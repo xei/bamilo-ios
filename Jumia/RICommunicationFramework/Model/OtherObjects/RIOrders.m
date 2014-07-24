@@ -87,6 +87,41 @@
                                                           }];
 }
 
+#pragma mark - Get the cart change
+
++ (NSString *)getCartChangeWithSuccessBlock:(void (^)())sucessBlock
+                            andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+{
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_CART_CHANGE]]
+                                                            parameters:nil
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
+                                                              if ([jsonObject objectForKey:@"metadata"]) {
+                                                                  sucessBlock();
+                                                              } else {
+                                                                  failureBlock(nil);
+                                                              }
+                                                              
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              
+                                                              if (NOTEMPTY(errorJsonObject)) {
+                                                                  
+                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  
+                                                              } else if (NOTEMPTY(errorObject)) {
+                                                                  
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(errorArray);
+                                                                  
+                                                              } else {
+                                                                  failureBlock(nil);
+                                                              }
+                                                          }];
+}
+
 #pragma mark - Cancel the request
 
 + (void)cancelRequest:(NSString *)operationID

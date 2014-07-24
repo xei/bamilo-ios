@@ -21,9 +21,30 @@
     
     [RICustomer loginCustomerWithSuccessBlock:^(id customer) {
         
-        [self loadOtherRequest];
+        [self request3];
         
     } andFailureBlock:^(NSArray *errorObject) {
+        
+    }];
+}
+
+- (void)request3
+{
+    [RIOrders getCartChangeWithSuccessBlock:^() {
+        
+        [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
+                                    message:@"Cart change."
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"Ok", nil] show];
+        
+    } andFailureBlock:^(NSArray *errorMessages) {
+        
+        [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
+                                    message:@"Error in cart change"
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"Ok", nil] show];
         
     }];
 }

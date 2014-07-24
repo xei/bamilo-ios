@@ -56,6 +56,17 @@
                           andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 
 /**
+ *  Method to get the cart change information
+ *
+ *  @param the success block
+ *  @param the error block that contains the error case the operation fails
+ *
+ *  @return the sring with the code to cancel the request
+ */
++ (NSString *)getCartChangeWithSuccessBlock:(void (^)())sucessBlock
+                            andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+
+/**
  * Method to cancel the request
  *
  * @param the operationID
