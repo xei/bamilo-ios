@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
-		B5A301B419811D0700F71726 /* Jumia.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B219811D0700F71726 /* Jumia.xcdatamodeld */; };
 		B5A301BA19811D0700F71726 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5A301B819811D0700F71726 /* Main.storyboard */; };
 		B5A301BC19811D0700F71726 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		B5A301C819811D0700F71726 /* JumiaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301C719811D0700F71726 /* JumiaTests.m */; };
@@ -128,7 +127,6 @@
 		B5A301AD19811D0700F71726 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B5A301AF19811D0700F71726 /* JAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAAppDelegate.h; sourceTree = "<group>"; };
 		B5A301B019811D0700F71726 /* JAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAAppDelegate.m; sourceTree = "<group>"; };
-		B5A301B319811D0700F71726 /* Jumia.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Jumia.xcdatamodel; sourceTree = "<group>"; };
 		B5A301B919811D0700F71726 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B5A301BB19811D0700F71726 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B5A301C119811D0700F71726 /* JumiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JumiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -370,7 +368,6 @@
 				B5A301B019811D0700F71726 /* JAAppDelegate.m */,
 				B5A301B819811D0700F71726 /* Main.storyboard */,
 				B5A301BB19811D0700F71726 /* Images.xcassets */,
-				B5A301B219811D0700F71726 /* Jumia.xcdatamodeld */,
 				B5A301AB19811D0700F71726 /* Supporting Files */,
 			);
 			path = Jumia;
@@ -981,7 +978,6 @@
 			files = (
 				B5A302C919811E9200F71726 /* RIProductSimple.m in Sources */,
 				B5A302D719811E9200F71726 /* RIError.m in Sources */,
-				B5A301B419811D0700F71726 /* Jumia.xcdatamodeld in Sources */,
 				B5A3025B19811E8A00F71726 /* SDWebImageManager.m in Sources */,
 				B5A302C319811E9200F71726 /* RIForm.m in Sources */,
 				B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */,
@@ -1247,6 +1243,7 @@
 				B5A301CD19811D0700F71726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B5A301CE19811D0700F71726 /* Build configuration list for PBXNativeTarget "JumiaTests" */ = {
 			isa = XCConfigurationList;
@@ -1255,20 +1252,11 @@
 				B5A301D019811D0700F71726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		B5A301B219811D0700F71726 /* Jumia.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				B5A301B319811D0700F71726 /* Jumia.xcdatamodel */,
-			);
-			currentVersion = B5A301B319811D0700F71726 /* Jumia.xcdatamodel */;
-			path = Jumia.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
