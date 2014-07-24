@@ -18,77 +18,97 @@
 @dynamic formIndex;
 
 + (NSString*)getForm:(NSString*)formIndexID
-       successBlock:(void (^)(id form))successBlock
-       failureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+        successBlock:(void (^)(id form))successBlock
+        failureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 {
-    //get form indexes
-    
-    return [RIFormIndex getFormIndexesWithWithSuccessBlock:^(id formIndexes) {
+    //get form for index
+    return [RIFormIndex getFormWithIndexId:formIndexID successBlock:^(RIFormIndex* formIndex) {
         
-        for (RIFormIndex* formIndex in formIndexes) {
+        if (VALID_NOTEMPTY(formIndex, RIFormIndex) && VALID_NOTEMPTY(formIndex.form, RIForm)) {
+            //index has form
+            successBlock(formIndex.form);
+        } else {
             
-            if ([formIndex.uid isEqualToString:formIndexID]) {
-                //found the index
+            if (VALID_NOTEMPTY(formIndex.url, NSString)) {
                 
-                if (VALID_NOTEMPTY(formIndex.form, RIForm)) {
-                    //index has form
-                    
-                    successBlock(formIndex.form);
-                    
-                } else {
-                
-                    if (VALID_NOTEMPTY(formIndex.url, NSString)) {
-                        
-                        [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:formIndex.url]
-                                                                         parameters:nil httpMethodPost:YES
-                                                                          cacheType:RIURLCacheNoCache
-                                                                          cacheTime:RIURLCacheDefaultTime
-                                                                       successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                                           
-                                                                           NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                                           
-                                                                           if (VALID_NOTEMPTY(metadata, NSDictionary)) {
-                                                                               
-                                                                               RIForm* newForm = [RIForm parseForm:metadata];
-                                                                               
-                                                                               [RIForm saveForm:newForm];
-                                                                               newForm.formIndex = formIndex;
-                                                                               formIndex.form = newForm;
-                                                                               //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
-                                                                               [[RIDataBaseWrapper sharedInstance] saveContext];
-                                                                               
-                                                                               successBlock(newForm);
-                                                                           } else {
-                                                                               failureBlock(nil);
-                                                                           }
-
-                                                                       } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                                           if(NOTEMPTY(errorJsonObject))
-                                                                           {
-                                                                               failureBlock([RIError getErrorMessages:errorJsonObject]);
-                                                                           } else if(NOTEMPTY(errorObject))
-                                                                           {
-                                                                               NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                               failureBlock(errorArray);
-                                                                           } else
-                                                                           {
-                                                                               failureBlock(nil);
-                                                                           }
-                                                                       }];
-                    }
-                }
-                
-                return;
+                [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:formIndex.url]
+                                                                 parameters:nil httpMethodPost:YES
+                                                                  cacheType:RIURLCacheNoCache
+                                                                  cacheTime:RIURLCacheDefaultTime
+                                                               successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                                   
+                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                                   
+                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary)) {
+                                                                       
+                                                                       RIForm* newForm = [RIForm parseForm:metadata];
+                                                                       
+                                                                       [RIForm saveForm:newForm];
+                                                                       newForm.formIndex = formIndex;
+                                                                       formIndex.form = newForm;
+                                                                       //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
+                                                                       [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                                       
+                                                                       successBlock(newForm);
+                                                                   } else {
+                                                                       failureBlock(nil);
+                                                                   }
+                                                                   
+                                                               } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                                   if(NOTEMPTY(errorJsonObject))
+                                                                   {
+                                                                       failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                   } else if(NOTEMPTY(errorObject))
+                                                                   {
+                                                                       NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                       failureBlock(errorArray);
+                                                                   } else
+                                                                   {
+                                                                       failureBlock(nil);
+                                                                   }
+                                                               }];
             }
         }
+        
+        return;
+        
+        
     } andFailureBlock:failureBlock];
 }
 
-+ (void)requestFormForIndex:(RIFormIndex*)formIndex
-               successBlock:(void (^)(id form))successBlock
-               failureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+#pragma mark - Facebook Login
++ (NSString*)sendForm:(RIForm*)form
+       withParameters:(NSDictionary *)parameters
+         successBlock:(void (^)(NSDictionary *jsonObject))successBlock
+      andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
 {
-
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
+                                                            parameters:parameters
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                              {
+                                                                  successBlock(metadata);
+                                                              } else
+                                                              {
+                                                                  failureBlock(nil);
+                                                              }
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(nil);
+                                                              }
+                                                          }];
 }
 
 + (RIForm *)parseForm:(NSDictionary *)formJSON;

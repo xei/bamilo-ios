@@ -20,8 +20,9 @@
 
 + (NSString*)loadFormIndexesIntoDatabaseWithSuccessBlock:(void (^)(id formIndexes))successBlock
                                          andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
-+ (NSString*)getFormIndexesWithWithSuccessBlock:(void (^)(id formIndexes))successBlock
-                                andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString*)getFormWithIndexId:(NSString*)formIndexID
+                   successBlock:(void (^)(RIFormIndex *formIndex))successBlock
+                andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 + (NSArray*)parseFormIndexes:(NSDictionary*)formIndexesJSON;
 + (RIFormIndex*)parseFormIndex:(NSDictionary*)formIndexJSON;
 + (void)saveFormIndex:(RIFormIndex*)formIndex;

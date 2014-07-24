@@ -21,16 +21,6 @@
 @property (strong, nonatomic) NSArray *addresses;
 
 /**
- * Method to login user
- *
- * @param the block where the success response can be processed
- * @param the block where the failure response can be processed
- * @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString *)loginCustomerWithSuccessBlock:(void (^)(id customer))successBlock
-                            andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
-
-/**
  * Method to login user via facebook
  *
  * @param the needed parameters to use with facebook login
