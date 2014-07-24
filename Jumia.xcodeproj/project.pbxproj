@@ -110,6 +110,7 @@
 		B5A302FA19811F1E00F71726 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
 		B5A302FC19811F2200F71726 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302FB19811F2200F71726 /* UIKit.framework */; };
 		B5A30303198121A400F71726 /* JABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A30301198121A400F71726 /* JABaseViewController.m */; };
+		CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,6 +309,8 @@
 		B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jumia-Prefix.pch"; sourceTree = "<group>"; };
 		B5A30301198121A400F71726 /* JABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABaseViewController.m; sourceTree = "<group>"; };
 		B5A30302198121A400F71726 /* JABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABaseViewController.h; sourceTree = "<group>"; };
+		CE21CB02198147EE00F7DC66 /* RIStaticBlockIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIStaticBlockIndex.h; sourceTree = "<group>"; };
+		CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIStaticBlockIndex.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -721,6 +724,8 @@
 				B5A3028C19811E9200F71726 /* RIURLCache.m */,
 				B5A3028D19811E9200F71726 /* RIVariation.h */,
 				B5A3028E19811E9200F71726 /* RIVariation.m */,
+				CE21CB02198147EE00F7DC66 /* RIStaticBlockIndex.h */,
+				CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */,
 			);
 			path = CoreDataEntities;
 			sourceTree = "<group>";
@@ -981,6 +986,7 @@
 			files = (
 				B5A302C919811E9200F71726 /* RIProductSimple.m in Sources */,
 				B5A302D719811E9200F71726 /* RIError.m in Sources */,
+				CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */,
 				B5A301B419811D0700F71726 /* Jumia.xcdatamodeld in Sources */,
 				B5A3025B19811E8A00F71726 /* SDWebImageManager.m in Sources */,
 				B5A302C319811E9200F71726 /* RIForm.m in Sources */,
@@ -1247,6 +1253,7 @@
 				B5A301CD19811D0700F71726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B5A301CE19811D0700F71726 /* Build configuration list for PBXNativeTarget "JumiaTests" */ = {
 			isa = XCConfigurationList;
@@ -1255,6 +1262,7 @@
 				B5A301D019811D0700F71726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

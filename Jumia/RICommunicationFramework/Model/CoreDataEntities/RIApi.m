@@ -14,6 +14,7 @@
 #import "RIImageResolution.h"
 #import "RICountry.h"
 #import "RICountryConfiguration.h"
+#import "RIStaticBlockIndex.h"
 
 @implementation RIApi
 
@@ -183,6 +184,14 @@
         [RICountry loadCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
             
         } andFailureBlock:^(NSArray *errorMessages) {
+            
+        }];
+    }
+    else if ([section.name isEqualToString:@"static_blocks"])
+    {
+        [RIStaticBlockIndex loadStaticBlockIndexesIntoDatabaseWithSuccessBlock:^(id staticBlockIndexes) {
+            
+        } andFailureBlock:^(NSArray *errorMessage) {
             
         }];
     }

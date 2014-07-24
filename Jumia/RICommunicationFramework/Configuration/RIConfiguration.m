@@ -38,6 +38,7 @@ NSString *const RI_FORMS_INDEX = @"forms/index/";
 NSString *const RI_API_INFO = @"main/md5/";
 NSString *const RI_API_IMAGE_RESOLUTIONS = @"main/imageresolutions/";
 NSString *const RI_API_GET_TEASERS = @"main/getteasers/";
+NSString *const RI_API_GET_STATICBLOCKS = @"main/getstaticblocks/";
 NSString *const RI_API_GET_CUSTOMER = @"customer/getdetails?setDevice=mobileApi";
 NSString *const RI_API_LOGIN_CUSTOMER = @"customer/login/";
 NSString *const RI_API_FACEBOOK_LOGIN_CUSTOMER = @"customer/facebooklogin?setDevice=mobileApi&facebook=true";
