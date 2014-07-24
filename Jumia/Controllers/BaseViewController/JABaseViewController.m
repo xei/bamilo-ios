@@ -7,6 +7,8 @@
 //
 
 #import "JABaseViewController.h"
+#import "RIOrders.h"
+#import "RICustomer.h"
 
 @interface JABaseViewController ()
 
@@ -16,7 +18,59 @@
             
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    [RICustomer loginCustomerWithSuccessBlock:^(id customer) {
+        
+        [self loadOtherRequest];
+        
+    } andFailureBlock:^(NSArray *errorObject) {
+        
+    }];
+}
+
+- (void)loadOtherRequest
+{
+    [RIOrders getCartDataWithSuccessBlock:^(RICartData *cartData) {
+        
+        [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
+                                    message:@"Obtained the cart data."
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"Ok", nil] show];
+        
+    } andFailureBlock:^(NSArray *errorMessages) {
+        
+        [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
+                                    message:@"Error getting cart data"
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"Ok", nil] show];
+        
+    }];
+}
+
+- (void)loadAnotherRequest
+{
+    [RIOrders addOrderWithCartQuantity:@"1"
+                                   sku:@"SH660AAAC1MWNGAMZ-177254"
+                                simple:@"SH660AAAC1MWNGAMZ"
+                      withSuccessBlock:^(NSInteger orderID) {
+                          
+                          [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
+                                                      message:@"Order added"
+                                                     delegate:nil
+                                            cancelButtonTitle:nil
+                                            otherButtonTitles:@"Ok", nil] show];
+                          
+                      } andFailureBlock:^(NSArray *errorMessages) {
+                          
+                          [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
+                                                      message:@"Error adding order"
+                                                     delegate:nil
+                                            cancelButtonTitle:nil
+                                            otherButtonTitles:@"Ok", nil] show];
+                          
+                      }];
 }
 
 - (void)didReceiveMemoryWarning {
