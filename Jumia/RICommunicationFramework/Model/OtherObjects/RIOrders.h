@@ -63,7 +63,7 @@
  *
  *  @return the sring with the code to cancel the request
  */
-+ (NSString *)getCartChangeWithSuccessBlock:(void (^)())sucessBlock
++ (NSString *)getCartChangeWithSuccessBlock:(void (^)(RICartData *cartData))sucessBlock
                             andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 
 /**

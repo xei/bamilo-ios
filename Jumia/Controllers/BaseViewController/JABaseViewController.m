@@ -9,6 +9,7 @@
 #import "JABaseViewController.h"
 #import "RIOrders.h"
 #import "RICustomer.h"
+#import "RIApi.h"
 
 @interface JABaseViewController ()
 
@@ -19,9 +20,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [RIApi startApiWithSuccessBlock:^(id api) {
+        
+        [self loginUser];
+        
+    } andFailureBlock:^(NSArray *errorMessage) {
+        
+    }];
+}
+
+- (void)loginUser
+{
     [RICustomer loginCustomerWithSuccessBlock:^(id customer) {
         
-        [self request3];
+        [self addProductToCart];
         
     } andFailureBlock:^(NSArray *errorObject) {
         
@@ -70,7 +82,7 @@
     }];
 }
 
-- (void)loadAnotherRequest
+- (void)addProductToCart
 {
     [RIOrders addOrderWithCartQuantity:@"1"
                                    sku:@"SH660AAAC1MWNGAMZ-177254"
@@ -82,6 +94,8 @@
                                                      delegate:nil
                                             cancelButtonTitle:nil
                                             otherButtonTitles:@"Ok", nil] show];
+                          
+                          [self request3];
                           
                       } andFailureBlock:^(NSArray *errorMessages) {
                           

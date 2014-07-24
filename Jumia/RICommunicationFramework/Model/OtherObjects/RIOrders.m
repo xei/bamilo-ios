@@ -89,7 +89,7 @@
 
 #pragma mark - Get the cart change
 
-+ (NSString *)getCartChangeWithSuccessBlock:(void (^)())sucessBlock
++ (NSString *)getCartChangeWithSuccessBlock:(void (^)(RICartData *cartData))sucessBlock
                             andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_CART_CHANGE]]
@@ -100,7 +100,7 @@
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               if ([jsonObject objectForKey:@"metadata"]) {
-                                                                  sucessBlock();
+                                                                  sucessBlock([RIOrders parseCartData:[jsonObject objectForKey:@"metadata"]]);
                                                               } else {
                                                                   failureBlock(nil);
                                                               }
