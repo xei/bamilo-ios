@@ -122,6 +122,42 @@
                                                           }];
 }
 
+#pragma mark - Remove product from cart
+
++ (NSString *)removeOrderFromCartWithQuantity:(NSString *)quantity
+                                          sku:(NSString *)sku
+                             withSuccessBlock:(void (^)())sucessBlock
+                              andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+{
+    NSDictionary *dic = @{@"quantity": quantity,
+                          @"sku": sku };
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_REMOVE_FROM_CART]]
+                                                            parameters:dic
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
+                                                              sucessBlock();
+                                                              
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              
+                                                              if (NOTEMPTY(errorJsonObject)) {
+                                                                  
+                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  
+                                                              } else if (NOTEMPTY(errorObject)) {
+                                                                  
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(errorArray);
+                                                                  
+                                                              } else {
+                                                                  failureBlock(nil);
+                                                              }
+                                                          }];
+}
+
 #pragma mark - Cancel the request
 
 + (void)cancelRequest:(NSString *)operationID

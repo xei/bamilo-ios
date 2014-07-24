@@ -67,6 +67,21 @@
                             andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 
 /**
+ *  Method to remove product from cart
+ *
+ *  @param the quantity that will be removed
+ *  @param the product sku
+ *  @param the success block
+ *  @param the error block that contains the error case the operation fails
+ *
+ *  @return the sring with the code to cancel the request
+ */
++ (NSString *)removeOrderFromCartWithQuantity:(NSString *)quantity
+                                          sku:(NSString *)sku
+                             withSuccessBlock:(void (^)())sucessBlock
+                              andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+
+/**
  * Method to cancel the request
  *
  * @param the operationID

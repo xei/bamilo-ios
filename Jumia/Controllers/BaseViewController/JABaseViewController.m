@@ -33,16 +33,39 @@
 {
     [RICustomer loginCustomerWithSuccessBlock:^(id customer) {
         
-        [self addProductToCart];
+        [self removeFromCart];
         
     } andFailureBlock:^(NSArray *errorObject) {
         
     }];
 }
 
+- (void)removeFromCart
+{
+    [RIOrders removeOrderFromCartWithQuantity:@"1"
+                                          sku:@"SH660AAAC1MWNGAMZ-177254"
+                             withSuccessBlock:^{
+                                 
+                                 [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
+                                                             message:@"Product removed."
+                                                            delegate:nil
+                                                   cancelButtonTitle:nil
+                                                   otherButtonTitles:@"Ok", nil] show];
+                                 
+                             } andFailureBlock:^(NSArray *errorMessages) {
+                                 
+                                 [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
+                                                             message:@"Error removing product"
+                                                            delegate:nil
+                                                   cancelButtonTitle:nil
+                                                   otherButtonTitles:@"Ok", nil] show];
+                                 
+                             }];
+}
+
 - (void)request3
 {
-    [RIOrders getCartChangeWithSuccessBlock:^() {
+    [RIOrders getCartChangeWithSuccessBlock:^(RICartData *cartData) {
         
         [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
                                     message:@"Cart change."
