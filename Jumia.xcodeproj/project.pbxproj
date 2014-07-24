@@ -109,6 +109,8 @@
 		B5A302FA19811F1E00F71726 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
 		B5A302FC19811F2200F71726 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302FB19811F2200F71726 /* UIKit.framework */; };
 		B5A30303198121A400F71726 /* JABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A30301198121A400F71726 /* JABaseViewController.m */; };
+		B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759B19814EF000005B13 /* FacebookSDK.framework */; };
+		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -306,6 +308,8 @@
 		B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jumia-Prefix.pch"; sourceTree = "<group>"; };
 		B5A30301198121A400F71726 /* JABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABaseViewController.m; sourceTree = "<group>"; };
 		B5A30302198121A400F71726 /* JABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABaseViewController.h; sourceTree = "<group>"; };
+		B5EF759B19814EF000005B13 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -315,6 +319,7 @@
 			files = (
 				B5A302FC19811F2200F71726 /* UIKit.framework in Frameworks */,
 				B5A302FA19811F1E00F71726 /* CoreGraphics.framework in Frameworks */,
+				B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */,
 				B5A302F819811F1A00F71726 /* Foundation.framework in Frameworks */,
 				B5A302F619811F1500F71726 /* ImageIO.framework in Frameworks */,
 				B5A302F419811F0200F71726 /* CoreLocation.framework in Frameworks */,
@@ -326,6 +331,7 @@
 				B5A302E819811EBF00F71726 /* CFNetwork.framework in Frameworks */,
 				B5A3025419811E8A00F71726 /* BugSense-iOS.framework in Frameworks */,
 				B5A3025519811E8A00F71726 /* libAdIdAccess.a in Frameworks */,
+				B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */,
 				B5A3023519811E8A00F71726 /* libAd4ScreenTrackingSDK.a in Frameworks */,
 				B5A3025619811E8A00F71726 /* libGoogleAnalyticsServices.a in Frameworks */,
 			);
@@ -423,6 +429,8 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5EF759B19814EF000005B13 /* FacebookSDK.framework */,
+				B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */,
 				B5A301D319811E8900F71726 /* Ad4ScreenTrackingSDK */,
 				B5A3020419811E8900F71726 /* ADXTracker */,
 				B5A3020719811E8900F71726 /* BugSense-iOS.framework */,
@@ -1148,6 +1156,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -1159,6 +1169,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1171,6 +1182,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -1182,6 +1195,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

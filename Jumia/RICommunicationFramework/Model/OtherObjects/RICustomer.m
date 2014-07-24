@@ -65,11 +65,8 @@
                                       successBlock:(void (^)(id customer))successBlock
                                    andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
 {
-    NSDictionary *dic = @{@"Alice_Module_Customer_Model_LoginForm[email]": @"sofias@jumia.com",
-                          @"Alice_Module_Customer_Model_LoginForm[password]": @"1234567"};
-    
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_LOGIN_CUSTOMER]]
-                                                            parameters:dic
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_FACEBOOK_LOGIN_CUSTOMER]]
+                                                            parameters:parameters
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
