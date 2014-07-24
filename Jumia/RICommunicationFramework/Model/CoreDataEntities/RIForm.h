@@ -26,9 +26,22 @@
         successBlock:(void (^)(id form))successBlock
         failureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 
+/**
+ * Method to send a request to a form action
+ *
+ * @param the form to what we want to make the request
+ * @param the parameters that the form needs
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString*)sendForm:(RIForm*)form
+       withParameters:(NSDictionary *)parameters
+         successBlock:(void (^)(NSDictionary *jsonObject))successBlock
+      andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
+
 + (void)cancelRequest:(NSString *)operationID;
 
-+ (RIForm *)parseForm:(NSDictionary *)formJSON;
 + (void)saveForm:(RIForm *)form;
 
 @end

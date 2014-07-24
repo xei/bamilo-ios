@@ -47,17 +47,25 @@
                                                           }];
 }
 
-+ (NSString*)getFormIndexesWithWithSuccessBlock:(void (^)(id formIndexes))successBlock
-                                andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString*)getFormWithIndexId:(NSString*)formIndexID
+                   successBlock:(void (^)(RIFormIndex *formIndex))successBlock
+                andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 {
-    NSArray* allFormIndexes = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIFormIndex class])];
-    if(VALID_NOTEMPTY(allFormIndexes, NSArray))
+    NSArray* formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"uid" andPropertyValue:formIndexID];
+    if(VALID_NOTEMPTY(formIndexes, NSArray))
     {
-        successBlock(allFormIndexes);
+        successBlock([formIndexes objectAtIndex:0]);
         return nil;
     } else {
         return [RIFormIndex loadFormIndexesIntoDatabaseWithSuccessBlock:^(id formIndexes) {
-            successBlock(formIndexes);
+            formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"uid" andPropertyValue:formIndexID];
+            if(VALID_NOTEMPTY(formIndexes, NSArray))
+            {
+                successBlock([formIndexes objectAtIndex:0]);
+            } else
+            {
+                failureBlock(nil);
+            }
         } andFailureBlock:failureBlock];
     }
 }
@@ -69,7 +77,7 @@
     NSMutableArray* newFormIndexes = [NSMutableArray new];
     
     NSArray* data = [formIndexesJSON objectForKey:@"data"];
-
+    
     if (VALID_NOTEMPTY(data, NSArray)) {
         
         for (NSDictionary* formIndexJSON in data) {
