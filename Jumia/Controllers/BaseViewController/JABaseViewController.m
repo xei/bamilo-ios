@@ -31,13 +31,6 @@
 
 - (void)loginUser
 {
-    [RICustomer loginCustomerWithSuccessBlock:^(id customer) {
-        
-        [self removeFromCart];
-        
-    } andFailureBlock:^(NSArray *errorObject) {
-        
-    }];
 }
 
 - (void)removeFromCart
