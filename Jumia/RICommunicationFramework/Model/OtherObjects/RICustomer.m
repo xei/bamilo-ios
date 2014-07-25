@@ -28,11 +28,19 @@
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                              if (metadata && [metadata isKindOfClass:[NSDictionary class]]) {
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                              {
                                                                   NSDictionary* userObject = [metadata objectForKey:@"user"];
-                                                                  if (userObject && [userObject isKindOfClass:[NSDictionary class]]) {
+                                                                  if (VALID_NOTEMPTY(userObject, NSDictionary))
+                                                                  {
                                                                       successBlock([self parseCustomerWithJson:userObject]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(nil);
                                                                   }
+                                                              } else
+                                                              {
+                                                                  failureBlock(nil);
                                                               }
                                                               
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
