@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4AAECB3619814CFA005403AA /* RIOrders.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAECB3519814CFA005403AA /* RIOrders.m */; };
+		B517FDF91982517300F65253 /* RICart.m in Sources */ = {isa = PBXBuildFile; fileRef = B517FDF81982517300F65253 /* RICart.m */; };
+		B517FDFC198265AD00F65253 /* RICartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B517FDFB198265AD00F65253 /* RICartItem.m */; };
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
 		B5A301BA19811D0700F71726 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5A301B819811D0700F71726 /* Main.storyboard */; };
@@ -127,8 +128,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4AAECB3419814CFA005403AA /* RIOrders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOrders.h; sourceTree = "<group>"; };
-		4AAECB3519814CFA005403AA /* RIOrders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIOrders.m; sourceTree = "<group>"; };
+		B517FDF71982517300F65253 /* RICart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICart.h; sourceTree = "<group>"; };
+		B517FDF81982517300F65253 /* RICart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICart.m; sourceTree = "<group>"; };
+		B517FDFA198265AD00F65253 /* RICartItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICartItem.h; sourceTree = "<group>"; };
+		B517FDFB198265AD00F65253 /* RICartItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICartItem.m; sourceTree = "<group>"; };
 		B5A301A819811D0700F71726 /* Jumia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jumia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A301AC19811D0700F71726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5A301AD19811D0700F71726 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -744,6 +747,10 @@
 		B5A3029119811E9200F71726 /* OtherObjects */ = {
 			isa = PBXGroup;
 			children = (
+				B517FDF71982517300F65253 /* RICart.h */,
+				B517FDF81982517300F65253 /* RICart.m */,
+				B517FDFA198265AD00F65253 /* RICartItem.h */,
+				B517FDFB198265AD00F65253 /* RICartItem.m */,
 				B5A3029219811E9200F71726 /* RICountry.h */,
 				B5A3029319811E9200F71726 /* RICountry.m */,
 				B5A3029419811E9200F71726 /* RICustomer.h */,
@@ -1013,7 +1020,6 @@
 				B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */,
 				B5A302BE19811E9200F71726 /* RIConfiguration.m in Sources */,
 				B5A302CC19811E9200F71726 /* RITeaser.m in Sources */,
-				4AAECB3619814CFA005403AA /* RIOrders.m in Sources */,
 				B5A302D019811E9200F71726 /* RITeaserProduct.m in Sources */,
 				B5A302CE19811E9200F71726 /* RITeaserGroup.m in Sources */,
 				B5A3023319811E8A00F71726 /* BMA4SViewController.m in Sources */,
@@ -1038,6 +1044,7 @@
 				B5A30303198121A400F71726 /* JABaseViewController.m in Sources */,
 				B5A302CB19811E9200F71726 /* RISection.m in Sources */,
 				B5A302D619811E9200F71726 /* RICustomer.m in Sources */,
+				B517FDF91982517300F65253 /* RICart.m in Sources */,
 				B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */,
 				B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */,
 				B5A302C219811E9200F71726 /* RIField.m in Sources */,
@@ -1051,6 +1058,7 @@
 				B5A302E419811E9200F71726 /* RIBugSenseTracker.m in Sources */,
 				B5A302C819811E9200F71726 /* RIProduct.m in Sources */,
 				B5A302DF19811E9200F71726 /* RIOpenURLHandler.m in Sources */,
+				B517FDFC198265AD00F65253 /* RICartItem.m in Sources */,
 				B5A3025819811E8A00F71726 /* SDImageCache.m in Sources */,
 				B5A302D219811E9200F71726 /* RIURLCache.m in Sources */,
 				B5A302D919811E9200F71726 /* RIRatings.m in Sources */,
@@ -1235,6 +1243,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = JumiaTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -1252,6 +1261,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
 				INFOPLIST_FILE = JumiaTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
