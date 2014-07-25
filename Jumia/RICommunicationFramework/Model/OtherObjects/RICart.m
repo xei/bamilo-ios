@@ -1,61 +1,20 @@
 //
-//  RIOrders.m
+//  RICart.m
 //  Jumia
 //
-//  Created by Miguel Chaves on 24/Jul/14.
+//  Created by Pedro Lopes on 25/07/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
-#import "RIOrders.h"
+#import "RICart.h"
+#import "RICartItem.h"
 
-@implementation RICartData
+@implementation RICart
 
-@end
+#pragma mark - Get cart
 
-@implementation RIOrders
-
-#pragma mark - Add order
-
-+ (NSString *)addOrderWithCartQuantity:(NSString *)quantity
-                                   sku:(NSString *)sku
-                                simple:(NSString *)simple
-                      withSuccessBlock:(void (^)())sucessBlock
-                       andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
-{
-    NSDictionary *dic = @{@"quantity": quantity,
-                          @"sku": sku,
-                          @"p": simple };
-    
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_ADD_ORDER]]
-                                                            parameters:dic
-                                                        httpMethodPost:YES
-                                                             cacheType:RIURLCacheNoCache
-                                                             cacheTime:RIURLCacheNoTime
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              
-                                                              sucessBlock();
-                                                              
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              
-                                                              if (NOTEMPTY(errorJsonObject)) {
-                                                                  
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
-                                                                  
-                                                              } else if (NOTEMPTY(errorObject)) {
-                                                                  
-                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
-                                                                  
-                                                              } else {
-                                                                  failureBlock(nil);
-                                                              }
-                                                          }];
-}
-
-#pragma mark - Get cart data
-
-+ (NSString *)getCartDataWithSuccessBlock:(void (^)(RICartData *cartData))sucessBlock
-                          andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
++ (NSString *)getCartWithSuccessBlock:(void (^)(RICart *cart))sucessBlock
+                      andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_CART_DATA]]
                                                             parameters:nil
@@ -64,9 +23,12 @@
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
-                                                              if ([jsonObject objectForKey:@"metadata"]) {
-                                                                  sucessBlock([RIOrders parseCartData:[jsonObject objectForKey:@"metadata"]]);
-                                                              } else {
+                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                              {
+                                                                  sucessBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"]]);
+                                                              } else
+                                                              {
                                                                   failureBlock(nil);
                                                               }
                                                               
@@ -89,19 +51,64 @@
 
 #pragma mark - Get the cart change
 
-+ (NSString *)getCartChangeWithSuccessBlock:(void (^)(RICartData *cartData))sucessBlock
-                            andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
++ (NSString *) changeQuantityInProducts:(NSDictionary *)productsQuantities
+                       withSuccessBlock:(void (^)(RICart *cart))sucessBlock
+                        andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_CART_CHANGE]]
-                                                            parameters:nil
+                                                            parameters:productsQuantities
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                              {
+                                                                  sucessBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"]]);
+                                                              } else
+                                                              {
+                                                                  failureBlock(nil);
+                                                              }
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              
+                                                              if (NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                              } else if (NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(errorArray);
+                                                              } else {
+                                                                  failureBlock(nil);
+                                                              }
+                                                          }];
+}
+
+#pragma mark - Add order
+
++ (NSString *)addProductWithQuantity:(NSString *)quantity
+                                 sku:(NSString *)sku
+                              simple:(NSString *)simple
+                    withSuccessBlock:(void (^)(RICart *cart))sucessBlock
+                     andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+{
+    NSDictionary *dic = @{@"quantity": quantity,
+                          @"sku": sku,
+                          @"p": simple };
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_ADD_ORDER]]
+                                                            parameters:dic
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
-                                                              if ([jsonObject objectForKey:@"metadata"]) {
-                                                                  sucessBlock([RIOrders parseCartData:[jsonObject objectForKey:@"metadata"]]);
-                                                              } else {
+                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                              {
+                                                                  sucessBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"]]);
+                                                              } else
+                                                              {
                                                                   failureBlock(nil);
                                                               }
                                                               
@@ -122,12 +129,13 @@
                                                           }];
 }
 
+
 #pragma mark - Remove product from cart
 
-+ (NSString *)removeOrderFromCartWithQuantity:(NSString *)quantity
-                                          sku:(NSString *)sku
-                             withSuccessBlock:(void (^)())sucessBlock
-                              andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
++ (NSString *)removeProductWithQuantity:(NSString *)quantity
+                                    sku:(NSString *)sku
+                       withSuccessBlock:(void (^)(RICart *cart))sucessBlock
+                        andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
     NSDictionary *dic = @{@"quantity": quantity,
                           @"sku": sku };
@@ -139,7 +147,14 @@
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
-                                                              sucessBlock();
+                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                              {
+                                                                  sucessBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"]]);
+                                                              } else
+                                                              {
+                                                                  failureBlock(nil);
+                                                              }
                                                               
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               
@@ -157,6 +172,7 @@
                                                               }
                                                           }];
 }
+
 
 #pragma mark - Cancel the request
 
@@ -169,83 +185,90 @@
 
 #pragma mark - Parsers
 
-+ (RICartData *)parseCartData:(NSDictionary *)json
++ (RICart *)parseCart:(NSDictionary *)json
 {
-    RICartData *cartData = [[RICartData alloc] init];
+    RICart *cart = [[RICart alloc] init];
     
-    if ([json objectForKey:@"cartCleanValue"]) {
-        if (![[json objectForKey:@"cartCleanValue"] isKindOfClass:[NSNull class]]) {
-            cartData.cartCleanValue = [json objectForKey:@"cartCleanValue"];
+    if ([json objectForKey:@"cartItems"]) {
+        NSDictionary *cartItemObjects = [json objectForKey:@"cartItems"];
+        if (VALID_NOTEMPTY(cartItemObjects, NSDictionary))
+        {
+            NSArray *cartItemObjectsKeys = [cartItemObjects allKeys];
+            if (VALID_NOTEMPTY(cartItemObjectsKeys, NSArray))
+            {
+                NSMutableDictionary *cartItems = [[NSMutableDictionary alloc] init];
+                for(NSString *cartItemObjectsKey in cartItemObjectsKeys)
+                {
+                    RICartItem *cartItem = [RICartItem parseCartItemWithSimpleSku:cartItemObjectsKey andInfo:[cartItemObjects objectForKey:cartItemObjectsKey]];
+                    [cartItems setValue:cartItem forKey:cartItemObjectsKey];
+                }
+                
+                cart.cartItems = [cartItems copy];
+            }
         }
     }
     
     if ([json objectForKey:@"cartCount"]) {
         if (![[json objectForKey:@"cartCount"] isKindOfClass:[NSNull class]]) {
-            cartData.cartCount = [json objectForKey:@"cartCount"];
-        }
-    }
-    
-    if ([json objectForKey:@"cartItems"]) {
-        if (![[json objectForKey:@"cartItems"] isKindOfClass:[NSNull class]]) {
-#warning it's necessary to know the struture of each cart item and implement the parser
+            cart.cartCount = [json objectForKey:@"cartCount"];
         }
     }
     
     if ([json objectForKey:@"cartValue"]) {
         if (![[json objectForKey:@"cartValue"] isKindOfClass:[NSNull class]]) {
-            cartData.cartValue = [json objectForKey:@"cartValue"];
+            cart.cartValue = [json objectForKey:@"cartValue"];
+        }
+    }
+    
+    if ([json objectForKey:@"cartCleanValue"]) {
+        if (![[json objectForKey:@"cartCleanValue"] isKindOfClass:[NSNull class]]) {
+            cart.cartCleanValue = [json objectForKey:@"cartCleanValue"];
         }
     }
     
     if ([json objectForKey:@"couponMoneyValue"]) {
         if (![[json objectForKey:@"couponMoneyValue"] isKindOfClass:[NSNull class]]) {
-            cartData.couponMoneyValue = [json objectForKey:@"couponMoneyValue"];
+            cart.couponMoneyValue = [json objectForKey:@"couponMoneyValue"];
         }
     }
     
     if ([json objectForKey:@"extra_costs"]) {
         if (![[json objectForKey:@"extra_costs"] isKindOfClass:[NSNull class]]) {
-            cartData.extraCosts = [json objectForKey:@"extra_costs"];
-        }
-    }
-    
-    if ([json objectForKey:@"messages"]) {
-        if (![[json objectForKey:@"messages"] isKindOfClass:[NSNull class]]) {
-            cartData.messages = [json objectForKey:@"messages"];
-        }
-    }
-    
-    if ([json objectForKey:@"price_rules"]) {
-        if (![[json objectForKey:@"price_rules"] isKindOfClass:[NSNull class]]) {
-            cartData.priceRules = [json objectForKey:@"price_rules"];
+            cart.extraCosts = [json objectForKey:@"extra_costs"];
         }
     }
     
     if ([json objectForKey:@"shipping_value"]) {
         if (![[json objectForKey:@"shipping_value"] isKindOfClass:[NSNull class]]) {
-            cartData.shippingValue = [json objectForKey:@"shipping_value"];
-        }
-    }
-    
-    if ([json objectForKey:@"sum_costs"]) {
-        if (![[json objectForKey:@"sum_costs"] isKindOfClass:[NSNull class]]) {
-            cartData.sumCosts = [json objectForKey:@"sum_costs"];
-        }
-    }
-    
-    if ([json objectForKey:@"sum_costs_value"]) {
-        if (![[json objectForKey:@"sum_costs_value"] isKindOfClass:[NSNull class]]) {
-            cartData.sumCostsValue = [json objectForKey:@"sum_costs_value"];
+            cart.shippingValue = [json objectForKey:@"shipping_value"];
         }
     }
     
     if ([json objectForKey:@"vat_value"]) {
         if (![[json objectForKey:@"vat_value"] isKindOfClass:[NSNull class]]) {
-            cartData.vatValue = [json objectForKey:@"vat_value"];
+            cart.vatValue = [json objectForKey:@"vat_value"];
         }
     }
     
-    return cartData;
+    if ([json objectForKey:@"sum_costs"]) {
+        if (![[json objectForKey:@"sum_costs"] isKindOfClass:[NSNull class]]) {
+            cart.sumCosts = [json objectForKey:@"sum_costs"];
+        }
+    }
+    
+    if ([json objectForKey:@"sum_costs_value"]) {
+        if (![[json objectForKey:@"sum_costs_value"] isKindOfClass:[NSNull class]]) {
+            cart.sumCostsValue = [json objectForKey:@"sum_costs_value"];
+        }
+    }
+    
+    if ([json objectForKey:@"price_rules"]) {
+        if (![[json objectForKey:@"price_rules"] isKindOfClass:[NSNull class]]) {
+            cart.priceRules = [json objectForKey:@"price_rules"];
+        }
+    }
+    
+    return cart;
 }
 
 @end
