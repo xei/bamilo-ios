@@ -16,60 +16,13 @@
 
 @implementation RICustomer
 
-#pragma mark - Login Customer
-
-+ (NSString*)loginCustomerWithSuccessBlock:(void (^)(id customer))successBlock
-                           andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
-{
-    NSDictionary *dic = @{@"Alice_Module_Customer_Model_LoginForm[email]": @"sofias@jumia.com",
-                          @"Alice_Module_Customer_Model_LoginForm[password]": @"123456"};
-    
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_LOGIN_CUSTOMER]]
-                                                            parameters:dic
-                                                        httpMethodPost:YES
-                                                             cacheType:RIURLCacheNoCache
-                                                             cacheTime:RIURLCacheNoTime
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
-                                                              {
-                                                                  NSDictionary* userObject = [metadata objectForKey:@"user"];
-                                                                  if (VALID_NOTEMPTY(userObject, NSDictionary))
-                                                                  {
-                                                                      successBlock([self parseCustomerWithJson:userObject]);
-                                                                  } else
-                                                                  {
-                                                                      failureBlock(nil);
-                                                                  }
-                                                              } else
-                                                              {
-                                                                  failureBlock(nil);
-                                                              }
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              if(NOTEMPTY(errorJsonObject))
-                                                              {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
-                                                              } else if(NOTEMPTY(errorObject))
-                                                              {
-                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
-                                                              } else
-                                                              {
-                                                                  failureBlock(nil);
-                                                              }
-                                                          }];
-}
-
 #pragma mark - Facebook Login
 + (NSString*)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
                                       successBlock:(void (^)(id customer))successBlock
                                    andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
 {
-    NSDictionary *dic = @{@"Alice_Module_Customer_Model_LoginForm[email]": @"sofias@jumia.com",
-                          @"Alice_Module_Customer_Model_LoginForm[password]": @"1234567"};
-    
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_LOGIN_CUSTOMER]]
-                                                            parameters:dic
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_FACEBOOK_LOGIN_CUSTOMER]]
+                                                            parameters:parameters
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime

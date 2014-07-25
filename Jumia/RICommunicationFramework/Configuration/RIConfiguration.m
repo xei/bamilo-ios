@@ -46,3 +46,7 @@ NSString *const RI_API_LOGOUT_CUSTOMER = @"customer/logout/";
 NSString *const RI_API_RATING_OPTIONS = @"rating/options/";
 NSString *const RI_API_SEARCH_SUGGESTIONS = @"search/suggest/";
 NSString *const RI_API_COUNTRY_CONFIGURATION = @"main/getcountryconfs/";
+NSString *const RI_API_ADD_ORDER = @"order/add?setDevice=mobileApi";
+NSString *const RI_API_GET_CART_DATA = @"order/cartdata?setDevice=mobileApi";
+NSString *const RI_API_GET_CART_CHANGE = @"order/cartchange/";
+NSString *const RI_API_REMOVE_FROM_CART = @"order/remove?setDevice=mobileApi";
