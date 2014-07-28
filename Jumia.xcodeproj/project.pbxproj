@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242D91986547C00E37C90 /* JASidePanelController.m */; };
+		4AE242E01986569000E37C90 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
+		4AE242E51986570500E37C90 /* JAHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E41986570500E37C90 /* JAHomeViewController.m */; };
+		4AE242E81986570F00E37C90 /* JAMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E71986570F00E37C90 /* JAMenuViewController.m */; };
 		B517FDF91982517300F65253 /* RICart.m in Sources */ = {isa = PBXBuildFile; fileRef = B517FDF81982517300F65253 /* RICart.m */; };
 		B517FDFC198265AD00F65253 /* RICartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B517FDFB198265AD00F65253 /* RICartItem.m */; };
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
@@ -128,6 +132,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4AE242D81986547C00E37C90 /* JASidePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASidePanelController.h; sourceTree = "<group>"; };
+		4AE242D91986547C00E37C90 /* JASidePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASidePanelController.m; sourceTree = "<group>"; };
+		4AE242DE1986569000E37C90 /* JARootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARootViewController.h; sourceTree = "<group>"; };
+		4AE242DF1986569000E37C90 /* JARootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARootViewController.m; sourceTree = "<group>"; };
+		4AE242E31986570500E37C90 /* JAHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAHomeViewController.h; sourceTree = "<group>"; };
+		4AE242E41986570500E37C90 /* JAHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAHomeViewController.m; sourceTree = "<group>"; };
+		4AE242E61986570F00E37C90 /* JAMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMenuViewController.h; sourceTree = "<group>"; };
+		4AE242E71986570F00E37C90 /* JAMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMenuViewController.m; sourceTree = "<group>"; };
 		B517FDF71982517300F65253 /* RICart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICart.h; sourceTree = "<group>"; };
 		B517FDF81982517300F65253 /* RICart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICart.m; sourceTree = "<group>"; };
 		B517FDFA198265AD00F65253 /* RICartItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICartItem.h; sourceTree = "<group>"; };
@@ -359,6 +371,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4AE242D71986547C00E37C90 /* JASidePanel */ = {
+			isa = PBXGroup;
+			children = (
+				4AE242D81986547C00E37C90 /* JASidePanelController.h */,
+				4AE242D91986547C00E37C90 /* JASidePanelController.m */,
+			);
+			path = JASidePanel;
+			sourceTree = "<group>";
+		};
+		4AE242DB198655D900E37C90 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4AE242DC198655D900E37C90 /* Storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4AE242DC198655D900E37C90 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301B819811D0700F71726 /* Main.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		4AE242DD1986567800E37C90 /* JARootViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4AE242DE1986569000E37C90 /* JARootViewController.h */,
+				4AE242DF1986569000E37C90 /* JARootViewController.m */,
+			);
+			path = JARootViewController;
+			sourceTree = "<group>";
+		};
+		4AE242E1198656F500E37C90 /* HomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4AE242E31986570500E37C90 /* JAHomeViewController.h */,
+				4AE242E41986570500E37C90 /* JAHomeViewController.m */,
+			);
+			path = HomeViewController;
+			sourceTree = "<group>";
+		};
+		4AE242E2198656F500E37C90 /* MenuViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4AE242E61986570F00E37C90 /* JAMenuViewController.h */,
+				4AE242E71986570F00E37C90 /* JAMenuViewController.m */,
+			);
+			path = MenuViewController;
+			sourceTree = "<group>";
+		};
 		B5A3019F19811D0700F71726 = {
 			isa = PBXGroup;
 			children = (
@@ -381,10 +445,10 @@
 		B5A301AA19811D0700F71726 /* Jumia */ = {
 			isa = PBXGroup;
 			children = (
+				4AE242DB198655D900E37C90 /* View */,
 				B5A302FF1981218E00F71726 /* Controllers */,
 				B5A301AF19811D0700F71726 /* JAAppDelegate.h */,
 				B5A301B019811D0700F71726 /* JAAppDelegate.m */,
-				B5A301B819811D0700F71726 /* Main.storyboard */,
 				B5A301BB19811D0700F71726 /* Images.xcassets */,
 				B5A301AB19811D0700F71726 /* Supporting Files */,
 			);
@@ -761,8 +825,6 @@
 				B5A3029919811E9200F71726 /* RIProductReview.m */,
 				B5A3029A19811E9200F71726 /* RIRatings.h */,
 				B5A3029B19811E9200F71726 /* RIRatings.m */,
-				4AAECB3419814CFA005403AA /* RIOrders.h */,
-				4AAECB3519814CFA005403AA /* RIOrders.m */,
 				CE21CB05198266FA00F7DC66 /* RIAddress.h */,
 				CE21CB06198266FA00F7DC66 /* RIAddress.m */,
 			);
@@ -861,7 +923,11 @@
 		B5A302FF1981218E00F71726 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4AE242E1198656F500E37C90 /* HomeViewController */,
+				4AE242E2198656F500E37C90 /* MenuViewController */,
 				B5A303001981218E00F71726 /* BaseViewController */,
+				4AE242DD1986567800E37C90 /* JARootViewController */,
+				4AE242D71986547C00E37C90 /* JASidePanel */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1026,7 +1092,9 @@
 				B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */,
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
 				B5A302D119811E9200F71726 /* RITeaserText.m in Sources */,
+				4AE242E51986570500E37C90 /* JAHomeViewController.m in Sources */,
 				B5A3025A19811E8A00F71726 /* SDWebImageDownloader.m in Sources */,
+				4AE242E81986570F00E37C90 /* JAMenuViewController.m in Sources */,
 				B5A3025719811E8A00F71726 /* MKAnnotationView+WebCache.m in Sources */,
 				B5A302D819811E9200F71726 /* RIProductReview.m in Sources */,
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
@@ -1052,6 +1120,7 @@
 				B5A3025D19811E8A00F71726 /* UIButton+WebCache.m in Sources */,
 				B5A3025C19811E8A00F71726 /* SDWebImagePrefetcher.m in Sources */,
 				B5A302E319811E9200F71726 /* RIAdXTracker.m in Sources */,
+				4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */,
 				B5A3025919811E8A00F71726 /* SDWebImageDecoder.m in Sources */,
 				B5A302C719811E9200F71726 /* RILanguage.m in Sources */,
 				B5A302E219811E9200F71726 /* RIAd4PushTracker.m in Sources */,
@@ -1063,6 +1132,7 @@
 				B5A302D219811E9200F71726 /* RIURLCache.m in Sources */,
 				B5A302D919811E9200F71726 /* RIRatings.m in Sources */,
 				B5A302DC19811E9200F71726 /* RIDataBaseWrapper.m in Sources */,
+				4AE242E01986569000E37C90 /* JARootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1091,6 +1161,7 @@
 				B5A301B919811D0700F71726 /* Base */,
 			);
 			name = Main.storyboard;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
