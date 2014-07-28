@@ -10,40 +10,43 @@
 
 @interface JAMenuViewController ()
 
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UITableView *tableViewMenu;
+
 @end
 
 @implementation JAMenuViewController
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [self layoutSearchBar];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
 }
-*/
+
+#pragma mark - Layout search bar
+
+- (void)layoutSearchBar
+{
+    UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
+    textFieldSearch.backgroundColor = [UIColor lightGrayColor];
+    
+    self.searchBar.layer.borderWidth = 1;
+    self.searchBar.layer.borderColor = [[UIColor whiteColor] CGColor];
+}
 
 @end
