@@ -36,13 +36,22 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString*)sendForm:(RIForm*)form
-       withParameters:(NSDictionary *)parameters
          successBlock:(void (^)(NSDictionary *jsonObject))successBlock
       andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
 
 + (void)cancelRequest:(NSString *)operationID;
 
 + (void)saveForm:(RIForm *)form;
+
++ (RIForm *)parseForm:(NSDictionary *)formJSON;
+
+/**
+ * Method that returns a dictionary with all the key/values for the form fields
+ *
+ * @param the form that we want to know the parameters
+ * @return a dictionary with the form key/value objects
+ */
++ (NSDictionary *) getParametersForForm:(RIForm *)form;
 
 @end
 
