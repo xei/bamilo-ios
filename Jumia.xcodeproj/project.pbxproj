@@ -15,7 +15,6 @@
 		B517FDFC198265AD00F65253 /* RICartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B517FDFB198265AD00F65253 /* RICartItem.m */; };
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
-		B5A301BA19811D0700F71726 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5A301B819811D0700F71726 /* Main.storyboard */; };
 		B5A301BC19811D0700F71726 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		B5A301C819811D0700F71726 /* JumiaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301C719811D0700F71726 /* JumiaTests.m */; };
 		B5A3023319811E8A00F71726 /* BMA4SViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301D619811E8900F71726 /* BMA4SViewController.m */; };
@@ -119,6 +118,7 @@
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
 		CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */; };
 		CE21CB07198266FA00F7DC66 /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB06198266FA00F7DC66 /* RIAddress.m */; };
+		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,7 +149,6 @@
 		B5A301AD19811D0700F71726 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B5A301AF19811D0700F71726 /* JAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAAppDelegate.h; sourceTree = "<group>"; };
 		B5A301B019811D0700F71726 /* JAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAAppDelegate.m; sourceTree = "<group>"; };
-		B5A301B919811D0700F71726 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B5A301BB19811D0700F71726 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B5A301C119811D0700F71726 /* JumiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JumiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A301C619811D0700F71726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -334,6 +333,7 @@
 		CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIStaticBlockIndex.m; sourceTree = "<group>"; };
 		CE21CB05198266FA00F7DC66 /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
 		CE21CB06198266FA00F7DC66 /* RIAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAddress.m; sourceTree = "<group>"; };
+		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -391,7 +391,7 @@
 		4AE242DC198655D900E37C90 /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
-				B5A301B819811D0700F71726 /* Main.storyboard */,
+				CE69B585198662E6005CC699 /* Main.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -1041,7 +1041,6 @@
 				B5A3024419811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
 				B5A3024019811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */,
 				B5A3024F19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
-				B5A301BA19811D0700F71726 /* Main.storyboard in Resources */,
 				B5A3024B19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
 				B5A3023419811E8A00F71726 /* A4S.bundle in Resources */,
 				B5A3023B19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
@@ -1050,6 +1049,7 @@
 				B5A3024D19811E8A00F71726 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				B5A3023D19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */,
 				B5A3024E19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
+				CE69B587198662E6005CC699 /* Main.storyboard in Resources */,
 				B5A3025119811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
 				B5A3024119811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib in Resources */,
 				B5A302E019811E9200F71726 /* RITracking_example.plist in Resources */,
@@ -1155,13 +1155,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B5A301B819811D0700F71726 /* Main.storyboard */ = {
+		CE69B585198662E6005CC699 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B5A301B919811D0700F71726 /* Base */,
+				CE69B586198662E6005CC699 /* Base */,
 			);
 			name = Main.storyboard;
-			path = ../..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
