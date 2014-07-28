@@ -93,8 +93,8 @@
                      andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
     NSDictionary *dic = @{@"quantity": quantity,
-                          @"sku": sku,
-                          @"p": simple };
+                          @"sku": simple,
+                          @"p": sku };
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_ADD_ORDER]]
                                                             parameters:dic

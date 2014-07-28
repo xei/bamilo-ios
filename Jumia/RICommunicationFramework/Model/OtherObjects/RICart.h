@@ -78,6 +78,8 @@
                        withSuccessBlock:(void (^)(RICart *cart))sucessBlock
                         andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 
++ (RICart *)parseCart:(NSDictionary *)json;
+
 /**
  * Method to cancel the request
  *
