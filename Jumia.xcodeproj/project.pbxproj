@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */; };
 		4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242D91986547C00E37C90 /* JASidePanelController.m */; };
 		4AE242E01986569000E37C90 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
 		4AE242E51986570500E37C90 /* JAHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E41986570500E37C90 /* JAHomeViewController.m */; };
@@ -137,6 +138,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A1270F6198795AF004142F5 /* JASubCategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASubCategoriesViewController.h; sourceTree = "<group>"; };
+		4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASubCategoriesViewController.m; sourceTree = "<group>"; };
 		4AE242D81986547C00E37C90 /* JASidePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASidePanelController.h; sourceTree = "<group>"; };
 		4AE242D91986547C00E37C90 /* JASidePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASidePanelController.m; sourceTree = "<group>"; };
 		4AE242DE1986569000E37C90 /* JARootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARootViewController.h; sourceTree = "<group>"; };
@@ -434,6 +437,8 @@
 			children = (
 				4AE242E61986570F00E37C90 /* JAMenuViewController.h */,
 				4AE242E71986570F00E37C90 /* JAMenuViewController.m */,
+				4A1270F6198795AF004142F5 /* JASubCategoriesViewController.h */,
+				4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */,
 			);
 			path = MenuViewController;
 			sourceTree = "<group>";
@@ -1113,6 +1118,7 @@
 				B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */,
 				B5A302BE19811E9200F71726 /* RIConfiguration.m in Sources */,
 				B5A302CC19811E9200F71726 /* RITeaser.m in Sources */,
+				4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */,
 				B5A302D019811E9200F71726 /* RITeaserProduct.m in Sources */,
 				B5A302CE19811E9200F71726 /* RITeaserGroup.m in Sources */,
 				B5A3023319811E8A00F71726 /* BMA4SViewController.m in Sources */,
