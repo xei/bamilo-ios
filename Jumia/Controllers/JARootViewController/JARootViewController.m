@@ -7,6 +7,7 @@
 //
 
 #import "JARootViewController.h"
+#import "RIApi.h"
 
 @interface JARootViewController ()
 
