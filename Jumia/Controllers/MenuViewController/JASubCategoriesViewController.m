@@ -78,9 +78,18 @@
 #warning implement when it's the tail subcategory
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return self.subCategoriesTitle;
+    return 30.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sectionHeader"];
+    
+    cell.textLabel.text = self.subCategoriesTitle;
+    
+    return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
