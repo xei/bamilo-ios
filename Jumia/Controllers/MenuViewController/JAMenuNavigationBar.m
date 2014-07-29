@@ -24,9 +24,7 @@
     
     if (self) {
         
-        self.backgroundColor = [UIColor whiteColor];
-        
-        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(6, 0, 230, 44)];
+        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(6, 0, 235, 44)];
         self.searchBar.barTintColor = [UIColor whiteColor];
         self.searchBar.placeholder = @"Search";
         
@@ -36,11 +34,12 @@
         self.searchBar.layer.borderWidth = 1;
         self.searchBar.layer.borderColor = [[UIColor whiteColor] CGColor];
         
-        self.titleViewCustom = [[UIView alloc] initWithFrame:self.searchBar.frame];
+        self.titleViewCustom = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 260, 45)];
+        self.titleViewCustom.backgroundColor = [UIColor whiteColor];
         [self.titleViewCustom addSubview:self.searchBar];
         
         self.backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.backButton.frame = CGRectMake(-10, 12, 12, 20);
+        self.backButton.frame = CGRectMake(4, 1, 24, 40);
         [self.backButton setImage:[UIImage imageNamed:@"btn_back"]
                          forState:UIControlStateNormal];
         
@@ -61,28 +60,38 @@
     return self;
 }
 
-#pragma mark - Add back button
+#pragma mark - Back button methods
 
 - (void)addBackButtonToNavBar
 {
     [UIView animateWithDuration:0.4f
                      animations:^{
-                         self.searchBar.frame = CGRectMake(30, 0, 200, 44);
+                         self.searchBar.frame = CGRectMake(35, 0, 200, 44);
                      } completion:^(BOOL finished) {
-                         self.backButton.alpha = 1.0f;
+                         [UIView animateWithDuration:0.3f
+                                          animations:^{
+                                              self.backButton.alpha = 1.0f;
+                                          }];
                      }];
 }
 
 - (void)removeBackButtonFromNavBar
 {
-    self.backButton.alpha = 0.0f;
-    
-    [UIView animateWithDuration:0.4f
+    [UIView animateWithDuration:0.3f
                      animations:^{
-                         self.searchBar.frame = CGRectMake(0, 0, 220, 44);
+                         self.backButton.alpha = 0.0f;
                      } completion:^(BOOL finished) {
-                         
+                         [UIView animateWithDuration:0.3f
+                                          animations:^{
+                                              self.searchBar.frame = CGRectMake(6, 0, 235, 44);
+                                          }];
                      }];
+}
+
+- (void)backButtonPressed
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"PRESSED_BACK_BUTTON"
+                                                        object:nil];
 }
 
 @end

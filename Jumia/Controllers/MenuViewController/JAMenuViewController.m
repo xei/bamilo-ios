@@ -17,11 +17,9 @@
     UITableViewDelegate
 >
 
-@property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray *sourceArray;
 @property (strong, nonatomic) NSArray *categories;
-@property (strong, nonatomic) UIView *titleView;
-@property (strong, nonatomic) UIButton *backButton;
+@property (strong, nonatomic) JAMenuNavigationBar *customNavBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewMenu;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewCart;
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelTitle;
@@ -41,10 +39,15 @@
     
     [self initSourceArray];
     
-    [self.navigationController setValue:[[JAMenuNavigationBar alloc] init] forKeyPath:@"navigationBar"];
+    self.customNavBar = [[JAMenuNavigationBar alloc] init];
+    [self.navigationController setValue:self.customNavBar forKeyPath:@"navigationBar"];
+    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     
-    //[self customizeTitleView];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didPressedBackButton)
+                                                 name:@"PRESSED_BACK_BUTTON"
+                                               object:nil];
+    
     self.cartLabelTitle.text = @"Shopping Cart";
     self.cartLabelTotalCost.text = @"RM 893.00";
     self.cartLabelDetails.text = @"10% VAT and Shipping costs included";
@@ -62,8 +65,6 @@
                           otherButtonTitles:@"OK", nil] show];
         
     }];
-    
-    self.navigationItem.shouldGroupAccessibilityChildren = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -119,80 +120,25 @@
     [tableView deselectRowAtIndexPath:indexPath
                              animated:YES];
     
-    [self.searchBar resignFirstResponder];
+    [self.customNavBar resignFirstResponder];
     
     if (1 == indexPath.row) {
+        
+        [self.customNavBar addBackButtonToNavBar];
+        
         [self performSegueWithIdentifier:@"showSubCategories"
                                   sender:self.categories];
     }
 }
 
-#pragma mark - Auxiliar methods
+#pragma mark - Navigation bar custom delegate
 
-- (void)customizeTitleView
-{
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 220, 44)];
-    self.searchBar.barTintColor = [UIColor whiteColor];
-    self.searchBar.placeholder = @"Search";
-    
-    UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
-    textFieldSearch.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0f];
-    
-    self.searchBar.layer.borderWidth = 1;
-    self.searchBar.layer.borderColor = [[UIColor whiteColor] CGColor];
-    
-    self.titleView = [[UIView alloc] initWithFrame:self.searchBar.frame];
-    [self.titleView addSubview:self.searchBar];
-    
-    self.backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.backButton.frame = CGRectMake(0, 12, 12, 20);
-    [self.backButton setImage:[UIImage imageNamed:@"btn_back"]
-                     forState:UIControlStateNormal];
-    
-    [self.backButton setImage:[UIImage imageNamed:@"btn_back_pressed"]
-                     forState:UIControlStateSelected];
-    
-    [self.backButton addTarget:self
-                        action:@selector(backButtonPressed)
-              forControlEvents:UIControlEventTouchUpInside];
-    
-    self.backButton.alpha = 0.0f;
-    
-    [self.titleView addSubview:self.backButton];
-    
-    self.navigationItem.titleView = self.titleView;
-}
-
-#pragma mark - Back functions
-
-- (void)addBackToNavBar
-{
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         self.searchBar.frame = CGRectMake(30, 0, 200, 44);
-                     } completion:^(BOOL finished) {
-                         self.backButton.alpha = 1.0f;
-                     }];
-}
-
-- (void)removeBackFromNavBar
-{
-    self.backButton.alpha = 0.0f;
-    
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         self.searchBar.frame = CGRectMake(0, 0, 220, 44);
-                     } completion:^(BOOL finished) {
-
-                     }];
-}
-
-- (void)backButtonPressed
+- (void)didPressedBackButton
 {
     [self.navigationController popViewControllerAnimated:YES];
     
     if (self.navigationController.viewControllers.count == 1) {
-        [self removeBackFromNavBar];
+        [self.customNavBar removeBackButtonFromNavBar];
     }
 }
 

@@ -24,17 +24,9 @@
     self.shouldResizeLeftPanel = YES;
     
     [RIApi startApiWithSuccessBlock:^(id api) {
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                    message:@"API started"
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:@"OK", nil] show];
+
     } andFailureBlock:^(NSArray *errorMessage) {
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                   message:@"Error starting the API"
-                                  delegate:nil
-                         cancelButtonTitle:nil
-                          otherButtonTitles:@"OK", nil] show];
+        
     }];
 }
 

@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
     
+    self.title = @"";
+    self.navigationItem.leftBarButtonItems = nil;
     self.navigationItem.hidesBackButton = YES;
 }
 
@@ -69,8 +71,8 @@
         newSubCategories.sourceCategoriesArray = category.children.array;
         newSubCategories.subCategoriesTitle = category.name;
         
-        [self.navigationController showViewController:newSubCategories
-                                               sender:nil];
+        [self.navigationController pushViewController:newSubCategories
+                                             animated:YES];
     } else {
         
     }
