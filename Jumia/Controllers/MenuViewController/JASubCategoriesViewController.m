@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.hidesBackButton = NO;
+    self.navigationItem.hidesBackButton = YES;
 }
 
 - (void)didReceiveMemoryWarning

@@ -9,6 +9,7 @@
 #import "JAMenuViewController.h"
 #import "JASubCategoriesViewController.h"
 #import "RICategory.h"
+#import "JAMenuNavigationBar.h"
 
 @interface JAMenuViewController ()
 <
@@ -19,6 +20,8 @@
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray *sourceArray;
 @property (strong, nonatomic) NSArray *categories;
+@property (strong, nonatomic) UIView *titleView;
+@property (strong, nonatomic) UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewMenu;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewCart;
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelTitle;
@@ -38,8 +41,9 @@
     
     [self initSourceArray];
     
-    NSArray *leftBarButtons = [[NSArray alloc] initWithObjects:[self createSearchBarHolder], nil];
-    self.navigationItem.leftBarButtonItems = leftBarButtons;
+    [self.navigationController setValue:[[JAMenuNavigationBar alloc] init] forKeyPath:@"navigationBar"];
+    
+    //[self customizeTitleView];
 
     self.cartLabelTitle.text = @"Shopping Cart";
     self.cartLabelTotalCost.text = @"RM 893.00";
@@ -58,6 +62,8 @@
                           otherButtonTitles:@"OK", nil] show];
         
     }];
+    
+    self.navigationItem.shouldGroupAccessibilityChildren = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -123,9 +129,9 @@
 
 #pragma mark - Auxiliar methods
 
-- (UIBarButtonItem *)createSearchBarHolder
+- (void)customizeTitleView
 {
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-5, 0, (self.view.frame.size.width * 0.74), 44)];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 220, 44)];
     self.searchBar.barTintColor = [UIColor whiteColor];
     self.searchBar.placeholder = @"Search";
     
@@ -135,12 +141,59 @@
     self.searchBar.layer.borderWidth = 1;
     self.searchBar.layer.borderColor = [[UIColor whiteColor] CGColor];
     
-    UIView *searchBarContainer = [[UIView alloc] initWithFrame:self.searchBar.frame];
-    searchBarContainer.autoresizingMask =  UIViewAutoresizingFlexibleWidth;
-    [searchBarContainer addSubview:self.searchBar];
-    self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
-    UIBarButtonItem *searchBarHolder = [[UIBarButtonItem alloc] initWithCustomView:searchBarContainer];
-    return searchBarHolder;
+    self.titleView = [[UIView alloc] initWithFrame:self.searchBar.frame];
+    [self.titleView addSubview:self.searchBar];
+    
+    self.backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.backButton.frame = CGRectMake(0, 12, 12, 20);
+    [self.backButton setImage:[UIImage imageNamed:@"btn_back"]
+                     forState:UIControlStateNormal];
+    
+    [self.backButton setImage:[UIImage imageNamed:@"btn_back_pressed"]
+                     forState:UIControlStateSelected];
+    
+    [self.backButton addTarget:self
+                        action:@selector(backButtonPressed)
+              forControlEvents:UIControlEventTouchUpInside];
+    
+    self.backButton.alpha = 0.0f;
+    
+    [self.titleView addSubview:self.backButton];
+    
+    self.navigationItem.titleView = self.titleView;
+}
+
+#pragma mark - Back functions
+
+- (void)addBackToNavBar
+{
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.searchBar.frame = CGRectMake(30, 0, 200, 44);
+                     } completion:^(BOOL finished) {
+                         self.backButton.alpha = 1.0f;
+                     }];
+}
+
+- (void)removeBackFromNavBar
+{
+    self.backButton.alpha = 0.0f;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.searchBar.frame = CGRectMake(0, 0, 220, 44);
+                     } completion:^(BOOL finished) {
+
+                     }];
+}
+
+- (void)backButtonPressed
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    if (self.navigationController.viewControllers.count == 1) {
+        [self removeBackFromNavBar];
+    }
 }
 
 #pragma mark - Init souce array
