@@ -1,21 +1,21 @@
 //
-//  JAHomeViewController.m
+//  JASplashViewController.m
 //  Jumia
 //
-//  Created by Miguel Chaves on 28/Jul/14.
+//  Created by Telmo Pinto on 29/07/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
-#import "JAHomeViewController.h"
-#import "JATeaserCategoryScrollView.h"
+#import "JASplashViewController.h"
+#import "JARootViewController.h"
+#import "RIApi.h"
+#import "JAAppDelegate.h"
 
-@interface JAHomeViewController ()
-
-@property (weak, nonatomic) IBOutlet JATeaserCategoryScrollView *teaserCategoryScrollView;
+@interface JASplashViewController ()
 
 @end
 
-@implementation JAHomeViewController
+@implementation JASplashViewController
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,10 +29,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    NSArray* array = [NSArray arrayWithObjects:@"home", @"computing", @"other", @"maracana", @"electronics", @"herp the derp", @"rio dei djanerou", nil];
-    
-    [self.teaserCategoryScrollView setCategories:array];
+
+    [RIApi startApiWithSuccessBlock:^(id api) {
+        
+        UIViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
+        
+        [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+        
+    } andFailureBlock:^(NSArray *errorMessage) {
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning
