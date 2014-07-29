@@ -37,6 +37,8 @@
 {
     [super viewDidLoad];
     
+    self.title = @"";
+    
     [self initSourceArray];
     
     self.customNavBar = [[JAMenuNavigationBar alloc] init];

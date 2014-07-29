@@ -38,6 +38,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bvx-Sl-Bkt">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="480" placeholder="YES" id="Cey-0Q-2m5"/>
+                                    <constraint firstAttribute="height" constant="480" placeholder="YES" id="rQ6-TJ-3FU"/>
+                                </constraints>
                                 <color key="separatorColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="sectionHeader" textLabel="hex-tJ-qeQ" rowHeight="30" style="IBUITableViewCellStyleDefault" id="Wny-sw-VPf">
@@ -80,10 +84,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="bvx-Sl-Bkt" firstAttribute="leading" secondItem="0V6-zY-rSO" secondAttribute="leading" id="0hN-ri-iia"/>
-                            <constraint firstItem="34t-u1-28L" firstAttribute="top" secondItem="bvx-Sl-Bkt" secondAttribute="bottom" id="fCA-5P-3iG"/>
-                            <constraint firstItem="bvx-Sl-Bkt" firstAttribute="top" secondItem="0V6-zY-rSO" secondAttribute="top" id="l24-RH-saS"/>
-                            <constraint firstAttribute="trailing" secondItem="bvx-Sl-Bkt" secondAttribute="trailing" id="lDF-J7-Rpr"/>
+                            <constraint firstItem="bvx-Sl-Bkt" firstAttribute="top" secondItem="0V6-zY-rSO" secondAttribute="top" id="BK4-B6-4IT"/>
+                            <constraint firstAttribute="trailing" secondItem="bvx-Sl-Bkt" secondAttribute="trailing" id="TSb-p8-R9w"/>
+                            <constraint firstItem="bvx-Sl-Bkt" firstAttribute="leading" secondItem="0V6-zY-rSO" secondAttribute="leading" id="bfp-rY-OaC"/>
+                            <constraint firstItem="34t-u1-28L" firstAttribute="top" secondItem="bvx-Sl-Bkt" secondAttribute="bottom" id="sBc-zu-7R5"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>

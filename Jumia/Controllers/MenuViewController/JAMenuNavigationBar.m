@@ -44,7 +44,7 @@
                          forState:UIControlStateNormal];
         
         [self.backButton setImage:[UIImage imageNamed:@"btn_back_pressed"]
-                         forState:UIControlStateSelected];
+                         forState:UIControlStateHighlighted];
         
         [self.backButton addTarget:self
                             action:@selector(backButtonPressed)

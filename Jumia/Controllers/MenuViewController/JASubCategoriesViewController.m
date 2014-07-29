@@ -52,6 +52,10 @@
     
     cell.textLabel.text = category.name;
     
+    if (category.children.count > 0) {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
     return cell;
 }
 
