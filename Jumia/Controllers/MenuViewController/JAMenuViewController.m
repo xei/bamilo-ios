@@ -71,10 +71,7 @@
 {
     if ([segue.identifier isEqualToString:@"showSubCategories"]) {
         [segue.destinationViewController setSourceCategoriesArray:sender];
-        [segue.destinationViewController setSubCategoriesCartTitle:self.cartLabelTitle.text];
-        [segue.destinationViewController setSubCategoriesCartPrice:self.cartLabelTotalCost.text];
-        [segue.destinationViewController setSubCategoriesCartDetails:self.cartLabelDetails.text];
-        [segue.destinationViewController setSubCategoriesCarCount:self.cartItensNumber.text];
+        [segue.destinationViewController setSubCategoriesTitle:@"Categories"];
     }
 }
 

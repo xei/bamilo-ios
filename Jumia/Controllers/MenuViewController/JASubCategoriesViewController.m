@@ -16,10 +16,6 @@
 >
 
 @property (weak, nonatomic) IBOutlet UITableView *tableViewCategories;
-@property (weak, nonatomic) IBOutlet UILabel *cartTitle;
-@property (weak, nonatomic) IBOutlet UILabel *cartCost;
-@property (weak, nonatomic) IBOutlet UILabel *cartDetails;
-@property (weak, nonatomic) IBOutlet UILabel *cartCount;
 
 @end
 
@@ -32,11 +28,6 @@
     [super viewDidLoad];
     
     self.navigationItem.hidesBackButton = NO;
-    
-    self.cartTitle.text = self.subCategoriesCartTitle;
-    self.cartCost.text = self.subCategoriesCartPrice;
-    self.cartDetails.text = self.subCategoriesCartDetails;
-    self.cartCount.text = self.subCategoriesCarCount;
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,10 +67,7 @@
         
         JASubCategoriesViewController *newSubCategories = [story instantiateViewControllerWithIdentifier:@"subCategoriesViewController"];
         newSubCategories.sourceCategoriesArray = category.children.array;
-        newSubCategories.subCategoriesCartTitle = self.cartTitle.text;
-        newSubCategories.subCategoriesCartPrice = self.cartCost.text;
-        newSubCategories.subCategoriesCartDetails = self.cartDetails.text;
-        newSubCategories.subCategoriesCarCount = self.cartCount.text;
+        newSubCategories.subCategoriesTitle = category.name;
         
         [self.navigationController showViewController:newSubCategories
                                                sender:nil];
@@ -88,6 +76,16 @@
     }
     
 #warning implement when it's the tail subcategory
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return self.subCategoriesTitle;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 @end

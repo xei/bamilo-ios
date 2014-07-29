@@ -11,9 +11,6 @@
 @interface JASubCategoriesViewController : UIViewController
 
 @property (strong, nonatomic) NSArray *sourceCategoriesArray;
-@property (strong, nonatomic) NSString *subCategoriesCartTitle;
-@property (strong, nonatomic) NSString *subCategoriesCartPrice;
-@property (strong, nonatomic) NSString *subCategoriesCartDetails;
-@property (strong, nonatomic) NSString *subCategoriesCarCount;
+@property (strong, nonatomic) NSString *subCategoriesTitle;
 
 @end
