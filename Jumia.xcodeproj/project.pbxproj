@@ -120,6 +120,7 @@
 		CE21CB07198266FA00F7DC66 /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB06198266FA00F7DC66 /* RIAddress.m */; };
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
 		CE69B59519868CFE005CC699 /* JATeaserCategoryScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */; };
+		CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B981987FF490078DFC9 /* JASplashViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -337,6 +338,8 @@
 		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		CE69B59319868CFE005CC699 /* JATeaserCategoryScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATeaserCategoryScrollView.h; sourceTree = "<group>"; };
 		CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATeaserCategoryScrollView.m; sourceTree = "<group>"; };
+		CEE91B971987FF490078DFC9 /* JASplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASplashViewController.h; sourceTree = "<group>"; };
+		CEE91B981987FF490078DFC9 /* JASplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASplashViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -927,6 +930,7 @@
 		B5A302FF1981218E00F71726 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CEE91B961987FF490078DFC9 /* SplashViewController */,
 				4AE242E1198656F500E37C90 /* HomeViewController */,
 				4AE242E2198656F500E37C90 /* MenuViewController */,
 				B5A303001981218E00F71726 /* BaseViewController */,
@@ -952,6 +956,15 @@
 				CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */,
 			);
 			path = Teasers;
+			sourceTree = "<group>";
+		};
+		CEE91B961987FF490078DFC9 /* SplashViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CEE91B971987FF490078DFC9 /* JASplashViewController.h */,
+				CEE91B981987FF490078DFC9 /* JASplashViewController.m */,
+			);
+			path = SplashViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1121,6 +1134,7 @@
 				B5A302C019811E9200F71726 /* RICategory.m in Sources */,
 				B5A302CA19811E9200F71726 /* RISearchSuggestion.m in Sources */,
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
+				CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */,
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
 				B5A302D319811E9200F71726 /* RIVariation.m in Sources */,
 				B5A30303198121A400F71726 /* JABaseViewController.m in Sources */,
