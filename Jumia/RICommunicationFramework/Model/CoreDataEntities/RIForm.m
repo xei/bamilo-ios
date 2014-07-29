@@ -39,9 +39,9 @@
                                                                    
                                                                    NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                    
-                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary)) {
-                                                                       
-                                                                       RIForm* newForm = [RIForm parseForm:metadata];
+                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary) && VALID_NOTEMPTY([metadata objectForKey:@"data"], NSArray)) {
+                                                                       NSArray* data = [metadata objectForKey:@"data"];
+                                                                       RIForm* newForm = [RIForm parseForm:[data firstObject]];
                                                                        
                                                                        [RIForm saveForm:newForm];
                                                                        newForm.formIndex = formIndex;
@@ -78,13 +78,13 @@
 
 #pragma mark - Facebook Login
 + (NSString*)sendForm:(RIForm*)form
-       withParameters:(NSDictionary *)parameters
          successBlock:(void (^)(NSDictionary *jsonObject))successBlock
       andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
 {
+    BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
-                                                            parameters:parameters
-                                                        httpMethodPost:YES
+                                                            parameters:[RIForm getParametersForForm:form]
+                                                        httpMethodPost:isPostRequest
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
@@ -111,39 +111,33 @@
                                                           }];
 }
 
-+ (RIForm *)parseForm:(NSDictionary *)formJSON;
++ (RIForm *)parseForm:(NSDictionary *)formDict;
 {
     RIForm* newForm = (RIForm*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIForm class])];
     
-    NSArray* data = [formJSON objectForKey:@"data"];
-    
-    if (VALID_NOTEMPTY(data, NSArray)) {
+    if (VALID_NOTEMPTY(formDict, NSDictionary)) {
         
-        NSDictionary* formDict = [data firstObject];
+        if ([formDict objectForKey:@"id"]) {
+            newForm.uid = [formDict objectForKey:@"id"];
+        }
+        if ([formDict objectForKey:@"action"]) {
+            newForm.action = [formDict objectForKey:@"action"];
+        }
+        if ([formDict objectForKey:@"method"]) {
+            newForm.method = [formDict objectForKey:@"method"];
+        }
         
-        if (VALID_NOTEMPTY(formDict, NSDictionary)) {
-            
-            if ([formDict objectForKey:@"id"]) {
-                newForm.uid = [formDict objectForKey:@"id"];
-            }
-            if ([formDict objectForKey:@"action"]) {
-                newForm.action = [formDict objectForKey:@"action"];
-            }
-            if ([formDict objectForKey:@"method"]) {
-                newForm.method = [formDict objectForKey:@"method"];
-            }
-            
-            NSArray* fields = [formDict objectForKey:@"fields"];
-            
-            if (VALID_NOTEMPTY(fields, NSArray)) {
-                for (NSDictionary* fieldJSON in fields) {
-                    RIField* newField = [RIField parseField:fieldJSON];
-                    newField.form = newForm;
-                    [newForm addFieldsObject:newField];
-                }
+        NSArray* fields = [formDict objectForKey:@"fields"];
+        
+        if (VALID_NOTEMPTY(fields, NSArray)) {
+            for (NSDictionary* fieldJSON in fields) {
+                RIField* newField = [RIField parseField:fieldJSON];
+                newField.form = newForm;
+                [newForm addFieldsObject:newField];
             }
         }
     }
+    
     return newForm;
 }
 
@@ -155,6 +149,16 @@
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:form];
     [[RIDataBaseWrapper sharedInstance] saveContext];
+}
+
++ (NSDictionary *) getParametersForForm:(RIForm *)form
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    for(RIField *field in form.fields)
+    {
+        [parameters setValue:field.value forKey:field.name];
+    }
+    return [parameters copy];
 }
 
 #pragma mark - Cancel requests

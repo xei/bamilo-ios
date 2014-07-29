@@ -114,6 +114,11 @@
 		B5A302FA19811F1E00F71726 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
 		B5A302FC19811F2200F71726 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302FB19811F2200F71726 /* UIKit.framework */; };
 		B5A30303198121A400F71726 /* JABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A30301198121A400F71726 /* JABaseViewController.m */; };
+		B5C682F81986C41D0094C92C /* RIShippingMethodPickupStationOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */; };
+		B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F01986C41D0094C92C /* RIShippingMethodFormField.m */; };
+		B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */; };
+		B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F41986C41D0094C92C /* RIOrder.m */; };
+		B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F61986C41D0094C92C /* RICheckout.m */; };
 		B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759B19814EF000005B13 /* FacebookSDK.framework */; };
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
 		CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */; };
@@ -329,6 +334,16 @@
 		B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jumia-Prefix.pch"; sourceTree = "<group>"; };
 		B5A30301198121A400F71726 /* JABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABaseViewController.m; sourceTree = "<group>"; };
 		B5A30302198121A400F71726 /* JABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABaseViewController.h; sourceTree = "<group>"; };
+		B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIShippingMethodPickupStationOption.m; sourceTree = "<group>"; };
+		B5C682EF1986C41D0094C92C /* RIShippingMethodPickupStationOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIShippingMethodPickupStationOption.h; sourceTree = "<group>"; };
+		B5C682F01986C41D0094C92C /* RIShippingMethodFormField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIShippingMethodFormField.m; sourceTree = "<group>"; };
+		B5C682F11986C41D0094C92C /* RIShippingMethodFormField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIShippingMethodFormField.h; sourceTree = "<group>"; };
+		B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIShippingMethodForm.m; sourceTree = "<group>"; };
+		B5C682F31986C41D0094C92C /* RIShippingMethodForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIShippingMethodForm.h; sourceTree = "<group>"; };
+		B5C682F41986C41D0094C92C /* RIOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIOrder.m; sourceTree = "<group>"; };
+		B5C682F51986C41D0094C92C /* RIOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOrder.h; sourceTree = "<group>"; };
+		B5C682F61986C41D0094C92C /* RICheckout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICheckout.m; sourceTree = "<group>"; };
+		B5C682F71986C41D0094C92C /* RICheckout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICheckout.h; sourceTree = "<group>"; };
 		B5EF759B19814EF000005B13 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		CE21CB02198147EE00F7DC66 /* RIStaticBlockIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIStaticBlockIndex.h; sourceTree = "<group>"; };
@@ -818,22 +833,32 @@
 		B5A3029119811E9200F71726 /* OtherObjects */ = {
 			isa = PBXGroup;
 			children = (
+				CE21CB05198266FA00F7DC66 /* RIAddress.h */,
+				CE21CB06198266FA00F7DC66 /* RIAddress.m */,
 				B517FDF71982517300F65253 /* RICart.h */,
 				B517FDF81982517300F65253 /* RICart.m */,
 				B517FDFA198265AD00F65253 /* RICartItem.h */,
 				B517FDFB198265AD00F65253 /* RICartItem.m */,
+				B5C682F71986C41D0094C92C /* RICheckout.h */,
+				B5C682F61986C41D0094C92C /* RICheckout.m */,
 				B5A3029219811E9200F71726 /* RICountry.h */,
 				B5A3029319811E9200F71726 /* RICountry.m */,
 				B5A3029419811E9200F71726 /* RICustomer.h */,
 				B5A3029519811E9200F71726 /* RICustomer.m */,
+				B5C682F51986C41D0094C92C /* RIOrder.h */,
+				B5C682F41986C41D0094C92C /* RIOrder.m */,
 				B5A3029619811E9200F71726 /* RIError.h */,
 				B5A3029719811E9200F71726 /* RIError.m */,
 				B5A3029819811E9200F71726 /* RIProductReview.h */,
 				B5A3029919811E9200F71726 /* RIProductReview.m */,
 				B5A3029A19811E9200F71726 /* RIRatings.h */,
 				B5A3029B19811E9200F71726 /* RIRatings.m */,
-				CE21CB05198266FA00F7DC66 /* RIAddress.h */,
-				CE21CB06198266FA00F7DC66 /* RIAddress.m */,
+				B5C682F31986C41D0094C92C /* RIShippingMethodForm.h */,
+				B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */,
+				B5C682F11986C41D0094C92C /* RIShippingMethodFormField.h */,
+				B5C682F01986C41D0094C92C /* RIShippingMethodFormField.m */,
+				B5C682EF1986C41D0094C92C /* RIShippingMethodPickupStationOption.h */,
+				B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */,
 			);
 			path = OtherObjects;
 			sourceTree = "<group>";
@@ -1101,10 +1126,12 @@
 				B5A302C919811E9200F71726 /* RIProductSimple.m in Sources */,
 				B5A302D719811E9200F71726 /* RIError.m in Sources */,
 				CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */,
+				B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */,
 				B5A3025B19811E8A00F71726 /* SDWebImageManager.m in Sources */,
 				B5A302C319811E9200F71726 /* RIForm.m in Sources */,
 				B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */,
 				B5A302C519811E9200F71726 /* RIImage.m in Sources */,
+				B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */,
 				CE21CB07198266FA00F7DC66 /* RIAddress.m in Sources */,
 				B5A302DB19811E9200F71726 /* RIOperation.m in Sources */,
 				B5A302D519811E9200F71726 /* RICountry.m in Sources */,
@@ -1118,6 +1145,7 @@
 				B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */,
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
 				B5A302D119811E9200F71726 /* RITeaserText.m in Sources */,
+				B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */,
 				4AE242E51986570500E37C90 /* JAHomeViewController.m in Sources */,
 				B5A3025A19811E8A00F71726 /* SDWebImageDownloader.m in Sources */,
 				4AE242E81986570F00E37C90 /* JAMenuViewController.m in Sources */,
@@ -1157,10 +1185,12 @@
 				B5A302DF19811E9200F71726 /* RIOpenURLHandler.m in Sources */,
 				B517FDFC198265AD00F65253 /* RICartItem.m in Sources */,
 				B5A3025819811E8A00F71726 /* SDImageCache.m in Sources */,
+				B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */,
 				B5A302D219811E9200F71726 /* RIURLCache.m in Sources */,
 				B5A302D919811E9200F71726 /* RIRatings.m in Sources */,
 				B5A302DC19811E9200F71726 /* RIDataBaseWrapper.m in Sources */,
 				4AE242E01986569000E37C90 /* JARootViewController.m in Sources */,
+				B5C682F81986C41D0094C92C /* RIShippingMethodPickupStationOption.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
