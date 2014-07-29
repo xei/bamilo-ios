@@ -39,11 +39,10 @@
 {
     [super viewDidLoad];
     
-    [self initLoadingScreen];
-    [self showLoading];
-    
     self.title = @"";
     
+    [self initLoadingScreen];
+    [self showLoading];
     [self initSourceArray];
     
     self.customNavBar = [[JAMenuNavigationBar alloc] init];

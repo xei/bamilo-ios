@@ -22,12 +22,6 @@
     [super viewDidLoad];
     
     self.shouldResizeLeftPanel = YES;
-    
-    [RIApi startApiWithSuccessBlock:^(id api) {
-
-    } andFailureBlock:^(NSArray *errorMessage) {
-        
-    }];
 }
 
 - (void)didReceiveMemoryWarning
