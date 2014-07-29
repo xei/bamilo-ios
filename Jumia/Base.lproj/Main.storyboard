@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="aZa-Tj-Jxa">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <scenes>
@@ -39,35 +38,58 @@
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iCA-so-HdJ">
                                 <rect key="frame" x="0.0" y="64" width="480" height="72"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ico_cart" translatesAutoresizingMaskIntoConstraints="NO" id="8Is-K1-RJw">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="ico_cart" translatesAutoresizingMaskIntoConstraints="NO" id="8Is-K1-RJw">
                                         <rect key="frame" x="15" y="26" width="25" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="Ce8-es-54z"/>
+                                            <constraint firstAttribute="width" constant="25" id="f1G-F6-QH5"/>
+                                        </constraints>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Vj-Bo-0Fr">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Vj-Bo-0Fr">
                                         <rect key="frame" x="65" y="9" width="407" height="21"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxT-WG-xY9">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxT-WG-xY9">
                                         <rect key="frame" x="65" y="31" width="407" height="21"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIt-9E-oKV">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIt-9E-oKV">
                                         <rect key="frame" x="65" y="51" width="407" height="21"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOV-HN-pXa">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOV-HN-pXa">
                                         <rect key="frame" x="18" y="20" width="25" height="15"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="CUT-Gs-Vdq"/>
+                                            <constraint firstAttribute="width" constant="25" id="W7f-k5-ea9"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                         <color key="textColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="bxT-WG-xY9" secondAttribute="trailing" constant="8" id="5Bp-xG-IFu"/>
+                                    <constraint firstItem="8Is-K1-RJw" firstAttribute="leading" secondItem="iCA-so-HdJ" secondAttribute="leading" constant="15" id="AXN-EV-rq7"/>
+                                    <constraint firstAttribute="bottom" secondItem="8Is-K1-RJw" secondAttribute="bottom" constant="26" id="ChW-aO-l9N"/>
+                                    <constraint firstItem="kOV-HN-pXa" firstAttribute="leading" secondItem="iCA-so-HdJ" secondAttribute="leading" constant="18" id="GHp-EM-fgY"/>
+                                    <constraint firstItem="kOV-HN-pXa" firstAttribute="top" secondItem="iCA-so-HdJ" secondAttribute="top" constant="20" id="Jap-BE-HqC"/>
+                                    <constraint firstAttribute="trailing" secondItem="4Vj-Bo-0Fr" secondAttribute="trailing" constant="8" id="O9q-sW-DiQ"/>
+                                    <constraint firstItem="bxT-WG-xY9" firstAttribute="leading" secondItem="kOV-HN-pXa" secondAttribute="trailing" constant="22" id="RZy-Nh-rKP"/>
+                                    <constraint firstItem="4Vj-Bo-0Fr" firstAttribute="leading" secondItem="kOV-HN-pXa" secondAttribute="trailing" constant="22" id="SWC-Bc-Kyg"/>
+                                    <constraint firstItem="4Vj-Bo-0Fr" firstAttribute="top" secondItem="iCA-so-HdJ" secondAttribute="top" constant="9" id="UOJ-CS-q81"/>
+                                    <constraint firstItem="hIt-9E-oKV" firstAttribute="top" secondItem="4Vj-Bo-0Fr" secondAttribute="bottom" constant="21" id="jCB-hE-kKX"/>
+                                    <constraint firstAttribute="trailing" secondItem="hIt-9E-oKV" secondAttribute="trailing" constant="8" id="k3f-vD-IoJ"/>
+                                    <constraint firstItem="hIt-9E-oKV" firstAttribute="leading" secondItem="iCA-so-HdJ" secondAttribute="leading" constant="65" id="xo7-4e-YTu"/>
+                                    <constraint firstItem="bxT-WG-xY9" firstAttribute="top" secondItem="4Vj-Bo-0Fr" secondAttribute="bottom" constant="1" id="yiK-de-1eU"/>
+                                </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="103" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JPe-83-lIS">
                                 <rect key="frame" x="0.0" y="136" width="480" height="344"/>
