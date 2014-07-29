@@ -199,12 +199,45 @@
                                                           }];
 }
 
-+ (NSString*)setPaymentMethodWithParameters:(NSDictionary*)parameters
-                               successBlock:(void (^)(RICheckout *checkout))successBlock
++ (NSString*)setPaymentMethod:(RIPaymentMethodForm*)form
+                 successBlock:(void (^)(RICheckout *checkout))successBlock
+              andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+{
+    BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
+                                                            parameters:[RIPaymentMethodForm getParametersForForm:form]
+                                                        httpMethodPost:isPostRequest
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                              {
+                                                                  successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"]]);
+                                                              } else
+                                                              {
+                                                                  failureBlock(nil);
+                                                              }
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(nil);
+                                                              }
+                                                          }];
+}
+
++ (NSString*)finishCheckoutWithSuccessBlock:(void (^)(RICheckout *checkout))successBlock
                             andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_SET_PAYMENT_METHOD]]
-                                                            parameters:parameters
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_FINISH_CHECKOUT]]
+                                                            parameters:nil
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
@@ -230,6 +263,7 @@
                                                               }
                                                           }];
 }
+
 #pragma mark - Cancel request
 
 + (void)cancelRequest:(NSString *)operationID
@@ -268,14 +302,34 @@
         checkout.shippingMethodForm = [RIShippingMethodForm parseForm:[checkoutObject objectForKey:@"shippingMethodForm"]];
     }
     
-    //    if(VALID_NOTEMPTY([checkoutObject objectForKey:@"paymentMethodForm"], NSDictionary))
-    //    {
-    //        checkout.paymentMethodForm = [RIPaymentMethodForm parseForm:[checkoutObject objectForKey:@"paymentMethodForm"]];
-    //    }
+    if(VALID_NOTEMPTY([checkoutObject objectForKey:@"paymentMethodForm"], NSDictionary))
+    {
+        checkout.paymentMethodForm = [RIPaymentMethodForm parseForm:[checkoutObject objectForKey:@"paymentMethodForm"]];
+    }
     
     if(VALID_NOTEMPTY([checkoutObject objectForKey:@"next_step"], NSString))
     {
         checkout.nextStep = [checkoutObject objectForKey:@"next_step"];
+    }
+    
+    if(VALID_NOTEMPTY([checkoutObject objectForKey:@"order_nr"], NSString))
+    {
+        checkout.orderNr = [checkoutObject objectForKey:@"order_nr"];
+    }
+    
+    if(VALID_NOTEMPTY([checkoutObject objectForKey:@"customer_first_name"], NSString))
+    {
+        checkout.customerFirstMame = [checkoutObject objectForKey:@"customer_first_name"];
+    }
+    
+    if(VALID_NOTEMPTY([checkoutObject objectForKey:@"customer_last_name"], NSString))
+    {
+        checkout.customerLastName = [checkoutObject objectForKey:@"customer_last_name"];
+    }
+    
+    if([checkoutObject objectForKey:@"payment"])
+    {
+        checkout.paymentInformation = [RIPaymentInformation parsePaymentInfo:[checkoutObject objectForKey:@"payment"]];
     }
     
     return checkout;

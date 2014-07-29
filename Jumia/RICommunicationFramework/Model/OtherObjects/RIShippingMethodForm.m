@@ -7,7 +7,6 @@
 //
 
 #import "RIShippingMethodForm.h"
-#import "RIShippingMethodFormField.h"
 
 @implementation RIShippingMethodForm
 

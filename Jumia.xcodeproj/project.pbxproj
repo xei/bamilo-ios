@@ -116,6 +116,10 @@
 		B5A302F819811F1A00F71726 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F719811F1A00F71726 /* Foundation.framework */; };
 		B5A302FA19811F1E00F71726 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
 		B5A30303198121A400F71726 /* JABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A30301198121A400F71726 /* JABaseViewController.m */; };
+		B5BB0A9919878AD400CA2D99 /* RIPaymentMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BB0A9819878AD400CA2D99 /* RIPaymentMethodForm.m */; };
+		B5BB0A9C19878BD000CA2D99 /* RIPaymentMethodFormField.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BB0A9B19878BD000CA2D99 /* RIPaymentMethodFormField.m */; };
+		B5BB0A9F1987B36600CA2D99 /* RIPaymentMethodFormOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BB0A9E1987B36600CA2D99 /* RIPaymentMethodFormOption.m */; };
+		B5BB0AA21987F1AF00CA2D99 /* RIPaymentInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BB0AA11987F1AF00CA2D99 /* RIPaymentInformation.m */; };
 		B5C682F81986C41D0094C92C /* RIShippingMethodPickupStationOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */; };
 		B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F01986C41D0094C92C /* RIShippingMethodFormField.m */; };
 		B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */; };
@@ -340,6 +344,14 @@
 		B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jumia-Prefix.pch"; sourceTree = "<group>"; };
 		B5A30301198121A400F71726 /* JABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABaseViewController.m; sourceTree = "<group>"; };
 		B5A30302198121A400F71726 /* JABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABaseViewController.h; sourceTree = "<group>"; };
+		B5BB0A9719878AD400CA2D99 /* RIPaymentMethodForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPaymentMethodForm.h; sourceTree = "<group>"; };
+		B5BB0A9819878AD400CA2D99 /* RIPaymentMethodForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIPaymentMethodForm.m; sourceTree = "<group>"; };
+		B5BB0A9A19878BD000CA2D99 /* RIPaymentMethodFormField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPaymentMethodFormField.h; sourceTree = "<group>"; };
+		B5BB0A9B19878BD000CA2D99 /* RIPaymentMethodFormField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIPaymentMethodFormField.m; sourceTree = "<group>"; };
+		B5BB0A9D1987B36600CA2D99 /* RIPaymentMethodFormOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPaymentMethodFormOption.h; sourceTree = "<group>"; };
+		B5BB0A9E1987B36600CA2D99 /* RIPaymentMethodFormOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIPaymentMethodFormOption.m; sourceTree = "<group>"; };
+		B5BB0AA01987F1AF00CA2D99 /* RIPaymentInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPaymentInformation.h; sourceTree = "<group>"; };
+		B5BB0AA11987F1AF00CA2D99 /* RIPaymentInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIPaymentInformation.m; sourceTree = "<group>"; };
 		B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIShippingMethodPickupStationOption.m; sourceTree = "<group>"; };
 		B5C682EF1986C41D0094C92C /* RIShippingMethodPickupStationOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIShippingMethodPickupStationOption.h; sourceTree = "<group>"; };
 		B5C682F01986C41D0094C92C /* RIShippingMethodFormField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIShippingMethodFormField.m; sourceTree = "<group>"; };
@@ -863,6 +875,14 @@
 				B5A3029919811E9200F71726 /* RIProductReview.m */,
 				B5A3029A19811E9200F71726 /* RIRatings.h */,
 				B5A3029B19811E9200F71726 /* RIRatings.m */,
+				B5BB0A9719878AD400CA2D99 /* RIPaymentMethodForm.h */,
+				B5BB0A9819878AD400CA2D99 /* RIPaymentMethodForm.m */,
+				B5BB0A9A19878BD000CA2D99 /* RIPaymentMethodFormField.h */,
+				B5BB0A9B19878BD000CA2D99 /* RIPaymentMethodFormField.m */,
+				B5BB0A9D1987B36600CA2D99 /* RIPaymentMethodFormOption.h */,
+				B5BB0A9E1987B36600CA2D99 /* RIPaymentMethodFormOption.m */,
+				B5BB0AA01987F1AF00CA2D99 /* RIPaymentInformation.h */,
+				B5BB0AA11987F1AF00CA2D99 /* RIPaymentInformation.m */,
 				B5C682F31986C41D0094C92C /* RIShippingMethodForm.h */,
 				B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */,
 				B5C682F11986C41D0094C92C /* RIShippingMethodFormField.h */,
@@ -1162,6 +1182,9 @@
 				B5A3025A19811E8A00F71726 /* SDWebImageDownloader.m in Sources */,
 				4AE242E81986570F00E37C90 /* JAMenuViewController.m in Sources */,
 				B5A3025719811E8A00F71726 /* MKAnnotationView+WebCache.m in Sources */,
+				B5BB0A9C19878BD000CA2D99 /* RIPaymentMethodFormField.m in Sources */,
+				B5BB0AA21987F1AF00CA2D99 /* RIPaymentInformation.m in Sources */,
+				B5BB0A9F1987B36600CA2D99 /* RIPaymentMethodFormOption.m in Sources */,
 				B5A302D819811E9200F71726 /* RIProductReview.m in Sources */,
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
 				CE69B59519868CFE005CC699 /* JATeaserCategoryScrollView.m in Sources */,
@@ -1187,6 +1210,7 @@
 				B5A301AE19811D0700F71726 /* main.m in Sources */,
 				B5A3025D19811E8A00F71726 /* UIButton+WebCache.m in Sources */,
 				B5A3025C19811E8A00F71726 /* SDWebImagePrefetcher.m in Sources */,
+				B5BB0A9919878AD400CA2D99 /* RIPaymentMethodForm.m in Sources */,
 				B5A302E319811E9200F71726 /* RIAdXTracker.m in Sources */,
 				4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */,
 				B5A3025919811E8A00F71726 /* SDWebImageDecoder.m in Sources */,
