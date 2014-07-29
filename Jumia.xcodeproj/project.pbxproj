@@ -119,6 +119,7 @@
 		CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */; };
 		CE21CB07198266FA00F7DC66 /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB06198266FA00F7DC66 /* RIAddress.m */; };
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
+		CE69B59519868CFE005CC699 /* JATeaserCategoryScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -334,6 +335,8 @@
 		CE21CB05198266FA00F7DC66 /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
 		CE21CB06198266FA00F7DC66 /* RIAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAddress.m; sourceTree = "<group>"; };
 		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		CE69B59319868CFE005CC699 /* JATeaserCategoryScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATeaserCategoryScrollView.h; sourceTree = "<group>"; };
+		CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATeaserCategoryScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +386,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CE69B58D19868B7A005CC699 /* Teasers */,
 				4AE242DC198655D900E37C90 /* Storyboard */,
 			);
 			path = View;
@@ -941,6 +945,15 @@
 			path = BaseViewController;
 			sourceTree = "<group>";
 		};
+		CE69B58D19868B7A005CC699 /* Teasers */ = {
+			isa = PBXGroup;
+			children = (
+				CE69B59319868CFE005CC699 /* JATeaserCategoryScrollView.h */,
+				CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */,
+			);
+			path = Teasers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1098,6 +1111,7 @@
 				B5A3025719811E8A00F71726 /* MKAnnotationView+WebCache.m in Sources */,
 				B5A302D819811E9200F71726 /* RIProductReview.m in Sources */,
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
+				CE69B59519868CFE005CC699 /* JATeaserCategoryScrollView.m in Sources */,
 				B5A302D419811E9200F71726 /* Model.xcdatamodeld in Sources */,
 				B5A302DA19811E9200F71726 /* RICommunicationWrapper.m in Sources */,
 				B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */,
