@@ -7,6 +7,7 @@
 //
 
 #import "JARootViewController.h"
+#import "JAMenuViewController.h"
 #import "RIApi.h"
 
 @interface JARootViewController ()
@@ -22,6 +23,11 @@
     [super viewDidLoad];
     
     self.shouldResizeLeftPanel = YES;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectedItemInMenu)
+                                                 name:kMenuDidSelectOptionNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -33,6 +39,13 @@
 {
     [self setLeftPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
     [self setCenterPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"]];
+}
+
+#pragma mark - Menu selected item in menu
+
+- (void)didSelectedItemInMenu
+{
+    [self showCenterPanelAnimated:YES];
 }
 
 @end

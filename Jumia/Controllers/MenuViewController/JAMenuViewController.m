@@ -150,12 +150,20 @@
     
     [self.customNavBar resignFirstResponder];
     
-    if (1 == indexPath.row) {
+    if (self.resultsTableView == tableView) {
+#warning implement the missing code
+    } else {
         
-        [self.customNavBar addBackButtonToNavBar];
-        
-        [self performSegueWithIdentifier:@"showSubCategories"
-                                  sender:self.categories];
+        if (1 == indexPath.row) {
+            
+            [self.customNavBar addBackButtonToNavBar];
+            
+            [self performSegueWithIdentifier:@"showSubCategories"
+                                      sender:self.categories];
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                object:nil];
+        }
     }
 }
 

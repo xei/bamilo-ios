@@ -9,3 +9,4 @@
 // Notifications
 #define kCancelLoadingNotificationName @"CANCEL_LOADING_NOTIFICATION"
 #define kCancelButtonPressedInMenuSearchBar @"PRESSED_BACK_BUTTON_NOTIFICATION"
+#define kMenuDidSelectOptionNotification @"NOTIFICATION_SELECTED_ITEM_MENU"
