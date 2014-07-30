@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JANavigationBar.h"
 
 @interface JAHomeViewController : JABaseViewController
 
-- (void)pushViewControllerWithName:(NSString *)name
-                    titleForNavBar:(NSString *)title;
+- (void)setNavigationBar:(JANavigationBar *)navBar;
 
 @end

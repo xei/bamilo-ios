@@ -19,5 +19,6 @@
 @property (weak, nonatomic) id<JANavigationBarDelegate>customDelegate;
 
 - (void)changeNavigationBarTitle:(NSString *)newTitle;
+- (void)changedToHomeViewController;
 
 @end

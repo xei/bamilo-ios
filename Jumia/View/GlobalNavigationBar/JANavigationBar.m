@@ -46,4 +46,10 @@
     self.navigationBarView.titleLabel.hidden = NO;
 }
 
+- (void)changedToHomeViewController
+{
+    self.navigationBarView.logoImageView.hidden = NO;
+    self.navigationBarView.titleLabel.hidden = YES;
+}
+
 @end

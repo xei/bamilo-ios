@@ -8,15 +8,10 @@
 
 #import "JAHomeViewController.h"
 #import "JATeaserCategoryScrollView.h"
-#import "JANavigationBar.h"
 
 @interface JAHomeViewController ()
-<
-    JANavigationBarDelegate
->
 
 @property (weak, nonatomic) IBOutlet JATeaserCategoryScrollView *teaserCategoryScrollView;
-@property (strong, nonatomic) JANavigationBar *navBar;
 
 @end
 
@@ -27,13 +22,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Add the custom navigation bar
-    self.navBar = [[JANavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    self.navBar.customDelegate = self;
-    [self.navigationController setValue:self.navBar
-                             forKeyPath:@"navigationBar"];
-    
+
     // Do any additional setup after loading the view.
     NSArray* array = [NSArray arrayWithObjects:@"home", @"computing", @"other", @"maracana", @"electronics", @"herp the derp", @"rio dei djanerou", nil];
     
@@ -45,31 +34,17 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Custom navigation bar delegates
-
-- (void)customNavigationBarOpenMenu
+- (void)setNavigationBar:(JANavigationBar *)navBar
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
-                                                        object:nil];
+    [self.navigationController setValue:navBar
+                             forKeyPath:@"navigationBar"];
 }
 
-#pragma mark - Public methods
-
-- (void)pushViewControllerWithName:(NSString *)name
-                    titleForNavBar:(NSString *)title
-{
-    [self.navBar changeNavigationBarTitle:title];
-}
-
-/*
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
 }
-*/
 
 @end
