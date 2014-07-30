@@ -11,6 +11,7 @@
 @protocol JANavigationBarDelegate <NSObject>
 
 - (void)customNavigationBarOpenMenu;
+- (void)customNavigationBarOpenCart;
 
 @end
 
