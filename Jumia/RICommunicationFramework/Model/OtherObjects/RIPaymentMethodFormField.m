@@ -7,7 +7,6 @@
 //
 
 #import "RIPaymentMethodFormField.h"
-#import "RIPaymentMethodFormOption.h"
 
 @implementation RIPaymentMethodFormField
 
@@ -58,7 +57,7 @@
                 [optionsArray addObject:option];
             }
         }
-
+        
         newField.options = [optionsArray copy];
     }
     
