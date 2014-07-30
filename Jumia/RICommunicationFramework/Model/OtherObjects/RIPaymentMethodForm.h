@@ -32,4 +32,14 @@
  */
 + (NSDictionary *) getParametersForForm:(RIPaymentMethodForm *)form;
 
+/**
+ * Method that returns an array with the extra fields needed for an option
+ *
+ * @param the option that we want to know if has extra fields
+ * @param the form that we want to know the extra fields
+ * @return an array with the extra fields needed
+ */
++ (NSArray *) getExtraFieldsForOption:(NSString*)option
+                               inForm:(RIPaymentMethodForm*)form;
+
 @end
