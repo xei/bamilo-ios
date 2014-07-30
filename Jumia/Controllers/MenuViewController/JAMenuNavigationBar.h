@@ -11,6 +11,7 @@
 @interface JAMenuNavigationBar : UINavigationBar
 
 @property (strong, nonatomic) UISearchBar *searchBar;
+@property (strong, nonatomic) UIButton *backButton;
 
 - (void)addBackButtonToNavBar;
 - (void)removeBackButtonFromNavBar;
