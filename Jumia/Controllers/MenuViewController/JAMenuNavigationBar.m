@@ -11,7 +11,6 @@
 @interface JAMenuNavigationBar ()
 
 @property (strong, nonatomic) UIView *titleViewCustom;
-@property (strong, nonatomic) UIButton *backButton;
 
 @end
 
@@ -46,10 +45,6 @@
         
         [self.backButton setImage:[UIImage imageNamed:@"btn_back_pressed"]
                          forState:UIControlStateHighlighted];
-        
-        [self.backButton addTarget:self
-                            action:@selector(backButtonPressed)
-                  forControlEvents:UIControlEventTouchUpInside];
         
         self.backButton.alpha = 0.0f;
         
@@ -87,12 +82,6 @@
                                               self.searchBar.frame = CGRectMake(6, 0, 235, 44);
                                           }];
                      }];
-}
-
-- (void)backButtonPressed
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kCancelButtonPressedInMenuSearchBar
-                                                        object:nil];
 }
 
 #pragma mark - Set search bar delegate

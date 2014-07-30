@@ -52,6 +52,10 @@
     [self.navigationController setValue:self.customNavBar
                              forKeyPath:@"navigationBar"];
     
+    [self.customNavBar.backButton addTarget:self
+                                     action:@selector(didPressedBackButton)
+                           forControlEvents:UIControlEventTouchUpInside];
+    
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -162,7 +166,8 @@
                                       sender:self.categories];
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                                object:@{@"index": @(indexPath.row)}];
+                                                                object:@{@"index": @(indexPath.row),
+                                                                         @"name": [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"]}];
         }
     }
 }
@@ -177,11 +182,16 @@
         [self.customNavBar removeBackButtonFromNavBar];
         [self removeResultsTableViewFromView];
     } else {
+        self.customNavBar.backButton.userInteractionEnabled = NO;
+        
         [self.navigationController popViewControllerAnimated:YES];
         
         if (self.navigationController.viewControllers.count == 1) {
+            
             [self.customNavBar removeBackButtonFromNavBar];
         }
+        
+        self.customNavBar.backButton.userInteractionEnabled = YES;
     }
 }
 
