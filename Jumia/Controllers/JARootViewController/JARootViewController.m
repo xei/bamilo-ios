@@ -25,7 +25,7 @@
     self.shouldResizeLeftPanel = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectedItemInMenu)
+                                             selector:@selector(didSelectedItemInMenu:)
                                                  name:kMenuDidSelectOptionNotification
                                                object:nil];
 }
@@ -43,8 +43,10 @@
 
 #pragma mark - Menu selected item in menu
 
-- (void)didSelectedItemInMenu
+- (void)didSelectedItemInMenu:(NSNotification *)notification
 {
+    NSDictionary *selectedItem = [notification object];
+    
     [self showCenterPanelAnimated:YES];
 }
 

@@ -162,7 +162,7 @@
                                       sender:self.categories];
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                                object:nil];
+                                                                object:@{@"index": @(indexPath.row)}];
         }
     }
 }
