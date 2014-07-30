@@ -145,6 +145,7 @@
 		4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASubCategoriesViewController.m; sourceTree = "<group>"; };
 		4A1270F91987EFB0004142F5 /* JAMenuNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMenuNavigationBar.h; sourceTree = "<group>"; };
 		4A1270FA1987EFB0004142F5 /* JAMenuNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMenuNavigationBar.m; sourceTree = "<group>"; };
+		4A3921191988E27A00B70A9C /* JAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAConstants.h; sourceTree = "<group>"; };
 		4AE242D81986547C00E37C90 /* JASidePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASidePanelController.h; sourceTree = "<group>"; };
 		4AE242D91986547C00E37C90 /* JASidePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASidePanelController.m; sourceTree = "<group>"; };
 		4AE242DE1986569000E37C90 /* JARootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARootViewController.h; sourceTree = "<group>"; };
@@ -493,6 +494,7 @@
 				B5A301AC19811D0700F71726 /* Info.plist */,
 				B5A301AD19811D0700F71726 /* main.m */,
 				B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */,
+				4A3921191988E27A00B70A9C /* JAConstants.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
