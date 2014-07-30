@@ -8,6 +8,7 @@
 
 #import "JARootViewController.h"
 #import "JAMenuViewController.h"
+#import "JAHomeViewController.h"
 #import "RIApi.h"
 
 @interface JARootViewController ()
@@ -28,6 +29,11 @@
                                              selector:@selector(didSelectedItemInMenu:)
                                                  name:kMenuDidSelectOptionNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(openMainMenu)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,7 +53,16 @@
 {
     NSDictionary *selectedItem = [notification object];
     
+    JAHomeViewController *homeVc = [((UINavigationController *)self.centerPanel).viewControllers firstObject];
+    [homeVc pushViewControllerWithName:@"teste"
+                        titleForNavBar:[selectedItem objectForKey:@"name"]];
+    
     [self showCenterPanelAnimated:YES];
+}
+
+- (void)openMainMenu
+{
+    [self showLeftPanelAnimated:YES];
 }
 
 @end

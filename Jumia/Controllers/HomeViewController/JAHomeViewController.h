@@ -10,4 +10,7 @@
 
 @interface JAHomeViewController : JABaseViewController
 
+- (void)pushViewControllerWithName:(NSString *)name
+                    titleForNavBar:(NSString *)title;
+
 @end

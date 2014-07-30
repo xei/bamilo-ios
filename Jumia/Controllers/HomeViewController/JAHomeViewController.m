@@ -8,27 +8,32 @@
 
 #import "JAHomeViewController.h"
 #import "JATeaserCategoryScrollView.h"
+#import "JANavigationBar.h"
 
 @interface JAHomeViewController ()
+<
+    JANavigationBarDelegate
+>
 
 @property (weak, nonatomic) IBOutlet JATeaserCategoryScrollView *teaserCategoryScrollView;
+@property (strong, nonatomic) JANavigationBar *navBar;
 
 @end
 
 @implementation JAHomeViewController
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+#pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Add the custom navigation bar
+    self.navBar = [[JANavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    self.navBar.customDelegate = self;
+    [self.navigationController setValue:self.navBar
+                             forKeyPath:@"navigationBar"];
+    
     // Do any additional setup after loading the view.
     NSArray* array = [NSArray arrayWithObjects:@"home", @"computing", @"other", @"maracana", @"electronics", @"herp the derp", @"rio dei djanerou", nil];
     
@@ -38,7 +43,22 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Custom navigation bar delegates
+
+- (void)customNavigationBarOpenMenu
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
+                                                        object:nil];
+}
+
+#pragma mark - Public methods
+
+- (void)pushViewControllerWithName:(NSString *)name
+                    titleForNavBar:(NSString *)title
+{
+    [self.navBar changeNavigationBarTitle:title];
 }
 
 /*
