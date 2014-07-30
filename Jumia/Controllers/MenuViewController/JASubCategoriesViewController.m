@@ -78,10 +78,9 @@
         [self.navigationController pushViewController:newSubCategories
                                              animated:YES];
     } else {
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                            object:@{@"index": @(indexPath.row)}];
     }
-    
-#warning implement when it's the tail subcategory
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
