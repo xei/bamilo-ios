@@ -10,6 +10,7 @@
 #import "JASubCategoriesViewController.h"
 #import "RICategory.h"
 #import "JAMenuNavigationBar.h"
+#import "RISearchSuggestion.h"
 
 @interface JAMenuViewController ()
 <
@@ -21,12 +22,15 @@
 @property (strong, nonatomic) NSArray *sourceArray;
 @property (strong, nonatomic) NSArray *categories;
 @property (strong, nonatomic) JAMenuNavigationBar *customNavBar;
+@property (strong, nonatomic) NSMutableArray *resultsArray;
+@property (strong, nonatomic) UITableView *resultsTableView;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewMenu;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewCart;
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelTitle;
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelTotalCost;
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelDetails;
 @property (weak, nonatomic) IBOutlet UILabel *cartItensNumber;
+@property (weak, nonatomic) IBOutlet UIView *cartView;
 
 @end
 
@@ -41,15 +45,18 @@
     self.title = @"";
     
     [self showLoading];
+    
     [self initSourceArray];
     
     self.customNavBar = [[JAMenuNavigationBar alloc] init];
-    [self.navigationController setValue:self.customNavBar forKeyPath:@"navigationBar"];
+    [self.navigationController setValue:self.customNavBar
+                             forKeyPath:@"navigationBar"];
+    
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didPressedBackButton)
-                                                 name:@"PRESSED_BACK_BUTTON"
+                                                 name:kCancelButtonPressedInMenuSearchBar
                                                object:nil];
     
     self.cartLabelTitle.text = @"Shopping Cart";
@@ -96,7 +103,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.sourceArray.count;
+    if (self.resultsTableView == tableView) {
+        return self.resultsArray.count;
+    } else {
+        return self.sourceArray.count;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -108,15 +119,22 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
-    
-    cell.imageView.image = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"image"]];
-    cell.imageView.highlightedImage = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"selected"]];
-    
-    if (1 == indexPath.row) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if (self.resultsTableView == tableView) {
+        
+        RISearchSuggestion *sugestion = [self.resultsArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = sugestion.item;
+        
+    } else {
+        
+        cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
+        
+        cell.imageView.image = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"image"]];
+        cell.imageView.highlightedImage = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"selected"]];
+        
+        if (1 == indexPath.row) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
     }
-    
     return cell;
 }
 
@@ -145,10 +163,17 @@
 
 - (void)didPressedBackButton
 {
-    [self.navigationController popViewControllerAnimated:YES];
-    
-    if (self.navigationController.viewControllers.count == 1) {
+    if (self.resultsTableView != nil) {
+        [self.customNavBar.searchBar resignFirstResponder];
+        self.customNavBar.searchBar.text = @"";
         [self.customNavBar removeBackButtonFromNavBar];
+        [self removeResultsTableViewFromView];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        if (self.navigationController.viewControllers.count == 1) {
+            [self.customNavBar removeBackButtonFromNavBar];
+        }
     }
 }
 
@@ -156,41 +181,95 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    searchBar.showsCancelButton = YES;
+    [self.customNavBar addBackButtonToNavBar];
+    
+    [self addResultsTableViewToView];
     
     return YES;
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    NSLog(@"clicked in search button");
-
     [searchBar resignFirstResponder];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    NSLog(@"clicked in cancel");
-    
     [searchBar resignFirstResponder];
-    searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    
+    [self removeResultsTableViewFromView];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSLog(@"new text: %@", searchText);
+    [RISearchSuggestion getSuggestionsForQuery:searchText
+                                  successBlock:^(NSArray *suggestions) {
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          self.resultsArray = [suggestions mutableCopy];
+                                          
+                                          [self.resultsTableView reloadSections:[NSIndexSet indexSetWithIndex:0]
+                                                               withRowAnimation:UITableViewRowAnimationFade];
+                                      });
+                                  } andFailureBlock:^(NSArray *errorMessages) {
+
+                                  }];
 }
 
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+#pragma mark - Results table view methods
+
+- (void)addResultsTableViewToView
 {
-    NSLog(@"started writing");
+    if (self.resultsTableView == nil) {
+        
+        self.resultsArray = [NSMutableArray new];
+        
+        CGRect resultsTableFrame = CGRectMake(self.cartView.frame.origin.x,
+                                              self.cartView.frame.origin.y,
+                                              self.cartView.frame.size.width,
+                                              self.navigationController.view.frame.size.height);
+        
+        resultsTableFrame.origin.y += resultsTableFrame.size.height;
+        
+        self.resultsTableView = [[UITableView alloc] initWithFrame:resultsTableFrame
+                                                             style:UITableViewStyleGrouped];
+        
+        self.resultsTableView.backgroundColor = [UIColor colorWithRed:1.0f
+                                                                green:1.0f
+                                                                 blue:1.0f
+                                                                alpha:0.78f];
+        self.resultsTableView.delegate = self;
+        self.resultsTableView.dataSource = self;
+        
+        self.resultsTableView.contentInset = UIEdgeInsetsMake(-35.0f, 0.f, 0.f, 0.f);
+        
+        [self.resultsTableView registerClass:[UITableViewCell class]
+                      forCellReuseIdentifier:@"cell"];
+        
+        [self.view addSubview:self.resultsTableView];
+        
+        [UIView animateWithDuration:0.4f
+                         animations:^{
+                             CGRect newFrame = self.resultsTableView.frame;
+                             newFrame.origin.y = self.cartView.frame.origin.y;
+                             self.resultsTableView.frame = newFrame;
+                         }];
+    }
 }
 
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+- (void)removeResultsTableViewFromView
 {
-    NSLog(@"finished editing");
+    CGRect newFrame = self.resultsTableView.frame;
+    newFrame.origin.y = newFrame.size.height + 242;
     
-    searchBar.showsCancelButton = NO;
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.resultsTableView.frame = newFrame;
+                     } completion:^(BOOL finished) {
+                         [self.resultsTableView removeFromSuperview];
+                         self.resultsArray = nil;
+                         self.resultsTableView = nil;
+                     }];
 }
 
 #pragma mark - Init souce array

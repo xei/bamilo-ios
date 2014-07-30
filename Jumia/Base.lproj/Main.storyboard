@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="35A-Fx-NNM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="35A-Fx-NNM">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <scenes>
@@ -212,6 +211,7 @@
                         <outlet property="cartLabelDetails" destination="hIt-9E-oKV" id="T5k-V8-oR3"/>
                         <outlet property="cartLabelTitle" destination="4Vj-Bo-0Fr" id="em1-pp-0AP"/>
                         <outlet property="cartLabelTotalCost" destination="bxT-WG-xY9" id="Aea-jv-ekB"/>
+                        <outlet property="cartView" destination="iCA-so-HdJ" id="M3N-Ms-PwU"/>
                         <outlet property="imageViewCart" destination="8Is-K1-RJw" id="xAO-4s-1WH"/>
                         <outlet property="searchDisplayController" destination="KkO-Kz-1hw" id="7zo-cY-TTd"/>
                         <outlet property="tableViewMenu" destination="JPe-83-lIS" id="EUr-Rg-wzo"/>

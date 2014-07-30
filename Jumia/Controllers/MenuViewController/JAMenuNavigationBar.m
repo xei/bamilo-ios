@@ -12,7 +12,6 @@
 
 @property (strong, nonatomic) UIView *titleViewCustom;
 @property (strong, nonatomic) UIButton *backButton;
-@property (strong, nonatomic) UISearchBar *searchBar;
 
 @end
 
@@ -92,7 +91,7 @@
 
 - (void)backButtonPressed
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"PRESSED_BACK_BUTTON"
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCancelButtonPressedInMenuSearchBar
                                                         object:nil];
 }
 
