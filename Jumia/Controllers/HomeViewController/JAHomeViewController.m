@@ -8,6 +8,7 @@
 
 #import "JAHomeViewController.h"
 #import "JATeaserCategoryScrollView.h"
+#import "RITeaserCategory.h"
 
 @interface JAHomeViewController ()
 
@@ -30,9 +31,21 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSArray* array = [NSArray arrayWithObjects:@"home", @"computing", @"other", @"maracana", @"electronics", @"herp the derp", @"rio dei djanerou", nil];
     
-    [self.teaserCategoryScrollView setCategories:array];
+    [RITeaserCategory getTeaserCategoriesWithSuccessBlock:^(id teaserCategories) {
+            
+        NSMutableArray* titles = [NSMutableArray new];
+        
+        for (RITeaserCategory* teaserCategory in teaserCategories) {
+            [titles addObject:teaserCategory.homePageTitle];
+        }
+        
+        [self.teaserCategoryScrollView setCategories:titles];
+        
+    } andFailureBlock:^(NSArray *errorMessage) {
+        
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning
