@@ -60,11 +60,11 @@
 
 - (void)addBackButtonToNavBar
 {
-    [UIView animateWithDuration:0.2f
+    [UIView animateWithDuration:0.1f
                      animations:^{
                          self.searchBar.frame = CGRectMake(35, 0, 200, 44);
                      } completion:^(BOOL finished) {
-                         [UIView animateWithDuration:0.2f
+                         [UIView animateWithDuration:0.1f
                                           animations:^{
                                               self.backButton.alpha = 1.0f;
                                           }];
@@ -77,7 +77,7 @@
                      animations:^{
                          self.backButton.alpha = 0.0f;
                      } completion:^(BOOL finished) {
-                         [UIView animateWithDuration:0.2f
+                         [UIView animateWithDuration:0.0f
                                           animations:^{
                                               self.searchBar.frame = CGRectMake(6, 0, 235, 44);
                                           }];

@@ -95,13 +95,13 @@
 
 #pragma mark - Navigation
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"showSubCategories"]) {
-        [segue.destinationViewController setSourceCategoriesArray:sender];
-        [segue.destinationViewController setSubCategoriesTitle:@"Categories"];
-    }
-}
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//{
+//    if ([segue.identifier isEqualToString:@"showSubCategories"]) {
+//        [segue.destinationViewController setSourceCategoriesArray:sender];
+//        [segue.destinationViewController setSubCategoriesTitle:@"Categories"];
+//    }
+//}
 
 #pragma mark - Tableview datasource and delegate
 
@@ -162,8 +162,13 @@
             
             [self.customNavBar addBackButtonToNavBar];
             
-            [self performSegueWithIdentifier:@"showSubCategories"
-                                      sender:self.categories];
+            JASubCategoriesViewController *subCategories = [[UIStoryboard storyboardWithName:@"Main"
+                                                                                      bundle:nil] instantiateViewControllerWithIdentifier:@"subCategoriesViewController"];
+            subCategories.sourceCategoriesArray = self.categories;
+            subCategories.subCategoriesTitle = @"Categories";
+            
+            [self.navigationController pushViewController:subCategories
+                                                 animated:YES];
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                                 object:@{@"index": @(indexPath.row),
@@ -182,16 +187,16 @@
         [self.customNavBar removeBackButtonFromNavBar];
         [self removeResultsTableViewFromView];
     } else {
-        self.customNavBar.backButton.userInteractionEnabled = NO;
         
-        [self.navigationController popViewControllerAnimated:YES];
-        
-        if (self.navigationController.viewControllers.count == 1) {
+        if (self.navigationController.viewControllers.count > 1) {
+            if (self.navigationController.viewControllers.count == 2) {
+                [self.customNavBar removeBackButtonFromNavBar];
+            }
             
+            [self.navigationController popViewControllerAnimated:NO];
+        } else {
             [self.customNavBar removeBackButtonFromNavBar];
         }
-        
-        self.customNavBar.backButton.userInteractionEnabled = YES;
     }
 }
 
