@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RIPaymentMethodFormOption.h"
 
 @interface RIPaymentMethodFormField : NSObject
 
@@ -27,6 +28,5 @@
  * @return a initialized payment method form field
  */
 + (RIPaymentMethodFormField *)parseField:(NSDictionary *)fieldJSON;
-
 
 @end

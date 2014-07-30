@@ -127,6 +127,15 @@
                             andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 
 /**
+ * Method to parse the checkout object
+ *
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return an intialized RICheckout object
+ */
++ (RICheckout*)parseCheckout:(NSDictionary*)checkoutObject;
+
+/**
  * Method to cancel the request
  *
  * @param the operationID that was returned by the getCountriesWithSuccessBlock:andFailureBlock method

@@ -7,6 +7,7 @@
 //
 
 #import "RIPaymentMethodForm.h"
+#import "RIField.h"
 
 @implementation RIPaymentMethodForm
 
@@ -46,10 +47,42 @@
     for(RIPaymentMethodFormField *field in form.fields)
     {
         [parameters setValue:field.value forKey:field.name];
+        
+        NSArray *extraFields = [RIPaymentMethodForm getExtraFieldsForOption:field.value inForm:form];
+        for(RIField *extraField in extraFields)
+        {            
+            [parameters setValue:extraField.value forKey:extraField.name];
+        }
     }
     
     return [parameters copy];
 }
 
++ (NSArray *) getExtraFieldsForOption:(NSString*)option
+                               inForm:(RIPaymentMethodForm*)form
+{
+    NSArray *extraFields = nil;
+    for (RIPaymentMethodFormField *field in [form fields])
+    {
+        if([@"paymentMethodForm[payment_method]" isEqualToString:[field name]])
+        {
+            for (RIPaymentMethodFormOption *formOption in [field options])
+            {
+                NSLog(@"%@ - %@", option, [formOption value]);
+                if([option isEqualToString:[formOption value]])
+                {
+                    if(VALID_NOTEMPTY(formOption.form, RIForm) && VALID_NOTEMPTY(formOption.form.fields, NSOrderedSet))
+                    {
+                        extraFields = [formOption.form.fields array];
+                        break;
+                    }
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    return extraFields;
+}
 
 @end

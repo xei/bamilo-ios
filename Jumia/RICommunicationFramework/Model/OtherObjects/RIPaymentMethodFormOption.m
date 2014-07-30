@@ -13,7 +13,7 @@
 + (RIPaymentMethodFormOption *)parseField:(NSDictionary *)fieldJSON forId:(NSString*)uid
 {
     RIPaymentMethodFormOption* newOption = [[RIPaymentMethodFormOption alloc] init];
-
+    
     if(VALID_NOTEMPTY(uid, NSString))
     {
         newOption.uid = uid;
@@ -44,14 +44,20 @@
         }
     }
     
-    if (VALID_NOTEMPTY([descriptionObject objectForKey:@"value"], NSString)) {
-        newOption.value = [descriptionObject objectForKey:@"value"];
+    if(VALID_NOTEMPTY([fieldJSON objectForKey:@"fields"], NSArray))
+    {
+        newOption.form = [RIForm parseForm:fieldJSON];
     }
     
-    if (VALID_NOTEMPTY([descriptionObject objectForKey:@"label"], NSString)) {
-        newOption.label = [descriptionObject objectForKey:@"label"];
+    if (VALID_NOTEMPTY([fieldJSON objectForKey:@"value"], NSString)) {
+        newOption.value = [fieldJSON objectForKey:@"value"];
+    }
+    
+    if (VALID_NOTEMPTY([fieldJSON objectForKey:@"label"], NSString)) {
+        newOption.label = [fieldJSON objectForKey:@"label"];
     }
     
     return newOption;
 }
+
 @end
