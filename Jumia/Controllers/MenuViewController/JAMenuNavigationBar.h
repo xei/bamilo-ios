@@ -12,5 +12,6 @@
 
 - (void)addBackButtonToNavBar;
 - (void)removeBackButtonFromNavBar;
+- (void)setSearchBarDelegate:(UIViewController<UISearchBarDelegate> *)destinationViewController;
 
 @end

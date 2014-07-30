@@ -14,7 +14,8 @@
 @interface JAMenuViewController ()
 <
     UITableViewDataSource,
-    UITableViewDelegate
+    UITableViewDelegate,
+    UISearchBarDelegate
 >
 
 @property (strong, nonatomic) NSArray *sourceArray;
@@ -54,6 +55,8 @@
     self.cartLabelTitle.text = @"Shopping Cart";
     self.cartLabelTotalCost.text = @"RM 893.00";
     self.cartLabelDetails.text = @"10% VAT and Shipping costs included";
+    
+    [self.customNavBar setSearchBarDelegate:self];
     
     [RICategory getCategoriesWithSuccessBlock:^(id categories) {
         
@@ -147,6 +150,47 @@
     if (self.navigationController.viewControllers.count == 1) {
         [self.customNavBar removeBackButtonFromNavBar];
     }
+}
+
+#pragma mark - SearchBar delegate
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = YES;
+    
+    return YES;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    NSLog(@"clicked in search button");
+
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    NSLog(@"clicked in cancel");
+    
+    [searchBar resignFirstResponder];
+    searchBar.showsCancelButton = NO;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSLog(@"new text: %@", searchText);
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    NSLog(@"started writing");
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    NSLog(@"finished editing");
+    
+    searchBar.showsCancelButton = NO;
 }
 
 #pragma mark - Init souce array

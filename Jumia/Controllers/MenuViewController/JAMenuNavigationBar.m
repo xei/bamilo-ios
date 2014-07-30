@@ -28,6 +28,8 @@
         self.searchBar.barTintColor = [UIColor whiteColor];
         self.searchBar.placeholder = @"Search";
         
+        [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
+        
         UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
         textFieldSearch.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0f];
         
@@ -92,6 +94,13 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"PRESSED_BACK_BUTTON"
                                                         object:nil];
+}
+
+#pragma mark - Set search bar delegate
+
+- (void)setSearchBarDelegate:(UIViewController<UISearchBarDelegate> *)destinationViewController
+{
+    self.searchBar.delegate = destinationViewController;
 }
 
 @end
