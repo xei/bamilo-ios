@@ -188,16 +188,29 @@
         [self removeResultsTableViewFromView];
     } else {
         
+        self.customNavBar.backButton.userInteractionEnabled = NO;
+        
         if (self.navigationController.viewControllers.count > 1) {
             if (self.navigationController.viewControllers.count == 2) {
                 [self.customNavBar removeBackButtonFromNavBar];
             }
             
-            [self.navigationController popViewControllerAnimated:NO];
+            [self.navigationController popViewControllerAnimated:YES];
         } else {
             [self.customNavBar removeBackButtonFromNavBar];
         }
+        
+        [NSTimer scheduledTimerWithTimeInterval:0.5f
+                                         target:self
+                                       selector:@selector(activateBackButton)
+                                       userInfo:nil
+                                        repeats:NO];
     }
+}
+
+- (void)activateBackButton
+{
+    self.customNavBar.backButton.userInteractionEnabled = YES;
 }
 
 #pragma mark - SearchBar delegate
