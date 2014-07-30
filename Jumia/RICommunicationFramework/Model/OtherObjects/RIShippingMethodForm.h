@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RIShippingMethodFormField.h"
 
 @interface RIShippingMethodForm : NSObject
 
@@ -15,6 +16,12 @@
 @property (nonatomic, retain) NSString * action;
 @property (nonatomic, retain) NSArray *fields;
 
+/**
+ * Method to parse a shipping method form
+ *
+ * @param the json object with the shipping method form
+ * @return a initialized shipping method form
+ */
 + (RIShippingMethodForm *)parseForm:(NSDictionary *)formJSON;
 
 /**
