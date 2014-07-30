@@ -22,6 +22,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self showLoading];
 
     [RIApi startApiWithSuccessBlock:^(id api) {
         
@@ -29,7 +31,11 @@
         
         [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
         
+        [self hideLoading];
+        
     } andFailureBlock:^(NSArray *errorMessage) {
+        
+        [self hideLoading];
         
     }];
 }

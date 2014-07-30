@@ -10,6 +10,15 @@
 
 @interface JABaseViewController : UIViewController
 
+/**
+ * Method to show loading
+ */
+- (void)showLoading;
+
+/**
+ * Method to hide loading
+ */
+- (void)hideLoading;
 
 @end
 
