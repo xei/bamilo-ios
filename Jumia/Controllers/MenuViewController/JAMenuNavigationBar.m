@@ -12,7 +12,6 @@
 
 @property (strong, nonatomic) UIView *titleViewCustom;
 @property (strong, nonatomic) UIButton *backButton;
-@property (strong, nonatomic) UISearchBar *searchBar;
 
 @end
 
@@ -27,6 +26,8 @@
         self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(6, 0, 235, 44)];
         self.searchBar.barTintColor = [UIColor whiteColor];
         self.searchBar.placeholder = @"Search";
+        
+        [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
         
         UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
         textFieldSearch.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0f];
@@ -90,8 +91,15 @@
 
 - (void)backButtonPressed
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"PRESSED_BACK_BUTTON"
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCancelButtonPressedInMenuSearchBar
                                                         object:nil];
+}
+
+#pragma mark - Set search bar delegate
+
+- (void)setSearchBarDelegate:(UIViewController<UISearchBarDelegate> *)destinationViewController
+{
+    self.searchBar.delegate = destinationViewController;
 }
 
 @end
