@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JAMenuViewController : UIViewController
+@interface JAMenuViewController : JABaseViewController
 
 @end

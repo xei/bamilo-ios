@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JAHomeViewController : UIViewController
+@interface JAHomeViewController : JABaseViewController
 
 @end

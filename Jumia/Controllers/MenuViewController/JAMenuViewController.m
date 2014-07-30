@@ -20,8 +20,6 @@
 @property (strong, nonatomic) NSArray *sourceArray;
 @property (strong, nonatomic) NSArray *categories;
 @property (strong, nonatomic) JAMenuNavigationBar *customNavBar;
-@property (strong, nonatomic) UIImageView *loadingImageView;
-@property (strong, nonatomic) UIActivityIndicatorView *loadingSpinner;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewMenu;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewCart;
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelTitle;
@@ -41,7 +39,6 @@
     
     self.title = @"";
     
-    [self initLoadingScreen];
     [self showLoading];
     [self initSourceArray];
     
@@ -183,46 +180,6 @@
                          @{ @"name": @"Sign In",
                             @"image": @"ico_sign",
                             @"selected": @"ico_signpressed" } ];
-}
-
-#pragma mark - Loading screen
-
-- (void)initLoadingScreen
-{
-    self.loadingImageView = [[UIImageView alloc] initWithFrame:[[[UIApplication sharedApplication] delegate] window].rootViewController.view.frame];
-    self.loadingImageView.backgroundColor = [UIColor blackColor];
-    self.loadingImageView.alpha = 0.0f;
-    self.loadingImageView.userInteractionEnabled = YES;
-    
-    self.loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    self.loadingSpinner.center = self.loadingImageView.center;
-    self.loadingImageView.alpha = 0.0f;
-}
-
-- (void)showLoading
-{
-    [[[[UIApplication sharedApplication] delegate] window].rootViewController.view addSubview:self.loadingImageView];
-    [[[[UIApplication sharedApplication] delegate] window].rootViewController.view addSubview:self.loadingSpinner];
-    
-    [self.loadingSpinner startAnimating];
-    
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         self.loadingImageView.alpha = 0.6f;
-                         self.loadingSpinner.alpha = 0.6f;
-                     }];
-}
-
-- (void)hideLoading
-{
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         self.loadingImageView.alpha = 0.0f;
-                         self.loadingSpinner.alpha = 0.0f;
-                     } completion:^(BOOL finished) {
-                         [self.loadingImageView removeFromSuperview];
-                         [self.loadingSpinner removeFromSuperview];
-                     }];
 }
 
 @end
