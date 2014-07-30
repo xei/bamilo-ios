@@ -69,6 +69,9 @@
     
     [self.customNavBar setSearchBarDelegate:self];
     
+    // Added because of the footer space
+    self.tableViewMenu.contentInset = UIEdgeInsetsMake(0, 0, -20, 0);
+    
     [RICategory getCategoriesWithSuccessBlock:^(id categories) {
         
         self.categories = [NSArray arrayWithArray:(NSArray *)categories];
@@ -95,13 +98,13 @@
 
 #pragma mark - Navigation
 
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//    if ([segue.identifier isEqualToString:@"showSubCategories"]) {
-//        [segue.destinationViewController setSourceCategoriesArray:sender];
-//        [segue.destinationViewController setSubCategoriesTitle:@"Categories"];
-//    }
-//}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showSubCategories"]) {
+        [segue.destinationViewController setSourceCategoriesArray:self.categories];
+        [segue.destinationViewController setSubCategoriesTitle:@"Categories"];
+    }
+}
 
 #pragma mark - Tableview datasource and delegate
 
@@ -162,13 +165,8 @@
             
             [self.customNavBar addBackButtonToNavBar];
             
-            JASubCategoriesViewController *subCategories = [[UIStoryboard storyboardWithName:@"Main"
-                                                                                      bundle:nil] instantiateViewControllerWithIdentifier:@"subCategoriesViewController"];
-            subCategories.sourceCategoriesArray = self.categories;
-            subCategories.subCategoriesTitle = @"Categories";
-            
-            [self.navigationController pushViewController:subCategories
-                                                 animated:YES];
+            [self performSegueWithIdentifier:@"showSubCategories"
+                                      sender:nil];
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                                 object:@{@"index": @(indexPath.row),
