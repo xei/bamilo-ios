@@ -25,4 +25,19 @@
     return nil;
 }
 
+#pragma mark - Public methods
+
+- (void)changeNavigationBarTitle:(NSString *)newTitle
+{
+    self.logoImageView.hidden = YES;
+    self.titleLabel.text = newTitle;
+    self.titleLabel.hidden = NO;
+}
+
+- (void)changedToHomeViewController
+{
+    self.logoImageView.hidden = NO;
+    self.titleLabel.hidden = YES;
+}
+
 @end

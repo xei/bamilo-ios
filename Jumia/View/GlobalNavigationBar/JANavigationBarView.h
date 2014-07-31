@@ -17,5 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 + (JANavigationBarView *)getNewNavBarView;
+- (void)changeNavigationBarTitle:(NSString *)newTitle;
+- (void)changedToHomeViewController;
 
 @end

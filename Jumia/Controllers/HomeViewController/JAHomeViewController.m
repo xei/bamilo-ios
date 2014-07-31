@@ -22,6 +22,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.hidesBackButton = YES;
+    self.title = @"";
 
     // Do any additional setup after loading the view.
     NSArray* array = [NSArray arrayWithObjects:@"home", @"computing", @"other", @"maracana", @"electronics", @"herp the derp", @"rio dei djanerou", nil];
@@ -32,12 +35,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-- (void)setNavigationBar:(JANavigationBar *)navBar
-{
-    [self.navigationController setValue:navBar
-                             forKeyPath:@"navigationBar"];
 }
 
 #pragma mark - Navigation
