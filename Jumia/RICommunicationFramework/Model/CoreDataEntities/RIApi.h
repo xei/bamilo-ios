@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+#define RISectionRequestStartedNotificationName @"SECTION_REQUEST_STARTED"
+#define RISectionRequestEndedNotificationName @"SECTION_REQUEST_ENDED"
+
 @class RISection;
 
 @interface RIApi : NSManagedObject

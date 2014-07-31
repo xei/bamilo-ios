@@ -1,16 +1,16 @@
 //
-//  JACartViewController.h
+//  JALoginViewController.h
 //  Jumia
 //
-//  Created by Pedro Lopes on 30/07/14.
+//  Created by Pedro Lopes on 31/07/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "JABaseViewController.h"
 
-@interface JACartViewController : JABaseViewController
+@interface JALoginViewController : JABaseViewController
 
-@property (weak, nonatomic) IBOutlet UIButton *goToLogin;
 @property (weak, nonatomic) IBOutlet UIButton *loginAndGoToAddresses;
 
 @end

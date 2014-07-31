@@ -23,6 +23,7 @@
 - (void)changeNavigationBarTitle:(NSString *)newTitle;
 
 - (void)changedToHomeViewController;
+- (void)updateCartProductCount:(NSNumber*)productCount;
 
 - (void)enteredInFirstLevelWithTitle:(NSString *)title
                      andProductCount:(NSString *)productCount;

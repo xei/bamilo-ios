@@ -115,4 +115,9 @@
     self.backImageView.hidden = NO;
 }
 
+- (void)updateCartProductCount:(NSNumber*)cartNumber
+{
+    [self.cartCountLabel setText:[cartNumber stringValue]];
+}
+
 @end

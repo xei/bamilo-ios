@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JAEmptyCartViewController : UIViewController
+@interface JAEmptyCartViewController : JABaseViewController
+
+@property (weak, nonatomic) IBOutlet UIButton *addProductAndGoToCart;
 
 @end
