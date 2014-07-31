@@ -34,8 +34,8 @@
         newImage.url = [json objectForKey:@"brand_url"];
     }
     
-    if ([json objectForKey:@"group_title"]) {
-        newImage.deviceType = [json objectForKey:@"group_title"];
+    if ([json objectForKey:@"device_type"]) {
+        newImage.deviceType = [json objectForKey:@"device_type"];
     }
     
     if ([json objectForKey:@"description"]) {

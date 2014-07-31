@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "JANavigationBar.h"
+#import "JATeaserCategoryScrollView.h"
 
-@interface JAHomeViewController : JABaseViewController
+@interface JAHomeViewController : JABaseViewController <JATeaserCategoryScrollViewDelegate>
 
 - (void)setNavigationBar:(JANavigationBar *)navBar;
 
