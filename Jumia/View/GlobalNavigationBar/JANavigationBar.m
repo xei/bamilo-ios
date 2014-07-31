@@ -7,11 +7,8 @@
 //
 
 #import "JANavigationBar.h"
-#import "JANavigationBarView.h"
 
 @interface JANavigationBar ()
-
-@property (strong, nonatomic) JANavigationBarView *navigationBarView;
 
 @end
 

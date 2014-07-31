@@ -55,6 +55,10 @@
     self.navBar = [[JANavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     self.navBar.customDelegate = self;
     [(JAHomeViewController *)(((UINavigationController *)self.centerPanel).viewControllers[0]) setNavigationBar:self.navBar];
+    
+    [self.navBar.navigationBarView.cartButton addTarget:self
+                                                 action:@selector(openCart)
+                                       forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Menu selected item in menu
@@ -73,7 +77,7 @@
             
         } else {
             [self pushViewControllerWithName:@"teste"
-                                titleForNavBar:[selectedItem objectForKey:@"name"]];
+                              titleForNavBar:[selectedItem objectForKey:@"name"]];
         }
     }
 }
@@ -81,6 +85,12 @@
 - (void)openMainMenu
 {
     [self showLeftPanelAnimated:YES];
+}
+
+- (void)openCart
+{
+    [self pushViewControllerWithName:@"teste"
+                      titleForNavBar:@"Cart"];
 }
 
 #pragma mark - Custom navigation bar delegates
@@ -91,7 +101,7 @@
                                                         object:nil];
 }
 
-#pragma mark - Public methods
+#pragma mark - Push and pop methods
 
 - (void)pushViewControllerWithName:(NSString *)name
                     titleForNavBar:(NSString *)title

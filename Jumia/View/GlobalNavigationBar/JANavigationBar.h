@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JANavigationBarView.h"
 
 @protocol JANavigationBarDelegate <NSObject>
 
@@ -16,6 +17,7 @@
 
 @interface JANavigationBar : UINavigationBar
 
+@property (strong, nonatomic) JANavigationBarView *navigationBarView;
 @property (weak, nonatomic) id<JANavigationBarDelegate>customDelegate;
 
 - (void)changeNavigationBarTitle:(NSString *)newTitle;
