@@ -17,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *teaserPagesScrollView;
 @property (nonatomic, strong) NSMutableArray* teaserPageViews;
 
-
 @end
 
 @implementation JAHomeViewController
@@ -27,6 +26,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.hidesBackButton = YES;
+    self.title = @"";
 
     self.teaserCategoryScrollView.delegate = self;
     self.teaserPagesScrollView.pagingEnabled = YES;
@@ -92,12 +94,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-- (void)setNavigationBar:(JANavigationBar *)navBar
-{
-    [self.navigationController setValue:navBar
-                             forKeyPath:@"navigationBar"];
 }
 
 #pragma mark - Navigation
