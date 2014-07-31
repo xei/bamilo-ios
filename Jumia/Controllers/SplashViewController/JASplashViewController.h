@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JASplashViewController : UIViewController
+@interface JASplashViewController : JABaseViewController
 
 @end

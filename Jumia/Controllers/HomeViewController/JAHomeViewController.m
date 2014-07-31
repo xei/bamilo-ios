@@ -22,20 +22,12 @@
 
 @implementation JAHomeViewController
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+#pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
+
     self.teaserCategoryScrollView.delegate = self;
     self.teaserPagesScrollView.pagingEnabled = YES;
     self.teaserPagesScrollView.scrollEnabled = NO;
@@ -95,6 +87,24 @@
     }
     
     [self.teaserPagesScrollView scrollRectToVisible:teaserPageView.frame animated:NO];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+- (void)setNavigationBar:(JANavigationBar *)navBar
+{
+    [self.navigationController setValue:navBar
+                             forKeyPath:@"navigationBar"];
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+
 }
 
 @end

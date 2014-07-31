@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "RIOrder.h"
-#import "RIShippingMethodForm.h"
 #import "RIForm.h"
+#import "RIShippingMethodForm.h"
+#import "RIPaymentMethodForm.h"
+#import "RIPaymentInformation.h"
 
 @interface RICheckout : NSObject
 
@@ -19,7 +21,11 @@
 @property (nonatomic, strong) RIForm *shippingAddressForm;
 @property (nonatomic, strong) RIForm *billingAddressForm;
 @property (nonatomic, strong) RIShippingMethodForm *shippingMethodForm;
-//@property (nonatomic, strong) RIPaymentMethodForm *paymentMethodForm;
+@property (nonatomic, strong) RIPaymentMethodForm *paymentMethodForm;
+@property (nonatomic, strong) NSString *orderNr;
+@property (nonatomic, strong) NSString *customerFirstMame;
+@property (nonatomic, strong) NSString *customerLastName;
+@property (nonatomic, strong) RIPaymentInformation *paymentInformation;
 
 /**
  * Method to get the billing address form needed for checkout process
@@ -34,7 +40,7 @@
 /**
  * Method to set the billing address needed for checkout process
  *
- * @param the parameters needed for setting the billing address
+ * @param the billing address form
  * @param the block where the success response can be processed
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
@@ -56,7 +62,7 @@
 /**
  * Method to set the shipping address needed for checkout process
  *
- * @param the parameters needed for setting the shipping address
+ * @param the shipping address form
  * @param the block where the success response can be processed
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
@@ -79,7 +85,7 @@
 /**
  * Method to set the shipping method needed for checkout process
  *
- * @param the parameters needed for setting the shipping method
+ * @param the shipping method form
  * @param the block where the success response can be processed
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
@@ -101,14 +107,33 @@
 /**
  * Method to set the payment method needed for checkout process
  *
- * @param the parameters needed for setting the payment method
+ * @param the payment method form
  * @param the block where the success response can be processed
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString*)setPaymentMethodWithParameters:(NSDictionary*)parameters
-                               successBlock:(void (^)(RICheckout *checkout))successBlock
++ (NSString*)setPaymentMethod:(RIPaymentMethodForm *)form
+                 successBlock:(void (^)(RICheckout *checkout))successBlock
+              andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+
+/**
+ * Method to end the checkout proccess
+ *
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString*)finishCheckoutWithSuccessBlock:(void (^)(RICheckout *checkout))successBlock
                             andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+
+/**
+ * Method to parse the checkout object
+ *
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return an intialized RICheckout object
+ */
++ (RICheckout*)parseCheckout:(NSDictionary*)checkoutObject;
 
 /**
  * Method to cancel the request
