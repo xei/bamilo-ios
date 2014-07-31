@@ -223,6 +223,25 @@
             </objects>
             <point key="canvasLocation" x="1123" y="-503"/>
         </scene>
+        <!--My Favourites View Controller-->
+        <scene sceneID="2xZ-ca-Yh9">
+            <objects>
+                <viewController storyboardIdentifier="myFavouritesViewController" id="0fU-Gn-Dfc" customClass="JAMyFavouritesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="I4q-nC-LPf"/>
+                        <viewControllerLayoutGuide type="bottom" id="8Hv-gh-VZe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PUx-yw-aeH">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RfL-3t-GwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2377" y="79"/>
+        </scene>
         <!--Home View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -234,14 +253,38 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bVK-fb-QVJ">
+                                <rect key="frame" x="0.0" y="108" width="320" height="372"/>
+                            </scrollView>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MEv-bE-tYZ" customClass="JATeaserCategoryScrollView">
+                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="1Fq-5o-1FS"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="bVK-fb-QVJ" secondAttribute="trailing" id="7PV-lz-jFL"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="bVK-fb-QVJ" secondAttribute="bottom" id="9ZY-mF-deI"/>
+                            <constraint firstItem="bVK-fb-QVJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Inw-md-cxG"/>
+                            <constraint firstAttribute="trailing" secondItem="MEv-bE-tYZ" secondAttribute="trailing" id="b9C-eu-9yW"/>
+                            <constraint firstItem="MEv-bE-tYZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="eVU-1I-Aiz"/>
+                            <constraint firstItem="MEv-bE-tYZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="xtf-gk-d2w"/>
+                        </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" id="92H-u5-dfy"/>
+                    <connections>
+                        <outlet property="teaserCategoryScrollView" destination="MEv-bE-tYZ" id="7gC-g8-f4J"/>
+                        <outlet property="teaserPagesScrollView" destination="bVK-fb-QVJ" id="hVZ-Y8-hXn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1751" y="72"/>
+            <point key="canvasLocation" x="1828" y="79"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="euH-wI-leh">
@@ -260,6 +303,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="keD-Ln-hGH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="512" y="-495"/>
+        </scene>
+        <!--Center Navigation Controller-->
+        <scene sceneID="zbS-US-1sA">
+            <objects>
+                <navigationController storyboardIdentifier="rootNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="t6o-pS-UXi" customClass="JACenterNavigationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tCF-5Z-jLJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D9k-Dg-apF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1136" y="79"/>
         </scene>
         <!--Empty Cart View Controller-->
         <scene sceneID="XGq-wN-VpQ">
@@ -298,40 +356,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CQy-QZ-SNO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="762" y="736"/>
-        </scene>
-        <!--Center Navigation Controller-->
-        <scene sceneID="xZs-kz-6o6">
-            <objects>
-                <navigationController storyboardIdentifier="rootNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="MbZ-lU-iOj" customClass="JACenterNavigationController" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VQX-BQ-Hfi">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Nbi-EO-kPW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1123" y="72"/>
-        </scene>
-        <!--My Favourites View Controller-->
-        <scene sceneID="KsO-qC-0uH">
-            <objects>
-                <viewController storyboardIdentifier="myFavouritesViewController" id="I9o-T9-Rna" customClass="JAMyFavouritesViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="yEU-TO-ppz"/>
-                        <viewControllerLayoutGuide type="bottom" id="zBT-kc-zqa"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="iiE-3o-vwa">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8d4-AD-LTg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2330" y="72"/>
         </scene>
     </scenes>
     <resources>

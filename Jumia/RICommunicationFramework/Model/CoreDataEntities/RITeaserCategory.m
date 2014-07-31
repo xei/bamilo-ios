@@ -25,7 +25,7 @@
 
 #pragma mark - Requests
 
-+ (NSString*)loadTeaserCategoriesIntoDatabaseWithSuccessBlock:(void (^)(id teasers))successBlock
++ (NSString*)loadTeaserCategoriesIntoDatabaseWithSuccessBlock:(void (^)(id teaserCategories))successBlock
                                               andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_TEASERS]]
@@ -65,18 +65,18 @@
                                                           }];
 }
 
-+ (NSString*)getTeaserCategoriesWithSuccessBlock:(void (^)(id teasers))successBlock
++ (NSString*)getTeaserCategoriesWithSuccessBlock:(void (^)(id teaserCategories))successBlock
                                  andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
     NSString *operationID = nil;
-    NSArray *allTeasers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RITeaserCategory class])];
+    NSArray *allTeaserCategories = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RITeaserCategory class])];
     
-    if (VALID_NOTEMPTY(allTeasers, NSArray)) {
-        successBlock(allTeasers);
+    if (VALID_NOTEMPTY(allTeaserCategories, NSArray)) {
+        successBlock(allTeaserCategories);
     } else {
-        operationID = [RITeaserCategory loadTeaserCategoriesIntoDatabaseWithSuccessBlock:^(NSArray *teasers) {
-            if (VALID_NOTEMPTY(teasers, NSArray)) {
-                successBlock(teasers);
+        operationID = [RITeaserCategory loadTeaserCategoriesIntoDatabaseWithSuccessBlock:^(NSArray *teaserCategories) {
+            if (VALID_NOTEMPTY(teaserCategories, NSArray)) {
+                successBlock(teaserCategories);
             } else {
                 failureBlock(nil);
             }

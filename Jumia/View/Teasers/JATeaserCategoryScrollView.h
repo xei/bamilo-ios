@@ -8,7 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol JATeaserCategoryScrollViewDelegate <NSObject>
+
+@optional
+- (void)teaserCategorySelectedAtIndex:(NSInteger)index;
+
+@end
+
 @interface JATeaserCategoryScrollView : UIView <UIScrollViewDelegate>
+
+@property (nonatomic, assign)id<JATeaserCategoryScrollViewDelegate> delegate;
 
 - (void)setCategories:(NSArray*)teaserCategories;
 

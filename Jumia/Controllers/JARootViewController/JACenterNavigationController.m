@@ -85,7 +85,7 @@
 - (void)changeCenterPanel:(NSString *)newScreenName
            titleForNavBar:(NSString *)title
 {
-    if ([newScreenName isEqualToString:@"homeViewController"])
+    if ([newScreenName isEqualToString:@"Home"])
     {
         JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
         
