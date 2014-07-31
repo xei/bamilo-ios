@@ -11,29 +11,42 @@
 
 @implementation JAEmptyCartViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    // TODO: Check if cart is empty..
-    // If the cart is empty this should be redirected to a empty cart page
+    
+    [self.addProductAndGoToCart setTitle:@"Add product and go to cart" forState:UIControlStateNormal];
+    [self.addProductAndGoToCart sizeToFit];
+    
+    [self.addProductAndGoToCart addTarget:self action:@selector(addProductAndGoToCartAction) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)addProductAndGoToCartAction
+{
+    [self showLoading];
+    
     [RICart addProductWithQuantity:@"1"
-                               sku:@"JU278SPACGWSAFRAMZ"
-                            simple:@"JU278SPACGWSAFRAMZ-171186"
+                               sku:@"ET938AAABUQKNGAMZ"
+                            simple:@"ET938AAABUQKNGAMZ-156048"
                   withSuccessBlock:^(RICart *cart) {
                       NSLog(@"Added product with success");
+                      
+                      [self hideLoading];
                       
                       NSMutableDictionary* userInfo = [NSMutableDictionary dictionary];
                       [userInfo setObject:cart forKey:kUpdateCartNotificationValue];
                       
                       NSNotificationCenter* notificationCenter = [NSNotificationCenter defaultCenter];
-                      [notificationCenter postNotificationName:kUpdateCartNotification object:self userInfo:userInfo];
+                      [notificationCenter postNotificationName:kUpdateCartNotification object:self userInfo:userInfo];                      
                       
+                      [notificationCenter postNotificationName:kOpenCartNotification object:self userInfo:nil];
                       
                   } andFailureBlock:^(NSArray *errorMessages) {
                       NSLog(@"Fail adding product");
+                      [self hideLoading];
                   }];
-    
 }
 
 @end

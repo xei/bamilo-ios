@@ -19,5 +19,6 @@
 + (JANavigationBarView *)getNewNavBarView;
 - (void)changeNavigationBarTitle:(NSString *)newTitle;
 - (void)changedToHomeViewController;
+- (void)updateCartProductCount:(NSNumber*)productCount;
 
 @end

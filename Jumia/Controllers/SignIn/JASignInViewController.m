@@ -19,9 +19,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.navigationItem.hidesBackButton = YES;
-    self.title = @"";
 }
 
 - (void)didReceiveMemoryWarning

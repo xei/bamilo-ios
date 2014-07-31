@@ -40,4 +40,9 @@
     self.titleLabel.hidden = YES;
 }
 
+- (void)updateCartProductCount:(NSNumber*)cartNumber
+{
+    [self.cartCountLabel setText:[cartNumber stringValue]];
+}
+
 @end
