@@ -13,7 +13,6 @@
 @implementation RIFormIndex
 
 @dynamic uid;
-@dynamic md5;
 @dynamic url;
 @dynamic form;
 
@@ -99,9 +98,6 @@
     
     if ([formIndexJSON objectForKey:@"id"]) {
         newFormIndex.uid = [formIndexJSON objectForKey:@"id"];
-    }
-    if ([formIndexJSON objectForKey:@"md5"]) {
-        newFormIndex.md5 = [formIndexJSON objectForKey:@"md5"];
     }
     if ([formIndexJSON objectForKey:@"url"]) {
         newFormIndex.url = [formIndexJSON objectForKey:@"url"];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6172.15" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="RIApi" representedClassName="RIApi" syncable="YES">
         <attribute name="actionName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="curMobVersion" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -48,10 +48,9 @@
         <relationship name="formIndex" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIFormIndex" inverseName="form" inverseEntity="RIFormIndex" syncable="YES"/>
     </entity>
     <entity name="RIFormIndex" representedClassName="RIFormIndex" syncable="YES">
-        <attribute name="md5" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="form" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIForm" inverseName="formIndex" inverseEntity="RIForm" syncable="YES"/>
+        <relationship name="form" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RIForm" inverseName="formIndex" inverseEntity="RIForm" syncable="YES"/>
     </entity>
     <entity name="RIImage" representedClassName="RIImage" syncable="YES">
         <attribute name="format" optional="YES" attributeType="String" syncable="YES"/>
@@ -187,7 +186,7 @@
         <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="195"/>
         <element name="RIField" positionX="-497" positionY="518" width="128" height="193"/>
         <element name="RIForm" positionX="-504" positionY="362" width="128" height="118"/>
-        <element name="RIFormIndex" positionX="-504" positionY="234" width="128" height="103"/>
+        <element name="RIFormIndex" positionX="-504" positionY="234" width="128" height="88"/>
         <element name="RIImage" positionX="27" positionY="486" width="128" height="135"/>
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
@@ -195,6 +194,7 @@
         <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="195"/>
         <element name="RISearchSuggestion" positionX="-648" positionY="27" width="128" height="73"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
+        <element name="RIStaticBlockIndex" positionX="-486" positionY="-63" width="128" height="90"/>
         <element name="RITeaser" positionX="-686" positionY="527" width="128" height="103"/>
         <element name="RITeaserCategory" positionX="-686" positionY="245" width="128" height="133"/>
         <element name="RITeaserGroup" positionX="-686" positionY="398" width="128" height="103"/>
@@ -203,6 +203,5 @@
         <element name="RITeaserText" positionX="-684" positionY="677" width="128" height="88"/>
         <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
         <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>
-        <element name="RIStaticBlockIndex" positionX="-486" positionY="-63" width="128" height="90"/>
     </elements>
 </model>

@@ -13,6 +13,8 @@
 
 @interface JASplashViewController ()
 
+@property (nonatomic, assign)NSInteger requestCount;
+
 @end
 
 @implementation JASplashViewController
@@ -24,20 +26,51 @@
     [super viewDidLoad];
     
     [self showLoading];
+    
+    self.requestCount = 0;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
 
     [RIApi startApiWithSuccessBlock:^(id api) {
         
-        UIViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
-        
-        [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
-        
-        [self hideLoading];
+        if (0 >= self.requestCount) {
+            [self procedeToFirstAppScreen];
+        }
         
     } andFailureBlock:^(NSArray *errorMessage) {
         
         [self hideLoading];
         
     }];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)incrementRequestCount
+{
+    self.requestCount++;
+}
+
+- (void)decrementRequestCount
+{
+    self.requestCount--;
+    
+    if (0 >= self.requestCount) {
+        [self procedeToFirstAppScreen];
+    }
+}
+
+- (void)procedeToFirstAppScreen
+{
+    UIViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
+    
+    [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+    
+    [self hideLoading];
 }
 
 - (void)didReceiveMemoryWarning
