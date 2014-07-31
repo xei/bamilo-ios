@@ -10,6 +10,8 @@
 #import "JAConstants.h"
 #import "RIForm.h"
 #import "RIField.h"
+#import "JALoginViewController.h"
+#import "JAAddressesViewController.h"
 
 @implementation JACartViewController
 
@@ -32,7 +34,10 @@
 
 -(void)goToLoginAction
 {
+    JALoginViewController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
     
+    [self.navigationController pushViewController:loginVC
+                                         animated:YES];
 }
 
 -(void)loginAndGoToAddressesAction
@@ -54,6 +59,12 @@
         [RIForm sendForm:form successBlock:^(NSDictionary *jsonObject) {
             NSLog(@"Login with success");
             [self hideLoading];
+            
+            JAAddressesViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
+            
+            [self.navigationController pushViewController:addressesVC
+                                                 animated:YES];
+            
         } andFailureBlock:^(NSArray *errorObject) {
             NSLog(@"Login failed");
             [self hideLoading];
