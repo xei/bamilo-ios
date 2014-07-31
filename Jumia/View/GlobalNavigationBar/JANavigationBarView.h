@@ -15,10 +15,19 @@
 @property (weak, nonatomic) IBOutlet UILabel *cartCountLabel;
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 + (JANavigationBarView *)getNewNavBarView;
+
 - (void)changeNavigationBarTitle:(NSString *)newTitle;
+
 - (void)changedToHomeViewController;
 - (void)updateCartProductCount:(NSNumber*)productCount;
+
+- (void)enteredInFirstLevelWithTitle:(NSString *)title
+                     andProductCount:(NSString *)productCount;
+
+- (void)enteredSecondOrThirdLevelWithBackTitle:(NSString *)backTitle;
 
 @end

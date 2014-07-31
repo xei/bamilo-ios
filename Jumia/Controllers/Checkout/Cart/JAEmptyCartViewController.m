@@ -14,7 +14,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    self.navigationItem.hidesBackButton = YES;
+    self.title = @"";
     
     
     [self.addProductAndGoToCart setTitle:@"Add product and go to cart" forState:UIControlStateNormal];
