@@ -63,11 +63,13 @@
     
     if(VALID_NOTEMPTY(self.cart, RICart) && 0 < [self.cart cartCount])
     {
+        [self popToRootViewControllerAnimated:NO];
         [self pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"cartViewController"]
                         animated:YES];
     }
     else
     {
+        [self popToRootViewControllerAnimated:NO];        
         [self pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"emptyCartViewController"]
                         animated:YES];
     }
@@ -79,6 +81,8 @@
     {
         NSDictionary* userInfo = notification.userInfo;
         self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
+
+        [self.navigationBarView updateCartProductCount:self.cart.cartCount];
     }
 }
 

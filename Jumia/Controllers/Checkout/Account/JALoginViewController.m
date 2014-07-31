@@ -1,38 +1,30 @@
 //
-//  JACartViewController.m
+//  JALoginViewController.m
 //  Jumia
 //
-//  Created by Pedro Lopes on 30/07/14.
+//  Created by Pedro Lopes on 31/07/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
-#import "JACartViewController.h"
-#import "JAConstants.h"
+#import "JALoginViewController.h"
 #import "RIForm.h"
 #import "RIField.h"
 
-@implementation JACartViewController
+@interface JALoginViewController ()
+
+@end
+
+@implementation JALoginViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    // If the user is not logged in go to login view controller
-    [self.goToLogin setTitle:@"Go to login" forState:UIControlStateNormal];
-    [self.goToLogin sizeToFit];
-    [self.goToLogin addTarget:self action:@selector(goToLoginAction) forControlEvents:UIControlEventTouchUpInside];
-    
-    // If the user is  logged in go to addresses view controller
     [self.loginAndGoToAddresses setTitle:@"Login and go to addresses" forState:UIControlStateNormal];
     [self.loginAndGoToAddresses sizeToFit];
-    [self.loginAndGoToAddresses addTarget:self action:@selector(loginAndGoToAddressesAction) forControlEvents:UIControlEventTouchUpInside];
-}
-
-
--(void)goToLoginAction
-{
     
+    [self.loginAndGoToAddresses addTarget:self action:@selector(loginAndGoToAddressesAction) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void)loginAndGoToAddressesAction
@@ -63,6 +55,5 @@
         [self hideLoading];
     }];
 }
-
 
 @end
