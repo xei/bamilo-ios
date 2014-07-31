@@ -11,6 +11,7 @@
 #import "RICart.h"
 #import "JAHomeViewController.h"
 #import "JAMyFavouritesViewController.h"
+#import "JAChooseCountryViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -109,6 +110,17 @@
         [self.navigationBarView changeNavigationBarTitle:title];
         
         self.viewControllers = @[favourites];
+    }
+    else if ([newScreenName isEqualToString:@"Choose Country"])
+    {
+        JAChooseCountryViewController *country = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
+        
+        [self pushViewController:country
+                        animated:YES];
+        
+        [self.navigationBarView changeNavigationBarTitle:title];
+        
+        self.viewControllers = @[country];
     }
     
     /*
