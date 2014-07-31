@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="35A-Fx-NNM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="35A-Fx-NNM">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <scenes>
         <!--Splash View Controller-->
@@ -16,12 +15,26 @@
                     <view key="view" contentMode="scaleToFill" id="Yju-3g-ONf">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CIB-OJ-oGP">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="CIB-OJ-oGP" firstAttribute="leading" secondItem="Yju-3g-ONf" secondAttribute="leading" id="ITS-p9-4Ma"/>
+                            <constraint firstAttribute="trailing" secondItem="CIB-OJ-oGP" secondAttribute="trailing" id="S2U-Vc-3hi"/>
+                            <constraint firstItem="qr3-Iw-5fx" firstAttribute="top" secondItem="CIB-OJ-oGP" secondAttribute="bottom" id="WA4-U7-gKQ"/>
+                            <constraint firstItem="CIB-OJ-oGP" firstAttribute="top" secondItem="Yju-3g-ONf" secondAttribute="top" id="iwT-sp-DKO"/>
+                        </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
+                    <connections>
+                        <outlet property="splashImage" destination="CIB-OJ-oGP" id="m27-HS-iBM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aKK-9j-dxn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-73" y="79"/>
+            <point key="canvasLocation" x="-47" y="79"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="5gM-c5-Uga">
@@ -35,6 +48,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aPI-2d-kOH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -107,6 +121,7 @@
                             <constraint firstItem="bvx-Sl-Bkt" firstAttribute="leading" secondItem="0V6-zY-rSO" secondAttribute="leading" id="bfp-rY-OaC"/>
                             <constraint firstItem="34t-u1-28L" firstAttribute="top" secondItem="bvx-Sl-Bkt" secondAttribute="bottom" id="sBc-zu-7R5"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -200,6 +215,7 @@
                             <constraint firstItem="JPe-83-lIS" firstAttribute="leading" secondItem="B9R-Rr-1lu" secondAttribute="leading" id="suZ-9B-CKo"/>
                             <constraint firstAttribute="trailing" secondItem="JPe-83-lIS" secondAttribute="trailing" id="ynM-fK-kJD"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" id="ZAb-vG-OXH"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -232,6 +248,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RfL-3t-GwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -270,6 +287,7 @@
                             <constraint firstItem="MEv-bE-tYZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="eVU-1I-Aiz"/>
                             <constraint firstItem="MEv-bE-tYZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="xtf-gk-d2w"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" id="92H-u5-dfy"/>
                     <connections>
@@ -338,6 +356,7 @@
                             <constraint firstAttribute="centerX" secondItem="vJu-Qc-EBo" secondAttribute="centerX" id="iI5-fx-uIB"/>
                             <constraint firstAttribute="centerY" secondItem="vJu-Qc-EBo" secondAttribute="centerY" id="upg-ui-2ax"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="addProductAndGoToCart" destination="vJu-Qc-EBo" id="pte-0h-V4z"/>
@@ -393,6 +412,7 @@
                             <constraint firstAttribute="centerX" secondItem="ReK-uh-uRe" secondAttribute="centerX" id="nOP-ze-JHS"/>
                             <constraint firstItem="8JR-2S-5zU" firstAttribute="leading" relation="lessThanOrEqual" secondItem="TAg-wu-qnb" secondAttribute="leading" constant="217" id="pSj-sl-Ojx"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="goToLogin" destination="8JR-2S-5zU" id="AaB-CM-ifF"/>
@@ -431,6 +451,7 @@
                             <constraint firstAttribute="centerY" secondItem="rMI-cb-scj" secondAttribute="centerY" id="JXy-fb-6AK"/>
                             <constraint firstAttribute="centerX" secondItem="rMI-cb-scj" secondAttribute="centerX" id="ugE-rq-PAo"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="loginAndGoToAddresses" destination="rMI-cb-scj" id="zSr-O6-sTu"/>
@@ -464,6 +485,7 @@
                             <constraint firstAttribute="centerX" secondItem="Pen-1z-Swr" secondAttribute="centerX" id="Of0-Lw-GYd"/>
                             <constraint firstAttribute="centerY" secondItem="Pen-1z-Swr" secondAttribute="centerY" id="pIs-KC-U1d"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="chooseBillingAndShippingAddressesAndGoToNextStep" destination="Pen-1z-Swr" id="5bE-cB-k0t"/>
@@ -497,6 +519,7 @@
                             <constraint firstAttribute="centerY" secondItem="fCc-1Z-JMx" secondAttribute="centerY" id="SzQ-Cu-nUp"/>
                             <constraint firstAttribute="centerX" secondItem="fCc-1Z-JMx" secondAttribute="centerX" id="hKq-Xs-XMh"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="chooseShippingMethodAndGoToNextStep" destination="fCc-1Z-JMx" id="WxK-xD-rLE"/>
@@ -534,6 +557,7 @@
                             <constraint firstAttribute="centerX" secondItem="pxX-bV-YMh" secondAttribute="centerX" id="LLc-y0-H1z"/>
                             <constraint firstAttribute="centerY" secondItem="pxX-bV-YMh" secondAttribute="centerY" id="aZ3-HX-pk4"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="choosePaymentMethodAndGoToNextStep" destination="pxX-bV-YMh" id="Epa-z2-PO9"/>
