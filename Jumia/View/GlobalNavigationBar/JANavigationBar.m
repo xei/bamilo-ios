@@ -26,6 +26,10 @@
         [self.navigationBarView.leftButton addTarget:self
                                               action:@selector(openMenu)
                                     forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.navigationBarView.cartButton addTarget:self
+                                              action:@selector(openCart)
+                                    forControlEvents:UIControlEventTouchUpInside];
     }
     
     return self;
@@ -34,6 +38,11 @@
 - (void)openMenu
 {
     [self.customDelegate customNavigationBarOpenMenu];
+}
+
+- (void)openCart
+{
+    [self.customDelegate customNavigationBarOpenCart];
 }
 
 - (void)changeNavigationBarTitle:(NSString *)newTitle

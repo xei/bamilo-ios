@@ -10,14 +10,15 @@
 #import "JAMenuViewController.h"
 #import "JAHomeViewController.h"
 #import "JANavigationBar.h"
-#import "RIApi.h"
+#import "RICart.h"
 
 @interface JARootViewController ()
 <
-    JANavigationBarDelegate
+JANavigationBarDelegate
 >
 
 @property (strong, nonatomic) JANavigationBar *navBar;
+@property (strong, nonatomic) RICart *cart;
 
 @end
 
@@ -39,6 +40,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(openMainMenu)
                                                  name:kOpenMenuNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(openCart)
+                                                 name:kOpenCartNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateCart:)
+                                                 name:kUpdateCartNotification
                                                object:nil];
 }
 
@@ -91,14 +102,38 @@
 {
     [self pushViewControllerWithName:@"teste"
                       titleForNavBar:@"Cart"];
+
+    if(VALID_NOTEMPTY(self.cart, RICart) && 0 < [self.cart cartCount])
+    {
+        [self setCenterPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"cartViewController"]];
+        [self showCenterPanelAnimated:YES];
+    }
+    else
+    {
+        [self setCenterPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"emptyCartViewController"]];
+        [self showCenterPanelAnimated:YES];        
+    }
+}
+
+- (void)updateCart:(NSNotification*) notification
+{
+    if ([kUpdateCartNotification isEqualToString:notification.name])
+    {
+        NSDictionary* userInfo = notification.userInfo;
+        self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
+    }
 }
 
 #pragma mark - Custom navigation bar delegates
 
 - (void)customNavigationBarOpenMenu
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
-                                                        object:nil];
+    [self openMainMenu];
+}
+
+- (void)customNavigationBarOpenCart
+{
+    [self openCart];
 }
 
 #pragma mark - Push and pop methods

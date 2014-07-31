@@ -11,3 +11,6 @@
 #define kCancelButtonPressedInMenuSearchBar @"PRESSED_BACK_BUTTON_NOTIFICATION"
 #define kMenuDidSelectOptionNotification @"NOTIFICATION_SELECTED_ITEM_MENU"
 #define kOpenMenuNotification @"NOTIFICATION_OPEN_MENU"
+#define kOpenCartNotification @"NOTIFICATION_OPEN_CART"
+#define kUpdateCartNotification @"NOTIFICATION_UPDATE_CART"
+#define kUpdateCartNotificationValue @"NOTIFICATION_UPDATE_CART_VALUE"
