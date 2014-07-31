@@ -9,6 +9,7 @@
 #import "JALoginViewController.h"
 #import "RIForm.h"
 #import "RIField.h"
+#import "JAAddressesViewController.h"
 
 @interface JALoginViewController ()
 
@@ -46,6 +47,12 @@
         [RIForm sendForm:form successBlock:^(NSDictionary *jsonObject) {
             NSLog(@"Login with success");
             [self hideLoading];
+            
+            JAAddressesViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
+            
+            [self.navigationController pushViewController:addressesVC
+                                                 animated:YES];
+            
         } andFailureBlock:^(NSArray *errorObject) {
             NSLog(@"Login failed");
             [self hideLoading];

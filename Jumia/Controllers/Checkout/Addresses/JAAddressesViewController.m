@@ -11,6 +11,7 @@
 #import "RIAddress.h"
 #import "RIForm.h"
 #import "RIField.h"
+#import "JAUtils.h"
 
 @interface JAAddressesViewController ()
 
@@ -35,14 +36,19 @@
     [self showLoading];
     [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
         NSLog(@"Get customer addresses with success");
-        NSArray *addressList = adressList;
-        if(VALID_NOTEMPTY(addressList, NSArray))
+        NSDictionary *addressDictionary = adressList;
+        if(VALID_NOTEMPTY(addressDictionary, NSDictionary))
         {
-            RIAddress *address = [adressList objectAtIndex:0];
-            if(VALID_NOTEMPTY(address, RIAddress))
+            RIAddress *billingAddress = [addressDictionary objectForKey:@"billing"];
+            if(VALID_NOTEMPTY(billingAddress, RIAddress))
             {
-                self.billingAddressId = address.uid;
-                self.shippingAddressId = address.uid;
+                self.billingAddressId = [billingAddress uid];
+            }
+            
+            RIAddress *shippingAddress = [addressDictionary objectForKey:@"shipping"];
+            if(VALID_NOTEMPTY(shippingAddress, RIAddress))
+            {
+                self.shippingAddressId = [shippingAddress uid];
             }
         }
         
@@ -74,34 +80,16 @@
             }
             else if([@"billingForm[shippingAddressDifferent" isEqualToString:[field name]])
             {
-                field.value = [self.billingAddressId isEqualToString:self.shippingAddressId] ? @"0" : @":01";
+                field.value = [self.billingAddressId isEqualToString:self.shippingAddressId] ? @"0" : @":1";
             }
         }
         
         [RICheckout setBillingAddress:billingForm successBlock:^(RICheckout *checkout) {
             NSLog(@"Set billing address form with success");
             
-            if([@"createAddress" isEqualToString:checkout.nextStep])
-            {
-                
-            }
-            else if([@"billing" isEqualToString:checkout.nextStep])
-            {
-                
-            }
-            else if([@"shippingMethod" isEqualToString:checkout.nextStep])
-            {
-                
-            }
-            else if([@"paymentMethod" isEqualToString:checkout.nextStep])
-            {
-                
-            }
-            else if([@"finish" isEqualToString:checkout.nextStep])
-            {
-                
-            }
-            
+            UIViewController *controller = [JAUtils getCheckoutNextStepViewController:checkout.nextStep inStoryboard:self.storyboard];
+            [self.navigationController pushViewController:controller
+                                                 animated:YES];
             [self hideLoading];
         } andFailureBlock:^(NSArray *errorMessages) {
             NSLog(@"Failed to set billing address form");
