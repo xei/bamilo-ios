@@ -14,7 +14,6 @@
 @interface RIFormIndex : NSManagedObject
 
 @property (nonatomic, retain) NSString * uid;
-@property (nonatomic, retain) NSString * md5;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) RIForm *form;
 
