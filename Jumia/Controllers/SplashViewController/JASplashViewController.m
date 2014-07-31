@@ -13,7 +13,8 @@
 
 @interface JASplashViewController ()
 
-@property (nonatomic, assign)NSInteger requestCount;
+@property (nonatomic, assign) NSInteger requestCount;
+@property (weak, nonatomic) IBOutlet UIImageView *splashImage;
 
 @end
 
@@ -24,6 +25,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (self.view.frame.size.height > 500.0f)
+    {
+        self.splashImage.image = [UIImage imageNamed:@"splash5"];
+    }
+    else
+    {
+        self.splashImage.image = [UIImage imageNamed:@"splash4"];
+    }
     
     [self showLoading];
     
