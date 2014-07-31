@@ -29,6 +29,9 @@
 
 - (void)changeNavigationBarTitle:(NSString *)newTitle
 {
+    self.backButton.hidden = YES;
+    self.backImageView.hidden = YES;
+    
     self.logoImageView.hidden = YES;
     self.titleLabel.text = newTitle;
     self.titleLabel.hidden = NO;
@@ -36,8 +39,80 @@
 
 - (void)changedToHomeViewController
 {
+    self.backButton.hidden = YES;
+    self.backImageView.hidden = YES;
+    
     self.logoImageView.hidden = NO;
     self.titleLabel.hidden = YES;
+}
+
+- (void)enteredInFirstLevelWithTitle:(NSString *)title
+                     andProductCount:(NSString *)productCount
+{
+    self.backButton.hidden = YES;
+    self.backImageView.hidden = YES;
+    
+    title = [title stringByAppendingString:@" "];
+    productCount = [NSString stringWithFormat:@"(%@)", productCount];
+    
+    NSMutableAttributedString *stringTitle = [[NSMutableAttributedString alloc] initWithString:title];
+    
+    NSInteger _stringLength = title.length;
+    
+    UIColor *titleColor = [UIColor colorWithRed:78.0/255.0 green:78.0/255.0 blue:78.0/255.0 alpha:1.0f];
+    
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue"
+                                   size:17.0];
+    
+    [stringTitle addAttribute:NSFontAttributeName
+                        value:font
+                        range:NSMakeRange(0, _stringLength)];
+    
+    [stringTitle addAttribute:NSStrokeColorAttributeName
+                        value:titleColor
+                        range:NSMakeRange(0, _stringLength)];
+    
+    NSMutableAttributedString *stringProductCount = [[NSMutableAttributedString alloc] initWithString:productCount];
+    
+    NSInteger secondStringLength = productCount.length;
+    
+    UIFont *countFont = [UIFont fontWithName:@"HelveticaNeue-Light"
+                                        size:10.0];
+    
+    [stringProductCount addAttribute:NSFontAttributeName
+                               value:countFont
+                               range:NSMakeRange(0, secondStringLength)];
+    
+    [stringProductCount addAttribute:NSStrokeColorAttributeName
+                               value:titleColor
+                               range:NSMakeRange(0, secondStringLength)];
+    
+    NSMutableAttributedString *resultString = [stringTitle mutableCopy];
+    [resultString appendAttributedString:stringProductCount];
+    
+    self.logoImageView.hidden = YES;
+    self.titleLabel.attributedText = resultString;
+    self.titleLabel.hidden = NO;
+}
+
+- (void)enteredSecondOrThirdLevelWithBackTitle:(NSString *)backTitle
+{
+    self.logoImageView.hidden = YES;
+    self.titleLabel.hidden = YES;
+    self.leftButton.hidden = YES;
+    
+    self.backButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue"
+                                   size:17.0];
+    
+    self.backButton.titleLabel.font = font;
+    
+    [self.backButton setTitle:backTitle
+                     forState:UIControlStateNormal];
+    
+    self.backButton.hidden = NO;
+    self.backImageView.hidden = NO;
 }
 
 @end

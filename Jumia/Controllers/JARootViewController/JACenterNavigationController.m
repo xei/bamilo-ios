@@ -106,6 +106,28 @@
         
         self.viewControllers = @[favourites];
     }
+    
+    /*
+     * READ
+     *
+     
+     if enter in 1 level:
+     
+     [self.navigationBarView enteredSecondOrThirdLevelWithBackTitle:@"Electronics"];
+     
+     if enter in 2 or 3 level:
+     
+     [self.navigationBarView enteredInFirstLevelWithTitle:@"Electronics"
+     andProductCount:@"432"];
+     
+     and add back action
+     
+     [self.navigationBarView.backButton addTarget:self
+     action:@selector(back)
+     forControlEvents:UIControlEventTouchUpInside];
+     
+     
+     */
 }
 
 - (void)didSelectedItemInMenu:(NSNotification *)notification
@@ -127,6 +149,11 @@
                      titleForNavBar:[selectedItem objectForKey:@"name"]];
         }
     }
+}
+
+- (void)back
+{
+    [self popViewControllerAnimated:YES];
 }
 
 #pragma mark - Customize navigation bar

@@ -11,9 +11,12 @@
 
 @implementation JAEmptyCartViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    self.navigationItem.hidesBackButton = YES;
+    self.title = @"";
     
     // TODO: Check if cart is empty..
     // If the cart is empty this should be redirected to a empty cart page
