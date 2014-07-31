@@ -151,13 +151,17 @@
 {
     if ([section.name isEqualToString:@"categories"])
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RICategory loadCategoriesIntoDatabaseWithSuccessBlock:^(id categories) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(NSArray* errorMessages) {
             failureBlock(errorMessages);
         }];
     } else if ([section.name isEqualToString:@"forms"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RIFormIndex loadFormIndexesIntoDatabaseWithSuccessBlock:^(id formIndexes) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(NSArray *errorMessage) {
             failureBlock(errorMessage);
@@ -165,7 +169,9 @@
     }
     else if ([section.name isEqualToString:@"teasers"])
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RITeaserCategory loadTeaserCategoriesIntoDatabaseWithSuccessBlock:^(id teasers) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(NSArray *errorMessage) {
             failureBlock(errorMessage);
@@ -173,24 +179,27 @@
     }
     else if ([section.name isEqualToString:@"imageresolutions"])
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RIImageResolution loadImageResolutionsIntoDatabaseWithSuccessBlock:^{
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(NSArray *errorMessage) {
             
         }];
     }
     else if ([section.name isEqualToString:@"countryconfs"])
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RICountry loadCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(NSArray *errorMessages) {
             
         }];
     }
     else if ([section.name isEqualToString:@"static_blocks"])
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RIStaticBlockIndex loadStaticBlockIndexesIntoDatabaseWithSuccessBlock:^(id staticBlockIndexes) {
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(NSArray *errorMessage) {
             
         }];
