@@ -66,7 +66,7 @@
     [self.scrollView setContentSize:CGSizeMake(currentWidth,
                                                self.scrollView.frame.size.height)];
     
-    [self selectLabelTextAtIndex:0];
+    [self selectLabelAtIndex:0];
     
     
     UIImage* indicatorImage = [UIImage imageNamed:JATeaserCategoryScrollViewIndicatorImageName];
@@ -85,7 +85,7 @@
     return nil;
 }
 
-- (void)selectLabelTextAtIndex:(NSInteger)index
+- (void)selectLabelAtIndex:(NSInteger)index
 {
     for (int i = 0; i < self.teaserCategoryLabels.count; i++) {
         UILabel* label = [self.teaserCategoryLabels objectAtIndex:i];
@@ -98,6 +98,10 @@
             label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:JATeaserCategoryScrollViewTextSize];
         }
     }
+    
+    if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(teaserCategorySelectedAtIndex:)]) {
+        [self.delegate teaserCategorySelectedAtIndex:index];
+    }
 }
 
 #pragma mark - Scrollview delegate
@@ -106,7 +110,7 @@
 {
     CGPoint point = *targetContentOffset;
     
-    [self selectLabelTextAtIndex:(point.x/JATeaserCategoryScrollViewCenterWidth)];
+    [self selectLabelAtIndex:(point.x/JATeaserCategoryScrollViewCenterWidth)];
 }
 
 

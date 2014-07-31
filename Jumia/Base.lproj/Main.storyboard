@@ -181,17 +181,25 @@
                                     <constraint firstAttribute="height" constant="44" id="3PM-CR-fMh"/>
                                 </constraints>
                             </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bkc-8c-W5b">
+                                <rect key="frame" x="0.0" y="88" width="320" height="392"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Bkc-8c-W5b" firstAttribute="top" secondItem="Ef6-VX-9sX" secondAttribute="bottom" id="06q-a0-Ke8"/>
                             <constraint firstAttribute="trailing" secondItem="Ef6-VX-9sX" secondAttribute="trailing" id="FW5-qh-vUP"/>
+                            <constraint firstItem="Bkc-8c-W5b" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ISm-mH-rMa"/>
                             <constraint firstItem="Ef6-VX-9sX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="24" id="Z4F-1s-N5U"/>
                             <constraint firstItem="Ef6-VX-9sX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ccv-GB-sFR"/>
+                            <constraint firstAttribute="trailing" secondItem="Bkc-8c-W5b" secondAttribute="trailing" id="iPH-vG-Lb0"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bkc-8c-W5b" secondAttribute="bottom" id="nI1-ga-X3T"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="teaserCategoryScrollView" destination="Ef6-VX-9sX" id="ZO7-DF-jKk"/>
+                        <outlet property="teaserPagesScrollView" destination="Bkc-8c-W5b" id="cfM-YP-dkQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JATeaserCategoryScrollView.h"
 
-@interface JAHomeViewController : UIViewController
+@interface JAHomeViewController : UIViewController <JATeaserCategoryScrollViewDelegate>
 
 @end
