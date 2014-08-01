@@ -13,6 +13,7 @@
 #import "JATopBrandsTeaserView.h"
 #import "JASmallTeaserView.h"
 #import "JACampaignsTeaserView.h"
+#import "JATopCategoriesTeaserView.h"
 
 @interface JATeaserPageView()
 
@@ -165,7 +166,27 @@
 }
 
 - (void)loadPopularCategories
-{}
+{
+    for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
+        
+        if (3 == [teaserGroup.type integerValue]) {
+            
+            //found it
+            
+            JATopCategoriesTeaserView* topCategoriesTeaserView = [[JATopCategoriesTeaserView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
+                                                                                                                             self.currentY,
+                                                                                                                             self.bounds.size.width,
+                                                                                                                             1)]; //height is set by the view itself
+            [self addSubview:topCategoriesTeaserView];
+            [topCategoriesTeaserView setTeasers:teaserGroup.teasers];
+            [topCategoriesTeaserView load];
+            
+            self.currentY += topCategoriesTeaserView.frame.size.height;
+            
+            break;
+        }
+    }
+}
 
 - (void)loadTopBrands
 {}

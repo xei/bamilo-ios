@@ -151,6 +151,7 @@
 		CE445870198BD21A00CE7E8D /* JATeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44586F198BD21A00CE7E8D /* JATeaserView.m */; };
 		CE445875198BD5D800CE7E8D /* JASmallTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445874198BD5D800CE7E8D /* JASmallTeaserView.m */; };
 		CE445879198BF15B00CE7E8D /* JACampaignsTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445878198BF15B00CE7E8D /* JACampaignsTeaserView.m */; };
+		CE44587C198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44587B198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m */; };
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
 		CE69B59519868CFE005CC699 /* JATeaserCategoryScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */; };
 		CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B981987FF490078DFC9 /* JASplashViewController.m */; };
@@ -435,6 +436,8 @@
 		CE445874198BD5D800CE7E8D /* JASmallTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASmallTeaserView.m; sourceTree = "<group>"; };
 		CE445877198BF15B00CE7E8D /* JACampaignsTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACampaignsTeaserView.h; sourceTree = "<group>"; };
 		CE445878198BF15B00CE7E8D /* JACampaignsTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACampaignsTeaserView.m; sourceTree = "<group>"; };
+		CE44587A198BF2EE00CE7E8D /* JATopCategoriesTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATopCategoriesTeaserView.h; sourceTree = "<group>"; };
+		CE44587B198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATopCategoriesTeaserView.m; sourceTree = "<group>"; };
 		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		CE69B59319868CFE005CC699 /* JATeaserCategoryScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATeaserCategoryScrollView.h; sourceTree = "<group>"; };
 		CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATeaserCategoryScrollView.m; sourceTree = "<group>"; };
@@ -1232,6 +1235,8 @@
 				CE445874198BD5D800CE7E8D /* JASmallTeaserView.m */,
 				CE445877198BF15B00CE7E8D /* JACampaignsTeaserView.h */,
 				CE445878198BF15B00CE7E8D /* JACampaignsTeaserView.m */,
+				CE44587A198BF2EE00CE7E8D /* JATopCategoriesTeaserView.h */,
+				CE44587B198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m */,
 			);
 			path = TeaserViews;
 			sourceTree = "<group>";
@@ -1431,6 +1436,7 @@
 				B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */,
 				4A39212A19891F6300B70A9C /* JASignInViewController.m in Sources */,
 				B5A302D819811E9200F71726 /* RIProductReview.m in Sources */,
+				CE44587C198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m in Sources */,
 				CE445875198BD5D800CE7E8D /* JASmallTeaserView.m in Sources */,
 				4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */,
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
