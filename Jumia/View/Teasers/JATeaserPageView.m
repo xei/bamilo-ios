@@ -10,6 +10,7 @@
 #import "RITeaserGroup.h"
 #import "JAMainTeaserView.h"
 #import "JATopSellersTeaserView.h"
+#import "JATopBrandsTeaserView.h"
 
 @interface JATeaserPageView()
 
@@ -64,6 +65,26 @@
     if ([[self.teaserCategory.homePageLayout lowercaseString] isEqualToString:@"fashion"]) {
 
         //brand teasers
+        for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
+            
+            if (4 == [teaserGroup.type integerValue]) {
+                
+                //found it
+                
+                JATopBrandsTeaserView* topSellersTeaserView = [[JATopBrandsTeaserView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
+                                                                                                                self.currentY,
+                                                                                                                self.bounds.size.width,
+                                                                                                                1)]; //height is set by the view itself
+                [self addSubview:topSellersTeaserView];
+                [topSellersTeaserView setTeasers:teaserGroup.teasers];
+                [topSellersTeaserView load];
+                
+                self.currentY += topSellersTeaserView.frame.size.height;
+                
+                break;
+            }
+        }
+
         
     } else if ([[self.teaserCategory.homePageLayout lowercaseString] isEqualToString:@"gm"]) {
         
