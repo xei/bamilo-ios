@@ -11,6 +11,7 @@
 #import "JAMainTeaserView.h"
 #import "JATopSellersTeaserView.h"
 #import "JATopBrandsTeaserView.h"
+#import "JASmallTeaserView.h"
 
 @interface JATeaserPageView()
 
@@ -34,6 +35,9 @@
         [self loadTopBrands];
         
         self.isLoaded = YES;
+        
+        [self setContentSize:CGSizeMake(self.frame.size.width,
+                                        self.currentY)];
     }
 }
 
@@ -114,7 +118,27 @@
 }
 
 - (void)loadSmallTeasers
-{}
+{
+    for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
+        
+        if (1 == [teaserGroup.type integerValue]) {
+            
+            //found it
+            
+            JASmallTeaserView* smallTeaserView = [[JASmallTeaserView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
+                                                                                                     self.currentY,
+                                                                                                     self.bounds.size.width,
+                                                                                                     1)]; //height is set by the view itself
+            [self addSubview:smallTeaserView];
+            [smallTeaserView setTeasers:teaserGroup.teasers];
+            [smallTeaserView load];
+            
+            self.currentY += smallTeaserView.frame.size.height;
+            
+            break;
+        }
+    }
+}
 
 - (void)loadCampaigns
 {}
