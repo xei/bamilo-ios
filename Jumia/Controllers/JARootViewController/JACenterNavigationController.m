@@ -14,6 +14,9 @@
 #import "JAChooseCountryViewController.h"
 
 @interface JACenterNavigationController ()
+<
+    JAChooseCountryDelegate
+>
 
 @property (strong, nonatomic) RICart *cart;
 
@@ -92,35 +95,50 @@
 {
     if ([newScreenName isEqualToString:@"Home"])
     {
-        JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
-        
-        [self pushViewController:home
-                        animated:YES];
-        [self.navigationBarView changedToHomeViewController];
-        
-        self.viewControllers = @[home];
+        if (![self.viewControllers.lastObject isKindOfClass:[JAHomeViewController class]])
+        {
+            JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+            
+            [self pushViewController:home
+                            animated:YES];
+            [self.navigationBarView changedToHomeViewController];
+            
+            self.viewControllers = @[home];
+        }
     }
     else if ([newScreenName isEqualToString:@"My Favourites"])
     {
-        JAMyFavouritesViewController *favourites = [self.storyboard instantiateViewControllerWithIdentifier:@"myFavouritesViewController"];
-        
-        [self pushViewController:favourites
-                        animated:YES];
-        
-        [self.navigationBarView changeNavigationBarTitle:title];
-        
-        self.viewControllers = @[favourites];
+        if (![self.viewControllers.lastObject isKindOfClass:[JAMyFavouritesViewController class]])
+        {
+            JAMyFavouritesViewController *favourites = [self.storyboard instantiateViewControllerWithIdentifier:@"myFavouritesViewController"];
+            
+            [self pushViewController:favourites
+                            animated:YES];
+            
+            [self.navigationBarView changeNavigationBarTitle:title];
+            
+            self.viewControllers = @[favourites];
+        }
     }
     else if ([newScreenName isEqualToString:@"Choose Country"])
     {
-        JAChooseCountryViewController *country = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
-        
-        [self pushViewController:country
-                        animated:YES];
-        
-        [self.navigationBarView changeNavigationBarTitle:title];
-        
-        self.viewControllers = @[country];
+        if (![self.viewControllers.lastObject isKindOfClass:[JAChooseCountryViewController class]])
+        {
+            JAChooseCountryViewController *country = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
+            country.delegate = self;
+            
+            [self pushViewController:country
+                            animated:YES];
+            
+            [self.navigationBarView changeNavigationBarTitle:title];
+            [self.navigationBarView changeToChooseCountry];
+            
+            [self.navigationBarView.applyButton addTarget:country
+                                                   action:@selector(applyButtonPressed)
+                                         forControlEvents:UIControlEventTouchDragInside];
+            
+            self.viewControllers = @[country];
+        }
     }
     
     /*
@@ -170,6 +188,19 @@
 - (void)back
 {
     [self popViewControllerAnimated:YES];
+}
+
+#pragma mark - Selected country delegate
+
+- (void)didSelectedCountry
+{
+    JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+    
+    [self pushViewController:home
+                    animated:YES];
+    [self.navigationBarView changedToHomeViewController];
+    
+    self.viewControllers = @[home];
 }
 
 #pragma mark - Customize navigation bar

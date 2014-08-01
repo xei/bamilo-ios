@@ -31,6 +31,8 @@
 {
     self.backButton.hidden = YES;
     self.backImageView.hidden = YES;
+    self.applyButton.hidden = YES;
+    self.cartButton.hidden = NO;
     
     self.logoImageView.hidden = YES;
     self.titleLabel.text = newTitle;
@@ -41,6 +43,8 @@
 {
     self.backButton.hidden = YES;
     self.backImageView.hidden = YES;
+    self.applyButton.hidden = YES;
+    self.cartButton.hidden = NO;
     
     self.logoImageView.hidden = NO;
     self.titleLabel.hidden = YES;
@@ -51,6 +55,8 @@
 {
     self.backButton.hidden = YES;
     self.backImageView.hidden = YES;
+    self.applyButton.hidden = YES;
+    self.cartButton.hidden = NO;
     
     title = [title stringByAppendingString:@" "];
     productCount = [NSString stringWithFormat:@"(%@)", productCount];
@@ -100,6 +106,8 @@
     self.logoImageView.hidden = YES;
     self.titleLabel.hidden = YES;
     self.leftButton.hidden = YES;
+    self.applyButton.hidden = YES;
+    self.cartButton.hidden = NO;
     
     self.backButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
@@ -118,6 +126,19 @@
 - (void)updateCartProductCount:(NSNumber*)cartNumber
 {
     [self.cartCountLabel setText:[cartNumber stringValue]];
+}
+
+#pragma mark - Choose country
+
+- (void)changeToChooseCountry
+{
+    self.logoImageView.hidden = NO;
+    self.titleLabel.hidden = YES;
+    self.leftButton.hidden = NO;
+    self.applyButton.hidden = NO;
+    self.cartButton.hidden = YES;
+    
+    self.applyButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
 }
 
 @end

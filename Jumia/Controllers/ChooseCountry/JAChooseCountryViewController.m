@@ -6,9 +6,11 @@
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "JAChooseCountryViewController.h"
 #import "UIImageView+WebCache.h"
 #import "RICountry.h"
+#import "JACountryCell.h"
 
 @interface JAChooseCountryViewController ()
 <
@@ -19,6 +21,7 @@
 @property (strong, nonatomic) NSArray *countriesArray;
 @property (strong, nonatomic) NSString *requestId;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewContries;
+@property (strong, nonatomic) NSIndexPath *selectedIndex;
 
 @end
 
@@ -54,7 +57,26 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark - Selected apply
+
+- (void)applyButtonPressed
+{
+    // RICountry *country = [self.countriesArray objectAtIndex:self.selectedIndex.row];
+    
+    [self.delegate didSelectedCountry];
+}
+
 #pragma mark - Tableview delegates
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [[UIView alloc] initWithFrame:CGRectZero];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -63,15 +85,43 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"countryCell"];
+    JACountryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"countryCell"];
     
     RICountry *country = [self.countriesArray objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = country.name;
+    cell.countryName.text = country.name;
     
-    [cell.imageView setImageWithURL:[NSURL URLWithString:country.flag]];
+    [cell.countryImage setImageWithURL:[NSURL URLWithString:country.flag]];
+    
+    cell.countryImage.layer.cornerRadius = cell.countryImage.frame.size.height /2;
+    cell.countryImage.layer.masksToBounds = YES;
+    cell.countryImage.layer.borderWidth = 0;
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.selectedIndex)
+    {
+        JACountryCell *previousCell = (JACountryCell *)[tableView cellForRowAtIndexPath:self.selectedIndex];
+        previousCell.checkImage.hidden = YES;
+        
+        JACountryCell *cell = (JACountryCell *)[tableView cellForRowAtIndexPath:indexPath];
+        cell.checkImage.hidden = NO;
+        
+        self.selectedIndex = indexPath;
+    }
+    else
+    {
+        JACountryCell *cell = (JACountryCell *)[tableView cellForRowAtIndexPath:indexPath];
+        cell.checkImage.hidden = NO;
+        
+        self.selectedIndex = indexPath;
+    }
+    
+    [tableView deselectRowAtIndexPath:indexPath
+                             animated:YES];
 }
 
 #pragma mark - Navigation

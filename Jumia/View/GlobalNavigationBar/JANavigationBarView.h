@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *applyButton;
 
 + (JANavigationBarView *)getNewNavBarView;
 
@@ -29,5 +30,7 @@
                      andProductCount:(NSString *)productCount;
 
 - (void)enteredSecondOrThirdLevelWithBackTitle:(NSString *)backTitle;
+
+- (void)changeToChooseCountry;
 
 @end

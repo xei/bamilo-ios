@@ -19,6 +19,8 @@
 		4A39213A19891FC400B70A9C /* JAMyFavouritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39213919891FC400B70A9C /* JAMyFavouritesViewController.m */; };
 		4A392141198925D000B70A9C /* JANavigationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A392140198925D000B70A9C /* JANavigationBarView.m */; };
 		4A392143198925E300B70A9C /* JANavigationBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A392142198925E300B70A9C /* JANavigationBarView.xib */; };
+		4A4ABF0C198B903B00342D92 /* JACountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4ABF0B198B903B00342D92 /* JACountryCell.m */; };
+		4A4ABF0E198B9DE600342D92 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */; };
 		4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */; };
 		4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242D91986547C00E37C90 /* JASidePanelController.m */; };
 		4AE242E01986569000E37C90 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
@@ -185,6 +187,9 @@
 		4A39213F198925D000B70A9C /* JANavigationBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANavigationBarView.h; sourceTree = "<group>"; };
 		4A392140198925D000B70A9C /* JANavigationBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANavigationBarView.m; sourceTree = "<group>"; };
 		4A392142198925E300B70A9C /* JANavigationBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANavigationBarView.xib; sourceTree = "<group>"; };
+		4A4ABF0A198B903B00342D92 /* JACountryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACountryCell.h; sourceTree = "<group>"; };
+		4A4ABF0B198B903B00342D92 /* JACountryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACountryCell.m; sourceTree = "<group>"; };
+		4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4A7F747F198A4EDA00621C0D /* JACenterNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACenterNavigationController.h; sourceTree = "<group>"; };
 		4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACenterNavigationController.m; sourceTree = "<group>"; };
 		4AE242D81986547C00E37C90 /* JASidePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASidePanelController.h; sourceTree = "<group>"; };
@@ -434,6 +439,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A4ABF0E198B9DE600342D92 /* QuartzCore.framework in Frameworks */,
 				4A1C00D81987F2EB00A0109E /* UIKit.framework in Frameworks */,
 				B5A302FA19811F1E00F71726 /* CoreGraphics.framework in Frameworks */,
 				B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */,
@@ -537,6 +543,23 @@
 			path = GlobalNavigationBar;
 			sourceTree = "<group>";
 		};
+		4A4ABF08198B902600342D92 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4A4ABF09198B902600342D92 /* CountryCell */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		4A4ABF09198B902600342D92 /* CountryCell */ = {
+			isa = PBXGroup;
+			children = (
+				4A4ABF0A198B903B00342D92 /* JACountryCell.h */,
+				4A4ABF0B198B903B00342D92 /* JACountryCell.m */,
+			);
+			path = CountryCell;
+			sourceTree = "<group>";
+		};
 		4AE242D71986547C00E37C90 /* JASidePanel */ = {
 			isa = PBXGroup;
 			children = (
@@ -549,6 +572,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4A4ABF08198B902600342D92 /* Cells */,
 				4A39213B198921A100B70A9C /* GlobalNavigationBar */,
 				CE69B58D19868B7A005CC699 /* Teasers */,
 				4AE242DC198655D900E37C90 /* Storyboard */,
@@ -719,6 +743,7 @@
 		B5A301D119811E7600F71726 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */,
 				B5A302FB19811F2200F71726 /* UIKit.framework */,
 				B5A302F919811F1E00F71726 /* CoreGraphics.framework */,
 				B5A302F719811F1A00F71726 /* Foundation.framework */,
@@ -1433,6 +1458,7 @@
 				B5225E3719895E0600C18F1E /* JAEmptyCartViewController.m in Sources */,
 				B5A3025919811E8A00F71726 /* SDWebImageDecoder.m in Sources */,
 				CEE91B9C1989065A0078DFC9 /* JATeaserPageView.m in Sources */,
+				4A4ABF0C198B903B00342D92 /* JACountryCell.m in Sources */,
 				4A39212719891F2D00B70A9C /* JATrackMyOrderViewController.m in Sources */,
 				B5A302C719811E9200F71726 /* RILanguage.m in Sources */,
 				B5A302E219811E9200F71726 /* RIAd4PushTracker.m in Sources */,

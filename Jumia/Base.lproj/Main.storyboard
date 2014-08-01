@@ -252,21 +252,53 @@
                                 <rect key="frame" x="6" y="6" width="468" height="404"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="separatorInset" minX="50" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="top" ambiguous="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="countryCell" textLabel="EgK-Wg-lxc" style="IBUITableViewCellStyleDefault" id="TmH-ze-LLi">
+                                    <tableViewCell contentMode="top" ambiguous="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="countryCell" rowHeight="44" id="TmH-ze-LLi" customClass="JACountryCell">
                                         <rect key="frame" x="0.0" y="0.0" width="456" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TmH-ze-LLi" id="ChK-5H-bV9">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EgK-Wg-lxc">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xAX-2L-9IM">
+                                                    <rect key="frame" x="12" y="9" width="25" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="LhM-by-jlT"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uS8-ol-GdG">
+                                                    <rect key="frame" x="55" y="13" width="353" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="Bdc-dv-Xt5"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.30588235289999999" green="0.30588235289999999" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tick_selected" translatesAutoresizingMaskIntoConstraints="NO" id="9My-fj-A3J">
+                                                    <rect key="frame" x="434" y="15" width="14" height="14"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="14" id="uYs-3S-dKC"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="xAX-2L-9IM" firstAttribute="leading" secondItem="ChK-5H-bV9" secondAttribute="leading" constant="12" id="Cca-I9-02p"/>
+                                                <constraint firstItem="uS8-ol-GdG" firstAttribute="leading" secondItem="xAX-2L-9IM" secondAttribute="trailing" constant="18" id="I04-QW-ijI"/>
+                                                <constraint firstItem="9My-fj-A3J" firstAttribute="top" secondItem="ChK-5H-bV9" secondAttribute="top" constant="15" id="MgN-8V-wfL"/>
+                                                <constraint firstItem="xAX-2L-9IM" firstAttribute="top" secondItem="ChK-5H-bV9" secondAttribute="top" constant="9" id="UXb-Qb-qcq"/>
+                                                <constraint firstAttribute="bottom" secondItem="9My-fj-A3J" secondAttribute="bottom" constant="14" id="Y2e-zs-Bls"/>
+                                                <constraint firstItem="uS8-ol-GdG" firstAttribute="top" secondItem="ChK-5H-bV9" secondAttribute="top" constant="13" id="abG-fd-doo"/>
+                                                <constraint firstAttribute="bottom" secondItem="xAX-2L-9IM" secondAttribute="bottom" constant="9" id="ebT-SF-hct"/>
+                                                <constraint firstAttribute="trailing" secondItem="9My-fj-A3J" secondAttribute="trailing" constant="20" id="laS-HE-2pN"/>
+                                                <constraint firstItem="9My-fj-A3J" firstAttribute="leading" secondItem="uS8-ol-GdG" secondAttribute="trailing" constant="26" id="lyB-nl-In9"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="checkImage" destination="9My-fj-A3J" id="CvK-ws-T3f"/>
+                                            <outlet property="countryImage" destination="xAX-2L-9IM" id="hdg-B1-esQ"/>
+                                            <outlet property="countryName" destination="uS8-ol-GdG" id="aE0-0o-uuw"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -293,7 +325,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OXB-ZK-wfC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2403" y="-503"/>
+            <point key="canvasLocation" x="2403" y="-505"/>
         </scene>
         <!--My Favourites View Controller-->
         <scene sceneID="2xZ-ca-Yh9">
@@ -384,6 +416,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tCF-5Z-jLJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                 </navigationController>
@@ -629,5 +662,6 @@
     </scenes>
     <resources>
         <image name="ico_cart" width="25" height="20"/>
+        <image name="tick_selected" width="14" height="14"/>
     </resources>
 </document>
