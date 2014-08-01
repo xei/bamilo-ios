@@ -1,5 +1,5 @@
 //
-//  JATopBrandsTeaserView.h
+//  JATeaserView.h
 //  Jumia
 //
 //  Created by Telmo Pinto on 01/08/14.
@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RITeaser.h"
+#import "RITeaserProduct.h"
+#import "RITeaserImage.h"
+#import "RITeaserText.h"
 
-@interface JATopBrandsTeaserView : UIView
+@interface JATeaserView : UIView
 
 @property (nonatomic, strong)NSOrderedSet* teasers;
 
