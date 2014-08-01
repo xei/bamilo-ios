@@ -33,6 +33,11 @@
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applyButtonPressed)
+                                                 name:kDidPressedApplyNotification
+                                               object:nil];
+    
     self.tableViewContries.layer.cornerRadius = 5.0f;
     
     [self showLoading];
@@ -57,13 +62,21 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Selected apply
 
 - (void)applyButtonPressed
 {
-    // RICountry *country = [self.countriesArray objectAtIndex:self.selectedIndex.row];
-    
-    [self.delegate didSelectedCountry];
+    if (self.selectedIndex)
+    {
+        // RICountry *country = [self.countriesArray objectAtIndex:self.selectedIndex.row];
+        
+        [self.delegate didSelectedCountry];
+    }
 }
 
 #pragma mark - Tableview delegates

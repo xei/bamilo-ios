@@ -133,11 +133,9 @@
             [self.navigationBarView changeNavigationBarTitle:title];
             [self.navigationBarView changeToChooseCountry];
             
-            [self.navigationBarView.applyButton addTarget:country
-                                                   action:@selector(applyButtonPressed)
-                                         forControlEvents:UIControlEventTouchDragInside];
-            
-            self.viewControllers = @[country];
+            [self.navigationBarView.applyButton addTarget:self
+                                                   action:@selector(sendNotificationToChooseCountry)
+                                         forControlEvents:UIControlEventTouchUpInside];
         }
     }
     
@@ -190,7 +188,13 @@
     [self popViewControllerAnimated:YES];
 }
 
-#pragma mark - Selected country delegate
+#pragma mark - Selected country delegate and notification
+
+- (void)sendNotificationToChooseCountry
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressedApplyNotification
+                                                        object:nil];
+}
 
 - (void)didSelectedCountry
 {
