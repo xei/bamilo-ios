@@ -16,6 +16,8 @@
 #import "JATopCategoriesTeaserView.h"
 #import "JAPopularBrandsTeaserView.h"
 
+#define JATeaserPageViewBackgroundColor UIColorFromRGB(0xc8c8c8);
+
 @interface JATeaserPageView()
 
 @property (nonatomic, assign)CGFloat currentY;
@@ -27,6 +29,8 @@
 - (void)loadTeasers;
 {
     if (NOTEMPTY(self.teaserCategory)) {
+        
+        self.backgroundColor = JATeaserPageViewBackgroundColor;
         
         self.currentY = self.bounds.origin.y; //shared between methods
         

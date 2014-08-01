@@ -26,8 +26,6 @@
 {
     [super load];
     
-    self.backgroundColor = [UIColor grayColor];
-    
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(JAPopularBrandsTeaserViewHorizontalMargin,
                                                                    JAPopularBrandsTeaserViewContentY,
                                                                    self.bounds.size.width - JAPopularBrandsTeaserViewHorizontalMargin*2,

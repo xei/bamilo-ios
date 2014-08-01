@@ -12,6 +12,8 @@
 
 -(void)load;
 {
+    self.backgroundColor = [UIColor clearColor];
+    
     if (ISEMPTY(self.teasers)) {
         return;
     }
