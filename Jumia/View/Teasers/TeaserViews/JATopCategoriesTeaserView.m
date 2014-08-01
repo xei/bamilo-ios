@@ -19,6 +19,7 @@
 #define JATopCategoriesTeaserViewCellHeight 30.0f
 #define JATopCategoriesTeaserViewCellFont [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f]
 #define JATopCategoriesTeaserViewCellColor UIColorFromRGB(0x4e4e4e)
+#define JATopCategoriesTeaserViewAllCategoriesCellFont [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0f]
 
 @implementation JATopCategoriesTeaserView
 
@@ -74,6 +75,19 @@
             currentY += teaserLabel.frame.size.height;
         }
     }
+    
+    //all categories cell
+    
+    UILabel* allCategoriesLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x + JATopCategoriesTeaserViewHorizontalMargin,
+                                                                             currentY,
+                                                                             contentView.bounds.size.width - JATopCategoriesTeaserViewHorizontalMargin*2,
+                                                                             JATopCategoriesTeaserViewCellHeight)];
+    allCategoriesLabel.text = @"All Categories";
+    allCategoriesLabel.font = JATopCategoriesTeaserViewAllCategoriesCellFont;
+    allCategoriesLabel.textColor = JATopCategoriesTeaserViewCellColor;
+    [contentView addSubview:allCategoriesLabel];
+    
+    currentY += allCategoriesLabel.frame.size.height;
     
     [contentView setFrame:CGRectMake(contentView.frame.origin.x,
                                      contentView.frame.origin.y,
