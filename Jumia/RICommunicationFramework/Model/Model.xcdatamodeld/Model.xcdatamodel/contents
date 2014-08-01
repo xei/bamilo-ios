@@ -159,7 +159,7 @@
         <attribute name="maxSpecialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="specialPrice" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="teaser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaser" inverseName="teaserProducts" inverseEntity="RITeaser" syncable="YES"/>

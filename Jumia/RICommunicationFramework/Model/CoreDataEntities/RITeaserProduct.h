@@ -20,7 +20,7 @@
 @property (nonatomic, retain) NSNumber * maxPrice;
 @property (nonatomic, retain) NSNumber * price;
 @property (nonatomic, retain) NSNumber * maxSpecialPrice;
-@property (nonatomic, retain) NSString * specialPrice;
+@property (nonatomic, retain) NSNumber * specialPrice;
 @property (nonatomic, retain) NSString * maxSavingPercentage;
 @property (nonatomic, retain) NSString * imageUrl;
 @property (nonatomic, retain) RITeaser *teaser;

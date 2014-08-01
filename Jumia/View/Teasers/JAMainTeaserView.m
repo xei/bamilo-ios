@@ -11,12 +11,19 @@
 #import "RITeaserImage.h"
 #import "UIImageView+WebCache.h"
 
+#define JAMainTeaserViewHeight 173.0f
+
 @implementation JAMainTeaserView
 
 - (void)load;
 {
     if (self.teasers) {
  
+        [self setFrame:CGRectMake(self.frame.origin.x,
+                                  self.frame.origin.y,
+                                  self.frame.size.width,
+                                  JAMainTeaserViewHeight)];
+        
         CGFloat currentX = 0;
         
         for (RITeaser* teaser in self.teasers) {

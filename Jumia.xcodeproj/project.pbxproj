@@ -146,6 +146,8 @@
 		CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */; };
 		CE21CB07198266FA00F7DC66 /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB06198266FA00F7DC66 /* RIAddress.m */; };
 		CE5768CD19893EFB002079A1 /* JAMainTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5768CC19893EFB002079A1 /* JAMainTeaserView.m */; };
+		CE5768D0198A8FD5002079A1 /* JATopSellersTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5768CF198A8FD5002079A1 /* JATopSellersTeaserView.m */; };
+		CE5768D3198BA9D0002079A1 /* JABrandsTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5768D2198BA9D0002079A1 /* JABrandsTeaserView.m */; };
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
 		CE69B59519868CFE005CC699 /* JATeaserCategoryScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */; };
 		CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B981987FF490078DFC9 /* JASplashViewController.m */; };
@@ -420,6 +422,10 @@
 		CE21CB06198266FA00F7DC66 /* RIAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAddress.m; sourceTree = "<group>"; };
 		CE5768CB19893EFB002079A1 /* JAMainTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMainTeaserView.h; sourceTree = "<group>"; };
 		CE5768CC19893EFB002079A1 /* JAMainTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMainTeaserView.m; sourceTree = "<group>"; };
+		CE5768CE198A8FD5002079A1 /* JATopSellersTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATopSellersTeaserView.h; sourceTree = "<group>"; };
+		CE5768CF198A8FD5002079A1 /* JATopSellersTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATopSellersTeaserView.m; sourceTree = "<group>"; };
+		CE5768D1198BA9D0002079A1 /* JABrandsTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABrandsTeaserView.h; sourceTree = "<group>"; };
+		CE5768D2198BA9D0002079A1 /* JABrandsTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABrandsTeaserView.m; sourceTree = "<group>"; };
 		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		CE69B59319868CFE005CC699 /* JATeaserCategoryScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATeaserCategoryScrollView.h; sourceTree = "<group>"; };
 		CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATeaserCategoryScrollView.m; sourceTree = "<group>"; };
@@ -1211,6 +1217,10 @@
 				CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */,
 				CE5768CB19893EFB002079A1 /* JAMainTeaserView.h */,
 				CE5768CC19893EFB002079A1 /* JAMainTeaserView.m */,
+				CE5768CE198A8FD5002079A1 /* JATopSellersTeaserView.h */,
+				CE5768CF198A8FD5002079A1 /* JATopSellersTeaserView.m */,
+				CE5768D1198BA9D0002079A1 /* JABrandsTeaserView.h */,
+				CE5768D2198BA9D0002079A1 /* JABrandsTeaserView.m */,
 			);
 			path = Teasers;
 			sourceTree = "<group>";
@@ -1380,6 +1390,7 @@
 				B5A302D019811E9200F71726 /* RITeaserProduct.m in Sources */,
 				B5A302CE19811E9200F71726 /* RITeaserGroup.m in Sources */,
 				B5225E30198950C500C18F1E /* JACartViewController.m in Sources */,
+				CE5768D3198BA9D0002079A1 /* JABrandsTeaserView.m in Sources */,
 				B5A3023319811E8A00F71726 /* BMA4SViewController.m in Sources */,
 				B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */,
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
@@ -1446,6 +1457,7 @@
 				B5A302D919811E9200F71726 /* RIRatings.m in Sources */,
 				B5A302DC19811E9200F71726 /* RIDataBaseWrapper.m in Sources */,
 				4AE242E01986569000E37C90 /* JARootViewController.m in Sources */,
+				CE5768D0198A8FD5002079A1 /* JATopSellersTeaserView.m in Sources */,
 				B5C682F81986C41D0094C92C /* RIShippingMethodPickupStationOption.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
