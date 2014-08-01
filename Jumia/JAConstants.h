@@ -15,3 +15,4 @@
 #define kOpenCartNotification @"NOTIFICATION_OPEN_CART"
 #define kUpdateCartNotification @"NOTIFICATION_UPDATE_CART"
 #define kUpdateCartNotificationValue @"NOTIFICATION_UPDATE_CART_VALUE"
+#define kDidPressedApplyNotification @"DID_PRESSED_APPLY_NOTIFICATION"
