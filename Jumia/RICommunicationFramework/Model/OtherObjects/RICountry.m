@@ -17,14 +17,28 @@
 {
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@", RI_COUNTRIES_URL]]
                                                              parameters:nil
-                                                         httpMethodPost:YES
+                                                         httpMethodPost:NO
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
                                                            successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                                NSArray *countriesArray = [RICountry parseCountriesWithJson:jsonObject];
-                                                               if(VALID_NOTEMPTY(countriesArray, NSArray))
+                                                               
+                                                               NSMutableArray *stagingCountries = [[NSMutableArray alloc] init];
+                                                               
+                                                               for(RICountry *country in countriesArray)
                                                                {
-                                                                   successBlock(countriesArray);
+                                                                   NSString *newUrl = [country.url stringByReplacingOccurrencesOfString:@"www"
+                                                                                                                             withString:@"alice-staging"];
+                                                                   
+                                                                   country.name = [NSString stringWithFormat:@"%@ - Staging", country.name];
+                                                                   country.url = newUrl;
+                                                                   
+                                                                   [stagingCountries addObject:country];
+                                                               }
+                                                               
+                                                               if(VALID_NOTEMPTY(stagingCountries, NSArray))
+                                                               {
+                                                                   successBlock(stagingCountries);
                                                                } else
                                                                {
                                                                    failureBlock(nil);
