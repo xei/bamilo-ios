@@ -12,10 +12,12 @@
 #import "JAHomeViewController.h"
 #import "JAMyFavouritesViewController.h"
 #import "JAChooseCountryViewController.h"
+#import "JARecentSearchesViewController.h"
 
 @interface JACenterNavigationController ()
 <
-    JAChooseCountryDelegate
+    JAChooseCountryDelegate,
+    JARecentSearchesDelegate
 >
 
 @property (strong, nonatomic) RICart *cart;
@@ -138,6 +140,19 @@
                                          forControlEvents:UIControlEventTouchUpInside];
         }
     }
+    else if ([newScreenName isEqualToString:@"Recent Searches"])
+    {
+        if (![self.viewControllers.lastObject isKindOfClass:[JARecentSearchesViewController class]])
+        {
+            JARecentSearchesViewController *searches = [self.storyboard instantiateViewControllerWithIdentifier:@"recentSearchesViewController"];
+            searches.delegate = self;
+            
+            [self pushViewController:searches
+                            animated:YES];
+            
+            [self.navigationBarView changeNavigationBarTitle:title];
+        }
+    }
     
     /*
      * READ
@@ -197,6 +212,19 @@
 }
 
 - (void)didSelectedCountry
+{
+    JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+    
+    [self pushViewController:home
+                    animated:YES];
+    [self.navigationBarView changedToHomeViewController];
+    
+    self.viewControllers = @[home];
+}
+
+#pragma mark - Recent Search delegate
+
+- (void)didSelectedRecentSearch:(RIRecentSearch *)recentSearch
 {
     JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
     
