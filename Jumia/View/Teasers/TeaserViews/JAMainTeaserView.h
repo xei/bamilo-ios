@@ -7,12 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JATeaserView.h"
 
-
-@interface JAMainTeaserView : UIScrollView
-
-@property (nonatomic, strong)NSOrderedSet* teasers;
-
-- (void)load;
+@interface JAMainTeaserView : JATeaserView
 
 @end

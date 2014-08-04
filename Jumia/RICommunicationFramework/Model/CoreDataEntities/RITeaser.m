@@ -82,26 +82,12 @@
             
         case 2: {
             
-            if ([json objectForKey:@"attributes"]) {
-                NSDictionary *attributes = [json objectForKey:@"attributes"];
-                
-                RITeaserProduct *product = [RITeaserProduct parseTeaserProduct:attributes];
-                product.teaser = teaser;
-                
-                [teaser addTeaserProductsObject:product];
-            }
             
-            if ([json objectForKey:@"images"]) {
-                
-                NSArray *imageList = [json objectForKey:@"images"];
-                
-                for (NSDictionary *imageDic in imageList) {
-                    RITeaserImage *image = [RITeaserImage parseTeaserImage:imageDic];
-                    image.teaser = teaser;
-                    
-                    [teaser addTeaserImagesObject:image];
-                }
-            }
+            RITeaserProduct *product = [RITeaserProduct parseTeaserProduct:json];
+            product.teaser = teaser;
+            
+            [teaser addTeaserProductsObject:product];
+
         }
     
             break;
