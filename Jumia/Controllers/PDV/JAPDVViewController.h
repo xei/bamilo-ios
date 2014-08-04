@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RIProduct.h"
 
-@interface JAPDVViewController : UIViewController
+@interface JAPDVViewController : JABaseViewController
+
+@property (strong, nonatomic) RIProduct *product;
 
 @end

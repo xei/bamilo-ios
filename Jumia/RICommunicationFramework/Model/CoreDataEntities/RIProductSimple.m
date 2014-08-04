@@ -33,10 +33,10 @@
             newProductSimple.sku = [meta objectForKey:@"sku"];
         }
         if ([meta objectForKey:@"price"]) {
-            newProductSimple.price = [meta objectForKey:@"price"];
+            newProductSimple.price = [NSNumber numberWithFloat:[[meta objectForKey:@"price"] floatValue]];
         }
         if ([meta objectForKey:@"special_price"]) {
-            newProductSimple.specialPrice = [meta objectForKey:@"special_price"];
+            newProductSimple.specialPrice = [NSNumber numberWithFloat:[[meta objectForKey:@"special_price"] floatValue]];
         }
         if ([meta objectForKey:@"quantity"]) {
             newProductSimple.quantity = [meta objectForKey:@"quantity"];

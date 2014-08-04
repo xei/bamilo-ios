@@ -22,6 +22,8 @@
 		4A4ABF0C198B903B00342D92 /* JACountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4ABF0B198B903B00342D92 /* JACountryCell.m */; };
 		4A4ABF0E198B9DE600342D92 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */; };
 		4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */; };
+		4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A862226198FA00D007FD76A /* JAPDVVariations.xib */; };
+		4A862229198FA683007FD76A /* JAPDVProductInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A862228198FA683007FD76A /* JAPDVProductInfo.xib */; };
 		4A9D26D7198BD44F001704ED /* RIRecentSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D26D6198BD44F001704ED /* RIRecentSearch.m */; };
 		4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242D91986547C00E37C90 /* JASidePanelController.m */; };
 		4AE242E01986569000E37C90 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
@@ -208,6 +210,8 @@
 		4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4A7F747F198A4EDA00621C0D /* JACenterNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACenterNavigationController.h; sourceTree = "<group>"; };
 		4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACenterNavigationController.m; sourceTree = "<group>"; };
+		4A862226198FA00D007FD76A /* JAPDVVariations.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVVariations.xib; sourceTree = "<group>"; };
+		4A862228198FA683007FD76A /* JAPDVProductInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPDVProductInfo.xib; path = ../RelatedItem/JAPDVProductInfo.xib; sourceTree = "<group>"; };
 		4A9D26D5198BD44F001704ED /* RIRecentSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIRecentSearch.h; sourceTree = "<group>"; };
 		4A9D26D6198BD44F001704ED /* RIRecentSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIRecentSearch.m; sourceTree = "<group>"; };
 		4AE242D81986547C00E37C90 /* JASidePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASidePanelController.h; sourceTree = "<group>"; };
@@ -714,6 +718,7 @@
 			children = (
 				4AE730BF198F8AEB000CA1DD /* JAPDVProductInfo.h */,
 				4AE730C0198F8AEB000CA1DD /* JAPDVProductInfo.m */,
+				4A862228198FA683007FD76A /* JAPDVProductInfo.xib */,
 			);
 			path = ProductInfo;
 			sourceTree = "<group>";
@@ -732,6 +737,7 @@
 			children = (
 				4AE730B9198F8AD6000CA1DD /* JAPDVVariations.h */,
 				4AE730BA198F8AD6000CA1DD /* JAPDVVariations.m */,
+				4A862226198FA00D007FD76A /* JAPDVVariations.xib */,
 			);
 			path = Variations;
 			sourceTree = "<group>";
@@ -1481,6 +1487,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5A3023A19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
+				4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */,
 				4A392143198925E300B70A9C /* JANavigationBarView.xib in Resources */,
 				B5A3024A19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
 				B5A3024719811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */,
@@ -1511,6 +1518,7 @@
 				B5A3024E19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
 				CE69B587198662E6005CC699 /* Main.storyboard in Resources */,
 				B5A3025119811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
+				4A862229198FA683007FD76A /* JAPDVProductInfo.xib in Resources */,
 				B5A3024119811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib in Resources */,
 				B5A302E019811E9200F71726 /* RITracking_example.plist in Resources */,
 				B5A3025219811E8A00F71726 /* BMA4SiPhoneWebViewNotifView.xib in Resources */,

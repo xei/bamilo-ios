@@ -13,6 +13,8 @@
 #import "JAMyFavouritesViewController.h"
 #import "JAChooseCountryViewController.h"
 #import "JARecentSearchesViewController.h"
+#import "JAPDVViewController.h"
+#import "RIProduct.h"
 
 @interface JACenterNavigationController ()
 <
@@ -97,6 +99,36 @@
 {
     if ([newScreenName isEqualToString:@"Home"])
     {
+        [RIProduct getProductWithUrl:@"http://www.jumia.com.ng/mobapi/v1.4/new-mentality-v-neck-print-t-shirt-red-106262.html"
+                        successBlock:^(id product) {
+                            
+                            JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
+                            pdv.product = product;
+                            
+                            [self pushViewController:pdv
+                                            animated:YES];
+                            
+                            [self.navigationBarView enteredSecondOrThirdLevelWithBackTitle:@"Catalogue"];
+                            
+                            [self.navigationBarView.backButton addTarget:self
+                                                                  action:@selector(back)
+                                                        forControlEvents:UIControlEventTouchUpInside];
+                            
+                        } andFailureBlock:^(NSArray *error) {
+                            
+                            JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+                            
+                            [self pushViewController:home
+                                            animated:YES];
+                            [self.navigationBarView changedToHomeViewController];
+                            
+                            self.viewControllers = @[home];
+                            
+                        }];
+        
+        
+        
+        /*
         if (![self.viewControllers.lastObject isKindOfClass:[JAHomeViewController class]])
         {
             JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
@@ -107,6 +139,7 @@
             
             self.viewControllers = @[home];
         }
+         */
     }
     else if ([newScreenName isEqualToString:@"My Favourites"])
     {
@@ -201,6 +234,14 @@
 - (void)back
 {
     [self popViewControllerAnimated:YES];
+#warning is necessary to check whats the rootview controller and change the bar title
+    if (1 == self.viewControllers.count) {
+        [self.navigationBarView changedToHomeViewController];
+        
+        [self.navigationBarView.backButton removeTarget:nil
+                                                 action:NULL
+                                       forControlEvents:UIControlEventAllEvents];
+    }
 }
 
 #pragma mark - Selected country delegate and notification

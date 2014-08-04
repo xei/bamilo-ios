@@ -10,4 +10,9 @@
 
 @interface JAPDVVariations : UIView
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *variationsScrollView;
+
++ (JAPDVVariations *)getNewPDVVariationsSection;
+
 @end

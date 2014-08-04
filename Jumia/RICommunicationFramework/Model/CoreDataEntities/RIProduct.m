@@ -147,16 +147,16 @@
             newProduct.brand = [dataDic objectForKey:@"brand"];
         }
         if ([dataDic objectForKey:@"max_price"]) {
-            newProduct.maxPrice = [dataDic objectForKey:@"max_price"];
+                newProduct.maxPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price"] floatValue]];
         }
         if ([dataDic objectForKey:@"price"]) {
-            newProduct.price = [dataDic objectForKey:@"price"];
+            newProduct.price = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price"] floatValue]];
         }
         if ([dataDic objectForKey:@"special_price"]) {
-            newProduct.specialPrice = [dataDic objectForKey:@"special_price"];
+            newProduct.specialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price"] floatValue]];
         }
         if ([dataDic objectForKey:@"max_special_price"]) {
-            newProduct.maxSpecialPrice = [dataDic objectForKey:@"max_special_price"];
+            newProduct.maxSpecialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price"] floatValue]];
         }
         if ([dataDic objectForKey:@"max_saving_percentage"]) {
             newProduct.maxSavingPercentage = [dataDic objectForKey:@"max_saving_percentage"];
