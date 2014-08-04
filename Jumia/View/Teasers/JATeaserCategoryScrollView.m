@@ -20,6 +20,7 @@
 @property (nonatomic, strong)UIScrollView* scrollView;
 @property (nonatomic, strong)UIImageView* arrowImageView;
 @property (nonatomic, strong)NSArray* teaserCategoryLabels;
+@property (nonatomic, assign)NSInteger selectedIndex;
 
 @end
 
@@ -99,8 +100,36 @@
         }
     }
     
+    self.selectedIndex = index;
+    
     if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(teaserCategorySelectedAtIndex:)]) {
         [self.delegate teaserCategorySelectedAtIndex:index];
+    }
+}
+
+- (void)scrollLeft
+{
+    CGFloat newIndex = self.selectedIndex + 1;
+    
+    if (newIndex < self.teaserCategoryLabels.count) {
+        [self.scrollView scrollRectToVisible:CGRectMake(newIndex * self.scrollView.bounds.size.width,
+                                                        self.scrollView.bounds.origin.y,
+                                                        self.scrollView.bounds.size.width,
+                                                        self.scrollView.bounds.size.height) animated:YES];
+        [self selectLabelAtIndex:newIndex];
+    }
+}
+
+- (void)scrollRight
+{
+    CGFloat newIndex = self.selectedIndex - 1;
+    
+    if (newIndex >= 0) {
+        [self.scrollView scrollRectToVisible:CGRectMake(newIndex * self.scrollView.bounds.size.width,
+                                                        self.scrollView.bounds.origin.y,
+                                                        self.scrollView.bounds.size.width,
+                                                        self.scrollView.bounds.size.height) animated:YES];
+        [self selectLabelAtIndex:newIndex];
     }
 }
 

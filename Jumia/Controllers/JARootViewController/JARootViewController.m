@@ -33,6 +33,21 @@
                                              selector:@selector(showCenterViewController)
                                                  name:kOpenCenterPanelNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(turnOffLeftSwipe)
+                                                 name:kTurnOffLeftSwipePanelNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(turnOnLeftSwipe)
+                                                 name:kTurnOnLeftSwipePanelNotification
+                                               object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,6 +62,16 @@
     
     [(JACenterNavigationController *)self.centerPanel showViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"]
                                                                   sender:nil];
+}
+
+- (void)turnOffLeftSwipe
+{
+    self.allowLeftSwipe = NO;
+}
+
+- (void)turnOnLeftSwipe
+{
+    self.allowLeftSwipe = YES;
 }
 
 - (void)openMainMenu

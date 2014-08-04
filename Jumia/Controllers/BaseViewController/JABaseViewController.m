@@ -23,6 +23,8 @@
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification object:nil];
+    
     self.navigationItem.hidesBackButton = YES;
     self.title = @"";
     
