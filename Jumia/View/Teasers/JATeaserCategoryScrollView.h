@@ -21,4 +21,7 @@
 
 - (void)setCategories:(NSArray*)teaserCategories;
 
+- (void)scrollLeft;
+- (void)scrollRight;
+
 @end

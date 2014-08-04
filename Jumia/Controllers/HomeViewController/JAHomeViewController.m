@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification object:nil];
+    
     self.navigationItem.hidesBackButton = YES;
     self.title = @"";
 
@@ -94,6 +96,16 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (IBAction)swipeRight:(id)sender
+{
+    [self.teaserCategoryScrollView scrollRight];
+}
+
+- (IBAction)swipeLeft:(id)sender
+{
+    [self.teaserCategoryScrollView scrollLeft];
 }
 
 #pragma mark - Navigation
