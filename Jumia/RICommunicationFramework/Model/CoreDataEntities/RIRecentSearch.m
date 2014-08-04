@@ -17,16 +17,33 @@
 + (void)saveRecentSearch:(RIRecentSearch *)search
 {
     NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIRecentSearch class])];
+    NSMutableArray *finalSearchArray = [NSMutableArray new];
+    [RIRecentSearch deleteAllSearches];
     
-    if (searches.count > 4) {
-        
-        RIRecentSearch *searchToDelete = searches[searches.count-1];
-        
-        [RIRecentSearch deleteRecentSearch:searchToDelete];
+    search.searchIndex = @(0);
+    [finalSearchArray insertObject:search
+                           atIndex:0];
+    
+    if (1 < searches.count)
+    {
+        for (int i = 1 ; i < searches.count ; i++)
+        {
+            RIRecentSearch *storedSearch = searches[i];
+            RIRecentSearch *tempSearch = (RIRecentSearch *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIRecentSearch class])];
+            
+            tempSearch.searchText = storedSearch.searchText;
+            tempSearch.searchIndex = @(i);
+            
+            [finalSearchArray insertObject:tempSearch
+                                   atIndex:i];
+        }
     }
     
-    [[RIDataBaseWrapper sharedInstance] insertManagedObject:search];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    for (RIRecentSearch *searchToSave in finalSearchArray)
+    {
+        [[RIDataBaseWrapper sharedInstance] insertManagedObject:searchToSave];
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
 }
 
 + (void)deleteRecentSearch:(RIRecentSearch *)search
