@@ -360,6 +360,11 @@
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bVK-fb-QVJ">
                                 <rect key="frame" x="0.0" y="108" width="320" height="372"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="c0u-Ks-8FI" appends="YES" id="U4y-kf-Z5c"/>
+                                    <outletCollection property="gestureRecognizers" destination="Ohf-6y-seg" appends="YES" id="0ll-kl-kpJ"/>
+                                </connections>
                             </scrollView>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MEv-bE-tYZ" customClass="JATeaserCategoryScrollView">
                                 <rect key="frame" x="0.0" y="64" width="320" height="44"/>
@@ -387,6 +392,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="c0u-Ks-8FI">
+                    <connections>
+                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="5NI-OL-4J4"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="Ohf-6y-seg">
+                    <connections>
+                        <action selector="swipeLeft:" destination="BYZ-38-t0r" id="doO-ct-bTD"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1692" y="-497"/>
         </scene>
@@ -465,7 +480,7 @@
         <!--View Controller-->
         <scene sceneID="PB4-GR-7g5">
             <objects>
-                <viewController storyboardIdentifier="pdvViewController" id="fgT-Jv-tdb" customClass="JAPDVViewController" sceneMemberID="viewController">
+                <viewController id="fgT-Jv-tdb" customClass="JAPDVViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DR6-1s-BTG"/>
                         <viewControllerLayoutGuide type="bottom" id="0ot-Ab-3Ot"/>
@@ -476,15 +491,14 @@
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RiA-6S-1Mu">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="416"/>
-                                <color key="backgroundColor" red="0.78431372549019607" green="0.78431372549019607" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="0ot-Ab-3Ot" firstAttribute="top" secondItem="RiA-6S-1Mu" secondAttribute="bottom" id="7fu-1b-zLB"/>
-                            <constraint firstAttribute="trailing" secondItem="RiA-6S-1Mu" secondAttribute="trailing" id="hYQ-yi-oxK"/>
-                            <constraint firstItem="RiA-6S-1Mu" firstAttribute="leading" secondItem="jhw-lm-hpC" secondAttribute="leading" id="iG5-Ks-c4y"/>
-                            <constraint firstItem="RiA-6S-1Mu" firstAttribute="top" secondItem="DR6-1s-BTG" secondAttribute="bottom" id="zdW-9H-aES"/>
+                            <constraint firstItem="0ot-Ab-3Ot" firstAttribute="top" secondItem="RiA-6S-1Mu" secondAttribute="bottom" id="AE9-eY-XWf"/>
+                            <constraint firstItem="RiA-6S-1Mu" firstAttribute="leading" secondItem="jhw-lm-hpC" secondAttribute="leading" id="IPU-O7-CaR"/>
+                            <constraint firstItem="RiA-6S-1Mu" firstAttribute="top" secondItem="DR6-1s-BTG" secondAttribute="bottom" id="MVR-Jy-OFt"/>
+                            <constraint firstAttribute="trailing" secondItem="RiA-6S-1Mu" secondAttribute="trailing" id="wlr-4y-ps8"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
