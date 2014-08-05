@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="35A-Fx-NNM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="35A-Fx-NNM">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <scenes>
@@ -108,6 +109,9 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="0.0" y="160" width="480" height="480"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="XR4-T4-6LA" id="cxX-Za-uhR"/>
                                     <outlet property="delegate" destination="XR4-T4-6LA" id="7Kc-oC-8f6"/>
@@ -202,6 +206,9 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="0.0" y="296" width="480" height="344"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="rNh-ME-jyY" id="4nI-va-HnU"/>
                                     <outlet property="delegate" destination="rNh-ME-jyY" id="JxE-nt-u5e"/>
@@ -301,6 +308,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="6" y="6" width="308" height="564"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="2Bm-pv-QSw" id="Nni-dY-v5y"/>
                                     <outlet property="delegate" destination="2Bm-pv-QSw" id="NQV-BS-HNo"/>
@@ -490,18 +500,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RiA-6S-1Mu">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="416"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RiA-6S-1Mu">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="1200"/>
                                 <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="0ot-Ab-3Ot" firstAttribute="top" secondItem="RiA-6S-1Mu" secondAttribute="bottom" id="AE9-eY-XWf"/>
-                            <constraint firstItem="RiA-6S-1Mu" firstAttribute="leading" secondItem="jhw-lm-hpC" secondAttribute="leading" id="IPU-O7-CaR"/>
-                            <constraint firstItem="RiA-6S-1Mu" firstAttribute="top" secondItem="DR6-1s-BTG" secondAttribute="bottom" id="MVR-Jy-OFt"/>
-                            <constraint firstAttribute="trailing" secondItem="RiA-6S-1Mu" secondAttribute="trailing" id="wlr-4y-ps8"/>
-                        </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -638,6 +642,9 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="6" y="6" width="308" height="404"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="0hJ-EI-g5I" id="26L-XT-bdq"/>
                                     <outlet property="delegate" destination="0hJ-EI-g5I" id="999-2a-Ix5"/>

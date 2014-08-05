@@ -9,7 +9,10 @@
 #import "JAPDVViewController.h"
 #import "JAPDVImageSection.h"
 #import "JAPDVVariations.h"
-//#import "JAPDVProductInfo.h"
+#import "JAPDVProductInfo.h"
+#import "JACTAButtons.h"
+#import "JAPDVRelatedItem.h"
+#import "JAPDVSingleRelatedItem.h"
 #import "UIImageView+WebCache.h"
 #import "RIImage.h"
 #import "RIVariation.h"
@@ -21,7 +24,9 @@
 @property (strong, nonatomic) RIProductReview *productReview;
 @property (strong, nonatomic) JAPDVImageSection *imageSection;
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
-//@property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
+@property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
+@property (strong, nonatomic) JACTAButtons *ctaButtons;
+@property (strong, nonatomic) JAPDVRelatedItem *relatedItems;
 
 @end
 
@@ -39,7 +44,11 @@
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
     }
     
-    //self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
+    self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
+    
+    self.ctaButtons = [JACTAButtons getNewPDVCTAButtons];
+    
+    self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
     
     [self fillTheViews];
 }
@@ -124,66 +133,75 @@
         Product Info Section
      *******/
     
-    JAPDVImageSection *newSection = [JAPDVImageSection getNewPDVImageSection];
+    self.productInfoSection.frame = CGRectMake(6,
+                                               startingElement,
+                                               self.productInfoSection.frame.size.width,
+                                               self.productInfoSection.frame.size.height);
     
-    newSection.frame = CGRectMake(6,
-                                         startingElement,
-                                         newSection.frame.size.width,
-                                         newSection.frame.size.height);
+    [self.productInfoSection setPriceWithNewValue:[self.product.specialPrice stringValue]
+                                      andOldValue:[self.product.price stringValue]];
     
-    newSection.layer.cornerRadius = 4.0f;
+    [self showLoading];
     
-    [self.mainScrollView addSubview:newSection];
+    [RIProductReview getReviewForProductWithSku:self.product.sku
+                                   successBlock:^(id review) {
+                                       
+                                       self.productReview = review;
+                                       
+                                       self.productInfoSection.numberOfReviewsLabel.text = [self.productReview.commentsCount stringValue];
+                                       
+#warning missing the number of stars
+                                       
+                                       [self hideLoading];
+                                       
+                                   } andFailureBlock:^(NSArray *errorMessages) {
+                                       
+                                       [self hideLoading];
+                                       
+                                   }];
     
-    [newSection.mainImage setImageWithURL:[NSURL URLWithString:image.url]];
+    self.productInfoSection.specificationsLabel.text = @"Specifications";
     
-    newSection.productNameLabel.text = self.product.brand;
-    newSection.productDescriptionLabel.text = self.product.name;
+    self.productInfoSection.layer.cornerRadius = 4.0f;
     
-    if (self.product.maxSavingPercentage.length > 0) {
-        newSection.discountLabel.text = [NSString stringWithFormat:@"-%@%%", self.product.maxSavingPercentage];
-    } else {
-        newSection.discountLabel.hidden = YES;
+    [self.mainScrollView addSubview:self.productInfoSection];
+    
+    startingElement += (4 + self.productInfoSection.frame.size.height);
+    
+    /*******
+        Related Items
+     *******/
+    
+    if (self.fromCatalogue) {
+        
+        self.relatedItems.frame = CGRectMake(6,
+                                             startingElement,
+                                             self.relatedItems.frame.size.width,
+                                             self.relatedItems.frame.size.height);
+        
+        self.relatedItems.layer.cornerRadius = 4.0f;
+        
+        [self.mainScrollView addSubview:self.relatedItems];
+        
+        startingElement += (4 + self.relatedItems.frame.size.height);
     }
     
-    startingElement += (4 + self.imageSection.frame.size.height);
+    /*******
+        CTA Buttons
+     *******/
     
-//    self.productInfoSection.frame = CGRectMake(6,
-//                                               startingElement,
-//                                               self.productInfoSection.frame.size.width,
-//                                               self.productInfoSection.frame.size.height);
-//    
-//    [self.productInfoSection setPriceWithNewValue:[self.product.specialPrice stringValue]
-//                                      andOldValue:[self.product.price stringValue]];
-//    
-//    [self showLoading];
-//    
-//    [RIProductReview getReviewForProductWithSku:self.product.sku
-//                                   successBlock:^(id review) {
-//                                       
-//                                       self.productReview = review;
-//                                       
-//                                       self.productInfoSection.numberOfReviewsLabel.text = [self.productReview.commentsCount stringValue];
-//                                       
-//#warning missing the number of stars
-//                                       
-//                                       [self hideLoading];
-//                                       
-//                                   } andFailureBlock:^(NSArray *errorMessages) {
-//                                       
-//                                       [self hideLoading];
-//                                       
-//                                   }];
-//    
-//    self.productInfoSection.specificationsLabel.text = @"Specifications";
-//    
-//    self.productInfoSection.layer.cornerRadius = 4.0f;
-//    
-//    [self.mainScrollView addSubview:self.productInfoSection];
-//    
-//    startingElement += (4 + self.productInfoSection.frame.size.height);
+    self.ctaButtons.frame = CGRectMake(6,
+                                       startingElement+2,
+                                       self.ctaButtons.frame.size.width,
+                                       self.ctaButtons.frame.size.height);
     
-    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement);
+    [self.ctaButtons layoutView];
+    
+    [self.mainScrollView addSubview:self.ctaButtons];
+    
+    startingElement += (6 + self.ctaButtons.frame.size.height);
+    
+    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + 700);
     
 }
 

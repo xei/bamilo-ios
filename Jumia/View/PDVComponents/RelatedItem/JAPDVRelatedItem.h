@@ -10,4 +10,6 @@
 
 @interface JAPDVRelatedItem : UIView
 
++ (JAPDVRelatedItem *)getNewPDVRelatedItemSection;
+
 @end
