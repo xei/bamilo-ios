@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="35A-Fx-NNM">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <scenes>
@@ -489,18 +490,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RiA-6S-1Mu">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RiA-6S-1Mu">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="416"/>
                                 <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="0ot-Ab-3Ot" firstAttribute="top" secondItem="RiA-6S-1Mu" secondAttribute="bottom" id="AE9-eY-XWf"/>
-                            <constraint firstItem="RiA-6S-1Mu" firstAttribute="leading" secondItem="jhw-lm-hpC" secondAttribute="leading" id="IPU-O7-CaR"/>
-                            <constraint firstItem="RiA-6S-1Mu" firstAttribute="top" secondItem="DR6-1s-BTG" secondAttribute="bottom" id="MVR-Jy-OFt"/>
-                            <constraint firstAttribute="trailing" secondItem="RiA-6S-1Mu" secondAttribute="trailing" id="wlr-4y-ps8"/>
-                        </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>

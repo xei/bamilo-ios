@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface JACTAButtons : UIView
+
+@property (weak, nonatomic) IBOutlet UIButton *callToOrderButton;
+@property (weak, nonatomic) IBOutlet UIButton *addToCartButton;
+
++ (JACTAButtons *)getNewPDVCTAButtons;
+
+- (void)layoutView;
 
 @end
