@@ -13,7 +13,7 @@
 @interface JAHomeViewController ()
 
 @property (nonatomic, strong) NSArray* teaserCategories;
-@property (weak, nonatomic) IBOutlet JATeaserCategoryScrollView *teaserCategoryScrollView;
+@property (weak, nonatomic) IBOutlet JAPickerScrollView *teaserCategoryScrollView;
 @property (weak, nonatomic) IBOutlet UIScrollView *teaserPagesScrollView;
 @property (nonatomic, strong) NSMutableArray* teaserPageViews;
 
@@ -59,7 +59,7 @@
             currentPageX += teaserPageView.frame.size.width;
         }
         
-        [self.teaserCategoryScrollView setCategories:titles];
+        [self.teaserCategoryScrollView setOptions:titles];
         
         [self.teaserPagesScrollView setContentSize:CGSizeMake(currentPageX,
                                                               self.teaserPagesScrollView.frame.size.height)];
@@ -71,7 +71,7 @@
 
 #pragma mark - JATeaserCategoryScrollViewDelegate
 
-- (void)teaserCategorySelectedAtIndex:(NSInteger)index
+- (void)selectedIndex:(NSInteger)index
 {
     //check if teaser page at said index is loaded
     

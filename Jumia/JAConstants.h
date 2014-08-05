@@ -10,6 +10,7 @@
 #define kCancelLoadingNotificationName @"CANCEL_LOADING_NOTIFICATION"
 #define kCancelButtonPressedInMenuSearchBar @"PRESSED_BACK_BUTTON_NOTIFICATION"
 #define kMenuDidSelectOptionNotification @"NOTIFICATION_SELECTED_ITEM_MENU"
+#define kMenuDidSelectLeafCategoryNotification @"NOTIFICATION_SELECTED_LEAF_CATEGORY"
 #define kOpenMenuNotification @"NOTIFICATION_OPEN_MENU"
 #define kOpenCenterPanelNotification @"NOTIFICATION_OPEN_CENTER_PANEL"
 #define kOpenCartNotification @"NOTIFICATION_OPEN_CART"
