@@ -102,7 +102,6 @@
 
 - (void)changeCenterPanel:(NSString *)newScreenName
            titleForNavBar:(NSString *)title
-                      url:(NSString *)url
 {
     if ([newScreenName isEqualToString:@"Home"])
     {
@@ -193,17 +192,6 @@
             [self.navigationBarView changeNavigationBarTitle:title];
         }
     }
-    else if ([newScreenName isEqualToString:@"Catalog"])
-    {
-        JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        
-        [self pushViewController:catalog
-                        animated:YES];
-        
-        [self.navigationBarView changeNavigationBarTitle:title];
-        
-        self.viewControllers = @[catalog];
-    }
     
     /*
      * READ
@@ -228,6 +216,19 @@
      */
 }
 
+- (void)changeCenterPanelToCatalogWithCategory:(RICategory*)category
+{
+    JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    
+    [self pushViewController:catalog
+                    animated:YES];
+    
+    [self.navigationBarView changeNavigationBarTitle:category.name];
+    catalog.category = category;
+    
+    self.viewControllers = @[catalog];
+}
+
 - (void)didSelectedItemInMenu:(NSNotification *)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
@@ -240,13 +241,11 @@
         
         if ([index isEqual:@(0)]) {
             [self changeCenterPanel:@"Home"
-                     titleForNavBar:nil
-                                url:nil];
+                     titleForNavBar:nil];
             
         } else {
             [self changeCenterPanel:[selectedItem objectForKey:@"name"]
-                     titleForNavBar:[selectedItem objectForKey:@"name"]
-                                url:nil];
+                     titleForNavBar:[selectedItem objectForKey:@"name"]];
         }
     }
 }
@@ -258,11 +257,10 @@
     
     NSDictionary *selectedItem = [notification object];
 
-    if ([selectedItem objectForKey:@"categoryUrl"] && [selectedItem objectForKey:@"categoryName"]) {
+    RICategory* category = [selectedItem objectForKey:@"category"];
+    if (VALID_NOTEMPTY(category, RICategory)) {
         
-        [self changeCenterPanel:@"Catalog"
-                 titleForNavBar:[selectedItem objectForKey:@"categoryName"]
-                            url:[selectedItem objectForKey:@"categoryUrl"]];
+        [self changeCenterPanelToCatalogWithCategory:category];
     }
 }
 

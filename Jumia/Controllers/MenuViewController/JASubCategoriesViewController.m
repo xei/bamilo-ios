@@ -79,7 +79,7 @@
                                              animated:YES];
     } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
-                                                            object:@{@"categoryName":category.name, @"categoryUrl":category.urlKey}];
+                                                            object:@{@"category":category}];
     }
 }
 

@@ -7,10 +7,12 @@
 //
 
 #import "JACatalogViewController.h"
+#import "RIProduct.h"
 
 @interface JACatalogViewController ()
 
 @property (weak, nonatomic) IBOutlet JAPickerScrollView *sortingScrollView;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
 
@@ -25,6 +27,17 @@
     NSArray* sortList = [NSArray arrayWithObjects:@"Popularity", @"Best Rating", @"New In", @"Price Up", @"Price Down", @"Name", @"Brand", nil];
     
     [self.sortingScrollView setOptions:sortList];
+    
+    if (VALID_NOTEMPTY(self.category, RICategory)) {
+        [self showLoading];
+        [RIProduct getProductsWithUrl:self.category.apiUrl successBlock:^(id products) {
+            
+            
+            [self hideLoading];
+        } andFailureBlock:^(NSArray *error) {
+            [self hideLoading];
+        }];
+    }
 }
 
 #pragma mark - JAPickerScrollViewDelegate
