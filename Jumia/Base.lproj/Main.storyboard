@@ -480,7 +480,7 @@
         <!--View Controller-->
         <scene sceneID="PB4-GR-7g5">
             <objects>
-                <viewController id="fgT-Jv-tdb" customClass="JAPDVViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="pdvViewController" id="fgT-Jv-tdb" customClass="JAPDVViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DR6-1s-BTG"/>
                         <viewControllerLayoutGuide type="bottom" id="0ot-Ab-3Ot"/>
@@ -491,6 +491,7 @@
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RiA-6S-1Mu">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="416"/>
+                                <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -9,7 +9,7 @@
 #import "JAPDVViewController.h"
 #import "JAPDVImageSection.h"
 #import "JAPDVVariations.h"
-#import "JAPDVProductInfo.h"
+//#import "JAPDVProductInfo.h"
 #import "UIImageView+WebCache.h"
 #import "RIImage.h"
 #import "RIVariation.h"
@@ -21,7 +21,7 @@
 @property (strong, nonatomic) RIProductReview *productReview;
 @property (strong, nonatomic) JAPDVImageSection *imageSection;
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
-@property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
+//@property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
 
 @end
 
@@ -39,7 +39,7 @@
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
     }
     
-    self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
+    //self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
     
     [self fillTheViews];
 }
@@ -124,42 +124,66 @@
         Product Info Section
      *******/
     
-    [self.productInfoSection setPriceWithNewValue:[self.product.specialPrice stringValue]
-                                      andOldValue:[self.product.price stringValue]];
+    JAPDVImageSection *newSection = [JAPDVImageSection getNewPDVImageSection];
     
-    [self showLoading];
+    newSection.frame = CGRectMake(6,
+                                         startingElement,
+                                         newSection.frame.size.width,
+                                         newSection.frame.size.height);
     
-    [RIProductReview getReviewForProductWithSku:self.product.sku
-                                   successBlock:^(id review) {
-                                       
-                                       self.productReview = review;
-                                       
-                                       self.productInfoSection.numberOfReviewsLabel.text = [self.productReview.commentsCount stringValue];
-                                       
-#warning missing the number of stars
-                                       
-                                       [self hideLoading];
-                                       
-                                   } andFailureBlock:^(NSArray *errorMessages) {
-                                       
-                                       [self hideLoading];
-                                       
-                                   }];
+    newSection.layer.cornerRadius = 4.0f;
     
-    self.productInfoSection.specificationsLabel.text = @"Specifications";
+    [self.mainScrollView addSubview:newSection];
     
-    self.productInfoSection.layer.cornerRadius = 4.0f;
+    [newSection.mainImage setImageWithURL:[NSURL URLWithString:image.url]];
     
-    self.productInfoSection.frame = CGRectMake(6,
-                                              startingElement,
-                                              308,
-                                              172);
+    newSection.productNameLabel.text = self.product.brand;
+    newSection.productDescriptionLabel.text = self.product.name;
     
-    [self.mainScrollView addSubview:self.productInfoSection];
+    if (self.product.maxSavingPercentage.length > 0) {
+        newSection.discountLabel.text = [NSString stringWithFormat:@"-%@%%", self.product.maxSavingPercentage];
+    } else {
+        newSection.discountLabel.hidden = YES;
+    }
     
-    startingElement += (4 + self.productInfoSection.frame.size.height);
+    startingElement += (4 + self.imageSection.frame.size.height);
     
-    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + 30);
+//    self.productInfoSection.frame = CGRectMake(6,
+//                                               startingElement,
+//                                               self.productInfoSection.frame.size.width,
+//                                               self.productInfoSection.frame.size.height);
+//    
+//    [self.productInfoSection setPriceWithNewValue:[self.product.specialPrice stringValue]
+//                                      andOldValue:[self.product.price stringValue]];
+//    
+//    [self showLoading];
+//    
+//    [RIProductReview getReviewForProductWithSku:self.product.sku
+//                                   successBlock:^(id review) {
+//                                       
+//                                       self.productReview = review;
+//                                       
+//                                       self.productInfoSection.numberOfReviewsLabel.text = [self.productReview.commentsCount stringValue];
+//                                       
+//#warning missing the number of stars
+//                                       
+//                                       [self hideLoading];
+//                                       
+//                                   } andFailureBlock:^(NSArray *errorMessages) {
+//                                       
+//                                       [self hideLoading];
+//                                       
+//                                   }];
+//    
+//    self.productInfoSection.specificationsLabel.text = @"Specifications";
+//    
+//    self.productInfoSection.layer.cornerRadius = 4.0f;
+//    
+//    [self.mainScrollView addSubview:self.productInfoSection];
+//    
+//    startingElement += (4 + self.productInfoSection.frame.size.height);
+    
+    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement);
     
 }
 
