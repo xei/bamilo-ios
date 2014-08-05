@@ -157,6 +157,7 @@
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
 		CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */; };
 		CE21CB07198266FA00F7DC66 /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB06198266FA00F7DC66 /* RIAddress.m */; };
+		CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */; };
 		CE44586B198BD20A00CE7E8D /* JAMainTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445866198BD20A00CE7E8D /* JAMainTeaserView.m */; };
 		CE44586C198BD20A00CE7E8D /* JATopBrandsTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445868198BD20A00CE7E8D /* JATopBrandsTeaserView.m */; };
 		CE44586D198BD20A00CE7E8D /* JATopSellersTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44586A198BD20A00CE7E8D /* JATopSellersTeaserView.m */; };
@@ -166,7 +167,6 @@
 		CE44587C198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44587B198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m */; };
 		CE445880198C03D100CE7E8D /* JAPopularBrandsTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44587F198C03D100CE7E8D /* JAPopularBrandsTeaserView.m */; };
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
-		CE69B59519868CFE005CC699 /* JATeaserCategoryScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */; };
 		CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B981987FF490078DFC9 /* JASplashViewController.m */; };
 		CEE91B9C1989065A0078DFC9 /* JATeaserPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */; };
 /* End PBXBuildFile section */
@@ -457,6 +457,8 @@
 		CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIStaticBlockIndex.m; sourceTree = "<group>"; };
 		CE21CB05198266FA00F7DC66 /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
 		CE21CB06198266FA00F7DC66 /* RIAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAddress.m; sourceTree = "<group>"; };
+		CE3FC5A51990E209003B4A27 /* JAPickerScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPickerScrollView.h; sourceTree = "<group>"; };
+		CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPickerScrollView.m; sourceTree = "<group>"; };
 		CE445865198BD20A00CE7E8D /* JAMainTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMainTeaserView.h; sourceTree = "<group>"; };
 		CE445866198BD20A00CE7E8D /* JAMainTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMainTeaserView.m; sourceTree = "<group>"; };
 		CE445867198BD20A00CE7E8D /* JATopBrandsTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATopBrandsTeaserView.h; sourceTree = "<group>"; };
@@ -474,8 +476,6 @@
 		CE44587E198C03D100CE7E8D /* JAPopularBrandsTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPopularBrandsTeaserView.h; sourceTree = "<group>"; };
 		CE44587F198C03D100CE7E8D /* JAPopularBrandsTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPopularBrandsTeaserView.m; sourceTree = "<group>"; };
 		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
-		CE69B59319868CFE005CC699 /* JATeaserCategoryScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATeaserCategoryScrollView.h; sourceTree = "<group>"; };
-		CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATeaserCategoryScrollView.m; sourceTree = "<group>"; };
 		CEE91B971987FF490078DFC9 /* JASplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASplashViewController.h; sourceTree = "<group>"; };
 		CEE91B981987FF490078DFC9 /* JASplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASplashViewController.m; sourceTree = "<group>"; };
 		CEE91B9A1989065A0078DFC9 /* JATeaserPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATeaserPageView.h; sourceTree = "<group>"; };
@@ -620,6 +620,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CE3FC5A41990E209003B4A27 /* GenericComponents */,
 				4AE730B0198F8A74000CA1DD /* PDVComponents */,
 				4A4ABF08198B902600342D92 /* Cells */,
 				4A39213B198921A100B70A9C /* GlobalNavigationBar */,
@@ -1356,6 +1357,15 @@
 			path = BaseViewController;
 			sourceTree = "<group>";
 		};
+		CE3FC5A41990E209003B4A27 /* GenericComponents */ = {
+			isa = PBXGroup;
+			children = (
+				CE3FC5A51990E209003B4A27 /* JAPickerScrollView.h */,
+				CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */,
+			);
+			path = GenericComponents;
+			sourceTree = "<group>";
+		};
 		CE445864198BD20A00CE7E8D /* TeaserViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -1382,8 +1392,6 @@
 		CE69B58D19868B7A005CC699 /* Teasers */ = {
 			isa = PBXGroup;
 			children = (
-				CE69B59319868CFE005CC699 /* JATeaserCategoryScrollView.h */,
-				CE69B59419868CFE005CC699 /* JATeaserCategoryScrollView.m */,
 				CEE91B9A1989065A0078DFC9 /* JATeaserPageView.h */,
 				CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */,
 				CE445864198BD20A00CE7E8D /* TeaserViews */,
@@ -1587,7 +1595,6 @@
 				4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */,
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
 				4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */,
-				CE69B59519868CFE005CC699 /* JATeaserCategoryScrollView.m in Sources */,
 				B5225E1C1989308300C18F1E /* RIPaymentMethodFormField.m in Sources */,
 				B5A302D419811E9200F71726 /* Model.xcdatamodeld in Sources */,
 				B5A302DA19811E9200F71726 /* RICommunicationWrapper.m in Sources */,
@@ -1618,6 +1625,7 @@
 				B5A301AE19811D0700F71726 /* main.m in Sources */,
 				B5A3025D19811E8A00F71726 /* UIButton+WebCache.m in Sources */,
 				B5A3025C19811E8A00F71726 /* SDWebImagePrefetcher.m in Sources */,
+				CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */,
 				4A39212D19891F6D00B70A9C /* JARecentSearchesViewController.m in Sources */,
 				4A39213A19891FC400B70A9C /* JAMyFavouritesViewController.m in Sources */,
 				B5A302E319811E9200F71726 /* RIAdXTracker.m in Sources */,

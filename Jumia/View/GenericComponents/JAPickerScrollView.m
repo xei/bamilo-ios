@@ -1,38 +1,38 @@
 //
-//  JATeaserCategoryScrollView.m
+//  JAPickerScrollView.m
 //  Jumia
 //
 //  Created by Telmo Pinto on 28/07/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
-#import "JATeaserCategoryScrollView.h"
+#import "JAPickerScrollView.h"
 
-#define JATeaserCategoryScrollViewCenterWidth 100.0f
-#define JATeaserCategoryScrollViewBackgroundColor UIColorFromRGB(0xe3e3e3);
-#define JATeaserCategoryScrollViewTextColor UIColorFromRGB(0x4e4e4e);
-#define JATeaserCategoryScrollViewTextSize 10.0f
-#define JATeaserCategoryScrollViewIndicatorImageName @"TeaserCategoryScrollIndicator"
+#define JAPickerScrollViewCenterWidth 100.0f
+#define JAPickerScrollViewBackgroundColor UIColorFromRGB(0xe3e3e3);
+#define JAPickerScrollViewTextColor UIColorFromRGB(0x4e4e4e);
+#define JAPickerScrollViewTextSize 10.0f
+#define JAPickerScrollViewIndicatorImageName @"PickerScrollIndicator"
 
 
-@interface JATeaserCategoryScrollView ()
+@interface JAPickerScrollView ()
 
 @property (nonatomic, strong)UIScrollView* scrollView;
 @property (nonatomic, strong)UIImageView* arrowImageView;
-@property (nonatomic, strong)NSArray* teaserCategoryLabels;
+@property (nonatomic, strong)NSArray* optionLabels;
 @property (nonatomic, assign)NSInteger selectedIndex;
 
 @end
 
-@implementation JATeaserCategoryScrollView
+@implementation JAPickerScrollView
 
-- (void)setCategories:(NSArray*)teaserCategories
+- (void)setOptions:(NSArray*)options;
 {
-    self.backgroundColor = JATeaserCategoryScrollViewBackgroundColor;
+    self.backgroundColor = JAPickerScrollViewBackgroundColor;
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((self.bounds.size.width - JATeaserCategoryScrollViewCenterWidth) / 2,
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((self.bounds.size.width - JAPickerScrollViewCenterWidth) / 2,
                                                                      self.bounds.origin.y,
-                                                                     JATeaserCategoryScrollViewCenterWidth,
+                                                                     JAPickerScrollViewCenterWidth,
                                                                      self.bounds.size.height)];
     self.scrollView.delegate = self;
     self.scrollView.pagingEnabled = YES;
@@ -43,16 +43,16 @@
     NSMutableArray* tempArray = [NSMutableArray new];
     
     CGFloat currentWidth = 0;
-    for (int i = 0; i < teaserCategories.count; i++) {
-        NSString* category = [teaserCategories objectAtIndex:i];
+    for (int i = 0; i < options.count; i++) {
+        NSString* category = [options objectAtIndex:i];
         
         UILabel* newLabel = [[UILabel alloc] initWithFrame:CGRectMake(currentWidth,
                                                                       self.scrollView.frame.origin.y,
                                                                       self.scrollView.frame.size.width,
                                                                       self.scrollView.frame.size.height)];
         newLabel.textAlignment = NSTextAlignmentCenter;
-        newLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:JATeaserCategoryScrollViewTextSize];
-        newLabel.textColor = JATeaserCategoryScrollViewTextColor;
+        newLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:JAPickerScrollViewTextSize];
+        newLabel.textColor = JAPickerScrollViewTextColor;
         newLabel.text = category;
         newLabel.tag = i;
         [self.scrollView addSubview:newLabel];
@@ -62,7 +62,7 @@
         currentWidth += newLabel.frame.size.width;
     }
     
-    self.teaserCategoryLabels = [tempArray copy];
+    self.optionLabels = [tempArray copy];
     
     [self.scrollView setContentSize:CGSizeMake(currentWidth,
                                                self.scrollView.frame.size.height)];
@@ -70,7 +70,7 @@
     [self selectLabelAtIndex:0];
     
     
-    UIImage* indicatorImage = [UIImage imageNamed:JATeaserCategoryScrollViewIndicatorImageName];
+    UIImage* indicatorImage = [UIImage imageNamed:JAPickerScrollViewIndicatorImageName];
     self.arrowImageView = [[UIImageView alloc] initWithImage:indicatorImage];
     [self.arrowImageView setFrame:CGRectMake((self.bounds.size.width - indicatorImage.size.width) / 2,
                                              self.bounds.origin.y,
@@ -88,22 +88,22 @@
 
 - (void)selectLabelAtIndex:(NSInteger)index
 {
-    for (int i = 0; i < self.teaserCategoryLabels.count; i++) {
-        UILabel* label = [self.teaserCategoryLabels objectAtIndex:i];
+    for (int i = 0; i < self.optionLabels.count; i++) {
+        UILabel* label = [self.optionLabels objectAtIndex:i];
         
         if (i == index) {
             //select
-            label.font = [UIFont fontWithName:@"HelveticaNeue" size:JATeaserCategoryScrollViewTextSize];
+            label.font = [UIFont fontWithName:@"HelveticaNeue" size:JAPickerScrollViewTextSize];
         } else {
             //de-select
-            label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:JATeaserCategoryScrollViewTextSize];
+            label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:JAPickerScrollViewTextSize];
         }
     }
     
     self.selectedIndex = index;
     
-    if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(teaserCategorySelectedAtIndex:)]) {
-        [self.delegate teaserCategorySelectedAtIndex:index];
+    if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(selectedIndex:)]) {
+        [self.delegate selectedIndex:index];
     }
 }
 
@@ -111,7 +111,7 @@
 {
     CGFloat newIndex = self.selectedIndex + 1;
     
-    if (newIndex < self.teaserCategoryLabels.count) {
+    if (newIndex < self.optionLabels.count) {
         [self.scrollView scrollRectToVisible:CGRectMake(newIndex * self.scrollView.bounds.size.width,
                                                         self.scrollView.bounds.origin.y,
                                                         self.scrollView.bounds.size.width,
@@ -139,7 +139,7 @@
 {
     CGPoint point = *targetContentOffset;
     
-    [self selectLabelAtIndex:(point.x/JATeaserCategoryScrollViewCenterWidth)];
+    [self selectLabelAtIndex:(point.x/JAPickerScrollViewCenterWidth)];
 }
 
 
