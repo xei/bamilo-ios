@@ -13,6 +13,7 @@
 #import "JAMyFavouritesViewController.h"
 #import "JAChooseCountryViewController.h"
 #import "JARecentSearchesViewController.h"
+#import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
 #import "RIProduct.h"
 
@@ -39,6 +40,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectedItemInMenu:)
                                                  name:kMenuDidSelectOptionNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectedLeafCategoryInMenu:)
+                                                 name:kMenuDidSelectLeafCategoryNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -96,6 +102,7 @@
 
 - (void)changeCenterPanel:(NSString *)newScreenName
            titleForNavBar:(NSString *)title
+                      url:(NSString *)url
 {
     if ([newScreenName isEqualToString:@"Home"])
     {
@@ -186,6 +193,17 @@
             [self.navigationBarView changeNavigationBarTitle:title];
         }
     }
+    else if ([newScreenName isEqualToString:@"Catalog"])
+    {
+        JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        
+        [self pushViewController:catalog
+                        animated:YES];
+        
+        [self.navigationBarView changeNavigationBarTitle:title];
+        
+        self.viewControllers = @[catalog];
+    }
     
     /*
      * READ
@@ -222,12 +240,29 @@
         
         if ([index isEqual:@(0)]) {
             [self changeCenterPanel:@"Home"
-                     titleForNavBar:nil];
+                     titleForNavBar:nil
+                                url:nil];
             
         } else {
             [self changeCenterPanel:[selectedItem objectForKey:@"name"]
-                     titleForNavBar:[selectedItem objectForKey:@"name"]];
+                     titleForNavBar:[selectedItem objectForKey:@"name"]
+                                url:nil];
         }
+    }
+}
+
+- (void)didSelectedLeafCategoryInMenu:(NSNotification *)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                        object:nil];
+    
+    NSDictionary *selectedItem = [notification object];
+
+    if ([selectedItem objectForKey:@"categoryUrl"] && [selectedItem objectForKey:@"categoryName"]) {
+        
+        [self changeCenterPanel:@"Catalog"
+                 titleForNavBar:[selectedItem objectForKey:@"categoryName"]
+                            url:[selectedItem objectForKey:@"categoryUrl"]];
     }
 }
 

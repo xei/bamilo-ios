@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="35A-Fx-NNM">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <scenes>
@@ -26,6 +27,7 @@
                             <constraint firstItem="qr3-Iw-5fx" firstAttribute="top" secondItem="CIB-OJ-oGP" secondAttribute="bottom" id="WA4-U7-gKQ"/>
                             <constraint firstItem="CIB-OJ-oGP" firstAttribute="top" secondItem="Yju-3g-ONf" secondAttribute="top" id="iwT-sp-DKO"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="splashImage" destination="CIB-OJ-oGP" id="m27-HS-iBM"/>
@@ -47,6 +49,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aPI-2d-kOH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -119,6 +122,7 @@
                             <constraint firstItem="bvx-Sl-Bkt" firstAttribute="leading" secondItem="0V6-zY-rSO" secondAttribute="leading" id="bfp-rY-OaC"/>
                             <constraint firstItem="34t-u1-28L" firstAttribute="top" secondItem="bvx-Sl-Bkt" secondAttribute="bottom" id="sBc-zu-7R5"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -212,6 +216,7 @@
                             <constraint firstItem="JPe-83-lIS" firstAttribute="leading" secondItem="B9R-Rr-1lu" secondAttribute="leading" id="suZ-9B-CKo"/>
                             <constraint firstAttribute="trailing" secondItem="JPe-83-lIS" secondAttribute="trailing" id="ynM-fK-kJD"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" id="ZAb-vG-OXH"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -310,6 +315,7 @@
                             <constraint firstItem="AsP-Cc-EYR" firstAttribute="top" secondItem="bfs-gi-LRx" secondAttribute="bottom" constant="6" id="XkL-a8-laq"/>
                             <constraint firstItem="Vsv-Ib-mUX" firstAttribute="top" secondItem="AsP-Cc-EYR" secondAttribute="bottom" constant="6" id="nn9-8L-cZZ"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -334,6 +340,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RfL-3t-GwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -377,6 +384,7 @@
                             <constraint firstItem="MEv-bE-tYZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="eVU-1I-Aiz"/>
                             <constraint firstItem="MEv-bE-tYZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="xtf-gk-d2w"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" id="92H-u5-dfy"/>
                     <connections>
@@ -430,6 +438,7 @@
                     <connections>
                         <segue destination="0hJ-EI-g5I" kind="show" id="oF6-vb-4hO"/>
                         <segue destination="fgT-Jv-tdb" kind="show" identifier="showPdv" id="uaI-yU-cmP"/>
+                        <segue destination="y7p-zP-v5K" kind="show" identifier="showCatalog" id="Pnc-cP-ATg"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D9k-Dg-apF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -460,6 +469,7 @@
                             <constraint firstAttribute="centerX" secondItem="vJu-Qc-EBo" secondAttribute="centerX" id="iI5-fx-uIB"/>
                             <constraint firstAttribute="centerY" secondItem="vJu-Qc-EBo" secondAttribute="centerY" id="upg-ui-2ax"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="addProductAndGoToCart" destination="vJu-Qc-EBo" id="pte-0h-V4z"/>
@@ -493,6 +503,7 @@
                             <constraint firstItem="RiA-6S-1Mu" firstAttribute="top" secondItem="DR6-1s-BTG" secondAttribute="bottom" id="MVR-Jy-OFt"/>
                             <constraint firstAttribute="trailing" secondItem="RiA-6S-1Mu" secondAttribute="trailing" id="wlr-4y-ps8"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
@@ -502,6 +513,65 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zwP-v4-smR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2269" y="662"/>
+        </scene>
+        <!--Catalog View Controller-->
+        <scene sceneID="rUS-bS-bgd">
+            <objects>
+                <viewController storyboardIdentifier="catalogViewController" id="y7p-zP-v5K" customClass="JACatalogViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lzj-49-Dyb"/>
+                        <viewControllerLayoutGuide type="bottom" id="lOt-fd-9os"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LT2-FN-Zb3">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6lO-cb-ku3" customClass="JAPickerScrollView">
+                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="rY3-Fd-zBi"/>
+                                </constraints>
+                            </view>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZRY-qq-tSd">
+                                <rect key="frame" x="0.0" y="108" width="320" height="372"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SCu-ih-mcg">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="9I1-9w-feb">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="ZRY-qq-tSd" firstAttribute="leading" secondItem="LT2-FN-Zb3" secondAttribute="leading" id="3BQ-46-mDS"/>
+                            <constraint firstItem="6lO-cb-ku3" firstAttribute="leading" secondItem="LT2-FN-Zb3" secondAttribute="leading" id="45T-wq-GRx"/>
+                            <constraint firstItem="ZRY-qq-tSd" firstAttribute="top" secondItem="6lO-cb-ku3" secondAttribute="bottom" id="7ux-D9-LHE"/>
+                            <constraint firstAttribute="trailing" secondItem="ZRY-qq-tSd" secondAttribute="trailing" id="Jtd-Gf-XEv"/>
+                            <constraint firstItem="lOt-fd-9os" firstAttribute="top" secondItem="ZRY-qq-tSd" secondAttribute="bottom" id="YSJ-z2-uF1"/>
+                            <constraint firstAttribute="trailing" secondItem="6lO-cb-ku3" secondAttribute="trailing" id="vke-qw-VAu"/>
+                            <constraint firstItem="6lO-cb-ku3" firstAttribute="top" secondItem="lzj-49-Dyb" secondAttribute="bottom" id="yoi-yP-bhp"/>
+                        </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <connections>
+                        <outlet property="sortingScrollView" destination="6lO-cb-ku3" id="FN2-gq-REl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fw5-pW-XE1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2267" y="1207"/>
         </scene>
         <!--Recent Searches View Controller-->
         <scene sceneID="1wB-Dk-dn6">
@@ -583,6 +653,7 @@
                             <constraint firstItem="BXm-QE-pAc" firstAttribute="top" secondItem="9Fh-2q-Y7g" secondAttribute="bottom" constant="6" id="ue3-Id-Kd8"/>
                             <constraint firstAttribute="trailing" secondItem="BXm-QE-pAc" secondAttribute="trailing" constant="6" id="zUA-oO-vQw"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
@@ -643,6 +714,7 @@
                             <constraint firstAttribute="centerX" secondItem="ReK-uh-uRe" secondAttribute="centerX" id="nOP-ze-JHS"/>
                             <constraint firstItem="8JR-2S-5zU" firstAttribute="leading" relation="lessThanOrEqual" secondItem="TAg-wu-qnb" secondAttribute="leading" constant="217" id="pSj-sl-Ojx"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="goToLogin" destination="8JR-2S-5zU" id="AaB-CM-ifF"/>
@@ -681,6 +753,7 @@
                             <constraint firstAttribute="centerY" secondItem="rMI-cb-scj" secondAttribute="centerY" id="JXy-fb-6AK"/>
                             <constraint firstAttribute="centerX" secondItem="rMI-cb-scj" secondAttribute="centerX" id="ugE-rq-PAo"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="loginAndGoToAddresses" destination="rMI-cb-scj" id="zSr-O6-sTu"/>
@@ -714,6 +787,7 @@
                             <constraint firstAttribute="centerX" secondItem="Pen-1z-Swr" secondAttribute="centerX" id="Of0-Lw-GYd"/>
                             <constraint firstAttribute="centerY" secondItem="Pen-1z-Swr" secondAttribute="centerY" id="pIs-KC-U1d"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="chooseBillingAndShippingAddressesAndGoToNextStep" destination="Pen-1z-Swr" id="5bE-cB-k0t"/>
@@ -747,6 +821,7 @@
                             <constraint firstAttribute="centerY" secondItem="fCc-1Z-JMx" secondAttribute="centerY" id="SzQ-Cu-nUp"/>
                             <constraint firstAttribute="centerX" secondItem="fCc-1Z-JMx" secondAttribute="centerX" id="hKq-Xs-XMh"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="chooseShippingMethodAndGoToNextStep" destination="fCc-1Z-JMx" id="WxK-xD-rLE"/>
@@ -784,6 +859,7 @@
                             <constraint firstAttribute="centerX" secondItem="pxX-bV-YMh" secondAttribute="centerX" id="LLc-y0-H1z"/>
                             <constraint firstAttribute="centerY" secondItem="pxX-bV-YMh" secondAttribute="centerY" id="aZ3-HX-pk4"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="choosePaymentMethodAndGoToNextStep" destination="pxX-bV-YMh" id="Epa-z2-PO9"/>

@@ -158,6 +158,7 @@
 		CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */; };
 		CE21CB07198266FA00F7DC66 /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB06198266FA00F7DC66 /* RIAddress.m */; };
 		CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */; };
+		CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */; };
 		CE44586B198BD20A00CE7E8D /* JAMainTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445866198BD20A00CE7E8D /* JAMainTeaserView.m */; };
 		CE44586C198BD20A00CE7E8D /* JATopBrandsTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445868198BD20A00CE7E8D /* JATopBrandsTeaserView.m */; };
 		CE44586D198BD20A00CE7E8D /* JATopSellersTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44586A198BD20A00CE7E8D /* JATopSellersTeaserView.m */; };
@@ -459,6 +460,8 @@
 		CE21CB06198266FA00F7DC66 /* RIAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAddress.m; sourceTree = "<group>"; };
 		CE3FC5A51990E209003B4A27 /* JAPickerScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPickerScrollView.h; sourceTree = "<group>"; };
 		CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPickerScrollView.m; sourceTree = "<group>"; };
+		CE3FC5AC1990E25C003B4A27 /* JACatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogViewController.h; sourceTree = "<group>"; };
+		CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogViewController.m; sourceTree = "<group>"; };
 		CE445865198BD20A00CE7E8D /* JAMainTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMainTeaserView.h; sourceTree = "<group>"; };
 		CE445866198BD20A00CE7E8D /* JAMainTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMainTeaserView.m; sourceTree = "<group>"; };
 		CE445867198BD20A00CE7E8D /* JATopBrandsTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATopBrandsTeaserView.h; sourceTree = "<group>"; };
@@ -1329,6 +1332,7 @@
 		B5A302FF1981218E00F71726 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CE3FC5AB1990E25C003B4A27 /* Catalog */,
 				4AE730AF198F88CB000CA1DD /* PDV */,
 				B5225E281989475E00C18F1E /* Checkout */,
 				4A39213119891FA200B70A9C /* MyFavourites */,
@@ -1364,6 +1368,15 @@
 				CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */,
 			);
 			path = GenericComponents;
+			sourceTree = "<group>";
+		};
+		CE3FC5AB1990E25C003B4A27 /* Catalog */ = {
+			isa = PBXGroup;
+			children = (
+				CE3FC5AC1990E25C003B4A27 /* JACatalogViewController.h */,
+				CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */,
+			);
+			path = Catalog;
 			sourceTree = "<group>";
 		};
 		CE445864198BD20A00CE7E8D /* TeaserViews */ = {
@@ -1553,6 +1566,7 @@
 				B5A3025B19811E8A00F71726 /* SDWebImageManager.m in Sources */,
 				B5A302C319811E9200F71726 /* RIForm.m in Sources */,
 				B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */,
+				CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */,
 				B5A302C519811E9200F71726 /* RIImage.m in Sources */,
 				B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */,
 				CE21CB07198266FA00F7DC66 /* RIAddress.m in Sources */,

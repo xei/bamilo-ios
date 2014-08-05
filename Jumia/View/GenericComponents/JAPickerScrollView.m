@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong)UIScrollView* scrollView;
 @property (nonatomic, strong)UIImageView* arrowImageView;
+@property (nonatomic, strong)NSArray* optionStrings;
 @property (nonatomic, strong)NSArray* optionLabels;
 @property (nonatomic, assign)NSInteger selectedIndex;
 
@@ -28,6 +29,15 @@
 
 - (void)setOptions:(NSArray*)options;
 {
+    self.optionStrings = options;
+    [self setNeedsLayout];
+}
+
+- (void)layoutSubviews
+{
+    [self.scrollView removeFromSuperview];
+    [self.arrowImageView removeFromSuperview];
+    
     self.backgroundColor = JAPickerScrollViewBackgroundColor;
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((self.bounds.size.width - JAPickerScrollViewCenterWidth) / 2,
@@ -43,8 +53,8 @@
     NSMutableArray* tempArray = [NSMutableArray new];
     
     CGFloat currentWidth = 0;
-    for (int i = 0; i < options.count; i++) {
-        NSString* category = [options objectAtIndex:i];
+    for (int i = 0; i < self.optionStrings.count; i++) {
+        NSString* category = [self.optionStrings objectAtIndex:i];
         
         UILabel* newLabel = [[UILabel alloc] initWithFrame:CGRectMake(currentWidth,
                                                                       self.scrollView.frame.origin.y,
