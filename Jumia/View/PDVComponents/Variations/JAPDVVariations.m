@@ -13,19 +13,27 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
+    
     if (self) {
-        // Initialization code
+        
     }
+    
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
++ (JAPDVVariations *)getNewPDVVariationsSection
 {
-    // Drawing code
+    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVVariations"
+                                                 owner:nil
+                                               options:nil];
+    
+    for (NSObject *obj in xib) {
+        if ([obj isKindOfClass:[JAPDVVariations class]]) {
+            return (JAPDVVariations *)obj;
+        }
+    }
+    
+    return nil;
 }
-*/
 
 @end

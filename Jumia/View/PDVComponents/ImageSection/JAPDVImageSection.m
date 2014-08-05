@@ -10,22 +10,30 @@
 
 @implementation JAPDVImageSection
 
++ (JAPDVImageSection *)getNewPDVImageSection
+{
+    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVImageSection"
+                                                 owner:nil
+                                               options:nil];
+    
+    for (NSObject *obj in xib) {
+        if ([obj isKindOfClass:[JAPDVImageSection class]]) {
+            return (JAPDVImageSection *)obj;
+        }
+    }
+    
+    return nil;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
+    
     if (self) {
-        // Initialization code
+       
     }
+    
     return self;
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

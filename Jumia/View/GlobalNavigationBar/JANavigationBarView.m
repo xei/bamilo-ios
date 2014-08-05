@@ -45,6 +45,7 @@
     self.backImageView.hidden = YES;
     self.applyButton.hidden = YES;
     self.cartButton.hidden = NO;
+    self.leftButton.hidden = NO;
     
     self.logoImageView.hidden = NO;
     self.titleLabel.hidden = YES;
