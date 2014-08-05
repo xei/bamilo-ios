@@ -13,6 +13,8 @@
 		4A2FD83E1991146400C65C1D /* JACTAButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD83D1991146400C65C1D /* JACTAButtons.xib */; };
 		4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */; };
 		4A2FD843199119D900C65C1D /* JAPDVProductInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */; };
+		4A2FD84619912BC500C65C1D /* JAPDVSingleRelatedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD84519912BC500C65C1D /* JAPDVSingleRelatedItem.m */; };
+		4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */; };
 		4A39212719891F2D00B70A9C /* JATrackMyOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212619891F2D00B70A9C /* JATrackMyOrderViewController.m */; };
 		4A39212A19891F6300B70A9C /* JASignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212919891F6300B70A9C /* JASignInViewController.m */; };
 		4A39212D19891F6D00B70A9C /* JARecentSearchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */; };
@@ -193,6 +195,9 @@
 		4A2FD83F199119D900C65C1D /* JAPDVProductInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVProductInfo.h; sourceTree = "<group>"; };
 		4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVProductInfo.m; sourceTree = "<group>"; };
 		4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVProductInfo.xib; sourceTree = "<group>"; };
+		4A2FD84419912BC500C65C1D /* JAPDVSingleRelatedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVSingleRelatedItem.h; sourceTree = "<group>"; };
+		4A2FD84519912BC500C65C1D /* JAPDVSingleRelatedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVSingleRelatedItem.m; sourceTree = "<group>"; };
+		4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVSingleRelatedItem.xib; sourceTree = "<group>"; };
 		4A3921191988E27A00B70A9C /* JAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAConstants.h; sourceTree = "<group>"; };
 		4A39212519891F2D00B70A9C /* JATrackMyOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATrackMyOrderViewController.h; sourceTree = "<group>"; };
 		4A39212619891F2D00B70A9C /* JATrackMyOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATrackMyOrderViewController.m; sourceTree = "<group>"; };
@@ -734,6 +739,9 @@
 				4AE730BC198F8ADF000CA1DD /* JAPDVRelatedItem.h */,
 				4AE730BD198F8ADF000CA1DD /* JAPDVRelatedItem.m */,
 				4A4F12E9198FF35600F93C89 /* JAPDVRelatedItem.xib */,
+				4A2FD84419912BC500C65C1D /* JAPDVSingleRelatedItem.h */,
+				4A2FD84519912BC500C65C1D /* JAPDVSingleRelatedItem.m */,
+				4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */,
 			);
 			path = RelatedItem;
 			sourceTree = "<group>";
@@ -1502,6 +1510,7 @@
 				B5A3024919811E8A00F71726 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
 				B5A3024819811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				B5A3023819811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
+				4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */,
 				B5A3023619811E8A00F71726 /* BMA4SCloseButton.png in Resources */,
 				B5A3023E19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
 				B5A3023F19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
@@ -1554,6 +1563,7 @@
 				CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */,
 				B50B03A6198A544A002046DF /* JAShippingViewController.m in Sources */,
 				B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */,
+				4A2FD84619912BC500C65C1D /* JAPDVSingleRelatedItem.m in Sources */,
 				B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */,
 				B5A3025B19811E8A00F71726 /* SDWebImageManager.m in Sources */,
 				B5A302C319811E9200F71726 /* RIForm.m in Sources */,

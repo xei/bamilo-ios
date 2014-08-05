@@ -11,6 +11,8 @@
 #import "JAPDVVariations.h"
 #import "JAPDVProductInfo.h"
 #import "JACTAButtons.h"
+#import "JAPDVRelatedItem.h"
+#import "JAPDVSingleRelatedItem.h"
 #import "UIImageView+WebCache.h"
 #import "RIImage.h"
 #import "RIVariation.h"
@@ -24,6 +26,7 @@
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
 @property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
 @property (strong, nonatomic) JACTAButtons *ctaButtons;
+@property (strong, nonatomic) JAPDVRelatedItem *relatedItems;
 
 @end
 
@@ -44,6 +47,8 @@
     self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
     
     self.ctaButtons = [JACTAButtons getNewPDVCTAButtons];
+    
+    self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
     
     [self fillTheViews];
 }
@@ -164,6 +169,24 @@
     startingElement += (4 + self.productInfoSection.frame.size.height);
     
     /*******
+        Related Items
+     *******/
+    
+    if (self.fromCatalogue) {
+        
+        self.relatedItems.frame = CGRectMake(6,
+                                             startingElement,
+                                             self.relatedItems.frame.size.width,
+                                             self.relatedItems.frame.size.height);
+        
+        self.relatedItems.layer.cornerRadius = 4.0f;
+        
+        [self.mainScrollView addSubview:self.relatedItems];
+        
+        startingElement += (4 + self.relatedItems.frame.size.height);
+    }
+    
+    /*******
         CTA Buttons
      *******/
     
@@ -176,9 +199,9 @@
     
     [self.mainScrollView addSubview:self.ctaButtons];
     
-    startingElement += (4 + self.ctaButtons.frame.size.height);
+    startingElement += (6 + self.ctaButtons.frame.size.height);
     
-    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement);
+    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + 700);
     
 }
 

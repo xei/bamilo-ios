@@ -109,6 +109,9 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="0.0" y="160" width="480" height="480"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="XR4-T4-6LA" id="cxX-Za-uhR"/>
                                     <outlet property="delegate" destination="XR4-T4-6LA" id="7Kc-oC-8f6"/>
@@ -203,6 +206,9 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="0.0" y="296" width="480" height="344"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="rNh-ME-jyY" id="4nI-va-HnU"/>
                                     <outlet property="delegate" destination="rNh-ME-jyY" id="JxE-nt-u5e"/>
@@ -302,6 +308,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="6" y="6" width="308" height="564"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="2Bm-pv-QSw" id="Nni-dY-v5y"/>
                                     <outlet property="delegate" destination="2Bm-pv-QSw" id="NQV-BS-HNo"/>
@@ -491,7 +500,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RiA-6S-1Mu">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="416"/>
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="1200"/>
                                 <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
                         </subviews>
@@ -572,6 +581,9 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="6" y="6" width="308" height="404"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="0hJ-EI-g5I" id="26L-XT-bdq"/>
                                     <outlet property="delegate" destination="0hJ-EI-g5I" id="999-2a-Ix5"/>

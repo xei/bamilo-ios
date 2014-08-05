@@ -12,5 +12,6 @@
 @interface JAPDVViewController : JABaseViewController
 
 @property (strong, nonatomic) RIProduct *product;
+@property (assign, nonatomic) BOOL fromCatalogue;
 
 @end
