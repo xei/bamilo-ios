@@ -13,6 +13,7 @@
 #import "JAMyFavouritesViewController.h"
 #import "JAChooseCountryViewController.h"
 #import "JARecentSearchesViewController.h"
+#import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
 #import "RIProduct.h"
 
@@ -39,6 +40,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectedItemInMenu:)
                                                  name:kMenuDidSelectOptionNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectedLeafCategoryInMenu:)
+                                                 name:kMenuDidSelectLeafCategoryNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -210,6 +216,19 @@
      */
 }
 
+- (void)changeCenterPanelToCatalogWithCategory:(RICategory*)category
+{
+    JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    
+    [self pushViewController:catalog
+                    animated:YES];
+    
+    [self.navigationBarView changeNavigationBarTitle:category.name];
+    catalog.category = category;
+    
+    self.viewControllers = @[catalog];
+}
+
 - (void)didSelectedItemInMenu:(NSNotification *)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
@@ -228,6 +247,20 @@
             [self changeCenterPanel:[selectedItem objectForKey:@"name"]
                      titleForNavBar:[selectedItem objectForKey:@"name"]];
         }
+    }
+}
+
+- (void)didSelectedLeafCategoryInMenu:(NSNotification *)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                        object:nil];
+    
+    NSDictionary *selectedItem = [notification object];
+
+    RICategory* category = [selectedItem objectForKey:@"category"];
+    if (VALID_NOTEMPTY(category, RICategory)) {
+        
+        [self changeCenterPanelToCatalogWithCategory:category];
     }
 }
 

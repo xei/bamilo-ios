@@ -78,8 +78,8 @@
         [self.navigationController pushViewController:newSubCategories
                                              animated:YES];
     } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                            object:@{@"index": @(indexPath.row)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
+                                                            object:@{@"category":category}];
     }
 }
 
