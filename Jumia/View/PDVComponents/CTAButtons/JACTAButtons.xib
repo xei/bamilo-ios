@@ -44,6 +44,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="addToCartButton" destination="Lqn-sn-N5k" id="CVE-He-5BA"/>
+                <outlet property="buttonWidth" destination="yv7-fu-5WV" id="bn6-ac-D9Q"/>
                 <outlet property="callToOrderButton" destination="1YR-cg-Iul" id="7T6-jP-Sfz"/>
             </connections>
             <point key="canvasLocation" x="510" y="230"/>

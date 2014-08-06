@@ -14,8 +14,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *callToOrderButton;
 @property (weak, nonatomic) IBOutlet UIButton *addToCartButton;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonWidth;
+
 + (JACTAButtons *)getNewPDVCTAButtons;
 
-- (void)layoutView;
+- (void)layoutViewWithNumberOfButton:(NSInteger)number;
 
 @end

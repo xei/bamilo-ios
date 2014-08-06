@@ -110,6 +110,7 @@
                             
                             JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
                             pdv.product = product;
+                            pdv.fromCatalogue = YES;
                             
                             [self pushViewController:pdv
                                             animated:YES];
