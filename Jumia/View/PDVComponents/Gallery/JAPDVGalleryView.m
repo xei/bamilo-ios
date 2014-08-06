@@ -17,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollViewImages;
 @property (strong, nonatomic) NSMutableArray *modifiedArray;
+@property (strong, nonatomic) NSMutableArray *imageViewsArray;
 
 @end
 
@@ -50,17 +51,32 @@
 
 - (void)loadGalleryWithArray:(NSArray *)source
 {
+    self.imageViewsArray = [NSMutableArray new];
+    
     if (source.count == 1)
     {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        
         RIImage *image = source[0];
+        
+        UIScrollView *scrollForImage = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, self.scrollViewImages.frame.size.height)];
+        scrollForImage.delegate = self;
+        scrollForImage.tag = 0;
+        
+        scrollForImage.minimumZoomScale = 1.0;
+        scrollForImage.maximumZoomScale = 2.0;
+        scrollForImage.contentSize = CGSizeMake(320, 320);
+        scrollForImage.showsHorizontalScrollIndicator = NO;
+        scrollForImage.showsVerticalScrollIndicator = NO;
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, self.scrollViewImages.frame.size.height)];
+        imageView.contentMode = UIViewContentModeCenter;
         
         [imageView setImageWithURL:[NSURL URLWithString:image.url]];
         
-        [self.scrollViewImages addSubview:imageView];
-        [self.scrollViewImages setContentSize:CGSizeMake(320, 320)];
+        [self.imageViewsArray insertObject:imageView
+                                   atIndex:0];
+        
+        [scrollForImage addSubview:imageView];
+        [self.scrollViewImages addSubview:scrollForImage];
     }
     else
     {
@@ -69,21 +85,35 @@
                                  atIndex:0];
         [self.modifiedArray addObject:[source firstObject]];
         
-        [self.scrollViewImages setContentSize:CGSizeMake(320 * self.modifiedArray.count, 320)];
+        [self.scrollViewImages setContentSize:CGSizeMake(320 * self.modifiedArray.count, self.scrollViewImages.frame.size.height)];
         
         for (int i = 0 ; i < self.modifiedArray.count ; i++)
         {
             RIImage *image = [self.modifiedArray objectAtIndex:i];
             
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * 320, 0, 320, 320)];
-            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            UIScrollView *scrollForImage = [[UIScrollView alloc] initWithFrame:CGRectMake(i * 320, 0, 320, self.scrollViewImages.frame.size.height)];
+            scrollForImage.delegate = self;
+            scrollForImage.tag = i;
+            
+            scrollForImage.minimumZoomScale = 1.0;
+            scrollForImage.maximumZoomScale = 2.0;
+            scrollForImage.contentSize = CGSizeMake(320, 320);
+            scrollForImage.showsHorizontalScrollIndicator = NO;
+            scrollForImage.showsVerticalScrollIndicator = NO;
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, self.scrollViewImages.frame.size.height)];
+            imageView.contentMode = UIViewContentModeCenter;
                         
             [imageView setImageWithURL:[NSURL URLWithString:image.url]];
             
-            [self.scrollViewImages addSubview:imageView];
+            [self.imageViewsArray insertObject:imageView
+                                       atIndex:i];
+            
+            [scrollForImage addSubview:imageView];
+            [self.scrollViewImages addSubview:scrollForImage];
         }
         
-        [self.scrollViewImages scrollRectToVisible:CGRectMake(320, 0, 320, 320)
+        [self.scrollViewImages scrollRectToVisible:CGRectMake(320, 0, 320, self.scrollViewImages.frame.size.height)
                                           animated:NO];
     }
 }
@@ -103,17 +133,26 @@
         
         if (scrollView.contentOffset.x == contentOffsetWhenFullyScrolledRight) {
             
-            [self.scrollViewImages scrollRectToVisible:CGRectMake(320, 0, 320, 320)
+            [self.scrollViewImages scrollRectToVisible:CGRectMake(320, 0, 320, self.scrollViewImages.frame.size.height)
                                               animated:NO];
             
         } else if (scrollView.contentOffset.x == 0)  {
             
             if (self.modifiedArray.count > 1) {
-                [self.scrollViewImages scrollRectToVisible:CGRectMake(self.scrollViewImages.contentSize.width - 640, 0, 320, 320)
+                [self.scrollViewImages scrollRectToVisible:CGRectMake(self.scrollViewImages.contentSize.width - 640, 0, 320, self.scrollViewImages.frame.size.height)
                                                   animated:NO];
             }
         }
     }
+}
+
+#pragma mark - Zoom method
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    UIImageView *imageView = [self.imageViewsArray objectAtIndex:scrollView.tag];
+    
+    return imageView;
 }
 
 @end
