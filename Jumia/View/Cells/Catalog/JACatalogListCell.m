@@ -7,16 +7,29 @@
 //
 
 #import "JACatalogListCell.h"
+#import "RIProduct.h"
+
+@interface JACatalogListCell()
+
+@property (weak, nonatomic) IBOutlet UIImageView *productImageView;
+@property (weak, nonatomic) IBOutlet UILabel *brandLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *numberOfReviewsLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *recentProductImageView;
+@property (weak, nonatomic) IBOutlet UILabel *recentProductLabel;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+@property (weak, nonatomic) IBOutlet UIImageView *discountImageView;
+@property (weak, nonatomic) IBOutlet UILabel *discountLabel;
+
+@end
 
 @implementation JACatalogListCell
 
-- (instancetype)initWithFrame:(CGRect)frameRect
+- (void)loadWithProduct:(RIProduct*)product
 {
-    self = [super initWithFrame:frameRect];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+
 }
 
 @end

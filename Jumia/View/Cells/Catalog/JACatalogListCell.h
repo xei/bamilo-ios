@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class RIProduct;
+
 @interface JACatalogListCell : UICollectionViewCell
+
+- (void)loadWithProduct:(RIProduct*)product;
 
 @end

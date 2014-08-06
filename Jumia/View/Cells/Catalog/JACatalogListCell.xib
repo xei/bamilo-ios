@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <objects>
@@ -15,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="72n-Eo-6JJ">
-                        <rect key="frame" x="6" y="0.0" width="308" height="95"/>
+                        <rect key="frame" x="6" y="3" width="308" height="95"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ies-sK-r7n">
                                 <rect key="frame" x="6" y="5" width="68" height="85"/>
@@ -48,15 +47,31 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r5y-Kd-UYC">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ProductBadgeNew" translatesAutoresizingMaskIntoConstraints="NO" id="r5y-Kd-UYC">
                                 <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GNO-gj-m3T">
-                                <rect key="frame" x="278" y="10" width="20" height="20"/>
-                                <state key="normal" title="Button">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FAF-Nn-CSy">
+                                <rect key="frame" x="0.0" y="0.0" width="48" height="14"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="8"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GNO-gj-m3T">
+                                <rect key="frame" x="278" y="10" width="24" height="24"/>
+                                <state key="normal" title="Button" image="btn_fav">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="selected" image="FavButtonPressed"/>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="img_badge_discount" translatesAutoresizingMaskIntoConstraints="NO" id="tRD-e6-mz8">
+                                <rect key="frame" x="272" y="71" width="26" height="14"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l2j-oQ-qLc">
+                                <rect key="frame" x="272" y="71" width="26" height="14"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="8"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -65,13 +80,31 @@
             </view>
             <color key="backgroundColor" red="0.77863919010000004" green="0.77863919010000004" blue="0.77863919010000004" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="72n-Eo-6JJ" secondAttribute="bottom" constant="3" id="HIo-Re-p1x"/>
+                <constraint firstAttribute="bottom" secondItem="72n-Eo-6JJ" secondAttribute="bottom" id="Bgu-Bl-1J1"/>
                 <constraint firstAttribute="trailing" secondItem="72n-Eo-6JJ" secondAttribute="trailing" constant="6" id="LPj-oA-XRQ"/>
                 <constraint firstItem="72n-Eo-6JJ" firstAttribute="leading" secondItem="8F8-oN-fPv" secondAttribute="leading" constant="6" id="UlB-yw-CHA"/>
-                <constraint firstItem="72n-Eo-6JJ" firstAttribute="top" secondItem="8F8-oN-fPv" secondAttribute="top" id="pY5-jm-GGB"/>
+                <constraint firstItem="72n-Eo-6JJ" firstAttribute="top" secondItem="8F8-oN-fPv" secondAttribute="top" constant="3" id="V7b-qo-1RP"/>
             </constraints>
             <size key="customSize" width="264" height="134"/>
+            <connections>
+                <outlet property="brandLabel" destination="EN6-Fm-NCj" id="9dC-wS-YmI"/>
+                <outlet property="discountImageView" destination="tRD-e6-mz8" id="eBy-QN-NN7"/>
+                <outlet property="discountLabel" destination="l2j-oQ-qLc" id="Syg-9d-rCG"/>
+                <outlet property="favoriteButton" destination="GNO-gj-m3T" id="xSy-iY-z0J"/>
+                <outlet property="nameLabel" destination="59B-cJ-eZ5" id="ICt-h7-Xhj"/>
+                <outlet property="numberOfReviewsLabel" destination="Pym-ic-lum" id="ted-dH-bJe"/>
+                <outlet property="priceLabel" destination="D5h-dq-CVk" id="tkq-oi-eG6"/>
+                <outlet property="productImageView" destination="Ies-sK-r7n" id="n0N-OC-P2J"/>
+                <outlet property="recentProductImageView" destination="r5y-Kd-UYC" id="UNb-A5-j5o"/>
+                <outlet property="recentProductLabel" destination="FAF-Nn-CSy" id="G8L-IL-L5l"/>
+            </connections>
             <point key="canvasLocation" x="474" y="401"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="FavButtonPressed" width="24" height="24"/>
+        <image name="ProductBadgeNew" width="48" height="48"/>
+        <image name="btn_fav" width="21" height="21"/>
+        <image name="img_badge_discount" width="26" height="14"/>
+    </resources>
 </document>
