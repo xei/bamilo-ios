@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Social/Social.h>
 #import "RIProduct.h"
 
 @interface JAPDVViewController : JABaseViewController
 
 @property (strong, nonatomic) RIProduct *product;
+@property (assign, nonatomic) BOOL fromCatalogue;
 
 @end

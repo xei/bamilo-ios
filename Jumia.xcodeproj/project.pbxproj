@@ -7,9 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A01EE4919922729005F5AD1 /* JAPDVPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A01EE4819922729005F5AD1 /* JAPDVPicker.m */; };
+		4A01EE4B19922736005F5AD1 /* JAPDVPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A01EE4A19922736005F5AD1 /* JAPDVPicker.xib */; };
+		4A01EE61199259C7005F5AD1 /* JAPDVGalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A01EE60199259C7005F5AD1 /* JAPDVGalleryView.m */; };
+		4A01EE63199259D1005F5AD1 /* JAPDVGalleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A01EE62199259D1005F5AD1 /* JAPDVGalleryView.xib */; };
 		4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */; };
 		4A1270FB1987EFB0004142F5 /* JAMenuNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1270FA1987EFB0004142F5 /* JAMenuNavigationBar.m */; };
 		4A1C00D81987F2EB00A0109E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302FB19811F2200F71726 /* UIKit.framework */; };
+		4A2FD83E1991146400C65C1D /* JACTAButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD83D1991146400C65C1D /* JACTAButtons.xib */; };
+		4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */; };
+		4A2FD843199119D900C65C1D /* JAPDVProductInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */; };
+		4A2FD84619912BC500C65C1D /* JAPDVSingleRelatedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD84519912BC500C65C1D /* JAPDVSingleRelatedItem.m */; };
+		4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */; };
+		4A2FD84A19913FCA00C65C1D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2FD84919913FCA00C65C1D /* Social.framework */; };
 		4A39212719891F2D00B70A9C /* JATrackMyOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212619891F2D00B70A9C /* JATrackMyOrderViewController.m */; };
 		4A39212A19891F6300B70A9C /* JASignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212919891F6300B70A9C /* JASignInViewController.m */; };
 		4A39212D19891F6D00B70A9C /* JARecentSearchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */; };
@@ -185,10 +195,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A01EE4719922729005F5AD1 /* JAPDVPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVPicker.h; sourceTree = "<group>"; };
+		4A01EE4819922729005F5AD1 /* JAPDVPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVPicker.m; sourceTree = "<group>"; };
+		4A01EE4A19922736005F5AD1 /* JAPDVPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVPicker.xib; sourceTree = "<group>"; };
+		4A01EE5F199259C7005F5AD1 /* JAPDVGalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVGalleryView.h; sourceTree = "<group>"; };
+		4A01EE60199259C7005F5AD1 /* JAPDVGalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVGalleryView.m; sourceTree = "<group>"; };
+		4A01EE62199259D1005F5AD1 /* JAPDVGalleryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVGalleryView.xib; sourceTree = "<group>"; };
 		4A1270F6198795AF004142F5 /* JASubCategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASubCategoriesViewController.h; sourceTree = "<group>"; };
 		4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASubCategoriesViewController.m; sourceTree = "<group>"; };
 		4A1270F91987EFB0004142F5 /* JAMenuNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMenuNavigationBar.h; sourceTree = "<group>"; };
 		4A1270FA1987EFB0004142F5 /* JAMenuNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMenuNavigationBar.m; sourceTree = "<group>"; };
+		4A2FD83D1991146400C65C1D /* JACTAButtons.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACTAButtons.xib; sourceTree = "<group>"; };
+		4A2FD83F199119D900C65C1D /* JAPDVProductInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVProductInfo.h; sourceTree = "<group>"; };
+		4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVProductInfo.m; sourceTree = "<group>"; };
+		4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVProductInfo.xib; sourceTree = "<group>"; };
+		4A2FD84419912BC500C65C1D /* JAPDVSingleRelatedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVSingleRelatedItem.h; sourceTree = "<group>"; };
+		4A2FD84519912BC500C65C1D /* JAPDVSingleRelatedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVSingleRelatedItem.m; sourceTree = "<group>"; };
+		4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVSingleRelatedItem.xib; sourceTree = "<group>"; };
+		4A2FD84919913FCA00C65C1D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4A3921191988E27A00B70A9C /* JAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAConstants.h; sourceTree = "<group>"; };
 		4A39212519891F2D00B70A9C /* JATrackMyOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATrackMyOrderViewController.h; sourceTree = "<group>"; };
 		4A39212619891F2D00B70A9C /* JATrackMyOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATrackMyOrderViewController.m; sourceTree = "<group>"; };
@@ -495,6 +519,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A2FD84A19913FCA00C65C1D /* Social.framework in Frameworks */,
 				4A4ABF0E198B9DE600342D92 /* QuartzCore.framework in Frameworks */,
 				4A1C00D81987F2EB00A0109E /* UIKit.framework in Frameworks */,
 				B5A302FA19811F1E00F71726 /* CoreGraphics.framework in Frameworks */,
@@ -526,6 +551,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A01EE3C19921DE9005F5AD1 /* PDVSizePicker */ = {
+			isa = PBXGroup;
+			children = (
+				4A01EE4719922729005F5AD1 /* JAPDVPicker.h */,
+				4A01EE4819922729005F5AD1 /* JAPDVPicker.m */,
+				4A01EE4A19922736005F5AD1 /* JAPDVPicker.xib */,
+			);
+			path = PDVSizePicker;
+			sourceTree = "<group>";
+		};
+		4A01EE5E199259B6005F5AD1 /* Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				4A01EE5F199259C7005F5AD1 /* JAPDVGalleryView.h */,
+				4A01EE60199259C7005F5AD1 /* JAPDVGalleryView.m */,
+				4A01EE62199259D1005F5AD1 /* JAPDVGalleryView.xib */,
+			);
+			path = Gallery;
+			sourceTree = "<group>";
+		};
 		4A39211A19891F1500B70A9C /* ChooseCountry */ = {
 			isa = PBXGroup;
 			children = (
@@ -692,6 +737,8 @@
 		4AE730B0198F8A74000CA1DD /* PDVComponents */ = {
 			isa = PBXGroup;
 			children = (
+				4A01EE5E199259B6005F5AD1 /* Gallery */,
+				4A01EE3C19921DE9005F5AD1 /* PDVSizePicker */,
 				4AE730B2198F8AAB000CA1DD /* ImageSection */,
 				4AE730B5198F8AAB000CA1DD /* Variations */,
 				4AE730B4198F8AAB000CA1DD /* RelatedItem */,
@@ -706,6 +753,7 @@
 			children = (
 				4AE730C2198F8AF3000CA1DD /* JACTAButtons.h */,
 				4AE730C3198F8AF3000CA1DD /* JACTAButtons.m */,
+				4A2FD83D1991146400C65C1D /* JACTAButtons.xib */,
 			);
 			path = CTAButtons;
 			sourceTree = "<group>";
@@ -723,6 +771,9 @@
 		4AE730B3198F8AAB000CA1DD /* ProductInfo */ = {
 			isa = PBXGroup;
 			children = (
+				4A2FD83F199119D900C65C1D /* JAPDVProductInfo.h */,
+				4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */,
+				4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */,
 			);
 			path = ProductInfo;
 			sourceTree = "<group>";
@@ -733,6 +784,9 @@
 				4AE730BC198F8ADF000CA1DD /* JAPDVRelatedItem.h */,
 				4AE730BD198F8ADF000CA1DD /* JAPDVRelatedItem.m */,
 				4A4F12E9198FF35600F93C89 /* JAPDVRelatedItem.xib */,
+				4A2FD84419912BC500C65C1D /* JAPDVSingleRelatedItem.h */,
+				4A2FD84519912BC500C65C1D /* JAPDVSingleRelatedItem.m */,
+				4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */,
 			);
 			path = RelatedItem;
 			sourceTree = "<group>";
@@ -879,6 +933,7 @@
 		B5A301D119811E7600F71726 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A2FD84919913FCA00C65C1D /* Social.framework */,
 				4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */,
 				B5A302FB19811F2200F71726 /* UIKit.framework */,
 				B5A302F919811F1E00F71726 /* CoreGraphics.framework */,
@@ -1521,12 +1576,15 @@
 				B5A3023A19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
 				4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */,
 				4A392143198925E300B70A9C /* JANavigationBarView.xib in Resources */,
+				4A2FD83E1991146400C65C1D /* JACTAButtons.xib in Resources */,
 				B5A3024A19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
 				B5A3024719811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */,
 				B5A3024319811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */,
+				4A01EE63199259D1005F5AD1 /* JAPDVGalleryView.xib in Resources */,
 				B5A3024919811E8A00F71726 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
 				B5A3024819811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				B5A3023819811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
+				4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */,
 				B5A3023619811E8A00F71726 /* BMA4SCloseButton.png in Resources */,
 				B5A3023E19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
 				B5A3023F19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
@@ -1535,12 +1593,14 @@
 				B5A3023919811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib in Resources */,
 				B5A3024C19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				4A4F12EA198FF35600F93C89 /* JAPDVRelatedItem.xib in Resources */,
+				4A2FD843199119D900C65C1D /* JAPDVProductInfo.xib in Resources */,
 				B5A3024519811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */,
 				B5A3023C19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */,
 				4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */,
 				B5A3024419811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
 				B5A3024019811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */,
 				CE2F577019913B6D000A9E09 /* JACatalogListCell.xib in Resources */,
+				4A01EE4B19922736005F5AD1 /* JAPDVPicker.xib in Resources */,
 				B5A3024F19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
 				B5A3024B19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
 				B5A3023419811E8A00F71726 /* A4S.bundle in Resources */,
@@ -1579,6 +1639,7 @@
 				CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */,
 				B50B03A6198A544A002046DF /* JAShippingViewController.m in Sources */,
 				B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */,
+				4A2FD84619912BC500C65C1D /* JAPDVSingleRelatedItem.m in Sources */,
 				B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */,
 				B5A3025B19811E8A00F71726 /* SDWebImageManager.m in Sources */,
 				B5A302C319811E9200F71726 /* RIForm.m in Sources */,
@@ -1601,6 +1662,7 @@
 				CE44586C198BD20A00CE7E8D /* JATopBrandsTeaserView.m in Sources */,
 				B5A302CE19811E9200F71726 /* RITeaserGroup.m in Sources */,
 				B5225E30198950C500C18F1E /* JACartViewController.m in Sources */,
+				4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */,
 				B5A3023319811E8A00F71726 /* BMA4SViewController.m in Sources */,
 				B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */,
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
@@ -1608,6 +1670,7 @@
 				B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */,
 				B5225E1B1989308300C18F1E /* RIPaymentMethodFormOption.m in Sources */,
 				4AE730B8198F8ACA000CA1DD /* JAPDVImageSection.m in Sources */,
+				4A01EE61199259C7005F5AD1 /* JAPDVGalleryView.m in Sources */,
 				CE445880198C03D100CE7E8D /* JAPopularBrandsTeaserView.m in Sources */,
 				4A39213719891FBA00B70A9C /* JAChooseCountryViewController.m in Sources */,
 				4A9D26D7198BD44F001704ED /* RIRecentSearch.m in Sources */,
@@ -1630,6 +1693,7 @@
 				CE55A4E41992873300EE75DE /* RIProduct.m in Sources */,
 				B5225E1C1989308300C18F1E /* RIPaymentMethodFormField.m in Sources */,
 				B5A302D419811E9200F71726 /* Model.xcdatamodeld in Sources */,
+				4A01EE4919922729005F5AD1 /* JAPDVPicker.m in Sources */,
 				B5A302DA19811E9200F71726 /* RICommunicationWrapper.m in Sources */,
 				CE44586D198BD20A00CE7E8D /* JATopSellersTeaserView.m in Sources */,
 				4A392141198925D000B70A9C /* JANavigationBarView.m in Sources */,
