@@ -33,6 +33,7 @@
 @property (nonatomic, retain) NSNumber * specialPrice;
 @property (nonatomic, retain) NSNumber * sum;
 @property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSNumber * isNew;
 @property (nonatomic, retain) NSOrderedSet *images;
 @property (nonatomic, retain) NSOrderedSet *productSimples;
 @property (nonatomic, retain) NSOrderedSet *variations;
