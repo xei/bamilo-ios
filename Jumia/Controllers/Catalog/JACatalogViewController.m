@@ -23,6 +23,8 @@
     [super viewDidLoad];
 
     self.sortingScrollView.delegate = self;
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
     
     NSArray* sortList = [NSArray arrayWithObjects:@"Popularity", @"Best Rating", @"New In", @"Price Up", @"Price Down", @"Name", @"Brand", nil];
     
@@ -31,6 +33,7 @@
     if (VALID_NOTEMPTY(self.category, RICategory)) {
         [self showLoading];
         [RIProduct getProductsWithUrl:self.category.apiUrl successBlock:^(id products) {
+            
             
             
             [self hideLoading];
