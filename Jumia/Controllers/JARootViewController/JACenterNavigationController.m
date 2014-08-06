@@ -105,7 +105,7 @@
 {
     if ([newScreenName isEqualToString:@"Home"])
     {
-        [RIProduct getProductWithUrl:@"http://www.jumia.com.ng/mobapi/v1.4/new-mentality-v-neck-print-t-shirt-red-106262.html"
+        [RIProduct getProductWithUrl:@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html"
                         successBlock:^(id product) {
                             
                             JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
