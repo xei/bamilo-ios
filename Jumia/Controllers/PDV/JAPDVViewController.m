@@ -17,8 +17,15 @@
 #import "RIImage.h"
 #import "RIVariation.h"
 #import "RIProductReview.h"
+#import "RICart.h"
+#import "RIProductSimple.h"
+#import "JAPDVPicker.h"
+#import "JAPDVGalleryView.h"
 
 @interface JAPDVViewController ()
+<
+    JAPDVGalleryViewDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
 @property (strong, nonatomic) RIProductReview *productReview;
@@ -27,6 +34,9 @@
 @property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
 @property (strong, nonatomic) JACTAButtons *ctaButtons;
 @property (strong, nonatomic) JAPDVRelatedItem *relatedItems;
+@property (strong, nonatomic) JAPDVPicker *picker;
+@property (strong, nonatomic) NSMutableArray *pickerDataSource;
+@property (strong, nonatomic) JAPDVGalleryView *gallery;
 
 @end
 
@@ -82,10 +92,14 @@
     
     self.imageSection.layer.cornerRadius = 4.0f;
     
-    [self.mainScrollView addSubview:self.imageSection];
-    
     RIImage *image = [self.product.images firstObject];
     [self.imageSection.mainImage setImageWithURL:[NSURL URLWithString:image.url]];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(presentGallery)];
+    
+    self.imageSection.mainImage.userInteractionEnabled = YES;
+    [self.imageSection.mainImage addGestureRecognizer:tap];
     
     self.imageSection.productNameLabel.text = self.product.brand;
     self.imageSection.productDescriptionLabel.text = self.product.name;
@@ -95,6 +109,16 @@
     } else {
         self.imageSection.discountLabel.hidden = YES;
     }
+    
+    [self.imageSection.shareButton addTarget:self
+                                      action:@selector(shareProduct)
+                            forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.imageSection.wishListButton addTarget:self
+                                         action:@selector(addProductToWishList)
+                               forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.mainScrollView addSubview:self.imageSection];
     
     startingElement += (4 + self.imageSection.frame.size.height);
     
@@ -164,12 +188,16 @@
     
     self.productInfoSection.layer.cornerRadius = 4.0f;
     
+    [self.productInfoSection.sizeButton addTarget:self
+                                           action:@selector(showSizePicker)
+                                 forControlEvents:UIControlEventTouchUpInside];
+    
     [self.mainScrollView addSubview:self.productInfoSection];
     
     startingElement += (4 + self.productInfoSection.frame.size.height);
     
     /*******
-        Related Items
+     Related Items
      *******/
     
     if (self.fromCatalogue) {
@@ -195,7 +223,16 @@
                                        self.ctaButtons.frame.size.width,
                                        self.ctaButtons.frame.size.height);
     
-    [self.ctaButtons layoutView];
+#warning need to change the product parser to include the phone_number
+    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",self.product]]]) {
+        [self.ctaButtons layoutViewWithNumberOfButton:2];
+    } else {
+        [self.ctaButtons layoutViewWithNumberOfButton:1];
+    }
+    
+    [self.ctaButtons.addToCartButton addTarget:self
+                                        action:@selector(addToCart)
+                              forControlEvents:UIControlEventTouchUpInside];
     
     [self.mainScrollView addSubview:self.ctaButtons];
     
@@ -203,6 +240,146 @@
     
     self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + 700);
     
+}
+
+#pragma mark - Actions
+
+- (void)shareProduct
+{
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    {
+        SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [tweetSheet setInitialText:self.product.name];
+        [self presentViewController:tweetSheet
+                           animated:YES
+                         completion:nil];
+    }
+}
+
+- (void)addProductToWishList
+{
+    
+}
+
+- (void)addToCart
+{
+    [self showLoading];
+    
+    [RICart addProductWithQuantity:@"1"
+                               sku:self.product.sku
+                            simple:((RIProduct *)[self.product.productSimples firstObject]).sku
+                  withSuccessBlock:^(RICart *cart) {
+                      
+                      [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                 message:@"Product added"
+                                                delegate:nil
+                                       cancelButtonTitle:nil
+                                        otherButtonTitles:@"Ok", nil] show];
+                      
+                      [self hideLoading];
+                      
+                  } andFailureBlock:^(NSArray *errorMessages) {
+                      
+                      [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                  message:@"Error adding to the cart"
+                                                 delegate:nil
+                                        cancelButtonTitle:nil
+                                        otherButtonTitles:@"Ok", nil] show];
+                      
+                      [self hideLoading];
+                      
+                  }];
+}
+
+- (void)callToOrder
+{
+    
+}
+
+- (void)showSizePicker
+{
+    self.picker = [JAPDVPicker getNewJAPDVPicker];
+    
+    self.pickerDataSource = [NSMutableArray new];
+    
+    if (self.product.productSimples.count > 0) {
+        for (RIProductSimple *simple in self.product.productSimples) {
+            if (simple.stock > 0) {
+                [self.pickerDataSource addObject:simple];
+            }
+        }
+    }
+    
+    [self.picker setDataSourceArray:[self.pickerDataSource copy]
+                       previousText:self.productInfoSection.sizeButton.titleLabel.text];
+    
+    [self.picker.doneButton addTarget:self
+                               action:@selector(didSelectedValueInPicker)
+                     forControlEvents:UIControlEventTouchUpInside];
+    
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
+    self.picker.frame = frame;
+    [self.view addSubview:self.picker];
+    frame.origin.y = 0.0f;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     }];
+}
+
+- (void)didSelectedValueInPicker
+{
+    NSUInteger selectedRow = [self.picker.picker selectedRowInComponent:0];
+    RIProductSimple *simple = [self.pickerDataSource objectAtIndex:selectedRow];
+    
+    [self.productInfoSection.sizeButton setTitle:simple.attributeSize
+                                        forState:UIControlStateNormal];
+    
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
+  
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [self.picker removeFromSuperview];
+                     }];
+}
+
+- (void)presentGallery
+{
+    self.gallery = [JAPDVGalleryView getNewJAPDVGalleryView];
+    self.gallery.delegate = self;
+    
+    [self.gallery loadGalleryWithArray:[self.product.images array]];
+    
+    CGRect tempFrame = self.gallery.frame;
+    tempFrame.origin.y = [[[UIApplication sharedApplication] delegate] window].rootViewController.view.frame.size.height;
+    self.gallery.frame = tempFrame;
+    
+    [[[[UIApplication sharedApplication] delegate] window].rootViewController.view addSubview:self.gallery];
+    
+    tempFrame.origin.y = 0;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.gallery.frame = tempFrame;
+                     }];
+}
+
+- (void)dismissGallery
+{
+    CGRect tempFrame = self.gallery.frame;
+    tempFrame.origin.y = [[[UIApplication sharedApplication] delegate] window].rootViewController.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.gallery.frame = tempFrame;
+                     } completion:^(BOOL finished) {
+                         [self.gallery removeFromSuperview];
+                     }];
 }
 
 @end

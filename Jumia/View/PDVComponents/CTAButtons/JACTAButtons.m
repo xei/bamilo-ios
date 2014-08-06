@@ -36,8 +36,8 @@
     return nil;
 }
 
-- (void)layoutView
-{    
+- (void)layoutViewWithNumberOfButton:(NSInteger)number
+{
     UIFont *buttonsFont = [UIFont fontWithName:@"HelveticaNeue"
                                           size:16.0];
     
@@ -47,14 +47,27 @@
     [self.addToCartButton setTitle:@"Add to Cart"
                           forState:UIControlStateNormal];
     
+    [self.addToCartButton setTitleColor:[UIColor whiteColor]
+                               forState:UIControlStateHighlighted];
+    
     [self.callToOrderButton setTitle:@"Call to Order"
                             forState:UIControlStateNormal];
+    
+    [self.callToOrderButton setTitleColor:[UIColor whiteColor]
+                                 forState:UIControlStateHighlighted];
     
     self.addToCartButton.layer.cornerRadius = 4.0f;
     
     self.callToOrderButton.layer.cornerRadius = 4.0f;
     self.callToOrderButton.layer.borderWidth = 1.0f;
     self.callToOrderButton.layer.borderColor = (__bridge CGColorRef)([UIColor colorWithRed:78.0/255.0 green:78.0/255.0 blue:78.0/255.0 alpha:1.0f]);
+    
+    if (number == 1) {
+        
+        [self.callToOrderButton removeFromSuperview];
+        self.buttonWidth.constant = self.frame.size.width;
+        
+    }
 }
 
 @end
