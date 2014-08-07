@@ -56,6 +56,11 @@
                                              selector:@selector(updateCart:)
                                                  name:kUpdateCartNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showBackButton)
+                                                 name:kShowBackNofication
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -327,6 +332,13 @@
     [self.navigationBarView.leftButton addTarget:self
                                           action:@selector(openMenu)
                                 forControlEvents:UIControlEventTouchUpInside];
+}
+
+#pragma mark - Show Back
+
+- (void)showBackButton
+{
+    [self.navigationBarView enteredSecondOrThirdLevelWithBackTitle:@"Back"];
 }
 
 @end

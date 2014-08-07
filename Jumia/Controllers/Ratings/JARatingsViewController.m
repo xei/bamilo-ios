@@ -9,6 +9,7 @@
 #import "JARatingsViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "JAReviewCell.h"
+#import "JANewRatingViewController.h"
 
 @interface JARatingsViewController ()
 <
@@ -41,6 +42,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
+                                                        object:nil];
     
     self.brandLabel.text = self.productBrand;
     self.nameLabel.text = self.productRatings.productName;
@@ -86,7 +90,20 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if ([segue.identifier isEqualToString:@"showNewRating"]) {
+        [segue.destinationViewController setRatingProductBrand:self.productBrand];
+        [segue.destinationViewController setRatingProductNameForLabel:self.productRatings.productName];
+        [segue.destinationViewController setRatingProductNewPriceForLabel:self.productNewPrice];
+        [segue.destinationViewController setRatingProductOldPriceForLabel:self.productOldPrice];
+    }
+}
 
+#pragma mark - Action
+
+- (IBAction)goToNewReviews:(id)sender
+{
+    [self performSegueWithIdentifier:@"showNewRating"
+                              sender:nil];
 }
 
 #pragma mark - Tableview methods
@@ -96,10 +113,34 @@
     return self.productRatings.comments.count;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return 44.0f;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self heightForBasicCellAtIndexPath:indexPath];
+}
+
+- (CGFloat)heightForBasicCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    static JAReviewCell *cell = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        cell = [self.tableViewComments dequeueReusableCellWithIdentifier:@"reviewCell"];
+    });
+    
+    RIRatingComment *comment = [self.productRatings.comments objectAtIndex:indexPath.row];
+    cell.labelDescription.text = comment.detail;
+    
+    return [self calculateHeightForConfiguredSizingCell:cell];
+}
+
+- (CGFloat)calculateHeightForConfiguredSizingCell:(UITableViewCell *)sizingCell
+{
+    [sizingCell setNeedsLayout];
+    [sizingCell layoutIfNeeded];
+    
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    
+    return size.height;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -124,7 +165,14 @@
         }
     }
     
-    NSString *string = [NSString stringWithFormat:@"posted by %@, %@", comment.nickname, comment.createdAt];
+    NSString *string;
+    
+    if (comment.nickname.length > 0) {
+        string = [NSString stringWithFormat:@"posted by %@, %@", comment.nickname, comment.createdAt];
+    } else {
+        string = [NSString stringWithFormat:@"posted by Anonimous User, %@", comment.createdAt];
+    }
+    
     cell.labelAuthorDate.text = string;
     
     return cell;

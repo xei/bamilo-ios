@@ -14,6 +14,7 @@
 		4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */; };
 		4A1270FB1987EFB0004142F5 /* JAMenuNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1270FA1987EFB0004142F5 /* JAMenuNavigationBar.m */; };
 		4A1892D219939A0C0036F327 /* JAReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D119939A0C0036F327 /* JAReviewCell.m */; };
+		4A1892D51993BCC90036F327 /* JANewRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D41993BCC90036F327 /* JANewRatingViewController.m */; };
 		4A1C00D81987F2EB00A0109E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302FB19811F2200F71726 /* UIKit.framework */; };
 		4A2FD83E1991146400C65C1D /* JACTAButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD83D1991146400C65C1D /* JACTAButtons.xib */; };
 		4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */; };
@@ -208,6 +209,8 @@
 		4A1270FA1987EFB0004142F5 /* JAMenuNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMenuNavigationBar.m; sourceTree = "<group>"; };
 		4A1892D019939A0C0036F327 /* JAReviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAReviewCell.h; sourceTree = "<group>"; };
 		4A1892D119939A0C0036F327 /* JAReviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAReviewCell.m; sourceTree = "<group>"; };
+		4A1892D31993BCC90036F327 /* JANewRatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewRatingViewController.h; sourceTree = "<group>"; };
+		4A1892D41993BCC90036F327 /* JANewRatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewRatingViewController.m; sourceTree = "<group>"; };
 		4A2FD83D1991146400C65C1D /* JACTAButtons.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACTAButtons.xib; sourceTree = "<group>"; };
 		4A2FD83F199119D900C65C1D /* JAPDVProductInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVProductInfo.h; sourceTree = "<group>"; };
 		4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVProductInfo.m; sourceTree = "<group>"; };
@@ -679,6 +682,8 @@
 			children = (
 				4A944FF6199290F200C02734 /* JARatingsViewController.h */,
 				4A944FF7199290F200C02734 /* JARatingsViewController.m */,
+				4A1892D31993BCC90036F327 /* JANewRatingViewController.h */,
+				4A1892D41993BCC90036F327 /* JANewRatingViewController.m */,
 			);
 			path = Ratings;
 			sourceTree = "<group>";
@@ -1739,6 +1744,7 @@
 				B5A3025C19811E8A00F71726 /* SDWebImagePrefetcher.m in Sources */,
 				CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */,
 				4A39212D19891F6D00B70A9C /* JARecentSearchesViewController.m in Sources */,
+				4A1892D51993BCC90036F327 /* JANewRatingViewController.m in Sources */,
 				4A39213A19891FC400B70A9C /* JAMyFavouritesViewController.m in Sources */,
 				B5A302E319811E9200F71726 /* RIAdXTracker.m in Sources */,
 				4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */,
