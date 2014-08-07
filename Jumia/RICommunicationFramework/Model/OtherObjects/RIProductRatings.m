@@ -155,7 +155,7 @@
             [tempArray addObject:[RIProductRatings parseOptionWithDictionary:optionDic]];
         }
         
-        ratingComment.options = [arrayOfoptions copy];
+        ratingComment.options = [tempArray copy];
     }
     
     return ratingComment;

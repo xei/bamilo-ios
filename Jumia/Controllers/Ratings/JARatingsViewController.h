@@ -12,5 +12,8 @@
 @interface JARatingsViewController : JABaseViewController
 
 @property (strong, nonatomic) RIProductRatings *productRatings;
+@property (strong, nonatomic) NSString *productBrand;
+@property (strong, nonatomic) NSNumber *productNewPrice;
+@property (strong, nonatomic) NSNumber *productOldPrice;
 
 @end

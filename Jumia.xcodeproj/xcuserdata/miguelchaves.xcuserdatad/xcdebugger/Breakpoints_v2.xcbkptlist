@@ -16,16 +16,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Jumia/View/PDVComponents/ProductInfo/JAPDVProductInfo.m"
-            timestampString = "428855176.341255"
+            filePath = "Jumia/RICommunicationFramework/Model/OtherObjects/RIProductRatings.m"
+            timestampString = "429109448.236256"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
-            landmarkName = "-removeSizeOptions"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
+            landmarkName = "+parseOptionWithDictionary:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

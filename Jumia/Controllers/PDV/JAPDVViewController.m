@@ -22,6 +22,7 @@
 #import "JAPDVPicker.h"
 #import "JAPDVGalleryView.h"
 #import "RIProductRatings.h"
+#import "JARatingsViewController.h"
 
 @interface JAPDVViewController ()
 <
@@ -73,7 +74,12 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    
+    if ([segue.identifier isEqualToString:@"showRatingsMain"]) {
+        [segue.destinationViewController setProductRatings:self.productRatings];
+        [segue.destinationViewController setProductBrand:self.product.brand];
+        [segue.destinationViewController setProductNewPrice:self.product.specialPrice];
+        [segue.destinationViewController setProductOldPrice:self.product.price];
+    }
 }
 
 #pragma mark - Fill the views
@@ -187,10 +193,14 @@
                                          
                                          [self hideLoading];
                                          
+                                         [self.productInfoSection.goToReviewsButton addTarget:self
+                                                                                       action:@selector(goToRatinsMainScreen)
+                                                                             forControlEvents:UIControlEventTouchUpInside];
+                                         
                                      } andFailureBlock:^(NSArray *errorMessages) {
                                          
                                          [self hideLoading];
-                                        
+                                         
                                      }];
     
     self.productInfoSection.specificationsLabel.text = @"Specifications";
@@ -252,6 +262,12 @@
 }
 
 #pragma mark - Actions
+
+- (void)goToRatinsMainScreen
+{
+    [self performSegueWithIdentifier:@"showRatingsMain"
+                              sender:nil];
+}
 
 - (void)shareProduct
 {
