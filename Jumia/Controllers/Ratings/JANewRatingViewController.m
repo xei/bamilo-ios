@@ -73,7 +73,132 @@
 
 - (IBAction)changeStars:(id)sender
 {
+    NSInteger tag = ((UIButton *)sender).tag;
     
+    switch (tag) {
+        case 1001:
+        {
+            [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1002]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+        }
+            break;
+            
+        case 1002:
+        {
+            [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+        }
+            break;
+            
+        case 1003:
+        {
+            [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+        }
+            break;
+            
+        case 1004:
+        {
+            [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+        }
+            break;
+            
+        case 1005:
+        {
+            [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+        }
+            break;
+            
+        case 2001:
+        {
+            
+        }
+            break;
+            
+        case 2002:
+        {
+            
+        }
+            break;
+            
+        case 2003:
+        {
+            
+        }
+            break;
+            
+        case 2004:
+        {
+            
+        }
+            break;
+            
+        case 2005:
+        {
+            
+        }
+            break;
+            
+        case 3001:
+        {
+            
+        }
+            break;
+            
+        case 3002:
+        {
+            
+        }
+            break;
+            
+        case 3003:
+        {
+            
+        }
+            break;
+            
+        case 3004:
+        {
+            
+        }
+            break;
+            
+        case 3005:
+        {
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (UIImage *)getEmptyStar
+{
+    return [UIImage imageNamed:@"img_rating_star_big_empty"];
+}
+
+- (UIImage *)getFilledStar
+{
+    return [UIImage imageNamed:@"img_rating_star_big_full"];
 }
 
 @end
