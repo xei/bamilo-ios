@@ -19,3 +19,4 @@
 #define kDidPressedApplyNotification @"DID_PRESSED_APPLY_NOTIFICATION"
 #define kTurnOffLeftSwipePanelNotification @"NOTIFICATION_TURN_OFF_LEFT_SWIPE_PANEL"
 #define kTurnOnLeftSwipePanelNotification @"NOTIFICATION_TURN_ON_LEFT_SWIPE_PANEL"
+#define kShowBackNofication @"NOTIFICATION_SHOW_BACK"
