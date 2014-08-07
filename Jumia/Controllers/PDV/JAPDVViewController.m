@@ -21,6 +21,8 @@
 #import "RIProductSimple.h"
 #import "JAPDVPicker.h"
 #import "JAPDVGalleryView.h"
+#import "RIProductRatings.h"
+#import "JARatingsViewController.h"
 
 @interface JAPDVViewController ()
 <
@@ -28,7 +30,7 @@
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
-@property (strong, nonatomic) RIProductReview *productReview;
+@property (strong, nonatomic) RIProductRatings *productRatings;
 @property (strong, nonatomic) JAPDVImageSection *imageSection;
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
 @property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
@@ -72,7 +74,12 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    
+    if ([segue.identifier isEqualToString:@"showRatingsMain"]) {
+        [segue.destinationViewController setProductRatings:self.productRatings];
+        [segue.destinationViewController setProductBrand:self.product.brand];
+        [segue.destinationViewController setProductNewPrice:self.product.specialPrice];
+        [segue.destinationViewController setProductOldPrice:self.product.price];
+    }
 }
 
 #pragma mark - Fill the views
@@ -167,22 +174,34 @@
     
     [self showLoading];
     
-    [RIProductReview getReviewForProductWithSku:self.product.sku
-                                   successBlock:^(id review) {
-                                       
-                                       self.productReview = review;
-                                       
-                                       self.productInfoSection.numberOfReviewsLabel.text = [self.productReview.commentsCount stringValue];
-                                       
-#warning missing the number of stars
-                                       
-                                       [self hideLoading];
-                                       
-                                   } andFailureBlock:^(NSArray *errorMessages) {
-                                       
-                                       [self hideLoading];
-                                       
-                                   }];
+    [RIProductRatings getRatingsForProductWithUrl:@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
+                                     successBlock:^(RIProductRatings *ratings) {
+                                        
+                                         self.productInfoSection.numberOfReviewsLabel.text = [NSString stringWithFormat:@"%@ Reviews", ratings.commentsCount];
+                                         
+                                         NSInteger media = 0;
+                                         
+                                         for (RIRatingComment *rating in ratings.comments) {
+                                             media += [rating.avgRating integerValue];
+                                         }
+                                         
+                                         media = (media / ratings.comments.count);
+                                         
+                                         [self.productInfoSection setNumberOfStars:media];
+                                         
+                                         self.productRatings = ratings;
+                                         
+                                         [self hideLoading];
+                                         
+                                         [self.productInfoSection.goToReviewsButton addTarget:self
+                                                                                       action:@selector(goToRatinsMainScreen)
+                                                                             forControlEvents:UIControlEventTouchUpInside];
+                                         
+                                     } andFailureBlock:^(NSArray *errorMessages) {
+                                         
+                                         [self hideLoading];
+                                         
+                                     }];
     
     self.productInfoSection.specificationsLabel.text = @"Specifications";
     
@@ -243,6 +262,12 @@
 }
 
 #pragma mark - Actions
+
+- (void)goToRatinsMainScreen
+{
+    [self performSegueWithIdentifier:@"showRatingsMain"
+                              sender:nil];
+}
 
 - (void)shareProduct
 {

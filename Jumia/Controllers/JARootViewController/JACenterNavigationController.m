@@ -56,6 +56,11 @@
                                              selector:@selector(updateCart:)
                                                  name:kUpdateCartNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showBackButton)
+                                                 name:kShowBackNofication
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,7 +110,7 @@
 {
     if ([newScreenName isEqualToString:@"Home"])
     {
-        [RIProduct getProductWithUrl:@"http://www.jumia.com.ng/mobapi/v1.4/new-mentality-v-neck-print-t-shirt-red-106262.html"
+        [RIProduct getProductWithUrl:@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html"
                         successBlock:^(id product) {
                             
                             JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
@@ -327,6 +332,13 @@
     [self.navigationBarView.leftButton addTarget:self
                                           action:@selector(openMenu)
                                 forControlEvents:UIControlEventTouchUpInside];
+}
+
+#pragma mark - Show Back
+
+- (void)showBackButton
+{
+    [self.navigationBarView enteredSecondOrThirdLevelWithBackTitle:@"Back"];
 }
 
 @end
