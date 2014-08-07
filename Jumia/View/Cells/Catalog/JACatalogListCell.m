@@ -55,6 +55,8 @@
     
     self.recentProductImageView.hidden = !product.isNew;
     self.recentProductLabel.hidden = !product.isNew;
+    self.recentProductLabel.text = @"NEW";
+    self.recentProductLabel.transform = CGAffineTransformMakeRotation (-M_PI/4);
     
     self.brandLabel.text = product.brand;
     self.nameLabel.text = product.name;
