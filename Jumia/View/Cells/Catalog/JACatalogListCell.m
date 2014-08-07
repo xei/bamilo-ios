@@ -10,6 +10,14 @@
 #import "RIProduct.h"
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
+#import "JARatingsView.h"
+
+#define JACatalogListCellNormalFont [UIFont fontWithName:@"HelveticaNeue" size:10.0f]
+#define JACatalogListCellLightFont [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f]
+#define JACatalogListCellRedFontColor UIColorFromRGB(0xcc0000)
+#define JACatalogListCellGrayFontColor UIColorFromRGB(0xcccccc)
+#define JACatalogListCellRatingsViewOffsetY 7.0f
+#define JACatalogListCellRatingsViewOffsetX 7.0f
 
 @interface JACatalogListCell()
 
@@ -17,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *brandLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
-
+@property (weak, nonatomic) IBOutlet JARatingsView *ratingsView;
 @property (weak, nonatomic) IBOutlet UILabel *numberOfReviewsLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *recentProductImageView;
 @property (weak, nonatomic) IBOutlet UILabel *recentProductLabel;
@@ -28,6 +36,16 @@
 @end
 
 @implementation JACatalogListCell
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.ratingsView = [JARatingsView getNewJARatingsView];
+        [self addSubview:self.ratingsView];
+    }
+    return self;
+}
 
 - (void)loadWithProduct:(RIProduct*)product
 {
@@ -43,8 +61,8 @@
     
     NSMutableAttributedString* finalPriceString;
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont fontWithName:@"HelveticaNeue" size:10.0f], NSFontAttributeName,
-                                UIColorFromRGB(0xcc0000), NSForegroundColorAttributeName, nil];
+                                JACatalogListCellNormalFont, NSFontAttributeName,
+                                JACatalogListCellRedFontColor, NSForegroundColorAttributeName, nil];
     if (product.specialPrice && 0 < [product.specialPrice floatValue]) {
         
         NSString* specialPrice = [product.specialPrice stringValue];
@@ -53,8 +71,8 @@
         finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", specialPrice, price]
                                                              attributes:attributes];
         NSDictionary* oldPriceAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f], NSFontAttributeName,
-                                         UIColorFromRGB(0xcccccc), NSForegroundColorAttributeName, nil];
+                                         JACatalogListCellLightFont, NSFontAttributeName,
+                                         JACatalogListCellGrayFontColor, NSForegroundColorAttributeName, nil];
         NSRange oldPriceRange = NSMakeRange(specialPrice.length + 1, price.length);
         
         [finalPriceString setAttributes:oldPriceAttributes
@@ -67,7 +85,16 @@
     
     [self.priceLabel setAttributedText:finalPriceString];
     
-    self.numberOfReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0];
+    
+    [self.ratingsView setFrame:CGRectMake(self.priceLabel.frame.origin.x + JACatalogListCellRatingsViewOffsetY,
+                                          CGRectGetMaxY(self.priceLabel.frame) + JACatalogListCellRatingsViewOffsetX,
+                                          self.ratingsView.frame.size.width,
+                                          self.ratingsView.frame.size.height)];
+    self.ratingsView.rating = [product.avr integerValue];
+    
+    
+    self.numberOfReviewsLabel.font = JACatalogListCellLightFont;
+    self.numberOfReviewsLabel.textColor = JACatalogListCellGrayFontColor;
     if (1 == [product.sum integerValue]) {
         self.numberOfReviewsLabel.text = [NSString stringWithFormat:@"%@ review", [product.sum stringValue]];
     } else {

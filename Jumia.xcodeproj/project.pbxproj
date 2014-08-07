@@ -179,6 +179,8 @@
 		CE44587C198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44587B198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m */; };
 		CE445880198C03D100CE7E8D /* JAPopularBrandsTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44587F198C03D100CE7E8D /* JAPopularBrandsTeaserView.m */; };
 		CE55A4E41992873300EE75DE /* RIProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55A4E31992873300EE75DE /* RIProduct.m */; };
+		CE55A4E71993672600EE75DE /* JARatingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55A4E61993672600EE75DE /* JARatingsView.m */; };
+		CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE55A4E819936B6300EE75DE /* JARatingsView.xib */; };
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
 		CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B981987FF490078DFC9 /* JASplashViewController.m */; };
 		CEE91B9C1989065A0078DFC9 /* JATeaserPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */; };
@@ -507,6 +509,9 @@
 		CE44587F198C03D100CE7E8D /* JAPopularBrandsTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPopularBrandsTeaserView.m; sourceTree = "<group>"; };
 		CE55A4E21992873300EE75DE /* RIProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIProduct.h; sourceTree = "<group>"; };
 		CE55A4E31992873300EE75DE /* RIProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIProduct.m; sourceTree = "<group>"; };
+		CE55A4E51993672600EE75DE /* JARatingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARatingsView.h; sourceTree = "<group>"; };
+		CE55A4E61993672600EE75DE /* JARatingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingsView.m; sourceTree = "<group>"; };
+		CE55A4E819936B6300EE75DE /* JARatingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARatingsView.xib; sourceTree = "<group>"; };
 		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		CEE91B971987FF490078DFC9 /* JASplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASplashViewController.h; sourceTree = "<group>"; };
 		CEE91B981987FF490078DFC9 /* JASplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASplashViewController.m; sourceTree = "<group>"; };
@@ -1435,6 +1440,9 @@
 		CE3FC5A41990E209003B4A27 /* GenericComponents */ = {
 			isa = PBXGroup;
 			children = (
+				CE55A4E51993672600EE75DE /* JARatingsView.h */,
+				CE55A4E61993672600EE75DE /* JARatingsView.m */,
+				CE55A4E819936B6300EE75DE /* JARatingsView.xib */,
 				CE3FC5A51990E209003B4A27 /* JAPickerScrollView.h */,
 				CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */,
 			);
@@ -1605,6 +1613,7 @@
 				B5A3024B19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
 				B5A3023419811E8A00F71726 /* A4S.bundle in Resources */,
 				B5A3023B19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
+				CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */,
 				B5A3023719811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
 				B5A301BC19811D0700F71726 /* Images.xcassets in Resources */,
 				B5A3024D19811E8A00F71726 /* BMA4SiPhoneTextNotifView.xib in Resources */,
@@ -1690,6 +1699,7 @@
 				4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */,
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
 				4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */,
+				CE55A4E71993672600EE75DE /* JARatingsView.m in Sources */,
 				CE55A4E41992873300EE75DE /* RIProduct.m in Sources */,
 				B5225E1C1989308300C18F1E /* RIPaymentMethodFormField.m in Sources */,
 				B5A302D419811E9200F71726 /* Model.xcdatamodeld in Sources */,
