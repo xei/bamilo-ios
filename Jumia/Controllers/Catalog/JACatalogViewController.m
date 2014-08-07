@@ -9,6 +9,7 @@
 #import "JACatalogViewController.h"
 #import "RIProduct.h"
 #import "JACatalogListCell.h"
+#import "JACatalogGridCell.h"
 
 @interface JACatalogViewController ()
 
@@ -30,12 +31,13 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
-    UINib *cellNib = [UINib nibWithNibName:@"JACatalogListCell" bundle:nil];
+    UINib *cellNib = [UINib nibWithNibName:@"JACatalogGridCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"cvCell"];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.minimumLineSpacing = 0;
-    flowLayout.itemSize = CGSizeMake(320, 98);
+    flowLayout.minimumInteritemSpacing = 0;
+    flowLayout.itemSize = CGSizeMake(160, 196); //320, 98);
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
     [self.collectionView setCollectionViewLayout:flowLayout];
@@ -80,7 +82,7 @@
     
     static NSString *cellIdentifier = @"cvCell";
     
-    JACatalogListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    JACatalogGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     [cell loadWithProduct:product];
     
