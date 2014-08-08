@@ -79,6 +79,7 @@
     self.labelUsedProduct.text = @"You have used this Product? Rate it now!";
     
     self.tableViewComments.layer.cornerRadius = 4.0f;
+    self.tableViewComments.allowsSelection = NO;
 }
 
 - (void)didReceiveMemoryWarning

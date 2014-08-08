@@ -8,6 +8,8 @@
 
 #import "JANewRatingViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "RIForm.h"
+#import "RIField.h"
 
 @interface JANewRatingViewController ()
 
@@ -20,8 +22,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelPrice;
 @property (weak, nonatomic) IBOutlet UILabel *labelAppearance;
 @property (weak, nonatomic) IBOutlet UILabel *labelQuality;
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *commentTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewName;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewTitle;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewComment;
 @property (weak, nonatomic) IBOutlet UIButton *sendReview;
 @property (weak, nonatomic) IBOutlet UIView *centerView;
 
@@ -57,6 +63,37 @@
     
     self.centerView.layer.cornerRadius = 4.0f;
     self.sendReview.layer.cornerRadius = 4.0f;
+    
+    [self showLoading];
+    
+    [RIForm getForm:@"rating"
+       successBlock:^(RIForm *form) {
+           
+           for (RIField *field in form.fields) {
+               if ([field.uid isEqualToString:@"RatingForm_name"]) {
+                   self.nameTextField.hidden = NO;
+                   self.imageViewName.hidden = NO;
+               } else if ([field.uid isEqualToString:@"RatingForm_title"]) {
+                   self.titleTextField.hidden = NO;
+                   self.imageViewTitle.hidden = NO;
+               } else if ([field.uid isEqualToString:@"RatingForm_comment"]) {
+                   self.commentTextField.hidden = NO;
+                   self.imageViewComment.hidden = NO;
+               }
+           }
+           
+           [self hideLoading];
+           
+       } failureBlock:^(NSArray *errorMessage) {
+           
+           [self hideLoading];
+
+           [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                       message:@"There was an error"
+                                      delegate:nil
+                             cancelButtonTitle:nil
+                             otherButtonTitles:@"OK", nil] show];
+       }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -128,61 +165,101 @@
             
         case 2001:
         {
-            
+            [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2002]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
         }
             break;
             
         case 2002:
         {
-            
+            [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
         }
             break;
             
         case 2003:
         {
-            
+            [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
         }
             break;
             
         case 2004:
         {
-            
+            [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
         }
             break;
             
         case 2005:
         {
-            
+            [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getFilledStar] forState:UIControlStateNormal];
         }
             break;
             
         case 3001:
         {
-            
+            [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3002]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
         }
             break;
             
         case 3002:
         {
-            
+            [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
         }
             break;
             
         case 3003:
         {
-            
+            [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
         }
             break;
             
         case 3004:
         {
-            
+            [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
         }
             break;
             
         case 3005:
         {
-            
+            [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getFilledStar] forState:UIControlStateNormal];
         }
             break;
             

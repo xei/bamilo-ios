@@ -135,6 +135,11 @@
     
     if (self.product.variations.count > 0) {
         
+        self.variationsSection.frame = CGRectMake(6,
+                                                  startingElement,
+                                                  self.variationsSection.frame.size.width,
+                                                  self.variationsSection.frame.size.height);
+        
         self.variationsSection.layer.cornerRadius = 4.0f;
         
         self.variationsSection.titleLabel.text = @"Variations";
@@ -149,11 +154,6 @@
             
             start += 40.0;
         }
-        
-        self.variationsSection.frame = CGRectMake(6,
-                                                  startingElement,
-                                                  self.variationsSection.frame.size.width,
-                                                  self.variationsSection.frame.size.height);
         
         [self.mainScrollView addSubview:self.variationsSection];
         
@@ -257,8 +257,7 @@
     
     startingElement += (6 + self.ctaButtons.frame.size.height);
     
-    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + 700);
-    
+    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + 6);
 }
 
 #pragma mark - Actions
