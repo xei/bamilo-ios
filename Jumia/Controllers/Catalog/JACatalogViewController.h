@@ -10,7 +10,7 @@
 #import "JAPickerScrollView.h"
 #import "RICategory.h"
 
-@interface JACatalogViewController : JABaseViewController <JAPickerScrollViewDelegate>
+@interface JACatalogViewController : JABaseViewController <JAPickerScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong)RICategory* category;
 

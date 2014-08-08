@@ -33,6 +33,7 @@
 @dynamic specialPrice;
 @dynamic sum;
 @dynamic url;
+@dynamic isNew;
 @dynamic images;
 @dynamic productSimples;
 @dynamic variations;
