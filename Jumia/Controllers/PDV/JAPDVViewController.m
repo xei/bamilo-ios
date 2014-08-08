@@ -23,6 +23,7 @@
 #import "JAPDVGalleryView.h"
 #import "RIProductRatings.h"
 #import "JARatingsViewController.h"
+#import "JAProductDetailsViewController.h"
 
 @interface JAPDVViewController ()
 <
@@ -79,6 +80,11 @@
         [segue.destinationViewController setProductBrand:self.product.brand];
         [segue.destinationViewController setProductNewPrice:self.product.specialPrice];
         [segue.destinationViewController setProductOldPrice:self.product.price];
+    } else if ([segue.identifier isEqualToString:@"segueToDetails"]) {
+        [segue.destinationViewController setStringBrand:self.product.brand];
+        [segue.destinationViewController setStringName:self.product.name];
+        [segue.destinationViewController setStringNewPrice:self.product.specialPrice];
+        [segue.destinationViewController setStringOldPrice:self.product.price];
     }
 }
 
@@ -211,6 +217,11 @@
                                            action:@selector(showSizePicker)
                                  forControlEvents:UIControlEventTouchUpInside];
     
+    
+    [self.productInfoSection.goToSpecificationsButton addTarget:self
+                                                         action:@selector(gotoDetails)
+                                               forControlEvents:UIControlEventTouchUpInside];
+    
     [self.mainScrollView addSubview:self.productInfoSection];
     
     startingElement += (4 + self.productInfoSection.frame.size.height);
@@ -261,6 +272,12 @@
 }
 
 #pragma mark - Actions
+
+- (void)gotoDetails
+{
+    [self performSegueWithIdentifier:@"segueToDetails"
+                              sender:nil];
+}
 
 - (void)goToRatinsMainScreen
 {
