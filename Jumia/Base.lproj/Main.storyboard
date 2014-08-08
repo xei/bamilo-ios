@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="35A-Fx-NNM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="35A-Fx-NNM">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <scenes>
@@ -1399,12 +1398,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6lO-cb-ku3" customClass="JAPickerScrollView">
-                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                <rect key="frame" x="34" y="64" width="252" height="44"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="rY3-Fd-zBi"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMs-IJ-hAe" userLabel="filterButton">
+                                <rect key="frame" x="0.0" y="64" width="34" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="P4f-XT-UGd"/>
+                                    <constraint firstAttribute="width" constant="34" id="lZ2-yr-xFe"/>
+                                </constraints>
+                                <state key="normal" image="filterIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WIM-UY-vXJ" userLabel="viewButton">
+                                <rect key="frame" x="286" y="64" width="34" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="22h-PS-qkn"/>
+                                    <constraint firstAttribute="height" constant="44" id="7O5-YZ-mbc"/>
+                                </constraints>
+                                <state key="normal" image="listIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="gridIcon"/>
+                                <connections>
+                                    <action selector="viewButtonPressed:" destination="y7p-zP-v5K" eventType="touchUpInside" id="7rD-ym-igu"/>
+                                </connections>
+                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZRY-qq-tSd">
                                 <rect key="frame" x="0.0" y="108" width="320" height="372"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SCu-ih-mcg">
@@ -1428,18 +1451,24 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="ZRY-qq-tSd" firstAttribute="leading" secondItem="LT2-FN-Zb3" secondAttribute="leading" id="3BQ-46-mDS"/>
-                            <constraint firstItem="6lO-cb-ku3" firstAttribute="leading" secondItem="LT2-FN-Zb3" secondAttribute="leading" id="45T-wq-GRx"/>
                             <constraint firstItem="ZRY-qq-tSd" firstAttribute="top" secondItem="6lO-cb-ku3" secondAttribute="bottom" id="7ux-D9-LHE"/>
+                            <constraint firstItem="6lO-cb-ku3" firstAttribute="leading" secondItem="uMs-IJ-hAe" secondAttribute="trailing" id="CsE-FI-zcK"/>
+                            <constraint firstItem="uMs-IJ-hAe" firstAttribute="top" secondItem="lzj-49-Dyb" secondAttribute="bottom" id="Fca-29-Opf"/>
                             <constraint firstAttribute="trailing" secondItem="ZRY-qq-tSd" secondAttribute="trailing" id="Jtd-Gf-XEv"/>
+                            <constraint firstAttribute="trailing" secondItem="WIM-UY-vXJ" secondAttribute="trailing" id="ONk-vo-TXV"/>
+                            <constraint firstItem="WIM-UY-vXJ" firstAttribute="top" secondItem="lzj-49-Dyb" secondAttribute="bottom" id="PiM-Vv-vUb"/>
                             <constraint firstItem="lOt-fd-9os" firstAttribute="top" secondItem="ZRY-qq-tSd" secondAttribute="bottom" id="YSJ-z2-uF1"/>
-                            <constraint firstAttribute="trailing" secondItem="6lO-cb-ku3" secondAttribute="trailing" id="vke-qw-VAu"/>
+                            <constraint firstItem="uMs-IJ-hAe" firstAttribute="leading" secondItem="LT2-FN-Zb3" secondAttribute="leading" id="beb-TA-LMK"/>
+                            <constraint firstItem="WIM-UY-vXJ" firstAttribute="leading" secondItem="6lO-cb-ku3" secondAttribute="trailing" id="c9S-Hf-9ln"/>
                             <constraint firstItem="6lO-cb-ku3" firstAttribute="top" secondItem="lzj-49-Dyb" secondAttribute="bottom" id="yoi-yP-bhp"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="ZRY-qq-tSd" id="XI0-2o-oZS"/>
+                        <outlet property="filterButton" destination="uMs-IJ-hAe" id="gAM-vt-Qmy"/>
                         <outlet property="sortingScrollView" destination="6lO-cb-ku3" id="FN2-gq-REl"/>
+                        <outlet property="viewToggleButton" destination="WIM-UY-vXJ" id="gcG-3I-aGg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fw5-pW-XE1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1747,10 +1776,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="filterIcon" width="22" height="22"/>
+        <image name="gridIcon" width="22" height="22"/>
         <image name="ico_cart" width="25" height="20"/>
         <image name="img_emptyrecentsearches" width="98" height="98"/>
         <image name="img_rating_star_big_empty" width="27" height="27"/>
         <image name="img_rating_star_small_empty" width="9" height="9"/>
+        <image name="listIcon" width="22" height="22"/>
         <image name="tick_selected" width="14" height="14"/>
     </resources>
 </document>
