@@ -11,11 +11,15 @@
 #import "JACatalogListCell.h"
 #import "JACatalogGridCell.h"
 
+#define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
+
 @interface JACatalogViewController ()
 
+@property (weak, nonatomic) IBOutlet UIButton *filterButton;
+@property (weak, nonatomic) IBOutlet UIButton *viewToggleButton;
 @property (weak, nonatomic) IBOutlet JAPickerScrollView *sortingScrollView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
+@property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSMutableArray* productsArray;
 
 @end
@@ -26,21 +30,25 @@
 {
     [super viewDidLoad];
 
+    self.filterButton.backgroundColor = JACatalogViewControllerButtonColor;
+    self.viewToggleButton.backgroundColor = JACatalogViewControllerButtonColor;
+    
     self.sortingScrollView.delegate = self;
 
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
-    UINib *cellNib = [UINib nibWithNibName:@"JACatalogGridCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"cvCell"];
+    UINib *gridCellNib = [UINib nibWithNibName:@"JACatalogGridCell" bundle:nil];
+    [self.collectionView registerNib:gridCellNib forCellWithReuseIdentifier:@"gridCell"];
+    UINib *listCellNib = [UINib nibWithNibName:@"JACatalogListCell" bundle:nil];
+    [self.collectionView registerNib:listCellNib forCellWithReuseIdentifier:@"listCell"];
     
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.minimumLineSpacing = 0;
-    flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.itemSize = CGSizeMake(160, 196); //320, 98);
-    flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    
-    [self.collectionView setCollectionViewLayout:flowLayout];
+    self.flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    self.flowLayout.minimumLineSpacing = 0;
+    self.flowLayout.minimumInteritemSpacing = 0;
+    self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    [self.collectionView setCollectionViewLayout:self.flowLayout];
+    [self changeToList];
     
     NSArray* sortList = [NSArray arrayWithObjects:@"Popularity", @"Best Rating", @"New In", @"Price Up", @"Price Down", @"Name", @"Brand", nil];
     
@@ -63,6 +71,36 @@
     }
 }
 
+- (void)changeToList
+{
+    [UIView transitionWithView:self.collectionView
+                      duration:.3
+                       options:UIViewAnimationOptionTransitionCrossDissolve|UIViewAnimationOptionCurveEaseIn
+                    animations:^{
+                        
+                        self.flowLayout.itemSize = CGSizeMake(320, 98);
+                        
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+    [self.collectionView reloadData];
+}
+
+- (void)changeToGrid
+{
+    [UIView transitionWithView:self.collectionView
+                      duration:.3
+                       options:UIViewAnimationOptionTransitionCrossDissolve|UIViewAnimationOptionCurveEaseIn
+                    animations:^{
+                        
+                        self.flowLayout.itemSize = CGSizeMake(160, 196);
+                        
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+    [self.collectionView reloadData];
+}
+
 #pragma mark - UICollectionView
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -80,9 +118,14 @@
     
     RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
     
-    static NSString *cellIdentifier = @"cvCell";
+    NSString *cellIdentifier;
+    if (self.viewToggleButton.selected) {
+        cellIdentifier = @"gridCell";
+    }else{
+        cellIdentifier = @"listCell";
+    }
     
-    JACatalogGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    JACatalogCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     [cell loadWithProduct:product];
     
@@ -96,5 +139,20 @@
 {
 
 }
+
+#pragma mark - Button actions
+
+- (IBAction)viewButtonPressed:(id)sender
+{
+    //reverse selection
+    self.viewToggleButton.selected = !self.viewToggleButton.selected;
+    
+    if (self.viewToggleButton.selected) {
+        [self changeToGrid];
+    } else {
+        [self changeToList];
+    }
+}
+
 
 @end
