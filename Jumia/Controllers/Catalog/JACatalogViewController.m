@@ -66,11 +66,11 @@
 
 - (void)resetCatalog
 {
+    [self.collectionView setContentOffset:CGPointZero animated:NO];
+    
     self.productsArray = [NSMutableArray new];
     
     self.loadedEverything = NO;
-    
-    [self.collectionView setContentOffset:CGPointZero animated:NO];
 }
 
 - (void)loadMoreProducts
