@@ -73,9 +73,22 @@
                                                           }];
 }
 
-+ (NSString *)getProductsWithUrl:(NSString*)url
-                    successBlock:(void (^)(id products))successBlock
-                 andFailureBlock:(void (^)(NSArray *error))failureBlock
++ (NSString *)getProductsWithCatalogUrl:(NSString*)url
+                          sortingMethod:(RICatalogSorting)sortingMethod
+                                   page:(NSInteger)page
+                               maxItems:(NSInteger)maxItems
+                           successBlock:(void (^)(id products))successBlock
+                        andFailureBlock:(void (^)(NSArray *error))failureBlock
+{
+    NSString* fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod]];
+    return [RIProduct getProductsWithFullUrl:fullUrl
+                                successBlock:successBlock
+                             andFailureBlock:failureBlock];
+}
+
++ (NSString *)getProductsWithFullUrl:(NSString*)url
+                        successBlock:(void (^)(id products))successBlock
+                     andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
@@ -99,7 +112,9 @@
                                                                           [products addObject:product];
                                                                       }
                                                                       
-                                                                      successBlock(products);
+                                                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                                                          successBlock(products);
+                                                                      });
                                                                   }
                                                               }
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
@@ -264,6 +279,36 @@
         }
     }
     return newProduct;
+}
+
++ (NSString*)urlComponentForSortingMethod:(RICatalogSorting)sortingMethod
+{
+    NSString* urlComponent = @"";
+    
+    switch (sortingMethod) {
+        case RICatalogSortingRating:
+            urlComponent = @"sort=rating&dir=desc";
+            break;
+        case RICatalogSortingNewest:
+            urlComponent = @"sort=newest&dir=desc";
+            break;
+        case RICatalogSortingPriceUp:
+            urlComponent = @"sort=price&dir=asc";
+            break;
+        case RICatalogSortingPriceDown:
+            urlComponent = @"sort=price&dir=desc";
+            break;
+        case RICatalogSortingName:
+            urlComponent = @"sort=name&dir=asc";
+            break;
+        case RICatalogSortingBrand:
+            urlComponent = @"sort=brand&dir=asc";
+            break;
+        default: //RICatalogSortingPopularity
+            break;
+    }
+    
+    return urlComponent;
 }
 
 @end
