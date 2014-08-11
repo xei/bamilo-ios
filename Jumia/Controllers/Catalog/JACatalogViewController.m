@@ -13,6 +13,8 @@
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
+#define JACatalogViewControllerListCellHeight 98.0f
+#define JACatalogViewControllerGridCellHeight 196.0f
 
 @interface JACatalogViewController ()
 
@@ -105,7 +107,7 @@
                        options:UIViewAnimationOptionTransitionCrossDissolve|UIViewAnimationOptionCurveEaseIn
                     animations:^{
                         
-                        self.flowLayout.itemSize = CGSizeMake(320, 98);
+                        self.flowLayout.itemSize = CGSizeMake(self.view.frame.size.width, JACatalogViewControllerListCellHeight);
                         
                     } completion:^(BOOL finished) {
                         
@@ -120,7 +122,7 @@
                        options:UIViewAnimationOptionTransitionCrossDissolve|UIViewAnimationOptionCurveEaseIn
                     animations:^{
                         
-                        self.flowLayout.itemSize = CGSizeMake(160, 196);
+                        self.flowLayout.itemSize = CGSizeMake(self.view.frame.size.width / 2, JACatalogViewControllerGridCellHeight);
                         
                     } completion:^(BOOL finished) {
                         
