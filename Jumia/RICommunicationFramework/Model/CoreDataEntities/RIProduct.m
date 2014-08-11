@@ -182,22 +182,22 @@
             newProduct.activatedAt = [dataDic objectForKey:@"activated_at"];
         }
         if ([dataDic objectForKey:@"attributes"]) {
-            NSDictionary* attributes = [dataDic objectForKey:@"activated_at"];
+            NSDictionary* attributes = [dataDic objectForKey:@"attributes"];
             if (VALID_NOTEMPTY(attributes, NSDictionary)) {
                 if ([attributes objectForKey:@"description"]) {
-                    newProduct.attributeDescription = [dataDic objectForKey:@"description"];
+                    newProduct.attributeDescription = [attributes objectForKey:@"description"];
                 }
                 if ([attributes objectForKey:@"main_material"]) {
-                    newProduct.attributeMainMaterial = [dataDic objectForKey:@"main_material"];
+                    newProduct.attributeMainMaterial = [attributes objectForKey:@"main_material"];
                 }
                 if ([attributes objectForKey:@"color"]) {
-                    newProduct.attributeColor = [dataDic objectForKey:@"color"];
+                    newProduct.attributeColor = [attributes objectForKey:@"color"];
                 }
                 if ([attributes objectForKey:@"care_label"]) {
-                    newProduct.attributeCareLabel = [dataDic objectForKey:@"care_label"];
+                    newProduct.attributeCareLabel = [attributes objectForKey:@"care_label"];
                 }
                 if ([attributes objectForKey:@"short_description"]) {
-                    newProduct.attributeShortDescription = [dataDic objectForKey:@"short_description"];
+                    newProduct.attributeShortDescription = [attributes objectForKey:@"short_description"];
                 }
             }
         }

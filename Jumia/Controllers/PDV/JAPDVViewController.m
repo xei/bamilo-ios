@@ -85,6 +85,8 @@
         [segue.destinationViewController setStringName:self.product.name];
         [segue.destinationViewController setStringNewPrice:self.product.specialPrice];
         [segue.destinationViewController setStringOldPrice:self.product.price];
+        [segue.destinationViewController setFeaturesText:self.product.attributeShortDescription];
+        [segue.destinationViewController setDescriptionText:self.product.descriptionString];
     }
 }
 

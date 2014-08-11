@@ -7,6 +7,7 @@
 //
 
 #import "JAProductDetailsViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface JAProductDetailsViewController ()
 
@@ -42,6 +43,32 @@
     self.labelName.text = self.stringName;
     self.labelNewPrice.text = [self.stringNewPrice stringValue];
     self.labelOldPrice.text = [self.stringOldPrice stringValue];
+    
+    self.featuresView.layer.cornerRadius = 4.0f;
+    self.descriptionView.layer.cornerRadius = 4.0f;
+    
+    self.featuresTitleLabel.text = @"Product Features";
+    self.descriptionTitleLabel.text = @"Product Description";
+    
+    self.featuresTextLabel.text = self.featuresText;
+    [self.featuresTextLabel sizeToFit];
+    
+    self.featuresView.frame = CGRectMake(self.featuresView.frame.origin.x,
+                                         self.featuresView.frame.origin.y,
+                                         self.featuresView.frame.size.width,
+                                         self.featuresTextLabel.frame.size.height + 70);
+    
+    self.descriptionTextLabel.text = self.descriptionText;
+    [self.descriptionTextLabel sizeToFit];
+    
+    self.descriptionView.frame = CGRectMake(self.descriptionView.frame.origin.x,
+                                            self.descriptionView.frame.origin.y,
+                                            self.descriptionView.frame.size.width,
+                                            self.descriptionTextLabel.frame.size.height + 70);
+    
+    [self.contenteScrollView layoutSubviews];
+    
+    [self.contenteScrollView setContentSize:CGSizeMake(320, self.featuresView.frame.size.height + self.descriptionView.frame.size.height - 35)];
 }
 
 - (void)didReceiveMemoryWarning
