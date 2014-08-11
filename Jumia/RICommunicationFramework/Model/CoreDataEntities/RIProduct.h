@@ -11,6 +11,16 @@
 
 @class RIImage, RIProductSimple, RIVariation;
 
+typedef NS_ENUM(NSInteger, RICatalogSorting) {
+    RICatalogSortingPopularity = 0,
+    RICatalogSortingRating,
+    RICatalogSortingNewest,
+    RICatalogSortingPriceUp,
+    RICatalogSortingPriceDown,
+    RICatalogSortingName,
+    RICatalogSortingBrand
+};
+
 @interface RIProduct : NSManagedObject
 
 @property (nonatomic, retain) NSString * activatedAt;
@@ -55,6 +65,26 @@
                 andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 /**
+ *  Method to load a set of products given a base product url, the sorting method and the paging info
+ *   This method calls getProductsWithFullUrl:successBlock:andFailureBlock:
+ *
+ *  @param the catalog base url
+ *  @param the sorting method to be used
+ *  @param the page that is being requested
+ *  @param the max number of products per page
+ *  @param the success block containing the obtained products
+ *  @param the failure block containing the error message
+ *
+ *  @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString *)getProductsWithCatalogUrl:(NSString*)url
+                          sortingMethod:(RICatalogSorting)sortingMethod
+                                   page:(NSInteger)page
+                               maxItems:(NSInteger)maxItems
+                           successBlock:(void (^)(id products))successBlock
+                        andFailureBlock:(void (^)(NSArray *error))failureBlock;
+
+/**
  *  Method to load a set of products given an url
  *
  *  @param the url to get the products
@@ -63,9 +93,9 @@
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)getProductsWithUrl:(NSString*)url
-                    successBlock:(void (^)(id products))successBlock
-                 andFailureBlock:(void (^)(NSArray *error))failureBlock;
++ (NSString *)getProductsWithFullUrl:(NSString*)url
+                        successBlock:(void (^)(id products))successBlock
+                     andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 /**
  *  Method to cancel the request

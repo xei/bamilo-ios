@@ -1227,7 +1227,6 @@
 			isa = PBXGroup;
 			children = (
 				B5A3026019811E9200F71726 /* Configuration */,
-				B5A3026319811E9200F71726 /* Model */,
 				B5A3029C19811E9200F71726 /* Wrappers */,
 			);
 			name = RICommunicationFramework;
@@ -1237,6 +1236,7 @@
 		B5A3026019811E9200F71726 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				B5A3026319811E9200F71726 /* Model */,
 				B5A3026119811E9200F71726 /* RIConfiguration.h */,
 				B5A3026219811E9200F71726 /* RIConfiguration.m */,
 			);
@@ -1250,7 +1250,8 @@
 				B5A3028F19811E9200F71726 /* Model.xcdatamodeld */,
 				B5A3029119811E9200F71726 /* OtherObjects */,
 			);
-			path = Model;
+			name = Model;
+			path = ../Model;
 			sourceTree = "<group>";
 		};
 		B5A3026419811E9200F71726 /* CoreDataEntities */ = {
@@ -1945,6 +1946,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "armv7s armv7";
@@ -1972,6 +1974,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "armv7s armv7";
