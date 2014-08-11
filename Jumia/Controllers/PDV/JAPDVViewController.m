@@ -23,6 +23,7 @@
 #import "JAPDVGalleryView.h"
 #import "RIProductRatings.h"
 #import "JARatingsViewController.h"
+#import "JAProductDetailsViewController.h"
 
 @interface JAPDVViewController ()
 <
@@ -79,6 +80,11 @@
         [segue.destinationViewController setProductBrand:self.product.brand];
         [segue.destinationViewController setProductNewPrice:self.product.specialPrice];
         [segue.destinationViewController setProductOldPrice:self.product.price];
+    } else if ([segue.identifier isEqualToString:@"segueToDetails"]) {
+        [segue.destinationViewController setStringBrand:self.product.brand];
+        [segue.destinationViewController setStringName:self.product.name];
+        [segue.destinationViewController setStringNewPrice:self.product.specialPrice];
+        [segue.destinationViewController setStringOldPrice:self.product.price];
     }
 }
 
@@ -135,6 +141,11 @@
     
     if (self.product.variations.count > 0) {
         
+        self.variationsSection.frame = CGRectMake(6,
+                                                  startingElement,
+                                                  self.variationsSection.frame.size.width,
+                                                  self.variationsSection.frame.size.height);
+        
         self.variationsSection.layer.cornerRadius = 4.0f;
         
         self.variationsSection.titleLabel.text = @"Variations";
@@ -149,11 +160,6 @@
             
             start += 40.0;
         }
-        
-        self.variationsSection.frame = CGRectMake(6,
-                                                  startingElement,
-                                                  self.variationsSection.frame.size.width,
-                                                  self.variationsSection.frame.size.height);
         
         [self.mainScrollView addSubview:self.variationsSection];
         
@@ -211,6 +217,11 @@
                                            action:@selector(showSizePicker)
                                  forControlEvents:UIControlEventTouchUpInside];
     
+    
+    [self.productInfoSection.goToSpecificationsButton addTarget:self
+                                                         action:@selector(gotoDetails)
+                                               forControlEvents:UIControlEventTouchUpInside];
+    
     [self.mainScrollView addSubview:self.productInfoSection];
     
     startingElement += (4 + self.productInfoSection.frame.size.height);
@@ -257,11 +268,16 @@
     
     startingElement += (6 + self.ctaButtons.frame.size.height);
     
-    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + 700);
-    
+    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + 6);
 }
 
 #pragma mark - Actions
+
+- (void)gotoDetails
+{
+    [self performSegueWithIdentifier:@"segueToDetails"
+                              sender:nil];
+}
 
 - (void)goToRatinsMainScreen
 {

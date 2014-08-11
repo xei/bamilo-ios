@@ -142,8 +142,6 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"loading: %d",indexPath.row);
-    
     if (self.productsArray.count - 5 == indexPath.row) {
         [self loadMoreProducts];
     }
