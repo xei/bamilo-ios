@@ -15,6 +15,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelBrand;
 @property (weak, nonatomic) IBOutlet UILabel *labelNewPrice;
 @property (weak, nonatomic) IBOutlet UILabel *labelOldPrice;
+@property (weak, nonatomic) IBOutlet UIScrollView *contenteScrollView;
+@property (weak, nonatomic) IBOutlet UIView *featuresView;
+@property (weak, nonatomic) IBOutlet UIView *descriptionView;
+@property (weak, nonatomic) IBOutlet UIImageView *featuresLineImage;
+@property (weak, nonatomic) IBOutlet UIImageView *descriptionLineImage;
+@property (weak, nonatomic) IBOutlet UILabel *featuresTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *featuresTextLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionTextLabel;
 
 @end
 
@@ -25,6 +34,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
+                                                        object:nil];
     
     self.labelBrand.text = self.stringBrand;
     self.labelName.text = self.stringName;
