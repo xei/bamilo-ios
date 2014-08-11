@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *viewToggleButton;
 @property (weak, nonatomic) IBOutlet JAPickerScrollView *sortingScrollView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIButton *catalogTopButton;
 @property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSMutableArray* productsArray;
 @property (nonatomic, assign) BOOL loadedEverything;
@@ -150,6 +151,14 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (0 == indexPath.row) {
+        self.catalogTopButton.hidden = YES;
+    }
+    
+    if (5 <= indexPath.row) {
+        self.catalogTopButton.hidden = NO;
+    }
+    
     if (self.productsArray.count - 5 == indexPath.row) {
         [self loadMoreProducts];
     }
@@ -197,5 +206,9 @@
     }
 }
 
+- (IBAction)catalogTopButtonPressed:(id)sender
+{
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+}
 
 @end

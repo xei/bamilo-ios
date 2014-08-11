@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="35A-Fx-NNM">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <scenes>
@@ -1440,6 +1439,20 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wc2-me-4py">
+                                <rect key="frame" x="265" y="513" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="PXJ-n3-fa8"/>
+                                    <constraint firstAttribute="height" constant="35" id="lSf-dZ-Udb"/>
+                                </constraints>
+                                <state key="normal" image="catalogTopButton">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="catalogTopButtonPressed"/>
+                                <connections>
+                                    <action selector="catalogTopButtonPressed:" destination="y7p-zP-v5K" eventType="touchUpInside" id="gqy-4E-N8g"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="ZRY-qq-tSd" firstAttribute="leading" secondItem="LT2-FN-Zb3" secondAttribute="leading" id="3BQ-46-mDS"/>
@@ -1449,7 +1462,9 @@
                             <constraint firstAttribute="trailing" secondItem="ZRY-qq-tSd" secondAttribute="trailing" id="Jtd-Gf-XEv"/>
                             <constraint firstAttribute="trailing" secondItem="WIM-UY-vXJ" secondAttribute="trailing" id="ONk-vo-TXV"/>
                             <constraint firstItem="WIM-UY-vXJ" firstAttribute="top" secondItem="lzj-49-Dyb" secondAttribute="bottom" id="PiM-Vv-vUb"/>
+                            <constraint firstItem="lOt-fd-9os" firstAttribute="top" secondItem="Wc2-me-4py" secondAttribute="bottom" constant="20" id="UKY-kL-3Le"/>
                             <constraint firstItem="lOt-fd-9os" firstAttribute="top" secondItem="ZRY-qq-tSd" secondAttribute="bottom" id="YSJ-z2-uF1"/>
+                            <constraint firstAttribute="trailing" secondItem="Wc2-me-4py" secondAttribute="trailing" constant="20" id="bTa-We-DJL"/>
                             <constraint firstItem="uMs-IJ-hAe" firstAttribute="leading" secondItem="LT2-FN-Zb3" secondAttribute="leading" id="beb-TA-LMK"/>
                             <constraint firstItem="WIM-UY-vXJ" firstAttribute="leading" secondItem="6lO-cb-ku3" secondAttribute="trailing" id="c9S-Hf-9ln"/>
                             <constraint firstItem="6lO-cb-ku3" firstAttribute="top" secondItem="lzj-49-Dyb" secondAttribute="bottom" id="yoi-yP-bhp"/>
@@ -1457,6 +1472,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="0Ui-Gw-Yo9"/>
                     <connections>
+                        <outlet property="catalogTopButton" destination="Wc2-me-4py" id="mcd-bw-b93"/>
                         <outlet property="collectionView" destination="ZRY-qq-tSd" id="XI0-2o-oZS"/>
                         <outlet property="filterButton" destination="uMs-IJ-hAe" id="gAM-vt-Qmy"/>
                         <outlet property="sortingScrollView" destination="6lO-cb-ku3" id="FN2-gq-REl"/>
@@ -1961,6 +1977,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="catalogTopButton" width="35" height="35"/>
+        <image name="catalogTopButtonPressed" width="35" height="35"/>
         <image name="filterIcon" width="22" height="22"/>
         <image name="gridIcon" width="22" height="22"/>
         <image name="ico_cart" width="25" height="20"/>
