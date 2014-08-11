@@ -12,6 +12,7 @@
 #import "JACatalogGridCell.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
+#define JACatalogViewControllerMaxProducts 36
 
 @interface JACatalogViewController ()
 
@@ -21,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSMutableArray* productsArray;
+@property (nonatomic, assign) BOOL loadedEverything;
 
 @end
 
@@ -56,18 +58,43 @@
     
     self.productsArray = [NSMutableArray new];
     
-    if (VALID_NOTEMPTY(self.category, RICategory)) {
+    self.loadedEverything = NO;
+    
+    [self loadMoreProducts];
+}
+
+- (void)loadMoreProducts
+{
+    if (VALID_NOTEMPTY(self.category, RICategory) && NO == self.loadedEverything) {
         [self showLoading];
-        [RIProduct getProductsWithUrl:self.category.apiUrl successBlock:^(id products) {
-            
-            [self.productsArray addObjectsFromArray:products];
-            
-            [self.collectionView reloadData];
-            
-            [self hideLoading];
-        } andFailureBlock:^(NSArray *error) {
-            [self hideLoading];
-        }];
+        [RIProduct getProductsWithCatalogUrl:self.category.apiUrl
+                               sortingMethod:RICatalogSortingPopularity
+                                        page:[self getCurrentPage]+1
+                                    maxItems:JACatalogViewControllerMaxProducts
+                                successBlock:^(NSArray* products) {
+                                    
+                                    if (0 == products.count || JACatalogViewControllerMaxProducts > products.count) {
+                                        self.loadedEverything = YES;
+                                    }
+                                    
+                                    [self.productsArray addObjectsFromArray:products];
+                                    
+                                    [self.collectionView reloadData];
+                                    
+                                    [self hideLoading];
+                                    
+                                    } andFailureBlock:^(NSArray *error) {
+                                        [self hideLoading];
+                                    }];
+    }
+}
+
+- (NSInteger)getCurrentPage
+{
+    if (self.productsArray.count) {
+        return self.productsArray.count / JACatalogViewControllerMaxProducts;
+    } else {
+        return 0;
     }
 }
 
@@ -115,6 +142,9 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.productsArray.count - 5 == indexPath.row) {
+        [self loadMoreProducts];
+    }
     
     RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
     
