@@ -25,6 +25,7 @@
 @property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSMutableArray* productsArray;
 @property (nonatomic, assign) BOOL loadedEverything;
+@property (nonatomic, assign) RICatalogSorting sortingMethod;
 
 @end
 
@@ -56,13 +57,18 @@
     
     NSArray* sortList = [NSArray arrayWithObjects:@"Popularity", @"Best Rating", @"New In", @"Price Up", @"Price Down", @"Name", @"Brand", nil];
     
+    self.sortingMethod = NSIntegerMax;
+    //this will trigger load methods
     [self.sortingScrollView setOptions:sortList];
-    
+}
+
+- (void)resetCatalog
+{
     self.productsArray = [NSMutableArray new];
     
     self.loadedEverything = NO;
     
-    [self loadMoreProducts];
+    [self.collectionView setContentOffset:CGPointZero animated:NO];
 }
 
 - (void)loadMoreProducts
@@ -70,7 +76,7 @@
     if (VALID_NOTEMPTY(self.category, RICategory) && NO == self.loadedEverything) {
         [self showLoading];
         [RIProduct getProductsWithCatalogUrl:self.category.apiUrl
-                               sortingMethod:RICatalogSortingPopularity
+                               sortingMethod:self.sortingMethod
                                         page:[self getCurrentPage]+1
                                     maxItems:JACatalogViewControllerMaxProducts
                                 successBlock:^(NSArray* products) {
@@ -169,7 +175,12 @@
 
 - (void)selectedIndex:(NSInteger)index
 {
-
+    if (index != self.sortingMethod) {
+        self.sortingMethod = index;
+        
+        [self resetCatalog];
+        [self loadMoreProducts];
+    }
 }
 
 #pragma mark - Button actions
