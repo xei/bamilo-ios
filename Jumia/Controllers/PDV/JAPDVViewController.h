@@ -14,5 +14,7 @@
 
 @property (strong, nonatomic) RIProduct *product;
 @property (assign, nonatomic) BOOL fromCatalogue;
+@property (strong, nonatomic) NSArray *arrayWithRelatedItems;
+@property (strong, nonatomic) NSString *previousCategory;
 
 @end

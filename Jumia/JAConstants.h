@@ -20,3 +20,4 @@
 #define kTurnOffLeftSwipePanelNotification @"NOTIFICATION_TURN_OFF_LEFT_SWIPE_PANEL"
 #define kTurnOnLeftSwipePanelNotification @"NOTIFICATION_TURN_ON_LEFT_SWIPE_PANEL"
 #define kShowBackNofication @"NOTIFICATION_SHOW_BACK"
+#define kShowBackButtonWithTitleNofication @"NOTIFICATION_SHOW_BACK_BUTTON_WITH_TITLE"

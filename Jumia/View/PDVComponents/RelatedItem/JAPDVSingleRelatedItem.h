@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RIProduct.h"
 
 @interface JAPDVSingleRelatedItem : UIView
 
@@ -14,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelBrand;
 @property (weak, nonatomic) IBOutlet UILabel *labelName;
 @property (weak, nonatomic) IBOutlet UILabel *labelPrice;
+@property (strong, nonatomic) RIProduct *product;
 
 + (JAPDVSingleRelatedItem *)getNewPDVSingleRelatedItem;
 

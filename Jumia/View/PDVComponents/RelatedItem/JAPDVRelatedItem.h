@@ -10,6 +10,9 @@
 
 @interface JAPDVRelatedItem : UIView
 
+@property (weak, nonatomic) IBOutlet UILabel *topLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *relatedItemsScrollView;
+
 + (JAPDVRelatedItem *)getNewPDVRelatedItemSection;
 
 @end

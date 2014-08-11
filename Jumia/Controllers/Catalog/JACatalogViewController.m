@@ -10,6 +10,7 @@
 #import "RIProduct.h"
 #import "JACatalogListCell.h"
 #import "JACatalogGridCell.h"
+#import "JAPDVViewController.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
@@ -161,6 +162,32 @@
     
     return cell;
     
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
+    
+    NSInteger count = self.productsArray.count;
+    
+    if (count > 20) {
+        count = 20;
+    }
+    
+    NSMutableArray *tempArray = [NSMutableArray new];
+    
+    for (int i = 0 ; i < count ; i ++) {
+        [tempArray addObject:[self.productsArray objectAtIndex:i]];
+    }
+    
+    JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
+    pdv.product = product;
+    pdv.fromCatalogue = YES;
+    pdv.previousCategory = self.category.name;
+    pdv.arrayWithRelatedItems = [tempArray copy];
+    
+    [self.navigationController pushViewController:pdv
+                                         animated:YES];
 }
 
 #pragma mark - JAPickerScrollViewDelegate

@@ -61,6 +61,11 @@
                                              selector:@selector(showBackButton)
                                                  name:kShowBackNofication
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changeBackButtonForTitle:)
+                                                 name:kShowBackButtonWithTitleNofication
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -110,37 +115,6 @@
 {
     if ([newScreenName isEqualToString:@"Home"])
     {
-        [RIProduct getProductWithUrl:@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html"
-                        successBlock:^(id product) {
-                            
-                            JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
-                            pdv.product = product;
-                            pdv.fromCatalogue = YES;
-                            
-                            [self pushViewController:pdv
-                                            animated:YES];
-                            
-                            [self.navigationBarView enteredSecondOrThirdLevelWithBackTitle:@"Catalogue"];
-                            
-                            [self.navigationBarView.backButton addTarget:self
-                                                                  action:@selector(back)
-                                                        forControlEvents:UIControlEventTouchUpInside];
-                            
-                        } andFailureBlock:^(NSArray *error) {
-                            
-                            JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
-                            
-                            [self pushViewController:home
-                                            animated:YES];
-                            [self.navigationBarView changedToHomeViewController];
-                            
-                            self.viewControllers = @[home];
-                            
-                        }];
-        
-        
-        
-        /*
         if (![self.viewControllers.lastObject isKindOfClass:[JAHomeViewController class]])
         {
             JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
@@ -151,7 +125,6 @@
             
             self.viewControllers = @[home];
         }
-         */
     }
     else if ([newScreenName isEqualToString:@"My Favourites"])
     {
@@ -281,6 +254,16 @@
                                                  action:NULL
                                        forControlEvents:UIControlEventAllEvents];
     }
+}
+
+- (void)changeBackButtonForTitle:(NSNotification *)notification
+{
+    NSDictionary* userInfo = notification.userInfo;
+    [self.navigationBarView enteredSecondOrThirdLevelWithBackTitle:[userInfo objectForKey:@"name"]];
+    
+    [self.navigationBarView.backButton addTarget:self
+                                          action:@selector(back)
+                                forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Selected country delegate and notification
