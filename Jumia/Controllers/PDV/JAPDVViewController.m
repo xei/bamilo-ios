@@ -215,9 +215,38 @@
     
     self.productInfoSection.layer.cornerRadius = 4.0f;
     
-    [self.productInfoSection.sizeButton addTarget:self
-                                           action:@selector(showSizePicker)
-                                 forControlEvents:UIControlEventTouchUpInside];
+    /*
+     Check if there is size
+     
+     if there is only one size: put that size and remove the action
+     if there are more than one size, open the picker
+     
+     */
+    if (self.product.productSimples.count == 0)
+    {        
+        [self.productInfoSection removeSizeOptions];
+    }
+    else if (self.product.productSimples.count == 1)
+    {
+        RIProductSimple *tempProduct = self.product.productSimples[0];
+        
+        if (tempProduct.attributeSize)
+        {
+            [self.productInfoSection.sizeButton setTitle:tempProduct.attributeSize
+                                            forState:UIControlStateNormal];
+        }
+        else
+        {
+            [self.productInfoSection removeSizeOptions];
+            [self.productInfoSection layoutSubviews];
+        }
+    }
+    else if (self.product.productSimples.count > 1)
+    {
+        [self.productInfoSection.sizeButton addTarget:self
+                                               action:@selector(showSizePicker)
+                                     forControlEvents:UIControlEventTouchUpInside];
+    }
     
     
     [self.productInfoSection.goToSpecificationsButton addTarget:self
