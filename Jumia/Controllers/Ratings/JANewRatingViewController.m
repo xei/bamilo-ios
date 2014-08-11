@@ -12,6 +12,9 @@
 #import "RIField.h"
 
 @interface JANewRatingViewController ()
+<
+    UITextFieldDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UILabel *brandLabel;
@@ -30,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewComment;
 @property (weak, nonatomic) IBOutlet UIButton *sendReview;
 @property (weak, nonatomic) IBOutlet UIView *centerView;
+@property (assign, nonatomic) CGPoint originalCenter;
 
 @end
 
@@ -40,6 +44,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.originalCenter = self.view.center;
     
     self.brandLabel.text = self.ratingProductBrand;
     self.nameLabel.text = self.ratingProductNameForLabel;
@@ -72,12 +78,18 @@
            for (RIField *field in form.fields) {
                if ([field.uid isEqualToString:@"RatingForm_name"]) {
                    self.nameTextField.hidden = NO;
+                   self.nameTextField.placeholder = @"Name";
+                   self.nameTextField.delegate = self;
                    self.imageViewName.hidden = NO;
                } else if ([field.uid isEqualToString:@"RatingForm_title"]) {
                    self.titleTextField.hidden = NO;
+                   self.titleTextField.placeholder = @"Title";
+                   self.titleTextField.delegate = self;
                    self.imageViewTitle.hidden = NO;
                } else if ([field.uid isEqualToString:@"RatingForm_comment"]) {
                    self.commentTextField.hidden = NO;
+                   self.commentTextField.placeholder = @"Comment";
+                   self.commentTextField.delegate = self;
                    self.imageViewComment.hidden = NO;
                }
            }
@@ -99,6 +111,27 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Textfield delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    self.view.center = textField.center;
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    self.view.center = self.originalCenter;
+    
+    [textField resignFirstResponder];
 }
 
 #pragma mark - Send review

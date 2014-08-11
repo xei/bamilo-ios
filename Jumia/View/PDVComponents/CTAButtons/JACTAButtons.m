@@ -60,7 +60,7 @@
     
     self.callToOrderButton.layer.cornerRadius = 4.0f;
     self.callToOrderButton.layer.borderWidth = 1.0f;
-    self.callToOrderButton.layer.borderColor = (__bridge CGColorRef)([UIColor colorWithRed:78.0/255.0 green:78.0/255.0 blue:78.0/255.0 alpha:1.0f]);
+    self.callToOrderButton.layer.borderColor = [UIColor colorWithRed:78.0/255.0 green:78.0/255.0 blue:78.0/255.0 alpha:1.0f].CGColor;
     
     if (number == 1) {
         

@@ -66,6 +66,30 @@
     [self fillTheViews];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (self.previousCategory.length > 0)
+    {
+        NSMutableDictionary *nameDic = [NSMutableDictionary dictionary];
+        [nameDic addEntriesFromDictionary:@{@"name": self.previousCategory}];
+        
+        NSNotificationCenter* notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter postNotificationName:kShowBackButtonWithTitleNofication
+                                          object:self
+                                        userInfo:nameDic];
+    }
+    else
+    {
+        NSMutableDictionary *nameDic = [NSMutableDictionary dictionary];
+        [nameDic addEntriesFromDictionary:@{@"name": @"Back"}];
+        
+        NSNotificationCenter* notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter postNotificationName:kShowBackButtonWithTitleNofication
+                                          object:self
+                                        userInfo:nameDic];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -85,6 +109,8 @@
         [segue.destinationViewController setStringName:self.product.name];
         [segue.destinationViewController setStringNewPrice:self.product.specialPrice];
         [segue.destinationViewController setStringOldPrice:self.product.price];
+        [segue.destinationViewController setFeaturesText:self.product.attributeShortDescription];
+        [segue.destinationViewController setDescriptionText:self.product.descriptionString];
     }
 }
 
@@ -213,9 +239,38 @@
     
     self.productInfoSection.layer.cornerRadius = 4.0f;
     
-    [self.productInfoSection.sizeButton addTarget:self
-                                           action:@selector(showSizePicker)
-                                 forControlEvents:UIControlEventTouchUpInside];
+    /*
+     Check if there is size
+     
+     if there is only one size: put that size and remove the action
+     if there are more than one size, open the picker
+     
+     */
+    if (self.product.productSimples.count == 0)
+    {        
+        [self.productInfoSection removeSizeOptions];
+    }
+    else if (self.product.productSimples.count == 1)
+    {
+        RIProductSimple *tempProduct = self.product.productSimples[0];
+        
+        if (tempProduct.attributeSize)
+        {
+            [self.productInfoSection.sizeButton setTitle:tempProduct.attributeSize
+                                            forState:UIControlStateNormal];
+        }
+        else
+        {
+            [self.productInfoSection removeSizeOptions];
+            [self.productInfoSection layoutSubviews];
+        }
+    }
+    else if (self.product.productSimples.count > 1)
+    {
+        [self.productInfoSection.sizeButton addTarget:self
+                                               action:@selector(showSizePicker)
+                                     forControlEvents:UIControlEventTouchUpInside];
+    }
     
     
     [self.productInfoSection.goToSpecificationsButton addTarget:self
@@ -230,22 +285,59 @@
      Related Items
      *******/
     
-    if (self.fromCatalogue) {
-        
-        self.relatedItems.frame = CGRectMake(6,
-                                             startingElement,
-                                             self.relatedItems.frame.size.width,
-                                             self.relatedItems.frame.size.height);
-        
-        self.relatedItems.layer.cornerRadius = 4.0f;
-        
-        [self.mainScrollView addSubview:self.relatedItems];
-        
-        startingElement += (4 + self.relatedItems.frame.size.height);
+    if (self.fromCatalogue)
+    {
+        if (self.arrayWithRelatedItems.count > 0)
+        {
+            self.relatedItems.topLabel.text = @"Related Items";
+            
+            self.relatedItems.frame = CGRectMake(6,
+                                                 startingElement,
+                                                 self.relatedItems.frame.size.width,
+                                                 self.relatedItems.frame.size.height);
+            
+            self.relatedItems.layer.cornerRadius = 4.0f;
+            
+            [self.mainScrollView addSubview:self.relatedItems];
+            
+            startingElement += (4 + self.relatedItems.frame.size.height);
+            
+            float relatedItemStart = 5.0f;
+            
+            for (RIProduct *product in self.arrayWithRelatedItems) {
+                JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
+                
+                CGRect tempFrame = singleItem.frame;
+                tempFrame.origin.x = relatedItemStart;
+                singleItem.frame = tempFrame;
+                
+                if (product.images.count > 0) {
+                    RIImage *imageTemp = [product.images firstObject];
+                    
+                    [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]];
+                }
+                
+                singleItem.labelBrand.text = product.brand;
+                singleItem.labelName.text = product.name;
+                singleItem.labelPrice.text = [product.price stringValue];
+                singleItem.product = product;
+                
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                      action:@selector(selectedRelatedItem:)];
+                singleItem.userInteractionEnabled = YES;
+                [singleItem addGestureRecognizer:tap];
+                
+                [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
+                
+                relatedItemStart += 110.0f;
+            }
+            
+            [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height)];
+        }
     }
     
     /*******
-        CTA Buttons
+     CTA Buttons
      *******/
     
     self.ctaButtons.frame = CGRectMake(6,
@@ -272,6 +364,23 @@
 }
 
 #pragma mark - Actions
+
+- (void)selectedRelatedItem:(UITapGestureRecognizer *)tap
+{
+    JAPDVSingleRelatedItem *view = (JAPDVSingleRelatedItem *)tap.view;
+    
+    RIProduct *tempProduct = view.product;
+    
+    JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
+    pdv.product = tempProduct;
+    pdv.fromCatalogue = NO;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
+                                                        object:nil];
+    
+    [self.navigationController pushViewController:pdv
+                                         animated:YES];
+}
 
 - (void)gotoDetails
 {

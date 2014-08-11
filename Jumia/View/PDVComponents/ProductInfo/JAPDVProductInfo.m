@@ -122,14 +122,28 @@
 
 - (void)removeSizeOptions
 {
-    [self.sizeButton removeFromSuperview];
-    [self.sizeImageViewSeparator removeFromSuperview];
+    [self.sizeView removeFromSuperview];
+    
+    CGRect reviewFrame = self.reviewsView.frame;
+    reviewFrame.origin.y -= 45.0f;
+    self.reviewsView.frame = reviewFrame;
+    
+    CGRect buttonFrame = self.goToSpecificationsButton.frame;
+    buttonFrame.origin.y -= 45.0f;
+    self.goToSpecificationsButton.frame = buttonFrame;
+    
+    CGRect labelFrame = self.specificationsLabel.frame;
+    labelFrame.origin.y -= 45.0f;
+    self.specificationsLabel.frame = labelFrame;
+    
+    CGRect imageFrame = self.goToSpecificationsImageView.frame;
+    imageFrame.origin.y -= 45.0f;
+    self.goToSpecificationsImageView.frame = imageFrame;
     
     CGRect frame = self.frame;
     frame.size.height -= 45.0f;
     
     self.frame = frame;
-    [self layoutSubviews];
 }
 
 - (void)setNumberOfStars:(NSInteger)stars
