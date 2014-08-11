@@ -33,7 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewComment;
 @property (weak, nonatomic) IBOutlet UIButton *sendReview;
 @property (weak, nonatomic) IBOutlet UIView *centerView;
-@property (assign, nonatomic) CGPoint originalCenter;
+@property (assign, nonatomic) CGRect originalFrame;
 
 @end
 
@@ -45,7 +45,7 @@
 {
     [super viewDidLoad];
     
-    self.originalCenter = self.view.center;
+    self.originalFrame = self.centerView.frame;
     
     self.brandLabel.text = self.ratingProductBrand;
     self.nameLabel.text = self.ratingProductNameForLabel;
@@ -115,23 +115,27 @@
 
 #pragma mark - Textfield delegate
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+- (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    self.view.center = textField.center;
-    
-    return YES;
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         CGRect frame = self.originalFrame;
+                         frame.origin.y -= textField.frame.origin.y;
+                         self.centerView.frame = frame;
+                     }];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    return YES;
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    self.view.center = self.originalCenter;
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         self.centerView.frame = self.originalFrame;
+                         [self.view layoutSubviews];
+                     }];
     
     [textField resignFirstResponder];
+    
+    return YES;
 }
 
 #pragma mark - Send review
