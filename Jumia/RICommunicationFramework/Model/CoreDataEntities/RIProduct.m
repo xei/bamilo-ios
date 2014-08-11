@@ -81,6 +81,7 @@
                         andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     NSString* fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod]];
+    NSLog(@"%@",fullUrl);
     return [RIProduct getProductsWithFullUrl:fullUrl
                                 successBlock:successBlock
                              andFailureBlock:failureBlock];
