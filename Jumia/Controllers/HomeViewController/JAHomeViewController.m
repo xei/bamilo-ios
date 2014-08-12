@@ -90,7 +90,7 @@
         }
     }
     
-    [self.teaserPagesScrollView scrollRectToVisible:teaserPageView.frame animated:NO];
+    [self.teaserPagesScrollView scrollRectToVisible:teaserPageView.frame animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
