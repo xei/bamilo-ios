@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *catalogTopButton;
 @property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSMutableArray* productsArray;
+@property (nonatomic, strong) NSArray* filtersArray;
 @property (nonatomic, assign) BOOL loadedEverything;
 @property (nonatomic, assign) RICatalogSorting sortingMethod;
 
@@ -66,7 +67,7 @@
 
 - (void)resetCatalog
 {
-    [self.collectionView setContentOffset:CGPointZero animated:NO];
+    //[self.collectionView setContentOffset:CGPointZero animated:NO];
     
     self.productsArray = [NSMutableArray new];
     
@@ -81,7 +82,11 @@
                                sortingMethod:self.sortingMethod
                                         page:[self getCurrentPage]+1
                                     maxItems:JACatalogViewControllerMaxProducts
-                                successBlock:^(NSArray* products) {
+                                successBlock:^(NSArray* products, NSArray* filters) {
+                                    
+                                    if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
+                                        self.filtersArray = filters;
+                                    }
                                     
                                     if (0 == products.count || JACatalogViewControllerMaxProducts > products.count) {
                                         self.loadedEverything = YES;

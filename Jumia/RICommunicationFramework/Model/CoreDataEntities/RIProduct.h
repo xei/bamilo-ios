@@ -81,7 +81,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                           sortingMethod:(RICatalogSorting)sortingMethod
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
-                           successBlock:(void (^)(id products))successBlock
+                           successBlock:(void (^)(NSArray *products, NSArray *filters))successBlock
                         andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 /**
@@ -94,7 +94,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(id products))successBlock
+                        successBlock:(void (^)(NSArray *products, NSArray *filters))successBlock
                      andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 /**
