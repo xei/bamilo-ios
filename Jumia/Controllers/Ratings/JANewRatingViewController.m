@@ -53,16 +53,83 @@
     
     self.brandLabel.text = self.ratingProductBrand;
     self.nameLabel.text = self.ratingProductNameForLabel;
-    self.oldPriceLabel.text = [self.ratingProductOldPriceForLabel stringValue];
     
     [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
     [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
     [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
     
-    if (self.ratingProductNewPriceForLabel) {
-        self.labelNewPrice.text = [self.ratingProductNewPriceForLabel stringValue];
-    } else {
-        [self.labelNewPrice removeFromSuperview];
+    if ([self.ratingProductNewPriceForLabel floatValue] > 0.0)
+    {
+        NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:[self.ratingProductOldPriceForLabel stringValue]];
+        NSInteger stringOldPriceLenght = [self.ratingProductOldPriceForLabel stringValue].length;
+        UIFont *stringOldPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
+                                                     size:14.0];
+        UIColor *stringOldPriceColor = [UIColor colorWithRed:204.0/255.0
+                                                       green:204.0/255.0
+                                                        blue:204.0/255.0
+                                                       alpha:1.0f];
+        
+        [stringOldPrice addAttribute:NSFontAttributeName
+                               value:stringOldPriceFont
+                               range:NSMakeRange(0, stringOldPriceLenght)];
+        
+        [stringOldPrice addAttribute:NSStrokeColorAttributeName
+                               value:stringOldPriceColor
+                               range:NSMakeRange(0, stringOldPriceLenght)];
+        
+        [stringOldPrice addAttribute:NSStrikethroughStyleAttributeName
+                               value:@(1)
+                               range:NSMakeRange(0, stringOldPriceLenght)];
+        
+        self.oldPriceLabel.attributedText = stringOldPrice;
+        
+        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:[self.ratingProductNewPriceForLabel stringValue]];
+        NSInteger stringNewPriceLenght = [self.ratingProductNewPriceForLabel stringValue].length;
+        UIFont *stringNewPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
+                                                     size:14.0];
+        UIColor *stringNewPriceColor = [UIColor colorWithRed:204.0/255.0
+                                                       green:0.0/255.0
+                                                        blue:0.0/255.0
+                                                       alpha:1.0f];
+        
+        [stringNewPrice addAttribute:NSFontAttributeName
+                               value:stringNewPriceFont
+                               range:NSMakeRange(0, stringNewPriceLenght)];
+        
+        [stringNewPrice addAttribute:NSStrokeColorAttributeName
+                               value:stringNewPriceColor
+                               range:NSMakeRange(0, stringNewPriceLenght)];
+        
+        self.labelNewPrice.attributedText = stringNewPrice;
+        
+        [self.labelNewPrice sizeToFit];
+        [self.labelPrice sizeToFit];
+        [self.topView layoutSubviews];
+    }
+    else
+    {
+        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:[self.ratingProductOldPriceForLabel stringValue]];
+        NSInteger stringNewPriceLenght = [self.ratingProductOldPriceForLabel stringValue].length;
+        UIFont *stringNewPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
+                                                     size:14.0];
+        UIColor *stringNewPriceColor = [UIColor colorWithRed:204.0/255.0
+                                                       green:0.0/255.0
+                                                        blue:0.0/255.0
+                                                       alpha:1.0f];
+        
+        [stringNewPrice addAttribute:NSFontAttributeName
+                               value:stringNewPriceFont
+                               range:NSMakeRange(0, stringNewPriceLenght)];
+        
+        [stringNewPrice addAttribute:NSStrokeColorAttributeName
+                               value:stringNewPriceColor
+                               range:NSMakeRange(0, stringNewPriceLenght)];
+        
+        self.labelNewPrice.attributedText = stringNewPrice;
+        
+        [self.oldPriceLabel removeFromSuperview];
+        [self.labelNewPrice sizeToFit];
+        [self.topView layoutSubviews];
     }
     
     self.labelFixed.text = @"You have used this Product? Rate it now!";
@@ -77,7 +144,7 @@
     
     self.centerView.layer.cornerRadius = 4.0f;
     self.sendReview.layer.cornerRadius = 4.0f;
-    
+
     [self showLoading];
     
     [RIForm getForm:@"rating"

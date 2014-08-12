@@ -48,12 +48,79 @@
     
     self.brandLabel.text = self.productBrand;
     self.nameLabel.text = self.productRatings.productName;
-    self.oldPriceLabel.text = [self.productOldPrice stringValue];
     
-    if (self.productNewPrice) {
-        self.labelNewPrice.text = [self.productNewPrice stringValue];
-    } else {
-        [self.labelNewPrice removeFromSuperview];
+    if ([self.productNewPrice floatValue] > 0.0)
+    {
+        NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:[self.productOldPrice stringValue]];
+        NSInteger stringOldPriceLenght = [self.productOldPrice stringValue].length;
+        UIFont *stringOldPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
+                                                     size:14.0];
+        UIColor *stringOldPriceColor = [UIColor colorWithRed:204.0/255.0
+                                                       green:204.0/255.0
+                                                        blue:204.0/255.0
+                                                       alpha:1.0f];
+        
+        [stringOldPrice addAttribute:NSFontAttributeName
+                               value:stringOldPriceFont
+                               range:NSMakeRange(0, stringOldPriceLenght)];
+        
+        [stringOldPrice addAttribute:NSStrokeColorAttributeName
+                               value:stringOldPriceColor
+                               range:NSMakeRange(0, stringOldPriceLenght)];
+        
+        [stringOldPrice addAttribute:NSStrikethroughStyleAttributeName
+                               value:@(1)
+                               range:NSMakeRange(0, stringOldPriceLenght)];
+        
+        self.oldPriceLabel.attributedText = stringOldPrice;
+        
+        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:[self.productNewPrice stringValue]];
+        NSInteger stringNewPriceLenght = [self.productNewPrice stringValue].length;
+        UIFont *stringNewPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
+                                                     size:14.0];
+        UIColor *stringNewPriceColor = [UIColor colorWithRed:204.0/255.0
+                                                       green:0.0/255.0
+                                                        blue:0.0/255.0
+                                                       alpha:1.0f];
+        
+        [stringNewPrice addAttribute:NSFontAttributeName
+                               value:stringNewPriceFont
+                               range:NSMakeRange(0, stringNewPriceLenght)];
+        
+        [stringNewPrice addAttribute:NSStrokeColorAttributeName
+                               value:stringNewPriceColor
+                               range:NSMakeRange(0, stringNewPriceLenght)];
+        
+        self.labelNewPrice.attributedText = stringNewPrice;
+        
+        [self.labelNewPrice sizeToFit];
+        [self.oldPriceLabel sizeToFit];
+        [self.topView layoutSubviews];
+    }
+    else
+    {
+        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:[self.productOldPrice stringValue]];
+        NSInteger stringNewPriceLenght = [self.productOldPrice stringValue].length;
+        UIFont *stringNewPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
+                                                     size:14.0];
+        UIColor *stringNewPriceColor = [UIColor colorWithRed:204.0/255.0
+                                                       green:0.0/255.0
+                                                        blue:0.0/255.0
+                                                       alpha:1.0f];
+        
+        [stringNewPrice addAttribute:NSFontAttributeName
+                               value:stringNewPriceFont
+                               range:NSMakeRange(0, stringNewPriceLenght)];
+        
+        [stringNewPrice addAttribute:NSStrokeColorAttributeName
+                               value:stringNewPriceColor
+                               range:NSMakeRange(0, stringNewPriceLenght)];
+        
+        self.labelNewPrice.attributedText = stringNewPrice;
+        
+        [self.oldPriceLabel removeFromSuperview];
+        [self.labelNewPrice sizeToFit];
+        [self.topView layoutSubviews];
     }
     
     self.reviewsNumber.text = [NSString stringWithFormat:@"%@ Reviews", self.productRatings.commentsCount];
