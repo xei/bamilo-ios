@@ -10,6 +10,7 @@
 #import "RIImage.h"
 #import "RIProductSimple.h"
 #import "RIVariation.h"
+#import "RIFilter.h"
 
 @implementation RIProduct
 
@@ -77,7 +78,7 @@
                           sortingMethod:(RICatalogSorting)sortingMethod
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
-                           successBlock:(void (^)(id products))successBlock
+                           successBlock:(void (^)(NSArray *products, NSArray *filters))successBlock
                         andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     NSString* fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod]];
@@ -87,7 +88,7 @@
 }
 
 + (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(id products))successBlock
+                        successBlock:(void (^)(NSArray *products, NSArray *filters))successBlock
                      andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
@@ -99,6 +100,16 @@
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
+                                                                  
+                                                                  NSArray* filtersJSON = [metadata objectForKey:@"filters"];
+                                                                  
+                                                                  NSArray* filtersArray;
+                                                                  
+                                                                  if (VALID_NOTEMPTY(filtersJSON, NSArray)) {
+                                                                      
+                                                                      filtersArray = [RIFilter parseFilters:filtersJSON];
+                                                                      
+                                                                  }
                                                                   
                                                                   NSArray* results = [metadata objectForKey:@"results"];
                                                                   
@@ -113,7 +124,7 @@
                                                                       }
                                                                       
                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                          successBlock(products);
+                                                                          successBlock(products, filtersArray);
                                                                       });
                                                                   }
                                                               }
