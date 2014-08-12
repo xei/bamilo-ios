@@ -16,7 +16,51 @@
 
 @implementation RICustomer
 
+#pragma mark - Normal login
+
++ (NSString *)loginCustomerWithParameters:(NSDictionary *)parameters
+                             successBlock:(void (^)(RICustomer *customer))successBlock
+                          andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
+{
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_LOGIN_CUSTOMER]]
+                                                            parameters:parameters
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                              {
+                                                                  NSDictionary* userObject = [metadata objectForKey:@"user"];
+                                                                  if (VALID_NOTEMPTY(userObject, NSDictionary))
+                                                                  {
+                                                                      successBlock([self parseCustomerWithJson:userObject]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(nil);
+                                                                  }
+                                                              } else
+                                                              {
+                                                                  failureBlock(nil);
+                                                              }
+                                                              
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(nil);
+                                                              }
+                                                          }];
+}
+
 #pragma mark - Facebook Login
+
 + (NSString*)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
                                       successBlock:(void (^)(id customer))successBlock
                                    andFailureBlock:(void (^)(NSArray *errorObject))failureBlock

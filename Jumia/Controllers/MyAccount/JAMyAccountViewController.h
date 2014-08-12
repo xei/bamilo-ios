@@ -7,6 +7,13 @@
 //
 
 #import "JABaseViewController.h"
+#import "RIField.h"
+
+@interface JATextField : UITextField
+
+@property (strong, nonatomic) RIField *field;
+
+@end
 
 @interface JAMyAccountViewController : JABaseViewController
 

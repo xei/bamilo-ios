@@ -11,6 +11,10 @@
 #import "RIField.h"
 #import "RICustomer.h"
 
+@implementation JATextField
+
+@end
+
 @interface JAMyAccountViewController ()
 <
     UITextFieldDelegate
@@ -45,7 +49,7 @@
            
            for (RIField *field in form.fields)
            {
-               UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(6.0f,
+               JATextField *textField = [[JATextField alloc] initWithFrame:CGRectMake(6.0f,
                                                                                       startingY,
                                                                                       self.loginView.frame.size.width - 12.0f,
                                                                                       27.0f)];
@@ -55,6 +59,7 @@
                
                textField.placeholder = field.type;
                textField.delegate = self;
+               textField.field = field;
                
                [self.loginView addSubview:textField];
                [self.fieldsArray addObject:textField];
@@ -82,7 +87,38 @@
 
 - (IBAction)login:(id)sender
 {
-
+    NSMutableDictionary *temp = [NSMutableDictionary new];
+    
+    for (JATextField *textField in self.fieldsArray)
+    {
+        RIField *field = textField.field;
+        NSDictionary *dicToAdd = @{ field.name : textField.text };
+        [temp addEntriesFromDictionary:dicToAdd];
+    }
+ 
+    [self showLoading];
+    
+    [RICustomer loginCustomerWithParameters:[temp copy]
+                               successBlock:^(RICustomer *customer) {
+                                   
+                                   [self hideLoading];
+                                   
+                                   [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                               message:@"Login with sucess"
+                                                              delegate:nil
+                                                     cancelButtonTitle:nil
+                                                     otherButtonTitles:@"OK", nil] show];
+                                   
+                               } andFailureBlock:^(NSArray *errorObject) {
+                                   
+                                   [self hideLoading];
+                                   
+                                   [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                               message:@"Error doing login."
+                                                              delegate:nil
+                                                     cancelButtonTitle:nil
+                                                     otherButtonTitles:@"OK", nil] show];
+                               }];
 }
 
 #pragma mark - Navigation

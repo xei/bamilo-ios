@@ -31,6 +31,19 @@
 + (NSString *)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
                                        successBlock:(void (^)(id customer))successBlock
                                     andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
+
+/**
+ * Method to login user
+ *
+ * @param the user parameters
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString *)loginCustomerWithParameters:(NSDictionary *)parameters
+                             successBlock:(void (^)(RICustomer *customer))successBlock
+                          andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
+
 /**
  * Method to get current customer information
  *
