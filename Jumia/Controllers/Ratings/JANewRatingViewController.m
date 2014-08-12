@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "RIForm.h"
 #import "RIField.h"
+#import "RIProductRatings.h"
 
 @interface JANewRatingViewController ()
 <
@@ -34,6 +35,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *sendReview;
 @property (weak, nonatomic) IBOutlet UIView *centerView;
 @property (assign, nonatomic) CGRect originalFrame;
+@property (assign, nonatomic) NSInteger priceStars;
+@property (assign, nonatomic) NSInteger appearanceStars;
+@property (assign, nonatomic) NSInteger qualityStars;
 
 @end
 
@@ -50,6 +54,10 @@
     self.brandLabel.text = self.ratingProductBrand;
     self.nameLabel.text = self.ratingProductNameForLabel;
     self.oldPriceLabel.text = [self.ratingProductOldPriceForLabel stringValue];
+    
+    [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+    [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+    [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
     
     if (self.ratingProductNewPriceForLabel) {
         self.labelNewPrice.text = [self.ratingProductNewPriceForLabel stringValue];
@@ -117,12 +125,14 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         CGRect frame = self.originalFrame;
-                         frame.origin.y -= textField.frame.origin.y;
-                         self.centerView.frame = frame;
-                     }];
+    if (self.originalFrame.origin.y == self.centerView.frame.origin.y) {
+        [UIView animateWithDuration:0.5f
+                         animations:^{
+                             CGRect frame = self.centerView.frame;
+                             frame.origin.y -= 100;
+                             self.centerView.frame = frame;
+                         }];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -130,7 +140,6 @@
     [UIView animateWithDuration:0.5f
                      animations:^{
                          self.centerView.frame = self.originalFrame;
-                         [self.view layoutSubviews];
                      }];
     
     [textField resignFirstResponder];
@@ -142,7 +151,48 @@
 
 - (IBAction)sendReview:(id)sender
 {
-    
+    if ((self.nameTextField.text.length > 0) && (self.commentTextField.text.length > 0) && (self.titleTextField.text.length > 0))
+    {
+        [self showLoading];
+        
+        NSInteger finalRating = (self.priceStars  + self.appearanceStars + self.qualityStars) / 3;
+        
+        [RIProductRatings sendRatingWithSku:self.ratingProductSku
+                                      stars:[NSString stringWithFormat:@"%d", finalRating]
+                                     userId:@"0"
+                                       name:self.nameTextField.text
+                                      title:self.titleTextField.text
+                                    comment:self.commentTextField.text
+                               successBlock:^(BOOL success) {
+                                   
+                                   [self hideLoading];
+                                   
+                                   [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                               message:@"Review submited with sucess."
+                                                              delegate:nil
+                                                     cancelButtonTitle:nil
+                                                     otherButtonTitles:@"Ok", nil] show];
+                                   
+                               } andFailureBlock:^(NSArray *errorMessages) {
+                                  
+                                   [self hideLoading];
+                                   
+                                   [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                               message:@"There was an error sending the review!"
+                                                              delegate:nil
+                                                     cancelButtonTitle:nil
+                                                     otherButtonTitles:@"Ok", nil] show];
+                                   
+                               }];
+    }
+    else
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                   message:@"Please fill all the fields."
+                                  delegate:nil
+                         cancelButtonTitle:nil
+                          otherButtonTitles:@"Ok", nil] show];
+    }
 }
 
 - (IBAction)changeStars:(id)sender
@@ -157,6 +207,7 @@
             [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            self.priceStars = 1;
         }
             break;
             
@@ -167,6 +218,7 @@
             [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            self.priceStars = 2;
         }
             break;
             
@@ -177,6 +229,7 @@
             [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            self.priceStars = 3;
         }
             break;
             
@@ -187,6 +240,7 @@
             [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            self.priceStars = 4;
         }
             break;
             
@@ -197,6 +251,7 @@
             [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            self.priceStars = 5;
         }
             break;
             
@@ -207,6 +262,7 @@
             [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            self.appearanceStars = 1;
         }
             break;
             
@@ -217,6 +273,7 @@
             [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            self.appearanceStars = 2;
         }
             break;
             
@@ -227,6 +284,7 @@
             [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            self.appearanceStars = 3;
         }
             break;
             
@@ -237,6 +295,7 @@
             [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            self.appearanceStars = 4;
         }
             break;
             
@@ -247,6 +306,7 @@
             [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            self.appearanceStars = 5;
         }
             break;
             
@@ -257,6 +317,7 @@
             [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            self.qualityStars = 1;
         }
             break;
             
@@ -267,6 +328,7 @@
             [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            self.qualityStars = 2;
         }
             break;
             
@@ -277,6 +339,7 @@
             [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            self.qualityStars = 3;
         }
             break;
             
@@ -287,6 +350,7 @@
             [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
+            self.qualityStars = 4;
         }
             break;
             
@@ -297,6 +361,7 @@
             [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
             [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getFilledStar] forState:UIControlStateNormal];
+            self.qualityStars = 5;
         }
             break;
             

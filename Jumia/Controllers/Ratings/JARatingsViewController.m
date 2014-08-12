@@ -92,6 +92,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showNewRating"]) {
+        [segue.destinationViewController setRatingProductSku:self.productRatings.productSku];
         [segue.destinationViewController setRatingProductBrand:self.productBrand];
         [segue.destinationViewController setRatingProductNameForLabel:self.productRatings.productName];
         [segue.destinationViewController setRatingProductNewPriceForLabel:self.productNewPrice];

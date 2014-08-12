@@ -63,6 +63,57 @@
     return operationID;
 }
 
++ (NSString *)sendRatingWithSku:(NSString *)sku
+                          stars:(NSString *)stars
+                         userId:(NSString *)userId
+                           name:(NSString *)name
+                          title:(NSString *)title
+                        comment:(NSString *)comment
+                   successBlock:(void (^)(BOOL success))successBlock
+                andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+{
+    NSString *operationID = nil;
+    
+    if (VALID_NOTEMPTY(sku, NSString))
+    {
+        NSString *url = [NSString stringWithFormat:@"%@%@rating/add/?rating-costumer=%@&rating-option--1=%@cenas&rating-catalog-sku=%@&RatingForm[comment]=%@&RatingForm[title]=%@&RatingForm[name]=%@", RI_BASE_URL, RI_API_VERSION, userId, stars, sku, comment, title, name];
+        operationID = [[RICommunicationWrapper sharedInstance]
+                       sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@", url]]
+                       parameters:nil
+                       httpMethodPost:YES
+                       cacheType:RIURLCacheDBCache
+                       cacheTime:RIURLCacheDefaultTime
+                       successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                           
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                               successBlock(YES);
+                           });
+                           
+                       } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+                           
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                               if(NOTEMPTY(errorJsonObject))
+                               {
+                                   failureBlock([RIError getErrorMessages:errorJsonObject]);
+                               } else if(NOTEMPTY(errorObject))
+                               {
+                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                   failureBlock(errorArray);
+                               } else
+                               {
+                                   failureBlock(nil);
+                               }
+                           });
+                       }];
+    }
+    else
+    {
+        failureBlock(nil);
+    }
+    
+    return operationID;
+}
+
 #pragma mark - Cancel requests
 
 + (void)cancelRequest:(NSString *)operationID

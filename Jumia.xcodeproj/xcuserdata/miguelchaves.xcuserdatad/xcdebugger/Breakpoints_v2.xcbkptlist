@@ -20,12 +20,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jumia/RICommunicationFramework/Model/OtherObjects/RIProductRatings.m"
-            timestampString = "429109448.236256"
+            timestampString = "429533289.569475"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "+parseOptionWithDictionary:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jumia/RICommunicationFramework/Model/OtherObjects/RIProductRatings.m"
+            timestampString = "429532831.522465"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "+sendRatingWithSku:stars:userId:name:title:comment:successBlock:andFailureBlock:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
