@@ -33,6 +33,12 @@
             NSNumber *interval = [filterOptionJSON objectForKey:@"interval"];
             newFilterOption.interval = [interval integerValue];
         }
+        if ([filterOptionJSON objectForKey:@"hex_value"]) {
+            newFilterOption.colorHexValue = [filterOptionJSON objectForKey:@"hex_value"];
+        }
+        if ([filterOptionJSON objectForKey:@"image_url"]) {
+            newFilterOption.colorImageUrl = [filterOptionJSON objectForKey:@"image_url"];
+        }
     }
     
     return newFilterOption;

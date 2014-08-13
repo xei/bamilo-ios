@@ -15,6 +15,8 @@
 @property (nonatomic, assign)NSInteger max;
 @property (nonatomic, assign)NSInteger min;
 @property (nonatomic, assign)NSInteger interval;
+@property (nonatomic, assign)NSString* colorHexValue;
+@property (nonatomic, assign)NSString* colorImageUrl;
 
 /**
  *  Method to parse an RIFilterOption given a JSON object
