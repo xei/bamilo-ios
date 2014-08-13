@@ -10,6 +10,7 @@
 
 @interface JANewRatingViewController : JABaseViewController
 
+@property (strong, nonatomic) NSString *ratingProductSku;
 @property (strong, nonatomic) NSString *ratingProductBrand;
 @property (strong, nonatomic) NSString *ratingProductNameForLabel;
 @property (strong, nonatomic) NSNumber *ratingProductNewPriceForLabel;

@@ -39,85 +39,85 @@
 - (void)setPriceWithNewValue:(NSString *)newValue
                  andOldValue:(NSString *)oldValue
 {
-    if (newValue.length > 0) {
+    if ([newValue floatValue] > 0.0)
+    {
+        NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:oldValue];
+        NSInteger stringOldPriceLenght = oldValue.length;
+        UIFont *stringOldPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
+                                                     size:14.0];
+        UIColor *stringOldPriceColor = [UIColor colorWithRed:204.0/255.0
+                                                       green:204.0/255.0
+                                                        blue:204.0/255.0
+                                                       alpha:1.0f];
         
-        NSMutableAttributedString *mutableNewValue = [[NSMutableAttributedString alloc] initWithString:newValue];
+        [stringOldPrice addAttribute:NSFontAttributeName
+                               value:stringOldPriceFont
+                               range:NSMakeRange(0, stringOldPriceLenght)];
         
-        NSInteger _stringLength = newValue.length;
+        [stringOldPrice addAttribute:NSStrokeColorAttributeName
+                               value:stringOldPriceColor
+                               range:NSMakeRange(0, stringOldPriceLenght)];
         
-        UIColor *newValueColor = [UIColor colorWithRed:204.0/255.0
-                                                 green:0.0/255.0
-                                                  blue:0.0/255.0
-                                                 alpha:1.0f];
+        [stringOldPrice addAttribute:NSStrikethroughStyleAttributeName
+                               value:@(1)
+                               range:NSMakeRange(0, stringOldPriceLenght)];
         
-        UIFont *font = [UIFont fontWithName:@"HelveticaNeue"
-                                       size:14.0];
+        self.oldPriceLabel.attributedText = stringOldPrice;
         
-        [mutableNewValue addAttribute:NSFontAttributeName
-                                value:font
-                                range:NSMakeRange(0, _stringLength)];
+        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:newValue];
+        NSInteger stringNewPriceLenght = newValue.length;
+        UIFont *stringNewPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
+                                                     size:14.0];
+        UIColor *stringNewPriceColor = [UIColor colorWithRed:204.0/255.0
+                                                       green:0.0/255.0
+                                                        blue:0.0/255.0
+                                                       alpha:1.0f];
         
-        [mutableNewValue addAttribute:NSStrokeColorAttributeName
-                                value:newValueColor
-                                range:NSMakeRange(0, _stringLength)];
+        [stringNewPrice addAttribute:NSFontAttributeName
+                               value:stringNewPriceFont
+                               range:NSMakeRange(0, stringNewPriceLenght)];
         
-        if (oldValue.length > 0) {
-            
-            oldValue = [NSString stringWithFormat:@" %@", oldValue];
-            
-            NSMutableAttributedString *mutableOldValue = [[NSMutableAttributedString alloc] initWithString:oldValue];
-            
-            NSInteger oldValueLength = oldValue.length;
-            
-            UIFont *oldValueFont = [UIFont fontWithName:@"HelveticaNeue-Light"
-                                                   size:14.0];
-            
-            UIColor *oldValueColor = [UIColor colorWithRed:204.0/255.0
-                                                     green:0.0/255.0
-                                                      blue:0.0/255.0
-                                                     alpha:1.0f];
-            
-            [mutableOldValue addAttribute:NSFontAttributeName
-                                    value:oldValueFont
-                                    range:NSMakeRange(0, oldValueLength)];
-            
-            [mutableOldValue addAttribute:NSStrokeColorAttributeName
-                                    value:oldValueColor
-                                    range:NSMakeRange(0, oldValueLength)];
-            
-            NSMutableAttributedString *resultString = [mutableNewValue mutableCopy];
-            [resultString appendAttributedString:mutableOldValue];
-            
-            self.priceLabel.attributedText = resultString;
-            
-        } else {
-            
-            self.priceLabel.attributedText = mutableNewValue;
-            
-        }
-    } else {
-        NSMutableAttributedString *mutableOldValue = [[NSMutableAttributedString alloc] initWithString:oldValue];
+        [stringNewPrice addAttribute:NSStrokeColorAttributeName
+                               value:stringNewPriceColor
+                               range:NSMakeRange(0, stringNewPriceLenght)];
         
-        NSInteger oldValueLength = oldValue.length;
+        self.priceLabel.attributedText = stringNewPrice;
         
-        UIFont *oldValueFont = [UIFont fontWithName:@"HelveticaNeue-Light"
-                                               size:14.0];
+        [self.priceLabel sizeToFit];
+        [self.oldPriceLabel sizeToFit];
         
-        UIColor *oldValueColor = [UIColor colorWithRed:204.0/255.0
-                                                 green:0.0/255.0
-                                                  blue:0.0/255.0
-                                                 alpha:1.0f];
-        
-        [mutableOldValue addAttribute:NSFontAttributeName
-                                value:oldValueFont
-                                range:NSMakeRange(0, oldValueLength)];
-        
-        [mutableOldValue addAttribute:NSStrokeColorAttributeName
-                                value:oldValueColor
-                                range:NSMakeRange(0, oldValueLength)];
-        
-        self.priceLabel.attributedText = mutableOldValue;
+        // This view was builded without auto layout so it's necessary to do maths :D
+        float x = self.priceLabel.frame.origin.x + self.priceLabel.frame.size.width + 5;
+        CGRect temp = self.oldPriceLabel.frame;
+        temp.origin.x = x;
+        self.oldPriceLabel.frame = temp;
     }
+    else
+    {
+        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:oldValue];
+        NSInteger stringNewPriceLenght = oldValue.length;
+        UIFont *stringNewPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
+                                                     size:14.0];
+        UIColor *stringNewPriceColor = [UIColor colorWithRed:204.0/255.0
+                                                       green:0.0/255.0
+                                                        blue:0.0/255.0
+                                                       alpha:1.0f];
+        
+        [stringNewPrice addAttribute:NSFontAttributeName
+                               value:stringNewPriceFont
+                               range:NSMakeRange(0, stringNewPriceLenght)];
+        
+        [stringNewPrice addAttribute:NSStrokeColorAttributeName
+                               value:stringNewPriceColor
+                               range:NSMakeRange(0, stringNewPriceLenght)];
+        
+        self.priceLabel.attributedText = stringNewPrice;
+        
+        [self.oldPriceLabel removeFromSuperview];
+        [self.priceLabel sizeToFit];
+    }
+    
+    [self layoutSubviews];
 }
 
 - (void)removeSizeOptions

@@ -132,7 +132,8 @@
     self.imageSection.layer.cornerRadius = 4.0f;
     
     RIImage *image = [self.product.images firstObject];
-    [self.imageSection.mainImage setImageWithURL:[NSURL URLWithString:image.url]];
+    [self.imageSection.mainImage setImageWithURL:[NSURL URLWithString:image.url]
+                                placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(presentGallery)];
@@ -181,7 +182,8 @@
         for (RIVariation *variation in self.product.variations) {
             
             UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake(start, 0.0, 30.0, 30.0)];
-            [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]];
+            [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
+                         placeholderImage:[UIImage imageNamed:@"placeholder"]];
             [self.variationsSection.variationsScrollView addSubview:newImageView];
             
             start += 40.0;
@@ -314,7 +316,8 @@
                 if (product.images.count > 0) {
                     RIImage *imageTemp = [product.images firstObject];
                     
-                    [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]];
+                    [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
+                                             placeholderImage:[UIImage imageNamed:@"placeholder"]];
                 }
                 
                 singleItem.labelBrand.text = product.brand;
