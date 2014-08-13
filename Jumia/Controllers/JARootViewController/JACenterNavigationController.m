@@ -15,6 +15,7 @@
 #import "JARecentSearchesViewController.h"
 #import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
+#import "JAMyAccountViewController.h"
 #import "RIProduct.h"
 
 @interface JACenterNavigationController ()
@@ -171,6 +172,20 @@
             [self.navigationBarView changeNavigationBarTitle:title];
         }
     }
+    else if ([newScreenName isEqualToString:@"My Account"])
+    {
+        if (![self.viewControllers.lastObject isKindOfClass:[JAMyAccountViewController class]])
+        {
+            JAMyAccountViewController *myAccount = [self.storyboard instantiateViewControllerWithIdentifier:@"myAccountViewController"];
+            
+            [self pushViewController:myAccount
+                            animated:YES];
+            
+            [self.navigationBarView changeNavigationBarTitle:title];
+            
+            self.viewControllers = @[myAccount];
+        }
+    }
     
     /*
      * READ
@@ -322,6 +337,9 @@
 - (void)showBackButton
 {
     [self.navigationBarView enteredSecondOrThirdLevelWithBackTitle:@"Back"];
+    [self.navigationBarView.backButton addTarget:self
+                                          action:@selector(back)
+                                forControlEvents:UIControlEventTouchUpInside];
 }
 
 @end

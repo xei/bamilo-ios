@@ -70,7 +70,8 @@
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, self.scrollViewImages.frame.size.height)];
         imageView.contentMode = UIViewContentModeCenter;
         
-        [imageView setImageWithURL:[NSURL URLWithString:image.url]];
+        [imageView setImageWithURL:[NSURL URLWithString:image.url]
+                  placeholderImage:[UIImage imageNamed:@"placeholder"]];
         
         [self.imageViewsArray insertObject:imageView
                                    atIndex:0];
@@ -104,7 +105,8 @@
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, self.scrollViewImages.frame.size.height)];
             imageView.contentMode = UIViewContentModeCenter;
                         
-            [imageView setImageWithURL:[NSURL URLWithString:image.url]];
+            [imageView setImageWithURL:[NSURL URLWithString:image.url]
+                      placeholderImage:[UIImage imageNamed:@"placeholder"]];
             
             [self.imageViewsArray insertObject:imageView
                                        atIndex:i];

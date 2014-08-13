@@ -20,7 +20,8 @@
     
     RIImage* firstImage = [product.images firstObject];
     
-    [self.productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]];
+    [self.productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
+                          placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
     self.recentProductImageView.hidden = !product.isNew;
     self.recentProductLabel.hidden = !product.isNew;

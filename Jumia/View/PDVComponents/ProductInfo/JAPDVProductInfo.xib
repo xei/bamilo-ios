@@ -12,10 +12,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5EF-cN-kZF">
-                    <rect key="frame" x="6" y="13" width="290" height="21"/>
+                    <rect key="frame" x="6" y="13" width="140" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="3KQ-ig-dJC">
@@ -110,6 +110,13 @@
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d9i-Z6-p93">
+                    <rect key="frame" x="156" y="13" width="140" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -119,6 +126,7 @@
                 <outlet property="goToSpecificationsButton" destination="fvd-2t-qwe" id="An6-bh-1dz"/>
                 <outlet property="goToSpecificationsImageView" destination="AxB-nz-fog" id="a5H-xA-mH3"/>
                 <outlet property="numberOfReviewsLabel" destination="orw-SE-ilC" id="wgS-HP-rRa"/>
+                <outlet property="oldPriceLabel" destination="d9i-Z6-p93" id="ZYq-VY-xGm"/>
                 <outlet property="priceLabel" destination="5EF-cN-kZF" id="FcM-Rb-IBd"/>
                 <outlet property="reviewsView" destination="KbH-OZ-BCW" id="N97-Ct-fJK"/>
                 <outlet property="sizeButton" destination="OpA-x6-1zY" id="RLD-m2-RcJ"/>

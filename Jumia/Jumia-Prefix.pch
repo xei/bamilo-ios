@@ -24,4 +24,5 @@
     #import "RIConfiguration.h"
     #import "JAConstants.h"
     #import "JABaseViewController.h"
+    #import "JAFormComponent.h"
 #endif

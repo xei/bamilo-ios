@@ -16,6 +16,14 @@
 		4A1892D219939A0C0036F327 /* JAReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D119939A0C0036F327 /* JAReviewCell.m */; };
 		4A1892D51993BCC90036F327 /* JANewRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D41993BCC90036F327 /* JANewRatingViewController.m */; };
 		4A1C00D81987F2EB00A0109E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302FB19811F2200F71726 /* UIKit.framework */; };
+		4A1C8E2D199B5C600045BD8D /* JASignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1C8E2C199B5C600045BD8D /* JASignupViewController.m */; };
+		4A1C8E32199B724A0045BD8D /* JATextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A1C8E31199B724A0045BD8D /* JATextField.xib */; };
+		4A1C8E35199B73CF0045BD8D /* JAFormComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1C8E34199B73CF0045BD8D /* JAFormComponent.m */; };
+		4A1C8E37199B73E00045BD8D /* JACheckBoxComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A1C8E36199B73E00045BD8D /* JACheckBoxComponent.xib */; };
+		4A1C8E39199B74520045BD8D /* JABirthDateComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A1C8E38199B74520045BD8D /* JABirthDateComponent.xib */; };
+		4A1C8E3B199B74C80045BD8D /* JAGenderComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A1C8E3A199B74C80045BD8D /* JAGenderComponent.xib */; };
+		4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1C8E3D199B789D0045BD8D /* RIFieldDataSetComponent.m */; };
+		4A1C8E44199B79440045BD8D /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1C8E43199B79440045BD8D /* RIField.m */; };
 		4A2FD83E1991146400C65C1D /* JACTAButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD83D1991146400C65C1D /* JACTAButtons.xib */; };
 		4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */; };
 		4A2FD843199119D900C65C1D /* JAPDVProductInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */; };
@@ -23,7 +31,6 @@
 		4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */; };
 		4A2FD84A19913FCA00C65C1D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2FD84919913FCA00C65C1D /* Social.framework */; };
 		4A39212719891F2D00B70A9C /* JATrackMyOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212619891F2D00B70A9C /* JATrackMyOrderViewController.m */; };
-		4A39212A19891F6300B70A9C /* JASignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212919891F6300B70A9C /* JASignInViewController.m */; };
 		4A39212D19891F6D00B70A9C /* JARecentSearchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */; };
 		4A39213019891F7800B70A9C /* JARecentlyViewedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212F19891F7800B70A9C /* JARecentlyViewedViewController.m */; };
 		4A39213419891FB200B70A9C /* JAMyAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39213319891FB200B70A9C /* JAMyAccountViewController.m */; };
@@ -115,7 +122,6 @@
 		B5A302BF19811E9200F71726 /* RIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3026619811E9200F71726 /* RIApi.m */; };
 		B5A302C019811E9200F71726 /* RICategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3026819811E9200F71726 /* RICategory.m */; };
 		B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3026A19811E9200F71726 /* RICountryConfiguration.m */; };
-		B5A302C219811E9200F71726 /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3026C19811E9200F71726 /* RIField.m */; };
 		B5A302C319811E9200F71726 /* RIForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3026E19811E9200F71726 /* RIForm.m */; };
 		B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027019811E9200F71726 /* RIFormIndex.m */; };
 		B5A302C519811E9200F71726 /* RIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027219811E9200F71726 /* RIImage.m */; };
@@ -220,6 +226,18 @@
 		4A1892D119939A0C0036F327 /* JAReviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAReviewCell.m; sourceTree = "<group>"; };
 		4A1892D31993BCC90036F327 /* JANewRatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewRatingViewController.h; sourceTree = "<group>"; };
 		4A1892D41993BCC90036F327 /* JANewRatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewRatingViewController.m; sourceTree = "<group>"; };
+		4A1C8E2B199B5C600045BD8D /* JASignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignupViewController.h; sourceTree = "<group>"; };
+		4A1C8E2C199B5C600045BD8D /* JASignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignupViewController.m; sourceTree = "<group>"; };
+		4A1C8E31199B724A0045BD8D /* JATextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JATextField.xib; path = Utils/JATextField.xib; sourceTree = "<group>"; };
+		4A1C8E33199B73CF0045BD8D /* JAFormComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAFormComponent.h; path = Utils/JAFormComponent.h; sourceTree = "<group>"; };
+		4A1C8E34199B73CF0045BD8D /* JAFormComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAFormComponent.m; path = Utils/JAFormComponent.m; sourceTree = "<group>"; };
+		4A1C8E36199B73E00045BD8D /* JACheckBoxComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACheckBoxComponent.xib; path = Utils/JACheckBoxComponent.xib; sourceTree = "<group>"; };
+		4A1C8E38199B74520045BD8D /* JABirthDateComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JABirthDateComponent.xib; path = Utils/JABirthDateComponent.xib; sourceTree = "<group>"; };
+		4A1C8E3A199B74C80045BD8D /* JAGenderComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAGenderComponent.xib; path = Utils/JAGenderComponent.xib; sourceTree = "<group>"; };
+		4A1C8E3C199B789D0045BD8D /* RIFieldDataSetComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldDataSetComponent.h; sourceTree = "<group>"; };
+		4A1C8E3D199B789D0045BD8D /* RIFieldDataSetComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIFieldDataSetComponent.m; sourceTree = "<group>"; };
+		4A1C8E42199B79440045BD8D /* RIField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIField.h; sourceTree = "<group>"; };
+		4A1C8E43199B79440045BD8D /* RIField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIField.m; sourceTree = "<group>"; };
 		4A2FD83D1991146400C65C1D /* JACTAButtons.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACTAButtons.xib; sourceTree = "<group>"; };
 		4A2FD83F199119D900C65C1D /* JAPDVProductInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVProductInfo.h; sourceTree = "<group>"; };
 		4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVProductInfo.m; sourceTree = "<group>"; };
@@ -231,8 +249,6 @@
 		4A3921191988E27A00B70A9C /* JAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAConstants.h; sourceTree = "<group>"; };
 		4A39212519891F2D00B70A9C /* JATrackMyOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATrackMyOrderViewController.h; sourceTree = "<group>"; };
 		4A39212619891F2D00B70A9C /* JATrackMyOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATrackMyOrderViewController.m; sourceTree = "<group>"; };
-		4A39212819891F6300B70A9C /* JASignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignInViewController.h; sourceTree = "<group>"; };
-		4A39212919891F6300B70A9C /* JASignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignInViewController.m; sourceTree = "<group>"; };
 		4A39212B19891F6D00B70A9C /* JARecentSearchesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARecentSearchesViewController.h; sourceTree = "<group>"; };
 		4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARecentSearchesViewController.m; sourceTree = "<group>"; };
 		4A39212E19891F7800B70A9C /* JARecentlyViewedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARecentlyViewedViewController.h; sourceTree = "<group>"; };
@@ -402,8 +418,6 @@
 		B5A3026819811E9200F71726 /* RICategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICategory.m; sourceTree = "<group>"; };
 		B5A3026919811E9200F71726 /* RICountryConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICountryConfiguration.h; sourceTree = "<group>"; };
 		B5A3026A19811E9200F71726 /* RICountryConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICountryConfiguration.m; sourceTree = "<group>"; };
-		B5A3026B19811E9200F71726 /* RIField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIField.h; sourceTree = "<group>"; };
-		B5A3026C19811E9200F71726 /* RIField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIField.m; sourceTree = "<group>"; };
 		B5A3026D19811E9200F71726 /* RIForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIForm.h; sourceTree = "<group>"; };
 		B5A3026E19811E9200F71726 /* RIForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIForm.m; sourceTree = "<group>"; };
 		B5A3026F19811E9200F71726 /* RIFormIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFormIndex.h; sourceTree = "<group>"; };
@@ -625,6 +639,8 @@
 			children = (
 				4A39213219891FB200B70A9C /* JAMyAccountViewController.h */,
 				4A39213319891FB200B70A9C /* JAMyAccountViewController.m */,
+				4A1C8E2B199B5C600045BD8D /* JASignupViewController.h */,
+				4A1C8E2C199B5C600045BD8D /* JASignupViewController.m */,
 			);
 			path = MyAccount;
 			sourceTree = "<group>";
@@ -645,15 +661,6 @@
 				4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */,
 			);
 			path = RecentSearches;
-			sourceTree = "<group>";
-		};
-		4A39211F19891F1500B70A9C /* SignIn */ = {
-			isa = PBXGroup;
-			children = (
-				4A39212819891F6300B70A9C /* JASignInViewController.h */,
-				4A39212919891F6300B70A9C /* JASignInViewController.m */,
-			);
-			path = SignIn;
 			sourceTree = "<group>";
 		};
 		4A39212319891F1500B70A9C /* TrackMyOrder */ = {
@@ -860,6 +867,12 @@
 			children = (
 				B50B03A9198A8861002046DF /* JAUtils.h */,
 				B50B03AA198A8861002046DF /* JAUtils.m */,
+				4A1C8E33199B73CF0045BD8D /* JAFormComponent.h */,
+				4A1C8E34199B73CF0045BD8D /* JAFormComponent.m */,
+				4A1C8E31199B724A0045BD8D /* JATextField.xib */,
+				4A1C8E36199B73E00045BD8D /* JACheckBoxComponent.xib */,
+				4A1C8E38199B74520045BD8D /* JABirthDateComponent.xib */,
+				4A1C8E3A199B74C80045BD8D /* JAGenderComponent.xib */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1271,8 +1284,10 @@
 				B5A3026819811E9200F71726 /* RICategory.m */,
 				B5A3026919811E9200F71726 /* RICountryConfiguration.h */,
 				B5A3026A19811E9200F71726 /* RICountryConfiguration.m */,
-				B5A3026B19811E9200F71726 /* RIField.h */,
-				B5A3026C19811E9200F71726 /* RIField.m */,
+				4A1C8E42199B79440045BD8D /* RIField.h */,
+				4A1C8E43199B79440045BD8D /* RIField.m */,
+				4A1C8E3C199B789D0045BD8D /* RIFieldDataSetComponent.h */,
+				4A1C8E3D199B789D0045BD8D /* RIFieldDataSetComponent.m */,
 				B5A3026D19811E9200F71726 /* RIForm.h */,
 				B5A3026E19811E9200F71726 /* RIForm.m */,
 				B5A3026F19811E9200F71726 /* RIFormIndex.h */,
@@ -1461,7 +1476,6 @@
 				4A39211B19891F1500B70A9C /* MyAccount */,
 				4A39211D19891F1500B70A9C /* RecentlyViewed */,
 				4A39211E19891F1500B70A9C /* RecentSearches */,
-				4A39211F19891F1500B70A9C /* SignIn */,
 				4A39212319891F1500B70A9C /* TrackMyOrder */,
 				4AE242E1198656F500E37C90 /* HomeViewController */,
 				4AE242E2198656F500E37C90 /* MenuViewController */,
@@ -1651,9 +1665,11 @@
 				4A01EE63199259D1005F5AD1 /* JAPDVGalleryView.xib in Resources */,
 				B5A3024919811E8A00F71726 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
 				B5A3024819811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
+				4A1C8E32199B724A0045BD8D /* JATextField.xib in Resources */,
 				B5A3023819811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
 				4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */,
 				B5A3023619811E8A00F71726 /* BMA4SCloseButton.png in Resources */,
+				4A1C8E39199B74520045BD8D /* JABirthDateComponent.xib in Resources */,
 				B5A3023E19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
 				B5A3023F19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
 				B5A3024619811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
@@ -1681,11 +1697,13 @@
 				B5A3023D19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */,
 				B5A3024E19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
 				CE69B587198662E6005CC699 /* Main.storyboard in Resources */,
+				4A1C8E3B199B74C80045BD8D /* JAGenderComponent.xib in Resources */,
 				B5A3025119811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
 				B5A3024119811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib in Resources */,
 				B5A302E019811E9200F71726 /* RITracking_example.plist in Resources */,
 				B5A3025219811E8A00F71726 /* BMA4SiPhoneWebViewNotifView.xib in Resources */,
 				B5A3025019811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */,
+				4A1C8E37199B73E00045BD8D /* JACheckBoxComponent.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1709,6 +1727,7 @@
 				CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */,
 				B50B03A6198A544A002046DF /* JAShippingViewController.m in Sources */,
 				B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */,
+				4A1C8E44199B79440045BD8D /* RIField.m in Sources */,
 				4A2FD84619912BC500C65C1D /* JAPDVSingleRelatedItem.m in Sources */,
 				B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */,
 				B5A3025B19811E8A00F71726 /* SDWebImageManager.m in Sources */,
@@ -1728,6 +1747,7 @@
 				B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */,
 				CE2F576E19913B33000A9E09 /* JACatalogListCell.m in Sources */,
 				B5A302BE19811E9200F71726 /* RIConfiguration.m in Sources */,
+				4A1C8E2D199B5C600045BD8D /* JASignupViewController.m in Sources */,
 				B5A302CC19811E9200F71726 /* RITeaser.m in Sources */,
 				4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */,
 				B5A302D019811E9200F71726 /* RITeaserProduct.m in Sources */,
@@ -1757,7 +1777,6 @@
 				B5A3025719811E8A00F71726 /* MKAnnotationView+WebCache.m in Sources */,
 				4AE730BE198F8ADF000CA1DD /* JAPDVRelatedItem.m in Sources */,
 				B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */,
-				4A39212A19891F6300B70A9C /* JASignInViewController.m in Sources */,
 				B5A302D819811E9200F71726 /* RIProductReview.m in Sources */,
 				CE44587C198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m in Sources */,
 				CE445875198BD5D800CE7E8D /* JASmallTeaserView.m in Sources */,
@@ -1771,12 +1790,14 @@
 				B5A302D419811E9200F71726 /* Model.xcdatamodeld in Sources */,
 				4A01EE4919922729005F5AD1 /* JAPDVPicker.m in Sources */,
 				B5A302DA19811E9200F71726 /* RICommunicationWrapper.m in Sources */,
+				4A1C8E35199B73CF0045BD8D /* JAFormComponent.m in Sources */,
 				CE44586D198BD20A00CE7E8D /* JATopSellersTeaserView.m in Sources */,
 				4A392141198925D000B70A9C /* JANavigationBarView.m in Sources */,
 				CE445870198BD21A00CE7E8D /* JATeaserView.m in Sources */,
 				B50B03AB198A8861002046DF /* JAUtils.m in Sources */,
 				4AE730C7198F8B05000CA1DD /* JAPDVViewController.m in Sources */,
 				B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */,
+				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
 				B5A3025319811E8A00F71726 /* AdXTracking.m in Sources */,
 				B5A302C619811E9200F71726 /* RIImageResolution.m in Sources */,
 				B5A302E619811E9200F71726 /* RIURLCacheWrapper.m in Sources */,
@@ -1794,7 +1815,6 @@
 				B517FDF91982517300F65253 /* RICart.m in Sources */,
 				B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */,
 				B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */,
-				B5A302C219811E9200F71726 /* RIField.m in Sources */,
 				B5A301AE19811D0700F71726 /* main.m in Sources */,
 				B5A3025D19811E8A00F71726 /* UIButton+WebCache.m in Sources */,
 				B5A3025C19811E8A00F71726 /* SDWebImagePrefetcher.m in Sources */,
