@@ -20,6 +20,8 @@
                           cancelButtonTitle:nil
                           otherButtonTitles:@"Ok", nil] show];
         
+        self.textField.backgroundColor = [UIColor redColor];
+        
         return NO;
     }
     else
@@ -33,10 +35,14 @@
                                   cancelButtonTitle:nil
                                   otherButtonTitles:@"Ok", nil] show];
                 
+                self.textField.backgroundColor = [UIColor redColor];
+                
                 return NO;
             }
         }
     }
+    
+    self.textField.backgroundColor = [UIColor whiteColor];
     
     return YES;
 }

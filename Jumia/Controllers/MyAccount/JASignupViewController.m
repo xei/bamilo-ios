@@ -20,6 +20,7 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
 @property (weak, nonatomic) UIButton *registerButton;
+@property (weak, nonatomic) UIButton *registerByFacebook;
 @property (strong, nonatomic) NSMutableArray *fieldsArray;
 @property (assign, nonatomic) CGRect originalFrame;
 @property (strong, nonatomic) RIForm *tempForm;
@@ -164,6 +165,27 @@
            
            [self.contentScrollView addSubview:self.registerButton];
            
+           // Facebook
+           self.registerByFacebook = [UIButton buttonWithType:UIButtonTypeCustom];
+           self.registerByFacebook.frame = CGRectMake(6.0, startingY, self.contentScrollView.frame.size.width - 12.0, 44.0);
+           
+           [self.registerByFacebook setTitle:@"Register via Facebook"
+                                    forState:UIControlStateNormal];
+           
+           [self.registerByFacebook setTitleColor:[UIColor orangeColor]
+                                         forState:UIControlStateNormal];
+           
+           [self.registerByFacebook addTarget:self
+                                       action:@selector(registerByFacebook)
+                             forControlEvents:UIControlEventTouchUpInside];
+           
+           frame = self.registerByFacebook.frame;
+           frame.origin.y = startingY;
+           self.registerByFacebook.frame = frame;
+           startingY += (self.registerByFacebook.frame.size.height + 8);
+           
+           [self.contentScrollView addSubview:self.registerByFacebook];
+           
            [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, startingY)];
            
        } failureBlock:^(NSArray *errorMessage) {
@@ -188,8 +210,6 @@
 {
     [self.view endEditing:YES];
     
-    [self showLoading];
-    
     BOOL hasErrors = NO;
     NSString *pass1 = @"";
     NSString *pass2 = @"";
@@ -201,7 +221,6 @@
             if (![obj isValid])
             {
                 hasErrors = YES;
-                [self hideLoading];
                 break;
                 
                 return;
@@ -224,8 +243,6 @@
     {
         if (![pass2 isEqualToString:pass1])
         {
-            [self hideLoading];
-            
             [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
                                         message:@"The passwords doesn't match."
                                        delegate:nil
@@ -299,6 +316,8 @@
             }
         }
         
+        [self showLoading];
+        
         [RICustomer registerCustomerWithParameters:[tempDic copy]
                                       successBlock:^(id customer) {
                                           [self hideLoading];
@@ -321,6 +340,11 @@
                                                             otherButtonTitles:@"Ok", nil] show];
                                       }];
     }
+}
+
+- (void)registerViaFacebook
+{
+    
 }
 
 #pragma mark - TextField Delegate
