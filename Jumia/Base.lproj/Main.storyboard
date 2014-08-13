@@ -1690,7 +1690,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xgY-mh-4W5">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xgY-mh-4W5">
                                 <rect key="frame" x="6" y="6" width="309" height="208"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sUm-ON-NB1">
@@ -1711,9 +1711,42 @@
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="208" id="fXo-jW-7kP"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Dg-X1-0hJ">
+                                <rect key="frame" x="6" y="219" width="309" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czm-cP-DoP">
+                                        <rect key="frame" x="10" y="7" width="257" height="30"/>
+                                        <state key="normal" title="Button">
+                                            <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="signUp:" destination="ghr-t8-OwX" eventType="touchUpInside" id="YwF-Q8-fAL"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrow_moreinfo" translatesAutoresizingMaskIntoConstraints="NO" id="wTe-Bn-Pch">
+                                        <rect key="frame" x="294" y="16" width="7" height="12"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="mDh-PX-F2j"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="0Dg-X1-0hJ" firstAttribute="top" secondItem="xgY-mh-4W5" secondAttribute="bottom" constant="5" id="8Go-KE-b4C"/>
+                            <constraint firstItem="xgY-mh-4W5" firstAttribute="top" secondItem="YaJ-P8-TCQ" secondAttribute="bottom" constant="6" id="DO7-Pm-1hL"/>
+                            <constraint firstAttribute="trailing" secondItem="xgY-mh-4W5" secondAttribute="trailing" constant="5" id="TzR-UI-Swe"/>
+                            <constraint firstAttribute="trailing" secondItem="0Dg-X1-0hJ" secondAttribute="trailing" constant="5" id="edO-Cn-iRR"/>
+                            <constraint firstItem="xgY-mh-4W5" firstAttribute="leading" secondItem="cNj-bh-3PS" secondAttribute="leading" constant="6" id="f7S-OE-7TT"/>
+                            <constraint firstItem="0Dg-X1-0hJ" firstAttribute="leading" secondItem="cNj-bh-3PS" secondAttribute="leading" constant="6" id="tH8-o9-Jqh"/>
+                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="HlZ-cw-qE8"/>
@@ -1721,11 +1754,48 @@
                         <outlet property="buttonLogin" destination="o7F-7t-Z82" id="uEo-Ej-Vdx"/>
                         <outlet property="labelLogin" destination="sUm-ON-NB1" id="zOz-dZ-y7U"/>
                         <outlet property="loginView" destination="xgY-mh-4W5" id="yCp-Yd-FmK"/>
+                        <outlet property="signUpButton" destination="czm-cP-DoP" id="afL-aY-01L"/>
+                        <outlet property="signUpView" destination="0Dg-X1-0hJ" id="FZ5-mi-0a5"/>
+                        <segue destination="FGH-sW-a5w" kind="push" identifier="segueSignUp" id="Tky-4b-C7s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xMg-uB-dWZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1590" y="1529"/>
+        </scene>
+        <!--Signup View Controller-->
+        <scene sceneID="Kxt-Aa-vEv">
+            <objects>
+                <viewController id="FGH-sW-a5w" customClass="JASignupViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iRE-ps-u1B"/>
+                        <viewControllerLayoutGuide type="bottom" id="Xha-UT-cf0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7yC-MH-9GN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EaJ-Q0-8n7">
+                                <rect key="frame" x="6" y="6" width="308" height="492"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="EaJ-Q0-8n7" firstAttribute="leading" secondItem="7yC-MH-9GN" secondAttribute="leading" constant="6" id="GeP-kX-Dfa"/>
+                            <constraint firstItem="EaJ-Q0-8n7" firstAttribute="top" secondItem="iRE-ps-u1B" secondAttribute="bottom" constant="6" id="bUx-TU-NzI"/>
+                            <constraint firstItem="Xha-UT-cf0" firstAttribute="top" secondItem="EaJ-Q0-8n7" secondAttribute="bottom" constant="6" id="nNt-ab-5q1"/>
+                            <constraint firstAttribute="trailing" secondItem="EaJ-Q0-8n7" secondAttribute="trailing" constant="6" id="rEm-3o-UN4"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="nZs-G9-2BW"/>
+                    <connections>
+                        <outlet property="contentScrollView" destination="EaJ-Q0-8n7" id="h9r-v0-REK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Shi-tF-b6p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2058" y="1529"/>
         </scene>
         <!--Recent Searches View Controller-->
         <scene sceneID="1wB-Dk-dn6">
@@ -2037,6 +2107,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow_moreinfo" width="7" height="12"/>
         <image name="catalogTopButton" width="35" height="35"/>
         <image name="catalogTopButtonPressed" width="35" height="35"/>
         <image name="filterIcon" width="22" height="22"/>

@@ -337,6 +337,9 @@
 - (void)showBackButton
 {
     [self.navigationBarView enteredSecondOrThirdLevelWithBackTitle:@"Back"];
+    [self.navigationBarView.backButton addTarget:self
+                                          action:@selector(back)
+                                forControlEvents:UIControlEventTouchUpInside];
 }
 
 @end

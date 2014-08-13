@@ -11,10 +11,6 @@
 #import "RIField.h"
 #import "RICustomer.h"
 
-@implementation JATextField
-
-@end
-
 @interface JAMyAccountViewController ()
 <
     UITextFieldDelegate
@@ -24,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIView *loginView;
 @property (weak, nonatomic) IBOutlet UILabel *labelLogin;
 @property (weak, nonatomic) IBOutlet UIButton *buttonLogin;
+@property (weak, nonatomic) IBOutlet UIView *signUpView;
+@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 
 @end
 
@@ -36,11 +34,18 @@
     [super viewDidLoad];
     
     self.loginView.layer.cornerRadius = 4.0f;
+    self.signUpView.layer.cornerRadius = 4.0f;
+    
     self.labelLogin.text = @"Login";
     self.fieldsArray = [NSMutableArray new];
     
     [self.buttonLogin setTitle:@"Login"
                       forState:UIControlStateNormal];
+    
+    [self.signUpButton setTitle:@"Signup"
+                       forState:UIControlStateNormal];
+    
+    self.signUpButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
@@ -54,11 +59,11 @@
                                                                                       self.loginView.frame.size.width - 12.0f,
                                                                                       27.0f)];
                
-               textField.borderStyle = UITextBorderStyleRoundedRect;
+               textField.textField.borderStyle = UITextBorderStyleRoundedRect;
                textField.layer.cornerRadius = 4.0f;
                
-               textField.placeholder = field.type;
-               textField.delegate = self;
+               textField.textField.placeholder = field.type;
+               textField.textField.delegate = self;
                textField.field = field;
                
                [self.loginView addSubview:textField];
@@ -66,7 +71,7 @@
                
                startingY += 40.0f;
            }
-           
+                      
        } failureBlock:^(NSArray *errorMessage) {
            
            [[[UIAlertView alloc] initWithTitle:@"Jumia"
@@ -85,6 +90,15 @@
 
 #pragma mark - Action
 
+- (IBAction)signUp:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
+                                                        object:nil];
+    
+    [self performSegueWithIdentifier:@"segueSignUp"
+                              sender:nil];
+}
+
 - (IBAction)login:(id)sender
 {
     NSMutableDictionary *temp = [NSMutableDictionary new];
@@ -92,7 +106,7 @@
     for (JATextField *textField in self.fieldsArray)
     {
         RIField *field = textField.field;
-        NSDictionary *dicToAdd = @{ field.name : textField.text };
+        NSDictionary *dicToAdd = @{ field.name : textField.textField.text };
         [temp addEntriesFromDictionary:dicToAdd];
     }
  

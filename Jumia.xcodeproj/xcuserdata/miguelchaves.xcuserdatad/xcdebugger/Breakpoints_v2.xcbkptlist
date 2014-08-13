@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jumia/RICommunicationFramework/Model/OtherObjects/RICustomer.m"
-            timestampString = "429554339.217997"
+            timestampString = "429634317.061423"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "+loginCustomerWithParameters:successBlock:andFailureBlock:"
             landmarkType = "5">
          </BreakpointContent>
@@ -68,11 +68,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jumia/RICommunicationFramework/Model/OtherObjects/RICustomer.m"
-            timestampString = "429554341.673512"
+            timestampString = "429634317.061423"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
             landmarkName = "+loginCustomerWithParameters:successBlock:andFailureBlock:"
             landmarkType = "5">
          </BreakpointContent>

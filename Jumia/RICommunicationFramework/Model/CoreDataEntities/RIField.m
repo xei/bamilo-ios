@@ -1,27 +1,29 @@
 //
 //  RIField.m
-//  Comunication Project
+//  Jumia
 //
-//  Created by Telmo Pinto on 23/07/14.
+//  Created by Miguel Chaves on 13/Aug/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
 #import "RIField.h"
+#import "RIFieldDataSetComponent.h"
 #import "RIForm.h"
 
 
 @implementation RIField
 
 @dynamic key;
-@dynamic type;
-@dynamic requiredMessage;
-@dynamic min;
 @dynamic max;
-@dynamic regex;
-@dynamic value;
+@dynamic min;
 @dynamic name;
+@dynamic regex;
+@dynamic requiredMessage;
+@dynamic type;
 @dynamic uid;
+@dynamic value;
 @dynamic form;
+@dynamic dataSet;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 {
@@ -42,19 +44,32 @@
     if ([fieldJSON objectForKey:@"name"]) {
         newField.name = [fieldJSON objectForKey:@"name"];
     }
+    if ([fieldJSON objectForKey:@"label"]) {
+        newField.label = [fieldJSON objectForKey:@"label"];
+    }
+    
+    if ([fieldJSON objectForKey:@"dataset"]) {
+        NSArray *dataSetArray = [fieldJSON objectForKey:@"dataset"];
+        
+        for (NSString *tempString in dataSetArray) {
+            RIFieldDataSetComponent *component = [RIFieldDataSetComponent parseDataSetComponent:tempString];
+            component.field = newField;
+            [newField addDataSetObject:component];
+        }
+    }
     
     NSDictionary* rules = [fieldJSON objectForKey:@"rules"];
     
     if (VALID_NOTEMPTY(rules, NSDictionary)) {
         
         if ([rules objectForKey:@"regex"]) {
-            newField.regex = [fieldJSON objectForKey:@"regex"];
+            newField.regex = [rules objectForKey:@"regex"];
         }
         if ([rules objectForKey:@"min"]) {
-            newField.min = [fieldJSON objectForKey:@"min"];
+            newField.min = [rules objectForKey:@"min"];
         }
         if ([rules objectForKey:@"max"]) {
-            newField.max = [fieldJSON objectForKey:@"max"];
+            newField.max = [rules objectForKey:@"max"];
         }
         
         NSDictionary* required = [rules objectForKey:@"required"];

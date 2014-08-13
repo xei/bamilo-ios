@@ -8,6 +8,7 @@
 
 #import "RIForm.h"
 #import "RIField.h"
+#import "RIFieldDataSetComponent.h"
 
 @implementation RIForm
 
@@ -144,6 +145,11 @@
 + (void)saveForm:(RIForm *)form;
 {
     for (RIField* field in form.fields) {
+        
+        for (RIFieldDataSetComponent *component in field.dataSet) {
+            [RIFieldDataSetComponent saveFieldDataSetComponent:component];
+        }
+        
         [RIField saveField:field];
     }
     
