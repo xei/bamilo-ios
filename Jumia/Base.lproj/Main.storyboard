@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="35A-Fx-NNM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="35A-Fx-NNM">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
@@ -65,7 +65,7 @@
                         <viewControllerLayoutGuide type="bottom" id="34t-u1-28L"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0V6-zY-rSO">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bvx-Sl-Bkt">
@@ -139,7 +139,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Vr9-zA-Lb3"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="B9R-Rr-1lu">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iCA-so-HdJ">
@@ -244,7 +244,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Vsv-Ib-mUX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="MU2-xF-eFa">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="top" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AsP-Cc-EYR">
@@ -352,7 +352,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MEv-bE-tYZ" customClass="JAPickerScrollView">
@@ -485,7 +485,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Zou-bB-UIJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="EAx-LS-Wk3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rIu-hD-3ch">
@@ -878,7 +878,7 @@
                         <viewControllerLayoutGuide type="bottom" id="vvT-Br-bbz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="C3c-l1-21f">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ggt-LD-yOF">
@@ -1353,7 +1353,7 @@
                         <viewControllerLayoutGuide type="bottom" id="0ot-Ab-3Ot"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="jhw-lm-hpC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RiA-6S-1Mu">
@@ -1409,6 +1409,9 @@
                                 <state key="normal" image="filterIcon">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="filterButtonPressed:" destination="y7p-zP-v5K" eventType="touchUpInside" id="aMn-CM-Kaf"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WIM-UY-vXJ" userLabel="viewButton">
                                 <rect key="frame" x="286" y="64" width="34" height="44"/>
@@ -1483,6 +1486,7 @@
                         <outlet property="filterButton" destination="uMs-IJ-hAe" id="gAM-vt-Qmy"/>
                         <outlet property="sortingScrollView" destination="6lO-cb-ku3" id="FN2-gq-REl"/>
                         <outlet property="viewToggleButton" destination="WIM-UY-vXJ" id="gcG-3I-aGg"/>
+                        <segue destination="EgT-RC-CyV" kind="push" id="DBe-sL-KVx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fw5-pW-XE1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1498,7 +1502,7 @@
                         <viewControllerLayoutGuide type="bottom" id="TEU-E5-HPl"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ngo-JV-gZI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hex-qc-hx0">
@@ -1699,7 +1703,7 @@
                         <viewControllerLayoutGuide type="bottom" id="LtC-HS-5m6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0GY-ne-ANt">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CSM-WR-7DI">
@@ -1980,6 +1984,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c6K-vV-fRd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="361.33333333333331" y="2365.4833333333336"/>
+        </scene>
+        <!--Main Filters View Controller-->
+        <scene sceneID="8DS-Z1-EaS">
+            <objects>
+                <viewController storyboardIdentifier="mainFiltersViewController" id="EgT-RC-CyV" customClass="JAMainFiltersViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rOW-IO-xaD"/>
+                        <viewControllerLayoutGuide type="bottom" id="L0G-X5-LM2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nbf-U1-VCE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cMj-JV-3oT">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cMj-JV-3oT" firstAttribute="leading" secondItem="nbf-U1-VCE" secondAttribute="leading" id="lRt-GL-zwV"/>
+                            <constraint firstAttribute="trailing" secondItem="cMj-JV-3oT" secondAttribute="trailing" id="yFz-mc-vhg"/>
+                            <constraint firstItem="L0G-X5-LM2" firstAttribute="top" secondItem="cMj-JV-3oT" secondAttribute="bottom" id="yH6-Bh-80M"/>
+                            <constraint firstItem="cMj-JV-3oT" firstAttribute="top" secondItem="rOW-IO-xaD" secondAttribute="bottom" id="yHN-yP-iEG"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ee2-Am-q1U"/>
+                    <connections>
+                        <outlet property="tableView" destination="cMj-JV-3oT" id="AFc-4g-ROv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aoR-tr-tlK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="748" y="2365"/>
         </scene>
     </scenes>
     <resources>
