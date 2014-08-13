@@ -21,3 +21,5 @@
 #define kTurnOnLeftSwipePanelNotification @"NOTIFICATION_TURN_ON_LEFT_SWIPE_PANEL"
 #define kShowBackNofication @"NOTIFICATION_SHOW_BACK"
 #define kShowBackButtonWithTitleNofication @"NOTIFICATION_SHOW_BACK_BUTTON_WITH_TITLE"
+#define kUserLoggedInNotification @"NOTIFICATION_USER_LOGGED_IN"
+#define kUserLoggedOutNotification @"NOTIFICATION_USER_LOGGED_OUT"

@@ -322,13 +322,9 @@
                                       successBlock:^(id customer) {
                                           [self hideLoading];
                                           
-                                          [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
-                                                                      message:@"User registed"
-                                                                     delegate:nil
-                                                            cancelButtonTitle:nil
-                                                            otherButtonTitles:@"Ok", nil] show];
-                                          
-                                          [self.navigationController popViewControllerAnimated:YES];
+                                          [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                                              object:@{@"index": @(0),
+                                                                                                       @"name": @"Home"}];
                                           
                                       } andFailureBlock:^(NSArray *errorObject) {
                                           [self hideLoading];

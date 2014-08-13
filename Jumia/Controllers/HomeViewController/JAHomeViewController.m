@@ -29,9 +29,6 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification object:nil];
     
-    self.navigationItem.hidesBackButton = YES;
-    self.title = @"";
-
     self.teaserCategoryScrollView.delegate = self;
     self.teaserPagesScrollView.pagingEnabled = YES;
     self.teaserPagesScrollView.scrollEnabled = NO;

@@ -7,6 +7,7 @@
 //
 
 #import "RICustomer.h"
+#import "RILogin.h"
 
 @interface RICustomer ()
 
@@ -31,7 +32,13 @@
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-                                                                  successBlock([self parseCustomerWithJson:metadata]);
+                                                                  RICustomer *customer = [self parseCustomerWithJson:metadata];
+                                                                  [RILogin sharedInstance].customer = customer;
+                                                                  
+                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                                                                                      object:nil];
+                                                                  
+                                                                  successBlock(customer);
            
                                                               } else
                                                               {
