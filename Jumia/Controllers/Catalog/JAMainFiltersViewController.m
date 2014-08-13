@@ -7,6 +7,7 @@
 //
 
 #import "JAMainFiltersViewController.h"
+#import "JAPriceFilterViewController.h"
 #import "RIFilter.h"
 
 @interface JAMainFiltersViewController ()
@@ -59,7 +60,7 @@
         cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
         cell.detailTextLabel.textColor = UIColorFromRGB(0x4e4e4e);
     }
-    
+
     RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
     
     cell.textLabel.text = filter.name;
@@ -67,6 +68,22 @@
     cell.detailTextLabel.text = @"All";
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
+    
+    if ([filter.uid isEqualToString:@"color_family"]) {
+    
+    } else if ([filter.uid isEqualToString:@"price"]) {
+        JAPriceFilterViewController* priceFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"priceFilterViewController"];
+        
+        priceFilterViewController.priceFilterOption = [filter.options firstObject];
+        
+        [self.navigationController pushViewController:priceFilterViewController
+                                             animated:YES];
+    }
 }
 
 @end

@@ -1994,30 +1994,90 @@
                         <viewControllerLayoutGuide type="bottom" id="L0G-X5-LM2"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nbf-U1-VCE">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cMj-JV-3oT">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cMj-JV-3oT">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="cMj-JV-3oT" firstAttribute="leading" secondItem="nbf-U1-VCE" secondAttribute="leading" id="lRt-GL-zwV"/>
-                            <constraint firstAttribute="trailing" secondItem="cMj-JV-3oT" secondAttribute="trailing" id="yFz-mc-vhg"/>
-                            <constraint firstItem="L0G-X5-LM2" firstAttribute="top" secondItem="cMj-JV-3oT" secondAttribute="bottom" id="yH6-Bh-80M"/>
-                            <constraint firstItem="cMj-JV-3oT" firstAttribute="top" secondItem="rOW-IO-xaD" secondAttribute="bottom" id="yHN-yP-iEG"/>
-                        </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="Ee2-Am-q1U"/>
                     <connections>
                         <outlet property="tableView" destination="cMj-JV-3oT" id="AFc-4g-ROv"/>
+                        <segue destination="NPs-9N-oOk" kind="push" id="y2y-Jc-792"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aoR-tr-tlK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="748" y="2365"/>
+        </scene>
+        <!--Price Filter View Controller-->
+        <scene sceneID="fSz-Km-khI">
+            <objects>
+                <viewController storyboardIdentifier="priceFilterViewController" id="NPs-9N-oOk" customClass="JAPriceFilterViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="j8C-KZ-8nt"/>
+                        <viewControllerLayoutGuide type="bottom" id="Dgt-hI-RIc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Uh2-B8-ovU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iqL-to-8be">
+                                <rect key="frame" x="0.0" y="154" width="320" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="TlI-Hr-n1q"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S6M-c6-NOI" customClass="NMRangeSlider">
+                                <rect key="frame" x="50" y="200" width="220" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="I08-I4-6Eh"/>
+                                    <constraint firstAttribute="height" constant="40" id="I6O-za-BOb"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="sliderMoved:" destination="NPs-9N-oOk" eventType="valueChanged" id="bYh-KR-FqO"/>
+                                </connections>
+                            </view>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Guj-VS-HSY">
+                                <rect key="frame" x="50" y="305" width="51" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="1od-ic-uC3"/>
+                                    <constraint firstAttribute="width" constant="49" id="1uT-G0-EY9"/>
+                                </constraints>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ygD-Jc-unJ">
+                                <rect key="frame" x="116" y="305" width="154" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="gVT-0h-DTE"/>
+                                    <constraint firstAttribute="width" constant="154" id="ytz-qc-JX5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="3b4-Ty-XP4"/>
+                    <connections>
+                        <outlet property="discountLabel" destination="ygD-Jc-unJ" id="Ccj-cn-hoj"/>
+                        <outlet property="discountSwitch" destination="Guj-VS-HSY" id="naE-Fu-iJG"/>
+                        <outlet property="priceRangeLabel" destination="iqL-to-8be" id="AnB-jX-f5K"/>
+                        <outlet property="priceRangeSlider" destination="S6M-c6-NOI" id="P7b-7k-4CQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="srW-Lp-5sn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1150" y="2365"/>
         </scene>
     </scenes>
     <resources>
