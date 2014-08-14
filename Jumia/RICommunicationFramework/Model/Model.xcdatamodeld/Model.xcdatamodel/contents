@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6172.15" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdBy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="customerAddressCityId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="customerAddressRegion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="customerAddressRegionId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="customerId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hidden" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isDefaultBilling" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isDefaultShipping" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locale" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedBy" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="customer" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RICustomer" inverseName="addresses" inverseEntity="RICustomer" syncable="YES"/>
+    </entity>
     <entity name="RIApi" representedClassName="RIApi" syncable="YES">
         <attribute name="actionName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="curMobVersion" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -27,6 +50,17 @@
         <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thousandsSep" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="languages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RILanguage" inverseName="countryConfig" inverseEntity="RILanguage" syncable="YES"/>
+    </entity>
+    <entity name="RICustomer" representedClassName="RICustomer" syncable="YES">
+        <attribute name="birthday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="idCustomer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="addresses" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIAddress" inverseName="customer" inverseEntity="RIAddress" syncable="YES"/>
     </entity>
     <entity name="RIField" representedClassName="RIField" syncable="YES">
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
@@ -216,5 +250,7 @@
         <element name="RITeaserText" positionX="-684" positionY="677" width="128" height="88"/>
         <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
         <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>
+        <element name="RIAddress" positionX="90" positionY="666" width="128" height="360"/>
+        <element name="RICustomer" positionX="279" positionY="650" width="128" height="178"/>
     </elements>
 </model>

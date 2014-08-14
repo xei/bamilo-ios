@@ -2,13 +2,37 @@
 //  RIAddress.m
 //  Jumia
 //
-//  Created by Telmo Pinto on 25/07/14.
+//  Created by Miguel Chaves on 14/Aug/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
 #import "RIAddress.h"
+#import "RICustomer.h"
+
 
 @implementation RIAddress
+
+@dynamic uid;
+@dynamic firstName;
+@dynamic lastName;
+@dynamic address;
+@dynamic city;
+@dynamic postcode;
+@dynamic phone;
+@dynamic customerId;
+@dynamic countryId;
+@dynamic customerAddressRegionId;
+@dynamic customerAddressCityId;
+@dynamic isDefaultBilling;
+@dynamic isDefaultShipping;
+@dynamic hidden;
+@dynamic createdAt;
+@dynamic updatedAt;
+@dynamic createdBy;
+@dynamic updatedBy;
+@dynamic customerAddressRegion;
+@dynamic locale;
+@dynamic customer;
 
 + (NSString*)getBillingAddressWithSuccessBlock:(void (^)(id billingAddress))successBlock
                                andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
@@ -28,7 +52,7 @@
                                                               } else {
                                                                   failureBlock(nil);
                                                               }
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
                                                                   failureBlock([RIError getErrorMessages:errorJsonObject]);
@@ -51,11 +75,11 @@
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
-                                                                      successBlock([RIAddress parseAddressList:metadata]);
+                                                                  successBlock([RIAddress parseAddressList:metadata]);
                                                               } else {
                                                                   failureBlock(nil);
                                                               }
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
                                                                   failureBlock([RIError getErrorMessages:errorJsonObject]);
@@ -102,7 +126,7 @@
 
 + (RIAddress*)parseAddress:(NSDictionary*)addressJSON
 {
-    RIAddress* newAddress = [[RIAddress alloc] init];
+    RIAddress* newAddress = (RIAddress *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIAddress class])];
     
     if ([addressJSON objectForKey:@"id_customer_address"]) {
         newAddress.uid = [addressJSON objectForKey:@"id_customer_address"];
@@ -163,6 +187,12 @@
     }
     
     return newAddress;
+}
+
++ (void)saveAddress:(RIAddress *)address
+{
+    [[RIDataBaseWrapper sharedInstance] insertManagedObject:address];
+    [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
 @end

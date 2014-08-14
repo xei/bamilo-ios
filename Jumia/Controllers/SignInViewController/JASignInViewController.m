@@ -10,7 +10,6 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "RICustomer.h"
-#import "RILogin.h"
 
 @interface JASignInViewController ()
 <
@@ -55,22 +54,41 @@
            
            for (RIField *field in form.fields)
            {
-               JATextField *textField = [[JATextField alloc] initWithFrame:CGRectMake(6.0f,
-                                                                                      startingY,
-                                                                                      self.loginView.frame.size.width - 12.0f,
-                                                                                      27.0f)];
-               
-               textField.textField.borderStyle = UITextBorderStyleRoundedRect;
-               textField.layer.cornerRadius = 4.0f;
-               
-               textField.textField.placeholder = field.type;
-               textField.textField.delegate = self;
-               textField.field = field;
-               
-               [self.loginView addSubview:textField];
-               [self.fieldsArray addObject:textField];
-               
-               startingY += 40.0f;
+               if ([field.type isEqualToString:@"email"])
+               {
+                   JATextField *textField = [JAFormComponent getNewJATextField];
+                   textField.field = field;
+                   
+                   textField.layer.cornerRadius = 4.0f;
+                   CGRect frame = textField.frame;
+                   frame.origin.y = startingY;
+                   textField.frame = frame;
+                   startingY += (textField.frame.size.height + 8);
+                   
+                   textField.textField.placeholder = field.label;
+                   textField.textField.delegate = self;
+                   
+                   [self.loginView addSubview:textField];
+                   [self.fieldsArray addObject:textField];
+               }
+               else if ([field.type isEqualToString:@"password"] || [field.type isEqualToString:@"password2"])
+               {
+                   JATextField *textField = [JAFormComponent getNewJATextField];
+                   textField.field = field;
+                   
+                   textField.layer.cornerRadius = 4.0f;
+                   CGRect frame = textField.frame;
+                   frame.origin.y = startingY;
+                   textField.frame = frame;
+                   startingY += (textField.frame.size.height + 8);
+                   
+                   textField.textField.placeholder = field.label;
+                   textField.textField.secureTextEntry = YES;
+                   textField.textField.delegate = self;
+                   
+                   [self.loginView addSubview:textField];
+                   [self.fieldsArray addObject:textField];
+               }
            }
            
        } failureBlock:^(NSArray *errorMessage) {
@@ -86,8 +104,10 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    if ([[RILogin sharedInstance] checkIfUserIsLogged]) {
+    if ([RICustomer checkIfUserIsLogged]) {
         NSLog(@"User logged");
+    } else {
+        NSLog(@"User not logged");
     }
 }
 
@@ -109,6 +129,24 @@
 
 - (IBAction)login:(id)sender
 {
+    BOOL hasErrors = NO;
+    
+    for (id obj in self.fieldsArray)
+    {
+        if ([obj isKindOfClass:[JATextField class]])
+        {
+            if (![obj isValid])
+            {
+                hasErrors = YES;
+                break;
+            }
+        }
+    }
+    
+    if (hasErrors) {
+        return;
+    }
+    
     NSMutableDictionary *temp = [NSMutableDictionary new];
     
     for (JATextField *textField in self.fieldsArray)
@@ -125,11 +163,12 @@
                                    
                                    [self hideLoading];
                                    
-                                   [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                               message:@"Login with sucess"
-                                                              delegate:nil
-                                                     cancelButtonTitle:nil
-                                                     otherButtonTitles:@"OK", nil] show];
+                                   [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                                       object:@{@"index": @(0),
+                                                                                                @"name": @"Home"}];
+
+                                   [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                                                       object:nil];
                                    
                                } andFailureBlock:^(NSArray *errorObject) {
                                    

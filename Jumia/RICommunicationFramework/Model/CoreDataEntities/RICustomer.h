@@ -1,24 +1,27 @@
 //
 //  RICustomer.h
-//  Comunication Project
+//  Jumia
 //
-//  Created by Miguel Chaves on 17/Jul/14.
+//  Created by Miguel Chaves on 14/Aug/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface RICustomer : NSObject
+@class RIAddress;
 
-@property (strong, nonatomic) NSString *idCustomer;
-@property (strong, nonatomic) NSString *email;
-@property (strong, nonatomic) NSString *firstName;
-@property (strong, nonatomic) NSString *lastName;
-@property (strong, nonatomic) NSString *birthday;
-@property (strong, nonatomic) NSString *gender;
-@property (strong, nonatomic) NSString *password;
-@property (strong, nonatomic) NSString *createdAt;
-@property (strong, nonatomic) NSArray *addresses;
+@interface RICustomer : NSManagedObject
+
+@property (nonatomic, retain) NSString * idCustomer;
+@property (nonatomic, retain) NSString * email;
+@property (nonatomic, retain) NSString * firstName;
+@property (nonatomic, retain) NSString * lastName;
+@property (nonatomic, retain) NSString * birthday;
+@property (nonatomic, retain) NSString * gender;
+@property (nonatomic, retain) NSString * password;
+@property (nonatomic, retain) NSString * createdAt;
+@property (nonatomic, retain) NSOrderedSet *addresses;
 
 /**
  * Method to registere a user
@@ -82,5 +85,28 @@
  * @param the operationID
  */
 + (void)cancelRequest:(NSString *)operationID;
+
+/**
+ * Method to check if the user is stored (logged)
+ *
+ * @return success case user is stored
+ *
+ */
++ (BOOL)checkIfUserIsLogged;
+
+@end
+
+@interface RICustomer (CoreDataGeneratedAccessors)
+
+- (void)insertObject:(RIAddress *)value inAddressesAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromAddressesAtIndex:(NSUInteger)idx;
+- (void)insertAddresses:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeAddressesAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInAddressesAtIndex:(NSUInteger)idx withObject:(RIAddress *)value;
+- (void)replaceAddressesAtIndexes:(NSIndexSet *)indexes withAddresses:(NSArray *)values;
+- (void)addAddressesObject:(RIAddress *)value;
+- (void)removeAddressesObject:(RIAddress *)value;
+- (void)addAddresses:(NSOrderedSet *)values;
+- (void)removeAddresses:(NSOrderedSet *)values;
 
 @end

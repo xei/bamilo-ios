@@ -11,7 +11,7 @@
 #import "RICategory.h"
 #import "JAMenuNavigationBar.h"
 #import "RISearchSuggestion.h"
-#import "RILogin.h"
+#import "RICustomer.h"
 
 @interface JAMenuViewController ()
 <
@@ -182,10 +182,16 @@
         } else {
             
             if (8 == indexPath.row) {
-                if ([[RILogin sharedInstance] checkIfUserIsLogged])
+                if ([RICustomer checkIfUserIsLogged])
                 {
-                    [[RILogin sharedInstance] logoutUser:^(BOOL success) {
+                    [RICustomer logoutCustomerWithSuccessBlock:^{
+                        
                         [self userDidLogout];
+                        
+                    } andFailureBlock:^(NSArray *errorObject) {
+                        
+                        [self userDidLogout];
+                        
                     }];
                 }
                 else
@@ -368,7 +374,7 @@
                              @"image": @"ico_sign",
                              @"selected": @"ico_signpressed" }] mutableCopy];
     
-    if ([[RILogin sharedInstance] checkIfUserIsLogged])
+    if ([RICustomer checkIfUserIsLogged])
     {
         NSDictionary *dic = @{ @"name": @"Sign Out",
                                @"image": @"ico_sign",
