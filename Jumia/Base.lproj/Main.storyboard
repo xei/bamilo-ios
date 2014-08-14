@@ -2133,6 +2133,7 @@
                     <connections>
                         <outlet property="tableView" destination="rr7-lq-WJT" id="6mX-ej-hga"/>
                         <segue destination="92Q-QO-3XP" kind="push" id="tjv-dz-GPC"/>
+                        <segue destination="5q6-Aq-jzg" kind="push" id="fmL-hx-WsR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ljs-RF-YVM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2201,7 +2202,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P8V-8F-dlk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1150" y="2365"/>
+            <point key="canvasLocation" x="1168" y="2297"/>
+        </scene>
+        <!--Generic Filter View Controller-->
+        <scene sceneID="Dh0-Fl-HFr">
+            <objects>
+                <viewController storyboardIdentifier="genericFilterViewController" id="5q6-Aq-jzg" customClass="JAGenericFilterViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bKa-dh-BqQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="WVk-mM-N3h"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yC5-c6-pBh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5ET-St-Piy">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="rrx-y6-fMa"/>
+                    <connections>
+                        <outlet property="tableView" destination="5ET-St-Piy" id="EKP-Tg-Tvf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SMo-zH-vlq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1590" y="2365"/>
         </scene>
     </scenes>
     <resources>

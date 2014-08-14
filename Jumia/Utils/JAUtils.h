@@ -13,4 +13,6 @@
 + (UIViewController*) getCheckoutNextStepViewController:(NSString*)nextStep
                                            inStoryboard:(UIStoryboard*)storyboard;
 
++ (unsigned int)intFromHexString:(NSString *) hexStr;
+
 @end

@@ -13,6 +13,7 @@
 + (RIFilterOption *)parseFilterOption:(NSDictionary *)filterOptionJSON;
 {
     RIFilterOption* newFilterOption = [[RIFilterOption alloc] init];
+    newFilterOption.selected = NO;
     
     if (VALID_NOTEMPTY(filterOptionJSON, NSDictionary)) {
         if ([filterOptionJSON objectForKey:@"label"]) {
