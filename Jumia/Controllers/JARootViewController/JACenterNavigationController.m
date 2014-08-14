@@ -281,6 +281,13 @@
     }
 }
 
+- (void)done
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressDoneNotification
+                                                        object:nil];
+    [self back];
+}
+
 - (void)changeBackButtonForTitle:(NSNotification *)notification
 {
     NSDictionary* userInfo = notification.userInfo;
@@ -295,7 +302,7 @@
 
 - (void)sendNotificationToChooseCountry
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressedApplyNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressApplyNotification
                                                         object:nil];
 }
 
@@ -358,7 +365,7 @@
 {
     [self.navigationBarView changeToMainFilters];
     [self.navigationBarView.doneButton addTarget:self
-                                          action:@selector(back)
+                                          action:@selector(done)
                                 forControlEvents:UIControlEventTouchUpInside];
 }
 

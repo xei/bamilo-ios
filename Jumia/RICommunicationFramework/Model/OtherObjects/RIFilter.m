@@ -13,7 +13,6 @@
 + (RIFilterOption *)parseFilterOption:(NSDictionary *)filterOptionJSON;
 {
     RIFilterOption* newFilterOption = [[RIFilterOption alloc] init];
-    newFilterOption.selected = NO;
     
     if (VALID_NOTEMPTY(filterOptionJSON, NSDictionary)) {
         if ([filterOptionJSON objectForKey:@"label"]) {
@@ -41,6 +40,12 @@
             newFilterOption.colorImageUrl = [filterOptionJSON objectForKey:@"image_url"];
         }
     }
+    
+    //initial state
+    newFilterOption.selected = NO;
+    newFilterOption.lowerValue = newFilterOption.min;
+    newFilterOption.upperValue = newFilterOption.max;
+    newFilterOption.discountOnly = NO;
     
     return newFilterOption;
 }

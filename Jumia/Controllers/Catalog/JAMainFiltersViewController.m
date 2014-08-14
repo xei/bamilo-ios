@@ -37,6 +37,8 @@
     [notificationCenter postNotificationName:kShowMainFiltersNavNofication
                                       object:self
                                     userInfo:nil];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableView
@@ -53,6 +55,7 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (ISEMPTY(cell)) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
@@ -66,9 +69,45 @@
     
     cell.textLabel.text = filter.name;
     
-    cell.detailTextLabel.text = @"All";
+    cell.detailTextLabel.text = [self stringWithSelectedOptionsFromFilter:filter];
     
     return cell;
+}
+
+- (NSString*)stringWithSelectedOptionsFromFilter:(RIFilter*)filter
+{
+    NSString* string = @"All";
+    
+    if (NOTEMPTY(filter.options)) {
+        
+        if ([filter.uid isEqualToString:@"price"]) {
+            
+            RIFilterOption* option = [filter.options firstObject];
+            
+            string = [NSString stringWithFormat:@"%d - %d", option.lowerValue, option.upperValue];
+            
+        } else {
+            NSMutableArray* selectedOptionsNames = [NSMutableArray new];
+            
+            for (RIFilterOption* option in filter.options) {
+                if (option.selected) {
+                    [selectedOptionsNames addObject:option.name];
+                }
+            }
+            
+            for (int i = 0; i < selectedOptionsNames.count; i++) {
+                
+                if (0 == i) {
+                    string = [selectedOptionsNames objectAtIndex:i];
+                } else {
+                    
+                    string = [NSString stringWithFormat:@"%@, %@", string, [selectedOptionsNames objectAtIndex:i]];
+                }
+            }
+        }
+    }
+    
+    return string;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -27,14 +27,14 @@
     self.priceRangeSlider.minimumValue = self.priceFilterOption.min;
     self.priceRangeSlider.maximumValue = self.priceFilterOption.max;
     
-    self.priceRangeSlider.lowerValue = self.priceFilterOption.min;
-    self.priceRangeSlider.upperValue = self.priceFilterOption.max;
+    self.priceRangeSlider.lowerValue = self.priceFilterOption.lowerValue;
+    self.priceRangeSlider.upperValue = self.priceFilterOption.upperValue;
     
     self.priceRangeSlider.stepValue = self.priceFilterOption.interval;
     [self sliderMoved:nil];
     
     self.discountLabel.text = @"With discount only";
-    self.discountSwitch.on = NO;
+    self.discountSwitch.on = self.priceFilterOption.discountOnly;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -48,6 +48,26 @@
     [notificationCenter postNotificationName:kShowSpecificFilterNavNofication
                                       object:self
                                     userInfo:nameDic];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doneButtonPressed)
+                                                 name:kDidPressDoneNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Button Actions
+
+- (void)doneButtonPressed
+{
+    //save selection in filter
+    
+    self.priceFilterOption.lowerValue = self.priceRangeSlider.lowerValue;
+    self.priceFilterOption.upperValue = self.priceRangeSlider.upperValue;
+    self.priceFilterOption.discountOnly = self.discountSwitch.on;
 }
 
 - (IBAction)sliderMoved:(id)sender
