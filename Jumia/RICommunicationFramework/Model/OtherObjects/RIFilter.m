@@ -81,7 +81,7 @@
             newFilter.name = [filterJSON objectForKey:@"name"];
         }
         if ([filterJSON objectForKey:@"multi"]) {
-            NSNumber* multi = [filterJSON objectForKey:@"id"];
+            NSNumber* multi = [filterJSON objectForKey:@"multi"];
             newFilter.multi = [multi boolValue];
         }
         
