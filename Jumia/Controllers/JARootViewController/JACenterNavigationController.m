@@ -288,6 +288,12 @@
     [self back];
 }
 
+- (void)edit
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressEditNotification
+                                                        object:nil];
+}
+
 - (void)changeBackButtonForTitle:(NSNotification *)notification
 {
     NSDictionary* userInfo = notification.userInfo;
@@ -366,6 +372,9 @@
     [self.navigationBarView changeToMainFilters];
     [self.navigationBarView.doneButton addTarget:self
                                           action:@selector(done)
+                                forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.editButton addTarget:self
+                                          action:@selector(edit)
                                 forControlEvents:UIControlEventTouchUpInside];
 }
 

@@ -38,7 +38,19 @@
                                       object:self
                                     userInfo:nil];
     
+    [notificationCenter addObserver:self
+                           selector:@selector(editButtonPressed)
+                               name:kDidPressEditNotification
+                             object:nil];
+    
     [self.tableView reloadData];
+}
+
+#pragma mark - Button Actions
+
+- (void)editButtonPressed
+{
+    [self.tableView setEditing:!self.tableView.editing animated:YES];
 }
 
 #pragma mark - UITableView
@@ -130,5 +142,41 @@
                                              animated:YES];
     }
 }
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
+    
+    if ([filter.uid isEqualToString:@"price"]) {
+        
+        RIFilterOption* option = [filter.options firstObject];
+        
+        if (option.lowerValue != option.min || option.upperValue != option.max) {
+            return UITableViewCellEditingStyleDelete;
+        }
+    } else {
+    
+        for (RIFilterOption* option in filter.options) {
+            
+            if (option.selected) {
+                return UITableViewCellEditingStyleDelete;
+            }
+        }
+    }
+    
+    return UITableViewCellEditingStyleNone;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
+    
+    for (RIFilterOption* option in filter.options) {
+        option.selected = NO;
+    }
+    
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 
 @end
