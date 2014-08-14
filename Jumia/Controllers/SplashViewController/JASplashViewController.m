@@ -10,7 +10,7 @@
 #import "JARootViewController.h"
 #import "RIApi.h"
 #import "JAAppDelegate.h"
-#import "RILogin.h"
+#import "RICustomer.h"
 
 @interface JASplashViewController ()
 
@@ -70,13 +70,13 @@
 {
     self.requestCount--;
     
-    if (0 >= self.requestCount) {
-        [[RILogin sharedInstance] autoLoginWithSucess:^(BOOL success) {
-            if (success) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                    object:nil];
-            }
-            
+    if (0 >= self.requestCount)
+    {
+        [RICustomer getCustomerWithSuccessBlock:^(id customer) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                                object:nil];
+            [self procedeToFirstAppScreen];
+        } andFailureBlock:^(NSArray *errorMessages) {
             [self procedeToFirstAppScreen];
         }];
     }

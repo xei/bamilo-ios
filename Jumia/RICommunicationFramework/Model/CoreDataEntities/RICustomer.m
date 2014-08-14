@@ -1,13 +1,13 @@
 //
 //  RICustomer.m
-//  Comunication Project
+//  Jumia
 //
-//  Created by Miguel Chaves on 17/Jul/14.
+//  Created by Miguel Chaves on 14/Aug/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
 #import "RICustomer.h"
-#import "RILogin.h"
+#import "RIAddress.h"
 
 @interface RICustomer ()
 
@@ -16,6 +16,17 @@
 @end
 
 @implementation RICustomer
+
+@dynamic idCustomer;
+@dynamic email;
+@dynamic firstName;
+@dynamic lastName;
+@dynamic birthday;
+@dynamic gender;
+@dynamic password;
+@dynamic createdAt;
+@dynamic addresses;
+@synthesize costumerRequestID;
 
 #pragma mark - Register user
 
@@ -33,13 +44,12 @@
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
                                                                   RICustomer *customer = [self parseCustomerWithJson:metadata];
-                                                                  [RILogin sharedInstance].customer = customer;
                                                                   
                                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                                                                       object:nil];
                                                                   
                                                                   successBlock(customer);
-           
+                                                                  
                                                               } else
                                                               {
                                                                   failureBlock(nil);
@@ -148,9 +158,16 @@
 
 #pragma mark - Get customer
 
-+ (NSString*)getCustomerWithSuccessBlock:(void (^)(id customer))successBlock
-                         andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
++ (NSString *)getCustomerWithSuccessBlock:(void (^)(id customer))successBlock
+                          andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
+    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
+    
+    if (customers.count > 0) {
+        successBlock(customers[0]);
+        return nil;
+    }
+    
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_CUSTOMER]]
                                                             parameters:nil
                                                         httpMethodPost:YES
@@ -185,12 +202,14 @@
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
                                                               successBlock();
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
                                                                   failureBlock([RIError getErrorMessages:errorJsonObject]);
-                                                              } else if(NOTEMPTY(errorObject))
+                                                              }
+                                                              else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
                                                                   failureBlock(errorArray);
@@ -199,6 +218,17 @@
                                                                   failureBlock(nil);
                                                               }
                                                           }];
+}
+
++ (BOOL)checkIfUserIsLogged
+{
+    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
+    
+    if (customers.count > 0) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - Cancel requests
@@ -213,7 +243,7 @@
 
 + (RICustomer *)parseCustomerWithJson:(NSDictionary *)json
 {
-    RICustomer *customer = [[RICustomer alloc] init];
+    RICustomer *customer = (RICustomer *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICustomer class])];
     
     if ([json objectForKey:@"id_customer"]) {
         customer.idCustomer = [json objectForKey:@"id_customer"];
@@ -249,12 +279,31 @@
     
     if ([json objectForKey:@"address_collection"]) {
         NSDictionary *addressesObject = [json objectForKey:@"address_collection"];
-        if(VALID_NOTEMPTY(addressesObject, addressesObject)) {
-            customer.addresses = [addressesObject allKeys];
+        
+        if(VALID_NOTEMPTY(addressesObject, addressesObject))
+        {
+            for (NSDictionary *dic in addressesObject)
+            {
+                RIAddress *address = [RIAddress parseAddress:dic];
+                address.customer = customer;
+                [customer addAddressesObject:address];
+            }
         }
     }
     
+    [RICustomer saveCustomer:customer];
+    
     return customer;
+}
+
++ (void)saveCustomer:(RICustomer *)customer
+{
+    for (RIAddress *address in customer.addresses) {
+        [RIAddress saveAddress:address];
+    }
+    
+    [[RIDataBaseWrapper sharedInstance] insertManagedObject:customer];
+    [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
 @end
