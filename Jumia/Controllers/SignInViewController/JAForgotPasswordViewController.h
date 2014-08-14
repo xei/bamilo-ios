@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JAForgotPasswordViewController : UIViewController
+@interface JAForgotPasswordViewController : JABaseViewController
 
 @end

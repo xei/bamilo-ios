@@ -98,12 +98,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jumia/RICommunicationFramework/Model/CoreDataEntities/RICustomer.m"
-            timestampString = "429703241.107303"
+            timestampString = "429713892.825719"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
-            landmarkName = "+logoutCustomerWithSuccessBlock:andFailureBlock:"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
+            landmarkName = "+requestPasswordReset:andFailureBlock:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jumia/RICommunicationFramework/Model/CoreDataEntities/RICustomer.m"
+            timestampString = "429713895.138582"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
+            landmarkName = "+requestPasswordReset:andFailureBlock:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

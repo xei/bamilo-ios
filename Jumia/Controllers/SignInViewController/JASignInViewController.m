@@ -22,6 +22,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *buttonLogin;
 @property (weak, nonatomic) IBOutlet UIView *signUpView;
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
+@property (weak, nonatomic) IBOutlet UIView *forgotView;
+@property (weak, nonatomic) IBOutlet UIButton *forgotButton;
 
 @end
 
@@ -45,7 +47,11 @@
     [self.signUpButton setTitle:@"Signup"
                        forState:UIControlStateNormal];
     
+    [self.forgotButton setTitle:@"Forgot password"
+                       forState:UIControlStateNormal];
+    
     self.signUpButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.forgotButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
@@ -127,8 +133,19 @@
                               sender:nil];
 }
 
+- (IBAction)forgot:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
+                                                        object:nil];
+    
+    [self performSegueWithIdentifier:@"segueToForgot"
+                              sender:nil];
+}
+
 - (IBAction)login:(id)sender
 {
+    [self.view endEditing:YES];
+    
     BOOL hasErrors = NO;
     
     for (id obj in self.fieldsArray)
