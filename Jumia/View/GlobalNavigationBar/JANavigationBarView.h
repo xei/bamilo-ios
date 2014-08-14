@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *applyButton;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 + (JANavigationBarView *)getNewNavBarView;
 
@@ -32,5 +34,8 @@
 - (void)enteredSecondOrThirdLevelWithBackTitle:(NSString *)backTitle;
 
 - (void)changeToChooseCountry;
+
+- (void)changeToMainFilters;
+- (void)changeToSpecificFilter:(NSString*)filterName;
 
 @end

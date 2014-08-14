@@ -67,6 +67,16 @@
                                              selector:@selector(changeBackButtonForTitle:)
                                                  name:kShowBackButtonWithTitleNofication
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showMainFiltersNavigation)
+                                                 name:kShowMainFiltersNavNofication
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSpecificFilterNavigation:)
+                                                 name:kShowSpecificFilterNavNofication
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -341,5 +351,26 @@
                                           action:@selector(back)
                                 forControlEvents:UIControlEventTouchUpInside];
 }
+
+#pragma mark - Filters
+
+- (void)showMainFiltersNavigation
+{
+    [self.navigationBarView changeToMainFilters];
+    [self.navigationBarView.doneButton addTarget:self
+                                          action:@selector(back)
+                                forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)showSpecificFilterNavigation:(NSNotification *)notification
+{
+    NSDictionary* userInfo = notification.userInfo;
+    [self.navigationBarView changeToSpecificFilter:[userInfo objectForKey:@"name"]];
+    
+    [self.navigationBarView.backButton addTarget:self
+                                          action:@selector(back)
+                                forControlEvents:UIControlEventTouchUpInside];
+}
+
 
 @end

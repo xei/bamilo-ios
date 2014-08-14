@@ -11,6 +11,7 @@
 #import "JACatalogListCell.h"
 #import "JACatalogGridCell.h"
 #import "JAPDVViewController.h"
+#import "JAMainFiltersViewController.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
@@ -225,6 +226,14 @@
 }
 
 #pragma mark - Button actions
+
+- (IBAction)filterButtonPressed:(id)sender
+{
+    JAMainFiltersViewController *mainFiltersViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"mainFiltersViewController"];
+    mainFiltersViewController.filtersArray = self.filtersArray;
+    [self.navigationController pushViewController:mainFiltersViewController
+                                         animated:YES];
+}
 
 - (IBAction)viewButtonPressed:(id)sender
 {
