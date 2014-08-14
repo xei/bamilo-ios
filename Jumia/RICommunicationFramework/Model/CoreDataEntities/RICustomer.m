@@ -220,6 +220,32 @@
                                                           }];
 }
 
++ (NSString *)requestPasswordReset:(void (^)())successBlock
+                   andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
+{
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
+                                                            parameters:nil
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheDefaultTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              successBlock();
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                              }
+                                                              else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(nil);
+                                                              }
+                                                          }];
+}
+
 + (BOOL)checkIfUserIsLogged
 {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];

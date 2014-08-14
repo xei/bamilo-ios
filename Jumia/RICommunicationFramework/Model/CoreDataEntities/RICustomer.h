@@ -94,6 +94,16 @@
  */
 + (BOOL)checkIfUserIsLogged;
 
+/**
+ * Method to request a password reset
+ *
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString *)requestPasswordReset:(void (^)())successBlock
+                   andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
+
 @end
 
 @interface RICustomer (CoreDataGeneratedAccessors)

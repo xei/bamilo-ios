@@ -40,6 +40,7 @@
 @property (strong, nonatomic) JAPDVPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (strong, nonatomic) JAPDVGalleryView *gallery;
+@property (weak, nonatomic) IBOutlet UIView *ctaView;
 
 @end
 
@@ -344,7 +345,7 @@
      *******/
     
     self.ctaButtons.frame = CGRectMake(6,
-                                       startingElement+2,
+                                       6,
                                        self.ctaButtons.frame.size.width,
                                        self.ctaButtons.frame.size.height);
     
@@ -359,9 +360,7 @@
                                         action:@selector(addToCart)
                               forControlEvents:UIControlEventTouchUpInside];
     
-    [self.mainScrollView addSubview:self.ctaButtons];
-    
-    startingElement += (6 + self.ctaButtons.frame.size.height);
+    [self.ctaView addSubview:self.ctaButtons];
     
     self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + 6);
 }

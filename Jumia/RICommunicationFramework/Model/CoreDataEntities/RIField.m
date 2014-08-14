@@ -24,6 +24,7 @@
 @dynamic value;
 @dynamic form;
 @dynamic dataSet;
+@dynamic label;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 {
