@@ -11,6 +11,7 @@
 #import "RICategory.h"
 #import "JAMenuNavigationBar.h"
 #import "RISearchSuggestion.h"
+#import "RILogin.h"
 
 @interface JAMenuViewController ()
 <
@@ -19,7 +20,7 @@
     UISearchBarDelegate
 >
 
-@property (strong, nonatomic) NSArray *sourceArray;
+@property (strong, nonatomic) NSMutableArray *sourceArray;
 @property (strong, nonatomic) NSArray *categories;
 @property (strong, nonatomic) JAMenuNavigationBar *customNavBar;
 @property (strong, nonatomic) NSMutableArray *resultsArray;
@@ -61,6 +62,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didPressedBackButton)
                                                  name:kCancelButtonPressedInMenuSearchBar
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userDidLogin)
+                                                 name:kUserLoggedInNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:nil
+                                                 name:kUserLoggedOutNotification
                                                object:nil];
     
     self.cartLabelTitle.text = @"Shopping Cart";
@@ -142,6 +153,7 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
+    
     return cell;
 }
 
@@ -168,9 +180,27 @@
             [self performSegueWithIdentifier:@"showSubCategories"
                                       sender:nil];
         } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                                object:@{@"index": @(indexPath.row),
-                                                                         @"name": [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"]}];
+            
+            if (8 == indexPath.row) {
+                if ([[RILogin sharedInstance] checkIfUserIsLogged])
+                {
+                    [[RILogin sharedInstance] logoutUser:^(BOOL success) {
+                        [self userDidLogout];
+                    }];
+                }
+                else
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                        object:@{@"index": @(indexPath.row),
+                                                                                 @"name": [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"]}];
+                }
+            }
+            else
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                    object:@{@"index": @(indexPath.row),
+                                                                             @"name": [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"]}];
+            }
         }
     }
 }
@@ -310,33 +340,68 @@
 
 - (void)initSourceArray
 {
-    self.sourceArray = @[@{ @"name": @"Home",
-                            @"image": @"ico_home",
-                            @"selected": @"ico_home_pressed" },
-                         @{ @"name": @"Categories",
-                            @"image": @"ico_categories",
-                            @"selected": @"ico_categories_pressed" },
-                         @{ @"name": @"My Favourites",
-                            @"image": @"ico_favourites",
-                            @"selected": @"ico_favourites_pressed" },
-                         @{ @"name": @"Recent Searches",
-                            @"image": @"ico_recentsearches",
-                            @"selected": @"ico_recentsearches_pressed" },
-                         @{ @"name": @"Recently Viewed",
-                            @"image": @"ico_recentlyviewed",
-                            @"selected": @"ico_recentlyviewed_pressed" },
-                         @{ @"name": @"My Account",
-                            @"image": @"ico_myaccount",
-                            @"selected": @"ico_myaccount_pressed" },
-                         @{ @"name": @"Track my Order",
-                            @"image": @"ico_trackorder",
-                            @"selected": @"ico_trackorder_pressed" },
-                         @{ @"name": @"Choose Country",
-                            @"image": @"ico_choosecountry",
-                            @"selected": @"ico_choosecountry_pressed" },
-                         @{ @"name": @"Sign In",
-                            @"image": @"ico_sign",
-                            @"selected": @"ico_signpressed" } ];
+    self.sourceArray = [@[@{ @"name": @"Home",
+                             @"image": @"ico_home",
+                             @"selected": @"ico_home_pressed" },
+                          @{ @"name": @"Categories",
+                             @"image": @"ico_categories",
+                             @"selected": @"ico_categories_pressed" },
+                          @{ @"name": @"My Favourites",
+                             @"image": @"ico_favourites",
+                             @"selected": @"ico_favourites_pressed" },
+                          @{ @"name": @"Recent Searches",
+                             @"image": @"ico_recentsearches",
+                             @"selected": @"ico_recentsearches_pressed" },
+                          @{ @"name": @"Recently Viewed",
+                             @"image": @"ico_recentlyviewed",
+                             @"selected": @"ico_recentlyviewed_pressed" },
+                          @{ @"name": @"My Account",
+                             @"image": @"ico_myaccount",
+                             @"selected": @"ico_myaccount_pressed" },
+                          @{ @"name": @"Track my Order",
+                             @"image": @"ico_trackorder",
+                             @"selected": @"ico_trackorder_pressed" },
+                          @{ @"name": @"Choose Country",
+                             @"image": @"ico_choosecountry",
+                             @"selected": @"ico_choosecountry_pressed" },
+                          @{ @"name": @"Sign In",
+                             @"image": @"ico_sign",
+                             @"selected": @"ico_signpressed" }] mutableCopy];
+    
+    if ([[RILogin sharedInstance] checkIfUserIsLogged])
+    {
+        NSDictionary *dic = @{ @"name": @"Sign Out",
+                               @"image": @"ico_sign",
+                               @"selected": @"ico_signpressed" };
+        
+        [self.sourceArray removeLastObject];
+        [self.sourceArray addObject:dic];
+        [self.tableViewMenu reloadData];
+    }
+}
+
+#pragma mark - Login and Logout
+
+- (void)userDidLogin
+{
+    NSDictionary *dic = @{ @"name": @"Sign Out",
+                           @"image": @"ico_sign",
+                           @"selected": @"ico_signpressed" };
+    
+    [self.sourceArray removeLastObject];
+    [self.sourceArray addObject:dic];
+    [self.tableViewMenu reloadData];
+}
+
+- (void)userDidLogout
+{
+    NSDictionary *dic = @{ @"name": @"Sign In",
+                           @"image": @"ico_sign",
+                           @"selected": @"ico_signpressed" };
+    
+    [self.sourceArray removeLastObject];
+    [self.sourceArray addObject:dic];
+    [self.tableViewMenu reloadData];
 }
 
 @end

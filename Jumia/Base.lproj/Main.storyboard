@@ -1682,10 +1682,10 @@
             </objects>
             <point key="canvasLocation" x="1128" y="1527"/>
         </scene>
-        <!--My Account View Controller-->
+        <!--Sign In View Controller-->
         <scene sceneID="uW8-50-FvF">
             <objects>
-                <viewController storyboardIdentifier="myAccountViewController" id="ghr-t8-OwX" customClass="JAMyAccountViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="myAccountViewController" id="ghr-t8-OwX" customClass="JASignInViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YaJ-P8-TCQ"/>
                         <viewControllerLayoutGuide type="bottom" id="gU7-jo-m0u"/>
