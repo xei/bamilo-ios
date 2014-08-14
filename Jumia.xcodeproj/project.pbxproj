@@ -196,6 +196,9 @@
 		CE55A4E71993672600EE75DE /* JARatingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55A4E61993672600EE75DE /* JARatingsView.m */; };
 		CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE55A4E819936B6300EE75DE /* JARatingsView.xib */; };
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
+		CED30C24199CAA5C00C67F4B /* JAGenericFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */; };
+		CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C26199CBF0E00C67F4B /* JAColorView.m */; };
+		CED30C2A199CC8F200C67F4B /* JAColorFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */; };
 		CEDEB983199A51E30022BAB5 /* RIFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB982199A51E30022BAB5 /* RIFilter.m */; };
 		CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB985199A6F430022BAB5 /* JAMainFiltersViewController.m */; };
 		CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB98D199BA4140022BAB5 /* JAPriceFilterViewController.m */; };
@@ -580,6 +583,12 @@
 		CE55A4E61993672600EE75DE /* JARatingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingsView.m; sourceTree = "<group>"; };
 		CE55A4E819936B6300EE75DE /* JARatingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARatingsView.xib; sourceTree = "<group>"; };
 		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		CED30C22199CAA5C00C67F4B /* JAGenericFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAGenericFilterViewController.h; sourceTree = "<group>"; };
+		CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAGenericFilterViewController.m; sourceTree = "<group>"; };
+		CED30C25199CBF0E00C67F4B /* JAColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAColorView.h; sourceTree = "<group>"; };
+		CED30C26199CBF0E00C67F4B /* JAColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAColorView.m; sourceTree = "<group>"; };
+		CED30C28199CC8F200C67F4B /* JAColorFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAColorFilterCell.h; sourceTree = "<group>"; };
+		CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAColorFilterCell.m; sourceTree = "<group>"; };
 		CEDEB981199A51E30022BAB5 /* RIFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFilter.h; sourceTree = "<group>"; };
 		CEDEB982199A51E30022BAB5 /* RIFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIFilter.m; sourceTree = "<group>"; };
 		CEDEB984199A6F430022BAB5 /* JAMainFiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMainFiltersViewController.h; sourceTree = "<group>"; };
@@ -1569,6 +1578,8 @@
 				CE2FB75419938EA100E7CD00 /* JACatalogGridCell.h */,
 				CE2FB75519938EA100E7CD00 /* JACatalogGridCell.m */,
 				CE2FB75719938EB500E7CD00 /* JACatalogGridCell.xib */,
+				CED30C28199CC8F200C67F4B /* JAColorFilterCell.h */,
+				CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
@@ -1581,6 +1592,8 @@
 				CE55A4E819936B6300EE75DE /* JARatingsView.xib */,
 				CE3FC5A51990E209003B4A27 /* JAPickerScrollView.h */,
 				CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */,
+				CED30C25199CBF0E00C67F4B /* JAColorView.h */,
+				CED30C26199CBF0E00C67F4B /* JAColorView.m */,
 			);
 			path = GenericComponents;
 			sourceTree = "<group>";
@@ -1594,6 +1607,8 @@
 				CEDEB985199A6F430022BAB5 /* JAMainFiltersViewController.m */,
 				CEDEB98C199BA4140022BAB5 /* JAPriceFilterViewController.h */,
 				CEDEB98D199BA4140022BAB5 /* JAPriceFilterViewController.m */,
+				CED30C22199CAA5C00C67F4B /* JAGenericFilterViewController.h */,
+				CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
@@ -1878,6 +1893,7 @@
 				CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */,
 				B50B03A6198A544A002046DF /* JAShippingViewController.m in Sources */,
 				B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */,
+				CED30C24199CAA5C00C67F4B /* JAGenericFilterViewController.m in Sources */,
 				4A1C8E44199B79440045BD8D /* RIField.m in Sources */,
 				4A2FD84619912BC500C65C1D /* JAPDVSingleRelatedItem.m in Sources */,
 				B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */,
@@ -1923,6 +1939,7 @@
 				4A1270FB1987EFB0004142F5 /* JAMenuNavigationBar.m in Sources */,
 				4A39213019891F7800B70A9C /* JARecentlyViewedViewController.m in Sources */,
 				B5A3025A19811E8A00F71726 /* SDWebImageDownloader.m in Sources */,
+				CED30C2A199CC8F200C67F4B /* JAColorFilterCell.m in Sources */,
 				B50B03A0198A5434002046DF /* JAAddressesViewController.m in Sources */,
 				4A1892D219939A0C0036F327 /* JAReviewCell.m in Sources */,
 				4AE242E81986570F00E37C90 /* JAMenuViewController.m in Sources */,
@@ -1948,6 +1965,7 @@
 				CE445870198BD21A00CE7E8D /* JATeaserView.m in Sources */,
 				B50B03AB198A8861002046DF /* JAUtils.m in Sources */,
 				4AE730C7198F8B05000CA1DD /* JAPDVViewController.m in Sources */,
+				CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */,
 				B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */,
 				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
 				B5A3025319811E8A00F71726 /* AdXTracking.m in Sources */,

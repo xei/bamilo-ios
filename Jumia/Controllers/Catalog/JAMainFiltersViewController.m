@@ -8,6 +8,7 @@
 
 #import "JAMainFiltersViewController.h"
 #import "JAPriceFilterViewController.h"
+#import "JAGenericFilterViewController.h"
 #import "RIFilter.h"
 
 @interface JAMainFiltersViewController ()
@@ -74,14 +75,19 @@
 {
     RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
     
-    if ([filter.uid isEqualToString:@"color_family"]) {
-    
-    } else if ([filter.uid isEqualToString:@"price"]) {
+    if ([filter.uid isEqualToString:@"price"]) {
         JAPriceFilterViewController* priceFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"priceFilterViewController"];
         
         priceFilterViewController.priceFilterOption = [filter.options firstObject];
         
         [self.navigationController pushViewController:priceFilterViewController
+                                             animated:YES];
+    } else {
+        JAGenericFilterViewController* genericFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"genericFilterViewController"];
+        
+        genericFilterViewController.filter = filter;
+        
+        [self.navigationController pushViewController:genericFilterViewController
                                              animated:YES];
     }
 }
