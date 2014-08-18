@@ -78,10 +78,13 @@
 
 - (void)loadMoreProducts
 {
-    if (VALID_NOTEMPTY(self.category, RICategory) && NO == self.loadedEverything) {
+    if (NO == self.loadedEverything) {
         [self showLoading];
         
-        NSString* urlToUse = self.category.apiUrl;
+        NSString* urlToUse = self.catalogUrl;
+        if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.apiUrl, NSString)) {
+            urlToUse = self.category.apiUrl;
+        }
         if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.apiUrl, NSString)) {
             urlToUse = self.filterCategory.apiUrl;
         }

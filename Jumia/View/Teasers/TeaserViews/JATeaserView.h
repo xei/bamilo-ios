@@ -12,10 +12,14 @@
 #import "RITeaserImage.h"
 #import "RITeaserText.h"
 
+#define kTeaserNotificationPushWithUrl @"TEASER_NOTIFICATION_PUSH_WITH_URL"
+
 @interface JATeaserView : UIView
 
 @property (nonatomic, strong)NSOrderedSet* teasers;
 
 - (void)load;
+
+- (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage;
 
 @end

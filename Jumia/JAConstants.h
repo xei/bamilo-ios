@@ -27,3 +27,6 @@
 #define kUserLoggedOutNotification @"NOTIFICATION_USER_LOGGED_OUT"
 #define kShowMainFiltersNavNofication @"NOTIFICATION_SHOW_MAIN_FILTERS_NAVIGATION"
 #define kShowSpecificFilterNavNofication @"NOTIFICATION_SHOW_SPECIFIC_FILTER_NAVIGATION"
+
+//teasers
+#define kDidSelectTeaserWithUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_URL"

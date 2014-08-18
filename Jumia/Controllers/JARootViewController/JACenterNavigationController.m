@@ -78,6 +78,11 @@
                                              selector:@selector(showSpecificFilterNavigation:)
                                                  name:kShowSpecificFilterNavNofication
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectTeaserWithUrl:)
+                                                 name:kDidSelectTeaserWithUrlNofication
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -252,6 +257,29 @@
             [self changeCenterPanel:[selectedItem objectForKey:@"name"]
                      titleForNavBar:[selectedItem objectForKey:@"name"]];
         }
+    }
+}
+
+- (void)didSelectTeaserWithUrl:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                        object:nil];
+    
+    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* title = [notification.userInfo objectForKey:@"title"];
+    
+    if (VALID_NOTEMPTY(url, NSString)) {
+        
+        JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        
+        catalog.catalogUrl = url;
+        
+        [self.navigationBarView changeNavigationBarTitle:title];
+        
+        [self pushViewController:catalog
+                        animated:YES];
+        
+        self.viewControllers = @[catalog];
     }
 }
 

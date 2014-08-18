@@ -9,6 +9,7 @@
 #import "JAHomeViewController.h"
 #import "RITeaserCategory.h"
 #import "JATeaserPageView.h"
+#import "JATeaserView.h"
 
 @interface JAHomeViewController ()
 
@@ -32,6 +33,7 @@
     self.teaserCategoryScrollView.delegate = self;
     self.teaserPagesScrollView.pagingEnabled = YES;
     self.teaserPagesScrollView.scrollEnabled = NO;
+    self.teaserPagesScrollView.delegate = self;
     
     [RITeaserCategory getTeaserCategoriesWithSuccessBlock:^(id teaserCategories) {
         
@@ -71,6 +73,35 @@
     [self hideLoading];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self addNotifications];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self removeNotifications];
+}
+
+- (void)addNotifications
+{
+    //we do this to make sure no notification is added more than once
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(pushCatalogWithUrl:)
+                                                 name:kTeaserNotificationPushWithUrl
+                                               object:nil];
+}
+
+- (void)removeNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - JATeaserCategoryScrollViewDelegate
 
 - (void)selectedIndex:(NSInteger)index
@@ -102,19 +133,40 @@
 
 - (IBAction)swipeRight:(id)sender
 {
+    [self removeNotifications];
     [self.teaserCategoryScrollView scrollRight];
 }
 
 - (IBAction)swipeLeft:(id)sender
 {
+    [self removeNotifications];
     [self.teaserCategoryScrollView scrollLeft];
 }
+
+#pragma mark - UIScrollViewDelegate
+
+//this depends on animation existing. if in the future there is a case where no animation
+//happens on the scroll view, we have to move this to another scrollviewdelegate method
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    [self addNotifications];
+}
+
 
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 
+}
+
+#pragma mark - Teaser actions
+
+- (void)pushCatalogWithUrl:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithUrlNofication
+                                                        object:notification.object
+                                                      userInfo:notification.userInfo];
 }
 
 @end

@@ -19,4 +19,11 @@
     }
 }
 
+- (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushWithUrl
+                                                        object:nil
+                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserImage.url,teaserImage.teaserDescription] forKeys:@[@"url",@"title"]]];
+}
+
 @end
