@@ -67,6 +67,7 @@
 + (BOOL)checkIfHaveCountrySelected;
 
 /**
+
  *  get the current url in use
  *
  *  @return the url

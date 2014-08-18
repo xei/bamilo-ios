@@ -61,7 +61,7 @@
 + (NSString *)loadCountryConfigurationWithSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
                                        andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_COUNTRY_CONFIGURATION]]
+    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_COUNTRY_CONFIGURATION]]
                                                              parameters:nil
                                                          httpMethodPost:YES
                                                               cacheType:RIURLCacheNoCache

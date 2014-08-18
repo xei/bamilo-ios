@@ -60,15 +60,16 @@
                                             inSection:0];
         } else {
             NSInteger index = 0;
+
             for (RICountry *country in countries) {
                 if ([country.url isEqualToString:countryUrl]) {
                     tempIndex = [NSIndexPath indexPathForItem:index
                                                     inSection:0];
                     break;
                 }
-                index++;
             }
         }
+        
         [self tableView:self.tableViewContries didSelectRowAtIndexPath:tempIndex];
         
     } andFailureBlock:^(NSArray *errorMessages) {
