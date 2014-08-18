@@ -27,6 +27,8 @@
 @property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSMutableArray* productsArray;
 @property (nonatomic, strong) NSArray* filtersArray;
+@property (nonatomic, strong) NSArray* categoriesArray;
+@property (nonatomic, strong) RICategory* filterCategory;
 @property (nonatomic, assign) BOOL loadedEverything;
 @property (nonatomic, assign) RICatalogSorting sortingMethod;
 
@@ -78,15 +80,24 @@
 {
     if (VALID_NOTEMPTY(self.category, RICategory) && NO == self.loadedEverything) {
         [self showLoading];
-        [RIProduct getProductsWithCatalogUrl:self.category.apiUrl
+        
+        NSString* urlToUse = self.category.apiUrl;
+        if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.apiUrl, NSString)) {
+            urlToUse = self.filterCategory.apiUrl;
+        }
+        [RIProduct getProductsWithCatalogUrl:urlToUse
                                sortingMethod:self.sortingMethod
                                         page:[self getCurrentPage]+1
                                     maxItems:JACatalogViewControllerMaxProducts
                                      filters:self.filtersArray
-                                successBlock:^(NSArray* products, NSArray* filters) {
+                                successBlock:^(NSArray* products, NSArray* filters, NSArray* categories) {
                                     
                                     if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
                                         self.filtersArray = filters;
+                                    }
+                                    
+                                    if (NOTEMPTY(categories)) {
+                                        self.categoriesArray = categories;
                                     }
                                     
                                     if (0 == products.count || JACatalogViewControllerMaxProducts > products.count) {
@@ -227,8 +238,9 @@
 
 #pragma mark - JAMainFiltersViewControllerDelegate
 
-- (void)filtersWhereUpdated;
+- (void)updatedFiltersAndCategory:(RICategory *)category;
 {
+    self.filterCategory = category;
     [self resetCatalog];
     [self loadMoreProducts];
 }
@@ -239,6 +251,8 @@
 {
     JAMainFiltersViewController *mainFiltersViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"mainFiltersViewController"];
     mainFiltersViewController.filtersArray = self.filtersArray;
+    mainFiltersViewController.categoriesArray = self.categoriesArray;
+    mainFiltersViewController.selectedCategory = self.filterCategory;
     mainFiltersViewController.delegate = self;
     [self.navigationController pushViewController:mainFiltersViewController
                                          animated:YES];

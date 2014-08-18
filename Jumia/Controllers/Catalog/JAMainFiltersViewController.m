@@ -10,6 +10,7 @@
 #import "JAPriceFilterViewController.h"
 #import "JAGenericFilterViewController.h"
 #import "RIFilter.h"
+#import "RICategory.h"
 
 @interface JAMainFiltersViewController ()
 
@@ -67,8 +68,8 @@
 
 - (void)doneButtonPressed
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(filtersWhereUpdated)]) {
-        [self.delegate filtersWhereUpdated];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(updatedFiltersAndCategory:)]) {
+        [self.delegate updatedFiltersAndCategory:self.selectedCategory];
     }
 }
 
@@ -76,11 +77,20 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.filtersArray.count;
+    if (VALID_NOTEMPTY(self.categoriesArray, NSArray)) {
+        return self.filtersArray.count + 1;
+    } else {
+        return self.filtersArray.count;
+    }
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSInteger filterIndex = indexPath.row;
+    if (VALID_NOTEMPTY(self.categoriesArray, NSArray)) {
+        filterIndex--;
+    }
+    
     NSString *cellIdentifier = @"mainFilterCell";
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -96,13 +106,27 @@
         cell.detailTextLabel.textColor = UIColorFromRGB(0x4e4e4e);
     }
 
-    RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
-    
-    cell.textLabel.text = filter.name;
-    
-    cell.detailTextLabel.text = [self stringWithSelectedOptionsFromFilter:filter];
+    if (-1 == filterIndex) {
+        cell.textLabel.text = @"Categories";
+        cell.detailTextLabel.text = [self stringWithSelectedCategory];
+    } else {
+        RIFilter* filter = [self.filtersArray objectAtIndex:filterIndex];
+        cell.textLabel.text = filter.name;
+        cell.detailTextLabel.text = [self stringWithSelectedOptionsFromFilter:filter];
+    }
     
     return cell;
+}
+
+- (NSString*)stringWithSelectedCategory
+{
+    NSString* string = @"All";
+    
+    if (VALID_NOTEMPTY(self.selectedCategory, RICategory)) {
+        string = self.selectedCategory.name;
+    }
+    
+    return string;
 }
 
 - (NSString*)stringWithSelectedOptionsFromFilter:(RIFilter*)filter
@@ -143,42 +167,69 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
+    NSInteger filterIndex = indexPath.row;
+    if (VALID_NOTEMPTY(self.categoriesArray, NSArray)) {
+        filterIndex--;
+    }
     
-    if ([filter.uid isEqualToString:@"price"]) {
-        JAPriceFilterViewController* priceFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"priceFilterViewController"];
+    if (-1 == filterIndex) {
+        JACategoryFilterViewController* categoryFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"categoryFilterViewController"];
         
-        priceFilterViewController.priceFilterOption = [filter.options firstObject];
+        categoryFilterViewController.categoriesArray = self.categoriesArray;
+        categoryFilterViewController.selectedCategory = self.selectedCategory;
+        categoryFilterViewController.delegate = self;
         
-        [self.navigationController pushViewController:priceFilterViewController
+        [self.navigationController pushViewController:categoryFilterViewController
                                              animated:YES];
     } else {
-        JAGenericFilterViewController* genericFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"genericFilterViewController"];
+        RIFilter* filter = [self.filtersArray objectAtIndex:filterIndex];
         
-        genericFilterViewController.filter = filter;
-        
-        [self.navigationController pushViewController:genericFilterViewController
-                                             animated:YES];
+        if ([filter.uid isEqualToString:@"price"]) {
+            JAPriceFilterViewController* priceFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"priceFilterViewController"];
+            
+            priceFilterViewController.priceFilterOption = [filter.options firstObject];
+            
+            [self.navigationController pushViewController:priceFilterViewController
+                                                 animated:YES];
+        } else {
+            JAGenericFilterViewController* genericFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"genericFilterViewController"];
+            
+            genericFilterViewController.filter = filter;
+            
+            [self.navigationController pushViewController:genericFilterViewController
+                                                 animated:YES];
+        }
     }
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
+    NSInteger filterIndex = indexPath.row;
+    if (VALID_NOTEMPTY(self.categoriesArray, NSArray)) {
+        filterIndex--;
+    }
     
-    if ([filter.uid isEqualToString:@"price"]) {
-        
-        RIFilterOption* option = [filter.options firstObject];
-        
-        if (option.lowerValue != option.min || option.upperValue != option.max) {
+    if (-1 == filterIndex) {
+        if (VALID_NOTEMPTY(self.selectedCategory, RICategory)) {
             return UITableViewCellEditingStyleDelete;
         }
     } else {
-    
-        for (RIFilterOption* option in filter.options) {
+        RIFilter* filter = [self.filtersArray objectAtIndex:filterIndex];
+        
+        if ([filter.uid isEqualToString:@"price"]) {
             
-            if (option.selected) {
+            RIFilterOption* option = [filter.options firstObject];
+            
+            if (option.lowerValue != option.min || option.upperValue != option.max) {
                 return UITableViewCellEditingStyleDelete;
+            }
+        } else {
+            
+            for (RIFilterOption* option in filter.options) {
+                
+                if (option.selected) {
+                    return UITableViewCellEditingStyleDelete;
+                }
             }
         }
     }
@@ -188,13 +239,30 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
+    NSInteger filterIndex = indexPath.row;
+    if (VALID_NOTEMPTY(self.categoriesArray, NSArray)) {
+        filterIndex--;
+    }
     
-    for (RIFilterOption* option in filter.options) {
-        option.selected = NO;
+    if (-1 == filterIndex) {
+        self.selectedCategory = nil;
+    } else {
+        RIFilter* filter = [self.filtersArray objectAtIndex:filterIndex];
+        
+        for (RIFilterOption* option in filter.options) {
+            option.selected = NO;
+        }
     }
     
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+
+#pragma mark - JACategoryFilterViewControllerDelegate
+
+- (void)categoriesFilterSelectedCategory:(RICategory *)category
+{
+    self.selectedCategory = category;
 }
 
 

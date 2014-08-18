@@ -31,7 +31,7 @@
                                                                   NSArray* data = [metadata objectForKey:@"data"];
                                                                   if (VALID_NOTEMPTY(data, NSArray))
                                                                   {
-                                                                      successBlock([RICategory parseCategories:data]);
+                                                                      successBlock([RICategory parseCategories:data persistData:YES]);
                                                                   } else
                                                                   {
                                                                       failureBlock(nil);
@@ -86,18 +86,29 @@
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
 }
 
-+ (NSArray*)parseCategories:(NSArray*)categories;
++ (NSArray*)parseCategories:(NSArray*)categories
+                persistData:(BOOL)persistData;
 {
-    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICategory class])];
+    if (persistData) {
+        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICategory class])];
+    }
     
     NSMutableArray* newCategories = [NSMutableArray new];
+    
+    //test if array as another array inside
+    NSArray* insideArray = [categories firstObject];
+    if (VALID(insideArray, NSArray)) {
+        categories = insideArray;
+    }
     
     for (NSDictionary* categoryJSON in categories) {
         
         if (VALID_NOTEMPTY(categoryJSON, NSDictionary)) {
             
             RICategory* category = [RICategory parseCategory:categoryJSON];
-            [RICategory saveCategory:category];
+            if (persistData) {
+                [RICategory saveCategory:category];
+            }
             [newCategories addObject:category];
         }
     }
@@ -121,6 +132,9 @@
     }
     if ([category objectForKey:@"url_key"]) {
         newCategory.urlKey = [category objectForKey:@"url_key"];
+    }
+    if ([category objectForKey:@"url"]) {
+        newCategory.apiUrl = [category objectForKey:@"url"];
     }
     if ([category objectForKey:@"api_url"]) {
         newCategory.apiUrl = [category objectForKey:@"api_url"];
