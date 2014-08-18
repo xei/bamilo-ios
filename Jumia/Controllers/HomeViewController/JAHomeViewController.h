@@ -11,4 +11,6 @@
 
 @interface JAHomeViewController : JABaseViewController <JAPickerScrollViewDelegate>
 
+- (void)stopLoading;
+
 @end

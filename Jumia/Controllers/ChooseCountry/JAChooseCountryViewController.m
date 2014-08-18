@@ -67,10 +67,17 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self hideLoading];
+}
+
 #pragma mark - Selected apply
 
 - (void)applyButtonPressed
 {
+    [self showLoading];
+    
     if (self.selectedIndex)
     {
         RICountry *country = [self.countriesArray objectAtIndex:self.selectedIndex.row];
