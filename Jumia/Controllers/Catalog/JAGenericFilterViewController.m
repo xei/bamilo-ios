@@ -50,6 +50,32 @@
     [notificationCenter postNotificationName:kShowSpecificFilterNavNofication
                                       object:self
                                     userInfo:nameDic];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doneButtonPressed)
+                                                 name:kDidPressDoneNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Button Actions
+
+- (void)doneButtonPressed
+{
+    //save selection in filter
+    
+    for (int i = 0; i < self.selectedIndexes.count; i++) {
+        
+        NSNumber *selectionNumber = [self.selectedIndexes objectAtIndex:i];
+        
+        RIFilterOption* filterOption = [self.filter.options objectAtIndex:i];
+        
+        filterOption.selected = [selectionNumber boolValue];
+    }
 }
 
 #pragma mark - UITableView
@@ -104,8 +130,28 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSNumber* selected = [self.selectedIndexes objectAtIndex:indexPath.row];
-    NSNumber* newSelection = [NSNumber numberWithBool:![selected boolValue]];
-    [self.selectedIndexes replaceObjectAtIndex:indexPath.row withObject:newSelection];
+    if (!self.filter.multi) {
+        //if this filter doesn't support multi selection, unselect all other indexes
+
+        NSMutableArray* newSelectedIndexes = [NSMutableArray new];
+        for (int i = 0; i < self.selectedIndexes.count; i++) {
+            
+            NSNumber* selection;
+            
+            if (i == indexPath.row) {
+                selection = [NSNumber numberWithBool:![selected boolValue]];
+            } else {
+                selection = [NSNumber numberWithInt:NO];
+            }
+            
+            [newSelectedIndexes addObject:selection];
+        }
+        self.selectedIndexes = newSelectedIndexes;
+    } else {
+        NSNumber* newSelection = [NSNumber numberWithBool:![selected boolValue]];
+        [self.selectedIndexes replaceObjectAtIndex:indexPath.row withObject:newSelection];
+        
+    }
     
     [tableView reloadData];
 }
