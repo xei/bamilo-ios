@@ -34,7 +34,7 @@
                                 successBlock:(void (^)(id customer))successBlock
                              andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_REGISTER_CUSTOMER]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_REGISTER_CUSTOMER]]
                                                             parameters:parameters
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
@@ -76,7 +76,7 @@
                              successBlock:(void (^)(RICustomer *customer))successBlock
                           andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_LOGIN_CUSTOMER]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGIN_CUSTOMER]]
                                                             parameters:parameters
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
@@ -119,7 +119,7 @@
                                       successBlock:(void (^)(id customer))successBlock
                                    andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_FACEBOOK_LOGIN_CUSTOMER]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_FACEBOOK_LOGIN_CUSTOMER]]
                                                             parameters:parameters
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
@@ -168,7 +168,7 @@
         return nil;
     }
     
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_CUSTOMER]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_CUSTOMER]]
                                                             parameters:nil
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
@@ -196,7 +196,7 @@
 + (NSString*)logoutCustomerWithSuccessBlock:(void (^)())successBlock
                             andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
                                                             parameters:nil
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
@@ -223,7 +223,7 @@
 + (NSString *)requestPasswordReset:(void (^)())successBlock
                    andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
                                                             parameters:nil
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
