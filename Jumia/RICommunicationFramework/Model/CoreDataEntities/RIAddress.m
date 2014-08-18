@@ -37,7 +37,7 @@
 + (NSString*)getBillingAddressWithSuccessBlock:(void (^)(id billingAddress))successBlock
                                andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_CUSTOMER_BILLING_ADDRESS]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_CUSTOMER_BILLING_ADDRESS]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
@@ -68,7 +68,7 @@
 + (NSString*)getCustomerAddressListWithSuccessBlock:(void (^)(id adressList))successBlock
                                     andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_CUSTOMER_ADDRESS_LIST]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_CUSTOMER_ADDRESS_LIST]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime

@@ -66,6 +66,13 @@
  */
 + (BOOL)checkIfHaveCountrySelected;
 
+/**
+ *  Get the country url that is in use
+ *
+ *  @return the country url
+ */
++ (NSString *)getCountryUrlInUse;
+
 @end
 
 @interface RIApi (CoreDataGeneratedAccessors)

@@ -7,8 +7,6 @@
 //
 
 #import "RICategory.h"
-#import "RICategory.h"
-
 
 @implementation RICategory
 
@@ -21,7 +19,7 @@
 
 + (NSString *)loadCategoriesIntoDatabaseWithSuccessBlock:(void (^)(id categories))successBlock andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_CATALOG_CATEGORIES]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_CATALOG_CATEGORIES]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime

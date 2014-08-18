@@ -138,6 +138,22 @@
     }
 }
 
+#pragma mark - Get country code
+
++ (NSString *)getCountryUrlInUse
+{
+    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+    
+    if (0 == apiArray.count) {
+        return @"";
+    } else {
+        RIApi *api = [apiArray firstObject];
+        return api.countryUrl;
+    }
+}
+
+#pragma mark - Parser
+
 + (RIApi *)parseApi:(NSDictionary*)api;
 {
     RIApi* newApi = (RIApi*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIApi class])];

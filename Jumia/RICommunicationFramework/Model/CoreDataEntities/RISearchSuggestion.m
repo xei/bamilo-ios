@@ -32,7 +32,7 @@
                        successBlock:(void (^)(NSArray *suggestions))successBlock
                     andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_SEARCH_SUGGESTIONS]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_SEARCH_SUGGESTIONS]]
                                                             parameters:[NSDictionary dictionaryWithObject:query forKey:@"q"]
                                                         httpMethodPost:NO
                                                              cacheType:RIURLCacheNoCache

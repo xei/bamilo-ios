@@ -11,6 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "RICountry.h"
 #import "JACountryCell.h"
+#import "RIApi.h"
 
 @interface JAChooseCountryViewController ()
 <
@@ -49,6 +50,29 @@
         [self hideLoading];
         
         [self.tableViewContries reloadData];
+        
+        NSString *countryUrl = [RIApi getCountryUrlInUse];
+        
+        NSIndexPath *tempIndex;
+        
+        if (0 == countryUrl.length) {
+            tempIndex = [NSIndexPath indexPathForItem:0
+                                            inSection:0];
+        } else {
+            NSInteger index = 0;
+            
+            for (RICountry *country in countries) {
+                if ([country.url isEqualToString:countryUrl]) {
+                    tempIndex = [NSIndexPath indexPathForItem:index
+                                                    inSection:0];
+                    break;
+                }
+                
+                index++;
+            }
+        }
+        
+        [self tableView:self.tableViewContries didSelectRowAtIndexPath:tempIndex];
         
     } andFailureBlock:^(NSArray *errorMessages) {
         
