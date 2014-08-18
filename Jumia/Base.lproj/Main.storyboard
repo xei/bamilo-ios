@@ -1529,7 +1529,7 @@
                                         <rect key="frame" x="12" y="68" width="83" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="19" id="PRA-yN-cpj"/>
-                                            <constraint firstAttribute="width" constant="83" id="wNa-U0-CN6"/>
+                                            <constraint firstAttribute="width" constant="83" placeholder="YES" id="wNa-U0-CN6"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1539,7 +1539,7 @@
                                         <rect key="frame" x="103" y="68" width="91" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="19" id="Z88-DL-Myq"/>
-                                            <constraint firstAttribute="width" constant="91" id="dNH-qU-Djc"/>
+                                            <constraint firstAttribute="width" constant="91" placeholder="YES" id="dNH-qU-Djc"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>

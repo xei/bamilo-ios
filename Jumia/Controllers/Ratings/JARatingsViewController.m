@@ -131,9 +131,11 @@
         media += [rating.avgRating integerValue];
     }
     
-    media = (media / self.productRatings.comments.count);
-
-    [self setNumberOfStars:media];
+    if (media > 0) {
+        media = (media / self.productRatings.comments.count);
+        
+        [self setNumberOfStars:media];
+    }
     
     self.resumeView.layer.cornerRadius = 4.0f;
     self.writeReviewButton.layer.borderWidth = 1.0f;
