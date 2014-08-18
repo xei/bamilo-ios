@@ -73,9 +73,7 @@ static dispatch_once_t sharedInstanceToken;
     RIAd4PushTracker *ad4PushTracker = [[RIAd4PushTracker alloc] init];
     RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
     
-//    self.trackers = @[googleAnalyticsTracker, bugsenseTracker, adxTracker, ad4PushTracker, newRelicTracker];
-    
-    self.trackers = @[newRelicTracker];
+    self.trackers = @[googleAnalyticsTracker, bugsenseTracker, adxTracker, ad4PushTracker, newRelicTracker];
     
     if (launchOptions) {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)
