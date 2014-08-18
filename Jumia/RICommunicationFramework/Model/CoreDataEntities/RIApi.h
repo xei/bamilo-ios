@@ -67,9 +67,10 @@
 + (BOOL)checkIfHaveCountrySelected;
 
 /**
- *  Get the country url that is in use
+
+ *  get the current url in use
  *
- *  @return the country url
+ *  @return the url
  */
 + (NSString *)getCountryUrlInUse;
 
