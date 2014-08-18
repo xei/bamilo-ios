@@ -24,13 +24,15 @@
 {
     [super viewDidLoad];
 
-    self.priceRangeSlider.minimumValue = self.priceFilterOption.min;
-    self.priceRangeSlider.maximumValue = self.priceFilterOption.max;
-    
-    self.priceRangeSlider.lowerValue = self.priceFilterOption.lowerValue;
-    self.priceRangeSlider.upperValue = self.priceFilterOption.upperValue;
-    
     self.priceRangeSlider.stepValue = self.priceFilterOption.interval;
+
+    self.priceRangeSlider.maximumValue = self.priceFilterOption.max;
+    self.priceRangeSlider.minimumValue = self.priceFilterOption.min;
+    
+    //found out the hard way that self.priceRangeSlider.upperValue has to be set before self.priceRangeSlider.lowerValue
+    self.priceRangeSlider.upperValue = self.priceFilterOption.upperValue;
+    self.priceRangeSlider.lowerValue = self.priceFilterOption.lowerValue;
+    
     [self sliderMoved:nil];
     
     self.discountLabel.text = @"With discount only";

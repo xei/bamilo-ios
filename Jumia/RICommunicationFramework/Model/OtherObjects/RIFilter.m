@@ -54,6 +54,66 @@
 
 @implementation RIFilter
 
++ (NSString *)urlWithFiltersArray:(NSArray*)filtersArray
+{
+    NSString* urlString = nil;
+    if (VALID_NOTEMPTY(filtersArray, NSArray)) {
+        for (RIFilter* filter in filtersArray) {
+            if (VALID_NOTEMPTY(filter, RIFilter)) {
+                
+                NSString* stringForFilter = [RIFilter urlWithFilter:filter];
+                
+                if (NOTEMPTY(stringForFilter)) {
+                    
+                    if (ISEMPTY(urlString)) {
+                        urlString = stringForFilter;
+                    } else {
+                        urlString = [NSString stringWithFormat:@"%@&%@", urlString, stringForFilter];
+                    }
+                }
+            }
+        }
+    }
+    return urlString;
+}
+
++ (NSString *)urlWithFilter:(RIFilter*)filter
+{
+    NSString* urlString = nil;
+    
+    if (VALID_NOTEMPTY(filter.uid, NSString) && VALID_NOTEMPTY(filter.options, NSArray) && 0 < filter.options.count) {
+        
+        if ([filter.uid isEqualToString:@"price"]) {
+            RIFilterOption* filterOption = [filter.options firstObject];
+            if (VALID_NOTEMPTY(filterOption, RIFilterOption)) {
+                
+                if (filterOption.lowerValue != filterOption.min || filterOption.upperValue != filterOption.max) {
+                    urlString = [NSString stringWithFormat:@"price=%d-%d", filterOption.lowerValue, filterOption.upperValue];
+                }
+            }
+        } else {
+            
+            for (RIFilterOption* filterOption in filter.options) {
+                
+                if (filterOption.selected) {
+                    if (ISEMPTY(urlString)) {
+                        
+                        NSString* filterUidString = filter.uid;
+                        if ([filter.uid isEqualToString:@"brand"]) {
+                            filterUidString = @"q";
+                        }
+                        urlString = [NSString stringWithFormat:@"%@=%@", filterUidString, filterOption.val];
+                    } else {
+                        urlString = [NSString stringWithFormat:@"%@--%@", urlString, filterOption.val];
+                    }
+                }
+            }
+        }
+    }
+    
+    return urlString;
+}
+
 + (NSArray *)parseFilters:(NSArray *)filtersJSON;
 {
     NSMutableArray* newFiltersArray = [NSMutableArray new];

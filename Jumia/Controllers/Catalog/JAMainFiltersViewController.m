@@ -43,14 +43,33 @@
                                name:kDidPressEditNotification
                              object:nil];
     
+    [notificationCenter addObserver:self
+                           selector:@selector(doneButtonPressed)
+                               name:kDidPressDoneNotification
+                             object:nil];
+    
     [self.tableView reloadData];
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 
 #pragma mark - Button Actions
 
 - (void)editButtonPressed
 {
     [self.tableView setEditing:!self.tableView.editing animated:YES];
+}
+
+- (void)doneButtonPressed
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(filtersWhereUpdated)]) {
+        [self.delegate filtersWhereUpdated];
+    }
 }
 
 #pragma mark - UITableView

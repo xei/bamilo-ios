@@ -72,6 +72,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @param the sorting method to be used
  *  @param the page that is being requested
  *  @param the max number of products per page
+ *  @param the filters array
  *  @param the success block containing the obtained products
  *  @param the failure block containing the error message
  *
@@ -81,6 +82,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                           sortingMethod:(RICatalogSorting)sortingMethod
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
+                                filters:(NSArray*)filters
                            successBlock:(void (^)(NSArray *products, NSArray *filters))successBlock
                         andFailureBlock:(void (^)(NSArray *error))failureBlock;
 

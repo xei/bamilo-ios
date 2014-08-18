@@ -41,6 +41,21 @@
 @property (nonatomic, strong)NSArray* options;
 
 /**
+ *  Method that returns the url component to add to the product request based on an array of RIFilters
+ *  This method calls + (NSString *)urlWithFilter:(RIFilter*)filter;
+ *
+ *  @return the url component
+ */
++ (NSString *)urlWithFiltersArray:(NSArray*)filtersArray;
+
+/**
+ *  Method that returns the url component to add to the product request based on an RIFilter
+ *
+ *  @return the url component
+ */
++ (NSString *)urlWithFilter:(RIFilter*)filter;
+
+/**
  *  Method to parse an array of RIFilters given a JSON object
  *
  *  @return the array of parsed RIFilters

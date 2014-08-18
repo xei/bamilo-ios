@@ -11,7 +11,6 @@
 #import "JACatalogListCell.h"
 #import "JACatalogGridCell.h"
 #import "JAPDVViewController.h"
-#import "JAMainFiltersViewController.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
@@ -83,6 +82,7 @@
                                sortingMethod:self.sortingMethod
                                         page:[self getCurrentPage]+1
                                     maxItems:JACatalogViewControllerMaxProducts
+                                     filters:self.filtersArray
                                 successBlock:^(NSArray* products, NSArray* filters) {
                                     
                                     if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
@@ -225,12 +225,21 @@
     }
 }
 
+#pragma mark - JAMainFiltersViewControllerDelegate
+
+- (void)filtersWhereUpdated;
+{
+    [self resetCatalog];
+    [self loadMoreProducts];
+}
+
 #pragma mark - Button actions
 
 - (IBAction)filterButtonPressed:(id)sender
 {
     JAMainFiltersViewController *mainFiltersViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"mainFiltersViewController"];
     mainFiltersViewController.filtersArray = self.filtersArray;
+    mainFiltersViewController.delegate = self;
     [self.navigationController pushViewController:mainFiltersViewController
                                          animated:YES];
 }
