@@ -37,6 +37,39 @@
     [notificationCenter postNotificationName:kShowMainFiltersNavNofication
                                       object:self
                                     userInfo:nil];
+    
+    [notificationCenter addObserver:self
+                           selector:@selector(editButtonPressed)
+                               name:kDidPressEditNotification
+                             object:nil];
+    
+    [notificationCenter addObserver:self
+                           selector:@selector(doneButtonPressed)
+                               name:kDidPressDoneNotification
+                             object:nil];
+    
+    [self.tableView reloadData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+#pragma mark - Button Actions
+
+- (void)editButtonPressed
+{
+    [self.tableView setEditing:!self.tableView.editing animated:YES];
+}
+
+- (void)doneButtonPressed
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(filtersWhereUpdated)]) {
+        [self.delegate filtersWhereUpdated];
+    }
 }
 
 #pragma mark - UITableView
@@ -53,6 +86,7 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (ISEMPTY(cell)) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
@@ -66,9 +100,45 @@
     
     cell.textLabel.text = filter.name;
     
-    cell.detailTextLabel.text = @"All";
+    cell.detailTextLabel.text = [self stringWithSelectedOptionsFromFilter:filter];
     
     return cell;
+}
+
+- (NSString*)stringWithSelectedOptionsFromFilter:(RIFilter*)filter
+{
+    NSString* string = @"All";
+    
+    if (NOTEMPTY(filter.options)) {
+        
+        if ([filter.uid isEqualToString:@"price"]) {
+            
+            RIFilterOption* option = [filter.options firstObject];
+            
+            string = [NSString stringWithFormat:@"%d - %d", option.lowerValue, option.upperValue];
+            
+        } else {
+            NSMutableArray* selectedOptionsNames = [NSMutableArray new];
+            
+            for (RIFilterOption* option in filter.options) {
+                if (option.selected) {
+                    [selectedOptionsNames addObject:option.name];
+                }
+            }
+            
+            for (int i = 0; i < selectedOptionsNames.count; i++) {
+                
+                if (0 == i) {
+                    string = [selectedOptionsNames objectAtIndex:i];
+                } else {
+                    
+                    string = [NSString stringWithFormat:@"%@, %@", string, [selectedOptionsNames objectAtIndex:i]];
+                }
+            }
+        }
+    }
+    
+    return string;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -91,5 +161,41 @@
                                              animated:YES];
     }
 }
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
+    
+    if ([filter.uid isEqualToString:@"price"]) {
+        
+        RIFilterOption* option = [filter.options firstObject];
+        
+        if (option.lowerValue != option.min || option.upperValue != option.max) {
+            return UITableViewCellEditingStyleDelete;
+        }
+    } else {
+    
+        for (RIFilterOption* option in filter.options) {
+            
+            if (option.selected) {
+                return UITableViewCellEditingStyleDelete;
+            }
+        }
+    }
+    
+    return UITableViewCellEditingStyleNone;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
+    
+    for (RIFilterOption* option in filter.options) {
+        option.selected = NO;
+    }
+    
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 
 @end

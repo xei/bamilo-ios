@@ -8,8 +8,15 @@
 
 #import "JABaseViewController.h"
 
+@protocol JAMainFiltersViewControllerDelegate <NSObject>
+
+- (void)filtersWhereUpdated;
+
+@end
+
 @interface JAMainFiltersViewController : JABaseViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong)NSArray* filtersArray;
+@property (nonatomic, assign)id<JAMainFiltersViewControllerDelegate> delegate;
 
 @end

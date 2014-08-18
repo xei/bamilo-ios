@@ -78,10 +78,11 @@
                           sortingMethod:(RICatalogSorting)sortingMethod
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
+                                filters:(NSArray*)filters
                            successBlock:(void (^)(NSArray *products, NSArray *filters))successBlock
                         andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
-    NSString* fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod]];
+    NSString* fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], [RIFilter urlWithFiltersArray:filters]];
     return [RIProduct getProductsWithFullUrl:fullUrl
                                 successBlock:successBlock
                              andFailureBlock:failureBlock];
