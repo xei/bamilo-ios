@@ -182,7 +182,7 @@
             [self.navigationBarView changeNavigationBarTitle:title];
         }
     }
-    else if ([newScreenName isEqualToString:@"My Account"])
+    else if ([newScreenName isEqualToString:@"Sign In"])
     {
         if (![self.viewControllers.lastObject isKindOfClass:[JAMyAccountViewController class]])
         {
