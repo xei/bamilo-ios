@@ -11,6 +11,7 @@
 #import "RIProductSimple.h"
 #import "RIVariation.h"
 #import "RIFilter.h"
+#import "RICategory.h"
 
 @implementation RIProduct
 
@@ -79,7 +80,7 @@
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
-                           successBlock:(void (^)(NSArray *products, NSArray *filters))successBlock
+                           successBlock:(void (^)(NSArray *products, NSArray *filters, NSArray* categories))successBlock
                         andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     NSString* fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], [RIFilter urlWithFiltersArray:filters]];
@@ -89,7 +90,7 @@
 }
 
 + (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(NSArray *products, NSArray *filters))successBlock
+                        successBlock:(void (^)(NSArray *products, NSArray *filters, NSArray* categories))successBlock
                      andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
@@ -112,6 +113,16 @@
                                                                       
                                                                   }
                                                                   
+                                                                  NSArray* categoriesJSON = [metadata objectForKey:@"categories"];
+                                                                  
+                                                                  NSArray* categoriesArray;
+                                                                  
+                                                                  if (VALID_NOTEMPTY(categoriesJSON, NSArray)) {
+                                                                      
+                                                                      categoriesArray = [RICategory parseCategories:categoriesJSON persistData:NO];
+                                                                      
+                                                                  }
+                                                                  
                                                                   NSArray* results = [metadata objectForKey:@"results"];
                                                                   
                                                                   if (VALID_NOTEMPTY(results, NSArray)) {
@@ -125,7 +136,7 @@
                                                                       }
                                                                       
                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                          successBlock(products, filtersArray);
+                                                                          successBlock(products, filtersArray, categoriesArray);
                                                                       });
                                                                   }
                                                               }

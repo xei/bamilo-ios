@@ -35,7 +35,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applyButtonPressed)
-                                                 name:kDidPressedApplyNotification
+                                                 name:kDidPressApplyNotification
                                                object:nil];
     
     self.tableViewContries.layer.cornerRadius = 5.0f;
