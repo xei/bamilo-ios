@@ -179,6 +179,11 @@
 		B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759B19814EF000005B13 /* FacebookSDK.framework */; };
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
 		CE13787019A2304500CA0751 /* JACategoryFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13786F19A2304500CA0751 /* JACategoryFilterViewController.m */; };
+		B5FE9FB119A1F362006F7D63 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */; };
+		B5FE9FB319A1F4C6006F7D63 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */; };
+		B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */; };
+		B5FE9FB719A1FD1B006F7D63 /* RITrackingDebug.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */; };
+		B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FE9FBB19A204F1006F7D63 /* RINewRelicTracker.m */; };
 		CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */; };
 		CE2F576E19913B33000A9E09 /* JACatalogListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F576D19913B33000A9E09 /* JACatalogListCell.m */; };
 		CE2F577019913B6D000A9E09 /* JACatalogListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2F576F19913B6D000A9E09 /* JACatalogListCell.xib */; };
@@ -556,6 +561,12 @@
 		B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		CE13786E19A2304500CA0751 /* JACategoryFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACategoryFilterViewController.h; sourceTree = "<group>"; };
 		CE13786F19A2304500CA0751 /* JACategoryFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACategoryFilterViewController.m; sourceTree = "<group>"; };
+		B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
+		B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking.plist; sourceTree = "<group>"; };
+		B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug.plist; sourceTree = "<group>"; };
+		B5FE9FBA19A204F1006F7D63 /* RINewRelicTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RINewRelicTracker.h; sourceTree = "<group>"; };
+		B5FE9FBB19A204F1006F7D63 /* RINewRelicTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RINewRelicTracker.m; sourceTree = "<group>"; };
 		CE21CB02198147EE00F7DC66 /* RIStaticBlockIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIStaticBlockIndex.h; sourceTree = "<group>"; };
 		CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIStaticBlockIndex.m; sourceTree = "<group>"; };
 		CE2F576C19913B33000A9E09 /* JACatalogListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogListCell.h; sourceTree = "<group>"; };
@@ -643,6 +654,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5FE9FB119A1F362006F7D63 /* CoreTelephony.framework in Frameworks */,
 				4A2FD84A19913FCA00C65C1D /* Social.framework in Frameworks */,
 				4A4ABF0E198B9DE600342D92 /* QuartzCore.framework in Frameworks */,
 				4A1C00D81987F2EB00A0109E /* UIKit.framework in Frameworks */,
@@ -661,6 +673,7 @@
 				B5A3025519811E8A00F71726 /* libAdIdAccess.a in Frameworks */,
 				B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */,
 				B5A3023519811E8A00F71726 /* libAd4ScreenTrackingSDK.a in Frameworks */,
+				B5FE9FB319A1F4C6006F7D63 /* NewRelicAgent.framework in Frameworks */,
 				B5A3025619811E8A00F71726 /* libGoogleAnalyticsServices.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1098,6 +1111,7 @@
 		B5A301D119811E7600F71726 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */,
 				4A2FD84919913FCA00C65C1D /* Social.framework */,
 				4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */,
 				B5A302FB19811F2200F71726 /* UIKit.framework */,
@@ -1120,6 +1134,7 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */,
 				CEDEB98F199BA8FA0022BAB5 /* NMRangeSlider */,
 				B5EF759B19814EF000005B13 /* FacebookSDK.framework */,
 				B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */,
@@ -1530,6 +1545,8 @@
 		B5A302AB19811E9200F71726 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */,
+				B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */,
 				B5A302AC19811E9200F71726 /* RIOpenURLHandler.h */,
 				B5A302AD19811E9200F71726 /* RIOpenURLHandler.m */,
 				B5A302AE19811E9200F71726 /* RITracking_example.plist */,
@@ -1550,6 +1567,8 @@
 				B5A302B719811E9200F71726 /* RIBugSenseTracker.m */,
 				B5A302B819811E9200F71726 /* RIGoogleAnalyticsTracker.h */,
 				B5A302B919811E9200F71726 /* RIGoogleAnalyticsTracker.m */,
+				B5FE9FBA19A204F1006F7D63 /* RINewRelicTracker.h */,
+				B5FE9FBB19A204F1006F7D63 /* RINewRelicTracker.m */,
 			);
 			path = Trackers;
 			sourceTree = "<group>";
@@ -1846,6 +1865,7 @@
 				4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */,
 				B5A3023619811E8A00F71726 /* BMA4SCloseButton.png in Resources */,
 				B5A3023E19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
+				B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */,
 				CEDEB9C7199BA8FA0022BAB5 /* slider-metal-trackBackground.png in Resources */,
 				CEDEB9C8199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png in Resources */,
 				CEDEB9B0199BA8FA0022BAB5 /* slider-default-handle-highlighted@2x.png in Resources */,
@@ -1868,6 +1888,7 @@
 				4A454F43199CE65100B44821 /* JABirthDateComponent.xib in Resources */,
 				CEDEB9C1199BA8FA0022BAB5 /* slider-metal-handle-highlighted.png in Resources */,
 				4A2FD843199119D900C65C1D /* JAPDVProductInfo.xib in Resources */,
+				B5FE9FB719A1FD1B006F7D63 /* RITrackingDebug.plist in Resources */,
 				B5A3024519811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */,
 				B5A3023C19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */,
 				CEDEB9C6199BA8FA0022BAB5 /* slider-metal-track@2x.png in Resources */,
@@ -2009,6 +2030,7 @@
 				B5A302CA19811E9200F71726 /* RISearchSuggestion.m in Sources */,
 				B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */,
 				4A454F45199CE65100B44821 /* JAFormComponent.m in Sources */,
+				B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */,
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
 				CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */,
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import "JAAppDelegate.h"
 
+
 @interface JAAppDelegate ()
 
 @end
@@ -16,6 +17,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+#if defined(DEBUG) && DEBUG
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug" ofType:@"plist"];
+#else
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];
+#endif
+    
+    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath launchOptions:launchOptions];
+    
     return YES;
 }
 

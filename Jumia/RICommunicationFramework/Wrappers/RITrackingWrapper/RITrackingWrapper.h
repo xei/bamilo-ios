@@ -339,6 +339,6 @@ typedef NS_ENUM(NSInteger, RICartState) {
 /**
  *  Returns the state of the cart
  */
-- (RICartState)getCarState;
+- (RICartState)getCartState;
 
 @end
