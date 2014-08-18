@@ -21,5 +21,6 @@
            andPropertyValue:(NSString *)propertyValue;
 -(void)deleteAllEntriesOfType:(NSString *)objectType;
 -(void)deleteObject:(NSManagedObject *)managedObject;
+- (void)resetApplicationModel;
 
 @end

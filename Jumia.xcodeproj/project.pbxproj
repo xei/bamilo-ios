@@ -11,6 +11,7 @@
 		4A01EE4B19922736005F5AD1 /* JAPDVPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A01EE4A19922736005F5AD1 /* JAPDVPicker.xib */; };
 		4A01EE61199259C7005F5AD1 /* JAPDVGalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A01EE60199259C7005F5AD1 /* JAPDVGalleryView.m */; };
 		4A01EE63199259D1005F5AD1 /* JAPDVGalleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A01EE62199259D1005F5AD1 /* JAPDVGalleryView.xib */; };
+		4A0EE57F19A20E5F00048632 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0EE57E19A20E5F00048632 /* FacebookSDK.framework */; };
 		4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */; };
 		4A1270FB1987EFB0004142F5 /* JAMenuNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1270FA1987EFB0004142F5 /* JAMenuNavigationBar.m */; };
 		4A1892D219939A0C0036F327 /* JAReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D119939A0C0036F327 /* JAReviewCell.m */; };
@@ -252,6 +253,7 @@
 		4A01EE5F199259C7005F5AD1 /* JAPDVGalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVGalleryView.h; sourceTree = "<group>"; };
 		4A01EE60199259C7005F5AD1 /* JAPDVGalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVGalleryView.m; sourceTree = "<group>"; };
 		4A01EE62199259D1005F5AD1 /* JAPDVGalleryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVGalleryView.xib; sourceTree = "<group>"; };
+		4A0EE57E19A20E5F00048632 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Jumia/ExternalFrameworks/FacebookSDK.framework; sourceTree = "<group>"; };
 		4A1270F6198795AF004142F5 /* JASubCategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASubCategoriesViewController.h; sourceTree = "<group>"; };
 		4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASubCategoriesViewController.m; sourceTree = "<group>"; };
 		4A1270F91987EFB0004142F5 /* JAMenuNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMenuNavigationBar.h; sourceTree = "<group>"; };
@@ -640,6 +642,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A0EE57F19A20E5F00048632 /* FacebookSDK.framework in Frameworks */,
 				4A2FD84A19913FCA00C65C1D /* Social.framework in Frameworks */,
 				4A4ABF0E198B9DE600342D92 /* QuartzCore.framework in Frameworks */,
 				4A1C00D81987F2EB00A0109E /* UIKit.framework in Frameworks */,
@@ -1095,6 +1098,7 @@
 		B5A301D119811E7600F71726 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A0EE57E19A20E5F00048632 /* FacebookSDK.framework */,
 				4A2FD84919913FCA00C65C1D /* Social.framework */,
 				4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */,
 				B5A302FB19811F2200F71726 /* UIKit.framework */,

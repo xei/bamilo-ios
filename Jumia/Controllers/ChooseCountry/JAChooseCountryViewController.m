@@ -73,9 +73,9 @@
 {
     if (self.selectedIndex)
     {
-        // RICountry *country = [self.countriesArray objectAtIndex:self.selectedIndex.row];
+        RICountry *country = [self.countriesArray objectAtIndex:self.selectedIndex.row];
         
-        [self.delegate didSelectedCountry];
+        [self.delegate didSelectedCountry:country];
     }
 }
 
