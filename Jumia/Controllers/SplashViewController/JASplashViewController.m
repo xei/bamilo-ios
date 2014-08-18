@@ -33,7 +33,7 @@
 {
     [super viewDidLoad];
     
-    if ([RIApi checkIfHaveCountrySelected])
+    if (self.selectedCountry)
     {
         self.navigationController.navigationBarHidden = YES;
         
@@ -44,7 +44,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
         
-        [RIApi startApiWithCountry:nil
+        [RIApi startApiWithCountry:self.selectedCountry
                       successBlock:^(id api) {
                           
                           if (0 >= self.requestCount) {
@@ -56,36 +56,72 @@
                           [self hideLoading];
                           
                       }];
+        
+        if (self.view.frame.size.height > 500.0f)
+        {
+            self.splashImage.image = [UIImage imageNamed:@"splash5"];
+        }
+        else
+        {
+            self.splashImage.image = [UIImage imageNamed:@"splash4"];
+        }
     }
     else
     {
-        [self.navigationItem setHidesBackButton:YES
-                                    animated:NO];
+        if ([RIApi checkIfHaveCountrySelected])
+        {
+            self.navigationController.navigationBarHidden = YES;
+            
+            [self showLoading];
+            
+            self.requestCount = 0;
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
+            
+            [RIApi startApiWithCountry:nil
+                          successBlock:^(id api) {
+                              
+                              if (0 >= self.requestCount) {
+                                  [self procedeToFirstAppScreen];
+                              }
+                              
+                          } andFailureBlock:^(NSArray *errorMessage) {
+                              
+                              [self hideLoading];
+                              
+                          }];
+        }
+        else
+        {
+            [self.navigationItem setHidesBackButton:YES
+                                           animated:NO];
+            
+            self.navigationBarView = [JANavigationBarView getNewNavBarView];
+            [self.navigationController.navigationBar.viewForBaselineLayout addSubview:self.navigationBarView];
+            
+            [self.navigationBarView changeToChooseCountry];
+            self.navigationBarView.leftButton.hidden = YES;
+            
+            [self.navigationBarView.applyButton addTarget:self
+                                                   action:@selector(sendSelectedCountryNotification)
+                                         forControlEvents:UIControlEventTouchUpInside];
+            
+            JAChooseCountryViewController *choose = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
+            choose.delegate = self;
+            
+            [self.navigationController pushViewController:choose
+                                                 animated:YES];
+        }
         
-        self.navigationBarView = [JANavigationBarView getNewNavBarView];
-        [self.navigationController.navigationBar.viewForBaselineLayout addSubview:self.navigationBarView];
-        
-        [self.navigationBarView changeToChooseCountry];
-        self.navigationBarView.leftButton.hidden = YES;
-        
-        [self.navigationBarView.applyButton addTarget:self
-                                               action:@selector(sendSelectedCountryNotification)
-                                     forControlEvents:UIControlEventTouchUpInside];
-        
-        JAChooseCountryViewController *choose = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
-        choose.delegate = self;
-        
-        [self.navigationController pushViewController:choose
-                                             animated:YES];
-    }
-    
-    if (self.view.frame.size.height > 500.0f)
-    {
-        self.splashImage.image = [UIImage imageNamed:@"splash5"];
-    }
-    else
-    {
-        self.splashImage.image = [UIImage imageNamed:@"splash4"];
+        if (self.view.frame.size.height > 500.0f)
+        {
+            self.splashImage.image = [UIImage imageNamed:@"splash5"];
+        }
+        else
+        {
+            self.splashImage.image = [UIImage imageNamed:@"splash4"];
+        }
     }
 }
 
