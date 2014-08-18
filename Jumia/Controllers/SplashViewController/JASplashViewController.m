@@ -11,11 +11,17 @@
 #import "RIApi.h"
 #import "JAAppDelegate.h"
 #import "RICustomer.h"
+#import "JAChooseCountryViewController.h"
+#import "JANavigationBarView.h"
 
 @interface JASplashViewController ()
+<
+    JAChooseCountryDelegate
+>
 
 @property (nonatomic, assign) NSInteger requestCount;
 @property (weak, nonatomic) IBOutlet UIImageView *splashImage;
+@property (strong, nonatomic) JANavigationBarView *navigationBarView;
 
 @end
 
@@ -27,6 +33,52 @@
 {
     [super viewDidLoad];
     
+    if ([RIApi checkIfHaveCountrySelected])
+    {
+        self.navigationController.navigationBarHidden = YES;
+        
+        [self showLoading];
+        
+        self.requestCount = 0;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
+        
+        [RIApi startApiWithCountry:nil
+                      successBlock:^(id api) {
+                          
+                          if (0 >= self.requestCount) {
+                              [self procedeToFirstAppScreen];
+                          }
+                          
+                      } andFailureBlock:^(NSArray *errorMessage) {
+                          
+                          [self hideLoading];
+                          
+                      }];
+    }
+    else
+    {
+        [self.navigationItem setHidesBackButton:YES
+                                    animated:NO];
+        
+        self.navigationBarView = [JANavigationBarView getNewNavBarView];
+        [self.navigationController.navigationBar.viewForBaselineLayout addSubview:self.navigationBarView];
+        
+        [self.navigationBarView changeToChooseCountry];
+        self.navigationBarView.leftButton.hidden = YES;
+        
+        [self.navigationBarView.applyButton addTarget:self
+                                               action:@selector(sendSelectedCountryNotification)
+                                     forControlEvents:UIControlEventTouchUpInside];
+        
+        JAChooseCountryViewController *choose = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
+        choose.delegate = self;
+        
+        [self.navigationController pushViewController:choose
+                                             animated:YES];
+    }
+    
     if (self.view.frame.size.height > 500.0f)
     {
         self.splashImage.image = [UIImage imageNamed:@"splash5"];
@@ -35,25 +87,6 @@
     {
         self.splashImage.image = [UIImage imageNamed:@"splash4"];
     }
-    
-    [self showLoading];
-    
-    self.requestCount = 0;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
-
-    [RIApi startApiWithSuccessBlock:^(id api) {
-        
-        if (0 >= self.requestCount) {
-            [self procedeToFirstAppScreen];
-        }
-        
-    } andFailureBlock:^(NSArray *errorMessage) {
-        
-        [self hideLoading];
-        
-    }];
 }
 
 - (void)dealloc
@@ -94,6 +127,39 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Send notification action
+
+- (void)sendSelectedCountryNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressApplyNotification
+                                                        object:nil];
+}
+
+#pragma mark - Choose country delegate
+
+- (void)didSelectedCountry:(RICountry *)country
+{
+    [self showLoading];
+    
+    self.requestCount = 0;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
+    
+    [RIApi startApiWithCountry:country
+                  successBlock:^(id api) {
+                      
+                      if (0 >= self.requestCount) {
+                          [self procedeToFirstAppScreen];
+                      }
+                      
+                  } andFailureBlock:^(NSArray *errorMessage) {
+                      
+                      [self hideLoading];
+                      
+                  }];
 }
 
 @end

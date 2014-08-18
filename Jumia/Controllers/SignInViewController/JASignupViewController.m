@@ -12,10 +12,12 @@
 #import "RIFieldDataSetComponent.h"
 #import "JAFormComponent.h"
 #import "RICustomer.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface JASignupViewController ()
 <
-    UITextFieldDelegate
+    UITextFieldDelegate,
+    FBLoginViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
@@ -176,7 +178,7 @@
                                          forState:UIControlStateNormal];
            
            [self.registerByFacebook addTarget:self
-                                       action:@selector(registerByFacebook)
+                                       action:@selector(registerViaFacebookAction:)
                              forControlEvents:UIControlEventTouchUpInside];
            
            frame = self.registerByFacebook.frame;
@@ -338,9 +340,70 @@
     }
 }
 
-- (void)registerViaFacebook
+- (IBAction)registerViaFacebookAction:(id)sender
 {
+//    NSArray *permissions = [[NSArray alloc] initWithObjects:@"email", @"name", nil];
+//    
+//    [FBSession openActiveSessionWithReadPermissions:permissions
+//                                       allowLoginUI:YES
+//                                  completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+//                                      NSLog(@"Here");
+//                                  }];
+}
+
+#pragma mark - Facebook delegates
+
+-(void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user
+{
+    NSLog(@"usr_first_name::%@",user.first_name);
+    NSLog(@"usr_middle_name::%@",user.middle_name);
+    NSLog(@"usr_last_nmae::%@",user.last_name);
+    NSLog(@"usr_Username::%@",user.username);
+    NSLog(@"usr_b_day::%@",user.birthday);
     
+}
+
+- (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error
+{
+    NSString *alertMessage;
+    
+    // If the user should perform an action outside of you app to recover,
+    // the SDK will provide a message for the user, you just need to surface it.
+    // This conveniently handles cases like Facebook password change or unverified Facebook accounts.
+    if ([FBErrorUtility shouldNotifyUserForError:error]) {
+        alertMessage = [FBErrorUtility userMessageForError:error];
+        
+        // This code will handle session closures that happen outside of the app
+        // You can take a look at our error handling guide to know more about it
+        // https://developers.facebook.com/docs/ios/errors
+    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
+        alertMessage = [FBErrorUtility userMessageForError:error];
+        
+        // If the user has cancelled a login, we will do nothing.
+        // You can also choose to show the user a message if cancelling login will result in
+        // the user not being able to complete a task they had initiated in your app
+        // (like accessing FB-stored information or posting to Facebook)
+    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
+        
+        NSLog(@"user cancelled login");
+        
+        // For simplicity, this sample handles other errors with a generic message
+        // You can checkout our error handling guide for more detailed information
+        // https://developers.facebook.com/docs/ios/errors
+    } else {
+        alertMessage = [FBErrorUtility userMessageForError:error];
+        NSLog(@"Unexpected error:%@", error);
+    }
+    
+    if (alertMessage) {
+        
+        [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
+                                    message:alertMessage
+                                   delegate:nil
+                          cancelButtonTitle:@"Ok"
+                          otherButtonTitles:nil] show];
+        
+    }
 }
 
 #pragma mark - TextField Delegate

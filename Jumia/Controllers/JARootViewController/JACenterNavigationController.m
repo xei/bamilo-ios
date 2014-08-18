@@ -17,6 +17,7 @@
 #import "JAPDVViewController.h"
 #import "JAMyAccountViewController.h"
 #import "RIProduct.h"
+#import "RIApi.h"
 
 @interface JACenterNavigationController ()
 <
@@ -312,15 +313,24 @@
                                                         object:nil];
 }
 
-- (void)didSelectedCountry
+- (void)didSelectedCountry:(RICountry *)country
 {
-    JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
-    
-    [self pushViewController:home
-                    animated:YES];
-    [self.navigationBarView changedToHomeViewController];
-    
-    self.viewControllers = @[home];
+    [RIApi startApiWithCountry:country
+                  successBlock:^(id api) {
+                      
+                      JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+                      
+                      [self pushViewController:home
+                                      animated:YES];
+                      [self.navigationBarView changedToHomeViewController];
+                      
+                      self.viewControllers = @[home];
+                      
+                  } andFailureBlock:^(NSArray *errorMessage) {
+                      
+                      NSLog(@"aqui");
+                      
+                  }];
 }
 
 #pragma mark - Recent Search delegate

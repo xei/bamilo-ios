@@ -25,6 +25,7 @@
     </entity>
     <entity name="RIApi" representedClassName="RIApi" syncable="YES">
         <attribute name="actionName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="curMobVersion" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="curVersion" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="minMobVersion" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -226,9 +227,11 @@
         <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="variations" inverseEntity="RIProduct" syncable="YES"/>
     </entity>
     <elements>
-        <element name="RIApi" positionX="-308" positionY="227" width="128" height="133"/>
+        <element name="RIAddress" positionX="90" positionY="666" width="128" height="360"/>
+        <element name="RIApi" positionX="-308" positionY="227" width="128" height="150"/>
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="133"/>
         <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="195"/>
+        <element name="RICustomer" positionX="279" positionY="650" width="128" height="178"/>
         <element name="RIField" positionX="-299" positionY="681" width="128" height="225"/>
         <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="73"/>
         <element name="RIForm" positionX="-504" positionY="362" width="128" height="118"/>
@@ -250,7 +253,5 @@
         <element name="RITeaserText" positionX="-684" positionY="677" width="128" height="88"/>
         <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
         <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>
-        <element name="RIAddress" positionX="90" positionY="666" width="128" height="360"/>
-        <element name="RICustomer" positionX="279" positionY="650" width="128" height="178"/>
     </elements>
 </model>

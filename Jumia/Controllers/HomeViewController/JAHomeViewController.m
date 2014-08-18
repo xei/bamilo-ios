@@ -66,6 +66,11 @@
     }];
 }
 
+- (void)stopLoading
+{
+    [self hideLoading];
+}
+
 #pragma mark - JATeaserCategoryScrollViewDelegate
 
 - (void)selectedIndex:(NSInteger)index

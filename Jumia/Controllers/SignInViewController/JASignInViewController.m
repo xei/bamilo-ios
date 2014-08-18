@@ -36,7 +36,7 @@
     [super viewDidLoad];
     
     self.loginView.layer.cornerRadius = 4.0f;
-    self.signUpView.layer.cornerRadius = 4.0f;
+    self.forgotView.layer.cornerRadius = 4.0f;
     
     self.labelLogin.text = @"Login";
     self.fieldsArray = [NSMutableArray new];

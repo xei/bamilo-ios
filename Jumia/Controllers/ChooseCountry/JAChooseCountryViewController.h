@@ -13,7 +13,7 @@
 
 @required
 
-- (void)didSelectedCountry;
+- (void)didSelectedCountry:(RICountry *)country;
 
 @end
 

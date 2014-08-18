@@ -24,6 +24,7 @@
 #import "RIProductRatings.h"
 #import "JARatingsViewController.h"
 #import "JAProductDetailsViewController.h"
+#import "JANewRatingViewController.h"
 
 @interface JAPDVViewController ()
 <
@@ -41,6 +42,7 @@
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (strong, nonatomic) JAPDVGalleryView *gallery;
 @property (weak, nonatomic) IBOutlet UIView *ctaView;
+@property (assign, nonatomic) NSInteger commentsCount;
 
 @end
 
@@ -100,18 +102,29 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"showRatingsMain"]) {
+    if ([segue.identifier isEqualToString:@"showRatingsMain"])
+    {
         [segue.destinationViewController setProductRatings:self.productRatings];
         [segue.destinationViewController setProductBrand:self.product.brand];
         [segue.destinationViewController setProductNewPrice:self.product.specialPrice];
         [segue.destinationViewController setProductOldPrice:self.product.price];
-    } else if ([segue.identifier isEqualToString:@"segueToDetails"]) {
+    }
+    else if ([segue.identifier isEqualToString:@"segueToDetails"])
+    {
         [segue.destinationViewController setStringBrand:self.product.brand];
         [segue.destinationViewController setStringName:self.product.name];
         [segue.destinationViewController setStringNewPrice:self.product.specialPrice];
         [segue.destinationViewController setStringOldPrice:self.product.price];
         [segue.destinationViewController setFeaturesText:self.product.attributeShortDescription];
         [segue.destinationViewController setDescriptionText:self.product.descriptionString];
+    }
+    else if ([segue.identifier isEqualToString:@"segueNewReview"])
+    {
+        [segue.destinationViewController setRatingProductSku:self.productRatings.productSku];
+        [segue.destinationViewController setRatingProductBrand:self.product.brand];
+        [segue.destinationViewController setRatingProductNameForLabel:self.productRatings.productName];
+        [segue.destinationViewController setRatingProductNewPriceForLabel:self.product.specialPrice];
+        [segue.destinationViewController setRatingProductOldPriceForLabel:self.product.price];
     }
 }
 
@@ -209,10 +222,11 @@
     
     [self showLoading];
     
-    [RIProductRatings getRatingsForProductWithUrl:@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
+    [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
                                         
                                          self.productInfoSection.numberOfReviewsLabel.text = [NSString stringWithFormat:@"%@ Reviews", ratings.commentsCount];
+                                         self.commentsCount = [ratings.commentsCount integerValue];
                                          
                                          NSInteger media = 0;
                                          
@@ -220,9 +234,11 @@
                                              media += [rating.avgRating integerValue];
                                          }
                                          
-                                         media = (media / ratings.comments.count);
-                                         
-                                         [self.productInfoSection setNumberOfStars:media];
+                                         if (media > 0) {
+                                             media = (media / ratings.comments.count);
+                                             
+                                             [self.productInfoSection setNumberOfStars:media];
+                                         }
                                          
                                          self.productRatings = ratings;
                                          
@@ -392,8 +408,16 @@
 
 - (void)goToRatinsMainScreen
 {
-    [self performSegueWithIdentifier:@"showRatingsMain"
-                              sender:nil];
+    if (0 == self.commentsCount) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
+                                                            object:nil];
+        
+        [self performSegueWithIdentifier:@"segueNewReview"
+                                  sender:nil];
+    } else {
+        [self performSegueWithIdentifier:@"showRatingsMain"
+                                  sender:nil];
+    }
 }
 
 - (void)shareProduct

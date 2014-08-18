@@ -18,6 +18,7 @@
 
 @implementation RIApi
 
+@dynamic countryUrl;
 @dynamic actionName;
 @dynamic curMobVersion;
 @dynamic curVersion;
@@ -25,18 +26,37 @@
 @dynamic minVersion;
 @dynamic sections;
 
-+ (NSString *)startApiWithSuccessBlock:(void (^)(id api))successBlock
-                       andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
++ (NSString *)startApiWithCountry:(RICountry *)country
+                     successBlock:(void (^)(id api))successBlock
+                  andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_INFO]]
+    NSString *url;
+    
+    if (nil == country) {
+        NSArray* apiArrayFromCoreData = [[RIDataBaseWrapper sharedInstance]allEntriesOfType:NSStringFromClass([RIApi class])];
+        
+        RIApi* api = [apiArrayFromCoreData firstObject];
+        
+        url = api.countryUrl;
+    } else {
+        
+        [[RIDataBaseWrapper sharedInstance] resetApplicationModel];
+        
+        url = country.url;
+    }
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", url, RI_API_VERSION, RI_API_INFO]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
-                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              NSMutableDictionary* metadata = [[NSMutableDictionary alloc] initWithDictionary:[jsonObject objectForKey:@"metadata"]];
                                                               
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
+                                                                  
+                                                                  // insert the country url
+                                                                  [metadata addEntriesFromDictionary:@{ @"countryUrl" : url }];
                                                                   
                                                                   RIApi* newApi = [RIApi parseApi:metadata];
                                                                   
@@ -105,6 +125,18 @@
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
 }
 
+#pragma mark - Verify if there is API stored
+
++ (BOOL)checkIfHaveCountrySelected
+{
+    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+    
+    if (0 == apiArray.count) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
 
 + (RIApi *)parseApi:(NSDictionary*)api;
 {
@@ -112,6 +144,10 @@
     
     if ([api objectForKey:@"action_name"]) {
         newApi.actionName = [api objectForKey:@"action_name"];
+    }
+    
+    if ([api objectForKey:@"countryUrl"]) {
+        newApi.countryUrl = [api objectForKey:@"countryUrl"];
     }
     
     //VERSION STUFF IS MISSING FOR NOW

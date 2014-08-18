@@ -93,6 +93,26 @@
     [self.managedObjectContext insertObject:object];
 }
 
+- (void) resetApplicationModel
+{
+    NSPersistentStore *store = [self.persistentStoreCoordinator.persistentStores lastObject];
+    NSError *error;
+    NSURL *storeURL = store.URL;
+    NSPersistentStoreCoordinator *storeCoordinator = self.persistentStoreCoordinator;
+    [storeCoordinator removePersistentStore:store error:&error];
+    [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&error];
+    //    Then, just add the persistent store back to ensure it is recreated properly.
+    if (![self.persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+}
+
+- (NSString *)applicationDocumentsDirectory
+{
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+}
+
 -(NSManagedObject *)temporaryManagedObjectOfType:(NSString *)objectType
 {
     NSEntityDescription* description = [NSEntityDescription entityForName:objectType inManagedObjectContext:self.managedObjectContext];
