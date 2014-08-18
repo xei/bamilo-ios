@@ -178,6 +178,7 @@
 		B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F61986C41D0094C92C /* RICheckout.m */; };
 		B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759B19814EF000005B13 /* FacebookSDK.framework */; };
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
+		CE13787019A2304500CA0751 /* JACategoryFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13786F19A2304500CA0751 /* JACategoryFilterViewController.m */; };
 		B5FE9FB119A1F362006F7D63 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */; };
 		B5FE9FB319A1F4C6006F7D63 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */; };
 		B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */; };
@@ -558,6 +559,8 @@
 		B5C682F71986C41D0094C92C /* RICheckout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICheckout.h; sourceTree = "<group>"; };
 		B5EF759B19814EF000005B13 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
+		CE13786E19A2304500CA0751 /* JACategoryFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACategoryFilterViewController.h; sourceTree = "<group>"; };
+		CE13786F19A2304500CA0751 /* JACategoryFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACategoryFilterViewController.m; sourceTree = "<group>"; };
 		B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
 		B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking.plist; sourceTree = "<group>"; };
@@ -1654,6 +1657,8 @@
 				CEDEB98D199BA4140022BAB5 /* JAPriceFilterViewController.m */,
 				CED30C22199CAA5C00C67F4B /* JAGenericFilterViewController.h */,
 				CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */,
+				CE13786E19A2304500CA0751 /* JACategoryFilterViewController.h */,
+				CE13786F19A2304500CA0751 /* JACategoryFilterViewController.m */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
@@ -2008,6 +2013,7 @@
 				B5A302D419811E9200F71726 /* Model.xcdatamodeld in Sources */,
 				4A01EE4919922729005F5AD1 /* JAPDVPicker.m in Sources */,
 				B5A302DA19811E9200F71726 /* RICommunicationWrapper.m in Sources */,
+				CE13787019A2304500CA0751 /* JACategoryFilterViewController.m in Sources */,
 				CE44586D198BD20A00CE7E8D /* JATopSellersTeaserView.m in Sources */,
 				4A392141198925D000B70A9C /* JANavigationBarView.m in Sources */,
 				CE445870198BD21A00CE7E8D /* JATeaserView.m in Sources */,

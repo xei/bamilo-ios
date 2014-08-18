@@ -50,6 +50,18 @@
  */
 + (void)cancelRequest:(NSString *)operationID;
 
+/**
+ *  Method to parse categories.
+ *
+ *  @param the json array of categories to be parsed
+ *  @param a bool indicating whether or not these categories are to be saved in core data (if this
+ *          is true, the old categories are replaced by the new ones)
+ *
+ *  @return an array of the parsed categories
+ */
++ (NSArray*)parseCategories:(NSArray*)categories
+                persistData:(BOOL)persistData;
+
 @end
 
 @interface RICategory (CoreDataGeneratedAccessors)
