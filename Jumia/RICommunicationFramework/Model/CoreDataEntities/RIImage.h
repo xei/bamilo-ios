@@ -27,5 +27,12 @@
  */
 + (RIImage *)parseImage:(NSDictionary *)image;
 
+/**
+ *  Method to save an RIImage in coredata
+ *
+ *  @param the RIImage to be saved
+ */
++ (void)saveImage:(RIImage*)image;
+
 @end
 

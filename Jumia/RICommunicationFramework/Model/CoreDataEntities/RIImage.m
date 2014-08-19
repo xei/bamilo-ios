@@ -49,5 +49,11 @@
     return newImage;
 }
 
++ (void)saveImage:(RIImage*)image
+{
+    [[RIDataBaseWrapper sharedInstance] insertManagedObject:image];
+    [[RIDataBaseWrapper sharedInstance] saveContext];
+}
+
 @end
 
