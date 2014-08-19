@@ -8,6 +8,6 @@
 
 #import "JABaseViewController.h"
 
-@interface JARecentlyViewedViewController : JABaseViewController
+@interface JARecentlyViewedViewController : JABaseViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

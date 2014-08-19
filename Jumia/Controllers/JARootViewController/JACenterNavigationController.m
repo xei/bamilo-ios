@@ -18,6 +18,7 @@
 #import "JAPDVViewController.h"
 #import "JACategoriesViewController.h"
 #import "JAMyAccountViewController.h"
+#import "JARecentlyViewedViewController.h"
 #import "RIProduct.h"
 #import "RIApi.h"
 
@@ -215,6 +216,20 @@
             [self.navigationBarView changeNavigationBarTitle:title];
             
             self.viewControllers = @[myAccount];
+        }
+    }
+    else if ([newScreenName isEqualToString:@"Recently Viewed"])
+    {
+        if (![self.viewControllers.lastObject isKindOfClass:[JARecentlyViewedViewController class]])
+        {
+            JARecentlyViewedViewController *recentlyViewed = [self.storyboard instantiateViewControllerWithIdentifier:@"recentlyViewedViewController"];
+            
+            [self pushViewController:recentlyViewed
+                            animated:YES];
+            
+            [self.navigationBarView changeNavigationBarTitle:title];
+            
+            self.viewControllers = @[recentlyViewed];
         }
     }
     

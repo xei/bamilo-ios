@@ -342,7 +342,14 @@
     NSArray* recentlyViewedProducts = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"recentlyViewedDate"];
     
     if (VALID(recentlyViewedProducts, NSArray) && successBlock) {
-        successBlock(recentlyViewedProducts);
+        
+        //reverse array
+        NSMutableArray *reversedArray = [NSMutableArray arrayWithCapacity:recentlyViewedProducts.count];
+        NSEnumerator *enumerator = [recentlyViewedProducts reverseObjectEnumerator];
+        for (id element in enumerator) {
+            [reversedArray addObject:element];
+        }
+        successBlock(reversedArray);
     } else if (failureBlock) {
         failureBlock(nil);
     }
@@ -367,9 +374,13 @@
             //we've hit the limit, delete the older product
             for (RIProduct* recentProduct in recentlyViewedProducts) {
                 
-                NSDate* oldestDate = [recentProduct.recentlyViewedDate laterDate:productToDelete.recentlyViewedDate];
-                if (oldestDate == recentProduct.recentlyViewedDate) {
+                if (ISEMPTY(productToDelete)) {
                     productToDelete = recentProduct;
+                } else {
+                    NSDate* oldestDate = [recentProduct.recentlyViewedDate earlierDate:productToDelete.recentlyViewedDate];
+                    if ([oldestDate isEqualToDate:recentProduct.recentlyViewedDate]) {
+                        productToDelete = recentProduct;
+                    }
                 }
             }
         }
