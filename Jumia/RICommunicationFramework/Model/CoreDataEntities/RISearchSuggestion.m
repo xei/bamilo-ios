@@ -13,6 +13,7 @@
 
 @dynamic item;
 @dynamic relevance;
+@dynamic isRecentSearch;
 
 + (void)saveSearchSuggestionOnDB:(NSString *)query
 {

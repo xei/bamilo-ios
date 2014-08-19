@@ -14,13 +14,16 @@
 
 @property (nonatomic, retain) NSString * item;
 @property (nonatomic, retain) NSNumber * relevance;
+@property (nonatomic, assign) BOOL isRecentSearch;
 
 /**
  * Method to save a search suggestions on core data
  *
  * @param the query to be saved on core data
+ * @param boolean if it's recent search
  */
-+ (void)saveSearchSuggestionOnDB:(NSString *)query;
++ (void)saveSearchSuggestionOnDB:(NSString *)query
+                  isRecentSearch:(BOOL)isRecentSearch;
 
 /**
  * Method to request a set of search suggestions
