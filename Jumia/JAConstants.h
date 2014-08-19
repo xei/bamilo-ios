@@ -27,3 +27,10 @@
 #define kUserLoggedOutNotification @"NOTIFICATION_USER_LOGGED_OUT"
 #define kShowMainFiltersNavNofication @"NOTIFICATION_SHOW_MAIN_FILTERS_NAVIGATION"
 #define kShowSpecificFilterNavNofication @"NOTIFICATION_SHOW_SPECIFIC_FILTER_NAVIGATION"
+
+// Update alert view
+#define kForceUpdateAlertViewTag 0
+#define kUpdateAvailableAlertViewTag 1
+
+// App url (this is needed to redirect to itunes connect to update the app)
+#define kAppStoreUrl @"https://itunes.apple.com/us/app/the-iconic-app/id686483021?ls=1&mt=8"

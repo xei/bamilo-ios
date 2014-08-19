@@ -17,9 +17,11 @@
 @dynamic children;
 @dynamic parent;
 
-+ (NSString *)loadCategoriesIntoDatabaseWithSuccessBlock:(void (^)(id categories))successBlock andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
++ (NSString *)loadCategoriesIntoDatabaseForCountry:(NSString *)country
+                                  withSuccessBlock:(void (^)(id categories))successBlock
+                                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_CATALOG_CATEGORIES]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", country, RI_API_VERSION, RI_CATALOG_CATEGORIES]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
@@ -53,6 +55,7 @@
                                                           }];
 }
 
+
 + (void)getCategoriesWithSuccessBlock:(void (^)(id categores))successBlock andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
     NSArray* databaseParentCategories = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"parent" andPropertyValue:nil];
@@ -64,7 +67,7 @@
             failureBlock(nil);
         }
     } else {
-        [RICategory loadCategoriesIntoDatabaseWithSuccessBlock:^(id categories) {
+        [RICategory loadCategoriesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] withSuccessBlock:^(id categories) {
             
             NSArray* parentCategories = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"parent" andPropertyValue:nil];
             if (VALID_NOTEMPTY(parentCategories, NSArray)) {

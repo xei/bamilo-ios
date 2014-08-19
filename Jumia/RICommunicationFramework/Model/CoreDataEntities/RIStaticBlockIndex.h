@@ -19,8 +19,9 @@
 + (NSString*)getStaticBlock:(NSString*)staticBlockKey
                successBlock:(void (^)(id staticBlock))successBlock
                failureBlock:(void (^)(NSArray *errorMessage))failureBlock;
-+ (NSString*)loadStaticBlockIndexesIntoDatabaseWithSuccessBlock:(void (^)(id staticBlockIndexes))successBlock
-                                                andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString*)loadStaticBlockIndexesIntoDatabaseForCountry:(NSString*)countryUrl
+                                         withSuccessBlock:(void (^)(id staticBlockIndexes))successBlock
+                                          andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 + (NSArray*)parseStaticBlockIndexes:(NSDictionary*)staticBlockIndexesJSON;
 + (RIStaticBlockIndex*)parseStaticBlockIndex:(NSDictionary*)staticBlockIndexJSON;
 + (void)saveStaticBlockIndex:(RIStaticBlockIndex*)staticBlockIndex;

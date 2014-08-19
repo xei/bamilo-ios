@@ -28,8 +28,9 @@
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)loadCategoriesIntoDatabaseWithSuccessBlock:(void (^)(id categories))successBlock
-                                         andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString *)loadCategoriesIntoDatabaseForCountry:(NSString *)country
+                                  withSuccessBlock:(void (^)(id categories))successBlock
+                                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 
 /**
  *  Method to load categories. It checks if they are stored in the core data, and case they aren't
