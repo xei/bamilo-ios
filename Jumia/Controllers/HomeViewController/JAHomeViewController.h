@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JAPickerScrollView.h"
 
-@interface JAHomeViewController : JABaseViewController <JAPickerScrollViewDelegate>
+@interface JAHomeViewController : JABaseViewController <JAPickerScrollViewDelegate, UIScrollViewDelegate>
 
 - (void)stopLoading;
 

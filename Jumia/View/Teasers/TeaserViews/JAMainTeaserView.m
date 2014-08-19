@@ -34,7 +34,8 @@
     
     CGFloat currentX = 0;
     
-    for (RITeaser* teaser in self.teasers) {
+    for (int i = 0; i < self.teasers.count; i++) {
+        RITeaser* teaser = [self.teasers objectAtIndex:i];
         
         RITeaserImage* teaserImage;
         
@@ -61,11 +62,28 @@
         [imageView setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl]];
         [self.scrollView addSubview:imageView];
         
+        UIControl* control = [UIControl new];
+        [control setFrame:imageView.frame];
+        [self.scrollView addSubview:control];
+        control.tag = i;
+        [control addTarget:self action:@selector(teaserImagePressed:) forControlEvents:UIControlEventTouchUpInside];
+        
         currentX += imageView.frame.size.width;
     }
     
     [self.scrollView setContentSize:CGSizeMake(currentX,
                                                self.scrollView.frame.size.height)];
+}
+
+- (void)teaserImagePressed:(UIControl*)control
+{
+    NSInteger index = control.tag;
+    
+    RITeaser* teaser = [self.teasers objectAtIndex:index];
+    
+    RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
+    
+    [self teaserPressedWithTeaserImage:teaserImage];
 }
 
 @end
