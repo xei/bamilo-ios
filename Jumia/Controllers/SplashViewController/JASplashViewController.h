@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RICountry.h"
 
 @interface JASplashViewController : JABaseViewController
+
+@property (strong, nonatomic) RICountry *selectedCountry;
 
 @end

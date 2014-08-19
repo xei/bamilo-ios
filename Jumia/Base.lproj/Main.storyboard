@@ -7,7 +7,7 @@
         <!--Splash View Controller-->
         <scene sceneID="Spm-qJ-s9h">
             <objects>
-                <viewController id="35A-Fx-NNM" customClass="JASplashViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="splashViewController" id="35A-Fx-NNM" customClass="JASplashViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Bim-vD-Gdf"/>
                         <viewControllerLayoutGuide type="bottom" id="qr3-Iw-5fx"/>

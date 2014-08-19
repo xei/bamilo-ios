@@ -16,7 +16,7 @@
 + (NSString *)getCartWithSuccessBlock:(void (^)(RICart *cart))sucessBlock
                       andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_CART_DATA]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_CART_DATA]]
                                                             parameters:nil
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
@@ -55,7 +55,7 @@
                        withSuccessBlock:(void (^)(RICart *cart))sucessBlock
                         andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_CART_CHANGE]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_CART_CHANGE]]
                                                             parameters:productsQuantities
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
@@ -96,7 +96,7 @@
                           @"sku": simple,
                           @"p": sku };
     
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_ADD_ORDER]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_ADD_ORDER]]
                                                             parameters:dic
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
@@ -140,7 +140,7 @@
     NSDictionary *dic = @{@"quantity": quantity,
                           @"sku": sku };
     
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_REMOVE_FROM_CART]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_REMOVE_FROM_CART]]
                                                             parameters:dic
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache

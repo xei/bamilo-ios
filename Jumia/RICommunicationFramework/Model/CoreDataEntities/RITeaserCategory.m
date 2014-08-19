@@ -25,10 +25,11 @@
 
 #pragma mark - Requests
 
-+ (NSString*)loadTeaserCategoriesIntoDatabaseWithSuccessBlock:(void (^)(id teaserCategories))successBlock
-                                              andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
++ (NSString *)loadTeaserCategoriesIntoDatabaseForCountry:(NSString*)countryUrl
+                                        withSuccessBlock:(void (^)(id teaserCategories))successBlock
+                                         andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_TEASERS]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_GET_TEASERS]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
@@ -74,7 +75,7 @@
     if (VALID_NOTEMPTY(allTeaserCategories, NSArray)) {
         successBlock(allTeaserCategories);
     } else {
-        operationID = [RITeaserCategory loadTeaserCategoriesIntoDatabaseWithSuccessBlock:^(NSArray *teaserCategories) {
+        operationID = [RITeaserCategory loadTeaserCategoriesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] withSuccessBlock:^(NSArray *teaserCategories) {
             if (VALID_NOTEMPTY(teaserCategories, NSArray)) {
                 successBlock(teaserCategories);
             } else {

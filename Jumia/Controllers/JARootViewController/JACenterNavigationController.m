@@ -8,6 +8,7 @@
 
 #import "JACenterNavigationController.h"
 #import "JANavigationBarView.h"
+#import "JASplashViewController.h"
 #import "RICart.h"
 #import "JAHomeViewController.h"
 #import "JAMyFavouritesViewController.h"
@@ -413,22 +414,12 @@
 
 - (void)didSelectedCountry:(RICountry *)country
 {
-    [RIApi startApiWithCountry:country
-                  successBlock:^(id api) {
-                      
-                      JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
-                      
-                      [self pushViewController:home
-                                      animated:YES];
-                      [self.navigationBarView changedToHomeViewController];
-                      
-                      self.viewControllers = @[home];
-                      
-                  } andFailureBlock:^(NSArray *errorMessage) {
-                      
-                      NSLog(@"aqui");
-                      
-                  }];
+    UINavigationController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+    JASplashViewController *splash = [self.storyboard instantiateViewControllerWithIdentifier:@"splashViewController"];
+    splash.selectedCountry = country;
+    rootViewController.viewControllers = @[splash];
+    
+    [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
 }
 
 #pragma mark - Recent Search delegate

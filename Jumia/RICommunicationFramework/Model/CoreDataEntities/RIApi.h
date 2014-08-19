@@ -19,9 +19,7 @@
 
 @property (nonatomic, retain) NSString * countryUrl;
 @property (nonatomic, retain) NSString * actionName;
-@property (nonatomic, retain) NSNumber * curMobVersion;
 @property (nonatomic, retain) NSNumber * curVersion;
-@property (nonatomic, retain) NSNumber * minMobVersion;
 @property (nonatomic, retain) NSNumber * minVersion;
 @property (nonatomic, retain) NSOrderedSet *sections;
 
@@ -35,7 +33,7 @@
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)startApiWithCountry:(RICountry *)country
-                     successBlock:(void (^)(id api))successBlock
+                     successBlock:(void (^)(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory))successBlock
                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 
 /**
@@ -65,6 +63,14 @@
  *  @return a boolean
  */
 + (BOOL)checkIfHaveCountrySelected;
+
+/**
+
+ *  get the current url in use
+ *
+ *  @return the url
+ */
++ (NSString *)getCountryUrlInUse;
 
 @end
 

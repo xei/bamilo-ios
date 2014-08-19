@@ -33,3 +33,10 @@
 #define kDidSelectTeaserWithPDVUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_PDV_URL"
 #define kDidSelectTeaserWithAllCategoriesNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_ALL_CATEGORIES"
 #define kDidSelectCategoryFromCenterPanelNotification @"NOTIFICATION_SELECTED_CATEGORY_FROM_CENTER_PANEL"
+
+// Update alert view
+#define kForceUpdateAlertViewTag 0
+#define kUpdateAvailableAlertViewTag 1
+
+// App url (this is needed to redirect to itunes connect to update the app)
+#define kAppStoreUrl @"https://itunes.apple.com/us/app/the-iconic-app/id686483021?ls=1&mt=8"

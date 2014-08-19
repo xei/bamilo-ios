@@ -31,7 +31,7 @@
                 successBlock(staticBlockIndex.data);
                 
             } else if (VALID_NOTEMPTY(staticBlockIndex.url, NSString)){
-
+                
                 return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:staticBlockIndex.url]
                                                                         parameters:nil httpMethodPost:YES
                                                                          cacheType:RIURLCacheNoCache
@@ -73,10 +73,11 @@
     return nil;
 }
 
-+ (NSString*)loadStaticBlockIndexesIntoDatabaseWithSuccessBlock:(void (^)(id staticBlockIndexes))successBlock
-                                                andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString*)loadStaticBlockIndexesIntoDatabaseForCountry:(NSString*)countryUrl
+                                         withSuccessBlock:(void (^)(id staticBlockIndexes))successBlock
+                                          andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_GET_STATICBLOCKS]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_GET_STATICBLOCKS]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime

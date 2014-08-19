@@ -76,7 +76,7 @@
     
     if (VALID_NOTEMPTY(sku, NSString))
     {
-        NSString *url = [NSString stringWithFormat:@"%@%@rating/add/?rating-costumer=%@&rating-option--1=%@cenas&rating-catalog-sku=%@&RatingForm[comment]=%@&RatingForm[title]=%@&RatingForm[name]=%@", RI_BASE_URL, RI_API_VERSION, userId, stars, sku, comment, title, name];
+        NSString *url = [NSString stringWithFormat:@"%@%@rating/add/?rating-costumer=%@&rating-option--1=%@cenas&rating-catalog-sku=%@&RatingForm[comment]=%@&RatingForm[title]=%@&RatingForm[name]=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, userId, stars, sku, comment, title, name];
         operationID = [[RICommunicationWrapper sharedInstance]
                        sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@", url]]
                        parameters:nil
