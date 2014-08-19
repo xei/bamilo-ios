@@ -44,7 +44,7 @@
     
     if ([self.stringNewPrice isEqualToNumber:@(0)])
     {
-        self.labelNewPrice.text = [self.stringNewPrice stringValue];
+        self.labelNewPrice.text = [self.stringOldPrice stringValue];
         
         [self.labelOldPrice removeFromSuperview];
     }
