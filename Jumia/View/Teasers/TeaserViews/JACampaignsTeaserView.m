@@ -88,6 +88,18 @@
     titleLabel.font = JACampaignsTeaserViewTitleFont;
     titleLabel.textColor = JACampaignsTeaserViewTitleColor;
     [contentView addSubview:titleLabel];
+    
+    UIControl* control = [UIControl new];
+    [control setFrame:self.bounds];
+    [contentView addSubview:control];
+    [control addTarget:self action:@selector(teaserTextPressed:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)teaserTextPressed:(UIControl*)control
+{
+//    RITeaser* teaser = [self.teasers firstObject];
+//    
+//    RITeaserText* teaserText = [teaser.teaserTexts firstObject];
 }
 
 @end

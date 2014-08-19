@@ -12,10 +12,19 @@
 #import "RITeaserImage.h"
 #import "RITeaserText.h"
 
+#define kTeaserNotificationPushCatalogWithUrl @"TEASER_NOTIFICATION_PUSH_CATALOG_WITH_URL"
+#define kTeaserNotificationPushPDVWithUrl @"TEASER_NOTIFICATION_PUSH_PDV_WITH_URL"
+#define kTeaserNotificationPushAllCategories @"TEASER_NOTIFICATION_PUSH_ALL_CATEGORIES"
+
 @interface JATeaserView : UIView
 
 @property (nonatomic, strong)NSOrderedSet* teasers;
 
 - (void)load;
+
+- (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage;
+- (void)teaserPressedWithTeaserText:(RITeaserText*)teaserText;
+- (void)teaserPressedWithTeaserProduct:(RITeaserProduct*)teaserProduct;
+- (void)teaserAllCategoriesPressed;
 
 @end
