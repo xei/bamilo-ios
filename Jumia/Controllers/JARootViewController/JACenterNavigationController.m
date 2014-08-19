@@ -279,11 +279,10 @@
         catalog.catalogUrl = url;
         
         [self.navigationBarView changeNavigationBarTitle:title];
+        [self showBackButton];
         
         [self pushViewController:catalog
                         animated:YES];
-        
-        self.viewControllers = @[catalog];
     }
 }
 
