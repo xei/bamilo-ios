@@ -91,6 +91,11 @@
     allCategoriesLabel.textColor = JATopCategoriesTeaserViewCellColor;
     [contentView addSubview:allCategoriesLabel];
     
+    UIControl* control = [UIControl new];
+    [control setFrame:allCategoriesLabel.frame];
+    [contentView addSubview:control];
+    [control addTarget:self action:@selector(teaserAllCategoriesPressed) forControlEvents:UIControlEventTouchUpInside];
+    
     currentY += allCategoriesLabel.frame.size.height;
     
     [contentView setFrame:CGRectMake(contentView.frame.origin.x,

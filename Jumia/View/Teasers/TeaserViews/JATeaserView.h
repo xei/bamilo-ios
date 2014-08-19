@@ -14,6 +14,7 @@
 
 #define kTeaserNotificationPushCatalogWithUrl @"TEASER_NOTIFICATION_PUSH_CATALOG_WITH_URL"
 #define kTeaserNotificationPushPDVWithUrl @"TEASER_NOTIFICATION_PUSH_PDV_WITH_URL"
+#define kTeaserNotificationPushAllCategories @"TEASER_NOTIFICATION_PUSH_ALL_CATEGORIES"
 
 @interface JATeaserView : UIView
 
@@ -24,5 +25,6 @@
 - (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage;
 - (void)teaserPressedWithTeaserText:(RITeaserText*)teaserText;
 - (void)teaserPressedWithTeaserProduct:(RITeaserProduct*)teaserProduct;
+- (void)teaserAllCategoriesPressed;
 
 @end

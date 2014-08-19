@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
@@ -342,7 +342,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RfL-3t-GwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1512.6666666666665" y="-588.11666666666667"/>
+            <point key="canvasLocation" x="1976" y="-589"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -389,6 +389,7 @@
                     <connections>
                         <outlet property="teaserCategoryScrollView" destination="MEv-bE-tYZ" id="7gC-g8-f4J"/>
                         <outlet property="teaserPagesScrollView" destination="bVK-fb-QVJ" id="hVZ-Y8-hXn"/>
+                        <segue destination="lMd-fG-L2Y" kind="push" id="zNt-qO-beb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -404,6 +405,35 @@
                 </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1128" y="-589"/>
+        </scene>
+        <!--Categories View Controller-->
+        <scene sceneID="1D2-QG-8TZ">
+            <objects>
+                <viewController storyboardIdentifier="categoriesViewController" id="lMd-fG-L2Y" customClass="JACategoriesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cQe-JP-ZhL"/>
+                        <viewControllerLayoutGuide type="bottom" id="GzH-sF-5Fd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Al1-Zf-OTC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9l2-zg-QiQ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="i7H-6A-BOF"/>
+                    <connections>
+                        <outlet property="tableView" destination="9l2-zg-QiQ" id="UhL-vt-V2c"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vA9-VB-bkS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1530" y="-589"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="euH-wI-leh">

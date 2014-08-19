@@ -15,6 +15,7 @@
 #import "JARecentSearchesViewController.h"
 #import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
+#import "JACategoriesViewController.h"
 #import "JAMyAccountViewController.h"
 #import "RIProduct.h"
 #import "RIApi.h"
@@ -86,6 +87,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectTeaserWithPDVUrl:)
                                                  name:kDidSelectTeaserWithPDVUrlNofication
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectTeaserWithAllCategories)
+                                                 name:kDidSelectTeaserWithAllCategoriesNofication
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectCategoryFromCenterPanel:)
+                                                 name:kDidSelectCategoryFromCenterPanelNotification
                                                object:nil];
 }
 
@@ -301,6 +311,44 @@
         pdv.previousCategory = @"Home";
         
         [self pushViewController:pdv
+                        animated:YES];
+    }
+}
+
+- (void)didSelectTeaserWithAllCategories
+{
+    JACategoriesViewController* categoriesViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"categoriesViewController"];
+    
+    [self showBackButton];
+    [self.navigationBarView changeNavigationBarTitle:@"All Categories"];
+    self.navigationBarView.backButton.hidden = NO;
+    self.navigationBarView.backImageView.hidden = NO;
+    self.navigationBarView.titleLabel.hidden = NO;
+    
+    [self pushViewController:categoriesViewController animated:YES];
+}
+
+- (void)didSelectCategoryFromCenterPanel:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                        object:nil];
+    
+    NSDictionary *selectedItem = [notification object];
+    
+    RICategory* category = [selectedItem objectForKey:@"category"];
+    if (VALID_NOTEMPTY(category, RICategory)) {
+        
+        JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        
+        catalog.category = category;
+        
+        [self showBackButton];
+        [self.navigationBarView changeNavigationBarTitle:category.name];
+        self.navigationBarView.backButton.hidden = NO;
+        self.navigationBarView.backImageView.hidden = NO;
+        self.navigationBarView.titleLabel.hidden = NO;
+        
+        [self pushViewController:catalog
                         animated:YES];
     }
 }

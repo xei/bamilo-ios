@@ -99,6 +99,10 @@
                                              selector:@selector(pushPDVWithUrl:)
                                                  name:kTeaserNotificationPushPDVWithUrl
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(pushAllCategories)
+                                                 name:kTeaserNotificationPushAllCategories
+                                               object:nil];
 }
 
 - (void)removeNotifications
@@ -178,6 +182,13 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:notification.object
                                                       userInfo:notification.userInfo];
+}
+
+- (void)pushAllCategories
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithAllCategoriesNofication
+                                                        object:nil
+                                                      userInfo:nil];
 }
 
 @end
