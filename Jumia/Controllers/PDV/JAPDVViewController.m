@@ -28,7 +28,7 @@
 
 @interface JAPDVViewController ()
 <
-    JAPDVGalleryViewDelegate
+JAPDVGalleryViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
@@ -54,9 +54,8 @@
 {
     [super viewDidLoad];
     
-    if (VALID_NOTEMPTY(self.product, RIProduct)) {
-        [self productLoaded];
-    } else if (VALID_NOTEMPTY(self.productUrl, NSString)) {
+    // Always load the product details when entering PDV
+    if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [self showLoading];
         [RIProduct getProductWithUrl:self.productUrl successBlock:^(id product) {
             self.product = product;
@@ -151,7 +150,7 @@
     float startingElement = 6.0;
     
     /*******
-        Image Section
+     Image Section
      *******/
     
     self.imageSection.frame = CGRectMake(6,
@@ -193,7 +192,7 @@
     startingElement += (4 + self.imageSection.frame.size.height);
     
     /*******
-        Colors / Variation
+     Colors / Variation
      *******/
     
     if (self.product.variations.count > 0) {
@@ -225,7 +224,7 @@
     }
     
     /*******
-        Product Info Section
+     Product Info Section
      *******/
     
     self.productInfoSection.frame = CGRectMake(6,
@@ -240,7 +239,7 @@
     
     [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
-                                        
+                                         
                                          self.productInfoSection.numberOfReviewsLabel.text = [NSString stringWithFormat:@"%@ Reviews", ratings.commentsCount];
                                          self.commentsCount = [ratings.commentsCount integerValue];
                                          
@@ -282,7 +281,7 @@
      
      */
     if (self.product.productSimples.count == 0)
-    {        
+    {
         [self.productInfoSection removeSizeOptions];
     }
     else if (self.product.productSimples.count == 1)
@@ -292,7 +291,7 @@
         if (tempProduct.attributeSize)
         {
             [self.productInfoSection.sizeButton setTitle:tempProduct.attributeSize
-                                            forState:UIControlStateNormal];
+                                                forState:UIControlStateNormal];
         }
         else
         {
@@ -463,9 +462,9 @@
                   withSuccessBlock:^(RICart *cart) {
                       
                       [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                 message:@"Product added"
-                                                delegate:nil
-                                       cancelButtonTitle:nil
+                                                  message:@"Product added"
+                                                 delegate:nil
+                                        cancelButtonTitle:nil
                                         otherButtonTitles:@"Ok", nil] show];
                       
                       [self hideLoading];
@@ -531,7 +530,7 @@
     
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
-  
+    
     [UIView animateWithDuration:0.4f
                      animations:^{
                          self.picker.frame = frame;
