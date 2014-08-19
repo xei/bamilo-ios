@@ -58,10 +58,11 @@
                                                            }];
 }
 
-+ (NSString *)loadCountryConfigurationWithSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
-                                       andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
++ (NSString *)loadCountryConfigurationForCountry:(NSString*)countryUrl
+                                withSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
+                                 andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_COUNTRY_CONFIGURATION]]
+    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_COUNTRY_CONFIGURATION]]
                                                              parameters:nil
                                                          httpMethodPost:YES
                                                               cacheType:RIURLCacheNoCache
@@ -100,7 +101,7 @@
     if (VALID_NOTEMPTY(configuration, NSArray)) {
         successBlock([configuration firstObject]);
     } else {
-        operationID = [RICountry loadCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+        operationID = [RICountry loadCountryConfigurationForCountry:[RIApi getCountryUrlInUse] withSuccessBlock:^(RICountryConfiguration *configuration) {
             successBlock(configuration);
         } andFailureBlock:failureBlock];
     }

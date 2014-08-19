@@ -28,8 +28,9 @@
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)loadTeaserCategoriesIntoDatabaseWithSuccessBlock:(void (^)(id teaserCategories))successBlock
-                                               andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString *)loadTeaserCategoriesIntoDatabaseForCountry:(NSString*)url
+                                        withSuccessBlock:(void (^)(id teaserCategories))successBlock
+                                         andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 
 /**
  *  Method to load teasers. It checks if they are stored in the core data, and case they aren't

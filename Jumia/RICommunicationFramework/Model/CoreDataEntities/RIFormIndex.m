@@ -16,10 +16,11 @@
 @dynamic url;
 @dynamic form;
 
-+ (NSString*)loadFormIndexesIntoDatabaseWithSuccessBlock:(void (^)(id formIndexes))successBlock
-                                         andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString*)loadFormIndexesIntoDatabaseForCountry:(NSString*)countryUrl
+                                  withSuccessBlock:(void (^)(id formIndexes))successBlock
+                                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_FORMS_INDEX]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_FORMS_INDEX]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
@@ -56,7 +57,7 @@
         successBlock([formIndexes objectAtIndex:0]);
         return nil;
     } else {
-        return [RIFormIndex loadFormIndexesIntoDatabaseWithSuccessBlock:^(id formIndexes) {
+        return [RIFormIndex loadFormIndexesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] withSuccessBlock:^(id formIndexes) {
             formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"uid" andPropertyValue:formIndexID];
             if(VALID_NOTEMPTY(formIndexes, NSArray))
             {

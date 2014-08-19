@@ -16,9 +16,11 @@
 
 @interface JASplashViewController ()
 <
-    JAChooseCountryDelegate
+JAChooseCountryDelegate,
+UIAlertViewDelegate
 >
 
+@property (nonatomic, assign) BOOL isPopupOpened;
 @property (nonatomic, assign) NSInteger requestCount;
 @property (weak, nonatomic) IBOutlet UIImageView *splashImage;
 @property (strong, nonatomic) JANavigationBarView *navigationBarView;
@@ -45,12 +47,31 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
         
         [RIApi startApiWithCountry:self.selectedCountry
-                      successBlock:^(id api) {
-                          
-                          if (0 >= self.requestCount) {
-                              [self procedeToFirstAppScreen];
+                      successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                          if(hasUpdate)
+                          {
+                              self.isPopupOpened = YES;
+                              if(isUpdateMandatory)
+                              {
+                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update necessary" message:@"We found something that we needed to fix to make shopping experience in Jumia even better! You will need to update before continue using the app." delegate:self cancelButtonTitle:@"Ok, Update!" otherButtonTitles:nil];
+                                  [alert setTag:kForceUpdateAlertViewTag];
+                                  [alert show];
+                                  
+                                  [self hideLoading];
+                              }
+                              else
+                              {
+                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update available" message:@"There is a new update available that we prepared to make shopping experience in Jumia even better! Make sure you upgrade today!" delegate:self cancelButtonTitle:@"No, thanks." otherButtonTitles:@"Update!", nil];
+                                  [alert setTag:kUpdateAvailableAlertViewTag];
+                                  [alert show];
+                              }
                           }
-                          
+                          else
+                          {
+                              if (0 >= self.requestCount) {
+                                  [self procedeToFirstAppScreen];
+                              }
+                          }
                       } andFailureBlock:^(NSArray *errorMessage) {
                           
                           [self hideLoading];
@@ -80,16 +101,34 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
             
             [RIApi startApiWithCountry:nil
-                          successBlock:^(id api) {
-                              
-                              if (0 >= self.requestCount) {
-                                  [self procedeToFirstAppScreen];
+                          successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                              if(hasUpdate)
+                              {
+                                  self.isPopupOpened = YES;
+                                  if(isUpdateMandatory)
+                                  {
+                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update necessary" message:@"We found something that we needed to fix to make shopping experience in Jumia even better! You will need to update before continue using the app." delegate:self cancelButtonTitle:@"Ok, Update!" otherButtonTitles:nil];
+                                      [alert setTag:kForceUpdateAlertViewTag];
+                                      [alert show];
+                                      
+                                      [self hideLoading];
+                                  }
+                                  else
+                                  {
+                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update available" message:@"There is a new update available that we prepared to make shopping experience in Jumia even better! Make sure you upgrade today!" delegate:self cancelButtonTitle:@"No, thanks." otherButtonTitles:@"Update!", nil];
+                                      [alert setTag:kUpdateAvailableAlertViewTag];
+                                      [alert show];
+                                  }
+                              }
+                              else
+                              {
+                                  if (0 >= self.requestCount) {
+                                      [self procedeToFirstAppScreen];
+                                  }
                               }
                               
                           } andFailureBlock:^(NSArray *errorMessage) {
-                              
                               [self hideLoading];
-                              
                           }];
         }
         else
@@ -125,6 +164,13 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.isPopupOpened = NO;
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -153,11 +199,14 @@
 
 - (void)procedeToFirstAppScreen
 {
-    UIViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
-    
-    [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
-    
-    [self hideLoading];
+    if(!self.isPopupOpened)
+    {
+        UIViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
+        
+        [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+        
+        [self hideLoading];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -185,17 +234,71 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
     
     [RIApi startApiWithCountry:country
-                  successBlock:^(id api) {
-                      
-                      if (0 >= self.requestCount) {
-                          [self procedeToFirstAppScreen];
+                  successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                      if(hasUpdate)
+                      {
+                          self.isPopupOpened = YES;
+                          if(isUpdateMandatory)
+                          {
+                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update necessary" message:@"We found something that we needed to fix to make shopping experience in Jumia even better! You will need to update before continue using the app." delegate:self cancelButtonTitle:@"Ok, Update!" otherButtonTitles:nil];
+                              [alert setTag:kForceUpdateAlertViewTag];
+                              [alert show];
+                              
+                              [self hideLoading];
+                          }
+                          else
+                          {
+                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update available" message:@"There is a new update available that we prepared to make shopping experience in Jumia even better! Make sure you upgrade today!" delegate:self cancelButtonTitle:@"No, thanks." otherButtonTitles:@"Update!", nil];
+                              [alert setTag:kUpdateAvailableAlertViewTag];
+                              [alert show];
+                          }
+                      }
+                      else
+                      {
+                          if (0 >= self.requestCount) {
+                              [self procedeToFirstAppScreen];
+                          }
                       }
                       
                   } andFailureBlock:^(NSArray *errorMessage) {
-                      
                       [self hideLoading];
-                      
                   }];
+}
+
+#pragma mark UIAlertView
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    self.isPopupOpened = NO;
+    if(kUpdateAvailableAlertViewTag == [alertView tag])
+    {
+        if(0 == buttonIndex)
+        {
+            if (0 >= self.requestCount) {
+                [self procedeToFirstAppScreen];
+            }
+        }
+        else if(1 == buttonIndex)
+        {
+            if (0 >= self.requestCount) {
+                [self procedeToFirstAppScreen];
+            }
+            
+            NSURL  *url = [NSURL URLWithString:kAppStoreUrl];
+            if([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }
+    }
+    else if(kForceUpdateAlertViewTag == [alertView tag])
+    {
+        if(0 == buttonIndex)
+        {
+            NSURL  *url = [NSURL URLWithString:kAppStoreUrl];
+            if([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }
+    }
 }
 
 @end
