@@ -70,7 +70,8 @@
     
     CGFloat currentX = productScrollView.bounds.origin.x;
     
-    for (RITeaser* teaser in self.teasers) {
+    for (int i = 0; i < self.teasers.count; i++) {
+        RITeaser* teaser = [self.teasers objectAtIndex:i];
         
         for (RITeaserProduct* teaserProduct in teaser.teaserProducts) {
             
@@ -128,11 +129,28 @@
                                             productTeaserView.bounds.size.width - JATopSellersTeaserViewHorizontalMargin*2,
                                             priceLabel.frame.size.height)];
             [productTeaserView addSubview:priceLabel];
+            
+            UIControl* control = [UIControl new];
+            [control setFrame:productTeaserView.frame];
+            [productScrollView addSubview:control];
+            control.tag = i;
+            [control addTarget:self action:@selector(teaserProductPressed:) forControlEvents:UIControlEventTouchUpInside];
         }
     }
     
     [productScrollView setContentSize:CGSizeMake(currentX,
                                                  productScrollView.frame.size.height)];
+}
+
+- (void)teaserProductPressed:(UIControl*)control
+{
+    NSInteger index = control.tag;
+    
+    RITeaser* teaser = [self.teasers objectAtIndex:index];
+    
+    RITeaserProduct* teaserProduct = [teaser.teaserProducts firstObject];
+    
+    [self teaserPressedWithTeaserProduct:teaserProduct];
 }
 
 @end

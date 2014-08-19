@@ -13,6 +13,7 @@
 @interface JAPDVViewController : JABaseViewController
 
 @property (strong, nonatomic) RIProduct *product;
+@property (strong, nonatomic) NSString* productUrl;
 @property (assign, nonatomic) BOOL fromCatalogue;
 @property (strong, nonatomic) NSArray *arrayWithRelatedItems;
 @property (strong, nonatomic) NSString *previousCategory;

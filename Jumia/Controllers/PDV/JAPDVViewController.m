@@ -54,6 +54,22 @@
 {
     [super viewDidLoad];
     
+    if (VALID_NOTEMPTY(self.product, RIProduct)) {
+        [self productLoaded];
+    } else if (VALID_NOTEMPTY(self.productUrl, NSString)) {
+        [self showLoading];
+        [RIProduct getProductWithUrl:self.productUrl successBlock:^(id product) {
+            self.product = product;
+            [self hideLoading];
+            [self productLoaded];
+        } andFailureBlock:^(NSArray *error) {
+            [self hideLoading];
+        }];
+    }
+}
+
+- (void)productLoaded
+{
     self.imageSection = [JAPDVImageSection getNewPDVImageSection];
     
     if (self.product.variations.count > 0) {

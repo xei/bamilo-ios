@@ -14,5 +14,6 @@
 @interface JACatalogViewController : JABaseViewController <JAPickerScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, JAMainFiltersViewControllerDelegate>
 
 @property (nonatomic, strong)RICategory* category;
+@property (nonatomic, strong)NSString* catalogUrl;
 
 @end
