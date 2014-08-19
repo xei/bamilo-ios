@@ -67,6 +67,7 @@
                                                     inSection:0];
                     break;
                 }
+                index++;
             }
         }
         
@@ -98,8 +99,6 @@
 
 - (void)applyButtonPressed
 {
-    [self showLoading];
-    
     if (self.selectedIndex)
     {
         RICountry *country = [self.countriesArray objectAtIndex:self.selectedIndex.row];
