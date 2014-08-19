@@ -60,8 +60,7 @@
     [self setLeftPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
     [self setCenterPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"rootNavigationController"]];
     
-    [(JACenterNavigationController *)self.centerPanel showViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"]
-                                                                  sender:nil];
+    [(JACenterNavigationController *)self.centerPanel pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"] animated:YES];
 }
 
 - (void)turnOffLeftSwipe
