@@ -367,9 +367,13 @@
             //we've hit the limit, delete the older product
             for (RIProduct* recentProduct in recentlyViewedProducts) {
                 
-                NSDate* oldestDate = [recentProduct.recentlyViewedDate laterDate:productToDelete.recentlyViewedDate];
-                if (oldestDate == recentProduct.recentlyViewedDate) {
+                if (ISEMPTY(productToDelete)) {
                     productToDelete = recentProduct;
+                } else {
+                    NSDate* oldestDate = [recentProduct.recentlyViewedDate earlierDate:productToDelete.recentlyViewedDate];
+                    if (oldestDate == recentProduct.recentlyViewedDate) {
+                        productToDelete = recentProduct;
+                    }
                 }
             }
         }
