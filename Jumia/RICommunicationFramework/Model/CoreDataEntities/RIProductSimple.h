@@ -31,4 +31,11 @@
  */
 + (RIProductSimple *)parseProductSimple:(NSDictionary *)productSimpleJSON;
 
+/**
+ *  Method to save an RIProductSimple in coredata
+ *
+ *  @param the RIProductSimple to be saved
+ */
++ (void)saveProductSimple:(RIProductSimple*)productSimple;
+
 @end
