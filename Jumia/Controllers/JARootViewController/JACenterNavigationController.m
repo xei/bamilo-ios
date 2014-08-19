@@ -80,8 +80,12 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectTeaserWithUrl:)
-                                                 name:kDidSelectTeaserWithUrlNofication
+                                             selector:@selector(didSelectTeaserWithCatalogUrl:)
+                                                 name:kDidSelectTeaserWithCatalogUrlNofication
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectTeaserWithPDVUrl:)
+                                                 name:kDidSelectTeaserWithPDVUrlNofication
                                                object:nil];
 }
 
@@ -260,7 +264,7 @@
     }
 }
 
-- (void)didSelectTeaserWithUrl:(NSNotification*)notification
+- (void)didSelectTeaserWithCatalogUrl:(NSNotification*)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
@@ -280,6 +284,29 @@
                         animated:YES];
         
         self.viewControllers = @[catalog];
+    }
+}
+
+- (void)didSelectTeaserWithPDVUrl:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                        object:nil];
+    
+    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* title = [notification.userInfo objectForKey:@"title"];
+    
+    if (VALID_NOTEMPTY(url, NSString)) {
+//        
+//        JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+//        
+//        catalog.catalogUrl = url;
+//        
+//        [self.navigationBarView changeNavigationBarTitle:title];
+//        
+//        [self pushViewController:catalog
+//                        animated:YES];
+//        
+//        self.viewControllers = @[catalog];
     }
 }
 

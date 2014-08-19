@@ -29,4 +29,5 @@
 #define kShowSpecificFilterNavNofication @"NOTIFICATION_SHOW_SPECIFIC_FILTER_NAVIGATION"
 
 //teasers
-#define kDidSelectTeaserWithUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_URL"
+#define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"
+#define kDidSelectTeaserWithPDVUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_PDV_URL"

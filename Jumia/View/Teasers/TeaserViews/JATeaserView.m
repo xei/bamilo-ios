@@ -21,9 +21,23 @@
 
 - (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushWithUrl
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushCatalogWithUrl
                                                         object:nil
                                                       userInfo:[NSDictionary dictionaryWithObjects:@[teaserImage.url,teaserImage.teaserDescription] forKeys:@[@"url",@"title"]]];
+}
+
+- (void)teaserPressedWithTeaserText:(RITeaserText*)teaserText
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushCatalogWithUrl
+                                                        object:nil
+                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserText.url,teaserText.name] forKeys:@[@"url",@"title"]]];
+}
+
+- (void)teaserPressedWithTeaserProduct:(RITeaserProduct*)teaserProduct
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushPDVWithUrl
+                                                        object:nil
+                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserProduct.url,teaserProduct.name] forKeys:@[@"url",@"title"]]];
 }
 
 @end

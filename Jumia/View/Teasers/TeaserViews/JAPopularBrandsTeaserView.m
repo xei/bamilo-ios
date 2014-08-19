@@ -56,7 +56,9 @@
     
     currentY += lineView.frame.size.height;
     
-    for (RITeaser* teaser in self.teasers) {
+    
+    for (int i = 0; i < self.teasers.count; i++) {
+        RITeaser* teaser = [self.teasers objectAtIndex:i];
         
         for (RITeaserText* teaserText in teaser.teaserTexts) {
             
@@ -68,6 +70,12 @@
             teaserLabel.font = JAPopularBrandsTeaserViewCellFont;
             teaserLabel.textColor = JAPopularBrandsTeaserViewCellColor;
             [contentView addSubview:teaserLabel];
+            
+            UIControl* control = [UIControl new];
+            [control setFrame:teaserLabel.frame];
+            [contentView addSubview:control];
+            control.tag = i;
+            [control addTarget:self action:@selector(teaserTextPressed:) forControlEvents:UIControlEventTouchUpInside];
             
             currentY += teaserLabel.frame.size.height;
         }
@@ -82,6 +90,17 @@
                               self.frame.origin.y,
                               self.frame.size.width,
                               currentY + JAPopularBrandsTeaserViewHorizontalMargin)];
+}
+
+- (void)teaserTextPressed:(UIControl*)control
+{
+    NSInteger index = control.tag;
+    
+    RITeaser* teaser = [self.teasers objectAtIndex:index];
+    
+    RITeaserText* teaserText = [teaser.teaserTexts firstObject];
+    
+    [self teaserPressedWithTeaserText:teaserText];
 }
 
 @end

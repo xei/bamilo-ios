@@ -93,7 +93,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(pushCatalogWithUrl:)
-                                                 name:kTeaserNotificationPushWithUrl
+                                                 name:kTeaserNotificationPushCatalogWithUrl
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(pushPDVWithUrl:)
+                                                 name:kTeaserNotificationPushPDVWithUrl
                                                object:nil];
 }
 
@@ -164,7 +168,14 @@
 
 - (void)pushCatalogWithUrl:(NSNotification*)notification
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithUrlNofication
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithCatalogUrlNofication
+                                                        object:notification.object
+                                                      userInfo:notification.userInfo];
+}
+
+- (void)pushPDVWithUrl:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:notification.object
                                                       userInfo:notification.userInfo];
 }
