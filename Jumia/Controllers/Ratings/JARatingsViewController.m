@@ -95,6 +95,11 @@
         
         [self.labelNewPrice sizeToFit];
         [self.oldPriceLabel sizeToFit];
+        
+        CGRect tempFrame = self.oldPriceLabel.frame;
+        tempFrame.origin.x = self.labelNewPrice.frame.size.width + self.labelNewPrice.frame.origin.x + 1;
+        self.oldPriceLabel.frame = tempFrame;
+        
         [self.topView layoutSubviews];
     }
     else
@@ -251,6 +256,11 @@
     cell.labelAuthorDate.text = string;
     
     return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 #pragma mark - Number of stars
