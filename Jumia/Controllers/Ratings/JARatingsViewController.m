@@ -233,6 +233,10 @@
             [cell setAppearanceRating:[option.optionValue integerValue]];
         } else if ([option.typeTitle isEqualToString:@"Quality"]) {
             [cell setQualityRating:[option.optionValue integerValue]];
+        } else if ([option.typeTitle isEqualToString:@"Rating"]) {
+            [cell setPriceRating:[option.optionValue integerValue]];
+            [cell setAppearanceRating:[option.optionValue integerValue]];
+            [cell setQualityRating:[option.optionValue integerValue]];
         }
     }
     
