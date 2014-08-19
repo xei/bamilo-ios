@@ -99,11 +99,11 @@
     }
     if(VALID_NOTEMPTY(sku, NSString))
     {
-        [parameters setValue:sku forKey:@"sku"];
+        [parameters setValue:sku forKey:@"p"];
     }
     if(VALID_NOTEMPTY(simple, NSString))
     {
-        [parameters setValue:simple forKey:@"simple"];
+        [parameters setValue:simple forKey:@"sku"];
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_ADD_ORDER]]

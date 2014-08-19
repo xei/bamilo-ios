@@ -218,7 +218,7 @@
     }
     
     JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
-    pdv.product = product;
+    pdv.productUrl = product.url;
     pdv.fromCatalogue = YES;
     pdv.previousCategory = self.category.name;
     pdv.arrayWithRelatedItems = [tempArray copy];
