@@ -7,7 +7,7 @@
 //
 
 #import "JAAppDelegate.h"
-
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface JAAppDelegate ()
 
@@ -24,7 +24,10 @@
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];
 #endif
     
-    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath launchOptions:launchOptions];
+    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
+                                                                       launchOptions:launchOptions];
+    
+    [FBLoginView class];
     
     return YES;
 }
@@ -52,6 +55,20 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    BOOL urlWasHandled = [FBAppCall handleOpenURL:url
+                                sourceApplication:sourceApplication
+                                  fallbackHandler:^(FBAppCall *call) {
+                                      NSLog(@"Unhandled deep link: %@", url);
+                        }];
+    
+    return urlWasHandled;
 }
 
 @end
