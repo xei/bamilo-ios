@@ -92,12 +92,22 @@
                     withSuccessBlock:(void (^)(RICart *cart))sucessBlock
                      andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    NSDictionary *dic = @{@"quantity": quantity,
-                          @"sku": simple,
-                          @"p": sku };
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    if(VALID_NOTEMPTY(quantity, NSString))
+    {
+        [parameters setValue:quantity forKey:@"quantity"];
+    }
+    if(VALID_NOTEMPTY(sku, NSString))
+    {
+        [parameters setValue:sku forKey:@"p"];
+    }
+    if(VALID_NOTEMPTY(simple, NSString))
+    {
+        [parameters setValue:simple forKey:@"sku"];
+    }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_ADD_ORDER]]
-                                                            parameters:dic
+                                                            parameters:parameters
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime

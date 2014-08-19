@@ -1738,7 +1738,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xgY-mh-4W5">
-                                <rect key="frame" x="6" y="6" width="309" height="208"/>
+                                <rect key="frame" x="6" y="6" width="309" height="228"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sUm-ON-NB1">
                                         <rect key="frame" x="8" y="6" width="291" height="21"/>
@@ -1746,8 +1746,18 @@
                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Nm-H1-3DS">
+                                        <rect key="frame" x="10" y="176" width="291" height="47"/>
+                                        <state key="normal" title="Button">
+                                            <color key="titleColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginViaFacebook:" destination="ghr-t8-OwX" eventType="touchUpInside" id="5tT-pw-nqB"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o7F-7t-Z82">
-                                        <rect key="frame" x="8" y="172" width="291" height="30"/>
+                                        <rect key="frame" x="9" y="133" width="291" height="30"/>
                                         <state key="normal" title="Button">
                                             <color key="titleColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1759,11 +1769,11 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="208" id="fXo-jW-7kP"/>
+                                    <constraint firstAttribute="height" constant="228" id="fXo-jW-7kP"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Dg-X1-0hJ">
-                                <rect key="frame" x="6" y="219" width="309" height="44"/>
+                                <rect key="frame" x="6" y="239" width="309" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czm-cP-DoP">
                                         <rect key="frame" x="10" y="7" width="257" height="30"/>
@@ -1785,7 +1795,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="znh-Au-nKn">
-                                <rect key="frame" x="6" y="269" width="309" height="44"/>
+                                <rect key="frame" x="6" y="289" width="309" height="44"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrow_moreinfo" translatesAutoresizingMaskIntoConstraints="NO" id="fZe-sa-gKb">
                                         <rect key="frame" x="294" y="16" width="7" height="12"/>
@@ -1824,6 +1834,7 @@
                     <navigationItem key="navigationItem" id="HlZ-cw-qE8"/>
                     <connections>
                         <outlet property="buttonLogin" destination="o7F-7t-Z82" id="uEo-Ej-Vdx"/>
+                        <outlet property="facebookLogin" destination="0Nm-H1-3DS" id="tkq-Rh-P6A"/>
                         <outlet property="forgotButton" destination="16o-z6-TzV" id="fJd-KN-4PC"/>
                         <outlet property="forgotView" destination="znh-Au-nKn" id="N2g-D1-vLp"/>
                         <outlet property="labelLogin" destination="sUm-ON-NB1" id="zOz-dZ-y7U"/>
