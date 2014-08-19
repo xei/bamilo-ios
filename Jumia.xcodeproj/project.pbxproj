@@ -48,6 +48,7 @@
 		4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A862226198FA00D007FD76A /* JAPDVVariations.xib */; };
 		4A944FF51992805100C02734 /* RIProductRatings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF41992805100C02734 /* RIProductRatings.m */; };
 		4A944FF8199290F200C02734 /* JARatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF7199290F200C02734 /* JARatingsViewController.m */; };
+		4A9D26D7198BD44F001704ED /* RIRecentSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D26D6198BD44F001704ED /* RIRecentSearch.m */; };
 		4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242D91986547C00E37C90 /* JASidePanelController.m */; };
 		4AE242E01986569000E37C90 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
 		4AE242E51986570500E37C90 /* JAHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E41986570500E37C90 /* JAHomeViewController.m */; };
@@ -319,6 +320,8 @@
 		4A944FF41992805100C02734 /* RIProductRatings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIProductRatings.m; sourceTree = "<group>"; };
 		4A944FF6199290F200C02734 /* JARatingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARatingsViewController.h; sourceTree = "<group>"; };
 		4A944FF7199290F200C02734 /* JARatingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingsViewController.m; sourceTree = "<group>"; };
+		4A9D26D5198BD44F001704ED /* RIRecentSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIRecentSearch.h; sourceTree = "<group>"; };
+		4A9D26D6198BD44F001704ED /* RIRecentSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIRecentSearch.m; sourceTree = "<group>"; };
 		4AE242D81986547C00E37C90 /* JASidePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASidePanelController.h; sourceTree = "<group>"; };
 		4AE242D91986547C00E37C90 /* JASidePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASidePanelController.m; sourceTree = "<group>"; };
 		4AE242DE1986569000E37C90 /* JARootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARootViewController.h; sourceTree = "<group>"; };
@@ -1438,6 +1441,8 @@
 				B5A3028E19811E9200F71726 /* RIVariation.m */,
 				CE21CB02198147EE00F7DC66 /* RIStaticBlockIndex.h */,
 				CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */,
+				4A9D26D5198BD44F001704ED /* RIRecentSearch.h */,
+				4A9D26D6198BD44F001704ED /* RIRecentSearch.m */,
 				4A454F36199CBD4D00B44821 /* RICustomer.h */,
 				4A454F37199CBD4D00B44821 /* RICustomer.m */,
 				4A454F39199CBF1400B44821 /* RIAddress.h */,
@@ -1997,6 +2002,7 @@
 				CE2FB75B1993BCB900E7CD00 /* JACatalogCell.m in Sources */,
 				CE445880198C03D100CE7E8D /* JAPopularBrandsTeaserView.m in Sources */,
 				4A39213719891FBA00B70A9C /* JAChooseCountryViewController.m in Sources */,
+				4A9D26D7198BD44F001704ED /* RIRecentSearch.m in Sources */,
 				4AE242E51986570500E37C90 /* JAHomeViewController.m in Sources */,
 				4A1270FB1987EFB0004142F5 /* JAMenuNavigationBar.m in Sources */,
 				4A39213019891F7800B70A9C /* JARecentlyViewedViewController.m in Sources */,
@@ -2198,8 +2204,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -2219,7 +2224,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2cf7cbb4-587b-4c68-866b-c0d4d149e0d5";
 				VALID_ARCHS = "armv7s armv7";
 			};
 			name = Debug;
@@ -2229,8 +2233,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -2250,7 +2253,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2cf7cbb4-587b-4c68-866b-c0d4d149e0d5";
 				VALID_ARCHS = "armv7s armv7";
 			};
 			name = Release;
