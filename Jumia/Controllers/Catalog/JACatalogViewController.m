@@ -11,6 +11,7 @@
 #import "JACatalogListCell.h"
 #import "JACatalogGridCell.h"
 #import "JAPDVViewController.h"
+#import "RISearchSuggestion.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
@@ -58,6 +59,34 @@
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
+    
+    if (self.searchString.length > 0) {
+        
+        [self showLoading];
+        
+        [RISearchSuggestion getResultsForSearch:self.searchString
+                                           page:@"1"
+                                       maxItems:[NSString stringWithFormat:@"%d",JACatalogViewControllerMaxProducts]
+                                   successBlock:^(NSArray *results) {
+                                       
+                                       [self hideLoading];
+                                       self.productsArray = [results mutableCopy];
+                                       
+                                       [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+                                       
+                                   } andFailureBlock:^(NSArray *errorMessages) {
+                                       
+                                       [self hideLoading];
+                                       
+                                       [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                                   message:@"Error processing request"
+                                                                  delegate:nil
+                                                         cancelButtonTitle:nil
+                                                         otherButtonTitles:@"Ok", nil] show];
+                                   }];
+        
+    }
+    
     [self changeToList];
     
     NSArray* sortList = [NSArray arrayWithObjects:@"Popularity", @"Best Rating", @"New In", @"Price Up", @"Price Down", @"Name", @"Brand", nil];
@@ -78,44 +107,79 @@
 
 - (void)loadMoreProducts
 {
-    if (NO == self.loadedEverything) {
+    if (self.searchString.length > 0)
+    {
+        // In case of this is a search
+        
         [self showLoading];
         
-        NSString* urlToUse = self.catalogUrl;
-        if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.apiUrl, NSString)) {
-            urlToUse = self.category.apiUrl;
-        }
-        if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.apiUrl, NSString)) {
-            urlToUse = self.filterCategory.apiUrl;
-        }
-        [RIProduct getProductsWithCatalogUrl:urlToUse
-                               sortingMethod:self.sortingMethod
-                                        page:[self getCurrentPage]+1
-                                    maxItems:JACatalogViewControllerMaxProducts
-                                     filters:self.filtersArray
-                                successBlock:^(NSArray* products, NSArray* filters, NSArray* categories) {
-                                    
-                                    if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
-                                        self.filtersArray = filters;
-                                    }
-                                    
-                                    if (NOTEMPTY(categories)) {
-                                        self.categoriesArray = categories;
-                                    }
-                                    
-                                    if (0 == products.count || JACatalogViewControllerMaxProducts > products.count) {
-                                        self.loadedEverything = YES;
-                                    }
-                                    
-                                    [self.productsArray addObjectsFromArray:products];
-                                    
-                                    [self.collectionView reloadData];
-                                    
-                                    [self hideLoading];
-                                    
+        [RISearchSuggestion getResultsForSearch:self.searchString
+                                           page:[NSString stringWithFormat:@"%d", [self getCurrentPage]+1]
+                                       maxItems:[NSString stringWithFormat:@"%d",JACatalogViewControllerMaxProducts]
+                                   successBlock:^(NSArray *results) {
+                                       
+                                       if (0 == results.count || JACatalogViewControllerMaxProducts > results.count) {
+                                           self.loadedEverything = YES;
+                                       }
+                                       
+                                       [self.productsArray addObjectsFromArray:results];
+                                       
+                                       [self.collectionView reloadData];
+                                       
+                                       [self hideLoading];
+                                       
+                                   } andFailureBlock:^(NSArray *errorMessages) {
+                                       
+                                       [self hideLoading];
+                                       
+                                       [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                                   message:@"Error processing request"
+                                                                  delegate:nil
+                                                         cancelButtonTitle:nil
+                                                         otherButtonTitles:@"Ok", nil] show];
+                                   }];
+    }
+    else
+    {
+        if (NO == self.loadedEverything) {
+            [self showLoading];
+            
+            NSString* urlToUse = self.catalogUrl;
+            if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.apiUrl, NSString)) {
+                urlToUse = self.category.apiUrl;
+            }
+            if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.apiUrl, NSString)) {
+                urlToUse = self.filterCategory.apiUrl;
+            }
+            [RIProduct getProductsWithCatalogUrl:urlToUse
+                                   sortingMethod:self.sortingMethod
+                                            page:[self getCurrentPage]+1
+                                        maxItems:JACatalogViewControllerMaxProducts
+                                         filters:self.filtersArray
+                                    successBlock:^(NSArray* products, NSArray* filters, NSArray* categories) {
+                                        
+                                        if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
+                                            self.filtersArray = filters;
+                                        }
+                                        
+                                        if (NOTEMPTY(categories)) {
+                                            self.categoriesArray = categories;
+                                        }
+                                        
+                                        if (0 == products.count || JACatalogViewControllerMaxProducts > products.count) {
+                                            self.loadedEverything = YES;
+                                        }
+                                        
+                                        [self.productsArray addObjectsFromArray:products];
+                                        
+                                        [self.collectionView reloadData];
+                                        
+                                        [self hideLoading];
+                                        
                                     } andFailureBlock:^(NSArray *error) {
                                         [self hideLoading];
                                     }];
+        }
     }
 }
 

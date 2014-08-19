@@ -58,6 +58,7 @@ JAPDVGalleryViewDelegate
     if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [self showLoading];
         [RIProduct getProductWithUrl:self.productUrl successBlock:^(id product) {
+            [RIProduct addToRecentlyViewed:product];
             self.product = product;
             [self hideLoading];
             [self productLoaded];

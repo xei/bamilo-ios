@@ -44,6 +44,8 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSNumber * sum;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSNumber * isNew;
+@property (nonatomic, retain) NSNumber * isFavorite;
+@property (nonatomic, retain) NSDate * recentlyViewedDate;
 @property (nonatomic, retain) NSOrderedSet *images;
 @property (nonatomic, retain) NSOrderedSet *productSimples;
 @property (nonatomic, retain) NSOrderedSet *variations;
@@ -98,6 +100,24 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 + (NSString *)getProductsWithFullUrl:(NSString*)url
                         successBlock:(void (^)(NSArray *products, NSArray *filters, NSArray* categories))successBlock
                      andFailureBlock:(void (^)(NSArray *error))failureBlock;
+
+/**
+ *  Method to load a the recently viewed products from coredata
+ *
+ *  @param the success block containing the recently viewed products
+ *  @param the failure block containing the error message
+ *
+ */
++ (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock
+                                  andFailureBlock:(void (^)(NSArray *error))failureBlock;
+
+/**
+ *  Method to add a product to recently viewed list (and save it in coredata)
+ *
+ *  @param the product to be added to the recently viewed list
+ *
+ */
++ (void)addToRecentlyViewed:(RIProduct*)product;
 
 /**
  *  Method to cancel the request

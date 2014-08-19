@@ -7,7 +7,7 @@
 //
 
 #import "RISearchSuggestion.h"
-
+#import "RIProduct.h"
 
 @implementation RISearchSuggestion
 
@@ -72,6 +72,50 @@
                                                                   failureBlock(nil);
                                                               }
                                                           }];
+}
+
++ (NSString *)getResultsForSearch:(NSString *)query
+                             page:(NSString *)page
+                         maxItems:(NSString *)maxItems
+                     successBlock:(void (^)(NSArray *results))successBlock
+                  andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+{
+    query = [query lowercaseString];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@/?page=%@&maxitems=%@&setDevice=mobileApi", [RIApi getCountryUrlInUse], RI_API_VERSION, query, page, maxItems]];
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
+                                                            parameters:nil
+                                                        httpMethodPost:NO
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
+                                                              NSDictionary *metadata = jsonObject[@"metadata"];
+                                                              NSDictionary *results = metadata[@"results"];
+                                                              
+                                                              NSMutableArray *temp = [NSMutableArray new];
+                                                              
+                                                              for (NSDictionary *dic in results) {
+                                                                  [temp addObject:[RIProduct parseProduct:dic]];
+                                                              }
+                                                              
+                                                              successBlock([temp copy]);
+                                                              
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(nil);
+                                                              }
+                                                          }];
+
 }
 
 #pragma mark - Cancel requests

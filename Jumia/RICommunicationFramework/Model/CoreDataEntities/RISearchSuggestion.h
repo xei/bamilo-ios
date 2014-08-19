@@ -35,6 +35,23 @@
                      andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 
 /**
+ * Method to request results for a given query
+ *
+ * @param the query for which we want the results
+ * @param the page number
+ * @param the max items
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ *
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString *)getResultsForSearch:(NSString *)query
+                             page:(NSString *)page
+                         maxItems:(NSString *)maxItems
+                     successBlock:(void (^)(NSArray *results))successBlock
+                  andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+
+/**
  * Method to cancel the request
  *
  * @param the operationID

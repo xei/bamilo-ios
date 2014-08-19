@@ -14,7 +14,7 @@
 @property (nonatomic, retain) NSNumber * searchIndex;
 @property (nonatomic, retain) NSString * searchText;
 
-+ (void)saveRecentSearch:(RIRecentSearch *)search;
++ (void)saveRecentSearch:(NSString *)text;
 
 + (void)deleteRecentSearch:(RIRecentSearch *)search;
 
