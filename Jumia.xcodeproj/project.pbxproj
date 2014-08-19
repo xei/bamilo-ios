@@ -48,7 +48,6 @@
 		4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A862226198FA00D007FD76A /* JAPDVVariations.xib */; };
 		4A944FF51992805100C02734 /* RIProductRatings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF41992805100C02734 /* RIProductRatings.m */; };
 		4A944FF8199290F200C02734 /* JARatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF7199290F200C02734 /* JARatingsViewController.m */; };
-		4A9D26D7198BD44F001704ED /* RIRecentSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D26D6198BD44F001704ED /* RIRecentSearch.m */; };
 		4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242D91986547C00E37C90 /* JASidePanelController.m */; };
 		4AE242E01986569000E37C90 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
 		4AE242E51986570500E37C90 /* JAHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E41986570500E37C90 /* JAHomeViewController.m */; };
@@ -2002,7 +2001,6 @@
 				CE2FB75B1993BCB900E7CD00 /* JACatalogCell.m in Sources */,
 				CE445880198C03D100CE7E8D /* JAPopularBrandsTeaserView.m in Sources */,
 				4A39213719891FBA00B70A9C /* JAChooseCountryViewController.m in Sources */,
-				4A9D26D7198BD44F001704ED /* RIRecentSearch.m in Sources */,
 				4AE242E51986570500E37C90 /* JAHomeViewController.m in Sources */,
 				4A1270FB1987EFB0004142F5 /* JAMenuNavigationBar.m in Sources */,
 				4A39213019891F7800B70A9C /* JARecentlyViewedViewController.m in Sources */,
