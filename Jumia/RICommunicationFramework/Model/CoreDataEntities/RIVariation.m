@@ -38,4 +38,14 @@
     return newVariation;
 }
 
++ (void)saveVariation:(RIVariation*)variation;
+{
+    if (VALID_NOTEMPTY(variation.image, RIImage)) {
+        [RIImage saveImage:variation.image];
+    }
+    
+    [[RIDataBaseWrapper sharedInstance] insertManagedObject:variation];
+    [[RIDataBaseWrapper sharedInstance] saveContext];
+}
+
 @end

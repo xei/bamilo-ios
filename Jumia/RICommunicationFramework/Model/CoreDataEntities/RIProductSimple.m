@@ -69,4 +69,10 @@
     return newProductSimple;
 }
 
++ (void)saveProductSimple:(RIProductSimple*)productSimple;
+{
+    [[RIDataBaseWrapper sharedInstance] insertManagedObject:productSimple];
+    [[RIDataBaseWrapper sharedInstance] saveContext];
+}
+
 @end

@@ -25,4 +25,12 @@
  */
 + (RIVariation *)parseVariation:(NSDictionary *)variation;
 
+/**
+ *  Method to save an RIVariation in coredata
+ *
+ *  @param the RIVariation to be saved
+ */
++ (void)saveVariation:(RIVariation*)variation;
+
+
 @end

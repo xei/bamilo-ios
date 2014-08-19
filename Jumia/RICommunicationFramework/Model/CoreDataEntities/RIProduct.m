@@ -36,6 +36,8 @@
 @dynamic sum;
 @dynamic url;
 @dynamic isNew;
+@dynamic isFavorite;
+@dynamic recentlyViewedDate;
 @dynamic images;
 @dynamic productSimples;
 @dynamic variations;
@@ -332,6 +334,74 @@
     }
     
     return urlComponent;
+}
+
++ (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock
+                                  andFailureBlock:(void (^)(NSArray *error))failureBlock;
+{
+    NSArray* recentlyViewedProducts = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"recentlyViewedDate"];
+    
+    if (VALID(recentlyViewedProducts, NSArray) && successBlock) {
+        successBlock(recentlyViewedProducts);
+    } else if (failureBlock) {
+        failureBlock(nil);
+    }
+}
+
++ (void)addToRecentlyViewed:(RIProduct*)product;
+{
+    [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
+        
+        RIProduct* productToDelete;
+        
+        for (RIProduct* recentProduct in recentlyViewedProducts) {
+            
+            if ([recentProduct.sku isEqualToString:product.sku]) {
+                //same product, delete this one
+                productToDelete = recentProduct;
+                break;
+            }
+        }
+        
+        if (ISEMPTY(productToDelete) && recentlyViewedProducts.count >= 15) {
+            //we've hit the limit, delete the older product
+            for (RIProduct* recentProduct in recentlyViewedProducts) {
+                
+                NSDate* oldestDate = [recentProduct.recentlyViewedDate laterDate:productToDelete.recentlyViewedDate];
+                if (oldestDate == recentProduct.recentlyViewedDate) {
+                    productToDelete = recentProduct;
+                }
+            }
+        }
+        
+        if (VALID_NOTEMPTY(productToDelete, RIProduct)) {
+            [[RIDataBaseWrapper sharedInstance] deleteObject:productToDelete];
+        }
+        
+        //add the new product
+        product.recentlyViewedDate = [NSDate date];
+        [RIProduct saveProduct:product];
+        
+    } andFailureBlock:^(NSArray *error) {
+        
+    }];
+}
+
+
++ (void)saveProduct:(RIProduct *)product
+{
+    for (RIImage* image in product.images) {
+        [RIImage saveImage:image];
+    }
+    for (RIProductSimple* productSimple in product.productSimples) {
+        [RIProductSimple saveProductSimple:productSimple];
+    }
+    for (RIVariation* variation in product.variations) {
+        [RIVariation saveVariation:variation];
+    }
+    
+    [[RIDataBaseWrapper sharedInstance] insertManagedObject:product];
+    [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
 @end
