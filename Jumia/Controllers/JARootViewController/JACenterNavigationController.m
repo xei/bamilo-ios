@@ -241,6 +241,19 @@
      */
 }
 
+- (void)pushCatalogToShowSearchResults:(NSString *)query
+{
+    JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    catalog.searchString = query;
+    
+    [self pushViewController:catalog
+                    animated:YES];
+    
+    [self.navigationBarView changeNavigationBarTitle:query];
+    
+    self.viewControllers = @[catalog];
+}
+
 - (void)changeCenterPanelToCatalogWithCategory:(RICategory*)category
 {
     JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
@@ -269,8 +282,16 @@
                      titleForNavBar:nil];
             
         } else {
+            if ([index isEqual:@(99)])
+            {
+                // It's to perform a search
+                [self pushCatalogToShowSearchResults:[selectedItem objectForKey:@"text"]];
+            }
+            else
+            {
             [self changeCenterPanel:[selectedItem objectForKey:@"name"]
                      titleForNavBar:[selectedItem objectForKey:@"name"]];
+            }
         }
     }
 }
