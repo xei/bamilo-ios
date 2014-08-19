@@ -293,20 +293,16 @@
                                                         object:nil];
     
     NSString* url = [notification.userInfo objectForKey:@"url"];
-    NSString* title = [notification.userInfo objectForKey:@"title"];
     
     if (VALID_NOTEMPTY(url, NSString)) {
-//        
-//        JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-//        
-//        catalog.catalogUrl = url;
-//        
-//        [self.navigationBarView changeNavigationBarTitle:title];
-//        
-//        [self pushViewController:catalog
-//                        animated:YES];
-//        
-//        self.viewControllers = @[catalog];
+        
+        JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
+        pdv.productUrl = url;
+        pdv.fromCatalogue = NO;
+        pdv.previousCategory = @"Home";
+        
+        [self pushViewController:pdv
+                        animated:YES];
     }
 }
 

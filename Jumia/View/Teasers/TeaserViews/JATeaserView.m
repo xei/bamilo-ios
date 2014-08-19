@@ -37,7 +37,7 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushPDVWithUrl
                                                         object:nil
-                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserProduct.url,teaserProduct.name] forKeys:@[@"url",@"title"]]];
+                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserProduct.url] forKeys:@[@"url"]]];
 }
 
 @end
