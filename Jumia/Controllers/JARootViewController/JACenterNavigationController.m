@@ -445,15 +445,15 @@
 
 #pragma mark - Recent Search delegate
 
-- (void)didSelectedRecentSearch:(RIRecentSearch *)recentSearch
+- (void)didSelectedRecentSearch:(RISearchSuggestion *)recentSearch
 {
-    JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+    JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    catalog.searchString = recentSearch.item;
     
-    [self pushViewController:home
+    [self pushViewController:catalog
                     animated:YES];
-    [self.navigationBarView changedToHomeViewController];
     
-    self.viewControllers = @[home];
+    [self.navigationBarView changeNavigationBarTitle:recentSearch.item];
 }
 
 #pragma mark - Customize navigation bar
