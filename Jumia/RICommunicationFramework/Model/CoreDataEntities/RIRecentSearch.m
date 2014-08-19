@@ -14,11 +14,14 @@
 @dynamic searchIndex;
 @dynamic searchText;
 
-+ (void)saveRecentSearch:(RIRecentSearch *)search
++ (void)saveRecentSearch:(NSString *)text
 {
     NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIRecentSearch class])];
     NSMutableArray *finalSearchArray = [NSMutableArray new];
     [RIRecentSearch deleteAllSearches];
+    
+    RIRecentSearch *search = (RIRecentSearch *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIRecentSearch class])];
+    search.searchText = text;
     
     search.searchIndex = @(0);
     [finalSearchArray insertObject:search
@@ -63,21 +66,6 @@
     NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIRecentSearch class])];
 
     if (searches) {
-#warning remove this. for tests only
-        if (searches.count == 0) {
-            RIRecentSearch *newSearch = (RIRecentSearch *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIRecentSearch class])];
-            newSearch.searchText = @"Adidas or Nike";
-            newSearch.searchIndex = @(0);
-            
-            [RIRecentSearch saveRecentSearch:newSearch];
-            
-            RIRecentSearch *newSearch2 = (RIRecentSearch *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIRecentSearch class])];
-            newSearch2.searchText = @"Apple iPhone 4";
-            newSearch2.searchIndex = @(0);
-            
-            [RIRecentSearch saveRecentSearch:newSearch2];
-        }
-        
         return searches;
     } else {
         return nil;

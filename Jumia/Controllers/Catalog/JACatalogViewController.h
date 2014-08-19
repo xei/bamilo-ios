@@ -15,5 +15,6 @@
 
 @property (nonatomic, strong)RICategory* category;
 @property (nonatomic, strong)NSString* catalogUrl;
+@property (nonatomic, strong) NSString *searchString;
 
 @end
