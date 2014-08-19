@@ -16,6 +16,7 @@
 @dynamic isRecentSearch;
 
 + (void)saveSearchSuggestionOnDB:(NSString *)query
+                  isRecentSearch:(BOOL)isRecentSearch
 {
     if(VALID_NOTEMPTY(query, NSString) && ![RISearchSuggestion checkIfSuggestionsExistsOnDB:query])
     {
@@ -23,6 +24,7 @@
         
         newSearchSuggestion.item = query;
         newSearchSuggestion.relevance = 0;
+        newSearchSuggestion.isRecentSearch = isRecentSearch;
         
         [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
         [[RIDataBaseWrapper sharedInstance] saveContext];
@@ -117,6 +119,38 @@
                                                               }
                                                           }];
 
+}
+
+#pragma mark - Get Recent searches
+
++ (NSArray *)getRecentSearches
+{
+    NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])];
+    
+    if (0 == searches.count)
+    {
+        return nil;
+    }
+    else
+    {
+        NSMutableArray *array = [NSMutableArray new];
+        
+        for (RISearchSuggestion *suggestion in searches)
+        {
+            if (suggestion.isRecentSearch)
+            {
+                [array addObject:suggestion];
+            }
+        }
+        
+        return [array copy];
+    }
+}
+
++ (void)deleteAllSearches
+{
+    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RISearchSuggestion class])];
+    [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
 #pragma mark - Cancel requests

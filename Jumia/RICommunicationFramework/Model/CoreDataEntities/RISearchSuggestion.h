@@ -61,4 +61,16 @@
  */
 + (void)cancelRequest:(NSString *)operationID;
 
+/**
+ * Method to get the recent searches
+ *
+ * @return an array with the searches
+ */
++ (NSArray *)getRecentSearches;
+
+/**
+ * Method to delete all searches
+ */
++ (void)deleteAllSearches;
+
 @end

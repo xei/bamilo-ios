@@ -445,7 +445,7 @@
 
 #pragma mark - Recent Search delegate
 
-- (void)didSelectedRecentSearch:(RIRecentSearch *)recentSearch
+- (void)didSelectedRecentSearch:(RISearchSuggestion *)recentSearch
 {
     JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
     

@@ -14,7 +14,7 @@
 #import "RICustomer.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <FacebookSDK/FBSession.h>
-#import "RIRecentSearch.h"
+#import "RISearchSuggestion.h"
 
 @interface JAMenuViewController ()
 <
@@ -176,7 +176,8 @@
 
         RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
     
-        [RIRecentSearch saveRecentSearch:suggestion.item];
+        [RISearchSuggestion saveSearchSuggestionOnDB:suggestion.item
+                                      isRecentSearch:YES];
         
         // I changed the index to 99 to know that it's to display a search result
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
@@ -291,7 +292,8 @@
 {
     [searchBar resignFirstResponder];
     
-    [RIRecentSearch saveRecentSearch:searchBar.text];
+    [RISearchSuggestion saveSearchSuggestionOnDB:searchBar.text
+                                  isRecentSearch:YES];
     
     // I changed the index to 99 to know that it's to display a search result
     [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification

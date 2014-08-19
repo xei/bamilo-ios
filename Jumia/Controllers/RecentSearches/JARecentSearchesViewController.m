@@ -36,7 +36,7 @@
     
     self.recentSearches = [NSMutableArray new];
     
-    self.recentSearches = [[RIRecentSearch getRecentSearches] mutableCopy];
+    self.recentSearches = [[RISearchSuggestion getRecentSearches] mutableCopy];
     
     if (0 == self.recentSearches.count) {
         self.recentSearchesTableView.hidden = YES;
@@ -90,7 +90,7 @@
 
 - (void)clearRecentSearches
 {
-    [RIRecentSearch deleteAllSearches];
+    [RISearchSuggestion deleteAllSearches];
     
     self.noSearchesView.hidden = NO;
     
@@ -133,9 +133,9 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchCell"];
     
-    RIRecentSearch *search = [self.recentSearches objectAtIndex:indexPath.row];
+    RISearchSuggestion *search = [self.recentSearches objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = search.searchText;
+    cell.textLabel.text = search.item;
     
     cell.imageView.image = [UIImage imageNamed:@"ico_recentsearches_results"];
 
