@@ -7,7 +7,7 @@
 //
 
 #import "JAAppDelegate.h"
-
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface JAAppDelegate ()
 
@@ -26,6 +26,8 @@
     
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
                                                                        launchOptions:launchOptions];
+    
+    [FBLoginView class];
     
     return YES;
 }

@@ -10,6 +10,7 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "RICustomer.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface JASignInViewController ()
 <
@@ -24,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 @property (weak, nonatomic) IBOutlet UIView *forgotView;
 @property (weak, nonatomic) IBOutlet UIButton *forgotButton;
+@property (weak, nonatomic) IBOutlet UIButton *facebookLogin;
 
 @end
 
@@ -49,6 +51,9 @@
     
     [self.forgotButton setTitle:@"Forgot password"
                        forState:UIControlStateNormal];
+    
+    [self.facebookLogin setTitle:@"Login with Facebook"
+                        forState:UIControlStateNormal];
     
     self.signUpButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.forgotButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -140,6 +145,46 @@
     
     [self performSegueWithIdentifier:@"segueToForgot"
                               sender:nil];
+}
+
+- (IBAction)loginViaFacebook:(id)sender
+{
+    [[FBRequest requestForMe] startWithCompletionHandler:
+     ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+         if (!error) {
+             
+             UIAlertView *tmp = [[UIAlertView alloc]
+                                 initWithTitle:@"Upload to FB?"
+                                 message:[NSString stringWithFormat:@"Upload to ""%@"" Account?", user.name]
+                                 delegate:self
+                                 cancelButtonTitle:nil
+                                 otherButtonTitles:@"No",@"Yes", nil];
+             [tmp show];
+             
+         }
+     }];
+    
+//    FBRequest *request = [FBRequest requestForMe];
+//    
+//    // Send request to Facebook
+//    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+//        if (!error) {
+//            // result is a dictionary with the user's Facebook data
+//            NSDictionary *userData = (NSDictionary *)result;
+//            
+//            NSString *facebookID = userData[@"id"];
+//            NSString *name = userData[@"name"];
+//            NSString *location = userData[@"location"][@"name"];
+//            NSString *gender = userData[@"gender"];
+//            NSString *birthday = userData[@"birthday"];
+//            NSString *relationship = userData[@"relationship_status"];
+//            
+//            NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
+//            
+//            // Now add the data to the UI elements
+//            // ...
+//        }
+//    }];
 }
 
 - (IBAction)login:(id)sender

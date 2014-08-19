@@ -1716,8 +1716,18 @@
                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Nm-H1-3DS">
+                                        <rect key="frame" x="8" y="173" width="291" height="30"/>
+                                        <state key="normal" title="Button">
+                                            <color key="titleColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginViaFacebook:" destination="ghr-t8-OwX" eventType="touchUpInside" id="5tT-pw-nqB"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o7F-7t-Z82">
-                                        <rect key="frame" x="8" y="172" width="291" height="30"/>
+                                        <rect key="frame" x="9" y="133" width="291" height="30"/>
                                         <state key="normal" title="Button">
                                             <color key="titleColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1794,6 +1804,7 @@
                     <navigationItem key="navigationItem" id="HlZ-cw-qE8"/>
                     <connections>
                         <outlet property="buttonLogin" destination="o7F-7t-Z82" id="uEo-Ej-Vdx"/>
+                        <outlet property="facebookLogin" destination="0Nm-H1-3DS" id="tkq-Rh-P6A"/>
                         <outlet property="forgotButton" destination="16o-z6-TzV" id="fJd-KN-4PC"/>
                         <outlet property="forgotView" destination="znh-Au-nKn" id="N2g-D1-vLp"/>
                         <outlet property="labelLogin" destination="sUm-ON-NB1" id="zOz-dZ-y7U"/>
