@@ -12,6 +12,8 @@
 #import "JAMenuNavigationBar.h"
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import <FacebookSDK/FBSession.h>
 
 @interface JAMenuViewController ()
 <
@@ -186,9 +188,25 @@
                 {
                     [RICustomer logoutCustomerWithSuccessBlock:^{
                         
+                        [[FBSession activeSession] closeAndClearTokenInformation];
+                        
+                        NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+                        
+                        for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
+                            [cookies deleteCookie:cookie];
+                        }
+                        
                         [self userDidLogout];
                         
                     } andFailureBlock:^(NSArray *errorObject) {
+                        
+                        [[FBSession activeSession] closeAndClearTokenInformation];
+                        
+                        NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+                        
+                        for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
+                            [cookies deleteCookie:cookie];
+                        }
                         
                         [self userDidLogout];
                         

@@ -14,7 +14,8 @@
 
 @interface JASignInViewController ()
 <
-    UITextFieldDelegate
+    UITextFieldDelegate,
+    FBLoginViewDelegate
 >
 
 @property (strong, nonatomic) NSMutableArray *fieldsArray;
@@ -26,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIView *forgotView;
 @property (weak, nonatomic) IBOutlet UIButton *forgotButton;
 @property (weak, nonatomic) IBOutlet UIButton *facebookLogin;
+@property (strong, nonatomic) FBLoginView *facebookLoginView;
 
 @end
 
@@ -38,6 +40,7 @@
     [super viewDidLoad];
     
     self.loginView.layer.cornerRadius = 4.0f;
+    self.signUpView.layer.cornerRadius = 4.0f;
     self.forgotView.layer.cornerRadius = 4.0f;
     
     self.labelLogin.text = @"Login";
@@ -54,6 +57,14 @@
     
     [self.facebookLogin setTitle:@"Login with Facebook"
                         forState:UIControlStateNormal];
+    
+    self.facebookLogin.hidden = YES;
+    
+    self.facebookLoginView = [[FBLoginView alloc] init];
+    self.facebookLoginView.delegate = self;
+    self.facebookLoginView.frame = self.facebookLogin.frame;
+    self.facebookLoginView.readPermissions = @[@"public_profile", @"email", @"user_friends", @"user_birthday"];
+    [self.loginView addSubview:self.facebookLoginView];
     
     self.signUpButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.forgotButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -147,46 +158,6 @@
                               sender:nil];
 }
 
-- (IBAction)loginViaFacebook:(id)sender
-{
-    [[FBRequest requestForMe] startWithCompletionHandler:
-     ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
-         if (!error) {
-             
-             UIAlertView *tmp = [[UIAlertView alloc]
-                                 initWithTitle:@"Upload to FB?"
-                                 message:[NSString stringWithFormat:@"Upload to ""%@"" Account?", user.name]
-                                 delegate:self
-                                 cancelButtonTitle:nil
-                                 otherButtonTitles:@"No",@"Yes", nil];
-             [tmp show];
-             
-         }
-     }];
-    
-//    FBRequest *request = [FBRequest requestForMe];
-//    
-//    // Send request to Facebook
-//    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-//        if (!error) {
-//            // result is a dictionary with the user's Facebook data
-//            NSDictionary *userData = (NSDictionary *)result;
-//            
-//            NSString *facebookID = userData[@"id"];
-//            NSString *name = userData[@"name"];
-//            NSString *location = userData[@"location"][@"name"];
-//            NSString *gender = userData[@"gender"];
-//            NSString *birthday = userData[@"birthday"];
-//            NSString *relationship = userData[@"relationship_status"];
-//            
-//            NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
-//            
-//            // Now add the data to the UI elements
-//            // ...
-//        }
-//    }];
-}
-
 - (IBAction)login:(id)sender
 {
     [self.view endEditing:YES];
@@ -242,6 +213,108 @@
                                                      cancelButtonTitle:nil
                                                      otherButtonTitles:@"OK", nil] show];
                                }];
+}
+
+- (IBAction)loginViaFacebook:(id)sender
+{
+
+}
+
+#pragma mark - Facebook Delegate
+
+- (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
+                            user:(id<FBGraphUser>)user
+{
+    if (![RICustomer checkIfUserIsLogged])
+    {
+        [self showLoading];
+        
+        NSString *email = [user objectForKey:@"email"];
+        NSString *firstName = [user objectForKey:@"first_name"];
+        NSString *lastName = [user objectForKey:@"last_name"];
+        NSString *birthday = [user objectForKey:@"birthday"];
+        NSString *gender = [user objectForKey:@"gender"];
+        
+        NSDictionary *parameters = @{ @"email": email,
+                                      @"first_name": firstName,
+                                      @"last_name": lastName,
+                                      @"birthday": birthday,
+                                      @"gender": gender };
+        
+        [RICustomer loginCustomerByFacebookWithParameters:parameters
+                                             successBlock:^(id customer) {
+                                                 [self hideLoading];
+                                                 
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                                                     object:@{@"index": @(0),
+                                                                                                              @"name": @"Home"}];
+                                                 
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                                                                     object:nil];
+                                             } andFailureBlock:^(NSArray *errorObject) {
+                                                 [self hideLoading];
+                                                 
+                                                 [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                                             message:@"Error doing login."
+                                                                            delegate:nil
+                                                                   cancelButtonTitle:nil
+                                                                   otherButtonTitles:@"OK", nil] show];
+                                             }];
+    }
+}
+
+- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView
+{
+    NSLog(@"Showing logged in user");
+}
+
+- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView
+{
+    NSLog(@"Showing logged in user");
+}
+
+// Handle possible errors that can occur during login
+- (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error
+{
+    NSString *alertMessage, *alertTitle;
+    
+    // If the user should perform an action outside of you app to recover,
+    // the SDK will provide a message for the user, you just need to surface it.
+    // This conveniently handles cases like Facebook password change or unverified Facebook accounts.
+    if ([FBErrorUtility shouldNotifyUserForError:error]) {
+        alertTitle = @"Facebook error";
+        alertMessage = [FBErrorUtility userMessageForError:error];
+        
+        // This code will handle session closures that happen outside of the app
+        // You can take a look at our error handling guide to know more about it
+        // https://developers.facebook.com/docs/ios/errors
+    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
+        alertTitle = @"Session Error";
+        alertMessage = @"Your current session is no longer valid. Please log in again.";
+        
+        // If the user has cancelled a login, we will do nothing.
+        // You can also choose to show the user a message if cancelling login will result in
+        // the user not being able to complete a task they had initiated in your app
+        // (like accessing FB-stored information or posting to Facebook)
+    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
+        NSLog(@"user cancelled login");
+        
+        // For simplicity, this sample handles other errors with a generic message
+        // You can checkout our error handling guide for more detailed information
+        // https://developers.facebook.com/docs/ios/errors
+    } else {
+        alertTitle  = @"Something went wrong";
+        alertMessage = @"Please try again later.";
+        NSLog(@"Unexpected error:%@", error);
+    }
+    
+    if (alertMessage) {
+        [[[UIAlertView alloc] initWithTitle:alertTitle
+                                    message:alertMessage
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+    }
 }
 
 #pragma mark - Navigation
