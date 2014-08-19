@@ -26,8 +26,43 @@
         newSearchSuggestion.relevance = 0;
         newSearchSuggestion.isRecentSearch = isRecentSearch;
         
-        [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
-        [[RIDataBaseWrapper sharedInstance] saveContext];
+        // The limit for recent search is 5, if there is > 5 it's necessary to delete the old one
+        if (isRecentSearch)
+        {
+             NSMutableArray *searches = [[[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])] mutableCopy];
+            
+            if (searches.count > 4)
+            {
+                [[RIDataBaseWrapper sharedInstance] deleteObject:[searches objectAtIndex:0]];
+                [[RIDataBaseWrapper sharedInstance] saveContext];
+                [searches removeObjectAtIndex:0];
+            }
+            
+            newSearchSuggestion.relevance = 0;
+            
+            [searches insertObject:newSearchSuggestion
+                           atIndex:0];
+            
+            for (NSInteger i = 0 ; i < searches.count ; i++)
+            {
+                RISearchSuggestion *suggestionToAdd = (RISearchSuggestion *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
+                RISearchSuggestion *suggestion = [searches objectAtIndex:i];
+                
+                suggestionToAdd.item = suggestion.item;
+                suggestionToAdd.relevance = @(i);
+                suggestionToAdd.isRecentSearch = suggestion.isRecentSearch;
+                
+                [[RIDataBaseWrapper sharedInstance] insertManagedObject:suggestionToAdd];
+                [[RIDataBaseWrapper sharedInstance] deleteObject:suggestion];
+            }
+            
+            [[RIDataBaseWrapper sharedInstance] saveContext];
+        }
+        else
+        {
+            [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
+            [[RIDataBaseWrapper sharedInstance] saveContext];
+        }
     }
 }
 
@@ -83,8 +118,9 @@
                      successBlock:(void (^)(NSArray *results))successBlock
                   andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    query = [query lowercaseString];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@/?page=%@&maxitems=%@&setDevice=mobileApi", [RIApi getCountryUrlInUse], RI_API_VERSION, query, page, maxItems]];
+    query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *tempString = [NSString stringWithFormat:@"%@%@/search?setDevice=mobileApi&q=%@&page=%@&maxitems=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, query, page, maxItems];
+    NSURL *url = [NSURL URLWithString:tempString];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:nil
@@ -141,6 +177,27 @@
             {
                 [array addObject:suggestion];
             }
+        }
+        
+        if (array.count > 1)
+        {
+            [array sortUsingComparator:^(RISearchSuggestion *obj1, RISearchSuggestion *obj2)
+             {
+                 NSInteger value1 = [obj1.relevance integerValue];
+                 NSInteger value2 = [obj2.relevance integerValue];
+                 
+                 if (value1 > value2)
+                 {
+                     return (NSComparisonResult)NSOrderedDescending;
+                 }
+                 
+                 if (value1 < value2)
+                 {
+                     return (NSComparisonResult)NSOrderedAscending;
+                 }
+                 
+                 return (NSComparisonResult)NSOrderedSame;
+             }];
         }
         
         return [array copy];

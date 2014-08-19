@@ -147,7 +147,9 @@
     [tableView deselectRowAtIndexPath:indexPath
                              animated:YES];
     
-    [self.delegate didSelectedRecentSearch:nil];
+    RISearchSuggestion *suggestion = [self.recentSearches objectAtIndex:indexPath.row];
+    
+    [self.delegate didSelectedRecentSearch:suggestion];
 }
 
 #pragma mark - Navigation
