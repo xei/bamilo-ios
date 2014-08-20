@@ -60,6 +60,11 @@
 		4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AE730C8198F8C8B000CA1DD /* JAPDVImageSection.xib */; };
 		4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */; };
 		4AFC7F94199BC124007D67F4 /* JASignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F93199BC124007D67F4 /* JASignupViewController.m */; };
+		B5007AC219A4E8EC0024035A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007ABE19A4E8EC0024035A /* HockeySDK.framework */; };
+		B5007AC319A4E8EC0024035A /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */; };
+		B5007AC419A4E8EC0024035A /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */; };
+		B5007AC619A4E9170024035A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007AC519A4E9170024035A /* CoreText.framework */; };
+		B5007AC819A4E92F0024035A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007AC719A4E92F0024035A /* Security.framework */; };
 		B50B039D198A5420002046DF /* JALoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B039C198A5420002046DF /* JALoginViewController.m */; };
 		B50B03A0198A5434002046DF /* JAAddressesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B039F198A5434002046DF /* JAAddressesViewController.m */; };
 		B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03A2198A5441002046DF /* JAPaymentViewController.m */; };
@@ -344,6 +349,11 @@
 		4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignInViewController.m; sourceTree = "<group>"; };
 		4AFC7F92199BC124007D67F4 /* JASignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignupViewController.h; sourceTree = "<group>"; };
 		4AFC7F93199BC124007D67F4 /* JASignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignupViewController.m; sourceTree = "<group>"; };
+		B5007ABE19A4E8EC0024035A /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
+		B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
+		B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
+		B5007AC519A4E9170024035A /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		B5007AC719A4E92F0024035A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B50B039B198A5420002046DF /* JALoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JALoginViewController.h; sourceTree = "<group>"; };
 		B50B039C198A5420002046DF /* JALoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JALoginViewController.m; sourceTree = "<group>"; };
 		B50B039E198A5434002046DF /* JAAddressesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAddressesViewController.h; sourceTree = "<group>"; };
@@ -655,6 +665,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5007AC819A4E92F0024035A /* Security.framework in Frameworks */,
+				B5007AC619A4E9170024035A /* CoreText.framework in Frameworks */,
 				B5FE9FB119A1F362006F7D63 /* CoreTelephony.framework in Frameworks */,
 				4A2FD84A19913FCA00C65C1D /* Social.framework in Frameworks */,
 				4A4ABF0E198B9DE600342D92 /* QuartzCore.framework in Frameworks */,
@@ -675,6 +687,7 @@
 				B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */,
 				B5A3023519811E8A00F71726 /* libAd4ScreenTrackingSDK.a in Frameworks */,
 				B5FE9FB319A1F4C6006F7D63 /* NewRelicAgent.framework in Frameworks */,
+				B5007AC219A4E8EC0024035A /* HockeySDK.framework in Frameworks */,
 				B5A3025619811E8A00F71726 /* libGoogleAnalyticsServices.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -980,6 +993,24 @@
 			path = SignInViewController;
 			sourceTree = "<group>";
 		};
+		B5007ABD19A4E8EC0024035A /* HockeySDK.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				B5007ABE19A4E8EC0024035A /* HockeySDK.framework */,
+				B5007ABF19A4E8EC0024035A /* Resources */,
+			);
+			path = HockeySDK.embeddedframework;
+			sourceTree = "<group>";
+		};
+		B5007ABF19A4E8EC0024035A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */,
+				B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		B50B03A8198A883D002046DF /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -1110,6 +1141,8 @@
 		B5A301D119811E7600F71726 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5007AC719A4E92F0024035A /* Security.framework */,
+				B5007AC519A4E9170024035A /* CoreText.framework */,
 				B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */,
 				4A2FD84919913FCA00C65C1D /* Social.framework */,
 				4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */,
@@ -1133,6 +1166,7 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5007ABD19A4E8EC0024035A /* HockeySDK.embeddedframework */,
 				B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */,
 				CEDEB98F199BA8FA0022BAB5 /* NMRangeSlider */,
 				B5EF759B19814EF000005B13 /* FacebookSDK.framework */,
@@ -1890,7 +1924,9 @@
 				4A454F44199CE65100B44821 /* JACheckBoxComponent.xib in Resources */,
 				B5A3023919811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib in Resources */,
 				B5A3024C19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
+				B5007AC419A4E8EC0024035A /* HockeySDKResources.bundle in Resources */,
 				4A4F12EA198FF35600F93C89 /* JAPDVRelatedItem.xib in Resources */,
+				B5007AC319A4E8EC0024035A /* HockeySDK.xcconfig in Resources */,
 				CEDEB9BD199BA8FA0022BAB5 /* slider-default7-trackBackground.png in Resources */,
 				CEDEB9B4199BA8FA0022BAB5 /* slider-default-track@2x.png in Resources */,
 				CEDEB9C5199BA8FA0022BAB5 /* slider-metal-track.png in Resources */,
@@ -2115,6 +2151,102 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B5007ACA19A4F29D0024035A /* Hockey */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"HOCKEY=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv7s";
+			};
+			name = Hockey;
+		};
+		B5007ACB19A4F29D0024035A /* Hockey */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
+				INFOPLIST_FILE = Jumia/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7s armv7";
+			};
+			name = Hockey;
+		};
+		B5007ACC19A4F29D0024035A /* Hockey */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Jumia.app/Jumia";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = JumiaTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = Hockey;
+		};
 		B5A301C919811D0700F71726 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2206,6 +2338,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -2235,6 +2368,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -2300,6 +2434,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B5A301C919811D0700F71726 /* Debug */,
+				B5007ACA19A4F29D0024035A /* Hockey */,
 				B5A301CA19811D0700F71726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2309,6 +2444,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B5A301CC19811D0700F71726 /* Debug */,
+				B5007ACB19A4F29D0024035A /* Hockey */,
 				B5A301CD19811D0700F71726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2318,6 +2454,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B5A301CF19811D0700F71726 /* Debug */,
+				B5007ACC19A4F29D0024035A /* Hockey */,
 				B5A301D019811D0700F71726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

@@ -8,6 +8,7 @@
 
 #import "JAAppDelegate.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <HockeySDK/HockeySDK.h>
 
 @interface JAAppDelegate ()
 
@@ -19,11 +20,25 @@
 {
     
 #if defined(DEBUG) && DEBUG
+    
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+    [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    
+    // we will run authenticateInstallation only if it is a from hockey
+#if defined(HOCKEY) && HOCKEY
+    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
+#endif
+    
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug" ofType:@"plist"];
 #else
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];
 #endif
-   
+    
+    
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
                                                                        launchOptions:launchOptions];
     
@@ -34,22 +49,22 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-
+    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -66,7 +81,7 @@
                                 sourceApplication:sourceApplication
                                   fallbackHandler:^(FBAppCall *call) {
                                       NSLog(@"Unhandled deep link: %@", url);
-                        }];
+                                  }];
     
     return urlWasHandled;
 }
