@@ -9,6 +9,7 @@
 #import "JACatalogListCell.h"
 #import "JARatingsView.h"
 #import "RIProduct.h"
+#import "JAUtils.h"
 
 @interface JACatalogListCell()
 
@@ -47,6 +48,11 @@
     } else {
         self.numberOfReviewsLabel.text = [NSString stringWithFormat:@"%@ reviews", [product.sum stringValue]];
     }
+    
+    [self.addToCartButton setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    self.addToCartButton.layer.cornerRadius = 3.0f;
+    [self.addToCartButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.addToCartButton setTitle:@"Add to Cart" forState:UIControlStateNormal];
 }
 
 @end

@@ -15,8 +15,6 @@
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
-#define JACatalogViewControllerListCellHeight 98.0f
-#define JACatalogViewControllerGridCellHeight 196.0f
 
 @interface JACatalogViewController ()
 

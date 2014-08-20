@@ -26,8 +26,7 @@
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.separatorColor = UIColorFromRGB(0xcccccc);
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, -20, 0, 0);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //inside this screen, we use self.selectedIndexes to indicate whether or not a filter is selected
     //instead of using the filter real state. This way, we can cancel the changes by simply poping the VC
@@ -80,6 +79,11 @@
 
 #pragma mark - UITableView
 
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [UIView new];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.filter.options.count;
@@ -95,6 +99,10 @@
 
         if (ISEMPTY(cell)) {
             cell = [[JAColorFilterCell alloc] initWithReuseIdentifier:cellIdentifier];
+            
+            UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(50.0f, 43.0f, 280.0f, 1.0f)];
+            separator.backgroundColor = UIColorFromRGB(0xcccccc);
+            [cell addSubview:separator];
         }
         
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
@@ -113,6 +121,10 @@
             
             cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
             cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+            
+            UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 43.0f, 320.0f, 1.0f)];
+            separator.backgroundColor = UIColorFromRGB(0xcccccc);
+            [cell addSubview:separator];
         }
         
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];

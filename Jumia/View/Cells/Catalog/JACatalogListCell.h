@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "JACatalogCell.h"
 
+#define JACatalogViewControllerListCellHeight 98.0f
+
 @interface JACatalogListCell : JACatalogCell
+
+@property (weak, nonatomic) IBOutlet UIButton *addToCartButton;
 
 @end
