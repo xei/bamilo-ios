@@ -8,6 +8,7 @@
 
 #import "JARecentlyViewedViewController.h"
 #import "JACatalogListCell.h"
+#import "JAButtonCell.h"
 #import "JAPDVViewController.h"
 #import "RIProduct.h"
 #import "RICart.h"
@@ -43,6 +44,8 @@
     
     UINib *listCellNib = [UINib nibWithNibName:@"JARecentlyViewedListCell" bundle:nil];
     [self.collectionView registerNib:listCellNib forCellWithReuseIdentifier:@"recentlyViewedListCell"];
+    UINib *buttonCellNib = [UINib nibWithNibName:@"JAButtonCell" bundle:nil];
+    [self.collectionView registerNib:buttonCellNib forCellWithReuseIdentifier:@"buttonCell"];
     
     UICollectionViewFlowLayout* flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.minimumLineSpacing = 0;
@@ -83,52 +86,71 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.productsArray.count;
+    return self.productsArray.count + 1;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
-    
-    NSString *cellIdentifier = @"recentlyViewedListCell";
-    
-    JACatalogListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    
-    [cell loadWithProduct:product];
-    cell.addToCartButton.tag = indexPath.row;
-    [cell.addToCartButton addTarget:self
-                             action:@selector(addToCartPressed:)
-                   forControlEvents:UIControlEventTouchUpInside];
-    
-    return cell;
-    
+    if (indexPath.row == self.productsArray.count) {
+        
+        NSString *cellIdentifier = @"buttonCell";
+        
+        JAButtonCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+        
+        [cell loadWithButtonName:@"Clear Recently Viewed"];
+        
+        [cell.button addTarget:self
+                        action:@selector(clearAllButtonPressed)
+              forControlEvents:UIControlEventTouchUpInside];
+        
+        return cell;
+        
+    } else {
+        RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
+        
+        NSString *cellIdentifier = @"recentlyViewedListCell";
+        
+        JACatalogListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+        
+        [cell loadWithProduct:product];
+        cell.addToCartButton.tag = indexPath.row;
+        [cell.addToCartButton addTarget:self
+                                 action:@selector(addToCartPressed:)
+                       forControlEvents:UIControlEventTouchUpInside];
+        
+        return cell;
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
-    
-    NSInteger count = self.productsArray.count;
-    
-    if (count > 20) {
-        count = 20;
+    if (indexPath.row < self.productsArray.count) {
+        RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
+        
+        NSInteger count = self.productsArray.count;
+        
+        if (count > 20) {
+            count = 20;
+        }
+        
+        NSMutableArray *tempArray = [NSMutableArray new];
+        
+        for (int i = 0 ; i < count ; i ++) {
+            [tempArray addObject:[self.productsArray objectAtIndex:i]];
+        }
+        
+        JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
+        pdv.productUrl = product.url;
+        pdv.fromCatalogue = YES;
+        pdv.previousCategory = @"Recently Viewed";
+        pdv.arrayWithRelatedItems = [tempArray copy];
+        
+        [self.navigationController pushViewController:pdv
+                                             animated:YES];
     }
-    
-    NSMutableArray *tempArray = [NSMutableArray new];
-    
-    for (int i = 0 ; i < count ; i ++) {
-        [tempArray addObject:[self.productsArray objectAtIndex:i]];
-    }
-    
-    JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
-    pdv.productUrl = product.url;
-    pdv.fromCatalogue = YES;
-    pdv.previousCategory = @"Recently Viewed";
-    pdv.arrayWithRelatedItems = [tempArray copy];
-    
-    [self.navigationController pushViewController:pdv
-                                         animated:YES];
 }
+
+#pragma mark - Button Actions
 
 - (void)addToCartPressed:(UIButton*)button;
 {
@@ -161,5 +183,17 @@
                   }];
 }
 
+
+- (void)clearAllButtonPressed
+{
+    [self showLoading];
+    [RIProduct removeAllRecentlyViewedWithSuccessBlock:^{
+        [self hideLoading];
+        self.productsArray = nil;
+        [self.collectionView reloadData];
+    } andFailureBlock:^(NSArray *error) {
+        [self hideLoading];
+    }];
+}
 
 @end
