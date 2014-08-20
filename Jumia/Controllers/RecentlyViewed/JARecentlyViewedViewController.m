@@ -10,6 +10,7 @@
 #import "JACatalogListCell.h"
 #import "JAPDVViewController.h"
 #import "RIProduct.h"
+#import "RICart.h"
 
 @interface JARecentlyViewedViewController ()
 
@@ -91,9 +92,13 @@
     
     NSString *cellIdentifier = @"recentlyViewedListCell";
     
-    JACatalogCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    JACatalogListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     [cell loadWithProduct:product];
+    cell.addToCartButton.tag = indexPath.row;
+    [cell.addToCartButton addTarget:self
+                             action:@selector(addToCartPressed:)
+                   forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
     
@@ -125,7 +130,36 @@
                                          animated:YES];
 }
 
-
+- (void)addToCartPressed:(UIButton*)button;
+{
+    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    
+    [self showLoading];
+    [RICart addProductWithQuantity:@"1"
+                               sku:product.sku
+                            simple:((RIProduct *)[product.productSimples firstObject]).sku
+                  withSuccessBlock:^(RICart *cart) {
+                      
+                      [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                  message:@"Product added"
+                                                 delegate:nil
+                                        cancelButtonTitle:nil
+                                        otherButtonTitles:@"Ok", nil] show];
+                      
+                      [self hideLoading];
+                      
+                  } andFailureBlock:^(NSArray *errorMessages) {
+                      
+                      [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                  message:@"Error adding to the cart"
+                                                 delegate:nil
+                                        cancelButtonTitle:nil
+                                        otherButtonTitles:@"Ok", nil] show];
+                      
+                      [self hideLoading];
+                      
+                  }];
+}
 
 
 @end

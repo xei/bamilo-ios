@@ -13,4 +13,6 @@
 
 @interface JACatalogListCell : JACatalogCell
 
+@property (weak, nonatomic) IBOutlet UIButton *addToCartButton;
+
 @end
