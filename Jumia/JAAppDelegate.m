@@ -8,6 +8,12 @@
 
 #import "JAAppDelegate.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <HockeySDK/HockeySDK.h>
+
+// we need this to check if the device is a simulator or not
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#endif
 
 @interface JAAppDelegate ()
 
@@ -19,11 +25,25 @@
 {
     
 #if defined(DEBUG) && DEBUG
+    
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+    [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    
+    // we will run authenticateInstallation only if it is a real device
+#if !(TARGET_IPHONE_SIMULATOR)
+    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
+#endif
+    
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug" ofType:@"plist"];
 #else
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];
 #endif
-   
+    
+    
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
                                                                        launchOptions:launchOptions];
     
@@ -34,22 +54,22 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-
+    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -66,7 +86,7 @@
                                 sourceApplication:sourceApplication
                                   fallbackHandler:^(FBAppCall *call) {
                                       NSLog(@"Unhandled deep link: %@", url);
-                        }];
+                                  }];
     
     return urlWasHandled;
 }
