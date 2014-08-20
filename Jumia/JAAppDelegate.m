@@ -10,11 +10,6 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <HockeySDK/HockeySDK.h>
 
-// we need this to check if the device is a simulator or not
-#ifdef __APPLE__
-#include "TargetConditionals.h"
-#endif
-
 @interface JAAppDelegate ()
 
 @end
@@ -30,8 +25,8 @@
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
     
-    // we will run authenticateInstallation only if it is a real device
-#if !(TARGET_IPHONE_SIMULATOR)
+    // we will run authenticateInstallation only if it is a from hockey
+#if defined(HOCKEY) && HOCKEY
     [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
 #endif
     
