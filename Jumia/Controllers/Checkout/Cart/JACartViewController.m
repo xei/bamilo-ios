@@ -39,7 +39,7 @@
 -(void)setupEmptyCart
 {
     self.emptyCartView.layer.cornerRadius = 5.0f;
-    [self.emptyCartLabel setText:@"You have no items in the cart You have no items in the cart You have no items in the cart You have no items in the cart"];
+    [self.emptyCartLabel setText:@"You have no items in the cart"];
     [self.emptyCartLabel setTextColor:JALabelGrey];
     
     [self.continueShoppingButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
