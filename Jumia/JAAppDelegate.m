@@ -23,7 +23,7 @@
 #else
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];
 #endif
-    
+   
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
                                                                        launchOptions:launchOptions];
     
