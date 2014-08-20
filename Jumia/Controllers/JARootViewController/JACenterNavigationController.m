@@ -256,6 +256,19 @@
      */
 }
 
+- (void)pushCatalogToShowSearchResults:(NSString *)query
+{
+    JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    catalog.searchString = query;
+    
+    [self pushViewController:catalog
+                    animated:YES];
+    
+    [self.navigationBarView changeNavigationBarTitle:query];
+    
+    self.viewControllers = @[catalog];
+}
+
 - (void)changeCenterPanelToCatalogWithCategory:(RICategory*)category
 {
     JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
@@ -284,8 +297,16 @@
                      titleForNavBar:nil];
             
         } else {
+            if ([index isEqual:@(99)])
+            {
+                // It's to perform a search
+                [self pushCatalogToShowSearchResults:[selectedItem objectForKey:@"text"]];
+            }
+            else
+            {
             [self changeCenterPanel:[selectedItem objectForKey:@"name"]
                      titleForNavBar:[selectedItem objectForKey:@"name"]];
+            }
         }
     }
 }
@@ -439,15 +460,15 @@
 
 #pragma mark - Recent Search delegate
 
-- (void)didSelectedRecentSearch:(RIRecentSearch *)recentSearch
+- (void)didSelectedRecentSearch:(RISearchSuggestion *)recentSearch
 {
-    JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+    JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    catalog.searchString = recentSearch.item;
     
-    [self pushViewController:home
+    [self pushViewController:catalog
                     animated:YES];
-    [self.navigationBarView changedToHomeViewController];
     
-    self.viewControllers = @[home];
+    [self.navigationBarView changeNavigationBarTitle:recentSearch.item];
 }
 
 #pragma mark - Customize navigation bar

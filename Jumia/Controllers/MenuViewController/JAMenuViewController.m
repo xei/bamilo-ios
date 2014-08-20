@@ -14,6 +14,7 @@
 #import "RICustomer.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <FacebookSDK/FBSession.h>
+#import "RISearchSuggestion.h"
 
 @interface JAMenuViewController ()
 <
@@ -172,7 +173,18 @@
     [self.customNavBar resignFirstResponder];
     
     if (self.resultsTableView == tableView) {
-#warning implement the missing code
+
+        RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
+    
+        [RISearchSuggestion saveSearchSuggestionOnDB:suggestion.item
+                                      isRecentSearch:YES];
+        
+        // I changed the index to 99 to know that it's to display a search result
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                            object:@{@"index": @(99),
+                                                                     @"name": @"Search",
+                                                                     @"text": suggestion.item }];
+        
     } else {
         
         if (1 == indexPath.row) {
@@ -279,7 +291,18 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
+    
+    [RISearchSuggestion saveSearchSuggestionOnDB:searchBar.text
+                                  isRecentSearch:YES];
+    
+    // I changed the index to 99 to know that it's to display a search result
+    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                        object:@{@"index": @(99),
+                                                                 @"name": @"Search",
+                                                                 @"text": searchBar.text }];
 }
+
+
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
