@@ -18,19 +18,42 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = JABackgroundGrey;
+    
+    [self setupEmptyCart];
+    
     // Do any additional setup after loading the view.
     
-    // If the user is not logged in go to login view controller
-    [self.goToLogin setTitle:@"Go to login" forState:UIControlStateNormal];
-    [self.goToLogin sizeToFit];
-    [self.goToLogin addTarget:self action:@selector(goToLoginAction) forControlEvents:UIControlEventTouchUpInside];
-    
-    // If the user is  logged in go to addresses view controller
-    [self.loginAndGoToAddresses setTitle:@"Login and go to addresses" forState:UIControlStateNormal];
-    [self.loginAndGoToAddresses sizeToFit];
-    [self.loginAndGoToAddresses addTarget:self action:@selector(loginAndGoToAddressesAction) forControlEvents:UIControlEventTouchUpInside];
+    //    // If the user is not logged in go to login view controller
+    //    [self.goToLogin setTitle:@"Go to login" forState:UIControlStateNormal];
+    //    [self.goToLogin sizeToFit];
+    //    [self.goToLogin addTarget:self action:@selector(goToLoginAction) forControlEvents:UIControlEventTouchUpInside];
+    //
+    //    // If the user is  logged in go to addresses view controller
+    //    [self.loginAndGoToAddresses setTitle:@"Login and go to addresses" forState:UIControlStateNormal];
+    //    [self.loginAndGoToAddresses sizeToFit];
+    //    [self.loginAndGoToAddresses addTarget:self action:@selector(loginAndGoToAddressesAction) forControlEvents:UIControlEventTouchUpInside];
 }
 
+-(void)setupEmptyCart
+{
+    self.emptyCartView.layer.cornerRadius = 5.0f;
+    [self.emptyCartLabel setText:@"You have no items in the cart"];
+    [self.emptyCartLabel setTextColor:JALabelGrey];
+    
+    [self.continueShoppingButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
+    [self.continueShoppingButton setTitle:@"Continue Shopping" forState:UIControlStateNormal];
+    [self.continueShoppingButton setBackgroundColor:JAButtonOrange];
+    self.continueShoppingButton.layer.cornerRadius = 5.0f;
+    
+    [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)goToHomeScreen
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+}
 
 -(void)goToLoginAction
 {

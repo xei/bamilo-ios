@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
     <scenes>
         <!--Splash View Controller-->
@@ -526,39 +527,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D9k-Dg-apF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="706" y="814"/>
-        </scene>
-        <!--Empty Cart View Controller-->
-        <scene sceneID="XGq-wN-VpQ">
-            <objects>
-                <viewController storyboardIdentifier="emptyCartViewController" id="JP8-XV-flT" userLabel="Empty Cart View Controller" customClass="JAEmptyCartViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="gYY-6P-HLj"/>
-                        <viewControllerLayoutGuide type="bottom" id="vCo-Ya-5UY"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="UpM-eN-f3F">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJu-Qc-EBo">
-                                <rect key="frame" x="137" y="269" width="46" height="30"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="vJu-Qc-EBo" secondAttribute="centerX" id="iI5-fx-uIB"/>
-                            <constraint firstAttribute="centerY" secondItem="vJu-Qc-EBo" secondAttribute="centerY" id="upg-ui-2ax"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="addProductAndGoToCart" destination="vJu-Qc-EBo" id="pte-0h-V4z"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MWc-DL-gbR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="348.66666666666663" y="814.13333333333333"/>
         </scene>
         <!--Ratings View Controller-->
         <scene sceneID="qkt-S7-jBs">
@@ -1459,6 +1427,7 @@
                         <segue destination="4DA-Wb-YGP" kind="push" identifier="segueToDetails" id="gWB-U5-lpy"/>
                         <segue destination="kkN-0R-T6h" kind="push" identifier="segueNewReview" id="BOh-Tr-8Lm"/>
                         <segue destination="m1y-eK-zF4" kind="push" id="lk2-ev-lh8"/>
+                        <segue destination="we7-Gk-jkb" kind="push" id="rUp-Rh-Qx3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zwP-v4-smR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2086,29 +2055,32 @@
                         <viewControllerLayoutGuide type="bottom" id="o8e-gD-yPB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="TAg-wu-qnb">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ReK-uh-uRe">
-                                <rect key="frame" x="137" y="270" width="46" height="30"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Qt-Jk-Rkc" userLabel="Empty Cart View">
+                                <rect key="frame" x="6" y="6" width="308" height="200"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="img_emptyCart" translatesAutoresizingMaskIntoConstraints="NO" id="Xdd-K7-78b" userLabel="Empty Cart Image">
+                                        <rect key="frame" x="94" y="31" width="98" height="98"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="288" translatesAutoresizingMaskIntoConstraints="NO" id="w2f-EV-aL4" userLabel="Empty Cart Label">
+                                        <rect key="frame" x="10" y="146" width="288" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="46" id="G8r-OX-pyT"/>
-                                    <constraint firstAttribute="height" constant="30" id="Qie-S5-dQp"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="46" id="R51-mP-5Lc"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="yju-zO-MRT"/>
+                                    <constraint firstAttribute="centerX" secondItem="Xdd-K7-78b" secondAttribute="centerX" id="Agc-4f-UPi"/>
+                                    <constraint firstItem="w2f-EV-aL4" firstAttribute="top" secondItem="Xdd-K7-78b" secondAttribute="bottom" constant="16" id="hZm-fS-MGj"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="w2f-EV-aL4" secondAttribute="bottom" constant="33" id="kiM-sS-Y5Q"/>
                                 </constraints>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8JR-2S-5zU">
-                                <rect key="frame" x="137" y="220" width="46" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="AJ3-UM-BqQ"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="Cjw-zR-e64"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="46" id="Lhk-nE-UHA"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="46" id="zvK-k4-ULc"/>
-                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="360-TD-5SK" userLabel="Continue Shopping Button">
+                                <rect key="frame" x="6" y="269" width="308" height="44"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                 <state key="normal" title="Button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2116,17 +2088,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ReK-uh-uRe" firstAttribute="top" secondItem="8JR-2S-5zU" secondAttribute="bottom" constant="20" id="6hP-pc-iyj"/>
-                            <constraint firstItem="8JR-2S-5zU" firstAttribute="top" secondItem="lsG-eh-GHh" secondAttribute="bottom" constant="200" id="N5i-e1-e6q"/>
-                            <constraint firstAttribute="centerX" secondItem="8JR-2S-5zU" secondAttribute="centerX" id="O4v-Af-zsV"/>
-                            <constraint firstItem="ReK-uh-uRe" firstAttribute="leading" relation="lessThanOrEqual" secondItem="TAg-wu-qnb" secondAttribute="leading" constant="217" id="UUg-Wr-Ycj"/>
-                            <constraint firstAttribute="centerX" secondItem="ReK-uh-uRe" secondAttribute="centerX" id="nOP-ze-JHS"/>
-                            <constraint firstItem="8JR-2S-5zU" firstAttribute="leading" relation="lessThanOrEqual" secondItem="TAg-wu-qnb" secondAttribute="leading" constant="217" id="pSj-sl-Ojx"/>
+                            <constraint firstItem="360-TD-5SK" firstAttribute="top" secondItem="6Qt-Jk-Rkc" secondAttribute="bottom" constant="10" id="K8F-kO-m1e"/>
+                            <constraint firstAttribute="trailing" secondItem="360-TD-5SK" secondAttribute="trailing" constant="6" id="dh8-J4-RyU"/>
+                            <constraint firstAttribute="centerX" secondItem="360-TD-5SK" secondAttribute="centerX" id="mxe-Lz-Pki"/>
+                            <constraint firstItem="360-TD-5SK" firstAttribute="leading" secondItem="TAg-wu-qnb" secondAttribute="leading" constant="6" id="myP-0z-c6P"/>
+                            <constraint firstItem="6Qt-Jk-Rkc" firstAttribute="top" secondItem="TAg-wu-qnb" secondAttribute="top" constant="6" id="wNW-Ja-vwv"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="DFn-Nn-YPR"/>
                     <connections>
-                        <outlet property="goToLogin" destination="8JR-2S-5zU" id="AaB-CM-ifF"/>
-                        <outlet property="loginAndGoToAddresses" destination="ReK-uh-uRe" id="8LK-fB-F77"/>
+                        <outlet property="continueShoppingButton" destination="360-TD-5SK" id="Pif-vm-yXE"/>
+                        <outlet property="emptyCartLabel" destination="w2f-EV-aL4" id="lvr-fd-k4O"/>
+                        <outlet property="emptyCartView" destination="6Qt-Jk-Rkc" id="b99-DQ-QS5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CQy-QZ-SNO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2454,6 +2428,7 @@
         <image name="filterIcon" width="22" height="22"/>
         <image name="gridIcon" width="22" height="22"/>
         <image name="ico_cart" width="25" height="20"/>
+        <image name="img_emptyCart" width="98" height="98"/>
         <image name="img_emptyrecentsearches" width="98" height="98"/>
         <image name="img_rating_star_big_empty" width="27" height="27"/>
         <image name="img_rating_star_small_empty" width="9" height="9"/>
@@ -2463,9 +2438,12 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination" type="retina4">
+            <size key="portraitSize" width="320" height="568"/>
+            <size key="landscapeSize" width="568" height="320"/>
+        </simulatedScreenMetrics>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="rzU-eE-MD5"/>
+        <segue reference="BOh-Tr-8Lm"/>
     </inferredMetricsTieBreakers>
 </document>
