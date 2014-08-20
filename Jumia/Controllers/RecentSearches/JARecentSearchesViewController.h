@@ -7,11 +7,11 @@
 //
 
 #import "JABaseViewController.h"
-#import "RIRecentSearch.h"
+#import "RISearchSuggestion.h"
 
 @protocol JARecentSearchesDelegate <NSObject>
 
-- (void)didSelectedRecentSearch:(RIRecentSearch *)recentSearch;
+- (void)didSelectedRecentSearch:(RISearchSuggestion *)recentSearch;
 
 @end
 
