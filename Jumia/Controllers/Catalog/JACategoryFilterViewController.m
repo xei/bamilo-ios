@@ -24,8 +24,7 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.separatorColor = UIColorFromRGB(0xcccccc);
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, -20, 0, 0);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //inside this screen, we use self.selectedIndex to indicate whether or not a category is selected
     //instead of changing the real state right away. This way, we can cancel the changes by simply poping
@@ -81,6 +80,11 @@
 
 #pragma mark - UITableView
 
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [UIView new];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.categoriesArray.count;
@@ -99,6 +103,10 @@
         
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
         cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        
+        UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 43.0f, 320.0f, 1.0f)];
+        separator.backgroundColor = UIColorFromRGB(0xcccccc);
+        [cell addSubview:separator];
     }
     
     RICategory* category = [self.categoriesArray objectAtIndex:indexPath.row];
