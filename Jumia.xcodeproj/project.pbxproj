@@ -1990,7 +1990,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Hockey\" ]; then\nbuildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion 1.$buildNumber-dev\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;";
+			shellScript = "if [ ${CONFIGURATION} == \"Hockey\" ]; then\nbuildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion 1.$buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;";
 		};
 /* End PBXShellScriptBuildPhase section */
 
