@@ -10,7 +10,10 @@
 
 @interface JACartViewController : JABaseViewController
 
-@property (weak, nonatomic) IBOutlet UIButton *goToLogin;
-@property (weak, nonatomic) IBOutlet UIButton *loginAndGoToAddresses;
+@property (weak, nonatomic) IBOutlet UIView *emptyCartView;
+@property (weak, nonatomic) IBOutlet UILabel *emptyCartLabel;
+@property (weak, nonatomic) IBOutlet UIButton *continueShoppingButton;
+//@property (weak, nonatomic) IBOutlet UIButton *goToLogin;
+//@property (weak, nonatomic) IBOutlet UIButton *loginAndGoToAddresses;
 
 @end

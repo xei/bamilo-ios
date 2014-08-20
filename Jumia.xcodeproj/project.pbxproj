@@ -72,7 +72,6 @@
 		B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E171989308300C18F1E /* RIPaymentMethodForm.m */; };
 		B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E191989308300C18F1E /* RIPaymentInformation.m */; };
 		B5225E30198950C500C18F1E /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
-		B5225E3719895E0600C18F1E /* JAEmptyCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E3619895E0600C18F1E /* JAEmptyCartViewController.m */; };
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
 		B5A301BC19811D0700F71726 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
@@ -369,8 +368,6 @@
 		B5225E1A1989308300C18F1E /* RIPaymentInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPaymentInformation.h; sourceTree = "<group>"; };
 		B5225E2E198950C500C18F1E /* JACartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACartViewController.h; sourceTree = "<group>"; };
 		B5225E2F198950C500C18F1E /* JACartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACartViewController.m; sourceTree = "<group>"; };
-		B5225E3519895E0600C18F1E /* JAEmptyCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAEmptyCartViewController.h; sourceTree = "<group>"; };
-		B5225E3619895E0600C18F1E /* JAEmptyCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAEmptyCartViewController.m; sourceTree = "<group>"; };
 		B5A301A819811D0700F71726 /* Jumia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jumia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A301AC19811D0700F71726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5A301AD19811D0700F71726 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1027,8 +1024,6 @@
 			children = (
 				B5225E2E198950C500C18F1E /* JACartViewController.h */,
 				B5225E2F198950C500C18F1E /* JACartViewController.m */,
-				B5225E3519895E0600C18F1E /* JAEmptyCartViewController.h */,
-				B5225E3619895E0600C18F1E /* JAEmptyCartViewController.m */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2067,7 +2062,6 @@
 				4A39213A19891FC400B70A9C /* JAMyFavouritesViewController.m in Sources */,
 				B5A302E319811E9200F71726 /* RIAdXTracker.m in Sources */,
 				4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */,
-				B5225E3719895E0600C18F1E /* JAEmptyCartViewController.m in Sources */,
 				CEDEB9C9199BA8FA0022BAB5 /* NMRangeSlider.m in Sources */,
 				B5A3025919811E8A00F71726 /* SDWebImageDecoder.m in Sources */,
 				CEE91B9C1989065A0078DFC9 /* JATeaserPageView.m in Sources */,

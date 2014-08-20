@@ -27,6 +27,7 @@
 #define kUserLoggedOutNotification @"NOTIFICATION_USER_LOGGED_OUT"
 #define kShowMainFiltersNavNofication @"NOTIFICATION_SHOW_MAIN_FILTERS_NAVIGATION"
 #define kShowSpecificFilterNavNofication @"NOTIFICATION_SHOW_SPECIFIC_FILTER_NAVIGATION"
+#define kShowHomeScreenNotification @"NOTIFICATION_HOME_SCREEN"
 
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"
@@ -40,3 +41,16 @@
 
 // App url (this is needed to redirect to itunes connect to update the app)
 #define kAppStoreUrl @"https://itunes.apple.com/us/app/the-iconic-app/id686483021?ls=1&mt=8"
+
+// Colors
+
+// Colors - Backgrounds
+#define JANavBarBackgroundGrey UIColorFromRGB(0xeaeaea)
+#define JABackgroundGrey UIColorFromRGB(0xc8c8c8)
+
+// Colors - Buttons
+#define JAButtonOrange UIColorFromRGB(0xfaa41a)
+#define JAButtonTextOrange UIColorFromRGB(0x4e4e4e)
+
+// Colors - Text
+#define JALabelGrey UIColorFromRGB(0xcccccc)

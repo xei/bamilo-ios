@@ -24,8 +24,8 @@
 
 @interface JACenterNavigationController ()
 <
-    JAChooseCountryDelegate,
-    JARecentSearchesDelegate
+JAChooseCountryDelegate,
+JARecentSearchesDelegate
 >
 
 @property (strong, nonatomic) RICart *cart;
@@ -86,10 +86,12 @@
                                              selector:@selector(didSelectTeaserWithCatalogUrl:)
                                                  name:kDidSelectTeaserWithCatalogUrlNofication
                                                object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectTeaserWithPDVUrl:)
                                                  name:kDidSelectTeaserWithPDVUrlNofication
                                                object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectTeaserWithAllCategories)
                                                  name:kDidSelectTeaserWithAllCategoriesNofication
@@ -99,6 +101,12 @@
                                              selector:@selector(didSelectCategoryFromCenterPanel:)
                                                  name:kDidSelectCategoryFromCenterPanelNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showHomeScreen)
+                                                 name:kShowHomeScreenNotification
+                                               object:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -118,18 +126,9 @@
 {
     [self.navigationBarView changeNavigationBarTitle:@"Cart"];
     
-    if(VALID_NOTEMPTY(self.cart, RICart) && 0 < [self.cart cartCount])
-    {
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"cartViewController"]
-                        animated:YES];
-    }
-    else
-    {
-        [self popToRootViewControllerAnimated:NO];        
-        [self pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"emptyCartViewController"]
-                        animated:YES];
-    }
+    [self popToRootViewControllerAnimated:NO];
+    [self pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"cartViewController"]
+                    animated:YES];
 }
 
 - (void)updateCart:(NSNotification*) notification
@@ -138,7 +137,7 @@
     {
         NSDictionary* userInfo = notification.userInfo;
         self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
-
+        
         [self.navigationBarView updateCartProductCount:self.cart.cartCount];
     }
 }
@@ -304,8 +303,8 @@
             }
             else
             {
-            [self changeCenterPanel:[selectedItem objectForKey:@"name"]
-                     titleForNavBar:[selectedItem objectForKey:@"name"]];
+                [self changeCenterPanel:[selectedItem objectForKey:@"name"]
+                         titleForNavBar:[selectedItem objectForKey:@"name"]];
             }
         }
     }
@@ -396,12 +395,18 @@
                                                         object:nil];
     
     NSDictionary *selectedItem = [notification object];
-
+    
     RICategory* category = [selectedItem objectForKey:@"category"];
     if (VALID_NOTEMPTY(category, RICategory)) {
         
         [self changeCenterPanelToCatalogWithCategory:category];
     }
+}
+
+- (void) showHomeScreen
+{
+    [self changeCenterPanel:@"Home"
+             titleForNavBar:nil];
 }
 
 - (void)back
@@ -479,6 +484,9 @@
                                    animated:NO];
     
     self.navigationBarView = [JANavigationBarView getNewNavBarView];
+    
+    self.navigationBarView.backgroundColor = JANavBarBackgroundGrey;
+    
     [self.navigationBar.viewForBaselineLayout addSubview:self.navigationBarView];
     
     [self.navigationBarView.cartButton addTarget:self
