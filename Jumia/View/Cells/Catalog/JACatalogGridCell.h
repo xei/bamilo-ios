@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "JACatalogCell.h"
 
+#define JACatalogViewControllerGridCellHeight 196.0f
+
 @interface JACatalogGridCell : JACatalogCell
 
 @end
