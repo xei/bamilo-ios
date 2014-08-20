@@ -117,7 +117,15 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @param the product to be added to the recently viewed list
  *
  */
-+ (void)addToRecentlyViewed:(RIProduct*)product;
++ (void)addToRecentlyViewed:(RIProduct*)product
+               successBlock:(void (^)(void))successBlock
+            andFailureBlock:(void (^)(NSArray *error))failureBlock;
+
+/**
+ *  Method to delete all recently viewed products from coredata
+ */
++ (void)removeAllRecentlyViewedWithSuccessBlock:(void (^)(void))successBlock
+                                andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 /**
  *  Method to cancel the request

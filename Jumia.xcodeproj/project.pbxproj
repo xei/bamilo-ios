@@ -209,6 +209,8 @@
 		CE55A4E71993672600EE75DE /* JARatingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55A4E61993672600EE75DE /* JARatingsView.m */; };
 		CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE55A4E819936B6300EE75DE /* JARatingsView.xib */; };
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
+		CEB5D5BC19A50230008BFDB3 /* JAButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB5D5BB19A50230008BFDB3 /* JAButtonCell.xib */; };
+		CEB5D5BF19A50256008BFDB3 /* JAButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB5D5BE19A50256008BFDB3 /* JAButtonCell.m */; };
 		CED30C24199CAA5C00C67F4B /* JAGenericFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */; };
 		CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C26199CBF0E00C67F4B /* JAColorView.m */; };
 		CED30C2A199CC8F200C67F4B /* JAColorFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */; };
@@ -614,6 +616,9 @@
 		CE55A4E61993672600EE75DE /* JARatingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingsView.m; sourceTree = "<group>"; };
 		CE55A4E819936B6300EE75DE /* JARatingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARatingsView.xib; sourceTree = "<group>"; };
 		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		CEB5D5BB19A50230008BFDB3 /* JAButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAButtonCell.xib; sourceTree = "<group>"; };
+		CEB5D5BD19A50256008BFDB3 /* JAButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAButtonCell.h; sourceTree = "<group>"; };
+		CEB5D5BE19A50256008BFDB3 /* JAButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAButtonCell.m; sourceTree = "<group>"; };
 		CED30C22199CAA5C00C67F4B /* JAGenericFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAGenericFilterViewController.h; sourceTree = "<group>"; };
 		CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAGenericFilterViewController.m; sourceTree = "<group>"; };
 		CED30C25199CBF0E00C67F4B /* JAColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAColorView.h; sourceTree = "<group>"; };
@@ -813,6 +818,9 @@
 			children = (
 				CE2F576B19913B33000A9E09 /* Catalog */,
 				4A4ABF09198B902600342D92 /* CountryCell */,
+				CEB5D5BB19A50230008BFDB3 /* JAButtonCell.xib */,
+				CEB5D5BD19A50256008BFDB3 /* JAButtonCell.h */,
+				CEB5D5BE19A50256008BFDB3 /* JAButtonCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1960,6 +1968,7 @@
 				B5A3023D19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */,
 				4A454F46199CE65100B44821 /* JAGenderComponent.xib in Resources */,
 				CEDEB9B3199BA8FA0022BAB5 /* slider-default-track.png in Resources */,
+				CEB5D5BC19A50230008BFDB3 /* JAButtonCell.xib in Resources */,
 				B5A3024E19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
 				CE69B587198662E6005CC699 /* Main.storyboard in Resources */,
 				CEDEB9B8199BA8FA0022BAB5 /* slider-default_trackBackground@2x.png in Resources */,
@@ -1998,6 +2007,7 @@
 				4A2FD84619912BC500C65C1D /* JAPDVSingleRelatedItem.m in Sources */,
 				B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */,
 				B5A3025B19811E8A00F71726 /* SDWebImageManager.m in Sources */,
+				CEB5D5BF19A50256008BFDB3 /* JAButtonCell.m in Sources */,
 				B5A302C319811E9200F71726 /* RIForm.m in Sources */,
 				4AFC7F94199BC124007D67F4 /* JASignupViewController.m in Sources */,
 				B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */,

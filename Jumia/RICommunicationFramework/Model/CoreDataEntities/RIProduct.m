@@ -355,7 +355,9 @@
     }
 }
 
-+ (void)addToRecentlyViewed:(RIProduct*)product;
++ (void)addToRecentlyViewed:(RIProduct*)product
+               successBlock:(void (^)(void))successBlock
+            andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
@@ -393,8 +395,35 @@
         product.recentlyViewedDate = [NSDate date];
         [RIProduct saveProduct:product];
         
-    } andFailureBlock:^(NSArray *error) {
+        if (successBlock) {
+            successBlock();
+        }
         
+    } andFailureBlock:^(NSArray *error) {
+        if (failureBlock) {
+            failureBlock(error);
+        }
+    }];
+}
+
++ (void)removeAllRecentlyViewedWithSuccessBlock:(void (^)(void))successBlock
+                                andFailureBlock:(void (^)(NSArray *))failureBlock;
+{
+    [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
+        
+        for (RIProduct* product in recentlyViewedProducts) {
+            [[RIDataBaseWrapper sharedInstance] deleteObject:product];
+            [[RIDataBaseWrapper sharedInstance] saveContext];
+        }
+        
+        if (successBlock) {
+            successBlock();
+        }
+        
+    } andFailureBlock:^(NSArray *error) {
+        if (failureBlock) {
+            failureBlock(error);
+        }
     }];
 }
 
