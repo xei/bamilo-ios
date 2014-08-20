@@ -1815,7 +1815,6 @@
 				B5A301A419811D0700F71726 /* Sources */,
 				B5A301A519811D0700F71726 /* Frameworks */,
 				B5A301A619811D0700F71726 /* Resources */,
-				B5007ACD19A4F3200024035A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1977,22 +1976,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		B5007ACD19A4F3200024035A /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Hockey\" ]; then\nbuildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion 1.$buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B5A301A419811D0700F71726 /* Sources */ = {
