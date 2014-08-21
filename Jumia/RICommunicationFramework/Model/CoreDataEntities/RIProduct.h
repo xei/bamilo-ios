@@ -128,6 +128,37 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                                 andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 /**
+ *  Method to load a the favorite products from coredata
+ *
+ *  @param the success block containing the favorite products
+ *  @param the failure block containing the error message
+ *
+ */
++ (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
+                            andFailureBlock:(void (^)(NSArray *error))failureBlock;
+
+/**
+ *  Method to add a product to favorites list (and save it in coredata)
+ *
+ *  @param the product to be added to the recently viewed list
+ *
+ */
++ (void)addToFavorites:(RIProduct*)product
+          successBlock:(void (^)(void))successBlock
+       andFailureBlock:(void (^)(NSArray *error))failureBlock;
+
+/**
+ *  Method to remove a product from favorites list (and save it in coredata)
+ *
+ *  @param the product to be added to the recently viewed list
+ *  @param the success block containing the favorite products list updated
+ *
+ */
++ (void)removeFromFavorites:(RIProduct*)product
+               successBlock:(void (^)(NSArray* favoriteProducts))successBlock
+            andFailureBlock:(void (^)(NSArray *error))failureBlock;
+
+/**
  *  Method to cancel the request
  *
  *  @param the operationID

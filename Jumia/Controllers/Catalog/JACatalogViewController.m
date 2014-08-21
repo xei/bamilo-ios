@@ -256,6 +256,10 @@
     }
     
     JACatalogCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.favoriteButton.tag = indexPath.row;
+    [cell.favoriteButton addTarget:self
+                            action:@selector(addToFavoritesPressed:)
+                  forControlEvents:UIControlEventTouchUpInside];
     
     [cell loadWithProduct:product];
     
@@ -338,6 +342,19 @@
 - (IBAction)catalogTopButtonPressed:(id)sender
 {
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+}
+
+- (void)addToFavoritesPressed:(UIButton*)button
+{
+    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    
+    [self showLoading];
+    [RIProduct addToFavorites:product successBlock:^{
+        [self hideLoading];
+        NSLog(@"Added to favorites");
+    } andFailureBlock:^(NSArray *error) {
+        [self hideLoading];
+    }];
 }
 
 @end

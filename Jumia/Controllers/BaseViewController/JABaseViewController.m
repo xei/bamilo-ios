@@ -28,6 +28,8 @@
     self.navigationItem.hidesBackButton = YES;
     self.title = @"";
     
+    self.view.backgroundColor = JABackgroundGrey;
+    
     self.requestNumber = 0;
     
     self.loadingImageView = [[UIImageView alloc] initWithFrame:((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame];
