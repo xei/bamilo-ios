@@ -349,12 +349,16 @@
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     
     [self showLoading];
-    [RIProduct addToFavorites:product successBlock:^{
-        [self hideLoading];
-        NSLog(@"Added to favorites");
-    } andFailureBlock:^(NSArray *error) {
-        [self hideLoading];
-    }];
+    [RIProduct getCompleteProductWithUrl:product.url
+                            successBlock:^(id completeProduct) {
+                                [RIProduct addToFavorites:completeProduct successBlock:^{
+                                    [self hideLoading];
+                                } andFailureBlock:^(NSArray *error) {
+                                    [self hideLoading];
+                                }];
+                            } andFailureBlock:^(NSArray *error) {
+                                [self hideLoading];
+                            }];
 }
 
 @end

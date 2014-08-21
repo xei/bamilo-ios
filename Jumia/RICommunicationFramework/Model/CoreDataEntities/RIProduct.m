@@ -44,9 +44,9 @@
 
 @synthesize categoryIds;
 
-+ (NSString *)getProductWithUrl:(NSString*)url
-                   successBlock:(void (^)(id product))successBlock
-                andFailureBlock:(void (^)(NSArray *error))failureBlock
++ (NSString *)getCompleteProductWithUrl:(NSString*)url
+                           successBlock:(void (^)(id product))successBlock
+                        andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil

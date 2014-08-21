@@ -57,7 +57,7 @@ JAPDVGalleryViewDelegate
     // Always load the product details when entering PDV
     if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [self showLoading];
-        [RIProduct getProductWithUrl:self.productUrl successBlock:^(id product) {
+        [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
             [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
             self.product = product;
             [self hideLoading];
