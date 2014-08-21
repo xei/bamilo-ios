@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <scenes>
@@ -338,8 +337,57 @@
                     <view key="view" contentMode="scaleToFill" id="PUx-yw-aeH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rnl-Mb-45V">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Pcj-MJ-MLc">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="mpU-iO-p4f">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KbF-vY-c7q" userLabel="Empty List View">
+                                <rect key="frame" x="6" y="70" width="308" height="200"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="150" translatesAutoresizingMaskIntoConstraints="NO" id="dlh-GT-lJE">
+                                        <rect key="frame" x="79" y="128" width="150" height="52"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="emptyFavoritesIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Umm-FJ-dYB">
+                                        <rect key="frame" x="105" y="20" width="98" height="98"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Rnl-Mb-45V" secondAttribute="trailing" id="4bK-fv-wyw"/>
+                            <constraint firstItem="Rnl-Mb-45V" firstAttribute="leading" secondItem="PUx-yw-aeH" secondAttribute="leading" id="7DT-MC-xCr"/>
+                            <constraint firstItem="8Hv-gh-VZe" firstAttribute="top" secondItem="Rnl-Mb-45V" secondAttribute="bottom" id="Qna-qK-wBM"/>
+                            <constraint firstItem="Rnl-Mb-45V" firstAttribute="top" secondItem="I4q-nC-LPf" secondAttribute="bottom" id="svo-hk-JJp"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="wxy-DE-nsB"/>
+                    <connections>
+                        <outlet property="collectionView" destination="Rnl-Mb-45V" id="aZI-SY-Bi9"/>
+                        <outlet property="emptyFavoritesLabel" destination="dlh-GT-lJE" id="pO3-bn-r06"/>
+                        <outlet property="emptyFavoritesView" destination="KbF-vY-c7q" id="nPX-zP-Odh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RfL-3t-GwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1376,6 +1424,7 @@
                         <segue destination="kkN-0R-T6h" kind="push" identifier="segueNewReview" id="BOh-Tr-8Lm"/>
                         <segue destination="we7-Gk-jkb" kind="push" id="rUp-Rh-Qx3"/>
                         <segue destination="LjQ-x6-EIP" kind="push" id="Zjg-Oa-JfE"/>
+                        <segue destination="0fU-Gn-Dfc" kind="push" id="wXL-pA-TpM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zwP-v4-smR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2440,6 +2489,7 @@
         <image name="arrow_moreinfo" width="7" height="12"/>
         <image name="catalogTopButton" width="35" height="35"/>
         <image name="catalogTopButtonPressed" width="35" height="35"/>
+        <image name="emptyFavoritesIcon" width="98" height="98"/>
         <image name="emptyRecentlyViewedIcon" width="98" height="98"/>
         <image name="filterIcon" width="22" height="22"/>
         <image name="gridIcon" width="22" height="22"/>

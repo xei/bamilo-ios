@@ -24,6 +24,20 @@
 
 @implementation JARecentlyViewedViewController
 
+@synthesize productsArray=_productsArray;
+- (void)setProductsArray:(NSArray *)productsArray
+{
+    _productsArray = productsArray;
+    [self.collectionView reloadData];
+    if (ISEMPTY(productsArray)) {
+        self.emptyListView.hidden = NO;
+        self.collectionView.hidden = YES;
+    } else {
+        self.emptyListView.hidden = YES;
+        self.collectionView.hidden = NO;
+    }
+}
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
@@ -44,7 +58,7 @@
     
     UINib *listCellNib = [UINib nibWithNibName:@"JARecentlyViewedListCell" bundle:nil];
     [self.collectionView registerNib:listCellNib forCellWithReuseIdentifier:@"recentlyViewedListCell"];
-    UINib *buttonCellNib = [UINib nibWithNibName:@"JAButtonCell" bundle:nil];
+    UINib *buttonCellNib = [UINib nibWithNibName:@"JAGrayButtonCell" bundle:nil];
     [self.collectionView registerNib:buttonCellNib forCellWithReuseIdentifier:@"buttonCell"];
     
     UICollectionViewFlowLayout* flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -60,18 +74,8 @@
     [super viewWillAppear:animated];
     [self showLoading];
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
-        
         [self hideLoading];
         self.productsArray = recentlyViewedProducts;
-        
-        if (ISEMPTY(recentlyViewedProducts)) {
-            self.emptyListView.hidden = NO;
-            self.collectionView.hidden = YES;
-        } else {
-            self.emptyListView.hidden = YES;
-            self.collectionView.hidden = NO;
-            [self.collectionView reloadData];
-        }
     } andFailureBlock:^(NSArray *error) {
         [self hideLoading];
     }];
@@ -190,7 +194,6 @@
     [RIProduct removeAllRecentlyViewedWithSuccessBlock:^{
         [self hideLoading];
         self.productsArray = nil;
-        [self.collectionView reloadData];
     } andFailureBlock:^(NSArray *error) {
         [self hideLoading];
     }];

@@ -336,6 +336,8 @@
     return urlComponent;
 }
 
+#pragma mark - Recently Viewed
+
 + (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock
                                   andFailureBlock:(void (^)(NSArray *error))failureBlock;
 {
@@ -427,6 +429,95 @@
     }];
 }
 
+#pragma mark - Favorites
+
++ (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
+                            andFailureBlock:(void (^)(NSArray *error))failureBlock;
+{
+    NSArray* favorites = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"isFavorite" andPropertyValue:@"YES"];
+    
+    if (VALID(favorites, NSArray) && successBlock) {
+        
+        //reverse array
+        NSMutableArray *reversedArray = [NSMutableArray arrayWithCapacity:favorites.count];
+        NSEnumerator *enumerator = [favorites reverseObjectEnumerator];
+        for (id element in enumerator) {
+            [reversedArray addObject:element];
+        }
+        successBlock(reversedArray);
+    } else if (failureBlock) {
+        failureBlock(nil);
+    }
+}
+
++ (void)addToFavorites:(RIProduct*)product
+          successBlock:(void (^)(void))successBlock
+       andFailureBlock:(void (^)(NSArray *error))failureBlock;
+{
+    [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+        
+        BOOL alreadyFavorite = NO;
+        
+        for (RIProduct* favorite in favoriteProducts) {
+            
+            if ([favorite.sku isEqualToString:product.sku]) {
+                //same product, don't need to add
+                alreadyFavorite = YES;
+                break;
+            }
+        }
+        
+        if (NO == alreadyFavorite) {
+            //add the new product
+            product.isFavorite = [NSNumber numberWithBool:YES];
+            [RIProduct saveProduct:product];
+        }
+        
+        if (successBlock) {
+            successBlock();
+        }
+        
+    } andFailureBlock:^(NSArray *error) {
+        if (failureBlock) {
+            failureBlock(error);
+        }
+    }];
+}
+
++ (void)removeFromFavorites:(RIProduct*)product
+               successBlock:(void (^)(void))successBlock
+            andFailureBlock:(void (^)(NSArray *error))failureBlock;
+{
+    [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+        
+        RIProduct* productToDelete;
+        
+        for (RIProduct* favorite in favoriteProducts) {
+            if ([favorite.sku isEqualToString:product.sku]) {
+                //same product, delete it
+                productToDelete = favorite;
+                break;
+            }
+        }
+        
+        //remove the product
+        if (VALID_NOTEMPTY(productToDelete, RIProduct)) {
+            [[RIDataBaseWrapper sharedInstance] deleteObject:productToDelete];
+            [[RIDataBaseWrapper sharedInstance] saveContext];
+        }
+        
+        if (successBlock) {
+            successBlock();
+        }
+        
+    } andFailureBlock:^(NSArray *error) {
+        if (failureBlock) {
+            failureBlock(error);
+        }
+    }];
+}
+
+#pragma mark - Save method
 
 + (void)saveProduct:(RIProduct *)product
 {
