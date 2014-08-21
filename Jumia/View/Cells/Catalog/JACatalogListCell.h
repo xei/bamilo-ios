@@ -15,5 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *addToCartButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (weak, nonatomic) IBOutlet UIButton *quantityButton;
+@property (weak, nonatomic) IBOutlet UIView *separator;
 
 @end

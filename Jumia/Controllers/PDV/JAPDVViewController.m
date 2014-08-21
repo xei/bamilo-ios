@@ -462,6 +462,9 @@ JAPDVGalleryViewDelegate
                             simple:((RIProduct *)[self.product.productSimples firstObject]).sku
                   withSuccessBlock:^(RICart *cart) {
                       
+                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                      
                       [[[UIAlertView alloc] initWithTitle:@"Jumia"
                                                   message:@"Product added"
                                                  delegate:nil
@@ -485,7 +488,14 @@ JAPDVGalleryViewDelegate
 
 - (void)callToOrder
 {
-    
+    [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+        UIDevice *device = [UIDevice currentDevice];
+        if ([[device model] isEqualToString:@"iPhone"] ) {
+            NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+        }
+    } andFailureBlock:^(NSArray *errorMessages) {
+    }];
 }
 
 - (void)showSizePicker

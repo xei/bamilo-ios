@@ -72,11 +72,25 @@
  *  @param the success block
  *  @param the error block that contains the error case the operation fails
  *
- *  @return the tsring with the code to cancel the request
+ *  @return the string with the code to cancel the request
  */
 + (NSString *) changeQuantityInProducts:(NSDictionary *)productsQuantities
                        withSuccessBlock:(void (^)(RICart *cart))sucessBlock
                         andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+
+/**
+ *  Method to add voucher information
+ *
+ *  @param the voucher code
+ *  @param the success block
+ *  @param the error block that contains the error case the operation fails
+ *
+ *  @return the string with the code to cancel the request
+ */
++ (NSString *) addVoucherWithCode:(NSString *)voucherCode
+                 withSuccessBlock:(void (^)(RICart *cart))sucessBlock
+                  andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+
 
 + (RICart *)parseCart:(NSDictionary *)json;
 

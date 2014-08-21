@@ -10,6 +10,7 @@
 #import "JARatingsView.h"
 #import "RIProduct.h"
 #import "JAUtils.h"
+#import "RICartItem.h"
 
 @interface JACatalogListCell()
 
@@ -59,4 +60,16 @@
     [self.addToCartButton setTitle:@"Add to Cart" forState:UIControlStateNormal];
 }
 
+- (void)loadWithCartItem:(RICartItem *)cartItem
+{
+    [super loadWithCartItem:cartItem];
+    
+    [self.ratingsView removeFromSuperview];
+    
+    NSString *stringQuantity = [NSString stringWithFormat:@"Quantity: %@", [[cartItem quantity] stringValue]];
+    [self.quantityButton setBackgroundColor:[UIColor clearColor]];
+    [self.quantityButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+    [self.quantityButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [self.quantityButton setTitle:stringQuantity forState:UIControlStateNormal];
+}
 @end
