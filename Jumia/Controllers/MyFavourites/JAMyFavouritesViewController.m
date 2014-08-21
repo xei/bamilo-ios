@@ -24,6 +24,20 @@
 
 @implementation JAMyFavouritesViewController
 
+@synthesize productsArray=_productsArray;
+- (void)setProductsArray:(NSArray *)productsArray
+{
+    _productsArray = productsArray;
+    [self.collectionView reloadData];
+    if (ISEMPTY(productsArray)) {
+        self.emptyFavoritesView.hidden = NO;
+        self.collectionView.hidden = YES;
+    } else {
+        self.emptyFavoritesView.hidden = YES;
+        self.collectionView.hidden = NO;
+    }
+}
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
@@ -64,15 +78,6 @@
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
         [self hideLoading];
         self.productsArray = favoriteProducts;
-        
-        if (ISEMPTY(favoriteProducts)) {
-            self.emptyFavoritesView.hidden = NO;
-            self.collectionView.hidden = YES;
-        } else {
-            self.emptyFavoritesView.hidden = YES;
-            self.collectionView.hidden = NO;
-            [self.collectionView reloadData];
-        }
     } andFailureBlock:^(NSArray *error) {
         [self hideLoading];
     }];
@@ -118,6 +123,10 @@
         [cell.addToCartButton addTarget:self
                                  action:@selector(addToCartPressed:)
                        forControlEvents:UIControlEventTouchUpInside];
+        cell.deleteButton.tag = indexPath.row;
+        [cell.deleteButton addTarget:self
+                              action:@selector(removeFromFavoritesPressed:)
+                    forControlEvents:UIControlEventTouchUpInside];
         
         return cell;
     }
@@ -143,7 +152,7 @@
         JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
         pdv.productUrl = product.url;
         pdv.fromCatalogue = YES;
-        pdv.previousCategory = @"Recently Viewed";
+        pdv.previousCategory = @"Favorites";
         pdv.arrayWithRelatedItems = [tempArray copy];
         
         [self.navigationController pushViewController:pdv
@@ -188,6 +197,19 @@
 - (void)addAllToCart
 {
 
+}
+
+- (void)removeFromFavoritesPressed:(UIButton*)button
+{
+    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    
+    [self showLoading];
+    [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+        [self hideLoading];
+        self.productsArray = favoriteProducts;
+    } andFailureBlock:^(NSArray *error) {
+        [self hideLoading];
+    }];
 }
 
 

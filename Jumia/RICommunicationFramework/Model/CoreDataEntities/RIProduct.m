@@ -434,13 +434,19 @@
 + (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
                             andFailureBlock:(void (^)(NSArray *error))failureBlock;
 {
-    NSArray* favorites = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"isFavorite" andPropertyValue:@"YES"];
+    NSArray* productsWithVariable = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"isFavorite"];
+    NSMutableArray* favoriteProducts = [NSMutableArray new];
+    for (RIProduct* product in productsWithVariable) {
+        if (VALID_NOTEMPTY(product.isFavorite, NSNumber) && YES == [product.isFavorite boolValue]) {
+            [favoriteProducts addObject:product];
+        }
+    }
     
-    if (VALID(favorites, NSArray) && successBlock) {
+    if (VALID(favoriteProducts, NSArray) && successBlock) {
         
         //reverse array
-        NSMutableArray *reversedArray = [NSMutableArray arrayWithCapacity:favorites.count];
-        NSEnumerator *enumerator = [favorites reverseObjectEnumerator];
+        NSMutableArray *reversedArray = [NSMutableArray arrayWithCapacity:favoriteProducts.count];
+        NSEnumerator *enumerator = [favoriteProducts reverseObjectEnumerator];
         for (id element in enumerator) {
             [reversedArray addObject:element];
         }
@@ -485,18 +491,21 @@
 }
 
 + (void)removeFromFavorites:(RIProduct*)product
-               successBlock:(void (^)(void))successBlock
+               successBlock:(void (^)(NSArray* favoriteProducts))successBlock
             andFailureBlock:(void (^)(NSArray *error))failureBlock;
 {
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
         
         RIProduct* productToDelete;
+        NSMutableArray* updatedFavoritesList = [NSMutableArray new];
         
         for (RIProduct* favorite in favoriteProducts) {
             if ([favorite.sku isEqualToString:product.sku]) {
-                //same product, delete it
+                //found product, delete it
                 productToDelete = favorite;
-                break;
+            } else {
+                //not the product we're looking for, add to updated list
+                [updatedFavoritesList addObject:favorite];
             }
         }
         
@@ -507,7 +516,7 @@
         }
         
         if (successBlock) {
-            successBlock();
+            successBlock([updatedFavoritesList copy]);
         }
         
     } andFailureBlock:^(NSArray *error) {

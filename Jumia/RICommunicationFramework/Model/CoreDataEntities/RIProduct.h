@@ -151,10 +151,11 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  Method to remove a product from favorites list (and save it in coredata)
  *
  *  @param the product to be added to the recently viewed list
+ *  @param the success block containing the favorite products list updated
  *
  */
 + (void)removeFromFavorites:(RIProduct*)product
-               successBlock:(void (^)(void))successBlock
+               successBlock:(void (^)(NSArray* favoriteProducts))successBlock
             andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 /**
