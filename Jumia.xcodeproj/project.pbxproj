@@ -77,6 +77,7 @@
 		B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E171989308300C18F1E /* RIPaymentMethodForm.m */; };
 		B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E191989308300C18F1E /* RIPaymentInformation.m */; };
 		B5225E30198950C500C18F1E /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
+		B56BBF3319A60D5400F4B1A3 /* JACartListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */; };
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
 		B5A301BC19811D0700F71726 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
@@ -382,6 +383,7 @@
 		B5225E1A1989308300C18F1E /* RIPaymentInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPaymentInformation.h; sourceTree = "<group>"; };
 		B5225E2E198950C500C18F1E /* JACartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACartViewController.h; sourceTree = "<group>"; };
 		B5225E2F198950C500C18F1E /* JACartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACartViewController.m; sourceTree = "<group>"; };
+		B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACartListCell.xib; sourceTree = "<group>"; };
 		B5A301A819811D0700F71726 /* Jumia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jumia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A301AC19811D0700F71726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5A301AD19811D0700F71726 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1678,6 +1680,7 @@
 				CE2F576F19913B6D000A9E09 /* JACatalogListCell.xib */,
 				CE13789419A4DC4E00CA0751 /* JARecentlyViewedListCell.xib */,
 				CEC3F71119A5FBF800DE12F6 /* JAFavoriteListCell.xib */,
+				B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */,
 				CE2FB75419938EA100E7CD00 /* JACatalogGridCell.h */,
 				CE2FB75519938EA100E7CD00 /* JACatalogGridCell.m */,
 				CE2FB75719938EB500E7CD00 /* JACatalogGridCell.xib */,
@@ -1978,6 +1981,7 @@
 				CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */,
 				CE13789519A4DC4E00CA0751 /* JARecentlyViewedListCell.xib in Resources */,
 				B5A3023719811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
+				B56BBF3319A60D5400F4B1A3 /* JACartListCell.xib in Resources */,
 				B5A301BC19811D0700F71726 /* Images.xcassets in Resources */,
 				CEDEB9B6199BA8FA0022BAB5 /* slider-default-trackCrossedOver.png in Resources */,
 				CEDEB9BE199BA8FA0022BAB5 /* slider-default7-trackBackground@2x.png in Resources */,

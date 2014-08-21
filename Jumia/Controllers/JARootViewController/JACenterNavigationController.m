@@ -19,6 +19,7 @@
 #import "JACategoriesViewController.h"
 #import "JAMyAccountViewController.h"
 #import "JARecentlyViewedViewController.h"
+#import "JACartViewController.h"
 #import "RIProduct.h"
 #import "RIApi.h"
 
@@ -126,9 +127,11 @@ JARecentSearchesDelegate
 {
     [self.navigationBarView changeNavigationBarTitle:@"Cart"];
     
+    JACartViewController *cartViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cartViewController"];
+    [cartViewController setCart:self.cart];
+    
     [self popToRootViewControllerAnimated:NO];
-    [self pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"cartViewController"]
-                    animated:YES];
+    [self pushViewController:cartViewController animated:YES];
 }
 
 - (void)updateCart:(NSNotification*) notification

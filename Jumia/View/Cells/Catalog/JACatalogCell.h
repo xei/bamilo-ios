@@ -17,6 +17,7 @@
 #define JACatalogCellRatingsViewOffsetX 7.0f
 
 @class RIProduct;
+@class RICartItem;
 
 @interface JACatalogCell : UICollectionViewCell
 
@@ -32,5 +33,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *discountLabel;
 
 - (void)loadWithProduct:(RIProduct*)product;
+- (void)loadWithCartItem:(RICartItem*)cartItem;
 
 @end

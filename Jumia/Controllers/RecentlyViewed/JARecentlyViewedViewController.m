@@ -165,6 +165,9 @@
                                sku:product.sku
                             simple:((RIProduct *)[product.productSimples firstObject]).sku
                   withSuccessBlock:^(RICart *cart) {
+
+                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
                       [[[UIAlertView alloc] initWithTitle:@"Jumia"
                                                   message:@"Product added"
