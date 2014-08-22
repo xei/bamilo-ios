@@ -60,8 +60,8 @@
     
     if ([self.ratingProductNewPriceForLabel floatValue] > 0.0)
     {
-        NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:[self.ratingProductOldPriceForLabel stringValue]];
-        NSInteger stringOldPriceLenght = [self.ratingProductOldPriceForLabel stringValue].length;
+        NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:self.ratingProductOldPriceForLabel];
+        NSInteger stringOldPriceLenght = self.ratingProductOldPriceForLabel.length;
         UIFont *stringOldPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
                                                      size:14.0];
         UIColor *stringOldPriceColor = [UIColor colorWithRed:204.0/255.0
@@ -83,8 +83,8 @@
         
         self.oldPriceLabel.attributedText = stringOldPrice;
         
-        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:[self.ratingProductNewPriceForLabel stringValue]];
-        NSInteger stringNewPriceLenght = [self.ratingProductNewPriceForLabel stringValue].length;
+        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:self.ratingProductNewPriceForLabel];
+        NSInteger stringNewPriceLenght = self.ratingProductNewPriceForLabel.length;
         UIFont *stringNewPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
                                                      size:14.0];
         UIColor *stringNewPriceColor = [UIColor colorWithRed:204.0/255.0
@@ -108,8 +108,8 @@
     }
     else
     {
-        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:[self.ratingProductOldPriceForLabel stringValue]];
-        NSInteger stringNewPriceLenght = [self.ratingProductOldPriceForLabel stringValue].length;
+        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:self.ratingProductOldPriceForLabel];
+        NSInteger stringNewPriceLenght = self.ratingProductOldPriceForLabel.length;
         UIFont *stringNewPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
                                                      size:14.0];
         UIColor *stringNewPriceColor = [UIColor colorWithRed:204.0/255.0

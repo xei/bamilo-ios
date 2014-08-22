@@ -13,7 +13,7 @@
 @property (strong, nonatomic) NSString *ratingProductSku;
 @property (strong, nonatomic) NSString *ratingProductBrand;
 @property (strong, nonatomic) NSString *ratingProductNameForLabel;
-@property (strong, nonatomic) NSNumber *ratingProductNewPriceForLabel;
-@property (strong, nonatomic) NSNumber *ratingProductOldPriceForLabel;
+@property (strong, nonatomic) NSString *ratingProductNewPriceForLabel;
+@property (strong, nonatomic) NSString *ratingProductOldPriceForLabel;
 
 @end

@@ -12,8 +12,8 @@
 
 @property (strong, nonatomic) NSString *stringBrand;
 @property (strong, nonatomic) NSString *stringName;
-@property (strong, nonatomic) NSNumber *stringNewPrice;
-@property (strong, nonatomic) NSNumber *stringOldPrice;
+@property (strong, nonatomic) NSString *stringNewPrice;
+@property (strong, nonatomic) NSString *stringOldPrice;
 @property (strong, nonatomic) NSString *featuresText;
 @property (strong, nonatomic) NSString *descriptionText;
 

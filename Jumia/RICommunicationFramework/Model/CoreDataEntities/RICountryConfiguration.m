@@ -82,6 +82,74 @@
     return newConfig;
 }
 
++ (NSString*)formatPrice:(NSNumber*)price country:(RICountryConfiguration*)country
+{
+    NSString *formattedPrice = [price stringValue];
+    
+    NSString* noFraction = nil;
+    NSString* fraction = nil;
+    if([formattedPrice containsString:@"."])
+    {
+        NSArray *formattedPriceComponents = [formattedPrice componentsSeparatedByString:@"."];
+        if(1 < [formattedPriceComponents count])
+        {
+            noFraction = [formattedPriceComponents objectAtIndex:0];
+            fraction = [formattedPriceComponents objectAtIndex:1];
+        }
+    }
+    else
+    {
+        noFraction = formattedPrice;
+    }
+    
+    if(3 < [noFraction length])
+    {
+        NSString *thousands = [noFraction substringWithRange:NSMakeRange([noFraction length] - 3, 3)];
+        NSString *other = [noFraction substringWithRange:NSMakeRange(0, [noFraction length] - 3)];
+        
+        if(0 == [[country noDecimals] integerValue])
+        {
+            formattedPrice = [NSString stringWithFormat:@"%@%@%@", other, [country thousandsSep], thousands];
+        }
+        else
+        {
+            while([[country noDecimals] integerValue] > [fraction length])
+            {
+                fraction = [NSString stringWithFormat:@"%@0",fraction];
+            }
+            
+            formattedPrice = [NSString stringWithFormat:@"%@%@%@%@%@", other, [country thousandsSep], thousands, [country decimalsSep], fraction];
+        }
+    }
+    else
+    {
+        if(0 == [[country noDecimals] integerValue])
+        {
+            formattedPrice = noFraction;
+        }
+        else
+        {
+            while([[country noDecimals] integerValue] > [fraction length])
+            {
+                fraction = [NSString stringWithFormat:@"%@0",fraction];
+            }
+            
+            formattedPrice = [NSString stringWithFormat:@"%@%@%@", noFraction, [country decimalsSep], fraction];
+        }
+    }
+    
+    if(!VALID_NOTEMPTY([country currencyPosition], NSNumber) || ![[country currencyPosition] boolValue])
+    {
+        formattedPrice = [NSString stringWithFormat:@"%@ %@", [country currencySymbol], formattedPrice];
+    }
+    else
+    {
+        formattedPrice = [NSString stringWithFormat:@"%@ %@", formattedPrice, [country currencySymbol]];
+    }
+    
+    return formattedPrice;
+}
+
 + (void)saveConfiguration:(RICountryConfiguration *)configuration
 {
     for (RILanguage *language in configuration.languages) {

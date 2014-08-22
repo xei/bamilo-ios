@@ -13,7 +13,7 @@
 
 @property (strong, nonatomic) RIProductRatings *productRatings;
 @property (strong, nonatomic) NSString *productBrand;
-@property (strong, nonatomic) NSNumber *productNewPrice;
-@property (strong, nonatomic) NSNumber *productOldPrice;
+@property (strong, nonatomic) NSString *productNewPrice;
+@property (strong, nonatomic) NSString *productOldPrice;
 
 @end

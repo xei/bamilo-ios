@@ -2120,9 +2120,25 @@
                                                 </view>
                                             </collectionViewCell>
                                         </cells>
-                                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cartListHeader" id="D96-xG-0iK">
+                                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cartListHeader" id="D96-xG-0iK" customClass="JACartListHeaderView">
                                             <rect key="frame" x="0.0" y="0.0" width="308" height="26"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f3q-pC-z2R">
+                                                    <rect key="frame" x="0.0" y="25" width="308" height="1"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C5a-OT-rcq">
+                                                    <rect key="frame" x="10" y="2" width="288" height="21"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <connections>
+                                                <outlet property="separator" destination="f3q-pC-z2R" id="DU1-gJ-LYA"/>
+                                                <outlet property="title" destination="C5a-OT-rcq" id="JSA-T3-Q4n"/>
+                                            </connections>
                                         </collectionReusableView>
                                     </collectionView>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xas-k4-jfs" userLabel="Coupon">

@@ -27,12 +27,16 @@
 @dynamic descriptionString;
 @dynamic idCatalogConfig;
 @dynamic maxPrice;
+@dynamic maxPriceFormatted;
 @dynamic maxSavingPercentage;
 @dynamic maxSpecialPrice;
+@dynamic maxSpecialPriceFormatted;
 @dynamic name;
 @dynamic price;
+@dynamic priceFormatted;
 @dynamic sku;
 @dynamic specialPrice;
+@dynamic specialPriceFormatted;
 @dynamic sum;
 @dynamic url;
 @dynamic isNew;
@@ -54,14 +58,19 @@
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
-                                                              {
-                                                                  successBlock([RIProduct parseProduct:metadata]);
-                                                              } else
-                                                              {
+                                                              
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                                  {
+                                                                      successBlock([RIProduct parseProduct:metadata country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(nil);
+                                                                  }
+                                                              } andFailureBlock:^(NSArray *errorMessages) {
                                                                   failureBlock(nil);
-                                                              }
+                                                              }];
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
@@ -101,47 +110,52 @@
                                                              cacheType:RIURLCacheDBCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                              
-                                                              if (VALID_NOTEMPTY(metadata, NSDictionary)) {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   
-                                                                  NSArray* filtersJSON = [metadata objectForKey:@"filters"];
+                                                                  NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                   
-                                                                  NSArray* filtersArray;
-                                                                  
-                                                                  if (VALID_NOTEMPTY(filtersJSON, NSArray)) {
+                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                       
-                                                                      filtersArray = [RIFilter parseFilters:filtersJSON];
+                                                                      NSArray* filtersJSON = [metadata objectForKey:@"filters"];
                                                                       
-                                                                  }
-                                                                  
-                                                                  NSArray* categoriesJSON = [metadata objectForKey:@"categories"];
-                                                                  
-                                                                  NSArray* categoriesArray;
-                                                                  
-                                                                  if (VALID_NOTEMPTY(categoriesJSON, NSArray)) {
+                                                                      NSArray* filtersArray;
                                                                       
-                                                                      categoriesArray = [RICategory parseCategories:categoriesJSON persistData:NO];
-                                                                      
-                                                                  }
-                                                                  
-                                                                  NSArray* results = [metadata objectForKey:@"results"];
-                                                                  
-                                                                  if (VALID_NOTEMPTY(results, NSArray)) {
-                                                                      
-                                                                      NSMutableArray* products = [NSMutableArray new];
-                                                                      
-                                                                      for (NSDictionary* productJSON in results) {
+                                                                      if (VALID_NOTEMPTY(filtersJSON, NSArray)) {
                                                                           
-                                                                          RIProduct* product = [RIProduct parseProduct:productJSON];
-                                                                          [products addObject:product];
+                                                                          filtersArray = [RIFilter parseFilters:filtersJSON];
+                                                                          
                                                                       }
                                                                       
-                                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                                          successBlock(products, filtersArray, categoriesArray);
-                                                                      });
+                                                                      NSArray* categoriesJSON = [metadata objectForKey:@"categories"];
+                                                                      
+                                                                      NSArray* categoriesArray;
+                                                                      
+                                                                      if (VALID_NOTEMPTY(categoriesJSON, NSArray)) {
+                                                                          
+                                                                          categoriesArray = [RICategory parseCategories:categoriesJSON persistData:NO];
+                                                                          
+                                                                      }
+                                                                      
+                                                                      NSArray* results = [metadata objectForKey:@"results"];
+                                                                      
+                                                                      if (VALID_NOTEMPTY(results, NSArray)) {
+                                                                          
+                                                                          NSMutableArray* products = [NSMutableArray new];
+                                                                          
+                                                                          for (NSDictionary* productJSON in results) {
+                                                                              
+                                                                              RIProduct* product = [RIProduct parseProduct:productJSON country:configuration];
+                                                                              [products addObject:product];
+                                                                          }
+                                                                          
+                                                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                                                              successBlock(products, filtersArray, categoriesArray);
+                                                                          });
+                                                                      }
                                                                   }
-                                                              }
+                                                              } andFailureBlock:^(NSArray *errorMessages) {
+                                                                  failureBlock(nil);
+                                                              }];
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
@@ -165,7 +179,7 @@
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
 }
 
-+ (RIProduct *)parseProduct:(NSDictionary *)productJSON;
++ (RIProduct *)parseProduct:(NSDictionary *)productJSON country:(RICountryConfiguration*)country
 {
     RIProduct* newProduct = (RIProduct*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIProduct class])];
     
@@ -188,16 +202,20 @@
             newProduct.brand = [dataDic objectForKey:@"brand"];
         }
         if ([dataDic objectForKey:@"max_price"]) {
-                newProduct.maxPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price"] floatValue]];
+            newProduct.maxPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price"] floatValue]];
+            newProduct.maxPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
         }
         if ([dataDic objectForKey:@"price"]) {
             newProduct.price = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price"] floatValue]];
+            newProduct.priceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
         }
         if ([dataDic objectForKey:@"special_price"]) {
             newProduct.specialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price"] floatValue]];
+            newProduct.specialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
         }
         if ([dataDic objectForKey:@"max_special_price"]) {
             newProduct.maxSpecialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price"] floatValue]];
+            newProduct.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
         }
         if ([dataDic objectForKey:@"max_saving_percentage"]) {
             newProduct.maxSavingPercentage = [dataDic objectForKey:@"max_saving_percentage"];
@@ -253,7 +271,7 @@
             for (NSDictionary* simpleJSON in productSimplesJSON) {
                 if (VALID_NOTEMPTY(simpleJSON, NSDictionary)) {
                     
-                    RIProductSimple* productSimple = [RIProductSimple parseProductSimple:simpleJSON];
+                    RIProductSimple* productSimple = [RIProductSimple parseProductSimple:simpleJSON country:country];
                     productSimple.product = newProduct;
                     [newProduct addProductSimplesObject:productSimple];
                 }
@@ -474,7 +492,7 @@
           successBlock:(void (^)(void))successBlock
        andFailureBlock:(void (^)(NSArray *error))failureBlock;
 {
-     NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
+    NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
     
     BOOL alreadyFavorite = NO;
     
