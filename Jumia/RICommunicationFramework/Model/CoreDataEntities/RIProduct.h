@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSOrderedSet *categoryIds;
 
 /**
- *  Method to load a product given his url
+ *  Method to load a product and all its details given his url
  *
  *  @param the product url
  *  @param the success block containing the obtained product
@@ -62,9 +62,9 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)getProductWithUrl:(NSString *)url
-                   successBlock:(void (^)(id product))successBlock
-                andFailureBlock:(void (^)(NSArray *error))failureBlock;
++ (NSString *)getCompleteProductWithUrl:(NSString*)url
+                           successBlock:(void (^)(id product))successBlock
+                        andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 /**
  *  Method to load a set of products given a base product url, the sorting method and the paging info

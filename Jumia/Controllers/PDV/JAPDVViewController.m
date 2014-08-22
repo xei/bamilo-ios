@@ -57,7 +57,7 @@ JAPDVGalleryViewDelegate
     // Always load the product details when entering PDV
     if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [self showLoading];
-        [RIProduct getProductWithUrl:self.productUrl successBlock:^(id product) {
+        [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
             [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
             self.product = product;
             [self hideLoading];
@@ -71,6 +71,10 @@ JAPDVGalleryViewDelegate
 - (void)productLoaded
 {
     self.imageSection = [JAPDVImageSection getNewPDVImageSection];
+    [self.imageSection.wishListButton addTarget:self
+                                         action:@selector(addToFavoritesPressed:)
+                               forControlEvents:UIControlEventTouchUpInside];
+    self.imageSection.wishListButton.selected = [self.product.isFavorite boolValue];
     
     if (self.product.variations.count > 0) {
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
@@ -583,5 +587,39 @@ JAPDVGalleryViewDelegate
                          [self.gallery removeFromSuperview];
                      }];
 }
+
+- (void)addToFavoritesPressed:(UIButton*)button
+{
+    button.selected = !button.selected;
+    
+    [self showLoading];
+    if (button.selected) {
+        //add to favorites
+        [RIProduct addToFavorites:self.product successBlock:^{
+            [self hideLoading];
+            
+            self.product.isFavorite = [NSNumber numberWithBool:button.selected];
+            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
+                [self.delegate changedFavoriteStateOfProduct:self.product];
+            }
+            
+        } andFailureBlock:^(NSArray *error) {
+            [self hideLoading];
+        }];
+    } else {
+        [RIProduct removeFromFavorites:self.product successBlock:^(NSArray *favoriteProducts) {
+            //update favoriteProducts
+            [self hideLoading];
+            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
+                [self.delegate changedFavoriteStateOfProduct:self.product];
+            }
+        } andFailureBlock:^(NSArray *error) {
+            [self hideLoading];
+        }];
+    }
+}
+
 
 @end

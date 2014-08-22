@@ -11,6 +11,7 @@
 #import "JAButtonCell.h"
 #import "JAPDVViewController.h"
 #import "RIProduct.h"
+#import "RIProductSimple.h"
 #import "RICart.h"
 
 @interface JAMyFavouritesViewController ()
@@ -20,9 +21,20 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray* productsArray;
 
+@property (nonatomic, assign)NSInteger addAllToCartCount;
+
 @end
 
 @implementation JAMyFavouritesViewController
+
+@synthesize addAllToCartCount=_addAllToCartCount;
+-(void)setAddAllToCartCount:(NSInteger)addAllToCartCount
+{
+    _addAllToCartCount=addAllToCartCount;
+    if (0 == addAllToCartCount) {
+        [self addAddAllToCartFinished];
+    }
+}
 
 @synthesize productsArray=_productsArray;
 - (void)setProductsArray:(NSArray *)productsArray
@@ -43,6 +55,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.addAllToCartCount = 0;
     
     self.navigationItem.hidesBackButton = YES;
     
@@ -172,11 +186,21 @@
                             simple:((RIProduct *)[product.productSimples firstObject]).sku
                   withSuccessBlock:^(RICart *cart) {
                       
+                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                      
                       [[[UIAlertView alloc] initWithTitle:@"Jumia"
                                                   message:@"Product added"
                                                  delegate:nil
                                         cancelButtonTitle:nil
                                         otherButtonTitles:@"Ok", nil] show];
+                      
+                      [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+                          [self hideLoading];
+                          self.productsArray = favoriteProducts;
+                      } andFailureBlock:^(NSArray *error) {
+                          [self hideLoading];
+                      }];
                       
                       [self hideLoading];
                       
@@ -189,14 +213,47 @@
                                         otherButtonTitles:@"Ok", nil] show];
                       
                       [self hideLoading];
-                      
                   }];
 }
 
 
 - (void)addAllToCart
 {
+    [self showLoading];
+    
+    self.addAllToCartCount = self.productsArray.count;
+    
+    for (RIProduct* product in self.productsArray) {
+        
+        [RICart addProductWithQuantity:@"1"
+                                   sku:product.sku
+                                simple:((RIProduct *)[product.productSimples firstObject]).sku
+                      withSuccessBlock:^(RICart *cart) {
+                                       
+                                       self.addAllToCartCount--;
+                                       
+                                   } andFailureBlock:^(NSArray *errorMessages) {
+                                       
+                                       self.addAllToCartCount--;
+                                       
+                                   }];
+        
+        [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+        } andFailureBlock:^(NSArray *error) {
+        }];
+    }
+}
 
+- (void)addAddAllToCartFinished
+{
+    [RICart getCartWithSuccessBlock:^(RICart *cartData) {
+        NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cartData forKey:kUpdateCartNotificationValue];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+    } andFailureBlock:^(NSArray *errorMessages) {
+        
+    }];
+    self.productsArray = nil;
+    [self hideLoading];
 }
 
 - (void)removeFromFavoritesPressed:(UIButton*)button

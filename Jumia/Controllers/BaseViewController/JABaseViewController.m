@@ -68,6 +68,9 @@
 - (void) hideLoading
 {
     self.requestNumber--;
+    if (self.requestNumber < 0) {
+        self.requestNumber = 0;
+    }
     if(0 == self.requestNumber) {
         [UIView animateWithDuration:0.4f
                          animations:^{

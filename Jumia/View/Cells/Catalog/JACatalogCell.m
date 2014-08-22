@@ -62,6 +62,8 @@
     self.discountLabel.text = [NSString stringWithFormat:@"-%@%%",product.maxSavingPercentage];
     self.discountLabel.hidden = !product.maxSavingPercentage;
     self.discountImageView.hidden = !product.maxSavingPercentage;
+    
+    self.favoriteButton.selected = [product.isFavorite boolValue];
 }
 
 - (void)loadWithCartItem:(RICartItem*)cartItem
