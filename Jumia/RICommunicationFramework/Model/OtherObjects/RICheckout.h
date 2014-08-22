@@ -133,7 +133,7 @@
  * @param the block where the failure response can be processed
  * @return an intialized RICheckout object
  */
-+ (RICheckout*)parseCheckout:(NSDictionary*)checkoutObject;
++ (RICheckout*)parseCheckout:(NSDictionary*)checkoutObject country:(RICountryConfiguration*)country;
 
 /**
  * Method to cancel the request

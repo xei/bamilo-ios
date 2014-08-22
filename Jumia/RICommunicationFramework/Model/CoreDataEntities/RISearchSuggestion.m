@@ -29,7 +29,7 @@
         // The limit for recent search is 5, if there is > 5 it's necessary to delete the old one
         if (isRecentSearch)
         {
-             NSMutableArray *searches = [[[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])] mutableCopy];
+            NSMutableArray *searches = [[[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])] mutableCopy];
             
             if (searches.count > 4)
             {
@@ -128,17 +128,20 @@
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              
-                                                              NSDictionary *metadata = jsonObject[@"metadata"];
-                                                              NSDictionary *results = metadata[@"results"];
-                                                              
-                                                              NSMutableArray *temp = [NSMutableArray new];
-                                                              
-                                                              for (NSDictionary *dic in results) {
-                                                                  [temp addObject:[RIProduct parseProduct:dic]];
-                                                              }
-                                                              
-                                                              successBlock([temp copy]);
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  NSDictionary *metadata = jsonObject[@"metadata"];
+                                                                  NSDictionary *results = metadata[@"results"];
+                                                                  
+                                                                  NSMutableArray *temp = [NSMutableArray new];
+                                                                  
+                                                                  for (NSDictionary *dic in results) {
+                                                                      [temp addObject:[RIProduct parseProduct:dic country:configuration]];
+                                                                  }
+                                                                  
+                                                                  successBlock([temp copy]);
+                                                              } andFailureBlock:^(NSArray *errorMessages) {
+                                                                  failureBlock(nil);
+                                                              }];
                                                               
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               
@@ -154,7 +157,7 @@
                                                                   failureBlock(nil);
                                                               }
                                                           }];
-
+    
 }
 
 #pragma mark - Get Recent searches

@@ -35,12 +35,16 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString * descriptionString;
 @property (nonatomic, retain) NSString * idCatalogConfig;
 @property (nonatomic, retain) NSNumber * maxPrice;
+@property (nonatomic, retain) NSString * maxPriceFormatted;
 @property (nonatomic, retain) NSString * maxSavingPercentage;
 @property (nonatomic, retain) NSNumber * maxSpecialPrice;
+@property (nonatomic, retain) NSString * maxSpecialPriceFormatted;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * price;
+@property (nonatomic, retain) NSString * priceFormatted;
 @property (nonatomic, retain) NSString * sku;
 @property (nonatomic, retain) NSNumber * specialPrice;
+@property (nonatomic, retain) NSString * specialPriceFormatted;
 @property (nonatomic, retain) NSNumber * sum;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSNumber * isNew;
@@ -170,7 +174,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *
  *  @return the parsed RIProduct
  */
-+ (RIProduct *)parseProduct:(NSDictionary *)productJSON;
++ (RIProduct *)parseProduct:(NSDictionary *)productJSON country:(RICountryConfiguration*)country;
 
 @end
 

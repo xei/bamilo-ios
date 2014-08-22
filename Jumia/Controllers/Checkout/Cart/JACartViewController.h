@@ -9,7 +9,7 @@
 #import "JABaseViewController.h"
 #import "RICart.h"
 
-@interface JACartViewController : JABaseViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface JACartViewController : JABaseViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) RICart *cart;
 

@@ -11,7 +11,8 @@
 @implementation RICartItem
 
 + (RICartItem*)parseCartItemWithSimpleSku:(NSString*)simpleSku
-                                  andInfo:(NSDictionary*)info
+                                     info:(NSDictionary*)info
+                                  country:(RICountryConfiguration *)country
 {
     RICartItem *cartItem = [[RICartItem alloc] init];
     
@@ -55,10 +56,12 @@
     
     if (VALID_NOTEMPTY([info objectForKey:@"unit_price"], NSNumber)) {
         cartItem.price = [info objectForKey:@"unit_price"];
+        cartItem.priceFormatted = [RICountryConfiguration formatPrice:cartItem.price country:country];
     }
     
     if (VALID_NOTEMPTY([info objectForKey:@"specialPrice"], NSNumber)) {
         cartItem.specialPrice = [info objectForKey:@"specialPrice"];
+        cartItem.specialPriceFormatted = [RICountryConfiguration formatPrice:cartItem.specialPrice country:country];
         
         // If there is special price, we have a saving percentage
         cartItem.savingPercentage = [NSNumber numberWithDouble:(100 - ([cartItem.specialPrice doubleValue] / [cartItem.price doubleValue]) * 100)];

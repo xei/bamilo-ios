@@ -42,16 +42,16 @@
     self.labelBrand.text = self.stringBrand;
     self.labelName.text = self.stringName;
     
-    if ([self.stringNewPrice isEqualToNumber:@(0)])
+    if(VALID_NOTEMPTY(self.stringOldPrice, NSString))
     {
-        self.labelNewPrice.text = [self.stringOldPrice stringValue];
+        self.labelNewPrice.text = self.stringOldPrice;
         
         [self.labelOldPrice removeFromSuperview];
     }
     else
     {
-        NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:[self.stringOldPrice stringValue]];
-        NSInteger stringOldPriceLenght = [self.stringOldPrice stringValue].length;
+        NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:self.stringOldPrice];
+        NSInteger stringOldPriceLenght = self.stringOldPrice.length;
         UIFont *stringOldPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
                                                      size:14.0];
         UIColor *stringOldPriceColor = [UIColor colorWithRed:204.0/255.0
@@ -73,7 +73,7 @@
         
         self.labelOldPrice.attributedText = stringOldPrice;
         
-        self.labelNewPrice.text = [self.stringNewPrice stringValue];
+        self.labelNewPrice.text = self.stringNewPrice;
         
         [self.labelNewPrice sizeToFit];
         [self.labelOldPrice sizeToFit];
