@@ -10,7 +10,6 @@
 #import "RIProduct.h"
 #import "JACatalogListCell.h"
 #import "JACatalogGridCell.h"
-#import "JAPDVViewController.h"
 #import "RISearchSuggestion.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -288,6 +287,7 @@
     pdv.fromCatalogue = YES;
     pdv.previousCategory = self.category.name;
     pdv.arrayWithRelatedItems = [tempArray copy];
+    pdv.delegate = self;
     
     [self.navigationController pushViewController:pdv
                                          animated:YES];
@@ -312,6 +312,19 @@
     self.filterCategory = category;
     [self resetCatalog];
     [self loadMoreProducts];
+}
+
+#pragma mark - JAPDVViewControllerDelegate
+
+- (void)changedFavoriteStateOfProduct:(RIProduct*)product;
+{
+    for (int i = 0; i < self.productsArray.count; i++) {
+        RIProduct* currentProduct = [self.productsArray objectAtIndex:i];
+        currentProduct.isFavorite = product.isFavorite;
+        if ([currentProduct.sku isEqualToString:product.sku]) {
+            [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]];
+        }
+    }
 }
 
 #pragma mark - Button actions
