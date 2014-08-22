@@ -282,6 +282,9 @@
         
         for (RIFilterOption* option in filter.options) {
             option.selected = NO;
+            option.lowerValue = option.min;
+            option.upperValue = option.max;
+            option.discountOnly = NO;
         }
     }
     
