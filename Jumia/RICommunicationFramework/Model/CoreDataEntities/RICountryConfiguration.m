@@ -88,7 +88,7 @@
     
     NSString* noFraction = nil;
     NSString* fraction = nil;
-    if([formattedPrice containsString:@"."])
+    if(NSNotFound != [formattedPrice rangeOfString:@"."].location)
     {
         NSArray *formattedPriceComponents = [formattedPrice componentsSeparatedByString:@"."];
         if(1 < [formattedPriceComponents count])
