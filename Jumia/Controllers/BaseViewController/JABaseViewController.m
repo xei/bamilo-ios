@@ -25,6 +25,7 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification object:nil];
     
+    [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.hidesBackButton = YES;
     self.title = @"";
     

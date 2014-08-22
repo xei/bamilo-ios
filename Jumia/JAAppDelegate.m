@@ -44,6 +44,8 @@
     
     [FBLoginView class];
     
+    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xeaeaea)];
+    
     return YES;
 }
 

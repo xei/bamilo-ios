@@ -8,6 +8,7 @@
 
 #import "JACatalogCell.h"
 #import "RIProduct.h"
+#import "RICartItem.h"
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 #import "JARatingsView.h"
@@ -63,6 +64,48 @@
     self.discountImageView.hidden = !product.maxSavingPercentage;
     
     self.favoriteButton.selected = [product.isFavorite boolValue];
+}
+
+- (void)loadWithCartItem:(RICartItem*)cartItem
+{
+    [self.productImageView setImageWithURL:[NSURL URLWithString:cartItem.imageUrl]
+                          placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    
+    self.recentProductImageView.hidden = YES;
+    self.recentProductLabel.hidden = YES;
+    
+    self.nameLabel.text = cartItem.name;
+    
+    NSMutableAttributedString* finalPriceString;
+    NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                JACatalogCellNormalFont, NSFontAttributeName,
+                                JACatalogCellRedFontColor, NSForegroundColorAttributeName, nil];
+    if (cartItem.specialPrice && 0 < [cartItem.specialPrice floatValue]) {
+        
+        NSString* specialPrice = [cartItem.specialPrice stringValue];
+        NSString* price = [cartItem.price stringValue];
+        
+        finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", specialPrice, price]
+                                                                  attributes:attributes];
+        NSDictionary* oldPriceAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                            JACatalogCellLightFont, NSFontAttributeName,
+                                            JACatalogCellGrayFontColor, NSForegroundColorAttributeName, nil];
+        NSRange oldPriceRange = NSMakeRange(specialPrice.length + 1, price.length);
+        
+        [finalPriceString setAttributes:oldPriceAttributes
+                                  range:oldPriceRange];
+        
+    } else {
+        finalPriceString = [[NSMutableAttributedString alloc] initWithString:[cartItem.price stringValue]
+                                                                  attributes:attributes];
+    }
+    
+    [self.priceLabel setAttributedText:finalPriceString];
+    
+    
+    self.discountLabel.text = [NSString stringWithFormat:@"-%@%%",[cartItem.savingPercentage stringValue]];
+    self.discountLabel.hidden = !cartItem.savingPercentage;
+    self.discountImageView.hidden = !cartItem.savingPercentage;
 }
 
 @end
