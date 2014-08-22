@@ -69,6 +69,11 @@ JARecentSearchesDelegate
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changeEditButtonState:)
+                                                 name:kEditShouldChangeStateNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(changeBackButtonForTitle:)
                                                  name:kShowBackButtonWithTitleNofication
                                                object:nil];
@@ -512,6 +517,12 @@ JARecentSearchesDelegate
 }
 
 #pragma mark - Filters
+
+- (void)changeEditButtonState:(NSNotification *)notification
+{
+    NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
+    self.navigationBarView.editButton.enabled = [state boolValue];
+}
 
 - (void)showMainFiltersNavigation
 {
