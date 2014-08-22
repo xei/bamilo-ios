@@ -346,19 +346,31 @@
 
 - (void)addToFavoritesPressed:(UIButton*)button
 {
-    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    button.selected = !button.selected;
     
+    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    product.isFavorite = [NSNumber numberWithBool:button.selected];
     [self showLoading];
-    [RIProduct getCompleteProductWithUrl:product.url
-                            successBlock:^(id completeProduct) {
-                                [RIProduct addToFavorites:completeProduct successBlock:^{
-                                    [self hideLoading];
+    if (button.selected) {
+        //add to favorites
+        [RIProduct getCompleteProductWithUrl:product.url
+                                successBlock:^(id completeProduct) {
+                                    [RIProduct addToFavorites:completeProduct successBlock:^{
+                                        [self hideLoading];
+                                    } andFailureBlock:^(NSArray *error) {
+                                        [self hideLoading];
+                                    }];
                                 } andFailureBlock:^(NSArray *error) {
                                     [self hideLoading];
                                 }];
-                            } andFailureBlock:^(NSArray *error) {
-                                [self hideLoading];
-                            }];
+    } else {
+        [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+            //update favoriteProducts
+            [self hideLoading];
+        } andFailureBlock:^(NSArray *error) {
+            [self hideLoading];
+        }];
+    }
 }
 
 @end

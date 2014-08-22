@@ -303,6 +303,9 @@
             }
         }
     }
+    
+    newProduct.isFavorite = [NSNumber numberWithBool:[RIProduct productIsFavoriteInDatabase:newProduct]];
+    
     return newProduct;
 }
 
@@ -474,8 +477,9 @@
         }
         
         if (NO == alreadyFavorite) {
-            //add the new product
+            //make sure this is YES
             product.isFavorite = [NSNumber numberWithBool:YES];
+            //add the new product
             [RIProduct saveProduct:product];
         }
         
@@ -524,6 +528,19 @@
             failureBlock(error);
         }
     }];
+}
+
++ (BOOL)productIsFavoriteInDatabase:(RIProduct*)product
+{
+    NSArray* productsWithVariable = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"sku" andPropertyValue:product.sku];
+    
+    for (RIProduct* possibleProduct in productsWithVariable) {
+        if (YES == [possibleProduct.isFavorite boolValue]) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 #pragma mark - Save method
