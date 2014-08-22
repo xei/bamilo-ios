@@ -343,7 +343,7 @@
                         <viewControllerLayoutGuide type="bottom" id="8Hv-gh-VZe"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="PUx-yw-aeH">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rnl-Mb-45V">
@@ -498,7 +498,7 @@
             <objects>
                 <navigationController storyboardIdentifier="menuViewController" automaticallyAdjustsScrollViewInsets="NO" id="tA5-pZ-pB4" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UvQ-KB-VPd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UvQ-KB-VPd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2111,7 +2111,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Qdw-jR-mQc">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <rect key="frame" x="0.0" y="26" width="308" height="90"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="308" height="90"/>
@@ -2121,7 +2121,7 @@
                                             </collectionViewCell>
                                         </cells>
                                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cartListHeader" id="D96-xG-0iK">
-                                            <rect key="frame" x="0.0" y="0.0" width="308" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="308" height="26"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionReusableView>
                                     </collectionView>
@@ -2138,11 +2138,13 @@
                                                 <rect key="frame" x="0.0" y="25" width="308" height="1"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3R-cH-4yn" userLabel="Use Coupon Button">
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3R-cH-4yn" userLabel="Use Coupon Button">
                                                 <rect key="frame" x="252" y="42" width="50" height="30"/>
-                                                <state key="normal" title="Button">
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                                <state key="normal" title="Button" backgroundImage="useCoupon_normal">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <state key="selected" backgroundImage="useCoupon_highlighted"/>
                                             </button>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ALM-Em-sCS">
                                                 <rect key="frame" x="6" y="43" width="248" height="30"/>
@@ -2734,6 +2736,8 @@
         <image name="orangeBig_disabled" width="308" height="44"/>
         <image name="orangeBig_normal" width="308" height="44"/>
         <image name="tick_selected" width="14" height="14"/>
+        <image name="useCoupon_highlighted" width="50" height="30"/>
+        <image name="useCoupon_normal" width="50" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
