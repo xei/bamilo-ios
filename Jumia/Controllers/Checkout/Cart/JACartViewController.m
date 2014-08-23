@@ -15,6 +15,7 @@
 #import "JACartListHeaderView.h"
 #import "RIForm.h"
 #import "RIField.h"
+#import "RICart.h"
 #import "RICartItem.h"
 #import "RICustomer.h"
 
@@ -96,8 +97,10 @@
     
     [self.cartScrollView setHidden:NO];
     
+    NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
     self.productCollectionView.layer.cornerRadius = 5.0f;
-    self.productTableViewConstrain.constant = ([[self.cart cartCount] integerValue] * 90.0f) + 26.0f;
+    self.productTableViewConstrain.constant = ([cartItemsKeys count] * 90.0f) + 26.0f;
+    [self.productCollectionView reloadData];
     
     // coupon
     self.couponView.layer.cornerRadius = 5.0f;
@@ -303,10 +306,111 @@
     {
         NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
         NSString *key = [cartItemsKeys objectAtIndex:button.tag];
-        RICartItem *product = [self.cart.cartItems objectForKey:key];
+        self.currentItem = [self.cart.cartItems objectForKey:key];
         
-        
+        [self setupPickerView];
     }
+}
+
+- (void)setupPickerView
+{
+    self.quantityPickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                 0.0f,
+                                                                                 self.view.frame.size.width,
+                                                                                 self.view.frame.size.height)];
+    [self.quantityPickerBackgroundView setBackgroundColor:[UIColor clearColor]];
+    
+    UITapGestureRecognizer *removePickerViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(removePickerView)];
+    [self.quantityPickerBackgroundView addGestureRecognizer:removePickerViewTap];
+    
+    self.quantityPicker = [[UIPickerView alloc] init];
+    [self.quantityPicker setFrame:CGRectMake(self.quantityPickerBackgroundView.frame.origin.x,
+                                             CGRectGetMaxY(self.quantityPickerBackgroundView.frame) - self.quantityPicker.frame.size.height,
+                                             self.quantityPicker.frame.size.width,
+                                             self.quantityPicker.frame.size.height)];
+    [self.quantityPicker setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.quantityPicker setShowsSelectionIndicator:YES];
+    [self.quantityPicker setDataSource:self];
+    [self.quantityPicker setDelegate:self];
+    
+    self.quantityPickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [self.quantityPickerToolbar setTranslucent:NO];
+    [self.quantityPickerToolbar setBackgroundColor:UIColorFromRGB(0xcc0000)];
+    [self.quantityPickerToolbar setTintColor:UIColorFromRGB(0x0000cc)];
+    [self.quantityPickerToolbar setFrame:CGRectMake(0.0f,
+                                                    CGRectGetMinY(self.quantityPicker.frame) - self.quantityPickerToolbar.frame.size.height,
+                                                    self.quantityPickerToolbar.frame.size.width,
+                                                    self.quantityPickerToolbar.frame.size.height)];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
+    [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [button setTitle:@"Done" forState:UIControlStateNormal];
+    [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [button addTarget:self action:@selector(selectQuantity:) forControlEvents:UIControlEventTouchUpInside];
+    [button sizeToFit];
+    
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    [self.quantityPickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
+    
+    [self.quantityPicker selectRow:([[self.currentItem quantity] integerValue] - 1) inComponent:0 animated:NO];
+    [self.quantityPickerBackgroundView addSubview:self.quantityPicker];
+    [self.quantityPickerBackgroundView addSubview:self.quantityPickerToolbar];
+    [self.view addSubview:self.quantityPickerBackgroundView];
+}
+
+- (void)selectQuantity:(UIButton*)sender
+{
+    NSInteger newQuantity = [self.quantityPicker selectedRowInComponent:0] + 1;
+    if(newQuantity != [[self.currentItem quantity] integerValue])
+    {
+        [self showLoading];
+        
+        NSMutableDictionary *quantitiesToChange = [[NSMutableDictionary alloc] init];
+        NSArray *cartItemsKeys = [[self.cart cartItems] allKeys];
+        for (NSString *cartItemKey in cartItemsKeys)
+        {
+            RICartItem *cartItem = [[self.cart cartItems] objectForKey:cartItemKey];
+            [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", [[cartItem quantity] integerValue]] forKey:[NSString stringWithFormat:@"qty_%@", cartItemKey]];
+        }
+        
+        [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", newQuantity] forKey:[NSString stringWithFormat:@"qty_%@", [self.currentItem simpleSku]]];
+        
+        [RICart changeQuantityInProducts:quantitiesToChange
+                        withSuccessBlock:^(RICart *cart) {
+                            self.cart = cart;
+                            
+                            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                            
+                            [self removePickerView];
+                            [self setupCart];
+                            [self hideLoading];
+                        } andFailureBlock:^(NSArray *errorMessages) {
+                            [self removePickerView];
+                            [self hideLoading];
+                            
+                            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                        message:@"Error changing quantity"
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"Ok", nil] show];
+                        }];
+    }
+}
+
+- (void)removePickerView
+{
+    [self.quantityPicker removeFromSuperview];
+    self.quantityPicker = nil;
+    
+    [self.quantityPickerBackgroundView removeFromSuperview];
+    self.quantityPickerBackgroundView = nil;
 }
 
 - (void)useCouponButtonPressed
@@ -414,7 +518,7 @@
     UICollectionReusableView *reusableview = [[UICollectionReusableView alloc] init];
     
     if (kind == UICollectionElementKindSectionHeader) {
-        JACartListHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader" forIndexPath:indexPath];        
+        JACartListHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader" forIndexPath:indexPath];
         
         [headerView loadHeaderWithText:@"Items"];
         
@@ -472,6 +576,31 @@
     }
     
     return YES;
+}
+
+#pragma mark UIPickerViewDataSource
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    NSInteger numberOfRowsInComponent = 0;
+    
+    if(VALID_NOTEMPTY(self.currentItem, RICartItem))
+    {
+        numberOfRowsInComponent = [[self.currentItem maxQuantity] integerValue];
+    }
+    
+    return numberOfRowsInComponent;
+}
+
+#pragma mark UIPickerViewDelegate
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    NSString *title = [NSString stringWithFormat:@"%d", (row + 1)];
+    return title;
 }
 
 @end
