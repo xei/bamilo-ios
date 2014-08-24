@@ -2155,7 +2155,7 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3R-cH-4yn" userLabel="Use Coupon Button">
-                                                <rect key="frame" x="252" y="42" width="50" height="30"/>
+                                                <rect key="frame" x="252" y="42" width="50" height="31"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                                 <state key="normal" title="Button" backgroundImage="useCoupon_normal">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2195,6 +2195,18 @@
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wk1-Jr-WMn" userLabel="Price">
                                                 <rect key="frame" x="159" y="36" width="144" height="15"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="11"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="144" translatesAutoresizingMaskIntoConstraints="NO" id="7NV-4f-fyY" userLabel="Price Rules Label">
+                                                <rect key="frame" x="10" y="53" width="144" height="15"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="144" translatesAutoresizingMaskIntoConstraints="NO" id="foJ-Uj-bzp" userLabel="Price Rules Value">
+                                                <rect key="frame" x="159" y="53" width="144" height="15"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -2336,6 +2348,8 @@
                         <outlet property="emptyCartView" destination="6Qt-Jk-Rkc" id="b99-DQ-QS5"/>
                         <outlet property="extraCostsLabel" destination="GOx-fv-IyP" id="HTV-E5-kFt"/>
                         <outlet property="extraCostsValue" destination="vEg-AR-pBv" id="hsf-pA-Qgf"/>
+                        <outlet property="priceRulesLabel" destination="7NV-4f-fyY" id="8XJ-dj-52J"/>
+                        <outlet property="priceRulesValue" destination="foJ-Uj-bzp" id="BFy-9P-DIJ"/>
                         <outlet property="productCollectionView" destination="h6t-n9-vsL" id="mC7-aP-TyK"/>
                         <outlet property="productTableViewConstrain" destination="Hwm-Ud-g2o" id="0PQ-Kv-ls2"/>
                         <outlet property="subtotalTitle" destination="u4z-Jq-qK8" id="jbQ-VD-Rhd"/>

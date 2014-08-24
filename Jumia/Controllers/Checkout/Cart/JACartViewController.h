@@ -41,6 +41,8 @@
 @property (weak, nonatomic) IBOutlet UIView *subtotalTitleSeparator;
 @property (weak, nonatomic) IBOutlet UILabel *articlesCount;
 @property (weak, nonatomic) IBOutlet UILabel *cartPrice;
+@property (weak, nonatomic) IBOutlet UILabel *priceRulesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceRulesValue;
 @property (weak, nonatomic) IBOutlet UILabel *cartVatLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cartVatValue;
 @property (weak, nonatomic) IBOutlet UILabel *cartShippingLabel;

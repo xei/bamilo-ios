@@ -149,20 +149,83 @@
         [self.cartPrice setText:[[self cart] cartCleanValueFormatted]];
     }
     
-    [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.cartVatLabel setText:@"VAT"];
-    [self.cartVatLabel setFrame:CGRectMake(self.cartVatLabel.frame.origin.x,
-                                           CGRectGetMaxY(self.articlesCount.frame) + 4.0f,
-                                           self.cartVatLabel.frame.size.width,
-                                           self.cartVatLabel.frame.size.height)];
+    NSString *priceRuleKeysString = @"";
+    NSString *priceRuleValuesString = @"";
+    if(VALID_NOTEMPTY([[self cart] priceRules], NSDictionary))
+    {
+        NSArray *priceRuleKeys = [[[self cart] priceRules] allKeys];
+        
+        for (NSString *priceRuleKey in priceRuleKeys)
+        {
+            if(ISEMPTY(priceRuleKeysString))
+            {
+                priceRuleKeysString = priceRuleKey;
+                priceRuleValuesString = [[[self cart] priceRules] objectForKey:priceRuleKey];
+            }
+            else
+            {
+                priceRuleKeysString = [NSString stringWithFormat:@"%@\n%@", priceRuleKeysString, priceRuleKey];
+                priceRuleValuesString = [NSString stringWithFormat:@"%@\n%@", priceRuleValuesString, [[[self cart] priceRules] objectForKey:priceRuleKey]];
+            }
+        }
+    }
     
+    if(VALID_NOTEMPTY(priceRuleKeysString, NSString) && VALID_NOTEMPTY(priceRuleValuesString, NSString))
+    {
+        [self.priceRulesLabel setTextColor:UIColorFromRGB(0x666666)];
+        [self.priceRulesLabel setText:priceRuleKeysString];
+        [self.priceRulesLabel setNumberOfLines:0];
+        [self.priceRulesLabel setFrame:CGRectMake(self.priceRulesLabel.frame.origin.x,
+                                                  CGRectGetMaxY(self.articlesCount.frame) + 4.0f,
+                                                  self.priceRulesLabel.frame.size.width,
+                                                  self.priceRulesLabel.frame.size.height)];
+        [self.priceRulesLabel setHidden:NO];
+        
+        [self.priceRulesValue setTextColor:UIColorFromRGB(0x666666)];
+        [self.priceRulesValue setText:priceRuleValuesString];
+        [self.priceRulesValue setNumberOfLines:0];
+        [self.priceRulesValue setFrame:CGRectMake(self.priceRulesValue.frame.origin.x,
+                                                  CGRectGetMaxY(self.cartPrice.frame) + 4.0f,
+                                                  self.priceRulesValue.frame.size.width,
+                                                  self.priceRulesValue.frame.size.height)];
+        [self.priceRulesValue setHidden:NO];
+        
+        [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
+        [self.cartVatLabel setText:@"VAT"];
+        [self.cartVatLabel setFrame:CGRectMake(self.cartVatLabel.frame.origin.x,
+                                               CGRectGetMaxY(self.priceRulesLabel.frame),
+                                               self.cartVatLabel.frame.size.width,
+                                               self.cartVatLabel.frame.size.height)];
+        
+        
+        [self.cartVatValue setTextColor:UIColorFromRGB(0x666666)];
+        [self.cartVatValue setText:[[self cart] vatValueFormatted]];
+        [self.cartVatValue setFrame:CGRectMake(self.cartVatValue.frame.origin.x,
+                                               CGRectGetMaxY(self.priceRulesValue.frame),
+                                               self.cartVatValue.frame.size.width,
+                                               self.cartVatValue.frame.size.height)];
+    }
+    else
+    {
+        [self.priceRulesLabel setHidden:YES];
+        [self.priceRulesLabel setHidden:YES];
+        
+        [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
+        [self.cartVatLabel setText:@"VAT"];
+        [self.cartVatLabel setFrame:CGRectMake(self.cartVatLabel.frame.origin.x,
+                                               CGRectGetMaxY(self.articlesCount.frame) + 4.0f,
+                                               self.cartVatLabel.frame.size.width,
+                                               self.cartVatLabel.frame.size.height)];
+        
+        
+        [self.cartVatValue setTextColor:UIColorFromRGB(0x666666)];
+        [self.cartVatValue setText:[[self cart] vatValueFormatted]];
+        [self.cartVatValue setFrame:CGRectMake(self.cartVatValue.frame.origin.x,
+                                               CGRectGetMaxY(self.cartPrice.frame) + 4.0f,
+                                               self.cartVatValue.frame.size.width,
+                                               self.cartVatValue.frame.size.height)];
+    }
     
-    [self.cartVatValue setTextColor:UIColorFromRGB(0x666666)];
-    [self.cartVatValue setText:[[self cart] vatValueFormatted]];
-    [self.cartVatValue setFrame:CGRectMake(self.cartVatValue.frame.origin.x,
-                                           CGRectGetMaxY(self.cartPrice.frame) + 4.0f,
-                                           self.cartVatValue.frame.size.width,
-                                           self.cartVatValue.frame.size.height)];
     
     
     [self.cartShippingLabel setTextColor:UIColorFromRGB(0x666666)];
@@ -331,14 +394,15 @@
                                              self.quantityPicker.frame.size.width,
                                              self.quantityPicker.frame.size.height)];
     [self.quantityPicker setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.quantityPicker setAlpha:0.9];
     [self.quantityPicker setShowsSelectionIndicator:YES];
     [self.quantityPicker setDataSource:self];
     [self.quantityPicker setDelegate:self];
     
     self.quantityPickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     [self.quantityPickerToolbar setTranslucent:NO];
-    [self.quantityPickerToolbar setBackgroundColor:UIColorFromRGB(0xcc0000)];
-    [self.quantityPickerToolbar setTintColor:UIColorFromRGB(0x0000cc)];
+    [self.quantityPickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.quantityPickerToolbar setAlpha:0.9];
     [self.quantityPickerToolbar setFrame:CGRectMake(0.0f,
                                                     CGRectGetMinY(self.quantityPicker.frame) - self.quantityPickerToolbar.frame.size.height,
                                                     self.quantityPickerToolbar.frame.size.width,
@@ -401,6 +465,10 @@
                                               cancelButtonTitle:nil
                                               otherButtonTitles:@"Ok", nil] show];
                         }];
+    }
+    else
+    {
+        [self removePickerView];
     }
 }
 

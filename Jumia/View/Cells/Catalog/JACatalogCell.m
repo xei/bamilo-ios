@@ -98,7 +98,7 @@
     [self.priceLabel setAttributedText:finalPriceString];
     
     
-    self.discountLabel.text = [NSString stringWithFormat:@"-%@%%",[cartItem.savingPercentage stringValue]];
+    self.discountLabel.text = [NSString stringWithFormat:@"-%d%%",[cartItem.savingPercentage integerValue]];
     self.discountLabel.hidden = !cartItem.savingPercentage;
     self.discountImageView.hidden = !cartItem.savingPercentage;
 }
