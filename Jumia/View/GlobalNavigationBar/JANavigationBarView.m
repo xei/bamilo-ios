@@ -139,7 +139,14 @@
 
 - (void)updateCartProductCount:(NSNumber*)cartNumber
 {
-    [self.cartCountLabel setText:[cartNumber stringValue]];
+    if(0 == [cartNumber integerValue])
+    {
+        [self.cartCountLabel setText:@""];
+    }
+    else
+    {
+        [self.cartCountLabel setText:[cartNumber stringValue]];
+    }
 }
 
 #pragma mark - Choose country
