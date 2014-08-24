@@ -15,6 +15,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <FacebookSDK/FBSession.h>
 #import "RISearchSuggestion.h"
+#import "RICart.h"
 
 @interface JAMenuViewController ()
 <
@@ -71,15 +72,24 @@
                                              selector:@selector(userDidLogin)
                                                  name:kUserLoggedInNotification
                                                object:nil];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateCart:)
+                                                 name:kUpdateCartNotification
+                                               object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:nil
                                                  name:kUserLoggedOutNotification
                                                object:nil];
     
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cartViewPressed:)];
+    tapRecognizer.numberOfTapsRequired = 1;
+    [self.cartView addGestureRecognizer:tapRecognizer];
     self.cartLabelTitle.text = @"Shopping Cart";
-    self.cartLabelTotalCost.text = @"RM 893.00";
-    self.cartLabelDetails.text = @"10% VAT and Shipping costs included";
+    self.cartLabelTotalCost.text = @"Your cart is empty";
+    self.cartLabelDetails.text = @"";
+    self.cartItensNumber.text = @"";
     
     [self.customNavBar setSearchBarDelegate:self];
     
@@ -103,6 +113,33 @@
                           otherButtonTitles:@"OK", nil] show];
         
     }];
+}
+
+- (void)updateCart:(NSNotification*) notification
+{
+    if ([kUpdateCartNotification isEqualToString:notification.name])
+    {
+        NSDictionary* userInfo = notification.userInfo;
+        RICart *cart = [userInfo objectForKey:kUpdateCartNotificationValue];
+        
+        if(0 == [[cart cartCount] integerValue])
+        {
+            self.cartLabelTotalCost.text = @"Your cart is empty";
+            self.cartLabelDetails.text = @"";
+            self.cartItensNumber.text = @"";
+        }
+        else
+        {
+            self.cartLabelTotalCost.text =  [cart cartValueFormatted];
+            self.cartLabelDetails.text = @"VAT and Shipping costs included";
+            self.cartItensNumber.text = [[cart cartCount] stringValue];
+        }
+    }
+}
+
+- (void)cartViewPressed:(UIGestureRecognizer*)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification object:nil userInfo:nil];
 }
 
 - (void)didReceiveMemoryWarning
