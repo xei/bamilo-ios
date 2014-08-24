@@ -358,7 +358,32 @@
     
     if ([json objectForKey:@"price_rules"]) {
         if (![[json objectForKey:@"price_rules"] isKindOfClass:[NSNull class]]) {
-            cart.priceRules = [json objectForKey:@"price_rules"];
+            NSArray *priceRulesObject = [json objectForKey:@"price_rules"];
+            if(VALID_NOTEMPTY(priceRulesObject, NSArray))
+            {
+                NSMutableDictionary *priceRules = [[NSMutableDictionary alloc] init];
+                for(NSDictionary *priceRulesDictionary in priceRulesObject)
+                {
+                    if(VALID_NOTEMPTY(priceRulesDictionary, NSDictionary))
+                    {
+                        if ([priceRulesDictionary objectForKey:@"label"] && ![[priceRulesDictionary objectForKey:@"label"] isKindOfClass:[NSNull class]])
+                        {
+                            if ([priceRulesDictionary objectForKey:@"value"] && ![[priceRulesDictionary objectForKey:@"value"] isKindOfClass:[NSNull class]])
+                            {
+                                if(VALID_NOTEMPTY([priceRulesDictionary objectForKey:@"value"], NSNumber))
+                                {
+                                    [priceRules setValue:[RICountryConfiguration formatPrice:[priceRulesDictionary objectForKey:@"value"] country:country] forKey: [priceRulesDictionary objectForKey:@"label"]];
+                                }
+                                else
+                                {
+                                    [priceRules setValue:[priceRulesDictionary objectForKey:@"value"] forKey: [priceRulesDictionary objectForKey:@"label"]];
+                                }
+                            }
+                        }
+                    }
+                }
+                cart.priceRules = [priceRules copy];
+            }
         }
     }
     

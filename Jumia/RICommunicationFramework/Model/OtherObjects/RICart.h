@@ -28,7 +28,7 @@
 @property (strong, nonatomic) NSString *vatValueFormatted;
 @property (strong, nonatomic) NSNumber *sumCosts;
 @property (strong, nonatomic) NSNumber *sumCostsValue;
-@property (strong, nonatomic) NSArray *priceRules;
+@property (strong, nonatomic) NSDictionary *priceRules;
 
 /**
  *  Method to add a product to the cart
