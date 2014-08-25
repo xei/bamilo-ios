@@ -65,7 +65,6 @@
     [self.priceLabel setAttributedText:finalPriceString];
     
     self.priceLabel.hidden = YES;
-    
     self.priceView = [[JAPriceView alloc] init];
     [self.priceView loadWithPrice:product.priceFormatted
                      specialPrice:product.specialPriceFormatted
@@ -117,6 +116,17 @@
     
     [self.priceLabel setAttributedText:finalPriceString];
     
+    self.priceLabel.hidden = YES;
+    self.priceView = [[JAPriceView alloc] init];
+    [self.priceView loadWithPrice:cartItem.priceFormatted
+                     specialPrice:cartItem.specialPriceFormatted
+                         fontSize:10.0f
+            specialPriceOnTheLeft:NO];
+    self.priceView.frame = CGRectMake(self.priceLabel.frame.origin.x,
+                                      self.priceLabel.frame.origin.y,
+                                      self.priceView.frame.size.width,
+                                      self.priceView.frame.size.height);
+    [self.contentView addSubview:self.priceView];
     
     self.discountLabel.text = [NSString stringWithFormat:@"-%d%%",[cartItem.savingPercentage integerValue]];
     self.discountLabel.hidden = !cartItem.savingPercentage;
