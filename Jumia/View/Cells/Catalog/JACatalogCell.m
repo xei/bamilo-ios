@@ -65,6 +65,7 @@
     [self.priceLabel setAttributedText:finalPriceString];
     
     self.priceLabel.hidden = YES;
+    [self.priceView removeFromSuperview];
     self.priceView = [[JAPriceView alloc] init];
     [self.priceView loadWithPrice:product.priceFormatted
                      specialPrice:product.specialPriceFormatted
@@ -117,6 +118,7 @@
     [self.priceLabel setAttributedText:finalPriceString];
     
     self.priceLabel.hidden = YES;
+    [self.priceView removeFromSuperview];
     self.priceView = [[JAPriceView alloc] init];
     [self.priceView loadWithPrice:cartItem.priceFormatted
                      specialPrice:cartItem.specialPriceFormatted
