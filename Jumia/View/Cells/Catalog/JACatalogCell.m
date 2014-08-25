@@ -12,13 +12,6 @@
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 #import "JARatingsView.h"
-#import "JAPriceView.h"
-
-@interface JACatalogCell()
-
-@property (strong, nonatomic)JAPriceView *priceView;
-
-@end
 
 @implementation JACatalogCell
 
@@ -39,40 +32,14 @@
     self.brandLabel.text = product.brand;
     self.nameLabel.text = product.name;
     
-    NSMutableAttributedString* finalPriceString;
-    NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                JACatalogCellNormalFont, NSFontAttributeName,
-                                JACatalogCellRedFontColor, NSForegroundColorAttributeName, nil];
-    if (product.specialPrice && 0 < [product.specialPrice floatValue]) {
-        
-        NSString* specialPrice = product.specialPriceFormatted;
-        NSString* price = product.priceFormatted;
-        
-        finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", specialPrice, price]
-                                                                  attributes:attributes];
-        NSDictionary* oldPriceAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                            JACatalogCellLightFont, NSFontAttributeName,
-                                            JACatalogCellGrayFontColor, NSForegroundColorAttributeName, nil];
-        NSRange oldPriceRange = NSMakeRange(specialPrice.length + 1, price.length);
-        
-        [finalPriceString setAttributes:oldPriceAttributes
-                                  range:oldPriceRange];
-        
-    } else {
-        finalPriceString = [[NSMutableAttributedString alloc] initWithString:product.priceFormatted attributes:attributes];
-    }
-    
-    [self.priceLabel setAttributedText:finalPriceString];
-    
-    self.priceLabel.hidden = YES;
     [self.priceView removeFromSuperview];
     self.priceView = [[JAPriceView alloc] init];
     [self.priceView loadWithPrice:product.priceFormatted
                      specialPrice:product.specialPriceFormatted
                          fontSize:10.0f
             specialPriceOnTheLeft:NO];
-    self.priceView.frame = CGRectMake(self.priceLabel.frame.origin.x + 5.0f,
-                                      self.priceLabel.frame.origin.y + 4.0f,
+    self.priceView.frame = CGRectMake(85.0f,
+                                      43.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
     [self.contentView addSubview:self.priceView];
@@ -95,37 +62,14 @@
     
     self.nameLabel.text = cartItem.name;
     
-    NSMutableAttributedString* finalPriceString;
-    NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                JACatalogCellNormalFont, NSFontAttributeName,
-                                JACatalogCellRedFontColor, NSForegroundColorAttributeName, nil];
-
-    if (cartItem.specialPrice && 0 < [cartItem.specialPrice floatValue])
-    {
-        finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", cartItem.specialPriceFormatted, cartItem.priceFormatted]
-                                                                  attributes:attributes];
-        NSDictionary* oldPriceAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                            JACatalogCellLightFont, NSFontAttributeName,
-                                            JACatalogCellGrayFontColor, NSForegroundColorAttributeName, nil];
-        NSRange oldPriceRange = NSMakeRange(cartItem.specialPriceFormatted.length + 1, cartItem.priceFormatted.length);
-        
-        [finalPriceString setAttributes:oldPriceAttributes range:oldPriceRange];
-    } else
-    {
-        finalPriceString = [[NSMutableAttributedString alloc] initWithString:cartItem.priceFormatted attributes:attributes];
-    }
-    
-    [self.priceLabel setAttributedText:finalPriceString];
-    
-    self.priceLabel.hidden = YES;
     [self.priceView removeFromSuperview];
     self.priceView = [[JAPriceView alloc] init];
     [self.priceView loadWithPrice:cartItem.priceFormatted
                      specialPrice:cartItem.specialPriceFormatted
                          fontSize:10.0f
             specialPriceOnTheLeft:NO];
-    self.priceView.frame = CGRectMake(self.priceLabel.frame.origin.x,
-                                      self.priceLabel.frame.origin.y,
+    self.priceView.frame = CGRectMake(90.0f,
+                                      32.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
     [self.contentView addSubview:self.priceView];

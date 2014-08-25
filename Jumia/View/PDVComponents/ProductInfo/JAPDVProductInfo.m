@@ -46,15 +46,14 @@
 - (void)setPriceWithNewValue:(NSString *)newValue
                  andOldValue:(NSString *)oldValue
 {
-    self.priceLabel.hidden = YES;
-    [self.priceLabel removeFromSuperview];
+    [self.priceView removeFromSuperview];
     self.priceView = [[JAPriceView alloc] init];
     [self.priceView loadWithPrice:oldValue
                      specialPrice:newValue
                          fontSize:14.0f
             specialPriceOnTheLeft:NO];
-    self.priceView.frame = CGRectMake(self.priceLabel.frame.origin.x,
-                                      self.priceLabel.frame.origin.y,
+    self.priceView.frame = CGRectMake(6.0f,
+                                      14.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
     [self addSubview:self.priceView];

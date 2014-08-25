@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -28,12 +28,6 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="59B-cJ-eZ5">
                                 <rect key="frame" x="80" y="24" width="195" height="15"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5h-dq-CVk">
-                                <rect key="frame" x="80" y="39" width="222" height="15"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -73,7 +67,6 @@
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                <nil key="simulatedStatusBarMetrics"/>
             </view>
             <color key="backgroundColor" red="0.77863919010000004" green="0.77863919010000004" blue="0.77863919010000004" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -91,12 +84,10 @@
                 <outlet property="favoriteButton" destination="GNO-gj-m3T" id="FQZ-M7-JPh"/>
                 <outlet property="nameLabel" destination="59B-cJ-eZ5" id="Lkn-Nb-JpH"/>
                 <outlet property="numberOfReviewsLabel" destination="Pym-ic-lum" id="OXz-Ah-utL"/>
-                <outlet property="priceLabel" destination="D5h-dq-CVk" id="pxD-Pm-P4k"/>
                 <outlet property="productImageView" destination="Ies-sK-r7n" id="jnY-ak-tHR"/>
                 <outlet property="recentProductImageView" destination="r5y-Kd-UYC" id="0PW-4p-Gip"/>
                 <outlet property="recentProductLabel" destination="FAF-Nn-CSy" id="i1M-Cu-wVV"/>
             </connections>
-            <point key="canvasLocation" x="474" y="401"/>
         </collectionViewCell>
     </objects>
     <resources>
