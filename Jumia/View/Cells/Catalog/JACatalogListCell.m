@@ -36,8 +36,8 @@
     [super loadWithProduct:product];
     
     if (self.numberOfReviewsLabel) {
-        [self.ratingsView setFrame:CGRectMake(self.priceLabel.frame.origin.x + JACatalogCellRatingsViewOffsetY,
-                                              CGRectGetMaxY(self.priceLabel.frame) + JACatalogCellRatingsViewOffsetX,
+        [self.ratingsView setFrame:CGRectMake(self.priceView.frame.origin.x + JACatalogCellRatingsViewOffsetY,
+                                              CGRectGetMaxY(self.priceView.frame) + JACatalogCellRatingsViewOffsetX,
                                               self.ratingsView.frame.size.width,
                                               self.ratingsView.frame.size.height)];
         self.ratingsView.rating = [product.avr integerValue];

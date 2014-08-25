@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAPriceView.h"
 
 #define JACatalogCellContentCornerRadius 3.0f
 #define JACatalogCellNormalFont [UIFont fontWithName:@"HelveticaNeue" size:10.0f]
@@ -25,12 +26,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *productImageView;
 @property (weak, nonatomic) IBOutlet UILabel *brandLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *recentProductImageView;
 @property (weak, nonatomic) IBOutlet UILabel *recentProductLabel;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *discountImageView;
 @property (weak, nonatomic) IBOutlet UILabel *discountLabel;
+@property (strong, nonatomic)JAPriceView *priceView;
 
 - (void)loadWithProduct:(RIProduct*)product;
 - (void)loadWithCartItem:(RICartItem*)cartItem;

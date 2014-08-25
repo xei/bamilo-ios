@@ -10,7 +10,6 @@
 
 @interface JAPDVProductInfo : UIView
 
-@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
 @property (weak, nonatomic) IBOutlet UIButton *sizeButton;
 @property (weak, nonatomic) IBOutlet UIView *sizeView;
