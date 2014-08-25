@@ -322,13 +322,7 @@
     [self.callToOrderButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.callToOrderButton addTarget:self action:@selector(callToOrderButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.callToOrderButton layoutIfNeeded];
-}
-
-
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    
+        
     [self.cartScrollView setContentSize:CGSizeMake(320.0f, CGRectGetMaxY(self.callToOrderButton.frame) + 6.0f)];
 }
 
