@@ -49,6 +49,21 @@
                              object:nil];
     
     [self.tableView reloadData];
+    [self checkEditButtonState];
+}
+
+- (void)checkEditButtonState
+{
+    NSInteger numberOfRows = [self tableView:self.tableView numberOfRowsInSection:0];
+    BOOL buttonIsEnabled = NO;
+    for (int i = 0; i < numberOfRows; i++) {
+        if (YES == [self rowHasFiltersSelected:i]) {
+            buttonIsEnabled = YES;
+            break;
+        }
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kEditShouldChangeStateNotification object:nil userInfo:@{@"enabled":[NSNumber numberWithBool:buttonIsEnabled]}];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -63,6 +78,7 @@
 - (void)editButtonPressed
 {
     [self.tableView setEditing:!self.tableView.editing animated:YES];
+    [self checkEditButtonState];
 }
 
 - (void)doneButtonPressed
@@ -212,37 +228,44 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger filterIndex = indexPath.row;
+    if ([self rowHasFiltersSelected:indexPath.row]) {
+        return UITableViewCellEditingStyleDelete;
+    } else {
+        return UITableViewCellEditingStyleNone;
+    }
+}
+
+- (BOOL)rowHasFiltersSelected:(NSInteger)row
+{
     if (VALID_NOTEMPTY(self.categoriesArray, NSArray)) {
-        filterIndex--;
+        row--;
     }
     
-    if (-1 == filterIndex) {
+    if (-1 == row) {
         if (VALID_NOTEMPTY(self.selectedCategory, RICategory)) {
-            return UITableViewCellEditingStyleDelete;
+            return YES;
         }
     } else {
-        RIFilter* filter = [self.filtersArray objectAtIndex:filterIndex];
+        RIFilter* filter = [self.filtersArray objectAtIndex:row];
         
         if ([filter.uid isEqualToString:@"price"]) {
             
             RIFilterOption* option = [filter.options firstObject];
             
             if (option.lowerValue != option.min || option.upperValue != option.max) {
-                return UITableViewCellEditingStyleDelete;
+                return YES;
             }
         } else {
             
             for (RIFilterOption* option in filter.options) {
                 
                 if (option.selected) {
-                    return UITableViewCellEditingStyleDelete;
+                    return YES;
                 }
             }
         }
     }
-    
-    return UITableViewCellEditingStyleNone;
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -259,6 +282,9 @@
         
         for (RIFilterOption* option in filter.options) {
             option.selected = NO;
+            option.lowerValue = option.min;
+            option.upperValue = option.max;
+            option.discountOnly = NO;
         }
     }
     

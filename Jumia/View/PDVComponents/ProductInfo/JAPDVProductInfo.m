@@ -7,6 +7,13 @@
 //
 
 #import "JAPDVProductInfo.h"
+#import "JAPriceView.h"
+
+@interface JAPDVProductInfo()
+
+@property (nonatomic, strong)JAPriceView* priceView;
+
+@end
 
 @implementation JAPDVProductInfo
 
@@ -39,83 +46,18 @@
 - (void)setPriceWithNewValue:(NSString *)newValue
                  andOldValue:(NSString *)oldValue
 {
-    if ([newValue floatValue] > 0.0)
-    {
-        NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:oldValue];
-        NSInteger stringOldPriceLenght = oldValue.length;
-        UIFont *stringOldPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
-                                                     size:14.0];
-        UIColor *stringOldPriceColor = [UIColor colorWithRed:204.0/255.0
-                                                       green:204.0/255.0
-                                                        blue:204.0/255.0
-                                                       alpha:1.0f];
-        
-        [stringOldPrice addAttribute:NSFontAttributeName
-                               value:stringOldPriceFont
-                               range:NSMakeRange(0, stringOldPriceLenght)];
-        
-        [stringOldPrice addAttribute:NSStrokeColorAttributeName
-                               value:stringOldPriceColor
-                               range:NSMakeRange(0, stringOldPriceLenght)];
-        
-        [stringOldPrice addAttribute:NSStrikethroughStyleAttributeName
-                               value:@(1)
-                               range:NSMakeRange(0, stringOldPriceLenght)];
-        
-        self.oldPriceLabel.attributedText = stringOldPrice;
-        
-        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:newValue];
-        NSInteger stringNewPriceLenght = newValue.length;
-        UIFont *stringNewPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
-                                                     size:14.0];
-        UIColor *stringNewPriceColor = [UIColor colorWithRed:204.0/255.0
-                                                       green:0.0/255.0
-                                                        blue:0.0/255.0
-                                                       alpha:1.0f];
-        
-        [stringNewPrice addAttribute:NSFontAttributeName
-                               value:stringNewPriceFont
-                               range:NSMakeRange(0, stringNewPriceLenght)];
-        
-        [stringNewPrice addAttribute:NSStrokeColorAttributeName
-                               value:stringNewPriceColor
-                               range:NSMakeRange(0, stringNewPriceLenght)];
-        
-        self.priceLabel.attributedText = stringNewPrice;
-        
-        [self.priceLabel sizeToFit];
-        [self.oldPriceLabel sizeToFit];
-        
-        // This view was builded without auto layout so it's necessary to do maths :D
-        float x = self.priceLabel.frame.origin.x + self.priceLabel.frame.size.width + 5;
-        CGRect temp = self.oldPriceLabel.frame;
-        temp.origin.x = x;
-        self.oldPriceLabel.frame = temp;
-    }
-    else
-    {
-        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:oldValue];
-        NSInteger stringNewPriceLenght = oldValue.length;
-        UIFont *stringNewPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
-                                                     size:14.0];
-        UIColor *stringNewPriceColor = [UIColor colorWithRed:204.0/255.0
-                                                       green:0.0/255.0
-                                                        blue:0.0/255.0
-                                                       alpha:1.0f];
-        
-        [stringNewPrice addAttribute:NSFontAttributeName
-                               value:stringNewPriceFont
-                               range:NSMakeRange(0, stringNewPriceLenght)];
-        
-        [stringNewPrice addAttribute:NSStrokeColorAttributeName
-                               value:stringNewPriceColor
-                               range:NSMakeRange(0, stringNewPriceLenght)];
-        
-        self.priceLabel.attributedText = stringNewPrice;
-        
-        [self.oldPriceLabel removeFromSuperview];
-        [self.priceLabel sizeToFit];
-    }
+    self.priceLabel.hidden = YES;
+    [self.priceLabel removeFromSuperview];
+    self.priceView = [[JAPriceView alloc] init];
+    [self.priceView loadWithPrice:oldValue
+                     specialPrice:newValue
+                         fontSize:14.0f
+            specialPriceOnTheLeft:NO];
+    self.priceView.frame = CGRectMake(self.priceLabel.frame.origin.x,
+                                      self.priceLabel.frame.origin.y,
+                                      self.priceView.frame.size.width,
+                                      self.priceView.frame.size.height);
+    [self addSubview:self.priceView];
     
     [self layoutSubviews];
 }

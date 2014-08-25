@@ -94,6 +94,22 @@
                            successBlock:(void (^)(NSArray *products, NSArray *filters, NSArray* categories))successBlock
                         andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
+    BOOL discountMode = NO;
+    for (RIFilter* filter in filters) {
+        for (RIFilterOption* filterOption in filter.options) {
+            if (filterOption.discountOnly) {
+                discountMode = YES;
+                break;
+            }
+        }
+    }
+    if (discountMode) {
+        NSString* countryUrl = [RIApi getCountryUrlInUse];
+        NSString* endingUrl = [url stringByReplacingOccurrencesOfString:countryUrl withString:@""];
+        endingUrl = [endingUrl stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
+        url = [NSString stringWithFormat:@"%@%@special-price/%@", countryUrl, RI_API_VERSION, endingUrl];
+    }
+    
     NSString* fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], [RIFilter urlWithFiltersArray:filters]];
     return [RIProduct getProductsWithFullUrl:fullUrl
                                 successBlock:successBlock
@@ -207,15 +223,15 @@
         }
         if ([dataDic objectForKey:@"price"]) {
             newProduct.price = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price"] floatValue]];
-            newProduct.priceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
+            newProduct.priceFormatted = [RICountryConfiguration formatPrice:newProduct.price country:country];
         }
         if ([dataDic objectForKey:@"special_price"]) {
             newProduct.specialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price"] floatValue]];
-            newProduct.specialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
+            newProduct.specialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.specialPrice country:country];
         }
         if ([dataDic objectForKey:@"max_special_price"]) {
             newProduct.maxSpecialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price"] floatValue]];
-            newProduct.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
+            newProduct.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxSpecialPrice country:country];
         }
         if ([dataDic objectForKey:@"max_saving_percentage"]) {
             newProduct.maxSavingPercentage = [dataDic objectForKey:@"max_saving_percentage"];
