@@ -196,7 +196,9 @@
                        options:UIViewAnimationOptionTransitionCrossDissolve|UIViewAnimationOptionCurveEaseIn
                     animations:^{
                         
+                        //use view instead of collection view, the list cell has the insets inside itself;
                         self.flowLayout.itemSize = CGSizeMake(self.view.frame.size.width, JACatalogViewControllerListCellHeight);
+                        self.flowLayout.minimumInteritemSpacing = 0.0f;
                         
                     } completion:^(BOOL finished) {
                         
@@ -211,7 +213,8 @@
                        options:UIViewAnimationOptionTransitionCrossDissolve|UIViewAnimationOptionCurveEaseIn
                     animations:^{
                         
-                        self.flowLayout.itemSize = CGSizeMake(self.view.frame.size.width / 2, JACatalogViewControllerGridCellHeight);
+                        self.flowLayout.itemSize = CGSizeMake((self.collectionView.frame.size.width / 2) - 2, JACatalogViewControllerGridCellHeight);
+                        self.flowLayout.minimumInteritemSpacing = 3.0f;
                         
                     } completion:^(BOOL finished) {
                         

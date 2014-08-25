@@ -1487,7 +1487,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZRY-qq-tSd">
-                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
+                                <rect key="frame" x="6" y="108" width="308" height="460"/>
                                 <color key="backgroundColor" red="0.77863919010000004" green="0.77863919010000004" blue="0.77863919010000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SCu-ih-mcg">
                                     <size key="itemSize" width="50" height="50"/>
@@ -1523,12 +1523,12 @@
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="ZRY-qq-tSd" firstAttribute="leading" secondItem="LT2-FN-Zb3" secondAttribute="leading" id="3BQ-46-mDS"/>
                             <constraint firstItem="ZRY-qq-tSd" firstAttribute="top" secondItem="6lO-cb-ku3" secondAttribute="bottom" id="7ux-D9-LHE"/>
+                            <constraint firstAttribute="trailing" secondItem="ZRY-qq-tSd" secondAttribute="trailing" constant="6" id="CoR-IQ-aYS"/>
                             <constraint firstItem="6lO-cb-ku3" firstAttribute="leading" secondItem="uMs-IJ-hAe" secondAttribute="trailing" id="CsE-FI-zcK"/>
                             <constraint firstItem="uMs-IJ-hAe" firstAttribute="top" secondItem="lzj-49-Dyb" secondAttribute="bottom" id="Fca-29-Opf"/>
-                            <constraint firstAttribute="trailing" secondItem="ZRY-qq-tSd" secondAttribute="trailing" id="Jtd-Gf-XEv"/>
                             <constraint firstAttribute="trailing" secondItem="WIM-UY-vXJ" secondAttribute="trailing" id="ONk-vo-TXV"/>
+                            <constraint firstItem="ZRY-qq-tSd" firstAttribute="leading" secondItem="LT2-FN-Zb3" secondAttribute="leading" constant="6" id="Ph5-ps-5DO"/>
                             <constraint firstItem="WIM-UY-vXJ" firstAttribute="top" secondItem="lzj-49-Dyb" secondAttribute="bottom" id="PiM-Vv-vUb"/>
                             <constraint firstItem="lOt-fd-9os" firstAttribute="top" secondItem="Wc2-me-4py" secondAttribute="bottom" constant="20" id="UKY-kL-3Le"/>
                             <constraint firstItem="lOt-fd-9os" firstAttribute="top" secondItem="ZRY-qq-tSd" secondAttribute="bottom" id="YSJ-z2-uF1"/>

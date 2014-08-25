@@ -17,6 +17,8 @@
 
 - (void)loadWithProduct:(RIProduct*)product
 {
+    self.backgroundColor = [UIColor clearColor];
+    
     self.backgroundContentView.layer.cornerRadius = JACatalogCellContentCornerRadius;
     
     RIImage* firstImage = [product.images firstObject];
