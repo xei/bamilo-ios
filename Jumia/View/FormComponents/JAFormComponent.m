@@ -7,150 +7,195 @@
 //
 
 #import "JAFormComponent.h"
+#import "RIForm.h"
+#import "RIFieldDataSetComponent.h"
 
-@implementation JATextField
+@implementation JAFormComponent
 
-- (BOOL)isValid
++(NSArray*)generateForm:(NSArray*)fields startingY:(CGFloat)startingY
 {
-    if ((self.field.requiredMessage.length > 0) && (self.textField.text.length == 0))
+    BOOL addedBirth = NO;
+    NSMutableArray *formViews = [[NSMutableArray alloc] init];
+    for (RIField *field in fields)
     {
-        [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
-                                    message:self.field.requiredMessage
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:@"Ok", nil] show];
-        
-        self.textField.backgroundColor = [UIColor redColor];
-        
-        return NO;
-    }
-    else
-    {
-        if (self.field.regex.length > 0)
+        if ([field.type isEqualToString:@"string"] || [field.type isEqualToString:@"email"])
         {
-            if (![self validateInputWithString:self.textField.text andRegularExpression:self.field.regex]) {
-                [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
-                                            message:@"Please verify the inserted data."
-                                           delegate:nil
-                                  cancelButtonTitle:nil
-                                  otherButtonTitles:@"Ok", nil] show];
+            JATextField *textField = [JATextField getNewJATextField];
+            textField.field = field;
+            
+            textField.layer.cornerRadius = 4.0f;
+            CGRect frame = textField.frame;
+            frame.origin.y = startingY;
+            textField.frame = frame;
+            startingY += (textField.frame.size.height + 8);
+            
+            textField.textField.placeholder = field.label;
+            
+            [formViews addObject:textField];
+        }
+        else if ([field.type isEqualToString:@"password"] || [field.type isEqualToString:@"password2"])
+        {
+            JATextField *textField = [JATextField getNewJATextField];
+            textField.field = field;
+            
+            textField.layer.cornerRadius = 4.0f;
+            CGRect frame = textField.frame;
+            frame.origin.y = startingY;
+            textField.frame = frame;
+            startingY += (textField.frame.size.height + 8);
+            
+            textField.textField.placeholder = field.label;
+            textField.textField.secureTextEntry = YES;
+            
+            [formViews addObject:textField];
+        }
+        else if ([field.type isEqualToString:@"integer"])
+        {
+            if (!addedBirth)
+            {
+                JABirthDateComponent *birthDate = [JABirthDateComponent getNewJABirthDateComponent];
+                birthDate.labelText.text = @"Birthdate";
                 
-                self.textField.backgroundColor = [UIColor redColor];
+                birthDate.layer.cornerRadius = 4.0f;
+                CGRect frame = birthDate.frame;
+                frame.origin.y = startingY;
+                birthDate.frame = frame;
+                startingY += (birthDate.frame.size.height + 8);
                 
-                return NO;
+                [formViews addObject:birthDate];
+                
+                addedBirth = YES;
+            }
+        }
+        else if ([field.type isEqualToString:@"radio"])
+        {
+            NSMutableArray *contentArray = [NSMutableArray new];
+            
+            for (RIFieldDataSetComponent *component in field.dataSet) {
+                [contentArray addObject:component.value];
+            }
+            
+            JAGenderComponent *gender = [JAGenderComponent getNewJAGenderComponent];
+            [gender initSegmentedControl:[contentArray copy]];
+            
+            gender.layer.cornerRadius = 4.0f;
+            gender.labelText.text = field.label;
+            gender.field = field;
+            
+            CGRect frame = gender.frame;
+            frame.origin.y = startingY;
+            gender.frame = frame;
+            startingY += (gender.frame.size.height + 8);
+            
+            [formViews addObject:gender];
+        }
+        else if ([field.type isEqualToString:@"checkbox"])
+        {
+            JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
+            check.field = field;
+            
+            check.layer.cornerRadius = 4.0f;
+            CGRect frame = check.frame;
+            frame.origin.y = startingY;
+            check.frame = frame;
+            startingY += (check.frame.size.height + 8);
+            
+            check.labelText.text = field.label;
+            
+            [formViews addObject:check];
+        }
+    }
+    
+    return formViews;
+}
+
++(BOOL)hasErrors:(NSArray*)views
+{
+    BOOL hasErrors = NO;
+    
+    for (id obj in views)
+    {
+        if ([obj isKindOfClass:[JATextField class]])
+        {
+            if (![obj isValid])
+            {
+                hasErrors = YES;
+                break;
             }
         }
     }
     
-    self.textField.backgroundColor = [UIColor whiteColor];
-    
-    return YES;
+    return hasErrors;
 }
 
-- (BOOL)validateInputWithString:(NSString *)aString
-           andRegularExpression:(NSString *)regExp
++(NSDictionary*)getValues:(NSArray*)views form:(RIForm*)form
 {
-    NSString * const regularExpression = regExp;
-    NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regularExpression
-                                                                           options:NSRegularExpressionCaseInsensitive
-                                                                             error:&error];
-    if (error) {
-        NSLog(@"error %@", error);
-    }
+    NSMutableDictionary *tempDic = [NSMutableDictionary new];
     
-    NSUInteger numberOfMatches = [regex numberOfMatchesInString:aString
-                                                        options:0
-                                                          range:NSMakeRange(0, [aString length])];
-    return numberOfMatches > 0;
-}
-
-@end
-
-@implementation JACheckBoxComponent
-
-@end
-
-@implementation JABirthDateComponent
-
-@end
-
-@implementation JAGenderComponent
-
-- (void)initSegmentedControl:(NSArray *)itens
-{
-    NSInteger i = 0;
-    for (NSString *temp in itens) {
-        [self.segmentedControl setTitle:temp
-                      forSegmentAtIndex:i];
-        
-        i++;
-    }
-}
-
-@end
-
-@implementation JAFormComponent
-
-
-+ (JATextField *)getNewJATextField
-{
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JATextField"
-                                                 owner:nil
-                                               options:nil];
-    
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JATextField class]]) {
-            return (JATextField *)obj;
+    for (UIView *view in views)
+    {
+        if ([view isKindOfClass:[JABirthDateComponent class]])
+        {
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+            NSString *dateString = [dateFormatter stringFromDate:((JABirthDateComponent *)view).datePicker.date];
+            
+            NSArray *components = [dateString componentsSeparatedByString:@"-"];
+            
+            if(VALID_NOTEMPTY(form, RIForm) && VALID_NOTEMPTY([form fields], NSArray))
+            {
+                for (RIField *field in [form fields])
+                {
+                    if ([field.type isEqualToString:@"integer"])
+                    {
+                        if ([field.key isEqualToString:@"day"])
+                        {
+                            NSDictionary *dicDay = @{field.name : components[0]};
+                            [tempDic addEntriesFromDictionary:dicDay];
+                        }
+                        else if ([field.key isEqualToString:@"month"])
+                        {
+                            NSDictionary *dicMonth = @{field.name : components[1]};
+                            [tempDic addEntriesFromDictionary:dicMonth];
+                        }
+                        else if ([field.key isEqualToString:@"year"])
+                        {
+                            NSDictionary *dicYear = @{field.name : components[2]};
+                            [tempDic addEntriesFromDictionary:dicYear];
+                        }
+                    }
+                }
+            }
+        }
+        else if ([view isKindOfClass:[JAGenderComponent class]])
+        {
+            NSInteger index = ((JAGenderComponent *)view).segmentedControl.selectedSegmentIndex;
+            NSString *selectedGender = [((JAGenderComponent *)view).segmentedControl titleForSegmentAtIndex:index];
+            
+            NSDictionary *temp = @{((JAGenderComponent *)view).field.name : selectedGender};
+            [tempDic addEntriesFromDictionary:temp];
+        }
+        else if ([view isKindOfClass:[JACheckBoxComponent class]])
+        {
+            if (((JACheckBoxComponent *)view).switchComponent.on)
+            {
+                NSDictionary *temp = @{((JACheckBoxComponent *)view).field.name : @"YES"};
+                [tempDic addEntriesFromDictionary:temp];
+            }
+            else
+            {
+                NSDictionary *temp = @{((JACheckBoxComponent *)view).field.name : @"NO"};
+                [tempDic addEntriesFromDictionary:temp];
+            }
+        }
+        else if ([view isKindOfClass:[JATextField class]])
+        {
+            NSDictionary *temp = @{((JATextField *)view).field.name : ((JATextField *)view).textField.text};
+            [tempDic addEntriesFromDictionary:temp];
         }
     }
     
-    return nil;
-}
-
-+ (JACheckBoxComponent *)getNewJACheckBoxComponent
-{
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JACheckBoxComponent"
-                                                 owner:nil
-                                               options:nil];
-    
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JACheckBoxComponent class]]) {
-            return (JACheckBoxComponent *)obj;
-        }
-    }
-    
-    return nil;
-}
-
-+ (JABirthDateComponent *)getNewJABirthDateComponent
-{
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JABirthDateComponent"
-                                                 owner:nil
-                                               options:nil];
-    
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JABirthDateComponent class]]) {
-            return (JABirthDateComponent *)obj;
-        }
-    }
-    
-    return nil;
-}
-
-+ (JAGenderComponent *)getNewJAGenderComponent
-{
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAGenderComponent"
-                                                 owner:nil
-                                               options:nil];
-    
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JAGenderComponent class]]) {
-            return (JAGenderComponent *)obj;
-        }
-    }
-    
-    return nil;
+    return [tempDic copy];
 }
 
 @end

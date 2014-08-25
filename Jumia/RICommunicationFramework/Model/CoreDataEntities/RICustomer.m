@@ -311,9 +311,9 @@
         {
             for (NSDictionary *dic in addressesObject)
             {
-                RIAddress *address = [RIAddress parseAddress:dic];
-                address.customer = customer;
-                [customer addAddressesObject:address];
+//                RIAddress *address = [RIAddress parseAddress:dic];
+//                address.customer = customer;
+//                [customer addAddressesObject:address];
             }
         }
     }
