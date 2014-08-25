@@ -13,11 +13,18 @@
 #import "JAPDVViewController.h"
 #import "JAConstants.h"
 #import "JACartListHeaderView.h"
+#import "JAPriceView.h"
 #import "RIForm.h"
 #import "RIField.h"
 #import "RICart.h"
 #import "RICartItem.h"
 #import "RICustomer.h"
+
+@interface JACartViewController ()
+
+@property (strong, nonatomic)JAPriceView *totalPriceView;
+
+@end
 
 @implementation JACartViewController
 
@@ -139,7 +146,6 @@
     }
     
     [self.cartPrice setTextColor:UIColorFromRGB(0xcc0000)];
-    
     if(VALID_NOTEMPTY([[self cart] cartUnreducedValueFormatted], NSString))
     {
         [self.cartPrice setText:[NSString stringWithFormat:@"%@ %@", [[self cart] cartUnreducedValueFormatted], [[self cart] cartCleanValueFormatted]]];
@@ -148,6 +154,20 @@
     {
         [self.cartPrice setText:[[self cart] cartCleanValueFormatted]];
     }
+    
+    self.cartPrice.hidden = YES;
+    [self.totalPriceView removeFromSuperview];
+    self.totalPriceView = [[JAPriceView alloc] init];
+    [self.totalPriceView loadWithPrice:[[self cart] cartUnreducedValueFormatted]
+                          specialPrice:[[self cart] cartCleanValueFormatted]
+                              fontSize:11.0f
+                 specialPriceOnTheLeft:YES];
+    self.totalPriceView.frame = CGRectMake(self.subtotalView.frame.size.width - self.totalPriceView.frame.size.width - 4.0f,
+                                           self.cartPrice.frame.origin.y,
+                                           self.totalPriceView.frame.size.width,
+                                           self.totalPriceView.frame.size.height);
+    [self.subtotalView addSubview:self.totalPriceView];
+    [self.subtotalView layoutIfNeeded];
     
     NSString *priceRuleKeysString = @"";
     NSString *priceRuleValuesString = @"";
@@ -185,7 +205,7 @@
         [self.priceRulesValue setText:priceRuleValuesString];
         [self.priceRulesValue setNumberOfLines:0];
         [self.priceRulesValue setFrame:CGRectMake(self.priceRulesValue.frame.origin.x,
-                                                  CGRectGetMaxY(self.cartPrice.frame) + 4.0f,
+                                                  CGRectGetMaxY(self.totalPriceView.frame) + 4.0f,
                                                   self.priceRulesValue.frame.size.width,
                                                   self.priceRulesValue.frame.size.height)];
         [self.priceRulesValue setHidden:NO];
@@ -221,7 +241,7 @@
         [self.cartVatValue setTextColor:UIColorFromRGB(0x666666)];
         [self.cartVatValue setText:[[self cart] vatValueFormatted]];
         [self.cartVatValue setFrame:CGRectMake(self.cartVatValue.frame.origin.x,
-                                               CGRectGetMaxY(self.cartPrice.frame) + 4.0f,
+                                               CGRectGetMaxY(self.totalPriceView.frame) + 4.0f,
                                                self.cartVatValue.frame.size.width,
                                                self.cartVatValue.frame.size.height)];
     }
@@ -322,7 +342,7 @@
     [self.callToOrderButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.callToOrderButton addTarget:self action:@selector(callToOrderButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.callToOrderButton layoutIfNeeded];
-        
+    
     [self.cartScrollView setContentSize:CGSizeMake(320.0f, CGRectGetMaxY(self.callToOrderButton.frame) + 6.0f)];
 }
 
