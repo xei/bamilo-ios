@@ -21,11 +21,14 @@
 @property (nonatomic, strong) NSNumber *stock;
 @property (nonatomic, strong) NSString *variation;
 @property (nonatomic, strong) NSNumber *price;
+@property (nonatomic, strong) NSString *priceFormatted;
 @property (nonatomic, strong) NSNumber *specialPrice;
+@property (nonatomic, strong) NSString *specialPriceFormatted;
 @property (nonatomic, strong) NSNumber *taxAmount;
 @property (nonatomic, strong) NSNumber *savingPercentage;
 
 + (RICartItem*)parseCartItemWithSimpleSku:(NSString*)simpleSku
-                                  andInfo:(NSDictionary*)info;
+                                     info:(NSDictionary*)info
+                                  country:(RICountryConfiguration*)country;
 
 @end

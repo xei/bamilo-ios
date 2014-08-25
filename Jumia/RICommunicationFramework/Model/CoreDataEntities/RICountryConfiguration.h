@@ -31,6 +31,8 @@
  */
 + (RICountryConfiguration *)parseCountryConfiguration:(NSDictionary *)json;
 
++ (NSString*)formatPrice:(NSNumber*)price country:(RICountryConfiguration*)country;
+
 @end
 
 @interface RICountryConfiguration (CoreDataGeneratedAccessors)

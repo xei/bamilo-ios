@@ -130,13 +130,20 @@ JARecentSearchesDelegate
 
 - (void)openCart
 {
-    [self.navigationBarView changeNavigationBarTitle:@"Cart"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                        object:nil];
     
-    JACartViewController *cartViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cartViewController"];
-    [cartViewController setCart:self.cart];
-    
-    [self popToRootViewControllerAnimated:NO];
-    [self pushViewController:cartViewController animated:YES];
+    if (![[self topViewController] isKindOfClass:[JACartViewController class]])
+    {
+        
+        [self.navigationBarView changeNavigationBarTitle:@"Cart"];
+        
+        JACartViewController *cartViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cartViewController"];
+        [cartViewController setCart:self.cart];
+        
+        [self popToRootViewControllerAnimated:NO];
+        [self pushViewController:cartViewController animated:YES];
+    }
 }
 
 - (void)updateCart:(NSNotification*) notification

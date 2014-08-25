@@ -70,6 +70,7 @@
 		B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03A2198A5441002046DF /* JAPaymentViewController.m */; };
 		B50B03A6198A544A002046DF /* JAShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03A5198A544A002046DF /* JAShippingViewController.m */; };
 		B50B03AB198A8861002046DF /* JAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03AA198A8861002046DF /* JAUtils.m */; };
+		B51777B219A7902400ED0AC7 /* JACartListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B51777B119A7902400ED0AC7 /* JACartListHeaderView.m */; };
 		B517FDF91982517300F65253 /* RICart.m in Sources */ = {isa = PBXBuildFile; fileRef = B517FDF81982517300F65253 /* RICart.m */; };
 		B517FDFC198265AD00F65253 /* RICartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B517FDFB198265AD00F65253 /* RICartItem.m */; };
 		B5225E1B1989308300C18F1E /* RIPaymentMethodFormOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E131989308300C18F1E /* RIPaymentMethodFormOption.m */; };
@@ -329,8 +330,6 @@
 		4A944FF41992805100C02734 /* RIProductRatings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIProductRatings.m; sourceTree = "<group>"; };
 		4A944FF6199290F200C02734 /* JARatingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARatingsViewController.h; sourceTree = "<group>"; };
 		4A944FF7199290F200C02734 /* JARatingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingsViewController.m; sourceTree = "<group>"; };
-		4A9D26D5198BD44F001704ED /* RIRecentSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIRecentSearch.h; sourceTree = "<group>"; };
-		4A9D26D6198BD44F001704ED /* RIRecentSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIRecentSearch.m; sourceTree = "<group>"; };
 		4AE242D81986547C00E37C90 /* JASidePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASidePanelController.h; sourceTree = "<group>"; };
 		4AE242D91986547C00E37C90 /* JASidePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASidePanelController.m; sourceTree = "<group>"; };
 		4AE242DE1986569000E37C90 /* JARootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARootViewController.h; sourceTree = "<group>"; };
@@ -369,6 +368,8 @@
 		B50B03A5198A544A002046DF /* JAShippingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAShippingViewController.m; sourceTree = "<group>"; };
 		B50B03A9198A8861002046DF /* JAUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAUtils.h; path = Utils/JAUtils.h; sourceTree = "<group>"; };
 		B50B03AA198A8861002046DF /* JAUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAUtils.m; path = Utils/JAUtils.m; sourceTree = "<group>"; };
+		B51777B019A7902400ED0AC7 /* JACartListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartListHeaderView.h; path = Jumia/View/Headers/JACartListHeaderView.h; sourceTree = SOURCE_ROOT; };
+		B51777B119A7902400ED0AC7 /* JACartListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartListHeaderView.m; path = Jumia/View/Headers/JACartListHeaderView.m; sourceTree = SOURCE_ROOT; };
 		B517FDF71982517300F65253 /* RICart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICart.h; sourceTree = "<group>"; };
 		B517FDF81982517300F65253 /* RICart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICart.m; sourceTree = "<group>"; };
 		B517FDFA198265AD00F65253 /* RICartItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICartItem.h; sourceTree = "<group>"; };
@@ -861,6 +862,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B51777AF19A78FEB00ED0AC7 /* Headers */,
 				4A454F3C199CE65100B44821 /* FormComponents */,
 				4A1892CF199399EC0036F327 /* ReviewCell */,
 				CE3FC5A41990E209003B4A27 /* GenericComponents */,
@@ -1030,6 +1032,16 @@
 				B50B03AA198A8861002046DF /* JAUtils.m */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		B51777AF19A78FEB00ED0AC7 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				B51777B019A7902400ED0AC7 /* JACartListHeaderView.h */,
+				B51777B119A7902400ED0AC7 /* JACartListHeaderView.m */,
+			);
+			name = Headers;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		B5225E281989475E00C18F1E /* Checkout */ = {
@@ -1483,8 +1495,6 @@
 				B5A3028E19811E9200F71726 /* RIVariation.m */,
 				CE21CB02198147EE00F7DC66 /* RIStaticBlockIndex.h */,
 				CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */,
-				4A9D26D5198BD44F001704ED /* RIRecentSearch.h */,
-				4A9D26D6198BD44F001704ED /* RIRecentSearch.m */,
 				4A454F36199CBD4D00B44821 /* RICustomer.h */,
 				4A454F37199CBD4D00B44821 /* RICustomer.m */,
 				4A454F39199CBF1400B44821 /* RIAddress.h */,
@@ -2043,6 +2053,7 @@
 				CE445879198BF15B00CE7E8D /* JACampaignsTeaserView.m in Sources */,
 				4A39213419891FB200B70A9C /* JAMyAccountViewController.m in Sources */,
 				CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */,
+				B51777B219A7902400ED0AC7 /* JACartListHeaderView.m in Sources */,
 				B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */,
 				CE2F576E19913B33000A9E09 /* JACatalogListCell.m in Sources */,
 				4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */,

@@ -12,8 +12,10 @@
 #import "JACatalogListCell.h"
 #import "JAPDVViewController.h"
 #import "JAConstants.h"
+#import "JACartListHeaderView.h"
 #import "RIForm.h"
 #import "RIField.h"
+#import "RICart.h"
 #import "RICartItem.h"
 #import "RICustomer.h"
 
@@ -95,22 +97,32 @@
     
     [self.cartScrollView setHidden:NO];
     
+    NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
     self.productCollectionView.layer.cornerRadius = 5.0f;
-    self.productTableViewConstrain.constant = ([[self.cart cartCount] integerValue] * 90.0f) + 26.0f;
+    self.productTableViewConstrain.constant = ([cartItemsKeys count] * 90.0f) + 26.0f;
+    [self.productCollectionView reloadData];
     
     // coupon
     self.couponView.layer.cornerRadius = 5.0f;
+    [self.couponView layoutIfNeeded];
     [self.couponTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.couponTitleSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.couponTitle setText:@"Coupon"];
     [self.couponTextField setPlaceholder:@"Enter your coupon code here"];
-    [self.couponTextField setTextColor:UIColorFromRGB(0xcccccc)];
+    [self.couponTextField setDelegate:self];
     [self.useCouponButton setTitle:@"Use" forState:UIControlStateNormal];
     [self.useCouponButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.useCouponButton addTarget:self action:@selector(useCouponButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
+    if(!VALID_NOTEMPTY([self.couponTextField text], NSString))
+    {
+        [self.useCouponButton setEnabled:NO];
+        [self.couponTextField setTextColor:UIColorFromRGB(0xcccccc)];
+    }
+    
     // subtotal
     self.subtotalView.layer.cornerRadius = 5.0f;
+    [self.subtotalView layoutIfNeeded];
     [self.subtotalTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.subtotalTitleSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.subtotalTitle setText:@"Subtotal"];
@@ -126,26 +138,94 @@
         [self.articlesCount setText:[NSString stringWithFormat:@"%d articles", cartCount]];
     }
     
-#warning check prices
-    [self.cartPrice setTextColor:UIColorFromRGB(0x666666)];
-    [self.cartPrice setText:[[[self cart] cartCleanValue] stringValue]];
+    [self.cartPrice setTextColor:UIColorFromRGB(0xcc0000)];
     
-    // Check all values from products and put it if there is at least one with discount
+    if(VALID_NOTEMPTY([[self cart] cartUnreducedValueFormatted], NSString))
+    {
+        [self.cartPrice setText:[NSString stringWithFormat:@"%@ %@", [[self cart] cartUnreducedValueFormatted], [[self cart] cartCleanValueFormatted]]];
+    }
+    else
+    {
+        [self.cartPrice setText:[[self cart] cartCleanValueFormatted]];
+    }
     
-    [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.cartVatLabel setText:@"VAT"];
-    [self.cartVatLabel setFrame:CGRectMake(self.cartVatLabel.frame.origin.x,
-                                           CGRectGetMaxY(self.articlesCount.frame) + 4.0f,
-                                           self.cartVatLabel.frame.size.width,
-                                           self.cartVatLabel.frame.size.height)];
+    NSString *priceRuleKeysString = @"";
+    NSString *priceRuleValuesString = @"";
+    if(VALID_NOTEMPTY([[self cart] priceRules], NSDictionary))
+    {
+        NSArray *priceRuleKeys = [[[self cart] priceRules] allKeys];
+        
+        for (NSString *priceRuleKey in priceRuleKeys)
+        {
+            if(ISEMPTY(priceRuleKeysString))
+            {
+                priceRuleKeysString = priceRuleKey;
+                priceRuleValuesString = [[[self cart] priceRules] objectForKey:priceRuleKey];
+            }
+            else
+            {
+                priceRuleKeysString = [NSString stringWithFormat:@"%@\n%@", priceRuleKeysString, priceRuleKey];
+                priceRuleValuesString = [NSString stringWithFormat:@"%@\n%@", priceRuleValuesString, [[[self cart] priceRules] objectForKey:priceRuleKey]];
+            }
+        }
+    }
     
+    if(VALID_NOTEMPTY(priceRuleKeysString, NSString) && VALID_NOTEMPTY(priceRuleValuesString, NSString))
+    {
+        [self.priceRulesLabel setTextColor:UIColorFromRGB(0x666666)];
+        [self.priceRulesLabel setText:priceRuleKeysString];
+        [self.priceRulesLabel setNumberOfLines:0];
+        [self.priceRulesLabel setFrame:CGRectMake(self.priceRulesLabel.frame.origin.x,
+                                                  CGRectGetMaxY(self.articlesCount.frame) + 4.0f,
+                                                  self.priceRulesLabel.frame.size.width,
+                                                  self.priceRulesLabel.frame.size.height)];
+        [self.priceRulesLabel setHidden:NO];
+        
+        [self.priceRulesValue setTextColor:UIColorFromRGB(0x666666)];
+        [self.priceRulesValue setText:priceRuleValuesString];
+        [self.priceRulesValue setNumberOfLines:0];
+        [self.priceRulesValue setFrame:CGRectMake(self.priceRulesValue.frame.origin.x,
+                                                  CGRectGetMaxY(self.cartPrice.frame) + 4.0f,
+                                                  self.priceRulesValue.frame.size.width,
+                                                  self.priceRulesValue.frame.size.height)];
+        [self.priceRulesValue setHidden:NO];
+        
+        [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
+        [self.cartVatLabel setText:@"VAT"];
+        [self.cartVatLabel setFrame:CGRectMake(self.cartVatLabel.frame.origin.x,
+                                               CGRectGetMaxY(self.priceRulesLabel.frame),
+                                               self.cartVatLabel.frame.size.width,
+                                               self.cartVatLabel.frame.size.height)];
+        
+        
+        [self.cartVatValue setTextColor:UIColorFromRGB(0x666666)];
+        [self.cartVatValue setText:[[self cart] vatValueFormatted]];
+        [self.cartVatValue setFrame:CGRectMake(self.cartVatValue.frame.origin.x,
+                                               CGRectGetMaxY(self.priceRulesValue.frame),
+                                               self.cartVatValue.frame.size.width,
+                                               self.cartVatValue.frame.size.height)];
+    }
+    else
+    {
+        [self.priceRulesLabel setHidden:YES];
+        [self.priceRulesLabel setHidden:YES];
+        
+        [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
+        [self.cartVatLabel setText:@"VAT"];
+        [self.cartVatLabel setFrame:CGRectMake(self.cartVatLabel.frame.origin.x,
+                                               CGRectGetMaxY(self.articlesCount.frame) + 4.0f,
+                                               self.cartVatLabel.frame.size.width,
+                                               self.cartVatLabel.frame.size.height)];
+        
+        
+        [self.cartVatValue setTextColor:UIColorFromRGB(0x666666)];
+        [self.cartVatValue setText:[[self cart] vatValueFormatted]];
+        [self.cartVatValue setFrame:CGRectMake(self.cartVatValue.frame.origin.x,
+                                               CGRectGetMaxY(self.cartPrice.frame) + 4.0f,
+                                               self.cartVatValue.frame.size.width,
+                                               self.cartVatValue.frame.size.height)];
+    }
     
-    [self.cartVatValue setTextColor:UIColorFromRGB(0x666666)];
-    [self.cartVatValue setText:[[[self cart] vatValue] stringValue]];
-    [self.cartVatValue setFrame:CGRectMake(self.cartVatValue.frame.origin.x,
-                                           CGRectGetMaxY(self.cartPrice.frame) + 4.0f,
-                                           self.cartVatValue.frame.size.width,
-                                           self.cartVatValue.frame.size.height)];
     
     
     [self.cartShippingLabel setTextColor:UIColorFromRGB(0x666666)];
@@ -162,7 +242,7 @@
     }
     else
     {
-        [self.cartShippingValue setText:[[[self cart] shippingValue] stringValue]];
+        [self.cartShippingValue setText:[[self cart] shippingValueFormatted]];
     }
     [self.cartShippingValue setFrame:CGRectMake(self.cartShippingValue.frame.origin.x,
                                                 CGRectGetMaxY(self.cartVatValue.frame),
@@ -177,26 +257,25 @@
                                               self.extraCostsLabel.frame.size.height)];
     
     [self.extraCostsValue setTextColor:UIColorFromRGB(0x666666)];
-    [self.extraCostsValue setText:[[[self cart] extraCosts] stringValue]];
+    [self.extraCostsValue setText:[[self cart] extraCostsFormatted]];
     [self.extraCostsValue setFrame:CGRectMake(self.extraCostsValue.frame.origin.x,
                                               CGRectGetMaxY(self.cartShippingValue.frame),
                                               self.extraCostsValue.frame.size.width,
                                               self.extraCostsValue.frame.size.height)];
     
-    
     [self.totalLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.totalLabel setText:@"Total"];
     
-    [self.totalValue setTextColor:UIColorFromRGB(0x666666)];
-    [self.totalValue setText:[[[self cart] cartValue] stringValue]];
+    [self.totalValue setTextColor:UIColorFromRGB(0xcc0000)];
+    [self.totalValue setText:[[self cart] cartValueFormatted]];
     
-    [self.couponLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.couponLabel setText:@"Coupon"];
+    [self.couponLabel setTextColor:UIColorFromRGB(0x3aaa35)];
+    [self.couponLabel setText:@"Voucher"];
     
-    [self.couponValue setTextColor:UIColorFromRGB(0x666666)];
-    [self.couponValue setText:[[[self cart] couponMoneyValue] stringValue]];
+    [self.couponValue setTextColor:UIColorFromRGB(0x3aaa35)];
+    [self.couponValue setText:[NSString stringWithFormat:@"- %@", [[self cart] couponMoneyValueFormatted]]];
     
-    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f > [[[self cart] couponMoneyValue] floatValue])
+    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
     {
         [self.couponLabel setHidden:NO];
         [self.couponLabel setFrame:CGRectMake(self.couponLabel.frame.origin.x,
@@ -237,10 +316,12 @@
     [self.checkoutButton setTitle:@"Proceed to Checkout" forState:UIControlStateNormal];
     [self.checkoutButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.checkoutButton addTarget:self action:@selector(checkoutButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.checkoutButton layoutIfNeeded];
     
     [self.callToOrderButton setTitle:@"Call to Order" forState:UIControlStateNormal];
     [self.callToOrderButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.callToOrderButton addTarget:self action:@selector(callToOrderButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.callToOrderButton layoutIfNeeded];
 }
 
 
@@ -288,14 +369,122 @@
     {
         NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
         NSString *key = [cartItemsKeys objectAtIndex:button.tag];
-        RICartItem *product = [self.cart.cartItems objectForKey:key];
+        self.currentItem = [self.cart.cartItems objectForKey:key];
         
-        
+        [self setupPickerView];
     }
+}
+
+- (void)setupPickerView
+{
+    self.quantityPickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                 0.0f,
+                                                                                 self.view.frame.size.width,
+                                                                                 self.view.frame.size.height)];
+    [self.quantityPickerBackgroundView setBackgroundColor:[UIColor clearColor]];
+    
+    UITapGestureRecognizer *removePickerViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(removePickerView)];
+    [self.quantityPickerBackgroundView addGestureRecognizer:removePickerViewTap];
+    
+    self.quantityPicker = [[UIPickerView alloc] init];
+    [self.quantityPicker setFrame:CGRectMake(self.quantityPickerBackgroundView.frame.origin.x,
+                                             CGRectGetMaxY(self.quantityPickerBackgroundView.frame) - self.quantityPicker.frame.size.height,
+                                             self.quantityPicker.frame.size.width,
+                                             self.quantityPicker.frame.size.height)];
+    [self.quantityPicker setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.quantityPicker setAlpha:0.9];
+    [self.quantityPicker setShowsSelectionIndicator:YES];
+    [self.quantityPicker setDataSource:self];
+    [self.quantityPicker setDelegate:self];
+    
+    self.quantityPickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [self.quantityPickerToolbar setTranslucent:NO];
+    [self.quantityPickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.quantityPickerToolbar setAlpha:0.9];
+    [self.quantityPickerToolbar setFrame:CGRectMake(0.0f,
+                                                    CGRectGetMinY(self.quantityPicker.frame) - self.quantityPickerToolbar.frame.size.height,
+                                                    self.quantityPickerToolbar.frame.size.width,
+                                                    self.quantityPickerToolbar.frame.size.height)];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
+    [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [button setTitle:@"Done" forState:UIControlStateNormal];
+    [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [button addTarget:self action:@selector(selectQuantity:) forControlEvents:UIControlEventTouchUpInside];
+    [button sizeToFit];
+    
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    [self.quantityPickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
+    
+    [self.quantityPicker selectRow:([[self.currentItem quantity] integerValue] - 1) inComponent:0 animated:NO];
+    [self.quantityPickerBackgroundView addSubview:self.quantityPicker];
+    [self.quantityPickerBackgroundView addSubview:self.quantityPickerToolbar];
+    [self.view addSubview:self.quantityPickerBackgroundView];
+}
+
+- (void)selectQuantity:(UIButton*)sender
+{
+    NSInteger newQuantity = [self.quantityPicker selectedRowInComponent:0] + 1;
+    if(newQuantity != [[self.currentItem quantity] integerValue])
+    {
+        [self showLoading];
+        
+        NSMutableDictionary *quantitiesToChange = [[NSMutableDictionary alloc] init];
+        NSArray *cartItemsKeys = [[self.cart cartItems] allKeys];
+        for (NSString *cartItemKey in cartItemsKeys)
+        {
+            RICartItem *cartItem = [[self.cart cartItems] objectForKey:cartItemKey];
+            [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", [[cartItem quantity] integerValue]] forKey:[NSString stringWithFormat:@"qty_%@", cartItemKey]];
+        }
+        
+        [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", newQuantity] forKey:[NSString stringWithFormat:@"qty_%@", [self.currentItem simpleSku]]];
+        
+        [RICart changeQuantityInProducts:quantitiesToChange
+                        withSuccessBlock:^(RICart *cart) {
+                            self.cart = cart;
+                            
+                            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                            
+                            [self removePickerView];
+                            [self setupCart];
+                            [self hideLoading];
+                        } andFailureBlock:^(NSArray *errorMessages) {
+                            [self removePickerView];
+                            [self hideLoading];
+                            
+                            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                        message:@"Error changing quantity"
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"Ok", nil] show];
+                        }];
+    }
+    else
+    {
+        [self removePickerView];
+    }
+}
+
+- (void)removePickerView
+{
+    [self.quantityPicker removeFromSuperview];
+    self.quantityPicker = nil;
+    
+    [self.quantityPickerBackgroundView removeFromSuperview];
+    self.quantityPickerBackgroundView = nil;
 }
 
 - (void)useCouponButtonPressed
 {
+    [self.couponTextField resignFirstResponder];
+    
     [self showLoading];
     NSString *voucherCode = [self.couponTextField text];
     [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
@@ -305,12 +494,7 @@
     } andFailureBlock:^(NSArray *errorMessages) {
         [self hideLoading];
         
-#warning talk to jose
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                    message:@"Please imnput a valid Coupon Code"
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:@"Ok", nil] show];
+        [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
     }];
 }
 
@@ -402,9 +586,9 @@
     UICollectionReusableView *reusableview = [[UICollectionReusableView alloc] init];
     
     if (kind == UICollectionElementKindSectionHeader) {
-        UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader" forIndexPath:indexPath];
+        JACartListHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader" forIndexPath:indexPath];
         
-        [headerView setBackgroundColor:[UIColor redColor]];
+        [headerView loadHeaderWithText:@"Items"];
         
         reusableview = headerView;
     }
@@ -429,6 +613,62 @@
         [self.navigationController pushViewController:pdv
                                              animated:YES];
     }
+}
+
+#pragma mark UITextFieldDelegate
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [self.couponTextField setTextColor:UIColorFromRGB(0xcccccc)];
+    
+    if(VALID_NOTEMPTY(textField.text, NSString))
+    {
+        [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSRange textFieldRange = NSMakeRange(0, [textField.text length]);
+    if (NSEqualRanges(range, textFieldRange) && [string length] == 0)
+    {
+        [self.useCouponButton setEnabled:NO];
+    }
+    else
+    {
+        [self.useCouponButton setEnabled:YES];
+    }
+    
+    return YES;
+}
+
+#pragma mark UIPickerViewDataSource
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    NSInteger numberOfRowsInComponent = 0;
+    
+    if(VALID_NOTEMPTY(self.currentItem, RICartItem))
+    {
+        numberOfRowsInComponent = [[self.currentItem maxQuantity] integerValue];
+    }
+    
+    return numberOfRowsInComponent;
+}
+
+#pragma mark UIPickerViewDelegate
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    NSString *title = [NSString stringWithFormat:@"%d", (row + 1)];
+    return title;
 }
 
 @end

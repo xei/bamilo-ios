@@ -19,13 +19,20 @@
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
-                                                              {
-                                                                  successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"]]);
-                                                              } else
-                                                              {
-                                                                  failureBlock(nil);
-                                                              }
+                                                              
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(nil);
+                                                                  }
+                                                              } andFailureBlock:^(NSArray *errorMessages) {
+                                                                  
+                                                              }];
+                                                              
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
@@ -46,13 +53,17 @@
                andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
     return [RIForm sendForm:form successBlock:^(NSDictionary *jsonObject) {
-        if(VALID_NOTEMPTY(jsonObject, NSDictionary))
-        {
-            successBlock([RICheckout parseCheckout:jsonObject]);
-        } else
-        {
+        [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+            if(VALID_NOTEMPTY(jsonObject, NSDictionary))
+            {
+                successBlock([RICheckout parseCheckout:jsonObject country:configuration]);
+            } else
+            {
+                failureBlock(nil);
+            }
+        } andFailureBlock:^(NSArray *errorMessages) {
             failureBlock(nil);
-        }
+        }];
     } andFailureBlock:failureBlock];
 }
 
@@ -65,13 +76,17 @@
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
-                                                              {
-                                                                  successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"]]);
-                                                              } else
-                                                              {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(nil);
+                                                                  }
+                                                              } andFailureBlock:^(NSArray *errorMessages) {
                                                                   failureBlock(nil);
-                                                              }
+                                                              }];
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
@@ -92,13 +107,17 @@
                 andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
     return [RIForm sendForm:form successBlock:^(NSDictionary *jsonObject) {
-        if(VALID_NOTEMPTY(jsonObject, NSDictionary))
-        {
-            successBlock([RICheckout parseCheckout:jsonObject]);
-        } else
-        {
+        [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+            if(VALID_NOTEMPTY(jsonObject, NSDictionary))
+            {
+                successBlock([RICheckout parseCheckout:jsonObject country:configuration]);
+            } else
+            {
+                failureBlock(nil);
+            }
+        } andFailureBlock:^(NSArray *errorMessages) {
             failureBlock(nil);
-        }
+        }];
     } andFailureBlock:failureBlock];
 }
 
@@ -111,13 +130,17 @@
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
-                                                              {
-                                                                  successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"]]);
-                                                              } else
-                                                              {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(nil);
+                                                                  }
+                                                              } andFailureBlock:^(NSArray *errorMessages) {
                                                                   failureBlock(nil);
-                                                              }
+                                                              }];
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
@@ -145,13 +168,17 @@
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
-                                                              {
-                                                                  successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"]]);
-                                                              } else
-                                                              {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(nil);
+                                                                  }
+                                                              } andFailureBlock:^(NSArray *errorMessages) {
                                                                   failureBlock(nil);
-                                                              }
+                                                              }];
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
@@ -177,13 +204,17 @@
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
-                                                              {
-                                                                  successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"]]);
-                                                              } else
-                                                              {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(nil);
+                                                                  }
+                                                              } andFailureBlock:^(NSArray *errorMessages) {
                                                                   failureBlock(nil);
-                                                              }
+                                                              }];
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
@@ -211,13 +242,17 @@
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
-                                                              {
-                                                                  successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"]]);
-                                                              } else
-                                                              {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(nil);
+                                                                  }
+                                                              } andFailureBlock:^(NSArray *errorMessages) {
                                                                   failureBlock(nil);
-                                                              }
+                                                              }];
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
@@ -242,13 +277,17 @@
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
-                                                              {
-                                                                  successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"]]);
-                                                              } else
-                                                              {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(nil);
+                                                                  }
+                                                              } andFailureBlock:^(NSArray *errorMessages) {
                                                                   failureBlock(nil);
-                                                              }
+                                                              }];
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
@@ -273,7 +312,7 @@
 }
 
 #pragma mark - Private methods
-+ (RICheckout*)parseCheckout:(NSDictionary*)checkoutObject
++ (RICheckout*)parseCheckout:(NSDictionary*)checkoutObject country:(RICountryConfiguration*)country
 {
     RICheckout *checkout = [[RICheckout alloc] init];
     
@@ -284,7 +323,7 @@
     
     if (VALID_NOTEMPTY([checkoutObject objectForKey:@"cart"], NSDictionary))
     {
-        checkout.cart = [RICart parseCart:[checkoutObject objectForKey:@"cart"]];
+        checkout.cart = [RICart parseCart:[checkoutObject objectForKey:@"cart"] country:country];
     }
     
     if(VALID_NOTEMPTY([checkoutObject objectForKey:@"billingForm"], NSDictionary))

@@ -7,11 +7,14 @@
 //
 
 #import "JABaseViewController.h"
-#import "RICart.h"
 
-@interface JACartViewController : JABaseViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@class RICart;
+@class RICartItem;
+
+@interface JACartViewController : JABaseViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (strong, nonatomic) RICart *cart;
+@property (strong, nonatomic) RICartItem *currentItem;
 
 // Empty cart views
 @property (weak, nonatomic) IBOutlet UIView *emptyCartView;
@@ -24,7 +27,6 @@
 // Products
 @property (weak, nonatomic) IBOutlet UICollectionView *productCollectionView;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *productTableViewConstrain;
-
 
 // Coupon
 @property (weak, nonatomic) IBOutlet UIView *couponView;
@@ -39,6 +41,8 @@
 @property (weak, nonatomic) IBOutlet UIView *subtotalTitleSeparator;
 @property (weak, nonatomic) IBOutlet UILabel *articlesCount;
 @property (weak, nonatomic) IBOutlet UILabel *cartPrice;
+@property (weak, nonatomic) IBOutlet UILabel *priceRulesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceRulesValue;
 @property (weak, nonatomic) IBOutlet UILabel *cartVatLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cartVatValue;
 @property (weak, nonatomic) IBOutlet UILabel *cartShippingLabel;
@@ -51,8 +55,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalValue;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *subtotalViewConstrain;
 
-
 @property (weak, nonatomic) IBOutlet UIButton *checkoutButton;
 @property (weak, nonatomic) IBOutlet UIButton *callToOrderButton;
+
+// quantity picker view
+@property (strong, nonatomic) UIView *quantityPickerBackgroundView;
+@property (strong, nonatomic) UIToolbar *quantityPickerToolbar;
+@property (strong, nonatomic) UIPickerView *quantityPicker;
 
 @end

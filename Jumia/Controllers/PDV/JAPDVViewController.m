@@ -126,15 +126,15 @@ JAPDVGalleryViewDelegate
     {
         [segue.destinationViewController setProductRatings:self.productRatings];
         [segue.destinationViewController setProductBrand:self.product.brand];
-        [segue.destinationViewController setProductNewPrice:self.product.specialPrice];
-        [segue.destinationViewController setProductOldPrice:self.product.price];
+        [segue.destinationViewController setProductNewPrice:self.product.specialPriceFormatted];
+        [segue.destinationViewController setProductOldPrice:self.product.priceFormatted];
     }
     else if ([segue.identifier isEqualToString:@"segueToDetails"])
     {
         [segue.destinationViewController setStringBrand:self.product.brand];
         [segue.destinationViewController setStringName:self.product.name];
-        [segue.destinationViewController setStringNewPrice:self.product.specialPrice];
-        [segue.destinationViewController setStringOldPrice:self.product.price];
+        [segue.destinationViewController setStringNewPrice:self.product.specialPriceFormatted];
+        [segue.destinationViewController setStringOldPrice:self.product.priceFormatted];
         [segue.destinationViewController setFeaturesText:self.product.attributeShortDescription];
         [segue.destinationViewController setDescriptionText:self.product.descriptionString];
     }
@@ -143,8 +143,8 @@ JAPDVGalleryViewDelegate
         [segue.destinationViewController setRatingProductSku:self.productRatings.productSku];
         [segue.destinationViewController setRatingProductBrand:self.product.brand];
         [segue.destinationViewController setRatingProductNameForLabel:self.productRatings.productName];
-        [segue.destinationViewController setRatingProductNewPriceForLabel:self.product.specialPrice];
-        [segue.destinationViewController setRatingProductOldPriceForLabel:self.product.price];
+        [segue.destinationViewController setRatingProductNewPriceForLabel:self.product.specialPriceFormatted];
+        [segue.destinationViewController setRatingProductOldPriceForLabel:self.product.priceFormatted];
     }
 }
 
@@ -237,8 +237,8 @@ JAPDVGalleryViewDelegate
                                                self.productInfoSection.frame.size.width,
                                                self.productInfoSection.frame.size.height);
     
-    [self.productInfoSection setPriceWithNewValue:[self.product.specialPrice stringValue]
-                                      andOldValue:[self.product.price stringValue]];
+    [self.productInfoSection setPriceWithNewValue:self.product.specialPriceFormatted
+                                      andOldValue:self.product.priceFormatted];
     
     [self showLoading];
     
@@ -359,7 +359,7 @@ JAPDVGalleryViewDelegate
                 
                 singleItem.labelBrand.text = product.brand;
                 singleItem.labelName.text = product.name;
-                singleItem.labelPrice.text = [product.price stringValue];
+                singleItem.labelPrice.text = product.priceFormatted;
                 singleItem.product = product;
                 
                 UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -410,7 +410,7 @@ JAPDVGalleryViewDelegate
     RIProduct *tempProduct = view.product;
     
     JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
-    pdv.product = tempProduct;
+    pdv.productUrl = tempProduct.url;
     pdv.fromCatalogue = NO;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication

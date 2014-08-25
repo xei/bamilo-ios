@@ -51,8 +51,8 @@
     
     if ([self.productNewPrice floatValue] > 0.0)
     {
-        NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:[self.productOldPrice stringValue]];
-        NSInteger stringOldPriceLenght = [self.productOldPrice stringValue].length;
+        NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:self.productOldPrice];
+        NSInteger stringOldPriceLenght = self.productOldPrice.length;
         UIFont *stringOldPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
                                                      size:14.0];
         UIColor *stringOldPriceColor = [UIColor colorWithRed:204.0/255.0
@@ -74,8 +74,8 @@
         
         self.oldPriceLabel.attributedText = stringOldPrice;
         
-        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:[self.productNewPrice stringValue]];
-        NSInteger stringNewPriceLenght = [self.productNewPrice stringValue].length;
+        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:self.productNewPrice];
+        NSInteger stringNewPriceLenght = self.productNewPrice.length;
         UIFont *stringNewPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
                                                      size:14.0];
         UIColor *stringNewPriceColor = [UIColor colorWithRed:204.0/255.0
@@ -104,8 +104,8 @@
     }
     else
     {
-        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:[self.productOldPrice stringValue]];
-        NSInteger stringNewPriceLenght = [self.productOldPrice stringValue].length;
+        NSMutableAttributedString *stringNewPrice = [[NSMutableAttributedString alloc] initWithString:self.productOldPrice];
+        NSInteger stringNewPriceLenght = self.productOldPrice.length;
         UIFont *stringNewPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
                                                      size:14.0];
         UIColor *stringNewPriceColor = [UIColor colorWithRed:204.0/255.0
