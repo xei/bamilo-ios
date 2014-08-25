@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="IEb-EH-YYf" customClass="JACatalogGridCell">
-            <rect key="frame" x="0.0" y="0.0" width="158" height="196"/>
+            <rect key="frame" x="0.0" y="0.0" width="152" height="196"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="158" height="196"/>
+                <rect key="frame" x="0.0" y="0.0" width="152" height="196"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OHb-gZ-UsD" userLabel="ContentView">
-                        <rect key="frame" x="4" y="3" width="152" height="193"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OHb-gZ-UsD" userLabel="ContentView">
+                        <rect key="frame" x="0.0" y="3" width="152" height="193"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lxr-pU-FDh">
                                 <rect key="frame" x="20" y="8" width="112" height="140"/>
@@ -23,26 +23,20 @@
                                 <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJQ-WO-yLm">
-                                <rect key="frame" x="0.0" y="17" width="48" height="14"/>
+                                <rect key="frame" x="-4" y="-4" width="48" height="14"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="8"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="63c-wT-5Ql">
                                 <rect key="frame" x="2" y="148" width="148" height="15"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7WG-Xo-Qtm">
-                                <rect key="frame" x="2" y="163" width="148" height="15"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYJ-0u-CrK">
-                                <rect key="frame" x="2" y="178" width="148" height="15"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <rect key="frame" x="2" y="162" width="148" height="15"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -64,11 +58,20 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="152" id="kyQ-Yz-3MY"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="OHb-gZ-UsD" firstAttribute="top" secondItem="IEb-EH-YYf" secondAttribute="top" constant="3" id="8UH-Ci-C4H"/>
+                <constraint firstAttribute="trailing" secondItem="OHb-gZ-UsD" secondAttribute="trailing" id="Dv9-WZ-ecH"/>
+                <constraint firstItem="OHb-gZ-UsD" firstAttribute="leading" secondItem="IEb-EH-YYf" secondAttribute="leading" id="G7a-JS-4Xr"/>
+                <constraint firstAttribute="bottom" secondItem="OHb-gZ-UsD" secondAttribute="bottom" id="aHU-mm-FVd"/>
+            </constraints>
             <size key="customSize" width="158" height="196"/>
             <connections>
                 <outlet property="backgroundContentView" destination="OHb-gZ-UsD" id="rOB-wx-zXu"/>
@@ -77,12 +80,10 @@
                 <outlet property="discountLabel" destination="4FK-VW-fsH" id="hYW-AE-ZSo"/>
                 <outlet property="favoriteButton" destination="hH1-79-qhw" id="gdD-lB-NMo"/>
                 <outlet property="nameLabel" destination="7WG-Xo-Qtm" id="ARO-Gm-Gir"/>
-                <outlet property="priceLabel" destination="dYJ-0u-CrK" id="xEX-ot-Iyj"/>
                 <outlet property="productImageView" destination="Lxr-pU-FDh" id="OAr-gK-8l3"/>
                 <outlet property="recentProductImageView" destination="zn6-GA-Xv7" id="6pi-JK-db8"/>
                 <outlet property="recentProductLabel" destination="BJQ-WO-yLm" id="u0Y-u7-gC1"/>
             </connections>
-            <point key="canvasLocation" x="233" y="272"/>
         </collectionViewCell>
     </objects>
     <resources>

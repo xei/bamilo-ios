@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,13 +11,6 @@
             <rect key="frame" x="0.0" y="0.0" width="308" height="179"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5EF-cN-kZF">
-                    <rect key="frame" x="6" y="13" width="140" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="3KQ-ig-dJC">
                     <rect key="frame" x="0.0" y="44" width="308" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -127,7 +120,6 @@
                 <outlet property="goToSpecificationsImageView" destination="AxB-nz-fog" id="a5H-xA-mH3"/>
                 <outlet property="numberOfReviewsLabel" destination="orw-SE-ilC" id="wgS-HP-rRa"/>
                 <outlet property="oldPriceLabel" destination="d9i-Z6-p93" id="ZYq-VY-xGm"/>
-                <outlet property="priceLabel" destination="5EF-cN-kZF" id="FcM-Rb-IBd"/>
                 <outlet property="reviewsView" destination="KbH-OZ-BCW" id="N97-Ct-fJK"/>
                 <outlet property="sizeButton" destination="OpA-x6-1zY" id="RLD-m2-RcJ"/>
                 <outlet property="sizeImageViewSeparator" destination="ERv-2x-8Nl" id="NV0-cv-75q"/>
@@ -139,7 +131,6 @@
                 <outlet property="star4" destination="ba0-ih-kT8" id="RDZ-yN-ki9"/>
                 <outlet property="star5" destination="IbG-ky-gqw" id="EHX-Sj-kkX"/>
             </connections>
-            <point key="canvasLocation" x="475" y="438.5"/>
         </view>
     </objects>
     <resources>
