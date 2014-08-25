@@ -237,7 +237,8 @@
         self.catalogTopButton.hidden = YES;
     }
     
-    if (5 <= indexPath.row) {
+    if ((YES == self.viewToggleButton.selected && 7 <= indexPath.row) ||
+        (NO == self.viewToggleButton.selected && 5 <= indexPath.row)) {
         self.catalogTopButton.hidden = NO;
     }
     
