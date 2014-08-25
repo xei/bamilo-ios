@@ -158,10 +158,12 @@
     self.cartPrice.hidden = YES;
     [self.totalPriceView removeFromSuperview];
     self.totalPriceView = [[JAPriceView alloc] init];
-    [self.totalPriceView loadWithPrice:[[self cart] cartUnreducedValueFormatted]
-                          specialPrice:[[self cart] cartCleanValueFormatted]
+    
+    [self.totalPriceView loadWithPrice:[[self cart] cartCleanValueFormatted]
+                          specialPrice:[[self cart] cartUnreducedValueFormatted]
                               fontSize:11.0f
                  specialPriceOnTheLeft:YES];
+    
     self.totalPriceView.frame = CGRectMake(self.subtotalView.frame.size.width - self.totalPriceView.frame.size.width - 4.0f,
                                            self.cartPrice.frame.origin.y,
                                            self.totalPriceView.frame.size.width,
