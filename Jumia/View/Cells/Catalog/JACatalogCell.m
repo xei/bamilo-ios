@@ -30,7 +30,9 @@
     self.recentProductLabel.transform = CGAffineTransformMakeRotation (-M_PI/4);
     
     self.brandLabel.text = product.brand;
+    self.brandLabel.textColor = UIColorFromRGB(0x666666);
     self.nameLabel.text = product.name;
+    self.nameLabel.textColor = UIColorFromRGB(0x666666);
     
     [self.priceView removeFromSuperview];
     self.priceView = [[JAPriceView alloc] init];
