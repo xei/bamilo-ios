@@ -197,6 +197,7 @@
 		CE2FB75619938EA100E7CD00 /* JACatalogGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2FB75519938EA100E7CD00 /* JACatalogGridCell.m */; };
 		CE2FB75819938EB500E7CD00 /* JACatalogGridCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2FB75719938EB500E7CD00 /* JACatalogGridCell.xib */; };
 		CE2FB75B1993BCB900E7CD00 /* JACatalogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2FB75A1993BCB900E7CD00 /* JACatalogCell.m */; };
+		CE33CA0119AB36FA00333B1A /* JAPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE33CA0019AB36FA00333B1A /* JAPriceView.m */; };
 		CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */; };
 		CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */; };
 		CE44586B198BD20A00CE7E8D /* JAMainTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445866198BD20A00CE7E8D /* JAMainTeaserView.m */; };
@@ -595,6 +596,8 @@
 		CE2FB75719938EB500E7CD00 /* JACatalogGridCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell.xib; sourceTree = "<group>"; };
 		CE2FB7591993BCB900E7CD00 /* JACatalogCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogCell.h; sourceTree = "<group>"; };
 		CE2FB75A1993BCB900E7CD00 /* JACatalogCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogCell.m; sourceTree = "<group>"; };
+		CE33C9FF19AB36FA00333B1A /* JAPriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPriceView.h; sourceTree = "<group>"; };
+		CE33CA0019AB36FA00333B1A /* JAPriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPriceView.m; sourceTree = "<group>"; };
 		CE3FC5A51990E209003B4A27 /* JAPickerScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPickerScrollView.h; sourceTree = "<group>"; };
 		CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPickerScrollView.m; sourceTree = "<group>"; };
 		CE3FC5AC1990E25C003B4A27 /* JACatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogViewController.h; sourceTree = "<group>"; };
@@ -1710,6 +1713,8 @@
 				CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */,
 				CED30C25199CBF0E00C67F4B /* JAColorView.h */,
 				CED30C26199CBF0E00C67F4B /* JAColorView.m */,
+				CE33C9FF19AB36FA00333B1A /* JAPriceView.h */,
+				CE33CA0019AB36FA00333B1A /* JAPriceView.m */,
 			);
 			path = GenericComponents;
 			sourceTree = "<group>";
@@ -2121,6 +2126,7 @@
 				B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */,
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
 				CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */,
+				CE33CA0119AB36FA00333B1A /* JAPriceView.m in Sources */,
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
 				B5A302D319811E9200F71726 /* RIVariation.m in Sources */,
 				CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */,

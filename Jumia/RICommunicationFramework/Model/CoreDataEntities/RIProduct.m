@@ -223,15 +223,15 @@
         }
         if ([dataDic objectForKey:@"price"]) {
             newProduct.price = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price"] floatValue]];
-            newProduct.priceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
+            newProduct.priceFormatted = [RICountryConfiguration formatPrice:newProduct.price country:country];
         }
         if ([dataDic objectForKey:@"special_price"]) {
             newProduct.specialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price"] floatValue]];
-            newProduct.specialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
+            newProduct.specialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.specialPrice country:country];
         }
         if ([dataDic objectForKey:@"max_special_price"]) {
             newProduct.maxSpecialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price"] floatValue]];
-            newProduct.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
+            newProduct.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxSpecialPrice country:country];
         }
         if ([dataDic objectForKey:@"max_saving_percentage"]) {
             newProduct.maxSavingPercentage = [dataDic objectForKey:@"max_saving_percentage"];

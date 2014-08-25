@@ -12,6 +12,13 @@
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 #import "JARatingsView.h"
+#import "JAPriceView.h"
+
+@interface JACatalogCell()
+
+@property (strong, nonatomic)JAPriceView *priceView;
+
+@end
 
 @implementation JACatalogCell
 
@@ -56,6 +63,19 @@
     }
     
     [self.priceLabel setAttributedText:finalPriceString];
+    
+    self.priceLabel.hidden = YES;
+    
+    self.priceView = [[JAPriceView alloc] init];
+    [self.priceView loadWithPrice:product.priceFormatted
+                     specialPrice:product.specialPriceFormatted
+                         fontSize:10.0f
+            specialPriceOnTheLeft:NO];
+    self.priceView.frame = CGRectMake(self.priceLabel.frame.origin.x + 5.0f,
+                                      self.priceLabel.frame.origin.y + 4.0f,
+                                      self.priceView.frame.size.width,
+                                      self.priceView.frame.size.height);
+    [self.contentView addSubview:self.priceView];
     
     
     self.discountLabel.text = [NSString stringWithFormat:@"-%@%%",product.maxSavingPercentage];

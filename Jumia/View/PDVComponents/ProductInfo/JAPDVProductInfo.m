@@ -39,7 +39,7 @@
 - (void)setPriceWithNewValue:(NSString *)newValue
                  andOldValue:(NSString *)oldValue
 {
-    if ([newValue floatValue] > 0.0)
+    if (VALID_NOTEMPTY(newValue, NSString))
     {
         NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:oldValue];
         NSInteger stringOldPriceLenght = oldValue.length;
