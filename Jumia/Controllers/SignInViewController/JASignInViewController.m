@@ -14,10 +14,10 @@
 
 @interface JASignInViewController ()
 <
-    UITextFieldDelegate,
-    FBLoginViewDelegate
+FBLoginViewDelegate
 >
 
+@property (strong, nonatomic) RIForm *tempForm;
 @property (strong, nonatomic) NSMutableArray *fieldsArray;
 @property (weak, nonatomic) IBOutlet UIView *loginView;
 @property (weak, nonatomic) IBOutlet UILabel *labelLogin;
@@ -72,45 +72,11 @@
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
            
-           float startingY = 40.0f;
-           
-           for (RIField *field in form.fields)
+           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:40.0f];
+           self.fieldsArray = [views copy];
+           for(UIView *view in views)
            {
-               if ([field.type isEqualToString:@"email"])
-               {
-                   JATextField *textField = [JAFormComponent getNewJATextField];
-                   textField.field = field;
-                   
-                   textField.layer.cornerRadius = 4.0f;
-                   CGRect frame = textField.frame;
-                   frame.origin.y = startingY;
-                   textField.frame = frame;
-                   startingY += (textField.frame.size.height + 8);
-                   
-                   textField.textField.placeholder = field.label;
-                   textField.textField.delegate = self;
-                   
-                   [self.loginView addSubview:textField];
-                   [self.fieldsArray addObject:textField];
-               }
-               else if ([field.type isEqualToString:@"password"] || [field.type isEqualToString:@"password2"])
-               {
-                   JATextField *textField = [JAFormComponent getNewJATextField];
-                   textField.field = field;
-                   
-                   textField.layer.cornerRadius = 4.0f;
-                   CGRect frame = textField.frame;
-                   frame.origin.y = startingY;
-                   textField.frame = frame;
-                   startingY += (textField.frame.size.height + 8);
-                   
-                   textField.textField.placeholder = field.label;
-                   textField.textField.secureTextEntry = YES;
-                   textField.textField.delegate = self;
-                   
-                   [self.loginView addSubview:textField];
-                   [self.fieldsArray addObject:textField];
-               }
+               [self.loginView addSubview:view];
            }
            
        } failureBlock:^(NSArray *errorMessage) {
@@ -162,62 +128,42 @@
 {
     [self.view endEditing:YES];
     
-    BOOL hasErrors = NO;
+    BOOL hasErrors = [JAFormComponent hasErrors:self.fieldsArray];
     
-    for (id obj in self.fieldsArray)
+    if(!hasErrors)
     {
-        if ([obj isKindOfClass:[JATextField class]])
-        {
-            if (![obj isValid])
-            {
-                hasErrors = YES;
-                break;
-            }
-        }
+        NSDictionary *temp = [JAFormComponent getValues:self.fieldsArray form:self.tempForm];
+        
+        [self showLoading];
+        
+        [RICustomer loginCustomerWithParameters:[temp copy]
+                                   successBlock:^(RICustomer *customer) {
+                                       
+                                       [self hideLoading];
+                                       
+                                       [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                                           object:@{@"index": @(0),
+                                                                                                    @"name": @"Home"}];
+                                       
+                                       [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                                                           object:nil];
+                                       
+                                   } andFailureBlock:^(NSArray *errorObject) {
+                                       
+                                       [self hideLoading];
+                                       
+                                       [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                                   message:@"Error doing login."
+                                                                  delegate:nil
+                                                         cancelButtonTitle:nil
+                                                         otherButtonTitles:@"OK", nil] show];
+                                   }];
     }
-    
-    if (hasErrors) {
-        return;
-    }
-    
-    NSMutableDictionary *temp = [NSMutableDictionary new];
-    
-    for (JATextField *textField in self.fieldsArray)
-    {
-        RIField *field = textField.field;
-        NSDictionary *dicToAdd = @{ field.name : textField.textField.text };
-        [temp addEntriesFromDictionary:dicToAdd];
-    }
-    
-    [self showLoading];
-    
-    [RICustomer loginCustomerWithParameters:[temp copy]
-                               successBlock:^(RICustomer *customer) {
-                                   
-                                   [self hideLoading];
-                                   
-                                   [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                                                       object:@{@"index": @(0),
-                                                                                                @"name": @"Home"}];
-
-                                   [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                       object:nil];
-                                   
-                               } andFailureBlock:^(NSArray *errorObject) {
-                                   
-                                   [self hideLoading];
-                                   
-                                   [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                               message:@"Error doing login."
-                                                              delegate:nil
-                                                     cancelButtonTitle:nil
-                                                     otherButtonTitles:@"OK", nil] show];
-                               }];
 }
 
 - (IBAction)loginViaFacebook:(id)sender
 {
-
+    
 }
 
 #pragma mark - Facebook Delegate

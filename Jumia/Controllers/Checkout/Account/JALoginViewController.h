@@ -11,6 +11,4 @@
 
 @interface JALoginViewController : JABaseViewController
 
-@property (weak, nonatomic) IBOutlet UIButton *loginAndGoToAddresses;
-
 @end

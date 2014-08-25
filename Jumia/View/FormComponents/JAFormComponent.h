@@ -7,48 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RIField.h"
-
-@interface JATextField : UIView
-
-@property (strong, nonatomic) RIField *field;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
-
-- (BOOL)isValid;
-
-@end
-
-@interface JACheckBoxComponent : UIView
-
-@property (strong, nonatomic) RIField *field;
-@property (weak, nonatomic) IBOutlet UILabel *labelText;
-@property (weak, nonatomic) IBOutlet UISwitch *switchComponent;
-
-@end
-
-@interface JABirthDateComponent : UIView
-
-@property (strong, nonatomic) RIField *field;
-@property (weak, nonatomic) IBOutlet UILabel *labelText;
-@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
-
-@end
-
-@interface JAGenderComponent : UIView
-
-@property (strong, nonatomic) RIField *field;
-@property (weak, nonatomic) IBOutlet UILabel *labelText;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
-
-- (void)initSegmentedControl:(NSArray *)itens;
-
-@end
+#import "JATextField.h"
+#import "JABirthDateComponent.h"
+#import "JACheckBoxComponent.h"
+#import "JAGenderComponent.h"
 
 @interface JAFormComponent : NSObject
 
-+ (JATextField *)getNewJATextField;
-+ (JACheckBoxComponent *)getNewJACheckBoxComponent;
-+ (JABirthDateComponent *)getNewJABirthDateComponent;
-+ (JAGenderComponent *)getNewJAGenderComponent;
++(NSArray*)generateForm:(NSArray*)fields startingY:(CGFloat)startingY;
++(BOOL)hasErrors:(NSArray*)views;
++(NSDictionary*)getValues:(NSArray*)views form:(RIForm*)form;
 
 @end
