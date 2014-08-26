@@ -11,7 +11,7 @@
 #define JAPickerScrollViewCenterWidth 100.0f
 #define JAPickerScrollViewBackgroundColor UIColorFromRGB(0xe3e3e3);
 #define JAPickerScrollViewTextColor UIColorFromRGB(0x4e4e4e);
-#define JAPickerScrollViewTextSize 10.0f
+#define JAPickerScrollViewTextSize 13.0f
 #define JAPickerScrollViewIndicatorImageName @"PickerScrollIndicator"
 
 

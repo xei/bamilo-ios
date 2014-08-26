@@ -22,6 +22,7 @@
 
 + (RITeaser *)parseTeaser:(NSDictionary *)json
                    ofType:(NSInteger)type
+     countryConfiguration:(RICountryConfiguration*)countryConfiguration;
 {
     RITeaser *teaser = (RITeaser*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaser class])];
     
@@ -83,7 +84,7 @@
         case 2: {
             
             
-            RITeaserProduct *product = [RITeaserProduct parseTeaserProduct:json];
+            RITeaserProduct *product = [RITeaserProduct parseTeaserProduct:json countryConfiguration:countryConfiguration];
             product.teaser = teaser;
             
             [teaser addTeaserProductsObject:product];

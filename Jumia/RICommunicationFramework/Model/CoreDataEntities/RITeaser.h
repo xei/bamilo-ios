@@ -19,12 +19,13 @@
 @property (nonatomic, retain) NSOrderedSet *teaserProducts;
 
 /**
- *  Method to parse an RITeaser given a JSON object and his type of Teaser
+ *  Method to parse an RITeaser given a JSON object and his type of Teaser and the country configurations
  *
  *  @return the parsed RITeaser
  */
 + (RITeaser *)parseTeaser:(NSDictionary *)json
-                   ofType:(NSInteger)type;
+                   ofType:(NSInteger)type
+     countryConfiguration:(RICountryConfiguration*)countryConfiguration;
 
 /**
  *  Save in the core data a given RITeaser

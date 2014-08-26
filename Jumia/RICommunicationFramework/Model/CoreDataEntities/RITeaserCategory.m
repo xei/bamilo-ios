@@ -35,20 +35,26 @@
                                                              cacheTime:RIURLCacheDefaultTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
-                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                              
-                                                              if(VALID_NOTEMPTY(metadata, NSDictionary))
-                                                              {
-                                                                  NSArray *data = [metadata objectForKey:@"data"];
-                                                                  if(VALID_NOTEMPTY(data, NSArray))
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                                  
+                                                                  if(VALID_NOTEMPTY(metadata, NSDictionary))
                                                                   {
-                                                                      successBlock([RITeaserCategory parseTeaserCategories:data]);
+                                                                      NSArray *data = [metadata objectForKey:@"data"];
+                                                                      if(VALID_NOTEMPTY(data, NSArray))
+                                                                      {
+                                                                          successBlock([RITeaserCategory parseTeaserCategories:data countryConfiguration:configuration]);
+                                                                      }
                                                                   }
-                                                              }
-                                                              else
-                                                              {
+                                                                  else
+                                                                  {
+                                                                      failureBlock(nil);
+                                                                  }
+                                                              } andFailureBlock:^(NSArray *errorMessages) {
                                                                   failureBlock(nil);
-                                                              }
+                                                              }];
+                                                              
+
                                                               
                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               
@@ -99,13 +105,14 @@
 #pragma mark - Parsers
 
 + (NSArray *)parseTeaserCategories:(NSArray *)teaserCategories
+                     countryConfiguration:(RICountryConfiguration*)countryConfiguration
 {
     NSMutableArray *returnArray = [NSMutableArray new];
     
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserCategory class])];
     
     for (NSDictionary *dic in teaserCategories) {
-        RITeaserCategory *teaserCategory = [RITeaserCategory parseTeaserCategory:dic];
+        RITeaserCategory *teaserCategory = [RITeaserCategory parseTeaserCategory:dic countryConfiguration:countryConfiguration];
         
         [RITeaserCategory saveTeaserCategory:teaserCategory];
         
@@ -116,6 +123,7 @@
 }
 
 + (RITeaserCategory *)parseTeaserCategory:(NSDictionary *)json
+                     countryConfiguration:(RICountryConfiguration*)countryConfiguration
 {
     RITeaserCategory *newCategory = (RITeaserCategory*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaserCategory class])];
     
@@ -145,7 +153,7 @@
         
         for (NSDictionary *dic in dataElements) {
             
-            RITeaserGroup *group = [RITeaserGroup parseTeaserGroup:dic];
+            RITeaserGroup *group = [RITeaserGroup parseTeaserGroup:dic countryConfiguration:countryConfiguration];
             group.teaserCategory = newCategory;
             
             [newCategory addTeaserGroupsObject:group];
