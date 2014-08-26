@@ -19,6 +19,7 @@
 @dynamic teaserCategory;
 
 + (RITeaserGroup *)parseTeaserGroup:(NSDictionary *)json
+               countryConfiguration:(RICountryConfiguration*)countryConfiguration
 {
     RITeaserGroup *newGroup = (RITeaserGroup*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaserGroup class])];
     
@@ -35,7 +36,8 @@
             NSArray *teasers = [json objectForKey:@"data"];
             
             for (NSDictionary *dic in teasers) {
-                RITeaser *teaser = [RITeaser parseTeaser:dic ofType:tempGroupTypeId];
+                RITeaser *teaser = [RITeaser parseTeaser:dic ofType:tempGroupTypeId
+                                    countryConfiguration:countryConfiguration];
                 teaser.teaserGroup = newGroup;
                 
                 [newGroup addTeasersObject:teaser];

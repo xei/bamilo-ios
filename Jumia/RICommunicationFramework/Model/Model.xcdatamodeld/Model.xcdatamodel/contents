@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6198" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
@@ -204,11 +204,15 @@
         <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="maxPrice" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="maxPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="maxSavingPercentage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="maxSpecialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="maxSpecialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="specialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="teaser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaser" inverseName="teaserProducts" inverseEntity="RITeaser" syncable="YES"/>
@@ -251,7 +255,7 @@
         <element name="RITeaserCategory" positionX="-686" positionY="245" width="128" height="133"/>
         <element name="RITeaserGroup" positionX="-686" positionY="398" width="128" height="103"/>
         <element name="RITeaserImage" positionX="-486" positionY="558" width="128" height="118"/>
-        <element name="RITeaserProduct" positionX="-504" positionY="693" width="128" height="208"/>
+        <element name="RITeaserProduct" positionX="-504" positionY="693" width="128" height="268"/>
         <element name="RITeaserText" positionX="-684" positionY="677" width="128" height="88"/>
         <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
         <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>

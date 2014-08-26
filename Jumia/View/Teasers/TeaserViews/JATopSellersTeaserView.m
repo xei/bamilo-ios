@@ -116,9 +116,9 @@
             
             UILabel* priceLabel = [[UILabel alloc] init];
             if (VALID_NOTEMPTY(teaserProduct.specialPrice, NSString)) {
-                priceLabel.text = [teaserProduct.specialPrice stringValue];
+                priceLabel.text = teaserProduct.specialPriceFormatted;
             } else {
-                priceLabel.text = [teaserProduct.price stringValue];
+                priceLabel.text = teaserProduct.priceFormatted;
             }
             priceLabel.font = JATopSellersTeaserViewProductFont;
             priceLabel.textColor = JATopSellersTeaserViewProductPriceColor;
