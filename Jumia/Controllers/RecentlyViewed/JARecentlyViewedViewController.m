@@ -93,6 +93,17 @@
     return self.productsArray.count + 1;
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.productsArray.count == indexPath.row) {
+        return CGSizeMake(self.view.frame.size.width,
+                          50.0f);
+    } else {
+        return CGSizeMake(self.view.frame.size.width,
+                          98.0f);
+    }
+}
+
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == self.productsArray.count) {

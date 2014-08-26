@@ -25,6 +25,8 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    self.priceRangeLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.discountLabel.textColor = UIColorFromRGB(0x4e4e4e);
 
     self.priceRangeSlider.stepValue = self.priceFilterOption.interval;
 

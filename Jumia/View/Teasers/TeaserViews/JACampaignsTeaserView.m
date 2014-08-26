@@ -38,7 +38,7 @@
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(JACampaignsTeaserViewHorizontalMargin,
                                                                    JACampaignsTeaserViewContentY,
                                                                    self.bounds.size.width - JACampaignsTeaserViewHorizontalMargin*2,
-                                                                   self.bounds.size.height - JACampaignsTeaserViewContentY*2)];
+                                                                   self.bounds.size.height - JACampaignsTeaserViewContentY)];
     contentView.layer.cornerRadius = JACampaignsTeaserViewContentCornerRadius;
     [self addSubview:contentView];
     

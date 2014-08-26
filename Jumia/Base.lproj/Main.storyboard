@@ -2663,14 +2663,14 @@
                                     <action selector="sliderMoved:" destination="92Q-QO-3XP" eventType="valueChanged" id="gtc-eH-rSo"/>
                                 </connections>
                             </view>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LUa-XD-PQU">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LUa-XD-PQU">
                                 <rect key="frame" x="50" y="305" width="51" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="49" id="ZIu-zV-Txj"/>
                                     <constraint firstAttribute="height" constant="31" id="qGr-LH-27c"/>
                                 </constraints>
                             </switch>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3nv-9e-aoF">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3nv-9e-aoF">
                                 <rect key="frame" x="116" y="305" width="154" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="aAU-mR-f7V"/>
@@ -2682,6 +2682,12 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="28V-0l-aBS" firstAttribute="top" secondItem="Wte-UZ-QZ8" secondAttribute="bottom" constant="25" id="Kb3-lm-HTt"/>
+                            <constraint firstItem="3nv-9e-aoF" firstAttribute="top" secondItem="28V-0l-aBS" secondAttribute="bottom" constant="75" id="O2m-fh-wfC"/>
+                            <constraint firstItem="Wte-UZ-QZ8" firstAttribute="top" secondItem="278-95-CO2" secondAttribute="bottom" constant="90" id="Su1-5Q-iV3"/>
+                            <constraint firstItem="LUa-XD-PQU" firstAttribute="top" secondItem="28V-0l-aBS" secondAttribute="bottom" constant="75" id="dEy-5u-nxh"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ZIE-hq-1ep"/>
                     <connections>

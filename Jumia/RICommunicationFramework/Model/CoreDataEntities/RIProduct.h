@@ -12,8 +12,8 @@
 @class RIImage, RIProductSimple, RIVariation;
 
 typedef NS_ENUM(NSInteger, RICatalogSorting) {
-    RICatalogSortingPopularity = 0,
-    RICatalogSortingRating,
+    RICatalogSortingRating = 0,
+    RICatalogSortingPopularity,
     RICatalogSortingNewest,
     RICatalogSortingPriceUp,
     RICatalogSortingPriceDown,

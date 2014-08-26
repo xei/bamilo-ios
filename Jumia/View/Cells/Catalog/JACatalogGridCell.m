@@ -14,7 +14,7 @@
 {
     [super loadWithProduct:product];
     
-    self.priceView.frame = CGRectMake(5.0f,
+    self.priceView.frame = CGRectMake(2.0f,
                                       181.0f,
                                       self.frame.size.width - 4.0f,
                                       self.priceView.frame.size.height);

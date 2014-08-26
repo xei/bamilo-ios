@@ -86,7 +86,7 @@
     
     [self changeToList];
     
-    NSArray* sortList = [NSArray arrayWithObjects:@"Popularity", @"Best Rating", @"New In", @"Price Up", @"Price Down", @"Name", @"Brand", nil];
+    NSArray* sortList = [NSArray arrayWithObjects:@"Best Rating", @"Popularity", @"New In", @"Price Up", @"Price Down", @"Name", @"Brand", nil];
     
     self.sortingMethod = NSIntegerMax;
     //this will trigger load methods
