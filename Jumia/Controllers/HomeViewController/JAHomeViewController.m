@@ -35,6 +35,11 @@
     self.teaserPagesScrollView.scrollEnabled = NO;
     self.teaserPagesScrollView.delegate = self;
     
+    self.teaserPagesScrollView.frame = CGRectMake(self.teaserPagesScrollView.frame.origin.x,
+                                                  CGRectGetMaxY(self.teaserCategoryScrollView.frame),
+                                                  self.teaserPagesScrollView.frame.size.width,
+                                                  self.view.frame.size.height - self.teaserCategoryScrollView.frame.size.height - 64.0f);
+    
     [RITeaserCategory getTeaserCategoriesWithSuccessBlock:^(id teaserCategories) {
         
         self.teaserCategories = teaserCategories;
