@@ -175,6 +175,8 @@
                                         
                                     } andFailureBlock:^(NSArray *error) {
                                         [self hideLoading];
+                                        [self resetCatalog];
+                                        [self.collectionView reloadData];
                                     }];
         }
     }
