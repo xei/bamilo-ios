@@ -189,6 +189,18 @@
     }
 }
 
+#pragma mark - Actions
+
+- (IBAction)swipeRight:(id)sender
+{
+    [self.sortingScrollView scrollRight];
+}
+
+- (IBAction)swipeLeft:(id)sender
+{
+    [self.sortingScrollView scrollLeft];
+}
+
 - (void)changeToList
 {
     [UIView transitionWithView:self.collectionView
