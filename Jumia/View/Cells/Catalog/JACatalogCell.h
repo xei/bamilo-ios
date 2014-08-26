@@ -14,7 +14,7 @@
 #define JACatalogCellLightFont [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f]
 #define JACatalogCellRedFontColor UIColorFromRGB(0xcc0000)
 #define JACatalogCellGrayFontColor UIColorFromRGB(0xcccccc)
-#define JACatalogCellRatingsViewOffsetY 7.0f
+#define JACatalogCellRatingsViewOffsetY 0.0f
 #define JACatalogCellRatingsViewOffsetX 7.0f
 
 @class RIProduct;
