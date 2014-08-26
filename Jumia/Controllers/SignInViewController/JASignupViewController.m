@@ -14,9 +14,6 @@
 #import "RICustomer.h"
 
 @interface JASignupViewController ()
-<
-    UITextFieldDelegate
->
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
 @property (weak, nonatomic) UIButton *registerButton;
@@ -45,108 +42,23 @@
            [self hideLoading];
            
            self.tempForm = form;
-           float startingY = 0.0f;
-           BOOL addedBirth = NO;
            
-           for (RIField *field in form.fields)
+           CGFloat maxY = 0.0f;
+           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:0.0f];
+           self.fieldsArray = [views copy];
+           for(UIView *view in views)
            {
-               if ([field.type isEqualToString:@"integer"])
+               [self.contentScrollView addSubview:view];
+               if(CGRectGetMaxY(view.frame) > maxY)
                {
-                   if (!addedBirth)
-                   {
-                       JABirthDateComponent *birthDate = [JAFormComponent getNewJABirthDateComponent];
-                       birthDate.labelText.text = @"Birthdate";
-                       
-                       birthDate.layer.cornerRadius = 4.0f;
-                       CGRect frame = birthDate.frame;
-                       frame.origin.y = startingY;
-                       birthDate.frame = frame;
-                       startingY += (birthDate.frame.size.height + 8);
-                       
-                       [self.contentScrollView addSubview:birthDate];
-                       [self.fieldsArray addObject:birthDate];
-                       
-                       addedBirth = YES;
-                   }
-               }
-               else if ([field.type isEqualToString:@"radio"])
-               {
-                   NSMutableArray *contentArray = [NSMutableArray new];
-                   
-                   for (RIFieldDataSetComponent *component in field.dataSet) {
-                       [contentArray addObject:component.value];
-                   }
-                   
-                   JAGenderComponent *gender = [JAFormComponent getNewJAGenderComponent];
-                   [gender initSegmentedControl:[contentArray copy]];
-                   
-                   gender.layer.cornerRadius = 4.0f;
-                   gender.labelText.text = field.label;
-                   gender.field = field;
-                
-                   CGRect frame = gender.frame;
-                   frame.origin.y = startingY;
-                   gender.frame = frame;
-                   startingY += (gender.frame.size.height + 8);
-                
-                   
-                   [self.contentScrollView addSubview:gender];
-                   [self.fieldsArray addObject:gender];
-               }
-               else if ([field.type isEqualToString:@"checkbox"])
-               {
-                   JACheckBoxComponent *check = [JAFormComponent getNewJACheckBoxComponent];
-                   check.field = field;
-                   
-                   check.layer.cornerRadius = 4.0f;
-                   CGRect frame = check.frame;
-                   frame.origin.y = startingY;
-                   check.frame = frame;
-                   startingY += (check.frame.size.height + 8);
-                   
-                   check.labelText.text = field.label;
-                   [self.contentScrollView addSubview:check];
-                   [self.fieldsArray addObject:check];
-               }
-               else if ([field.type isEqualToString:@"string"] || [field.type isEqualToString:@"email"])
-               {
-                   JATextField *textField = [JAFormComponent getNewJATextField];
-                   textField.field = field;
-                   
-                   textField.layer.cornerRadius = 4.0f;
-                   CGRect frame = textField.frame;
-                   frame.origin.y = startingY;
-                   textField.frame = frame;
-                   startingY += (textField.frame.size.height + 8);
-                   
-                   textField.textField.placeholder = field.label;
-                   textField.textField.delegate = self;
-                   
-                   [self.contentScrollView addSubview:textField];
-                   [self.fieldsArray addObject:textField];
-               }
-               else if ([field.type isEqualToString:@"password"] || [field.type isEqualToString:@"password2"])
-               {
-                   JATextField *textField = [JAFormComponent getNewJATextField];
-                   textField.field = field;
-                   
-                   textField.layer.cornerRadius = 4.0f;
-                   CGRect frame = textField.frame;
-                   frame.origin.y = startingY;
-                   textField.frame = frame;
-                   startingY += (textField.frame.size.height + 8);
-                   
-                   textField.textField.placeholder = field.label;
-                   textField.textField.secureTextEntry = YES;
-                   textField.textField.delegate = self;
-                   
-                   [self.contentScrollView addSubview:textField];
-                   [self.fieldsArray addObject:textField];
+                   maxY = CGRectGetMaxY(view.frame);
                }
            }
            
+           [self.contentScrollView layoutIfNeeded];
+           
            self.registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-           self.registerButton.frame = CGRectMake(6.0, startingY, self.contentScrollView.frame.size.width - 12.0, 44.0);
+           self.registerButton.frame = CGRectMake(6.0, maxY, self.contentScrollView.frame.size.width - 12.0, 44.0);
            
            [self.registerButton setTitle:@"Register"
                                 forState:UIControlStateNormal];
@@ -159,13 +71,13 @@
                          forControlEvents:UIControlEventTouchUpInside];
            
            CGRect frame = self.registerButton.frame;
-           frame.origin.y = startingY;
+           frame.origin.y = maxY;
            self.registerButton.frame = frame;
-           startingY += (self.registerButton.frame.size.height + 8);
+           maxY += (self.registerButton.frame.size.height + 8);
            
            [self.contentScrollView addSubview:self.registerButton];
            
-           [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, startingY)];
+           [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, maxY)];
            
        } failureBlock:^(NSArray *errorMessage) {
            [self hideLoading];
@@ -189,111 +101,11 @@
 {
     [self.view endEditing:YES];
     
-    BOOL hasErrors = NO;
-    NSString *pass1 = @"";
-    NSString *pass2 = @"";
+    BOOL hasErrors = [JAFormComponent hasErrors:self.fieldsArray];
     
-    for (id obj in self.fieldsArray)
+    if(!hasErrors)
     {
-        if ([obj isKindOfClass:[JATextField class]])
-        {
-            if (![obj isValid])
-            {
-                hasErrors = YES;
-                break;
-                
-                return;
-            }
-            else
-            {
-                if ([((JATextField *)obj).field.key isEqualToString:@"password"])
-                {
-                    pass1 = ((JATextField *)obj).textField.text;
-                }
-                else if ([((JATextField *)obj).field.key isEqualToString:@"password2"])
-                {
-                    pass2 = ((JATextField *)obj).textField.text;
-                }
-            }
-        }
-    }
-    
-    if ((pass1.length > 0) && (pass2.length > 0))
-    {
-        if (![pass2 isEqualToString:pass1])
-        {
-            [[[UIAlertView alloc] initWithTitle:@"Jumia iOS"
-                                        message:@"The passwords doesn't match."
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"Ok", nil] show];
-            
-            return;
-        }
-    }
-    
-    if (!hasErrors)
-    {
-        NSMutableDictionary *tempDic = [NSMutableDictionary new];
-        
-        for (id obj in self.fieldsArray)
-        {
-            if ([obj isKindOfClass:[JABirthDateComponent class]])
-            {
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-                NSString *dateString = [dateFormatter stringFromDate:((JABirthDateComponent *)obj).datePicker.date];
-                
-                NSArray *components = [dateString componentsSeparatedByString:@"-"];
-                
-                for (RIField *field in self.tempForm.fields) {
-                    if ([field.type isEqualToString:@"integer"])
-                    {
-                        if ([field.key isEqualToString:@"day"])
-                        {
-                            NSDictionary *dicDay = @{field.name : components[0]};
-                            [tempDic addEntriesFromDictionary:dicDay];
-                        }
-                        else if ([field.key isEqualToString:@"month"])
-                        {
-                            NSDictionary *dicMonth = @{field.name : components[1]};
-                            [tempDic addEntriesFromDictionary:dicMonth];
-                        }
-                        else if ([field.key isEqualToString:@"year"])
-                        {
-                            NSDictionary *dicYear = @{field.name : components[2]};
-                            [tempDic addEntriesFromDictionary:dicYear];
-                        }
-                    }
-                }
-            }
-            else if ([obj isKindOfClass:[JAGenderComponent class]])
-            {
-                NSInteger index = ((JAGenderComponent *)obj).segmentedControl.selectedSegmentIndex;
-                NSString *selectedGender = [((JAGenderComponent *)obj).segmentedControl titleForSegmentAtIndex:index];
-                
-                NSDictionary *temp = @{((JAGenderComponent *)obj).field.name : selectedGender};
-                [tempDic addEntriesFromDictionary:temp];
-            }
-            else if ([obj isKindOfClass:[JACheckBoxComponent class]])
-            {
-               if (((JACheckBoxComponent *)obj).switchComponent.on)
-               {
-                   NSDictionary *temp = @{((JACheckBoxComponent *)obj).field.name : @"YES"};
-                   [tempDic addEntriesFromDictionary:temp];
-               }
-                else
-                {
-                    NSDictionary *temp = @{((JACheckBoxComponent *)obj).field.name : @"NO"};
-                    [tempDic addEntriesFromDictionary:temp];
-                }
-            }
-            else if ([obj isKindOfClass:[JATextField class]])
-            {
-                NSDictionary *temp = @{((JATextField *)obj).field.name : ((JATextField *)obj).textField.text};
-                [tempDic addEntriesFromDictionary:temp];
-            }
-        }
+        NSDictionary *tempDic = [JAFormComponent getValues:self.fieldsArray form:self.tempForm];
         
         [self showLoading];
         

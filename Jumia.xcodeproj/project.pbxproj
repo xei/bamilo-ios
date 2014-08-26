@@ -183,6 +183,10 @@
 		B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F61986C41D0094C92C /* RICheckout.m */; };
 		B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759B19814EF000005B13 /* FacebookSDK.framework */; };
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
+		B5F5115619AB4317004A4BA6 /* JATextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F5115519AB4317004A4BA6 /* JATextField.m */; };
+		B5F62BC419AB499D0024D67F /* JABirthDateComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F62BC319AB499D0024D67F /* JABirthDateComponent.m */; };
+		B5F62BC719AB49AA0024D67F /* JACheckBoxComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F62BC619AB49AA0024D67F /* JACheckBoxComponent.m */; };
+		B5F62BCA19AB49BD0024D67F /* JAGenderComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F62BC919AB49BD0024D67F /* JAGenderComponent.m */; };
 		B5FE9FB119A1F362006F7D63 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */; };
 		B5FE9FB319A1F4C6006F7D63 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */; };
 		B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */; };
@@ -575,6 +579,14 @@
 		B5C682F71986C41D0094C92C /* RICheckout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICheckout.h; sourceTree = "<group>"; };
 		B5EF759B19814EF000005B13 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
+		B5F5115419AB4317004A4BA6 /* JATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextField.h; sourceTree = "<group>"; };
+		B5F5115519AB4317004A4BA6 /* JATextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATextField.m; sourceTree = "<group>"; };
+		B5F62BC219AB499D0024D67F /* JABirthDateComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABirthDateComponent.h; sourceTree = "<group>"; };
+		B5F62BC319AB499D0024D67F /* JABirthDateComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABirthDateComponent.m; sourceTree = "<group>"; };
+		B5F62BC519AB49AA0024D67F /* JACheckBoxComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACheckBoxComponent.h; sourceTree = "<group>"; };
+		B5F62BC619AB49AA0024D67F /* JACheckBoxComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACheckBoxComponent.m; sourceTree = "<group>"; };
+		B5F62BC819AB49BD0024D67F /* JAGenderComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAGenderComponent.h; sourceTree = "<group>"; };
+		B5F62BC919AB49BD0024D67F /* JAGenderComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAGenderComponent.m; sourceTree = "<group>"; };
 		B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
 		B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking.plist; sourceTree = "<group>"; };
@@ -815,9 +827,17 @@
 			children = (
 				4A454F3F199CE65100B44821 /* JAFormComponent.h */,
 				4A454F40199CE65100B44821 /* JAFormComponent.m */,
+				B5F62BC219AB499D0024D67F /* JABirthDateComponent.h */,
+				B5F62BC319AB499D0024D67F /* JABirthDateComponent.m */,
 				4A454F3D199CE65100B44821 /* JABirthDateComponent.xib */,
+				B5F62BC519AB49AA0024D67F /* JACheckBoxComponent.h */,
+				B5F62BC619AB49AA0024D67F /* JACheckBoxComponent.m */,
 				4A454F3E199CE65100B44821 /* JACheckBoxComponent.xib */,
+				B5F62BC819AB49BD0024D67F /* JAGenderComponent.h */,
+				B5F62BC919AB49BD0024D67F /* JAGenderComponent.m */,
 				4A454F41199CE65100B44821 /* JAGenderComponent.xib */,
+				B5F5115419AB4317004A4BA6 /* JATextField.h */,
+				B5F5115519AB4317004A4BA6 /* JATextField.m */,
 				4A454F42199CE65100B44821 /* JATextField.xib */,
 			);
 			path = FormComponents;
@@ -2113,7 +2133,9 @@
 				B50B03AB198A8861002046DF /* JAUtils.m in Sources */,
 				4AE730C7198F8B05000CA1DD /* JAPDVViewController.m in Sources */,
 				CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */,
+				B5F62BC719AB49AA0024D67F /* JACheckBoxComponent.m in Sources */,
 				B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */,
+				B5F62BCA19AB49BD0024D67F /* JAGenderComponent.m in Sources */,
 				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
 				B5A3025319811E8A00F71726 /* AdXTracking.m in Sources */,
 				B5A302C619811E9200F71726 /* RIImageResolution.m in Sources */,
@@ -2127,11 +2149,13 @@
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
 				CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */,
 				CE33CA0119AB36FA00333B1A /* JAPriceView.m in Sources */,
+				B5F5115619AB4317004A4BA6 /* JATextField.m in Sources */,
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
 				B5A302D319811E9200F71726 /* RIVariation.m in Sources */,
 				CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */,
 				B5A30303198121A400F71726 /* JABaseViewController.m in Sources */,
 				B5A302CB19811E9200F71726 /* RISection.m in Sources */,
+				B5F62BC419AB499D0024D67F /* JABirthDateComponent.m in Sources */,
 				B517FDF91982517300F65253 /* RICart.m in Sources */,
 				B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */,
 				B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */,

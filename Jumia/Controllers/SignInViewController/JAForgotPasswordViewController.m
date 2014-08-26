@@ -11,14 +11,12 @@
 #import "RICustomer.h"
 
 @interface JAForgotPasswordViewController ()
-<
-    UITextFieldDelegate
->
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIButton *buttonRequest;
 @property (weak, nonatomic) IBOutlet UILabel *labelTop;
 @property (strong, nonatomic) NSMutableArray *fieldsArray;
+@property (strong, nonatomic) RIForm *tempForm;
 
 @end
 
@@ -37,37 +35,23 @@
     
     [RIForm getForm:@"forgotpassword"
        successBlock:^(RIForm *form) {
-           [self hideLoading];
-        
-           float startingY = 35.0f;
+           self.tempForm = form;
            
-           for (RIField *field in form.fields)
+           [self hideLoading];
+           
+           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:35.0f];
+           self.fieldsArray = [views copy];
+           for(UIView *view in views)
            {
-               if ([field.type isEqualToString:@"string"] || [field.type isEqualToString:@"email"])
-               {
-                   JATextField *textField = [JAFormComponent getNewJATextField];
-                   textField.field = field;
-                   
-                   textField.layer.cornerRadius = 4.0f;
-                   CGRect frame = textField.frame;
-                   frame.origin.y = startingY;
-                   textField.frame = frame;
-                   startingY += (textField.frame.size.height + 8);
-                   
-                   textField.textField.placeholder = field.label;
-                   textField.textField.delegate = self;
-                   
-                   [self.contentView addSubview:textField];
-                   [self.fieldsArray addObject:textField];
-               }
+               [self.contentView addSubview:view];
            }
            
            [self.buttonRequest setTitle:@"Register"
-                                forState:UIControlStateNormal];
+                               forState:UIControlStateNormal];
            
            [self.buttonRequest addTarget:self
-                                   action:@selector(requestPassword)
-                         forControlEvents:UIControlEventTouchUpInside];
+                                  action:@selector(requestPassword)
+                        forControlEvents:UIControlEventTouchUpInside];
            
        } failureBlock:^(NSArray *errorMessage) {
            [self hideLoading];
@@ -102,57 +86,37 @@
 {
     [self.view endEditing:YES];
     
-    BOOL hasErrors = NO;
+    BOOL hasErrors = [JAFormComponent hasErrors:self.fieldsArray];
     
-    for (id obj in self.fieldsArray)
+    if(!hasErrors)
     {
-        if ([obj isKindOfClass:[JATextField class]])
-        {
-            if (![obj isValid])
-            {
-                hasErrors = YES;
-                break;
-            }
-        }
+        NSDictionary *temp = [JAFormComponent getValues:self.fieldsArray form:self.tempForm];
+        
+        [self showLoading];
+        
+        [RICustomer requestPasswordReset:^(RICustomer *customer) {
+            
+            [self hideLoading];
+            
+            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                        message:@"Request sent with success!"
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK", nil] show];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        } andFailureBlock:^(NSArray *errorObject) {
+            
+            [self hideLoading];
+            
+            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                        message:@"Error reseting password."
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK", nil] show];
+        }];
     }
-    
-    if (hasErrors) {
-        return;
-    }
-    
-    NSMutableDictionary *temp = [NSMutableDictionary new];
-    
-    for (JATextField *textField in self.fieldsArray)
-    {
-        RIField *field = textField.field;
-        NSDictionary *dicToAdd = @{ field.name : textField.textField.text };
-        [temp addEntriesFromDictionary:dicToAdd];
-    }
-    
-    [self showLoading];
-    
-    [RICustomer requestPasswordReset:^(RICustomer *customer) {
-        
-        [self hideLoading];
-        
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                    message:@"Request sent with success!"
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:@"OK", nil] show];
-
-        [self.navigationController popViewControllerAnimated:YES];
-        
-    } andFailureBlock:^(NSArray *errorObject) {
-        
-        [self hideLoading];
-        
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                    message:@"Error reseting password."
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:@"OK", nil] show];
-    }];
 }
 
 @end
