@@ -404,7 +404,7 @@
         <!--Home View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="homeViewController" id="BYZ-38-t0r" customClass="JAHomeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="homeViewController" automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="JAHomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -413,14 +413,14 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MEv-bE-tYZ" customClass="JAPickerScrollView">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MEv-bE-tYZ" customClass="JAPickerScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="8ya-9S-0yD"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bVK-fb-QVJ">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bVK-fb-QVJ">
                                 <rect key="frame" x="0.0" y="44" width="320" height="460"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -431,13 +431,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="MEv-bE-tYZ" secondAttribute="trailing" id="BNq-HS-wWk"/>
                             <constraint firstItem="MEv-bE-tYZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="NLj-vL-Zo9"/>
-                            <constraint firstItem="bVK-fb-QVJ" firstAttribute="top" secondItem="MEv-bE-tYZ" secondAttribute="bottom" id="bg3-JY-8Tq"/>
-                            <constraint firstItem="MEv-bE-tYZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="g0n-QP-pA0"/>
-                            <constraint firstAttribute="trailing" secondItem="bVK-fb-QVJ" secondAttribute="trailing" id="h4j-p7-OiO"/>
-                            <constraint firstItem="bVK-fb-QVJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jln-az-enA"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="bVK-fb-QVJ" secondAttribute="bottom" id="nvs-eb-SFf"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
