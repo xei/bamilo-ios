@@ -2484,9 +2484,9 @@
                         <outlet property="loginView" destination="sla-aO-av7" id="Kcv-Ai-KHH"/>
                         <outlet property="loginViewConstrains" destination="hU8-Ln-el3" id="80S-kF-QAb"/>
                         <outlet property="scrollView" destination="0yq-lq-ZFs" id="yZR-bH-1Gg"/>
-                        <outlet property="signUSeparator" destination="YBb-vc-0MC" id="46W-N5-c6c"/>
                         <outlet property="signUpFormView" destination="mka-LQ-QbC" id="uf2-bO-XaE"/>
                         <outlet property="signUpLabel" destination="R9b-JB-dkg" id="Hck-f3-WYL"/>
+                        <outlet property="signUpSeparator" destination="YBb-vc-0MC" id="01D-2F-ePG"/>
                         <outlet property="signUpView" destination="7ni-7n-FVG" id="6vw-pN-9zJ"/>
                         <outlet property="signUpViewConstrains" destination="C1c-k7-GmP" id="YDL-Ju-tVm"/>
                         <outlet property="signUpViewFormConstrains" destination="IT8-wZ-JLB" id="upD-NX-fop"/>

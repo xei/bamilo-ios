@@ -27,7 +27,9 @@
         
         if (VALID_NOTEMPTY(formIndex, RIFormIndex) && VALID_NOTEMPTY(formIndex.form, RIForm)) {
             //index has form
-            successBlock(formIndex.form);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                successBlock(formIndex.form);
+            });
         } else {
             
             if (VALID_NOTEMPTY(formIndex.url, NSString)) {
@@ -50,22 +52,32 @@
                                                                        //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
                                                                        [[RIDataBaseWrapper sharedInstance] saveContext];
                                                                        
-                                                                       successBlock(newForm);
+                                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                                           successBlock(newForm);
+                                                                       });
                                                                    } else {
-                                                                       failureBlock(nil);
+                                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                                           failureBlock(nil);
+                                                                       });
                                                                    }
                                                                    
                                                                } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                                    if(NOTEMPTY(errorJsonObject))
                                                                    {
-                                                                       failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                                           failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                       });
                                                                    } else if(NOTEMPTY(errorObject))
                                                                    {
-                                                                       NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                       failureBlock(errorArray);
+                                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                                           NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                           failureBlock(errorArray);
+                                                                       });
                                                                    } else
                                                                    {
-                                                                       failureBlock(nil);
+                                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                                           failureBlock(nil);
+                                                                       });
                                                                    }
                                                                }];
             }

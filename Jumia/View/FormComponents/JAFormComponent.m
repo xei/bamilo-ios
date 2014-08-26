@@ -27,7 +27,7 @@
             CGRect frame = textField.frame;
             frame.origin.y = startingY;
             textField.frame = frame;
-            startingY += (textField.frame.size.height + 8);
+            startingY += textField.frame.size.height;
             
             textField.textField.placeholder = field.label;
             
@@ -42,7 +42,7 @@
             CGRect frame = textField.frame;
             frame.origin.y = startingY;
             textField.frame = frame;
-            startingY += (textField.frame.size.height + 8);
+            startingY += textField.frame.size.height;
             
             textField.textField.placeholder = field.label;
             textField.textField.secureTextEntry = YES;
@@ -60,7 +60,7 @@
                 CGRect frame = birthDate.frame;
                 frame.origin.y = startingY;
                 birthDate.frame = frame;
-                startingY += (birthDate.frame.size.height + 8);
+                startingY += (birthDate.frame.size.height + 8.0f);
                 
                 [formViews addObject:birthDate];
                 
@@ -85,7 +85,7 @@
             CGRect frame = gender.frame;
             frame.origin.y = startingY;
             gender.frame = frame;
-            startingY += (gender.frame.size.height + 8);
+            startingY += (gender.frame.size.height + 8.0f);
             
             [formViews addObject:gender];
         }
@@ -98,7 +98,7 @@
             CGRect frame = check.frame;
             frame.origin.y = startingY;
             check.frame = frame;
-            startingY += (check.frame.size.height + 8);
+            startingY += (check.frame.size.height + 8.0f);
             
             check.labelText.text = field.label;
             
