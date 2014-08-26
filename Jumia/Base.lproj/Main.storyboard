@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -1517,6 +1517,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="ZRY-qq-tSd" firstAttribute="top" secondItem="6lO-cb-ku3" secondAttribute="bottom" id="7ux-D9-LHE"/>
                             <constraint firstAttribute="trailing" secondItem="ZRY-qq-tSd" secondAttribute="trailing" constant="6" id="CoR-IQ-aYS"/>
@@ -1532,6 +1533,10 @@
                             <constraint firstItem="WIM-UY-vXJ" firstAttribute="leading" secondItem="6lO-cb-ku3" secondAttribute="trailing" id="c9S-Hf-9ln"/>
                             <constraint firstItem="6lO-cb-ku3" firstAttribute="top" secondItem="lzj-49-Dyb" secondAttribute="bottom" id="yoi-yP-bhp"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="QR5-05-akf" appends="YES" id="kS3-DL-PbS"/>
+                            <outletCollection property="gestureRecognizers" destination="WkV-aZ-WRO" appends="YES" id="Q8D-cV-TAp"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="0Ui-Gw-Yo9"/>
                     <connections>
@@ -1544,6 +1549,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fw5-pW-XE1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="QR5-05-akf">
+                    <connections>
+                        <action selector="swipeRight:" destination="y7p-zP-v5K" id="bxT-uO-kCw"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="WkV-aZ-WRO">
+                    <connections>
+                        <action selector="swipeLeft:" destination="y7p-zP-v5K" id="n5P-Pw-ZSa"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="713" y="1527"/>
         </scene>
