@@ -17,7 +17,7 @@
 FBLoginViewDelegate
 >
 
-@property (strong, nonatomic) RIForm *tempForm;
+@property (strong, nonatomic) JADynamicForm *dynamicForm;
 @property (strong, nonatomic) NSMutableArray *fieldsArray;
 @property (weak, nonatomic) IBOutlet UIView *loginView;
 @property (weak, nonatomic) IBOutlet UILabel *labelLogin;
@@ -72,9 +72,9 @@ FBLoginViewDelegate
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
            
-           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:40.0f delegate:nil];
-           self.fieldsArray = [views copy];
-           for(UIView *view in views)
+           self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:40.0f];
+           self.fieldsArray = [self.dynamicForm.formViews copy];
+           for(UIView *view in self.dynamicForm.formViews)
            {
                [self.loginView addSubview:view];
            }
@@ -128,11 +128,11 @@ FBLoginViewDelegate
 {
     [self.view endEditing:YES];
     
-    BOOL hasErrors = [JAFormComponent hasErrors:self.fieldsArray];
+    BOOL hasErrors = [self.dynamicForm checkErrors];
     
     if(!hasErrors)
     {
-        NSDictionary *temp = [JAFormComponent getValues:self.fieldsArray form:self.tempForm];
+        NSDictionary *temp = [self.dynamicForm getValues];
         
         [self showLoading];
         

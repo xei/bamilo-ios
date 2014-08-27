@@ -15,7 +15,6 @@
 
 @interface JALoginViewController ()
 <
-UITextFieldDelegate,
 FBLoginViewDelegate
 >
 
@@ -30,7 +29,7 @@ FBLoginViewDelegate
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepLabelWidthConstrain;
 
 // Login
-@property (strong, nonatomic) RIForm *loginForm;
+@property (strong, nonatomic) JADynamicForm *loginDynamicForm;
 @property (strong, nonatomic) NSMutableArray *loginFormFieldsArray;
 @property (weak, nonatomic) IBOutlet UIView *loginView;
 @property (weak, nonatomic) IBOutlet UIView *loginSeparator;
@@ -50,7 +49,7 @@ FBLoginViewDelegate
 @property (strong, nonatomic) UILabel *facebookLoginLabel;
 
 // Signup
-@property (strong, nonatomic) RIForm *signupForm;
+@property (strong, nonatomic) JADynamicForm *signupDynamicForm;
 @property (strong, nonatomic) NSMutableArray *signupFormFieldsArray;
 @property (weak, nonatomic) IBOutlet UIView *signUpView;
 @property (weak, nonatomic) IBOutlet UIView *signUpSeparator;
@@ -93,12 +92,11 @@ FBLoginViewDelegate
     self.numberOfFormsToLoad = 2;
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
-           self.loginForm = form;
-           
-           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:7.0f delegate:self];
-           self.loginFormFieldsArray = [views copy];
+
+           self.loginDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
            self.loginFormHeight = 0.0f;
-           for(UIView *view in views)
+           self.loginFormFieldsArray = [self.loginDynamicForm.formViews copy];
+           for(UIView *view in self.loginDynamicForm.formViews)
            {
                [self.loginFormView addSubview:view];
                if(CGRectGetMaxY(view.frame) > self.loginFormHeight)
@@ -123,12 +121,11 @@ FBLoginViewDelegate
     
     [RIForm getForm:@"registersignup"
        successBlock:^(RIForm *form) {
-           self.signupForm = form;
            
-           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:7.0f delegate:self];
-           self.signupFormFieldsArray = [views copy];
+           self.signupDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:40.0f];
            self.signupFormHeight = 0.0f;
-           for(UIView *view in views)
+           self.signupFormFieldsArray = [self.signupDynamicForm.formViews copy];
+           for(UIView *view in self.signupDynamicForm.formViews)
            {
                [self.signUpFormView addSubview:view];
                if(CGRectGetMaxY(view.frame) > self.signupFormHeight)
@@ -469,15 +466,15 @@ FBLoginViewDelegate
 
 -(void)loginButtonPressed
 {
-    BOOL hasErrors = [JAFormComponent hasErrors:self.loginFormFieldsArray];
+    BOOL hasErrors = [self.loginDynamicForm checkErrors];
     
     if(!hasErrors)
     {
-        NSDictionary *parameters = [JAFormComponent getValues:self.loginFormFieldsArray form:self.loginForm];
+        NSDictionary *parameters = [self.loginDynamicForm getValues];
         
         [self showLoading];
         
-        [RIForm sendForm:self.loginForm parameters:parameters successBlock:^(id object) {
+        [RIForm sendForm:self.loginDynamicForm.form parameters:parameters successBlock:^(id object) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                 object:nil];
             
@@ -508,15 +505,15 @@ FBLoginViewDelegate
 
 -(void)signUpButtonPressed
 {
-    BOOL hasErrors = [JAFormComponent hasErrors:self.signupFormFieldsArray];
+    BOOL hasErrors = [self.signupDynamicForm checkErrors];
     
     if(!hasErrors)
     {
-        NSDictionary *parameters = [JAFormComponent getValues:self.signupFormFieldsArray form:self.signupForm];
+        NSDictionary *parameters = [self.signupDynamicForm getValues];
         
         [self showLoading];
         
-        [RIForm sendForm:self.signupForm parameters:parameters successBlock:^(id object) {
+        [RIForm sendForm:self.signupDynamicForm.form parameters:parameters successBlock:^(id object) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                 object:nil];
             
@@ -629,15 +626,6 @@ FBLoginViewDelegate
                           cancelButtonTitle:@"OK"
                           otherButtonTitles:nil] show];
     }
-}
-
-#pragma mark UITextFieldDelegate
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    [textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-    [textField setTextColor:UIColorFromRGB(0x666666)];
-    
-    return YES;
 }
 
 @end
