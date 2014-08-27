@@ -11,14 +11,21 @@
 #import "JAButtonCell.h"
 #import "JAPDVViewController.h"
 #import "RIProduct.h"
+#import "RIProductSimple.h"
 #import "RICart.h"
 
 @interface JARecentlyViewedViewController ()
+
+// size picker view
+@property (strong, nonatomic) UIView *sizePickerBackgroundView;
+@property (strong, nonatomic) UIToolbar *sizePickerToolbar;
+@property (strong, nonatomic) UIPickerView *sizePicker;
 
 @property (weak, nonatomic) IBOutlet UIView *emptyListView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyListLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray* productsArray;
+@property (nonatomic, strong) NSMutableArray* chosenSimpleNames;
 
 @end
 
@@ -76,6 +83,15 @@
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         [self hideLoading];
         self.productsArray = recentlyViewedProducts;
+        self.chosenSimpleNames = [NSMutableArray new];
+        for (RIProduct* product in self.productsArray) {
+            if (1 == product.productSimples.count) {
+                RIProductSimple* simple = [product.productSimples firstObject];
+                [self.chosenSimpleNames addObject:simple.attributeSize];
+            } else {
+                [self.chosenSimpleNames addObject:@""];
+            }
+        }
     } andFailureBlock:^(NSArray *error) {
         [self hideLoading];
     }];
@@ -132,6 +148,17 @@
         [cell.addToCartButton addTarget:self
                                  action:@selector(addToCartPressed:)
                        forControlEvents:UIControlEventTouchUpInside];
+
+        NSString* chosenSimpleName = [self.chosenSimpleNames objectAtIndex:indexPath.row];
+        if ([chosenSimpleName isEqualToString:@""]) {
+            [cell.sizeButton setTitle:@"Size" forState:UIControlStateNormal];
+        } else {
+            [cell.sizeButton setTitle:[NSString stringWithFormat:@"Size: %@", chosenSimpleName] forState:UIControlStateNormal];
+        }
+        cell.sizeButton.tag = indexPath.row;
+        [cell.sizeButton addTarget:self
+                            action:@selector(sizeButtonPressed:)
+                  forControlEvents:UIControlEventTouchUpInside];
         
         return cell;
     }
@@ -171,10 +198,29 @@
 {
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     
+    RIProductSimple* productSimple;
+    
+    if (1 == product.productSimples.count) {
+        productSimple = [product.productSimples firstObject];
+    } else {
+        NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
+        if ([simpleName isEqualToString:@""]) {
+            //NOTHING SELECTED
+            return;
+        } else {
+            for (RIProductSimple* simple in product.productSimples) {
+                if ([simple.attributeSize isEqualToString:simpleName]) {
+                    //found it
+                    productSimple = simple;
+                }
+            }
+        }
+    }
+    
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
                                sku:product.sku
-                            simple:((RIProduct *)[product.productSimples firstObject]).sku
+                            simple:productSimple.sku
                   withSuccessBlock:^(RICart *cart) {
 
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
@@ -212,5 +258,115 @@
         [self hideLoading];
     }];
 }
+
+- (void)sizeButtonPressed:(UIButton*)button
+{
+    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
+
+    self.sizePickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                 0.0f,
+                                                                                 self.view.frame.size.width,
+                                                                                 self.view.frame.size.height)];
+    [self.sizePickerBackgroundView setBackgroundColor:[UIColor clearColor]];
+    
+    UITapGestureRecognizer *removePickerViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(removePickerView)];
+    [self.sizePickerBackgroundView addGestureRecognizer:removePickerViewTap];
+    
+    self.sizePicker = [[UIPickerView alloc] init];
+    [self.sizePicker setFrame:CGRectMake(self.sizePickerBackgroundView.frame.origin.x,
+                                             CGRectGetMaxY(self.sizePickerBackgroundView.frame) - self.sizePicker.frame.size.height,
+                                             self.sizePicker.frame.size.width,
+                                             self.sizePicker.frame.size.height)];
+    [self.sizePicker setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.sizePicker setAlpha:0.9];
+    [self.sizePicker setShowsSelectionIndicator:YES];
+    [self.sizePicker setDataSource:self];
+    [self.sizePicker setDelegate:self];
+    self.sizePicker.tag = button.tag;
+    
+    self.sizePickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [self.sizePickerToolbar setTranslucent:NO];
+    [self.sizePickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.sizePickerToolbar setAlpha:0.9];
+    [self.sizePickerToolbar setFrame:CGRectMake(0.0f,
+                                                    CGRectGetMinY(self.sizePicker.frame) - self.sizePickerToolbar.frame.size.height,
+                                                    self.sizePickerToolbar.frame.size.width,
+                                                    self.sizePickerToolbar.frame.size.height)];
+    
+    UIButton *tmpbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [tmpbutton setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
+    [tmpbutton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [tmpbutton setTitle:@"Done" forState:UIControlStateNormal];
+    [tmpbutton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [tmpbutton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [tmpbutton addTarget:self action:@selector(selectSize:) forControlEvents:UIControlEventTouchUpInside];
+    [tmpbutton sizeToFit];
+    tmpbutton.tag = button.tag;
+    
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:tmpbutton];
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    [self.sizePickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
+    
+    //simple index
+    NSInteger simpleIndex = 0;
+    for (int i = 0; i < product.productSimples.count; i++) {
+        RIProductSimple* simple = [product.productSimples objectAtIndex:i];
+        if ([simple.attributeSize isEqualToString:simpleName]) {
+            //found it
+            simpleIndex = i;
+        }
+    }
+    
+    [self.sizePicker selectRow:simpleIndex inComponent:0 animated:NO];
+    [self.sizePickerBackgroundView addSubview:self.sizePicker];
+    [self.sizePickerBackgroundView addSubview:self.sizePickerToolbar];
+    [self.view addSubview:self.sizePickerBackgroundView];
+}
+
+- (void)selectSize:(UIButton*)button
+{
+    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    NSInteger selectedIndex = [self.sizePicker selectedRowInComponent:0];
+    
+    RIProductSimple* selectedSimple = [product.productSimples objectAtIndex:selectedIndex];
+    [self.chosenSimpleNames replaceObjectAtIndex:button.tag withObject:selectedSimple.attributeSize];
+    
+    [self removePickerView];
+    [self.collectionView reloadData];
+}
+
+- (void)removePickerView
+{
+    [self.sizePicker removeFromSuperview];
+    self.sizePicker = nil;
+    
+    [self.sizePickerBackgroundView removeFromSuperview];
+    self.sizePickerBackgroundView = nil;
+}
+
+#pragma mark - UIPickerView
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    RIProduct* product = [self.productsArray objectAtIndex:pickerView.tag];
+    return product.productSimples.count;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    RIProduct* product = [self.productsArray objectAtIndex:pickerView.tag];
+    RIProductSimple* simple = [product.productSimples objectAtIndex:row];
+    NSString *title = [NSString stringWithFormat:@"%@", simple.attributeSize];
+    return title;
+}
+
 
 @end

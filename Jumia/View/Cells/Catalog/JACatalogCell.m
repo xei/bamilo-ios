@@ -55,6 +55,14 @@
     self.discountImageView.hidden = !product.maxSavingPercentage;
     
     self.favoriteButton.selected = [product.isFavorite boolValue];
+    
+    if (1 >= product.productSimples.count) {
+        self.sizeButton.hidden = YES;
+    } else {
+        self.sizeButton.hidden = NO;
+    }
+    [self.sizeButton setTitle:@"Size" forState:UIControlStateNormal];
+    [self.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
 }
 
 - (void)loadWithCartItem:(RICartItem*)cartItem
