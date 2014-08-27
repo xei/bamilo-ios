@@ -217,6 +217,9 @@
         if ([dataDic objectForKey:@"brand"]) {
             newProduct.brand = [dataDic objectForKey:@"brand"];
         }
+        if ([dataDic objectForKey:@"is_new"]) {
+            newProduct.isNew = [NSNumber numberWithBool:[[dataDic objectForKey:@"is_new"] boolValue]];
+        }
         if ([dataDic objectForKey:@"max_price"]) {
             newProduct.maxPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price"] floatValue]];
             newProduct.maxPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];

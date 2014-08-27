@@ -25,9 +25,10 @@
     
     [self.productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
                           placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    [self.backgroundContentView sendSubviewToBack:self.productImageView];
     
-    self.recentProductImageView.hidden = !product.isNew;
-    self.recentProductLabel.hidden = !product.isNew;
+    self.recentProductImageView.hidden = ![product.isNew boolValue];
+    self.recentProductLabel.hidden = ![product.isNew boolValue];
     self.recentProductLabel.text = @"NEW";
     self.recentProductLabel.transform = CGAffineTransformMakeRotation (-M_PI/4);
     
@@ -54,6 +55,14 @@
     self.discountImageView.hidden = !product.maxSavingPercentage;
     
     self.favoriteButton.selected = [product.isFavorite boolValue];
+    
+    if (1 >= product.productSimples.count) {
+        self.sizeButton.hidden = YES;
+    } else {
+        self.sizeButton.hidden = NO;
+    }
+    [self.sizeButton setTitle:@"Size" forState:UIControlStateNormal];
+    [self.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
 }
 
 - (void)loadWithCartItem:(RICartItem*)cartItem

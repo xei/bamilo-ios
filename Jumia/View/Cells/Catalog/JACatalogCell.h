@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *discountImageView;
 @property (weak, nonatomic) IBOutlet UILabel *discountLabel;
+@property (weak, nonatomic) IBOutlet UIButton *sizeButton;
 @property (strong, nonatomic)JAPriceView *priceView;
 
 - (void)loadWithProduct:(RIProduct*)product;

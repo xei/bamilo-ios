@@ -146,6 +146,7 @@
     <entity name="RIProductSimple" representedClassName="RIProductSimple" syncable="YES">
         <attribute name="attributePackageType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="attributeSize" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="maxDeliveryTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="minDeliveryTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -155,6 +156,7 @@
         <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="specialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="stock" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="variation" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="productSimples" inverseEntity="RIProduct" syncable="YES"/>
     </entity>
     <entity name="RISearchSuggestion" representedClassName="RISearchSuggestion" syncable="YES">
@@ -247,7 +249,7 @@
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
         <element name="RIProduct" positionX="-99" positionY="0" width="128" height="495"/>
-        <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="225"/>
+        <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
         <element name="RISearchSuggestion" positionX="-648" positionY="27" width="128" height="88"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
         <element name="RIStaticBlockIndex" positionX="-486" positionY="-63" width="128" height="90"/>
@@ -255,7 +257,7 @@
         <element name="RITeaserCategory" positionX="-686" positionY="245" width="128" height="133"/>
         <element name="RITeaserGroup" positionX="-686" positionY="398" width="128" height="103"/>
         <element name="RITeaserImage" positionX="-486" positionY="558" width="128" height="118"/>
-        <element name="RITeaserProduct" positionX="-504" positionY="693" width="128" height="268"/>
+        <element name="RITeaserProduct" positionX="-504" positionY="693" width="128" height="270"/>
         <element name="RITeaserText" positionX="-684" positionY="677" width="128" height="88"/>
         <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
         <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>

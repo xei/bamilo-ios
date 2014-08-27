@@ -175,6 +175,8 @@
                                         
                                     } andFailureBlock:^(NSArray *error) {
                                         [self hideLoading];
+                                        [self resetCatalog];
+                                        [self.collectionView reloadData];
                                     }];
         }
     }
@@ -244,6 +246,11 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.productsArray.count;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(3, 0, 0, 0);
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath

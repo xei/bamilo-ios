@@ -64,6 +64,14 @@
                                 </state>
                                 <state key="selected" image="btn_removeitem_pressed"/>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AJj-tf-drM">
+                                <rect key="frame" x="80" y="58" width="70" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -89,6 +97,7 @@
                 <outlet property="productImageView" destination="HBK-bc-RQM" id="CHF-QZ-SY8"/>
                 <outlet property="recentProductImageView" destination="5Nc-HJ-nHi" id="8cw-Y7-LYn"/>
                 <outlet property="recentProductLabel" destination="YBV-2P-Jvq" id="Rbw-BC-yjf"/>
+                <outlet property="sizeButton" destination="AJj-tf-drM" id="Kne-XG-lyE"/>
             </connections>
         </collectionViewCell>
     </objects>
