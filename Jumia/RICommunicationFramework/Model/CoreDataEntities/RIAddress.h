@@ -45,6 +45,8 @@
 
 + (RIAddress*)parseAddress:(NSDictionary*)addressJSON;
 
++ (RIAddress*)parseAddressFromCustomer:(NSString*)uid jsonObject:(NSDictionary*)addressJSON;
+
 + (void)saveAddress:(RIAddress *)address;
 
 @end

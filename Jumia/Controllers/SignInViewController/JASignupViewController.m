@@ -44,7 +44,7 @@
            self.tempForm = form;
            
            CGFloat maxY = 0.0f;
-           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:0.0f];
+           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:0.0f delegate:nil];
            self.fieldsArray = [views copy];
            for(UIView *view in views)
            {

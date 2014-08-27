@@ -12,7 +12,7 @@
 
 @implementation JAFormComponent
 
-+(NSArray*)generateForm:(NSArray*)fields startingY:(CGFloat)startingY
++(NSArray*)generateForm:(NSArray*)fields startingY:(CGFloat)startingY delegate:(id<UITextFieldDelegate>)delegate;
 {
     BOOL addedBirth = NO;
     NSMutableArray *formViews = [[NSMutableArray alloc] init];
@@ -21,31 +21,28 @@
         if ([field.type isEqualToString:@"string"] || [field.type isEqualToString:@"email"])
         {
             JATextField *textField = [JATextField getNewJATextField];
-            textField.field = field;
+            [textField setupWithField:field];
+            [textField.textField setDelegate:delegate];
             
-            textField.layer.cornerRadius = 4.0f;
             CGRect frame = textField.frame;
             frame.origin.y = startingY;
             textField.frame = frame;
             startingY += textField.frame.size.height;
             
-            textField.textField.placeholder = field.label;
             
             [formViews addObject:textField];
         }
         else if ([field.type isEqualToString:@"password"] || [field.type isEqualToString:@"password2"])
         {
             JATextField *textField = [JATextField getNewJATextField];
-            textField.field = field;
+            [textField setupWithField:field];
+            [textField.textField setDelegate:delegate];
+            textField.textField.secureTextEntry = YES;
             
-            textField.layer.cornerRadius = 4.0f;
             CGRect frame = textField.frame;
             frame.origin.y = startingY;
             textField.frame = frame;
             startingY += textField.frame.size.height;
-            
-            textField.textField.placeholder = field.label;
-            textField.textField.secureTextEntry = YES;
             
             [formViews addObject:textField];
         }

@@ -189,6 +189,15 @@
     return newAddress;
 }
 
++ (RIAddress*)parseAddressFromCustomer:(NSString*)uid jsonObject:(NSDictionary*)addressJSON
+{
+    RIAddress* newAddress = (RIAddress *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIAddress class])];
+    
+    newAddress.uid = uid;
+    
+    return newAddress;
+}
+
 + (void)saveAddress:(RIAddress *)address
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:address];
