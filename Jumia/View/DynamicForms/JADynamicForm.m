@@ -39,7 +39,6 @@
         
         if ([field.type isEqualToString:@"string"] || [field.type isEqualToString:@"email"])
         {
-            lastTextFieldIndex = i;
             JATextField *textField = [JATextField getNewJATextField];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
@@ -49,14 +48,15 @@
             frame.origin.y = startingY;
             textField.frame = frame;
             startingY += textField.frame.size.height;
-
+            
             [textField.textField setTag:i];
             [textField setTag:i];
+            
+            lastTextFieldIndex = [self.formViews count];
             [self.formViews addObject:textField];
         }
         else if ([field.type isEqualToString:@"password"] || [field.type isEqualToString:@"password2"])
         {
-            lastTextFieldIndex = i;
             JATextField *textField = [JATextField getNewJATextField];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
@@ -68,8 +68,10 @@
             textField.frame = frame;
             startingY += textField.frame.size.height;
             
-            [textField.textField setTag:i];            
+            [textField.textField setTag:i];
             [textField setTag:i];
+            
+            lastTextFieldIndex = [self.formViews count];
             [self.formViews addObject:textField];
         }
         else if ([field.type isEqualToString:@"integer"])
@@ -130,9 +132,12 @@
             [check setTag:i];
             [self.formViews addObject:check];
         }
+        else if ([field.type isEqualToString:@"hidden"])
+        {
+        }
     }
     
-    if(lastTextFieldIndex == [fields count] - 1)
+    if(lastTextFieldIndex < [self.formViews count])
     {
         JATextField *lastTextField = [self.formViews objectAtIndex:lastTextFieldIndex];
         [lastTextField.textField setReturnKeyType:UIReturnKeyDone];
