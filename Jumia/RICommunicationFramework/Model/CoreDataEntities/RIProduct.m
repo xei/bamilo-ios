@@ -518,8 +518,11 @@
     for (RIProduct* favorite in allProducts) {
         
         if ([favorite.sku isEqualToString:product.sku]) {
-            //same product, don't need to add
-            alreadyFavorite = YES;
+            //same product
+            if (VALID_NOTEMPTY(favorite.isFavorite, NSNumber) && YES == [favorite.isFavorite boolValue]) {
+                //its already a favorite
+                alreadyFavorite = YES;
+            }
             break;
         }
     }
