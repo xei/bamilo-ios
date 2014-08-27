@@ -122,7 +122,7 @@ FBLoginViewDelegate
     [RIForm getForm:@"registersignup"
        successBlock:^(RIForm *form) {
            
-           self.signupDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:40.0f];
+           self.signupDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
            self.signupFormHeight = 0.0f;
            self.signupFormFieldsArray = [self.signupDynamicForm.formViews copy];
            for(UIView *view in self.signupDynamicForm.formViews)
