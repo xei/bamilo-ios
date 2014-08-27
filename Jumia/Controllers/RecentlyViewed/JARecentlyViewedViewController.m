@@ -201,10 +201,19 @@
         NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
         if ([simpleName isEqualToString:@""]) {
             //NOTHING SELECTED
+            
+            [[[UIAlertView alloc] initWithTitle:@"Error"
+                                        message:@"Please choose product size"
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"Ok", nil] show];
+            
             return;
         } else {
             for (RIProductSimple* simple in product.productSimples) {
-                if ([simple.attributeSize isEqualToString:simpleName]) {
+                if ([simple.attributeSize isEqualToString:simpleName] ||
+                    [simple.variation isEqualToString:simpleName] ||
+                    [simple.color isEqualToString:simpleName]) {
                     //found it
                     productSimple = simple;
                 }
@@ -310,7 +319,9 @@
     NSInteger simpleIndex = 0;
     for (int i = 0; i < product.productSimples.count; i++) {
         RIProductSimple* simple = [product.productSimples objectAtIndex:i];
-        if ([simple.attributeSize isEqualToString:simpleName]) {
+        if ([simple.attributeSize isEqualToString:simpleName] ||
+            [simple.variation isEqualToString:simpleName] ||
+            [simple.color isEqualToString:simpleName]) {
             //found it
             simpleIndex = i;
         }
@@ -328,7 +339,16 @@
     NSInteger selectedIndex = [self.sizePicker selectedRowInComponent:0];
     
     RIProductSimple* selectedSimple = [product.productSimples objectAtIndex:selectedIndex];
-    [self.chosenSimpleNames replaceObjectAtIndex:button.tag withObject:selectedSimple.attributeSize];
+    NSString* simpleName = @"";
+    if (VALID_NOTEMPTY(selectedSimple.attributeSize, NSString)) {
+        simpleName = selectedSimple.attributeSize;
+    } else if (VALID_NOTEMPTY(selectedSimple.variation, NSString)) {
+        simpleName = selectedSimple.variation;
+    } else if (VALID_NOTEMPTY(selectedSimple.color, NSString)) {
+        simpleName = selectedSimple.color;
+    }
+    
+    [self.chosenSimpleNames replaceObjectAtIndex:button.tag withObject:simpleName];
     
     [self removePickerView];
     [self.collectionView reloadData];
@@ -359,7 +379,15 @@
 {
     RIProduct* product = [self.productsArray objectAtIndex:pickerView.tag];
     RIProductSimple* simple = [product.productSimples objectAtIndex:row];
-    NSString *title = [NSString stringWithFormat:@"%@", simple.attributeSize];
+    NSString* simpleName = @"";
+    if (VALID_NOTEMPTY(simple.attributeSize, NSString)) {
+        simpleName = simple.attributeSize;
+    } else if (VALID_NOTEMPTY(simple.variation, NSString)) {
+        simpleName = simple.variation;
+    } else if (VALID_NOTEMPTY(simple.color, NSString)) {
+        simpleName = simple.color;
+    }
+    NSString *title = [NSString stringWithFormat:@"%@", simpleName];
     return title;
 }
 

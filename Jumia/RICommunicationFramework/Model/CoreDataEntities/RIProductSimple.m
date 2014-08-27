@@ -13,6 +13,8 @@
 
 @dynamic attributePackageType;
 @dynamic attributeSize;
+@dynamic variation;
+@dynamic color;
 @dynamic maxDeliveryTime;
 @dynamic minDeliveryTime;
 @dynamic price;
@@ -56,6 +58,12 @@
         }
         if ([meta objectForKey:@"min_delivery_time"]) {
             newProductSimple.minDeliveryTime = [meta objectForKey:@"min_delivery_time"];
+        }
+        if ([meta objectForKey:@"variation"]) {
+            newProductSimple.variation = [meta objectForKey:@"variation"];
+        }
+        if ([meta objectForKey:@"color"]) {
+            newProductSimple.color = [meta objectForKey:@"color"];
         }
     }
     
