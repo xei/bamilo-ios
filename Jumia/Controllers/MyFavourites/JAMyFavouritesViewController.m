@@ -97,14 +97,19 @@
     
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
         [self hideLoading];
-        self.productsArray = favoriteProducts;
-        self.chosenSimpleNames = [NSMutableArray new];
-        for (int i = 0; i < self.productsArray.count; i++) {
-            [self.chosenSimpleNames addObject:@""];
-        }
+        [self updateListsWith:favoriteProducts];
     } andFailureBlock:^(NSArray *error) {
         [self hideLoading];
     }];
+}
+
+- (void)updateListsWith:(NSArray*)products
+{
+    self.chosenSimpleNames = [NSMutableArray new];
+    for (int i = 0; i < products.count; i++) {
+        [self.chosenSimpleNames addObject:@""];
+    }
+    self.productsArray = products;
 }
 
 #pragma mark - UICollectionView
@@ -210,28 +215,60 @@
 
 - (void)addAllToCart
 {
+    //first lets check if we have all products with simples selected
+    for (int i = 0; i < self.chosenSimpleNames.count; i++) {
+        RIProduct* product = [self.productsArray objectAtIndex:i];
+        if (1 != product.productSimples.count) {
+            //has more than one simple, lets check if there is a simple selected
+            NSString* string = [self.chosenSimpleNames objectAtIndex:i];
+            if ([string isEqualToString:@""]) {
+                //nothing is selected, abort
+                
+                [[[UIAlertView alloc] initWithTitle:@"Error"
+                                            message:@"Please choose size for all products"
+                                           delegate:nil
+                                  cancelButtonTitle:nil
+                                  otherButtonTitles:@"Ok", nil] show];
+                
+                return;
+            }
+        }
+    }
+    
     [self showLoading];
     
     self.addAllToCartCount = self.productsArray.count;
     
-    for (RIProduct* product in self.productsArray) {
+    for (int i = 0; i < self.chosenSimpleNames.count; i++) {
+        RIProduct* product = [self.productsArray objectAtIndex:i];
         
-        [RICart addProductWithQuantity:@"1"
-                                   sku:product.sku
-                                simple:((RIProduct *)[product.productSimples firstObject]).sku
-                      withSuccessBlock:^(RICart *cart) {
-                                       
-                                       self.addAllToCartCount--;
-                                       
-                                   } andFailureBlock:^(NSArray *errorMessages) {
-                                       
-                                       self.addAllToCartCount--;
-                                       
-                                   }];
+        //lets find the simple that was selected
+        NSString* simpleName = [self.chosenSimpleNames objectAtIndex:i];
         
-        [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
-        } andFailureBlock:^(NSArray *error) {
-        }];
+        for (RIProductSimple* simple in product.productSimples) {
+            if ([simpleName isEqualToString:simple.attributeSize]) {
+                //found it
+                
+                [RICart addProductWithQuantity:@"1"
+                                           sku:product.sku
+                                        simple:simple.sku
+                              withSuccessBlock:^(RICart *cart) {
+                                  
+                                  self.addAllToCartCount--;
+                                  
+                              } andFailureBlock:^(NSArray *errorMessages) {
+                                  
+                                  self.addAllToCartCount--;
+                                  
+                              }];
+                
+                [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+                } andFailureBlock:^(NSArray *error) {
+                }];
+                
+                break;
+            }
+        }
     }
 }
 
@@ -243,7 +280,7 @@
     } andFailureBlock:^(NSArray *errorMessages) {
         
     }];
-    self.productsArray = nil;
+    [self updateListsWith:nil];
     [self hideLoading];
 }
 
@@ -254,12 +291,11 @@
     [self showLoading];
     [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
         [self hideLoading];
-        self.productsArray = favoriteProducts;
+        [self updateListsWith:favoriteProducts];
     } andFailureBlock:^(NSArray *error) {
         [self hideLoading];
     }];
 }
-
 
 - (void)addToCartPressed:(UIButton*)button;
 {
@@ -273,6 +309,13 @@
         NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
         if ([simpleName isEqualToString:@""]) {
             //NOTHING SELECTED
+            
+            [[[UIAlertView alloc] initWithTitle:@"Error"
+                                        message:@"Please choose product size"
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"Ok", nil] show];
+            
             return;
         } else {
             for (RIProductSimple* simple in product.productSimples) {
@@ -299,7 +342,12 @@
                                         cancelButtonTitle:nil
                                         otherButtonTitles:@"Ok", nil] show];
                       
-                      [self hideLoading];
+                      [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+                          [self updateListsWith:favoriteProducts];
+                          [self hideLoading];
+                      } andFailureBlock:^(NSArray *error) {
+                          [self hideLoading];
+                      }];
                       
                   } andFailureBlock:^(NSArray *errorMessages) {
                       
@@ -312,18 +360,6 @@
                       [self hideLoading];
                       
                   }];
-}
-
-
-- (void)clearAllButtonPressed
-{
-    [self showLoading];
-    [RIProduct removeAllRecentlyViewedWithSuccessBlock:^{
-        [self hideLoading];
-        self.productsArray = nil;
-    } andFailureBlock:^(NSArray *error) {
-        [self hideLoading];
-    }];
 }
 
 - (void)sizeButtonPressed:(UIButton*)button
