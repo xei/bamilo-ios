@@ -518,17 +518,15 @@
 {
     if([RICustomer checkIfUserIsLogged])
     {
-        JAAddressesViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
-        
-        [self.navigationController pushViewController:addressesVC
-                                             animated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                            object:nil
+                                                          userInfo:nil];
     }
     else
     {
-        JALoginViewController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
-        
-        [self.navigationController pushViewController:loginVC
-                                             animated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutLoginScreenNotification
+                                                            object:nil
+                                                          userInfo:nil];
     }
 }
 
