@@ -10,6 +10,21 @@
 
 @implementation JATextField
 
++ (JATextField *)getNewJATextField
+{
+    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JATextField"
+                                                 owner:nil
+                                               options:nil];
+    
+    for (NSObject *obj in xib) {
+        if ([obj isKindOfClass:[JATextField class]]) {
+            return (JATextField *)obj;
+        }
+    }
+    
+    return nil;
+}
+
 - (BOOL)isValid
 {
     if ((self.field.requiredMessage.length > 0) && (self.textField.text.length == 0))
@@ -63,22 +78,6 @@
                                                         options:0
                                                           range:NSMakeRange(0, [aString length])];
     return numberOfMatches > 0;
-}
-
-
-+ (JATextField *)getNewJATextField
-{
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JATextField"
-                                                 owner:nil
-                                               options:nil];
-    
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JATextField class]]) {
-            return (JATextField *)obj;
-        }
-    }
-    
-    return nil;
 }
 
 @end
