@@ -2,7 +2,7 @@
 //  JACartListHeaderView.m
 //  Jumia
 //
-//  Created by Pedro Lopes on 22/08/14.
+//  Created by Pedro Lopes on 28/08/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
@@ -10,12 +10,8 @@
 
 @implementation JACartListHeaderView
 
-- (instancetype)initWithFrame:(CGRect)frameRect {
-    self = [super initWithFrame:frameRect];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+- (void)awakeFromNib {
+    // Initialization code
 }
 
 - (void) loadHeaderWithText:(NSString*)text

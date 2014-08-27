@@ -8,6 +8,7 @@
 
 #import "JABaseViewController.h"
 
+@class JAPriceView;
 @class RICart;
 @class RICartItem;
 
@@ -22,41 +23,40 @@
 @property (weak, nonatomic) IBOutlet UIButton *continueShoppingButton;
 
 // Cart views
-@property (weak, nonatomic) IBOutlet UIScrollView *cartScrollView;
+@property (strong, nonatomic) UIScrollView *cartScrollView;
 
 // Products
-@property (weak, nonatomic) IBOutlet UICollectionView *productCollectionView;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *productTableViewConstrain;
+@property (strong, nonatomic) UICollectionView *productCollectionView;
 
 // Coupon
-@property (weak, nonatomic) IBOutlet UIView *couponView;
-@property (weak, nonatomic) IBOutlet UILabel *couponTitle;
-@property (weak, nonatomic) IBOutlet UIView *couponTitleSeparator;
-@property (weak, nonatomic) IBOutlet UITextField *couponTextField;
-@property (weak, nonatomic) IBOutlet UIButton *useCouponButton;
+@property (strong, nonatomic) UIView *couponView;
+@property (strong, nonatomic) UILabel *couponTitle;
+@property (strong, nonatomic) UIView *couponTitleSeparator;
+@property (strong, nonatomic) UITextField *couponTextField;
+@property (strong, nonatomic) UIButton *useCouponButton;
 
 // Subtotal
-@property (weak, nonatomic) IBOutlet UIView *subtotalView;
-@property (weak, nonatomic) IBOutlet UILabel *subtotalTitle;
-@property (weak, nonatomic) IBOutlet UIView *subtotalTitleSeparator;
-@property (weak, nonatomic) IBOutlet UILabel *articlesCount;
-@property (weak, nonatomic) IBOutlet UILabel *cartPrice;
-@property (weak, nonatomic) IBOutlet UILabel *priceRulesLabel;
-@property (weak, nonatomic) IBOutlet UILabel *priceRulesValue;
-@property (weak, nonatomic) IBOutlet UILabel *cartVatLabel;
-@property (weak, nonatomic) IBOutlet UILabel *cartVatValue;
-@property (weak, nonatomic) IBOutlet UILabel *cartShippingLabel;
-@property (weak, nonatomic) IBOutlet UILabel *cartShippingValue;
-@property (weak, nonatomic) IBOutlet UILabel *extraCostsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *extraCostsValue;
-@property (weak, nonatomic) IBOutlet UILabel *couponLabel;
-@property (weak, nonatomic) IBOutlet UILabel *couponValue;
-@property (weak, nonatomic) IBOutlet UILabel *totalLabel;
-@property (weak, nonatomic) IBOutlet UILabel *totalValue;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *subtotalViewConstrain;
+@property (strong, nonatomic) UIView *subtotalView;
+@property (strong, nonatomic) UILabel *subtotalTitle;
+@property (strong, nonatomic) UIView *subtotalTitleSeparator;
+@property (strong, nonatomic) UILabel *articlesCount;
+@property (strong, nonatomic) JAPriceView *totalPriceView;
+@property (strong, nonatomic) UILabel *priceRulesLabel;
+@property (strong, nonatomic) UILabel *priceRulesValue;
+@property (strong, nonatomic) UILabel *cartVatLabel;
+@property (strong, nonatomic) UILabel *cartVatValue;
+@property (strong, nonatomic) UILabel *cartShippingLabel;
+@property (strong, nonatomic) UILabel *cartShippingValue;
+@property (strong, nonatomic) UILabel *extraCostsLabel;
+@property (strong, nonatomic) UILabel *extraCostsValue;
+@property (strong, nonatomic) UILabel *couponLabel;
+@property (strong, nonatomic) UILabel *couponValue;
+@property (strong, nonatomic) UILabel *totalLabel;
+@property (strong, nonatomic) UILabel *totalValue;
+@property (strong, nonatomic) NSLayoutConstraint *subtotalViewConstrain;
 
-@property (weak, nonatomic) IBOutlet UIButton *checkoutButton;
-@property (weak, nonatomic) IBOutlet UIButton *callToOrderButton;
+@property (strong, nonatomic) UIButton *checkoutButton;
+@property (strong, nonatomic) UIButton *callToOrderButton;
 
 // quantity picker view
 @property (strong, nonatomic) UIView *quantityPickerBackgroundView;
