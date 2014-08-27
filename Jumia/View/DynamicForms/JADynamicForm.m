@@ -13,8 +13,6 @@
 @interface JADynamicForm ()
 <UITextFieldDelegate>
 
-@property (assign, nonatomic) NSInteger *numberOfFields;
-
 @end
 
 @implementation JADynamicForm
@@ -33,36 +31,44 @@
 - (void)generateForm:(NSArray*)fields startingY:(CGFloat)startingY
 {
     BOOL addedBirth = NO;
+    NSInteger lastTextFieldIndex = 0;
     self.formViews = [[NSMutableArray alloc] init];
     for (int i = 0; i < [fields count]; i++)
     {
         RIField *field = [fields objectAtIndex:i];
+        
         if ([field.type isEqualToString:@"string"] || [field.type isEqualToString:@"email"])
         {
+            lastTextFieldIndex = i;
             JATextField *textField = [JATextField getNewJATextField];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
+            [textField.textField setReturnKeyType:UIReturnKeyNext];
             
             CGRect frame = textField.frame;
             frame.origin.y = startingY;
             textField.frame = frame;
             startingY += textField.frame.size.height;
-            
+
+            [textField.textField setTag:i];
             [textField setTag:i];
             [self.formViews addObject:textField];
         }
         else if ([field.type isEqualToString:@"password"] || [field.type isEqualToString:@"password2"])
         {
+            lastTextFieldIndex = i;
             JATextField *textField = [JATextField getNewJATextField];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
-            textField.textField.secureTextEntry = YES;
+            [textField.textField setReturnKeyType:UIReturnKeyNext];
+            [textField.textField setSecureTextEntry:YES];
             
             CGRect frame = textField.frame;
             frame.origin.y = startingY;
             textField.frame = frame;
             startingY += textField.frame.size.height;
             
+            [textField.textField setTag:i];            
             [textField setTag:i];
             [self.formViews addObject:textField];
         }
@@ -124,6 +130,12 @@
             [check setTag:i];
             [self.formViews addObject:check];
         }
+    }
+    
+    if(lastTextFieldIndex == [fields count] - 1)
+    {
+        JATextField *lastTextField = [self.formViews objectAtIndex:lastTextFieldIndex];
+        [lastTextField.textField setReturnKeyType:UIReturnKeyDone];
     }
 }
 
@@ -236,9 +248,9 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    UITextField *newResponder = (UITextField *) [self viewWithTag:textField.tag + 1];
-    if (VALID(newResponder, UITextField)) {
-        [newResponder becomeFirstResponder];
+    JATextField *newResponder = (JATextField *) [self viewWithTag:textField.tag + 1];
+    if (VALID(newResponder, JATextField)) {
+        [newResponder.textField becomeFirstResponder];
     } else {
         [textField resignFirstResponder];
     }
