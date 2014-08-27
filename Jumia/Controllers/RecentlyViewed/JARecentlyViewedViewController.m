@@ -16,15 +16,15 @@
 
 @interface JARecentlyViewedViewController ()
 
-// size picker view
-@property (strong, nonatomic) UIView *sizePickerBackgroundView;
-@property (strong, nonatomic) UIToolbar *sizePickerToolbar;
-@property (strong, nonatomic) UIPickerView *sizePicker;
-
 @property (weak, nonatomic) IBOutlet UIView *emptyListView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyListLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray* productsArray;
+
+// size picker view
+@property (strong, nonatomic) UIView *sizePickerBackgroundView;
+@property (strong, nonatomic) UIToolbar *sizePickerToolbar;
+@property (strong, nonatomic) UIPickerView *sizePicker;
 @property (nonatomic, strong) NSMutableArray* chosenSimpleNames;
 
 @end
@@ -84,13 +84,8 @@
         [self hideLoading];
         self.productsArray = recentlyViewedProducts;
         self.chosenSimpleNames = [NSMutableArray new];
-        for (RIProduct* product in self.productsArray) {
-            if (1 == product.productSimples.count) {
-                RIProductSimple* simple = [product.productSimples firstObject];
-                [self.chosenSimpleNames addObject:simple.attributeSize];
-            } else {
-                [self.chosenSimpleNames addObject:@""];
-            }
+        for (int i = 0; i < self.productsArray.count; i++) {
+            [self.chosenSimpleNames addObject:@""];
         }
     } andFailureBlock:^(NSArray *error) {
         [self hideLoading];
