@@ -7,7 +7,6 @@
 //
 
 #import "JALoginViewController.h"
-#import "JAAddressesViewController.h"
 #import "RIForm.h"
 #import "RIField.h"
 #import "RICustomer.h"
@@ -477,13 +476,10 @@ FBLoginViewDelegate
         [RIForm sendForm:self.loginDynamicForm.form parameters:parameters successBlock:^(id object) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                 object:nil];
-            
-            
-            JAAddressesViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
-            
-            [self.navigationController pushViewController:addressesVC
-                                                 animated:YES];
-            
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                                object:nil
+                                                              userInfo:nil];
             [self hideLoading];
             
         } andFailureBlock:^(NSArray *errorObject) {
@@ -500,7 +496,9 @@ FBLoginViewDelegate
 
 -(void)forgotButtonPressed
 {
-    NSLog(@"forgotButtonPressed");
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowForgotPasswordScreenNotification
+                                                        object:nil
+                                                      userInfo:nil];
 }
 
 -(void)signUpButtonPressed
@@ -517,11 +515,9 @@ FBLoginViewDelegate
             [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                 object:nil];
             
-            
-            JAAddressesViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
-            
-            [self.navigationController pushViewController:addressesVC
-                                                 animated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                                object:nil
+                                                              userInfo:nil];
             
             [self hideLoading];
             
@@ -561,15 +557,13 @@ FBLoginViewDelegate
         [RICustomer loginCustomerByFacebookWithParameters:parameters
                                              successBlock:^(id customer) {
                                                  [self hideLoading];
-                                                 
+                                         
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                                                      object:nil];
-                                                 
-                                                 JAAddressesViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
-                                                 
-                                                 [self.navigationController pushViewController:addressesVC
-                                                                                      animated:YES];
-                                                 
+                                                    
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                                                                     object:nil
+                                                                                                   userInfo:nil];
                                                  [self hideLoading];
                                              } andFailureBlock:^(NSArray *errorObject) {
                                                  [self hideLoading];

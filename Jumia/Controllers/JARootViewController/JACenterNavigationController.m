@@ -20,6 +20,9 @@
 #import "JAMyAccountViewController.h"
 #import "JARecentlyViewedViewController.h"
 #import "JACartViewController.h"
+#import "JAForgotPasswordViewController.h"
+#import "JALoginViewController.h"
+#import "JAAddressesViewController.h"
 #import "RIProduct.h"
 #import "RIApi.h"
 
@@ -113,6 +116,20 @@ JARecentSearchesDelegate
                                                  name:kShowHomeScreenNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showForgotPasswordScreen)
+                                                 name:kShowForgotPasswordScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutLoginScreen)
+                                                 name:kShowCheckoutLoginScreenNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutAddressesScreen)
+                                                 name:kShowCheckoutAddressesScreenNotification
+                                               object:nil];    
 }
 
 - (void)didReceiveMemoryWarning
@@ -422,6 +439,27 @@ JARecentSearchesDelegate
 {
     [self changeCenterPanel:@"Home"
              titleForNavBar:nil];
+}
+
+- (void)showForgotPasswordScreen
+{
+    JAForgotPasswordViewController *forgotVC = [self.storyboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
+    
+    [self pushViewController:forgotVC animated:YES];
+}
+
+- (void)showCheckoutLoginScreen
+{
+    JALoginViewController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+    
+    [self pushViewController:loginVC animated:YES];
+}
+
+- (void)showCheckoutAddressesScreen
+{
+    JAAddressesViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
+    
+    [self pushViewController:addressesVC animated:YES];
 }
 
 - (void)back

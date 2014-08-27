@@ -2,7 +2,7 @@
 //  JACartListHeaderView.h
 //  Jumia
 //
-//  Created by Pedro Lopes on 22/08/14.
+//  Created by Pedro Lopes on 28/08/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
