@@ -12,9 +12,9 @@
 #import "JACheckBoxComponent.h"
 #import "JAGenderComponent.h"
 
-@interface JAFormComponent : NSObject
+@interface JAFormComponent : NSObject <UITextFieldDelegate>
 
-+(NSArray*)generateForm:(NSArray*)fields startingY:(CGFloat)startingY;
++(NSArray*)generateForm:(NSArray*)fields startingY:(CGFloat)startingY delegate:(id<UITextFieldDelegate>)delegate;
 +(BOOL)hasErrors:(NSArray*)views;
 +(NSDictionary*)getValues:(NSArray*)views form:(RIForm*)form;
 

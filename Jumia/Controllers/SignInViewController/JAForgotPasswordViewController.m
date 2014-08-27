@@ -39,7 +39,7 @@
            
            [self hideLoading];
            
-           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:35.0f];
+           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:35.0f delegate:nil];
            self.fieldsArray = [views copy];
            for(UIView *view in views)
            {

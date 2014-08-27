@@ -72,7 +72,7 @@ FBLoginViewDelegate
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
            
-           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:40.0f];
+           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:40.0f delegate:nil];
            self.fieldsArray = [views copy];
            for(UIView *view in views)
            {

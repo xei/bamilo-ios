@@ -13,9 +13,12 @@
 
 @property (strong, nonatomic) RIField *field;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
 
 - (BOOL)isValid;
 
 + (JATextField *)getNewJATextField;
+
+- (void)setupWithField:(RIField*)field;
 
 @end

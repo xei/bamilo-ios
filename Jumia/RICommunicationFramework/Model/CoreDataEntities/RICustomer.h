@@ -80,6 +80,13 @@
 + (NSString *)logoutCustomerWithSuccessBlock:(void (^)())successBlock
                              andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
 
+/**
+ * Method to parse user json object
+ *
+ * @return an initialized RICustomer object
+ */
++ (RICustomer *)parseCustomerWithJson:(NSDictionary *)json;
+
 /** Method to cancel the request
  *
  * @param the operationID

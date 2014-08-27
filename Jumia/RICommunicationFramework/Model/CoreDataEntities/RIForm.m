@@ -9,6 +9,7 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "RIFieldDataSetComponent.h"
+#import "RICustomer.h"
 
 @implementation RIForm
 
@@ -91,21 +92,57 @@
 
 #pragma mark - Facebook Login
 + (NSString*)sendForm:(RIForm*)form
-         successBlock:(void (^)(NSDictionary *jsonObject))successBlock
+         successBlock:(void (^)(id object))successBlock
+      andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
+{
+    return [RIForm sendForm:form
+                 parameters:[RIForm getParametersForForm:form]
+               successBlock:successBlock
+            andFailureBlock:failureBlock];
+}
+
++ (NSString*)sendForm:(RIForm*)form
+           parameters:(NSDictionary*)parameters
+         successBlock:(void (^)(id object))successBlock
       andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
 {
     BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
+    
+    NSMutableDictionary *allParameters = [[NSMutableDictionary alloc] initWithDictionary:[RIForm getParametersForForm:form]];
+    
+    if(VALID_NOTEMPTY(parameters, NSDictionary))
+    {
+        NSArray *parametersKeys = [parameters allKeys];
+        if(VALID_NOTEMPTY(parametersKeys, NSArray))
+        {
+            for(NSString *parameterKey in parametersKeys)
+            {
+                [allParameters setObject:[parameters objectForKey:parameterKey] forKey:parameterKey];
+            }
+        }
+    }
+    
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
-                                                            parameters:[RIForm getParametersForForm:form]
+                                                            parameters:allParameters
                                                         httpMethodPost:isPostRequest
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              
+                                                              BOOL responseProcessed = NO;
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-                                                                  successBlock(metadata);
-                                                              } else
+                                                                  if([@"form-account-login" isEqualToString:form.uid] ||
+                                                                     [@"Alice_Module_Mobapi_Form_Ext1m1_Customer_RegisterSignupForm" isEqualToString:form.uid])
+                                                                  {
+                                                                      responseProcessed = YES;
+                                                                      RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"]];
+                                                                      successBlock(customer);
+                                                                  }
+                                                              }
+                                                              
+                                                              if(!responseProcessed)
                                                               {
                                                                   failureBlock(nil);
                                                               }

@@ -306,14 +306,17 @@
     
     if ([json objectForKey:@"address_collection"]) {
         NSDictionary *addressesObject = [json objectForKey:@"address_collection"];
-        
         if(VALID_NOTEMPTY(addressesObject, addressesObject))
         {
-            for (NSDictionary *dic in addressesObject)
+            NSArray *addressesObjectKeys = [addressesObject allKeys];
+            if(VALID_NOTEMPTY(addressesObjectKeys, NSArray))
             {
-//                RIAddress *address = [RIAddress parseAddress:dic];
-//                address.customer = customer;
-//                [customer addAddressesObject:address];
+                for(NSString *addressObjectKey in addressesObjectKeys)
+                {
+                    RIAddress *address = [RIAddress parseAddressFromCustomer:addressObjectKey jsonObject:[addressesObject objectForKey:addressObjectKey]];
+                    address.customer = customer;
+                    [customer addAddressesObject:address];
+                }
             }
         }
     }

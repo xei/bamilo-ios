@@ -52,11 +52,11 @@
                   successBlock:(void (^)(RICheckout *checkout))successBlock
                andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return [RIForm sendForm:form successBlock:^(NSDictionary *jsonObject) {
+    return [RIForm sendForm:form successBlock:^(id object) {
         [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-            if(VALID_NOTEMPTY(jsonObject, NSDictionary))
+            if(VALID_NOTEMPTY(object, NSDictionary))
             {
-                successBlock([RICheckout parseCheckout:jsonObject country:configuration]);
+                successBlock([RICheckout parseCheckout:object country:configuration]);
             } else
             {
                 failureBlock(nil);
@@ -106,11 +106,11 @@
                    successBlock:(void (^)(RICheckout *checkout))successBlock
                 andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return [RIForm sendForm:form successBlock:^(NSDictionary *jsonObject) {
+    return [RIForm sendForm:form successBlock:^(id object) {
         [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-            if(VALID_NOTEMPTY(jsonObject, NSDictionary))
+            if(VALID_NOTEMPTY(object, NSDictionary))
             {
-                successBlock([RICheckout parseCheckout:jsonObject country:configuration]);
+                successBlock([RICheckout parseCheckout:object country:configuration]);
             } else
             {
                 failureBlock(nil);
