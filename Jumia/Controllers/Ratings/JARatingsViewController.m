@@ -43,8 +43,7 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
-                                                        object:nil];
+    self.navBarLayout.showBackButton = YES;
     
     self.brandLabel.text = self.productBrand;
     self.nameLabel.text = self.productRatings.productName;

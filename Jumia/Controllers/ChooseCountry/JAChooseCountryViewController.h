@@ -9,18 +9,6 @@
 #import "JABaseViewController.h"
 #import "RICountry.h"
 
-@protocol JAChooseCountryDelegate <NSObject>
-
-@required
-
-- (void)didSelectedCountry:(RICountry *)country;
-
-@end
-
 @interface JAChooseCountryViewController : JABaseViewController
-
-@property (weak, nonatomic) id<JAChooseCountryDelegate>delegate;
-
-- (void)applyButtonPressed;
 
 @end

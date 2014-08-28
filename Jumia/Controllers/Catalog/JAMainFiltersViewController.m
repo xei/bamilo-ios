@@ -24,6 +24,10 @@
 {
     [super viewDidLoad];
     
+    self.navBarLayout.title = @"Filters";
+    self.navBarLayout.showEditButton = YES;
+    self.navBarLayout.showDoneButton = YES;
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -34,9 +38,6 @@
     [super viewWillAppear:animated];
     
     NSNotificationCenter* notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter postNotificationName:kShowMainFiltersNavNofication
-                                      object:self
-                                    userInfo:nil];
     
     [notificationCenter addObserver:self
                            selector:@selector(editButtonPressed)

@@ -54,6 +54,16 @@ JAPDVGalleryViewDelegate
 {
     [super viewDidLoad];
     
+    if (self.previousCategory.length > 0)
+    {
+        self.navBarLayout.backButtonTitle = self.previousCategory;
+    }
+    else
+    {
+        self.navBarLayout.showBackButton = YES;
+    }
+    self.navBarLayout.showLogo = NO;
+    
     // Always load the product details when entering PDV
     if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [self showLoading];
@@ -87,30 +97,6 @@ JAPDVGalleryViewDelegate
     self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
     
     [self fillTheViews];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    if (self.previousCategory.length > 0)
-    {
-        NSMutableDictionary *nameDic = [NSMutableDictionary dictionary];
-        [nameDic addEntriesFromDictionary:@{@"name": self.previousCategory}];
-        
-        NSNotificationCenter* notificationCenter = [NSNotificationCenter defaultCenter];
-        [notificationCenter postNotificationName:kShowBackButtonWithTitleNofication
-                                          object:self
-                                        userInfo:nameDic];
-    }
-    else
-    {
-        NSMutableDictionary *nameDic = [NSMutableDictionary dictionary];
-        [nameDic addEntriesFromDictionary:@{@"name": @"Back"}];
-        
-        NSNotificationCenter* notificationCenter = [NSNotificationCenter defaultCenter];
-        [notificationCenter postNotificationName:kShowBackButtonWithTitleNofication
-                                          object:self
-                                        userInfo:nameDic];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -413,9 +399,6 @@ JAPDVGalleryViewDelegate
     pdv.productUrl = tempProduct.url;
     pdv.fromCatalogue = NO;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
-                                                        object:nil];
-    
     [self.navigationController pushViewController:pdv
                                          animated:YES];
 }
@@ -428,10 +411,7 @@ JAPDVGalleryViewDelegate
 
 - (void)goToRatinsMainScreen
 {
-    if (0 == self.commentsCount) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
-                                                            object:nil];
-        
+    if (0 == self.commentsCount) {        
         [self performSegueWithIdentifier:@"segueNewReview"
                                   sender:nil];
     } else {

@@ -7,34 +7,43 @@
 //
 
 // Notifications
-#define kCancelLoadingNotificationName @"CANCEL_LOADING_NOTIFICATION"
-#define kCancelButtonPressedInMenuSearchBar @"PRESSED_BACK_BUTTON_NOTIFICATION"
-#define kMenuDidSelectOptionNotification @"NOTIFICATION_SELECTED_ITEM_MENU"
-#define kMenuDidSelectLeafCategoryNotification @"NOTIFICATION_SELECTED_LEAF_CATEGORY"
-#define kOpenMenuNotification @"NOTIFICATION_OPEN_MENU"
-#define kOpenCenterPanelNotification @"NOTIFICATION_OPEN_CENTER_PANEL"
-#define kOpenCartNotification @"NOTIFICATION_OPEN_CART"
+
+//************ app action notifications
+#define kSelectedCountryNotification @"NOTIFICATION_SELECTED_COUNTRY"
 #define kUpdateCartNotification @"NOTIFICATION_UPDATE_CART"
 #define kUpdateCartNotificationValue @"NOTIFICATION_UPDATE_CART_VALUE"
-#define kDidPressApplyNotification @"DID_PRESS_APPLY_NOTIFICATION"
-#define kDidPressDoneNotification @"DID_PRESS_DONE_NOTIFICATION"
-#define kDidPressEditNotification @"DID_PRESS_EDIT_NOTIFICATION"
-#define kEditShouldChangeStateNotification @"EDIT_SHOULD_CHANGE_NOTIFICATION"
-#define kTurnOffLeftSwipePanelNotification @"NOTIFICATION_TURN_OFF_LEFT_SWIPE_PANEL"
-#define kTurnOnLeftSwipePanelNotification @"NOTIFICATION_TURN_ON_LEFT_SWIPE_PANEL"
-#define kShowBackNofication @"NOTIFICATION_SHOW_BACK"
-#define kShowBackButtonWithTitleNofication @"NOTIFICATION_SHOW_BACK_BUTTON_WITH_TITLE"
 #define kUserLoggedInNotification @"NOTIFICATION_USER_LOGGED_IN"
 #define kUserLoggedOutNotification @"NOTIFICATION_USER_LOGGED_OUT"
-#define kShowMainFiltersNavNofication @"NOTIFICATION_SHOW_MAIN_FILTERS_NAVIGATION"
-#define kShowSpecificFilterNavNofication @"NOTIFICATION_SHOW_SPECIFIC_FILTER_NAVIGATION"
+#define kCancelLoadingNotificationName @"CANCEL_LOADING_NOTIFICATION"
+#define kCancelButtonPressedInMenuSearchBar @"PRESSED_BACK_BUTTON_NOTIFICATION"
+//************
+
+//************ root view controller notifications
+#define kOpenMenuNotification @"NOTIFICATION_OPEN_MENU"
+#define kOpenCenterPanelNotification @"NOTIFICATION_OPEN_CENTER_PANEL"
+#define kTurnOffLeftSwipePanelNotification @"NOTIFICATION_TURN_OFF_LEFT_SWIPE_PANEL"
+#define kTurnOnLeftSwipePanelNotification @"NOTIFICATION_TURN_ON_LEFT_SWIPE_PANEL"
+//************
+
+//************ center navigation controller notifications
+#define kMenuDidSelectOptionNotification @"NOTIFICATION_SELECTED_ITEM_MENU"
+#define kMenuDidSelectLeafCategoryNotification @"NOTIFICATION_SELECTED_LEAF_CATEGORY"
 #define kShowHomeScreenNotification @"NOTIFICATION_HOME_SCREEN"
+#define kSelectedRecentSearchNotification @"NOTIFICATION_SELECTED_RECENT_SEARCH"
+#define kOpenCartNotification @"NOTIFICATION_OPEN_CART"
 
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"
 #define kDidSelectTeaserWithPDVUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_PDV_URL"
 #define kDidSelectTeaserWithAllCategoriesNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_ALL_CATEGORIES"
 #define kDidSelectCategoryFromCenterPanelNotification @"NOTIFICATION_SELECTED_CATEGORY_FROM_CENTER_PANEL"
+
+//navbar notification
+#define kChangeNavigationBarNotification @"NOTIFICATION_CHANGE_NAVIGATION_BAR"
+#define kEditShouldChangeStateNotification @"EDIT_SHOULD_CHANGE_NOTIFICATION"
+#define kDidPressDoneNotification @"DID_PRESS_DONE_NOTIFICATION"
+#define kDidPressEditNotification @"DID_PRESS_EDIT_NOTIFICATION"
+//************
 
 // Update alert view
 #define kForceUpdateAlertViewTag 0

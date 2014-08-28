@@ -22,6 +22,10 @@
 {
     [super viewDidLoad];
     
+    self.navBarLayout.title = @"Categories";
+    self.navBarLayout.backButtonTitle = @"Filters";
+    self.navBarLayout.showDoneButton = YES;
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -43,14 +47,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    NSMutableDictionary *nameDic = [NSMutableDictionary dictionary];
-    [nameDic addEntriesFromDictionary:@{@"name": @"Categories"}];
-    
-    NSNotificationCenter* notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter postNotificationName:kShowSpecificFilterNavNofication
-                                      object:self
-                                    userInfo:nameDic];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doneButtonPressed)
                                                  name:kDidPressDoneNotification

@@ -28,6 +28,8 @@
 {
     [super viewDidLoad];
     
+    self.navBarLayout.showBackButton = YES;
+    
     self.labelTop.text = @"Forgot password";
     self.contentView.layer.cornerRadius = 4.0f;
     

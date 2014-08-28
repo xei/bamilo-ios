@@ -19,6 +19,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navBarLayout.title = @"Sign In";
 }
 
 - (void)didReceiveMemoryWarning

@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JANavigationBarLayout.h"
 
 @interface JABaseViewController : UIViewController
+
+@property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 
 /**
  * Method to show loading

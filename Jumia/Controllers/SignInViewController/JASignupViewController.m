@@ -32,6 +32,8 @@
 {
     [super viewDidLoad];
     
+    self.navBarLayout.showBackButton = YES;
+    
     self.originalFrame = self.contentScrollView.frame;
     self.fieldsArray = [NSMutableArray new];
     

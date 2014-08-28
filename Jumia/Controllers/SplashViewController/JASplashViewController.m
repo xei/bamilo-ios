@@ -17,7 +17,6 @@
 
 @interface JASplashViewController ()
 <
-JAChooseCountryDelegate,
 UIAlertViewDelegate
 >
 
@@ -35,6 +34,11 @@ UIAlertViewDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectCountry:)
+                                                 name:kSelectedCountryNotification
+                                               object:nil];
     
     if (self.selectedCountry)
     {
@@ -177,24 +181,22 @@ UIAlertViewDelegate
         }
         else
         {
-            [self.navigationItem setHidesBackButton:YES
-                                           animated:NO];
+            JAChooseCountryViewController *choose = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
             
+            choose.navBarLayout.showMenuButton = NO;
+            choose.navBarLayout.doneButtonTitle = @"Apply";
+            
+            //center navigation doesn't exit yet, create a "fake" nav bar
             self.navigationBarView = [JANavigationBarView getNewNavBarView];
             [self.navigationController.navigationBar.viewForBaselineLayout addSubview:self.navigationBarView];
-            
-            [self.navigationBarView changeToChooseCountry];
-            self.navigationBarView.leftButton.hidden = YES;
-            
-            [self.navigationBarView.applyButton addTarget:self
-                                                   action:@selector(sendSelectedCountryNotification)
-                                         forControlEvents:UIControlEventTouchUpInside];
-            
-            JAChooseCountryViewController *choose = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
-            choose.delegate = self;
+            //manual setup of the "fake" nav bar
+            [self.navigationBarView initialSetup];
+            [self.navigationBarView.doneButton addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
+            [self.navigationBarView setupWithNavigationBarLayout:choose.navBarLayout];
             
             [self.navigationController pushViewController:choose
                                                  animated:YES];
+            
         }
         
         if (self.view.frame.size.height > 500.0f)
@@ -258,55 +260,50 @@ UIAlertViewDelegate
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Send notification action
-
-- (void)sendSelectedCountryNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressApplyNotification
-                                                        object:nil];
-}
-
 #pragma mark - Choose country delegate
 
-- (void)didSelectedCountry:(RICountry *)country
+- (void)didSelectCountry:(NSNotification*)notification
 {
-    [self showLoading];
-    
-    self.requestCount = 0;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
-    
-    [RIApi startApiWithCountry:country
-                  successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
-                      if(hasUpdate)
-                      {
-                          self.isPopupOpened = YES;
-                          if(isUpdateMandatory)
+    RICountry *country = notification.object;
+    if (VALID_NOTEMPTY(country, RICountry)) {
+        [self showLoading];
+        
+        self.requestCount = 0;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
+        
+        [RIApi startApiWithCountry:country
+                      successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                          if(hasUpdate)
                           {
-                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update necessary" message:@"We found something that we needed to fix to make shopping experience in Jumia even better! You will need to update before continue using the app." delegate:self cancelButtonTitle:@"Ok, Update!" otherButtonTitles:nil];
-                              [alert setTag:kForceUpdateAlertViewTag];
-                              [alert show];
-                              
-                              [self hideLoading];
+                              self.isPopupOpened = YES;
+                              if(isUpdateMandatory)
+                              {
+                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update necessary" message:@"We found something that we needed to fix to make shopping experience in Jumia even better! You will need to update before continue using the app." delegate:self cancelButtonTitle:@"Ok, Update!" otherButtonTitles:nil];
+                                  [alert setTag:kForceUpdateAlertViewTag];
+                                  [alert show];
+                                  
+                                  [self hideLoading];
+                              }
+                              else
+                              {
+                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update available" message:@"There is a new update available that we prepared to make shopping experience in Jumia even better! Make sure you upgrade today!" delegate:self cancelButtonTitle:@"No, thanks." otherButtonTitles:@"Update!", nil];
+                                  [alert setTag:kUpdateAvailableAlertViewTag];
+                                  [alert show];
+                              }
                           }
                           else
                           {
-                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update available" message:@"There is a new update available that we prepared to make shopping experience in Jumia even better! Make sure you upgrade today!" delegate:self cancelButtonTitle:@"No, thanks." otherButtonTitles:@"Update!", nil];
-                              [alert setTag:kUpdateAvailableAlertViewTag];
-                              [alert show];
+                              if (0 >= self.requestCount) {
+                                  [self procedeToFirstAppScreen];
+                              }
                           }
-                      }
-                      else
-                      {
-                          if (0 >= self.requestCount) {
-                              [self procedeToFirstAppScreen];
-                          }
-                      }
-                      
-                  } andFailureBlock:^(NSArray *errorMessage) {
-                      [self hideLoading];
-                  }];
+                          
+                      } andFailureBlock:^(NSArray *errorMessage) {
+                          [self hideLoading];
+                      }];
+    }
 }
 
 #pragma mark UIAlertView
@@ -344,6 +341,13 @@ UIAlertViewDelegate
             }
         }
     }
+}
+
+#pragma mark - Fake nav bar button actions
+
+- (void)done
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressDoneNotification object:nil];
 }
 
 @end

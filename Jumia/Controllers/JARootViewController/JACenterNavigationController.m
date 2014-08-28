@@ -22,12 +22,9 @@
 #import "JACartViewController.h"
 #import "RIProduct.h"
 #import "RIApi.h"
+#import "JANavigationBarLayout.h"
 
 @interface JACenterNavigationController ()
-<
-JAChooseCountryDelegate,
-JARecentSearchesDelegate
->
 
 @property (strong, nonatomic) RICart *cart;
 
@@ -44,12 +41,22 @@ JARecentSearchesDelegate
     [self customizeNavigationBar];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectedItemInMenu:)
+                                             selector:@selector(didSelectCountry:)
+                                                 name:kSelectedCountryNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectRecentSearch:)
+                                                 name:kSelectedRecentSearchNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectItemInMenu:)
                                                  name:kMenuDidSelectOptionNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectedLeafCategoryInMenu:)
+                                             selector:@selector(didSelectLeafCategoryInMenu:)
                                                  name:kMenuDidSelectLeafCategoryNotification
                                                object:nil];
     
@@ -64,28 +71,8 @@ JARecentSearchesDelegate
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showBackButton)
-                                                 name:kShowBackNofication
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(changeEditButtonState:)
                                                  name:kEditShouldChangeStateNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(changeBackButtonForTitle:)
-                                                 name:kShowBackButtonWithTitleNofication
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showMainFiltersNavigation)
-                                                 name:kShowMainFiltersNavNofication
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSpecificFilterNavigation:)
-                                                 name:kShowSpecificFilterNavNofication
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -113,6 +100,12 @@ JARecentSearchesDelegate
                                                  name:kShowHomeScreenNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changeNavigationWithNotification:)
+                                                 name:kChangeNavigationBarNotification
+                                               object:nil];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -120,45 +113,36 @@ JARecentSearchesDelegate
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Open menus
+#pragma mark - Left Menu Actions
 
-- (void)openMenu
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
-                                                        object:nil];
-}
-
-- (void)openCart
+- (void)didSelectItemInMenu:(NSNotification *)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
-    if (![[self topViewController] isKindOfClass:[JACartViewController class]])
-    {
+    NSDictionary *selectedItem = [notification object];
+    
+    if ([selectedItem objectForKey:@"index"]) {
+        NSNumber *index = [selectedItem objectForKey:@"index"];
         
-        [self.navigationBarView changeNavigationBarTitle:@"Cart"];
-        
-        JACartViewController *cartViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cartViewController"];
-        [cartViewController setCart:self.cart];
-        
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:cartViewController animated:YES];
-    }
-}
-
-- (void)updateCart:(NSNotification*) notification
-{
-    if ([kUpdateCartNotification isEqualToString:notification.name])
-    {
-        NSDictionary* userInfo = notification.userInfo;
-        self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
-        
-        [self.navigationBarView updateCartProductCount:self.cart.cartCount];
+        if ([index isEqual:@(0)]) {
+            [self changeCenterPanel:@"Home"];
+            
+        } else {
+            if ([index isEqual:@(99)])
+            {
+                // It's to perform a search
+                [self pushCatalogToShowSearchResults:[selectedItem objectForKey:@"text"]];
+            }
+            else
+            {
+                [self changeCenterPanel:[selectedItem objectForKey:@"name"]];
+            }
+        }
     }
 }
 
 - (void)changeCenterPanel:(NSString *)newScreenName
-           titleForNavBar:(NSString *)title
 {
     if ([newScreenName isEqualToString:@"Home"])
     {
@@ -168,7 +152,6 @@ JARecentSearchesDelegate
             
             [self pushViewController:home
                             animated:YES];
-            [self.navigationBarView changedToHomeViewController];
             
             self.viewControllers = @[home];
         }
@@ -182,8 +165,6 @@ JARecentSearchesDelegate
             [self pushViewController:favourites
                             animated:YES];
             
-            [self.navigationBarView changeNavigationBarTitle:title];
-            
             self.viewControllers = @[favourites];
         }
     }
@@ -192,17 +173,12 @@ JARecentSearchesDelegate
         if (![self.viewControllers.lastObject isKindOfClass:[JAChooseCountryViewController class]])
         {
             JAChooseCountryViewController *country = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
-            country.delegate = self;
+            
+            country.navBarLayout.title = @"Choose Country";
+            country.navBarLayout.doneButtonTitle = @"Apply";
             
             [self pushViewController:country
                             animated:YES];
-            
-            [self.navigationBarView changeNavigationBarTitle:title];
-            [self.navigationBarView changeToChooseCountry];
-            
-            [self.navigationBarView.applyButton addTarget:self
-                                                   action:@selector(sendNotificationToChooseCountry)
-                                         forControlEvents:UIControlEventTouchUpInside];
         }
     }
     else if ([newScreenName isEqualToString:@"Recent Searches"])
@@ -210,12 +186,11 @@ JARecentSearchesDelegate
         if (![self.viewControllers.lastObject isKindOfClass:[JARecentSearchesViewController class]])
         {
             JARecentSearchesViewController *searches = [self.storyboard instantiateViewControllerWithIdentifier:@"recentSearchesViewController"];
-            searches.delegate = self;
             
             [self pushViewController:searches
                             animated:YES];
             
-            [self.navigationBarView changeNavigationBarTitle:title];
+            self.viewControllers = @[searches];
         }
     }
     else if ([newScreenName isEqualToString:@"Sign In"])
@@ -226,8 +201,6 @@ JARecentSearchesDelegate
             
             [self pushViewController:myAccount
                             animated:YES];
-            
-            [self.navigationBarView changeNavigationBarTitle:title];
             
             self.viewControllers = @[myAccount];
         }
@@ -241,33 +214,9 @@ JARecentSearchesDelegate
             [self pushViewController:recentlyViewed
                             animated:YES];
             
-            [self.navigationBarView changeNavigationBarTitle:title];
-            
             self.viewControllers = @[recentlyViewed];
         }
     }
-    
-    /*
-     * READ
-     *
-     
-     if enter in 1 level:
-     
-     [self.navigationBarView enteredSecondOrThirdLevelWithBackTitle:@"Electronics"];
-     
-     if enter in 2 or 3 level:
-     
-     [self.navigationBarView enteredInFirstLevelWithTitle:@"Electronics"
-     andProductCount:@"432"];
-     
-     and add back action
-     
-     [self.navigationBarView.backButton addTarget:self
-     action:@selector(back)
-     forControlEvents:UIControlEventTouchUpInside];
-     
-     
-     */
 }
 
 - (void)pushCatalogToShowSearchResults:(NSString *)query
@@ -275,55 +224,42 @@ JARecentSearchesDelegate
     JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
     catalog.searchString = query;
     
-    [self pushViewController:catalog
-                    animated:YES];
-    
-    [self.navigationBarView changeNavigationBarTitle:query];
-    
-    self.viewControllers = @[catalog];
-}
-
-- (void)changeCenterPanelToCatalogWithCategory:(RICategory*)category
-{
-    JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    catalog.navBarLayout.title = query;
     
     [self pushViewController:catalog
                     animated:YES];
     
-    [self.navigationBarView changeNavigationBarTitle:category.name];
-    catalog.category = category;
-    
     self.viewControllers = @[catalog];
 }
 
-- (void)didSelectedItemInMenu:(NSNotification *)notification
+- (void)didSelectLeafCategoryInMenu:(NSNotification *)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
     NSDictionary *selectedItem = [notification object];
     
-    if ([selectedItem objectForKey:@"index"]) {
-        NSNumber *index = [selectedItem objectForKey:@"index"];
+    RICategory* category = [selectedItem objectForKey:@"category"];
+    if (VALID_NOTEMPTY(category, RICategory)) {
         
-        if ([index isEqual:@(0)]) {
-            [self changeCenterPanel:@"Home"
-                     titleForNavBar:nil];
-            
-        } else {
-            if ([index isEqual:@(99)])
-            {
-                // It's to perform a search
-                [self pushCatalogToShowSearchResults:[selectedItem objectForKey:@"text"]];
-            }
-            else
-            {
-                [self changeCenterPanel:[selectedItem objectForKey:@"name"]
-                         titleForNavBar:[selectedItem objectForKey:@"name"]];
-            }
-        }
+        JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        
+        catalog.navBarLayout.title = category.name;
+        catalog.category = category;
+        
+        [self pushViewController:catalog
+                        animated:YES];
+        
+        self.viewControllers = @[catalog];
     }
 }
+
+- (void) showHomeScreen
+{
+    [self changeCenterPanel:@"Home"];
+}
+
+#pragma mark - Teaser Actions
 
 - (void)didSelectTeaserWithCatalogUrl:(NSNotification*)notification
 {
@@ -338,9 +274,8 @@ JARecentSearchesDelegate
         JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
         catalog.catalogUrl = url;
-        
-        [self.navigationBarView changeNavigationBarTitle:title];
-        [self showBackButton];
+        catalog.navBarLayout.title = title;
+        catalog.navBarLayout.backButtonTitle = @"Home";
         
         [self pushViewController:catalog
                         animated:YES];
@@ -370,11 +305,8 @@ JARecentSearchesDelegate
 {
     JACategoriesViewController* categoriesViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"categoriesViewController"];
     
-    [self showBackButton];
-    [self.navigationBarView changeNavigationBarTitle:@"All Categories"];
-    self.navigationBarView.backButton.hidden = NO;
-    self.navigationBarView.backImageView.hidden = NO;
-    self.navigationBarView.titleLabel.hidden = NO;
+    categoriesViewController.navBarLayout.title = @"All Categories";
+    categoriesViewController.navBarLayout.backButtonTitle = @"Home";
     
     [self pushViewController:categoriesViewController animated:YES];
 }
@@ -393,48 +325,105 @@ JARecentSearchesDelegate
         
         catalog.category = category;
         
-        [self showBackButton];
-        [self.navigationBarView changeNavigationBarTitle:category.name];
-        self.navigationBarView.backButton.hidden = NO;
-        self.navigationBarView.backImageView.hidden = NO;
-        self.navigationBarView.titleLabel.hidden = NO;
+        catalog.navBarLayout.title = category.name;
+        catalog.navBarLayout.backButtonTitle = @"All Categories";
         
         [self pushViewController:catalog
                         animated:YES];
     }
 }
 
-- (void)didSelectedLeafCategoryInMenu:(NSNotification *)notification
+#pragma mark - Choose Country
+
+- (void)didSelectCountry:(NSNotification*)notification
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                        object:nil];
-    
-    NSDictionary *selectedItem = [notification object];
-    
-    RICategory* category = [selectedItem objectForKey:@"category"];
-    if (VALID_NOTEMPTY(category, RICategory)) {
+    RICountry *country = notification.object;
+    if (VALID_NOTEMPTY(country, RICountry)) {
+        UINavigationController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+        JASplashViewController *splash = [self.storyboard instantiateViewControllerWithIdentifier:@"splashViewController"];
+        splash.selectedCountry = country;
+        rootViewController.viewControllers = @[splash];
         
-        [self changeCenterPanelToCatalogWithCategory:category];
+        [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
     }
 }
 
-- (void) showHomeScreen
+#pragma mark - Recent Search
+
+- (void)didSelectRecentSearch:(NSNotification*)notification
 {
-    [self changeCenterPanel:@"Home"
-             titleForNavBar:nil];
+    RISearchSuggestion *recentSearch = notification.object;
+    
+    if (VALID_NOTEMPTY(recentSearch, RISearchSuggestion)) {
+        JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        catalog.searchString = recentSearch.item;
+        
+        catalog.navBarLayout.title = recentSearch.item;
+        
+        [self pushViewController:catalog
+                        animated:YES];
+    }
 }
+
+
+
+#pragma mark - Navigation Bar
+
+- (void)customizeNavigationBar
+{
+    [self.navigationItem setHidesBackButton:YES
+                                   animated:NO];
+    
+    self.navigationBarView = [JANavigationBarView getNewNavBarView];
+    [self.navigationBarView initialSetup];
+    
+    [self.navigationBar.viewForBaselineLayout addSubview:self.navigationBarView];
+    
+    [self.navigationBarView.cartButton addTarget:self
+                                          action:@selector(openCart)
+                                forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.leftButton addTarget:self
+                                          action:@selector(openMenu)
+                                forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.doneButton addTarget:self
+                                          action:@selector(done)
+                                forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.editButton addTarget:self
+                                          action:@selector(edit)
+                                forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.backButton addTarget:self
+                                          action:@selector(back)
+                                forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)changeNavigationWithNotification:(NSNotification*)notification
+{
+    JANavigationBarLayout* layout = notification.object;
+    if (VALID_NOTEMPTY(layout, JANavigationBarLayout)) {
+        [self.navigationBarView setupWithNavigationBarLayout:layout];
+    }
+}
+
+- (void)changeEditButtonState:(NSNotification *)notification
+{
+    NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
+    self.navigationBarView.editButton.enabled = [state boolValue];
+}
+
+- (void)updateCart:(NSNotification*) notification
+{
+    NSDictionary* userInfo = notification.userInfo;
+    self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
+    
+    [self.navigationBarView updateCartProductCount:self.cart.cartCount];
+}
+
+
+#pragma mark - Navbar Button actions
 
 - (void)back
 {
     [self popViewControllerAnimated:YES];
-#warning is necessary to check whats the rootview controller and change the bar title
-    if (1 == self.viewControllers.count) {
-        [self.navigationBarView changedToHomeViewController];
-        
-        [self.navigationBarView.backButton removeTarget:nil
-                                                 action:NULL
-                                       forControlEvents:UIControlEventAllEvents];
-    }
 }
 
 - (void)done
@@ -450,107 +439,26 @@ JARecentSearchesDelegate
                                                         object:nil];
 }
 
-- (void)changeBackButtonForTitle:(NSNotification *)notification
+- (void)openCart
 {
-    NSDictionary* userInfo = notification.userInfo;
-    [self.navigationBarView enteredSecondOrThirdLevelWithBackTitle:[userInfo objectForKey:@"name"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                        object:nil];
     
-    [self.navigationBarView.backButton addTarget:self
-                                          action:@selector(back)
-                                forControlEvents:UIControlEventTouchUpInside];
+    if (![[self topViewController] isKindOfClass:[JACartViewController class]])
+    {
+        
+        JACartViewController *cartViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cartViewController"];
+        [cartViewController setCart:self.cart];
+        
+        [self popToRootViewControllerAnimated:NO];
+        [self pushViewController:cartViewController animated:YES];
+    }
 }
 
-#pragma mark - Selected country delegate and notification
-
-- (void)sendNotificationToChooseCountry
+- (void)openMenu
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressApplyNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
                                                         object:nil];
 }
-
-- (void)didSelectedCountry:(RICountry *)country
-{
-    UINavigationController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
-    JASplashViewController *splash = [self.storyboard instantiateViewControllerWithIdentifier:@"splashViewController"];
-    splash.selectedCountry = country;
-    rootViewController.viewControllers = @[splash];
-    
-    [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
-}
-
-#pragma mark - Recent Search delegate
-
-- (void)didSelectedRecentSearch:(RISearchSuggestion *)recentSearch
-{
-    JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-    catalog.searchString = recentSearch.item;
-    
-    [self pushViewController:catalog
-                    animated:YES];
-    
-    [self.navigationBarView changeNavigationBarTitle:recentSearch.item];
-}
-
-#pragma mark - Customize navigation bar
-
-- (void)customizeNavigationBar
-{
-    [self.navigationItem setHidesBackButton:YES
-                                   animated:NO];
-    
-    self.navigationBarView = [JANavigationBarView getNewNavBarView];
-    
-    self.navigationBarView.backgroundColor = JANavBarBackgroundGrey;
-    
-    [self.navigationBar.viewForBaselineLayout addSubview:self.navigationBarView];
-    
-    [self.navigationBarView.cartButton addTarget:self
-                                          action:@selector(openCart)
-                                forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.navigationBarView.leftButton addTarget:self
-                                          action:@selector(openMenu)
-                                forControlEvents:UIControlEventTouchUpInside];
-}
-
-#pragma mark - Show Back
-
-- (void)showBackButton
-{
-    [self.navigationBarView enteredSecondOrThirdLevelWithBackTitle:@"Back"];
-    [self.navigationBarView.backButton addTarget:self
-                                          action:@selector(back)
-                                forControlEvents:UIControlEventTouchUpInside];
-}
-
-#pragma mark - Filters
-
-- (void)changeEditButtonState:(NSNotification *)notification
-{
-    NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
-    self.navigationBarView.editButton.enabled = [state boolValue];
-}
-
-- (void)showMainFiltersNavigation
-{
-    [self.navigationBarView changeToMainFilters];
-    [self.navigationBarView.doneButton addTarget:self
-                                          action:@selector(done)
-                                forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.editButton addTarget:self
-                                          action:@selector(edit)
-                                forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)showSpecificFilterNavigation:(NSNotification *)notification
-{
-    NSDictionary* userInfo = notification.userInfo;
-    [self.navigationBarView changeToSpecificFilter:[userInfo objectForKey:@"name"]];
-    
-    [self.navigationBarView.backButton addTarget:self
-                                          action:@selector(back)
-                                forControlEvents:UIControlEventTouchUpInside];
-}
-
 
 @end

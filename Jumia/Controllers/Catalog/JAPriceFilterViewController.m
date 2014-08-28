@@ -24,6 +24,10 @@
 {
     [super viewDidLoad];
     
+    self.navBarLayout.title = @"Price";
+    self.navBarLayout.backButtonTitle = @"Filters";
+    self.navBarLayout.showDoneButton = YES;
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.priceRangeLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.discountLabel.textColor = UIColorFromRGB(0x4e4e4e);
@@ -47,13 +51,6 @@
 {
     [super viewWillAppear:animated];
     
-    NSMutableDictionary *nameDic = [NSMutableDictionary dictionary];
-    [nameDic addEntriesFromDictionary:@{@"name": @"Price"}];
-    
-    NSNotificationCenter* notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter postNotificationName:kShowSpecificFilterNavNofication
-                                      object:self
-                                    userInfo:nameDic];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doneButtonPressed)
                                                  name:kDidPressDoneNotification
                                                object:nil];

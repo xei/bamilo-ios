@@ -108,18 +108,12 @@ FBLoginViewDelegate
 
 - (IBAction)signUp:(id)sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
-                                                        object:nil];
-    
     [self performSegueWithIdentifier:@"segueSignUp"
                               sender:nil];
 }
 
 - (IBAction)forgot:(id)sender
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
-                                                        object:nil];
-    
+{    
     [self performSegueWithIdentifier:@"segueToForgot"
                               sender:nil];
 }
