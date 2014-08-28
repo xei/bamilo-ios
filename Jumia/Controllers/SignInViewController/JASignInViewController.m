@@ -304,12 +304,18 @@ FBLoginViewDelegate
 
 - (void)changedFocus:(UIView *)view
 {
-    self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) - view.frame.origin.y);
+    [UIView animateWithDuration:0.5f animations:^{
+        self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) - view.frame.origin.y);
+        [self.loginView layoutIfNeeded];
+    }];
 }
 
 - (void) lostFocus
 {
-    self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) + 10.0f);
+    [UIView animateWithDuration:0.5f animations:^{
+        self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) + 10.0f);
+        [self.loginView layoutIfNeeded];
+    }];
 }
 
 @end
