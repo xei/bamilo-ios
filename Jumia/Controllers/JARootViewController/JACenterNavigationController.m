@@ -17,12 +17,12 @@
 #import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
 #import "JACategoriesViewController.h"
-#import "JAMyAccountViewController.h"
 #import "JARecentlyViewedViewController.h"
 #import "JACartViewController.h"
 #import "JAForgotPasswordViewController.h"
 #import "JALoginViewController.h"
 #import "JAAddressesViewController.h"
+#import "JASignInViewController.h"
 #import "JASignupViewController.h"
 #import "RIProduct.h"
 #import "RIApi.h"
@@ -173,7 +173,7 @@
 {
     if ([newScreenName isEqualToString:@"Home"])
     {
-        if (![self.viewControllers.lastObject isKindOfClass:[JAHomeViewController class]])
+        if (![[self topViewController] isKindOfClass:[JAHomeViewController class]])
         {
             JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
             
@@ -185,7 +185,7 @@
     }
     else if ([newScreenName isEqualToString:@"My Favourites"])
     {
-        if (![self.viewControllers.lastObject isKindOfClass:[JAMyFavouritesViewController class]])
+        if (![[self topViewController] isKindOfClass:[JAMyFavouritesViewController class]])
         {
             JAMyFavouritesViewController *favourites = [self.storyboard instantiateViewControllerWithIdentifier:@"myFavouritesViewController"];
             
@@ -197,7 +197,7 @@
     }
     else if ([newScreenName isEqualToString:@"Choose Country"])
     {
-        if (![self.viewControllers.lastObject isKindOfClass:[JAChooseCountryViewController class]])
+        if (![[self topViewController] isKindOfClass:[JAChooseCountryViewController class]])
         {
             JAChooseCountryViewController *country = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
             
@@ -207,7 +207,7 @@
     }
     else if ([newScreenName isEqualToString:@"Recent Searches"])
     {
-        if (![self.viewControllers.lastObject isKindOfClass:[JARecentSearchesViewController class]])
+        if (![[self topViewController] isKindOfClass:[JARecentSearchesViewController class]])
         {
             JARecentSearchesViewController *searches = [self.storyboard instantiateViewControllerWithIdentifier:@"recentSearchesViewController"];
             
@@ -219,19 +219,19 @@
     }
     else if ([newScreenName isEqualToString:@"Sign In"])
     {
-        if (![self.viewControllers.lastObject isKindOfClass:[JAMyAccountViewController class]])
+        if (![[self topViewController] isKindOfClass:[JASignInViewController class]])
         {
-            JAMyAccountViewController *myAccount = [self.storyboard instantiateViewControllerWithIdentifier:@"myAccountViewController"];
+            JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
             
-            [self pushViewController:myAccount
+            [self pushViewController:signInViewController
                             animated:YES];
             
-            self.viewControllers = @[myAccount];
+            self.viewControllers = @[signInViewController];
         }
     }
     else if ([newScreenName isEqualToString:@"Recently Viewed"])
     {
-        if (![self.viewControllers.lastObject isKindOfClass:[JARecentlyViewedViewController class]])
+        if (![[self topViewController] isKindOfClass:[JARecentlyViewedViewController class]])
         {
             JARecentlyViewedViewController *recentlyViewed = [self.storyboard instantiateViewControllerWithIdentifier:@"recentlyViewedViewController"];
             
