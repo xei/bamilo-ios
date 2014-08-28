@@ -34,6 +34,9 @@
 {
     [super viewDidLoad];
     
+    self.navBarLayout.title = @"Choose Country";
+    self.navBarLayout.doneButtonTitle = @"Apply";
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applyButtonPressed)
                                                  name:kDidPressDoneNotification
@@ -55,10 +58,7 @@
         
         NSIndexPath *tempIndex;
         
-        if (0 == countryUrl.length) {
-            tempIndex = [NSIndexPath indexPathForItem:0
-                                            inSection:0];
-        } else {
+        if (0 != countryUrl.length) {
             NSInteger index = 0;
 
             for (RICountry *country in countries) {
@@ -71,7 +71,9 @@
             }
         }
         
-        [self tableView:self.tableViewContries didSelectRowAtIndexPath:tempIndex];
+        if (VALID_NOTEMPTY(tempIndex, NSIndexPath)) {
+            [self tableView:self.tableViewContries didSelectRowAtIndexPath:tempIndex];
+        }
         
     } andFailureBlock:^(NSArray *errorMessages) {
         
@@ -160,6 +162,8 @@
         
         self.selectedIndex = indexPath;
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kEditShouldChangeStateNotification object:nil userInfo:@{@"enabled":[NSNumber numberWithBool:YES]}];
     
     [tableView deselectRowAtIndexPath:indexPath
                              animated:YES];

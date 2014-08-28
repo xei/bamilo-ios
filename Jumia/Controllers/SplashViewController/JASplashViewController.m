@@ -185,6 +185,7 @@ UIAlertViewDelegate
             
             choose.navBarLayout.showMenuButton = NO;
             choose.navBarLayout.doneButtonTitle = @"Apply";
+            choose.navBarLayout.title = @"Choose Country";
             
             //center navigation doesn't exit yet, create a "fake" nav bar
             self.navigationBarView = [JANavigationBarView getNewNavBarView];
@@ -193,6 +194,8 @@ UIAlertViewDelegate
             [self.navigationBarView initialSetup];
             [self.navigationBarView.doneButton addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
             [self.navigationBarView setupWithNavigationBarLayout:choose.navBarLayout];
+            self.navigationBarView.doneButton.enabled = NO;
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDoneButtonState:) name:kEditShouldChangeStateNotification object:nil];
             
             [self.navigationController pushViewController:choose
                                                  animated:YES];
@@ -348,6 +351,13 @@ UIAlertViewDelegate
 - (void)done
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressDoneNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kEditShouldChangeStateNotification object:nil];
+}
+
+- (void)changeDoneButtonState:(NSNotification *)notification
+{
+    NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
+    self.navigationBarView.doneButton.enabled = [state boolValue];
 }
 
 @end

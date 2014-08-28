@@ -80,6 +80,11 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changeDoneButtonState:)
+                                                 name:kDoneShouldChangeStateNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectTeaserWithCatalogUrl:)
                                                  name:kDidSelectTeaserWithCatalogUrlNofication
                                                object:nil];
@@ -195,9 +200,6 @@
         if (![self.viewControllers.lastObject isKindOfClass:[JAChooseCountryViewController class]])
         {
             JAChooseCountryViewController *country = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
-            
-            country.navBarLayout.title = @"Choose Country";
-            country.navBarLayout.doneButtonTitle = @"Apply";
             
             [self pushViewController:country
                             animated:YES];
@@ -458,6 +460,12 @@
 {
     NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
     self.navigationBarView.editButton.enabled = [state boolValue];
+}
+
+- (void)changeDoneButtonState:(NSNotification *)notification
+{
+    NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
+    self.navigationBarView.doneButton.enabled = [state boolValue];
 }
 
 - (void)updateCart:(NSNotification*) notification
