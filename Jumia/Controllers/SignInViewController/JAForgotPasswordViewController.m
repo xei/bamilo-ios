@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *buttonRequest;
 @property (weak, nonatomic) IBOutlet UILabel *labelTop;
 @property (strong, nonatomic) NSMutableArray *fieldsArray;
-@property (strong, nonatomic) RIForm *tempForm;
+@property (strong, nonatomic) JADynamicForm *dynamicForm;
 
 @end
 
@@ -37,13 +37,12 @@
     
     [RIForm getForm:@"forgotpassword"
        successBlock:^(RIForm *form) {
-           self.tempForm = form;
            
            [self hideLoading];
            
-           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:35.0f];
-           self.fieldsArray = [views copy];
-           for(UIView *view in views)
+           self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:35.0f];
+           self.fieldsArray = [self.dynamicForm.formViews copy];
+           for(UIView *view in self.dynamicForm.formViews)
            {
                [self.contentView addSubview:view];
            }
@@ -88,11 +87,11 @@
 {
     [self.view endEditing:YES];
     
-    BOOL hasErrors = [JAFormComponent hasErrors:self.fieldsArray];
+    BOOL hasErrors = [self.dynamicForm checkErrors];
     
     if(!hasErrors)
     {
-        NSDictionary *temp = [JAFormComponent getValues:self.fieldsArray form:self.tempForm];
+        NSDictionary *temp = [self.dynamicForm getValues];
         
         [self showLoading];
         

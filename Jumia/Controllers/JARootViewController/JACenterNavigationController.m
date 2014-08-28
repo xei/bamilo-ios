@@ -20,6 +20,10 @@
 #import "JAMyAccountViewController.h"
 #import "JARecentlyViewedViewController.h"
 #import "JACartViewController.h"
+#import "JAForgotPasswordViewController.h"
+#import "JALoginViewController.h"
+#import "JAAddressesViewController.h"
+#import "JASignupViewController.h"
 #import "RIProduct.h"
 #import "RIApi.h"
 #import "JANavigationBarLayout.h"
@@ -105,7 +109,25 @@
                                                  name:kChangeNavigationBarNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showForgotPasswordScreen)
+                                                 name:kShowForgotPasswordScreenNotification
+                                               object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutLoginScreen)
+                                                 name:kShowCheckoutLoginScreenNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutAddressesScreen)
+                                                 name:kShowCheckoutAddressesScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSignUpScreen)
+                                                 name:kShowSignUpScreenNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -331,6 +353,34 @@
         [self pushViewController:catalog
                         animated:YES];
     }
+}
+
+- (void)showForgotPasswordScreen
+{
+    JAForgotPasswordViewController *forgotVC = [self.storyboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
+    
+    [self pushViewController:forgotVC animated:YES];
+}
+
+- (void)showCheckoutLoginScreen
+{
+    JALoginViewController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+    
+    [self pushViewController:loginVC animated:YES];
+}
+
+- (void)showCheckoutAddressesScreen
+{
+    JAAddressesViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
+    
+    [self pushViewController:addressesVC animated:YES];
+}
+
+- (void)showSignUpScreen
+{
+    JASignupViewController *signUpVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signUpViewController"];
+    
+    [self pushViewController:signUpVC animated:YES];
 }
 
 #pragma mark - Choose Country

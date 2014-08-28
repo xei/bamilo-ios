@@ -82,10 +82,12 @@
                          fontSize:10.0f
             specialPriceOnTheLeft:NO];
     self.priceView.frame = CGRectMake(90.0f,
-                                      32.0f,
+                                      34.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
     [self.contentView addSubview:self.priceView];
+    
+    self.sizeLabel.text = cartItem.variation;
     
     self.discountLabel.text = [NSString stringWithFormat:@"-%d%%",[cartItem.savingPercentage integerValue]];
     self.discountLabel.hidden = !cartItem.savingPercentage;

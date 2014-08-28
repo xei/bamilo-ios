@@ -34,11 +34,6 @@
 		4A392143198925E300B70A9C /* JANavigationBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A392142198925E300B70A9C /* JANavigationBarView.xib */; };
 		4A454F38199CBD4D00B44821 /* RICustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A454F37199CBD4D00B44821 /* RICustomer.m */; };
 		4A454F3B199CBF1400B44821 /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A454F3A199CBF1400B44821 /* RIAddress.m */; };
-		4A454F43199CE65100B44821 /* JABirthDateComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A454F3D199CE65100B44821 /* JABirthDateComponent.xib */; };
-		4A454F44199CE65100B44821 /* JACheckBoxComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A454F3E199CE65100B44821 /* JACheckBoxComponent.xib */; };
-		4A454F45199CE65100B44821 /* JAFormComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A454F40199CE65100B44821 /* JAFormComponent.m */; };
-		4A454F46199CE65100B44821 /* JAGenderComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A454F41199CE65100B44821 /* JAGenderComponent.xib */; };
-		4A454F47199CE65100B44821 /* JATextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A454F42199CE65100B44821 /* JATextField.xib */; };
 		4A454F4A199CE67500B44821 /* JAForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */; };
 		4A480C2C19951E9700E054B8 /* JAProductDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A480C2B19951E9700E054B8 /* JAProductDetailsViewController.m */; };
 		4A4ABF0C198B903B00342D92 /* JACountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4ABF0B198B903B00342D92 /* JACountryCell.m */; };
@@ -70,7 +65,15 @@
 		B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03A2198A5441002046DF /* JAPaymentViewController.m */; };
 		B50B03A6198A544A002046DF /* JAShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03A5198A544A002046DF /* JAShippingViewController.m */; };
 		B50B03AB198A8861002046DF /* JAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03AA198A8861002046DF /* JAUtils.m */; };
-		B51777B219A7902400ED0AC7 /* JACartListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B51777B119A7902400ED0AC7 /* JACartListHeaderView.m */; };
+		B510B01019AE466B00A9754A /* JABirthDateComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B510B00319AE466B00A9754A /* JABirthDateComponent.m */; };
+		B510B01119AE466B00A9754A /* JABirthDateComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B510B00419AE466B00A9754A /* JABirthDateComponent.xib */; };
+		B510B01219AE466B00A9754A /* JACheckBoxComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B510B00619AE466B00A9754A /* JACheckBoxComponent.m */; };
+		B510B01319AE466B00A9754A /* JACheckBoxComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B510B00719AE466B00A9754A /* JACheckBoxComponent.xib */; };
+		B510B01419AE466B00A9754A /* JADynamicForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B510B00919AE466B00A9754A /* JADynamicForm.m */; };
+		B510B01519AE466B00A9754A /* JAGenderComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B510B00B19AE466B00A9754A /* JAGenderComponent.m */; };
+		B510B01619AE466B00A9754A /* JAGenderComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B510B00C19AE466B00A9754A /* JAGenderComponent.xib */; };
+		B510B01719AE466B00A9754A /* JATextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B510B00E19AE466B00A9754A /* JATextField.m */; };
+		B510B01819AE466B00A9754A /* JATextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = B510B00F19AE466B00A9754A /* JATextField.xib */; };
 		B517FDF91982517300F65253 /* RICart.m in Sources */ = {isa = PBXBuildFile; fileRef = B517FDF81982517300F65253 /* RICart.m */; };
 		B517FDFC198265AD00F65253 /* RICartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B517FDFB198265AD00F65253 /* RICartItem.m */; };
 		B5225E1B1989308300C18F1E /* RIPaymentMethodFormOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E131989308300C18F1E /* RIPaymentMethodFormOption.m */; };
@@ -78,6 +81,8 @@
 		B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E171989308300C18F1E /* RIPaymentMethodForm.m */; };
 		B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E191989308300C18F1E /* RIPaymentInformation.m */; };
 		B5225E30198950C500C18F1E /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
+		B542546B19AE9F7500C792FF /* JACartListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B542546919AE9F7500C792FF /* JACartListHeaderView.m */; };
+		B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		B56BBF3319A60D5400F4B1A3 /* JACartListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */; };
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
@@ -183,10 +188,6 @@
 		B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F61986C41D0094C92C /* RICheckout.m */; };
 		B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759B19814EF000005B13 /* FacebookSDK.framework */; };
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
-		B5F5115619AB4317004A4BA6 /* JATextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F5115519AB4317004A4BA6 /* JATextField.m */; };
-		B5F62BC419AB499D0024D67F /* JABirthDateComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F62BC319AB499D0024D67F /* JABirthDateComponent.m */; };
-		B5F62BC719AB49AA0024D67F /* JACheckBoxComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F62BC619AB49AA0024D67F /* JACheckBoxComponent.m */; };
-		B5F62BCA19AB49BD0024D67F /* JAGenderComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F62BC919AB49BD0024D67F /* JAGenderComponent.m */; };
 		B5FE9FB119A1F362006F7D63 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */; };
 		B5FE9FB319A1F4C6006F7D63 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */; };
 		B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */; };
@@ -315,12 +316,6 @@
 		4A454F37199CBD4D00B44821 /* RICustomer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICustomer.m; sourceTree = "<group>"; };
 		4A454F39199CBF1400B44821 /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
 		4A454F3A199CBF1400B44821 /* RIAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAddress.m; sourceTree = "<group>"; };
-		4A454F3D199CE65100B44821 /* JABirthDateComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JABirthDateComponent.xib; sourceTree = "<group>"; };
-		4A454F3E199CE65100B44821 /* JACheckBoxComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACheckBoxComponent.xib; sourceTree = "<group>"; };
-		4A454F3F199CE65100B44821 /* JAFormComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFormComponent.h; sourceTree = "<group>"; };
-		4A454F40199CE65100B44821 /* JAFormComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAFormComponent.m; sourceTree = "<group>"; };
-		4A454F41199CE65100B44821 /* JAGenderComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAGenderComponent.xib; sourceTree = "<group>"; };
-		4A454F42199CE65100B44821 /* JATextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JATextField.xib; sourceTree = "<group>"; };
 		4A454F48199CE67500B44821 /* JAForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAForgotPasswordViewController.h; sourceTree = "<group>"; };
 		4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAForgotPasswordViewController.m; sourceTree = "<group>"; };
 		4A480C2A19951E9700E054B8 /* JAProductDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAProductDetailsViewController.h; sourceTree = "<group>"; };
@@ -374,8 +369,20 @@
 		B50B03A5198A544A002046DF /* JAShippingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAShippingViewController.m; sourceTree = "<group>"; };
 		B50B03A9198A8861002046DF /* JAUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAUtils.h; path = Utils/JAUtils.h; sourceTree = "<group>"; };
 		B50B03AA198A8861002046DF /* JAUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAUtils.m; path = Utils/JAUtils.m; sourceTree = "<group>"; };
-		B51777B019A7902400ED0AC7 /* JACartListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartListHeaderView.h; path = Jumia/View/Headers/JACartListHeaderView.h; sourceTree = SOURCE_ROOT; };
-		B51777B119A7902400ED0AC7 /* JACartListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartListHeaderView.m; path = Jumia/View/Headers/JACartListHeaderView.m; sourceTree = SOURCE_ROOT; };
+		B510B00219AE466B00A9754A /* JABirthDateComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABirthDateComponent.h; sourceTree = "<group>"; };
+		B510B00319AE466B00A9754A /* JABirthDateComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABirthDateComponent.m; sourceTree = "<group>"; };
+		B510B00419AE466B00A9754A /* JABirthDateComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JABirthDateComponent.xib; sourceTree = "<group>"; };
+		B510B00519AE466B00A9754A /* JACheckBoxComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACheckBoxComponent.h; sourceTree = "<group>"; };
+		B510B00619AE466B00A9754A /* JACheckBoxComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACheckBoxComponent.m; sourceTree = "<group>"; };
+		B510B00719AE466B00A9754A /* JACheckBoxComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACheckBoxComponent.xib; sourceTree = "<group>"; };
+		B510B00819AE466B00A9754A /* JADynamicForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JADynamicForm.h; sourceTree = "<group>"; };
+		B510B00919AE466B00A9754A /* JADynamicForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JADynamicForm.m; sourceTree = "<group>"; };
+		B510B00A19AE466B00A9754A /* JAGenderComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAGenderComponent.h; sourceTree = "<group>"; };
+		B510B00B19AE466B00A9754A /* JAGenderComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAGenderComponent.m; sourceTree = "<group>"; };
+		B510B00C19AE466B00A9754A /* JAGenderComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAGenderComponent.xib; sourceTree = "<group>"; };
+		B510B00D19AE466B00A9754A /* JATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextField.h; sourceTree = "<group>"; };
+		B510B00E19AE466B00A9754A /* JATextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATextField.m; sourceTree = "<group>"; };
+		B510B00F19AE466B00A9754A /* JATextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JATextField.xib; sourceTree = "<group>"; };
 		B517FDF71982517300F65253 /* RICart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICart.h; sourceTree = "<group>"; };
 		B517FDF81982517300F65253 /* RICart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICart.m; sourceTree = "<group>"; };
 		B517FDFA198265AD00F65253 /* RICartItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICartItem.h; sourceTree = "<group>"; };
@@ -390,6 +397,9 @@
 		B5225E1A1989308300C18F1E /* RIPaymentInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPaymentInformation.h; sourceTree = "<group>"; };
 		B5225E2E198950C500C18F1E /* JACartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACartViewController.h; sourceTree = "<group>"; };
 		B5225E2F198950C500C18F1E /* JACartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACartViewController.m; sourceTree = "<group>"; };
+		B542546819AE9F7500C792FF /* JACartListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartListHeaderView.h; path = Jumia/View/Headers/JACartListHeaderView.h; sourceTree = SOURCE_ROOT; };
+		B542546919AE9F7500C792FF /* JACartListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartListHeaderView.m; path = Jumia/View/Headers/JACartListHeaderView.m; sourceTree = SOURCE_ROOT; };
+		B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACartListHeaderView.xib; path = Jumia/View/Headers/JACartListHeaderView.xib; sourceTree = SOURCE_ROOT; };
 		B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACartListCell.xib; sourceTree = "<group>"; };
 		B5A301A819811D0700F71726 /* Jumia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jumia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A301AC19811D0700F71726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -580,14 +590,6 @@
 		B5C682F71986C41D0094C92C /* RICheckout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICheckout.h; sourceTree = "<group>"; };
 		B5EF759B19814EF000005B13 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
-		B5F5115419AB4317004A4BA6 /* JATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextField.h; sourceTree = "<group>"; };
-		B5F5115519AB4317004A4BA6 /* JATextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATextField.m; sourceTree = "<group>"; };
-		B5F62BC219AB499D0024D67F /* JABirthDateComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABirthDateComponent.h; sourceTree = "<group>"; };
-		B5F62BC319AB499D0024D67F /* JABirthDateComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABirthDateComponent.m; sourceTree = "<group>"; };
-		B5F62BC519AB49AA0024D67F /* JACheckBoxComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACheckBoxComponent.h; sourceTree = "<group>"; };
-		B5F62BC619AB49AA0024D67F /* JACheckBoxComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACheckBoxComponent.m; sourceTree = "<group>"; };
-		B5F62BC819AB49BD0024D67F /* JAGenderComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAGenderComponent.h; sourceTree = "<group>"; };
-		B5F62BC919AB49BD0024D67F /* JAGenderComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAGenderComponent.m; sourceTree = "<group>"; };
 		B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
 		B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking.plist; sourceTree = "<group>"; };
@@ -827,27 +829,6 @@
 			path = GlobalNavigationBar;
 			sourceTree = "<group>";
 		};
-		4A454F3C199CE65100B44821 /* FormComponents */ = {
-			isa = PBXGroup;
-			children = (
-				4A454F3F199CE65100B44821 /* JAFormComponent.h */,
-				4A454F40199CE65100B44821 /* JAFormComponent.m */,
-				B5F62BC219AB499D0024D67F /* JABirthDateComponent.h */,
-				B5F62BC319AB499D0024D67F /* JABirthDateComponent.m */,
-				4A454F3D199CE65100B44821 /* JABirthDateComponent.xib */,
-				B5F62BC519AB49AA0024D67F /* JACheckBoxComponent.h */,
-				B5F62BC619AB49AA0024D67F /* JACheckBoxComponent.m */,
-				4A454F3E199CE65100B44821 /* JACheckBoxComponent.xib */,
-				B5F62BC819AB49BD0024D67F /* JAGenderComponent.h */,
-				B5F62BC919AB49BD0024D67F /* JAGenderComponent.m */,
-				4A454F41199CE65100B44821 /* JAGenderComponent.xib */,
-				B5F5115419AB4317004A4BA6 /* JATextField.h */,
-				B5F5115519AB4317004A4BA6 /* JATextField.m */,
-				4A454F42199CE65100B44821 /* JATextField.xib */,
-			);
-			path = FormComponents;
-			sourceTree = "<group>";
-		};
 		4A4ABF08198B902600342D92 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -890,8 +871,8 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B510B00119AE466B00A9754A /* DynamicForms */,
 				B51777AF19A78FEB00ED0AC7 /* Headers */,
-				4A454F3C199CE65100B44821 /* FormComponents */,
 				4A1892CF199399EC0036F327 /* ReviewCell */,
 				CE3FC5A41990E209003B4A27 /* GenericComponents */,
 				4AE730B0198F8A74000CA1DD /* PDVComponents */,
@@ -1062,11 +1043,33 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
+		B510B00119AE466B00A9754A /* DynamicForms */ = {
+			isa = PBXGroup;
+			children = (
+				B510B00219AE466B00A9754A /* JABirthDateComponent.h */,
+				B510B00319AE466B00A9754A /* JABirthDateComponent.m */,
+				B510B00419AE466B00A9754A /* JABirthDateComponent.xib */,
+				B510B00519AE466B00A9754A /* JACheckBoxComponent.h */,
+				B510B00619AE466B00A9754A /* JACheckBoxComponent.m */,
+				B510B00719AE466B00A9754A /* JACheckBoxComponent.xib */,
+				B510B00819AE466B00A9754A /* JADynamicForm.h */,
+				B510B00919AE466B00A9754A /* JADynamicForm.m */,
+				B510B00A19AE466B00A9754A /* JAGenderComponent.h */,
+				B510B00B19AE466B00A9754A /* JAGenderComponent.m */,
+				B510B00C19AE466B00A9754A /* JAGenderComponent.xib */,
+				B510B00D19AE466B00A9754A /* JATextField.h */,
+				B510B00E19AE466B00A9754A /* JATextField.m */,
+				B510B00F19AE466B00A9754A /* JATextField.xib */,
+			);
+			path = DynamicForms;
+			sourceTree = "<group>";
+		};
 		B51777AF19A78FEB00ED0AC7 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				B51777B019A7902400ED0AC7 /* JACartListHeaderView.h */,
-				B51777B119A7902400ED0AC7 /* JACartListHeaderView.m */,
+				B542546819AE9F7500C792FF /* JACartListHeaderView.h */,
+				B542546919AE9F7500C792FF /* JACartListHeaderView.m */,
+				B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */,
 			);
 			name = Headers;
 			path = Cells;
@@ -1968,6 +1971,7 @@
 				B5A3024319811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */,
 				CEDEB9B5199BA8FA0022BAB5 /* slider-default-trackBackground.png in Resources */,
 				4A01EE63199259D1005F5AD1 /* JAPDVGalleryView.xib in Resources */,
+				B510B01619AE466B00A9754A /* JAGenderComponent.xib in Resources */,
 				CEDEB9B2199BA8FA0022BAB5 /* slider-default-handle@2x.png in Resources */,
 				B5A3024919811E8A00F71726 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
 				B5A3024819811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
@@ -1983,13 +1987,15 @@
 				CEDEB9B9199BA8FA0022BAB5 /* slider-default7-handle.png in Resources */,
 				CEC3F71D19A5FDDA00DE12F6 /* JAGrayButtonCell.xib in Resources */,
 				B5A3023F19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
+				B510B01119AE466B00A9754A /* JABirthDateComponent.xib in Resources */,
 				CEDEB9C0199BA8FA0022BAB5 /* slider-default7-trackCrossedOver@2x.png in Resources */,
 				CEDEB9B7199BA8FA0022BAB5 /* slider-default-trackCrossedOver@2x.png in Resources */,
 				B5A3024619811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
 				CE2FB75819938EB500E7CD00 /* JACatalogGridCell.xib in Resources */,
 				B5A3024219811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
-				4A454F44199CE65100B44821 /* JACheckBoxComponent.xib in Resources */,
+				B510B01819AE466B00A9754A /* JATextField.xib in Resources */,
 				B5A3023919811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib in Resources */,
+				B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */,
 				B5A3024C19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				B5007AC419A4E8EC0024035A /* HockeySDKResources.bundle in Resources */,
 				4A4F12EA198FF35600F93C89 /* JAPDVRelatedItem.xib in Resources */,
@@ -1997,8 +2003,8 @@
 				CEDEB9BD199BA8FA0022BAB5 /* slider-default7-trackBackground.png in Resources */,
 				CEDEB9B4199BA8FA0022BAB5 /* slider-default-track@2x.png in Resources */,
 				CEDEB9C5199BA8FA0022BAB5 /* slider-metal-track.png in Resources */,
+				B510B01319AE466B00A9754A /* JACheckBoxComponent.xib in Resources */,
 				CEDEB9BF199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png in Resources */,
-				4A454F43199CE65100B44821 /* JABirthDateComponent.xib in Resources */,
 				CEDEB9C1199BA8FA0022BAB5 /* slider-metal-handle-highlighted.png in Resources */,
 				4A2FD843199119D900C65C1D /* JAPDVProductInfo.xib in Resources */,
 				B5FE9FB719A1FD1B006F7D63 /* RITrackingDebug.plist in Resources */,
@@ -2015,7 +2021,6 @@
 				B5A3024F19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
 				B5A3024B19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
 				CEDEB9BB199BA8FA0022BAB5 /* slider-default7-track.png in Resources */,
-				4A454F47199CE65100B44821 /* JATextField.xib in Resources */,
 				B5A3023419811E8A00F71726 /* A4S.bundle in Resources */,
 				B5A3023B19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
 				CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */,
@@ -2027,7 +2032,6 @@
 				CEDEB9BE199BA8FA0022BAB5 /* slider-default7-trackBackground@2x.png in Resources */,
 				B5A3024D19811E8A00F71726 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				B5A3023D19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */,
-				4A454F46199CE65100B44821 /* JAGenderComponent.xib in Resources */,
 				CEDEB9B3199BA8FA0022BAB5 /* slider-default-track.png in Resources */,
 				B5A3024E19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
 				CE69B587198662E6005CC699 /* Main.storyboard in Resources */,
@@ -2056,10 +2060,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5A302C919811E9200F71726 /* RIProductSimple.m in Sources */,
+				B542546B19AE9F7500C792FF /* JACartListHeaderView.m in Sources */,
 				4AE730C4198F8AF3000CA1DD /* JACTAButtons.m in Sources */,
 				B5A302D719811E9200F71726 /* RIError.m in Sources */,
 				CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */,
 				B50B03A6198A544A002046DF /* JAShippingViewController.m in Sources */,
+				B510B01219AE466B00A9754A /* JACheckBoxComponent.m in Sources */,
 				B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */,
 				CED30C24199CAA5C00C67F4B /* JAGenericFilterViewController.m in Sources */,
 				4A1C8E44199B79440045BD8D /* RIField.m in Sources */,
@@ -2083,7 +2089,6 @@
 				CE445879198BF15B00CE7E8D /* JACampaignsTeaserView.m in Sources */,
 				4A39213419891FB200B70A9C /* JAMyAccountViewController.m in Sources */,
 				CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */,
-				B51777B219A7902400ED0AC7 /* JACartListHeaderView.m in Sources */,
 				B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */,
 				CE2F576E19913B33000A9E09 /* JACatalogListCell.m in Sources */,
 				4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */,
@@ -2139,10 +2144,10 @@
 				B50B03AB198A8861002046DF /* JAUtils.m in Sources */,
 				4AE730C7198F8B05000CA1DD /* JAPDVViewController.m in Sources */,
 				CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */,
-				B5F62BC719AB49AA0024D67F /* JACheckBoxComponent.m in Sources */,
 				B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */,
-				B5F62BCA19AB49BD0024D67F /* JAGenderComponent.m in Sources */,
+				B510B01519AE466B00A9754A /* JAGenderComponent.m in Sources */,
 				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
+				B510B01719AE466B00A9754A /* JATextField.m in Sources */,
 				B5A3025319811E8A00F71726 /* AdXTracking.m in Sources */,
 				B5A302C619811E9200F71726 /* RIImageResolution.m in Sources */,
 				B5A302E619811E9200F71726 /* RIURLCacheWrapper.m in Sources */,
@@ -2150,21 +2155,19 @@
 				B5A302C019811E9200F71726 /* RICategory.m in Sources */,
 				B5A302CA19811E9200F71726 /* RISearchSuggestion.m in Sources */,
 				B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */,
-				4A454F45199CE65100B44821 /* JAFormComponent.m in Sources */,
 				B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */,
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
 				CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */,
 				CE33CA0119AB36FA00333B1A /* JAPriceView.m in Sources */,
-				B5F5115619AB4317004A4BA6 /* JATextField.m in Sources */,
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
 				B5A302D319811E9200F71726 /* RIVariation.m in Sources */,
 				CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */,
 				B5A30303198121A400F71726 /* JABaseViewController.m in Sources */,
 				B5A302CB19811E9200F71726 /* RISection.m in Sources */,
-				B5F62BC419AB499D0024D67F /* JABirthDateComponent.m in Sources */,
 				B517FDF91982517300F65253 /* RICart.m in Sources */,
 				B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */,
 				B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */,
+				B510B01419AE466B00A9754A /* JADynamicForm.m in Sources */,
 				B5A301AE19811D0700F71726 /* main.m in Sources */,
 				B5A3025D19811E8A00F71726 /* UIButton+WebCache.m in Sources */,
 				B5A3025C19811E8A00F71726 /* SDWebImagePrefetcher.m in Sources */,
@@ -2190,6 +2193,7 @@
 				4A480C2C19951E9700E054B8 /* JAProductDetailsViewController.m in Sources */,
 				B5A3025819811E8A00F71726 /* SDImageCache.m in Sources */,
 				B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */,
+				B510B01019AE466B00A9754A /* JABirthDateComponent.m in Sources */,
 				B5A302D219811E9200F71726 /* RIURLCache.m in Sources */,
 				B5A302D919811E9200F71726 /* RIRatings.m in Sources */,
 				B5A302DC19811E9200F71726 /* RIDataBaseWrapper.m in Sources */,

@@ -25,6 +25,21 @@
     return nil;
 }
 
+- (void)setupWithField:(RIField*)field
+{
+    self.field = field;
+    [self.textField setPlaceholder:field.label];
+    
+    if(VALID_NOTEMPTY(field.requiredMessage, NSString))
+    {
+        [self.textField setTextColor:UIColorFromRGB(0x666666)];
+        [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+        
+        [self.requiredSymbol setHidden:NO];
+        [self.requiredSymbol setTextColor:UIColorFromRGB(0xfaa41a)];
+    }
+}
+
 - (BOOL)isValid
 {
     if ((self.field.requiredMessage.length > 0) && (self.textField.text.length == 0))
@@ -35,7 +50,8 @@
                           cancelButtonTitle:nil
                           otherButtonTitles:@"Ok", nil] show];
         
-        self.textField.backgroundColor = [UIColor redColor];
+        [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
+        [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
         
         return NO;
     }
@@ -50,7 +66,8 @@
                                   cancelButtonTitle:nil
                                   otherButtonTitles:@"Ok", nil] show];
                 
-                self.textField.backgroundColor = [UIColor redColor];
+                [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
+                [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
                 
                 return NO;
             }

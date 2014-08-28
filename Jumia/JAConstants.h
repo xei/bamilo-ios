@@ -31,6 +31,10 @@
 #define kShowHomeScreenNotification @"NOTIFICATION_HOME_SCREEN"
 #define kSelectedRecentSearchNotification @"NOTIFICATION_SELECTED_RECENT_SEARCH"
 #define kOpenCartNotification @"NOTIFICATION_OPEN_CART"
+#define kShowForgotPasswordScreenNotification @"NOTIFICATION_SHOW_FORGOT_PASSWORD_SCREEN"
+#define kShowCheckoutLoginScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_LOGIN_SCREEN"
+#define kShowCheckoutAddressesScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_ADDRESSES_SCREEN"
+#define kShowSignUpScreenNotification @"NOTIFICATION_SHOW_SIGN_UP_SCREEN"
 
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"

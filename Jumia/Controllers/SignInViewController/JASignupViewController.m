@@ -10,7 +10,6 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "RIFieldDataSetComponent.h"
-#import "JAFormComponent.h"
 #import "RICustomer.h"
 
 @interface JASignupViewController ()
@@ -20,7 +19,7 @@
 @property (weak, nonatomic) UIButton *registerByFacebook;
 @property (strong, nonatomic) NSMutableArray *fieldsArray;
 @property (assign, nonatomic) CGRect originalFrame;
-@property (strong, nonatomic) RIForm *tempForm;
+@property (strong, nonatomic) JADynamicForm *dynamicForm;
 
 @end
 
@@ -43,12 +42,11 @@
        successBlock:^(RIForm *form) {
            [self hideLoading];
            
-           self.tempForm = form;
            
            CGFloat maxY = 0.0f;
-           NSArray *views = [JAFormComponent generateForm:[form.fields array] startingY:0.0f];
-           self.fieldsArray = [views copy];
-           for(UIView *view in views)
+           self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:0.0f];
+           self.fieldsArray = [self.dynamicForm.formViews copy];
+           for(UIView *view in self.dynamicForm.formViews)
            {
                [self.contentScrollView addSubview:view];
                if(CGRectGetMaxY(view.frame) > maxY)
@@ -103,11 +101,11 @@
 {
     [self.view endEditing:YES];
     
-    BOOL hasErrors = [JAFormComponent hasErrors:self.fieldsArray];
+    BOOL hasErrors = [self.dynamicForm checkErrors];
     
     if(!hasErrors)
     {
-        NSDictionary *tempDic = [JAFormComponent getValues:self.fieldsArray form:self.tempForm];
+        NSDictionary *tempDic = [self.dynamicForm getValues];
         
         [self showLoading];
         
