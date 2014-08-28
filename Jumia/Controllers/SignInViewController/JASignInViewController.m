@@ -14,6 +14,7 @@
 
 @interface JASignInViewController ()
 <
+JADynamicFormDelegate,
 FBLoginViewDelegate
 >
 
@@ -30,6 +31,7 @@ FBLoginViewDelegate
 @property (strong, nonatomic) UILabel *facebookLoginLabel;
 @property (assign, nonatomic) CGFloat loginViewCurrentY;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginViewHeightConstrain;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginViewBottomConstrain;
 
 @end
 
@@ -88,6 +90,7 @@ FBLoginViewDelegate
            
            self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginView.frame) + 6.0f;
            self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.loginViewCurrentY];
+           [self.dynamicForm setDelegate:self];
            self.fieldsArray = [self.dynamicForm.formViews copy];
            
            for(UIView *view in self.dynamicForm.formViews)
@@ -153,6 +156,7 @@ FBLoginViewDelegate
     [self.loginView addSubview:self.signUpButton];
     
     self.loginViewHeightConstrain.constant = CGRectGetMaxY(self.signUpButton.frame) + 10.0f;
+    self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) + 10.0f);
     
     [self hideLoading];
 }
@@ -294,6 +298,18 @@ FBLoginViewDelegate
                           cancelButtonTitle:@"OK"
                           otherButtonTitles:nil] show];
     }
+}
+
+#pragma mark JADynamicFormDelegate
+
+- (void)changedFocus:(UIView *)view
+{
+    self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) - view.frame.origin.y);
+}
+
+- (void) lostFocus
+{
+    self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) + 10.0f);
 }
 
 @end

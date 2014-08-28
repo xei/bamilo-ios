@@ -258,12 +258,20 @@
         [newResponder.textField becomeFirstResponder];
     } else {
         [textField resignFirstResponder];
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(lostFocus)]) {
+            [self.delegate performSelector:@selector(lostFocus) withObject:nil];
+        }
     }
     return YES;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changedFocus:)]) {
+        [self.delegate performSelector:@selector(changedFocus:) withObject:[self viewWithTag:textField.tag]];
+    }
+    
     [textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     [textField setTextColor:UIColorFromRGB(0x666666)];
     

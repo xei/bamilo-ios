@@ -14,10 +14,21 @@
 
 @class RIForm;
 
+@protocol JADynamicFormDelegate <NSObject>
+
+@optional
+
+- (void)changedFocus:(UIView *)view;
+
+- (void)lostFocus;
+
+@end
+
 @interface JADynamicForm : NSObject <UITextFieldDelegate>
 
 @property (strong, nonatomic) RIForm *form;
 @property (strong, nonatomic) NSMutableArray *formViews;
+@property (strong, nonatomic) id<JADynamicFormDelegate> delegate;
 
 -(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
 
