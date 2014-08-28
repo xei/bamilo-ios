@@ -1766,7 +1766,7 @@
         <!--Sign In View Controller-->
         <scene sceneID="uW8-50-FvF">
             <objects>
-                <viewController storyboardIdentifier="myAccountViewController" id="ghr-t8-OwX" customClass="JASignInViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="signInViewController" id="ghr-t8-OwX" customClass="JASignInViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YaJ-P8-TCQ"/>
                         <viewControllerLayoutGuide type="bottom" id="gU7-jo-m0u"/>
@@ -1835,24 +1835,10 @@
                     <view key="view" contentMode="scaleToFill" id="7yC-MH-9GN">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EaJ-Q0-8n7">
-                                <rect key="frame" x="6" y="6" width="308" height="492"/>
-                            </scrollView>
-                        </subviews>
                         <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="EaJ-Q0-8n7" firstAttribute="leading" secondItem="7yC-MH-9GN" secondAttribute="leading" constant="6" id="GeP-kX-Dfa"/>
-                            <constraint firstItem="EaJ-Q0-8n7" firstAttribute="top" secondItem="iRE-ps-u1B" secondAttribute="bottom" constant="6" id="bUx-TU-NzI"/>
-                            <constraint firstItem="Xha-UT-cf0" firstAttribute="top" secondItem="EaJ-Q0-8n7" secondAttribute="bottom" constant="6" id="nNt-ab-5q1"/>
-                            <constraint firstAttribute="trailing" secondItem="EaJ-Q0-8n7" secondAttribute="trailing" constant="6" id="rEm-3o-UN4"/>
-                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="nZs-G9-2BW"/>
-                    <connections>
-                        <outlet property="contentScrollView" destination="EaJ-Q0-8n7" id="h9r-v0-REK"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Shi-tF-b6p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
