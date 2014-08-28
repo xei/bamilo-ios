@@ -19,7 +19,8 @@
 #define JACampaignsTeaserViewGraySquareWidth 61.0f
 #define JACampaignsTeaserViewOffersLabelFont [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0f];
 #define JACampaignsTeaserViewOffersLabelColor [UIColor blackColor]
-#define JACampaignsTeaserViewTitleOffset 90.0f
+#define JACampaignsTeaserViewTitleOffset 80.0f
+#define JACampaignsTeaserViewTitleRightOffset 20.0f
 #define JACampaignsTeaserViewTitleFont [UIFont fontWithName:@"HelveticaNeue-Bold" size:17.0f]
 #define JACampaignsTeaserViewTitleColor [UIColor whiteColor]
 
@@ -82,7 +83,7 @@
     
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x + JACampaignsTeaserViewTitleOffset,
                                                                     contentView.bounds.origin.y,
-                                                                    contentView.bounds.size.width - JACampaignsTeaserViewTitleOffset,
+                                                                    contentView.bounds.size.width - JACampaignsTeaserViewTitleOffset - JACampaignsTeaserViewTitleRightOffset,
                                                                     contentView.bounds.size.height)];
     titleLabel.text = teaserText.name;
     titleLabel.font = JACampaignsTeaserViewTitleFont;
