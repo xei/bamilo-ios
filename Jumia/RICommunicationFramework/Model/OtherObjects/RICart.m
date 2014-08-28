@@ -278,7 +278,7 @@
                     RICartItem *cartItem = [RICartItem parseCartItemWithSimpleSku:cartItemObjectsKey info:[cartItemObjects objectForKey:cartItemObjectsKey] country:country];
                     [cartItems setValue:cartItem forKey:cartItemObjectsKey];
                     
-                    cartUnreducedValue += [cartItem.price floatValue];
+                    cartUnreducedValue += ([cartItem.price floatValue] * [cartItem.quantity integerValue]);
                     if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice floatValue] && [cartItem.price floatValue] != [cartItem.specialPrice floatValue])
                     {
                         showUnreducedPrice = YES;
