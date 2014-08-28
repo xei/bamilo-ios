@@ -79,7 +79,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @param the page that is being requested
  *  @param the max number of products per page
  *  @param the filters array
- *  @param the success block containing the obtained products, filters and related categories
+ *  @param the success block containing the obtained products, productCount, filters and related categories
  *  @param the failure block containing the error message
  *
  *  @return a string with the operationID that can be used to cancel the operation
@@ -89,20 +89,20 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
-                           successBlock:(void (^)(NSArray *products, NSArray *filters, NSArray* categories))successBlock
+                           successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSArray* categories))successBlock
                         andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 /**
  *  Method to load a set of products given an url
  *
  *  @param the url to get the products
- *  @param the success block containing the obtained products, filters and related categories
+ *  @param the success block containing the obtained products, product count, filters and related categories
  *  @param the failure block containing the error message
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(NSArray *products, NSArray *filters, NSArray* categories))successBlock
+                        successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSArray* categories))successBlock
                      andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 /**
