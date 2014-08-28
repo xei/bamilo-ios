@@ -51,7 +51,7 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.hidesBackButton = YES;
+    self.navBarLayout.title = @"Recently Viewed";
     
     self.collectionView.backgroundColor = UIColorFromRGB(0xc8c8c8);
     

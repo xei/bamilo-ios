@@ -25,117 +25,125 @@
     return nil;
 }
 
-#pragma mark - Public methods
+#pragma mark - Setup
 
-- (void)changeNavigationBarTitle:(NSString *)newTitle
+- (void)initialSetup;
 {
-    self.backButton.hidden = YES;
-    self.backImageView.hidden = YES;
-    self.applyButton.hidden = YES;
-    self.cartButton.hidden = NO;
-    self.leftButton.hidden = NO;
-    
-    self.logoImageView.hidden = YES;
-    self.titleLabel.text = newTitle;
-    self.titleLabel.hidden = NO;
-    
-    self.editButton.hidden = YES;
-    self.doneButton.hidden = YES;
+    self.backgroundColor = JANavBarBackgroundGrey;
+    [self.editButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.doneButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    self.titleLabel.textColor = UIColorFromRGB(0x4e4e4e);
 }
 
-- (void)changedToHomeViewController
+- (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout;
 {
-    self.backButton.hidden = YES;
-    self.backImageView.hidden = YES;
-    self.applyButton.hidden = YES;
-    self.cartButton.hidden = NO;
-    self.leftButton.hidden = NO;
+    //left side
+    if (layout.showBackButton) {
+        [self showBackButtonWithTitle:layout.backButtonTitle];
+    } else if (layout.showEditButton) {
+        [self showEditButton];
+    } else if (layout.showMenuButton) {
+        [self showMenuButton];
+    } else {
+        [self hideLeftItems];
+    }
     
-    self.logoImageView.hidden = NO;
-    self.titleLabel.hidden = YES;
+    if (layout.showTitleLabel) {
+        [self showTitleLabelWithTitle:layout.title subtitle:layout.subTitle];
+    } else if (layout.showLogo) {
+        [self showLogo];
+    } else { //default
+        [self hideCenterItems];
+    }
     
-    self.editButton.hidden = YES;
-    self.doneButton.hidden = YES;
+    if (layout.showDoneButton) {
+        [self showDoneButtonWithTitle:layout.doneButtonTitle];
+    } else if (layout.showCartButton) {
+        [self showCartButton];
+    } else { //default
+        [self hideRightItems];
+    }
 }
 
-- (void)enteredInFirstLevelWithTitle:(NSString *)title
-                     andProductCount:(NSString *)productCount
-{
-    self.backButton.hidden = YES;
-    self.backImageView.hidden = YES;
-    self.applyButton.hidden = YES;
-    self.cartButton.hidden = NO;
-    
-    title = [title stringByAppendingString:@" "];
-    productCount = [NSString stringWithFormat:@"(%@)", productCount];
-    
-    NSMutableAttributedString *stringTitle = [[NSMutableAttributedString alloc] initWithString:title];
-    
-    NSInteger _stringLength = title.length;
-    
-    UIColor *titleColor = [UIColor colorWithRed:78.0/255.0 green:78.0/255.0 blue:78.0/255.0 alpha:1.0f];
-    
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue"
-                                   size:17.0];
-    
-    [stringTitle addAttribute:NSFontAttributeName
-                        value:font
-                        range:NSMakeRange(0, _stringLength)];
-    
-    [stringTitle addAttribute:NSStrokeColorAttributeName
-                        value:titleColor
-                        range:NSMakeRange(0, _stringLength)];
-    
-    NSMutableAttributedString *stringProductCount = [[NSMutableAttributedString alloc] initWithString:productCount];
-    
-    NSInteger secondStringLength = productCount.length;
-    
-    UIFont *countFont = [UIFont fontWithName:@"HelveticaNeue-Light"
-                                        size:10.0];
-    
-    [stringProductCount addAttribute:NSFontAttributeName
-                               value:countFont
-                               range:NSMakeRange(0, secondStringLength)];
-    
-    [stringProductCount addAttribute:NSStrokeColorAttributeName
-                               value:titleColor
-                               range:NSMakeRange(0, secondStringLength)];
-    
-    NSMutableAttributedString *resultString = [stringTitle mutableCopy];
-    [resultString appendAttributedString:stringProductCount];
-    
-    self.logoImageView.hidden = YES;
-    self.titleLabel.attributedText = resultString;
-    self.titleLabel.hidden = NO;
-    
-    self.editButton.hidden = YES;
-    self.doneButton.hidden = YES;
-}
 
-- (void)enteredSecondOrThirdLevelWithBackTitle:(NSString *)backTitle
+#pragma mark - Left side
+- (void)showBackButtonWithTitle:(NSString*)backButtonTitle;
 {
-    self.logoImageView.hidden = YES;
-    self.titleLabel.hidden = YES;
-    self.leftButton.hidden = YES;
-    self.applyButton.hidden = YES;
-    self.cartButton.hidden = NO;
-    
-    self.backButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue"
-                                   size:17.0];
-    
-    self.backButton.titleLabel.font = font;
-    
-    [self.backButton setTitle:backTitle
-                     forState:UIControlStateNormal];
-    
+    [self.backButton setTitle:backButtonTitle forState:UIControlStateNormal];
     self.backButton.hidden = NO;
     self.backImageView.hidden = NO;
-    
+    self.leftButton.hidden = YES;
     self.editButton.hidden = YES;
-    self.doneButton.hidden = YES;
 }
+- (void)showEditButton;
+{
+    self.backButton.hidden = YES;
+    self.backImageView.hidden = YES;
+    self.leftButton.hidden = YES;
+    self.editButton.hidden = NO;
+}
+
+- (void)showMenuButton;
+{
+    self.backButton.hidden = YES;
+    self.backImageView.hidden = YES;
+    self.leftButton.hidden = NO;
+    self.editButton.hidden = YES;
+}
+
+- (void)hideLeftItems
+{
+    self.backButton.hidden = YES;
+    self.backImageView.hidden = YES;
+    self.leftButton.hidden = YES;
+    self.editButton.hidden = YES;
+}
+
+#pragma mark - Center
+- (void)showLogo;
+{
+    self.logoImageView.hidden = NO;
+    self.titleLabel.hidden = YES;
+}
+- (void)showTitleLabelWithTitle:(NSString*)title
+                       subtitle:(NSString*)subtitle;
+{
+    //$$$ SUBTITLE NOT YET DONE
+    self.titleLabel.text = title;
+    self.logoImageView.hidden = YES;
+    self.titleLabel.hidden = NO;
+}
+
+- (void)hideCenterItems
+{
+    self.logoImageView.hidden = YES;
+    self.titleLabel.hidden = YES;
+}
+
+#pragma mark - Right side
+- (void)showDoneButtonWithTitle:(NSString*)doneButtonTitle;
+{
+    [self.doneButton setTitle:doneButtonTitle forState:UIControlStateNormal];
+    self.doneButton.hidden = NO;
+    self.cartButton.hidden = YES;
+    self.cartCountLabel.hidden = YES;
+}
+
+- (void)showCartButton;
+{
+    self.doneButton.hidden = YES;
+    self.cartButton.hidden = NO;
+    self.cartCountLabel.hidden = NO;
+}
+
+- (void)hideRightItems
+{
+    self.doneButton.hidden = YES;
+    self.cartButton.hidden = YES;
+    self.cartCountLabel.hidden = YES;
+}
+
+#pragma mark - Details
 
 - (void)updateCartProductCount:(NSNumber*)cartNumber
 {
@@ -147,73 +155,6 @@
     {
         [self.cartCountLabel setText:[cartNumber stringValue]];
     }
-}
-
-#pragma mark - Choose country
-
-- (void)changeToChooseCountry
-{
-    self.logoImageView.hidden = NO;
-    self.titleLabel.hidden = YES;
-    self.leftButton.hidden = NO;
-    self.applyButton.hidden = NO;
-    self.cartButton.hidden = YES;
-    
-    self.applyButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    
-    self.editButton.hidden = YES;
-    self.doneButton.hidden = YES;
-}
-
-#pragma mark - Filters
-
-- (void)changeToMainFilters
-{
-    self.logoImageView.hidden = YES;
-    self.titleLabel.hidden = NO;
-    self.titleLabel.text = @"Filters";
-    self.leftButton.hidden = YES;
-    self.applyButton.hidden = YES;
-    self.cartButton.hidden = YES;
-    self.backButton.hidden = YES;
-    self.backImageView.hidden = YES;
-    
-    self.editButton.hidden = NO;
-    [self.editButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    self.editButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
-    [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
-    self.doneButton.hidden = NO;
-    [self.doneButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    self.doneButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
-    [self.doneButton setTitle:@"Done" forState:UIControlStateNormal];
-}
-
-- (void)changeToSpecificFilter:(NSString*)filterName
-{
-    self.logoImageView.hidden = YES;
-    self.titleLabel.hidden = NO;
-    self.titleLabel.text = filterName;
-    self.leftButton.hidden = YES;
-    self.applyButton.hidden = YES;
-    self.cartButton.hidden = YES;
-    self.backButton.hidden = NO;
-    self.backImageView.hidden = NO;
-    
-    self.backButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue"
-                                   size:17.0];
-    
-    self.backButton.titleLabel.font = font;
-    
-    [self.backButton setTitle:@"Filter"
-                     forState:UIControlStateNormal];
-    
-    [self.doneButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    self.doneButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
-    [self.doneButton setTitle:@"Done" forState:UIControlStateNormal];
-    
-    self.editButton.hidden = YES;
 }
 
 @end

@@ -25,6 +25,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+ 
+    self.navBarLayout.title = @"Cart";
     
     self.view.backgroundColor = JABackgroundGrey;
     

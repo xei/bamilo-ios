@@ -19,6 +19,16 @@
 
 @implementation JABaseViewController
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        JANavigationBarLayout* defaultLayout = [[JANavigationBarLayout alloc] init];
+        self.navBarLayout = defaultLayout;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -45,6 +55,14 @@
     self.loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     self.loadingSpinner.center = self.loadingImageView.center;
     self.loadingImageView.alpha = 0.0f;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification
+                                                        object:self.navBarLayout];
 }
 
 - (void) showLoading

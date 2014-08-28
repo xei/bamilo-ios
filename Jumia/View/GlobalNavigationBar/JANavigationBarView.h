@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JANavigationBarLayout.h"
 
 @interface JANavigationBarView : UIView
 
@@ -17,25 +18,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
-@property (weak, nonatomic) IBOutlet UIButton *applyButton;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 + (JANavigationBarView *)getNewNavBarView;
 
-- (void)changeNavigationBarTitle:(NSString *)newTitle;
+- (void)initialSetup;
+- (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout;
 
-- (void)changedToHomeViewController;
 - (void)updateCartProductCount:(NSNumber*)productCount;
-
-- (void)enteredInFirstLevelWithTitle:(NSString *)title
-                     andProductCount:(NSString *)productCount;
-
-- (void)enteredSecondOrThirdLevelWithBackTitle:(NSString *)backTitle;
-
-- (void)changeToChooseCountry;
-
-- (void)changeToMainFilters;
-- (void)changeToSpecificFilter:(NSString*)filterName;
 
 @end

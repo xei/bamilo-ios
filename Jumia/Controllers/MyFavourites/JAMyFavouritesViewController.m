@@ -62,6 +62,8 @@
 {
     [super viewDidLoad];
     
+    self.navBarLayout.title = @"My Favorites";
+    
     self.addAllToCartCount = 0;
     
     self.navigationItem.hidesBackButton = YES;

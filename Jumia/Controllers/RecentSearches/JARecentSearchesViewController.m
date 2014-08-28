@@ -31,6 +31,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navBarLayout.title = @"Recent Searches";
         
     self.noSearchesView.layer.cornerRadius = 5.0f;
     
@@ -149,7 +151,7 @@
     
     RISearchSuggestion *suggestion = [self.recentSearches objectAtIndex:indexPath.row];
     
-    [self.delegate didSelectedRecentSearch:suggestion];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedRecentSearchNotification object:suggestion];
 }
 
 #pragma mark - Navigation

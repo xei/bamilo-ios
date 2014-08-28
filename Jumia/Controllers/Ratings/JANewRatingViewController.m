@@ -49,6 +49,8 @@
 {
     [super viewDidLoad];
     
+    self.navBarLayout.showBackButton = YES;
+    
     self.originalFrame = self.centerView.frame;
     
     self.brandLabel.text = self.ratingProductBrand;

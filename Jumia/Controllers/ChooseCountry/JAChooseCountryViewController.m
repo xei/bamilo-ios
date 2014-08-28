@@ -36,7 +36,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applyButtonPressed)
-                                                 name:kDidPressApplyNotification
+                                                 name:kDidPressDoneNotification
                                                object:nil];
     
     self.tableViewContries.layer.cornerRadius = 5.0f;
@@ -103,7 +103,7 @@
     {
         RICountry *country = [self.countriesArray objectAtIndex:self.selectedIndex.row];
         
-        [self.delegate didSelectedCountry:country];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:country];
     }
 }
 

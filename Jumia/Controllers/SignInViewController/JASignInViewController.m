@@ -43,6 +43,8 @@ FBLoginViewDelegate
 {
     [super viewDidLoad];
     
+    self.navBarLayout.title = @"Login";
+    
     [self showLoading];
     
     self.loginView.layer.cornerRadius = 5.0f;
@@ -163,19 +165,13 @@ FBLoginViewDelegate
 
 - (void)signUpButtonPressed:(id)sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
-                                                        object:nil];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification
                                                         object:nil
                                                       userInfo:nil];
 }
 
 - (void)forgotPasswordButtonPressed:(id)sender
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowBackNofication
-                                                        object:nil];
-    
+{    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowForgotPasswordScreenNotification
                                                         object:nil
                                                       userInfo:nil];

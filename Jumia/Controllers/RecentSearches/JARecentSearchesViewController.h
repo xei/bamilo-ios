@@ -9,14 +9,6 @@
 #import "JABaseViewController.h"
 #import "RISearchSuggestion.h"
 
-@protocol JARecentSearchesDelegate <NSObject>
-
-- (void)didSelectedRecentSearch:(RISearchSuggestion *)recentSearch;
-
-@end
-
 @interface JARecentSearchesViewController : JABaseViewController
-
-@property (weak, nonatomic) id<JARecentSearchesDelegate>delegate;
 
 @end
