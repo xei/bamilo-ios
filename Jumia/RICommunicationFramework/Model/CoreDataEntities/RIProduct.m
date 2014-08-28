@@ -405,9 +405,11 @@
 {
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
+        NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
+        
         RIProduct* productToDelete;
         
-        for (RIProduct* recentProduct in recentlyViewedProducts) {
+        for (RIProduct* recentProduct in allProducts) {
             
             if ([recentProduct.sku isEqualToString:product.sku]) {
                 //same product, delete this one
