@@ -108,8 +108,27 @@
 - (void)showTitleLabelWithTitle:(NSString*)title
                        subtitle:(NSString*)subtitle;
 {
-    //$$$ SUBTITLE NOT YET DONE
-    self.titleLabel.text = title;
+    NSMutableAttributedString* finalTitleString;
+    NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [UIFont fontWithName:@"HelveticaNeue" size:17.0f], NSFontAttributeName,
+                                UIColorFromRGB(0x4e4e4e), NSForegroundColorAttributeName, nil];
+    if (VALID_NOTEMPTY(subtitle, NSString)) {
+        NSString* subtitleBrackets = [NSString stringWithFormat:@" (%@)", subtitle];
+        NSDictionary* subtitleAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                            [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f], NSFontAttributeName,
+                                            nil];
+        NSRange subtitleRange = NSMakeRange(title.length, subtitleBrackets.length);
+        finalTitleString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", title, subtitleBrackets]
+                                                                  attributes:attributes];
+        
+        [finalTitleString setAttributes:subtitleAttributes
+                                  range:subtitleRange];
+        
+    } else {
+        finalTitleString = [[NSMutableAttributedString alloc] initWithString:title attributes:attributes];
+    }
+
+    [self.titleLabel setAttributedText:finalTitleString];
     self.logoImageView.hidden = YES;
     self.titleLabel.hidden = NO;
 }

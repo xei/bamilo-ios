@@ -13,6 +13,12 @@
 
 @property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 
+
+/**
+ * Method to force Nav bar to reload. This is called in viewWillAppear
+ */
+- (void)reloadNavBar;
+
 /**
  * Method to show loading
  */
