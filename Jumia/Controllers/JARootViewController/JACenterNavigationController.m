@@ -23,6 +23,7 @@
 #import "JAForgotPasswordViewController.h"
 #import "JALoginViewController.h"
 #import "JAAddressesViewController.h"
+#import "JASignupViewController.h"
 #import "RIProduct.h"
 #import "RIApi.h"
 
@@ -129,7 +130,12 @@ JARecentSearchesDelegate
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutAddressesScreen)
                                                  name:kShowCheckoutAddressesScreenNotification
-                                               object:nil];    
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSignUpScreen)
+                                                 name:kShowSignUpScreenNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -460,6 +466,13 @@ JARecentSearchesDelegate
     JAAddressesViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
     
     [self pushViewController:addressesVC animated:YES];
+}
+
+- (void)showSignUpScreen
+{
+    JASignupViewController *signUpVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signUpViewController"];
+    
+    [self pushViewController:signUpVC animated:YES];
 }
 
 - (void)back
