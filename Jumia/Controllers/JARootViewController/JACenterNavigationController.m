@@ -133,6 +133,11 @@
                                              selector:@selector(showSignUpScreen)
                                                  name:kShowSignUpScreenNotification
                                                object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSignInScreen)
+                                                 name:kShowSignInScreenNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -383,6 +388,13 @@
     JASignupViewController *signUpVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signUpViewController"];
     
     [self pushViewController:signUpVC animated:YES];
+}
+
+- (void)showSignInScreen
+{
+    JASignInViewController *signInVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+    
+    [self pushViewController:signInVC animated:YES];
 }
 
 #pragma mark - Choose Country

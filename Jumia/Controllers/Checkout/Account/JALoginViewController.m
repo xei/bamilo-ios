@@ -467,13 +467,9 @@ FBLoginViewDelegate
 
 -(void)loginButtonPressed
 {
-    [self.loginDynamicForm checkErrors];
-    
-    NSDictionary *parameters = [self.loginDynamicForm getValues];
-    
     [self showLoading];
     
-    [RIForm sendForm:self.loginDynamicForm.form successBlock:^(id object) {
+    [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object) {
         [self.loginDynamicForm resetValues];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
@@ -485,6 +481,8 @@ FBLoginViewDelegate
         [self hideLoading];
         
     } andFailureBlock:^(NSArray *errorObject) {
+        [self.loginDynamicForm checkErrors];
+        
         [self hideLoading];
         
         [[[UIAlertView alloc] initWithTitle:@"Jumia"
@@ -504,13 +502,9 @@ FBLoginViewDelegate
 
 -(void)signUpButtonPressed
 {
-    [self.signupDynamicForm checkErrors];
-    
-    NSDictionary *parameters = [self.signupDynamicForm getValues];
-    
     [self showLoading];
     
-    [RIForm sendForm:self.signupDynamicForm.form successBlock:^(id object) {
+    [RIForm sendForm:[self.signupDynamicForm form] parameters:[self.signupDynamicForm getValues] successBlock:^(id object) {
         [self.signupDynamicForm resetValues];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
@@ -524,6 +518,8 @@ FBLoginViewDelegate
         
     } andFailureBlock:^(NSArray *errorObject) {
         [self hideLoading];
+        
+        [self.signupDynamicForm checkErrors];        
         
         [[[UIAlertView alloc] initWithTitle:@"Jumia"
                                     message:[errorObject componentsJoinedByString:@","]

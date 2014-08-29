@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6198" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
@@ -74,10 +74,18 @@
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="dataSet" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIFieldDataSetComponent" inverseName="field" inverseEntity="RIFieldDataSetComponent" syncable="YES"/>
         <relationship name="form" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIForm" inverseName="fields" inverseEntity="RIForm" syncable="YES"/>
+        <relationship name="options" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIFieldOption" inverseName="field" inverseEntity="RIFieldOption" syncable="YES"/>
     </entity>
     <entity name="RIFieldDataSetComponent" representedClassName="RIFieldDataSetComponent" syncable="YES">
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="field" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RIField" inverseName="dataSet" inverseEntity="RIField" syncable="YES"/>
+    </entity>
+    <entity name="RIFieldOption" representedClassName="RIFieldOption" syncable="YES">
+        <attribute name="isDefault" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isUserSubscribed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="field" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIField" inverseName="options" inverseEntity="RIField" syncable="YES"/>
     </entity>
     <entity name="RIForm" representedClassName="RIForm" syncable="YES">
         <attribute name="action" optional="YES" attributeType="String" syncable="YES"/>
@@ -236,12 +244,12 @@
         <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="variations" inverseEntity="RIProduct" syncable="YES"/>
     </entity>
     <elements>
-        <element name="RIAddress" positionX="90" positionY="666" width="128" height="360"/>
+        <element name="RIAddress" positionX="90" positionY="666" width="128" height="358"/>
         <element name="RIApi" positionX="-308" positionY="227" width="128" height="120"/>
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="133"/>
         <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="195"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="178"/>
-        <element name="RIField" positionX="-299" positionY="681" width="128" height="225"/>
+        <element name="RIField" positionX="-299" positionY="681" width="128" height="238"/>
         <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="73"/>
         <element name="RIForm" positionX="-504" positionY="362" width="128" height="118"/>
         <element name="RIFormIndex" positionX="-504" positionY="234" width="128" height="88"/>
@@ -252,7 +260,7 @@
         <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
         <element name="RISearchSuggestion" positionX="-648" positionY="27" width="128" height="88"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
-        <element name="RIStaticBlockIndex" positionX="-486" positionY="-63" width="128" height="90"/>
+        <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
         <element name="RITeaser" positionX="-686" positionY="527" width="128" height="103"/>
         <element name="RITeaserCategory" positionX="-686" positionY="245" width="128" height="133"/>
         <element name="RITeaserGroup" positionX="-686" positionY="398" width="128" height="103"/>
@@ -261,5 +269,6 @@
         <element name="RITeaserText" positionX="-684" positionY="677" width="128" height="88"/>
         <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
         <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>
+        <element name="RIFieldOption" positionX="-270" positionY="974" width="128" height="118"/>
     </elements>
 </model>

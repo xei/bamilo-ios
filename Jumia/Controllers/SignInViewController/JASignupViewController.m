@@ -53,7 +53,7 @@ UIPickerViewDelegate>
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
     
-    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
+    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
     [self.contentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.contentView.layer.cornerRadius = 5.0f;
     
@@ -96,6 +96,8 @@ UIPickerViewDelegate>
            
        } failureBlock:^(NSArray *errorMessage) {
            [self hideLoading];
+           
+           [self finishedFormLoading];
            
            [[[UIAlertView alloc] initWithTitle:@"Jumia"
                                        message:@"There was an error"
@@ -141,23 +143,23 @@ UIPickerViewDelegate>
 
 - (void)registerButtonPressed:(id)sender
 {
-    [self.dynamicForm checkErrors];
-    
-    NSDictionary *parameters = [self.dynamicForm getValues];
-    
     [self showLoading];
     
-    [RIForm sendForm:self.dynamicForm.form successBlock:^(id object) {
+    [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object) {
         [self.dynamicForm resetValues];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                             object:@{@"index": @(0),
                                                                      @"name": @"Home"}];
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                            object:nil];
         
         [self hideLoading];
         
     } andFailureBlock:^(NSArray *errorObject) {
+        [self.dynamicForm checkErrors];
+
         [self hideLoading];
         
         [[[UIAlertView alloc] initWithTitle:@"Jumia"
@@ -170,7 +172,9 @@ UIPickerViewDelegate>
 
 - (void)loginButtonPressed:(id)sender
 {
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
+                                                        object:nil
+                                                      userInfo:nil];
 }
 
 - (void)birthdayChanged:(id)sender

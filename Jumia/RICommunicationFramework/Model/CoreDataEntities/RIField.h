@@ -2,18 +2,19 @@
 //  RIField.h
 //  Jumia
 //
-//  Created by Miguel Chaves on 13/Aug/14.
+//  Created by Pedro Lopes on 29/08/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class RIFieldDataSetComponent, RIForm;
+@class RIFieldDataSetComponent, RIFieldOption, RIForm;
 
 @interface RIField : NSManagedObject
 
 @property (nonatomic, retain) NSString * key;
+@property (nonatomic, retain) NSString * label;
 @property (nonatomic, retain) NSNumber * max;
 @property (nonatomic, retain) NSNumber * min;
 @property (nonatomic, retain) NSString * name;
@@ -22,9 +23,9 @@
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * uid;
 @property (nonatomic, retain) NSString * value;
-@property (nonatomic, retain) NSString * label;
-@property (nonatomic, retain) RIForm *form;
 @property (nonatomic, retain) NSOrderedSet *dataSet;
+@property (nonatomic, retain) RIForm *form;
+@property (nonatomic, retain) NSOrderedSet *options;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 + (void)saveField:(RIField *)field;
@@ -43,5 +44,14 @@
 - (void)removeDataSetObject:(RIFieldDataSetComponent *)value;
 - (void)addDataSet:(NSOrderedSet *)values;
 - (void)removeDataSet:(NSOrderedSet *)values;
-
+- (void)insertObject:(RIFieldOption *)value inOptionsAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromOptionsAtIndex:(NSUInteger)idx;
+- (void)insertOptions:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeOptionsAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInOptionsAtIndex:(NSUInteger)idx withObject:(RIFieldOption *)value;
+- (void)replaceOptionsAtIndexes:(NSIndexSet *)indexes withOptions:(NSArray *)values;
+- (void)addOptionsObject:(RIFieldOption *)value;
+- (void)removeOptionsObject:(RIFieldOption *)value;
+- (void)addOptions:(NSOrderedSet *)values;
+- (void)removeOptions:(NSOrderedSet *)values;
 @end

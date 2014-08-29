@@ -9,6 +9,7 @@
 #import "JADynamicForm.h"
 #import "RIForm.h"
 #import "RIFieldDataSetComponent.h"
+#import "RIFieldOption.h"
 
 @interface JADynamicForm ()
 <UITextFieldDelegate>
@@ -154,18 +155,43 @@
         }
         else if ([@"checkbox" isEqualToString:field.type])
         {
-            JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
-            check.field = field;
-            
-            CGRect frame = check.frame;
-            frame.origin.y = startingY;
-            check.frame = frame;
-            startingY += check.frame.size.height;
-            
-            check.labelText.text = field.label;
-            
-            [check setTag:i];
-            [self.formViews addObject:check];
+            if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [@"newsletter_categories_subscribed" isEqualToString:field.key])
+            {
+                JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
+                [check setupWithField:field];
+                
+                CGRect frame = check.frame;
+                frame.origin.y = startingY;
+                check.frame = frame;
+                startingY += check.frame.size.height;
+                
+                check.labelText.text = field.label;
+                
+                [check setTag:i];
+                [self.formViews addObject:check];
+            }
+            else
+            {
+                if(VALID_NOTEMPTY(field.options, NSOrderedSet))
+                {
+#warning missing component
+                }
+                else
+                {
+                    JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
+                    [check setupWithField:field];
+                    
+                    CGRect frame = check.frame;
+                    frame.origin.y = startingY;
+                    check.frame = frame;
+                    startingY += check.frame.size.height;
+                    
+                    check.labelText.text = field.label;
+                    
+                    [check setTag:i];
+                    [self.formViews addObject:check];
+                }
+            }
         }
         else if ([@"hidden" isEqualToString:field.type])
         {
@@ -224,6 +250,9 @@
 -(NSDictionary*)getValues
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    JARadioComponent *genderComponent = nil;
+    JACheckBoxComponent *categoriesNewsletterComponent = nil;
+    
     if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
     {
         for (UIView *view in self.formViews)
@@ -251,14 +280,38 @@
             {
                 JARadioComponent *radioComponent = (JARadioComponent*) view;
                 
-                if(VALID_NOTEMPTY(radioComponent.field.value, NSString))
+                if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [@"gender" isEqualToString:radioComponent.field.key])
                 {
-                    [parameters setValue:radioComponent.field.value forKey:radioComponent.field.name];
+                    genderComponent = radioComponent;
+                    
+                    if(VALID_NOTEMPTY(radioComponent.field.value, NSString))
+                    {
+                        [parameters setValue:radioComponent.field.value forKey:radioComponent.field.name];
+                    }
+                }
+                else
+                {
+                    if(VALID_NOTEMPTY(radioComponent.field.options, NSOrderedSet))
+                    {
+#warning missing component behavior
+                    }
+                    else
+                    {
+                        if(VALID_NOTEMPTY(radioComponent.field.value, NSString))
+                        {
+                            [parameters setValue:radioComponent.field.value forKey:radioComponent.field.name];
+                        }
+                    }
                 }
             }
             else if ([view isKindOfClass:[JACheckBoxComponent class]])
             {
                 JACheckBoxComponent *checkBoxComponent = (JACheckBoxComponent*) view;
+                
+                if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [@"newsletter_categories_subscribed" isEqualToString:checkBoxComponent.field.key])
+                {
+                    categoriesNewsletterComponent = checkBoxComponent;
+                }
                 
                 if (checkBoxComponent.switchComponent.on)
                 {
@@ -272,24 +325,32 @@
             else if ([view isKindOfClass:[JATextField class]])
             {
                 JATextField *textFieldComponent = (JATextField*) view;
-                
-                if ([@"password" isEqualToString:textFieldComponent.field.type] || [@"password2" isEqualToString:textFieldComponent.field.type])
+                if(VALID_NOTEMPTY(textFieldComponent.textField.text, NSString))
                 {
-                    if(VALID_NOTEMPTY(textFieldComponent.textField.text, NSString))
-                    {
-                        [parameters setValue:textFieldComponent.textField.text forKey:textFieldComponent.field.name];
-                    }
-                }
-                else
-                {
-                    if(VALID_NOTEMPTY(textFieldComponent.field.value, NSString))
-                    {
-                        [parameters setValue:textFieldComponent.field.value forKey:textFieldComponent.field.name];
-                    }
+                    [parameters setValue:textFieldComponent.textField.text forKey:textFieldComponent.field.name];
                 }
             }
         }
     }
+    
+    if(VALID_NOTEMPTY(genderComponent, JARadioComponent) && VALID_NOTEMPTY(categoriesNewsletterComponent, JACheckBoxComponent))
+    {
+        NSString *selectedGenderValue = [genderComponent.field value];
+        NSString *selectedCategoriesNewsletterValue = [categoriesNewsletterComponent.field value];
+        if(VALID_NOTEMPTY(selectedGenderValue, NSString) && VALID_NOTEMPTY(selectedCategoriesNewsletterValue, NSString))
+        {
+            NSArray *categoriesNewsletterOptions = [[[categoriesNewsletterComponent.field options] array] copy];
+            for(RIFieldOption *categoriesNewsletterOption in categoriesNewsletterOptions)
+            {
+                if(NSNotFound != [[[categoriesNewsletterOption label] lowercaseString] rangeOfString:[selectedGenderValue lowercaseString]].location)
+                {
+                    [parameters setValue:categoriesNewsletterOption.value forKey:categoriesNewsletterComponent.field.name];
+                    break;
+                }
+            }
+        }
+    }
+    
     return [parameters copy];
 }
 
@@ -406,10 +467,7 @@
         textFieldShouldEndEditing = YES;
         
         JATextField *textFieldView = (JATextField*)view;
-        if (![@"password" isEqualToString:textFieldView.field.type] && ![@"password2" isEqualToString:textFieldView.field.type])
-        {
-            [textFieldView setValue:textField.text];
-        }
+        [textFieldView setValue:textField.text];
     }
     
     return textFieldShouldEndEditing;

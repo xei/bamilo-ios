@@ -35,6 +35,7 @@
 #define kShowCheckoutLoginScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_LOGIN_SCREEN"
 #define kShowCheckoutAddressesScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_ADDRESSES_SCREEN"
 #define kShowSignUpScreenNotification @"NOTIFICATION_SHOW_SIGN_UP_SCREEN"
+#define kShowSignInScreenNotification @"NOTIFICATION_SHOW_SIGN_IN_SCREEN"
 
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"

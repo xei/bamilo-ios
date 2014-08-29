@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
     <scenes>
@@ -1804,7 +1805,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="gU7-jo-m0u" firstAttribute="top" secondItem="xgY-mh-4W5" secondAttribute="bottom" constant="158" id="028-PL-Zsl"/>
+                            <constraint firstItem="gU7-jo-m0u" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xgY-mh-4W5" secondAttribute="bottom" constant="158" id="028-PL-Zsl"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>

@@ -108,22 +108,8 @@
 {
     BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     
-    NSMutableDictionary *allParameters = [[NSMutableDictionary alloc] initWithDictionary:[RIForm getParametersForForm:form]];
-    
-    if(VALID_NOTEMPTY(parameters, NSDictionary))
-    {
-        NSArray *parametersKeys = [parameters allKeys];
-        if(VALID_NOTEMPTY(parametersKeys, NSArray))
-        {
-            for(NSString *parameterKey in parametersKeys)
-            {
-                [allParameters setObject:[parameters objectForKey:parameterKey] forKey:parameterKey];
-            }
-        }
-    }
-    
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
-                                                            parameters:allParameters
+                                                            parameters:parameters
                                                         httpMethodPost:isPostRequest
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
@@ -211,8 +197,8 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     for(RIField *field in form.fields)
     {
-        if(VALID_NOTEMPTY(field.name, NSString))
-        {
+        if(VALID_NOTEMPTY(field.value, NSString))
+        {                    
             [parameters setValue:field.value forKey:field.name];
         }
     }
