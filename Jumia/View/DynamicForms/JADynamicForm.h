@@ -43,4 +43,6 @@
 
 -(void)resetValues;
 
+-(void)resignResponder;
+
 @end

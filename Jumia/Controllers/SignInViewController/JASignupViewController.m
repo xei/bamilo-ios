@@ -143,6 +143,8 @@ UIPickerViewDelegate>
 
 - (void)registerButtonPressed:(id)sender
 {
+    [self.dynamicForm resignResponder];
+    
     [self showLoading];
     
     [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object) {
@@ -172,6 +174,8 @@ UIPickerViewDelegate>
 
 - (void)loginButtonPressed:(id)sender
 {
+    [self.dynamicForm resignResponder];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
                                                         object:nil
                                                       userInfo:nil];

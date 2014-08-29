@@ -467,6 +467,8 @@ FBLoginViewDelegate
 
 -(void)loginButtonPressed
 {
+    [self.loginDynamicForm resignResponder];
+    
     [self showLoading];
     
     [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object) {
@@ -495,6 +497,8 @@ FBLoginViewDelegate
 
 -(void)forgotButtonPressed
 {
+    [self.loginDynamicForm resignResponder];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowForgotPasswordScreenNotification
                                                         object:nil
                                                       userInfo:nil];
@@ -502,6 +506,8 @@ FBLoginViewDelegate
 
 -(void)signUpButtonPressed
 {
+    [self.signupDynamicForm resignResponder];
+    
     [self showLoading];
     
     [RIForm sendForm:[self.signupDynamicForm form] parameters:[self.signupDynamicForm getValues] successBlock:^(id object) {
