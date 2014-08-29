@@ -28,8 +28,6 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification object:nil];
-    
     self.teaserCategoryScrollView.delegate = self;
     self.teaserPagesScrollView.pagingEnabled = YES;
     self.teaserPagesScrollView.scrollEnabled = NO;
@@ -83,6 +81,9 @@
     [super viewWillAppear:animated];
     
     [self addNotifications];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+                                                        object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
