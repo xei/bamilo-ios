@@ -81,7 +81,7 @@
                      specialPrice:cartItem.specialPriceFormatted
                          fontSize:10.0f
             specialPriceOnTheLeft:NO];
-    self.priceView.frame = CGRectMake(90.0f,
+    self.priceView.frame = CGRectMake(96.0f,
                                       34.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
