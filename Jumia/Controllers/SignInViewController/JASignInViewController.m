@@ -171,7 +171,7 @@ FBLoginViewDelegate
 }
 
 - (void)forgotPasswordButtonPressed:(id)sender
-{    
+{
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowForgotPasswordScreenNotification
                                                         object:nil
                                                       userInfo:nil];
@@ -179,33 +179,30 @@ FBLoginViewDelegate
 
 - (void)loginButtonPressed:(id)sender
 {
-    BOOL hasErrors = [self.dynamicForm checkErrors];
+    [self.dynamicForm checkErrors];
     
-    if(!hasErrors)
-    {
-        NSDictionary *parameters = [self.dynamicForm getValues];
+    [self showLoading];
+    
+    [RIForm sendForm:self.dynamicForm.form successBlock:^(id object) {
+        [self.dynamicForm resetValues];
         
-        [self showLoading];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                            object:@{@"index": @(0),
+                                                                     @"name": @"Home"}];
         
-        [RIForm sendForm:self.dynamicForm.form parameters:parameters successBlock:^(id object) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                                object:@{@"index": @(0),
-                                                                         @"name": @"Home"}];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                object:nil];
-            [self hideLoading];
-            
-        } andFailureBlock:^(NSArray *errorObject) {
-            [self hideLoading];
-            
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:[errorObject componentsJoinedByString:@","]
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
-        }];
-    }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                            object:nil];
+        [self hideLoading];
+        
+    } andFailureBlock:^(NSArray *errorObject) {
+        [self hideLoading];
+        
+        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                    message:[errorObject componentsJoinedByString:@","]
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"OK", nil] show];
+    }];
 }
 
 #pragma mark - Facebook Delegate

@@ -89,6 +89,8 @@
 
 -(void)setupEmptyCart
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
+    
     [self.emptyCartView setHidden:NO];
     [self.emptyCartLabel setHidden:NO];
     [self.continueShoppingButton setHidden:NO];

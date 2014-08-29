@@ -11,10 +11,18 @@
 
 @interface JABirthDateComponent : UIView
 
-@property (strong, nonatomic) RIField *field;
-@property (weak, nonatomic) IBOutlet UILabel *labelText;
-@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (strong, nonatomic) RIField *dayField;
+@property (strong, nonatomic) RIField *monthField;
+@property (strong, nonatomic) RIField *yearField;
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
 
-+ (JABirthDateComponent *)getNewJABirthDateComponent;
++(JABirthDateComponent *)getNewJABirthDateComponent;
+
+-(void)setupWithLabel:(NSString*)label day:(RIField*)day month:(RIField*)month year:(RIField*)year;
+
+-(void)setValue:(NSDate*)date;
+
+-(NSDate*)getValue;
 
 @end

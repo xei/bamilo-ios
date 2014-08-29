@@ -93,7 +93,7 @@ FBLoginViewDelegate
     self.numberOfFormsToLoad = 2;
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
-
+           
            self.loginDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
            self.loginFormHeight = 0.0f;
            self.loginFormFieldsArray = [self.loginDynamicForm.formViews copy];
@@ -467,33 +467,32 @@ FBLoginViewDelegate
 
 -(void)loginButtonPressed
 {
-    BOOL hasErrors = [self.loginDynamicForm checkErrors];
+    [self.loginDynamicForm checkErrors];
     
-    if(!hasErrors)
-    {
-        NSDictionary *parameters = [self.loginDynamicForm getValues];
+    NSDictionary *parameters = [self.loginDynamicForm getValues];
+    
+    [self showLoading];
+    
+    [RIForm sendForm:self.loginDynamicForm.form successBlock:^(id object) {
+        [self.loginDynamicForm resetValues];
         
-        [self showLoading];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                            object:nil];
         
-        [RIForm sendForm:self.loginDynamicForm.form parameters:parameters successBlock:^(id object) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                object:nil];
-
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                object:nil
-                                                              userInfo:nil];
-            [self hideLoading];
-            
-        } andFailureBlock:^(NSArray *errorObject) {
-            [self hideLoading];
-            
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:[errorObject componentsJoinedByString:@","]
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
-        }];
-    }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                            object:nil
+                                                          userInfo:nil];
+        [self hideLoading];
+        
+    } andFailureBlock:^(NSArray *errorObject) {
+        [self hideLoading];
+        
+        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                    message:[errorObject componentsJoinedByString:@","]
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"OK", nil] show];
+    }];
 }
 
 -(void)forgotButtonPressed
@@ -505,35 +504,33 @@ FBLoginViewDelegate
 
 -(void)signUpButtonPressed
 {
-    BOOL hasErrors = [self.signupDynamicForm checkErrors];
+    [self.signupDynamicForm checkErrors];
     
-    if(!hasErrors)
-    {
-        NSDictionary *parameters = [self.signupDynamicForm getValues];
-        
-        [self showLoading];
-        
-        [RIForm sendForm:self.signupDynamicForm.form parameters:parameters successBlock:^(id object) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                object:nil];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                object:nil
-                                                              userInfo:nil];
-            
-            [self hideLoading];
-            
-        } andFailureBlock:^(NSArray *errorObject) {
-            [self hideLoading];
-            
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:[errorObject componentsJoinedByString:@","]
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
-        }];
-    }
+    NSDictionary *parameters = [self.signupDynamicForm getValues];
     
+    [self showLoading];
+    
+    [RIForm sendForm:self.signupDynamicForm.form successBlock:^(id object) {
+        [self.signupDynamicForm resetValues];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                            object:nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                            object:nil
+                                                          userInfo:nil];
+        
+        [self hideLoading];
+        
+    } andFailureBlock:^(NSArray *errorObject) {
+        [self hideLoading];
+        
+        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                    message:[errorObject componentsJoinedByString:@","]
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"OK", nil] show];
+    }];
 }
 
 #pragma mark - Facebook Delegate
@@ -559,10 +556,10 @@ FBLoginViewDelegate
         [RICustomer loginCustomerByFacebookWithParameters:parameters
                                              successBlock:^(id customer) {
                                                  [self hideLoading];
-                                         
+                                                 
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                                                      object:nil];
-                                                    
+                                                 
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
                                                                                                      object:nil
                                                                                                    userInfo:nil];
