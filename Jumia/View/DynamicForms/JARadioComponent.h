@@ -1,5 +1,5 @@
 //
-//  JATextField.h
+//  JARadioComponent.h
 //  Jumia
 //
 //  Created by Pedro Lopes on 25/08/14.
@@ -9,17 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "RIField.h"
 
-@interface JATextField : UIView
+@interface JARadioComponent : UIView
 
 @property (strong, nonatomic) RIField *field;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
+@property (strong, nonatomic) NSArray *dataset;
 
-- (BOOL)isValid;
++(JARadioComponent *)getNewJARadioComponent;
 
-+ (JATextField *)getNewJATextField;
-
-- (void)setupWithField:(RIField*)field;
+-(void)setupWithField:(RIField*)field;
 
 -(void)setValue:(NSString*)value;
 

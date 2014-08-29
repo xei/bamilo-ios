@@ -211,7 +211,10 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     for(RIField *field in form.fields)
     {
-        [parameters setValue:field.value forKey:field.name];
+        if(VALID_NOTEMPTY(field.name, NSString))
+        {
+            [parameters setValue:field.value forKey:field.name];
+        }
     }
     return [parameters copy];
 }

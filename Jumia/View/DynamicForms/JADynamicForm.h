@@ -10,7 +10,7 @@
 #import "JATextField.h"
 #import "JABirthDateComponent.h"
 #import "JACheckBoxComponent.h"
-#import "JAGenderComponent.h"
+#import "JARadioComponent.h"
 
 @class RIForm;
 
@@ -21,6 +21,10 @@
 - (void)changedFocus:(UIView *)view;
 
 - (void)lostFocus;
+
+- (void)openDatePicker:(JABirthDateComponent *)birthdayComponent;
+
+- (void)openPicker:(JARadioComponent *)radioComponent;
 
 @end
 
@@ -35,5 +39,7 @@
 -(BOOL)checkErrors;
 
 -(NSDictionary*)getValues;
+
+-(void)resetValues;
 
 @end

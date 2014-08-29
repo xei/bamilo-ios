@@ -465,7 +465,14 @@
     NSDictionary* userInfo = notification.userInfo;
     self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
     
-    [self.navigationBarView updateCartProductCount:self.cart.cartCount];
+    if(VALID_NOTEMPTY(self.cart, RICart))
+    {
+        [self.navigationBarView updateCartProductCount:self.cart.cartCount];
+    }
+    else
+    {
+        [self.navigationBarView updateCartProductCount:0];
+    }
 }
 
 

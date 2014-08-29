@@ -13,16 +13,27 @@
 #import "RICustomer.h"
 
 @interface JASignupViewController ()
-<JADynamicFormDelegate>
+<JADynamicFormDelegate,
+UIPickerViewDataSource,
+UIPickerViewDelegate>
 
 @property (strong, nonatomic) UIScrollView *contentScrollView;
 @property (strong, nonatomic) UIView *contentView;
+@property (strong, nonatomic) UILabel *headerLabel;
+@property (strong, nonatomic) UIView *headerSeparator;
 @property (strong, nonatomic) UIButton *loginButton;
 @property (strong, nonatomic) UIButton *registerButton;
 @property (strong, nonatomic) NSMutableArray *fieldsArray;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
 @property (assign, nonatomic) CGRect originalFrame;
 @property (assign, nonatomic) CGFloat registerViewCurrentY;
+
+@property (strong, nonatomic) JABirthDateComponent *birthdayComponent;
+@property (strong, nonatomic) JARadioComponent *radioComponent;
+@property (strong, nonatomic) UIView *pickerBackgroundView;
+@property (strong, nonatomic) UIToolbar *pickerToolbar;
+@property (strong, nonatomic) UIDatePicker *datePickerView;
+@property (strong, nonatomic) UIPickerView *pickerView;
 
 @end
 
@@ -36,18 +47,31 @@
     
     self.navBarLayout.title = @"Create Account";
     
+    self.registerViewCurrentY = 0.0f;
+    
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height - 64.0f)];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
     
-    self.contentView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
     [self.contentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.contentView.layer.cornerRadius = 5.0f;
     
+    self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, self.registerViewCurrentY, self.contentView.frame.size.width - 12.0f, 25.0f)];
+    [self.headerLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.headerLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+    [self.headerLabel setText:@"Account Data"];
+    [self.headerLabel setBackgroundColor:[UIColor clearColor]];
+    [self.contentView addSubview:self.headerLabel];
+    self.registerViewCurrentY = CGRectGetMaxY(self.headerLabel.frame);
+    
+    self.headerSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.registerViewCurrentY, self.contentView.frame.size.width, 1.0f)];
+    [self.headerSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.contentView addSubview:self.headerSeparator];
+    self.registerViewCurrentY = CGRectGetMaxY(self.headerSeparator.frame) + 6.0f;
+    
     [self.contentScrollView addSubview:self.contentView];
     [self.view addSubview:self.contentScrollView];
-    
-    self.registerViewCurrentY = 0.0f;
     
     self.originalFrame = self.contentScrollView.frame;
     self.fieldsArray = [NSMutableArray new];
@@ -117,32 +141,31 @@
 
 - (void)registerButtonPressed:(id)sender
 {
-    BOOL hasErrors = [self.dynamicForm checkErrors];
+    [self.dynamicForm checkErrors];
     
-    if(!hasErrors)
-    {
-        NSDictionary *parameters = [self.dynamicForm getValues];
+    NSDictionary *parameters = [self.dynamicForm getValues];
+    
+    [self showLoading];
+    
+    [RIForm sendForm:self.dynamicForm.form successBlock:^(id object) {
+        [self.dynamicForm resetValues];
         
-        [self showLoading];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                            object:@{@"index": @(0),
+                                                                     @"name": @"Home"}];
         
-        [RIForm sendForm:self.dynamicForm.form parameters:parameters successBlock:^(id object) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                                object:@{@"index": @(0),
-                                                                         @"name": @"Home"}];
-            
-            
-            [self hideLoading];
-            
-        } andFailureBlock:^(NSArray *errorObject) {
-            [self hideLoading];
-            
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:[errorObject componentsJoinedByString:@","]
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
-        }];
-    }
+        
+        [self hideLoading];
+        
+    } andFailureBlock:^(NSArray *errorObject) {
+        [self hideLoading];
+        
+        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                    message:[errorObject componentsJoinedByString:@","]
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"OK", nil] show];
+    }];
 }
 
 - (void)loginButtonPressed:(id)sender
@@ -150,28 +173,56 @@
     
 }
 
-//#pragma mark - TextField Delegate
-//
-//- (void)textFieldDidBeginEditing:(UITextField *)textField
-//{
-//    UIView *superView = textField.superview;
-//
-//    CGPoint scrollPoint = CGPointMake(0.0, superView.frame.origin.y - 130);
-//    [self.contentScrollView setContentOffset:scrollPoint
-//                                    animated:YES];
-//}
-//
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField
-//{
-//    [UIView animateWithDuration:0.5f
-//                     animations:^{
-//                         self.contentScrollView.frame = self.originalFrame;
-//                     }];
-//
-//    [textField resignFirstResponder];
-//
-//    return YES;
-//}
+- (void)birthdayChanged:(id)sender
+{
+    if(VALID_NOTEMPTY(self.birthdayComponent, JABirthDateComponent))
+    {
+        [self.birthdayComponent setValue:[self.datePickerView date]];
+    }
+    
+    [self removePickerView];
+}
+
+- (void)radioOptionChanged:(id)sender
+{
+    if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent))
+    {
+        NSInteger selectedRow = [self.pickerView selectedRowInComponent:0];
+        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray) && selectedRow < [[self.radioComponent dataset] count])
+        {
+            [self.radioComponent setValue:[[self.radioComponent dataset] objectAtIndex:selectedRow]];
+        }
+    }
+    
+    [self removePickerView];
+}
+
+-(void)removePickerView
+{
+    if(VALID_NOTEMPTY(self.pickerToolbar, UIToolbar))
+    {
+        [self.pickerToolbar removeFromSuperview];
+    }
+    
+    if(VALID_NOTEMPTY(self.pickerView, UIPickerView))
+    {
+        [self.pickerView removeFromSuperview];
+    }
+    
+    if(VALID_NOTEMPTY(self.datePickerView, UIDatePicker))
+    {
+        [self.datePickerView removeFromSuperview];
+    }
+    
+    if(VALID_NOTEMPTY(self.pickerBackgroundView, UIView))
+    {
+        [self.pickerBackgroundView removeFromSuperview];
+    }
+    
+    self.pickerView = nil;
+    self.datePickerView = nil;
+    self.pickerBackgroundView = nil;
+}
 
 #pragma mark JADynamicFormDelegate
 
@@ -188,6 +239,152 @@
                      animations:^{
                          self.contentScrollView.frame = self.originalFrame;
                      }];
+}
+
+- (void)openDatePicker:(JABirthDateComponent *)birthdayComponent
+{
+    [self removePickerView];
+    
+    self.birthdayComponent = birthdayComponent;
+    self.pickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+    UITapGestureRecognizer *removePickerViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(removePickerView)];
+    [self.pickerBackgroundView addGestureRecognizer:removePickerViewTap];
+    
+    self.datePickerView = [[UIDatePicker alloc] initWithFrame:CGRectZero];
+    [self.datePickerView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.datePickerView setAlpha:0.9];
+    self.datePickerView.datePickerMode = UIDatePickerModeDate;
+    
+    self.datePickerView.date = VALID_NOTEMPTY([birthdayComponent getValue], NSDate) ? [birthdayComponent getValue] : [NSDate date];
+    [self.datePickerView setFrame:CGRectMake(0.0f,
+                                             (self.pickerBackgroundView.frame.size.height - self.datePickerView.frame.size.height),
+                                             self.datePickerView.frame.size.width,
+                                             self.datePickerView.frame.size.height)];
+    
+    self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
+    [self.pickerToolbar setTranslucent:NO];
+    [self.pickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.pickerToolbar setAlpha:0.9];
+    [self.pickerToolbar setFrame:CGRectMake(0.0f,
+                                            CGRectGetMinY(self.datePickerView.frame) - 44.0f,
+                                            320.0f,
+                                            44.0f)];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
+    [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [button setTitle:@"Done" forState:UIControlStateNormal];
+    [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [button addTarget:self action:@selector(birthdayChanged:) forControlEvents:UIControlEventTouchUpInside];
+    [button sizeToFit];
+    
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    [self.pickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
+    [self.pickerBackgroundView addSubview:self.pickerToolbar];
+    
+    [self.pickerBackgroundView addSubview:self.datePickerView];
+    [self.view addSubview:self.pickerBackgroundView];
+}
+
+- (void)openPicker:(JARadioComponent *)radioComponent
+{
+    [self removePickerView];
+    
+    self.radioComponent = radioComponent;
+    self.pickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+    UITapGestureRecognizer *removePickerViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(removePickerView)];
+    [self.pickerBackgroundView addGestureRecognizer:removePickerViewTap];
+    
+    self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
+    [self.pickerView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.pickerView setAlpha:0.9];
+    [self.pickerView setDataSource:self];
+    [self.pickerView setDelegate:self];
+    
+    NSString *selectedValue = [radioComponent getValue];
+    if(VALID_NOTEMPTY(selectedValue, NSString))
+    {
+        NSInteger selectedRow = 0;
+        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray))
+        {
+            for (int i = 0; i < [[self.radioComponent dataset] count]; i++)
+            {
+                if([selectedValue isEqualToString:[[self.radioComponent dataset] objectAtIndex:i]])
+                {
+                    selectedRow = i;
+                    break;
+                }
+            }
+        }
+        [self.pickerView selectRow:selectedRow inComponent:0 animated:NO];
+    }
+    
+    [self.pickerView setFrame:CGRectMake(0.0f,
+                                         (self.pickerBackgroundView.frame.size.height - self.pickerView.frame.size.height),
+                                         self.pickerView.frame.size.width,
+                                         self.pickerView.frame.size.height)];
+    
+    self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
+    [self.pickerToolbar setTranslucent:NO];
+    [self.pickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.pickerToolbar setAlpha:0.9];
+    [self.pickerToolbar setFrame:CGRectMake(0.0f,
+                                            CGRectGetMinY(self.pickerView.frame) - 44.0f,
+                                            320.0f,
+                                            44.0f)];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
+    [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [button setTitle:@"Done" forState:UIControlStateNormal];
+    [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [button addTarget:self action:@selector(radioOptionChanged:) forControlEvents:UIControlEventTouchUpInside];
+    [button sizeToFit];
+    
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    [self.pickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
+    [self.pickerBackgroundView addSubview:self.pickerToolbar];
+    
+    [self.pickerBackgroundView addSubview:self.pickerView];
+    [self.view addSubview:self.pickerBackgroundView];
+}
+
+#pragma mark UIPickerViewDataSource
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    NSInteger numberOfRowsInComponent = 0;
+    if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray))
+    {
+        numberOfRowsInComponent = [[self.radioComponent dataset] count];
+    }
+    return numberOfRowsInComponent;
+}
+
+#pragma mark UIPickerViewDelegate
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    NSString *titleForRow = @"";
+    if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray) && row < [[self.radioComponent dataset] count])
+    {
+        titleForRow = [[self.radioComponent dataset] objectAtIndex:row];
+    }
+    return  titleForRow;
 }
 
 @end

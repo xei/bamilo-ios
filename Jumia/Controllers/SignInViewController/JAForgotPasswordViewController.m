@@ -87,37 +87,34 @@
 {
     [self.view endEditing:YES];
     
-    BOOL hasErrors = [self.dynamicForm checkErrors];
+    [self.dynamicForm checkErrors];
     
-    if(!hasErrors)
-    {
-        NSDictionary *temp = [self.dynamicForm getValues];
+    NSDictionary *temp = [self.dynamicForm getValues];
+    
+    [self showLoading];
+    
+    [RICustomer requestPasswordReset:^(RICustomer *customer) {
         
-        [self showLoading];
+        [self hideLoading];
         
-        [RICustomer requestPasswordReset:^(RICustomer *customer) {
-            
-            [self hideLoading];
-            
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:@"Request sent with success!"
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
-            
-            [self.navigationController popViewControllerAnimated:YES];
-            
-        } andFailureBlock:^(NSArray *errorObject) {
-            
-            [self hideLoading];
-            
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:@"Error reseting password."
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
-        }];
-    }
+        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                    message:@"Request sent with success!"
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"OK", nil] show];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } andFailureBlock:^(NSArray *errorObject) {
+        
+        [self hideLoading];
+        
+        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                    message:@"Error reseting password."
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"OK", nil] show];
+    }];
 }
 
 @end
