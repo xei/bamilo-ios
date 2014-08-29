@@ -91,7 +91,7 @@
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
-                           successBlock:(void (^)(NSArray *products, NSArray *filters, NSArray* categories))successBlock
+                           successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSArray* categories))successBlock
                         andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     BOOL discountMode = NO;
@@ -117,7 +117,7 @@
 }
 
 + (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(NSArray *products, NSArray *filters, NSArray* categories))successBlock
+                        successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSArray* categories))successBlock
                      andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
@@ -152,6 +152,8 @@
                                                                           
                                                                       }
                                                                       
+                                                                      NSString* productCount = [metadata objectForKey:@"product_count"];
+                                                                      
                                                                       NSArray* results = [metadata objectForKey:@"results"];
                                                                       
                                                                       if (VALID_NOTEMPTY(results, NSArray)) {
@@ -165,7 +167,7 @@
                                                                           }
                                                                           
                                                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                                                              successBlock(products, filtersArray, categoriesArray);
+                                                                              successBlock(products, productCount, filtersArray, categoriesArray);
                                                                           });
                                                                       }
                                                                   }
@@ -403,9 +405,11 @@
 {
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
+        NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
+        
         RIProduct* productToDelete;
         
-        for (RIProduct* recentProduct in recentlyViewedProducts) {
+        for (RIProduct* recentProduct in allProducts) {
             
             if ([recentProduct.sku isEqualToString:product.sku]) {
                 //same product, delete this one

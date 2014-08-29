@@ -96,6 +96,14 @@
         self.showTitleLabel = YES;
     }
 }
+@synthesize subTitle=_subTitle;
+- (void)setSubTitle:(NSString *)subTitle
+{
+    _subTitle=subTitle;
+    if (VALID_NOTEMPTY(subTitle, NSString)) {
+        self.showTitleLabel = YES;
+    }
+}
 
 
 #pragma mark Right buttons

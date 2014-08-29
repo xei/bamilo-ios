@@ -61,6 +61,11 @@
 {
     [super viewWillAppear:animated];
     
+    [self reloadNavBar];
+}
+
+- (void)reloadNavBar
+{
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification
                                                         object:self.navBarLayout];
 }

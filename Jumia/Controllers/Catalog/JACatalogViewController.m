@@ -153,7 +153,10 @@
                                             page:[self getCurrentPage]+1
                                         maxItems:JACatalogViewControllerMaxProducts
                                          filters:self.filtersArray
-                                    successBlock:^(NSArray* products, NSArray* filters, NSArray* categories) {
+                                    successBlock:^(NSArray* products, NSString* productCount, NSArray* filters, NSArray* categories) {
+                                        
+                                        self.navBarLayout.subTitle = productCount;
+                                        [self reloadNavBar];
                                         
                                         if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
                                             self.filtersArray = filters;
