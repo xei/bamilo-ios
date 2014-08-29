@@ -2,18 +2,20 @@
 //  RIField.m
 //  Jumia
 //
-//  Created by Miguel Chaves on 13/Aug/14.
+//  Created by Pedro Lopes on 29/08/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
 #import "RIField.h"
 #import "RIFieldDataSetComponent.h"
+#import "RIFieldOption.h"
 #import "RIForm.h"
 
 
 @implementation RIField
 
 @dynamic key;
+@dynamic label;
 @dynamic max;
 @dynamic min;
 @dynamic name;
@@ -22,9 +24,9 @@
 @dynamic type;
 @dynamic uid;
 @dynamic value;
-@dynamic form;
 @dynamic dataSet;
-@dynamic label;
+@dynamic form;
+@dynamic options;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 {
@@ -56,6 +58,19 @@
             RIFieldDataSetComponent *component = [RIFieldDataSetComponent parseDataSetComponent:tempString];
             component.field = newField;
             [newField addDataSetObject:component];
+        }
+    }
+    
+    if ([fieldJSON objectForKey:@"options"]) {
+        NSArray *optionsArray = [fieldJSON objectForKey:@"options"];
+        
+        for (NSDictionary *optionObject in optionsArray) {
+            if(VALID_NOTEMPTY(optionObject, NSDictionary))
+            {
+                RIFieldOption *option = [RIFieldOption parseFieldOption:optionObject];
+                option.field = newField;
+                [newField addOptionsObject:option];          
+            }
         }
     }
     

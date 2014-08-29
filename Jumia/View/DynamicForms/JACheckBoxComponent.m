@@ -25,4 +25,35 @@
     return nil;
 }
 
+-(void)setupWithField:(RIField*)field
+{
+    self.field = field;
+    
+    [self.switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
+    
+    if(VALID_NOTEMPTY([[self field] value], NSString))
+    {
+        [self.switchComponent setOn:YES animated:NO];
+    }
+}
+
+- (void)changedState:(id)sender
+{
+    BOOL state = [sender isOn];
+    
+    [self setValue:state];
+}
+
+-(void)setValue:(BOOL)state
+{
+    if(state)
+    {
+        [[self field] setValue:@"1"];
+    }
+    else
+    {
+        [[self field] setValue:@""];
+    }
+}
+
 @end

@@ -87,10 +87,11 @@ FBLoginViewDelegate
     
     [self.facebookLoginButton removeFromSuperview];
     
+    self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginView.frame) + 6.0f;
+
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
            
-           self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginView.frame) + 6.0f;
            self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.loginViewCurrentY];
            [self.dynamicForm setDelegate:self];
            self.fieldsArray = [self.dynamicForm.formViews copy];
@@ -102,9 +103,11 @@ FBLoginViewDelegate
            }
            
            [self finishedFormLoading];
-           
+
        } failureBlock:^(NSArray *errorMessage) {
-           
+
+           [self finishedFormLoading];
+    
            [[[UIAlertView alloc] initWithTitle:@"Jumia"
                                        message:@"There was an error"
                                       delegate:nil
@@ -158,7 +161,7 @@ FBLoginViewDelegate
     [self.loginView addSubview:self.signUpButton];
     
     self.loginViewHeightConstrain.constant = CGRectGetMaxY(self.signUpButton.frame) + 10.0f;
-    self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) + 10.0f);
+    self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) + 10.0f) - 200.0f;
     
     [self hideLoading];
 }
@@ -179,11 +182,9 @@ FBLoginViewDelegate
 
 - (void)loginButtonPressed:(id)sender
 {
-    [self.dynamicForm checkErrors];
-    
     [self showLoading];
     
-    [RIForm sendForm:self.dynamicForm.form successBlock:^(id object) {
+    [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object) {
         [self.dynamicForm resetValues];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
@@ -195,6 +196,8 @@ FBLoginViewDelegate
         [self hideLoading];
         
     } andFailureBlock:^(NSArray *errorObject) {
+        [self.dynamicForm checkErrors];
+
         [self hideLoading];
         
         [[[UIAlertView alloc] initWithTitle:@"Jumia"
