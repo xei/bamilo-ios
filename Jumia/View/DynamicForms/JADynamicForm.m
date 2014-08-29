@@ -23,21 +23,26 @@
     if(self)
     {
         self.form = form;
-        [self generateForm:[[form fields] array] startingY:startingY];
+        [self generateForm:[[[form fields] array] copy] startingY:startingY];
     }
     return self;
 }
 
 - (void)generateForm:(NSArray*)fields startingY:(CGFloat)startingY
 {
-    BOOL addedBirth = NO;
+    RIField *dayField = nil;
+    RIField *monthField = nil;
+    RIField *yearField = nil;
+    NSInteger birthdayFieldPosition = -1;
+    JABirthDateComponent *birthDateComponent = [JABirthDateComponent getNewJABirthDateComponent];
+    
     NSInteger lastTextFieldIndex = 0;
     self.formViews = [[NSMutableArray alloc] init];
     for (int i = 0; i < [fields count]; i++)
     {
         RIField *field = [fields objectAtIndex:i];
         
-        if ([field.type isEqualToString:@"string"] || [field.type isEqualToString:@"email"])
+        if ([@"string" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
             JATextField *textField = [JATextField getNewJATextField];
             [textField setupWithField:field];
@@ -55,7 +60,7 @@
             lastTextFieldIndex = [self.formViews count];
             [self.formViews addObject:textField];
         }
-        else if ([field.type isEqualToString:@"password"] || [field.type isEqualToString:@"password2"])
+        else if ([@"password" isEqualToString:field.type] || [@"password2" isEqualToString:field.type])
         {
             JATextField *textField = [JATextField getNewJATextField];
             [textField setupWithField:field];
@@ -76,24 +81,54 @@
         }
         else if ([field.type isEqualToString:@"integer"])
         {
-            if (!addedBirth)
+            if([@"day" isEqualToString:field.key] || [@"month" isEqualToString:field.key] || [@"year" isEqualToString:field.key])
             {
-                JABirthDateComponent *birthDate = [JABirthDateComponent getNewJABirthDateComponent];
-                birthDate.labelText.text = @"Birthdate";
+                if([@"day" isEqualToString:field.key])
+                {
+                    dayField = field;
+                }
+                else if([@"month" isEqualToString:field.key])
+                {
+                    monthField = field;
+                }
+                else if([@"year" isEqualToString:field.key])
+                {
+                    yearField = field;
+                }
+                if(-1 == birthdayFieldPosition)
+                {
+                    birthdayFieldPosition = i;
+                    
+                    CGRect frame = birthDateComponent.frame;
+                    frame.origin.y = startingY;
+                    birthDateComponent.frame = frame;
+                    startingY += birthDateComponent.frame.size.height;
+                    
+                    [birthDateComponent.textField setTag:birthdayFieldPosition];
+                    [birthDateComponent setTag:birthdayFieldPosition];
+                }
+            }
+            else
+            {
+                JATextField *textField = [JATextField getNewJATextField];
+                [textField setupWithField:field];
+                [textField.textField setDelegate:self];
+                [textField.textField setReturnKeyType:UIReturnKeyNext];
+                [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
                 
-                birthDate.layer.cornerRadius = 4.0f;
-                CGRect frame = birthDate.frame;
+                CGRect frame = textField.frame;
                 frame.origin.y = startingY;
-                birthDate.frame = frame;
-                startingY += (birthDate.frame.size.height + 8.0f);
+                textField.frame = frame;
+                startingY += textField.frame.size.height;
                 
-                [birthDate setTag:i];
-                [self.formViews addObject:birthDate];
+                [textField.textField setTag:i];
+                [textField setTag:i];
                 
-                addedBirth = YES;
+                lastTextFieldIndex = [self.formViews count];
+                [self.formViews addObject:textField];
             }
         }
-        else if ([field.type isEqualToString:@"radio"])
+        else if ([@"radio" isEqualToString:field.type])
         {
             NSMutableArray *contentArray = [NSMutableArray new];
             
@@ -101,46 +136,69 @@
                 [contentArray addObject:component.value];
             }
             
-            JAGenderComponent *gender = [JAGenderComponent getNewJAGenderComponent];
-            [gender initSegmentedControl:[contentArray copy]];
-            
-            gender.layer.cornerRadius = 4.0f;
-            gender.labelText.text = field.label;
-            gender.field = field;
+            JARadioComponent *gender = [JARadioComponent getNewJARadioComponent];
+            [gender setupWithField:field];
+            [gender.textField setDelegate:self];
+            [gender.textField setReturnKeyType:UIReturnKeyNext];
             
             CGRect frame = gender.frame;
             frame.origin.y = startingY;
             gender.frame = frame;
-            startingY += (gender.frame.size.height + 8.0f);
+            startingY += gender.frame.size.height;
             
+            [gender.textField setTag:i];
             [gender setTag:i];
+            
+            lastTextFieldIndex = [self.formViews count];
             [self.formViews addObject:gender];
         }
-        else if ([field.type isEqualToString:@"checkbox"])
+        else if ([@"checkbox" isEqualToString:field.type])
         {
             JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
             check.field = field;
             
-            check.layer.cornerRadius = 4.0f;
             CGRect frame = check.frame;
             frame.origin.y = startingY;
             check.frame = frame;
-            startingY += (check.frame.size.height + 8.0f);
+            startingY += check.frame.size.height;
             
             check.labelText.text = field.label;
             
             [check setTag:i];
             [self.formViews addObject:check];
         }
-        else if ([field.type isEqualToString:@"hidden"])
+        else if ([@"hidden" isEqualToString:field.type])
         {
         }
     }
     
+    if(-1 != birthdayFieldPosition && VALID_NOTEMPTY(dayField, RIField) && VALID_NOTEMPTY(monthField, RIField) && VALID_NOTEMPTY(yearField, RIField))
+    {
+        [birthDateComponent setupWithLabel:@"Birthday" day:dayField month:monthField year:yearField];
+        [birthDateComponent.textField setDelegate:self];
+        [birthDateComponent.textField setReturnKeyType:UIReturnKeyNext];
+        
+        if(lastTextFieldIndex >= birthdayFieldPosition)
+        {
+            lastTextFieldIndex++;
+        }
+        
+        [self.formViews insertObject:birthDateComponent atIndex:birthdayFieldPosition];
+    }
+    
     if(lastTextFieldIndex < [self.formViews count])
     {
-        JATextField *lastTextField = [self.formViews objectAtIndex:lastTextFieldIndex];
-        [lastTextField.textField setReturnKeyType:UIReturnKeyDone];
+        UIView *view = [self.formViews objectAtIndex:lastTextFieldIndex];
+        if([view isKindOfClass:[JATextField class]])
+        {
+            JATextField *lastTextField = (JATextField*) view;
+            [lastTextField.textField setReturnKeyType:UIReturnKeyDone];
+        }
+        else if([view isKindOfClass:[JABirthDateComponent class]])
+        {
+            JABirthDateComponent *lastTextField = (JABirthDateComponent*) view;
+            [lastTextField.textField setReturnKeyType:UIReturnKeyDone];
+        }
     }
 }
 
@@ -151,12 +209,11 @@
     {
         for (id obj in self.formViews)
         {
-            if ([obj isKindOfClass:[JATextField class]])
+            if ([obj isKindOfClass:[JATextField class]] || [obj isKindOfClass:[JABirthDateComponent class]] || [obj isKindOfClass:[JARadioComponent class]])
             {
                 if (![obj isValid])
                 {
                     hasErrors = YES;
-                    break;
                 }
             }
         }
@@ -166,73 +223,110 @@
 
 -(NSDictionary*)getValues
 {
-    NSMutableDictionary *tempDic = [NSMutableDictionary new];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
     {
         for (UIView *view in self.formViews)
         {
             if ([view isKindOfClass:[JABirthDateComponent class]])
             {
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-                NSString *dateString = [dateFormatter stringFromDate:((JABirthDateComponent *)view).datePicker.date];
+                JABirthDateComponent *birthdateComponent = (JABirthDateComponent*) view;
                 
-                NSArray *components = [dateString componentsSeparatedByString:@"-"];
-                
-                if(VALID_NOTEMPTY(self.form, RIForm) && VALID_NOTEMPTY([self.form fields], NSArray))
+                if(VALID_NOTEMPTY(birthdateComponent.dayField.value, NSString))
                 {
-                    for (RIField *field in [self.form fields])
-                    {
-                        if ([field.type isEqualToString:@"integer"])
-                        {
-                            if ([field.key isEqualToString:@"day"])
-                            {
-                                NSDictionary *dicDay = @{field.name : components[0]};
-                                [tempDic addEntriesFromDictionary:dicDay];
-                            }
-                            else if ([field.key isEqualToString:@"month"])
-                            {
-                                NSDictionary *dicMonth = @{field.name : components[1]};
-                                [tempDic addEntriesFromDictionary:dicMonth];
-                            }
-                            else if ([field.key isEqualToString:@"year"])
-                            {
-                                NSDictionary *dicYear = @{field.name : components[2]};
-                                [tempDic addEntriesFromDictionary:dicYear];
-                            }
-                        }
-                    }
+                    [parameters setValue:birthdateComponent.dayField.value forKey:birthdateComponent.dayField.name];
+                }
+                
+                if(VALID_NOTEMPTY(birthdateComponent.monthField.value, NSString))
+                {
+                    [parameters setValue:birthdateComponent.monthField.value forKey:birthdateComponent.monthField.name];
+                }
+                
+                if(VALID_NOTEMPTY(birthdateComponent.yearField.value, NSString))
+                {
+                    [parameters setValue:birthdateComponent.yearField.value forKey:birthdateComponent.yearField.name];
                 }
             }
-            else if ([view isKindOfClass:[JAGenderComponent class]])
+            else if ([view isKindOfClass:[JARadioComponent class]])
             {
-                NSInteger index = ((JAGenderComponent *)view).segmentedControl.selectedSegmentIndex;
-                NSString *selectedGender = [((JAGenderComponent *)view).segmentedControl titleForSegmentAtIndex:index];
+                JARadioComponent *radioComponent = (JARadioComponent*) view;
                 
-                NSDictionary *temp = @{((JAGenderComponent *)view).field.name : selectedGender};
-                [tempDic addEntriesFromDictionary:temp];
+                if(VALID_NOTEMPTY(radioComponent.field.value, NSString))
+                {
+                    [parameters setValue:radioComponent.field.value forKey:radioComponent.field.name];
+                }
             }
             else if ([view isKindOfClass:[JACheckBoxComponent class]])
             {
-                if (((JACheckBoxComponent *)view).switchComponent.on)
+                JACheckBoxComponent *checkBoxComponent = (JACheckBoxComponent*) view;
+                
+                if (checkBoxComponent.switchComponent.on)
                 {
-                    NSDictionary *temp = @{((JACheckBoxComponent *)view).field.name : @"YES"};
-                    [tempDic addEntriesFromDictionary:temp];
+                    [parameters setValue:@"1" forKey:checkBoxComponent.field.name];
                 }
-                else
+                else if(VALID_NOTEMPTY([checkBoxComponent.field requiredMessage], NSString))
                 {
-                    NSDictionary *temp = @{((JACheckBoxComponent *)view).field.name : @"NO"};
-                    [tempDic addEntriesFromDictionary:temp];
+                    [parameters setValue:@"0" forKey:checkBoxComponent.field.name];
                 }
             }
             else if ([view isKindOfClass:[JATextField class]])
             {
-                NSDictionary *temp = @{((JATextField *)view).field.name : ((JATextField *)view).textField.text};
-                [tempDic addEntriesFromDictionary:temp];
+                JATextField *textFieldComponent = (JATextField*) view;
+                
+                if ([@"password" isEqualToString:textFieldComponent.field.type] || [@"password2" isEqualToString:textFieldComponent.field.type])
+                {
+                    if(VALID_NOTEMPTY(textFieldComponent.textField.text, NSString))
+                    {
+                        [parameters setValue:textFieldComponent.textField.text forKey:textFieldComponent.field.name];
+                    }
+                }
+                else
+                {
+                    if(VALID_NOTEMPTY(textFieldComponent.field.value, NSString))
+                    {
+                        [parameters setValue:textFieldComponent.field.value forKey:textFieldComponent.field.name];
+                    }
+                }
             }
         }
     }
-    return [tempDic copy];
+    return [parameters copy];
+}
+
+-(void)resetValues
+{
+    if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
+    {
+        for (UIView *view in self.formViews)
+        {
+            if ([view isKindOfClass:[JABirthDateComponent class]])
+            {
+                JABirthDateComponent *birthdateComponent = (JABirthDateComponent*) view;
+                
+                [birthdateComponent.dayField setValue:@""];
+                [birthdateComponent.monthField setValue:@""];
+                [birthdateComponent.yearField setValue:@""];
+            }
+            else if ([view isKindOfClass:[JARadioComponent class]])
+            {
+                JARadioComponent *radioComponent = (JARadioComponent*) view;
+                
+                [radioComponent.field setValue:@""];
+            }
+            else if ([view isKindOfClass:[JACheckBoxComponent class]])
+            {
+                JACheckBoxComponent *checkBoxComponent = (JACheckBoxComponent*) view;
+                
+                [checkBoxComponent.field setValue:@""];
+            }
+            else if ([view isKindOfClass:[JATextField class]])
+            {
+                JATextField *textFieldComponent = (JATextField*) view;
+                
+                [textFieldComponent.field setValue:@""];
+            }
+        }
+    }
 }
 
 -(UIView*)viewWithTag:(NSInteger) tag
@@ -253,10 +347,13 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    JATextField *newResponder = (JATextField *) [self viewWithTag:textField.tag + 1];
-    if (VALID(newResponder, JATextField)) {
-        [newResponder.textField becomeFirstResponder];
-    } else {
+    UIView *nextView = [self viewWithTag:textField.tag + 1];
+    if([nextView isKindOfClass:[JATextField class]])
+    {
+        JATextField *textField = (JATextField *) nextView;
+        [textField.textField becomeFirstResponder];
+    }
+    else {
         [textField resignFirstResponder];
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(lostFocus)]) {
@@ -268,14 +365,54 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(changedFocus:)]) {
-        [self.delegate performSelector:@selector(changedFocus:) withObject:[self viewWithTag:textField.tag]];
-    }
+    BOOL textFieldShouldBeginEditing = YES;
     
     [textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     [textField setTextColor:UIColorFromRGB(0x666666)];
     
-    return YES;
+    UIView *view = [self viewWithTag:textField.tag];
+    if([view isKindOfClass:[JATextField class]])
+    {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(changedFocus:)]) {
+            [self.delegate performSelector:@selector(changedFocus:) withObject:[self viewWithTag:textField.tag]];
+        }
+    }
+    else if([view isKindOfClass:[JABirthDateComponent class]])
+    {
+        textFieldShouldBeginEditing = NO;
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(openDatePicker:)]) {
+            [self.delegate performSelector:@selector(openDatePicker:) withObject:[self viewWithTag:textField.tag]];
+        }
+    }
+    else if([view isKindOfClass:[JARadioComponent class]])
+    {
+        textFieldShouldBeginEditing = NO;
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(openPicker:)]) {
+            [self.delegate performSelector:@selector(openPicker:) withObject:[self viewWithTag:textField.tag]];
+        }
+    }
+    
+    return textFieldShouldBeginEditing;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    BOOL textFieldShouldEndEditing = NO;
+    UIView *view = [self viewWithTag:textField.tag];
+    if([view isKindOfClass:[JATextField class]])
+    {
+        textFieldShouldEndEditing = YES;
+        
+        JATextField *textFieldView = (JATextField*)view;
+        if (![@"password" isEqualToString:textFieldView.field.type] && ![@"password2" isEqualToString:textFieldView.field.type])
+        {
+            [textFieldView setValue:textField.text];
+        }
+    }
+    
+    return textFieldShouldEndEditing;
 }
 
 @end

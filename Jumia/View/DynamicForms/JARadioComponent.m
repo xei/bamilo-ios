@@ -1,31 +1,32 @@
 //
-//  JATextField.m
+//  JARadioComponent.m
 //  Jumia
 //
 //  Created by Pedro Lopes on 25/08/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
-#import "JATextField.h"
+#import "JARadioComponent.h"
+#import "RIFieldDataSetComponent.h"
 
-@implementation JATextField
+@implementation JARadioComponent
 
-+ (JATextField *)getNewJATextField
++(JARadioComponent *)getNewJARadioComponent
 {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JATextField"
+    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JARadioComponent"
                                                  owner:nil
                                                options:nil];
     
     for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JATextField class]]) {
-            return (JATextField *)obj;
+        if ([obj isKindOfClass:[JARadioComponent class]]) {
+            return (JARadioComponent *)obj;
         }
     }
     
     return nil;
 }
 
-- (void)setupWithField:(RIField*)field
+-(void)setupWithField:(RIField*)field
 {
     self.field = field;
     [self.textField setPlaceholder:field.label];
@@ -43,6 +44,12 @@
     {
         [self.textField setText:field.value];
     }
+    
+    NSMutableArray *contentArray = [[NSMutableArray alloc] init];
+    for (RIFieldDataSetComponent *component in field.dataSet) {
+        [contentArray addObject:component.value];
+    }
+    self.dataset = [contentArray copy];
 }
 
 -(void)setValue:(NSString*)value
@@ -70,41 +77,10 @@
         
         return NO;
     }
-    else
-    {
-        if (self.field.regex.length > 0)
-        {
-            if (![self validateInputWithString:self.textField.text andRegularExpression:self.field.regex]) {
 
-                [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
-                [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
-                
-                return NO;
-            }
-        }
-    }
-    
     self.textField.backgroundColor = [UIColor whiteColor];
     
     return YES;
-}
-
-- (BOOL)validateInputWithString:(NSString *)aString
-           andRegularExpression:(NSString *)regExp
-{
-    NSString * const regularExpression = regExp;
-    NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regularExpression
-                                                                           options:NSRegularExpressionCaseInsensitive
-                                                                             error:&error];
-    if (error) {
-        NSLog(@"error %@", error);
-    }
-    
-    NSUInteger numberOfMatches = [regex numberOfMatchesInString:aString
-                                                        options:0
-                                                          range:NSMakeRange(0, [aString length])];
-    return numberOfMatches > 0;
 }
 
 @end
