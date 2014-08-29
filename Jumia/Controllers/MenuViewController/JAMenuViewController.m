@@ -115,6 +115,11 @@
     }];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    //this is here to override super DO NOT CALL SUPER
+}
+
 - (void)updateCart:(NSNotification*) notification
 {
     if ([kUpdateCartNotification isEqualToString:notification.name])
