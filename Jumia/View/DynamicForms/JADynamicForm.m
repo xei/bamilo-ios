@@ -14,6 +14,8 @@
 @interface JADynamicForm ()
 <UITextFieldDelegate>
 
+@property (nonatomic, strong) UITextField* currentTextField;
+
 @end
 
 @implementation JADynamicForm
@@ -391,6 +393,20 @@
     }
 }
 
+-(void)resignResponder
+{
+    if(VALID_NOTEMPTY(self.currentTextField, UITextField))
+    {
+        [self.currentTextField resignFirstResponder];
+    }
+        
+    if (self.delegate && [self.delegate respondsToSelector:@selector(lostFocus)]) {
+        [self.delegate performSelector:@selector(lostFocus) withObject:nil];
+    }
+    
+    self.currentTextField = nil;
+}
+
 -(UIView*)viewWithTag:(NSInteger) tag
 {
     UIView *view = nil;
@@ -428,6 +444,8 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     BOOL textFieldShouldBeginEditing = YES;
+    
+    self.currentTextField = textField;
     
     [textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     [textField setTextColor:UIColorFromRGB(0x666666)];

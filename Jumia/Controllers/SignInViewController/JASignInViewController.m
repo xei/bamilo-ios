@@ -88,7 +88,7 @@ FBLoginViewDelegate
     [self.facebookLoginButton removeFromSuperview];
     
     self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginView.frame) + 6.0f;
-
+    
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
            
@@ -103,11 +103,11 @@ FBLoginViewDelegate
            }
            
            [self finishedFormLoading];
-
+           
        } failureBlock:^(NSArray *errorMessage) {
-
+           
            [self finishedFormLoading];
-    
+           
            [[[UIAlertView alloc] initWithTitle:@"Jumia"
                                        message:@"There was an error"
                                       delegate:nil
@@ -168,6 +168,8 @@ FBLoginViewDelegate
 
 - (void)signUpButtonPressed:(id)sender
 {
+    [self.dynamicForm resignResponder];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification
                                                         object:nil
                                                       userInfo:nil];
@@ -175,6 +177,8 @@ FBLoginViewDelegate
 
 - (void)forgotPasswordButtonPressed:(id)sender
 {
+    [self.dynamicForm resignResponder];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowForgotPasswordScreenNotification
                                                         object:nil
                                                       userInfo:nil];
@@ -182,6 +186,8 @@ FBLoginViewDelegate
 
 - (void)loginButtonPressed:(id)sender
 {
+    [self.dynamicForm resignResponder];
+    
     [self showLoading];
     
     [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object) {
@@ -197,7 +203,7 @@ FBLoginViewDelegate
         
     } andFailureBlock:^(NSArray *errorObject) {
         [self.dynamicForm checkErrors];
-
+        
         [self hideLoading];
         
         [[[UIAlertView alloc] initWithTitle:@"Jumia"
