@@ -182,6 +182,8 @@
 		B5A30303198121A400F71726 /* JABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A30301198121A400F71726 /* JABaseViewController.m */; };
 		B5C61BBD19B0BB7E00840E93 /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BBC19B0BB7E00840E93 /* RIField.m */; };
 		B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */; };
+		B5C61BC319B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BC219B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m */; };
+		B5C61BC519B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C61BC419B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib */; };
 		B5C682F81986C41D0094C92C /* RIShippingMethodPickupStationOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */; };
 		B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F01986C41D0094C92C /* RIShippingMethodFormField.m */; };
 		B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */; };
@@ -581,6 +583,9 @@
 		B5C61BBC19B0BB7E00840E93 /* RIField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIField.m; sourceTree = "<group>"; };
 		B5C61BBE19B0BB7F00840E93 /* RIFieldOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldOption.h; sourceTree = "<group>"; };
 		B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIFieldOption.m; sourceTree = "<group>"; };
+		B5C61BC119B0DAD600840E93 /* JACheckBoxWithOptionsComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACheckBoxWithOptionsComponent.h; sourceTree = "<group>"; };
+		B5C61BC219B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACheckBoxWithOptionsComponent.m; sourceTree = "<group>"; };
+		B5C61BC419B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACheckBoxWithOptionsComponent.xib; sourceTree = "<group>"; };
 		B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIShippingMethodPickupStationOption.m; sourceTree = "<group>"; };
 		B5C682EF1986C41D0094C92C /* RIShippingMethodPickupStationOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIShippingMethodPickupStationOption.h; sourceTree = "<group>"; };
 		B5C682F01986C41D0094C92C /* RIShippingMethodFormField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIShippingMethodFormField.m; sourceTree = "<group>"; };
@@ -1063,6 +1068,9 @@
 				B510B00D19AE466B00A9754A /* JATextField.h */,
 				B510B00E19AE466B00A9754A /* JATextField.m */,
 				B510B00F19AE466B00A9754A /* JATextField.xib */,
+				B5C61BC119B0DAD600840E93 /* JACheckBoxWithOptionsComponent.h */,
+				B5C61BC219B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m */,
+				B5C61BC419B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib */,
 			);
 			path = DynamicForms;
 			sourceTree = "<group>";
@@ -1982,6 +1990,7 @@
 				B5A3024819811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				B5A3023819811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
 				4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */,
+				B5C61BC519B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib in Resources */,
 				B5A3023619811E8A00F71726 /* BMA4SCloseButton.png in Resources */,
 				B5A3023E19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
 				B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */,
@@ -2170,6 +2179,7 @@
 				CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */,
 				B5A30303198121A400F71726 /* JABaseViewController.m in Sources */,
 				B5A302CB19811E9200F71726 /* RISection.m in Sources */,
+				B5C61BC319B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m in Sources */,
 				B517FDF91982517300F65253 /* RICart.m in Sources */,
 				B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */,
 				B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */,

@@ -11,6 +11,7 @@
 #import "JABirthDateComponent.h"
 #import "JACheckBoxComponent.h"
 #import "JARadioComponent.h"
+#import "JACheckBoxWithOptionsComponent.h"
 
 @class RIForm;
 

@@ -165,8 +165,6 @@
                 check.frame = frame;
                 startingY += check.frame.size.height;
                 
-                check.labelText.text = field.label;
-                
                 [check setTag:i];
                 [self.formViews addObject:check];
             }
@@ -174,7 +172,16 @@
             {
                 if(VALID_NOTEMPTY(field.options, NSOrderedSet))
                 {
-#warning missing component
+                    JACheckBoxWithOptionsComponent *checkWithOptions = [JACheckBoxWithOptionsComponent getNewJACheckBoxWithOptionsComponent];
+                    [checkWithOptions setupWithField:field];
+                    
+                    CGRect frame = checkWithOptions.frame;
+                    frame.origin.y = startingY;
+                    checkWithOptions.frame = frame;
+                    startingY += checkWithOptions.frame.size.height;
+                    
+                    [checkWithOptions setTag:i];
+                    [self.formViews addObject:checkWithOptions];
                 }
                 else
                 {
@@ -283,25 +290,11 @@
                 if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [@"gender" isEqualToString:radioComponent.field.key])
                 {
                     genderComponent = radioComponent;
-                    
-                    if(VALID_NOTEMPTY(radioComponent.field.value, NSString))
-                    {
-                        [parameters setValue:radioComponent.field.value forKey:radioComponent.field.name];
-                    }
                 }
-                else
+                
+                if(VALID_NOTEMPTY(radioComponent.field.value, NSString))
                 {
-                    if(VALID_NOTEMPTY(radioComponent.field.options, NSOrderedSet))
-                    {
-#warning missing component behavior
-                    }
-                    else
-                    {
-                        if(VALID_NOTEMPTY(radioComponent.field.value, NSString))
-                        {
-                            [parameters setValue:radioComponent.field.value forKey:radioComponent.field.name];
-                        }
-                    }
+                    [parameters setValue:radioComponent.field.value forKey:radioComponent.field.name];
                 }
             }
             else if ([view isKindOfClass:[JACheckBoxComponent class]])
@@ -320,6 +313,14 @@
                 else if(VALID_NOTEMPTY([checkBoxComponent.field requiredMessage], NSString))
                 {
                     [parameters setValue:@"0" forKey:checkBoxComponent.field.name];
+                }
+            }
+            else if ([view isKindOfClass:[JACheckBoxWithOptionsComponent class]])
+            {
+                JACheckBoxWithOptionsComponent *checkBoxWithOptionsComponent = (JACheckBoxWithOptionsComponent*) view;
+                if(VALID_NOTEMPTY(checkBoxWithOptionsComponent.values, NSMutableDictionary))
+                {
+                    [parameters addEntriesFromDictionary:checkBoxWithOptionsComponent.values];
                 }
             }
             else if ([view isKindOfClass:[JATextField class]])
