@@ -29,6 +29,12 @@
 {
     self.field = field;
     
+    [self.labelText setTextColor:UIColorFromRGB(0x666666)];
+    if(VALID_NOTEMPTY(field.label, NSString))
+    {
+        [self.labelText setText:field.label];
+    }
+    
     [self.switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
     
     if(VALID_NOTEMPTY([[self field] value], NSString))
