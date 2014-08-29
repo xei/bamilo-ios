@@ -33,8 +33,6 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification object:nil];
-    
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.hidesBackButton = YES;
     self.title = @"";
@@ -62,6 +60,8 @@
     [super viewWillAppear:animated];
     
     [self reloadNavBar];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
+                                                        object:nil];
 }
 
 - (void)reloadNavBar

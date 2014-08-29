@@ -93,6 +93,14 @@
     [self.sortingScrollView setOptions:sortList];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+                                                        object:nil];
+}
+
 - (void)resetCatalog
 {
     //[self.collectionView setContentOffset:CGPointZero animated:NO];
