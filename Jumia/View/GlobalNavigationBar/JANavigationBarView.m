@@ -71,14 +71,12 @@
 {
     [self.backButton setTitle:backButtonTitle forState:UIControlStateNormal];
     self.backButton.hidden = NO;
-    self.backImageView.hidden = NO;
     self.leftButton.hidden = YES;
     self.editButton.hidden = YES;
 }
 - (void)showEditButton;
 {
     self.backButton.hidden = YES;
-    self.backImageView.hidden = YES;
     self.leftButton.hidden = YES;
     self.editButton.hidden = NO;
 }
@@ -86,7 +84,6 @@
 - (void)showMenuButton;
 {
     self.backButton.hidden = YES;
-    self.backImageView.hidden = YES;
     self.leftButton.hidden = NO;
     self.editButton.hidden = YES;
 }
@@ -94,7 +91,6 @@
 - (void)hideLeftItems
 {
     self.backButton.hidden = YES;
-    self.backImageView.hidden = YES;
     self.leftButton.hidden = YES;
     self.editButton.hidden = YES;
 }
