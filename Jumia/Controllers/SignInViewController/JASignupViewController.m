@@ -168,7 +168,7 @@ UIPickerViewDelegate>
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
-            [self.dynamicForm validateFields:errorObject];
+            [self.dynamicForm checkErrors];
 
             [[[UIAlertView alloc] initWithTitle:@"Jumia"
                                         message:[errorObject componentsJoinedByString:@","]

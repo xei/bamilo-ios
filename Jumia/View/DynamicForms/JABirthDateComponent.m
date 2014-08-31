@@ -34,7 +34,7 @@
     
     [self.textField setPlaceholder:label];
     
-    if(VALID_NOTEMPTY(day.requiredMessage, NSString))
+    if([day.required boolValue])
     {
         [self.textField setTextColor:UIColorFromRGB(0x666666)];
         [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
@@ -114,7 +114,7 @@
 
 -(BOOL)isValid
 {
-    if ((self.dayField.requiredMessage.length > 0) && (self.textField.text.length == 0))
+    if (([self.dayField.required boolValue]) && (self.textField.text.length == 0))
     {
         [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
         [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];

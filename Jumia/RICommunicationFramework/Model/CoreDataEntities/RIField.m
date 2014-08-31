@@ -88,9 +88,14 @@
             newField.max = [rules objectForKey:@"max"];
         }
         
-        NSDictionary* required = [rules objectForKey:@"required"];
+        id required = [rules objectForKey:@"required"];
         if (VALID_NOTEMPTY(required, NSDictionary) && [required objectForKey:@"message"]) {
+            newField.required = [NSNumber numberWithBool:YES];
             newField.requiredMessage = [required objectForKey:@"message"];
+        }
+        else if(required)
+        {
+            newField.required = [NSNumber numberWithBool:[required boolValue]];
         }
     }
     

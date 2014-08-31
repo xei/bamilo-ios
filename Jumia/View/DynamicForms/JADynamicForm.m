@@ -323,17 +323,17 @@
             {
                 JABirthDateComponent *birthdateComponent = (JABirthDateComponent*) view;
                 
-                if(VALID_NOTEMPTY(birthdateComponent.dayField.requiredMessage, NSString) || VALID_NOTEMPTY(birthdateComponent.dayField.value, NSString))
+                if([birthdateComponent.dayField.required boolValue]|| VALID_NOTEMPTY(birthdateComponent.dayField.value, NSString))
                 {
                     [parameters setValue:birthdateComponent.dayField.value forKey:birthdateComponent.dayField.name];
                 }
                 
-                if(VALID_NOTEMPTY(birthdateComponent.monthField.requiredMessage, NSString) || VALID_NOTEMPTY(birthdateComponent.monthField.value, NSString))
+                if([birthdateComponent.monthField.required boolValue] || VALID_NOTEMPTY(birthdateComponent.monthField.value, NSString))
                 {
                     [parameters setValue:birthdateComponent.monthField.value forKey:birthdateComponent.monthField.name];
                 }
                 
-                if(VALID_NOTEMPTY(birthdateComponent.yearField.requiredMessage, NSString) || VALID_NOTEMPTY(birthdateComponent.yearField.value, NSString))
+                if([birthdateComponent.yearField.required boolValue] || VALID_NOTEMPTY(birthdateComponent.yearField.value, NSString))
                 {
                     [parameters setValue:birthdateComponent.yearField.value forKey:birthdateComponent.yearField.name];
                 }
@@ -347,7 +347,7 @@
                     genderComponent = radioComponent;
                 }
                 
-                if(VALID_NOTEMPTY(radioComponent.field.requiredMessage, NSString) || VALID_NOTEMPTY(radioComponent.field.value, NSString))
+                if([radioComponent.field.required boolValue] || VALID_NOTEMPTY(radioComponent.field.value, NSString))
                 {
                     [parameters setValue:radioComponent.field.value forKey:radioComponent.field.name];
                 }
@@ -365,7 +365,7 @@
                 {
                     [parameters setValue:@"1" forKey:checkBoxComponent.field.name];
                 }
-                else if(VALID_NOTEMPTY([checkBoxComponent.field requiredMessage], NSString))
+                else if([checkBoxComponent.field.required boolValue])
                 {
                     [parameters setValue:@"0" forKey:checkBoxComponent.field.name];
                 }
@@ -381,7 +381,7 @@
             else if ([view isKindOfClass:[JATextField class]])
             {
                 JATextField *textFieldComponent = (JATextField*) view;
-                if(VALID_NOTEMPTY(textFieldComponent.field.requiredMessage, NSString) || VALID_NOTEMPTY(textFieldComponent.field.value, NSString))
+                if([textFieldComponent.field.required boolValue] || VALID_NOTEMPTY(textFieldComponent.field.value, NSString))
                 {
                     [parameters setValue:textFieldComponent.textField.text forKey:textFieldComponent.field.name];
                 }

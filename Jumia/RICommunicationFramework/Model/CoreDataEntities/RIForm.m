@@ -127,6 +127,16 @@
                                                                       RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"]];
                                                                       successBlock(customer);
                                                                   }
+                                                                  else
+                                                                  {
+                                                                      responseProcessed = YES;
+                                                                      successBlock(nil);
+                                                                  }
+                                                              }
+                                                              else
+                                                              {
+                                                                  responseProcessed = YES;
+                                                                  successBlock(nil);
                                                               }
                                                               
                                                               if(!responseProcessed)
@@ -141,7 +151,8 @@
                                                                   if(VALID_NOTEMPTY(errorDictionary, NSDictionary))
                                                                   {
                                                                       failureBlock(errorDictionary);
-                                                                  } else if(VALID_NOTEMPTY(errorArray, NSArray))
+                                                                  }
+                                                                  else if(VALID_NOTEMPTY(errorArray, NSArray))
                                                                   {
                                                                       failureBlock(errorArray);
                                                                   }

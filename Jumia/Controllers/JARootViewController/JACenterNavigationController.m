@@ -118,7 +118,12 @@
                                              selector:@selector(showForgotPasswordScreen)
                                                  name:kShowForgotPasswordScreenNotification
                                                object:nil];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutForgotPasswordScreen)
+                                                 name:kShowCheckoutForgotPasswordScreenNotification
+                                               object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutLoginScreen)
                                                  name:kShowCheckoutLoginScreenNotification
@@ -365,6 +370,17 @@
 - (void)showForgotPasswordScreen
 {
     JAForgotPasswordViewController *forgotVC = [self.storyboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
+    
+    forgotVC.navBarLayout.backButtonTitle = @"Login";
+    
+    [self pushViewController:forgotVC animated:YES];
+}
+
+- (void)showCheckoutForgotPasswordScreen
+{
+    JAForgotPasswordViewController *forgotVC = [self.storyboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
+    
+    forgotVC.navBarLayout.backButtonTitle = @"Checkout";
     
     [self pushViewController:forgotVC animated:YES];
 }

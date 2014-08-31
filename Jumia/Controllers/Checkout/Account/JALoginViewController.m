@@ -513,7 +513,7 @@ FBLoginViewDelegate
 {
     [self.loginDynamicForm resignResponder];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowForgotPasswordScreenNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutForgotPasswordScreenNotification
                                                         object:nil
                                                       userInfo:nil];
 }
