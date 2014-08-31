@@ -11,6 +11,7 @@
 
 @interface JARadioComponent : UIView
 
+@property (assign, nonatomic) BOOL hasError;
 @property (strong, nonatomic) RIField *field;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
@@ -23,5 +24,9 @@
 -(void)setValue:(NSString*)value;
 
 -(NSString*)getValue;
+
+-(void)setError:(NSString*)error;
+
+-(void)cleanError;
 
 @end

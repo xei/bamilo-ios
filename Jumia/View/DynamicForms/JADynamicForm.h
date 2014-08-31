@@ -37,6 +37,8 @@
 
 -(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
 
+-(void)validateFields:(NSDictionary*)errors;
+
 -(BOOL)checkErrors;
 
 -(NSDictionary*)getValues;

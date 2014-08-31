@@ -87,7 +87,7 @@
 {
     [self.view endEditing:YES];
     
-    [self.dynamicForm checkErrors];
+    [self.dynamicForm validateFields:nil];
     
     NSDictionary *temp = [self.dynamicForm getValues];
     

@@ -11,6 +11,7 @@
 
 @interface JABirthDateComponent : UIView
 
+@property (assign, nonatomic) BOOL hasError;
 @property (strong, nonatomic) RIField *dayField;
 @property (strong, nonatomic) RIField *monthField;
 @property (strong, nonatomic) RIField *yearField;
@@ -24,5 +25,9 @@
 -(void)setValue:(NSDate*)date;
 
 -(NSDate*)getValue;
+
+-(void)setError:(NSString*)error;
+
+-(void)cleanError;
 
 @end

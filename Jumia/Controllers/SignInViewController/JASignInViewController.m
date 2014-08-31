@@ -201,16 +201,31 @@ FBLoginViewDelegate
                                                             object:nil];
         [self hideLoading];
         
-    } andFailureBlock:^(NSArray *errorObject) {
-        [self.dynamicForm checkErrors];
+    } andFailureBlock:^(id errorObject) {
         
         [self hideLoading];
         
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                    message:[errorObject componentsJoinedByString:@","]
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:@"OK", nil] show];
+        if(VALID_NOTEMPTY(errorObject, NSDictionary))
+        {
+            [self.dynamicForm validateFields:errorObject];
+        }
+        else if(VALID_NOTEMPTY(errorObject, NSArray))
+        {
+            [self.dynamicForm checkErrors];
+            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                        message:[errorObject componentsJoinedByString:@","]
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK", nil] show];
+        }
+        else
+        {
+            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                        message:@"Generic error"
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK", nil] show];
+        }
     }];
 }
 
