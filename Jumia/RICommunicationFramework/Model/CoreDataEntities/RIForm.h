@@ -36,7 +36,7 @@
  */
 + (NSString*)sendForm:(RIForm*)form
          successBlock:(void (^)(id object))successBlock
-      andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
+      andFailureBlock:(void (^)(id errorObject))failureBlock;
 
 /**
  * Method to send a request to a form action
@@ -50,7 +50,7 @@
 + (NSString*)sendForm:(RIForm*)form
            parameters:(NSDictionary*)parameters
          successBlock:(void (^)(id object))successBlock
-      andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
+      andFailureBlock:(void (^)(id errorObject))failureBlock;
 
 + (void)cancelRequest:(NSString *)operationID;
 

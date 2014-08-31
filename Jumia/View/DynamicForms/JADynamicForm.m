@@ -237,6 +237,59 @@
     }
 }
 
+-(void)validateFields:(NSDictionary*)errors
+{
+    NSArray *errorKeys = [errors allKeys];
+    for (NSString *errorKey in errorKeys)
+    {
+        if(VALID_NOTEMPTY([errors objectForKey:errorKey], NSArray))
+        {
+            NSArray *errorArray = [errors objectForKey:errorKey];
+            [self setError:[errorArray componentsJoinedByString:@","] inFieldKey:errorKey];
+        }
+        else if(VALID_NOTEMPTY([errors objectForKey:errorKey], NSString))
+        {
+            [self setError:[errors objectForKey:errorKey] inFieldKey:errorKey];
+        }
+    }
+}
+
+-(void)setError:(NSString*)error inFieldKey:(NSString*)key
+{
+    for (id view in self.formViews)
+    {
+        if ([view isKindOfClass:[JATextField class]])
+        {
+            JATextField *textFieldView = (JATextField*)view;
+            if([key isEqualToString:[[textFieldView field] key]])
+            {
+                [textFieldView setError:error];
+                break;
+            }
+        }
+        else if ([view isKindOfClass:[JABirthDateComponent class]])
+        {
+            JABirthDateComponent *birthDateComponent = (JABirthDateComponent*)view;
+            if([key isEqualToString:[[birthDateComponent dayField] key]] ||
+               [key isEqualToString:[[birthDateComponent monthField] key]] ||
+               [key isEqualToString:[[birthDateComponent yearField] key]] )
+            {
+                [birthDateComponent setError:error];
+                break;
+            }
+        }
+        else if ([view isKindOfClass:[JARadioComponent class]])
+        {
+            JARadioComponent *radioComponent = (JARadioComponent*)view;
+            if([key isEqualToString:[[radioComponent field] key]])
+            {
+                [radioComponent setError:error];
+                break;
+            }
+        }
+    }
+}
+
 -(BOOL)checkErrors
 {
     BOOL hasErrors = NO;
@@ -270,17 +323,17 @@
             {
                 JABirthDateComponent *birthdateComponent = (JABirthDateComponent*) view;
                 
-                if(VALID_NOTEMPTY(birthdateComponent.dayField.value, NSString))
+                if([birthdateComponent.dayField.required boolValue]|| VALID_NOTEMPTY(birthdateComponent.dayField.value, NSString))
                 {
                     [parameters setValue:birthdateComponent.dayField.value forKey:birthdateComponent.dayField.name];
                 }
                 
-                if(VALID_NOTEMPTY(birthdateComponent.monthField.value, NSString))
+                if([birthdateComponent.monthField.required boolValue] || VALID_NOTEMPTY(birthdateComponent.monthField.value, NSString))
                 {
                     [parameters setValue:birthdateComponent.monthField.value forKey:birthdateComponent.monthField.name];
                 }
                 
-                if(VALID_NOTEMPTY(birthdateComponent.yearField.value, NSString))
+                if([birthdateComponent.yearField.required boolValue] || VALID_NOTEMPTY(birthdateComponent.yearField.value, NSString))
                 {
                     [parameters setValue:birthdateComponent.yearField.value forKey:birthdateComponent.yearField.name];
                 }
@@ -294,7 +347,7 @@
                     genderComponent = radioComponent;
                 }
                 
-                if(VALID_NOTEMPTY(radioComponent.field.value, NSString))
+                if([radioComponent.field.required boolValue] || VALID_NOTEMPTY(radioComponent.field.value, NSString))
                 {
                     [parameters setValue:radioComponent.field.value forKey:radioComponent.field.name];
                 }
@@ -312,7 +365,7 @@
                 {
                     [parameters setValue:@"1" forKey:checkBoxComponent.field.name];
                 }
-                else if(VALID_NOTEMPTY([checkBoxComponent.field requiredMessage], NSString))
+                else if([checkBoxComponent.field.required boolValue])
                 {
                     [parameters setValue:@"0" forKey:checkBoxComponent.field.name];
                 }
@@ -328,7 +381,7 @@
             else if ([view isKindOfClass:[JATextField class]])
             {
                 JATextField *textFieldComponent = (JATextField*) view;
-                if(VALID_NOTEMPTY(textFieldComponent.textField.text, NSString))
+                if([textFieldComponent.field.required boolValue] || VALID_NOTEMPTY(textFieldComponent.field.value, NSString))
                 {
                     [parameters setValue:textFieldComponent.textField.text forKey:textFieldComponent.field.name];
                 }
@@ -399,7 +452,7 @@
     {
         [self.currentTextField resignFirstResponder];
     }
-        
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(lostFocus)]) {
         [self.delegate performSelector:@selector(lostFocus) withObject:nil];
     }
@@ -446,11 +499,13 @@
     BOOL textFieldShouldBeginEditing = YES;
     
     self.currentTextField = textField;
-    
-    [textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-    [textField setTextColor:UIColorFromRGB(0x666666)];
-    
+
     UIView *view = [self viewWithTag:textField.tag];
+    if([view respondsToSelector:@selector(cleanError)])
+    {
+        [view performSelector:@selector(cleanError) withObject:nil];
+    }
+    
     if([view isKindOfClass:[JATextField class]])
     {
         if (self.delegate && [self.delegate respondsToSelector:@selector(changedFocus:)]) {

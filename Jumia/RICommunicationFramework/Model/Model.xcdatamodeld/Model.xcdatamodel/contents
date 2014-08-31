@@ -68,6 +68,7 @@
         <attribute name="min" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="regex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="required" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="requiredMessage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
@@ -249,8 +250,9 @@
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="133"/>
         <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="195"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="178"/>
-        <element name="RIField" positionX="-299" positionY="681" width="128" height="238"/>
+        <element name="RIField" positionX="-299" positionY="681" width="128" height="255"/>
         <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="73"/>
+        <element name="RIFieldOption" positionX="-270" positionY="974" width="128" height="118"/>
         <element name="RIForm" positionX="-504" positionY="362" width="128" height="118"/>
         <element name="RIFormIndex" positionX="-504" positionY="234" width="128" height="88"/>
         <element name="RIImage" positionX="27" positionY="486" width="128" height="135"/>
@@ -269,6 +271,5 @@
         <element name="RITeaserText" positionX="-684" positionY="677" width="128" height="88"/>
         <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
         <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>
-        <element name="RIFieldOption" positionX="-270" positionY="974" width="128" height="118"/>
     </elements>
 </model>

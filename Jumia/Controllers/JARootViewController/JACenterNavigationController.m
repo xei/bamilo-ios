@@ -27,6 +27,7 @@
 #import "RIProduct.h"
 #import "RIApi.h"
 #import "JANavigationBarLayout.h"
+#import "RICustomer.h"
 
 @interface JACenterNavigationController ()
 
@@ -118,7 +119,12 @@
                                              selector:@selector(showForgotPasswordScreen)
                                                  name:kShowForgotPasswordScreenNotification
                                                object:nil];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutForgotPasswordScreen)
+                                                 name:kShowCheckoutForgotPasswordScreenNotification
+                                               object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutLoginScreen)
                                                  name:kShowCheckoutLoginScreenNotification
@@ -246,6 +252,25 @@
             self.viewControllers = @[recentlyViewed];
         }
     }
+    else if([newScreenName isEqualToString:@"My Account"])
+    {
+        if([RICustomer checkIfUserIsLogged])
+        {
+            
+        }
+        else
+        {
+            if (![[self topViewController] isKindOfClass:[JASignInViewController class]])
+            {
+                JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+                
+                [self pushViewController:signInViewController
+                                animated:YES];
+                
+                self.viewControllers = @[signInViewController];
+            }
+        }
+    }
 }
 
 - (void)pushCatalogToShowSearchResults:(NSString *)query
@@ -365,6 +390,17 @@
 - (void)showForgotPasswordScreen
 {
     JAForgotPasswordViewController *forgotVC = [self.storyboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
+    
+    forgotVC.navBarLayout.backButtonTitle = @"Login";
+    
+    [self pushViewController:forgotVC animated:YES];
+}
+
+- (void)showCheckoutForgotPasswordScreen
+{
+    JAForgotPasswordViewController *forgotVC = [self.storyboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
+    
+    forgotVC.navBarLayout.backButtonTitle = @"Checkout";
     
     [self pushViewController:forgotVC animated:YES];
 }

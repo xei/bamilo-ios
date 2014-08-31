@@ -61,7 +61,7 @@
             {
                 failureBlock(nil);
             }
-        } andFailureBlock:^(NSArray *errorMessages) {
+        } andFailureBlock:^(id errorMessages) {
             failureBlock(nil);
         }];
     } andFailureBlock:failureBlock];
@@ -115,7 +115,7 @@
             {
                 failureBlock(nil);
             }
-        } andFailureBlock:^(NSArray *errorMessages) {
+        } andFailureBlock:^(id errorMessages) {
             failureBlock(nil);
         }];
     } andFailureBlock:failureBlock];

@@ -28,10 +28,11 @@
 
 -(void)setupWithField:(RIField*)field
 {
+    self.hasError = NO;
     self.field = field;
     [self.textField setPlaceholder:field.label];
     
-    if(VALID_NOTEMPTY(field.requiredMessage, NSString))
+    if([field.required boolValue])
     {
         [self.textField setTextColor:UIColorFromRGB(0x666666)];
         [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
@@ -68,17 +69,45 @@
     return value;
 }
 
+-(void)setError:(NSString*)error
+{
+    [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
+    [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+    
+    if(ISEMPTY(self.textField.text))
+    {
+        self.hasError = YES;
+        [self.textField setText:error];
+    }
+}
+
+-(void)cleanError
+{
+    if(self.hasError)
+    {
+        [self.textField setTextColor:UIColorFromRGB(0x666666)];
+        [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+        
+        if(self.hasError)
+        {
+            self.hasError = NO;
+            [self.textField setText:@""];
+        }
+    }
+}
+
 - (BOOL)isValid
 {
-    if ((self.field.requiredMessage.length > 0) && (self.textField.text.length == 0))
+    if ([self.field.required  boolValue] && (self.textField.text.length == 0))
     {
         [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
         [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
         
         return NO;
     }
-
-    self.textField.backgroundColor = [UIColor whiteColor];
+    
+    [self.textField setTextColor:UIColorFromRGB(0x666666)];
+    [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     
     return YES;
 }

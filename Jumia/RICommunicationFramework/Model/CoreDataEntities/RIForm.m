@@ -93,7 +93,7 @@
 #pragma mark - Facebook Login
 + (NSString*)sendForm:(RIForm*)form
          successBlock:(void (^)(id object))successBlock
-      andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
+      andFailureBlock:(void (^)(id errorObject))failureBlock
 {
     return [RIForm sendForm:form
                  parameters:[RIForm getParametersForForm:form]
@@ -104,7 +104,7 @@
 + (NSString*)sendForm:(RIForm*)form
            parameters:(NSDictionary*)parameters
          successBlock:(void (^)(id object))successBlock
-      andFailureBlock:(void (^)(NSArray *errorObject))failureBlock
+      andFailureBlock:(void (^)(id errorObject))failureBlock
 {
     BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     
@@ -120,12 +120,23 @@
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
                                                                   if([@"form-account-login" isEqualToString:form.uid] ||
+                                                                     [@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:form.uid] ||
                                                                      [@"Alice_Module_Mobapi_Form_Ext1m1_Customer_RegisterSignupForm" isEqualToString:form.uid])
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"]];
                                                                       successBlock(customer);
                                                                   }
+                                                                  else
+                                                                  {
+                                                                      responseProcessed = YES;
+                                                                      successBlock(nil);
+                                                                  }
+                                                              }
+                                                              else
+                                                              {
+                                                                  responseProcessed = YES;
+                                                                  successBlock(nil);
                                                               }
                                                               
                                                               if(!responseProcessed)
@@ -135,7 +146,16 @@
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  NSDictionary *errorDictionary = [RIError getErrorDictionary:errorJsonObject];
+                                                                  NSArray *errorArray = [RIError getErrorMessages:errorJsonObject];
+                                                                  if(VALID_NOTEMPTY(errorDictionary, NSDictionary))
+                                                                  {
+                                                                      failureBlock(errorDictionary);
+                                                                  }
+                                                                  else if(VALID_NOTEMPTY(errorArray, NSArray))
+                                                                  {
+                                                                      failureBlock(errorArray);
+                                                                  }
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
