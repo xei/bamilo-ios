@@ -27,6 +27,7 @@
 #import "RIProduct.h"
 #import "RIApi.h"
 #import "JANavigationBarLayout.h"
+#import "RICustomer.h"
 
 @interface JACenterNavigationController ()
 
@@ -249,6 +250,25 @@
                             animated:YES];
             
             self.viewControllers = @[recentlyViewed];
+        }
+    }
+    else if([newScreenName isEqualToString:@"My Account"])
+    {
+        if([RICustomer checkIfUserIsLogged])
+        {
+            
+        }
+        else
+        {
+            if (![[self topViewController] isKindOfClass:[JASignInViewController class]])
+            {
+                JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+                
+                [self pushViewController:signInViewController
+                                animated:YES];
+                
+                self.viewControllers = @[signInViewController];
+            }
         }
     }
 }
