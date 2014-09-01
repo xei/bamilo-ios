@@ -71,7 +71,7 @@
         imageView.contentMode = UIViewContentModeCenter;
         
         [imageView setImageWithURL:[NSURL URLWithString:image.url]
-                  placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                  placeholderImage:[UIImage imageNamed:@"placeholder_gallery"]];
         
         [self.imageViewsArray insertObject:imageView
                                    atIndex:0];
@@ -106,7 +106,7 @@
             imageView.contentMode = UIViewContentModeCenter;
                         
             [imageView setImageWithURL:[NSURL URLWithString:image.url]
-                      placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                      placeholderImage:[UIImage imageNamed:@"placeholder_gallery"]];
             
             [self.imageViewsArray insertObject:imageView
                                        atIndex:i];

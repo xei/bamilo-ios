@@ -24,7 +24,8 @@
     RIImage* firstImage = [product.images firstObject];
     
     [self.productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
-                          placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                          placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
+    
     [self.backgroundContentView sendSubviewToBack:self.productImageView];
     
     self.recentProductImageView.hidden = ![product.isNew boolValue];
@@ -68,7 +69,7 @@
 - (void)loadWithCartItem:(RICartItem*)cartItem
 {
     [self.productImageView setImageWithURL:[NSURL URLWithString:cartItem.imageUrl]
-                          placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                          placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     
     self.recentProductImageView.hidden = YES;
     self.recentProductLabel.hidden = YES;

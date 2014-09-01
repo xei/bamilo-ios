@@ -7,12 +7,20 @@
 //
 
 #import "JACatalogGridCell.h"
+#import "UIImageView+WebCache.h"
+#import "RIProduct.h"
+#import "RIImage.h"
 
 @implementation JACatalogGridCell
 
 - (void)loadWithProduct:(RIProduct *)product
 {
     [super loadWithProduct:product];
+    
+    RIImage* firstImage = [product.images firstObject];
+ 
+    [self.productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
+                          placeholderImage:[UIImage imageNamed:@"placeholder_grid"]];
     
     self.priceView.frame = CGRectMake(2.0f,
                                       181.0f,
