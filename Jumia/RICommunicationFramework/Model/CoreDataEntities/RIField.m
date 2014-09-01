@@ -20,6 +20,7 @@
 @dynamic min;
 @dynamic name;
 @dynamic regex;
+@dynamic required;
 @dynamic requiredMessage;
 @dynamic type;
 @dynamic uid;
