@@ -101,6 +101,8 @@
 
 - (void)forgotPasswordButtonPressed:(id)sender
 {
+    [self.dynamicForm resignResponder];
+    
     [self showLoading];
     
     [RIForm sendForm:[self.dynamicForm form]
