@@ -58,7 +58,9 @@
         <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="idCustomer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loginMethod" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="plainPassword" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="addresses" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIAddress" inverseName="customer" inverseEntity="RIAddress" syncable="YES"/>
     </entity>
     <entity name="RIField" representedClassName="RIField" syncable="YES">
@@ -86,7 +88,7 @@
         <attribute name="isUserSubscribed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="field" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIField" inverseName="options" inverseEntity="RIField" syncable="YES"/>
+        <relationship name="field" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RIField" inverseName="options" inverseEntity="RIField" syncable="YES"/>
     </entity>
     <entity name="RIForm" representedClassName="RIForm" syncable="YES">
         <attribute name="action" optional="YES" attributeType="String" syncable="YES"/>
@@ -249,10 +251,10 @@
         <element name="RIApi" positionX="-308" positionY="227" width="128" height="120"/>
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="133"/>
         <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="195"/>
-        <element name="RICustomer" positionX="279" positionY="650" width="128" height="178"/>
-        <element name="RIField" positionX="-299" positionY="681" width="128" height="255"/>
+        <element name="RICustomer" positionX="279" positionY="650" width="128" height="210"/>
+        <element name="RIField" positionX="-299" positionY="681" width="128" height="253"/>
         <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="73"/>
-        <element name="RIFieldOption" positionX="-270" positionY="974" width="128" height="118"/>
+        <element name="RIFieldOption" positionX="-137" positionY="963" width="128" height="118"/>
         <element name="RIForm" positionX="-504" positionY="362" width="128" height="118"/>
         <element name="RIFormIndex" positionX="-504" positionY="234" width="128" height="88"/>
         <element name="RIImage" positionX="27" positionY="486" width="128" height="135"/>

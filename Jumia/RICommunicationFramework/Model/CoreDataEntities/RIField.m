@@ -70,7 +70,7 @@
             {
                 RIFieldOption *option = [RIFieldOption parseFieldOption:optionObject];
                 option.field = newField;
-                [newField addOptionsObject:option];          
+                [newField addOptionsObject:option];
             }
         }
     }

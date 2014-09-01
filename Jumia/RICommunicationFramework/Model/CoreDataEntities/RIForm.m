@@ -10,6 +10,7 @@
 #import "RIField.h"
 #import "RIFieldDataSetComponent.h"
 #import "RICustomer.h"
+#import "RIFieldOption.h"
 
 @implementation RIForm
 
@@ -108,23 +109,54 @@
 {
     BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     
+    NSMutableDictionary *allParameters = [[NSMutableDictionary alloc] initWithDictionary:parameters];
+    for(RIField *formField in form.fields)
+    {
+        if([@"hidden" isEqualToString:formField.type] && ![parameters objectForKey:formField.name])
+        {
+            [allParameters setValue:formField.value forKey:formField.name];
+        }
+    }
+    
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
-                                                            parameters:parameters
+                                                            parameters:allParameters
                                                         httpMethodPost:isPostRequest
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              
+                                                              NSString *password = nil;
+                                                              NSArray *parameterKeys = [parameters allKeys];
+                                                              for(NSString *key in parameterKeys)
+                                                              {
+                                                                  if(NSNotFound != [[key lowercaseString] rangeOfString:@"password"].location)
+                                                                  {
+                                                                      password = [parameters objectForKey:key];
+                                                                      break;
+                                                                  }
+                                                              }
                                                               
                                                               BOOL responseProcessed = NO;
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-                                                                  if([@"form-account-login" isEqualToString:form.uid] ||
-                                                                     [@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:form.uid] ||
-                                                                     [@"Alice_Module_Mobapi_Form_Ext1m1_Customer_RegisterSignupForm" isEqualToString:form.uid])
+                                                                  if([@"form-account-login" isEqualToString:form.uid])
                                                                   {
                                                                       responseProcessed = YES;
-                                                                      RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"]];
+                                                                      RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"] plainPassword:password loginMethod:@"normal"];
+                                                                      successBlock(customer);
+                                                                  }
+                                                                  else if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:form.uid])
+                                                                  {
+                                                                      responseProcessed = YES;
+                                                                      RICustomer *customer = [RICustomer parseCustomerWithJson:metadata plainPassword:password loginMethod:@"normal"];
+                                                                      successBlock(customer);
+                                                                  }
+                                                                  else if([@"Alice_Module_Mobapi_Form_Ext1m1_Customer_RegisterSignupForm" isEqualToString:form.uid])
+                                                                  {
+                                                                      responseProcessed = YES;
+                                                                      RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"] plainPassword:password loginMethod:@"signup"];
                                                                       successBlock(customer);
                                                                   }
                                                                   else
@@ -205,6 +237,11 @@
             [RIFieldDataSetComponent saveFieldDataSetComponent:component];
         }
         
+        for(RIFieldOption *option in field.options)
+        {
+            [RIFieldOption saveFieldOption:option];
+        }
+        
         [RIField saveField:field];
     }
     
@@ -218,7 +255,7 @@
     for(RIField *field in form.fields)
     {
         if(VALID_NOTEMPTY(field.value, NSString))
-        {                    
+        {
             [parameters setValue:field.value forKey:field.name];
         }
     }

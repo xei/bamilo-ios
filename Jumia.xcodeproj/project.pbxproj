@@ -83,6 +83,7 @@
 		B542546B19AE9F7500C792FF /* JACartListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B542546919AE9F7500C792FF /* JACartListHeaderView.m */; };
 		B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		B56BBF3319A60D5400F4B1A3 /* JACartListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */; };
+		B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4119B4E92B00DE7960 /* RIField.m */; };
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
 		B5A301BC19811D0700F71726 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
@@ -180,7 +181,6 @@
 		B5A302F819811F1A00F71726 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F719811F1A00F71726 /* Foundation.framework */; };
 		B5A302FA19811F1E00F71726 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
 		B5A30303198121A400F71726 /* JABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A30301198121A400F71726 /* JABaseViewController.m */; };
-		B5C61BBD19B0BB7E00840E93 /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BBC19B0BB7E00840E93 /* RIField.m */; };
 		B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */; };
 		B5C61BC319B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BC219B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m */; };
 		B5C61BC519B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C61BC419B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib */; };
@@ -402,6 +402,8 @@
 		B542546919AE9F7500C792FF /* JACartListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartListHeaderView.m; path = Jumia/View/Headers/JACartListHeaderView.m; sourceTree = SOURCE_ROOT; };
 		B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACartListHeaderView.xib; path = Jumia/View/Headers/JACartListHeaderView.xib; sourceTree = SOURCE_ROOT; };
 		B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACartListCell.xib; sourceTree = "<group>"; };
+		B59DCA4019B4E92B00DE7960 /* RIField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIField.h; sourceTree = "<group>"; };
+		B59DCA4119B4E92B00DE7960 /* RIField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIField.m; sourceTree = "<group>"; };
 		B5A301A819811D0700F71726 /* Jumia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jumia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A301AC19811D0700F71726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5A301AD19811D0700F71726 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -579,8 +581,6 @@
 		B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jumia-Prefix.pch"; sourceTree = "<group>"; };
 		B5A30301198121A400F71726 /* JABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABaseViewController.m; sourceTree = "<group>"; };
 		B5A30302198121A400F71726 /* JABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABaseViewController.h; sourceTree = "<group>"; };
-		B5C61BBB19B0BB7E00840E93 /* RIField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIField.h; sourceTree = "<group>"; };
-		B5C61BBC19B0BB7E00840E93 /* RIField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIField.m; sourceTree = "<group>"; };
 		B5C61BBE19B0BB7F00840E93 /* RIFieldOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldOption.h; sourceTree = "<group>"; };
 		B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIFieldOption.m; sourceTree = "<group>"; };
 		B5C61BC119B0DAD600840E93 /* JACheckBoxWithOptionsComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACheckBoxWithOptionsComponent.h; sourceTree = "<group>"; };
@@ -1497,8 +1497,6 @@
 				B5A3026819811E9200F71726 /* RICategory.m */,
 				B5A3026919811E9200F71726 /* RICountryConfiguration.h */,
 				B5A3026A19811E9200F71726 /* RICountryConfiguration.m */,
-				B5C61BBB19B0BB7E00840E93 /* RIField.h */,
-				B5C61BBC19B0BB7E00840E93 /* RIField.m */,
 				4A1C8E3C199B789D0045BD8D /* RIFieldDataSetComponent.h */,
 				4A1C8E3D199B789D0045BD8D /* RIFieldDataSetComponent.m */,
 				B5C61BBE19B0BB7F00840E93 /* RIFieldOption.h */,
@@ -1543,6 +1541,8 @@
 				4A454F37199CBD4D00B44821 /* RICustomer.m */,
 				4A454F39199CBF1400B44821 /* RIAddress.h */,
 				4A454F3A199CBF1400B44821 /* RIAddress.m */,
+				B59DCA4019B4E92B00DE7960 /* RIField.h */,
+				B59DCA4119B4E92B00DE7960 /* RIField.m */,
 			);
 			path = CoreDataEntities;
 			sourceTree = "<group>";
@@ -2114,6 +2114,7 @@
 				B5A302CE19811E9200F71726 /* RITeaserGroup.m in Sources */,
 				B5225E30198950C500C18F1E /* JACartViewController.m in Sources */,
 				4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */,
+				B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */,
 				B5A3023319811E8A00F71726 /* BMA4SViewController.m in Sources */,
 				B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */,
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
@@ -2161,7 +2162,6 @@
 				B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */,
 				B510B01519AE466B00A9754A /* JARadioComponent.m in Sources */,
 				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
-				B5C61BBD19B0BB7E00840E93 /* RIField.m in Sources */,
 				B510B01719AE466B00A9754A /* JATextField.m in Sources */,
 				B5A3025319811E8A00F71726 /* AdXTracking.m in Sources */,
 				B5A302C619811E9200F71726 /* RIImageResolution.m in Sources */,

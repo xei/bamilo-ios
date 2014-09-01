@@ -45,7 +45,7 @@
     return fieldOption;
 }
 
-+ (void)saveFieldDataSetComponent:(RIFieldOption *)option
++ (void)saveFieldOption:(RIFieldOption *)option
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:option];
     [[RIDataBaseWrapper sharedInstance] saveContext];

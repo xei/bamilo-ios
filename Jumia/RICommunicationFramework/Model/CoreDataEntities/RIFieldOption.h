@@ -21,6 +21,6 @@
 
 + (RIFieldOption *)parseFieldOption:(NSDictionary *)fieldOptionObject;
 
-+ (void)saveFieldDataSetComponent:(RIFieldOption *)option;
++ (void)saveFieldOption:(RIFieldOption *)option;
 
 @end
