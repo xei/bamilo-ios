@@ -153,7 +153,7 @@ JAPDVGalleryViewDelegate
     
     RIImage *image = [self.product.images firstObject];
     [self.imageSection.mainImage setImageWithURL:[NSURL URLWithString:image.url]
-                                placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                                placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(presentGallery)];
@@ -203,7 +203,7 @@ JAPDVGalleryViewDelegate
             
             UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake(start, 0.0, 30.0, 30.0)];
             [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
-                         placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                         placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
             [self.variationsSection.variationsScrollView addSubview:newImageView];
             
             start += 40.0;
@@ -340,7 +340,7 @@ JAPDVGalleryViewDelegate
                     RIImage *imageTemp = [product.images firstObject];
                     
                     [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
-                                             placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                                             placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
                 }
                 
                 singleItem.labelBrand.text = product.brand;
