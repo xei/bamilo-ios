@@ -20,20 +20,12 @@
 @property (nonatomic, retain) NSString * birthday;
 @property (nonatomic, retain) NSString * gender;
 @property (nonatomic, retain) NSString * password;
+@property (nonatomic, retain) NSString * plainPassword;
 @property (nonatomic, retain) NSString * createdAt;
+@property (nonatomic, retain) NSString * loginMethod;
 @property (nonatomic, retain) NSOrderedSet *addresses;
 
-/**
- * Method to registere a user
- *
- * @param the needed parameters to register the user
- * @param the block where the success response can be processed
- * @param the block where the failure response can be processed
- * @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString *)registerCustomerWithParameters:(NSDictionary *)parameters
-                                successBlock:(void (^)(id customer))successBlock
-                             andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
++ (NSString*)autoLogin:(void (^)())returnBlock;
 
 /**
  * Method to login user via facebook
@@ -46,18 +38,6 @@
 + (NSString *)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
                                        successBlock:(void (^)(id customer))successBlock
                                     andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
-
-/**
- * Method to login user
- *
- * @param the user parameters
- * @param the block where the success response can be processed
- * @param the block where the failure response can be processed
- * @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString *)loginCustomerWithParameters:(NSDictionary *)parameters
-                             successBlock:(void (^)(RICustomer *customer))successBlock
-                          andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
 
 /**
  * Method to get current customer information
@@ -86,6 +66,8 @@
  * @return an initialized RICustomer object
  */
 + (RICustomer *)parseCustomerWithJson:(NSDictionary *)json;
+
++ (RICustomer *)parseCustomerWithJson:(NSDictionary *)json plainPassword:(NSString*)plainPassword loginMethod:(NSString*)loginMethod;
 
 /** Method to cancel the request
  *

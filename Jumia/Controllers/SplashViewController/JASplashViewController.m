@@ -236,13 +236,7 @@ UIAlertViewDelegate
     
     if (0 >= self.requestCount)
     {
-        [RICustomer getCustomerWithSuccessBlock:^(id customer) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                object:nil];
-            [self procedeToFirstAppScreen];
-        } andFailureBlock:^(NSArray *errorMessages) {
-            [self procedeToFirstAppScreen];
-        }];
+        [self procedeToFirstAppScreen];
     }
 }
 
@@ -250,11 +244,13 @@ UIAlertViewDelegate
 {
     if(!self.isPopupOpened)
     {
-        UIViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
-        
-        [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
-        
-        [self hideLoading];
+        [RICustomer autoLogin:^{
+            UIViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
+            
+            [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+            
+            [self hideLoading];
+        }];
     }
 }
 

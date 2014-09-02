@@ -20,6 +20,7 @@
 @dynamic min;
 @dynamic name;
 @dynamic regex;
+@dynamic required;
 @dynamic requiredMessage;
 @dynamic type;
 @dynamic uid;
@@ -69,7 +70,7 @@
             {
                 RIFieldOption *option = [RIFieldOption parseFieldOption:optionObject];
                 option.field = newField;
-                [newField addOptionsObject:option];          
+                [newField addOptionsObject:option];
             }
         }
     }
