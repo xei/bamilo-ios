@@ -11,7 +11,7 @@
 @interface JAAddNewAddressViewController : JABaseViewController
 
 @property (assign, nonatomic) BOOL isBillingAddress;
-@property (assign, nonatomic) BOOL isDeliveryAddress;
+@property (assign, nonatomic) BOOL isShippingAddress;
 
 
 @end

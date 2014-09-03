@@ -11,6 +11,13 @@
 #import "RIRegion.h"
 #import "RICity.h"
 
+@interface JARadioComponent ()
+
+@property (strong, nonatomic) RIField *field;
+@property (strong, nonatomic) NSString *storedValue;
+
+@end
+
 @implementation JARadioComponent
 
 +(JARadioComponent *)getNewJARadioComponent
@@ -30,6 +37,7 @@
 
 -(void)setupWithField:(RIField*)field
 {
+    self.storedValue = @"";
     self.hasError = NO;
     self.field = field;
     [self.textField setPlaceholder:field.label];
@@ -43,9 +51,13 @@
         [self.requiredSymbol setTextColor:UIColorFromRGB(0xfaa41a)];
     }
     
-    if(VALID_NOTEMPTY(field.value, NSString) && ![@"list" isEqualToString:field.type])
+    if(VALID_NOTEMPTY(field.value, NSString))
     {
-        [self.textField setText:field.value];
+        self.storedValue = field.value;
+        if(![@"list" isEqualToString:field.type])
+        {
+            [self.textField setText:field.value];
+        }
     }
     
     if(VALID_NOTEMPTY(field.dataSet, NSOrderedSet))
@@ -62,32 +74,58 @@
     }
 }
 
+-(BOOL)isComponentWithKey:(NSString*)key
+{
+    return ([key isEqualToString:self.field.key]);
+}
+
 -(void)setValue:(NSString*)value
 {
-    [[self field] setValue:value];
+    self.storedValue = value;
     [self.textField setText:value];
 }
 
 -(void)setRegionValue:(RIRegion*)value
 {
-    [[self field] setValue:[value uid]];
-    [self.textField setText:[value name]];
+    if(VALID_NOTEMPTY(value, RIRegion))
+    {
+        self.storedValue = [value uid];
+        [self.textField setText:[value name]];
+    }
+    else
+    {
+        self.storedValue = @"";
+        [self.textField setText:@""];
+    }
 }
 
 -(void)setCityValue:(RICity*)value
 {
-    [[self field] setValue:[value uid]];
-    [self.textField setText:[value value]];
+    if(VALID_NOTEMPTY(value, RICity))
+    {
+        self.storedValue = [value uid];
+        [self.textField setText:[value value]];
+    }
+    else
+    {
+        self.storedValue = @"";
+        [self.textField setText:@""];
+    }
 }
 
--(NSString*)getValue
+-(NSDictionary*)getValues
 {
-    NSString *value = nil;
-    if(VALID_NOTEMPTY([self field], RIField) && VALID_NOTEMPTY([[self field] value], NSString))
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    if([self.field.required boolValue] || VALID_NOTEMPTY(self.storedValue, NSString))
     {
-        value = [[self field] value];
+        [parameters setValue:self.storedValue forKey:self.field.name];
     }
-    return value;
+    return parameters;
+}
+
+-(NSString*)getSelectedValue
+{
+    return self.storedValue;
 }
 
 -(void)setError:(NSString*)error
@@ -104,20 +142,17 @@
 
 -(void)cleanError
 {
+    [self.textField setTextColor:UIColorFromRGB(0x666666)];
+    [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    
     if(self.hasError)
     {
-        [self.textField setTextColor:UIColorFromRGB(0x666666)];
-        [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-        
-        if(self.hasError)
-        {
-            self.hasError = NO;
-            [self.textField setText:@""];
-        }
+        self.hasError = NO;
+        [self.textField setText:@""];
     }
 }
 
-- (BOOL)isValid
+-(BOOL)isValid
 {
     if ([self.field.required  boolValue] && (self.textField.text.length == 0))
     {
@@ -131,6 +166,32 @@
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     
     return YES;
+}
+
+-(void)resetValue
+{
+    [self cleanError];
+    
+    if(VALID_NOTEMPTY(self.field.value, NSString))
+    {
+        self.storedValue = self.field.value;
+        if(![@"list" isEqualToString:self.field.type])
+        {
+            [self.textField setText:self.field.value];
+        }
+    }
+}
+
+-(NSString*)getApiCallUrl
+{
+    NSString *apiCallUrl = nil;
+    
+    if(VALID_NOTEMPTY(self.field, RIField) && [@"list" isEqualToString:[self.field type]] && VALID_NOTEMPTY([self.field apiCall], NSString))
+    {
+        apiCallUrl = [self.field apiCall];
+    }
+    
+    return apiCallUrl;
 }
 
 @end

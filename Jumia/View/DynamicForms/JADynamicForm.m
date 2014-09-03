@@ -20,6 +20,18 @@
 
 @implementation JADynamicForm
 
+-(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate startingPosition:(CGFloat)startingY;
+{
+    self = [super init];
+    if(self)
+    {
+        self.form = form;
+        self.delegate = delegate;
+        [self generateForm:[[[form fields] array] copy] startingY:startingY];
+    }
+    return self;
+}
+
 -(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
 {
     self = [super init];
@@ -38,6 +50,8 @@
     RIField *yearField = nil;
     NSInteger birthdayFieldPosition = -1;
     JABirthDateComponent *birthDateComponent = [JABirthDateComponent getNewJABirthDateComponent];
+    JARadioComponent *regionsComponent = nil;
+    JARadioComponent *citiesComponent = nil;
     
     NSInteger lastTextFieldIndex = 0;
     self.formViews = [[NSMutableArray alloc] init];
@@ -47,13 +61,17 @@
         
         if ([@"string" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
-            NSLog(@"textFieldComponent.field.key = %@", field.key);
             if(!([@"address-form" isEqualToString:[self.form uid]] && [@"city" isEqualToString:field.key]))
             {
                 JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
                 [textField setupWithField:field];
                 [textField.textField setDelegate:self];
                 [textField.textField setReturnKeyType:UIReturnKeyNext];
+                
+                if([@"email" isEqualToString:field.type])
+                {
+                    [textField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
+                }
                 
                 CGRect frame = textField.frame;
                 frame.origin.y = startingY;
@@ -139,21 +157,30 @@
         {
             if(!([@"address-form" isEqualToString:[self.form uid]] && [@"city" isEqualToString:field.key]))
             {
-                JARadioComponent *gender = [JARadioComponent getNewJARadioComponent];
-                [gender setupWithField:field];
-                [gender.textField setDelegate:self];
-                [gender.textField setReturnKeyType:UIReturnKeyNext];
+                JARadioComponent *radioComponent = [JARadioComponent getNewJARadioComponent];
+                [radioComponent setupWithField:field];
+                [radioComponent.textField setDelegate:self];
+                [radioComponent.textField setReturnKeyType:UIReturnKeyNext];
                 
-                CGRect frame = gender.frame;
+                CGRect frame = radioComponent.frame;
                 frame.origin.y = startingY;
-                gender.frame = frame;
-                startingY += gender.frame.size.height;
+                radioComponent.frame = frame;
+                startingY += radioComponent.frame.size.height;
                 
-                [gender.textField setTag:i];
-                [gender setTag:i];
+                [radioComponent.textField setTag:i];
+                [radioComponent setTag:i];
                 
                 lastTextFieldIndex = [self.formViews count];
-                [self.formViews addObject:gender];
+                [self.formViews addObject:radioComponent];
+                
+                if([radioComponent isComponentWithKey:@"fk_customer_address_region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+                {
+                    regionsComponent = radioComponent;
+                }
+                else if([radioComponent isComponentWithKey:@"fk_customer_address_city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+                {
+                    citiesComponent = radioComponent;
+                }
             }
         }
         else if ([@"checkbox" isEqualToString:field.type])
@@ -236,6 +263,10 @@
             [lastTextField.textField setReturnKeyType:UIReturnKeyDone];
         }
     }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(downloadRegions:cities:)]) {
+        [self.delegate performSelector:@selector(downloadRegions:cities:) withObject:regionsComponent withObject:citiesComponent];
+    }
 }
 
 -(void)validateFields:(NSDictionary*)errors
@@ -251,7 +282,7 @@
         else if(VALID_NOTEMPTY([errors objectForKey:errorKey], NSDictionary))
         {
             NSDictionary *errorDictionary = [errors objectForKey:errorKey];
-                        NSArray *errorDictionaryKeys = [errorDictionary allKeys];
+            NSArray *errorDictionaryKeys = [errorDictionary allKeys];
             NSString *errorString = nil;
             for(NSString *errorDictionaryKey in errorDictionaryKeys)
             {
@@ -281,7 +312,7 @@
         if ([view isKindOfClass:[JATextFieldComponent class]])
         {
             JATextFieldComponent *textFieldView = (JATextFieldComponent*)view;
-            if([key isEqualToString:[[textFieldView field] key]])
+            if([textFieldView isComponentWithKey:key])
             {
                 [textFieldView setError:error];
                 break;
@@ -290,9 +321,7 @@
         else if ([view isKindOfClass:[JABirthDateComponent class]])
         {
             JABirthDateComponent *birthDateComponent = (JABirthDateComponent*)view;
-            if([key isEqualToString:[[birthDateComponent dayField] key]] ||
-               [key isEqualToString:[[birthDateComponent monthField] key]] ||
-               [key isEqualToString:[[birthDateComponent yearField] key]] )
+            if([birthDateComponent isComponentWithKey:key])
             {
                 [birthDateComponent setError:error];
                 break;
@@ -301,7 +330,7 @@
         else if ([view isKindOfClass:[JARadioComponent class]])
         {
             JARadioComponent *radioComponent = (JARadioComponent*)view;
-            if([key isEqualToString:[[radioComponent field] key]])
+            if([radioComponent isComponentWithKey:key])
             {
                 [radioComponent setError:error];
                 break;
@@ -342,57 +371,39 @@
             if ([view isKindOfClass:[JABirthDateComponent class]])
             {
                 JABirthDateComponent *birthdateComponent = (JABirthDateComponent*) view;
-                
-                if([birthdateComponent.dayField.required boolValue]|| VALID_NOTEMPTY(birthdateComponent.dayField.value, NSString))
-                {
-                    [parameters setValue:birthdateComponent.dayField.value forKey:birthdateComponent.dayField.name];
-                }
-                
-                if([birthdateComponent.monthField.required boolValue] || VALID_NOTEMPTY(birthdateComponent.monthField.value, NSString))
-                {
-                    [parameters setValue:birthdateComponent.monthField.value forKey:birthdateComponent.monthField.name];
-                }
-                
-                if([birthdateComponent.yearField.required boolValue] || VALID_NOTEMPTY(birthdateComponent.yearField.value, NSString))
-                {
-                    [parameters setValue:birthdateComponent.yearField.value forKey:birthdateComponent.yearField.name];
-                }
+                [parameters addEntriesFromDictionary:[birthdateComponent getValues]];
             }
             else if ([view isKindOfClass:[JARadioComponent class]])
             {
                 JARadioComponent *radioComponent = (JARadioComponent*) view;
                 
-                if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [@"gender" isEqualToString:radioComponent.field.key])
+                if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [radioComponent isComponentWithKey:@"gender"])
                 {
                     genderComponent = radioComponent;
                 }
                 
-                if([@"address-form" isEqualToString:[self.form uid]] && [@"fk_customer_address_city" isEqualToString:radioComponent.field.key])
+                if([@"address-form" isEqualToString:[self.form uid]] && [radioComponent isComponentWithKey:@"fk_customer_address_city"])
                 {
                     [parameters setValue:radioComponent.textField.text forKey:@"Alice_Module_Customer_Model_AddressForm[city]"];
                 }
                 
-                if([radioComponent.field.required boolValue] || VALID_NOTEMPTY(radioComponent.field.value, NSString))
+                if(VALID_NOTEMPTY([radioComponent getValues], NSDictionary))
                 {
-                    [parameters setValue:radioComponent.field.value forKey:radioComponent.field.name];
+                    [parameters addEntriesFromDictionary:[radioComponent getValues]];
                 }
             }
             else if ([view isKindOfClass:[JACheckBoxComponent class]])
             {
                 JACheckBoxComponent *checkBoxComponent = (JACheckBoxComponent*) view;
                 
-                if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [@"newsletter_categories_subscribed" isEqualToString:checkBoxComponent.field.key])
+                if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [checkBoxComponent isComponentWithKey:@"newsletter_categories_subscribed"])
                 {
                     categoriesNewsletterComponent = checkBoxComponent;
                 }
                 
-                if (checkBoxComponent.switchComponent.on)
+                if(VALID_NOTEMPTY([checkBoxComponent getValues], NSDictionary))
                 {
-                    [parameters setValue:@"1" forKey:checkBoxComponent.field.name];
-                }
-                else if([checkBoxComponent.field.required boolValue])
-                {
-                    [parameters setValue:@"0" forKey:checkBoxComponent.field.name];
+                    [parameters addEntriesFromDictionary:[checkBoxComponent getValues]];
                 }
             }
             else if ([view isKindOfClass:[JACheckBoxWithOptionsComponent class]])
@@ -406,12 +417,12 @@
             else if ([view isKindOfClass:[JATextFieldComponent class]])
             {
                 JATextFieldComponent *textFieldComponent = (JATextFieldComponent*) view;
-                if([textFieldComponent.field.required boolValue] || VALID_NOTEMPTY(textFieldComponent.field.value, NSString))
-                {
-                    [parameters setValue:textFieldComponent.textField.text forKey:textFieldComponent.field.name];
-                }
                 
-                if([@"address-form" isEqualToString:[self.form uid]] && [@"fk_customer_address_city" isEqualToString:textFieldComponent.field.key])
+                if(VALID_NOTEMPTY([textFieldComponent getValues], NSDictionary))
+                {
+                    [parameters addEntriesFromDictionary:[textFieldComponent getValues]];
+                }
+                if([@"address-form" isEqualToString:[self.form uid]] && [textFieldComponent isComponentWithKey:@"fk_customer_address_city"])
                 {
                     [parameters setValue:textFieldComponent.textField.text forKey:@"Alice_Module_Customer_Model_AddressForm[city]"];
                 }
@@ -421,16 +432,18 @@
     
     if(VALID_NOTEMPTY(genderComponent, JARadioComponent) && VALID_NOTEMPTY(categoriesNewsletterComponent, JACheckBoxComponent))
     {
-        NSString *selectedGenderValue = [genderComponent.field value];
-        NSString *selectedCategoriesNewsletterValue = [categoriesNewsletterComponent.field value];
-        if(VALID_NOTEMPTY(selectedGenderValue, NSString) && VALID_NOTEMPTY(selectedCategoriesNewsletterValue, NSString))
+        NSString *selectedGenderValue = [genderComponent getSelectedValue];
+        BOOL isCategoriesNewsletterComponentOn = [categoriesNewsletterComponent isCheckBoxOn];
+        
+        if(VALID_NOTEMPTY(selectedGenderValue, NSString) && isCategoriesNewsletterComponentOn)
         {
-            NSArray *categoriesNewsletterOptions = [[[categoriesNewsletterComponent.field options] array] copy];
+            NSArray *categoriesNewsletterOptions = [[categoriesNewsletterComponent getOptions] copy];
             for(RIFieldOption *categoriesNewsletterOption in categoriesNewsletterOptions)
             {
                 if(NSNotFound != [[[categoriesNewsletterOption label] lowercaseString] rangeOfString:[selectedGenderValue lowercaseString]].location)
                 {
-                    [parameters setValue:categoriesNewsletterOption.value forKey:categoriesNewsletterComponent.field.name];
+                    [categoriesNewsletterComponent setValue:categoriesNewsletterOption.value];
+                    [parameters addEntriesFromDictionary:[categoriesNewsletterComponent getValues]];
                     break;
                 }
             }
@@ -446,31 +459,9 @@
     {
         for (UIView *view in self.formViews)
         {
-            if ([view isKindOfClass:[JABirthDateComponent class]])
+            if([view respondsToSelector:@selector(resetValue)])
             {
-                JABirthDateComponent *birthdateComponent = (JABirthDateComponent*) view;
-                
-                [birthdateComponent.dayField setValue:@""];
-                [birthdateComponent.monthField setValue:@""];
-                [birthdateComponent.yearField setValue:@""];
-            }
-            else if ([view isKindOfClass:[JARadioComponent class]])
-            {
-                JARadioComponent *radioComponent = (JARadioComponent*) view;
-                
-                [radioComponent.field setValue:@""];
-            }
-            else if ([view isKindOfClass:[JACheckBoxComponent class]])
-            {
-                JACheckBoxComponent *checkBoxComponent = (JACheckBoxComponent*) view;
-                
-                [checkBoxComponent.field setValue:@""];
-            }
-            else if ([view isKindOfClass:[JATextFieldComponent class]])
-            {
-                JATextFieldComponent *textFieldComponent = (JATextFieldComponent*) view;
-                
-                [textFieldComponent.field setValue:@""];
+                [view performSelector:@selector(resetValue) withObject:nil];
             }
         }
     }
@@ -504,6 +495,40 @@
     return view;
 }
 
+-(void)setRegionValue:(RIRegion*)region
+{
+    for(UIView *formView in self.formViews)
+    {
+        if([formView isKindOfClass:[JARadioComponent class]])
+        {
+            JARadioComponent *radioComponent = (JARadioComponent*) formView;
+            if([radioComponent isComponentWithKey:@"fk_customer_address_region"])
+            {
+                [radioComponent setRegionValue:region];
+            }
+            else if([radioComponent isComponentWithKey:@"fk_customer_address_city"])
+            {
+                [radioComponent setCityValue:nil];
+            }
+        }
+    }
+}
+
+-(void)setCityValue:(RICity*)city
+{
+    for(UIView *formView in self.formViews)
+    {
+        if([formView isKindOfClass:[JARadioComponent class]])
+        {
+            JARadioComponent *radioComponent = (JARadioComponent*) formView;
+            if([radioComponent isComponentWithKey:@"fk_customer_address_city"])
+            {
+                [radioComponent setCityValue:city];
+            }
+        }
+    }
+}
+
 #pragma mark UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -529,7 +554,7 @@
     BOOL textFieldShouldBeginEditing = YES;
     
     self.currentTextField = textField;
-
+    
     UIView *view = [self viewWithTag:textField.tag];
     if([view respondsToSelector:@selector(cleanError)])
     {

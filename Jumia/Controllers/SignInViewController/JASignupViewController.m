@@ -283,7 +283,7 @@ UIPickerViewDelegate>
     [self.datePickerView setAlpha:0.9];
     self.datePickerView.datePickerMode = UIDatePickerModeDate;
     
-    self.datePickerView.date = VALID_NOTEMPTY([birthdayComponent getValue], NSDate) ? [birthdayComponent getValue] : [NSDate date];
+    self.datePickerView.date = VALID_NOTEMPTY([birthdayComponent getDate], NSDate) ? [birthdayComponent getDate] : [NSDate date];
     [self.datePickerView setFrame:CGRectMake(0.0f,
                                              (self.pickerBackgroundView.frame.size.height - self.datePickerView.frame.size.height),
                                              self.datePickerView.frame.size.width,
@@ -334,7 +334,7 @@ UIPickerViewDelegate>
     [self.pickerView setDataSource:self];
     [self.pickerView setDelegate:self];
     
-    NSString *selectedValue = [radioComponent getValue];
+    NSString *selectedValue = [radioComponent getSelectedValue];
     if(VALID_NOTEMPTY(selectedValue, NSString))
     {
         NSInteger selectedRow = 0;

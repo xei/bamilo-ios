@@ -15,7 +15,6 @@
 @interface JARadioComponent : UIView
 
 @property (assign, nonatomic) BOOL hasError;
-@property (strong, nonatomic) RIField *field;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
 @property (strong, nonatomic) NSArray *dataset;
@@ -25,16 +24,24 @@
 
 -(void)setupWithField:(RIField*)field;
 
+-(BOOL)isComponentWithKey:(NSString*)key;
+
 -(void)setValue:(NSString*)value;
 
 -(void)setRegionValue:(RIRegion*)value;
 
 -(void)setCityValue:(RICity*)value;
 
--(NSString*)getValue;
+-(NSDictionary*)getValues;
+
+-(NSString*)getSelectedValue;
 
 -(void)setError:(NSString*)error;
 
 -(void)cleanError;
+
+-(void)resetValue;
+
+-(NSString*)getApiCallUrl;
 
 @end

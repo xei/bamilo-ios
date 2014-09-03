@@ -12,22 +12,25 @@
 @interface JATextFieldComponent : UIView
 
 @property (assign, nonatomic) BOOL hasError;
-@property (strong, nonatomic) RIField *field;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
 
-- (BOOL)isValid;
+-(BOOL)isValid;
 
-+ (JATextFieldComponent *)getNewJATextFieldComponent;
++(JATextFieldComponent *)getNewJATextFieldComponent;
 
-- (void)setupWithField:(RIField*)field;
+-(void)setupWithField:(RIField*)field;
+
+-(BOOL)isComponentWithKey:(NSString*)key;
 
 -(void)setValue:(NSString*)value;
 
--(NSString*)getValue;
+-(NSDictionary*)getValues;
 
 -(void)setError:(NSString*)error;
 
 -(void)cleanError;
+
+-(void)resetValue;
 
 @end

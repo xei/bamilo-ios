@@ -25,6 +25,8 @@
 #import "JASignInViewController.h"
 #import "JASignupViewController.h"
 #import "JAAddNewAddressViewController.h"
+#import "JAShippingViewController.h"
+#import "JAPaymentViewController.h"
 #import "RIProduct.h"
 #import "RIApi.h"
 #import "JANavigationBarLayout.h"
@@ -117,20 +119,30 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSignUpScreen)
+                                                 name:kShowSignUpScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSignInScreen)
+                                                 name:kShowSignInScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showForgotPasswordScreen)
                                                  name:kShowForgotPasswordScreenNotification
-                                               object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutForgotPasswordScreen)
-                                                 name:kShowCheckoutForgotPasswordScreenNotification
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutLoginScreen)
                                                  name:kShowCheckoutLoginScreenNotification
                                                object:nil];
-
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutForgotPasswordScreen)
+                                                 name:kShowCheckoutForgotPasswordScreenNotification
+                                               object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutAddressesScreen)
                                                  name:kShowCheckoutAddressesScreenNotification
@@ -147,18 +159,23 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutAddDeliveryAddressScreen)
-                                                 name:kShowCheckoutAddDeliveryAddressScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSignUpScreen)
-                                                 name:kShowSignUpScreenNotification
+                                             selector:@selector(showCheckoutAddShippingAddressScreen)
+                                                 name:kShowCheckoutAddShippingAddressScreenNotification
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSignInScreen)
-                                                 name:kShowSignInScreenNotification
+                                             selector:@selector(showCheckoutShippingScreen)
+                                                 name:kShowCheckoutShippingScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutPaymentScreen)
+                                                 name:kShowCheckoutPaymentScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutFinishScreen)
+                                                 name:kShowCheckoutFinishScreenNotification
                                                object:nil];
 }
 
@@ -403,6 +420,20 @@
     }
 }
 
+- (void)showSignUpScreen
+{
+    JASignupViewController *signUpVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signUpViewController"];
+    
+    [self pushViewController:signUpVC animated:YES];
+}
+
+- (void)showSignInScreen
+{
+    JASignInViewController *signInVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+    
+    [self pushViewController:signInVC animated:YES];
+}
+
 - (void)showForgotPasswordScreen
 {
     JAForgotPasswordViewController *forgotVC = [self.storyboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
@@ -412,6 +443,13 @@
     [self pushViewController:forgotVC animated:YES];
 }
 
+- (void)showCheckoutLoginScreen
+{
+    JALoginViewController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+    
+    [self pushViewController:loginVC animated:YES];
+}
+
 - (void)showCheckoutForgotPasswordScreen
 {
     JAForgotPasswordViewController *forgotVC = [self.storyboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
@@ -419,13 +457,6 @@
     forgotVC.navBarLayout.backButtonTitle = @"Checkout";
     
     [self pushViewController:forgotVC animated:YES];
-}
-
-- (void)showCheckoutLoginScreen
-{
-    JALoginViewController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
-    
-    [self pushViewController:loginVC animated:YES];
 }
 
 - (void)showCheckoutAddressesScreen
@@ -440,17 +471,17 @@
     JAAddNewAddressViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
     
     addressesVC.isBillingAddress = YES;
-    addressesVC.isDeliveryAddress = NO;
+    addressesVC.isShippingAddress = NO;
     
     [self pushViewController:addressesVC animated:YES];
 }
 
-- (void)showCheckoutAddDeliveryAddressScreen
+- (void)showCheckoutAddShippingAddressScreen
 {
     JAAddNewAddressViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
     
     addressesVC.isBillingAddress = NO;
-    addressesVC.isDeliveryAddress = YES;
+    addressesVC.isShippingAddress = YES;
     
     [self pushViewController:addressesVC animated:YES];
 }
@@ -460,23 +491,28 @@
     JAAddNewAddressViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
     
     addressesVC.isBillingAddress = YES;
-    addressesVC.isDeliveryAddress = YES;
+    addressesVC.isShippingAddress = YES;
     
     [self pushViewController:addressesVC animated:YES];
 }
 
-- (void)showSignUpScreen
+- (void)showCheckoutShippingScreen
 {
-    JASignupViewController *signUpVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signUpViewController"];
+    JAShippingViewController *shippingVC = [self.storyboard instantiateViewControllerWithIdentifier:@"shippingViewController"];
     
-    [self pushViewController:signUpVC animated:YES];
+    [self pushViewController:shippingVC animated:YES];
 }
 
-- (void)showSignInScreen
+- (void)showCheckoutPaymentScreen
 {
-    JASignInViewController *signInVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+    JAPaymentViewController *paymentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"paymentViewController"];
     
-    [self pushViewController:signInVC animated:YES];
+    [self pushViewController:paymentVC animated:YES];
+}
+
+- (void)showCheckoutFinishScreen
+{
+    
 }
 
 #pragma mark - Choose Country

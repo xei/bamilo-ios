@@ -12,9 +12,6 @@
 @interface JABirthDateComponent : UIView
 
 @property (assign, nonatomic) BOOL hasError;
-@property (strong, nonatomic) RIField *dayField;
-@property (strong, nonatomic) RIField *monthField;
-@property (strong, nonatomic) RIField *yearField;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
 
@@ -22,12 +19,18 @@
 
 -(void)setupWithLabel:(NSString*)label day:(RIField*)day month:(RIField*)month year:(RIField*)year;
 
+-(BOOL)isComponentWithKey:(NSString*)key;
+
 -(void)setValue:(NSDate*)date;
 
--(NSDate*)getValue;
+-(NSDate*)getDate;
+
+-(NSMutableDictionary*)getValues;
 
 -(void)setError:(NSString*)error;
 
 -(void)cleanError;
+
+-(void)resetValue;
 
 @end
