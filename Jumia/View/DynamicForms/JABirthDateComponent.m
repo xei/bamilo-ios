@@ -87,7 +87,7 @@
 {
     [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
     [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
-
+    
     if(ISEMPTY(self.textField.text))
     {
         self.hasError = YES;
@@ -97,18 +97,13 @@
 
 -(void)cleanError
 {
+    [self.textField setTextColor:UIColorFromRGB(0x666666)];
+    [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    
     if(self.hasError)
     {
         self.hasError = NO;
-        
-        [self.textField setTextColor:UIColorFromRGB(0x666666)];
-        [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-
-        if(self.hasError)
-        {
-            self.hasError = NO;
-            [self.textField setText:@""];
-        }
+        [self.textField setText:@""];
     }
 }
 

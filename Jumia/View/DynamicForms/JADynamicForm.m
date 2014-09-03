@@ -47,13 +47,17 @@
         
         if ([@"string" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
-            NSLog(@"textFieldComponent.field.key = %@", field.key);
             if(!([@"address-form" isEqualToString:[self.form uid]] && [@"city" isEqualToString:field.key]))
             {
                 JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
                 [textField setupWithField:field];
                 [textField.textField setDelegate:self];
                 [textField.textField setReturnKeyType:UIReturnKeyNext];
+            
+                if([@"email" isEqualToString:field.type])
+                {
+                    [textField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
+                }
                 
                 CGRect frame = textField.frame;
                 frame.origin.y = startingY;

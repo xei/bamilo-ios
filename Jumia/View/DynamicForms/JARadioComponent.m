@@ -104,16 +104,13 @@
 
 -(void)cleanError
 {
+    [self.textField setTextColor:UIColorFromRGB(0x666666)];
+    [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    
     if(self.hasError)
     {
-        [self.textField setTextColor:UIColorFromRGB(0x666666)];
-        [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-        
-        if(self.hasError)
-        {
-            self.hasError = NO;
-            [self.textField setText:@""];
-        }
+        self.hasError = NO;
+        [self.textField setText:@""];
     }
 }
 
