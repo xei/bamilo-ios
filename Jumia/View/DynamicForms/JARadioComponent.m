@@ -87,14 +87,30 @@
 
 -(void)setRegionValue:(RIRegion*)value
 {
-    self.storedValue = [value uid];
-    [self.textField setText:[value name]];
+    if(VALID_NOTEMPTY(value, RIRegion))
+    {
+        self.storedValue = [value uid];
+        [self.textField setText:[value name]];
+    }
+    else
+    {
+        self.storedValue = @"";
+        [self.textField setText:@""];
+    }
 }
 
 -(void)setCityValue:(RICity*)value
 {
-    self.storedValue = [value uid];
-    [self.textField setText:[value value]];
+    if(VALID_NOTEMPTY(value, RICity))
+    {
+        self.storedValue = [value uid];
+        [self.textField setText:[value value]];
+    }
+    else
+    {
+        self.storedValue = @"";
+        [self.textField setText:@""];
+    }
 }
 
 -(NSDictionary*)getValues

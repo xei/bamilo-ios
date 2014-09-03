@@ -20,6 +20,18 @@
 
 @implementation JADynamicForm
 
+-(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate startingPosition:(CGFloat)startingY;
+{
+    self = [super init];
+    if(self)
+    {
+        self.form = form;
+        self.delegate = delegate;
+        [self generateForm:[[[form fields] array] copy] startingY:startingY];
+    }
+    return self;
+}
+
 -(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
 {
     self = [super init];
@@ -38,6 +50,8 @@
     RIField *yearField = nil;
     NSInteger birthdayFieldPosition = -1;
     JABirthDateComponent *birthDateComponent = [JABirthDateComponent getNewJABirthDateComponent];
+    JARadioComponent *regionsComponent = nil;
+    JARadioComponent *citiesComponent = nil;
     
     NSInteger lastTextFieldIndex = 0;
     self.formViews = [[NSMutableArray alloc] init];
@@ -53,7 +67,7 @@
                 [textField setupWithField:field];
                 [textField.textField setDelegate:self];
                 [textField.textField setReturnKeyType:UIReturnKeyNext];
-            
+                
                 if([@"email" isEqualToString:field.type])
                 {
                     [textField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
@@ -143,21 +157,30 @@
         {
             if(!([@"address-form" isEqualToString:[self.form uid]] && [@"city" isEqualToString:field.key]))
             {
-                JARadioComponent *gender = [JARadioComponent getNewJARadioComponent];
-                [gender setupWithField:field];
-                [gender.textField setDelegate:self];
-                [gender.textField setReturnKeyType:UIReturnKeyNext];
+                JARadioComponent *radioComponent = [JARadioComponent getNewJARadioComponent];
+                [radioComponent setupWithField:field];
+                [radioComponent.textField setDelegate:self];
+                [radioComponent.textField setReturnKeyType:UIReturnKeyNext];
                 
-                CGRect frame = gender.frame;
+                CGRect frame = radioComponent.frame;
                 frame.origin.y = startingY;
-                gender.frame = frame;
-                startingY += gender.frame.size.height;
+                radioComponent.frame = frame;
+                startingY += radioComponent.frame.size.height;
                 
-                [gender.textField setTag:i];
-                [gender setTag:i];
+                [radioComponent.textField setTag:i];
+                [radioComponent setTag:i];
                 
                 lastTextFieldIndex = [self.formViews count];
-                [self.formViews addObject:gender];
+                [self.formViews addObject:radioComponent];
+                
+                if([radioComponent isComponentWithKey:@"fk_customer_address_region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+                {
+                    regionsComponent = radioComponent;
+                }
+                else if([radioComponent isComponentWithKey:@"fk_customer_address_city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+                {
+                    citiesComponent = radioComponent;
+                }
             }
         }
         else if ([@"checkbox" isEqualToString:field.type])
@@ -240,6 +263,10 @@
             [lastTextField.textField setReturnKeyType:UIReturnKeyDone];
         }
     }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(downloadRegions:cities:)]) {
+        [self.delegate performSelector:@selector(downloadRegions:cities:) withObject:regionsComponent withObject:citiesComponent];
+    }
 }
 
 -(void)validateFields:(NSDictionary*)errors
@@ -255,7 +282,7 @@
         else if(VALID_NOTEMPTY([errors objectForKey:errorKey], NSDictionary))
         {
             NSDictionary *errorDictionary = [errors objectForKey:errorKey];
-                        NSArray *errorDictionaryKeys = [errorDictionary allKeys];
+            NSArray *errorDictionaryKeys = [errorDictionary allKeys];
             NSString *errorString = nil;
             for(NSString *errorDictionaryKey in errorDictionaryKeys)
             {
@@ -390,7 +417,7 @@
             else if ([view isKindOfClass:[JATextFieldComponent class]])
             {
                 JATextFieldComponent *textFieldComponent = (JATextFieldComponent*) view;
-
+                
                 if(VALID_NOTEMPTY([textFieldComponent getValues], NSDictionary))
                 {
                     [parameters addEntriesFromDictionary:[textFieldComponent getValues]];
@@ -431,7 +458,7 @@
     if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
     {
         for (UIView *view in self.formViews)
-        {            
+        {
             if([view respondsToSelector:@selector(resetValue)])
             {
                 [view performSelector:@selector(resetValue) withObject:nil];
@@ -468,6 +495,40 @@
     return view;
 }
 
+-(void)setRegionValue:(RIRegion*)region
+{
+    for(UIView *formView in self.formViews)
+    {
+        if([formView isKindOfClass:[JARadioComponent class]])
+        {
+            JARadioComponent *radioComponent = (JARadioComponent*) formView;
+            if([radioComponent isComponentWithKey:@"fk_customer_address_region"])
+            {
+                [radioComponent setRegionValue:region];
+            }
+            else if([radioComponent isComponentWithKey:@"fk_customer_address_city"])
+            {
+                [radioComponent setCityValue:nil];
+            }
+        }
+    }
+}
+
+-(void)setCityValue:(RICity*)city
+{
+    for(UIView *formView in self.formViews)
+    {
+        if([formView isKindOfClass:[JARadioComponent class]])
+        {
+            JARadioComponent *radioComponent = (JARadioComponent*) formView;
+            if([radioComponent isComponentWithKey:@"fk_customer_address_city"])
+            {
+                [radioComponent setCityValue:city];
+            }
+        }
+    }
+}
+
 #pragma mark UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -493,7 +554,7 @@
     BOOL textFieldShouldBeginEditing = YES;
     
     self.currentTextField = textField;
-
+    
     UIView *view = [self viewWithTag:textField.tag];
     if([view respondsToSelector:@selector(cleanError)])
     {

@@ -14,6 +14,8 @@
 #import "JACheckBoxWithOptionsComponent.h"
 
 @class RIForm;
+@class RIRegion;
+@class RICity;
 
 @protocol JADynamicFormDelegate <NSObject>
 
@@ -27,6 +29,8 @@
 
 - (void)openPicker:(JARadioComponent *)radioComponent;
 
+- (void)downloadRegions:(JARadioComponent *)regionComponent cities:(JARadioComponent*) citiesComponent;
+
 @end
 
 @interface JADynamicForm : NSObject <UITextFieldDelegate>
@@ -34,6 +38,8 @@
 @property (strong, nonatomic) RIForm *form;
 @property (strong, nonatomic) NSMutableArray *formViews;
 @property (strong, nonatomic) id<JADynamicFormDelegate> delegate;
+
+-(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate startingPosition:(CGFloat)startingY;
 
 -(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
 
@@ -46,5 +52,9 @@
 -(void)resetValues;
 
 -(void)resignResponder;
+
+-(void)setRegionValue:(RIRegion*)region;
+
+-(void)setCityValue:(RICity*)city;
 
 @end

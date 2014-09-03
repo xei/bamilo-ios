@@ -12,7 +12,7 @@
 
 + (NSString *)getCitiesForUrl:(NSString*)url
                        region:(NSString*)regionId
-                 successBlock:(void (^)(NSArray *regions))successBlock
+                 successBlock:(void (^)(NSArray *cities))successBlock
               andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     url = [url stringByReplacingOccurrencesOfString:@"fk_customer_address_region" withString:regionId];

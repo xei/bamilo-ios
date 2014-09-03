@@ -38,6 +38,8 @@ UIPickerViewDelegate>
 @property (strong, nonatomic) JADynamicForm *shippingDynamicForm;
 @property (assign, nonatomic) CGFloat shippingAddressViewCurrentY;
 @property (strong, nonatomic) RIRegion *shippingSelectedRegion;
+@property (strong, nonatomic) RICity *shippingSelectedCity;
+@property (strong, nonatomic) NSArray *shippingCitiesDataset;
 
 // Billing Address
 @property (strong, nonatomic) UIView *billingContentView;
@@ -46,10 +48,12 @@ UIPickerViewDelegate>
 @property (strong, nonatomic) JADynamicForm *billingDynamicForm;
 @property (assign, nonatomic) CGFloat billingAddressViewCurrentY;
 @property (strong, nonatomic) RIRegion *billingSelectedRegion;
+@property (strong, nonatomic) RICity *billingSelectedCity;
+@property (strong, nonatomic) NSArray *billingCitiesDataset;
 
 // Picker view
-@property (strong, nonatomic) JARadioComponent *shippingRadioComponent;
-@property (strong, nonatomic) JARadioComponent *billingRadioComponent;
+@property (strong, nonatomic) JARadioComponent *radioComponent;
+@property (strong, nonatomic) NSArray *regionsDataset;
 @property (strong, nonatomic) NSArray *radioComponentDataset;
 @property (strong, nonatomic) UIView *pickerBackgroundView;
 @property (strong, nonatomic) UIToolbar *pickerToolbar;
@@ -94,8 +98,7 @@ UIPickerViewDelegate>
     [RIForm getForm:@"addresscreate"
        successBlock:^(RIForm *form)
      {
-         self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.shippingAddressViewCurrentY];
-         [self.shippingDynamicForm setDelegate:self];
+         self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.shippingAddressViewCurrentY];
          
          for(UIView *view in self.shippingDynamicForm.formViews)
          {
@@ -103,8 +106,7 @@ UIPickerViewDelegate>
              self.shippingAddressViewCurrentY = CGRectGetMaxY(view.frame);
          }
          
-         self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.billingAddressViewCurrentY];
-         [self.billingDynamicForm setDelegate:self];
+         self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY];
          
          for(UIView *view in self.billingDynamicForm.formViews)
          {
@@ -295,37 +297,46 @@ UIPickerViewDelegate>
 
 -(void)radioOptionChanged:(id)sender
 {
-    if(VALID_NOTEMPTY(self.shippingRadioComponent, JARadioComponent))
+    if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent))
     {
         NSInteger selectedRow = [self.pickerView selectedRowInComponent:0];
-        if(VALID_NOTEMPTY(self.shippingRadioComponent, JARadioComponent) && VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && selectedRow < [self.radioComponentDataset count])
+        if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && selectedRow < [self.radioComponentDataset count])
         {
             id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
-            if(VALID_NOTEMPTY(selectedObject, RIRegion))
+            
+            if(self.shippingContentView == [self.radioComponent superview])
             {
-                self.shippingSelectedRegion = selectedObject;
-                [self.shippingRadioComponent setRegionValue:selectedObject];
+                if(VALID_NOTEMPTY(selectedObject, RIRegion) && ![[selectedObject uid] isEqualToString:[self.shippingSelectedRegion uid]])
+                {
+                    self.shippingSelectedRegion = selectedObject;
+                    self.shippingSelectedCity = nil;
+                    self.shippingCitiesDataset = nil;
+                    
+                    [self.shippingDynamicForm setRegionValue:selectedObject];
+                }
+                else if(VALID_NOTEMPTY(selectedObject, RICity))
+                {
+                    self.shippingSelectedCity = selectedObject;
+
+                    [self.shippingDynamicForm setCityValue:selectedObject];
+                }
             }
-            else if(VALID_NOTEMPTY(selectedObject, RICity))
+            else if(self.billingContentView == [self.radioComponent superview])
             {
-                [self.shippingRadioComponent setCityValue:selectedObject];
-            }
-        }
-    }
-    else if(VALID_NOTEMPTY(self.billingRadioComponent, JARadioComponent))
-    {
-        NSInteger selectedRow = [self.pickerView selectedRowInComponent:0];
-        if(VALID_NOTEMPTY(self.billingRadioComponent, JARadioComponent) && VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && selectedRow < [self.radioComponentDataset count])
-        {
-            id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
-            if(VALID_NOTEMPTY(selectedObject, RIRegion))
-            {
-                self.billingSelectedRegion = selectedObject;
-                [self.billingRadioComponent setRegionValue:selectedObject];
-            }
-            else if(VALID_NOTEMPTY(selectedObject, RICity))
-            {
-                [self.billingRadioComponent setCityValue:selectedObject];
+                if(VALID_NOTEMPTY(selectedObject, RIRegion) && ![[selectedObject uid] isEqualToString:[self.billingSelectedRegion uid]])
+                {
+                    self.billingSelectedRegion = selectedObject;
+                    self.billingSelectedCity = nil;
+                    self.billingCitiesDataset = nil;
+
+                    [self.billingDynamicForm setRegionValue:selectedObject];
+                }
+                else if(VALID_NOTEMPTY(selectedObject, RICity))
+                {
+                    self.billingSelectedCity = selectedObject;
+                    
+                    [self.billingDynamicForm setCityValue:selectedObject];
+                }
             }
         }
     }
@@ -353,8 +364,8 @@ UIPickerViewDelegate>
     self.pickerView = nil;
     self.datePickerView = nil;
     self.pickerBackgroundView = nil;
-    self.shippingRadioComponent = nil;
-    self.billingRadioComponent = nil;
+    self.radioComponent = nil;
+    self.radioComponentDataset = nil;
 }
 
 -(void)createAddressButtonPressed
@@ -471,145 +482,216 @@ UIPickerViewDelegate>
 {
     [self removePickerView];
     
-    if(self.shippingContentView == [radioComponent superview])
-    {
-        self.shippingRadioComponent = radioComponent;
-    }
-    else if(self.billingContentView == [radioComponent superview])
-    {
-        self.billingRadioComponent = radioComponent;
-    }
-    
+    self.radioComponent = radioComponent;
+
     if([radioComponent isComponentWithKey:@"fk_customer_address_region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
     {
-        [self showLoading];
-        [RIRegion getRegionsForUrl:[radioComponent getApiCallUrl] successBlock:^(NSArray *regions)
-         {
-             self.radioComponentDataset = [regions copy];
-             [self finishedLoadingRegions];
-         } andFailureBlock:^(NSArray *error)
-         {
-             [self finishedLoadingRegions];
-         }];
+        self.radioComponentDataset = self.regionsDataset;
+        
+        [self setupPickerView];
     }
     else if([radioComponent isComponentWithKey:@"fk_customer_address_city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
     {
-        NSString *url = [radioComponent getApiCallUrl];
-        if(self.shippingContentView == [radioComponent superview] && VALID_NOTEMPTY(self.shippingSelectedRegion, RIRegion))
+        if(self.shippingContentView == [radioComponent superview])
         {
-            [self showLoading];
-            [RICity getCitiesForUrl:url region:[self.shippingSelectedRegion uid] successBlock:^(NSArray *regions)
-             {
-                 self.radioComponentDataset = [regions copy];
-                 [self finishedLoadingRegions];
-             } andFailureBlock:^(NSArray *error)
-             {
-                 [self finishedLoadingRegions];
-             }];
+            if(VALID_NOTEMPTY(self.shippingCitiesDataset, NSArray))
+            {
+                self.radioComponentDataset = self.shippingCitiesDataset;
+                
+                [self setupPickerView];
+            }
+            else
+            {
+                NSString *url = [radioComponent getApiCallUrl];
+                [self showLoading];
+                [RICity getCitiesForUrl:url region:[self.shippingSelectedRegion uid] successBlock:^(NSArray *regions)
+                 {
+                     self.shippingCitiesDataset = [regions copy];
+                     self.radioComponentDataset = [regions copy];
+                    
+                     [self hideLoading];
+                     [self setupPickerView];
+                 } andFailureBlock:^(NSArray *error)
+                 {
+                     [self hideLoading];
+                 }];
+            }
         }
-        else if(self.billingContentView == [radioComponent superview] && VALID_NOTEMPTY(self.billingSelectedRegion, RIRegion))
+        else if(self.billingContentView == [radioComponent superview])
         {
-            [self showLoading];
-            [RICity getCitiesForUrl:url region:[self.billingSelectedRegion uid] successBlock:^(NSArray *regions)
-             {
-                 self.radioComponentDataset = [regions copy];
-                 [self finishedLoadingRegions];
-             } andFailureBlock:^(NSArray *error)
-             {
-                 [self finishedLoadingRegions];
-             }];
+            if(VALID_NOTEMPTY(self.billingCitiesDataset, NSArray))
+            {
+                self.radioComponentDataset = self.billingCitiesDataset;
+                
+                [self setupPickerView];
+            }
+            else
+            {
+                NSString *url = [radioComponent getApiCallUrl];
+                [self showLoading];
+                [RICity getCitiesForUrl:url region:[self.shippingSelectedRegion uid] successBlock:^(NSArray *regions)
+                 {
+                     self.billingCitiesDataset = [regions copy];
+                     self.radioComponentDataset = [regions copy];
+                     
+                     [self hideLoading];
+                     [self setupPickerView];
+                 } andFailureBlock:^(NSArray *error)
+                 {
+                     [self hideLoading];
+                 }];
+            }
         }
     }
 }
 
--(void) finishedLoadingRegions
+-(NSInteger)getPickerSelectedRow
 {
-    [self hideLoading];
-    
-    if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray))
+    NSString *selectedValue = [self.radioComponent getSelectedValue];
+    NSInteger selectedRow = 0;
+    if(VALID_NOTEMPTY(selectedValue, NSString))
     {
-        self.pickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
-        UITapGestureRecognizer *removePickerViewTap =
-        [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                action:@selector(removePickerView)];
-        [self.pickerBackgroundView addGestureRecognizer:removePickerViewTap];
-        
-        self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
-        [self.pickerView setBackgroundColor:UIColorFromRGB(0xffffff)];
-        [self.pickerView setAlpha:0.9];
-        [self.pickerView setDataSource:self];
-        [self.pickerView setDelegate:self];
-        
-        NSString *selectedValue = @"";
-        if(VALID_NOTEMPTY(self.shippingRadioComponent, JARadioComponent))
+        if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray))
         {
-            selectedValue = [self.shippingRadioComponent getSelectedValue];
-        }
-        else if(VALID_NOTEMPTY(self.billingRadioComponent, JARadioComponent))
-        {
-            selectedValue = [self.billingRadioComponent getSelectedValue];
-        }
-        
-        if(VALID_NOTEMPTY(selectedValue, NSString))
-        {
-            NSInteger selectedRow = 0;
-            if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray))
+            for (int i = 0; i < [self.radioComponentDataset count]; i++)
             {
-                for (int i = 0; i < [self.radioComponentDataset count]; i++)
+                id selectedObject = [self.radioComponentDataset objectAtIndex:i];
+                if(VALID_NOTEMPTY(selectedObject, RIRegion))
                 {
-                    id selectedObject = [self.radioComponentDataset objectAtIndex:i];
-                    if(VALID_NOTEMPTY(selectedObject, RIRegion))
+                    if([selectedValue isEqualToString:[selectedObject uid]])
                     {
-                        if([selectedValue isEqualToString:[selectedObject uid]])
-                        {
-                            selectedRow = i;
-                            break;
-                        }
+                        selectedRow = i;
+                        break;
                     }
-                    else if(VALID_NOTEMPTY(selectedObject, RICity))
+                }
+                else if(VALID_NOTEMPTY(selectedObject, RICity))
+                {
+                    if([selectedValue isEqualToString:[selectedObject uid]])
                     {
-                        if([selectedValue isEqualToString:[selectedObject uid]])
-                        {
-                            selectedRow = i;
-                            break;
-                        }
+                        selectedRow = i;
+                        break;
                     }
                 }
             }
-            [self.pickerView selectRow:selectedRow inComponent:0 animated:NO];
         }
-        
-        [self.pickerView setFrame:CGRectMake(0.0f,
-                                             (self.pickerBackgroundView.frame.size.height - self.pickerView.frame.size.height),
-                                             self.pickerView.frame.size.width,
-                                             self.pickerView.frame.size.height)];
-        
-        self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
-        [self.pickerToolbar setTranslucent:NO];
-        [self.pickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
-        [self.pickerToolbar setAlpha:0.9];
-        [self.pickerToolbar setFrame:CGRectMake(0.0f,
-                                                CGRectGetMinY(self.pickerView.frame) - 44.0f,
-                                                320.0f,
-                                                44.0f)];
-        
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
-        [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-        [button setTitle:@"Done" forState:UIControlStateNormal];
-        [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-        [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        [button addTarget:self action:@selector(radioOptionChanged:) forControlEvents:UIControlEventTouchUpInside];
-        [button sizeToFit];
-        
-        UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-        UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        
-        [self.pickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
-        [self.pickerBackgroundView addSubview:self.pickerToolbar];
-        
-        [self.pickerBackgroundView addSubview:self.pickerView];
-        [self.view addSubview:self.pickerBackgroundView];
+    }
+    return selectedRow;
+}
+
+-(void) setupPickerView
+{
+    self.pickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+    UITapGestureRecognizer *removePickerViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(removePickerView)];
+    [self.pickerBackgroundView addGestureRecognizer:removePickerViewTap];
+    
+    self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
+    [self.pickerView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.pickerView setAlpha:0.9];
+    [self.pickerView setDataSource:self];
+    [self.pickerView setDelegate:self];
+    
+    [self.pickerView selectRow:[self getPickerSelectedRow] inComponent:0 animated:NO];
+    
+    [self.pickerView setFrame:CGRectMake(0.0f,
+                                         (self.pickerBackgroundView.frame.size.height - self.pickerView.frame.size.height),
+                                         self.pickerView.frame.size.width,
+                                         self.pickerView.frame.size.height)];
+    
+    self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
+    [self.pickerToolbar setTranslucent:NO];
+    [self.pickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.pickerToolbar setAlpha:0.9];
+    [self.pickerToolbar setFrame:CGRectMake(0.0f,
+                                            CGRectGetMinY(self.pickerView.frame) - 44.0f,
+                                            320.0f,
+                                            44.0f)];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
+    [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [button setTitle:@"Done" forState:UIControlStateNormal];
+    [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [button addTarget:self action:@selector(radioOptionChanged:) forControlEvents:UIControlEventTouchUpInside];
+    [button sizeToFit];
+    
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    [self.pickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
+    [self.pickerBackgroundView addSubview:self.pickerToolbar];
+    
+    [self.pickerBackgroundView addSubview:self.pickerView];
+    [self.view addSubview:self.pickerBackgroundView];
+}
+
+- (void)downloadRegions:(JARadioComponent *)regionComponent cities:(JARadioComponent*) citiesComponent
+{
+    if(VALID_NOTEMPTY(regionComponent, JARadioComponent) && VALID_NOTEMPTY(citiesComponent, JARadioComponent))
+    {
+        if(!VALID_NOTEMPTY(self.regionsDataset, NSArray))
+        {
+            [self showLoading];
+            [RIRegion getRegionsForUrl:[regionComponent getApiCallUrl] successBlock:^(NSArray *regions)
+             {
+                 self.regionsDataset = [regions copy];
+                 
+                 NSString *selectedValue = [regionComponent getSelectedValue];
+                 
+                 if(VALID_NOTEMPTY(selectedValue, NSString) && VALID_NOTEMPTY(regions, NSArray))
+                 {
+                     for(RIRegion *region in regions)
+                     {
+                         if([selectedValue isEqualToString:[region uid]])
+                         {
+                             self.shippingSelectedRegion = region;
+                             self.billingSelectedRegion = region;
+
+                             [self.shippingDynamicForm setRegionValue:region];
+                             [self.billingDynamicForm setRegionValue:region];
+                             
+                             break;
+                         }
+                         
+                     }
+                 }
+                 else if(VALID_NOTEMPTY(regions, NSArray))
+                 {
+                     self.shippingSelectedRegion = [regions objectAtIndex:0];
+                     self.billingSelectedRegion = [regions objectAtIndex:0];
+                     [regionComponent setRegionValue:self.shippingSelectedRegion];
+                 }
+                 
+                 if(VALID_NOTEMPTY(self.shippingSelectedRegion, RIRegion))
+                 {
+                     [RICity getCitiesForUrl:[citiesComponent getApiCallUrl] region:[self.shippingSelectedRegion uid] successBlock:^(NSArray *cities) {
+                         self.shippingCitiesDataset = [cities copy];
+                         self.billingCitiesDataset = [cities copy];
+                         
+                         if(VALID_NOTEMPTY(cities, NSArray))
+                         {
+                             RICity *city = [cities objectAtIndex:0];
+                             
+                             self.shippingSelectedCity = city;
+                             self.billingSelectedCity = city;
+                             
+                             [self.shippingDynamicForm setCityValue:city];
+                             [self.billingDynamicForm setCityValue:city];
+                         }
+                             
+                         [self hideLoading];
+                         
+                     } andFailureBlock:^(NSArray *error) {
+                         [self hideLoading];
+                     }];
+                 }
+             } andFailureBlock:^(NSArray *error)
+             {
+                 [self hideLoading];
+             }];
+        }
     }
 }
 
