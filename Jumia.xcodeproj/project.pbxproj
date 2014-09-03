@@ -84,11 +84,11 @@
 		B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		B56BBF3319A60D5400F4B1A3 /* JACartListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */; };
 		B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4119B4E92B00DE7960 /* RIField.m */; };
-		B59DCA4519B5B71800DE7960 /* JAAddNewAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4419B5B71800DE7960 /* JAAddNewAddressViewController.m */; };
-		B59DCA4F19B5E0E600DE7960 /* RIRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4E19B5E0E600DE7960 /* RIRegion.m */; };
-		B59DCA5219B5E0F400DE7960 /* RICity.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5119B5E0F400DE7960 /* RICity.m */; };
-		B59DCA5619B6368100DE7960 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5519B6368100DE7960 /* FXBlurView.m */; };
 		B59DCA5919B70C2E00DE7960 /* JATextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5819B70C2E00DE7960 /* JATextField.m */; };
+		B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5A19B7109300DE7960 /* JAAddNewAddressViewController.m */; };
+		B59DCA6119B710B100DE7960 /* RIRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5D19B710B100DE7960 /* RIRegion.m */; };
+		B59DCA6219B710B100DE7960 /* RICity.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5F19B710B100DE7960 /* RICity.m */; };
+		B59DCA6619B710DA00DE7960 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA6519B710DA00DE7960 /* FXBlurView.m */; };
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
 		B5A301BC19811D0700F71726 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
@@ -409,16 +409,16 @@
 		B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACartListCell.xib; sourceTree = "<group>"; };
 		B59DCA4019B4E92B00DE7960 /* RIField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIField.h; sourceTree = "<group>"; };
 		B59DCA4119B4E92B00DE7960 /* RIField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIField.m; sourceTree = "<group>"; };
-		B59DCA4319B5B71800DE7960 /* JAAddNewAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAddNewAddressViewController.h; sourceTree = "<group>"; };
-		B59DCA4419B5B71800DE7960 /* JAAddNewAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAddNewAddressViewController.m; sourceTree = "<group>"; };
-		B59DCA4D19B5E0E600DE7960 /* RIRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIRegion.h; sourceTree = "<group>"; };
-		B59DCA4E19B5E0E600DE7960 /* RIRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIRegion.m; sourceTree = "<group>"; };
-		B59DCA5019B5E0F400DE7960 /* RICity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICity.h; sourceTree = "<group>"; };
-		B59DCA5119B5E0F400DE7960 /* RICity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICity.m; sourceTree = "<group>"; };
-		B59DCA5419B6368100DE7960 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
-		B59DCA5519B6368100DE7960 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		B59DCA5719B70C2E00DE7960 /* JATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextField.h; sourceTree = "<group>"; };
 		B59DCA5819B70C2E00DE7960 /* JATextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATextField.m; sourceTree = "<group>"; };
+		B59DCA5A19B7109300DE7960 /* JAAddNewAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAddNewAddressViewController.m; sourceTree = "<group>"; };
+		B59DCA5B19B7109300DE7960 /* JAAddNewAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAddNewAddressViewController.h; sourceTree = "<group>"; };
+		B59DCA5D19B710B100DE7960 /* RIRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIRegion.m; sourceTree = "<group>"; };
+		B59DCA5E19B710B100DE7960 /* RIRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIRegion.h; sourceTree = "<group>"; };
+		B59DCA5F19B710B100DE7960 /* RICity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICity.m; sourceTree = "<group>"; };
+		B59DCA6019B710B100DE7960 /* RICity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICity.h; sourceTree = "<group>"; };
+		B59DCA6419B710DA00DE7960 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
+		B59DCA6519B710DA00DE7960 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		B5A301A819811D0700F71726 /* Jumia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jumia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A301AC19811D0700F71726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5A301AD19811D0700F71726 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1127,8 +1127,8 @@
 			children = (
 				B50B039E198A5434002046DF /* JAAddressesViewController.h */,
 				B50B039F198A5434002046DF /* JAAddressesViewController.m */,
-				B59DCA4319B5B71800DE7960 /* JAAddNewAddressViewController.h */,
-				B59DCA4419B5B71800DE7960 /* JAAddNewAddressViewController.m */,
+				B59DCA5B19B7109300DE7960 /* JAAddNewAddressViewController.h */,
+				B59DCA5A19B7109300DE7960 /* JAAddNewAddressViewController.m */,
 			);
 			path = Addresses;
 			sourceTree = "<group>";
@@ -1160,11 +1160,11 @@
 			path = Shipping;
 			sourceTree = "<group>";
 		};
-		B59DCA5319B6368100DE7960 /* FXBlurView */ = {
+		B59DCA6319B710DA00DE7960 /* FXBlurView */ = {
 			isa = PBXGroup;
 			children = (
-				B59DCA5419B6368100DE7960 /* FXBlurView.h */,
-				B59DCA5519B6368100DE7960 /* FXBlurView.m */,
+				B59DCA6419B710DA00DE7960 /* FXBlurView.h */,
+				B59DCA6519B710DA00DE7960 /* FXBlurView.m */,
 			);
 			path = FXBlurView;
 			sourceTree = "<group>";
@@ -1258,7 +1258,7 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B59DCA5319B6368100DE7960 /* FXBlurView */,
+				B59DCA6319B710DA00DE7960 /* FXBlurView */,
 				B5007ABD19A4E8EC0024035A /* HockeySDK.embeddedframework */,
 				B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */,
 				CEDEB98F199BA8FA0022BAB5 /* NMRangeSlider */,
@@ -1611,10 +1611,10 @@
 				B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */,
 				CEDEB981199A51E30022BAB5 /* RIFilter.h */,
 				CEDEB982199A51E30022BAB5 /* RIFilter.m */,
-				B59DCA4D19B5E0E600DE7960 /* RIRegion.h */,
-				B59DCA4E19B5E0E600DE7960 /* RIRegion.m */,
-				B59DCA5019B5E0F400DE7960 /* RICity.h */,
-				B59DCA5119B5E0F400DE7960 /* RICity.m */,
+				B59DCA6019B710B100DE7960 /* RICity.h */,
+				B59DCA5F19B710B100DE7960 /* RICity.m */,
+				B59DCA5E19B710B100DE7960 /* RIRegion.h */,
+				B59DCA5D19B710B100DE7960 /* RIRegion.m */,
 			);
 			path = OtherObjects;
 			sourceTree = "<group>";
@@ -2107,8 +2107,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5A302C919811E9200F71726 /* RIProductSimple.m in Sources */,
-				B59DCA5619B6368100DE7960 /* FXBlurView.m in Sources */,
 				B542546B19AE9F7500C792FF /* JACartListHeaderView.m in Sources */,
+				B59DCA6619B710DA00DE7960 /* FXBlurView.m in Sources */,
 				4AE730C4198F8AF3000CA1DD /* JACTAButtons.m in Sources */,
 				B5A302D719811E9200F71726 /* RIError.m in Sources */,
 				CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */,
@@ -2143,7 +2143,6 @@
 				B5A302CC19811E9200F71726 /* RITeaser.m in Sources */,
 				4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */,
 				CE13787819A357B400CA0751 /* JACategoriesViewController.m in Sources */,
-				B59DCA4F19B5E0E600DE7960 /* RIRegion.m in Sources */,
 				B5A302D019811E9200F71726 /* RITeaserProduct.m in Sources */,
 				CE44586C198BD20A00CE7E8D /* JATopBrandsTeaserView.m in Sources */,
 				B5A302CE19811E9200F71726 /* RITeaserGroup.m in Sources */,
@@ -2170,13 +2169,16 @@
 				B50B03A0198A5434002046DF /* JAAddressesViewController.m in Sources */,
 				4A1892D219939A0C0036F327 /* JAReviewCell.m in Sources */,
 				4AE242E81986570F00E37C90 /* JAMenuViewController.m in Sources */,
+				B59DCA6219B710B100DE7960 /* RICity.m in Sources */,
 				B5A3025719811E8A00F71726 /* MKAnnotationView+WebCache.m in Sources */,
 				4AE730BE198F8ADF000CA1DD /* JAPDVRelatedItem.m in Sources */,
 				B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */,
+				B59DCA6119B710B100DE7960 /* RIRegion.m in Sources */,
 				B5A302D819811E9200F71726 /* RIProductReview.m in Sources */,
 				CE44587C198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m in Sources */,
 				CE445875198BD5D800CE7E8D /* JASmallTeaserView.m in Sources */,
 				4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */,
+				B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */,
 				4A944FF8199290F200C02734 /* JARatingsViewController.m in Sources */,
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
 				4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */,
@@ -2206,7 +2208,6 @@
 				B5A302CA19811E9200F71726 /* RISearchSuggestion.m in Sources */,
 				B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */,
 				B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */,
-				B59DCA4519B5B71800DE7960 /* JAAddNewAddressViewController.m in Sources */,
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
 				CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */,
 				CE33CA0119AB36FA00333B1A /* JAPriceView.m in Sources */,
@@ -2218,7 +2219,6 @@
 				B5A302CB19811E9200F71726 /* RISection.m in Sources */,
 				B5C61BC319B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m in Sources */,
 				B517FDF91982517300F65253 /* RICart.m in Sources */,
-				B59DCA5219B5E0F400DE7960 /* RICity.m in Sources */,
 				B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */,
 				B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */,
 				B510B01419AE466B00A9754A /* JADynamicForm.m in Sources */,
