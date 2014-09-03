@@ -188,11 +188,17 @@
                                                                   {
                                                                       failureBlock(errorArray);
                                                                   }
-                                                              } else if(NOTEMPTY(errorObject))
+                                                                  else
+                                                                  {
+                                                                      failureBlock(nil);
+                                                                  }
+                                                              }
+                                                              else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
                                                                   failureBlock(errorArray);
-                                                              } else
+                                                              }
+                                                              else
                                                               {
                                                                   failureBlock(nil);
                                                               }

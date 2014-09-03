@@ -17,6 +17,8 @@
 
 + (JACheckBoxComponent *)getNewJACheckBoxComponent;
 
+-(void)setup;
+
 -(void)setupWithField:(RIField*)field;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JATextField.h"
+#import "JATextFieldComponent.h"
 #import "JABirthDateComponent.h"
 #import "JACheckBoxComponent.h"
 #import "JARadioComponent.h"

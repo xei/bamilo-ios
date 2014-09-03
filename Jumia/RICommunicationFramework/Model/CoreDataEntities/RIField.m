@@ -26,6 +26,7 @@
 @dynamic uid;
 @dynamic value;
 @dynamic dataSet;
+@dynamic apiCall;
 @dynamic form;
 @dynamic options;
 
@@ -52,7 +53,8 @@
         newField.label = [fieldJSON objectForKey:@"label"];
     }
     
-    if ([fieldJSON objectForKey:@"dataset"]) {
+    if (VALID_NOTEMPTY([fieldJSON objectForKey:@"dataset"], NSArray))
+    {
         NSArray *dataSetArray = [fieldJSON objectForKey:@"dataset"];
         
         for (NSString *tempString in dataSetArray) {
@@ -61,6 +63,15 @@
             [newField addDataSetObject:component];
         }
     }
+    else if (VALID_NOTEMPTY([fieldJSON objectForKey:@"dataset"], NSDictionary))
+    {
+        NSDictionary *dataSetDictionary = [fieldJSON objectForKey:@"dataset"];
+        if(VALID_NOTEMPTY([dataSetDictionary objectForKey:@"api_call"], NSString))
+        {
+            newField.apiCall = [dataSetDictionary objectForKey:@"api_call"];
+        }
+    }
+    
     
     if ([fieldJSON objectForKey:@"options"]) {
         NSArray *optionsArray = [fieldJSON objectForKey:@"options"];

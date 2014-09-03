@@ -1,24 +1,24 @@
 //
-//  JATextField.m
+//  JATextFieldComponent.h
 //  Jumia
 //
 //  Created by Pedro Lopes on 25/08/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
-#import "JATextField.h"
+#import "JATextFieldComponent.h"
 
-@implementation JATextField
+@implementation JATextFieldComponent
 
-+ (JATextField *)getNewJATextField
++ (JATextFieldComponent *)getNewJATextFieldComponent
 {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JATextField"
+    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JATextFieldComponent"
                                                  owner:nil
                                                options:nil];
     
     for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JATextField class]]) {
-            return (JATextField *)obj;
+        if ([obj isKindOfClass:[JATextFieldComponent class]]) {
+            return (JATextFieldComponent *)obj;
         }
     }
     

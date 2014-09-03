@@ -11,6 +11,4 @@
 
 @interface JAAddressesViewController : JABaseViewController
 
-@property (weak, nonatomic) IBOutlet UIButton *chooseBillingAndShippingAddressesAndGoToNextStep;
-
 @end

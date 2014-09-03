@@ -87,7 +87,7 @@
     [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
     [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
     [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
-    [self.forgotPasswordButton setTitle:@"Submt" forState:UIControlStateNormal];
+    [self.forgotPasswordButton setTitle:@"Submit" forState:UIControlStateNormal];
     [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.forgotPasswordButton addTarget:self action:@selector(forgotPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.forgotPasswordButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
@@ -111,6 +111,13 @@
      {
          [self.dynamicForm resetValues];
          [self hideLoading];
+         
+         [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                     message:@"Email sent"
+                                    delegate:nil
+                           cancelButtonTitle:nil
+                           otherButtonTitles:@"OK", nil] show];
+         
      } andFailureBlock:^(id errorObject)
      {
          [self hideLoading];
@@ -118,6 +125,12 @@
          if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.dynamicForm validateFields:errorObject];
+             
+             [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                         message:@"Invalid fields"
+                                        delegate:nil
+                               cancelButtonTitle:nil
+                               otherButtonTitles:@"OK", nil] show];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {

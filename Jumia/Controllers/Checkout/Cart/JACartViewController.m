@@ -19,6 +19,7 @@
 #import "RICart.h"
 #import "RICartItem.h"
 #import "RICustomer.h"
+#import "RIAddress.h"
 
 @implementation JACartViewController
 
@@ -671,14 +672,40 @@
 
 - (void)checkoutButtonPressed
 {
+    [self showLoading];
     if([RICustomer checkIfUserIsLogged])
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                            object:nil
-                                                          userInfo:nil];
+        [RIAddress getCustomerAddressListWithSuccessBlock:^(id addressList)
+        {
+            [self hideLoading];
+#warning user is suppose to have a dictionary with addresses
+            if(VALID_NOTEMPTY(addressList, NSDictionary))
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                                    object:nil
+                                                                  userInfo:nil];
+            }
+            else
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
+                                                                    object:nil
+                                                                  userInfo:nil];
+            }
+            
+        } andFailureBlock:^(NSArray *errorMessages)
+        {
+                        [self hideLoading];
+            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                        message:[errorMessages componentsJoinedByString:@","]
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK", nil] show];
+            
+        }];
     }
     else
     {
+                    [self hideLoading];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutLoginScreenNotification
                                                             object:nil
                                                           userInfo:nil];

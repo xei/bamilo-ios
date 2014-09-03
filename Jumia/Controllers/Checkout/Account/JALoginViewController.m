@@ -10,6 +10,7 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "RICustomer.h"
+#import "RIAddress.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 @interface JALoginViewController ()
@@ -29,7 +30,6 @@ FBLoginViewDelegate
 
 // Login
 @property (strong, nonatomic) JADynamicForm *loginDynamicForm;
-@property (strong, nonatomic) NSMutableArray *loginFormFieldsArray;
 @property (weak, nonatomic) IBOutlet UIView *loginView;
 @property (weak, nonatomic) IBOutlet UIView *loginSeparator;
 @property (weak, nonatomic) IBOutlet UILabel *loginLabel;
@@ -49,7 +49,6 @@ FBLoginViewDelegate
 
 // Signup
 @property (strong, nonatomic) JADynamicForm *signupDynamicForm;
-@property (strong, nonatomic) NSMutableArray *signupFormFieldsArray;
 @property (weak, nonatomic) IBOutlet UIView *signUpView;
 @property (weak, nonatomic) IBOutlet UIView *signUpSeparator;
 @property (weak, nonatomic) IBOutlet UILabel *signUpLabel;
@@ -96,7 +95,7 @@ FBLoginViewDelegate
            
            self.loginDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
            self.loginFormHeight = 0.0f;
-           self.loginFormFieldsArray = [self.loginDynamicForm.formViews copy];
+
            for(UIView *view in self.loginDynamicForm.formViews)
            {
                [self.loginFormView addSubview:view];
@@ -125,7 +124,7 @@ FBLoginViewDelegate
            
            self.signupDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
            self.signupFormHeight = 0.0f;
-           self.signupFormFieldsArray = [self.signupDynamicForm.formViews copy];
+
            for(UIView *view in self.signupDynamicForm.formViews)
            {
                [self.signUpFormView addSubview:view];
@@ -474,13 +473,33 @@ FBLoginViewDelegate
     [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object) {
         [self.loginDynamicForm resetValues];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                            object:nil];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                            object:nil
-                                                          userInfo:nil];
-        [self hideLoading];
+#warning user is suppose to have a dictionary with addresses
+        [RIAddress getCustomerAddressListWithSuccessBlock:^(id addressList)
+         {
+             [self hideLoading];
+             if(VALID_NOTEMPTY(addressList, NSDictionary))
+             {
+                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                                     object:nil
+                                                                   userInfo:nil];
+             }
+             else
+             {
+                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
+                                                                     object:nil
+                                                                   userInfo:nil];
+             }
+             
+         } andFailureBlock:^(NSArray *errorMessages)
+         {
+             [self hideLoading];
+             [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                         message:[errorMessages componentsJoinedByString:@","]
+                                        delegate:nil
+                               cancelButtonTitle:nil
+                               otherButtonTitles:@"OK", nil] show];
+             
+         }];
         
     } andFailureBlock:^(id errorObject) {
         [self hideLoading];
@@ -488,6 +507,12 @@ FBLoginViewDelegate
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.loginDynamicForm validateFields:errorObject];
+            
+            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                        message:@"Invalid fields"
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK", nil] show];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
@@ -527,21 +552,26 @@ FBLoginViewDelegate
     [RIForm sendForm:[self.signupDynamicForm form] parameters:[self.signupDynamicForm getValues] successBlock:^(id object) {
         [self.signupDynamicForm resetValues];
         
+        [self hideLoading];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
                                                             object:nil
                                                           userInfo:nil];
-        
-        [self hideLoading];
-        
     } andFailureBlock:^(id errorObject) {
         [self hideLoading];
         
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.signupDynamicForm validateFields:errorObject];
+            
+            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                        message:@"Invalid fields"
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK", nil] show];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
@@ -585,15 +615,16 @@ FBLoginViewDelegate
         
         [RICustomer loginCustomerByFacebookWithParameters:parameters
                                              successBlock:^(id customer) {
+                                                 [self.loginDynamicForm resetValues];
+                                                 
                                                  [self hideLoading];
                                                  
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                                                      object:nil];
                                                  
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
                                                                                                      object:nil
                                                                                                    userInfo:nil];
-                                                 [self hideLoading];
                                              } andFailureBlock:^(NSArray *errorObject) {
                                                  [self hideLoading];
                                                  

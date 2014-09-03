@@ -25,6 +25,7 @@
 @property (nonatomic, retain) NSString * uid;
 @property (nonatomic, retain) NSString * value;
 @property (nonatomic, retain) NSOrderedSet *dataSet;
+@property (nonatomic, retain) NSString * apiCall;
 @property (nonatomic, retain) RIForm *form;
 @property (nonatomic, retain) NSOrderedSet *options;
 

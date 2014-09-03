@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
     <scenes>
@@ -1429,6 +1430,8 @@
                         <segue destination="LjQ-x6-EIP" kind="push" id="Zjg-Oa-JfE"/>
                         <segue destination="0fU-Gn-Dfc" kind="push" id="wXL-pA-TpM"/>
                         <segue destination="R5h-jK-q53" kind="push" id="Tjj-8m-WXY"/>
+                        <segue destination="Gh5-6E-R0E" kind="push" id="CEY-CM-Qfl"/>
+                        <segue destination="fQL-zh-vpR" kind="push" id="sx1-VO-Ujm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zwP-v4-smR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2052,6 +2055,62 @@
             </objects>
             <point key="canvasLocation" x="-32" y="783"/>
         </scene>
+        <!--Add New Address Controller-->
+        <scene sceneID="Stl-uA-BX8">
+            <objects>
+                <viewController storyboardIdentifier="addNewAddressViewController" automaticallyAdjustsScrollViewInsets="NO" id="Gh5-6E-R0E" userLabel="Add New Address Controller" customClass="JAAddNewAddressViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kfW-55-XdT"/>
+                        <viewControllerLayoutGuide type="bottom" id="aNC-vL-EQI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="32A-UA-UUh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="mxV-EE-O8u">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IAW-kV-hxG">
+                                <rect key="frame" x="80" y="3" width="104" height="15"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="lN0-4f-CH6">
+                                        <rect key="frame" x="14" y="1" width="9" height="12"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFv-qn-kgz">
+                                        <rect key="frame" x="29" y="1" width="42" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="42" id="DuD-u5-7cg"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="lN0-4f-CH6" firstAttribute="leading" secondItem="IAW-kV-hxG" secondAttribute="leading" constant="14" id="ay1-61-e8W"/>
+                                    <constraint firstAttribute="centerY" secondItem="AFv-qn-kgz" secondAttribute="centerY" id="dxH-hb-bB9"/>
+                                    <constraint firstAttribute="centerY" secondItem="lN0-4f-CH6" secondAttribute="centerY" id="f9L-TP-TsO"/>
+                                    <constraint firstItem="AFv-qn-kgz" firstAttribute="leading" secondItem="lN0-4f-CH6" secondAttribute="trailing" constant="6" id="fRH-Ek-cED"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="h9V-mw-vY4"/>
+                    <connections>
+                        <outlet property="stepIcon" destination="lN0-4f-CH6" id="wdQ-uB-wnm"/>
+                        <outlet property="stepIconLeftConstrain" destination="ay1-61-e8W" id="Ehm-Up-3Np"/>
+                        <outlet property="stepLabel" destination="AFv-qn-kgz" id="n1Y-rD-kse"/>
+                        <outlet property="stepLabelWidthConstrain" destination="DuD-u5-7cg" id="xa7-gA-sI6"/>
+                        <outlet property="stepView" destination="IAW-kV-hxG" id="akF-nO-Lz9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rx2-cK-7O1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-586" y="1619"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="ZBR-1c-duQ">
             <objects>
@@ -2190,30 +2249,53 @@
         <!--Addresses Controller-->
         <scene sceneID="ClD-cO-5Sq">
             <objects>
-                <viewController storyboardIdentifier="addressesViewController" id="fQL-zh-vpR" userLabel="Addresses Controller" customClass="JAAddressesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="addressesViewController" automaticallyAdjustsScrollViewInsets="NO" id="fQL-zh-vpR" userLabel="Addresses Controller" customClass="JAAddressesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ERF-In-Sq0"/>
                         <viewControllerLayoutGuide type="bottom" id="Xiw-9P-8o0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vvC-E1-CpH">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pen-1z-Swr">
-                                <rect key="frame" x="137" y="269" width="46" height="30"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="lYq-XR-Aoj">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="far-Sa-Edc">
+                                <rect key="frame" x="80" y="3" width="104" height="15"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="wmS-Dw-SzE">
+                                        <rect key="frame" x="14" y="1" width="9" height="12"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISk-Oo-DKH">
+                                        <rect key="frame" x="29" y="1" width="42" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="42" id="lV8-zD-HlM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="ISk-Oo-DKH" secondAttribute="centerY" id="5Ge-AO-HIt"/>
+                                    <constraint firstItem="ISk-Oo-DKH" firstAttribute="leading" secondItem="wmS-Dw-SzE" secondAttribute="trailing" constant="6" id="5UP-5y-yh8"/>
+                                    <constraint firstAttribute="centerY" secondItem="wmS-Dw-SzE" secondAttribute="centerY" id="tww-4K-A2S"/>
+                                    <constraint firstItem="wmS-Dw-SzE" firstAttribute="leading" secondItem="far-Sa-Edc" secondAttribute="leading" constant="14" id="vpc-Vs-Wim"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="Pen-1z-Swr" secondAttribute="centerX" id="Of0-Lw-GYd"/>
-                            <constraint firstAttribute="centerY" secondItem="Pen-1z-Swr" secondAttribute="centerY" id="pIs-KC-U1d"/>
-                        </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="x14-RD-kHn"/>
                     <connections>
-                        <outlet property="chooseBillingAndShippingAddressesAndGoToNextStep" destination="Pen-1z-Swr" id="5bE-cB-k0t"/>
+                        <outlet property="stepIcon" destination="wmS-Dw-SzE" id="4eT-8v-pPL"/>
+                        <outlet property="stepIconLeftConstrain" destination="vpc-Vs-Wim" id="Bs7-hT-aYY"/>
+                        <outlet property="stepLabel" destination="ISk-Oo-DKH" id="NaN-Ju-avi"/>
+                        <outlet property="stepLabelWidthConstrain" destination="lV8-zD-HlM" id="6OM-yk-qNm"/>
+                        <outlet property="stepView" destination="far-Sa-Edc" id="iMr-xv-IRu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gjX-yg-cRS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2547,6 +2629,8 @@
         <image name="gridIcon" width="22" height="22"/>
         <image name="headerCheckoutStep1" width="320" height="21"/>
         <image name="headerCheckoutStep1Icon" width="9" height="12"/>
+        <image name="headerCheckoutStep2" width="320" height="21"/>
+        <image name="headerCheckoutStep2Icon" width="8" height="13"/>
         <image name="ico_cart" width="25" height="20"/>
         <image name="img_emptyCart" width="98" height="98"/>
         <image name="img_emptyrecentsearches" width="98" height="98"/>
