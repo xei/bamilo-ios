@@ -68,7 +68,7 @@ UICollectionViewDelegate>
         }
         else
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddNewAddressScreenNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
                                                                 object:nil
                                                               userInfo:nil];
         }
