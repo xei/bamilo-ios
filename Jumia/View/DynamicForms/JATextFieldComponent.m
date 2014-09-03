@@ -8,6 +8,13 @@
 
 #import "JATextFieldComponent.h"
 
+@interface JATextFieldComponent ()
+
+@property (strong, nonatomic) RIField *field;
+@property (strong, nonatomic) NSString *storedValue;
+
+@end
+
 @implementation JATextFieldComponent
 
 + (JATextFieldComponent *)getNewJATextFieldComponent
@@ -27,6 +34,7 @@
 
 - (void)setupWithField:(RIField*)field
 {
+    self.storedValue = @"";
     self.hasError = NO;
     self.field = field;
     [self.textField setPlaceholder:field.label];
@@ -42,24 +50,34 @@
     
     if(VALID_NOTEMPTY(field.value, NSString))
     {
+        self.storedValue = field.value;
         [self.textField setText:field.value];
     }
 }
 
+-(BOOL)isComponentWithKey:(NSString*)key
+{
+    return ([key isEqualToString:self.field.key]);
+}
+
 -(void)setValue:(NSString*)value
 {
-    [[self field] setValue:value];
+    self.storedValue = value;
     [self.textField setText:value];
 }
 
--(NSString*)getValue
+-(NSDictionary*)getValues
 {
-    NSString *value = nil;
-    if(VALID_NOTEMPTY([self field], RIField) && VALID_NOTEMPTY([[self field] value], NSString))
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    if([self.field.required boolValue] || VALID_NOTEMPTY(self.storedValue, NSString))
     {
-        value = [[self field] value];
+        if(!self.hasError)
+        {
+            self.storedValue = self.textField.text;
+        }
+        [parameters setValue:self.storedValue forKey:self.field.name];
     }
-    return value;
+    return parameters;
 }
 
 -(void)setError:(NSString*)error
@@ -93,7 +111,7 @@
         {
             [self.textField setSecureTextEntry:YES];
         }
-
+        
         [self.textField setText:@""];
     }
 }
@@ -143,6 +161,17 @@
                                                         options:0
                                                           range:NSMakeRange(0, [aString length])];
     return numberOfMatches > 0;
+}
+
+-(void)resetValue
+{
+    [self cleanError];
+    
+    if(VALID_NOTEMPTY(self.field.value, NSString))
+    {
+        self.storedValue = self.field.value;
+        [self.textField setText:self.field.value];
+    }
 }
 
 @end

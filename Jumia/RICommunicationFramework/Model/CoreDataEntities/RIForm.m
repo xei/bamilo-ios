@@ -11,6 +11,7 @@
 #import "RIFieldDataSetComponent.h"
 #import "RICustomer.h"
 #import "RIFieldOption.h"
+#import "RICheckout.h"
 
 @implementation RIForm
 
@@ -159,10 +160,16 @@
                                                                       RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"] plainPassword:password loginMethod:@"signup"];
                                                                       successBlock(customer);
                                                                   }
+                                                                  else if([@"address-form" isEqualToString:form.uid])
+                                                                  {
+                                                                      responseProcessed = YES;
+                                                                      RICheckout *checkout = [RICheckout parseCheckout:metadata country:nil];
+                                                                      successBlock(checkout);
+                                                                  }
                                                                   else
                                                                   {
                                                                       responseProcessed = YES;
-                                                                      successBlock(nil);
+                                                                      successBlock(metadata);
                                                                   }
                                                               }
                                                               else

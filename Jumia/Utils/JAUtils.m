@@ -20,15 +20,21 @@
     }
     else if([@"billing" isEqualToString:nextStep])
     {
-        nextStepViewController = [storyboard instantiateViewControllerWithIdentifier:@"billingViewController"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                            object:nil
+                                                          userInfo:nil];
     }
     else if([@"shippingMethod" isEqualToString:nextStep])
     {
-        nextStepViewController = [storyboard instantiateViewControllerWithIdentifier:@"shippingViewController"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification
+                                                            object:nil
+                                                          userInfo:nil];
     }
     else if([@"paymentMethod" isEqualToString:nextStep])
     {
-        nextStepViewController = [storyboard instantiateViewControllerWithIdentifier:@"paymentViewController"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
+                                                            object:nil
+                                                          userInfo:nil];
     }
     else if([@"finish" isEqualToString:nextStep])
     {

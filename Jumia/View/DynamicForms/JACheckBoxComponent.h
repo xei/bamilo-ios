@@ -11,7 +11,6 @@
 
 @interface JACheckBoxComponent : UIView
 
-@property (strong, nonatomic) RIField *field;
 @property (weak, nonatomic) IBOutlet UILabel *labelText;
 @property (weak, nonatomic) IBOutlet UISwitch *switchComponent;
 
@@ -20,5 +19,17 @@
 -(void)setup;
 
 -(void)setupWithField:(RIField*)field;
+
+-(BOOL)isComponentWithKey:(NSString*)key;
+
+-(void)resetValue;
+
+-(NSDictionary*)getValues;
+
+-(void)setValue:(NSString*)value;
+
+-(BOOL)isCheckBoxOn;
+
+-(NSArray*)getOptions;
 
 @end

@@ -8,10 +8,12 @@
 
 #import "JAAddNewAddressViewController.h"
 #import "JADynamicForm.h"
+#import "JAUtils.h"
 #import "FXBlurView.h"
 #import "RIForm.h"
 #import "RIRegion.h"
 #import "RICity.h"
+#import "RICheckout.h"
 
 @interface JAAddNewAddressViewController ()
 <JADynamicFormDelegate,
@@ -46,7 +48,8 @@ UIPickerViewDelegate>
 @property (strong, nonatomic) RIRegion *billingSelectedRegion;
 
 // Picker view
-@property (strong, nonatomic) JARadioComponent *radioComponent;
+@property (strong, nonatomic) JARadioComponent *shippingRadioComponent;
+@property (strong, nonatomic) JARadioComponent *billingRadioComponent;
 @property (strong, nonatomic) NSArray *radioComponentDataset;
 @property (strong, nonatomic) UIView *pickerBackgroundView;
 @property (strong, nonatomic) UIToolbar *pickerToolbar;
@@ -56,13 +59,35 @@ UIPickerViewDelegate>
 // Create Address Button
 @property (strong, nonatomic) UIButton *createAddressButton;
 
+@property (assign, nonatomic) NSInteger numberOfRequests;
+@property (assign, nonatomic) BOOL hasErrors;
+@property (strong, nonatomic) NSString *nextStep;
+@property (strong, nonatomic) RICheckout *checkout;
+
 @end
 
 @implementation JAAddNewAddressViewController
 
+@synthesize numberOfRequests=_numberOfRequests;
+-(void)setNumberOfRequests:(NSInteger)numberOfRequests
+{
+    _numberOfRequests=numberOfRequests;
+    if (0 == numberOfRequests) {
+        [self finishedRequests];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.hasErrors = NO;
+    
+    if(!self.isBillingAddress || !self.isShippingAddress)
+    {
+        self.navBarLayout.backButtonTitle = @"Checkout";
+        self.navBarLayout.showLogo = NO;
+    }
     
     [self setupViews];
     
@@ -91,7 +116,6 @@ UIPickerViewDelegate>
      }
        failureBlock:^(NSArray *errorMessage)
      {
-         
          [self finishedFormLoading];
          
          [[[UIAlertView alloc] initWithTitle:@"Jumia"
@@ -99,7 +123,6 @@ UIPickerViewDelegate>
                                     delegate:nil
                            cancelButtonTitle:nil
                            otherButtonTitles:@"OK", nil] show];
-         
      }];
 }
 
@@ -132,9 +155,8 @@ UIPickerViewDelegate>
     
     [self setupShippingAddressView];
     [self setupBillingAddressView];
-
-    [self.view addSubview:self.contentScrollView];
     
+    [self.view addSubview:self.contentScrollView];
     
     self.createAddressButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *createAddressButtonImageNormal = [UIImage imageNamed:@"orangeBig_normal"];
@@ -150,7 +172,7 @@ UIPickerViewDelegate>
     
     FXBlurView *bottomView = [[FXBlurView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - createAddressButtonImageNormal.size.height - 16.0f, self.view.frame.size.width, createAddressButtonImageNormal.size.height + 16.0f)];
     [bottomView setTintColor:[UIColor clearColor]];
-
+    
     [bottomView setBlurEnabled:YES];
     [bottomView setBlurRadius:3.5f];
     [bottomView setDynamic:YES];
@@ -187,30 +209,30 @@ UIPickerViewDelegate>
 {
     self.billingAddressViewCurrentY = 0.0f;
     
-    self.billingContentView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.billingContentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
     [self.billingContentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.billingContentView.layer.cornerRadius = 5.0f;
     [self.billingContentView setHidden:YES];
     
-    self.billingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, self.shippingAddressViewCurrentY, self.shippingContentView.frame.size.width - 12.0f, 25.0f)];
+    self.billingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, self.billingAddressViewCurrentY, self.billingContentView.frame.size.width - 12.0f, 25.0f)];
     [self.billingHeaderLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.billingHeaderLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.billingHeaderLabel setText:@"Add New Address"];
+    [self.billingHeaderLabel setText:@"Billing Address"];
     [self.billingHeaderLabel setBackgroundColor:[UIColor clearColor]];
     [self.billingContentView addSubview:self.billingHeaderLabel];
     self.billingAddressViewCurrentY = CGRectGetMaxY(self.billingHeaderLabel.frame);
     
-    self.billingHeaderSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.shippingAddressViewCurrentY, self.shippingContentView.frame.size.width, 1.0f)];
+    self.billingHeaderSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.billingAddressViewCurrentY, self.billingContentView.frame.size.width, 1.0f)];
     [self.billingHeaderSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.billingContentView addSubview:self.billingHeaderSeparator];
     self.billingAddressViewCurrentY = CGRectGetMaxY(self.billingHeaderSeparator.frame) + 6.0f;
-
+    
     [self.contentScrollView addSubview:self.billingContentView];
 }
 
 -(void)finishedFormLoading
 {
-    if(self.isBillingAddress && self.isDeliveryAddress)
+    if(self.isBillingAddress && self.isShippingAddress)
     {
         JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
         [check setup];
@@ -226,7 +248,7 @@ UIPickerViewDelegate>
         [self.shippingContentView addSubview:check];
     }
     
-    if(!self.isBillingAddress || !self.isDeliveryAddress)
+    if(!self.isBillingAddress || !self.isShippingAddress)
     {
         self.shippingAddressViewCurrentY += 12.0f;
     }
@@ -241,6 +263,8 @@ UIPickerViewDelegate>
 
 -(void)showBillingAddressForm
 {
+    [self.shippingHeaderLabel setText:@"Shipping Address"];
+    
     [self.billingContentView setHidden:NO];
     [self.billingContentView setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.shippingContentView.frame) + 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.billingAddressViewCurrentY + 12.0f)];
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + 6.0f + self.billingContentView.frame.size.height + self.createAddressButton.frame.size.height + 6.0f + 10.0f)];
@@ -248,6 +272,9 @@ UIPickerViewDelegate>
 
 -(void)hideBillingAddressForm
 {
+    [self.shippingHeaderLabel setText:@"Add New Address"];
+    [self.billingDynamicForm resetValues];
+    
     [self.billingContentView setHidden:YES];
     [self.shippingContentView setFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.shippingAddressViewCurrentY)];
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.createAddressButton.frame.size.height + 6.0f + 10.0f)];
@@ -268,20 +295,37 @@ UIPickerViewDelegate>
 
 -(void)radioOptionChanged:(id)sender
 {
-    if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent))
+    if(VALID_NOTEMPTY(self.shippingRadioComponent, JARadioComponent))
     {
         NSInteger selectedRow = [self.pickerView selectedRowInComponent:0];
-        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && selectedRow < [self.radioComponentDataset count])
+        if(VALID_NOTEMPTY(self.shippingRadioComponent, JARadioComponent) && VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && selectedRow < [self.radioComponentDataset count])
         {
             id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
             if(VALID_NOTEMPTY(selectedObject, RIRegion))
             {
                 self.shippingSelectedRegion = selectedObject;
-                [self.radioComponent setRegionValue:selectedObject];
+                [self.shippingRadioComponent setRegionValue:selectedObject];
             }
             else if(VALID_NOTEMPTY(selectedObject, RICity))
             {
-                [self.radioComponent setCityValue:selectedObject];
+                [self.shippingRadioComponent setCityValue:selectedObject];
+            }
+        }
+    }
+    else if(VALID_NOTEMPTY(self.billingRadioComponent, JARadioComponent))
+    {
+        NSInteger selectedRow = [self.pickerView selectedRowInComponent:0];
+        if(VALID_NOTEMPTY(self.billingRadioComponent, JARadioComponent) && VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && selectedRow < [self.radioComponentDataset count])
+        {
+            id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
+            if(VALID_NOTEMPTY(selectedObject, RIRegion))
+            {
+                self.billingSelectedRegion = selectedObject;
+                [self.billingRadioComponent setRegionValue:selectedObject];
+            }
+            else if(VALID_NOTEMPTY(selectedObject, RICity))
+            {
+                [self.billingRadioComponent setCityValue:selectedObject];
             }
         }
     }
@@ -309,24 +353,66 @@ UIPickerViewDelegate>
     self.pickerView = nil;
     self.datePickerView = nil;
     self.pickerBackgroundView = nil;
+    self.shippingRadioComponent = nil;
+    self.billingRadioComponent = nil;
 }
 
 -(void)createAddressButtonPressed
 {
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.shippingDynamicForm getValues]];
+    [self showLoading];
     
-    [parameters setValue:@"1" forKey:@"is_default_shipping"];
-    [parameters setValue:@"1" forKey:@"is_default_billing"];
+    self.numberOfRequests = 1;
+    
+    NSMutableDictionary *shippingParameters = [[NSMutableDictionary alloc] initWithDictionary:[self.shippingDynamicForm getValues]];
+    
+    [shippingParameters setValue:@"1" forKey:@"is_default_shipping"];
+    [shippingParameters setValue:@"1" forKey:@"is_default_billing"];
+    
+    if(![self.billingContentView isHidden])
+    {
+        self.numberOfRequests = 2;
+        
+        [shippingParameters setValue:@"0" forKey:@"is_default_billing"];
+        
+        NSMutableDictionary *billingParameters = [[NSMutableDictionary alloc] initWithDictionary:[self.billingDynamicForm getValues]];
+        
+        [billingParameters setValue:@"0" forKey:@"is_default_shipping"];
+        [billingParameters setValue:@"1" forKey:@"is_default_billing"];
+        
+        [RIForm sendForm:[self.billingDynamicForm form]
+              parameters:billingParameters
+            successBlock:^(id object)
+         {
+             self.checkout = object;
+             [self.billingDynamicForm resetValues];
+             self.numberOfRequests--;
+         } andFailureBlock:^(id errorObject)
+         {
+             self.hasErrors = YES;
+             self.numberOfRequests--;
+             
+             if(VALID_NOTEMPTY(errorObject, NSDictionary))
+             {
+                 [self.billingDynamicForm validateFields:errorObject];
+             }
+             else if(VALID_NOTEMPTY(errorObject, NSArray))
+             {
+                 [self.billingDynamicForm checkErrors];
+             }
+         }];
+    }
     
     [RIForm sendForm:[self.shippingDynamicForm form]
-          parameters:parameters
+          parameters:shippingParameters
         successBlock:^(id object)
      {
+         self.checkout = object;
          [self.shippingDynamicForm resetValues];
-         [self hideLoading];
+         self.numberOfRequests--;
      } andFailureBlock:^(id errorObject)
      {
-         [self hideLoading];
+         self.hasErrors = YES;
+         self.numberOfRequests--;
          
          if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
@@ -335,23 +421,27 @@ UIPickerViewDelegate>
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.shippingDynamicForm checkErrors];
-             
-             [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                         message:[errorObject componentsJoinedByString:@","]
-                                        delegate:nil
-                               cancelButtonTitle:nil
-                               otherButtonTitles:@"OK", nil] show];
-         }
-         else
-         {
-             [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                         message:@"Generic error"
-                                        delegate:nil
-                               cancelButtonTitle:nil
-                               otherButtonTitles:@"OK", nil] show];
          }
      }];
+}
+
+-(void)finishedRequests
+{
+    [self hideLoading];
     
+    if(self.hasErrors)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                    message:@"Invalid Fields"
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"OK", nil] show];
+        self.hasErrors = NO;
+    }
+    else
+    {
+        [JAUtils getCheckoutNextStepViewController:self.checkout.nextStep inStoryboard:self.storyboard];
+    }
 }
 
 #pragma mark JADynamicFormDelegate
@@ -359,6 +449,12 @@ UIPickerViewDelegate>
 - (void)changedFocus:(UIView *)view
 {
     CGPoint scrollPoint = CGPointMake(0.0, view.frame.origin.y);
+    
+    if(self.billingContentView == [view superview])
+    {
+        scrollPoint = CGPointMake(0.0, 6.0f + CGRectGetMaxY(self.shippingContentView.frame) + 6.0f + view.frame.origin.y);
+    }
+    
     [self.contentScrollView setContentOffset:scrollPoint
                                     animated:YES];
 }
@@ -375,14 +471,34 @@ UIPickerViewDelegate>
 {
     [self removePickerView];
     
-    self.radioComponent = radioComponent;
-    
-    if([@"fk_customer_address_region" isEqualToString:radioComponent.field.key] && [@"list" isEqualToString:radioComponent.field.type])
+    if(self.shippingContentView == [radioComponent superview])
     {
-        if(VALID_NOTEMPTY([[radioComponent field] apiCall], NSString))
+        self.shippingRadioComponent = radioComponent;
+    }
+    else if(self.billingContentView == [radioComponent superview])
+    {
+        self.billingRadioComponent = radioComponent;
+    }
+    
+    if([radioComponent isComponentWithKey:@"fk_customer_address_region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+    {
+        [self showLoading];
+        [RIRegion getRegionsForUrl:[radioComponent getApiCallUrl] successBlock:^(NSArray *regions)
+         {
+             self.radioComponentDataset = [regions copy];
+             [self finishedLoadingRegions];
+         } andFailureBlock:^(NSArray *error)
+         {
+             [self finishedLoadingRegions];
+         }];
+    }
+    else if([radioComponent isComponentWithKey:@"fk_customer_address_city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+    {
+        NSString *url = [radioComponent getApiCallUrl];
+        if(self.shippingContentView == [radioComponent superview] && VALID_NOTEMPTY(self.shippingSelectedRegion, RIRegion))
         {
             [self showLoading];
-            [RIRegion getRegionsForUrl:[[radioComponent field] apiCall] successBlock:^(NSArray *regions)
+            [RICity getCitiesForUrl:url region:[self.shippingSelectedRegion uid] successBlock:^(NSArray *regions)
              {
                  self.radioComponentDataset = [regions copy];
                  [self finishedLoadingRegions];
@@ -391,13 +507,10 @@ UIPickerViewDelegate>
                  [self finishedLoadingRegions];
              }];
         }
-    }
-    else if([@"fk_customer_address_city" isEqualToString:radioComponent.field.key] && [@"list" isEqualToString:radioComponent.field.type] && VALID_NOTEMPTY(self.shippingSelectedRegion, RIRegion))
-    {
-        if(VALID_NOTEMPTY([[radioComponent field] apiCall], NSString))
+        else if(self.billingContentView == [radioComponent superview] && VALID_NOTEMPTY(self.billingSelectedRegion, RIRegion))
         {
             [self showLoading];
-            [RICity getCitiesForUrl:[[radioComponent field] apiCall] region:[self.shippingSelectedRegion uid] successBlock:^(NSArray *regions)
+            [RICity getCitiesForUrl:url region:[self.billingSelectedRegion uid] successBlock:^(NSArray *regions)
              {
                  self.radioComponentDataset = [regions copy];
                  [self finishedLoadingRegions];
@@ -427,11 +540,20 @@ UIPickerViewDelegate>
         [self.pickerView setDataSource:self];
         [self.pickerView setDelegate:self];
         
-        NSString *selectedValue = [self.radioComponent getValue];
+        NSString *selectedValue = @"";
+        if(VALID_NOTEMPTY(self.shippingRadioComponent, JARadioComponent))
+        {
+            selectedValue = [self.shippingRadioComponent getSelectedValue];
+        }
+        else if(VALID_NOTEMPTY(self.billingRadioComponent, JARadioComponent))
+        {
+            selectedValue = [self.billingRadioComponent getSelectedValue];
+        }
+        
         if(VALID_NOTEMPTY(selectedValue, NSString))
         {
             NSInteger selectedRow = 0;
-            if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY(self.radioComponentDataset, NSArray))
+            if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray))
             {
                 for (int i = 0; i < [self.radioComponentDataset count]; i++)
                 {
@@ -501,7 +623,7 @@ UIPickerViewDelegate>
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     NSInteger numberOfRowsInComponent = 0;
-    if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY(self.radioComponentDataset , NSArray))
+    if(VALID_NOTEMPTY(self.radioComponentDataset , NSArray))
     {
         numberOfRowsInComponent = [self.radioComponentDataset count];
     }
@@ -513,7 +635,7 @@ UIPickerViewDelegate>
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     NSString *titleForRow = @"";
-    if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && row < [self.radioComponentDataset count])
+    if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && row < [self.radioComponentDataset count])
     {
         id currentObject = [self.radioComponentDataset objectAtIndex:row];
         if(VALID_NOTEMPTY(currentObject, RIRegion))

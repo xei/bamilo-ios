@@ -10,7 +10,6 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "RICustomer.h"
-#import "RIAddress.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 @interface JALoginViewController ()
@@ -473,33 +472,23 @@ FBLoginViewDelegate
     [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object) {
         [self.loginDynamicForm resetValues];
         
-#warning user is suppose to have a dictionary with addresses
-        [RIAddress getCustomerAddressListWithSuccessBlock:^(id addressList)
-         {
-             [self hideLoading];
-             if(VALID_NOTEMPTY(addressList, NSDictionary))
-             {
-                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                     object:nil
-                                                                   userInfo:nil];
-             }
-             else
-             {
-                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
-                                                                     object:nil
-                                                                   userInfo:nil];
-             }
-             
-         } andFailureBlock:^(NSArray *errorMessages)
-         {
-             [self hideLoading];
-             [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                         message:[errorMessages componentsJoinedByString:@","]
-                                        delegate:nil
-                               cancelButtonTitle:nil
-                               otherButtonTitles:@"OK", nil] show];
-             
-         }];
+        [self hideLoading];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                            object:nil];
+        
+        if([RICustomer checkIfUserHasAddresses])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                                object:nil
+                                                              userInfo:nil];
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
+                                                                object:nil
+                                                              userInfo:nil];
+        }
         
     } andFailureBlock:^(id errorObject) {
         [self hideLoading];

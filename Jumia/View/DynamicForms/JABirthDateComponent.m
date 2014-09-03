@@ -8,6 +8,17 @@
 
 #import "JABirthDateComponent.h"
 
+@interface JABirthDateComponent ()
+
+@property (strong, nonatomic) RIField *dayField;
+@property (strong, nonatomic) RIField *monthField;
+@property (strong, nonatomic) RIField *yearField;
+@property (assign, nonatomic) NSInteger storedDay;
+@property (assign, nonatomic) NSInteger storedMonth;
+@property (assign, nonatomic) NSInteger storedYear;
+
+@end
+
 @implementation JABirthDateComponent
 
 +(JABirthDateComponent *)getNewJABirthDateComponent
@@ -28,9 +39,14 @@
 -(void)setupWithLabel:(NSString*)label day:(RIField*)day month:(RIField*)month year:(RIField*)year
 {
     self.hasError = NO;
+    
     self.dayField = day;
     self.monthField = month;
     self.yearField = year;
+    
+    self.storedDay = -1;
+    self.storedMonth = -1;
+    self.storedYear = -1;
     
     [self.textField setPlaceholder:label];
     
@@ -43,10 +59,15 @@
         [self.requiredSymbol setTextColor:UIColorFromRGB(0xfaa41a)];
     }
     
-    if(VALID_NOTEMPTY([[self dayField] value], NSString) && VALID_NOTEMPTY([[self monthField] value], NSString) && VALID_NOTEMPTY([[self yearField] value], NSString))
+    if(-1 != self.storedDay && -1 != self.storedMonth && -1 != self.storedYear)
     {
-        [self.textField setText:[NSString stringWithFormat:@"%@-%@-%@", [[self dayField] value], [[self monthField] value], [[self yearField] value]]];
+        [self.textField setText:[NSString stringWithFormat:@"%d-%d-%d", self.storedDay, self.storedMonth, self.storedYear]];
     }
+}
+
+-(BOOL)isComponentWithKey:(NSString*)key
+{
+    return ([key isEqualToString:self.dayField.key] || [key isEqualToString:self.monthField.key] || [key isEqualToString:self.yearField.key]);
 }
 
 -(void)setValue:(NSDate*)date
@@ -54,33 +75,37 @@
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *components = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
     
-    NSInteger day = [components day];
-    [[self dayField] setValue:[NSString stringWithFormat:@"%d", day]];
+    self.storedDay = [components day];
+    self.storedMonth = [components month];
+    self.storedYear = [components year];
     
-    NSInteger month = [components month];
-    [[self monthField] setValue:[NSString stringWithFormat:@"%d", month]];
-    
-    NSInteger year = [components year];
-    [[self yearField] setValue:[NSString stringWithFormat:@"%d", year]];
-    
-    [self.textField setText:[NSString stringWithFormat:@"%d-%d-%d", day, month, year]];
+    [self.textField setText:[NSString stringWithFormat:@"%d-%d-%d", self.storedDay, self.storedMonth, self.storedYear]];
 }
 
--(NSDate*)getValue
+-(NSDate*)getDate
 {
     NSDate *value = nil;
-    if(VALID_NOTEMPTY([self dayField], RIField) && VALID_NOTEMPTY([[self dayField] value], NSString)
-       && VALID_NOTEMPTY([self monthField], RIField) && VALID_NOTEMPTY([[self monthField] value], NSString)
-       && VALID_NOTEMPTY([self yearField], RIField) && VALID_NOTEMPTY([[self yearField] value], NSString))
+    if(-1 != self.storedDay && -1 != self.storedMonth && -1 != self.storedYear)
     {
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         NSDateComponents *components = [[NSDateComponents alloc] init];
-        [components setDay:[[[self dayField] value] intValue]];
-        [components setMonth:[[[self monthField] value] intValue]];
-        [components setYear:[[[self yearField] value] intValue]];
+        [components setDay:self.storedDay];
+        [components setMonth:self.storedMonth];
+        [components setYear:self.storedYear];
         value = [calendar dateFromComponents:components];
     }
     return value;
+}
+
+-(NSMutableDictionary*)getValues
+{
+    NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
+    
+    [values setObject:[NSString stringWithFormat:@"%d", self.storedDay] forKey:self.dayField.name];
+    [values setObject:[NSString stringWithFormat:@"%d", self.storedMonth] forKey:self.monthField.name];
+    [values setObject:[NSString stringWithFormat:@"%d", self.storedYear] forKey:self.yearField.name];
+    
+    return values;
 }
 
 -(void)setError:(NSString*)error
@@ -121,6 +146,17 @@
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     
     return YES;
+}
+
+-(void)resetValue
+{
+    [self cleanError];
+    
+    self.storedDay = -1;
+    self.storedMonth = -1;
+    self.storedYear = -1;
+    
+    [self.textField setText:@""];
 }
 
 @end
