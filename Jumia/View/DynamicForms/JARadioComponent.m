@@ -8,6 +8,8 @@
 
 #import "JARadioComponent.h"
 #import "RIFieldDataSetComponent.h"
+#import "RIRegion.h"
+#import "RICity.h"
 
 @implementation JARadioComponent
 
@@ -41,22 +43,41 @@
         [self.requiredSymbol setTextColor:UIColorFromRGB(0xfaa41a)];
     }
     
-    if(VALID_NOTEMPTY(field.value, NSString))
+    if(VALID_NOTEMPTY(field.value, NSString) && ![@"list" isEqualToString:field.type])
     {
         [self.textField setText:field.value];
     }
     
-    NSMutableArray *contentArray = [[NSMutableArray alloc] init];
-    for (RIFieldDataSetComponent *component in field.dataSet) {
-        [contentArray addObject:component.value];
+    if(VALID_NOTEMPTY(field.dataSet, NSOrderedSet))
+    {
+        NSMutableArray *contentArray = [[NSMutableArray alloc] init];
+        for (RIFieldDataSetComponent *component in field.dataSet) {
+            [contentArray addObject:component.value];
+        }
+        self.dataset = [contentArray copy];
     }
-    self.dataset = [contentArray copy];
+    else if(VALID_NOTEMPTY(field.apiCall, NSString))
+    {
+        self.apiCall = field.apiCall;
+    }
 }
 
 -(void)setValue:(NSString*)value
 {
     [[self field] setValue:value];
     [self.textField setText:value];
+}
+
+-(void)setRegionValue:(RIRegion*)value
+{
+    [[self field] setValue:[value uid]];
+    [self.textField setText:[value name]];
+}
+
+-(void)setCityValue:(RICity*)value
+{
+    [[self field] setValue:[value uid]];
+    [self.textField setText:[value value]];
 }
 
 -(NSString*)getValue

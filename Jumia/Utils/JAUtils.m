@@ -7,9 +7,6 @@
 //
 
 #import "JAUtils.h"
-#import "JAAddressesViewController.h"
-#import "JAShippingViewController.h"
-#import "JAPaymentViewController.h"
 
 @implementation JAUtils
 

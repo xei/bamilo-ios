@@ -64,6 +64,7 @@
         <relationship name="addresses" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIAddress" inverseName="customer" inverseEntity="RIAddress" syncable="YES"/>
     </entity>
     <entity name="RIField" representedClassName="RIField" syncable="YES">
+        <attribute name="apiCall" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="max" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -252,7 +253,7 @@
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="133"/>
         <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="195"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="210"/>
-        <element name="RIField" positionX="-299" positionY="681" width="128" height="253"/>
+        <element name="RIField" positionX="-299" positionY="681" width="128" height="268"/>
         <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="73"/>
         <element name="RIFieldOption" positionX="-137" positionY="963" width="128" height="118"/>
         <element name="RIForm" positionX="-504" positionY="362" width="128" height="118"/>

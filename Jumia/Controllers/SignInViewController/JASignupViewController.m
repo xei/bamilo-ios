@@ -23,7 +23,6 @@ UIPickerViewDelegate>
 @property (strong, nonatomic) UIView *headerSeparator;
 @property (strong, nonatomic) UIButton *loginButton;
 @property (strong, nonatomic) UIButton *registerButton;
-@property (strong, nonatomic) NSMutableArray *fieldsArray;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
 @property (assign, nonatomic) CGRect originalFrame;
 @property (assign, nonatomic) CGFloat registerViewCurrentY;
@@ -74,7 +73,6 @@ UIPickerViewDelegate>
     [self.view addSubview:self.contentScrollView];
     
     self.originalFrame = self.contentScrollView.frame;
-    self.fieldsArray = [NSMutableArray new];
     
     [self showLoading];
     
@@ -84,7 +82,6 @@ UIPickerViewDelegate>
            
            self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.registerViewCurrentY];
            [self.dynamicForm setDelegate:self];
-           self.fieldsArray = [self.dynamicForm.formViews copy];
            
            for(UIView *view in self.dynamicForm.formViews)
            {
@@ -150,6 +147,8 @@ UIPickerViewDelegate>
     [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object) {
         [self.dynamicForm resetValues];
         
+        [self hideLoading];
+
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                             object:@{@"index": @(0),
                                                                      @"name": @"Home"}];
@@ -157,14 +156,18 @@ UIPickerViewDelegate>
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
         
-        [self hideLoading];
-        
     } andFailureBlock:^(id errorObject) {
         [self hideLoading];
         
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.dynamicForm validateFields:errorObject];
+            
+            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                        message:@"Invalid fields"
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK", nil] show];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {

@@ -19,7 +19,6 @@ FBLoginViewDelegate
 >
 
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
-@property (strong, nonatomic) NSMutableArray *fieldsArray;
 @property (weak, nonatomic) IBOutlet UIView *loginView;
 @property (weak, nonatomic) IBOutlet UILabel *loginLabel;
 @property (weak, nonatomic) IBOutlet UIView *loginSeparator;
@@ -53,8 +52,6 @@ FBLoginViewDelegate
     [self.loginLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     
     [self.loginSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
-    
-    self.fieldsArray = [NSMutableArray new];
     
     self.facebookLoginView = [[FBLoginView alloc] init];
     self.facebookLoginView.delegate = self;
@@ -94,7 +91,6 @@ FBLoginViewDelegate
            
            self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.loginViewCurrentY];
            [self.dynamicForm setDelegate:self];
-           self.fieldsArray = [self.dynamicForm.formViews copy];
            
            for(UIView *view in self.dynamicForm.formViews)
            {
@@ -193,14 +189,14 @@ FBLoginViewDelegate
     [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object) {
         [self.dynamicForm resetValues];
         
+        [self hideLoading];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                             object:@{@"index": @(0),
                                                                      @"name": @"Home"}];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
-        [self hideLoading];
-        
     } andFailureBlock:^(id errorObject) {
         
         [self hideLoading];
@@ -208,6 +204,12 @@ FBLoginViewDelegate
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.dynamicForm validateFields:errorObject];
+            
+            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                        message:@"Invalid fields"
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK", nil] show];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
@@ -252,8 +254,10 @@ FBLoginViewDelegate
         
         [RICustomer loginCustomerByFacebookWithParameters:parameters
                                              successBlock:^(id customer) {
-                                                 [self hideLoading];
+                                                 [self.dynamicForm resetValues];
                                                  
+                                                 [self hideLoading];
+
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                                                                      object:@{@"index": @(0),
                                                                                                               @"name": @"Home"}];

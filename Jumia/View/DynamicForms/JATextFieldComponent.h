@@ -1,5 +1,5 @@
 //
-//  JATextField.h
+//  JATextFieldComponent.h
 //  Jumia
 //
 //  Created by Pedro Lopes on 25/08/14.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RIField.h"
 
-@interface JATextField : UIView
+@interface JATextFieldComponent : UIView
 
 @property (assign, nonatomic) BOOL hasError;
 @property (strong, nonatomic) RIField *field;
@@ -18,7 +18,7 @@
 
 - (BOOL)isValid;
 
-+ (JATextField *)getNewJATextField;
++ (JATextFieldComponent *)getNewJATextFieldComponent;
 
 - (void)setupWithField:(RIField*)field;
 

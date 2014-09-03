@@ -24,6 +24,7 @@
 #import "JAAddressesViewController.h"
 #import "JASignInViewController.h"
 #import "JASignupViewController.h"
+#import "JAAddNewAddressViewController.h"
 #import "RIProduct.h"
 #import "RIApi.h"
 #import "JANavigationBarLayout.h"
@@ -133,6 +134,21 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutAddressesScreen)
                                                  name:kShowCheckoutAddressesScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutAddFirstAddressScreen)
+                                                 name:kShowCheckoutAddFirstAddressScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutAddBillingAddressScreen)
+                                                 name:kShowCheckoutAddBillingAddressScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutAddDeliveryAddressScreen)
+                                                 name:kShowCheckoutAddDeliveryAddressScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -415,6 +431,36 @@
 - (void)showCheckoutAddressesScreen
 {
     JAAddressesViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
+    
+    [self pushViewController:addressesVC animated:YES];
+}
+
+- (void)showCheckoutAddBillingAddressScreen
+{
+    JAAddNewAddressViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
+    
+    addressesVC.isBillingAddress = YES;
+    addressesVC.isDeliveryAddress = NO;
+    
+    [self pushViewController:addressesVC animated:YES];
+}
+
+- (void)showCheckoutAddDeliveryAddressScreen
+{
+    JAAddNewAddressViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
+    
+    addressesVC.isBillingAddress = NO;
+    addressesVC.isDeliveryAddress = YES;
+    
+    [self pushViewController:addressesVC animated:YES];
+}
+
+- (void)showCheckoutAddFirstAddressScreen
+{
+    JAAddNewAddressViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
+    
+    addressesVC.isBillingAddress = YES;
+    addressesVC.isDeliveryAddress = YES;
     
     [self pushViewController:addressesVC animated:YES];
 }

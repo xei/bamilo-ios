@@ -78,6 +78,10 @@
                         returnBlock();
                     }];
         }
+        else
+        {
+            returnBlock();
+        }
     }
     else
     {
