@@ -450,6 +450,11 @@
     {
         for (UIView *view in self.formViews)
         {
+            if([view respondsToSelector:@selector(cleanError)])
+            {
+                [view performSelector:@selector(cleanError) withObject:nil];
+            }
+            
             if ([view isKindOfClass:[JABirthDateComponent class]])
             {
                 JABirthDateComponent *birthdateComponent = (JABirthDateComponent*) view;
