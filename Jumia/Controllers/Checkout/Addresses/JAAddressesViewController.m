@@ -30,17 +30,20 @@ UICollectionViewDelegateFlowLayout>
 @property (weak, nonatomic) IBOutlet UILabel *stepLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepLabelWidthConstrain;
 
+// Addresses
 @property (strong, nonatomic) UIScrollView *contentScrollView;
-@property (strong, nonatomic) UICollectionView *firstAddressesCollectionView;
-@property (strong, nonatomic) UICollectionView *secondAddressesCollectionView;
-@property (strong, nonatomic) UIButton *nextStepButton;
-
 @property (assign, nonatomic) BOOL useSameAddressAsBillingAndShipping;
 @property (strong, nonatomic) NSDictionary *addresses;
-@property (strong, nonatomic) NSArray *firstCollectionViewAddresses;
-@property (strong, nonatomic) NSArray *secondCollectionViewAddresses;
-@property (strong, nonatomic) RIAddress *billingAddress;
 @property (strong, nonatomic) RIAddress *shippingAddress;
+@property (strong, nonatomic) RIAddress *billingAddress;
+
+@property (strong, nonatomic) UICollectionView *firstAddressesCollectionView;
+@property (strong, nonatomic) NSArray *firstCollectionViewAddresses;
+@property (strong, nonatomic) NSIndexPath *firstCollectionViewIndexSelected;
+
+@property (strong, nonatomic) UICollectionView *secondAddressesCollectionView;
+@property (strong, nonatomic) NSArray *secondCollectionViewAddresses;
+@property (strong, nonatomic) NSIndexPath *secondCollectionViewIndexSelected;
 
 // Bottom view
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
@@ -55,6 +58,9 @@ UICollectionViewDelegateFlowLayout>
     
     self.firstCollectionViewAddresses = [[NSArray alloc] init];
     self.secondCollectionViewAddresses = [[NSArray alloc] init];
+    
+    self.firstCollectionViewIndexSelected = nil;
+    self.secondCollectionViewIndexSelected = nil;
     
     self.useSameAddressAsBillingAndShipping = YES;
     
@@ -81,14 +87,20 @@ UICollectionViewDelegateFlowLayout>
             {
                 self.useSameAddressAsBillingAndShipping = YES;
             }
+            else
+            {
+                self.useSameAddressAsBillingAndShipping = NO;
+            }
             
             [self finishedLoadingAddresses];
         }
         else
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                 object:nil
-                                                              userInfo:nil];
+                                                              userInfo:userInfo];
         }
         
     } andFailureBlock:^(NSArray *errorMessages) {
@@ -186,9 +198,10 @@ UICollectionViewDelegateFlowLayout>
 
 -(void)finishedLoadingAddresses
 {
+    NSInteger billingAddressIndex = 0;
     if(self.useSameAddressAsBillingAndShipping)
     {
-        self.firstCollectionViewAddresses = [[NSArray alloc] initWithObjects:self.shippingAddress, nil];
+        self.firstCollectionViewAddresses = [NSArray arrayWithObject:self.shippingAddress];
         self.secondCollectionViewAddresses = [self.addresses objectForKey:@"other"];
     }
     else
@@ -202,6 +215,7 @@ UICollectionViewDelegateFlowLayout>
         
         if(VALID_NOTEMPTY(self.billingAddress, RIAddress) && ![self checkIfAddressIsAdded:self.billingAddress addresses:addresses])
         {
+            billingAddressIndex++;
             [addresses addObject:self.billingAddress];
         }
         
@@ -218,6 +232,13 @@ UICollectionViewDelegateFlowLayout>
         
         self.firstCollectionViewAddresses = [addresses copy];
         self.secondCollectionViewAddresses = [addresses copy];
+    }
+    
+    self.firstCollectionViewIndexSelected = [NSIndexPath indexPathForItem:0 inSection:0];
+    self.secondCollectionViewIndexSelected = nil;
+    if(!self.useSameAddressAsBillingAndShipping)
+    {
+        self.secondCollectionViewIndexSelected = [NSIndexPath indexPathForItem:billingAddressIndex inSection:0];
     }
     
     if(VALID_NOTEMPTY(self.firstCollectionViewAddresses, NSArray))
@@ -254,7 +275,7 @@ UICollectionViewDelegateFlowLayout>
                                                                 70.0f)];
     }
     [self.secondAddressesCollectionView reloadData];
-
+    
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
 }
 
@@ -273,9 +294,40 @@ UICollectionViewDelegateFlowLayout>
     return checkIfAddressIsAdded;
 }
 
--(void)editAddressButtonPressed
+-(void)editAddressButtonPressed:(UIButton*)sender
 {
+    NSInteger tag = sender.tag;
     
+    UIView *view = [sender superview];
+    if(VALID_NOTEMPTY(view, UIView))
+    {
+        UIView *cellView = [view superview];
+        if(VALID_NOTEMPTY(cellView, UIView))
+        {
+            UIView *collectionView = [cellView superview];
+            if(VALID_NOTEMPTY(collectionView, UIView))
+            {
+                RIAddress *addressToEdit = nil;
+                if(self.firstAddressesCollectionView == [[[sender superview] superview] superview])
+                {
+                    addressToEdit = [self.firstCollectionViewAddresses objectAtIndex:tag];
+                    NSLog(@"First address collection view");
+                }
+                else if(self.secondAddressesCollectionView == [[[sender superview] superview] superview])
+                {
+                    addressToEdit = [self.secondCollectionViewAddresses objectAtIndex:tag];
+                    NSLog(@"second address collection view");
+                }
+                
+                if(VALID_NOTEMPTY(addressToEdit, RIAddress))
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutEditAddressScreenNotification
+                                                                        object:nil
+                                                                      userInfo:[NSDictionary dictionaryWithObjects:@[addressToEdit] forKeys:@[@"address_to_edit"]]];
+                }
+            }
+        }
+    }
 }
 
 -(void)changeBillingAddressState:(id)sender
@@ -283,7 +335,10 @@ UICollectionViewDelegateFlowLayout>
     UISwitch *switchView = sender;
     
     self.useSameAddressAsBillingAndShipping = switchView.isOn;
+    
     [self finishedLoadingAddresses];
+    
+    [self.contentScrollView setContentOffset:CGPointMake(0.0f, 0.0f) animated:NO];
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
@@ -391,7 +446,17 @@ UICollectionViewDelegateFlowLayout>
                 NSString *cellIdentifier = @"addressListCell";
                 JAAddressCell *addressCell = (JAAddressCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
                 [addressCell loadWithAddress:address];
-                [addressCell.editAddressButton addTarget:self action:@selector(editAddressButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+                [addressCell.editAddressButton setTag:indexPath.row];
+                [addressCell.editAddressButton addTarget:self action:@selector(editAddressButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                
+                if(VALID_NOTEMPTY(self.firstCollectionViewIndexSelected, NSIndexPath) && self.firstCollectionViewIndexSelected.row == indexPath.row)
+                {
+                    [addressCell selectAddress];
+                }
+                else
+                {
+                    [addressCell deselectAddress];
+                }
                 
                 cell = addressCell;
             }
@@ -401,8 +466,17 @@ UICollectionViewDelegateFlowLayout>
                 NSString *cellIdentifier = @"switchListCell";
                 JASwitchCell *switchCell = (JASwitchCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
                 [switchCell loadWithText:@"Billing to the same address" isLastRow:self.useSameAddressAsBillingAndShipping];
-                [switchCell.switchView addTarget:self action:@selector(changeBillingAddressState:) forControlEvents:UIControlEventValueChanged];
                 
+                if(self.useSameAddressAsBillingAndShipping)
+                {
+                    [switchCell.switchView setOn:YES];
+                }
+                else
+                {
+                    [switchCell.switchView setOn:NO];
+                }
+                
+                [switchCell.switchView addTarget:self action:@selector(changeBillingAddressState:) forControlEvents:UIControlEventValueChanged];
                 cell = switchCell;
             }
             else if(indexPath.row < ([self.firstCollectionViewAddresses count] + 2))
@@ -425,7 +499,17 @@ UICollectionViewDelegateFlowLayout>
             NSString *cellIdentifier = @"addressListCell";
             JAAddressCell *addressCell = (JAAddressCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
             [addressCell loadWithAddress:address];
-            [addressCell.editAddressButton addTarget:self action:@selector(editAddressButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+            [addressCell.editAddressButton setTag:indexPath.row];
+            [addressCell.editAddressButton addTarget:self action:@selector(editAddressButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            
+            if(VALID_NOTEMPTY(self.secondCollectionViewIndexSelected, NSIndexPath) && self.secondCollectionViewIndexSelected.row == indexPath.row)
+            {
+                [addressCell selectAddress];
+            }
+            else
+            {
+                [addressCell deselectAddress];
+            }
             
             cell = addressCell;
         }
@@ -489,19 +573,43 @@ UICollectionViewDelegateFlowLayout>
         {
             if(indexPath.row < [self.firstCollectionViewAddresses count])
             {
+                self.shippingAddress = [self.firstCollectionViewAddresses objectAtIndex:indexPath.row];
                 
+                if(self.useSameAddressAsBillingAndShipping)
+                {
+                    self.billingAddress = self.shippingAddress;
+                    
+                    if(VALID(self.secondAddressesCollectionView , UICollectionView) && VALID_NOTEMPTY(self.secondCollectionViewIndexSelected, NSIndexPath))
+                    {
+                        JAAddressCell *oldAddressCell = (JAAddressCell*) [self.secondAddressesCollectionView cellForItemAtIndexPath:self.secondCollectionViewIndexSelected];
+                        [oldAddressCell deselectAddress];
+                        
+                        self.secondCollectionViewIndexSelected = nil;
+                    }
+                }
+                
+                if(VALID_NOTEMPTY(self.firstCollectionViewIndexSelected, NSIndexPath))
+                {
+                    JAAddressCell *oldAddressCell = (JAAddressCell*) [collectionView cellForItemAtIndexPath:self.firstCollectionViewIndexSelected];
+                    [oldAddressCell deselectAddress];
+                }
+                self.firstCollectionViewIndexSelected = indexPath;
+                
+                JAAddressCell *addressCell = (JAAddressCell*)[collectionView cellForItemAtIndexPath:indexPath];
+                [addressCell selectAddress];
             }
             else if(indexPath.row < ([self.firstCollectionViewAddresses count] + 1))
             {
-                // Switch
-                
+                // Switch - nothing to do
             }
             else if(indexPath.row < ([self.firstCollectionViewAddresses count] + 2))
             {
                 // Add new address
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddShippingAddressScreenNotification
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil
-                                                                  userInfo:nil];
+                                                                  userInfo:userInfo];
             }
         }
     }
@@ -509,34 +617,54 @@ UICollectionViewDelegateFlowLayout>
     {
         if(VALID_NOTEMPTY(self.secondCollectionViewAddresses, NSArray) && indexPath.row < [self.secondCollectionViewAddresses count])
         {
+            self.billingAddress = [self.secondCollectionViewAddresses objectAtIndex:indexPath.row];
+            if(self.useSameAddressAsBillingAndShipping)
+            {
+                self.shippingAddress = self.billingAddress;
+                
+                if(VALID(self.firstAddressesCollectionView, UICollectionView) && VALID_NOTEMPTY(self.firstCollectionViewIndexSelected, NSIndexPath))
+                {
+                    JAAddressCell *oldAddressCell = (JAAddressCell*) [self.firstAddressesCollectionView cellForItemAtIndexPath:self.firstCollectionViewIndexSelected];
+                    [oldAddressCell deselectAddress];
+                    
+                    self.firstCollectionViewIndexSelected = nil;
+                }
+            }
             
+            if(VALID_NOTEMPTY(self.secondCollectionViewIndexSelected, NSIndexPath))
+            {
+                JAAddressCell *oldAddressCell = (JAAddressCell*) [collectionView cellForItemAtIndexPath:self.secondCollectionViewIndexSelected];
+                [oldAddressCell deselectAddress];
+            }
+            self.secondCollectionViewIndexSelected = indexPath;
+            
+            JAAddressCell *addressCell = (JAAddressCell*)[collectionView cellForItemAtIndexPath:indexPath];
+            [addressCell selectAddress];
         }
         else
         {
-            // Add new address            
+            // Add new address
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddOtherAddressScreenNotification
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil
-                                                                  userInfo:nil];
+                                                                  userInfo:userInfo];
             }
             else
             {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddBillingAddressScreenNotification
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil
-                                                                  userInfo:nil];
+                                                                  userInfo:userInfo];
             }
         }
-        
     }
 }
 
 -(void)nextStepButtonPressed
-{
-    
-}
-
-- (void) chooseBillingAndShippingAddressesAndGoToNextStepAction
 {
     [self showLoading];
     
@@ -544,29 +672,29 @@ UICollectionViewDelegateFlowLayout>
         NSLog(@"Get billing address form with success");
         RIForm *billingForm = checkout.billingAddressForm;
         
+        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
         for (RIField *field in [billingForm fields])
         {
             if([@"billingForm[billingAddressId]" isEqualToString:[field name]])
             {
-                field.value = [self.billingAddress uid];
+                [parameters setValue:[self.billingAddress uid] forKey:[field name]];
             }
             else if([@"billingForm[shippingAddressId]" isEqualToString:[field name]])
             {
-                field.value = [self.shippingAddress uid];
+                [parameters setValue:[self.shippingAddress uid] forKey:[field name]];
             }
-            else if([@"billingForm[shippingAddressDifferent" isEqualToString:[field name]])
+            else if([@"billingForm[shippingAddressDifferent]" isEqualToString:[field name]])
             {
-                field.value = [[self.billingAddress uid] isEqualToString:[self.shippingAddress uid]] ? @"0" : @":1";
+                [parameters setValue:[[self.billingAddress uid] isEqualToString:[self.shippingAddress uid]] ? @"0" : @"1" forKey:[field name]];
             }
         }
         
-        [RICheckout setBillingAddress:billingForm successBlock:^(RICheckout *checkout) {
-            NSLog(@"Set billing address form with success");
+        [RICheckout setBillingAddress:checkout.billingAddressForm parameters:parameters successBlock:^(RICheckout *checkout) {
+            NSLog(@"Set billing address form with success %@", checkout.nextStep);
             
-            UIViewController *controller = [JAUtils getCheckoutNextStepViewController:checkout.nextStep inStoryboard:self.storyboard];
-            [self.navigationController pushViewController:controller
-                                                 animated:YES];
             [self hideLoading];
+            
+            [JAUtils getCheckoutNextStepViewController:checkout.nextStep inStoryboard:self.storyboard];
         } andFailureBlock:^(NSArray *errorMessages) {
             NSLog(@"Failed to set billing address form");
             [self hideLoading];

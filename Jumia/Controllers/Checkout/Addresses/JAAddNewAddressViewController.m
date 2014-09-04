@@ -61,7 +61,7 @@ UIPickerViewDelegate>
 @property (strong, nonatomic) UIPickerView *pickerView;
 
 // Create Address Button
-@property (strong, nonatomic) UIButton *createAddressButton;
+@property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
 @property (assign, nonatomic) NSInteger numberOfRequests;
 @property (assign, nonatomic) BOOL hasErrors;
@@ -160,11 +160,11 @@ UIPickerViewDelegate>
     
     [self.view addSubview:self.contentScrollView];
     
-    JAButtonWithBlur *bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
-    [bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - bottomView.frame.size.height, self.view.frame.size.width, bottomView.frame.size.height)];
-    [bottomView addButton:@"Next" target:self action:@selector(createAddressButtonPressed)];
+    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
+    [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
+    [self.bottomView addButton:@"Next" target:self action:@selector(createAddressButtonPressed)];
     
-    [self.view addSubview:bottomView];
+    [self.view addSubview:self.bottomView];
 }
 
 -(void)setupShippingAddressView
@@ -244,7 +244,7 @@ UIPickerViewDelegate>
     }
     
     [self.shippingContentView setFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.shippingAddressViewCurrentY)];
-    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.self.createAddressButton.frame.size.height + 6.0f + 10.0f)];
+    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.bottomView.frame.size.height)];
 }
 
 -(void)showBillingAddressForm
@@ -253,7 +253,7 @@ UIPickerViewDelegate>
     
     [self.billingContentView setHidden:NO];
     [self.billingContentView setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.shippingContentView.frame) + 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.billingAddressViewCurrentY + 12.0f)];
-    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + 6.0f + self.billingContentView.frame.size.height + self.createAddressButton.frame.size.height + 6.0f + 10.0f)];
+    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + 6.0f + self.billingContentView.frame.size.height + self.bottomView.frame.size.height)];
 }
 
 -(void)hideBillingAddressForm
@@ -263,7 +263,7 @@ UIPickerViewDelegate>
     
     [self.billingContentView setHidden:YES];
     [self.shippingContentView setFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.shippingAddressViewCurrentY)];
-    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.createAddressButton.frame.size.height + 6.0f + 10.0f)];
+    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.bottomView.frame.size.height)];
 }
 
 -(void)changedAddressState:(id)sender

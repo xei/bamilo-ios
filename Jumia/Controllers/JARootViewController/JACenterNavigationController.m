@@ -25,6 +25,7 @@
 #import "JASignInViewController.h"
 #import "JASignupViewController.h"
 #import "JAAddNewAddressViewController.h"
+#import "JAEditAddressViewController.h"
 #import "JAShippingViewController.h"
 #import "JAPaymentViewController.h"
 #import "RIProduct.h"
@@ -109,6 +110,11 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(closeCurrentScreenNotificaion)
+                                                 name:kCloseCurrentScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showHomeScreen)
                                                  name:kShowHomeScreenNotification
                                                object:nil];
@@ -149,23 +155,13 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutAddFirstAddressScreen)
-                                                 name:kShowCheckoutAddFirstAddressScreenNotification
+                                             selector:@selector(showCheckoutAddAddressScreen:)
+                                                 name:kShowCheckoutAddAddressScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutAddBillingAddressScreen)
-                                                 name:kShowCheckoutAddBillingAddressScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutAddShippingAddressScreen)
-                                                 name:kShowCheckoutAddShippingAddressScreenNotification
-                                               object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutAddOtherAddressScreen)
-                                                 name:kShowCheckoutAddOtherAddressScreenNotification
+                                             selector:@selector(showCheckoutEditAddressScreen:)
+                                                 name:kShowCheckoutEditAddressScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -346,6 +342,11 @@
     }
 }
 
+- (void) closeCurrentScreenNotificaion
+{
+    [self popViewControllerAnimated:YES];
+}
+
 - (void) showHomeScreen
 {
     [self changeCenterPanel:@"Home"];
@@ -471,47 +472,29 @@
     [self pushViewController:addressesVC animated:YES];
 }
 
-- (void)showCheckoutAddBillingAddressScreen
+- (void)showCheckoutAddAddressScreen:(NSNotification*)notification
 {
-    JAAddNewAddressViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
+    JAAddNewAddressViewController *addAddressVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
     
-    addressesVC.isBillingAddress = YES;
-    addressesVC.isShippingAddress = NO;
-    addressesVC.showBackButton = YES;
+    NSNumber* isBillingAddress = [notification.userInfo objectForKey:@"is_billing_address"];
+    NSNumber* isShippingAddress = [notification.userInfo objectForKey:@"is_shipping_address"];
+    NSNumber* showBackButton = [notification.userInfo objectForKey:@"show_back_button"];
     
-    [self pushViewController:addressesVC animated:YES];
+    addAddressVC.isBillingAddress = [isBillingAddress boolValue];
+    addAddressVC.isShippingAddress = [isShippingAddress boolValue];
+    addAddressVC.showBackButton = [showBackButton boolValue];
+    
+    [self pushViewController:addAddressVC animated:YES];
 }
 
-- (void)showCheckoutAddShippingAddressScreen
+- (void)showCheckoutEditAddressScreen:(NSNotification*)notification
 {
-    JAAddNewAddressViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
+    JAEditAddressViewController *editAddressVC = [self.storyboard instantiateViewControllerWithIdentifier:@"editAddressViewController"];
     
-    addressesVC.isBillingAddress = NO;
-    addressesVC.isShippingAddress = YES;
-    addressesVC.showBackButton = YES;
+    RIAddress* editAddress = [notification.userInfo objectForKey:@"address_to_edit"];
+    editAddressVC.editAddress = editAddress;
     
-    [self pushViewController:addressesVC animated:YES];
-}
-
-- (void)showCheckoutAddFirstAddressScreen
-{
-    JAAddNewAddressViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
-    
-    addressesVC.isBillingAddress = YES;
-    addressesVC.isShippingAddress = YES;
-    
-    [self pushViewController:addressesVC animated:YES];
-}
-
-- (void)showCheckoutAddOtherAddressScreen
-{
-    JAAddNewAddressViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
-    
-    addressesVC.isBillingAddress = YES;
-    addressesVC.isShippingAddress = YES;
-    addressesVC.showBackButton = YES;
-    
-    [self pushViewController:addressesVC animated:YES];
+    [self pushViewController:editAddressVC animated:YES];
 }
 
 - (void)showCheckoutShippingScreen

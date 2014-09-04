@@ -49,10 +49,11 @@
 }
 
 + (NSString*)setBillingAddress:(RIForm*)form
+                    parameters:(NSDictionary*)parameters
                   successBlock:(void (^)(RICheckout *checkout))successBlock
                andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return [RIForm sendForm:form successBlock:^(id object) {
+    return [RIForm sendForm:form parameters:parameters successBlock:^(id object) {
         [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
             if(VALID_NOTEMPTY(object, NSDictionary))
             {
@@ -103,6 +104,7 @@
 }
 
 + (NSString*)setShippingAddress:(RIForm*)form
+                    parameters:(NSDictionary*)parameters
                    successBlock:(void (^)(RICheckout *checkout))successBlock
                 andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
