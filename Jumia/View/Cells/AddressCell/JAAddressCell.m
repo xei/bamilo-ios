@@ -23,6 +23,8 @@
 {
     self.backgroundColor = UIColorFromRGB(0xffffff);
     
+    [self.checkMark setHidden:YES];
+    
     NSString *addressText = @"";
     
     if(VALID_NOTEMPTY(address.firstName, NSString) && VALID_NOTEMPTY(address.lastName, NSString))
@@ -89,9 +91,14 @@
     [self.addressLabel setText:addressText];
 }
 
--(void)changeAddressState:(BOOL)selectedAddress
+-(void)selectAddress
 {
-    [self.checkMark setHidden:selectedAddress];
+    [self.checkMark setHidden:NO];
+}
+
+-(void)deselectAddress
+{
+    [self.checkMark setHidden:YES];
 }
 
 @end
