@@ -25,10 +25,14 @@
 #import "JARatingsViewController.h"
 #import "JAProductDetailsViewController.h"
 #import "JANewRatingViewController.h"
+#import "JAAppDelegate.h"
+#import "JAShareActivityProvider.h"
+#import "JAActivityViewController.h"
 
 @interface JAPDVViewController ()
 <
-JAPDVGalleryViewDelegate
+    JAPDVGalleryViewDelegate,
+    JAActivityViewControllerDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
@@ -292,6 +296,9 @@ JAPDVGalleryViewDelegate
     }
     else if (self.product.productSimples.count > 1)
     {
+        [self.productInfoSection.sizeButton setTitle:@"Size"
+                                            forState:UIControlStateNormal];
+        
         [self.productInfoSection.sizeButton addTarget:self
                                                action:@selector(showSizePicker)
                                      forControlEvents:UIControlEventTouchUpInside];
@@ -422,14 +429,26 @@ JAPDVGalleryViewDelegate
 
 - (void)shareProduct
 {
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initWithProduct:self.product];
+    
+    NSArray *objectsToShare = @[provider];
+    
+    JAActivityViewController *activityController = [[JAActivityViewController alloc] initWithActivityItems:objectsToShare
+                                                                                     applicationActivities:nil];
+    
+    NSString *stringToShare = @"Great product at Jumia";
+
+    [activityController setValue:stringToShare
+                          forKey:@"subject"];
+    
+    activityController.completionHandler = ^(NSString *activityType, BOOL completed)
     {
-        SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [tweetSheet setInitialText:self.product.name];
-        [self presentViewController:tweetSheet
-                           animated:YES
-                         completion:nil];
-    }
+        
+    };
+    
+    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypePostToTwitter];
+    
+    [self presentViewController:activityController animated:YES completion:nil];
 }
 
 - (void)addProductToWishList
@@ -504,9 +523,10 @@ JAPDVGalleryViewDelegate
                      forControlEvents:UIControlEventTouchUpInside];
     
     CGRect frame = self.picker.frame;
-    frame.origin.y = self.view.frame.size.height;
+    frame.origin.y = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size.height;
+    frame.size.height = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size.height;
     self.picker.frame = frame;
-    [self.view addSubview:self.picker];
+    [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.picker];
     frame.origin.y = 0.0f;
     
     [UIView animateWithDuration:0.4f
@@ -537,6 +557,7 @@ JAPDVGalleryViewDelegate
 - (void)presentGallery
 {
     self.gallery = [JAPDVGalleryView getNewJAPDVGalleryView];
+    [self.gallery layoutSubviews];
     self.gallery.delegate = self;
     
     [self.gallery loadGalleryWithArray:[self.product.images array]];
@@ -601,5 +622,11 @@ JAPDVGalleryViewDelegate
     }
 }
 
+#pragma mark - Activity delegate
+
+- (void)willDismissActivityViewController:(JAActivityViewController *)activityViewController
+{
+    // Track sharing here :)
+}
 
 @end
