@@ -96,9 +96,11 @@ UICollectionViewDelegateFlowLayout>
         }
         else
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                 object:nil
-                                                              userInfo:nil];
+                                                              userInfo:userInfo];
         }
         
     } andFailureBlock:^(NSArray *errorMessages) {
@@ -275,7 +277,6 @@ UICollectionViewDelegateFlowLayout>
     [self.secondAddressesCollectionView reloadData];
     
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
-    [self.contentScrollView setContentOffset:CGPointMake(0.0f, 0.0f) animated:YES];
 }
 
 -(BOOL)checkIfAddressIsAdded:(RIAddress*)addressToAdd addresses:(NSArray*)addresses
@@ -293,9 +294,40 @@ UICollectionViewDelegateFlowLayout>
     return checkIfAddressIsAdded;
 }
 
--(void)editAddressButtonPressed
+-(void)editAddressButtonPressed:(UIButton*)sender
 {
+    NSInteger tag = sender.tag;
     
+    UIView *view = [sender superview];
+    if(VALID_NOTEMPTY(view, UIView))
+    {
+        UIView *cellView = [view superview];
+        if(VALID_NOTEMPTY(cellView, UIView))
+        {
+            UIView *collectionView = [cellView superview];
+            if(VALID_NOTEMPTY(collectionView, UIView))
+            {
+                RIAddress *addressToEdit = nil;
+                if(self.firstAddressesCollectionView == [[[sender superview] superview] superview])
+                {
+                    addressToEdit = [self.firstCollectionViewAddresses objectAtIndex:tag];
+                    NSLog(@"First address collection view");
+                }
+                else if(self.secondAddressesCollectionView == [[[sender superview] superview] superview])
+                {
+                    addressToEdit = [self.secondCollectionViewAddresses objectAtIndex:tag];
+                    NSLog(@"second address collection view");
+                }
+                
+                if(VALID_NOTEMPTY(addressToEdit, RIAddress))
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutEditAddressScreenNotification
+                                                                        object:nil
+                                                                      userInfo:[NSDictionary dictionaryWithObjects:@[addressToEdit] forKeys:@[@"address_to_edit"]]];
+                }
+            }
+        }
+    }
 }
 
 -(void)changeBillingAddressState:(id)sender
@@ -305,6 +337,8 @@ UICollectionViewDelegateFlowLayout>
     self.useSameAddressAsBillingAndShipping = switchView.isOn;
     
     [self finishedLoadingAddresses];
+    
+    [self.contentScrollView setContentOffset:CGPointMake(0.0f, 0.0f) animated:NO];
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
@@ -412,7 +446,8 @@ UICollectionViewDelegateFlowLayout>
                 NSString *cellIdentifier = @"addressListCell";
                 JAAddressCell *addressCell = (JAAddressCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
                 [addressCell loadWithAddress:address];
-                [addressCell.editAddressButton addTarget:self action:@selector(editAddressButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+                [addressCell.editAddressButton setTag:indexPath.row];
+                [addressCell.editAddressButton addTarget:self action:@selector(editAddressButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 
                 if(VALID_NOTEMPTY(self.firstCollectionViewIndexSelected, NSIndexPath) && self.firstCollectionViewIndexSelected.row == indexPath.row)
                 {
@@ -464,7 +499,8 @@ UICollectionViewDelegateFlowLayout>
             NSString *cellIdentifier = @"addressListCell";
             JAAddressCell *addressCell = (JAAddressCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
             [addressCell loadWithAddress:address];
-            [addressCell.editAddressButton addTarget:self action:@selector(editAddressButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+            [addressCell.editAddressButton setTag:indexPath.row];
+            [addressCell.editAddressButton addTarget:self action:@selector(editAddressButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             
             if(VALID_NOTEMPTY(self.secondCollectionViewIndexSelected, NSIndexPath) && self.secondCollectionViewIndexSelected.row == indexPath.row)
             {
@@ -569,9 +605,11 @@ UICollectionViewDelegateFlowLayout>
             else if(indexPath.row < ([self.firstCollectionViewAddresses count] + 2))
             {
                 // Add new address
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddShippingAddressScreenNotification
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil
-                                                                  userInfo:nil];
+                                                                  userInfo:userInfo];
             }
         }
     }
@@ -608,15 +646,19 @@ UICollectionViewDelegateFlowLayout>
             // Add new address
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddOtherAddressScreenNotification
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil
-                                                                  userInfo:nil];
+                                                                  userInfo:userInfo];
             }
             else
             {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddBillingAddressScreenNotification
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil
-                                                                  userInfo:nil];
+                                                                  userInfo:userInfo];
             }
         }
     }
