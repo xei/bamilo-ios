@@ -10,7 +10,6 @@
 #import "JAPDVImageSection.h"
 #import "JAPDVVariations.h"
 #import "JAPDVProductInfo.h"
-#import "JACTAButtons.h"
 #import "JAPDVRelatedItem.h"
 #import "JAPDVSingleRelatedItem.h"
 #import "UIImageView+WebCache.h"
@@ -29,6 +28,7 @@
 #import "JAShareActivityProvider.h"
 #import "JAActivityViewController.h"
 #import "RICountry.h"
+#import "JAButtonWithBlur.h"
 
 @interface JAPDVViewController ()
 <
@@ -41,7 +41,6 @@
 @property (strong, nonatomic) JAPDVImageSection *imageSection;
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
 @property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
-@property (strong, nonatomic) JACTAButtons *ctaButtons;
 @property (strong, nonatomic) JAPDVRelatedItem *relatedItems;
 @property (strong, nonatomic) JAPDVPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
@@ -96,8 +95,6 @@
     }
     
     self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
-    
-    self.ctaButtons = [JACTAButtons getNewPDVCTAButtons];
     
     self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
     
@@ -386,32 +383,30 @@
      CTA Buttons
      *******/
     
-    self.ctaButtons.frame = CGRectMake(6,
-                                       6,
-                                       self.ctaButtons.frame.size.width,
-                                       self.ctaButtons.frame.size.height);
-    
     UIDevice *device = [UIDevice currentDevice];
     
     NSString *model = device.model;
     
-    if ([model isEqualToString:@"iPhone"]) {
-        
-        [self.ctaButtons layoutViewWithNumberOfButton:2];
-        
-        [self.ctaButtons.callToOrderButton addTarget:self
-                                              action:@selector(callToOrder)
-                                    forControlEvents:UIControlEventTouchUpInside];
-        
-    } else {
-        [self.ctaButtons layoutViewWithNumberOfButton:1];
+    JAButtonWithBlur *ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
+    
+    [ctaView setFrame:CGRectMake(0,
+                                 self.view.frame.size.height - 56,
+                                 self.view.frame.size.width,
+                                 60)];
+    
+    if ([model isEqualToString:@"iPhone"])
+    {
+        [ctaView addButton:@"Call to Order"
+                    target:self
+                    action:@selector(callToOrder)];
     }
+
     
-    [self.ctaButtons.addToCartButton addTarget:self
-                                        action:@selector(addToCart)
-                              forControlEvents:UIControlEventTouchUpInside];
+    [ctaView addButton:@"Add to Cart"
+                   target:self
+                   action:@selector(addToCart)];
     
-    [self.ctaView addSubview:self.ctaButtons];
+    [self.view addSubview:ctaView];
     
     self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + 6);
 }
