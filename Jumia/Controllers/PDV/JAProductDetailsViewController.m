@@ -41,6 +41,8 @@
     self.labelBrand.text = self.stringBrand;
     self.labelName.text = self.stringName;
     
+    self.view.backgroundColor = JABackgroundGrey;
+    
     if(VALID_NOTEMPTY(self.stringOldPrice, NSString))
     {
         self.labelNewPrice.text = self.stringOldPrice;
