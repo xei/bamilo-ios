@@ -87,7 +87,7 @@ UIPickerViewDelegate>
     
     self.hasErrors = NO;
     
-    if(!self.isBillingAddress || !self.isShippingAddress)
+    if(self.showBackButton)
     {
         self.navBarLayout.backButtonTitle = @"Checkout";
         self.navBarLayout.showLogo = NO;

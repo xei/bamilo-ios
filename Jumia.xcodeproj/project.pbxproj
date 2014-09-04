@@ -92,6 +92,12 @@
 		B59DCA6219B710B100DE7960 /* RICity.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5F19B710B100DE7960 /* RICity.m */; };
 		B59DCA6619B710DA00DE7960 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA6519B710DA00DE7960 /* FXBlurView.m */; };
 		B59DCA6A19B8521A00DE7960 /* JAButtonWithBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA6919B8521A00DE7960 /* JAButtonWithBlur.m */; };
+		B59DCA6F19B8712500DE7960 /* JAAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA6D19B8712500DE7960 /* JAAddressCell.m */; };
+		B59DCA7019B8712500DE7960 /* JAAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA6E19B8712500DE7960 /* JAAddressCell.xib */; };
+		B59DCA7619B88DAD00DE7960 /* JASwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA7419B88DAD00DE7960 /* JASwitchCell.m */; };
+		B59DCA7719B88DAD00DE7960 /* JASwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7519B88DAD00DE7960 /* JASwitchCell.xib */; };
+		B59DCA7E19B88DDB00DE7960 /* JAAddNewAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA7C19B88DDB00DE7960 /* JAAddNewAddressCell.m */; };
+		B59DCA7F19B88DDB00DE7960 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
 		B5A301BC19811D0700F71726 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
@@ -428,6 +434,15 @@
 		B59DCA6519B710DA00DE7960 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		B59DCA6819B8521A00DE7960 /* JAButtonWithBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAButtonWithBlur.h; path = Buttons/JAButtonWithBlur.h; sourceTree = "<group>"; };
 		B59DCA6919B8521A00DE7960 /* JAButtonWithBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAButtonWithBlur.m; path = Buttons/JAButtonWithBlur.m; sourceTree = "<group>"; };
+		B59DCA6C19B8712500DE7960 /* JAAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAAddressCell.h; path = AddressCell/JAAddressCell.h; sourceTree = "<group>"; };
+		B59DCA6D19B8712500DE7960 /* JAAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAAddressCell.m; path = AddressCell/JAAddressCell.m; sourceTree = "<group>"; };
+		B59DCA6E19B8712500DE7960 /* JAAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAAddressCell.xib; path = AddressCell/JAAddressCell.xib; sourceTree = "<group>"; };
+		B59DCA7319B88DAD00DE7960 /* JASwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASwitchCell.h; path = SwitchCell/JASwitchCell.h; sourceTree = "<group>"; };
+		B59DCA7419B88DAD00DE7960 /* JASwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASwitchCell.m; path = SwitchCell/JASwitchCell.m; sourceTree = "<group>"; };
+		B59DCA7519B88DAD00DE7960 /* JASwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JASwitchCell.xib; path = SwitchCell/JASwitchCell.xib; sourceTree = "<group>"; };
+		B59DCA7B19B88DDB00DE7960 /* JAAddNewAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAAddNewAddressCell.h; path = AddressCell/JAAddNewAddressCell.h; sourceTree = "<group>"; };
+		B59DCA7C19B88DDB00DE7960 /* JAAddNewAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAAddNewAddressCell.m; path = AddressCell/JAAddNewAddressCell.m; sourceTree = "<group>"; };
+		B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAAddNewAddressCell.xib; path = AddressCell/JAAddNewAddressCell.xib; sourceTree = "<group>"; };
 		B5A301A819811D0700F71726 /* Jumia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jumia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A301AC19811D0700F71726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5A301AD19811D0700F71726 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -864,6 +879,8 @@
 		4A4ABF08198B902600342D92 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				B59DCA7219B88D9000DE7960 /* SwitchCell */,
+				B59DCA6B19B870EA00DE7960 /* AddressCell */,
 				CEC3F71719A5FDDA00DE12F6 /* ButtonCell */,
 				CE2F576B19913B33000A9E09 /* Catalog */,
 				4A4ABF09198B902600342D92 /* CountryCell */,
@@ -1190,6 +1207,29 @@
 				B59DCA6919B8521A00DE7960 /* JAButtonWithBlur.m */,
 			);
 			name = Buttons;
+			sourceTree = "<group>";
+		};
+		B59DCA6B19B870EA00DE7960 /* AddressCell */ = {
+			isa = PBXGroup;
+			children = (
+				B59DCA6C19B8712500DE7960 /* JAAddressCell.h */,
+				B59DCA6D19B8712500DE7960 /* JAAddressCell.m */,
+				B59DCA6E19B8712500DE7960 /* JAAddressCell.xib */,
+				B59DCA7B19B88DDB00DE7960 /* JAAddNewAddressCell.h */,
+				B59DCA7C19B88DDB00DE7960 /* JAAddNewAddressCell.m */,
+				B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */,
+			);
+			name = AddressCell;
+			sourceTree = "<group>";
+		};
+		B59DCA7219B88D9000DE7960 /* SwitchCell */ = {
+			isa = PBXGroup;
+			children = (
+				B59DCA7319B88DAD00DE7960 /* JASwitchCell.h */,
+				B59DCA7419B88DAD00DE7960 /* JASwitchCell.m */,
+				B59DCA7519B88DAD00DE7960 /* JASwitchCell.xib */,
+			);
+			name = SwitchCell;
 			sourceTree = "<group>";
 		};
 		B5A3019F19811D0700F71726 = {
@@ -2046,6 +2086,7 @@
 				B5A3024819811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				B5A3023819811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
 				4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */,
+				B59DCA7F19B88DDB00DE7960 /* JAAddNewAddressCell.xib in Resources */,
 				B5C61BC519B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib in Resources */,
 				B5A3023619811E8A00F71726 /* BMA4SCloseButton.png in Resources */,
 				B5A3023E19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
@@ -2064,6 +2105,7 @@
 				CE2FB75819938EB500E7CD00 /* JACatalogGridCell.xib in Resources */,
 				B5A3024219811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
 				B510B01819AE466B00A9754A /* JATextFieldComponent.xib in Resources */,
+				B59DCA7719B88DAD00DE7960 /* JASwitchCell.xib in Resources */,
 				B5A3023919811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib in Resources */,
 				B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */,
 				B5A3024C19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
@@ -2095,6 +2137,7 @@
 				B5A3023B19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
 				CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */,
 				CE13789519A4DC4E00CA0751 /* JARecentlyViewedListCell.xib in Resources */,
+				B59DCA7019B8712500DE7960 /* JAAddressCell.xib in Resources */,
 				B5A3023719811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
 				B56BBF3319A60D5400F4B1A3 /* JACartListCell.xib in Resources */,
 				B5A301BC19811D0700F71726 /* Images.xcassets in Resources */,
@@ -2158,6 +2201,7 @@
 				4A944FF51992805100C02734 /* RIProductRatings.m in Sources */,
 				B5A3025E19811E8A00F71726 /* UIImageView+WebCache.m in Sources */,
 				CE445879198BF15B00CE7E8D /* JACampaignsTeaserView.m in Sources */,
+				B59DCA7619B88DAD00DE7960 /* JASwitchCell.m in Sources */,
 				4A39213419891FB200B70A9C /* JAMyAccountViewController.m in Sources */,
 				CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */,
 				B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */,
@@ -2214,6 +2258,7 @@
 				4A01EE4919922729005F5AD1 /* JAPDVPicker.m in Sources */,
 				B5A302DA19811E9200F71726 /* RICommunicationWrapper.m in Sources */,
 				CE13787019A2304500CA0751 /* JACategoryFilterViewController.m in Sources */,
+				B59DCA7E19B88DDB00DE7960 /* JAAddNewAddressCell.m in Sources */,
 				CE44586D198BD20A00CE7E8D /* JATopSellersTeaserView.m in Sources */,
 				4A392141198925D000B70A9C /* JANavigationBarView.m in Sources */,
 				CE445870198BD21A00CE7E8D /* JATeaserView.m in Sources */,
@@ -2264,6 +2309,7 @@
 				4A4ABF0C198B903B00342D92 /* JACountryCell.m in Sources */,
 				4A39212719891F2D00B70A9C /* JATrackMyOrderViewController.m in Sources */,
 				CE44586B198BD20A00CE7E8D /* JAMainTeaserView.m in Sources */,
+				B59DCA6F19B8712500DE7960 /* JAAddressCell.m in Sources */,
 				B5A302C719811E9200F71726 /* RILanguage.m in Sources */,
 				B5A302E219811E9200F71726 /* RIAd4PushTracker.m in Sources */,
 				B5A302E419811E9200F71726 /* RIBugSenseTracker.m in Sources */,
