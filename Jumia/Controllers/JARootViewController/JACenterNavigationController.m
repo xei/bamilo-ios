@@ -164,6 +164,11 @@
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutAddOtherAddressScreen)
+                                                 name:kShowCheckoutAddOtherAddressScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutShippingScreen)
                                                  name:kShowCheckoutShippingScreenNotification
                                                object:nil];
@@ -472,6 +477,7 @@
     
     addressesVC.isBillingAddress = YES;
     addressesVC.isShippingAddress = NO;
+    addressesVC.showBackButton = YES;
     
     [self pushViewController:addressesVC animated:YES];
 }
@@ -482,6 +488,7 @@
     
     addressesVC.isBillingAddress = NO;
     addressesVC.isShippingAddress = YES;
+    addressesVC.showBackButton = YES;
     
     [self pushViewController:addressesVC animated:YES];
 }
@@ -492,6 +499,17 @@
     
     addressesVC.isBillingAddress = YES;
     addressesVC.isShippingAddress = YES;
+    
+    [self pushViewController:addressesVC animated:YES];
+}
+
+- (void)showCheckoutAddOtherAddressScreen
+{
+    JAAddNewAddressViewController *addressesVC = [self.storyboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
+    
+    addressesVC.isBillingAddress = YES;
+    addressesVC.isShippingAddress = YES;
+    addressesVC.showBackButton = YES;
     
     [self pushViewController:addressesVC animated:YES];
 }
