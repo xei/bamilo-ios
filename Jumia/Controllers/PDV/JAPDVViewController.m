@@ -26,10 +26,13 @@
 #import "JAProductDetailsViewController.h"
 #import "JANewRatingViewController.h"
 #import "JAAppDelegate.h"
+#import "JAShareActivityProvider.h"
+#import "JAActivityViewController.h"
 
 @interface JAPDVViewController ()
 <
-    JAPDVGalleryViewDelegate
+    JAPDVGalleryViewDelegate,
+    JAActivityViewControllerDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
@@ -426,14 +429,26 @@
 
 - (void)shareProduct
 {
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initWithProduct:self.product];
+    
+    NSArray *objectsToShare = @[provider];
+    
+    JAActivityViewController *activityController = [[JAActivityViewController alloc] initWithActivityItems:objectsToShare
+                                                                                     applicationActivities:nil];
+    
+    NSString *stringToShare = @"Great product at Jumia";
+
+    [activityController setValue:stringToShare
+                          forKey:@"subject"];
+    
+    activityController.completionHandler = ^(NSString *activityType, BOOL completed)
     {
-        SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [tweetSheet setInitialText:self.product.name];
-        [self presentViewController:tweetSheet
-                           animated:YES
-                         completion:nil];
-    }
+        
+    };
+    
+    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypePostToTwitter];
+    
+    [self presentViewController:activityController animated:YES completion:nil];
 }
 
 - (void)addProductToWishList
@@ -607,5 +622,11 @@
     }
 }
 
+#pragma mark - Activity delegate
+
+- (void)willDismissActivityViewController:(JAActivityViewController *)activityViewController
+{
+    // Track sharing here :)
+}
 
 @end
