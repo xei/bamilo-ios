@@ -51,6 +51,13 @@
                                       andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 
 /**
+ * Method to request the phone number for the stored country
+ *
+ * @return the phone number for the country
+ */
++ (NSString *)getCountryPhoneNumber;
+
+/**
  * Method to cancel the request
  *
  * @param the operationID that was returned by the getCountriesWithSuccessBlock:andFailureBlock method
