@@ -25,6 +25,7 @@
 #import "JARatingsViewController.h"
 #import "JAProductDetailsViewController.h"
 #import "JANewRatingViewController.h"
+#import "JAAppDelegate.h"
 
 @interface JAPDVViewController ()
 <
@@ -507,9 +508,10 @@
                      forControlEvents:UIControlEventTouchUpInside];
     
     CGRect frame = self.picker.frame;
-    frame.origin.y = self.view.frame.size.height;
+    frame.origin.y = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size.height;
+    frame.size.height = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size.height;
     self.picker.frame = frame;
-    [self.view addSubview:self.picker];
+    [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.picker];
     frame.origin.y = 0.0f;
     
     [UIView animateWithDuration:0.4f
@@ -540,6 +542,7 @@
 - (void)presentGallery
 {
     self.gallery = [JAPDVGalleryView getNewJAPDVGalleryView];
+    [self.gallery layoutSubviews];
     self.gallery.delegate = self;
     
     [self.gallery loadGalleryWithArray:[self.product.images array]];

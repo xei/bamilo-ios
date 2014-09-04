@@ -9,6 +9,7 @@
 #import "JAPDVGalleryView.h"
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
+#import "JAAppDelegate.h"
 
 @interface JAPDVGalleryView ()
 <
@@ -42,7 +43,9 @@
     
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JAPDVGalleryView class]]) {
-            return (JAPDVGalleryView *)obj;
+            JAPDVGalleryView *temp = (JAPDVGalleryView *)obj;
+            temp.frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame;
+            return temp;
         }
     }
     
@@ -52,6 +55,11 @@
 - (void)loadGalleryWithArray:(NSArray *)source
 {
     self.imageViewsArray = [NSMutableArray new];
+    
+    CGRect frame = self.scrollViewImages.frame;
+    frame.size.height = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size.height - 20;
+    
+    self.scrollViewImages.frame = frame;
     
     if (source.count == 1)
     {
@@ -69,6 +77,9 @@
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, self.scrollViewImages.frame.size.height)];
         imageView.contentMode = UIViewContentModeCenter;
+        CGPoint point = scrollForImage.center;
+        point.x = 320/2;
+        imageView.center = point;
         
         [imageView setImageWithURL:[NSURL URLWithString:image.url]
                   placeholderImage:[UIImage imageNamed:@"placeholder_gallery"]];
@@ -104,6 +115,9 @@
             
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, self.scrollViewImages.frame.size.height)];
             imageView.contentMode = UIViewContentModeCenter;
+            CGPoint point = scrollForImage.center;
+            point.x = 320/2;
+            imageView.center = point;
                         
             [imageView setImageWithURL:[NSURL URLWithString:image.url]
                       placeholderImage:[UIImage imageNamed:@"placeholder_gallery"]];
