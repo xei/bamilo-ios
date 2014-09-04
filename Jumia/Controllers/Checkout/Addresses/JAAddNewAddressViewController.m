@@ -9,7 +9,7 @@
 #import "JAAddNewAddressViewController.h"
 #import "JADynamicForm.h"
 #import "JAUtils.h"
-#import "FXBlurView.h"
+#import "JAButtonWithBlur.h"
 #import "RIForm.h"
 #import "RIRegion.h"
 #import "RICity.h"
@@ -160,25 +160,9 @@ UIPickerViewDelegate>
     
     [self.view addSubview:self.contentScrollView];
     
-    self.createAddressButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *createAddressButtonImageNormal = [UIImage imageNamed:@"orangeBig_normal"];
-    [self.createAddressButton setBackgroundImage:createAddressButtonImageNormal forState:UIControlStateNormal];
-    [self.createAddressButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
-    [self.createAddressButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
-    [self.createAddressButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
-    [self.createAddressButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
-    [self.createAddressButton setTitle:@"Next" forState:UIControlStateNormal];
-    [self.createAddressButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.createAddressButton addTarget:self action:@selector(createAddressButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.createAddressButton setFrame:CGRectMake(6.0f, 6.0f, createAddressButtonImageNormal.size.width, createAddressButtonImageNormal.size.height)];
-    
-    FXBlurView *bottomView = [[FXBlurView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - createAddressButtonImageNormal.size.height - 16.0f, self.view.frame.size.width, createAddressButtonImageNormal.size.height + 16.0f)];
-    [bottomView setTintColor:[UIColor clearColor]];
-    
-    [bottomView setBlurEnabled:YES];
-    [bottomView setBlurRadius:3.5f];
-    [bottomView setDynamic:YES];
-    [bottomView addSubview:self.createAddressButton];
+    JAButtonWithBlur *bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
+    [bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - bottomView.frame.size.height, self.view.frame.size.width, bottomView.frame.size.height)];
+    [bottomView addButton:@"Next" target:self action:@selector(createAddressButtonPressed)];
     
     [self.view addSubview:bottomView];
 }

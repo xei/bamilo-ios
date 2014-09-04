@@ -13,6 +13,7 @@
 #import "RIAddress.h"
 #import "RIForm.h"
 #import "RIField.h"
+#import "JAButtonWithBlur.h"
 
 @interface JAAddressesViewController ()
 <UICollectionViewDataSource,
@@ -26,7 +27,9 @@ UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepLabelWidthConstrain;
 
 @property (nonatomic, strong) UIScrollView *contentScrollView;
-@property (nonatomic, strong) UICollectionView *addressesCollectionView;
+@property (nonatomic, strong) UICollectionView *firstAddressesCollectionView;
+@property (nonatomic, strong) UICollectionView *secondAddressesCollectionView;
+@property (nonatomic, strong) UIButton *nextStepButton;
 
 @property (nonatomic, strong) NSDictionary *addresses;
 @property (nonatomic, strong) NSString *billingAddressId;
@@ -107,7 +110,7 @@ UICollectionViewDelegate>
         self.stepIconLeftConstrain.constant = 0.0f;
     }
     
-    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.stepView.frame), self.view.frame.size.width, self.view.frame.size.height - 64.0f - CGRectGetMaxY(self.stepView.frame))];
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 21.0f, self.view.frame.size.width, self.view.frame.size.height - 64.0f - 21.0f)];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
     
@@ -118,24 +121,46 @@ UICollectionViewDelegate>
     flowLayout.itemSize = CGSizeMake(self.view.frame.size.width, 90.0f);
     [flowLayout setHeaderReferenceSize:CGSizeMake(self.contentScrollView.frame.size.width - 12.0f, 26.0f)];
     
-    self.addressesCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(6.0f,
-                                                                                      6.0f,
-                                                                                      self.contentScrollView.frame.size.width - 12.0f,
-                                                                                      26.0f) collectionViewLayout:flowLayout];
-    
-    self.addressesCollectionView.layer.cornerRadius = 5.0f;
+    self.firstAddressesCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(6.0f,
+                                                                                           6.0f,
+                                                                                           self.contentScrollView.frame.size.width - 12.0f,
+                                                                                           26.0f) collectionViewLayout:flowLayout];
+    [self.firstAddressesCollectionView setScrollEnabled:NO];
+    self.firstAddressesCollectionView.layer.cornerRadius = 5.0f;
     
     UINib *cartListCellNib = [UINib nibWithNibName:@"JACartListCell" bundle:nil];
-    [self.addressesCollectionView registerNib:cartListCellNib forCellWithReuseIdentifier:@"cartListCell"];
+    [self.firstAddressesCollectionView registerNib:cartListCellNib forCellWithReuseIdentifier:@"cartListCell"];
     
     UINib *cartListHeaderNib = [UINib nibWithNibName:@"JACartListHeaderView" bundle:nil];
-    [self.addressesCollectionView registerNib:cartListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
+    [self.firstAddressesCollectionView registerNib:cartListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
     
-    [self.addressesCollectionView setDataSource:self];
-    [self.addressesCollectionView setDelegate:self];
+    [self.firstAddressesCollectionView setDataSource:self];
+    [self.firstAddressesCollectionView setDelegate:self];
     
-    [self.contentScrollView addSubview:self.addressesCollectionView];
+    [self.contentScrollView addSubview:self.firstAddressesCollectionView];
     [self.view addSubview:self.contentScrollView];
+    
+    self.secondAddressesCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(6.0f,
+                                                                                            CGRectGetMaxY(self.firstAddressesCollectionView.frame) + 6.0f,
+                                                                                            self.contentScrollView.frame.size.width - 12.0f,
+                                                                                            26.0f) collectionViewLayout:flowLayout];
+    [self.secondAddressesCollectionView setScrollEnabled:NO];
+    self.secondAddressesCollectionView.layer.cornerRadius = 5.0f;
+    
+    [self.secondAddressesCollectionView registerNib:cartListCellNib forCellWithReuseIdentifier:@"cartListCell"];
+    [self.secondAddressesCollectionView registerNib:cartListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
+    
+    [self.secondAddressesCollectionView setDataSource:self];
+    [self.secondAddressesCollectionView setDelegate:self];
+    
+    [self.contentScrollView addSubview:self.secondAddressesCollectionView];
+    [self.view addSubview:self.contentScrollView];
+    
+    JAButtonWithBlur *bottomView = [[JAButtonWithBlur alloc] init];
+    [bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - bottomView.frame.size.height, bottomView.frame.size.width, bottomView.frame.size.height)];
+    [bottomView addButton:@"Next" target:self action:@selector(nextStepButtonPressed)];
+    
+    [self.view addSubview:bottomView];
 }
 
 - (void) finishedLoading
@@ -146,7 +171,7 @@ UICollectionViewDelegate>
 #pragma mark UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -228,6 +253,15 @@ UICollectionViewDelegate>
     //        [self.navigationController pushViewController:pdv
     //                                             animated:YES];
     //    }
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+    return UIEdgeInsetsMake(6.0f, 0.0f, 0.0f, 0.0f);
+}
+
+-(void)nextStepButtonPressed
+{
+    
 }
 
 - (void) chooseBillingAndShippingAddressesAndGoToNextStepAction

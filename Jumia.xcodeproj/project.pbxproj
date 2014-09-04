@@ -89,6 +89,7 @@
 		B59DCA6119B710B100DE7960 /* RIRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5D19B710B100DE7960 /* RIRegion.m */; };
 		B59DCA6219B710B100DE7960 /* RICity.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5F19B710B100DE7960 /* RICity.m */; };
 		B59DCA6619B710DA00DE7960 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA6519B710DA00DE7960 /* FXBlurView.m */; };
+		B59DCA6A19B8521A00DE7960 /* JAButtonWithBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA6919B8521A00DE7960 /* JAButtonWithBlur.m */; };
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
 		B5A301BC19811D0700F71726 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
@@ -419,6 +420,8 @@
 		B59DCA6019B710B100DE7960 /* RICity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICity.h; sourceTree = "<group>"; };
 		B59DCA6419B710DA00DE7960 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		B59DCA6519B710DA00DE7960 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		B59DCA6819B8521A00DE7960 /* JAButtonWithBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAButtonWithBlur.h; path = Buttons/JAButtonWithBlur.h; sourceTree = "<group>"; };
+		B59DCA6919B8521A00DE7960 /* JAButtonWithBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAButtonWithBlur.m; path = Buttons/JAButtonWithBlur.m; sourceTree = "<group>"; };
 		B5A301A819811D0700F71726 /* Jumia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jumia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A301AC19811D0700F71726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5A301AD19811D0700F71726 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -894,6 +897,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B59DCA6719B851F700DE7960 /* Buttons */,
 				B510B00119AE466B00A9754A /* DynamicForms */,
 				B51777AF19A78FEB00ED0AC7 /* Headers */,
 				4A1892CF199399EC0036F327 /* ReviewCell */,
@@ -1167,6 +1171,15 @@
 				B59DCA6519B710DA00DE7960 /* FXBlurView.m */,
 			);
 			path = FXBlurView;
+			sourceTree = "<group>";
+		};
+		B59DCA6719B851F700DE7960 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				B59DCA6819B8521A00DE7960 /* JAButtonWithBlur.h */,
+				B59DCA6919B8521A00DE7960 /* JAButtonWithBlur.m */,
+			);
+			name = Buttons;
 			sourceTree = "<group>";
 		};
 		B5A3019F19811D0700F71726 = {
@@ -2203,6 +2216,7 @@
 				B5A3025319811E8A00F71726 /* AdXTracking.m in Sources */,
 				B5A302C619811E9200F71726 /* RIImageResolution.m in Sources */,
 				B5A302E619811E9200F71726 /* RIURLCacheWrapper.m in Sources */,
+				B59DCA6A19B8521A00DE7960 /* JAButtonWithBlur.m in Sources */,
 				B50B039D198A5420002046DF /* JALoginViewController.m in Sources */,
 				B5A302C019811E9200F71726 /* RICategory.m in Sources */,
 				B5A302CA19811E9200F71726 /* RISearchSuggestion.m in Sources */,
