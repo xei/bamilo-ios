@@ -28,7 +28,7 @@
 
 @interface JAPDVViewController ()
 <
-JAPDVGalleryViewDelegate
+    JAPDVGalleryViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
@@ -292,6 +292,9 @@ JAPDVGalleryViewDelegate
     }
     else if (self.product.productSimples.count > 1)
     {
+        [self.productInfoSection.sizeButton setTitle:@"Size"
+                                            forState:UIControlStateNormal];
+        
         [self.productInfoSection.sizeButton addTarget:self
                                                action:@selector(showSizePicker)
                                      forControlEvents:UIControlEventTouchUpInside];
