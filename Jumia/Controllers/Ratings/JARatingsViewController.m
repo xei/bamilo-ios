@@ -210,7 +210,7 @@
 - (CGFloat)calculateHeightForConfiguredSizingCell:(UITableViewCell *)sizingCell
 {
     [sizingCell setNeedsLayout];
-    [sizingCell layoutIfNeeded];
+    [sizingCell layoutSubviews];
     
     CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     
@@ -253,6 +253,8 @@
     }
     
     cell.labelAuthorDate.text = string;
+    
+    [cell layoutSubviews];
     
     return cell;
 }
