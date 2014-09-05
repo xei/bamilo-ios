@@ -198,6 +198,7 @@
 		B5A302F819811F1A00F71726 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F719811F1A00F71726 /* Foundation.framework */; };
 		B5A302FA19811F1E00F71726 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
 		B5A30303198121A400F71726 /* JABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A30301198121A400F71726 /* JABaseViewController.m */; };
+		B5C1E33719BA1E73009C422C /* UIImageView+JA.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1E33619BA1E73009C422C /* UIImageView+JA.m */; };
 		B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */; };
 		B5C61BC319B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BC219B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m */; };
 		B5C61BC519B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C61BC419B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib */; };
@@ -628,6 +629,8 @@
 		B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jumia-Prefix.pch"; sourceTree = "<group>"; };
 		B5A30301198121A400F71726 /* JABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABaseViewController.m; sourceTree = "<group>"; };
 		B5A30302198121A400F71726 /* JABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABaseViewController.h; sourceTree = "<group>"; };
+		B5C1E33519BA1E73009C422C /* UIImageView+JA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+JA.h"; path = "Categories/UIImageView+JA.h"; sourceTree = "<group>"; };
+		B5C1E33619BA1E73009C422C /* UIImageView+JA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+JA.m"; path = "Categories/UIImageView+JA.m"; sourceTree = "<group>"; };
 		B5C61BBE19B0BB7F00840E93 /* RIFieldOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldOption.h; sourceTree = "<group>"; };
 		B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIFieldOption.m; sourceTree = "<group>"; };
 		B5C61BC119B0DAD600840E93 /* JACheckBoxWithOptionsComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACheckBoxWithOptionsComponent.h; sourceTree = "<group>"; };
@@ -1267,6 +1270,7 @@
 		B5A301AA19811D0700F71726 /* Jumia */ = {
 			isa = PBXGroup;
 			children = (
+				B5C1E33419BA1E3D009C422C /* Categories */,
 				B50B03A8198A883D002046DF /* Utils */,
 				4AE242DB198655D900E37C90 /* View */,
 				B5A302FF1981218E00F71726 /* Controllers */,
@@ -1822,6 +1826,15 @@
 			path = BaseViewController;
 			sourceTree = "<group>";
 		};
+		B5C1E33419BA1E3D009C422C /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B5C1E33519BA1E73009C422C /* UIImageView+JA.h */,
+				B5C1E33619BA1E73009C422C /* UIImageView+JA.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		CE13787519A357B400CA0751 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -2211,6 +2224,7 @@
 				B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */,
 				4A454F4A199CE67500B44821 /* JAForgotPasswordViewController.m in Sources */,
 				B5A302DB19811E9200F71726 /* RIOperation.m in Sources */,
+				B5C1E33719BA1E73009C422C /* UIImageView+JA.m in Sources */,
 				B5A302D519811E9200F71726 /* RICountry.m in Sources */,
 				4A944FF51992805100C02734 /* RIProductRatings.m in Sources */,
 				B5A3025E19811E8A00F71726 /* UIImageView+WebCache.m in Sources */,
