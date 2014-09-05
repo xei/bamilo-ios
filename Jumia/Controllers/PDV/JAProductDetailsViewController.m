@@ -42,6 +42,8 @@
     self.labelName.text = self.stringName;
     
     self.view.backgroundColor = JABackgroundGrey;
+    self.featuresTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.descriptionTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     
     if(VALID_NOTEMPTY(self.stringOldPrice, NSString))
     {
@@ -112,7 +114,7 @@
     {
         self.featuresTitleLabel.text = @"Product Features";
         self.descriptionTitleLabel.text = @"Product Description";
-        
+
         self.featuresTextLabel.text = self.featuresText;
         [self.featuresTextLabel sizeToFit];
         
