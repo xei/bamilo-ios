@@ -408,7 +408,7 @@
     
     [self.view addSubview:ctaView];
     
-    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + 6);
+    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + ctaView.frame.size.height);
 }
 
 #pragma mark - Actions
