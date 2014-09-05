@@ -85,6 +85,7 @@
 		B542546B19AE9F7500C792FF /* JACartListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B542546919AE9F7500C792FF /* JACartListHeaderView.m */; };
 		B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		B56BBF3319A60D5400F4B1A3 /* JACartListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */; };
+		B57DC97E19B90AB10080C818 /* JAEditAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */; };
 		B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4119B4E92B00DE7960 /* RIField.m */; };
 		B59DCA5919B70C2E00DE7960 /* JATextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5819B70C2E00DE7960 /* JATextField.m */; };
 		B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5A19B7109300DE7960 /* JAAddNewAddressViewController.m */; };
@@ -420,6 +421,8 @@
 		B542546919AE9F7500C792FF /* JACartListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartListHeaderView.m; path = Jumia/View/Headers/JACartListHeaderView.m; sourceTree = SOURCE_ROOT; };
 		B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACartListHeaderView.xib; path = Jumia/View/Headers/JACartListHeaderView.xib; sourceTree = SOURCE_ROOT; };
 		B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACartListCell.xib; sourceTree = "<group>"; };
+		B57DC97C19B90AB10080C818 /* JAEditAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAEditAddressViewController.h; sourceTree = "<group>"; };
+		B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAEditAddressViewController.m; sourceTree = "<group>"; };
 		B59DCA4019B4E92B00DE7960 /* RIField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIField.h; sourceTree = "<group>"; };
 		B59DCA4119B4E92B00DE7960 /* RIField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIField.m; sourceTree = "<group>"; };
 		B59DCA5719B70C2E00DE7960 /* JATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextField.h; sourceTree = "<group>"; };
@@ -1160,6 +1163,8 @@
 				B50B039F198A5434002046DF /* JAAddressesViewController.m */,
 				B59DCA5B19B7109300DE7960 /* JAAddNewAddressViewController.h */,
 				B59DCA5A19B7109300DE7960 /* JAAddNewAddressViewController.m */,
+				B57DC97C19B90AB10080C818 /* JAEditAddressViewController.h */,
+				B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */,
 			);
 			path = Addresses;
 			sourceTree = "<group>";
@@ -2202,6 +2207,7 @@
 				B5A3025E19811E8A00F71726 /* UIImageView+WebCache.m in Sources */,
 				CE445879198BF15B00CE7E8D /* JACampaignsTeaserView.m in Sources */,
 				B59DCA7619B88DAD00DE7960 /* JASwitchCell.m in Sources */,
+				B57DC97E19B90AB10080C818 /* JAEditAddressViewController.m in Sources */,
 				4A39213419891FB200B70A9C /* JAMyAccountViewController.m in Sources */,
 				CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */,
 				B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */,

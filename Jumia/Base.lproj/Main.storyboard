@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
     <scenes>
         <!--Splash View Controller-->
@@ -1431,6 +1432,7 @@
                         <segue destination="R5h-jK-q53" kind="push" id="Tjj-8m-WXY"/>
                         <segue destination="Gh5-6E-R0E" kind="push" id="CEY-CM-Qfl"/>
                         <segue destination="fQL-zh-vpR" kind="push" id="sx1-VO-Ujm"/>
+                        <segue destination="npC-Ek-8yq" kind="push" id="c6r-y0-Qa4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zwP-v4-smR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2301,6 +2303,64 @@
             </objects>
             <point key="canvasLocation" x="361.33333333333331" y="1527.6833333333334"/>
         </scene>
+        <!--Edit Address View Controller-->
+        <scene sceneID="AQl-gz-qlq">
+            <objects>
+                <viewController storyboardIdentifier="editAddressViewController" automaticallyAdjustsScrollViewInsets="NO" id="npC-Ek-8yq" customClass="JAEditAddressViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MPZ-lh-f4X"/>
+                        <viewControllerLayoutGuide type="bottom" id="MZy-Q8-g84"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XKQ-wn-JwR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="LxP-DF-eGQ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ms2-bD-mVV">
+                                <rect key="frame" x="80" y="3" width="104" height="15"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="hbx-ay-Dyp">
+                                        <rect key="frame" x="14" y="1" width="9" height="12"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ktl-mZ-gHd">
+                                        <rect key="frame" x="29" y="1" width="42" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="42" id="MZL-Nx-wX7"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="hbx-ay-Dyp" firstAttribute="leading" secondItem="ms2-bD-mVV" secondAttribute="leading" constant="14" id="5VT-yK-SD5"/>
+                                    <constraint firstAttribute="centerY" secondItem="Ktl-mZ-gHd" secondAttribute="centerY" id="EcR-6T-gXI"/>
+                                    <constraint firstItem="Ktl-mZ-gHd" firstAttribute="leading" secondItem="hbx-ay-Dyp" secondAttribute="trailing" constant="6" id="dPV-BM-s3M"/>
+                                    <constraint firstAttribute="centerY" secondItem="hbx-ay-Dyp" secondAttribute="centerY" id="koL-Te-3Ou"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="QWR-kk-poU"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <outlet property="stepIcon" destination="hbx-ay-Dyp" id="yh8-0o-3Ri"/>
+                        <outlet property="stepIconLeftConstrain" destination="5VT-yK-SD5" id="ski-f6-VOW"/>
+                        <outlet property="stepLabel" destination="Ktl-mZ-gHd" id="AXC-7w-68b"/>
+                        <outlet property="stepLabelWidthConstrain" destination="MZL-Nx-wX7" id="72z-BR-Pwo"/>
+                        <outlet property="stepView" destination="ms2-bD-mVV" id="QMO-n4-uDw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ofY-Eg-f3a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-586" y="2365"/>
+        </scene>
         <!--Shipping View Controller-->
         <scene sceneID="q56-6o-47V">
             <objects>
@@ -2642,7 +2702,10 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination" type="retina4">
+            <size key="portraitSize" width="320" height="568"/>
+            <size key="landscapeSize" width="568" height="320"/>
+        </simulatedScreenMetrics>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="BOh-Tr-8Lm"/>

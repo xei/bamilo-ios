@@ -485,9 +485,11 @@ FBLoginViewDelegate
         }
         else
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                 object:nil
-                                                              userInfo:nil];
+                                                              userInfo:userInfo];
         }
         
     } andFailureBlock:^(id errorObject) {
@@ -546,9 +548,11 @@ FBLoginViewDelegate
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                             object:nil
-                                                          userInfo:nil];
+                                                          userInfo:userInfo];
     } andFailureBlock:^(id errorObject) {
         [self hideLoading];
         
@@ -608,12 +612,23 @@ FBLoginViewDelegate
                                                  
                                                  [self hideLoading];
                                                  
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                                     object:nil];
-                                                 
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
-                                                                                                     object:nil
-                                                                                                   userInfo:nil];
+                                                 if([RICustomer checkIfUserHasAddresses])
+                                                 {
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                                                                         object:nil
+                                                                                                       userInfo:nil];
+                                                 }
+                                                 else
+                                                 {
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                                                                         object:nil];
+                                                     
+                                                     NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                                                     
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
+                                                                                                         object:nil
+                                                                                                       userInfo:userInfo];
+                                                 }
                                              } andFailureBlock:^(NSArray *errorObject) {
                                                  [self hideLoading];
                                                  

@@ -31,8 +31,8 @@
                                                           userInfo:nil];
     }
     else if([@"paymentMethod" isEqualToString:nextStep])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddFirstAddressScreenNotification
+    {        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
                                                             object:nil
                                                           userInfo:nil];
     }

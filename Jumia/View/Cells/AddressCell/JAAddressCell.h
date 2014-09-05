@@ -16,6 +16,8 @@
 
 -(void)loadWithAddress:(RIAddress*)address;
 
--(void)changeAddressState:(BOOL)selectedAddress;
+-(void)selectAddress;
+
+-(void)deselectAddress;
 
 @end

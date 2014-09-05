@@ -26,6 +26,7 @@
 //************
 
 //************ center navigation controller notifications
+#define kCloseCurrentScreenNotification @"NOTIFICATION_CLOSE_CURRENT_SCREEN"
 #define kMenuDidSelectOptionNotification @"NOTIFICATION_SELECTED_ITEM_MENU"
 #define kMenuDidSelectLeafCategoryNotification @"NOTIFICATION_SELECTED_LEAF_CATEGORY"
 #define kShowHomeScreenNotification @"NOTIFICATION_HOME_SCREEN"
@@ -37,10 +38,8 @@
 #define kShowCheckoutForgotPasswordScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_FORGOT_PASSWORD_SCREEN"
 #define kShowCheckoutLoginScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_LOGIN_SCREEN"
 #define kShowCheckoutAddressesScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_ADDRESSES_SCREEN"
-#define kShowCheckoutAddFirstAddressScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_ADD_FIRST_ADDRESS_SCREEN"
-#define kShowCheckoutAddBillingAddressScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_ADD_BILLING_ADDRESS_SCREEN"
-#define kShowCheckoutAddShippingAddressScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_ADD_SHIPPING_ADDRESS_SCREEN"
-#define kShowCheckoutAddOtherAddressScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_ADD_OTHER_ADDRESS_SCREEN"
+#define kShowCheckoutAddAddressScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_ADD_ADDRESS_SCREEN"
+#define kShowCheckoutEditAddressScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_EDIT_ADDRESS_SCREEN"
 #define kShowCheckoutShippingScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_SHIPPING_SCREEN"
 #define kShowCheckoutPaymentScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_PAYMENT_SCREEN"
 #define kShowCheckoutFinishScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_FINISH_SCREEN"
