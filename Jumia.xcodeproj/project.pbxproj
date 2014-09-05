@@ -2437,6 +2437,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f352eb6b-9b02-4768-b283-a392ca9c53ea";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALID_ARCHS = "armv7s armv7";
 			};
@@ -2575,6 +2576,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f352eb6b-9b02-4768-b283-a392ca9c53ea";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALID_ARCHS = "armv7s armv7";
 			};
@@ -2607,6 +2609,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f352eb6b-9b02-4768-b283-a392ca9c53ea";
 				VALID_ARCHS = "armv7s armv7";
 			};
 			name = Release;
