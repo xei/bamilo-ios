@@ -157,16 +157,19 @@
                    self.nameTextField.hidden = NO;
                    self.nameTextField.placeholder = @"Name";
                    self.nameTextField.delegate = self;
+                   self.nameTextField.tag = 0;
                    self.imageViewName.hidden = NO;
                } else if ([field.uid isEqualToString:@"RatingForm_title"]) {
                    self.titleTextField.hidden = NO;
                    self.titleTextField.placeholder = @"Title";
                    self.titleTextField.delegate = self;
+                   self.titleTextField.tag = 1;
                    self.imageViewTitle.hidden = NO;
                } else if ([field.uid isEqualToString:@"RatingForm_comment"]) {
                    self.commentTextField.hidden = NO;
                    self.commentTextField.placeholder = @"Comment";
                    self.commentTextField.delegate = self;
+                   self.commentTextField.tag = 2;
                    self.imageViewComment.hidden = NO;
                }
            }
@@ -194,26 +197,46 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if (self.originalFrame.origin.y == self.centerView.frame.origin.y) {
-        [UIView animateWithDuration:0.5f
-                         animations:^{
-                             CGRect frame = self.centerView.frame;
-                             frame.origin.y -= 100;
-                             self.centerView.frame = frame;
-                         }];
-    }
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         CGRect frame = self.centerView.frame;
+                         
+                         if (self.centerView.frame.origin.y < 0)
+                         {
+                             frame.origin.y -= 35;
+                         }
+                         else
+                         {
+                             frame.origin.y -= (textField.center.y - 30);
+                         }
+                         
+                         self.centerView.frame = frame;
+                     }];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         self.centerView.frame = self.originalFrame;
-                     }];
-    
-    [textField resignFirstResponder];
-    
-    return YES;
+    if (0 == textField.tag)
+    {
+        [self.titleTextField becomeFirstResponder];
+        return NO;
+    }
+    else if (1 == textField.tag)
+    {
+        [self.commentTextField becomeFirstResponder];
+        return NO;
+    }
+    else
+    {
+        [UIView animateWithDuration:0.5f
+                         animations:^{
+                             self.centerView.frame = self.originalFrame;
+                         }];
+        
+        [textField resignFirstResponder];
+        
+        return YES;
+    }
 }
 
 #pragma mark - Send review
