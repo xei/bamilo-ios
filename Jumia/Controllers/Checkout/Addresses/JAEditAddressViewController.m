@@ -53,7 +53,6 @@ UIPickerViewDelegate>
 @property (assign, nonatomic) BOOL hasErrors;
 @property (strong, nonatomic) NSString *nextStep;
 @property (strong, nonatomic) RICheckout *checkout;
-@property (assign, nonatomic) BOOL isBillingAndShipping;
 
 @end
 
@@ -72,8 +71,8 @@ UIPickerViewDelegate>
     [RIForm getForm:@"addressedit"
        successBlock:^(RIForm *form)
      {
-         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.addressViewCurrentY];
-         
+         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self values:[self getAddressValues] startingPosition:self.addressViewCurrentY];
+
          for(UIView *view in self.dynamicForm.formViews)
          {
              [self.contentView addSubview:view];
@@ -133,6 +132,48 @@ UIPickerViewDelegate>
     [self.view addSubview:self.bottomView];
 }
 
+-(NSDictionary*)getAddressValues
+{
+    NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
+    
+    if(VALID_NOTEMPTY([self.editAddress firstName], NSString))
+    {
+        [values setObject:[self.editAddress firstName] forKey:@"first_name"];
+    }
+    
+    if(VALID_NOTEMPTY([self.editAddress lastName], NSString))
+    {
+        [values setObject:[self.editAddress lastName] forKey:@"last_name"];
+    }
+    
+    if(VALID_NOTEMPTY([self.editAddress address], NSString))
+    {
+        [values setObject:[self.editAddress address] forKey:@"address1"];
+    }
+    
+    if(VALID_NOTEMPTY([self.editAddress address2], NSString))
+    {
+        [values setObject:[self.editAddress address2] forKey:@"address2"];
+    }
+    
+    if(VALID_NOTEMPTY([self.editAddress city], NSString))
+    {
+        [values setObject:[self.editAddress city] forKey:@"city"];
+    }
+    
+    if(VALID_NOTEMPTY([self.editAddress postcode], NSString))
+    {
+        [values setObject:[self.editAddress postcode] forKey:@"postcode"];
+    }
+    
+    if(VALID_NOTEMPTY([self.editAddress phone], NSString))
+    {
+        [values setObject:[self.editAddress phone] forKey:@"phone"];
+    }
+    
+    return values;
+}
+
 -(void)setupAddressView
 {
     self.addressViewCurrentY = 0.0f;
@@ -144,7 +185,7 @@ UIPickerViewDelegate>
     self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, self.addressViewCurrentY, self.contentView.frame.size.width - 12.0f, 25.0f)];
     [self.headerLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.headerLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.headerLabel setText:@"Add New Address"];
+    [self.headerLabel setText:@"Edit Address"];
     [self.headerLabel setBackgroundColor:[UIColor clearColor]];
     [self.contentView addSubview:self.headerLabel];
     self.addressViewCurrentY = CGRectGetMaxY(self.headerLabel.frame);
@@ -159,40 +200,21 @@ UIPickerViewDelegate>
 
 -(void)finishedFormLoading
 {
-    JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
-    [check setup];
-    [check.labelText setText:@"Billing to the same address"];
-    [check.switchComponent setOn:YES];
-    [check.switchComponent addTarget:self action:@selector(changedAddressState:) forControlEvents:UIControlEventValueChanged];
-    
-    CGRect frame = check.frame;
-    frame.origin.y = self.addressViewCurrentY;
-    check.frame = frame;
-    
-    self.addressViewCurrentY = CGRectGetMaxY(check.frame);
-    [self.contentView addSubview:check];
-    
     self.addressViewCurrentY += 6.0f;
     
     [self.contentView setFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.addressViewCurrentY)];
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.contentView.frame.origin.y + self.contentView.frame.size.height + self.bottomView.frame.size.height)];
 }
 
--(void)changedAddressState:(id)sender
-{
-    UISwitch *switchView = sender;
-    self.isBillingAndShipping = [switchView isOn];
-}
-
 -(void)saveChangesButtonPressed
 {
     [self showLoading];
     
-    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.dynamicForm getValues]];
     
-    [parameters setValue:@"1" forKey:@"is_default_shipping"];
-    [parameters setValue:@"1" forKey:@"is_default_billing"];
+    [parameters setValue:[self.editAddress uid] forKey:@"Alice_Module_Customer_Model_AddressForm[id_customer_address]"];
+    [parameters setValue:[self.editAddress isDefaultShipping] forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
+    [parameters setValue:[self.editAddress isDefaultBilling] forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
     
     [RIForm sendForm:[self.dynamicForm form]
           parameters:parameters
@@ -447,7 +469,7 @@ UIPickerViewDelegate>
              {
                  self.regionsDataset = [regions copy];
                  
-                 NSString *selectedValue = [regionComponent getSelectedValue];
+                 NSString *selectedValue = [self.editAddress customerAddressRegionId];
                  
                  if(VALID_NOTEMPTY(selectedValue, NSString) && VALID_NOTEMPTY(regions, NSArray))
                  {
@@ -473,13 +495,27 @@ UIPickerViewDelegate>
                      [RICity getCitiesForUrl:[citiesComponent getApiCallUrl] region:[self.selectedRegion uid] successBlock:^(NSArray *cities) {
                          self.citiesDataset = [cities copy];
                          
+                          NSString *selectedValue = [self.editAddress customerAddressCityId];
                          if(VALID_NOTEMPTY(cities, NSArray))
                          {
-                             RICity *city = [cities objectAtIndex:0];
+                             if(VALID_NOTEMPTY(selectedValue, NSString))
+                             {
+                                 for(RICity *city in cities)
+                                 {
+                                     if([selectedValue isEqualToString:[city uid]])
+                                     {
+                                         self.selectedCity = city;
+                                         [self.dynamicForm setCityValue:self.selectedCity];
+                                         break;
+                                     }
+                                 }
+                             }
                              
-                             self.selectedCity = city;
-                             
-                             [self.dynamicForm setCityValue:city];
+                             if(!VALID_NOTEMPTY(self.selectedCity, RICity))
+                             {
+                                 self.selectedCity =  [cities objectAtIndex:0];
+                                 [self.dynamicForm setCityValue:self.selectedCity];
+                             }
                          }
                          
                          [self hideLoading];

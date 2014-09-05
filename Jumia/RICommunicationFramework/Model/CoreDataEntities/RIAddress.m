@@ -16,6 +16,7 @@
 @dynamic firstName;
 @dynamic lastName;
 @dynamic address;
+@dynamic address2;
 @dynamic city;
 @dynamic postcode;
 @dynamic phone;
@@ -139,6 +140,9 @@
     }
     if ([addressJSON objectForKey:@"address1"]) {
         newAddress.address = [addressJSON objectForKey:@"address1"];
+    }
+    if ([addressJSON objectForKey:@"address2"]) {
+        newAddress.address2 = [addressJSON objectForKey:@"address2"];
     }
     if ([addressJSON objectForKey:@"city"]) {
         newAddress.city = [addressJSON objectForKey:@"city"];

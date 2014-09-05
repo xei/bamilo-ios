@@ -39,11 +39,11 @@
     self.field = field;
     [self.textField setPlaceholder:field.label];
     
-    if(VALID_NOTEMPTY(field.requiredMessage, NSString))
+    [self.textField setTextColor:UIColorFromRGB(0x666666)];
+    [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    
+    if([field.required boolValue])
     {
-        [self.textField setTextColor:UIColorFromRGB(0x666666)];
-        [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-        
         [self.requiredSymbol setHidden:NO];
         [self.requiredSymbol setTextColor:UIColorFromRGB(0xfaa41a)];
     }
@@ -69,7 +69,7 @@
 -(NSDictionary*)getValues
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    if([self.field.required boolValue] || VALID_NOTEMPTY(self.storedValue, NSString))
+    if([self.field.required boolValue] || VALID_NOTEMPTY(self.textField.text, NSString))
     {
         if(!self.hasError)
         {
@@ -118,7 +118,7 @@
 
 - (BOOL)isValid
 {
-    if ((self.field.requiredMessage.length > 0) && (self.textField.text.length == 0))
+    if ([self.field.required boolValue] && !VALID_NOTEMPTY(self.textField.text, NSString))
     {
         [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
         [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
@@ -130,6 +130,25 @@
         if (self.field.regex.length > 0)
         {
             if (![self validateInputWithString:self.textField.text andRegularExpression:self.field.regex])
+            {
+                [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
+                [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+                
+                return NO;
+            }
+        }
+        
+        if([self.field.required boolValue] || VALID_NOTEMPTY(self.textField.text, NSString))
+        {        
+            if(VALID_NOTEMPTY(self.field.min, NSNumber) && [self.field.min intValue] > [self.textField.text length])
+            {
+                [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
+                [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+                
+                return NO;
+            }
+            
+            if(VALID_NOTEMPTY(self.field.max, NSNumber) && [self.field.max intValue] < [self.textField.text length])
             {
                 [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
                 [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];

@@ -52,6 +52,18 @@
         }
     }
     
+    if(VALID_NOTEMPTY(address.address2, NSString))
+    {
+        if(VALID_NOTEMPTY(addressText, NSString))
+        {
+            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.address2];
+        }
+        else
+        {
+            addressText = address.address2;
+        }
+    }
+    
     if(VALID_NOTEMPTY(address.city, NSString))
     {
         if(VALID_NOTEMPTY(addressText, NSString))
