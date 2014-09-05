@@ -11,10 +11,16 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "RIProductRatings.h"
+#import "RIRatings.h"
+#import "JADynamicForm.h"
+#import "JAStarsComponent.h"
+#import "RICustomer.h"
 
 @interface JANewRatingViewController ()
 <
-    UITextFieldDelegate
+    UITextFieldDelegate,
+    JADynamicFormDelegate,
+    UIAlertViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -23,21 +29,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *labelNewPrice;
 @property (weak, nonatomic) IBOutlet UILabel *labelFixed;
-@property (weak, nonatomic) IBOutlet UILabel *labelPrice;
-@property (weak, nonatomic) IBOutlet UILabel *labelAppearance;
-@property (weak, nonatomic) IBOutlet UILabel *labelQuality;
-@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
-@property (weak, nonatomic) IBOutlet UITextField *commentTextField;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewName;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewTitle;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewComment;
 @property (weak, nonatomic) IBOutlet UIButton *sendReview;
 @property (weak, nonatomic) IBOutlet UIView *centerView;
+@property (strong, nonatomic) JADynamicForm *ratingDynamicForm;
 @property (assign, nonatomic) CGRect originalFrame;
-@property (assign, nonatomic) NSInteger priceStars;
-@property (assign, nonatomic) NSInteger appearanceStars;
-@property (assign, nonatomic) NSInteger qualityStars;
+@property (strong, nonatomic) NSMutableArray *ratingStarsArray;
 
 @end
 
@@ -55,10 +51,6 @@
     
     self.brandLabel.text = self.ratingProductBrand;
     self.nameLabel.text = self.ratingProductNameForLabel;
-    
-    [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-    [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-    [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
     
     if ([self.ratingProductNewPriceForLabel floatValue] > 0.0)
     {
@@ -105,7 +97,6 @@
         self.labelNewPrice.attributedText = stringNewPrice;
         
         [self.labelNewPrice sizeToFit];
-        [self.labelPrice sizeToFit];
         [self.topView layoutSubviews];
     }
     else
@@ -135,57 +126,77 @@
     }
     
     self.labelFixed.text = @"You have used this Product? Rate it now!";
-    self.labelPrice.text = @"Price";
-    self.labelAppearance.text = @"Appearance";
-    self.labelQuality.text = @"Quality";
-    self.titleTextField.placeholder = @"Title";
-    self.commentTextField.placeholder = @"Title";
     
     [self.sendReview setTitle:@"Send Review"
                      forState:UIControlStateNormal];
     
+    [self.sendReview setTitleColor:UIColorFromRGB(0x4e4e4e)
+                          forState:UIControlStateNormal];
+    
     self.centerView.layer.cornerRadius = 4.0f;
-    self.sendReview.layer.cornerRadius = 4.0f;
 
     [self showLoading];
     
-    [RIForm getForm:@"rating"
-       successBlock:^(RIForm *form) {
-           
-           for (RIField *field in form.fields) {
-               if ([field.uid isEqualToString:@"RatingForm_name"]) {
-                   self.nameTextField.hidden = NO;
-                   self.nameTextField.placeholder = @"Name";
-                   self.nameTextField.delegate = self;
-                   self.nameTextField.tag = 0;
-                   self.imageViewName.hidden = NO;
-               } else if ([field.uid isEqualToString:@"RatingForm_title"]) {
-                   self.titleTextField.hidden = NO;
-                   self.titleTextField.placeholder = @"Title";
-                   self.titleTextField.delegate = self;
-                   self.titleTextField.tag = 1;
-                   self.imageViewTitle.hidden = NO;
-               } else if ([field.uid isEqualToString:@"RatingForm_comment"]) {
-                   self.commentTextField.hidden = NO;
-                   self.commentTextField.placeholder = @"Comment";
-                   self.commentTextField.delegate = self;
-                   self.commentTextField.tag = 2;
-                   self.imageViewComment.hidden = NO;
+    __block float startingY = self.labelFixed.frame.origin.y + 22;
+    
+    [RIRatings getRatingsWithSuccessBlock:^(id ratings) {
+        
+        self.ratingStarsArray = [NSMutableArray new];
+        
+        for (RIRatingsDetails *option in ratings) {
+            
+            JAStarsComponent *stars = [JAStarsComponent getNewJAStarsComponent];
+            stars.title.text = option.title;
+            stars.ratingOptions = option.options;
+            stars.starValue = 1;
+            
+            CGRect frame = stars.frame;
+            frame.origin.y = startingY;
+            
+            stars.frame = frame;
+            
+            [self.centerView addSubview:stars];
+            startingY += stars.frame.size.height + 6;
+            
+            [self.ratingStarsArray addObject:stars];
+        }
+        
+        [RIForm getForm:@"rating"
+           successBlock:^(RIForm *form) {
+               
+               self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:form
+                                                                   delegate:self
+                                                           startingPosition:startingY-10];
+               
+               for (UIView *view in self.ratingDynamicForm.formViews)
+               {
+                   [self.centerView addSubview:view];
                }
-           }
-           
-           [self hideLoading];
-           
-       } failureBlock:^(NSArray *errorMessage) {
-           
-           [self hideLoading];
-
-           [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                       message:@"There was an error"
-                                      delegate:nil
-                             cancelButtonTitle:nil
-                             otherButtonTitles:@"OK", nil] show];
-       }];
+               
+               [self hideLoading];
+               
+           } failureBlock:^(NSArray *errorMessage) {
+               
+               [self hideLoading];
+               
+               [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                           message:@"There was an error"
+                                          delegate:nil
+                                 cancelButtonTitle:nil
+                                 otherButtonTitles:@"OK", nil] show];
+           }];
+        
+    } andFailureBlock:^(NSArray *errorMessages) {
+        
+        [self hideLoading];
+        
+        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                    message:@"There was an error"
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"OK", nil] show];
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -193,9 +204,9 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Textfield delegate
+#pragma mark JADynamicFormDelegate
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
+- (void)changedFocus:(UIView *)view
 {
     [UIView animateWithDuration:0.5f
                      animations:^{
@@ -203,273 +214,100 @@
                          
                          if (self.centerView.frame.origin.y < 0)
                          {
-                             frame.origin.y -= 35;
+                             frame.origin.y -= 44;
                          }
                          else
                          {
-                             frame.origin.y -= (textField.center.y - 30);
+                             frame.origin.y -= (view.center.y - 35);
                          }
                          
                          self.centerView.frame = frame;
                      }];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (void)lostFocus
 {
-    if (0 == textField.tag)
-    {
-        [self.titleTextField becomeFirstResponder];
-        return NO;
-    }
-    else if (1 == textField.tag)
-    {
-        [self.commentTextField becomeFirstResponder];
-        return NO;
-    }
-    else
-    {
-        [UIView animateWithDuration:0.5f
-                         animations:^{
-                             self.centerView.frame = self.originalFrame;
-                         }];
-        
-        [textField resignFirstResponder];
-        
-        return YES;
-    }
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         self.centerView.frame = self.originalFrame;
+                     }];
 }
 
 #pragma mark - Send review
 
 - (IBAction)sendReview:(id)sender
 {
-    if ((self.nameTextField.text.length > 0) && (self.commentTextField.text.length > 0) && (self.titleTextField.text.length > 0))
-    {
-        [self showLoading];
-        
-        NSInteger finalRating = (self.priceStars  + self.appearanceStars + self.qualityStars) / 3;
-        
-        [RIProductRatings sendRatingWithSku:self.ratingProductSku
-                                      stars:[NSString stringWithFormat:@"%d", finalRating]
-                                     userId:@"0"
-                                       name:self.nameTextField.text
-                                      title:self.titleTextField.text
-                                    comment:self.commentTextField.text
-                               successBlock:^(BOOL success) {
-                                   
-                                   [self hideLoading];
-                                   
-                                   [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                               message:@"Review submited with sucess."
-                                                              delegate:nil
-                                                     cancelButtonTitle:nil
-                                                     otherButtonTitles:@"Ok", nil] show];
-                                   
-                               } andFailureBlock:^(NSArray *errorMessages) {
-                                  
-                                   [self hideLoading];
-                                   
-                                   [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                               message:@"There was an error sending the review!"
-                                                              delegate:nil
-                                                     cancelButtonTitle:nil
-                                                     otherButtonTitles:@"Ok", nil] show];
-                                   
-                               }];
-    }
-    else
-    {
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                   message:@"Please fill all the fields."
-                                  delegate:nil
-                         cancelButtonTitle:nil
-                          otherButtonTitles:@"Ok", nil] show];
-    }
-}
-
-- (IBAction)changeStars:(id)sender
-{
-    NSInteger tag = ((UIButton *)sender).tag;
+    [self showLoading];
     
-    switch (tag) {
-        case 1001:
-        {
-            [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1002]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            self.priceStars = 1;
-        }
-            break;
-            
-        case 1002:
-        {
-            [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            self.priceStars = 2;
-        }
-            break;
-            
-        case 1003:
-        {
-            [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            self.priceStars = 3;
-        }
-            break;
-            
-        case 1004:
-        {
-            [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            self.priceStars = 4;
-        }
-            break;
-            
-        case 1005:
-        {
-            [((UIButton *)[self.view viewWithTag:1001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:1005]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            self.priceStars = 5;
-        }
-            break;
-            
-        case 2001:
-        {
-            [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2002]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            self.appearanceStars = 1;
-        }
-            break;
-            
-        case 2002:
-        {
-            [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            self.appearanceStars = 2;
-        }
-            break;
-            
-        case 2003:
-        {
-            [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            self.appearanceStars = 3;
-        }
-            break;
-            
-        case 2004:
-        {
-            [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            self.appearanceStars = 4;
-        }
-            break;
-            
-        case 2005:
-        {
-            [((UIButton *)[self.view viewWithTag:2001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:2005]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            self.appearanceStars = 5;
-        }
-            break;
-            
-        case 3001:
-        {
-            [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3002]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            self.qualityStars = 1;
-        }
-            break;
-            
-        case 3002:
-        {
-            [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            self.qualityStars = 2;
-        }
-            break;
-            
-        case 3003:
-        {
-            [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            self.qualityStars = 3;
-        }
-            break;
-            
-        case 3004:
-        {
-            [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getEmptyStar] forState:UIControlStateNormal];
-            self.qualityStars = 4;
-        }
-            break;
-            
-        case 3005:
-        {
-            [((UIButton *)[self.view viewWithTag:3001]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3002]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3003]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3004]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            [((UIButton *)[self.view viewWithTag:3005]) setImage:[self getFilledStar] forState:UIControlStateNormal];
-            self.qualityStars = 5;
-        }
-            break;
-            
-        default:
-            break;
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.ratingDynamicForm getValues]];
+    
+    for (JAStarsComponent *component in self.ratingStarsArray)
+    {
+        RIRatingsOptions *option = [component.ratingOptions objectAtIndex:(component.starValue - 1)];
+        NSString *key = [NSString stringWithFormat:@"rating-option--%@", option.fkRatingType];
+        
+        [parameters addEntriesFromDictionary:@{key: option.value}];
     }
+    
+    [parameters addEntriesFromDictionary:@{@"rating-customer": [RICustomer getCustomerId]}];
+    [parameters addEntriesFromDictionary:@{@"rating-catalog-sku": self.ratingProductSku}];
+    
+    [RIForm sendForm:self.ratingDynamicForm.form
+          parameters:parameters
+        successBlock:^(id object) {
+            
+            [self hideLoading];
+            
+            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                        message:@"Review submited with sucess."
+                                       delegate:self
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"Ok", nil] show];
+            
+            
+        } andFailureBlock:^(id errorObject) {
+            
+            [self hideLoading];
+            
+            
+            if(VALID_NOTEMPTY(errorObject, NSDictionary))
+            {
+                [self.ratingDynamicForm validateFields:errorObject];
+                
+                [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                            message:@"Invalid fields"
+                                           delegate:nil
+                                  cancelButtonTitle:nil
+                                  otherButtonTitles:@"OK", nil] show];
+            }
+            else if(VALID_NOTEMPTY(errorObject, NSArray))
+            {
+                [self.ratingDynamicForm checkErrors];
+                
+                [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                            message:[errorObject componentsJoinedByString:@","]
+                                           delegate:nil
+                                  cancelButtonTitle:nil
+                                  otherButtonTitles:@"OK", nil] show];
+            }
+            else
+            {
+                [self.ratingDynamicForm checkErrors];
+                
+                [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                            message:@"Generic error"
+                                           delegate:nil
+                                  cancelButtonTitle:nil
+                                  otherButtonTitles:@"OK", nil] show];
+            }
+        }];
 }
 
-- (UIImage *)getEmptyStar
-{
-    return [UIImage imageNamed:@"img_rating_star_big_empty"];
-}
+#pragma mark - Alertview delegate
 
-- (UIImage *)getFilledStar
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    return [UIImage imageNamed:@"img_rating_star_big_full"];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

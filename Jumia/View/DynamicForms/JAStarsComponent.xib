@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="JAStarsComponent">
+            <rect key="frame" x="0.0" y="0.0" width="308" height="30"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cJq-dk-jdo">
+                    <rect key="frame" x="9" y="4" width="116" height="21"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mMf-al-IQ3">
+                    <rect key="frame" x="133" y="1" width="27" height="27"/>
+                    <state key="normal" image="img_rating_star_big_full">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="changeStars:" destination="iN0-l3-epB" eventType="touchUpInside" id="kbr-TN-9dZ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJy-w4-nkj">
+                    <rect key="frame" x="168" y="1" width="27" height="27"/>
+                    <state key="normal" image="img_rating_star_big_empty">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="changeStars:" destination="iN0-l3-epB" eventType="touchUpInside" id="C6O-pE-PvU"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qXU-ro-htM">
+                    <rect key="frame" x="203" y="1" width="27" height="27"/>
+                    <state key="normal" image="img_rating_star_big_empty">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="changeStars:" destination="iN0-l3-epB" eventType="touchUpInside" id="Xr5-p6-ZAP"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yet-ou-hyj">
+                    <rect key="frame" x="238" y="1" width="27" height="27"/>
+                    <state key="normal" image="img_rating_star_big_empty">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="changeStars:" destination="iN0-l3-epB" eventType="touchUpInside" id="Vv5-C2-H4g"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0O-ra-b07">
+                    <rect key="frame" x="273" y="1" width="27" height="27"/>
+                    <state key="normal" image="img_rating_star_big_empty">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="changeStars:" destination="iN0-l3-epB" eventType="touchUpInside" id="QLC-VN-GY6"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="starButton1" destination="mMf-al-IQ3" id="093-Qx-GoR"/>
+                <outlet property="starButton2" destination="OJy-w4-nkj" id="av1-1q-9Yo"/>
+                <outlet property="starButton3" destination="qXU-ro-htM" id="Ins-rz-DMo"/>
+                <outlet property="starButton4" destination="yet-ou-hyj" id="5Qg-5Z-2te"/>
+                <outlet property="starButton5" destination="H0O-ra-b07" id="i2b-T5-Llb"/>
+                <outlet property="title" destination="cJq-dk-jdo" id="N9R-YV-kMu"/>
+            </connections>
+            <point key="canvasLocation" x="510" y="109"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="img_rating_star_big_empty" width="27" height="27"/>
+        <image name="img_rating_star_big_full" width="27" height="27"/>
+    </resources>
+</document>

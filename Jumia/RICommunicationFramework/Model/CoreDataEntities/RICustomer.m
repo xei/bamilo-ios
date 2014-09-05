@@ -91,7 +91,24 @@
     return operationID;
 }
 
++ (NSString *)getCustomerId
+{
+    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
+    
+    if (customers.count > 0)
+    {
+        RICustomer *customer = (RICustomer *)customers[0];
+                                
+        return customer.idCustomer;
+    }
+    else
+    {
+        return @"0";
+    }
+}
+
 #pragma mark - Facebook Login
+
 + (NSString*)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
                                       successBlock:(void (^)(id customer))successBlock
                                    andFailureBlock:(void (^)(NSArray *errorObject))failureBlock

@@ -41,6 +41,8 @@
 		4A4ABF0E198B9DE600342D92 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */; };
 		4A4F12EA198FF35600F93C89 /* JAPDVRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A4F12E9198FF35600F93C89 /* JAPDVRelatedItem.xib */; };
 		4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */; };
+		4A85AEEB19B9D410000019CE /* JAStarsComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A85AEEA19B9D410000019CE /* JAStarsComponent.m */; };
+		4A85AEED19B9D4A0000019CE /* JAStarsComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A85AEEC19B9D4A0000019CE /* JAStarsComponent.xib */; };
 		4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A862226198FA00D007FD76A /* JAPDVVariations.xib */; };
 		4A944FF51992805100C02734 /* RIProductRatings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF41992805100C02734 /* RIProductRatings.m */; };
 		4A944FF8199290F200C02734 /* JARatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF7199290F200C02734 /* JARatingsViewController.m */; };
@@ -346,6 +348,9 @@
 		4A4F12E9198FF35600F93C89 /* JAPDVRelatedItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVRelatedItem.xib; sourceTree = "<group>"; };
 		4A7F747F198A4EDA00621C0D /* JACenterNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACenterNavigationController.h; sourceTree = "<group>"; };
 		4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACenterNavigationController.m; sourceTree = "<group>"; };
+		4A85AEE919B9D410000019CE /* JAStarsComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAStarsComponent.h; sourceTree = "<group>"; };
+		4A85AEEA19B9D410000019CE /* JAStarsComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAStarsComponent.m; sourceTree = "<group>"; };
+		4A85AEEC19B9D4A0000019CE /* JAStarsComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAStarsComponent.xib; sourceTree = "<group>"; };
 		4A862226198FA00D007FD76A /* JAPDVVariations.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVVariations.xib; sourceTree = "<group>"; };
 		4A944FF31992805100C02734 /* RIProductRatings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIProductRatings.h; sourceTree = "<group>"; };
 		4A944FF41992805100C02734 /* RIProductRatings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIProductRatings.m; sourceTree = "<group>"; };
@@ -1120,6 +1125,9 @@
 				B5C61BC119B0DAD600840E93 /* JACheckBoxWithOptionsComponent.h */,
 				B5C61BC219B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m */,
 				B5C61BC419B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib */,
+				4A85AEE919B9D410000019CE /* JAStarsComponent.h */,
+				4A85AEEA19B9D410000019CE /* JAStarsComponent.m */,
+				4A85AEEC19B9D4A0000019CE /* JAStarsComponent.xib */,
 			);
 			path = DynamicForms;
 			sourceTree = "<group>";
@@ -2081,6 +2089,7 @@
 				CEDEB9C4199BA8FA0022BAB5 /* slider-metal-handle@2x.png in Resources */,
 				B5A3024A19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
 				B5A3024719811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */,
+				4A85AEED19B9D4A0000019CE /* JAStarsComponent.xib in Resources */,
 				CEDEB9AF199BA8FA0022BAB5 /* slider-default-handle-highlighted.png in Resources */,
 				B5A3024319811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */,
 				CEDEB9B5199BA8FA0022BAB5 /* slider-default-trackBackground.png in Resources */,
@@ -2208,6 +2217,7 @@
 				CE445879198BF15B00CE7E8D /* JACampaignsTeaserView.m in Sources */,
 				B59DCA7619B88DAD00DE7960 /* JASwitchCell.m in Sources */,
 				B57DC97E19B90AB10080C818 /* JAEditAddressViewController.m in Sources */,
+				4A85AEEB19B9D410000019CE /* JAStarsComponent.m in Sources */,
 				4A39213419891FB200B70A9C /* JAMyAccountViewController.m in Sources */,
 				CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */,
 				B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */,
