@@ -10,7 +10,6 @@
 #import "JAPDVImageSection.h"
 #import "JAPDVVariations.h"
 #import "JAPDVProductInfo.h"
-#import "JACTAButtons.h"
 #import "JAPDVRelatedItem.h"
 #import "JAPDVSingleRelatedItem.h"
 #import "UIImageView+WebCache.h"
@@ -28,6 +27,8 @@
 #import "JAAppDelegate.h"
 #import "JAShareActivityProvider.h"
 #import "JAActivityViewController.h"
+#import "RICountry.h"
+#import "JAButtonWithBlur.h"
 
 @interface JAPDVViewController ()
 <
@@ -40,7 +41,6 @@
 @property (strong, nonatomic) JAPDVImageSection *imageSection;
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
 @property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
-@property (strong, nonatomic) JACTAButtons *ctaButtons;
 @property (strong, nonatomic) JAPDVRelatedItem *relatedItems;
 @property (strong, nonatomic) JAPDVPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
@@ -95,8 +95,6 @@
     }
     
     self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
-    
-    self.ctaButtons = [JACTAButtons getNewPDVCTAButtons];
     
     self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
     
@@ -199,7 +197,7 @@
         
         self.variationsSection.layer.cornerRadius = 4.0f;
         
-        self.variationsSection.titleLabel.text = @"Variations";
+        self.variationsSection.titleLabel.text = @"Colors";
         
         float start = 0.0;
         
@@ -235,8 +233,16 @@
     [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
                                          
-                                         self.productInfoSection.numberOfReviewsLabel.text = [NSString stringWithFormat:@"%@ Reviews", ratings.commentsCount];
                                          self.commentsCount = [ratings.commentsCount integerValue];
+                                         
+                                         if ([ratings.commentsCount integerValue] > 0)
+                                         {
+                                             self.productInfoSection.numberOfReviewsLabel.text = [NSString stringWithFormat:@"%@ Reviews", ratings.commentsCount];
+                                         }
+                                         else
+                                         {
+                                             self.productInfoSection.numberOfReviewsLabel.text = @"Rate now";
+                                         }
                                          
                                          NSInteger media = 0;
                                          
@@ -336,33 +342,37 @@
             
             float relatedItemStart = 5.0f;
             
-            for (RIProduct *product in self.arrayWithRelatedItems) {
-                JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
-                
-                CGRect tempFrame = singleItem.frame;
-                tempFrame.origin.x = relatedItemStart;
-                singleItem.frame = tempFrame;
-                
-                if (product.images.count > 0) {
-                    RIImage *imageTemp = [product.images firstObject];
+            for (RIProduct *product in self.arrayWithRelatedItems)
+            {
+                if (![product.name isEqualToString:self.product.name])
+                {
+                    JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
                     
-                    [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
-                                             placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                    CGRect tempFrame = singleItem.frame;
+                    tempFrame.origin.x = relatedItemStart;
+                    singleItem.frame = tempFrame;
+                    
+                    if (product.images.count > 0) {
+                        RIImage *imageTemp = [product.images firstObject];
+                        
+                        [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
+                                                 placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                    }
+                    
+                    singleItem.labelBrand.text = product.brand;
+                    singleItem.labelName.text = product.name;
+                    singleItem.labelPrice.text = product.priceFormatted;
+                    singleItem.product = product;
+                    
+                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                          action:@selector(selectedRelatedItem:)];
+                    singleItem.userInteractionEnabled = YES;
+                    [singleItem addGestureRecognizer:tap];
+                    
+                    [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
+                    
+                    relatedItemStart += 110.0f;
                 }
-                
-                singleItem.labelBrand.text = product.brand;
-                singleItem.labelName.text = product.name;
-                singleItem.labelPrice.text = product.priceFormatted;
-                singleItem.product = product;
-                
-                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                      action:@selector(selectedRelatedItem:)];
-                singleItem.userInteractionEnabled = YES;
-                [singleItem addGestureRecognizer:tap];
-                
-                [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
-                
-                relatedItemStart += 110.0f;
             }
             
             [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height)];
@@ -373,23 +383,30 @@
      CTA Buttons
      *******/
     
-    self.ctaButtons.frame = CGRectMake(6,
-                                       6,
-                                       self.ctaButtons.frame.size.width,
-                                       self.ctaButtons.frame.size.height);
+    UIDevice *device = [UIDevice currentDevice];
     
-#warning need to change the product parser to include the phone_number
-    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",self.product]]]) {
-        [self.ctaButtons layoutViewWithNumberOfButton:2];
-    } else {
-        [self.ctaButtons layoutViewWithNumberOfButton:1];
+    NSString *model = device.model;
+    
+    JAButtonWithBlur *ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
+    
+    [ctaView setFrame:CGRectMake(0,
+                                 self.view.frame.size.height - 56,
+                                 self.view.frame.size.width,
+                                 60)];
+    
+    if ([model isEqualToString:@"iPhone"])
+    {
+        [ctaView addButton:@"Call to Order"
+                    target:self
+                    action:@selector(callToOrder)];
     }
+
     
-    [self.ctaButtons.addToCartButton addTarget:self
-                                        action:@selector(addToCart)
-                              forControlEvents:UIControlEventTouchUpInside];
+    [ctaView addButton:@"Add to Cart"
+                   target:self
+                   action:@selector(addToCart)];
     
-    [self.ctaView addSubview:self.ctaButtons];
+    [self.view addSubview:ctaView];
     
     self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + 6);
 }
@@ -458,35 +475,43 @@
 
 - (void)addToCart
 {
-    [self showLoading];
-    
-    [RICart addProductWithQuantity:@"1"
-                               sku:self.product.sku
-                            simple:((RIProduct *)[self.product.productSimples firstObject]).sku
-                  withSuccessBlock:^(RICart *cart) {
-                      
-                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-                      
-                      [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                  message:@"Product added"
-                                                 delegate:nil
-                                        cancelButtonTitle:nil
-                                        otherButtonTitles:@"Ok", nil] show];
-                      
-                      [self hideLoading];
-                      
-                  } andFailureBlock:^(NSArray *errorMessages) {
-                      
-                      [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                  message:@"Error adding to the cart"
-                                                 delegate:nil
-                                        cancelButtonTitle:nil
-                                        otherButtonTitles:@"Ok", nil] show];
-                      
-                      [self hideLoading];
-                      
-                  }];
+    if ([self.productInfoSection.sizeButton.titleLabel.text isEqualToString:@"Size"])
+    {
+        [self showSizePicker];
+    }
+    else
+    {
+        
+        [self showLoading];
+        
+        [RICart addProductWithQuantity:@"1"
+                                   sku:self.product.sku
+                                simple:((RIProduct *)[self.product.productSimples firstObject]).sku
+                      withSuccessBlock:^(RICart *cart) {
+                          
+                          NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                          [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                          
+                          [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                      message:@"Product added"
+                                                     delegate:nil
+                                            cancelButtonTitle:nil
+                                            otherButtonTitles:@"Ok", nil] show];
+                          
+                          [self hideLoading];
+                          
+                      } andFailureBlock:^(NSArray *errorMessages) {
+                          
+                          [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                      message:@"Error adding to the cart"
+                                                     delegate:nil
+                                            cancelButtonTitle:nil
+                                            otherButtonTitles:@"Ok", nil] show];
+                          
+                          [self hideLoading];
+                          
+                      }];
+    }
 }
 
 - (void)callToOrder

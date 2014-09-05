@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
@@ -18,10 +18,10 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="To2-Xa-KXK">
-                    <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="36" id="8hX-vG-H3h"/>
-                        <constraint firstAttribute="height" constant="36" id="NiN-7d-yEd"/>
+                        <constraint firstAttribute="width" constant="50" id="8hX-vG-H3h"/>
+                        <constraint firstAttribute="height" constant="50" id="NiN-7d-yEd"/>
                     </constraints>
                     <state key="normal" image="btn_share">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -65,10 +65,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bsw-2t-Blk">
-                    <rect key="frame" x="272" y="0.0" width="36" height="36"/>
+                    <rect key="frame" x="261" y="0.0" width="50" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="36" id="73S-q1-QGK"/>
-                        <constraint firstAttribute="height" constant="36" id="sxm-ZH-aDG"/>
+                        <constraint firstAttribute="width" constant="50" id="73S-q1-QGK"/>
+                        <constraint firstAttribute="height" constant="50" id="sxm-ZH-aDG"/>
                     </constraints>
                     <state key="normal" image="btn_fav">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -86,7 +86,7 @@
                 <constraint firstItem="dJ3-Sg-ObF" firstAttribute="top" secondItem="aj0-2L-1o6" secondAttribute="bottom" constant="2" id="EuV-2p-79b"/>
                 <constraint firstAttribute="trailing" secondItem="aj0-2L-1o6" secondAttribute="trailing" id="Fdh-6z-fgN"/>
                 <constraint firstItem="dJ3-Sg-ObF" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" constant="6" id="Hf2-PL-jwK"/>
-                <constraint firstAttribute="trailing" secondItem="bsw-2t-Blk" secondAttribute="trailing" id="S9k-cp-QjA"/>
+                <constraint firstAttribute="trailing" secondItem="bsw-2t-Blk" secondAttribute="trailing" constant="-3" id="S9k-cp-QjA"/>
                 <constraint firstItem="aj0-2L-1o6" firstAttribute="top" secondItem="pnI-TF-g9h" secondAttribute="bottom" constant="5" id="afg-RF-BLo"/>
                 <constraint firstItem="bsw-2t-Blk" firstAttribute="top" secondItem="5ON-fF-LLy" secondAttribute="top" id="b5U-3Q-q0v"/>
                 <constraint firstItem="dJ3-Sg-ObF" firstAttribute="top" secondItem="aj0-2L-1o6" secondAttribute="bottom" constant="2" id="bwv-9H-UDh"/>
