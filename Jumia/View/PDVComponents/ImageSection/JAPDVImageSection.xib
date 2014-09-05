@@ -62,7 +62,7 @@
                     <state key="normal" image="btn_fav">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <state key="selected" image="FavButtonPressed"/>
+                    <state key="selected" image="btn_fav_added"/>
                 </button>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-20%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A3y-q3-3f1">
                     <rect key="frame" x="262" y="156" width="38" height="22"/>
@@ -112,8 +112,8 @@
         </view>
     </objects>
     <resources>
-        <image name="FavButtonPressed" width="24" height="24"/>
         <image name="btn_fav" width="21" height="21"/>
+        <image name="btn_fav_added" width="21" height="21"/>
         <image name="btn_share" width="21" height="21"/>
         <image name="btn_share_pressed" width="21" height="21"/>
     </resources>
