@@ -34,7 +34,7 @@
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                              if (VALID_NOTEMPTY(metadata, NSDictionary) && VALID_NOTEMPTY([metadata objectForKey:@"data"], NSDictionary)) {
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                   NSDictionary *dataDic = [metadata objectForKey:@"data"];
                                                                   NSMutableArray *returnArray = [NSMutableArray new];
                                                                   

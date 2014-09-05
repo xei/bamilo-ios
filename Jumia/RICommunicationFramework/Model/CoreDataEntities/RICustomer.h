@@ -61,6 +61,13 @@
                              andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
 
 /**
+ * Method to get the current user id
+ *
+ * @return a string with the customer id
+ */
++ (NSString *)getCustomerId;
+
+/**
  * Method to parse user json object
  *
  * @return an initialized RICustomer object
