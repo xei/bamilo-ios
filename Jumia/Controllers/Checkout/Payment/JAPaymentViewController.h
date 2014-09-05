@@ -11,6 +11,4 @@
 
 @interface JAPaymentViewController : JABaseViewController
 
-@property (weak, nonatomic) IBOutlet UIButton *choosePaymentMethodAndGoToNextStep;
-
 @end

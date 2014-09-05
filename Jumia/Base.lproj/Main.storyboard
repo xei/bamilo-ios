@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
     <scenes>
         <!--Splash View Controller-->
@@ -1432,6 +1433,8 @@
                         <segue destination="Gh5-6E-R0E" kind="push" id="CEY-CM-Qfl"/>
                         <segue destination="fQL-zh-vpR" kind="push" id="sx1-VO-Ujm"/>
                         <segue destination="npC-Ek-8yq" kind="push" id="c6r-y0-Qa4"/>
+                        <segue destination="Zjk-p2-4wX" kind="push" id="Kbm-d1-uhP"/>
+                        <segue destination="0l9-ec-cdv" kind="push" id="FUy-lf-wqh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zwP-v4-smR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2363,30 +2366,53 @@
         <!--Shipping View Controller-->
         <scene sceneID="q56-6o-47V">
             <objects>
-                <viewController storyboardIdentifier="shippingViewController" id="Zjk-p2-4wX" customClass="JAShippingViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="shippingViewController" automaticallyAdjustsScrollViewInsets="NO" id="Zjk-p2-4wX" customClass="JAShippingViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oez-ok-O0B"/>
                         <viewControllerLayoutGuide type="bottom" id="uC9-5u-a1W"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ib6-Gs-7Fx">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCc-1Z-JMx">
-                                <rect key="frame" x="137" y="269" width="46" height="30"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep3" translatesAutoresizingMaskIntoConstraints="NO" id="GiB-sD-89w">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lBS-Lj-6z1">
+                                <rect key="frame" x="136" y="3" width="104" height="15"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep3Icon" translatesAutoresizingMaskIntoConstraints="NO" id="3w6-1g-A0b">
+                                        <rect key="frame" x="14" y="1" width="17" height="11"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQo-tx-n9g">
+                                        <rect key="frame" x="37" y="1" width="42" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="42" id="eGD-U0-A8f"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="xQo-tx-n9g" firstAttribute="leading" secondItem="3w6-1g-A0b" secondAttribute="trailing" constant="6" id="Ge9-GN-sD8"/>
+                                    <constraint firstAttribute="centerY" secondItem="xQo-tx-n9g" secondAttribute="centerY" id="SKo-na-KJA"/>
+                                    <constraint firstAttribute="centerY" secondItem="3w6-1g-A0b" secondAttribute="centerY" id="hup-xg-7uX"/>
+                                    <constraint firstItem="3w6-1g-A0b" firstAttribute="leading" secondItem="lBS-Lj-6z1" secondAttribute="leading" constant="14" id="n87-hJ-Tm7"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerY" secondItem="fCc-1Z-JMx" secondAttribute="centerY" id="SzQ-Cu-nUp"/>
-                            <constraint firstAttribute="centerX" secondItem="fCc-1Z-JMx" secondAttribute="centerX" id="hKq-Xs-XMh"/>
-                        </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="PBB-tv-bh8"/>
                     <connections>
-                        <outlet property="chooseShippingMethodAndGoToNextStep" destination="fCc-1Z-JMx" id="WxK-xD-rLE"/>
+                        <outlet property="stepIcon" destination="3w6-1g-A0b" id="LiJ-Bg-gPK"/>
+                        <outlet property="stepIconLeftConstrain" destination="n87-hJ-Tm7" id="or4-pr-tjG"/>
+                        <outlet property="stepLabel" destination="xQo-tx-n9g" id="29G-Np-u18"/>
+                        <outlet property="stepLabelWidthConstrain" destination="eGD-U0-A8f" id="XH8-f1-CQw"/>
+                        <outlet property="stepView" destination="lBS-Lj-6z1" id="cWm-2J-enF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pnQ-RB-Ypf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2396,34 +2422,52 @@
         <!--Payment View Controller-->
         <scene sceneID="xWv-Qh-PLE">
             <objects>
-                <viewController storyboardIdentifier="paymentViewController" id="0l9-ec-cdv" customClass="JAPaymentViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="paymentViewController" automaticallyAdjustsScrollViewInsets="NO" id="0l9-ec-cdv" customClass="JAPaymentViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZD8-pR-3mm"/>
                         <viewControllerLayoutGuide type="bottom" id="1ug-zd-j9K"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iOQ-tU-T5G">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pxX-bV-YMh">
-                                <rect key="frame" x="137" y="269" width="46" height="30"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep4" translatesAutoresizingMaskIntoConstraints="NO" id="IE2-jy-nA3">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4vc-Qh-3NM">
+                                <rect key="frame" x="192" y="3" width="104" height="15"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep4Icon" translatesAutoresizingMaskIntoConstraints="NO" id="2hf-t3-Gpb">
+                                        <rect key="frame" x="14" y="2" width="14" height="10"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIs-5b-mhc">
+                                        <rect key="frame" x="29" y="1" width="42" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="42" id="qVD-74-KBr"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="LgO-e7-Mcu"/>
-                                    <constraint firstAttribute="width" constant="46" id="tH0-ov-yqB"/>
+                                    <constraint firstAttribute="centerY" secondItem="XIs-5b-mhc" secondAttribute="centerY" id="GLc-oE-32f"/>
+                                    <constraint firstItem="2hf-t3-Gpb" firstAttribute="leading" secondItem="4vc-Qh-3NM" secondAttribute="leading" constant="14" id="Gtf-xd-xyA"/>
+                                    <constraint firstItem="XIs-5b-mhc" firstAttribute="leading" secondItem="2hf-t3-Gpb" secondAttribute="trailing" constant="6" id="VKH-8Y-r5U"/>
+                                    <constraint firstAttribute="centerY" secondItem="2hf-t3-Gpb" secondAttribute="centerY" id="XpQ-Un-ods"/>
                                 </constraints>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="pxX-bV-YMh" secondAttribute="centerX" id="LLc-y0-H1z"/>
-                            <constraint firstAttribute="centerY" secondItem="pxX-bV-YMh" secondAttribute="centerY" id="aZ3-HX-pk4"/>
-                        </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="Dhp-Gv-ecA"/>
                     <connections>
-                        <outlet property="choosePaymentMethodAndGoToNextStep" destination="pxX-bV-YMh" id="Epa-z2-PO9"/>
+                        <outlet property="stepIcon" destination="2hf-t3-Gpb" id="LFp-Y0-AQx"/>
+                        <outlet property="stepIconLeftConstrain" destination="Gtf-xd-xyA" id="3lP-QX-Gil"/>
+                        <outlet property="stepLabel" destination="XIs-5b-mhc" id="EYc-MR-HxQ"/>
+                        <outlet property="stepLabelWidthConstrain" destination="qVD-74-KBr" id="vPr-EH-6sa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c6K-vV-fRd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2689,6 +2733,10 @@
         <image name="headerCheckoutStep1Icon" width="9" height="12"/>
         <image name="headerCheckoutStep2" width="320" height="21"/>
         <image name="headerCheckoutStep2Icon" width="8" height="13"/>
+        <image name="headerCheckoutStep3" width="320" height="21"/>
+        <image name="headerCheckoutStep3Icon" width="17" height="11"/>
+        <image name="headerCheckoutStep4" width="320" height="21"/>
+        <image name="headerCheckoutStep4Icon" width="14" height="10"/>
         <image name="ico_cart" width="25" height="20"/>
         <image name="img_emptyCart" width="98" height="98"/>
         <image name="img_emptyrecentsearches" width="98" height="98"/>
@@ -2701,7 +2749,10 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination" type="retina4">
+            <size key="portraitSize" width="320" height="568"/>
+            <size key="landscapeSize" width="568" height="320"/>
+        </simulatedScreenMetrics>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="BOh-Tr-8Lm"/>

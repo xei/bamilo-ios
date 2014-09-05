@@ -64,11 +64,11 @@
     CGFloat originX = 6.0f;
     for(UIButton *button in self.buttons)
     {
-        UIImage *buttonImageNormal = [UIImage imageNamed:@"greyHalf_normal"];
+        UIImage *buttonImageNormal = [UIImage imageNamed:@"greyHalfWithBackground_normal"];
         [button setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"greyHalf_highlighted"] forState:UIControlStateHighlighted];
-        [button setBackgroundImage:[UIImage imageNamed:@"greyHalf_highlighted"] forState:UIControlStateSelected];
-        [button setBackgroundImage:[UIImage imageNamed:@"greyHalf_disabled"] forState:UIControlStateDisabled];
+        [button setBackgroundImage:[UIImage imageNamed:@"greyHalfWithBackground_highlighted"] forState:UIControlStateHighlighted];
+        [button setBackgroundImage:[UIImage imageNamed:@"greyHalfWithBackground_highlighted"] forState:UIControlStateSelected];
+        [button setBackgroundImage:[UIImage imageNamed:@"greyHalfWithBackground_disabled"] forState:UIControlStateDisabled];
         [button setFrame:CGRectMake(originX, 6.0f, buttonWidth, button.frame.size.height)];
         originX += (buttonWidth + buttonSpace);
     }
