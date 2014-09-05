@@ -360,19 +360,19 @@ UIPickerViewDelegate>
     
     NSMutableDictionary *shippingParameters = [[NSMutableDictionary alloc] initWithDictionary:[self.shippingDynamicForm getValues]];
     
-    [shippingParameters setValue:@"1" forKey:@"is_default_shipping"];
-    [shippingParameters setValue:@"1" forKey:@"is_default_billing"];
+    [shippingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
+    [shippingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
     
     if(![self.billingContentView isHidden])
     {
         self.numberOfRequests = 2;
         
-        [shippingParameters setValue:@"0" forKey:@"is_default_billing"];
+        [shippingParameters setValue:@"0" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
         
         NSMutableDictionary *billingParameters = [[NSMutableDictionary alloc] initWithDictionary:[self.billingDynamicForm getValues]];
         
-        [billingParameters setValue:@"0" forKey:@"is_default_shipping"];
-        [billingParameters setValue:@"1" forKey:@"is_default_billing"];
+        [billingParameters setValue:@"0" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
+        [billingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
         
         [RIForm sendForm:[self.billingDynamicForm form]
               parameters:billingParameters
