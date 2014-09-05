@@ -39,11 +39,11 @@
     self.field = field;
     [self.textField setPlaceholder:field.label];
     
-    if(VALID_NOTEMPTY(field.requiredMessage, NSString))
+    [self.textField setTextColor:UIColorFromRGB(0x666666)];
+    [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    
+    if([field.required boolValue])
     {
-        [self.textField setTextColor:UIColorFromRGB(0x666666)];
-        [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-        
         [self.requiredSymbol setHidden:NO];
         [self.requiredSymbol setTextColor:UIColorFromRGB(0xfaa41a)];
     }
@@ -69,7 +69,7 @@
 -(NSDictionary*)getValues
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    if([self.field.required boolValue] || VALID_NOTEMPTY(self.storedValue, NSString))
+    if([self.field.required boolValue] || VALID_NOTEMPTY(self.textField.text, NSString))
     {
         if(!self.hasError)
         {

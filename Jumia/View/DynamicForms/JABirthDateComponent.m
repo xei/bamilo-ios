@@ -50,11 +50,11 @@
     
     [self.textField setPlaceholder:label];
     
+    [self.textField setTextColor:UIColorFromRGB(0x666666)];
+    [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+
     if([day.required boolValue])
-    {
-        [self.textField setTextColor:UIColorFromRGB(0x666666)];
-        [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-        
+    {        
         [self.requiredSymbol setHidden:NO];
         [self.requiredSymbol setTextColor:UIColorFromRGB(0xfaa41a)];
     }

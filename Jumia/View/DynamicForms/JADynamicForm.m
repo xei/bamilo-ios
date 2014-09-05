@@ -20,6 +20,17 @@
 
 @implementation JADynamicForm
 
+-(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
+{
+    self = [super init];
+    if(self)
+    {
+        self.form = form;
+        [self generateForm:[[[form fields] array] copy] values:nil startingY:startingY];
+    }
+    return self;
+}
+
 -(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate startingPosition:(CGFloat)startingY;
 {
     self = [super init];
@@ -27,23 +38,24 @@
     {
         self.form = form;
         self.delegate = delegate;
-        [self generateForm:[[[form fields] array] copy] startingY:startingY];
+        [self generateForm:[[[form fields] array] copy] values:nil startingY:startingY];
     }
     return self;
 }
 
--(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
+-(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate values:(NSDictionary*)values startingPosition:(CGFloat)startingY;
 {
     self = [super init];
     if(self)
     {
         self.form = form;
-        [self generateForm:[[[form fields] array] copy] startingY:startingY];
+        self.delegate = delegate;
+        [self generateForm:[[[form fields] array] copy] values:values startingY:startingY];
     }
     return self;
 }
 
-- (void)generateForm:(NSArray*)fields startingY:(CGFloat)startingY
+- (void)generateForm:(NSArray*)fields values:(NSDictionary*)values startingY:(CGFloat)startingY
 {
     RIField *dayField = nil;
     RIField *monthField = nil;
@@ -264,9 +276,28 @@
         }
     }
     
+    if(VALID_NOTEMPTY(values, NSDictionary))
+    {
+        [self setValues:values];
+    }
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(downloadRegions:cities:)]) {
         [self.delegate performSelector:@selector(downloadRegions:cities:) withObject:regionsComponent withObject:citiesComponent];
     }
+}
+
+-(UIView*)viewWithTag:(NSInteger) tag
+{
+    UIView *view = nil;
+    for(UIView *formView in self.formViews)
+    {
+        if(tag == formView.tag)
+        {
+            view = formView;
+            break;
+        }
+    }
+    return view;
 }
 
 -(void)validateFields:(NSDictionary*)errors
@@ -453,6 +484,43 @@
     return [parameters copy];
 }
 
+- (void)setValues:(NSDictionary *)values
+{
+    NSArray *valuesKeys = [values allKeys];
+    if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
+    {
+        for(NSString *key in valuesKeys)
+        {
+            [self setValue:[values objectForKey:key] inFieldWithKey:key];
+        }
+    }
+}
+
+-(void)setValue:(NSString*)value inFieldWithKey:(NSString*)key
+{
+    for (id view in self.formViews)
+    {
+        if ([view isKindOfClass:[JATextFieldComponent class]])
+        {
+            JATextFieldComponent *textFieldView = (JATextFieldComponent*)view;
+            if([textFieldView isComponentWithKey:key])
+            {
+                [textFieldView setValue:value];
+                break;
+            }
+        }
+        else if ([view isKindOfClass:[JARadioComponent class]])
+        {
+            JARadioComponent *radioComponent = (JARadioComponent*)view;
+            if([radioComponent isComponentWithKey:key])
+            {
+                [radioComponent setValue:value];
+                break;
+            }
+        }
+    }
+}
+
 -(void)resetValues
 {
     if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
@@ -465,34 +533,6 @@
             }
         }
     }
-}
-
--(void)resignResponder
-{
-    if(VALID_NOTEMPTY(self.currentTextField, UITextField))
-    {
-        [self.currentTextField resignFirstResponder];
-    }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(lostFocus)]) {
-        [self.delegate performSelector:@selector(lostFocus) withObject:nil];
-    }
-    
-    self.currentTextField = nil;
-}
-
--(UIView*)viewWithTag:(NSInteger) tag
-{
-    UIView *view = nil;
-    for(UIView *formView in self.formViews)
-    {
-        if(tag == formView.tag)
-        {
-            view = formView;
-            break;
-        }
-    }
-    return view;
 }
 
 -(void)setRegionValue:(RIRegion*)region
@@ -527,6 +567,20 @@
             }
         }
     }
+}
+
+-(void)resignResponder
+{
+    if(VALID_NOTEMPTY(self.currentTextField, UITextField))
+    {
+        [self.currentTextField resignFirstResponder];
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(lostFocus)]) {
+        [self.delegate performSelector:@selector(lostFocus) withObject:nil];
+    }
+    
+    self.currentTextField = nil;
 }
 
 #pragma mark UITextFieldDelegate
