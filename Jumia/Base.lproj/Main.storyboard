@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <scenes>
         <!--Splash View Controller-->
@@ -1395,17 +1394,17 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RiA-6S-1Mu">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="448"/>
-                                <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                            </scrollView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QGi-gP-I1t">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QGi-gP-I1t">
                                 <rect key="frame" x="0.0" y="448" width="320" height="56"/>
                                 <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="he8-18-FMy"/>
                                 </constraints>
                             </view>
+                            <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RiA-6S-1Mu">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1414,7 +1413,7 @@
                             <constraint firstItem="0ot-Ab-3Ot" firstAttribute="top" secondItem="QGi-gP-I1t" secondAttribute="bottom" id="TgJ-aK-Q2Z"/>
                             <constraint firstAttribute="trailing" secondItem="RiA-6S-1Mu" secondAttribute="trailing" id="aEF-6R-u9q"/>
                             <constraint firstItem="RiA-6S-1Mu" firstAttribute="top" secondItem="DR6-1s-BTG" secondAttribute="bottom" id="frb-QA-pAY"/>
-                            <constraint firstItem="QGi-gP-I1t" firstAttribute="top" secondItem="RiA-6S-1Mu" secondAttribute="bottom" id="jMy-IK-5Xi"/>
+                            <constraint firstItem="QGi-gP-I1t" firstAttribute="top" secondItem="RiA-6S-1Mu" secondAttribute="bottom" constant="-56" id="jMy-IK-5Xi"/>
                             <constraint firstItem="QGi-gP-I1t" firstAttribute="leading" secondItem="jhw-lm-hpC" secondAttribute="leading" id="q48-xK-bmY"/>
                         </constraints>
                     </view>
@@ -2702,10 +2701,7 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4">
-            <size key="portraitSize" width="320" height="568"/>
-            <size key="landscapeSize" width="568" height="320"/>
-        </simulatedScreenMetrics>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="BOh-Tr-8Lm"/>
