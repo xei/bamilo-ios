@@ -13,6 +13,7 @@
 #import "JAPDVRelatedItem.h"
 #import "JAPDVSingleRelatedItem.h"
 #import "UIImageView+WebCache.h"
+#import "UIImageView+JA.h"
 #import "RIImage.h"
 #import "RIVariation.h"
 #import "RIProductReview.h"
@@ -208,15 +209,16 @@
         
         self.variationsSection.layer.cornerRadius = 4.0f;
         
-        self.variationsSection.titleLabel.text = @"Colors";
+        self.variationsSection.titleLabel.text = @"Variations";
         
         float start = 0.0;
         
         for (RIVariation *variation in self.product.variations) {
             
-            UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake(start, 0.0, 30.0, 30.0)];
+            UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake(start, 0.0f, 30.0f, 30.0f)];
             [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
                          placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+            [newImageView changeImageSize:30.0f andWidth:0.0f];
             [self.variationsSection.variationsScrollView addSubview:newImageView];
             
             start += 40.0;
