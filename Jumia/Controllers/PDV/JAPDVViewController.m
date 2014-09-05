@@ -181,6 +181,16 @@
                                          action:@selector(addProductToWishList)
                                forControlEvents:UIControlEventTouchUpInside];
     
+    UIImage *img = [UIImage imageNamed:@"img_badge_discount"];
+    CGSize imgSize = self.imageSection.discountLabel.frame.size;
+    
+    UIGraphicsBeginImageContext( imgSize );
+    [img drawInRect:CGRectMake(0,0,imgSize.width,imgSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    self.imageSection.discountLabel.backgroundColor = [UIColor colorWithPatternImage:newImage];
+    
     [self.mainScrollView addSubview:self.imageSection];
     
     startingElement += (4 + self.imageSection.frame.size.height);
@@ -228,6 +238,8 @@
     
     [self.productInfoSection setPriceWithNewValue:self.product.specialPriceFormatted
                                       andOldValue:self.product.priceFormatted];
+    
+    self.productInfoSection.sizeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
     [self showLoading];
     
@@ -347,32 +359,35 @@
             {
                 if (![product.name isEqualToString:self.product.name])
                 {
-                    JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
-                    
-                    CGRect tempFrame = singleItem.frame;
-                    tempFrame.origin.x = relatedItemStart;
-                    singleItem.frame = tempFrame;
-                    
-                    if (product.images.count > 0) {
-                        RIImage *imageTemp = [product.images firstObject];
+                    if (product.images.count > 0)
+                    {
+                        JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
                         
-                        [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
-                                                 placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                        CGRect tempFrame = singleItem.frame;
+                        tempFrame.origin.x = relatedItemStart;
+                        singleItem.frame = tempFrame;
+                        
+                        if (product.images.count > 0) {
+                            RIImage *imageTemp = [product.images firstObject];
+                            
+                            [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
+                                                     placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                        }
+                        
+                        singleItem.labelBrand.text = product.brand;
+                        singleItem.labelName.text = product.name;
+                        singleItem.labelPrice.text = product.priceFormatted;
+                        singleItem.product = product;
+                        
+                        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                              action:@selector(selectedRelatedItem:)];
+                        singleItem.userInteractionEnabled = YES;
+                        [singleItem addGestureRecognizer:tap];
+                        
+                        [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
+                        
+                        relatedItemStart += 110.0f;
                     }
-                    
-                    singleItem.labelBrand.text = product.brand;
-                    singleItem.labelName.text = product.name;
-                    singleItem.labelPrice.text = product.priceFormatted;
-                    singleItem.product = product;
-                    
-                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                          action:@selector(selectedRelatedItem:)];
-                    singleItem.userInteractionEnabled = YES;
-                    [singleItem addGestureRecognizer:tap];
-                    
-                    [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
-                    
-                    relatedItemStart += 110.0f;
                 }
             }
             
