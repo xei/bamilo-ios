@@ -56,6 +56,8 @@ UICollectionViewDelegateFlowLayout>
 {
     [super viewDidLoad];
     
+    self.navBarLayout.title = @"Checkout";
+    
     self.firstCollectionViewAddresses = [[NSArray alloc] init];
     self.secondCollectionViewAddresses = [[NSArray alloc] init];
     
