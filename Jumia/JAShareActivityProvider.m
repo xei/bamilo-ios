@@ -72,10 +72,7 @@
     
     else if ([activityType isEqualToString:UIActivityTypeMail])
     {
-        productUrl = [productUrl stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"mobapi/"]
-                                                           withString:@""];
-        
-        productUrl = [productUrl stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"mobapi/%@", RI_API_VERSION]
+        productUrl = [productUrl stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/mobapi"]
                                                            withString:@""];
         
         NSString *emailShare = [NSString stringWithFormat:@"<html><body>Hello! Look I found something great which might interest you:<br><br><a href='%@'><img src='%@'></a><br><br><a href='%@'>%@</a></body></html>", productUrl, productImageUrl, productUrl, productName];
