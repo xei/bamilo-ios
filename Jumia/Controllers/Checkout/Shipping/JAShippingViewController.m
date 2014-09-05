@@ -33,6 +33,8 @@
 {
     [super viewDidLoad];
     
+    self.navBarLayout.title = @"Checkout";
+    
     [self setupViews];
     
     [RICheckout getShippingMethodFormWithSuccessBlock:^(RICheckout *checkout)

@@ -60,6 +60,8 @@
 {
     [super viewDidLoad];
     
+    self.navBarLayout.showLogo = NO;
+
     if (self.previousCategory.length > 0)
     {
         self.navBarLayout.backButtonTitle = self.previousCategory;
@@ -68,8 +70,7 @@
     {
         self.navBarLayout.showBackButton = YES;
     }
-    self.navBarLayout.showLogo = NO;
-    
+
     // Always load the product details when entering PDV
     if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [self showLoading];
@@ -83,6 +84,7 @@
         }];
     }
 }
+
 
 - (void)productLoaded
 {
@@ -213,12 +215,19 @@
         
         float start = 0.0;
         
-        for (RIVariation *variation in self.product.variations) {
+        for (int i = 0; i < [self.product.variations count]; i++) {
+            RIVariation *variation = [self.product.variations objectAtIndex:i];
             
             UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake(start, 0.0f, 30.0f, 30.0f)];
             [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
                          placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
             [newImageView changeImageSize:30.0f andWidth:0.0f];
+            [newImageView setTag:i];
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(openVariation:)];
+            [newImageView addGestureRecognizer:tap];
+            [newImageView setUserInteractionEnabled:YES];
             [self.variationsSection.variationsScrollView addSubview:newImageView];
             
             start += 40.0;
@@ -429,7 +438,27 @@
     self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + ctaView.frame.size.height);
 }
 
+
 #pragma mark - Actions
+
+- (void) openVariation:(UITapGestureRecognizer *)gr {
+    
+    UIImageView *variationImageView = (UIImageView *)gr.view;
+    NSInteger tag = variationImageView.tag;
+    
+    RIVariation *variation = [self.product.variations objectAtIndex:tag];
+    self.productUrl = variation.link;
+    
+    [self showLoading];
+    [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
+        [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
+        self.product = product;
+        [self hideLoading];
+        [self productLoaded];
+    } andFailureBlock:^(NSArray *error) {
+        [self hideLoading];
+    }];
+}
 
 - (void)selectedRelatedItem:(UITapGestureRecognizer *)tap
 {
