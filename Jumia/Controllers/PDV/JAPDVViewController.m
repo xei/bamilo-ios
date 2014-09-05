@@ -640,11 +640,10 @@
 {
     button.selected = !button.selected;
     
-    [self showLoading];
     if (button.selected) {
         //add to favorites
         [RIProduct addToFavorites:self.product successBlock:^{
-            [self hideLoading];
+            //[self hideLoading];
             
             self.product.isFavorite = [NSNumber numberWithBool:button.selected];
             
@@ -653,18 +652,18 @@
             }
             
         } andFailureBlock:^(NSArray *error) {
-            [self hideLoading];
+            //[self hideLoading];
         }];
     } else {
         [RIProduct removeFromFavorites:self.product successBlock:^(NSArray *favoriteProducts) {
             //update favoriteProducts
-            [self hideLoading];
+            //[self hideLoading];
             
             if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
                 [self.delegate changedFavoriteStateOfProduct:self.product];
             }
         } andFailureBlock:^(NSArray *error) {
-            [self hideLoading];
+           // [self hideLoading];
         }];
     }
 }
