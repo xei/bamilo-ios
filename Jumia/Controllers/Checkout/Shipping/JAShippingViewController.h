@@ -11,6 +11,4 @@
 
 @interface JAShippingViewController : JABaseViewController
 
-@property (weak, nonatomic) IBOutlet UIButton *chooseShippingMethodAndGoToNextStep;
-
 @end
