@@ -534,7 +534,7 @@
     
     if (self.product.productSimples.count > 0) {
         for (RIProductSimple *simple in self.product.productSimples) {
-            if (simple.stock > 0) {
+            if ([simple.quantity integerValue] > 0) {
                 [self.pickerDataSource addObject:simple];
             }
         }
