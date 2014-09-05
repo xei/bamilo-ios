@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <scenes>
@@ -520,11 +521,12 @@
                         <segue destination="fgT-Jv-tdb" kind="push" identifier="showPdv" id="uaI-yU-cmP"/>
                         <segue destination="y7p-zP-v5K" kind="push" identifier="showCatalog" id="Pnc-cP-ATg"/>
                         <segue destination="ghr-t8-OwX" kind="push" identifier="segueToMyAccount" id="Fv7-Im-hF1"/>
+                        <segue destination="OuJ-bo-0Lu" kind="push" identifier="pushTrackOrder" id="k6z-HH-SJs"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D9k-Dg-apF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="706" y="814"/>
+            <point key="canvasLocation" x="490" y="746"/>
         </scene>
         <!--Ratings View Controller-->
         <scene sceneID="qkt-S7-jBs">
@@ -1047,6 +1049,80 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dT1-hB-Hqz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2116" y="401"/>
+        </scene>
+        <!--Track My Order View Controller-->
+        <scene sceneID="5kL-8W-mV7">
+            <objects>
+                <viewController storyboardIdentifier="jaTrackOrderViewController" id="OuJ-bo-0Lu" customClass="JATrackMyOrderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jOZ-WU-rcC"/>
+                        <viewControllerLayoutGuide type="bottom" id="MpL-2G-7Ky"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ahg-dq-Nw3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="flO-HK-Q77">
+                                <rect key="frame" x="6" y="6" width="308" height="158"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FYS-dk-7Ay">
+                                        <rect key="frame" x="6" y="6" width="294" height="18"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7OW-r9-OAT">
+                                        <rect key="frame" x="0.0" y="26" width="308" height="1"/>
+                                        <color key="backgroundColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </imageView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ktu-kI-bCy">
+                                        <rect key="frame" x="17" y="47" width="271" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="OuJ-bo-0Lu" id="xrl-GF-ALk"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDP-zY-Ols">
+                                        <rect key="frame" x="6" y="104" width="294" height="44"/>
+                                        <state key="normal" title="Button" backgroundImage="orangeBig_normal">
+                                            <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="trackOrder:" destination="OuJ-bo-0Lu" eventType="touchUpInside" id="uMc-mA-Kur"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Rt-Jz-xVJ">
+                                        <rect key="frame" x="17" y="75" width="276" height="1"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="*" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fR-ru-RIG">
+                                        <rect key="frame" x="278" y="60" width="10" height="10"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="PAc-zn-YgL"/>
+                    <connections>
+                        <outlet property="buttonTrack" destination="WDP-zY-Ols" id="ax3-an-Wdm"/>
+                        <outlet property="imageViewLine" destination="7OW-r9-OAT" id="iE5-ua-aAf"/>
+                        <outlet property="imageViewTextField" destination="2Rt-Jz-xVJ" id="ABc-Fu-0Ae"/>
+                        <outlet property="labelAsterisco" destination="0fR-ru-RIG" id="eoS-Fs-Q6o"/>
+                        <outlet property="orderTextField" destination="Ktu-kI-bCy" id="42K-GY-9VP"/>
+                        <outlet property="topView" destination="flO-HK-Q77" id="FuM-NT-cWG"/>
+                        <outlet property="trackOrderLabel" destination="FYS-dk-7Ay" id="qIU-Io-7Fb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F8P-XE-SZ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2512" y="924"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="PB4-GR-7g5">

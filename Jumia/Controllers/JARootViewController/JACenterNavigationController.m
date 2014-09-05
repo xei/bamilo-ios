@@ -32,6 +32,7 @@
 #import "RIApi.h"
 #import "JANavigationBarLayout.h"
 #import "RICustomer.h"
+#import "JATrackMyOrderViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -303,6 +304,18 @@
                 
                 self.viewControllers = @[signInViewController];
             }
+        }
+    }
+    else if ([newScreenName isEqualToString:@"Track my Order"])
+    {
+        if (![[self topViewController] isKindOfClass:[JATrackMyOrderViewController class]])
+        {
+            JATrackMyOrderViewController *trackOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"jaTrackOrderViewController"];
+            
+            [self pushViewController:trackOrder
+                            animated:YES];
+            
+            self.viewControllers = @[trackOrder];
         }
     }
 }
