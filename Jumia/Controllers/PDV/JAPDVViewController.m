@@ -47,6 +47,7 @@
 @property (strong, nonatomic) JAPDVGalleryView *gallery;
 @property (weak, nonatomic) IBOutlet UIView *ctaView;
 @property (assign, nonatomic) NSInteger commentsCount;
+@property (assign, nonatomic) BOOL openPickerFromCart;
 
 @end
 
@@ -477,6 +478,7 @@
 {
     if ([self.productInfoSection.sizeButton.titleLabel.text isEqualToString:@"Size"])
     {
+        self.openPickerFromCart = YES;
         [self showSizePicker];
     }
     else
@@ -576,6 +578,11 @@
                          self.picker.frame = frame;
                      } completion:^(BOOL finished) {
                          [self.picker removeFromSuperview];
+                         
+                         if (self.openPickerFromCart)
+                         {
+                             [self addToCart];
+                         }
                      }];
 }
 
