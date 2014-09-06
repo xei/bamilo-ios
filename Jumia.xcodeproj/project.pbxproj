@@ -88,6 +88,8 @@
 		B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		B56BBF3319A60D5400F4B1A3 /* JACartListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */; };
 		B57DC97E19B90AB10080C818 /* JAEditAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */; };
+		B58767FE19BB62B3001651D6 /* JAShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58767FC19BB62B3001651D6 /* JAShippingCell.m */; };
+		B58767FF19BB62B3001651D6 /* JAShippingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58767FD19BB62B3001651D6 /* JAShippingCell.xib */; };
 		B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4119B4E92B00DE7960 /* RIField.m */; };
 		B59DCA5919B70C2E00DE7960 /* JATextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5819B70C2E00DE7960 /* JATextField.m */; };
 		B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5A19B7109300DE7960 /* JAAddNewAddressViewController.m */; };
@@ -429,6 +431,9 @@
 		B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACartListCell.xib; sourceTree = "<group>"; };
 		B57DC97C19B90AB10080C818 /* JAEditAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAEditAddressViewController.h; sourceTree = "<group>"; };
 		B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAEditAddressViewController.m; sourceTree = "<group>"; };
+		B58767FB19BB62B3001651D6 /* JAShippingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAShippingCell.h; path = ShippingCell/JAShippingCell.h; sourceTree = "<group>"; };
+		B58767FC19BB62B3001651D6 /* JAShippingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAShippingCell.m; path = ShippingCell/JAShippingCell.m; sourceTree = "<group>"; };
+		B58767FD19BB62B3001651D6 /* JAShippingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAShippingCell.xib; path = ShippingCell/JAShippingCell.xib; sourceTree = "<group>"; };
 		B59DCA4019B4E92B00DE7960 /* RIField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIField.h; sourceTree = "<group>"; };
 		B59DCA4119B4E92B00DE7960 /* RIField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIField.m; sourceTree = "<group>"; };
 		B59DCA5719B70C2E00DE7960 /* JATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextField.h; sourceTree = "<group>"; };
@@ -890,6 +895,7 @@
 		4A4ABF08198B902600342D92 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				B58767FA19BB6284001651D6 /* ShippingCell */,
 				B59DCA7219B88D9000DE7960 /* SwitchCell */,
 				B59DCA6B19B870EA00DE7960 /* AddressCell */,
 				CEC3F71719A5FDDA00DE12F6 /* ButtonCell */,
@@ -1205,6 +1211,16 @@
 				B50B03A5198A544A002046DF /* JAShippingViewController.m */,
 			);
 			path = Shipping;
+			sourceTree = "<group>";
+		};
+		B58767FA19BB6284001651D6 /* ShippingCell */ = {
+			isa = PBXGroup;
+			children = (
+				B58767FB19BB62B3001651D6 /* JAShippingCell.h */,
+				B58767FC19BB62B3001651D6 /* JAShippingCell.m */,
+				B58767FD19BB62B3001651D6 /* JAShippingCell.xib */,
+			);
+			name = ShippingCell;
 			sourceTree = "<group>";
 		};
 		B59DCA6319B710DA00DE7960 /* FXBlurView */ = {
@@ -2093,6 +2109,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEC3F71219A5FBF800DE12F6 /* JAFavoriteListCell.xib in Resources */,
+				B58767FF19BB62B3001651D6 /* JAShippingCell.xib in Resources */,
 				B5A3023A19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
 				CEDEB9BA199BA8FA0022BAB5 /* slider-default7-handle@2x.png in Resources */,
 				4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */,
@@ -2242,6 +2259,7 @@
 				4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */,
 				CE13787819A357B400CA0751 /* JACategoriesViewController.m in Sources */,
 				B5A302D019811E9200F71726 /* RITeaserProduct.m in Sources */,
+				B58767FE19BB62B3001651D6 /* JAShippingCell.m in Sources */,
 				CE44586C198BD20A00CE7E8D /* JATopBrandsTeaserView.m in Sources */,
 				B5A302CE19811E9200F71726 /* RITeaserGroup.m in Sources */,
 				B5225E30198950C500C18F1E /* JACartViewController.m in Sources */,
