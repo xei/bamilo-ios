@@ -526,7 +526,7 @@ UIPickerViewDelegate>
             {
                 NSString *url = [radioComponent getApiCallUrl];
                 [self showLoading];
-                [RICity getCitiesForUrl:url region:[self.shippingSelectedRegion uid] successBlock:^(NSArray *regions)
+                [RICity getCitiesForUrl:url region:[self.billingSelectedRegion uid] successBlock:^(NSArray *regions)
                  {
                      self.billingCitiesDataset = [regions copy];
                      self.radioComponentDataset = [regions copy];
