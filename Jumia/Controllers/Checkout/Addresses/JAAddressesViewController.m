@@ -200,14 +200,26 @@ UICollectionViewDelegateFlowLayout>
 
 -(void)finishedLoadingAddresses
 {
+    self.shippingAddress = [self.addresses objectForKey:@"shipping"];
+    
     NSInteger billingAddressIndex = 0;
     if(self.useSameAddressAsBillingAndShipping)
     {
+        self.billingAddress = self.shippingAddress;
         self.firstCollectionViewAddresses = [NSArray arrayWithObject:self.shippingAddress];
-        self.secondCollectionViewAddresses = [self.addresses objectForKey:@"other"];
+        
+        NSMutableArray *addresses = [[NSMutableArray alloc] initWithArray:[self.addresses objectForKey:@"other"]];
+        RIAddress *addressToAdd = [self.addresses objectForKey:@"billing"];
+        if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![self checkIfAddressIsAdded:addressToAdd addresses:addresses])
+        {
+            [addresses addObject:addressToAdd];
+        }
+        self.secondCollectionViewAddresses = [addresses copy];
     }
     else
     {
+        self.billingAddress = [self.addresses objectForKey:@"billing"];
+        
         NSMutableArray *addresses = [[NSMutableArray alloc] init];
         
         if(VALID_NOTEMPTY(self.shippingAddress, RIAddress))

@@ -19,6 +19,7 @@
 #import "RICart.h"
 #import "RICartItem.h"
 #import "RICustomer.h"
+#import "RIAddress.h"
 
 @implementation JACartViewController
 
@@ -673,20 +674,30 @@
 {
     if([RICustomer checkIfUserIsLogged])
     {
-        if([RICustomer checkIfUserHasAddresses])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                object:nil
-                                                              userInfo:nil];
-        }
-        else
-        {
+        [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+            
+            if(VALID_NOTEMPTY(adressList, NSDictionary))
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                                    object:nil
+                                                                  userInfo:nil];
+            }
+            else
+            {
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
+                                                                    object:nil
+                                                                  userInfo:userInfo];
+            }
+            
+        } andFailureBlock:^(NSArray *errorMessages) {
             NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                 object:nil
                                                               userInfo:userInfo];
-        }
+        }];
     }
     else
     {
