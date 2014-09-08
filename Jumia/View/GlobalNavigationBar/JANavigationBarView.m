@@ -73,12 +73,16 @@
     self.backButton.hidden = NO;
     self.leftButton.hidden = YES;
     self.editButton.hidden = YES;
+    
+    [self adjustTitleFrame];    
 }
 - (void)showEditButton;
 {
     self.backButton.hidden = YES;
     self.leftButton.hidden = YES;
     self.editButton.hidden = NO;
+    
+    [self adjustTitleFrame];
 }
 
 - (void)showMenuButton;
@@ -86,6 +90,8 @@
     self.backButton.hidden = YES;
     self.leftButton.hidden = NO;
     self.editButton.hidden = YES;
+    
+    [self adjustTitleFrame];
 }
 
 - (void)hideLeftItems
@@ -127,6 +133,48 @@
     [self.titleLabel setAttributedText:finalTitleString];
     self.logoImageView.hidden = YES;
     self.titleLabel.hidden = NO;
+    
+    [self adjustTitleFrame];
+}
+
+-(void)adjustTitleFrame
+{
+    CGRect leftItemFrame = CGRectZero;
+    if(!self.backButton.hidden)
+    {
+        NSString *backButtonText = self.backButton.titleLabel.text;
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
+        CGSize backButtonTextSize = [backButtonText sizeWithAttributes:attributes];
+        CGRect frame = self.backButton.frame;
+        frame.size.width = 6.0f + backButtonTextSize.width + 11.0f + 12.0f;
+        self.backButton.frame = frame;
+        leftItemFrame = frame;
+    }
+    else if(!self.leftButton.hidden)
+    {
+        [self.leftButton sizeToFit];
+        leftItemFrame = self.leftButton.frame;
+    }
+    else if(!self.editButton.hidden)
+    {
+        [self.editButton sizeToFit];
+        leftItemFrame = self.editButton.frame;
+    }
+    
+    CGRect rightItemFrame = CGRectZero;
+    if(!self.doneButton.hidden)
+    {
+        rightItemFrame = self.doneButton.frame;
+    }
+    else if(!self.cartButton.hidden)
+    {
+        rightItemFrame = self.cartButton.frame;
+    }
+    
+    [self.titleLabel setFrame:CGRectMake(CGRectGetMaxX(leftItemFrame) + 3.0f,
+                                         self.titleLabel.frame.origin.y,
+                                         CGRectGetMinX(rightItemFrame) - 3.0f - CGRectGetMaxX(leftItemFrame),
+                                         self.titleLabel.frame.size.height)];
 }
 
 - (void)hideCenterItems
