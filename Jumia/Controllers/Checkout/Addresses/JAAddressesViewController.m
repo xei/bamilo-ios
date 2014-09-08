@@ -200,46 +200,65 @@ UICollectionViewDelegateFlowLayout>
 
 -(void)finishedLoadingAddresses
 {
-    self.shippingAddress = [self.addresses objectForKey:@"shipping"];
-    
     NSInteger billingAddressIndex = 0;
     if(self.useSameAddressAsBillingAndShipping)
     {
         self.billingAddress = self.shippingAddress;
         self.firstCollectionViewAddresses = [NSArray arrayWithObject:self.shippingAddress];
         
-        NSMutableArray *addresses = [[NSMutableArray alloc] initWithArray:[self.addresses objectForKey:@"other"]];
-        RIAddress *addressToAdd = [self.addresses objectForKey:@"billing"];
-        if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![self checkIfAddressIsAdded:addressToAdd addresses:addresses])
+        NSMutableArray *addresses = [[NSMutableArray alloc] init];
+        
+        RIAddress *addressToAdd = [self.addresses objectForKey:@"shipping"];
+        if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![[addressToAdd uid] isEqualToString:[self.shippingAddress uid]] && ![self checkIfAddressIsAdded:addressToAdd addresses:addresses])
         {
             [addresses addObject:addressToAdd];
+        }
+        
+        addressToAdd = [self.addresses objectForKey:@"billing"];
+        if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![[addressToAdd uid] isEqualToString:[self.shippingAddress uid]] && ![self checkIfAddressIsAdded:addressToAdd addresses:addresses])
+        {
+            [addresses addObject:addressToAdd];
+        }
+        if(VALID_NOTEMPTY([self.addresses objectForKey:@"other"], NSArray))
+        {
+            for (RIAddress *address in [self.addresses objectForKey:@"other"]) {
+                if(VALID_NOTEMPTY(address, RIAddress) && ![[address uid] isEqualToString:[self.shippingAddress uid]] && ![self checkIfAddressIsAdded:address addresses:addresses])
+                {
+                    [addresses addObject:address];
+                }
+            }
         }
         self.secondCollectionViewAddresses = [addresses copy];
     }
     else
     {
-        self.billingAddress = [self.addresses objectForKey:@"billing"];
-        
         NSMutableArray *addresses = [[NSMutableArray alloc] init];
-        
-        if(VALID_NOTEMPTY(self.shippingAddress, RIAddress))
-        {
-            [addresses addObject:self.shippingAddress];
-        }
-        
+        [addresses addObject:self.shippingAddress];
+            
         if(VALID_NOTEMPTY(self.billingAddress, RIAddress) && ![self checkIfAddressIsAdded:self.billingAddress addresses:addresses])
         {
-            billingAddressIndex++;
+            billingAddressIndex = 1;
             [addresses addObject:self.billingAddress];
+        }
+      
+        RIAddress *addressToAdd = [self.addresses objectForKey:@"shipping"];
+        if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![self checkIfAddressIsAdded:addressToAdd addresses:addresses])
+        {
+            [addresses addObject:addressToAdd];
+        }
+        
+        addressToAdd = [self.addresses objectForKey:@"billing"];
+        if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![self checkIfAddressIsAdded:addressToAdd addresses:addresses])
+        {
+            [addresses addObject:addressToAdd];
         }
         
         if(VALID_NOTEMPTY([self.addresses objectForKey:@"other"], NSArray))
         {
-            for(RIAddress *addressToAdd in [self.addresses objectForKey:@"other"])
-            {
-                if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![self checkIfAddressIsAdded:addressToAdd addresses:addresses])
+            for (RIAddress *address in [self.addresses objectForKey:@"other"]) {
+                if(![self checkIfAddressIsAdded:address addresses:addresses])
                 {
-                    [addresses addObject:addressToAdd];
+                    [addresses addObject:address];
                 }
             }
         }
