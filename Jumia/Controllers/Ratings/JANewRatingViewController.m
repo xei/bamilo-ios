@@ -52,7 +52,7 @@
     self.brandLabel.text = self.ratingProductBrand;
     self.nameLabel.text = self.ratingProductNameForLabel;
     
-    if ([self.ratingProductNewPriceForLabel floatValue] > 0.0)
+    if (self.ratingProductNewPriceForLabel.length > 1)
     {
         NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:self.ratingProductOldPriceForLabel];
         NSInteger stringOldPriceLenght = self.ratingProductOldPriceForLabel.length;
