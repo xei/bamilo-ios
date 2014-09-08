@@ -29,6 +29,8 @@
 {
     [super viewDidLoad];
 
+    self.navBarLayout.title = @"Checkout";
+    
     [self setupViews];
 }
 
