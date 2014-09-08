@@ -45,31 +45,6 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Init elements
-
-- (void)initViewElements
-{
-    self.topView.layer.cornerRadius = 4.0f;
-    
-    self.trackOrderLabel.text = @"Track Your Order";
-    self.trackOrderLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.imageViewLine.backgroundColor = UIColorFromRGB(0xfaa41a);
-    
-    self.orderTextField.placeholder = @"Order ID";
-    self.orderTextField.textColor = UIColorFromRGB(0xcccccc);
-    
-    self.imageViewTextField.backgroundColor = UIColorFromRGB(0xcccccc);
-    
-    [self.buttonTrack setTitle:@"Track Order"
-                      forState:UIControlStateNormal];
-    
-    [self.buttonTrack setTitleColor:UIColorFromRGB(0x4e4e4e)
-                           forState:UIControlStateNormal];
-    
-    self.orderIdLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.variableView.layer.cornerRadius = 4.0f;
-}
-
 #pragma mark - Actions
 
 - (IBAction)trackOrder:(id)sender
@@ -254,6 +229,34 @@
     [self.view needsUpdateConstraints];
     
     self.contentScrollView.contentSize = CGSizeMake(320, self.variableView.frame.size.height + self.topView.frame.size.height + 10);
+}
+
+#pragma mark - Init elements
+
+- (void)initViewElements
+{
+    self.navBarLayout.showLogo = NO;
+    self.navBarLayout.title = @"Order Status";
+    
+    self.topView.layer.cornerRadius = 4.0f;
+    
+    self.trackOrderLabel.text = @"Track Your Order";
+    self.trackOrderLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.imageViewLine.backgroundColor = UIColorFromRGB(0xfaa41a);
+    
+    self.orderTextField.placeholder = @"Order ID";
+    self.orderTextField.textColor = UIColorFromRGB(0x666666);
+    
+    self.imageViewTextField.backgroundColor = UIColorFromRGB(0xcccccc);
+    
+    [self.buttonTrack setTitle:@"Track Order"
+                      forState:UIControlStateNormal];
+    
+    [self.buttonTrack setTitleColor:UIColorFromRGB(0x4e4e4e)
+                           forState:UIControlStateNormal];
+    
+    self.orderIdLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.variableView.layer.cornerRadius = 4.0f;
 }
 
 @end
