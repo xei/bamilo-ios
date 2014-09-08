@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *featuresTextLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionTextLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomDistance;
 
 @end
 
@@ -44,8 +45,9 @@
     self.view.backgroundColor = JABackgroundGrey;
     self.featuresTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.descriptionTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.contenteScrollView.backgroundColor = UIColorFromRGB(0xc8c8c8);
     
-    if(VALID_NOTEMPTY(self.stringOldPrice, NSString))
+    if(!VALID_NOTEMPTY(self.stringNewPrice, NSString))
     {
         self.labelNewPrice.text = self.stringOldPrice;
         
@@ -106,8 +108,6 @@
                                              self.featuresView.frame.size.width,
                                              self.featuresTextLabel.frame.size.height + 70);
         
-        [self.contenteScrollView layoutSubviews];
-        
         [self.contenteScrollView setContentSize:CGSizeMake(320, self.featuresView.frame.size.height - 15)];
     }
     else
@@ -131,10 +131,12 @@
                                                 self.descriptionView.frame.size.width,
                                                 self.descriptionTextLabel.frame.size.height + 70);
         
-        [self.contenteScrollView layoutSubviews];
-        
-        [self.contenteScrollView setContentSize:CGSizeMake(320, self.featuresView.frame.size.height + self.descriptionView.frame.size.height - 35)];
+        [self.contenteScrollView setContentSize:CGSizeMake(320, self.featuresView.frame.size.height + self.descriptionView.frame.size.height)];
     }
+    
+    self.bottomDistance.constant = 6;
+    
+    [self.view updateConstraints];
 }
 
 - (void)didReceiveMemoryWarning

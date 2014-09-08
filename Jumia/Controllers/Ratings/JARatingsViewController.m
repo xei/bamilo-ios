@@ -44,6 +44,7 @@
     [super viewDidLoad];
     
     self.navBarLayout.showBackButton = YES;
+    self.navBarLayout.showLogo = NO;
     
     self.brandLabel.text = self.productBrand;
     self.nameLabel.text = self.productRatings.productName;
