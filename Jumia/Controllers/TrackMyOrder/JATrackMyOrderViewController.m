@@ -7,6 +7,7 @@
 //
 
 #import "JATrackMyOrderViewController.h"
+#import "RIOrder.h"
 
 @interface JATrackMyOrderViewController ()
 <
@@ -59,13 +60,44 @@
     
     [self.buttonTrack setTitleColor:UIColorFromRGB(0x4e4e4e)
                            forState:UIControlStateNormal];
+    
+#warning remove this
+    self.orderTextField.text = @"301956292";
 }
 
 #pragma mark - Actions
 
 - (IBAction)trackOrder:(id)sender
 {
+    [self.view endEditing:YES];
     
+    [self showLoading];
+    
+    if (self.orderTextField.text.length > 0)
+    {
+        [RIOrder trackOrderWithOrderNumber:self.orderTextField.text
+                          WithSuccessBlock:^(RITrackOrder *trackingOrder) {
+                              
+                              [self hideLoading];
+                              
+                              NSLog(@"Aqui");
+                              
+                          } andFailureBlock:^(NSArray *errorMessages) {
+                              
+                              [self hideLoading];
+                              
+                              NSLog(@"Ali");
+                              
+                          }];
+    }
+    else
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                    message:@"Please enter the order ID."
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"Ok", nil] show];
+    }
 }
 
 #pragma mark - Textfield delegate

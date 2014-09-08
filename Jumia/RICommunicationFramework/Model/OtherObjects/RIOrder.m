@@ -8,6 +8,18 @@
 
 #import "RIOrder.h"
 
+@implementation RIStatus
+
+@end
+
+@implementation RIItemCollection
+
+@end
+
+@implementation RITrackOrder
+
+@end
+
 @implementation RIOrder
 
 + (RIOrder*)parseOrder:(NSDictionary*)orderObject
@@ -79,6 +91,136 @@
     }
     
     return order;
+}
+
++ (NSString *)trackOrderWithOrderNumber:(NSString *)orderNumber
+                       WithSuccessBlock:(void (^)(RITrackOrder *trackingOrder))successBlock
+                        andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+{
+    NSString *operationID = nil;
+    
+    if (VALID_NOTEMPTY(orderNumber, NSString))
+    {
+        operationID = [[RICommunicationWrapper sharedInstance]
+                       sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, [NSString stringWithFormat:RI_API_TRACK_ORDER, orderNumber]]]
+                       parameters:nil
+                       httpMethodPost:YES
+                       cacheType:RIURLCacheDBCache
+                       cacheTime:RIURLCacheDefaultTime
+                       successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                           
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                               
+                               NSDictionary *dic = [jsonObject objectForKey:@"metadata"];
+                               
+                               successBlock([RIOrder parseTrackOrder:dic]);
+                           });
+                           
+                       } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+                           
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                               if(NOTEMPTY(errorJsonObject))
+                               {
+                                   failureBlock([RIError getErrorMessages:errorJsonObject]);
+                               } else if(NOTEMPTY(errorObject))
+                               {
+                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                   failureBlock(errorArray);
+                               } else
+                               {
+                                   failureBlock(nil);
+                               }
+                           });
+                       }];
+    } else {
+        failureBlock(nil);
+    }
+    
+    return operationID;
+}
+
+#pragma mark - Track order parsers
+
++ (RITrackOrder *)parseTrackOrder:(NSDictionary *)json
+{
+    RITrackOrder *trackOrder = [[RITrackOrder alloc] init];
+    
+    if ([json objectForKey:@"order_id"]) {
+        trackOrder.orderId = [json objectForKey:@"order_id"];
+    }
+    
+    if ([json objectForKey:@"creation_date"]) {
+        trackOrder.creationDate = [json objectForKey:@"creation_date"];
+    }
+    
+    if ([json objectForKey:@"last_order_update"]) {
+        trackOrder.lastOrderUpdate = [json objectForKey:@"last_order_update"];
+    }
+    
+    if ([json objectForKey:@"payment_method"]) {
+        trackOrder.paymentMethod = [json objectForKey:@"payment_method"];
+    }
+    
+    if ([json objectForKey:@"item_collection"]) {
+        NSDictionary *tempDic = [json objectForKey:@"item_collection"];
+        
+        NSMutableArray *itemArray = [NSMutableArray new];
+        
+        for (NSString *string in tempDic) {
+            NSDictionary *temp = [tempDic objectForKey:string];
+            [itemArray addObject:[RIOrder parseItemCollection:temp]];
+        }
+        
+        trackOrder.itemCollection = [itemArray copy];
+    }
+    
+    return trackOrder;
+}
+
++ (RIItemCollection *)parseItemCollection:(NSDictionary *)json
+{
+    RIItemCollection *item = [[RIItemCollection alloc] init];
+    
+    if ([json objectForKey:@"sku"]) {
+        item.sku = [json objectForKey:@"sku"];
+    }
+    
+    if ([json objectForKey:@"name"]) {
+        item.name = [json objectForKey:@"name"];
+    }
+    
+    if ([json objectForKey:@"quantity"]) {
+        item.quantity = [json objectForKey:@"quantity"];
+    }
+    
+    if ([json objectForKey:@"status"]) {
+        NSArray *tempArray = [json objectForKey:@"status"];
+        
+        NSMutableArray *statusArray = [NSMutableArray new];
+        
+        for (NSDictionary *dic in tempArray) {
+            [statusArray addObject:[RIOrder parseStatus:dic]];
+        }
+        
+        item.status = [statusArray copy];
+    }
+    
+    return item;
+}
+
++ (RIStatus *)parseStatus:(NSDictionary *)json
+{
+    RIStatus *status = [[RIStatus alloc] init];
+    
+    if ([json objectForKey:@"item_status"]) {
+        status.itemStatus = [json objectForKey:@"item_status"];
+    }
+    
+    if ([json objectForKey:@"last_status_change"]) {
+        status.lastChangeStatus = [json objectForKey:@"last_status_change"];
+    }
+    
+    return status;
 }
 
 @end
