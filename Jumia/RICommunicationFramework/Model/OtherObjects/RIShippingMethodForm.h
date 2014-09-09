@@ -50,4 +50,8 @@
  */
 + (NSDictionary *) getParametersForForm:(RIShippingMethodForm *)form;
 
++ (NSDictionary *) getRegionsForShippingMethod:(NSString*)shippingMethod inForm:(RIShippingMethodForm *) form;
+
++ (NSArray *) getPickupStationsForRegion:(NSString*)regionId shippingMethod:(NSString*)shippingMethod inForm:(RIShippingMethodForm *) form;
+
 @end

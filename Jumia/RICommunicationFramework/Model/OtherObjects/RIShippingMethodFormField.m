@@ -13,8 +13,7 @@
 
 + (RIShippingMethodFormField *)parseField:(NSDictionary *)fieldJSON;
 {
-    RIShippingMethodFormField* newField = [[RIShippingMethodFormField alloc] init];
-    
+    RIShippingMethodFormField* newField = [[RIShippingMethodFormField alloc] init];    
     
     if ([fieldJSON objectForKey:@"id"]) {
         newField.uid = [fieldJSON objectForKey:@"id"];
@@ -73,7 +72,7 @@
             {
                 if(VALID_NOTEMPTY(optionObject, NSDictionary))
                 {
-                    if([@"PickupStation" isEqualToString:newField.scenario])
+                    if([@"pickupstation" isEqualToString:[newField.scenario lowercaseString]])
                     {
                         RIShippingMethodPickupStationOption *option = [RIShippingMethodPickupStationOption parsePickupStation:optionObject];
                         [optionsArray addObject:option];

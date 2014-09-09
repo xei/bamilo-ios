@@ -17,7 +17,7 @@
 
 @implementation JAShippingCell
 
-- (void)loadWithShippingMethod:(NSString *)shippingMethod andOptions:(NSArray *)options
+-(void)loadWithShippingMethod:(NSString *)shippingMethod
 {
     [self.label setText:shippingMethod];
 }
@@ -25,11 +25,13 @@
 -(void)selectAddress
 {
     [self.checkMark setHidden:NO];
+    [self.separator setHidden:YES];
 }
 
 -(void)deselectAddress
 {
     [self.checkMark setHidden:YES];
+    [self.separator setHidden:NO];
 }
 
 @end
