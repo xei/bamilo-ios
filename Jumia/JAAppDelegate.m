@@ -46,6 +46,11 @@
     
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xeaeaea)];
     
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
+     setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                             UIColorFromRGB(0xc8c8c8), NSForegroundColorAttributeName,
+                             [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
+    
     return YES;
 }
 
