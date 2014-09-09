@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,52 +12,6 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="308" height="120"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E2V-AL-HVh" userLabel="Info">
-                        <rect key="frame" x="92" y="0.0" width="180" height="120"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="180" translatesAutoresizingMaskIntoConstraints="NO" id="RaE-2X-KC3" userLabel="City">
-                                <rect key="frame" x="0.0" y="20" width="180" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="180" id="LkV-5v-b7L"/>
-                                    <constraint firstAttribute="height" constant="20" id="wBS-Rb-BVe"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="180" translatesAutoresizingMaskIntoConstraints="NO" id="GNj-pg-QOb" userLabel="Address">
-                                <rect key="frame" x="0.0" y="40" width="180" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="180" id="67z-sj-DHU"/>
-                                    <constraint firstAttribute="height" constant="20" id="6sv-V2-KTh"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="180" translatesAutoresizingMaskIntoConstraints="NO" id="pKm-sB-5m3" userLabel="Opening Hours">
-                                <rect key="frame" x="0.0" y="60" width="180" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="180" id="1qV-XZ-X14"/>
-                                    <constraint firstAttribute="height" constant="20" id="t3e-dq-Rab"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="pKm-sB-5m3" firstAttribute="leading" secondItem="E2V-AL-HVh" secondAttribute="leading" id="2hR-yO-gfp"/>
-                            <constraint firstItem="pKm-sB-5m3" firstAttribute="top" secondItem="GNj-pg-QOb" secondAttribute="bottom" id="5Ou-lE-NfG"/>
-                            <constraint firstAttribute="height" constant="120" id="5pK-SB-W0l"/>
-                            <constraint firstAttribute="width" constant="180" id="Mhn-HD-YFm"/>
-                            <constraint firstItem="GNj-pg-QOb" firstAttribute="leading" secondItem="E2V-AL-HVh" secondAttribute="leading" id="iNj-gE-pVf"/>
-                            <constraint firstItem="RaE-2X-KC3" firstAttribute="leading" secondItem="E2V-AL-HVh" secondAttribute="leading" id="iP2-dC-Q96"/>
-                            <constraint firstItem="RaE-2X-KC3" firstAttribute="top" secondItem="E2V-AL-HVh" secondAttribute="top" id="kiK-dT-ZTC"/>
-                            <constraint firstItem="GNj-pg-QOb" firstAttribute="top" secondItem="RaE-2X-KC3" secondAttribute="bottom" id="sG1-ul-MWB"/>
-                        </constraints>
-                    </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6ch-Sp-USJ" userLabel="Image">
                         <rect key="frame" x="22" y="30" width="60" height="60"/>
                     </imageView>
@@ -74,27 +28,13 @@
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                <nil key="simulatedStatusBarMetrics"/>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="E2V-AL-HVh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="92" id="Yjl-AL-b3R"/>
-                <constraint firstItem="E2V-AL-HVh" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="yNU-79-DYF"/>
-            </constraints>
             <connections>
-                <outlet property="addressHeightConstrain" destination="6sv-V2-KTh" id="wQM-B2-hyA"/>
-                <outlet property="addressLabel" destination="GNj-pg-QOb" id="jXa-py-wE0"/>
-                <outlet property="checkMark" destination="ptg-2v-Leo" id="fk2-LY-lPt"/>
-                <outlet property="cityHeightConstrain" destination="wBS-Rb-BVe" id="hOI-O2-6qQ"/>
-                <outlet property="cityLabel" destination="RaE-2X-KC3" id="oMR-fj-dVp"/>
-                <outlet property="image" destination="6ch-Sp-USJ" id="UmK-Zq-ghF"/>
-                <outlet property="infoHeightConstrain" destination="Mhn-HD-YFm" id="zcO-we-BSy"/>
-                <outlet property="infoView" destination="E2V-AL-HVh" id="YG1-2Y-Gd3"/>
-                <outlet property="infoYConstrain" destination="yNU-79-DYF" id="mII-g0-MFF"/>
-                <outlet property="lastSeparator" destination="fY7-VH-03i" id="K5T-2N-ciR"/>
-                <outlet property="openingHours" destination="pKm-sB-5m3" id="7sf-oG-nne"/>
-                <outlet property="openingHoursHeightConstrain" destination="t3e-dq-Rab" id="FDy-GB-yx8"/>
-                <outlet property="separator" destination="M9b-Ys-5TY" id="My4-D2-1oO"/>
+                <outlet property="checkMark" destination="ptg-2v-Leo" id="mTT-6e-VmQ"/>
+                <outlet property="image" destination="6ch-Sp-USJ" id="s0i-cW-WbC"/>
+                <outlet property="lastSeparator" destination="fY7-VH-03i" id="w4s-Kg-znp"/>
+                <outlet property="separator" destination="M9b-Ys-5TY" id="hPo-xP-kY4"/>
             </connections>
         </collectionViewCell>
     </objects>
