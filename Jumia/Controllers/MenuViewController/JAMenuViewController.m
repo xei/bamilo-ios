@@ -185,7 +185,39 @@
     if (self.resultsTableView == tableView) {
         
         RISearchSuggestion *sugestion = [self.resultsArray objectAtIndex:indexPath.row];
-        cell.textLabel.text = sugestion.item;
+        
+        NSString *text = sugestion.item;
+        NSString *searchedText = self.customNavBar.searchBar.text;
+        
+        NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:text];
+        NSInteger stringTextLenght = text.length;
+        
+        UIFont *stringTextFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
+        UIFont *subStringTextFont = [UIFont fontWithName:@"HelveticaNeue" size:17.0f];
+        UIColor *stringTextColor = UIColorFromRGB(0x4e4e4e);
+        
+        
+        [stringText addAttribute:NSFontAttributeName
+                               value:stringTextFont
+                               range:NSMakeRange(0, stringTextLenght)];
+        
+        [stringText addAttribute:NSStrokeColorAttributeName
+                               value:stringTextColor
+                               range:NSMakeRange(0, stringTextLenght)];
+        
+        NSRange range = [text rangeOfString:searchedText];
+        
+        [stringText addAttribute:NSFontAttributeName
+                           value:subStringTextFont
+                           range:range];
+        
+        cell.textLabel.attributedText = stringText;
+        
+        if (1 == sugestion.isRecentSearch) {
+            cell.imageView.image = [UIImage imageNamed:@"ico_recentsearchsuggestion"];
+        } else {
+            cell.imageView.image = [UIImage imageNamed:@"ico_searchsuggestion"];
+        }
         
     } else {
         
@@ -209,6 +241,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.view endEditing:YES];
+    
     [tableView deselectRowAtIndexPath:indexPath
                              animated:YES];
     
@@ -323,10 +357,16 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    [self.customNavBar addBackButtonToNavBar];
+    if (self.customNavBar.isBackVisible) {
+        [self.customNavBar removeBackButtonFromNavBarNoResetVariable];
+    } else {
+        [self.customNavBar removeBackButtonFromNavBar];
+    }
+    
+    searchBar.showsCancelButton = YES;
     
     [self addResultsTableViewToView];
-    
+        
     return YES;
 }
 
@@ -344,29 +384,36 @@
                                                                  @"text": searchBar.text }];
 }
 
-
-
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
     searchBar.text = @"";
     
+    searchBar.showsCancelButton = NO;
+    
     [self removeResultsTableViewFromView];
+    
+    if (self.customNavBar.isBackVisible) {
+        [self.customNavBar addBackButtonToNavBar];
+    }
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [RISearchSuggestion getSuggestionsForQuery:searchText
-                                  successBlock:^(NSArray *suggestions) {
-                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                          self.resultsArray = [suggestions mutableCopy];
+    if (searchText.length > 1)
+    {
+        [RISearchSuggestion getSuggestionsForQuery:searchText
+                                      successBlock:^(NSArray *suggestions) {
+                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                              self.resultsArray = [suggestions mutableCopy];
+                                              
+                                              [self.resultsTableView reloadSections:[NSIndexSet indexSetWithIndex:0]
+                                                                   withRowAnimation:UITableViewRowAnimationFade];
+                                          });
+                                      } andFailureBlock:^(NSArray *errorMessages) {
                                           
-                                          [self.resultsTableView reloadSections:[NSIndexSet indexSetWithIndex:0]
-                                                               withRowAnimation:UITableViewRowAnimationFade];
-                                      });
-                                  } andFailureBlock:^(NSArray *errorMessages) {
-
-                                  }];
+                                      }];
+    }
 }
 
 #pragma mark - Results table view methods
@@ -404,7 +451,7 @@
         [UIView animateWithDuration:0.4f
                          animations:^{
                              CGRect newFrame = self.resultsTableView.frame;
-                             newFrame.origin.y = self.cartView.frame.origin.y;
+                             newFrame.origin.y = self.cartView.frame.origin.y + 1;
                              self.resultsTableView.frame = newFrame;
                          }];
     }

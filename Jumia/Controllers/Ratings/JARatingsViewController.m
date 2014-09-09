@@ -49,7 +49,7 @@
     self.brandLabel.text = self.productBrand;
     self.nameLabel.text = self.productRatings.productName;
     
-    if ([self.productNewPrice floatValue] > 0.0)
+    if (self.productNewPrice.length > 1)
     {
         NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:self.productOldPrice];
         NSInteger stringOldPriceLenght = self.productOldPrice.length;
@@ -99,7 +99,7 @@
         CGRect tempFrame = self.oldPriceLabel.frame;
         tempFrame.origin.x = self.labelNewPrice.frame.size.width + self.labelNewPrice.frame.origin.x + 1;
         self.oldPriceLabel.frame = tempFrame;
-        
+                
         [self.topView layoutSubviews];
     }
     else
@@ -230,18 +230,34 @@
     
     cell.labelTitle.text = comment.title;
     cell.labelDescription.text = comment.detail;
+
+    NSInteger count = comment.options.count;
     
-    for (RIRatingOption *option in comment.options) {
-        if ([option.typeTitle isEqualToString:@"Price"]) {
+    if (count == 1) {
+        [cell.viewAppearance removeFromSuperview];
+        [cell.viewQuality removeFromSuperview];
+    } else if (2 == count) {
+        [cell.viewQuality removeFromSuperview];
+    }
+    
+    for (int i = 0 ; i < count ; i++)
+    {
+        RIRatingOption *option = comment.options[i];
+        
+        if (i == 0)
+        {
             [cell setPriceRating:[option.optionValue integerValue]];
-        } else if ([option.typeTitle isEqualToString:@"Appearance"]) {
+            cell.labelPrice.text = option.title;
+        }
+        else if (i == 1)
+        {
             [cell setAppearanceRating:[option.optionValue integerValue]];
-        } else if ([option.typeTitle isEqualToString:@"Quality"]) {
+            cell.labelAppearance.text = option.title;
+        }
+        else if (i == 2)
+        {
             [cell setQualityRating:[option.optionValue integerValue]];
-        } else if ([option.typeTitle isEqualToString:@"Rating"]) {
-            [cell setPriceRating:[option.optionValue integerValue]];
-            [cell setAppearanceRating:[option.optionValue integerValue]];
-            [cell setQualityRating:[option.optionValue integerValue]];
+            cell.labelQuality.text = option.title;
         }
     }
     

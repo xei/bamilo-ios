@@ -46,13 +46,14 @@
     [super viewDidLoad];
     
     self.navBarLayout.showBackButton = YES;
+    self.navBarLayout.showLogo = NO;
     
     self.originalFrame = self.centerView.frame;
     
     self.brandLabel.text = self.ratingProductBrand;
     self.nameLabel.text = self.ratingProductNameForLabel;
     
-    if ([self.ratingProductNewPriceForLabel floatValue] > 0.0)
+    if (self.ratingProductNewPriceForLabel.length > 1)
     {
         NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:self.ratingProductOldPriceForLabel];
         NSInteger stringOldPriceLenght = self.ratingProductOldPriceForLabel.length;
@@ -168,9 +169,13 @@
                                                                    delegate:self
                                                            startingPosition:startingY-10];
                
+               NSInteger count = 0;
+               
                for (UIView *view in self.ratingDynamicForm.formViews)
                {
+                   view.tag = count;
                    [self.centerView addSubview:view];
+                   count++;
                }
                
                [self hideLoading];
@@ -208,17 +213,16 @@
 
 - (void)changedFocus:(UIView *)view
 {
+    __block CGRect frame = self.originalFrame;
+    __block CGRect tempFrame = self.view.frame;
+    
     [UIView animateWithDuration:0.5f
                      animations:^{
-                         CGRect frame = self.centerView.frame;
                          
-                         if (self.centerView.frame.origin.y < 0)
-                         {
-                             frame.origin.y -= 44;
-                         }
-                         else
-                         {
-                             frame.origin.y -= (view.center.y - 35);
+                         if (tempFrame.size.height > 417) {
+                             frame.origin.y -= (44 * (view.tag + 1));
+                         } else {
+                             frame.origin.y -= (44 * (view.tag + 3));
                          }
                          
                          self.centerView.frame = frame;

@@ -22,6 +22,8 @@
     
     if (self) {
         
+        self.isBackVisible = NO;
+        
         self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(6, 0, 235, 44)];
         self.searchBar.barTintColor = [UIColor whiteColor];
         self.searchBar.placeholder = @"Search";
@@ -60,6 +62,8 @@
 
 - (void)addBackButtonToNavBar
 {
+    self.isBackVisible = YES;
+    
     [UIView animateWithDuration:0.1f
                      animations:^{
                          self.searchBar.frame = CGRectMake(35, 0, 200, 44);
@@ -72,6 +76,21 @@
 }
 
 - (void)removeBackButtonFromNavBar
+{
+    self.isBackVisible = NO;
+    
+    [UIView animateWithDuration:0.2f
+                     animations:^{
+                         self.backButton.alpha = 0.0f;
+                     } completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.0f
+                                          animations:^{
+                                              self.searchBar.frame = CGRectMake(6, 0, 235, 44);
+                                          }];
+                     }];
+}
+
+- (void)removeBackButtonFromNavBarNoResetVariable
 {
     [UIView animateWithDuration:0.2f
                      animations:^{
