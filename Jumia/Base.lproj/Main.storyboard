@@ -1735,7 +1735,7 @@
                                     <constraint firstAttribute="height" constant="492" id="DYU-r4-LrC"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" textLabel="FHO-SE-Jn5" style="IBUITableViewCellStyleDefault" id="l2D-Nt-fPI">
+                                    <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="searchCell" textLabel="FHO-SE-Jn5" style="IBUITableViewCellStyleDefault" id="l2D-Nt-fPI">
                                         <rect key="frame" x="0.0" y="22" width="308" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l2D-Nt-fPI" id="zvb-FF-eve">
@@ -1751,6 +1751,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -2505,7 +2506,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sMK-ij-F4G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2124" y="-291"/>
+            <point key="canvasLocation" x="2436" y="-259"/>
         </scene>
     </scenes>
     <resources>

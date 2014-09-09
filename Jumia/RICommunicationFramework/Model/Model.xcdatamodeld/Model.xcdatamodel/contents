@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6198" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6172.15" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
@@ -173,6 +173,7 @@
         <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="productSimples" inverseEntity="RIProduct" syncable="YES"/>
     </entity>
     <entity name="RISearchSuggestion" representedClassName="RISearchSuggestion" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="isRecentSearch" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="relevance" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -264,7 +265,7 @@
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
         <element name="RIProduct" positionX="-99" positionY="0" width="128" height="495"/>
         <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
-        <element name="RISearchSuggestion" positionX="-648" positionY="27" width="128" height="88"/>
+        <element name="RISearchSuggestion" positionX="-648" positionY="27" width="128" height="105"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
         <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
         <element name="RITeaser" positionX="-686" positionY="527" width="128" height="103"/>
