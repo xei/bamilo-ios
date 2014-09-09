@@ -50,6 +50,7 @@ UIPickerViewDelegate>
 @property (strong, nonatomic) NSArray *shippingMethods;
 @property (strong, nonatomic) NSDictionary *pickupStationRegions;
 @property (strong, nonatomic) NSString *selectedRegion;
+@property (strong, nonatomic) NSString *selectedRegionId;
 @property (strong, nonatomic) NSMutableArray *pickupStationsForRegion;
 @property (strong, nonatomic) NSString *selectedShippingMethod;
 @property (strong, nonatomic) NSIndexPath *collectionViewIndexSelected;
@@ -126,6 +127,7 @@ UIPickerViewDelegate>
                                                                              self.scrollView.frame.size.width - 12.0f,
                                                                              26.0f) collectionViewLayout:collectionViewFlowLayout];
     self.collectionView.layer.cornerRadius = 5.0f;
+    [self.collectionView setBackgroundColor:UIColorFromRGB(0xffffff)];
     [self.collectionView registerNib:shippingListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"shippingListHeader"];
     [self.collectionView registerNib:shippingListCellNib forCellWithReuseIdentifier:@"shippingListCell"];
     [self.collectionView registerNib:shippingInfoCellNib forCellWithReuseIdentifier:@"shippingInfoCell"];
@@ -199,13 +201,17 @@ UIPickerViewDelegate>
             }
         }
         
-        [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
-                                                 self.collectionView.frame.origin.y,
-                                                 self.collectionView.frame.size.width,
-                                                 collectionViewHeight)];
+        [UIView animateWithDuration:0.5f
+                         animations:^{
+                             [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
+                                                                      self.collectionView.frame.origin.y,
+                                                                      self.collectionView.frame.size.width,
+                                                                      collectionViewHeight)];
+                         }];
         
         [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
                                                    self.collectionView.frame.origin.y + collectionViewHeight + self.bottomView.frame.size.height + 6.0f)];
+        
     }
     
     [self.collectionView reloadData];
@@ -226,26 +232,6 @@ UIPickerViewDelegate>
     [self.pickerView setAlpha:0.9];
     [self.pickerView setDataSource:self];
     [self.pickerView setDelegate:self];
-    
-    NSInteger selectedRow = 0;
-    if(VALID_NOTEMPTY(self.pickupStationRegions, NSDictionary) && VALID_NOTEMPTY(self.pickerIndexPath, NSIndexPath))
-    {
-        NSArray *allKeys = [self.pickupStationRegions allKeys];
-        if(VALID_NOTEMPTY(allKeys, NSArray))
-        {
-            for (int i = 0; i < [allKeys count]; i++)
-            {
-                NSString *key = [allKeys objectAtIndex:i];
-                if([self.selectedRegion isEqualToString:[self.pickupStationRegions objectForKey:key]])
-                {
-                    selectedRow = i;
-                    break;
-                }
-            }
-        }
-    }
-    
-    //    [self.pickerView selectedRowInComponent:selectedRow];
     [self.pickerView setFrame:CGRectMake(0.0f,
                                          (self.pickerBackgroundView.frame.size.height - self.pickerView.frame.size.height),
                                          self.pickerView.frame.size.width,
@@ -277,6 +263,26 @@ UIPickerViewDelegate>
     
     [self.pickerBackgroundView addSubview:self.pickerView];
     [self.view addSubview:self.pickerBackgroundView];
+    
+    NSInteger selectedRow = 0;
+    if(VALID_NOTEMPTY(self.pickupStationRegions, NSDictionary) && VALID_NOTEMPTY(self.pickerIndexPath, NSIndexPath))
+    {
+        NSArray *allKeys = [self.pickupStationRegions allKeys];
+        if(VALID_NOTEMPTY(allKeys, NSArray))
+        {
+            for (int i = 0; i < [allKeys count]; i++)
+            {
+                NSString *key = [allKeys objectAtIndex:i];
+                if([self.selectedRegion isEqualToString:[self.pickupStationRegions objectForKey:key]])
+                {
+                    selectedRow = i;
+                    break;
+                }
+            }
+        }
+    }
+    
+    [self.pickerView selectRow:selectedRow inComponent:0 animated:NO];
 }
 
 -(void)removePickerView
@@ -308,10 +314,12 @@ UIPickerViewDelegate>
         NSArray *allKeys = [self.pickupStationRegions allKeys];
         if(VALID_NOTEMPTY(allKeys, NSArray) && selectedRow < [self.pickupStationRegions count])
         {
-            NSString *key = [allKeys objectAtIndex:selectedRow];
-            self.selectedRegion = [self.pickupStationRegions objectForKey:key];
+            self.selectedRegionId = [allKeys objectAtIndex:selectedRow];
+            self.selectedRegion = [self.pickupStationRegions objectForKey:self.selectedRegionId];
             
-            self.pickupStationsForRegion = [[NSMutableArray alloc] initWithArray:[RIShippingMethodForm getPickupStationsForRegion:key shippingMethod:self.selectedShippingMethod inForm:self.shippingMethodForm]];
+            self.pickupStationsForRegion = [[NSMutableArray alloc] initWithArray:[RIShippingMethodForm getPickupStationsForRegion:self.selectedRegionId shippingMethod:self.selectedShippingMethod inForm:self.shippingMethodForm]];
+            
+            self.selectedPickupStationIndexPath = [NSIndexPath indexPathForItem:(self.pickerIndexPath.item + 1) inSection:self.pickerIndexPath.section];
         }
     }
     
@@ -322,27 +330,50 @@ UIPickerViewDelegate>
 
 -(void)nextStepButtonPressed
 {
+    BOOL hasError = NO;
     if(VALID_NOTEMPTY(self.selectedShippingMethod, NSString))
     {
-        for (RIShippingMethodFormField *field in [self.shippingMethodForm fields])
+        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+        [parameters setObject:self.selectedShippingMethod forKey:@"shippingMethodForm[shipping_method]"];
+        
+        if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
         {
-            if([@"shippingMethodForm[shipping_method]" isEqualToString:[field name]])
+            if(VALID_NOTEMPTY(self.selectedRegionId, NSString) && VALID_NOTEMPTY(self.pickupStationsForRegion, NSMutableArray))
             {
-                field.value = self.selectedShippingMethod;
+                [parameters setObject:self.selectedRegionId forKey:@"shippingMethodForm[pickup_station_customer_address_region]"];
+                
+                NSInteger pickupStationIndex = self.selectedPickupStationIndexPath.row - self.collectionViewIndexSelected.row - 2;
+                RIShippingMethodPickupStationOption *pickupStation = [self.pickupStationsForRegion objectAtIndex:pickupStationIndex];
+                [parameters setObject:pickupStation.uid forKey:@"shippingMethodForm[pickup_station]"];
+            }
+            else
+            {
+                hasError = YES;
             }
         }
-        
-        [self showLoading];
-        [RICheckout setShippingMethod:self.shippingMethodForm
-                         successBlock:^(RICheckout *checkout) {
-                             
-                             [self hideLoading];
-                             
-                             [JAUtils getCheckoutNextStepViewController:checkout.nextStep inStoryboard:self.storyboard];
-                             
-                         } andFailureBlock:^(NSArray *errorMessages) {
-                             [self hideLoading];
-                         }];
+        if(!hasError)
+        {
+            [self showLoading];
+            [RICheckout setShippingMethod:self.shippingMethodForm
+                               parameters:[parameters copy]
+                             successBlock:^(RICheckout *checkout) {
+                                 
+                                 [self hideLoading];
+                                 
+                                 [JAUtils getCheckoutNextStepViewController:checkout.nextStep inStoryboard:self.storyboard];
+                                 
+                             } andFailureBlock:^(NSArray *errorMessages) {
+                                 [self hideLoading];
+                             }];
+        }
+        else
+        {
+            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                        message:@"Invalid Fields"
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK", nil] show];
+        }
     }
 }
 
@@ -563,7 +594,7 @@ UIPickerViewDelegate>
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(collectionView == self.collectionView && VALID_NOTEMPTY(self.shippingMethods, NSArray))
+    if(collectionView == self.collectionView && VALID_NOTEMPTY(self.shippingMethods, NSArray) && indexPath.row != self.collectionViewIndexSelected.row)
     {
         if(indexPath.row <= self.collectionViewIndexSelected.row || indexPath.row > (self.collectionViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
         {
@@ -592,8 +623,7 @@ UIPickerViewDelegate>
                 
                 self.pickupStationRegions = [RIShippingMethodForm getRegionsForShippingMethod:self.selectedShippingMethod inForm:self.shippingMethodForm];
                 self.pickerIndexPath = nil;
-                self.selectedPickupStationIndexPath = nil;
-
+                
                 [self reloadCollectionView];
             }
         }
