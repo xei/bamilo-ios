@@ -15,6 +15,7 @@
 @property (nonatomic, retain) NSString * item;
 @property (nonatomic, retain) NSNumber * relevance;
 @property (nonatomic, assign) BOOL isRecentSearch;
+@property (nonatomic, assign) NSDate *date;
 
 /**
  * Method to save a search suggestions on core data

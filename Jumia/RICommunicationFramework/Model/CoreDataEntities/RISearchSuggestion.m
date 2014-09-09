@@ -14,6 +14,7 @@
 @dynamic item;
 @dynamic relevance;
 @dynamic isRecentSearch;
+@dynamic date;
 
 + (void)saveSearchSuggestionOnDB:(NSString *)query
                   isRecentSearch:(BOOL)isRecentSearch
@@ -23,8 +24,9 @@
         RISearchSuggestion *newSearchSuggestion = (RISearchSuggestion*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
         
         newSearchSuggestion.item = query;
-        newSearchSuggestion.relevance = 0;
+        newSearchSuggestion.relevance = @(0);
         newSearchSuggestion.isRecentSearch = isRecentSearch;
+        newSearchSuggestion.date = [NSDate date];
         
         // The limit for recent search is 5, if there is > 5 it's necessary to delete the old one
         if (isRecentSearch)
@@ -33,29 +35,25 @@
             
             if (searches.count > 4)
             {
-                [[RIDataBaseWrapper sharedInstance] deleteObject:[searches objectAtIndex:0]];
+                [searches sortUsingComparator:^(RISearchSuggestion *obj1, RISearchSuggestion *obj2)
+                 {
+                     NSComparisonResult result = [obj1.date compare:obj2.date];
+                     
+                     switch (result)
+                     {
+                         case NSOrderedAscending: return (NSComparisonResult)NSOrderedDescending; break;
+                         case NSOrderedDescending: return (NSComparisonResult)NSOrderedAscending; break;
+                         case NSOrderedSame: return (NSComparisonResult)NSOrderedSame; break;
+                             
+                         default: return (NSComparisonResult)NSOrderedSame; break;
+                     }
+                 }];
+                
+                [[RIDataBaseWrapper sharedInstance] deleteObject:[searches lastObject]];
                 [[RIDataBaseWrapper sharedInstance] saveContext];
-                [searches removeObjectAtIndex:0];
             }
-            
-            newSearchSuggestion.relevance = 0;
-            
-            [searches insertObject:newSearchSuggestion
-                           atIndex:0];
-            
-            for (NSInteger i = 0 ; i < searches.count ; i++)
-            {
-                RISearchSuggestion *suggestionToAdd = (RISearchSuggestion *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
-                RISearchSuggestion *suggestion = [searches objectAtIndex:i];
-                
-                suggestionToAdd.item = suggestion.item;
-                suggestionToAdd.relevance = @(i);
-                suggestionToAdd.isRecentSearch = suggestion.isRecentSearch;
-                
-                [[RIDataBaseWrapper sharedInstance] insertManagedObject:suggestionToAdd];
-                [[RIDataBaseWrapper sharedInstance] deleteObject:suggestion];
-            }
-            
+
+            [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
             [[RIDataBaseWrapper sharedInstance] saveContext];
         }
         else
@@ -186,20 +184,16 @@
         {
             [array sortUsingComparator:^(RISearchSuggestion *obj1, RISearchSuggestion *obj2)
              {
-                 NSInteger value1 = [obj1.relevance integerValue];
-                 NSInteger value2 = [obj2.relevance integerValue];
+                 NSComparisonResult result = [obj1.date compare:obj2.date];
                  
-                 if (value1 > value2)
+                 switch (result)
                  {
-                     return (NSComparisonResult)NSOrderedDescending;
+                     case NSOrderedAscending: return (NSComparisonResult)NSOrderedDescending; break;
+                     case NSOrderedDescending: return (NSComparisonResult)NSOrderedAscending; break;
+                     case NSOrderedSame: return (NSComparisonResult)NSOrderedSame; break;
+                         
+                     default: return (NSComparisonResult)NSOrderedSame; break;
                  }
-                 
-                 if (value1 < value2)
-                 {
-                     return (NSComparisonResult)NSOrderedAscending;
-                 }
-                 
-                 return (NSComparisonResult)NSOrderedSame;
              }];
         }
         
@@ -223,7 +217,7 @@
 
 #pragma mark - Private methods
 
-+ (BOOL) checkIfSuggestionsExistsOnDB:(NSString *)query
++ (BOOL)checkIfSuggestionsExistsOnDB:(NSString *)query
 {
     BOOL suggestionExists = false;
     NSArray* searchSuggestions = [RISearchSuggestion getSearchSuggestionsOnDBForQuery:query];
@@ -235,7 +229,7 @@
 }
 
 
-+ (NSArray *) getSearchSuggestionsOnDBForQuery:(NSString*)query
++ (NSArray *)getSearchSuggestionsOnDBForQuery:(NSString*)query
 {
     return [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RISearchSuggestion class]) withPropertyName:@"item" andPropertyValue:query];
 }
@@ -257,7 +251,7 @@
     return [suggestions copy];
 }
 
-+ (RISearchSuggestion*) parseSearchSuggestion:(NSDictionary*)jsonObject
++ (RISearchSuggestion *)parseSearchSuggestion:(NSDictionary*)jsonObject
 {
     RISearchSuggestion *newSearchSuggestion = (RISearchSuggestion*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
     

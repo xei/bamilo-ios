@@ -187,6 +187,12 @@
         RISearchSuggestion *sugestion = [self.resultsArray objectAtIndex:indexPath.row];
         cell.textLabel.text = sugestion.item;
         
+        if (1 == sugestion.isRecentSearch) {
+            cell.imageView.image = [UIImage imageNamed:@"FavButtonPressed"];
+        } else {
+            [cell.imageView removeFromSuperview];
+        }
+        
     } else {
         
         cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
@@ -344,8 +350,6 @@
                                                                  @"text": searchBar.text }];
 }
 
-
-
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
@@ -356,17 +360,20 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [RISearchSuggestion getSuggestionsForQuery:searchText
-                                  successBlock:^(NSArray *suggestions) {
-                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                          self.resultsArray = [suggestions mutableCopy];
+    if (searchText.length > 1)
+    {
+        [RISearchSuggestion getSuggestionsForQuery:searchText
+                                      successBlock:^(NSArray *suggestions) {
+                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                              self.resultsArray = [suggestions mutableCopy];
+                                              
+                                              [self.resultsTableView reloadSections:[NSIndexSet indexSetWithIndex:0]
+                                                                   withRowAnimation:UITableViewRowAnimationFade];
+                                          });
+                                      } andFailureBlock:^(NSArray *errorMessages) {
                                           
-                                          [self.resultsTableView reloadSections:[NSIndexSet indexSetWithIndex:0]
-                                                               withRowAnimation:UITableViewRowAnimationFade];
-                                      });
-                                  } andFailureBlock:^(NSArray *errorMessages) {
-
-                                  }];
+                                      }];
+    }
 }
 
 #pragma mark - Results table view methods
