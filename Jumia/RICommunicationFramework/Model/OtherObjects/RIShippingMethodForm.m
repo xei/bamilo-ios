@@ -7,6 +7,7 @@
 //
 
 #import "RIShippingMethodForm.h"
+#import "RIShippingMethodPickupStationOption.h"
 
 @implementation RIShippingMethodForm
 
@@ -60,10 +61,9 @@
 + (NSArray *) getOptionsForScenario:(NSString *) key
                              inForm:(RIShippingMethodForm *) form
 {
-    NSMutableArray *options = nil;
+    NSMutableArray *options = [[NSMutableArray alloc] init];
     if(VALID_NOTEMPTY(form, RIShippingMethodForm))
     {
-        options = [[NSMutableArray alloc] init];
         for(RIShippingMethodFormField *field in form.fields)
         {
             if([key isEqualToString:field.scenario])
@@ -73,6 +73,63 @@
         }
     }
     return [options copy];
+}
+
++ (NSDictionary *) getRegionsForShippingMethod:(NSString*)shippingMethod inForm:(RIShippingMethodForm *) form
+{
+    NSMutableDictionary *regions = [[NSMutableDictionary alloc] init];
+    if(VALID_NOTEMPTY(form, RIShippingMethodForm))
+    {
+        for(RIShippingMethodFormField *field in form.fields)
+        {
+            if([shippingMethod isEqualToString:field.scenario] && [@"pickup_station" isEqualToString:[field.key lowercaseString]])
+            {
+                NSArray *options = [field.options objectForKey:shippingMethod];
+                for(RIShippingMethodPickupStationOption *pickupStation in options)
+                {
+                    if(VALID_NOTEMPTY(pickupStation.regions, NSDictionary))
+                    {
+                        [regions addEntriesFromDictionary:pickupStation.regions];
+                    }
+                }
+            }
+        }
+    }
+    return [regions copy];
+}
+
++ (NSArray *) getPickupStationsForRegion:(NSString*)regionId shippingMethod:(NSString*)shippingMethod inForm:(RIShippingMethodForm *) form
+{
+    NSMutableArray *pickupStations = [[NSMutableArray alloc] init];
+    if(VALID_NOTEMPTY(form, RIShippingMethodForm))
+    {
+        for(RIShippingMethodFormField *field in form.fields)
+        {
+            if([shippingMethod isEqualToString:field.scenario] && [@"pickup_station" isEqualToString:[field.key lowercaseString]])
+            {
+                NSArray *options = [field.options objectForKey:shippingMethod];
+                for(RIShippingMethodPickupStationOption *pickupStation in options)
+                {
+                    if(VALID_NOTEMPTY(pickupStation.regions, NSDictionary))
+                    {
+                        NSArray *pickupStationRegionIds = [pickupStation.regions allKeys];
+                        if(VALID_NOTEMPTY(pickupStationRegionIds, NSArray))
+                        {
+                            for(NSString *pickupStationRegionId in pickupStationRegionIds)
+                            {
+                                if([pickupStationRegionId isEqualToString:regionId])
+                                {
+                                    [pickupStations addObject:pickupStation];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return [pickupStations copy];
 }
 
 + (NSDictionary *) getParametersForForm:(RIShippingMethodForm *)form

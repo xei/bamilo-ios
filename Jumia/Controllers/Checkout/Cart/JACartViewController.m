@@ -674,8 +674,10 @@
 {
     if([RICustomer checkIfUserIsLogged])
     {
+        [self showLoading];
         [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
-            
+            [self hideLoading];
+
             if(VALID_NOTEMPTY(adressList, NSDictionary))
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
@@ -692,6 +694,8 @@
             }
             
         } andFailureBlock:^(NSArray *errorMessages) {
+            [self hideLoading];
+            
             NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
@@ -701,7 +705,6 @@
     }
     else
     {
-        [self hideLoading];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutLoginScreenNotification
                                                             object:nil
                                                           userInfo:nil];

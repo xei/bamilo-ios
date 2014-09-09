@@ -12,7 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *separator;
 
--(void)loadWithShippingMethod:(NSString *)shippingMethod andOptions:(NSArray*)options;
+-(void)loadWithShippingMethod:(NSString *)shippingMethod;
 
 -(void)selectAddress;
 

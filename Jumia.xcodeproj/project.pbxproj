@@ -63,6 +63,9 @@
 		B5007AC419A4E8EC0024035A /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */; };
 		B5007AC619A4E9170024035A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007AC519A4E9170024035A /* CoreText.framework */; };
 		B5007AC819A4E92F0024035A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007AC719A4E92F0024035A /* Security.framework */; };
+		B501E88919BE20C100BE51DD /* JAPickupRegionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B501E88819BE20C100BE51DD /* JAPickupRegionsCell.xib */; };
+		B501E88D19BEF7DE00BE51DD /* JAPickupStationInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B501E88B19BEF7DE00BE51DD /* JAPickupStationInfoCell.m */; };
+		B501E88E19BEF7DE00BE51DD /* JAPickupStationInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B501E88C19BEF7DE00BE51DD /* JAPickupStationInfoCell.xib */; };
 		B50B039D198A5420002046DF /* JALoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B039C198A5420002046DF /* JALoginViewController.m */; };
 		B50B03A0198A5434002046DF /* JAAddressesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B039F198A5434002046DF /* JAAddressesViewController.m */; };
 		B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03A2198A5441002046DF /* JAPaymentViewController.m */; };
@@ -86,6 +89,8 @@
 		B5225E30198950C500C18F1E /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
 		B542546B19AE9F7500C792FF /* JACartListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B542546919AE9F7500C792FF /* JACartListHeaderView.m */; };
 		B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
+		B55CF29019BE072800A6C6B6 /* JAShippingInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B55CF28D19BE072800A6C6B6 /* JAShippingInfoCell.xib */; };
+		B55CF29119BE072800A6C6B6 /* JAShippingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B55CF28E19BE072800A6C6B6 /* JAShippingInfoCell.m */; };
 		B56BBF3319A60D5400F4B1A3 /* JACartListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */; };
 		B57DC97E19B90AB10080C818 /* JAEditAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */; };
 		B58767FE19BB62B3001651D6 /* JAShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58767FC19BB62B3001651D6 /* JAShippingCell.m */; };
@@ -387,6 +392,10 @@
 		B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		B5007AC519A4E9170024035A /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B5007AC719A4E92F0024035A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		B501E88819BE20C100BE51DD /* JAPickupRegionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPickupRegionsCell.xib; path = ShippingCell/JAPickupRegionsCell.xib; sourceTree = "<group>"; };
+		B501E88A19BEF7DE00BE51DD /* JAPickupStationInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPickupStationInfoCell.h; path = ShippingCell/JAPickupStationInfoCell.h; sourceTree = "<group>"; };
+		B501E88B19BEF7DE00BE51DD /* JAPickupStationInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPickupStationInfoCell.m; path = ShippingCell/JAPickupStationInfoCell.m; sourceTree = "<group>"; };
+		B501E88C19BEF7DE00BE51DD /* JAPickupStationInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPickupStationInfoCell.xib; path = ShippingCell/JAPickupStationInfoCell.xib; sourceTree = "<group>"; };
 		B50B039B198A5420002046DF /* JALoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JALoginViewController.h; sourceTree = "<group>"; };
 		B50B039C198A5420002046DF /* JALoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JALoginViewController.m; sourceTree = "<group>"; };
 		B50B039E198A5434002046DF /* JAAddressesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAddressesViewController.h; sourceTree = "<group>"; };
@@ -428,6 +437,9 @@
 		B542546819AE9F7500C792FF /* JACartListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartListHeaderView.h; path = Jumia/View/Headers/JACartListHeaderView.h; sourceTree = SOURCE_ROOT; };
 		B542546919AE9F7500C792FF /* JACartListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartListHeaderView.m; path = Jumia/View/Headers/JACartListHeaderView.m; sourceTree = SOURCE_ROOT; };
 		B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACartListHeaderView.xib; path = Jumia/View/Headers/JACartListHeaderView.xib; sourceTree = SOURCE_ROOT; };
+		B55CF28D19BE072800A6C6B6 /* JAShippingInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAShippingInfoCell.xib; path = ShippingCell/JAShippingInfoCell.xib; sourceTree = "<group>"; };
+		B55CF28E19BE072800A6C6B6 /* JAShippingInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAShippingInfoCell.m; path = ShippingCell/JAShippingInfoCell.m; sourceTree = "<group>"; };
+		B55CF28F19BE072800A6C6B6 /* JAShippingInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAShippingInfoCell.h; path = ShippingCell/JAShippingInfoCell.h; sourceTree = "<group>"; };
 		B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACartListCell.xib; sourceTree = "<group>"; };
 		B57DC97C19B90AB10080C818 /* JAEditAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAEditAddressViewController.h; sourceTree = "<group>"; };
 		B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAEditAddressViewController.m; sourceTree = "<group>"; };
@@ -1219,6 +1231,13 @@
 				B58767FB19BB62B3001651D6 /* JAShippingCell.h */,
 				B58767FC19BB62B3001651D6 /* JAShippingCell.m */,
 				B58767FD19BB62B3001651D6 /* JAShippingCell.xib */,
+				B55CF28F19BE072800A6C6B6 /* JAShippingInfoCell.h */,
+				B55CF28E19BE072800A6C6B6 /* JAShippingInfoCell.m */,
+				B55CF28D19BE072800A6C6B6 /* JAShippingInfoCell.xib */,
+				B501E88819BE20C100BE51DD /* JAPickupRegionsCell.xib */,
+				B501E88A19BEF7DE00BE51DD /* JAPickupStationInfoCell.h */,
+				B501E88B19BEF7DE00BE51DD /* JAPickupStationInfoCell.m */,
+				B501E88C19BEF7DE00BE51DD /* JAPickupStationInfoCell.xib */,
 			);
 			name = ShippingCell;
 			sourceTree = "<group>";
@@ -2109,9 +2128,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEC3F71219A5FBF800DE12F6 /* JAFavoriteListCell.xib in Resources */,
+				B501E88E19BEF7DE00BE51DD /* JAPickupStationInfoCell.xib in Resources */,
 				B58767FF19BB62B3001651D6 /* JAShippingCell.xib in Resources */,
 				B5A3023A19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
 				CEDEB9BA199BA8FA0022BAB5 /* slider-default7-handle@2x.png in Resources */,
+				B55CF29019BE072800A6C6B6 /* JAShippingInfoCell.xib in Resources */,
+				B501E88919BE20C100BE51DD /* JAPickupRegionsCell.xib in Resources */,
 				4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */,
 				4A392143198925E300B70A9C /* JANavigationBarView.xib in Resources */,
 				CEDEB9C3199BA8FA0022BAB5 /* slider-metal-handle.png in Resources */,
@@ -2238,6 +2260,7 @@
 				CEDEB983199A51E30022BAB5 /* RIFilter.m in Sources */,
 				CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */,
 				B5A302C519811E9200F71726 /* RIImage.m in Sources */,
+				B501E88D19BEF7DE00BE51DD /* JAPickupStationInfoCell.m in Sources */,
 				B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */,
 				4A454F4A199CE67500B44821 /* JAForgotPasswordViewController.m in Sources */,
 				B5A302DB19811E9200F71726 /* RIOperation.m in Sources */,
@@ -2350,6 +2373,7 @@
 				4A39213A19891FC400B70A9C /* JAMyFavouritesViewController.m in Sources */,
 				4A18856419B8A368003337FC /* JAActivityViewController.m in Sources */,
 				B5A302E319811E9200F71726 /* RIAdXTracker.m in Sources */,
+				B55CF29119BE072800A6C6B6 /* JAShippingInfoCell.m in Sources */,
 				4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */,
 				CEDEB9C9199BA8FA0022BAB5 /* NMRangeSlider.m in Sources */,
 				B5A3025919811E8A00F71726 /* SDWebImageDecoder.m in Sources */,
