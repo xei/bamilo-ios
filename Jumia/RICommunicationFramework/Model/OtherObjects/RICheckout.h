@@ -90,11 +90,13 @@
  * Method to set the shipping method needed for checkout process
  *
  * @param the shipping method form
+ * @param the parameters to send along with the form 
  * @param the block where the success response can be processed
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString*)setShippingMethod:(RIShippingMethodForm*)form
+                    parameters:(NSDictionary*)parameters
                   successBlock:(void (^)(RICheckout *checkout))successBlock
                andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 

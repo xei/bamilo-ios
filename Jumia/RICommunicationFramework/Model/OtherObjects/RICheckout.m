@@ -159,13 +159,14 @@
 }
 
 + (NSString*)setShippingMethod:(RIShippingMethodForm*)form
+                    parameters:(NSDictionary*)parameters
                   successBlock:(void (^)(RICheckout *checkout))successBlock
                andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
     BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
-                                                            parameters:[RIShippingMethodForm getParametersForForm:form]
+                                                            parameters:parameters
                                                         httpMethodPost:isPostRequest
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
