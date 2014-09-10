@@ -144,11 +144,11 @@
     [self.couponView addSubview:self.couponTitleSeparator];
     
     self.couponTextField = [[UITextField alloc] initWithFrame:CGRectMake(6.0f, CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f, 240.0f, 30.0f)];
+    [self.couponTextField setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
+    [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     [self.couponTextField setPlaceholder:@"Enter your coupon code here"];
     [self.couponTextField setDelegate:self];
-    [self.couponTextField setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-    [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-    [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
     [self.couponView addSubview:self.couponTextField];
     
     self.useCouponButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -169,7 +169,6 @@
     if(!VALID_NOTEMPTY([self.couponTextField text], NSString))
     {
         [self.useCouponButton setEnabled:NO];
-        [self.couponTextField setTextColor:UIColorFromRGB(0xcccccc)];
     }
     
     if(VALID_NOTEMPTY(self.subtotalView, UIView))
@@ -825,6 +824,11 @@
     }
     
     return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
 }
 
 #pragma mark UIPickerViewDataSource
