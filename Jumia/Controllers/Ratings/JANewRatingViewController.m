@@ -64,7 +64,7 @@
                      specialPrice:self.ratingProductNewPriceForLabel
                          fontSize:14.0f
             specialPriceOnTheLeft:NO];
-    self.priceView.frame = CGRectMake(6.0f,
+    self.priceView.frame = CGRectMake(12.0f,
                                       68.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);

@@ -401,7 +401,7 @@
                             
                             for (NSDictionary *dic in productImages) {
                                 if ([dic objectForKey:@"url"]) {
-                                    [tempImagesArray addObject:[productDic objectForKey:@"url"]];
+                                    [tempImagesArray addObject:[dic objectForKey:@"url"]];
                                 }
                             }
                             
@@ -441,7 +441,11 @@
                         }
                         
                         if ([dic objectForKey:@"image"]) {
-                            brand.image = [dic objectForKey:@"image"];
+                            if (![[dic objectForKey:@"image"] isKindOfClass:[NSNull class]]) {
+                                brand.image = [dic objectForKey:@"image"];
+                            }
+                        } else {
+                            brand.image = @"";
                         }
                         
                         if ([dic objectForKey:@"url"]) {

@@ -11,6 +11,7 @@
 #import "JACatalogListCell.h"
 #import "JACatalogGridCell.h"
 #import "RISearchSuggestion.h"
+#import "JAUndefinedSearchView.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
@@ -29,6 +30,7 @@
 @property (nonatomic, strong) RICategory* filterCategory;
 @property (nonatomic, assign) BOOL loadedEverything;
 @property (nonatomic, assign) RICatalogSorting sortingMethod;
+@property (nonatomic, strong) JAUndefinedSearchView *undefinedView;
 
 @end
 
@@ -111,6 +113,9 @@
                                        [self hideLoading];
                                        
                                        if (undefSearchTerm) {
+                                           self.navBarLayout.subTitle = @"0";
+                                           [self reloadNavBar];
+                                           
                                            [self addUndefinedSearchView:undefSearchTerm];
                                        } else {
                                            [[[UIAlertView alloc] initWithTitle:@"Jumia"
@@ -401,6 +406,13 @@
 
 - (void)addUndefinedSearchView:(RIUndefinedSearchTerm *)undefSearch
 {
+    self.undefinedView = [JAUndefinedSearchView getNewJAUndefinedSearchView];
+    CGRect frame = self.collectionView.frame;
+    frame.origin.y += 6;
+    frame.size.height -= 12;
+    
+    [self.undefinedView setFrame:frame];
+    
     // Remove the existent components
     self.filterButton.userInteractionEnabled = NO;
     self.viewToggleButton.userInteractionEnabled = NO;
@@ -409,6 +421,9 @@
     [self.catalogTopButton removeFromSuperview];
     
     // Build and add the new view
+    [self.view addSubview:self.undefinedView];
+    
+    [self.undefinedView setupWithUndefinedSearchResult:undefSearch];
 }
 
 @end
