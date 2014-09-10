@@ -6,7 +6,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             scope = "0"
@@ -53,7 +53,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "161"
             endingLineNumber = "161"
-            landmarkName = "+parseApi:"
+            landmarkName = "+getCountryUrlInUse"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -70,22 +70,6 @@
             startingLineNumber = "624"
             endingLineNumber = "624"
             landmarkName = "-addSkipBackupAttributeToItemAtURL:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Jumia/Controllers/Catalog/JACatalogViewController.m"
-            timestampString = "432035842.763448"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "405"
-            endingLineNumber = "405"
-            landmarkName = "-addUndefinedSearchView:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

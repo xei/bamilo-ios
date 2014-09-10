@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelName;
 @property (weak, nonatomic) IBOutlet UILabel *labelPrice;
 @property (strong, nonatomic) RIProduct *product;
+@property (strong, nonatomic) NSString *productUrl;
 
 + (JAPDVSingleRelatedItem *)getNewPDVSingleRelatedItem;
 

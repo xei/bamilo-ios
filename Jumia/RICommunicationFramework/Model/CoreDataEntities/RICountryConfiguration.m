@@ -160,4 +160,15 @@
     [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
++ (RICountryConfiguration *)getCurrentConfiguration
+{
+    NSArray *configArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
+    
+    if (0 == configArray.count) {
+        return nil;
+    } else {
+        return configArray[0];
+    }
+}
+
 @end

@@ -29,6 +29,9 @@
 @property (nonatomic, strong) RICategory* filterCategory;
 @property (nonatomic, assign) BOOL loadedEverything;
 @property (nonatomic, assign) RICatalogSorting sortingMethod;
+@property (nonatomic, strong) JAUndefinedSearchView *undefinedView;
+@property (nonatomic, strong) RIUndefinedSearchTerm *undefinedBackup;
+@property (assign, nonatomic) CGRect backupFrame;
 
 @end
 
@@ -37,6 +40,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (self.forceShowBackButton)
+    {
+        self.navBarLayout.showBackButton = YES;
+    }
 
     self.filterButton.backgroundColor = JACatalogViewControllerButtonColor;
     self.viewToggleButton.backgroundColor = JACatalogViewControllerButtonColor;
@@ -72,6 +80,12 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
+    
+    if (self.undefinedView) {
+        [self.undefinedView removeFromSuperview];
+        
+        [self addUndefinedSearchView:self.undefinedBackup];
+    }
 }
 
 - (void)resetCatalog
@@ -111,6 +125,10 @@
                                        [self hideLoading];
                                        
                                        if (undefSearchTerm) {
+                                           self.navBarLayout.subTitle = @"0";
+                                           [self reloadNavBar];
+                                           self.undefinedBackup = undefSearchTerm;
+                                           self.backupFrame = self.collectionView.frame;
                                            [self addUndefinedSearchView:undefSearchTerm];
                                        } else {
                                            [[[UIAlertView alloc] initWithTitle:@"Jumia"
@@ -401,6 +419,14 @@
 
 - (void)addUndefinedSearchView:(RIUndefinedSearchTerm *)undefSearch
 {
+    self.undefinedView = [JAUndefinedSearchView getNewJAUndefinedSearchView];
+    self.undefinedView.delegate = self;
+    CGRect frame = self.backupFrame;
+    frame.origin.y += 6;
+    frame.size.height -= 12;
+    
+    [self.undefinedView setFrame:frame];
+    
     // Remove the existent components
     self.filterButton.userInteractionEnabled = NO;
     self.viewToggleButton.userInteractionEnabled = NO;
@@ -409,6 +435,33 @@
     [self.catalogTopButton removeFromSuperview];
     
     // Build and add the new view
+    [self.view addSubview:self.undefinedView];
+    
+    [self.undefinedView setupWithUndefinedSearchResult:undefSearch
+                                            searchText:self.searchString];
+}
+
+#pragma mark - Undefined view delegate
+
+- (void)didSelectProduct:(NSString *)productUrl
+{
+    JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
+    pdv.productUrl = productUrl;
+    pdv.fromCatalogue = NO;
+    pdv.previousCategory = self.category.name;
+    pdv.delegate = self;
+    
+    [self.navigationController pushViewController:pdv
+                                         animated:YES];
+}
+
+- (void)didSelectBrand:(NSString *)brandUrl
+             brandName:(NSString *)brandName
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                        object:@{@"index": @(98),
+                                                                 @"name": brandName,
+                                                                 @"url": brandUrl }];
 }
 
 @end
