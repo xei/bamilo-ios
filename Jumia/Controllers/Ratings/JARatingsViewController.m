@@ -80,12 +80,11 @@
     }
     
     self.resumeView.layer.cornerRadius = 4.0f;
-    self.writeReviewButton.layer.borderWidth = 1.0f;
-    self.writeReviewButton.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    self.writeReviewButton.layer.cornerRadius = 4.0f;
     
     [self.writeReviewButton setTitle:@"Write a Review"
                             forState:UIControlStateNormal];
+    [self.writeReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
+                                 forState:UIControlStateNormal];
     
     self.labelUsedProduct.text = @"You have used this Product? Rate it now!";
     
