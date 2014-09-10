@@ -9,6 +9,30 @@
 #import "RISearchSuggestion.h"
 #import "RIProduct.h"
 
+@implementation RISearchType
+
+@end
+
+@implementation RISearchTypeProduct
+
+@end
+
+@implementation RIFeaturedBox
+
+@end
+
+@implementation RIBrand
+
+@end
+
+@implementation RIFeaturedBrandBox
+
+@end
+
+@implementation RIUndefinedSearchTerm
+
+@end
+
 @implementation RISearchSuggestion
 
 @dynamic item;
@@ -114,7 +138,7 @@
                              page:(NSString *)page
                          maxItems:(NSString *)maxItems
                      successBlock:(void (^)(NSArray *results))successBlock
-                  andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                  andFailureBlock:(void (^)(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     NSString *tempString = [NSString stringWithFormat:@"%@%@/search?setDevice=mobileApi&q=%@&page=%@&maxitems=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, query, page, maxItems];
@@ -136,24 +160,41 @@
                                                                       [temp addObject:[RIProduct parseProduct:dic country:configuration]];
                                                                   }
                                                                   
-                                                                  successBlock([temp copy]);
+                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                                      successBlock([temp copy]);
+                                                                  });
+                                                                  
                                                               } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil);
+                                                                  
+                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                                      failureBlock(nil, nil);
+                                                                  });
                                                               }];
                                                               
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               
-                                                              if(NOTEMPTY(errorJsonObject))
-                                                              {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
-                                                              } else if(NOTEMPTY(errorObject))
-                                                              {
-                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
-                                                              } else
-                                                              {
-                                                                  failureBlock(nil);
-                                                              }
+                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                  if ([errorJsonObject objectForKey:@"metadata"])
+                                                                  {
+                                                                      failureBlock(nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                      if(NOTEMPTY(errorJsonObject))
+                                                                      {
+                                                                          failureBlock([RIError getErrorMessages:errorJsonObject], nil);
+                                                                      }
+                                                                      else if(NOTEMPTY(errorObject))
+                                                                      {
+                                                                          NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                          failureBlock(errorArray, nil);
+                                                                      }
+                                                                      else
+                                                                      {
+                                                                          failureBlock(nil, nil);
+                                                                      }
+                                                                  }
+                                                              });
                                                           }];
     
 }
@@ -264,6 +305,165 @@
     }
     
     return newSearchSuggestion;
+}
+
+#pragma mark - Parse undefined term
+
++ (RIUndefinedSearchTerm *)parseUndefinedSearchTerm:(NSDictionary *)json
+{
+    NSDictionary *data = [json objectForKey:@"data"];
+    
+    if (NOTEMPTY(data))
+    {
+        RIUndefinedSearchTerm *undefinedSearchTerm = [[RIUndefinedSearchTerm alloc] init];
+        
+        if ([data objectForKey:@"error_message"]) {
+            undefinedSearchTerm.errorMessage = [data objectForKey:@"error_message"];
+        }
+        
+        if ([data objectForKey:@"notice_message"]) {
+            undefinedSearchTerm.noticeMessage = [data objectForKey:@"notice_message"];
+        }
+        
+        if ([data objectForKey:@"search_tips"]) {
+            NSDictionary *searchTipsDic = [data objectForKey:@"search_tips"];
+            
+            RISearchType *searchType = [[RISearchType alloc] init];
+            
+            if ([searchTipsDic objectForKey:@"text"]) {
+                searchType.text = [searchTipsDic objectForKey:@"text"];
+            }
+            
+            if ([searchTipsDic objectForKey:@"title"]) {
+                searchType.title = [searchTipsDic objectForKey:@"title"];
+            }
+            
+            undefinedSearchTerm.searchType = searchType;
+        }
+        
+        if ([data objectForKey:@"featured_box"]) {
+            if ([[data objectForKey:@"featured_box"] isKindOfClass:[NSArray class]]) {
+                NSArray *tempArray = [data objectForKey:@"featured_box"];
+                NSDictionary *featuredBoxDic = [tempArray firstObject];
+                
+                RIFeaturedBox *featuredBox = [[RIFeaturedBox alloc] init];
+                
+                if ([featuredBoxDic objectForKey:@"title"]) {
+                    featuredBox.title = [featuredBoxDic objectForKey:@"title"];
+                }
+                
+                if ([featuredBoxDic objectForKey:@"label"]) {
+                    featuredBox.label = [featuredBoxDic objectForKey:@"label"];
+                }
+                
+                if ([featuredBoxDic objectForKey:@"url"]) {
+                    featuredBox.url = [featuredBoxDic objectForKey:@"url"];
+                }
+                
+                if ([featuredBoxDic objectForKey:@"products"]) {
+                    NSArray *productsArray = [featuredBoxDic objectForKey:@"products"];
+                    NSMutableArray *tempArray = [NSMutableArray new];
+                    
+                    for (NSDictionary *productDic in productsArray) {
+                        RISearchTypeProduct *product = [[RISearchTypeProduct alloc] init];
+                        
+                        if ([productDic objectForKey:@"sku"]) {
+                            product.sku = [productDic objectForKey:@"sku"];
+                        }
+                        
+                        if ([productDic objectForKey:@"name"]) {
+                            product.name = [productDic objectForKey:@"name"];
+                        }
+                        
+                        if ([productDic objectForKey:@"max_price"]) {
+                            product.maxPrice = [productDic objectForKey:@"max_price"];
+                        }
+                        
+                        if ([productDic objectForKey:@"max_savings_percentage"]) {
+                            product.maxPercentageSaving = [productDic objectForKey:@"max_savings_percentage"];
+                        }
+                        
+                        if ([productDic objectForKey:@"price"]) {
+                            product.price = [productDic objectForKey:@"price"];
+                        }
+                        
+                        if ([productDic objectForKey:@"brand"]) {
+                            product.brand = [productDic objectForKey:@"brand"];
+                        }
+                        
+                        if ([productDic objectForKey:@"url"]) {
+                            product.url = [productDic objectForKey:@"url"];
+                        }
+                        
+                        if ([productDic objectForKey:@"image"]) {
+                            NSArray *productImages = [productDic objectForKey:@"image"];
+                            NSMutableArray *tempImagesArray = [NSMutableArray new];
+                            
+                            for (NSDictionary *dic in productImages) {
+                                if ([dic objectForKey:@"url"]) {
+                                    [tempImagesArray addObject:[productDic objectForKey:@"url"]];
+                                }
+                            }
+                            
+                            product.imagesArray = [tempImagesArray copy];
+                        }
+                        
+                        [tempArray addObject:product];
+                    }
+                    
+                    featuredBox.products = [tempArray copy];
+                }
+                
+                undefinedSearchTerm.featuredBox = featuredBox;
+            }
+        }
+        
+        if ([data objectForKey:@"featured_brandbox"]) {
+            if ([[data objectForKey:@"featured_brandbox"] isKindOfClass:[NSArray class]]) {
+                NSArray *tempArray = [data objectForKey:@"featured_brandbox"];
+                NSDictionary *featuredBrandBoxDic = [tempArray firstObject];
+                
+                RIFeaturedBrandBox *featuredBrandBox = [[RIFeaturedBrandBox alloc] init];
+                
+                if ([featuredBrandBoxDic objectForKey:@"title"]) {
+                    featuredBrandBox.title = [featuredBrandBoxDic objectForKey:@"title"];
+                }
+                
+                if ([featuredBrandBoxDic objectForKey:@"brands"]) {
+                    NSArray *brandsArray = [featuredBrandBoxDic objectForKey:@"brands"];
+                    NSMutableArray *tempBrandsArray = [NSMutableArray new];
+                    
+                    for (NSDictionary *dic in brandsArray) {
+                        RIBrand *brand = [[RIBrand alloc] init];
+                        
+                        if ([dic objectForKey:@"name"]) {
+                            brand.name = [dic objectForKey:@"name"];
+                        }
+                        
+                        if ([dic objectForKey:@"image"]) {
+                            brand.image = [dic objectForKey:@"image"];
+                        }
+                        
+                        if ([dic objectForKey:@"url"]) {
+                            brand.url = [dic objectForKey:@"url"];
+                        }
+                        
+                        [tempBrandsArray addObject:brand];
+                    }
+                    
+                    featuredBrandBox.brands = [tempBrandsArray copy];
+                }
+                
+                undefinedSearchTerm.featuredBrandBox = featuredBrandBox;
+            }
+        }
+        
+        return undefinedSearchTerm;
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 @end

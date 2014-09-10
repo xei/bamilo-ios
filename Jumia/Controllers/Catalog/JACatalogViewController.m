@@ -57,33 +57,6 @@
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
-    if (self.searchString.length > 0) {
-        
-        [self showLoading];
-        
-        [RISearchSuggestion getResultsForSearch:self.searchString
-                                           page:@"1"
-                                       maxItems:[NSString stringWithFormat:@"%d",JACatalogViewControllerMaxProducts]
-                                   successBlock:^(NSArray *results) {
-                                       
-                                       [self hideLoading];
-                                       self.productsArray = [results mutableCopy];
-                                       
-                                       [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-                                       
-                                   } andFailureBlock:^(NSArray *errorMessages) {
-                                       
-                                       [self hideLoading];
-                                       
-                                       [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                                   message:@"Error processing request"
-                                                                  delegate:nil
-                                                         cancelButtonTitle:nil
-                                                         otherButtonTitles:@"Ok", nil] show];
-                                   }];
-        
-    }
-    
     [self changeToList];
     
     NSArray* sortList = [NSArray arrayWithObjects:@"Best Rating", @"Popularity", @"New In", @"Price Up", @"Price Down", @"Name", @"Brand", nil];
@@ -119,7 +92,7 @@
         [self showLoading];
         
         [RISearchSuggestion getResultsForSearch:self.searchString
-                                           page:[NSString stringWithFormat:@"%d", [self getCurrentPage]+1]
+                                           page:@"1"
                                        maxItems:[NSString stringWithFormat:@"%d",JACatalogViewControllerMaxProducts]
                                    successBlock:^(NSArray *results) {
                                        
@@ -133,15 +106,19 @@
                                        
                                        [self hideLoading];
                                        
-                                   } andFailureBlock:^(NSArray *errorMessages) {
+                                   } andFailureBlock:^(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
                                        
                                        [self hideLoading];
                                        
-                                       [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                                   message:@"Error processing request"
-                                                                  delegate:nil
-                                                         cancelButtonTitle:nil
-                                                         otherButtonTitles:@"Ok", nil] show];
+                                       if (undefSearchTerm) {
+                                           [self addUndefinedSearchView:undefSearchTerm];
+                                       } else {
+                                           [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                                       message:@"Error processing request temp"
+                                                                      delegate:nil
+                                                             cancelButtonTitle:nil
+                                                             otherButtonTitles:@"Ok", nil] show];
+                                       }
                                    }];
     }
     else
@@ -418,6 +395,20 @@
             [self hideLoading];
         }];
     }
+}
+
+#pragma mark - Add the undefined search view
+
+- (void)addUndefinedSearchView:(RIUndefinedSearchTerm *)undefSearch
+{
+    // Remove the existent components
+    self.filterButton.userInteractionEnabled = NO;
+    self.viewToggleButton.userInteractionEnabled = NO;
+    self.sortingScrollView.disableDelagation = YES;
+    [self.collectionView removeFromSuperview];
+    [self.catalogTopButton removeFromSuperview];
+    
+    // Build and add the new view
 }
 
 @end
