@@ -12,6 +12,10 @@
 #import "RIConfiguration.h"
 #import "RICountry.h"
 
+@implementation JABrandView
+
+@end
+
 @interface JAUndefinedSearchView ()
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
@@ -33,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIView *noticeView;
 @property (weak, nonatomic) IBOutlet UILabel *noticeLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *noticeConstraintHeight;
+@property (assign, nonatomic) CGSize contentSize;
 
 @end
 
@@ -54,11 +59,37 @@
 }
 
 - (void)setupWithUndefinedSearchResult:(RIUndefinedSearchTerm *)searchTerm
+                            searchText:(NSString *)searchText
 {
     self.contentScrollView.backgroundColor = [UIColor clearColor];
     self.topView.layer.cornerRadius = 4.0f;
     self.labelNoResults.textColor = UIColorFromRGB(0x666666);
-    self.labelNoResults.text = searchTerm.errorMessage;
+    
+    NSString *text = searchTerm.errorMessage;
+    
+    NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:text];
+    NSInteger stringTextLenght = text.length;
+    
+    UIFont *stringTextFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
+    UIFont *subStringTextFont = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+    UIColor *stringTextColor = UIColorFromRGB(0X666666);
+    
+    
+    [stringText addAttribute:NSFontAttributeName
+                       value:stringTextFont
+                       range:NSMakeRange(0, stringTextLenght)];
+    
+    [stringText addAttribute:NSStrokeColorAttributeName
+                       value:stringTextColor
+                       range:NSMakeRange(0, stringTextLenght)];
+    
+    NSRange range = [text rangeOfString:searchText];
+    
+    [stringText addAttribute:NSFontAttributeName
+                       value:subStringTextFont
+                       range:range];
+    
+    self.labelNoResults.attributedText = stringText;
     [self.labelNoResults sizeToFit];
     
     self.lineImageView.backgroundColor = UIColorFromRGB(0xcccccc);
@@ -113,15 +144,15 @@
             
             singleItem.labelBrand.text = product.brand;
             singleItem.labelName.text = product.name;
+            singleItem.productUrl = product.url;
             
             singleItem.labelPrice.text = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
                                                                      country:[RICountryConfiguration getCurrentConfiguration]];
             
-//#warning add delegate here to fire action in catalogue
-//            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-//                                                                                  action:@selector(selectedRelatedItem:)];
-//            singleItem.userInteractionEnabled = YES;
-//            [singleItem addGestureRecognizer:tap];
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(productSelected:)];
+            singleItem.userInteractionEnabled = YES;
+            [singleItem addGestureRecognizer:tap];
             
             [self.topSellersScrollView addSubview:singleItem];
             
@@ -147,8 +178,10 @@
     {
         if (brand.image.length > 0)
         {
-            UIView *brandView = [[UIView alloc] initWithFrame:CGRectMake(brandItemStart, 0, 110, 100)];
+            JABrandView *brandView = [[JABrandView alloc] initWithFrame:CGRectMake(brandItemStart, 0, 110, 100)];
             brandView.backgroundColor = [UIColor clearColor];
+            brandView.brandUrl = brand.url;
+            brandView.brandName = brand.name;
             
             UIImageView *brandImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 20, 50, 40)];
             
@@ -169,6 +202,11 @@
             brandLabel.text = brand.name;
             
             [brandView addSubview:brandLabel];
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(brandSelected:)];
+            brandView.userInteractionEnabled = YES;
+            [brandView addGestureRecognizer:tap];
             
             [self.topBrandsScrollView addSubview:brandView];
             brandItemStart += 110.0f;
@@ -195,6 +233,38 @@
     float contentHeight = self.noticeConstraintHeight.constant + self.topViewHeightConstraint.constant + 320;
     
     self.contentScrollView.contentSize = CGSizeMake(self.contentScrollView.frame.size.width, contentHeight);
+    
+    self.contentSize = self.contentScrollView.contentSize;
+}
+
+#pragma mark - Delegate methods
+
+- (void)productSelected:(UITapGestureRecognizer *)tap
+{
+    JAPDVSingleRelatedItem *item = (JAPDVSingleRelatedItem *)tap.view;
+    
+    if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectProduct:)])
+    {
+        [self.delegate didSelectProduct:item.productUrl];
+    }
+}
+
+- (void)brandSelected:(UITapGestureRecognizer *)tap
+{
+    JABrandView *item = (JABrandView *)tap.view;
+    
+    if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectBrand:brandName:)])
+    {
+        [self.delegate didSelectBrand:item.brandUrl
+                            brandName:item.brandName];
+    }
+}
+
+#pragma mark - Refresh content size
+
+- (void)refreshContentSize
+{
+    self.contentScrollView.contentSize = self.contentSize;
 }
 
 @end
