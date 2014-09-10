@@ -11,11 +11,13 @@
 #import "RICategory.h"
 #import "JAMainFiltersViewController.h"
 #import "JAPDVViewController.h"
+#import "JAUndefinedSearchView.h"
 
-@interface JACatalogViewController : JABaseViewController <JAPickerScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, JAMainFiltersViewControllerDelegate, JAPDVViewControllerDelegate>
+@interface JACatalogViewController : JABaseViewController <JAPickerScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, JAMainFiltersViewControllerDelegate, JAPDVViewControllerDelegate, JAUndefinedSearchViewDelegate>
 
 @property (nonatomic, strong)RICategory* category;
 @property (nonatomic, strong)NSString* catalogUrl;
 @property (nonatomic, strong) NSString *searchString;
+@property (assign, nonatomic) BOOL forceShowBackButton;
 
 @end

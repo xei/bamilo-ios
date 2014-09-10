@@ -155,6 +155,10 @@
         } else {
             [cell.sizeButton setTitle:[NSString stringWithFormat:@"Size: %@", chosenSimpleName] forState:UIControlStateNormal];
         }
+        
+        [cell.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a)
+                              forState:UIControlStateHighlighted];
+        
         cell.sizeButton.tag = indexPath.row;
         [cell.sizeButton addTarget:self
                             action:@selector(sizeButtonPressed:)

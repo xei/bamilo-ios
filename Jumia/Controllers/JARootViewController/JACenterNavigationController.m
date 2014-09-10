@@ -207,6 +207,11 @@
                 // It's to perform a search
                 [self pushCatalogToShowSearchResults:[selectedItem objectForKey:@"text"]];
             }
+            else if ([index isEqual:@(98)])
+            {
+                [self pushCatalogForUndefinedSearchWithBrandUrl:[selectedItem objectForKey:@"url"]
+                                                   andBrandName:[selectedItem objectForKey:@"name"]];
+            }
             else
             {
                 [self changeCenterPanel:[selectedItem objectForKey:@"name"]];
@@ -331,6 +336,19 @@
                     animated:YES];
     
     self.viewControllers = @[catalog];
+}
+
+- (void)pushCatalogForUndefinedSearchWithBrandUrl:(NSString *)brandUrl
+                                     andBrandName:(NSString *)brandName
+{
+    JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    catalog.catalogUrl = brandUrl;
+    catalog.forceShowBackButton = YES;
+    
+    catalog.navBarLayout.title = brandName;
+    
+    [self pushViewController:catalog
+                    animated:YES];
 }
 
 - (void)didSelectLeafCategoryInMenu:(NSNotification *)notification
