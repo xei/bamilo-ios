@@ -36,6 +36,7 @@
 @property (assign, nonatomic) CGRect originalFrame;
 @property (strong, nonatomic) NSMutableArray *ratingStarsArray;
 @property (nonatomic, strong) JAPriceView *priceView;
+@property (assign, nonatomic) NSInteger numberOfFields;
 
 
 @end
@@ -88,6 +89,8 @@
         
         self.ratingStarsArray = [NSMutableArray new];
         
+        self.numberOfFields = 0;
+        
         for (RIRatingsDetails *option in ratings) {
             
             JAStarsComponent *stars = [JAStarsComponent getNewJAStarsComponent];
@@ -104,6 +107,8 @@
             startingY += stars.frame.size.height + 6;
             
             [self.ratingStarsArray addObject:stars];
+            
+            self.numberOfFields++;
         }
         
         [RIForm getForm:@"rating"
@@ -163,10 +168,18 @@
     [UIView animateWithDuration:0.5f
                      animations:^{
                          
-                         if (tempFrame.size.height > 417) {
-                             frame.origin.y -= (44 * (view.tag + 1));
+                         if (self.numberOfFields == 1) {
+                             if (tempFrame.size.height > 417) {
+                                 frame.origin.y -= (44 * view.tag);
+                             } else {
+                                 frame.origin.y -= (44 * (view.tag + 1));
+                             }
                          } else {
-                             frame.origin.y -= (44 * (view.tag + 3));
+                             if (tempFrame.size.height > 417) {
+                                 frame.origin.y -= (44 * (view.tag + 1));
+                             } else {
+                                 frame.origin.y -= (44 * (view.tag + 3));
+                             }
                          }
                          
                          self.centerView.frame = frame;
