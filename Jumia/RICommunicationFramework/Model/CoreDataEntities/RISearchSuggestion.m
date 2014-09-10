@@ -9,6 +9,30 @@
 #import "RISearchSuggestion.h"
 #import "RIProduct.h"
 
+@implementation RISearchType
+
+@end
+
+@implementation RISearchTypeProduct
+
+@end
+
+@implementation RIFeaturedBox
+
+@end
+
+@implementation RIBrand
+
+@end
+
+@implementation RIFeaturedBrandBox
+
+@end
+
+@implementation RIUndefinedSearchTerm
+
+@end
+
 @implementation RISearchSuggestion
 
 @dynamic item;
@@ -114,7 +138,7 @@
                              page:(NSString *)page
                          maxItems:(NSString *)maxItems
                      successBlock:(void (^)(NSArray *results))successBlock
-                  andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                  andFailureBlock:(void (^)(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     NSString *tempString = [NSString stringWithFormat:@"%@%@/search?setDevice=mobileApi&q=%@&page=%@&maxitems=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, query, page, maxItems];
@@ -138,21 +162,30 @@
                                                                   
                                                                   successBlock([temp copy]);
                                                               } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(nil, nil);
                                                               }];
                                                               
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               
-                                                              if(NOTEMPTY(errorJsonObject))
+                                                              if ([errorJsonObject objectForKey:@"metadata"])
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
-                                                              } else if(NOTEMPTY(errorObject))
+                                                                  failureBlock(nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
+                                                              }
+                                                              else
                                                               {
-                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
-                                                              } else
-                                                              {
-                                                                  failureBlock(nil);
+                                                                  if(NOTEMPTY(errorJsonObject))
+                                                                  {
+                                                                      failureBlock([RIError getErrorMessages:errorJsonObject], nil);
+                                                                  }
+                                                                  else if(NOTEMPTY(errorObject))
+                                                                  {
+                                                                      NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                      failureBlock(errorArray, nil);
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                      failureBlock(nil, nil);
+                                                                  }
                                                               }
                                                           }];
     
@@ -264,6 +297,15 @@
     }
     
     return newSearchSuggestion;
+}
+
+#pragma mark - Parse undefined term
+
++ (RIUndefinedSearchTerm *)parseUndefinedSearchTerm:(NSDictionary *)json
+{
+    RIUndefinedSearchTerm *undefinedSearchTerm = [[RIUndefinedSearchTerm alloc] init];
+    
+    return undefinedSearchTerm;
 }
 
 @end

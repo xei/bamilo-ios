@@ -71,7 +71,7 @@
                                        
                                        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
                                        
-                                   } andFailureBlock:^(NSArray *errorMessages) {
+                                   } andFailureBlock:^(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
                                        
                                        [self hideLoading];
                                        
@@ -133,7 +133,7 @@
                                        
                                        [self hideLoading];
                                        
-                                   } andFailureBlock:^(NSArray *errorMessages) {
+                                   } andFailureBlock:^(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
                                        
                                        [self hideLoading];
                                        
