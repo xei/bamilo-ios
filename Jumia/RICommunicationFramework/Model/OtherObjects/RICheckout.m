@@ -233,14 +233,15 @@
                                                           }];
 }
 
-+ (NSString*)setPaymentMethod:(RIPaymentMethodForm*)form
++ (NSString*)setPaymentMethod:(RIPaymentMethodForm *)form
+                   parameters:(NSDictionary*)parameters
                  successBlock:(void (^)(RICheckout *checkout))successBlock
               andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
     BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
-                                                            parameters:[RIPaymentMethodForm getParametersForForm:form]
+                                                            parameters:parameters
                                                         httpMethodPost:isPostRequest
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime

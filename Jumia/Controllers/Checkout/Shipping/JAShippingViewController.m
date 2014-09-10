@@ -582,7 +582,7 @@ UIPickerViewDelegate>
         
         if(collectionView == self.collectionView)
         {
-            [headerView loadHeaderWithText:@"Shipping Methods"];
+            [headerView loadHeaderWithText:@"Shipping"];
         }
         reusableview = headerView;
     }
