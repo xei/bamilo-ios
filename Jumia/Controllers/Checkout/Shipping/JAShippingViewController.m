@@ -248,7 +248,7 @@ UIPickerViewDelegate>
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
-    [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [button setTitle:@"Done" forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
@@ -471,10 +471,10 @@ UIPickerViewDelegate>
                 JAShippingCell *shippingCell = (JAShippingCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
                 [shippingCell loadWithShippingMethod:[shippingMethod objectForKey:shippingMethodKey]];
                 
-                [shippingCell deselectAddress];
+                [shippingCell deselectShippingMethod];
                 if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath) && indexPath.row == self.collectionViewIndexSelected.row)
                 {
-                    [shippingCell selectAddress];
+                    [shippingCell selectShippingMethod];
                 }
                 
                 if(([self.shippingMethods count] - 1) == index || self.collectionViewIndexSelected.row == index)
@@ -614,12 +614,12 @@ UIPickerViewDelegate>
                 if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath))
                 {
                     JAShippingCell *oldShippingCell = (JAShippingCell*) [collectionView cellForItemAtIndexPath:self.collectionViewIndexSelected];
-                    [oldShippingCell deselectAddress];
+                    [oldShippingCell deselectShippingMethod];
                 }
                 self.collectionViewIndexSelected = [NSIndexPath indexPathForItem:index inSection:indexPath.section];
                 
                 JAShippingCell *shippingCell = (JAShippingCell*)[collectionView cellForItemAtIndexPath:indexPath];
-                [shippingCell selectAddress];
+                [shippingCell selectShippingMethod];
                 
                 self.pickupStationRegions = [RIShippingMethodForm getRegionsForShippingMethod:self.selectedShippingMethod inForm:self.shippingMethodForm];
                 self.pickerIndexPath = nil;
@@ -647,7 +647,7 @@ UIPickerViewDelegate>
             
             JAPickupStationInfoCell *pickupStationInfoCell = (JAPickupStationInfoCell*)[collectionView cellForItemAtIndexPath:indexPath];
             [pickupStationInfoCell selectPickupStation];
-           
+            
             self.selectedPickupStationIndexPath = indexPath;
         }
     }

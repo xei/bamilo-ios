@@ -29,6 +29,8 @@
 
 + (JAPDVProductInfo *)getNewPDVProductInfoSection;
 
+- (void)setup;
+
 - (void)setNumberOfStars:(NSInteger)stars;
 
 - (void)setPriceWithNewValue:(NSString *)newValue

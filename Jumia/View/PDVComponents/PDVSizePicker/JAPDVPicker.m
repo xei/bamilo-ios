@@ -36,11 +36,19 @@
     
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JAPDVPicker class]]) {
-            return (JAPDVPicker *)obj;
+            JAPDVPicker *object = (JAPDVPicker*)obj;
+            [object setup];
+            return object;
         }
     }
     
     return nil;
+}
+
+-(void)setup
+{
+    [self.doneButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.doneButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
 }
 
 - (void)setDataSourceArray:(NSArray *)dataSource
@@ -76,10 +84,7 @@
 - (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     RIProductSimple *simple = [self.dataSource objectAtIndex:row];
-    UIColor *color = [UIColor colorWithRed:78.0/255.0
-                                     green:78.0/255.0
-                                      blue:78.0/255.0
-                                     alpha:1.0f];
+    UIColor *color = UIColorFromRGB(0x4e4e4e);
     
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:simple.attributeSize
                                                                                   attributes:@{NSForegroundColorAttributeName:color}];

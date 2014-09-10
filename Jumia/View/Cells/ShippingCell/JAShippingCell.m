@@ -22,13 +22,13 @@
     [self.label setText:shippingMethod];
 }
 
--(void)selectAddress
+-(void)selectShippingMethod
 {
     [self.checkMark setHidden:NO];
     [self.separator setHidden:YES];
 }
 
--(void)deselectAddress
+-(void)deselectShippingMethod
 {
     [self.checkMark setHidden:YES];
     [self.separator setHidden:NO];
