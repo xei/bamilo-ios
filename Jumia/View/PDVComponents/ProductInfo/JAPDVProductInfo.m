@@ -36,11 +36,19 @@
     
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JAPDVProductInfo class]]) {
-            return (JAPDVProductInfo *)obj;
+            JAPDVProductInfo *object = (JAPDVProductInfo *)obj;
+            [object setup];
+            return object;
         }
     }
     
     return nil;
+}
+
+- (void)setup
+{
+    [self.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+    [self.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
 }
 
 - (void)setPriceWithNewValue:(NSString *)newValue

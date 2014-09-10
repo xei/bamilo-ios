@@ -31,8 +31,13 @@
 {
     self.backgroundColor = JANavBarBackgroundGrey;
     [self.editButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [self.doneButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.doneButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     self.titleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    
+    [self.backButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.backButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
 }
 
 - (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout;

@@ -14,8 +14,8 @@
 
 -(void)loadWithShippingMethod:(NSString *)shippingMethod;
 
--(void)selectAddress;
+-(void)selectShippingMethod;
 
--(void)deselectAddress;
+-(void)deselectShippingMethod;
 
 @end

@@ -92,8 +92,8 @@
     {
         UIImage *buttonImageNormal = [UIImage imageNamed:@"orangeHalf_normal"];
         [newButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
-        [newButton setBackgroundImage:[UIImage imageNamed:@"orangeHalf_highlighted"] forState:UIControlStateHighlighted];
-        [newButton setBackgroundImage:[UIImage imageNamed:@"orangeHalf_highlighted"] forState:UIControlStateSelected];
+        [newButton setBackgroundImage:[UIImage imageNamed:@"orangeHalf_highlight"] forState:UIControlStateHighlighted];
+        [newButton setBackgroundImage:[UIImage imageNamed:@"orangeHalf_highlight"] forState:UIControlStateSelected];
         [newButton setBackgroundImage:[UIImage imageNamed:@"orangeHalf_disabled"] forState:UIControlStateDisabled];
         [newButton setFrame:CGRectMake(originX, 6.0f, buttonWidth, buttonImageNormal.size.height)];
     }

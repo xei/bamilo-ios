@@ -307,7 +307,7 @@
     
     UIButton *tmpbutton = [UIButton buttonWithType:UIButtonTypeCustom];
     [tmpbutton setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
-    [tmpbutton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [tmpbutton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [tmpbutton setTitle:@"Done" forState:UIControlStateNormal];
     [tmpbutton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [tmpbutton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];

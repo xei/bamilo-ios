@@ -311,6 +311,7 @@
     }
     else if (self.product.productSimples.count == 1)
     {
+        [self.productInfoSection.sizeButton setEnabled:NO];
         RIProductSimple *tempProduct = self.product.productSimples[0];
         
         if (tempProduct.attributeSize)
@@ -326,6 +327,7 @@
     }
     else if (self.product.productSimples.count > 1)
     {
+        [self.productInfoSection.sizeButton setEnabled:YES  ];
         [self.productInfoSection.sizeButton setTitle:@"Size"
                                             forState:UIControlStateNormal];
         
