@@ -12,13 +12,15 @@
 
 @interface JAPickupStationInfoCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIView *separator;
-@property (weak, nonatomic) IBOutlet UIView *lastSeparator;
+@property (strong, nonatomic) UIView *separator;
+@property (strong, nonatomic) UIView *lastSeparator;
 
-- (void) loadWithPickupStation:(RIShippingMethodPickupStationOption*)pickupStation;
+-(void)loadWithPickupStation:(RIShippingMethodPickupStationOption*)pickupStation;
 
 -(void)selectPickupStation;
 
 -(void)deselectPickupStation;
+
++(CGFloat)getHeightForPickupStation:(RIShippingMethodPickupStationOption*)pickupStation;
 
 @end

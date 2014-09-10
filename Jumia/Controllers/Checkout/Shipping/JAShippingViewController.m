@@ -52,6 +52,7 @@ UIPickerViewDelegate>
 @property (strong, nonatomic) NSString *selectedRegion;
 @property (strong, nonatomic) NSString *selectedRegionId;
 @property (strong, nonatomic) NSMutableArray *pickupStationsForRegion;
+@property (strong, nonatomic) NSMutableArray *pickupStationHeightsForRegion;
 @property (strong, nonatomic) NSString *selectedShippingMethod;
 @property (strong, nonatomic) NSIndexPath *collectionViewIndexSelected;
 @property (strong, nonatomic) NSIndexPath *selectedPickupStationIndexPath;
@@ -67,6 +68,7 @@ UIPickerViewDelegate>
     self.navBarLayout.title = @"Checkout";
     
     self.pickupStationsForRegion = [[NSMutableArray alloc] init];
+    self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
     
     [self setupViews];
     
@@ -193,7 +195,16 @@ UIPickerViewDelegate>
             if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
             {
                 collectionViewHeight += 50.0f;
-                collectionViewHeight += ([self.pickupStationsForRegion count] * 120.0f);
+                
+                if(VALID_NOTEMPTY(self.pickupStationHeightsForRegion, NSMutableArray))
+                {
+                    for (NSNumber *pickupStationHeight in self.pickupStationHeightsForRegion)
+                    {
+                        NSLog(@"pickupStationHeight %@", [pickupStationHeight stringValue]);
+                        
+                        collectionViewHeight += [pickupStationHeight floatValue];
+                    }
+                }
             }
             else
             {
@@ -318,6 +329,18 @@ UIPickerViewDelegate>
             self.selectedRegion = [self.pickupStationRegions objectForKey:self.selectedRegionId];
             
             self.pickupStationsForRegion = [[NSMutableArray alloc] initWithArray:[RIShippingMethodForm getPickupStationsForRegion:self.selectedRegionId shippingMethod:self.selectedShippingMethod inForm:self.shippingMethodForm]];
+            self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
+            for(RIShippingMethodPickupStationOption *pickupStation in self.pickupStationsForRegion)
+            {
+                CGFloat size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation];
+                
+                if(size < 120.0f)
+                {
+                    size = 120.0f;
+                }
+                
+                [self.pickupStationHeightsForRegion addObject:[NSNumber numberWithFloat:size]];
+            }
             
             self.selectedPickupStationIndexPath = [NSIndexPath indexPathForItem:(self.pickerIndexPath.item + 1) inSection:self.pickerIndexPath.section];
         }
@@ -407,7 +430,9 @@ UIPickerViewDelegate>
             // Shipping method option cell
             if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
             {
-                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 120.0f);
+                NSInteger index = indexPath.row - self.collectionViewIndexSelected.row - 2;
+                NSLog(@"sizeForItemAtIndexPath %d = %@", indexPath.row, [[self.pickupStationHeightsForRegion objectAtIndex:index] stringValue]);
+                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, [[self.pickupStationHeightsForRegion objectAtIndex:index] floatValue]);
             }
         }
     }
@@ -547,6 +572,7 @@ UIPickerViewDelegate>
                 {
                     NSInteger index = indexPath.row - self.collectionViewIndexSelected.row - 2;
                     [pickupStationInfoCell loadWithPickupStation:[self.pickupStationsForRegion objectAtIndex:index]];
+                    
                     if(index == ([self.pickupStationsForRegion count] - 1))
                     {
                         [pickupStationInfoCell.separator setHidden:YES];
