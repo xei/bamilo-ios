@@ -59,21 +59,26 @@
                                   44);
         
         UIFont *font = [UIFont fontWithName:@"HelveticaNeue"
-                                       size:17.0];
+                                       size:16.0];
         
         self.button.titleLabel.font = font;
-        [self.button setTitleColor:[UIColor colorWithRed:78.0/255.0 green:78.0/255.0 blue:78.0/255.0 alpha:1.0f]
+        [self.button setTitleColor:UIColorFromRGB(0x4e4e4e)
                           forState:UIControlStateNormal];
 
-        [self.button setTitleColor:[UIColor colorWithRed:255.0/255.0 green:153.0/255.0 blue:0.0/255.0 alpha:1.0f]
-                          forState:UIControlStateHighlighted];
+        [self.button setBackgroundImage:[UIImage imageNamed:@"grayBig_normal"]
+                               forState:UIControlStateNormal];
+        
+        [self.button setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"]
+                               forState:UIControlStateSelected];
+        
+        [self.button setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"]
+                               forState:UIControlStateHighlighted];
+        
+        [self.button setBackgroundImage:[UIImage imageNamed:@"grayBig_disabled"]
+                               forState:UIControlStateDisabled];
         
         [self.button setTitle:@"Clear Recent Searches"
                      forState:UIControlStateNormal];
-        
-        self.button.layer.cornerRadius = 5.0f;
-        self.button.layer.borderColor = [[UIColor colorWithRed:78.0/255.0 green:78.0/255.0 blue:78.0/255.0 alpha:1.0f] CGColor];
-        self.button.layer.borderWidth = 1.0f;
         
         [self.button addTarget:self
                    action:@selector(clearRecentSearches)
