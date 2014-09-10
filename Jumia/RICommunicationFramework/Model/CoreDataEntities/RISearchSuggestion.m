@@ -160,33 +160,41 @@
                                                                       [temp addObject:[RIProduct parseProduct:dic country:configuration]];
                                                                   }
                                                                   
-                                                                  successBlock([temp copy]);
+                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                                      successBlock([temp copy]);
+                                                                  });
+                                                                  
                                                               } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil, nil);
+                                                                  
+                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                                      failureBlock(nil, nil);
+                                                                  });
                                                               }];
                                                               
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               
-                                                              if ([errorJsonObject objectForKey:@"metadata"])
-                                                              {
-                                                                  failureBlock(nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
-                                                              }
-                                                              else
-                                                              {
-                                                                  if(NOTEMPTY(errorJsonObject))
+                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                  if ([errorJsonObject objectForKey:@"metadata"])
                                                                   {
-                                                                      failureBlock([RIError getErrorMessages:errorJsonObject], nil);
-                                                                  }
-                                                                  else if(NOTEMPTY(errorObject))
-                                                                  {
-                                                                      NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                      failureBlock(errorArray, nil);
+                                                                      failureBlock(nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
                                                                   }
                                                                   else
                                                                   {
-                                                                      failureBlock(nil, nil);
+                                                                      if(NOTEMPTY(errorJsonObject))
+                                                                      {
+                                                                          failureBlock([RIError getErrorMessages:errorJsonObject], nil);
+                                                                      }
+                                                                      else if(NOTEMPTY(errorObject))
+                                                                      {
+                                                                          NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                          failureBlock(errorArray, nil);
+                                                                      }
+                                                                      else
+                                                                      {
+                                                                          failureBlock(nil, nil);
+                                                                      }
                                                                   }
-                                                              }
+                                                              });
                                                           }];
     
 }

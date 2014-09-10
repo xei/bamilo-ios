@@ -18,6 +18,7 @@
 @interface JAPickerScrollView : UIView <UIScrollViewDelegate>
 
 @property (nonatomic, assign)id<JAPickerScrollViewDelegate> delegate;
+@property (nonatomic, assign) BOOL disableDelagation; // used in undefined search therm
 
 - (void)setOptions:(NSArray*)options;
 
