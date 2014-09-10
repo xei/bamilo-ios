@@ -114,11 +114,13 @@
  * Method to set the payment method needed for checkout process
  *
  * @param the payment method form
+ * @param the parameters to send along with the form
  * @param the block where the success response can be processed
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString*)setPaymentMethod:(RIPaymentMethodForm *)form
+                   parameters:(NSDictionary*)parameters
                  successBlock:(void (^)(RICheckout *checkout))successBlock
               andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 

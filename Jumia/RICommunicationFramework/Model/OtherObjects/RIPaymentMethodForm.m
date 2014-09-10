@@ -58,6 +58,50 @@
     return [parameters copy];
 }
 
++ (NSArray *) getPaymentMethodsInForm:(RIPaymentMethodForm*)form
+{
+    NSArray *paymentMethods = nil;
+    
+    for (RIPaymentMethodFormField *field in [form fields])
+    {
+        if([@"paymentMethodForm[payment_method]" isEqualToString:[field name]])
+        {
+            paymentMethods = [field.options copy];
+            break;
+        }
+    }
+    
+    return paymentMethods;
+}
+
++ (NSInteger) getSelectedPaymentMethodsInForm:(RIPaymentMethodForm*)form
+{
+    NSInteger selectedPaymentMethodsInForm = 0;
+    
+    for (RIPaymentMethodFormField *field in [form fields])
+    {
+        if([@"paymentMethodForm[payment_method]" isEqualToString:[field name]])
+        {
+            if(VALID_NOTEMPTY([field value], NSString))
+            {
+                NSString *selectedOptionId = [field value];
+                for(int i = 0; i < [[field options] count]; i++)
+                {
+                    RIPaymentMethodFormOption *option = [[field options] objectAtIndex:i];
+                    if([selectedOptionId isEqualToString:[option value]])
+                    {
+                        selectedPaymentMethodsInForm = i;
+                    }
+                }
+                break;
+            }
+        }
+    }
+    
+    return selectedPaymentMethodsInForm;
+}
+
+
 + (NSArray *) getExtraFieldsForOption:(NSString*)option
                                inForm:(RIPaymentMethodForm*)form
 {

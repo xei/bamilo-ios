@@ -33,6 +33,23 @@
 + (NSDictionary *) getParametersForForm:(RIPaymentMethodForm *)form;
 
 /**
+ * Method that returns an array with all the payment methods
+ *
+ * @param the option that we want to know if has extra fields
+ * @param the form that we want to know the extra fields
+ * @return an array with the possible payment methods
+ */
++ (NSArray *) getPaymentMethodsInForm:(RIPaymentMethodForm*)form;
+
+/**
+ * Method that returns the index of the default selected payment method
+ *
+ * @param the payment methods form
+ * @return an index with the default payment method
+ */
++ (NSInteger) getSelectedPaymentMethodsInForm:(RIPaymentMethodForm*)form;
+
+/**
  * Method that returns an array with the extra fields needed for an option
  *
  * @param the option that we want to know if has extra fields

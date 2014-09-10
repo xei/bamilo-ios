@@ -95,6 +95,8 @@
 		B57DC97E19B90AB10080C818 /* JAEditAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */; };
 		B58767FE19BB62B3001651D6 /* JAShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58767FC19BB62B3001651D6 /* JAShippingCell.m */; };
 		B58767FF19BB62B3001651D6 /* JAShippingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58767FD19BB62B3001651D6 /* JAShippingCell.xib */; };
+		B58DBF3919C0AF9600D4678A /* JAPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */; };
+		B58DBF3A19C0AF9600D4678A /* JAPaymentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58DBF3819C0AF9600D4678A /* JAPaymentCell.xib */; };
 		B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4119B4E92B00DE7960 /* RIField.m */; };
 		B59DCA5919B70C2E00DE7960 /* JATextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5819B70C2E00DE7960 /* JATextField.m */; };
 		B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5A19B7109300DE7960 /* JAAddNewAddressViewController.m */; };
@@ -446,6 +448,9 @@
 		B58767FB19BB62B3001651D6 /* JAShippingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAShippingCell.h; path = ShippingCell/JAShippingCell.h; sourceTree = "<group>"; };
 		B58767FC19BB62B3001651D6 /* JAShippingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAShippingCell.m; path = ShippingCell/JAShippingCell.m; sourceTree = "<group>"; };
 		B58767FD19BB62B3001651D6 /* JAShippingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAShippingCell.xib; path = ShippingCell/JAShippingCell.xib; sourceTree = "<group>"; };
+		B58DBF3619C0AF9600D4678A /* JAPaymentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPaymentCell.h; sourceTree = "<group>"; };
+		B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPaymentCell.m; sourceTree = "<group>"; };
+		B58DBF3819C0AF9600D4678A /* JAPaymentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPaymentCell.xib; sourceTree = "<group>"; };
 		B59DCA4019B4E92B00DE7960 /* RIField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIField.h; sourceTree = "<group>"; };
 		B59DCA4119B4E92B00DE7960 /* RIField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIField.m; sourceTree = "<group>"; };
 		B59DCA5719B70C2E00DE7960 /* JATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextField.h; sourceTree = "<group>"; };
@@ -917,6 +922,7 @@
 		4A4ABF08198B902600342D92 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				B58DBF3519C0AF9600D4678A /* PaymentCell */,
 				B58767FA19BB6284001651D6 /* ShippingCell */,
 				B59DCA7219B88D9000DE7960 /* SwitchCell */,
 				B59DCA6B19B870EA00DE7960 /* AddressCell */,
@@ -1240,6 +1246,16 @@
 				B501E88C19BEF7DE00BE51DD /* JAPickupStationInfoCell.xib */,
 			);
 			name = ShippingCell;
+			sourceTree = "<group>";
+		};
+		B58DBF3519C0AF9600D4678A /* PaymentCell */ = {
+			isa = PBXGroup;
+			children = (
+				B58DBF3619C0AF9600D4678A /* JAPaymentCell.h */,
+				B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */,
+				B58DBF3819C0AF9600D4678A /* JAPaymentCell.xib */,
+			);
+			path = PaymentCell;
 			sourceTree = "<group>";
 		};
 		B59DCA6319B710DA00DE7960 /* FXBlurView */ = {
@@ -2167,6 +2183,7 @@
 				CEDEB9C0199BA8FA0022BAB5 /* slider-default7-trackCrossedOver@2x.png in Resources */,
 				CEDEB9B7199BA8FA0022BAB5 /* slider-default-trackCrossedOver@2x.png in Resources */,
 				B5A3024619811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
+				B58DBF3A19C0AF9600D4678A /* JAPaymentCell.xib in Resources */,
 				CE2FB75819938EB500E7CD00 /* JACatalogGridCell.xib in Resources */,
 				B5A3024219811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
 				B510B01819AE466B00A9754A /* JATextFieldComponent.xib in Resources */,
@@ -2289,6 +2306,7 @@
 				B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */,
 				B5A3023319811E8A00F71726 /* BMA4SViewController.m in Sources */,
 				B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */,
+				B58DBF3919C0AF9600D4678A /* JAPaymentCell.m in Sources */,
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
 				B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */,
 				B5A302D119811E9200F71726 /* RITeaserText.m in Sources */,
