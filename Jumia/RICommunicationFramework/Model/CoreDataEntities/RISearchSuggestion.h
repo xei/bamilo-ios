@@ -9,6 +9,59 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@interface RISearchType : NSObject
+
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *text;
+
+@end
+
+@interface RISearchTypeProduct : NSObject
+
+@property (strong, nonatomic) NSString *sku;
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *maxPrice;
+@property (strong, nonatomic) NSString *price;
+@property (strong, nonatomic) NSNumber *maxPercentageSaving;
+@property (strong, nonatomic) NSString *brand;
+@property (strong, nonatomic) NSString *url;
+@property (strong, nonatomic) NSArray *imagesArray;
+
+@end
+
+@interface RIFeaturedBox : NSObject
+
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *label;
+@property (strong, nonatomic) NSString *url;
+@property (strong, nonatomic) NSArray *products;
+
+@end
+
+@interface RIBrand : NSObject
+
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *image;
+@property (strong, nonatomic) NSString *url;
+
+@end
+
+@interface RIFeaturedBrandBox : NSObject
+
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSArray *brands;
+
+@end
+
+@interface RIUndefinedSearchTerm : NSObject
+
+@property (strong, nonatomic) NSString *errorMessage;
+@property (strong, nonatomic) NSString *noticeMessage;
+@property (strong, nonatomic) RISearchType *searchType;
+@property (strong, nonatomic) RIFeaturedBox *featuredBox;
+@property (strong, nonatomic) RIFeaturedBrandBox *featuredBrandBox;
+
+@end
 
 @interface RISearchSuggestion : NSManagedObject
 
@@ -53,7 +106,7 @@
                              page:(NSString *)page
                          maxItems:(NSString *)maxItems
                      successBlock:(void (^)(NSArray *results))successBlock
-                  andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                  andFailureBlock:(void (^)(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
 
 /**
  * Method to cancel the request

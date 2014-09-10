@@ -74,6 +74,4 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
     }
 }
 
-
-
 @end

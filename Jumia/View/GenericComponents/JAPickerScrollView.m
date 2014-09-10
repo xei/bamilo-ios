@@ -38,6 +38,8 @@
     [self.scrollView removeFromSuperview];
     [self.arrowImageView removeFromSuperview];
     
+    self.disableDelagation = NO;
+    
     self.backgroundColor = JAPickerScrollViewBackgroundColor;
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((self.bounds.size.width - JAPickerScrollViewCenterWidth) / 2,
@@ -113,7 +115,9 @@
     self.selectedIndex = index;
     
     if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(selectedIndex:)]) {
-        [self.delegate selectedIndex:index];
+        if (!self.disableDelagation) {
+            [self.delegate selectedIndex:index];
+        }
     }
 }
 
@@ -152,5 +156,12 @@
     [self selectLabelAtIndex:(point.x/JAPickerScrollViewCenterWidth)];
 }
 
+
+#pragma mark - Disable scroll
+
+- (void)disableScroll
+{
+    self.scrollView.userInteractionEnabled = NO;
+}
 
 @end
