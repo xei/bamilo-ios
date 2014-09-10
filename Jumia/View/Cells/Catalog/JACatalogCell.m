@@ -64,6 +64,7 @@
     }
     [self.sizeButton setTitle:@"Size" forState:UIControlStateNormal];
     [self.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+    [self.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
 }
 
 - (void)loadWithCartItem:(RICartItem*)cartItem
