@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *emptyListLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray* productsArray;
+@property (assign, nonatomic) BOOL selectedSizeAndAddToCart;
 
 // size picker view
 @property (strong, nonatomic) UIView *sizePickerBackgroundView;
@@ -51,6 +52,7 @@
 {
     [super viewDidLoad];
     
+    self.selectedSizeAndAddToCart = NO;
     self.navBarLayout.title = @"Recently Viewed";
     
     self.collectionView.backgroundColor = UIColorFromRGB(0xc8c8c8);
@@ -208,11 +210,8 @@
         if ([simpleName isEqualToString:@""]) {
             //NOTHING SELECTED
             
-            [[[UIAlertView alloc] initWithTitle:@"Error"
-                                        message:@"Please choose product size"
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"Ok", nil] show];
+            self.selectedSizeAndAddToCart = YES;
+            [self sizeButtonPressed:button];
             
             return;
         } else {
@@ -358,6 +357,12 @@
     
     [self removePickerView];
     [self.collectionView reloadData];
+    
+    if (self.selectedSizeAndAddToCart) {
+        self.selectedSizeAndAddToCart = NO;
+        
+        [self addToCartPressed:button];
+    }
 }
 
 - (void)removePickerView
