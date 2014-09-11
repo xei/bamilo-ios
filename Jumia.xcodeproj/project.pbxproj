@@ -87,6 +87,7 @@
 		B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E171989308300C18F1E /* RIPaymentMethodForm.m */; };
 		B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E191989308300C18F1E /* RIPaymentInformation.m */; };
 		B5225E30198950C500C18F1E /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
+		B530D57119C1998B0052FEDA /* JACheckoutForms.m in Sources */ = {isa = PBXBuildFile; fileRef = B530D57019C1998B0052FEDA /* JACheckoutForms.m */; };
 		B542546B19AE9F7500C792FF /* JACartListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B542546919AE9F7500C792FF /* JACartListHeaderView.m */; };
 		B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		B55CF29019BE072800A6C6B6 /* JAShippingInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B55CF28D19BE072800A6C6B6 /* JAShippingInfoCell.xib */; };
@@ -436,6 +437,8 @@
 		B5225E1A1989308300C18F1E /* RIPaymentInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPaymentInformation.h; sourceTree = "<group>"; };
 		B5225E2E198950C500C18F1E /* JACartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACartViewController.h; sourceTree = "<group>"; };
 		B5225E2F198950C500C18F1E /* JACartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACartViewController.m; sourceTree = "<group>"; };
+		B530D56F19C1998B0052FEDA /* JACheckoutForms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACheckoutForms.h; path = CheckoutForms/JACheckoutForms.h; sourceTree = "<group>"; };
+		B530D57019C1998B0052FEDA /* JACheckoutForms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACheckoutForms.m; path = CheckoutForms/JACheckoutForms.m; sourceTree = "<group>"; };
 		B542546819AE9F7500C792FF /* JACartListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartListHeaderView.h; path = Jumia/View/Headers/JACartListHeaderView.h; sourceTree = SOURCE_ROOT; };
 		B542546919AE9F7500C792FF /* JACartListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartListHeaderView.m; path = Jumia/View/Headers/JACartListHeaderView.m; sourceTree = SOURCE_ROOT; };
 		B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACartListHeaderView.xib; path = Jumia/View/Headers/JACartListHeaderView.xib; sourceTree = SOURCE_ROOT; };
@@ -965,6 +968,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B530D56E19C199690052FEDA /* CheckoutForms */,
 				4A3719BA19C05F3C002D4199 /* UndefinedSearchView */,
 				B59DCA6719B851F700DE7960 /* Buttons */,
 				B510B00119AE466B00A9754A /* DynamicForms */,
@@ -1229,6 +1233,15 @@
 				B50B03A5198A544A002046DF /* JAShippingViewController.m */,
 			);
 			path = Shipping;
+			sourceTree = "<group>";
+		};
+		B530D56E19C199690052FEDA /* CheckoutForms */ = {
+			isa = PBXGroup;
+			children = (
+				B530D56F19C1998B0052FEDA /* JACheckoutForms.h */,
+				B530D57019C1998B0052FEDA /* JACheckoutForms.m */,
+			);
+			name = CheckoutForms;
 			sourceTree = "<group>";
 		};
 		B58767FA19BB6284001651D6 /* ShippingCell */ = {
@@ -2355,6 +2368,7 @@
 				4AE730C7198F8B05000CA1DD /* JAPDVViewController.m in Sources */,
 				CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */,
 				B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */,
+				B530D57119C1998B0052FEDA /* JACheckoutForms.m in Sources */,
 				B510B01519AE466B00A9754A /* JARadioComponent.m in Sources */,
 				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
 				B510B01719AE466B00A9754A /* JATextFieldComponent.m in Sources */,
