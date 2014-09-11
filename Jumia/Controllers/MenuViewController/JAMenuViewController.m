@@ -422,6 +422,9 @@
 {
     if (self.resultsTableView == nil) {
         
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        UIView *tempView = ((UIViewController *)[viewControllers lastObject]).view;
+        
         self.resultsArray = [NSMutableArray new];
         
         CGRect resultsTableFrame = CGRectMake(self.cartView.frame.origin.x,
@@ -446,12 +449,17 @@
         [self.resultsTableView registerClass:[UITableViewCell class]
                       forCellReuseIdentifier:@"cell"];
         
-        [self.view addSubview:self.resultsTableView];
+        [tempView addSubview:self.resultsTableView];
         
         [UIView animateWithDuration:0.4f
                          animations:^{
                              CGRect newFrame = self.resultsTableView.frame;
                              newFrame.origin.y = self.cartView.frame.origin.y + 1;
+                             
+                             if ([[viewControllers lastObject] isKindOfClass:[JASubCategoriesViewController class]]) {
+                                 newFrame.origin.y -= 64;
+                             }
+                             
                              self.resultsTableView.frame = newFrame;
                          }];
     }
