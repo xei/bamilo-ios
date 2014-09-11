@@ -8,6 +8,7 @@
 
 #import "JAProductDetailsViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "JAPriceView.h"
 
 @interface JAProductDetailsViewController ()
 
@@ -26,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionTextLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomDistance;
+@property (nonatomic, strong) JAPriceView *priceView;
 
 @end
 
@@ -48,49 +50,20 @@
     self.descriptionTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.contenteScrollView.backgroundColor = UIColorFromRGB(0xc8c8c8);
     
-    if(!VALID_NOTEMPTY(self.stringNewPrice, NSString))
-    {
-        self.labelNewPrice.text = self.stringOldPrice;
-        
-        [self.labelOldPrice removeFromSuperview];
-    }
-    else
-    {
-        NSMutableAttributedString *stringOldPrice = [[NSMutableAttributedString alloc] initWithString:self.stringOldPrice];
-        NSInteger stringOldPriceLenght = self.stringOldPrice.length;
-        UIFont *stringOldPriceFont = [UIFont fontWithName:@"HelveticaNeue-Light"
-                                                     size:14.0];
-        UIColor *stringOldPriceColor = [UIColor colorWithRed:204.0/255.0
-                                                       green:204.0/255.0
-                                                        blue:204.0/255.0
-                                                       alpha:1.0f];
-        
-        [stringOldPrice addAttribute:NSFontAttributeName
-                               value:stringOldPriceFont
-                               range:NSMakeRange(0, stringOldPriceLenght)];
-        
-        [stringOldPrice addAttribute:NSStrokeColorAttributeName
-                               value:stringOldPriceColor
-                               range:NSMakeRange(0, stringOldPriceLenght)];
-        
-        [stringOldPrice addAttribute:NSStrikethroughStyleAttributeName
-                               value:@(1)
-                               range:NSMakeRange(0, stringOldPriceLenght)];
-        
-        self.labelOldPrice.attributedText = stringOldPrice;
-        
-        self.labelNewPrice.text = self.stringNewPrice;
-        
-        [self.labelNewPrice sizeToFit];
-        [self.labelOldPrice sizeToFit];
-        
-        float x = self.labelNewPrice.frame.origin.x + self.labelNewPrice.frame.size.width + 5;
-        CGRect temp = self.labelOldPrice.frame;
-        temp.origin.x = x;
-        self.labelOldPrice.frame = temp;
-        
-        [self.topView layoutSubviews];
-    }
+    [self.labelNewPrice removeFromSuperview];
+    [self.labelOldPrice removeFromSuperview];
+    
+    self.priceView = [[JAPriceView alloc] init];
+    [self.priceView loadWithPrice:self.stringOldPrice
+                     specialPrice:self.stringNewPrice
+                         fontSize:14.0f
+            specialPriceOnTheLeft:NO];
+    
+    self.priceView.frame = CGRectMake(12.0f,
+                                      68.0f,
+                                      self.priceView.frame.size.width,
+                                      self.priceView.frame.size.height);
+    [self.view addSubview:self.priceView];
     
     self.featuresView.layer.cornerRadius = 4.0f;
     self.descriptionView.layer.cornerRadius = 4.0f;

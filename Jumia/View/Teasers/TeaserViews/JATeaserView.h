@@ -15,16 +15,19 @@
 #define kTeaserNotificationPushCatalogWithUrl @"TEASER_NOTIFICATION_PUSH_CATALOG_WITH_URL"
 #define kTeaserNotificationPushPDVWithUrl @"TEASER_NOTIFICATION_PUSH_PDV_WITH_URL"
 #define kTeaserNotificationPushAllCategories @"TEASER_NOTIFICATION_PUSH_ALL_CATEGORIES"
+#define kTeaserNotificationPushCatalogWithUrlForCampaigns @"TEASER_NOTIFICATION_PUSH_PDV_WITH_URL_FOR_CAMPAIGNS"
 
 @interface JATeaserView : UIView
 
 @property (nonatomic, strong)NSOrderedSet* teasers;
+@property (strong, nonatomic) NSString *groupTitle;
 
 - (void)load;
 
 - (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage;
 - (void)teaserPressedWithTeaserText:(RITeaserText*)teaserText;
 - (void)teaserPressedWithTeaserProduct:(RITeaserProduct*)teaserProduct;
+- (void)teaserPressedWithTeaserTextForCampaigns:(RITeaserText *)teaserText;
 - (void)teaserAllCategoriesPressed;
 
 @end
