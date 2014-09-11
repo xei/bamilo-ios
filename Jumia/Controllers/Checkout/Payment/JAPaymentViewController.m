@@ -10,6 +10,7 @@
 #import "JACartListHeaderView.h"
 #import "JAButtonWithBlur.h"
 #import "JAPaymentCell.h"
+#import "JACheckoutForms.h"
 #import "RICheckout.h"
 
 @interface JAPaymentViewController ()
@@ -132,11 +133,12 @@ UICollectionViewDelegate>
 {
     if(VALID_NOTEMPTY(self.paymentMethods, NSArray))
     {
-        CGFloat collectionViewHeight = 26.0f + (([self.paymentMethods count] - 1) * 44.0f);
+        CGFloat collectionViewHeight = 26.0f + ([self.paymentMethods count] * 44.0f);
         
         if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath))
         {
-            collectionViewHeight += 84.0f;
+            RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:self.collectionViewIndexSelected.row];
+            collectionViewHeight += [JACheckoutForms getPaymentMethodOptionViewHeight:paymentMethod];
         }
         
         [UIView animateWithDuration:0.5f
@@ -183,7 +185,8 @@ UICollectionViewDelegate>
         // Payment method cell
         if(indexPath.row == self.collectionViewIndexSelected.row)
         {
-            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 84.0f);
+            RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
+            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 44.0f +[JACheckoutForms getPaymentMethodOptionViewHeight:paymentMethod]);
         }
         else
         {

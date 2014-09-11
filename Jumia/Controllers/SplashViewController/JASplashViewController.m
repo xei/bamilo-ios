@@ -46,48 +46,48 @@ UIAlertViewDelegate
         
         [self showLoading];
         
-        // Change the Facebook app id
-        NSString *appId;
-        
-#warning Necessary to check if the facebook app id is changed properly
-        
-        if ([self.selectedCountry.countryIso isEqualToString:@"MA"]) {
-            appId = @"518468904830623";
-        } else if ([self.selectedCountry.countryIso isEqualToString:@"CI"]) {
-            appId = @"472507709498904";
-        } else if ([self.selectedCountry.countryIso isEqualToString:@"NG"]) {
-            appId = @"321703697936806";
-        } else if ([self.selectedCountry.countryIso isEqualToString:@"EG"]) {
-            appId = @"390085037744566";
-        } else if ([self.selectedCountry.countryIso isEqualToString:@"KE"]) {
-            appId = @"319581271497227";
-        } else if ([self.selectedCountry.countryIso isEqualToString:@"UG"]) {
-            appId = @"321703697936806";
-        } else if ([self.selectedCountry.countryIso isEqualToString:@"GH"]) {
-            appId = @"321703697936806";
-        } else {
-            appId = @"321703697936806";
-        }
-
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"Info"
-                                                         ofType:@"plist"];
-        NSMutableDictionary *menuDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:path];
-        [menuDictionary removeObjectForKey:@"FacebookAppID"];
-        [menuDictionary addEntriesFromDictionary:@{@"FacebookAppID": appId}];
-        
-        NSError *error;
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        
-        NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:@"Info.plist"];
-        
-        if (![[NSFileManager defaultManager] fileExistsAtPath: path])
-        {
-            NSString *bundle = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
-            [[NSFileManager defaultManager]  copyItemAtPath:bundle toPath:path error:&error];
-        }
-        
-        [menuDictionary writeToFile:plistPath atomically: YES];
+//        // Change the Facebook app id
+//        NSString *appId;
+//        
+//#warning Necessary to check if the facebook app id is changed properly
+//        
+//        if ([self.selectedCountry.countryIso isEqualToString:@"MA"]) {
+//            appId = @"518468904830623";
+//        } else if ([self.selectedCountry.countryIso isEqualToString:@"CI"]) {
+//            appId = @"472507709498904";
+//        } else if ([self.selectedCountry.countryIso isEqualToString:@"NG"]) {
+//            appId = @"321703697936806";
+//        } else if ([self.selectedCountry.countryIso isEqualToString:@"EG"]) {
+//            appId = @"390085037744566";
+//        } else if ([self.selectedCountry.countryIso isEqualToString:@"KE"]) {
+//            appId = @"319581271497227";
+//        } else if ([self.selectedCountry.countryIso isEqualToString:@"UG"]) {
+//            appId = @"321703697936806";
+//        } else if ([self.selectedCountry.countryIso isEqualToString:@"GH"]) {
+//            appId = @"321703697936806";
+//        } else {
+//            appId = @"321703697936806";
+//        }
+//
+//        NSString *path = [[NSBundle mainBundle] pathForResource:@"Info"
+//                                                         ofType:@"plist"];
+//        NSMutableDictionary *menuDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:path];
+//        [menuDictionary removeObjectForKey:@"FacebookAppID"];
+//        [menuDictionary addEntriesFromDictionary:@{@"FacebookAppID": appId}];
+//        
+//        NSError *error;
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString *documentsDirectory = [paths objectAtIndex:0];
+//        
+//        NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:@"Info.plist"];
+//        
+//        if (![[NSFileManager defaultManager] fileExistsAtPath: path])
+//        {
+//            NSString *bundle = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+//            [[NSFileManager defaultManager]  copyItemAtPath:bundle toPath:path error:&error];
+//        }
+//        
+//        [menuDictionary writeToFile:plistPath atomically: YES];
         
         self.requestCount = 0;
         

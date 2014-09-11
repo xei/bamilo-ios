@@ -200,8 +200,6 @@ UIPickerViewDelegate>
                 {
                     for (NSNumber *pickupStationHeight in self.pickupStationHeightsForRegion)
                     {
-                        NSLog(@"pickupStationHeight %@", [pickupStationHeight stringValue]);
-                        
                         collectionViewHeight += [pickupStationHeight floatValue];
                     }
                 }
