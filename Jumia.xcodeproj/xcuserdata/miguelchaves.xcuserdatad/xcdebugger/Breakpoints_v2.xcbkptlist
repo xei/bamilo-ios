@@ -80,12 +80,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jumia/View/GenericComponents/JAPickerScrollView.m"
-            timestampString = "432036443.15869"
+            timestampString = "432123073.193547"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "-layoutSubviews"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
+            landmarkName = "-disableScroll"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
