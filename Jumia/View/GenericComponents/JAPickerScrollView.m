@@ -38,6 +38,7 @@
     [self.scrollView removeFromSuperview];
     [self.arrowImageView removeFromSuperview];
     
+    
     self.disableDelagation = NO;
     
     self.backgroundColor = JAPickerScrollViewBackgroundColor;
@@ -89,13 +90,36 @@
                                              indicatorImage.size.width,
                                              indicatorImage.size.height)];
     [self addSubview:self.arrowImageView];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(touchedInScrollView:)];
+    self.userInteractionEnabled = YES;
+    [self addGestureRecognizer:tap];
 }
 
 - (UIView *) hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    if ([self pointInside:point withEvent:event]) {
+    if ([self pointInside:point withEvent:event])
+    {
         return self.scrollView;
     }
     return nil;
+}
+
+- (void)touchedInScrollView:(UITapGestureRecognizer *)tap
+{
+    CGPoint point = [tap locationInView:self];
+    
+    if (point.x < self.scrollView.frame.origin.x)
+    {
+        [self scrollRight];
+    }
+    else
+    {
+        if (point.x > (self.scrollView.frame.origin.x + self.scrollView.frame.size.width))
+        {
+            [self scrollLeft];
+        }
+    }
 }
 
 - (void)selectLabelAtIndex:(NSInteger)index

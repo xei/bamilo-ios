@@ -32,6 +32,7 @@
 @property (nonatomic, strong) JAUndefinedSearchView *undefinedView;
 @property (nonatomic, strong) RIUndefinedSearchTerm *undefinedBackup;
 @property (assign, nonatomic) CGRect backupFrame;
+@property (assign, nonatomic) BOOL isFirstLoad;
 
 @end
 
@@ -46,6 +47,7 @@
         self.navBarLayout.showBackButton = YES;
     }
 
+    self.isFirstLoad = YES;
     self.filterButton.backgroundColor = JACatalogViewControllerButtonColor;
     self.viewToggleButton.backgroundColor = JACatalogViewControllerButtonColor;
     
@@ -85,6 +87,21 @@
         [self.undefinedView removeFromSuperview];
         
         [self addUndefinedSearchView:self.undefinedBackup];
+    }
+    
+    if (self.isFirstLoad)
+    {
+        [self showLoading];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (self.isFirstLoad) {
+        [self swipeLeft:nil];
+        self.isFirstLoad = NO;
+        
+        [self hideLoading];
     }
 }
 
