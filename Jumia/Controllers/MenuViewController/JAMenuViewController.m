@@ -274,7 +274,15 @@
             if (8 == indexPath.row) {
                 if ([RICustomer checkIfUserIsLogged])
                 {
+                    __block NSString *custumerId = [RICustomer getCustomerId];
+                    
                     [RICustomer logoutCustomerWithSuccessBlock:^{
+                        
+                        [[RITrackingWrapper sharedInstance] trackEvent:custumerId
+                                                                 value:nil
+                                                                action:@"LogoutSuccess"
+                                                              category:@"Account"
+                                                                  data:nil];
                         
                         [[FBSession activeSession] closeAndClearTokenInformation];
                         

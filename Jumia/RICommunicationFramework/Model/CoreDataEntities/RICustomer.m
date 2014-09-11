@@ -53,8 +53,22 @@
             
             [RICustomer loginCustomerByFacebookWithParameters:parameters
                                                  successBlock:^(id customer) {
+                                                     
+                                                     [[RITrackingWrapper sharedInstance] trackEvent:((RICustomer *)customer).idCustomer
+                                                                                              value:nil
+                                                                                             action:@"AutoLoginSuccess"
+                                                                                           category:@"Account"
+                                                                                               data:nil];
+                                                     
                                                      returnBlock();
                                                  } andFailureBlock:^(NSArray *errorObject) {
+                                                     
+                                                     [[RITrackingWrapper sharedInstance] trackEvent:nil
+                                                                                              value:nil
+                                                                                             action:@"AutoLoginFailed"
+                                                                                           category:@"Account"
+                                                                                               data:nil];
+                                                     
                                                      returnBlock();
                                                  }];
         }
@@ -68,9 +82,21 @@
                         [RIForm sendForm:form parameters:parameters
                             successBlock:^(id jsonObject)
                          {
+                             [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                                                      value:nil
+                                                                     action:@"AutoLoginSuccess"
+                                                                   category:@"Account"
+                                                                       data:nil];
+                             
                              returnBlock();
                          } andFailureBlock:^(id errorObject)
                          {
+                             [[RITrackingWrapper sharedInstance] trackEvent:nil
+                                                                      value:nil
+                                                                     action:@"AutoLoginFailed"
+                                                                   category:@"Account"
+                                                                       data:nil];
+                             
                              returnBlock();
                          }];
                     } failureBlock:^(NSArray *errorMessage)

@@ -231,6 +231,12 @@
                                sku:product.sku
                             simple:productSimple.sku
                   withSuccessBlock:^(RICart *cart) {
+                      
+                      [[RITrackingWrapper sharedInstance] trackEvent:product.sku
+                                                               value:product.price
+                                                              action:@"AddToCart"
+                                                            category:@"Catalog"
+                                                                data:nil];
 
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];

@@ -145,6 +145,13 @@ UIPickerViewDelegate>
     [self showLoading];
     
     [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object) {
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:((RICustomer *)object).idCustomer
+                                                 value:nil
+                                                action:@"CreateSuccess"
+                                              category:@"Account"
+                                                  data:nil];
+        
         [self.dynamicForm resetValues];
         
         [self hideLoading];
@@ -157,6 +164,13 @@ UIPickerViewDelegate>
                                                             object:nil];
         
     } andFailureBlock:^(id errorObject) {
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:nil
+                                                 value:nil
+                                                action:@"CreateFailed"
+                                              category:@"Account"
+                                                  data:nil];
+        
         [self hideLoading];
         
         if(VALID_NOTEMPTY(errorObject, NSDictionary))

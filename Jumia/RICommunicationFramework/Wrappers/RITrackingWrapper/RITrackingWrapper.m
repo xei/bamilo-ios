@@ -102,13 +102,11 @@ static dispatch_once_t sharedInstanceToken;
     RIDebugLog(@"Tracking event: '%@' with value: %@ with action: %@ with category: %@ and data: %@"
                , event, value, action, category, data);
     
-    [self RI_callTrackersConformToProtocol:@protocol(RIEventTracking)
-                                  selector:@selector(trackEvent:value:action:category:data:)
-                                 arguments:@[event,
-                                             value,
-                                             action,
-                                             category,
-                                             data]];
+    [[RIGoogleAnalyticsTracker sharedInstance] trackEvent:event
+                                                    value:value
+                                                   action:action
+                                                 category:category
+                                                     data:data];
 }
 
 #pragma mark - RIExceptionTracking protocolx

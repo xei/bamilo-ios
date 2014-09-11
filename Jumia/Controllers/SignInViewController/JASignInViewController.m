@@ -186,43 +186,58 @@ FBLoginViewDelegate
     
     [self showLoading];
     
-    [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object) {
-        [self.dynamicForm resetValues];
-        
-        [self hideLoading];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                            object:@{@"index": @(0),
-                                                                     @"name": @"Home"}];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                            object:nil];
-    } andFailureBlock:^(id errorObject) {
-        
-        [self hideLoading];
-        
-        if(VALID_NOTEMPTY(errorObject, NSDictionary))
-        {
-            [self.dynamicForm validateFields:errorObject];
-            
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:@"Invalid fields"
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
-        }
-        else if(VALID_NOTEMPTY(errorObject, NSArray))
-        {
-            [self.dynamicForm checkErrors];
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:[errorObject componentsJoinedByString:@","]
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
-        }
-        else
-        {
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+    [RIForm sendForm:[self.dynamicForm form]
+          parameters:[self.dynamicForm getValues]
+        successBlock:^(id object)
+     {
+         [self.dynamicForm resetValues];
+         
+         [[RITrackingWrapper sharedInstance] trackEvent:((RICustomer *)object).idCustomer
+                                                  value:nil
+                                                 action:@"LoginSuccess"
+                                               category:@"Account"
+                                                   data:nil];
+         
+         [self hideLoading];
+         
+         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                             object:@{@"index": @(0),
+                                                                      @"name": @"Home"}];
+         
+         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                             object:nil];
+     } andFailureBlock:^(id errorObject) {
+         
+         [[RITrackingWrapper sharedInstance] trackEvent:nil
+                                                  value:nil
+                                                 action:@"LoginFailed"
+                                               category:@"Account"
+                                                   data:nil];
+         
+         [self hideLoading];
+         
+         if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         {
+             [self.dynamicForm validateFields:errorObject];
+             
+             [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                         message:@"Invalid fields"
+                                        delegate:nil
+                               cancelButtonTitle:nil
+                               otherButtonTitles:@"OK", nil] show];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSArray))
+         {
+             [self.dynamicForm checkErrors];
+             [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                         message:[errorObject componentsJoinedByString:@","]
+                                        delegate:nil
+                               cancelButtonTitle:nil
+                               otherButtonTitles:@"OK", nil] show];
+         }
+         else
+         {
+             [[[UIAlertView alloc] initWithTitle:@"Jumia"
                                         message:@"Generic error"
                                        delegate:nil
                               cancelButtonTitle:nil
@@ -254,6 +269,13 @@ FBLoginViewDelegate
         
         [RICustomer loginCustomerByFacebookWithParameters:parameters
                                              successBlock:^(id customer) {
+                                                 
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:((RICustomer *)customer).idCustomer
+                                                                                          value:nil
+                                                                                         action:@"FacebookLoginSuccess"
+                                                                                       category:@"Account"
+                                                                                           data:nil];
+                                                 
                                                  [self.dynamicForm resetValues];
                                                  
                                                  [self hideLoading];
@@ -265,6 +287,13 @@ FBLoginViewDelegate
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                                                      object:nil];
                                              } andFailureBlock:^(NSArray *errorObject) {
+                                                 
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:nil
+                                                                                          value:nil
+                                                                                         action:@"LoginFailed"
+                                                                                       category:@"Account"
+                                                                                           data:nil];
+                                                 
                                                  [self hideLoading];
                                                  
                                                  [[[UIAlertView alloc] initWithTitle:@"Jumia"
