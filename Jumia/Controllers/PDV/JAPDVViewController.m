@@ -129,6 +129,12 @@
         [segue.destinationViewController setStringOldPrice:self.product.priceFormatted];
         [segue.destinationViewController setFeaturesText:self.product.attributeShortDescription];
         [segue.destinationViewController setDescriptionText:self.product.descriptionString];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:self.product.sku
+                                                 value:nil
+                                                action:@"ViewProductDetails"
+                                              category:@"Catalog"
+                                                  data:nil];
     }
     else if ([segue.identifier isEqualToString:@"segueNewReview"])
     {
@@ -509,7 +515,30 @@
     
     activityController.completionHandler = ^(NSString *activityType, BOOL completed)
     {
+        NSString *type = @"";
         
+        if ([activityType isEqualToString:@"com.apple.UIKit.activity.Mail"])
+        {
+            type = @"Email";
+        }
+        else if ([activityType isEqualToString:@"com.apple.UIKit.activity.Facebook"])
+        {
+            type = @"Facebook";
+        }
+        else if ([activityType isEqualToString:@"com.apple.UIKit.activity.Twitter"])
+        {
+            type = @"Twitter";
+        }
+        else
+        {
+            type = @"Shared";
+        }
+    
+        [[RITrackingWrapper sharedInstance] trackEvent:self.product.sku
+                                                 value:self.product.price
+                                                action:type
+                                              category:@"Catalog"
+                                                  data:nil];
     };
     
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypePostToTwitter];
@@ -538,6 +567,12 @@
                                    sku:self.product.sku
                                 simple:((RIProduct *)[self.product.productSimples firstObject]).sku
                       withSuccessBlock:^(RICart *cart) {
+                          
+                          [[RITrackingWrapper sharedInstance] trackEvent:((RIProduct *)[self.product.productSimples firstObject]).sku
+                                                                   value:((RIProduct *)[self.product.productSimples firstObject]).price
+                                                                  action:@"AddToCart"
+                                                                category:@"Catalog"
+                                                                    data:nil];
                           
                           NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                           [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -678,6 +713,12 @@
         [RIProduct addToFavorites:self.product successBlock:^{
             //[self hideLoading];
             
+            [[RITrackingWrapper sharedInstance] trackEvent:self.product.sku
+                                                     value:self.product.price
+                                                    action:@"AddtoWishlist"
+                                                  category:@"Catalog"
+                                                      data:nil];
+            
             self.product.isFavorite = [NSNumber numberWithBool:button.selected];
             
             if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
@@ -691,6 +732,12 @@
         [RIProduct removeFromFavorites:self.product successBlock:^(NSArray *favoriteProducts) {
             //update favoriteProducts
             //[self hideLoading];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:self.product.sku
+                                                     value:self.product.price
+                                                    action:@"RemoveFromWishlist"
+                                                  category:@"Catalog"
+                                                      data:nil];
             
             if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
                 [self.delegate changedFavoriteStateOfProduct:self.product];

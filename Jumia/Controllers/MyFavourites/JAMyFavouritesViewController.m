@@ -273,6 +273,12 @@
                                 simple:productSimple.sku
                       withSuccessBlock:^(RICart *cart) {
                           
+                          [[RITrackingWrapper sharedInstance] trackEvent:product.sku
+                                                                   value:product.price
+                                                                  action:@"AddToCart"
+                                                                category:@"Catalog"
+                                                                    data:nil];
+                          
                           self.addAllToCartCount--;
                           
                       } andFailureBlock:^(NSArray *errorMessages) {
@@ -282,6 +288,11 @@
                       }];
         
         [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+            [[RITrackingWrapper sharedInstance] trackEvent:product.sku
+                                                     value:product.price
+                                                    action:@"RemoveFromWishlist"
+                                                  category:@"Catalog"
+                                                      data:nil];
         } andFailureBlock:^(NSArray *error) {
         }];
     }
@@ -305,6 +316,12 @@
     
     [self showLoading];
     [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+        [[RITrackingWrapper sharedInstance] trackEvent:product.sku
+                                                 value:product.price
+                                                action:@"RemoveFromWishlist"
+                                              category:@"Catalog"
+                                                  data:nil];
+        
         [self hideLoading];
         [self updateListsWith:favoriteProducts];
     } andFailureBlock:^(NSArray *error) {
@@ -350,6 +367,12 @@
                             simple:productSimple.sku
                   withSuccessBlock:^(RICart *cart) {
                       
+                      [[RITrackingWrapper sharedInstance] trackEvent:product.sku
+                                                               value:product.price
+                                                              action:@"AddToCart"
+                                                            category:@"Catalog"
+                                                                data:nil];
+                      
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
@@ -360,6 +383,13 @@
                                         otherButtonTitles:@"Ok", nil] show];
                       
                       [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+                          
+                          [[RITrackingWrapper sharedInstance] trackEvent:product.sku
+                                                                   value:product.price
+                                                                  action:@"RemoveFromWishlist"
+                                                                category:@"Catalog"
+                                                                    data:nil];
+                          
                           [self updateListsWith:favoriteProducts];
                           [self hideLoading];
                       } andFailureBlock:^(NSArray *error) {

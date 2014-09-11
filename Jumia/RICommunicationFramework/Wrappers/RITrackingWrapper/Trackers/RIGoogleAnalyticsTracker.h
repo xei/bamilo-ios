@@ -25,4 +25,6 @@ extern NSString * const kRIGoogleAnalyticsTrackingID;
     RILaunchEventTracker
 >
 
++ (instancetype)sharedInstance;
+
 @end

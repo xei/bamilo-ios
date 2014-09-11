@@ -97,6 +97,7 @@
             stars.title.text = option.title;
             stars.ratingOptions = option.options;
             stars.starValue = 1;
+            stars.idRatingType = option.idRatingType;
             
             CGRect frame = stars.frame;
             frame.origin.y = startingY;
@@ -216,6 +217,43 @@
     [RIForm sendForm:self.ratingDynamicForm.form
           parameters:parameters
         successBlock:^(id object) {
+            
+            for (JAStarsComponent *component in self.ratingStarsArray)
+            {
+                if ([component.idRatingType isEqualToString:@"1"])
+                {
+                    [[RITrackingWrapper sharedInstance] trackEvent:self.ratingProductSku
+                                                             value:@(component.starValue)
+                                                            action:@"RateProductPrice"
+                                                          category:@"Catalog"
+                                                              data:nil];
+                }
+                else if ([component.idRatingType isEqualToString:@"2"])
+                {
+                    [[RITrackingWrapper sharedInstance] trackEvent:self.ratingProductSku
+                                                             value:@(component.starValue)
+                                                            action:@"RateProductAppearance"
+                                                          category:@"Catalog"
+                                                              data:nil];
+                }
+                else if ([component.idRatingType isEqualToString:@"3"])
+                {
+                    [[RITrackingWrapper sharedInstance] trackEvent:self.ratingProductSku
+                                                             value:@(component.starValue)
+                                                            action:@"RateProductQuality"
+                                                          category:@"Catalog"
+                                                              data:nil];
+                }
+                else
+                {
+                    // There is no indication about the default tracking for rating
+                    [[RITrackingWrapper sharedInstance] trackEvent:self.ratingProductSku
+                                                             value:@(component.starValue)
+                                                            action:@"RateProductQuality"
+                                                          category:@"Catalog"
+                                                              data:nil];
+                }
+            }
             
             [self hideLoading];
             

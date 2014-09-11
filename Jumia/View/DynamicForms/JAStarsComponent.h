@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSMutableDictionary *values;
 @property (assign, nonatomic) NSInteger starValue;
 @property (strong, nonatomic) NSArray *ratingOptions;
+@property (strong, nonatomic) NSString *idRatingType;
 
 + (JAStarsComponent *)getNewJAStarsComponent;
 

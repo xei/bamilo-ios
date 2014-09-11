@@ -33,6 +33,7 @@
 @property (nonatomic, strong) RIUndefinedSearchTerm *undefinedBackup;
 @property (assign, nonatomic) CGRect backupFrame;
 @property (assign, nonatomic) BOOL isFirstLoad;
+@property (assign, nonatomic) BOOL isFirstLoadTracking;
 
 @end
 
@@ -48,6 +49,7 @@
     }
 
     self.isFirstLoad = YES;
+    self.isFirstLoadTracking = NO;
     self.filterButton.backgroundColor = JACatalogViewControllerButtonColor;
     self.viewToggleButton.backgroundColor = JACatalogViewControllerButtonColor;
     
@@ -126,6 +128,16 @@
                                            page:@"1"
                                        maxItems:[NSString stringWithFormat:@"%d",JACatalogViewControllerMaxProducts]
                                    successBlock:^(NSArray *results) {
+                                       
+                                       if (!self.isFirstLoadTracking) {
+                                           self.isFirstLoadTracking = YES;
+                                           
+                                           [[RITrackingWrapper sharedInstance] trackEvent:self.searchString
+                                                                                    value:@(results.count)
+                                                                                   action:@"Search"
+                                                                                 category:@"Catalog"
+                                                                                     data:nil];
+                                       }
                                        
                                        if (0 == results.count || JACatalogViewControllerMaxProducts > results.count) {
                                            self.loadedEverything = YES;
@@ -415,6 +427,13 @@
         [RIProduct getCompleteProductWithUrl:product.url
                                 successBlock:^(id completeProduct) {
                                     [RIProduct addToFavorites:completeProduct successBlock:^{
+                                        
+                                        [[RITrackingWrapper sharedInstance] trackEvent:product.sku
+                                                                                 value:product.price
+                                                                                action:@"AddtoWishlist"
+                                                                              category:@"Catalog"
+                                                                                  data:nil];
+                                        
                                         [self hideLoading];
                                     } andFailureBlock:^(NSArray *error) {
                                         [self hideLoading];
@@ -424,6 +443,13 @@
                                 }];
     } else {
         [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:product.sku
+                                                     value:product.price
+                                                    action:@"RemoveFromWishlist"
+                                                  category:@"Catalog"
+                                                      data:nil];
+            
             //update favoriteProducts
             [self hideLoading];
         } andFailureBlock:^(NSArray *error) {

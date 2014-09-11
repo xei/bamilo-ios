@@ -20,12 +20,16 @@
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
 #import "GAILogger.h"
+#import "RICountryConfiguration.h"
 
 NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
 
 @implementation RIGoogleAnalyticsTracker
 
 @synthesize queue;
+
+static RIGoogleAnalyticsTracker *sharedInstance;
+static dispatch_once_t sharedInstanceToken;
 
 - (id)init
 {
@@ -38,33 +42,43 @@ NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
     return self;
 }
 
-#pragma mark - RITracker protocol
++ (instancetype)sharedInstance
+{
+    dispatch_once(&sharedInstanceToken, ^{
+        sharedInstance = [[RIGoogleAnalyticsTracker alloc] init];
+        
+        RIDebugLog(@"Google Analytics tracker tracks application launch");
+        
+        RICountryConfiguration *config = [RICountryConfiguration getCurrentConfiguration];
+        NSString *trackingId = config.gaId;
+        
+        if (!trackingId) {
+            RIRaiseError(@"Missing Google Analytics Tracking ID in tracking properties");
+            return;
+        }
+        
+        // Automatically send uncaught exceptions to Google Analytics.
+        [GAI sharedInstance].trackUncaughtExceptions = YES;
+        
+        // Dispatch tracking information every 5 seconds (default: 120)
+        [GAI sharedInstance].dispatchInterval = 5;
+        
+        // Create tracker instance.
+        [[GAI sharedInstance] trackerWithTrackingId:trackingId];
+        
+        // Setup the app version
+        NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+        [[GAI sharedInstance].defaultTracker set:kGAIAppVersion value:version];
+        
+        NSLog(@"Initialized Google Analytics %d", [GAI sharedInstance].trackUncaughtExceptions);
+    });
+    
+    return sharedInstance;
+}
 
 - (void)applicationDidLaunchWithOptions:(NSDictionary *)options
 {
-    RIDebugLog(@"Google Analytics tracker tracks application launch");
-    
-    NSString *trackingId = [RITrackingConfiguration valueForKey:kRIGoogleAnalyticsTrackingID];
-    
-    if (!trackingId) {
-        RIRaiseError(@"Missing Google Analytics Tracking ID in tracking properties");
-        return;
-    }
-    
-    // Automatically send uncaught exceptions to Google Analytics.
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
-    
-    // Dispatch tracking information every 5 seconds (default: 120)
-    [GAI sharedInstance].dispatchInterval = 5;
-    
-    // Create tracker instance.
-    [[GAI sharedInstance] trackerWithTrackingId:trackingId];
-    
-    // Setup the app version
-    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
-    [[GAI sharedInstance].defaultTracker set:kGAIAppVersion value:version];
-    
-    NSLog(@"Initialized Google Analytics %d", [GAI sharedInstance].trackUncaughtExceptions);
+
 }
 
 #pragma mark - RIExceptionTracking protocol
