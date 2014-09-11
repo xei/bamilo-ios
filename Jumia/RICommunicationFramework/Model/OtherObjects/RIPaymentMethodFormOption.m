@@ -34,10 +34,6 @@
             newOption.cvcText = [descriptionObject objectForKey:@"cvc_text"];
         }
         
-        if (VALID_NOTEMPTY([descriptionObject objectForKey:@"text"], NSString)) {
-            newOption.text = [descriptionObject objectForKey:@"text"];
-        }
-        
         if (VALID_NOTEMPTY([descriptionObject objectForKey:@"images"], NSArray)) {
             NSArray *images = [descriptionObject objectForKey:@"images"];
             newOption.images = [images copy];

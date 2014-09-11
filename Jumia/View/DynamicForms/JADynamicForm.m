@@ -432,9 +432,10 @@
                     categoriesNewsletterComponent = checkBoxComponent;
                 }
                 
-                if(VALID_NOTEMPTY([checkBoxComponent getValues], NSDictionary))
+                NSDictionary *checkBoxParameters = [checkBoxComponent getValues];
+                if(VALID_NOTEMPTY(checkBoxParameters, NSDictionary))
                 {
-                    [parameters addEntriesFromDictionary:[checkBoxComponent getValues]];
+                    [parameters addEntriesFromDictionary:checkBoxParameters];
                 }
             }
             else if ([view isKindOfClass:[JACheckBoxWithOptionsComponent class]])
