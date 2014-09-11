@@ -8,12 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+@class RIPaymentMethodForm;
 @class RIPaymentMethodFormOption;
 
 @interface JACheckoutForms : NSObject
 
-+(UIView*)createPaymentMethodOptionView:(RIPaymentMethodFormOption*)paymentMethod;
+@property (nonatomic, strong) NSMutableDictionary *paymentMethodFormViews;
 
-+(CGFloat)getPaymentMethodOptionViewHeight:(RIPaymentMethodFormOption*)paymentMethod;
+-(id)initWithPaymentMethodForm:(RIPaymentMethodForm*)paymentMethodForm;
+
+-(UIView*)getPaymentMethodView:(RIPaymentMethodFormOption*)paymentMethod;
+
+-(CGFloat)getPaymentMethodViewHeight:(RIPaymentMethodFormOption*)paymentMethod;
+
+-(NSDictionary*)getValuesForPaymentMethod:(RIPaymentMethodFormOption*)paymentMethod;
 
 @end

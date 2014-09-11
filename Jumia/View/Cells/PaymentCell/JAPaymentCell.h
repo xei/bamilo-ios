@@ -14,7 +14,7 @@
 
 @property (strong, nonatomic) UIView *separator;
 
--(void)loadWithPaymentMethod:(RIPaymentMethodFormOption *)paymentMethod;
+-(void)loadWithPaymentMethod:(RIPaymentMethodFormOption *)paymentMethod paymentMethodView:(UIView*)paymentMethodView;
 
 -(void)selectPaymentMethod;
 
