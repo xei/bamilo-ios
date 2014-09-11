@@ -155,6 +155,7 @@
                              animated:YES];
     
     RISearchSuggestion *suggestion = [self.recentSearches objectAtIndex:indexPath.row];
+    [RISearchSuggestion putRecentSearchInTop:suggestion];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedRecentSearchNotification object:suggestion];
 }

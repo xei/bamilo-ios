@@ -109,6 +109,13 @@
                   andFailureBlock:(void (^)(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
 
 /**
+ * Method to put a recent search in top
+ *
+ * @param the recent search
+ */
++ (void)putRecentSearchInTop:(RISearchSuggestion *)search;
+
+/**
  * Method to cancel the request
  *
  * @param the operationID

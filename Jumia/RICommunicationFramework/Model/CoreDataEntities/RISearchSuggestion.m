@@ -248,6 +248,12 @@
     [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
++ (void)putRecentSearchInTop:(RISearchSuggestion *)search
+{
+    search.date = [NSDate date];
+    [[RIDataBaseWrapper sharedInstance] saveContext];
+}
+
 #pragma mark - Cancel requests
 
 + (void)cancelRequest:(NSString *)operationID
