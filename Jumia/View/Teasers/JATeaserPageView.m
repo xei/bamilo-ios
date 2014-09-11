@@ -158,6 +158,7 @@
                                                                                                                  self.bounds.size.width,
                                                                                                                  1)]; //height is set by the view itself
             [self addSubview:campaignsTeaserView];
+            campaignsTeaserView.groupTitle = teaserGroup.title;
             [campaignsTeaserView setTeasers:teaserGroup.teasers];
             [campaignsTeaserView load];
             

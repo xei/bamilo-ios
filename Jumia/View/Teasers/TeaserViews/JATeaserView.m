@@ -40,6 +40,13 @@
                                                       userInfo:[NSDictionary dictionaryWithObjects:@[teaserProduct.url] forKeys:@[@"url"]]];
 }
 
+- (void)teaserPressedWithTeaserTextForCampaigns:(RITeaserText *)teaserText
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushCatalogWithUrlForCampaigns
+                                                        object:nil
+                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserText.url,teaserText.name] forKeys:@[@"url",@"title"]]];
+}
+
 - (void)teaserAllCategoriesPressed
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushAllCategories

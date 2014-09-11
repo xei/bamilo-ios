@@ -96,6 +96,11 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectCampaign:)
+                                                 name:kDidSelectCampaignNofication
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectTeaserWithPDVUrl:)
                                                  name:kDidSelectTeaserWithPDVUrlNofication
                                                object:nil];
@@ -403,6 +408,21 @@
         
         [self pushViewController:catalog
                         animated:YES];
+    }
+}
+
+- (void)didSelectCampaign:(NSNotification*)notification
+{
+#warning implement here the push for the campaigns
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                        object:nil];
+    
+    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* title = [notification.userInfo objectForKey:@"title"];
+    
+    if (VALID_NOTEMPTY(url, NSString)) {
+        
+        
     }
 }
 

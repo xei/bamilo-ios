@@ -109,6 +109,11 @@
                                              selector:@selector(pushAllCategories)
                                                  name:kTeaserNotificationPushAllCategories
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(pushCampaigns:)
+                                                 name:kTeaserNotificationPushCatalogWithUrlForCampaigns
+                                               object:nil];
 }
 
 - (void)removeNotifications
@@ -186,6 +191,13 @@
 - (void)pushPDVWithUrl:(NSNotification*)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                        object:notification.object
+                                                      userInfo:notification.userInfo];
+}
+
+- (void)pushCampaigns:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCampaignNofication
                                                         object:notification.object
                                                       userInfo:notification.userInfo];
 }

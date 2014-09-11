@@ -9,6 +9,7 @@
 #import "JACampaignsTeaserView.h"
 
 #define JACampaignsTeaserViewHeight 72.0f
+#define JACampaignsTeaserBackgroundHeight 72.0f
 #define JACampaignsTeaserViewHorizontalMargin 6.0f
 #define JACampaignsTeaserViewContentY 4.0f
 #define JACampaignsTeaserViewContentCornerRadius 3.0f
@@ -36,10 +37,22 @@
                               self.frame.size.width,
                               JACampaignsTeaserViewHeight)];
     
+    // Calculate new height
+    if (self.teasers.count > 1)
+    {
+        float newHeight = JACampaignsTeaserViewHeight + (self.teasers.count * 30.0) + 5;
+        
+        CGRect frame = self.frame;
+        frame.size.height = newHeight;
+        self.frame = frame;
+    }
+    
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(JACampaignsTeaserViewHorizontalMargin,
                                                                    JACampaignsTeaserViewContentY,
                                                                    self.bounds.size.width - JACampaignsTeaserViewHorizontalMargin*2,
                                                                    self.bounds.size.height - JACampaignsTeaserViewContentY)];
+    contentView.backgroundColor = [UIColor whiteColor];
+    
     contentView.layer.cornerRadius = JACampaignsTeaserViewContentCornerRadius;
     [self addSubview:contentView];
     
@@ -48,7 +61,7 @@
     [backgroundImageView setFrame:CGRectMake(contentView.bounds.origin.x,
                                              contentView.bounds.origin.y,
                                              contentView.bounds.size.width,
-                                             contentView.bounds.size.height)];
+                                             JACampaignsTeaserBackgroundHeight)];
     [contentView addSubview:backgroundImageView];
     
     //there's a white rectangle where these two labels will go in. its measures are (4, 0, 61, 56)
@@ -60,7 +73,7 @@
     hotLabel.textAlignment = NSTextAlignmentCenter;
     [hotLabel sizeToFit];
     [hotLabel setFrame:CGRectMake(contentView.bounds.origin.x + JACampaignsTeaserViewGraySquareX,
-                                  contentView.bounds.size.height/2 - hotLabel.frame.size.height + JACampaignsTeaserViewHotLabelOffset,
+                                  backgroundImageView.bounds.size.height/2 - hotLabel.frame.size.height + JACampaignsTeaserViewHotLabelOffset,
                                   JACampaignsTeaserViewGraySquareWidth,
                                   hotLabel.frame.size.height)];
     [contentView addSubview:hotLabel];
@@ -75,32 +88,70 @@
                                      CGRectGetMaxY(hotLabel.frame) - JACampaignsTeaserViewHotLabelOffset,
                                      JACampaignsTeaserViewGraySquareWidth,
                                      offersLabel.frame.size.height)];
+    
     [contentView addSubview:offersLabel];
-    
-    
-    RITeaser* teaser = [self.teasers firstObject];
-    RITeaserText* teaserText = [teaser.teaserTexts firstObject];
     
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x + JACampaignsTeaserViewTitleOffset,
                                                                     contentView.bounds.origin.y,
                                                                     contentView.bounds.size.width - JACampaignsTeaserViewTitleOffset - JACampaignsTeaserViewTitleRightOffset,
-                                                                    contentView.bounds.size.height)];
-    titleLabel.text = teaserText.name;
+                                                                    backgroundImageView.bounds.size.height)];
+    if (self.teasers.count > 1) {
+        titleLabel.text = self.groupTitle;
+    } else {
+        RITeaser *teaser = [self.teasers firstObject];
+        RITeaserText *teaserText = [teaser.teaserTexts firstObject];
+        titleLabel.text = teaserText.name;
+    }
+    
     titleLabel.font = JACampaignsTeaserViewTitleFont;
     titleLabel.textColor = JACampaignsTeaserViewTitleColor;
     [contentView addSubview:titleLabel];
     
-    UIControl* control = [UIControl new];
-    [control setFrame:self.bounds];
-    [contentView addSubview:control];
-    [control addTarget:self action:@selector(teaserTextPressed:) forControlEvents:UIControlEventTouchUpInside];
+    UILabel *fakeLabel = [[UILabel alloc] initWithFrame:backgroundImageView.frame];
+    fakeLabel.tag = 0;
+    fakeLabel.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(teaserTextPressed:)];
+    [fakeLabel addGestureRecognizer:tap];
+    
+    [contentView addSubview:fakeLabel];
+    
+    if (self.teasers.count > 1)
+    {
+        // Add teasers
+        float startingY = backgroundImageView.frame.size.height;
+        NSInteger tag = 0;
+        
+        for (RITeaser *teaser in self.teasers)
+        {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, startingY, contentView.frame.size.width - 30, 30)];
+            RITeaserText* teaserText = [teaser.teaserTexts firstObject];
+            label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+            label.textColor = UIColorFromRGB(0x4e4e4e);
+            label.text = teaserText.name;
+            label.tag = tag;
+            [contentView addSubview:label];
+            startingY += 30;
+            tag++;
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(teaserTextPressed:)];
+            label.userInteractionEnabled = YES;
+            [label addGestureRecognizer:tap];
+        }
+    }
 }
 
-- (void)teaserTextPressed:(UIControl*)control
+- (void)teaserTextPressed:(UITapGestureRecognizer *)tap
 {
-//    RITeaser* teaser = [self.teasers firstObject];
-//    
-//    RITeaserText* teaserText = [teaser.teaserTexts firstObject];
+    UILabel *label = (UILabel *)tap.view;
+    
+    RITeaser* teaser = [self.teasers objectAtIndex:label.tag];
+    
+    RITeaserText* teaserText = [teaser.teaserTexts firstObject];
+    
+    [self teaserPressedWithTeaserTextForCampaigns:teaserText];
 }
 
 @end
