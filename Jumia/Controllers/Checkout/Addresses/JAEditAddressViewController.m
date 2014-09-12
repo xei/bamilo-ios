@@ -63,8 +63,9 @@ UIPickerViewDelegate>
     
     self.navBarLayout.title = @"Checkout";
     
-    self.hasErrors = NO;
+    self.navBarLayout.showCartButton = NO;
     
+    self.hasErrors = NO;
     
     [self setupViews];
     

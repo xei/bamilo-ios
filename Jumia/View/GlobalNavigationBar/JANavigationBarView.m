@@ -68,6 +68,8 @@
     } else { //default
         [self hideRightItems];
     }
+    
+    [self adjustTitleFrame];
 }
 
 
@@ -174,6 +176,13 @@
     else if(!self.cartButton.hidden)
     {
         rightItemFrame = self.cartButton.frame;
+    }
+    else
+    {
+        rightItemFrame = CGRectMake(self.frame.size.width - leftItemFrame.size.width - 3.0f,
+                                    0.0f,
+                                    0.0f,
+                                    0.0f);
     }
     
     [self.titleLabel setFrame:CGRectMake(CGRectGetMaxX(leftItemFrame) + 3.0f,

@@ -23,6 +23,8 @@
     
     self.navBarLayout.title = @"Checkout";
     
+    self.navBarLayout.showCartButton = NO;
+    
     [self setupViews];
 }
 
@@ -57,9 +59,11 @@
             {
                 NSLog(@"NEEDS EXTERNAL WEBVIEW %d - %@", checkout.paymentInformation.type, checkout.paymentInformation.method);
                 
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[checkout.paymentInformation] forKeys:@[@"payment_information"]];
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification
                                                                     object:nil
-                                                                  userInfo:nil];
+                                                                  userInfo:userInfo];
             }
         }
         

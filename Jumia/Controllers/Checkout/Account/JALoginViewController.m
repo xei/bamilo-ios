@@ -84,6 +84,8 @@ FBLoginViewDelegate
     
     self.navBarLayout.title = @"Checkout";
     
+    self.navBarLayout.showCartButton = NO;
+    
     [self setupViews];
     
     [self showLoading];
