@@ -21,6 +21,12 @@
 #import "RICustomer.h"
 #import "RIAddress.h"
 
+@interface JACartViewController ()
+
+@property (nonatomic, strong) NSString *voucherCode;
+
+@end
+
 @implementation JACartViewController
 
 - (void)viewDidLoad
@@ -158,7 +164,6 @@
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_highlighted"] forState:UIControlStateSelected];
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_disabled"] forState:UIControlStateDisabled];
     [self.useCouponButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-    [self.useCouponButton setTitle:@"Use" forState:UIControlStateNormal];
     [self.useCouponButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.useCouponButton addTarget:self action:@selector(useCouponButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.useCouponButton setFrame:CGRectMake(CGRectGetMaxX(self.couponTextField.frame) + 5.0f, CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f, useCouponImageNormal.size.width, useCouponImageNormal.size.height)];
@@ -166,7 +171,20 @@
     
     [self.cartScrollView addSubview:self.couponView];
     
-    if(!VALID_NOTEMPTY([self.couponTextField text], NSString))
+    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
+    {
+        [self.useCouponButton setTitle:@"Remove" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.useCouponButton setTitle:@"Use" forState:UIControlStateNormal];
+    }
+    
+    if(VALID_NOTEMPTY(self.voucherCode, NSString))
+    {
+        [self.couponTextField setText:self.voucherCode];
+    }
+    else if(!VALID_NOTEMPTY([self.couponTextField text], NSString))
     {
         [self.useCouponButton setEnabled:NO];
     }
@@ -658,15 +676,35 @@
     
     [self showLoading];
     NSString *voucherCode = [self.couponTextField text];
-    [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
-        self.cart = cart;
-        [self setupCart];
-        [self hideLoading];
-    } andFailureBlock:^(NSArray *errorMessages) {
-        [self hideLoading];
-        
-        [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
-    }];
+    
+    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
+    {
+        [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
+            self.cart = cart;
+            self.voucherCode = voucherCode;
+            
+            [self setupCart];
+            [self hideLoading];
+        } andFailureBlock:^(NSArray *errorMessages) {
+            [self hideLoading];
+            
+            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+        }];
+    }
+    else
+    {
+        [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
+            self.cart = cart;
+            self.voucherCode = voucherCode;
+            
+            [self setupCart];
+            [self hideLoading];
+        } andFailureBlock:^(NSArray *errorMessages) {
+            [self hideLoading];
+            
+            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+        }];
+    }
 }
 
 - (void)checkoutButtonPressed

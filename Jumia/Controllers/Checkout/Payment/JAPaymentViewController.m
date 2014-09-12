@@ -12,6 +12,7 @@
 #import "JAPaymentCell.h"
 #import "JACheckoutForms.h"
 #import "RICheckout.h"
+#import "RICart.h"
 
 @interface JAPaymentViewController ()
 <UICollectionViewDataSource,
@@ -41,6 +42,7 @@ UITextFieldDelegate>
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
 @property (strong, nonatomic) RICheckout *checkout;
+@property (strong, nonatomic) RICart *cart;
 @property (strong, nonatomic) RIPaymentMethodForm *paymentMethodForm;
 @property (strong, nonatomic) JACheckoutForms *checkoutFormForPaymentMethod;
 @property (strong, nonatomic) NSArray *paymentMethods;
@@ -63,6 +65,8 @@ UITextFieldDelegate>
     [RICheckout getPaymentMethodFormWithSuccessBlock:^(RICheckout *checkout)
      {
          self.checkout = checkout;
+         self.cart = checkout.cart;
+         
          self.paymentMethodForm = checkout.paymentMethodForm;
          
          // LIST OF AVAILABLE PAYMENT METHODS
@@ -149,18 +153,18 @@ UITextFieldDelegate>
     [self.couponView addSubview:self.couponTextField];
     
     self.useCouponButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.useCouponButton setTitle:@"Use" forState:UIControlStateNormal];
     UIImage *useCouponImageNormal = [UIImage imageNamed:@"useCoupon_normal"];
     [self.useCouponButton setBackgroundImage:useCouponImageNormal forState:UIControlStateNormal];
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_highlighted"] forState:UIControlStateHighlighted];
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_highlighted"] forState:UIControlStateSelected];
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_disabled"] forState:UIControlStateDisabled];
     [self.useCouponButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-    [self.useCouponButton setTitle:@"Use" forState:UIControlStateNormal];
     [self.useCouponButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.useCouponButton addTarget:self action:@selector(useCouponButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.useCouponButton setFrame:CGRectMake(CGRectGetMaxX(self.couponTextField.frame) + 5.0f, CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f, useCouponImageNormal.size.width, useCouponImageNormal.size.height)];
-    [self.couponView addSubview:self.useCouponButton];
     
+    [self.couponView addSubview:self.useCouponButton];
     [self.scrollView addSubview:self.couponView];
     
     self.bottomView = [[JAButtonWithBlur alloc] init];
@@ -172,6 +176,20 @@ UITextFieldDelegate>
 
 -(void)finishedLoadingPaymentMethods
 {
+    if(VALID_NOTEMPTY([[[self checkout] orderSummary] discountCouponCode], NSString))
+    {
+        [self.couponTextField setText:[[[self checkout] orderSummary] discountCouponCode]];
+        [self.useCouponButton setTitle:@"Remove" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.useCouponButton setTitle:@"Use" forState:UIControlStateNormal];
+        if(!VALID_NOTEMPTY([self.couponTextField text], NSString))
+        {
+            [self.useCouponButton setEnabled:NO];
+        }
+    }
+    
     self.collectionViewIndexSelected = [NSIndexPath indexPathForItem:[RIPaymentMethodForm getSelectedPaymentMethodsInForm:self.paymentMethodForm] inSection:0];
     
     [self reloadCollectionView];
@@ -220,13 +238,35 @@ UITextFieldDelegate>
     
     [self showLoading];
     NSString *voucherCode = [self.couponTextField text];
-    [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
-        [self hideLoading];
-    } andFailureBlock:^(NSArray *errorMessages) {
-        [self hideLoading];
-        
-        [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
-    }];
+    
+    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
+    {
+        [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
+            self.cart = cart;
+            
+            [self.useCouponButton setTitle:@"Use" forState:UIControlStateNormal];
+            
+            [self hideLoading];
+        } andFailureBlock:^(NSArray *errorMessages) {
+            [self hideLoading];
+            
+            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+        }];
+    }
+    else
+    {
+        [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
+            self.cart = cart;
+            [self.useCouponButton setTitle:@"Remove" forState:UIControlStateNormal];
+            
+            [self hideLoading];
+            
+        } andFailureBlock:^(NSArray *errorMessages) {
+            [self hideLoading];
+            
+            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+        }];
+    }
 }
 
 -(void)nextStepButtonPressed
