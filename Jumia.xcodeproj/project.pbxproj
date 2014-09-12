@@ -98,7 +98,9 @@
 		B58767FF19BB62B3001651D6 /* JAShippingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58767FD19BB62B3001651D6 /* JAShippingCell.xib */; };
 		B58DBF3919C0AF9600D4678A /* JAPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */; };
 		B58DBF3A19C0AF9600D4678A /* JAPaymentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58DBF3819C0AF9600D4678A /* JAPaymentCell.xib */; };
-		B59D195B19C2F810004843C3 /* JAOrderSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D195A19C2F810004843C3 /* JAOrderSummaryViewController.m */; };
+		B59D195F19C33122004843C3 /* JAOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D195E19C33122004843C3 /* JAOrderViewController.m */; };
+		B59D196319C333CF004843C3 /* JAExternalPaymentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D196219C333CF004843C3 /* JAExternalPaymentsViewController.m */; };
+		B59D196719C333F4004843C3 /* JAThanksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D196619C333F4004843C3 /* JAThanksViewController.m */; };
 		B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4119B4E92B00DE7960 /* RIField.m */; };
 		B59DCA5919B70C2E00DE7960 /* JATextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5819B70C2E00DE7960 /* JATextField.m */; };
 		B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5A19B7109300DE7960 /* JAAddNewAddressViewController.m */; };
@@ -455,8 +457,12 @@
 		B58DBF3619C0AF9600D4678A /* JAPaymentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPaymentCell.h; sourceTree = "<group>"; };
 		B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPaymentCell.m; sourceTree = "<group>"; };
 		B58DBF3819C0AF9600D4678A /* JAPaymentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPaymentCell.xib; sourceTree = "<group>"; };
-		B59D195919C2F810004843C3 /* JAOrderSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAOrderSummaryViewController.h; path = OrderSummary/JAOrderSummaryViewController.h; sourceTree = "<group>"; };
-		B59D195A19C2F810004843C3 /* JAOrderSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAOrderSummaryViewController.m; path = OrderSummary/JAOrderSummaryViewController.m; sourceTree = "<group>"; };
+		B59D195D19C33122004843C3 /* JAOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAOrderViewController.h; sourceTree = "<group>"; };
+		B59D195E19C33122004843C3 /* JAOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAOrderViewController.m; sourceTree = "<group>"; };
+		B59D196119C333CF004843C3 /* JAExternalPaymentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAExternalPaymentsViewController.h; sourceTree = "<group>"; };
+		B59D196219C333CF004843C3 /* JAExternalPaymentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAExternalPaymentsViewController.m; sourceTree = "<group>"; };
+		B59D196519C333F4004843C3 /* JAThanksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAThanksViewController.h; path = Thanks/JAThanksViewController.h; sourceTree = "<group>"; };
+		B59D196619C333F4004843C3 /* JAThanksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAThanksViewController.m; path = Thanks/JAThanksViewController.m; sourceTree = "<group>"; };
 		B59DCA4019B4E92B00DE7960 /* RIField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIField.h; sourceTree = "<group>"; };
 		B59DCA4119B4E92B00DE7960 /* RIField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIField.m; sourceTree = "<group>"; };
 		B59DCA5719B70C2E00DE7960 /* JATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextField.h; sourceTree = "<group>"; };
@@ -1180,10 +1186,11 @@
 		B5225E281989475E00C18F1E /* Checkout */ = {
 			isa = PBXGroup;
 			children = (
-				B59D195819C2F7DE004843C3 /* OrderSummary */,
+				B59D196419C333E2004843C3 /* Thanks */,
 				B5225E291989475E00C18F1E /* Account */,
 				B5225E2A1989475E00C18F1E /* Addresses */,
 				B5225E2B1989475E00C18F1E /* Cart */,
+				B59D195C19C33122004843C3 /* Order */,
 				B5225E2C1989475E00C18F1E /* Payment */,
 				B5225E2D1989475E00C18F1E /* Shipping */,
 			);
@@ -1226,6 +1233,8 @@
 			children = (
 				B50B03A1198A5441002046DF /* JAPaymentViewController.h */,
 				B50B03A2198A5441002046DF /* JAPaymentViewController.m */,
+				B59D196119C333CF004843C3 /* JAExternalPaymentsViewController.h */,
+				B59D196219C333CF004843C3 /* JAExternalPaymentsViewController.m */,
 			);
 			path = Payment;
 			sourceTree = "<group>";
@@ -1275,13 +1284,22 @@
 			path = PaymentCell;
 			sourceTree = "<group>";
 		};
-		B59D195819C2F7DE004843C3 /* OrderSummary */ = {
+		B59D195C19C33122004843C3 /* Order */ = {
 			isa = PBXGroup;
 			children = (
-				B59D195919C2F810004843C3 /* JAOrderSummaryViewController.h */,
-				B59D195A19C2F810004843C3 /* JAOrderSummaryViewController.m */,
+				B59D195D19C33122004843C3 /* JAOrderViewController.h */,
+				B59D195E19C33122004843C3 /* JAOrderViewController.m */,
 			);
-			name = OrderSummary;
+			path = Order;
+			sourceTree = "<group>";
+		};
+		B59D196419C333E2004843C3 /* Thanks */ = {
+			isa = PBXGroup;
+			children = (
+				B59D196519C333F4004843C3 /* JAThanksViewController.h */,
+				B59D196619C333F4004843C3 /* JAThanksViewController.m */,
+			);
+			name = Thanks;
 			sourceTree = "<group>";
 		};
 		B59DCA6319B710DA00DE7960 /* FXBlurView */ = {
@@ -2307,12 +2325,12 @@
 				4A454F4A199CE67500B44821 /* JAForgotPasswordViewController.m in Sources */,
 				B5A302DB19811E9200F71726 /* RIOperation.m in Sources */,
 				B5C1E33719BA1E73009C422C /* UIImageView+JA.m in Sources */,
+				B59D196719C333F4004843C3 /* JAThanksViewController.m in Sources */,
 				B5A302D519811E9200F71726 /* RICountry.m in Sources */,
 				4A944FF51992805100C02734 /* RIProductRatings.m in Sources */,
 				B5A3025E19811E8A00F71726 /* UIImageView+WebCache.m in Sources */,
 				CE445879198BF15B00CE7E8D /* JACampaignsTeaserView.m in Sources */,
 				B59DCA7619B88DAD00DE7960 /* JASwitchCell.m in Sources */,
-				B59D195B19C2F810004843C3 /* JAOrderSummaryViewController.m in Sources */,
 				B57DC97E19B90AB10080C818 /* JAEditAddressViewController.m in Sources */,
 				4A85AEEB19B9D410000019CE /* JAStarsComponent.m in Sources */,
 				4A39213419891FB200B70A9C /* JAMyAccountViewController.m in Sources */,
@@ -2364,6 +2382,7 @@
 				B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */,
 				4A944FF8199290F200C02734 /* JARatingsViewController.m in Sources */,
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
+				B59D196319C333CF004843C3 /* JAExternalPaymentsViewController.m in Sources */,
 				4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */,
 				CE55A4E71993672600EE75DE /* JARatingsView.m in Sources */,
 				CE55A4E41992873300EE75DE /* RIProduct.m in Sources */,
@@ -2418,6 +2437,7 @@
 				4A1892D51993BCC90036F327 /* JANewRatingViewController.m in Sources */,
 				4A39213A19891FC400B70A9C /* JAMyFavouritesViewController.m in Sources */,
 				4A18856419B8A368003337FC /* JAActivityViewController.m in Sources */,
+				B59D195F19C33122004843C3 /* JAOrderViewController.m in Sources */,
 				B5A302E319811E9200F71726 /* RIAdXTracker.m in Sources */,
 				B55CF29119BE072800A6C6B6 /* JAShippingInfoCell.m in Sources */,
 				4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */,

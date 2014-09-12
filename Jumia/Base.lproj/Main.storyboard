@@ -1231,6 +1231,8 @@
                         <segue destination="Zjk-p2-4wX" kind="push" id="Kbm-d1-uhP"/>
                         <segue destination="0l9-ec-cdv" kind="push" id="FUy-lf-wqh"/>
                         <segue destination="nXK-xm-YTt" kind="push" id="GX3-Fb-mOc"/>
+                        <segue destination="R2a-gr-9Kf" kind="push" id="YBC-E6-Nyq"/>
+                        <segue destination="Mbc-MG-i7X" kind="push" id="oNr-rL-T1e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zwP-v4-smR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2274,10 +2276,54 @@
             </objects>
             <point key="canvasLocation" x="361.33333333333331" y="2365.4833333333336"/>
         </scene>
-        <!--Order Summary View Controller-->
+        <!--Thanks View Controller-->
+        <scene sceneID="5sS-nM-jdi">
+            <objects>
+                <viewController storyboardIdentifier="thanksViewController" automaticallyAdjustsScrollViewInsets="NO" id="R2a-gr-9Kf" customClass="JAThanksViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MQ5-jB-v8M"/>
+                        <viewControllerLayoutGuide type="bottom" id="hi2-Ks-I4T"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nhs-qm-qB2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="J9h-47-Hya"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jmj-pj-aBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-586" y="3046"/>
+        </scene>
+        <!--External Payments View Controller-->
+        <scene sceneID="y00-ag-OxJ">
+            <objects>
+                <viewController storyboardIdentifier="externalPaymentsViewController" automaticallyAdjustsScrollViewInsets="NO" id="Mbc-MG-i7X" customClass="JAExternalPaymentsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="oT7-ZX-znD"/>
+                        <viewControllerLayoutGuide type="bottom" id="dOc-eC-Nia"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zb1-zh-1KE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="JAo-Vg-aKW"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tni-oi-jWG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-39" y="3020"/>
+        </scene>
+        <!--Order View Controller-->
         <scene sceneID="hba-VA-Yez">
             <objects>
-                <viewController storyboardIdentifier="orderSummaryViewController" automaticallyAdjustsScrollViewInsets="NO" id="nXK-xm-YTt" customClass="JAOrderSummaryViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="orderViewController" automaticallyAdjustsScrollViewInsets="NO" id="nXK-xm-YTt" customClass="JAOrderViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bQJ-Ti-s4N"/>
                         <viewControllerLayoutGuide type="bottom" id="3YV-0o-hbJ"/>
@@ -2292,7 +2338,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GJ7-mZ-UR0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="320" y="2988"/>
+            <point key="canvasLocation" x="361" y="3026"/>
         </scene>
         <!--Main Filters View Controller-->
         <scene sceneID="Ml2-Ct-a79">
@@ -2580,6 +2626,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="rzU-eE-MD5"/>
+        <segue reference="BOh-Tr-8Lm"/>
     </inferredMetricsTieBreakers>
 </document>

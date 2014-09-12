@@ -34,7 +34,7 @@
         }
         
         if (VALID_NOTEMPTY([jsonObject objectForKey:@"url"], NSString)) {
-            paymentInfo.method = [jsonObject objectForKey:@"url"];
+            paymentInfo.url = [jsonObject objectForKey:@"url"];
         }
         
         if (VALID_NOTEMPTY([jsonObject objectForKey:@"form"], NSDictionary)) {
