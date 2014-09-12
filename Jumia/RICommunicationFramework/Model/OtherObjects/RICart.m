@@ -244,6 +244,48 @@
                                                           }];
 }
 
++ (NSString *) removeVoucherWithCode:(NSString *)voucherCode
+                 withSuccessBlock:(void (^)(RICart *cart))sucessBlock
+                  andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+{
+    NSDictionary *dic =[NSDictionary dictionaryWithObject:voucherCode forKey:@"couponcode"];
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_REMOVE_VOUCHER_FROM_CART]]
+                                                            parameters:dic
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                                  {
+                                                                      sucessBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(nil);
+                                                                  }
+                                                              } andFailureBlock:^(NSArray *errorMessages) {
+                                                                  failureBlock(nil);
+                                                              }];
+                                                              
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              
+                                                              if (NOTEMPTY(errorJsonObject)) {
+                                                                  
+                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  
+                                                              } else if (NOTEMPTY(errorObject)) {
+                                                                  
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(errorArray);
+                                                                  
+                                                              } else {
+                                                                  failureBlock(nil);
+                                                              }
+                                                          }];
+}
 
 #pragma mark - Cancel the request
 
