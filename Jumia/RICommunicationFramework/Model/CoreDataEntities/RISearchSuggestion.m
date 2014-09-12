@@ -40,11 +40,30 @@
 @dynamic isRecentSearch;
 @dynamic date;
 
++ (void)deleteSearchSuggestionByQuery:(NSString *)query
+{
+    NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])];
+    
+    for (RISearchSuggestion *tempSearch in searches) {
+        if ([tempSearch.item isEqualToString:query]) {
+            [[RIDataBaseWrapper sharedInstance] deleteObject:tempSearch];
+            [[RIDataBaseWrapper sharedInstance] saveContext];
+            
+            break;
+        }
+    }
+}
+
 + (void)saveSearchSuggestionOnDB:(NSString *)query
                   isRecentSearch:(BOOL)isRecentSearch
 {
-    if(VALID_NOTEMPTY(query, NSString) && ![RISearchSuggestion checkIfSuggestionsExistsOnDB:query])
+    if(VALID_NOTEMPTY(query, NSString))
     {
+        if ([RISearchSuggestion checkIfSuggestionsExistsOnDB:query])
+        {
+            [RISearchSuggestion deleteSearchSuggestionByQuery:query];
+        }
+        
         RISearchSuggestion *newSearchSuggestion = (RISearchSuggestion*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
         
         newSearchSuggestion.item = query;
@@ -101,7 +120,18 @@
                                                               NSMutableArray *suggestions = [[NSMutableArray alloc] init];
                                                               
                                                               // Add recent search suggestions
-                                                              NSArray* suggestionsForQuery = [RISearchSuggestion getSearchSuggestionsOnDBForQuery:query];
+                                                              NSMutableArray *tempArray = [NSMutableArray new];
+                                                              
+                                                              NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])];
+                                                              
+                                                              for (RISearchSuggestion *tempSearch in searches) {
+                                                                  if ([tempSearch.item rangeOfString:query].location != NSNotFound) {
+                                                                      [tempArray addObject:tempSearch];
+                                                                  }
+                                                              }
+                                                              
+                                                              NSArray* suggestionsForQuery = [tempArray copy];
+                                                              
                                                               if(VALID_NOTEMPTY(suggestionsForQuery, NSArray))
                                                               {
                                                                   [suggestions addObjectsFromArray:suggestionsForQuery];
@@ -114,7 +144,20 @@
                                                                   NSArray *requestSuggestions = [RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"suggestions"]];
                                                                   if(VALID_NOTEMPTY(requestSuggestions, NSArray))
                                                                   {
-                                                                      [suggestions addObjectsFromArray:requestSuggestions];
+                                                                      if (searches.count == 0)
+                                                                      {
+                                                                          [suggestions addObjectsFromArray:requestSuggestions];
+                                                                      }
+                                                                      else
+                                                                      {
+                                                                          for (RISearchSuggestion *tempSearch in suggestionsForQuery) {
+                                                                              for (RISearchSuggestion *otherSearch in requestSuggestions) {
+                                                                                  if (![tempSearch.item isEqualToString:otherSearch.item]) {
+                                                                                      [suggestions addObject:otherSearch];
+                                                                                  }
+                                                                              }
+                                                                          }
+                                                                      }
                                                                   }
                                                               }
                                                               

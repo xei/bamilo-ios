@@ -49,7 +49,12 @@
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
      setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                              UIColorFromRGB(0xc8c8c8), NSForegroundColorAttributeName,
-                             [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
+                             [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
+    
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
+     setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                             [UIColor orangeColor], NSForegroundColorAttributeName,
+                             [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
     
     return YES;
 }
