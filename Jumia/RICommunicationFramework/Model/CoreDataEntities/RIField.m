@@ -40,9 +40,17 @@
     if ([fieldJSON objectForKey:@"type"]) {
         newField.type = [fieldJSON objectForKey:@"type"];
     }
-    if ([fieldJSON objectForKey:@"value"]) {
-        newField.value = [fieldJSON objectForKey:@"value"];
+
+    id value = [fieldJSON objectForKey:@"value"];
+    if (VALID(value, NSString))
+    {
+        newField.value = (NSString *)value;
     }
+    else if(VALID(value, NSNumber))
+    {
+        newField.value = [((NSNumber *)value) stringValue];
+    }
+    
     if ([fieldJSON objectForKey:@"id"]) {
         newField.uid = [fieldJSON objectForKey:@"id"];
     }
