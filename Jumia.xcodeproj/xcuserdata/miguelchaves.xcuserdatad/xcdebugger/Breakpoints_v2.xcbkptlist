@@ -207,22 +207,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Jumia/Controllers/PDV/JAPDVViewController.m"
-            timestampString = "432145803.600409"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "-prepareForSegue:sender:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Jumia/Controllers/Checkout/Addresses/JAAddNewAddressViewController.m"
             timestampString = "432147240.153763"
             startingColumnNumber = "9223372036854775807"
@@ -288,11 +272,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jumia/Controllers/Catalog/JACatalogViewController.m"
-            timestampString = "432220954.698068"
+            timestampString = "432232309.508559"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "412"
-            endingLineNumber = "412"
+            startingLineNumber = "414"
+            endingLineNumber = "414"
             landmarkName = "-updatedFiltersAndCategory:"
             landmarkType = "5">
          </BreakpointContent>
@@ -304,11 +288,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jumia/Controllers/Catalog/JACatalogViewController.m"
-            timestampString = "432220954.698068"
+            timestampString = "432232309.508559"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
             landmarkName = "-changeToGrid"
             landmarkType = "5">
          </BreakpointContent>
