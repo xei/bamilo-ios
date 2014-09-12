@@ -183,12 +183,20 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     if (self.resultsTableView == tableView) {
+        for (UIView *view in cell.subviews) {
+            if ([view isKindOfClass:[UIImageView class]]) {
+                [view removeFromSuperview];
+            }
+        }
         
         RISearchSuggestion *sugestion = [self.resultsArray objectAtIndex:indexPath.row];
         
         NSString *text = sugestion.item;
         NSString *searchedText = self.customNavBar.searchBar.text;
         
+        if (text.length == 0) {
+            text = @"Error";
+        }
         NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:text];
         NSInteger stringTextLenght = text.length;
         
@@ -260,6 +268,8 @@
     [self.customNavBar resignFirstResponder];
     
     if (self.resultsTableView == tableView) {
+        
+        [self.customNavBar.searchBar resignFirstResponder];
         
         RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
     
@@ -449,7 +459,7 @@
         CGRect resultsTableFrame = CGRectMake(self.cartView.frame.origin.x,
                                               self.cartView.frame.origin.y,
                                               self.cartView.frame.size.width,
-                                              self.navigationController.view.frame.size.height);
+                                              self.navigationController.view.frame.size.height - 35);
         
         resultsTableFrame.origin.y += resultsTableFrame.size.height;
         
