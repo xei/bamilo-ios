@@ -1,5 +1,5 @@
 //
-//  JAOrderSummaryViewController.h
+//  JAOrderViewController.h
 //  Jumia
 //
 //  Created by Pedro Lopes on 12/09/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JAOrderSummaryViewController : JABaseViewController
+@interface JAOrderViewController : JABaseViewController
 
 @end

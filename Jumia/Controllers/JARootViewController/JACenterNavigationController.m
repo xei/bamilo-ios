@@ -28,7 +28,9 @@
 #import "JAEditAddressViewController.h"
 #import "JAShippingViewController.h"
 #import "JAPaymentViewController.h"
-#import "JAOrderSummaryViewController.h"
+#import "JAOrderViewController.h"
+#import "JAExternalPaymentsViewController.h"
+#import "JAThanksViewController.h"
 #import "RIProduct.h"
 #import "RIApi.h"
 #import "JANavigationBarLayout.h"
@@ -185,6 +187,18 @@
                                              selector:@selector(showCheckoutFinishScreen)
                                                  name:kShowCheckoutFinishScreenNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutExternalPaymentsScreen)
+                                                 name:kShowCheckoutExternalPaymentsScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showCheckoutThanksScreen)
+                                                 name:kShowCheckoutThanksScreenNotification
+                                               object:nil];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -571,9 +585,23 @@
 
 - (void)showCheckoutFinishScreen
 {
-    JAOrderSummaryViewController *orderSummaryVC = [self.storyboard instantiateViewControllerWithIdentifier:@"orderSummaryViewController"];
+    JAOrderViewController *orderVC = [self.storyboard instantiateViewControllerWithIdentifier:@"orderViewController"];
     
-    [self pushViewController:orderSummaryVC animated:YES];
+    [self pushViewController:orderVC animated:YES];
+}
+
+- (void)showCheckoutExternalPaymentsScreen
+{
+    JAExternalPaymentsViewController *externalPaymentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
+    
+    [self pushViewController:externalPaymentsVC animated:YES];
+}
+
+- (void)showCheckoutThanksScreen
+{
+    JAThanksViewController *thanksVC = [self.storyboard instantiateViewControllerWithIdentifier:@"thanksViewController"];
+    
+    [self pushViewController:thanksVC animated:YES];
 }
 
 #pragma mark - Choose Country
