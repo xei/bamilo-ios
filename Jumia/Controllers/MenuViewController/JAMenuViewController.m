@@ -219,6 +219,17 @@
             cell.imageView.image = [UIImage imageNamed:@"ico_searchsuggestion"];
         }
         
+        if (0 == indexPath.row)
+        {
+            UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
+            line.backgroundColor = UIColorFromRGB(0xcccccc);
+            [cell.viewForBaselineLayout addSubview:line];
+        }
+        
+        UIImageView *line2 = [[UIImageView alloc] initWithFrame:CGRectMake(45, cell.frame.size.height-1, cell.frame.size.width-20, 1)];
+        line2.backgroundColor = UIColorFromRGB(0xcccccc);
+        [cell.viewForBaselineLayout addSubview:line2];
+        
     } else {
         
         cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
@@ -249,7 +260,7 @@
     [self.customNavBar resignFirstResponder];
     
     if (self.resultsTableView == tableView) {
-
+        
         RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
     
         [RISearchSuggestion saveSearchSuggestionOnDB:suggestion.item
@@ -456,6 +467,8 @@
         
         [self.resultsTableView registerClass:[UITableViewCell class]
                       forCellReuseIdentifier:@"cell"];
+        
+        self.resultsTableView.separatorColor = [UIColor clearColor];
         
         [tempView addSubview:self.resultsTableView];
         

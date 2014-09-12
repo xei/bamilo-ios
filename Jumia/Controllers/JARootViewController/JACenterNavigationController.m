@@ -454,12 +454,40 @@
     
     NSString* url = [notification.userInfo objectForKey:@"url"];
     
-    if (VALID_NOTEMPTY(url, NSString)) {
-        
+    if (VALID_NOTEMPTY(url, NSString))
+    {
         JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
         pdv.productUrl = url;
-        pdv.fromCatalogue = NO;
-        pdv.previousCategory = @"Home";
+        
+        if ([notification.userInfo objectForKey:@"fromCatalog"])
+        {
+            pdv.fromCatalogue = YES;
+            
+            if ([notification.userInfo objectForKey:@"relatedItems"]) {
+                pdv.arrayWithRelatedItems = [notification.userInfo objectForKey:@"relatedItems"];
+            }
+            
+            if ([notification.userInfo objectForKey:@"delegate"]) {
+                pdv.delegate = [notification.userInfo objectForKey:@"delegate"];
+            }
+        }
+        else
+        {
+            pdv.fromCatalogue = NO;
+        }
+        
+        if ([notification.userInfo objectForKey:@"previousCategory"])
+        {
+            NSString *previous = [notification.userInfo objectForKey:@"previousCategory"];
+            
+            if (previous.length > 0) {
+                pdv.previousCategory = previous;
+            }
+        }
+        else
+        {
+            pdv.previousCategory = @"Home";
+        }
         
         [self pushViewController:pdv
                         animated:YES];
@@ -636,8 +664,6 @@
     }
 }
 
-
-
 #pragma mark - Navigation Bar
 
 - (void)customizeNavigationBar
@@ -701,7 +727,6 @@
         [self.navigationBarView updateCartProductCount:0];
     }
 }
-
 
 #pragma mark - Navbar Button actions
 
