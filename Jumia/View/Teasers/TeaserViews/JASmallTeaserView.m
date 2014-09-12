@@ -7,7 +7,7 @@
 //
 
 #import "JASmallTeaserView.h"
-#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 
 #define JATopBrandsTeaserViewHeight 55.0f
 
@@ -43,22 +43,17 @@
             }
         }
         
-        UIImageView* imageView = [UIImageView new];
-        [imageView setFrame:CGRectMake(currentX,
-                                       self.bounds.origin.y,
-                                       self.bounds.size.width / self.teasers.count,
-                                       self.bounds.size.height)];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setBackgroundColor:UIColorFromRGB(0xffffff)];
+        [button setFrame:CGRectMake(currentX,
+                                   self.bounds.origin.y,
+                                   self.bounds.size.width / self.teasers.count,
+                                    self.bounds.size.height)];
+        [button setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_grid"]];
+        [button addTarget:self action:@selector(teaserImagePressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:button];
         
-        [imageView setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl]];
-        [self addSubview:imageView];
-        
-        UIControl* control = [UIControl new];
-        [control setFrame:imageView.frame];
-        [self addSubview:control];
-        control.tag = i;
-        [control addTarget:self action:@selector(teaserImagePressed:) forControlEvents:UIControlEventTouchUpInside];
-        
-        currentX += imageView.frame.size.width;
+        currentX += button.frame.size.width;
     }
 }
 

@@ -189,7 +189,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutExternalPaymentsScreen)
+                                             selector:@selector(showCheckoutExternalPaymentsScreen:)
                                                  name:kShowCheckoutExternalPaymentsScreenNotification
                                                object:nil];
     
@@ -618,9 +618,11 @@
     [self pushViewController:orderVC animated:YES];
 }
 
-- (void)showCheckoutExternalPaymentsScreen
+- (void)showCheckoutExternalPaymentsScreen:(NSNotification *)notification
 {
     JAExternalPaymentsViewController *externalPaymentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
+        
+    externalPaymentsVC.paymentInformation = [notification.userInfo objectForKey:@"payment_information"];
     
     [self pushViewController:externalPaymentsVC animated:YES];
 }

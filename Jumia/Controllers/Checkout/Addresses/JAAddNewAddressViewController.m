@@ -88,6 +88,8 @@ UIPickerViewDelegate>
     
     self.hasErrors = NO;
     
+    self.navBarLayout.showCartButton = NO;
+    
     if(self.showBackButton)
     {
         self.navBarLayout.backButtonTitle = @"Checkout";

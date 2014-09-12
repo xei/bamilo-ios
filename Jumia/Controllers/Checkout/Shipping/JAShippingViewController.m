@@ -74,6 +74,8 @@ UIPickerViewDelegate>
     
     self.navBarLayout.title = @"Checkout";
     
+    self.navBarLayout.showCartButton = NO;    
+    
     self.pickupStationsForRegion = [[NSMutableArray alloc] init];
     self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
     
