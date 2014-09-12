@@ -144,6 +144,8 @@
                                            self.loadedEverything = YES;
                                        }
                                        
+                                       self.navBarLayout.subTitle = [NSString stringWithFormat:@"%d", results.count];
+                                       
                                        [self.productsArray addObjectsFromArray:results];
                                        
                                        [self.collectionView reloadData];
