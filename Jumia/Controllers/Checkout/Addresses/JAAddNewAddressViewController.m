@@ -14,6 +14,7 @@
 #import "RIRegion.h"
 #import "RICity.h"
 #import "RICheckout.h"
+#import "RICustomer.h"
 
 @interface JAAddNewAddressViewController ()
 <JADynamicFormDelegate,
@@ -126,6 +127,12 @@ UIPickerViewDelegate>
                            cancelButtonTitle:nil
                            otherButtonTitles:@"OK", nil] show];
      }];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                             value:nil
+                                            action:@"CheckoutMyAddress"
+                                          category:@"NativeCheckout"
+                                              data:nil];
 }
 
 -(void)setupViews
@@ -391,6 +398,12 @@ UIPickerViewDelegate>
               parameters:billingParameters
             successBlock:^(id object)
          {
+             [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                                      value:nil
+                                                     action:@"CheckoutCreateAddress"
+                                                   category:@"NativeCheckout"
+                                                       data:nil];
+             
              self.checkout = object;
              [self.billingDynamicForm resetValues];
              self.numberOfRequests--;
