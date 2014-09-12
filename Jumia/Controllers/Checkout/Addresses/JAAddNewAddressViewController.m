@@ -409,6 +409,12 @@ UIPickerViewDelegate>
              self.numberOfRequests--;
          } andFailureBlock:^(id errorObject)
          {
+             [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                                      value:nil
+                                                     action:@"NativeCheckoutError"
+                                                   category:@"NativeCheckout"
+                                                       data:nil];
+             
              self.hasErrors = YES;
              self.numberOfRequests--;
              

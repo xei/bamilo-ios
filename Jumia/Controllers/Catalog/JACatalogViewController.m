@@ -11,6 +11,7 @@
 #import "JACatalogListCell.h"
 #import "JACatalogGridCell.h"
 #import "RISearchSuggestion.h"
+#import "RICustomer.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
@@ -253,6 +254,12 @@
                         
                     }];
     [self.collectionView reloadData];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                             value:nil
+                                            action:@"List"
+                                          category:@"Catalog"
+                                              data:nil];
 }
 
 - (void)changeToGrid
@@ -269,6 +276,12 @@
                         
                     }];
     [self.collectionView reloadData];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                             value:nil
+                                            action:@"Grid"
+                                          category:@"Catalog"
+                                              data:nil];
 }
 
 #pragma mark - UICollectionView
@@ -360,6 +373,12 @@
         
         [self resetCatalog];
         [self loadMoreProducts];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:self.title
+                                                 value:nil
+                                                action:@"SortingOnCatalog"
+                                              category:@"Catalog"
+                                                  data:nil];
     }
 }
 
@@ -367,6 +386,12 @@
 
 - (void)updatedFiltersAndCategory:(RICategory *)category;
 {
+    [[RITrackingWrapper sharedInstance] trackEvent:self.catalogUrl
+                                             value:nil
+                                            action:@"Filters"
+                                          category:@"Catalog"
+                                              data:nil];
+    
     self.filterCategory = category;
     [self resetCatalog];
     [self loadMoreProducts];

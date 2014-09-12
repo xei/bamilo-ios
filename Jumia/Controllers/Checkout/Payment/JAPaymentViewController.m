@@ -12,6 +12,7 @@
 #import "JAPaymentCell.h"
 #import "JACheckoutForms.h"
 #import "RICheckout.h"
+#import "RICustomer.h"
 
 @interface JAPaymentViewController ()
 <UICollectionViewDataSource,
@@ -54,6 +55,12 @@ UITextFieldDelegate>
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                             value:nil
+                                            action:@"CheckoutPaymentMethods"
+                                          category:@"NativeCheckout"
+                                              data:nil];
     
     self.navBarLayout.title = @"Checkout";
     
