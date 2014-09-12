@@ -727,10 +727,16 @@ UICollectionViewDelegateFlowLayout>
             
             [self hideLoading];
             
-            [JAUtils getCheckoutNextStepViewController:checkout.nextStep inStoryboard:self.storyboard];
+            [JAUtils goToCheckoutNextStep:checkout.nextStep inStoryboard:self.storyboard];
         } andFailureBlock:^(NSArray *errorMessages) {
             NSLog(@"Failed to set billing address form");
             [self hideLoading];
+            
+            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                        message:@"Error setting billing/shipping address"
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK", nil] show];
         }];
     } andFailureBlock:^(NSArray *errorMessages) {
         NSLog(@"Failed to get billing address form");
