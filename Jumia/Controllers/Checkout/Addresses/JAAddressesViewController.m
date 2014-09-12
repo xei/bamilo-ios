@@ -17,6 +17,7 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "JAButtonWithBlur.h"
+#import "RICustomer.h"
 
 @interface JAAddressesViewController ()
 <UICollectionViewDataSource,
@@ -106,6 +107,12 @@ UICollectionViewDelegateFlowLayout>
         }
         
     } andFailureBlock:^(NSArray *errorMessages) {
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                                 value:nil
+                                                action:@"NativeCheckoutError"
+                                              category:@"NativeCheckout"
+                                                  data:nil];
         
         [[[UIAlertView alloc] initWithTitle:@"Jumia"
                                     message:[errorMessages componentsJoinedByString:@","]
@@ -729,6 +736,13 @@ UICollectionViewDelegateFlowLayout>
             
             [JAUtils goToCheckoutNextStep:checkout.nextStep inStoryboard:self.storyboard];
         } andFailureBlock:^(NSArray *errorMessages) {
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                                     value:nil
+                                                    action:@"NativeCheckoutError"
+                                                  category:@"NativeCheckout"
+                                                      data:nil];
+            
             NSLog(@"Failed to set billing address form");
             [self hideLoading];
             
@@ -739,6 +753,13 @@ UICollectionViewDelegateFlowLayout>
                               otherButtonTitles:@"OK", nil] show];
         }];
     } andFailureBlock:^(NSArray *errorMessages) {
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                                 value:nil
+                                                action:@"NativeCheckoutError"
+                                              category:@"NativeCheckout"
+                                                  data:nil];
+        
         NSLog(@"Failed to get billing address form");
         [self hideLoading];
     }];

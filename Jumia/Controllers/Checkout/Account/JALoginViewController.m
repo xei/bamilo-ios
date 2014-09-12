@@ -470,6 +470,13 @@ FBLoginViewDelegate
     [self showLoading];
     
     [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object) {
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                                 value:nil
+                                                action:@"CheckoutAboutYou"
+                                              category:@"NativeCheckout"
+                                                  data:nil];
+        
         [self.loginDynamicForm resetValues];
         
         [self hideLoading];
@@ -608,6 +615,13 @@ FBLoginViewDelegate
         
         [RICustomer loginCustomerByFacebookWithParameters:parameters
                                              successBlock:^(id customer) {
+                                                 
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                                                                          value:nil
+                                                                                         action:@"CheckoutAboutYou"
+                                                                                       category:@"NativeCheckout"
+                                                                                           data:nil];
+                                                 
                                                  [self.loginDynamicForm resetValues];
                                                  
                                                  [self hideLoading];

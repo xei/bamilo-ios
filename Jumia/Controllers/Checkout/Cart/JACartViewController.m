@@ -523,6 +523,12 @@
 
 -(void)goToHomeScreen
 {
+    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                             value:nil
+                                            action:@"ContinueShopping"
+                                          category:@"Checkout"
+                                              data:nil];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
@@ -713,6 +719,13 @@
     {
         [self showLoading];
         [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:nil
+                                                     value:nil
+                                                    action:@"Started"
+                                                  category:@"Checkout"
+                                                      data:nil];
+            
             [self hideLoading];
 
             if(VALID_NOTEMPTY(adressList, NSDictionary))
@@ -731,6 +744,13 @@
             }
             
         } andFailureBlock:^(NSArray *errorMessages) {
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                                     value:nil
+                                                    action:@"NativeCheckoutError"
+                                                  category:@"NativeCheckout"
+                                                      data:nil];
+            
             [self hideLoading];
             
             NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];

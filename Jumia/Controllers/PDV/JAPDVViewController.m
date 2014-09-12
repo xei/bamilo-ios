@@ -478,6 +478,12 @@
     pdv.productUrl = tempProduct.url;
     pdv.fromCatalogue = NO;
     
+    [[RITrackingWrapper sharedInstance] trackEvent:tempProduct.sku
+                                             value:tempProduct.price
+                                            action:@"RelatedItem"
+                                          category:@"Catalog"
+                                              data:nil];
+    
     [self.navigationController pushViewController:pdv
                                          animated:YES];
 }

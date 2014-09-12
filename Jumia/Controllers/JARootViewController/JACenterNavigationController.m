@@ -329,6 +329,12 @@
             self.viewControllers = @[trackOrder];
         }
     }
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                             value:nil
+                                            action:newScreenName
+                                          category:@"ActionOverflow"
+                                              data:nil];
 }
 
 - (void)pushCatalogToShowSearchResults:(NSString *)query

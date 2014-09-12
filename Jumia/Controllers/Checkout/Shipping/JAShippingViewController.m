@@ -15,6 +15,7 @@
 #import "JAUtils.h"
 #import "RICheckout.h"
 #import "RIShippingMethodPickupStationOption.h"
+#import "RICustomer.h"
 
 #define kPickupStationKey @"pickupstation"
 
@@ -64,6 +65,12 @@ UIPickerViewDelegate>
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                             value:nil
+                                            action:@"CheckoutShippingMethods"
+                                          category:@"NativeCheckout"
+                                              data:nil];
     
     self.navBarLayout.title = @"Checkout";
     

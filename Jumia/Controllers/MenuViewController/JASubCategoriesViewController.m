@@ -8,6 +8,7 @@
 
 #import "JASubCategoriesViewController.h"
 #import "RICategory.h"
+#import "RICustomer.h"
 
 @interface JASubCategoriesViewController ()
 <
@@ -65,6 +66,12 @@
                              animated:YES];
     
     RICategory *category = [self.sourceCategoriesArray objectAtIndex:indexPath.row];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:category.name
+                                             value:nil
+                                            action:@"Categories"
+                                          category:@"Catalog"
+                                              data:nil];
     
     if (category.children.count > 0) {
         
