@@ -473,19 +473,17 @@
     JAPDVSingleRelatedItem *view = (JAPDVSingleRelatedItem *)tap.view;
     
     RIProduct *tempProduct = view.product;
-    
-    JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
-    pdv.productUrl = tempProduct.url;
-    pdv.fromCatalogue = NO;
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                        object:nil
+                                                      userInfo:@{ @"url" : tempProduct.url,
+                                                                  @"previousCategory" : @"" }];
     
     [[RITrackingWrapper sharedInstance] trackEvent:tempProduct.sku
                                              value:tempProduct.price
                                             action:@"RelatedItem"
                                           category:@"Catalog"
                                               data:nil];
-    
-    [self.navigationController pushViewController:pdv
-                                         animated:YES];
 }
 
 - (void)gotoDetails

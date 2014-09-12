@@ -183,12 +183,20 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     if (self.resultsTableView == tableView) {
+        for (UIView *view in cell.subviews) {
+            if ([view isKindOfClass:[UIImageView class]]) {
+                [view removeFromSuperview];
+            }
+        }
         
         RISearchSuggestion *sugestion = [self.resultsArray objectAtIndex:indexPath.row];
         
         NSString *text = sugestion.item;
         NSString *searchedText = self.customNavBar.searchBar.text;
         
+        if (text.length == 0) {
+            text = @"Error";
+        }
         NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:text];
         NSInteger stringTextLenght = text.length;
         
@@ -218,6 +226,17 @@
         } else {
             cell.imageView.image = [UIImage imageNamed:@"ico_searchsuggestion"];
         }
+        
+        if (0 == indexPath.row)
+        {
+            UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
+            line.backgroundColor = UIColorFromRGB(0xcccccc);
+            [cell.viewForBaselineLayout addSubview:line];
+        }
+        
+        UIImageView *line2 = [[UIImageView alloc] initWithFrame:CGRectMake(45, cell.frame.size.height-1, cell.frame.size.width-20, 1)];
+        line2.backgroundColor = UIColorFromRGB(0xcccccc);
+        [cell.viewForBaselineLayout addSubview:line2];
         
     } else {
         
@@ -249,7 +268,9 @@
     [self.customNavBar resignFirstResponder];
     
     if (self.resultsTableView == tableView) {
-
+        
+        [self.customNavBar.searchBar resignFirstResponder];
+        
         RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
     
         [RISearchSuggestion saveSearchSuggestionOnDB:suggestion.item
@@ -438,7 +459,7 @@
         CGRect resultsTableFrame = CGRectMake(self.cartView.frame.origin.x,
                                               self.cartView.frame.origin.y,
                                               self.cartView.frame.size.width,
-                                              self.navigationController.view.frame.size.height);
+                                              self.navigationController.view.frame.size.height - 35);
         
         resultsTableFrame.origin.y += resultsTableFrame.size.height;
         
@@ -456,6 +477,8 @@
         
         [self.resultsTableView registerClass:[UITableViewCell class]
                       forCellReuseIdentifier:@"cell"];
+        
+        self.resultsTableView.separatorColor = [UIColor clearColor];
         
         [tempView addSubview:self.resultsTableView];
         

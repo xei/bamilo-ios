@@ -46,12 +46,27 @@
         frame.size.height = newHeight;
         self.frame = frame;
     }
+    else
+    {
+        float newHeight = JACampaignsTeaserViewHeight + 4;
+        
+        CGRect frame = self.frame;
+        frame.size.height = newHeight;
+        self.frame = frame;
+    }
     
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(JACampaignsTeaserViewHorizontalMargin,
                                                                    JACampaignsTeaserViewContentY,
                                                                    self.bounds.size.width - JACampaignsTeaserViewHorizontalMargin*2,
                                                                    self.bounds.size.height - JACampaignsTeaserViewContentY)];
-    contentView.backgroundColor = [UIColor whiteColor];
+    if (self.teasers.count > 1)
+    {
+        contentView.backgroundColor = [UIColor whiteColor];
+    }
+    else
+    {
+        contentView.backgroundColor = [UIColor clearColor];
+    }
     
     contentView.layer.cornerRadius = JACampaignsTeaserViewContentCornerRadius;
     [self addSubview:contentView];

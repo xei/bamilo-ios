@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *emptyFavoritesLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray* productsArray;
+@property (assign, nonatomic) BOOL selectedSizeAndAddToCart;
 
 @property (nonatomic, assign)NSInteger addAllToCartCount;
 
@@ -62,9 +63,10 @@
 {
     [super viewDidLoad];
     
-    self.navBarLayout.title = @"My Favorites";
+    self.navBarLayout.title = @"My Favourites";
     
     self.addAllToCartCount = 0;
+    self.selectedSizeAndAddToCart = NO;
     
     self.navigationItem.hidesBackButton = YES;
     
@@ -135,7 +137,7 @@
 {
     if (self.productsArray.count == indexPath.row) {
         return CGSizeMake(self.view.frame.size.width,
-                          50.0f);
+                          55.0f);
     } else {
         return CGSizeMake(self.view.frame.size.width,
                           98.0f);
@@ -340,13 +342,9 @@
     } else {
         NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
         if ([simpleName isEqualToString:@""]) {
-            //NOTHING SELECTED
-            
-            [[[UIAlertView alloc] initWithTitle:@"Error"
-                                        message:@"Please choose product size"
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"Ok", nil] show];
+            self.selectedSizeAndAddToCart = YES;
+                        
+            [self sizeButtonPressed:button];
             
             return;
         } else {
@@ -498,6 +496,12 @@
     
     [self removePickerView];
     [self.collectionView reloadData];
+    
+    if (self.selectedSizeAndAddToCart) {
+        self.selectedSizeAndAddToCart = NO;
+        
+        [self addToCartPressed:button];
+    }
 }
 
 - (void)removePickerView
