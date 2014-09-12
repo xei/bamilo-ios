@@ -10,11 +10,9 @@
 
 @implementation JAUtils
 
-+ (UIViewController*) getCheckoutNextStepViewController:(NSString*)nextStep
-                                           inStoryboard:(UIStoryboard*)storyboard
++ (void) goToCheckoutNextStep:(NSString*)nextStep
+                 inStoryboard:(UIStoryboard*)storyboard
 {
-    UIViewController *nextStepViewController = nil;
-    
     if([@"createAddress" isEqualToString:nextStep])
     {
     }
@@ -38,9 +36,10 @@
     }
     else if([@"finish" isEqualToString:nextStep])
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutFinishScreenNotification
+                                                            object:nil
+                                                          userInfo:nil];
     }
-    
-    return nextStepViewController;
 }
 
 + (unsigned int)intFromHexString:(NSString *) hexStr

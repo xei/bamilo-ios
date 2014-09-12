@@ -10,8 +10,8 @@
 
 @interface JAUtils : NSObject
 
-+ (UIViewController*) getCheckoutNextStepViewController:(NSString*)nextStep
-                                           inStoryboard:(UIStoryboard*)storyboard;
++ (void) goToCheckoutNextStep:(NSString*)nextStep
+                 inStoryboard:(UIStoryboard*)storyboard;
 
 + (unsigned int)intFromHexString:(NSString *) hexStr;
 
