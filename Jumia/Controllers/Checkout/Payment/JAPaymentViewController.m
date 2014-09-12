@@ -11,6 +11,7 @@
 #import "JAButtonWithBlur.h"
 #import "JAPaymentCell.h"
 #import "JACheckoutForms.h"
+#import "JAUtils.h"
 #import "RICheckout.h"
 #import "RICustomer.h"
 #import "RICart.h"
@@ -37,7 +38,6 @@ UITextFieldDelegate>
 @property (strong, nonatomic) UIView *couponTitleSeparator;
 @property (strong, nonatomic) UITextField *couponTextField;
 @property (strong, nonatomic) UIButton *useCouponButton;
-
 
 // Bottom view
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
@@ -199,6 +199,8 @@ UITextFieldDelegate>
     
     self.collectionViewIndexSelected = [NSIndexPath indexPathForItem:[RIPaymentMethodForm getSelectedPaymentMethodsInForm:self.paymentMethodForm] inSection:0];
     
+    self.selectedPaymentMethod = [self.paymentMethods objectAtIndex:self.collectionViewIndexSelected.row];
+    
     [self reloadCollectionView];
     
     [self hideLoading];
@@ -289,11 +291,19 @@ UITextFieldDelegate>
     [RICheckout setPaymentMethod:self.paymentMethodForm
                       parameters:parameters
                     successBlock:^(RICheckout *checkout) {
-                        NSLog(@"Success setting payment method");
+                        
+                        [JAUtils goToCheckoutNextStep:checkout.nextStep inStoryboard:self.storyboard];
+                        
                         [self hideLoading];
     } andFailureBlock:^(NSArray *errorMessages) {
-                        NSLog(@"Failed setting payment method");
-                        [self hideLoading];        
+        
+        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                    message:@"Error setting payment method"
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"OK", nil] show];
+        
+                        [self hideLoading];
     }];
 }
 

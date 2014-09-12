@@ -263,7 +263,7 @@ UIPickerViewDelegate>
     }
     else
     {
-        [JAUtils getCheckoutNextStepViewController:self.checkout.nextStep inStoryboard:self.storyboard];
+        [JAUtils goToCheckoutNextStep:self.checkout.nextStep inStoryboard:self.storyboard];
     }
 }
 

@@ -28,6 +28,7 @@
 #import "JAEditAddressViewController.h"
 #import "JAShippingViewController.h"
 #import "JAPaymentViewController.h"
+#import "JAOrderSummaryViewController.h"
 #import "RIProduct.h"
 #import "RIApi.h"
 #import "JANavigationBarLayout.h"
@@ -570,7 +571,9 @@
 
 - (void)showCheckoutFinishScreen
 {
+    JAOrderSummaryViewController *orderSummaryVC = [self.storyboard instantiateViewControllerWithIdentifier:@"orderSummaryViewController"];
     
+    [self pushViewController:orderSummaryVC animated:YES];
 }
 
 #pragma mark - Choose Country

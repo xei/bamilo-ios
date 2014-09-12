@@ -388,10 +388,16 @@ UIPickerViewDelegate>
                                  
                                  [self hideLoading];
                                  
-                                 [JAUtils getCheckoutNextStepViewController:checkout.nextStep inStoryboard:self.storyboard];
+                                 [JAUtils goToCheckoutNextStep:checkout.nextStep inStoryboard:self.storyboard];
                                  
                              } andFailureBlock:^(NSArray *errorMessages) {
                                  [self hideLoading];
+                                 
+                                 [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                             message:@"Error setting shipping method"
+                                                            delegate:nil
+                                                   cancelButtonTitle:nil
+                                                   otherButtonTitles:@"OK", nil] show];
                              }];
         }
         else
