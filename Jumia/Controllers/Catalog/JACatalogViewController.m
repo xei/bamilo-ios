@@ -172,6 +172,7 @@
     else
     {
         if (NO == self.loadedEverything) {
+            
             [self showLoading];
             
             NSString* urlToUse = self.catalogUrl;
@@ -353,15 +354,37 @@
         [tempArray addObject:[self.productsArray objectAtIndex:i]];
     }
     
-    JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
-    pdv.productUrl = product.url;
-    pdv.fromCatalogue = YES;
-    pdv.previousCategory = self.category.name;
-    pdv.arrayWithRelatedItems = [tempArray copy];
-    pdv.delegate = self;
+    NSString *temp = self.category.name;
     
-    [self.navigationController pushViewController:pdv
-                                         animated:YES];
+    if (temp.length > 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                            object:nil
+                                                          userInfo:@{ @"url" : product.url,
+                                                                      @"previousCategory" : temp,
+                                                                      @"fromCatalog" : @"YES",
+                                                                      @"relatedItems" : tempArray ,
+                                                                      @"delegate": self }];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                            object:nil
+                                                          userInfo:@{ @"url" : product.url,
+                                                                      @"fromCatalog" : @"YES",
+                                                                      @"previousCategory" : @"",
+                                                                      @"relatedItems" : tempArray ,
+                                                                      @"delegate": self }];
+    }
+    
+//    JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
+//    pdv.productUrl = product.url;
+//    pdv.fromCatalogue = YES;
+//    pdv.previousCategory = self.category.name;
+//    pdv.arrayWithRelatedItems = [tempArray copy];
+//    pdv.delegate = self;
+//    
+//    [self.navigationController pushViewController:pdv
+//                                         animated:YES];
 }
 
 #pragma mark - JAPickerScrollViewDelegate
