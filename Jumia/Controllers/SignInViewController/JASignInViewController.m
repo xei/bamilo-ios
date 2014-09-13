@@ -42,7 +42,7 @@ FBLoginViewDelegate
 {
     [super viewDidLoad];
     
-    self.navBarLayout.title = @"Login";
+    self.navBarLayout.title = LOGIN_LABEL;
     
     [self showLoading];
     
@@ -124,7 +124,7 @@ FBLoginViewDelegate
     [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
     [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
     [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
-    [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
+    [self.loginButton setTitle:LOGIN_LABEL forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.loginButton addTarget:self action:@selector(loginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.loginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];

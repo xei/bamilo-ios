@@ -544,7 +544,7 @@
 {
     JAForgotPasswordViewController *forgotVC = [self.storyboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
     
-    forgotVC.navBarLayout.backButtonTitle = @"Login";
+    forgotVC.navBarLayout.backButtonTitle = LOGIN_LABEL;
     
     [self pushViewController:forgotVC animated:YES];
 }
@@ -560,7 +560,7 @@
 {
     JAForgotPasswordViewController *forgotVC = [self.storyboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
     
-    forgotVC.navBarLayout.backButtonTitle = @"Checkout";
+    forgotVC.navBarLayout.backButtonTitle = CHECKOUT_LABEL;
     
     [self pushViewController:forgotVC animated:YES];
 }

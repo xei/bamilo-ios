@@ -82,6 +82,7 @@
 		B510B01819AE466B00A9754A /* JATextFieldComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B510B00F19AE466B00A9754A /* JATextFieldComponent.xib */; };
 		B517FDF91982517300F65253 /* RICart.m in Sources */ = {isa = PBXBuildFile; fileRef = B517FDF81982517300F65253 /* RICart.m */; };
 		B517FDFC198265AD00F65253 /* RICartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B517FDFB198265AD00F65253 /* RICartItem.m */; };
+		B5210E8619C4863400FDB0D1 /* RIStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5210E8819C4863400FDB0D1 /* RIStrings.strings */; };
 		B5225E1B1989308300C18F1E /* RIPaymentMethodFormOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E131989308300C18F1E /* RIPaymentMethodFormOption.m */; };
 		B5225E1C1989308300C18F1E /* RIPaymentMethodFormField.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E151989308300C18F1E /* RIPaymentMethodFormField.m */; };
 		B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E171989308300C18F1E /* RIPaymentMethodForm.m */; };
@@ -430,6 +431,9 @@
 		B517FDF81982517300F65253 /* RICart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICart.m; sourceTree = "<group>"; };
 		B517FDFA198265AD00F65253 /* RICartItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICartItem.h; sourceTree = "<group>"; };
 		B517FDFB198265AD00F65253 /* RICartItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICartItem.m; sourceTree = "<group>"; };
+		B5210E8719C4863400FDB0D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RIStrings.strings; sourceTree = "<group>"; };
+		B5210E8919C4863D00FDB0D1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/RIStrings.strings; sourceTree = "<group>"; };
+		B5210E8A19C48F1700FDB0D1 /* JAStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAStrings.h; sourceTree = "<group>"; };
 		B5225E131989308300C18F1E /* RIPaymentMethodFormOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIPaymentMethodFormOption.m; sourceTree = "<group>"; };
 		B5225E141989308300C18F1E /* RIPaymentMethodFormOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPaymentMethodFormOption.h; sourceTree = "<group>"; };
 		B5225E151989308300C18F1E /* RIPaymentMethodFormField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIPaymentMethodFormField.m; sourceTree = "<group>"; };
@@ -1384,6 +1388,8 @@
 				B5A301AD19811D0700F71726 /* main.m */,
 				B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */,
 				4A3921191988E27A00B70A9C /* JAConstants.h */,
+				B5210E8819C4863400FDB0D1 /* RIStrings.strings */,
+				B5210E8A19C48F1700FDB0D1 /* JAStrings.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2170,6 +2176,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = B5A3019F19811D0700F71726;
 			productRefGroup = B5A301A919811D0700F71726 /* Products */;
@@ -2196,6 +2203,7 @@
 				B501E88919BE20C100BE51DD /* JAPickupRegionsCell.xib in Resources */,
 				4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */,
 				4A392143198925E300B70A9C /* JANavigationBarView.xib in Resources */,
+				B5210E8619C4863400FDB0D1 /* RIStrings.strings in Resources */,
 				CEDEB9C3199BA8FA0022BAB5 /* slider-metal-handle.png in Resources */,
 				CEDEB9C4199BA8FA0022BAB5 /* slider-metal-handle@2x.png in Resources */,
 				B5A3024A19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
@@ -2485,6 +2493,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		B5210E8819C4863400FDB0D1 /* RIStrings.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5210E8719C4863400FDB0D1 /* en */,
+				B5210E8919C4863D00FDB0D1 /* fr */,
+			);
+			name = RIStrings.strings;
+			sourceTree = "<group>";
+		};
 		CE69B585198662E6005CC699 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

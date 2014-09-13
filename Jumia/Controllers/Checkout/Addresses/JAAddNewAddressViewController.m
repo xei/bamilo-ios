@@ -92,7 +92,7 @@ UIPickerViewDelegate>
     
     if(self.showBackButton)
     {
-        self.navBarLayout.backButtonTitle = @"Checkout";
+        self.navBarLayout.backButtonTitle = CHECKOUT_LABEL;
         self.navBarLayout.showLogo = NO;
     }
     
@@ -141,7 +141,7 @@ UIPickerViewDelegate>
 {
     CGFloat availableWidth = self.stepView.frame.size.width;
     
-    [self.stepLabel setText:@"2. Address"];
+    [self.stepLabel setText:CHECKOUT_HEADER_STEP_2];
     [self.stepLabel sizeToFit];
     
     CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;

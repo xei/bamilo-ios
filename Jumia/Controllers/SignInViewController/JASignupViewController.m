@@ -123,7 +123,7 @@ UIPickerViewDelegate>
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.loginButton setFrame:CGRectMake(6.0f, self.registerViewCurrentY, 296.0f, 30.0f)];
     [self.loginButton setBackgroundColor:[UIColor clearColor]];
-    [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
+    [self.loginButton setTitle:LOGIN_LABEL forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [self.loginButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];

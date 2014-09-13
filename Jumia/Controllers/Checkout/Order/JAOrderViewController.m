@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navBarLayout.title = @"Checkout";
+    self.navBarLayout.title = CHECKOUT_LABEL;
     
     self.navBarLayout.showCartButton = NO;
     

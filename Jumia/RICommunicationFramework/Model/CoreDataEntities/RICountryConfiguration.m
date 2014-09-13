@@ -63,6 +63,7 @@
         newConfig.csEmail = [json objectForKey:@"cs_email"];
     }
     
+    NSString *languageCode = @"";
     if ([json objectForKey:@"languages"]) {
         
         NSArray *languagesArray = [json objectForKey:@"languages"];
@@ -71,9 +72,17 @@
             RILanguage *language = [RILanguage parseRILanguage:dic];
             language.countryConfig = newConfig;
             
+            if([language.langDefault boolValue])
+            {
+                languageCode = language.langCode;
+            }
+            
             [newConfig addLanguagesObject:language];
         }
     }
+
+    [[NSUserDefaults standardUserDefaults] setObject:languageCode forKey:@"language_code"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
     

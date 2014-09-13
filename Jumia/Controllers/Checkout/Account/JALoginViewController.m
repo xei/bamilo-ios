@@ -82,7 +82,7 @@ FBLoginViewDelegate
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navBarLayout.title = @"Checkout";
+    self.navBarLayout.title = CHECKOUT_LABEL;
     
     self.navBarLayout.showCartButton = NO;
     
@@ -155,7 +155,7 @@ FBLoginViewDelegate
     
     CGFloat availableWidth = self.stepView.frame.size.width;
     
-    [self.stepLabel setText:@"1. About you"];
+    [self.stepLabel setText:CHECKOUT_HEADER_STEP_1];
     [self.stepLabel sizeToFit];
     
     CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;
@@ -179,7 +179,7 @@ FBLoginViewDelegate
                                             action:@selector(showLogin)];
     [self.loginView addGestureRecognizer:showLoginViewTap];
     [self.loginLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.loginLabel setText:@"Login"];
+    [self.loginLabel setText:LOGIN_LABEL];
     [self.loginSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     
     self.signUpView.layer.cornerRadius = 5.0f;
@@ -211,7 +211,7 @@ FBLoginViewDelegate
     [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
     [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
     [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
-    [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
+    [self.loginButton setTitle:LOGIN_LABEL forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.loginButton addTarget:self action:@selector(loginButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.loginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];

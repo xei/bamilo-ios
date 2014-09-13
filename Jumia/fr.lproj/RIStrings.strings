@@ -1,0 +1,25 @@
+/* 
+  RIStrings.strings
+  Jumia
+
+  Created by Pedro Lopes on 13/09/14.
+  Copyright (c) 2014 Rocket Internet. All rights reserved.
+*/
+
+"login_label" = "Connectez-vous";
+
+"add_to_shopping_cart" = "Ajouter au panier";
+
+"cart_label" = "Panier";
+"wishlist_notiems" = "Vous n\'avez pas d\'articles dans le panier";
+"continue_shopping" = "Continuer votre shopping!";
+"voucher_use" = "Utiliser";
+"voucher_remove" = "Supprimer";
+"voucher_message_hint" = "Entrez votre Code Promotionnel ici";
+"call_to_order" = "Appeler pour commander";
+
+"checkout_label" = "Checkout";
+"checkout_header_step_1" = "1. Informations client";
+"checkout_header_step_2" = "2. Adresse";
+"checkout_header_step_3" = "3. Livraison";
+"checkout_header_step_4" = "4. Paiement";

@@ -33,7 +33,7 @@
 {
     [super viewDidLoad];
  
-    self.navBarLayout.title = @"Cart";
+    self.navBarLayout.title = CART_LABEL;
     
     self.view.backgroundColor = JABackgroundGrey;
     
@@ -105,11 +105,11 @@
     [self.cartScrollView setHidden:YES];
     
     self.emptyCartView.layer.cornerRadius = 5.0f;
-    [self.emptyCartLabel setText:@"You have no items in the cart"];
+    [self.emptyCartLabel setText:WISHLIST_NOITEMS];
     [self.emptyCartLabel setTextColor:JALabelGrey];
     
     [self.continueShoppingButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
-    [self.continueShoppingButton setTitle:@"Continue Shopping" forState:UIControlStateNormal];
+    [self.continueShoppingButton setTitle:CONTINUE_SHOPPING forState:UIControlStateNormal];
     
     self.continueShoppingButton.layer.cornerRadius = 5.0f;
     
@@ -153,7 +153,7 @@
     [self.couponTextField setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
     [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
     [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-    [self.couponTextField setPlaceholder:@"Enter your coupon code here"];
+    [self.couponTextField setPlaceholder:VOUCHER_MESSAGE_HINT];
     [self.couponTextField setDelegate:self];
     [self.couponView addSubview:self.couponTextField];
     
@@ -173,11 +173,11 @@
     
     if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
     {
-        [self.useCouponButton setTitle:@"Remove" forState:UIControlStateNormal];
+        [self.useCouponButton setTitle:VOUCHER_REMOVE forState:UIControlStateNormal];
     }
     else
     {
-        [self.useCouponButton setTitle:@"Use" forState:UIControlStateNormal];
+        [self.useCouponButton setTitle:VOUCHER_USE forState:UIControlStateNormal];
     }
     
     if(VALID_NOTEMPTY(self.voucherCode, NSString))
@@ -512,7 +512,7 @@
     [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"] forState:UIControlStateSelected];
     [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:@"grayBig_disabled"] forState:UIControlStateDisabled];
     [self.callToOrderButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
-    [self.callToOrderButton setTitle:@"Call to Order" forState:UIControlStateNormal];
+    [self.callToOrderButton setTitle:CALL_TO_ORDER forState:UIControlStateNormal];
     [self.callToOrderButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.callToOrderButton addTarget:self action:@selector(callToOrderButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.callToOrderButton setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.checkoutButton.frame) + 6.0f, callToOrderButtonImageNormal.size.width, callToOrderButtonImageNormal.size.height)];
@@ -860,7 +860,7 @@
         JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
         pdv.productUrl = product.productUrl;
         pdv.fromCatalogue = NO;
-        pdv.previousCategory = @"Cart";
+        pdv.previousCategory = CART_LABEL;
         
         [self.navigationController pushViewController:pdv
                                              animated:YES];

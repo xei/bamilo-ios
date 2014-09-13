@@ -72,7 +72,7 @@ UIPickerViewDelegate>
                                           category:@"NativeCheckout"
                                               data:nil];
     
-    self.navBarLayout.title = @"Checkout";
+    self.navBarLayout.title = CHECKOUT_LABEL;
     
     self.navBarLayout.showCartButton = NO;    
     
@@ -101,7 +101,7 @@ UIPickerViewDelegate>
 {
     CGFloat availableWidth = self.stepView.frame.size.width;
     
-    [self.stepLabel setText:@"3. Shipping"];
+    [self.stepLabel setText:CHECKOUT_HEADER_STEP_3];
     [self.stepLabel sizeToFit];
     
     CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;

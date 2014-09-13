@@ -431,13 +431,13 @@
     
     if ([model isEqualToString:@"iPhone"])
     {
-        [ctaView addButton:@"Call to Order"
+        [ctaView addButton:CALL_TO_ORDER
                     target:self
                     action:@selector(callToOrder)];
     }
 
     
-    [ctaView addButton:@"Add to Cart"
+    [ctaView addButton:ADD_TO_SHOPPING_CART
                    target:self
                    action:@selector(addToCart)];
     
