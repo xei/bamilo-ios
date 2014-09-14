@@ -57,7 +57,7 @@ UICollectionViewDelegateFlowLayout>
 {
     [super viewDidLoad];
     
-    self.navBarLayout.title = @"Checkout";
+    self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;
     
@@ -116,11 +116,11 @@ UICollectionViewDelegateFlowLayout>
                                               category:@"NativeCheckout"
                                                   data:nil];
         
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                     message:[errorMessages componentsJoinedByString:@","]
                                    delegate:nil
                           cancelButtonTitle:nil
-                          otherButtonTitles:@"OK", nil] show];
+                          otherButtonTitles:STRING_OK, nil] show];
         
         [self hideLoading];
         [self finishedLoadingAddresses];
@@ -131,7 +131,7 @@ UICollectionViewDelegateFlowLayout>
 {
     CGFloat availableWidth = self.stepView.frame.size.width;
     
-    [self.stepLabel setText:@"2. Address"];
+    [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
     [self.stepLabel sizeToFit];
     
     CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;
@@ -202,7 +202,7 @@ UICollectionViewDelegateFlowLayout>
     
     self.bottomView = [[JAButtonWithBlur alloc] init];
     [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
-    [self.bottomView addButton:@"Next" target:self action:@selector(nextStepButtonPressed)];
+    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
     
     [self.view addSubview:self.bottomView];
 }
@@ -353,12 +353,10 @@ UICollectionViewDelegateFlowLayout>
                 if(self.firstAddressesCollectionView == [[[sender superview] superview] superview])
                 {
                     addressToEdit = [self.firstCollectionViewAddresses objectAtIndex:tag];
-                    NSLog(@"First address collection view");
                 }
                 else if(self.secondAddressesCollectionView == [[[sender superview] superview] superview])
                 {
                     addressToEdit = [self.secondCollectionViewAddresses objectAtIndex:tag];
-                    NSLog(@"second address collection view");
                 }
                 
                 if(VALID_NOTEMPTY(addressToEdit, RIAddress))
@@ -507,7 +505,7 @@ UICollectionViewDelegateFlowLayout>
                 // Switch
                 NSString *cellIdentifier = @"switchListCell";
                 JASwitchCell *switchCell = (JASwitchCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-                [switchCell loadWithText:@"Billing to the same address" isLastRow:self.useSameAddressAsBillingAndShipping];
+                [switchCell loadWithText:STRING_BILLING_SAME_ADDRESSES isLastRow:self.useSameAddressAsBillingAndShipping];
                 
                 if(self.useSameAddressAsBillingAndShipping)
                 {
@@ -526,7 +524,7 @@ UICollectionViewDelegateFlowLayout>
                 // Add new address
                 NSString *cellIdentifier = @"addAddressListCell";
                 JAAddNewAddressCell *addAddressCell = (JAAddNewAddressCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-                [addAddressCell loadWithText:@"Add New Address"];
+                [addAddressCell loadWithText:STRING_ADD_NEW_ADDRESS];
                 
                 cell = addAddressCell;
             }
@@ -560,7 +558,7 @@ UICollectionViewDelegateFlowLayout>
             // Add new address
             NSString *cellIdentifier = @"addAddressListCell";
             JAAddNewAddressCell *addAddressCell = (JAAddNewAddressCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-            [addAddressCell loadWithText:@"Add New Address"];
+            [addAddressCell loadWithText:STRING_ADD_NEW_ADDRESS];
             
             cell = addAddressCell;
         }
@@ -581,22 +579,22 @@ UICollectionViewDelegateFlowLayout>
         {
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [headerView loadHeaderWithText:@"Default Shipping Address"];
+                [headerView loadHeaderWithText:STRING_DEFAULT_SHIPPING_ADDRESSES];
             }
             else
             {
-                [headerView loadHeaderWithText:@"Shipping Address"];
+                [headerView loadHeaderWithText:STRING_SHIPPING_ADDRESSES];
             }
         }
         else if(collectionView == self.secondAddressesCollectionView)
         {
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [headerView loadHeaderWithText:@"Other Address"];
+                [headerView loadHeaderWithText:STRING_OTHER_ADDRESSES];
             }
             else
             {
-                [headerView loadHeaderWithText:@"Billing Address"];
+                [headerView loadHeaderWithText:STRING_BILLING_ADDRESSES];
             }
         }
         
@@ -711,7 +709,6 @@ UICollectionViewDelegateFlowLayout>
     [self showLoading];
     
     [RICheckout getBillingAddressFormWithSuccessBlock:^(RICheckout *checkout) {
-        NSLog(@"Get billing address form with success");
         RIForm *billingForm = checkout.billingAddressForm;
         
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
@@ -732,7 +729,6 @@ UICollectionViewDelegateFlowLayout>
         }
         
         [RICheckout setBillingAddress:checkout.billingAddressForm parameters:parameters successBlock:^(RICheckout *checkout) {
-            NSLog(@"Set billing address form with success %@", checkout.nextStep);
             
             [self hideLoading];
             
@@ -745,14 +741,13 @@ UICollectionViewDelegateFlowLayout>
                                                   category:@"NativeCheckout"
                                                       data:nil];
             
-            NSLog(@"Failed to set billing address form");
             [self hideLoading];
             
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:@"Error setting billing/shipping address"
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                        message:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
         }];
     } andFailureBlock:^(NSArray *errorMessages) {
         
@@ -761,8 +756,6 @@ UICollectionViewDelegateFlowLayout>
                                                 action:@"NativeCheckoutError"
                                               category:@"NativeCheckout"
                                                   data:nil];
-        
-        NSLog(@"Failed to get billing address form");
         [self hideLoading];
     }];
 }

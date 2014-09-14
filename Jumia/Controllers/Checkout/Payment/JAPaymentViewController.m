@@ -64,7 +64,7 @@ UITextFieldDelegate>
                                           category:@"NativeCheckout"
                                               data:nil];
     
-    self.navBarLayout.title = @"Checkout";
+    self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;
     
@@ -94,7 +94,7 @@ UITextFieldDelegate>
 {
     CGFloat availableWidth = self.stepView.frame.size.width;
     
-    [self.stepLabel setText:@"4. Payment"];
+    [self.stepLabel setText:STRING_CHECKOUT_PAYMENT];
     [self.stepLabel sizeToFit];
     
     CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;
@@ -145,7 +145,7 @@ UITextFieldDelegate>
     self.couponTitle = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, 280.0f, 25.0f)];
     [self.couponTitle setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.couponTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.couponTitle setText:@"Coupon"];
+    [self.couponTitle setText:STRING_COUPON];
     [self.couponTitle setBackgroundColor:[UIColor clearColor]];
     [self.couponView addSubview:self.couponTitle];
     
@@ -157,12 +157,12 @@ UITextFieldDelegate>
     [self.couponTextField setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
     [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
     [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-    [self.couponTextField setPlaceholder:@"Enter your coupon code here"];
+    [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
     [self.couponTextField setDelegate:self];
     [self.couponView addSubview:self.couponTextField];
     
     self.useCouponButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.useCouponButton setTitle:@"Use" forState:UIControlStateNormal];
+    [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
     UIImage *useCouponImageNormal = [UIImage imageNamed:@"useCoupon_normal"];
     [self.useCouponButton setBackgroundImage:useCouponImageNormal forState:UIControlStateNormal];
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_highlighted"] forState:UIControlStateHighlighted];
@@ -178,7 +178,7 @@ UITextFieldDelegate>
     
     self.bottomView = [[JAButtonWithBlur alloc] init];
     [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
-    [self.bottomView addButton:@"Next" target:self action:@selector(nextStepButtonPressed)];
+    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
     
     [self.view addSubview:self.bottomView];
 }
@@ -188,11 +188,11 @@ UITextFieldDelegate>
     if(VALID_NOTEMPTY([[[self checkout] orderSummary] discountCouponCode], NSString))
     {
         [self.couponTextField setText:[[[self checkout] orderSummary] discountCouponCode]];
-        [self.useCouponButton setTitle:@"Remove" forState:UIControlStateNormal];
+        [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
     }
     else
     {
-        [self.useCouponButton setTitle:@"Use" forState:UIControlStateNormal];
+        [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
         if(!VALID_NOTEMPTY([self.couponTextField text], NSString))
         {
             [self.useCouponButton setEnabled:NO];
@@ -255,7 +255,7 @@ UITextFieldDelegate>
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
             
-            [self.useCouponButton setTitle:@"Use" forState:UIControlStateNormal];
+            [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
             
             [self hideLoading];
         } andFailureBlock:^(NSArray *errorMessages) {
@@ -268,7 +268,7 @@ UITextFieldDelegate>
     {
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
-            [self.useCouponButton setTitle:@"Remove" forState:UIControlStateNormal];
+            [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
             
             [self hideLoading];
             
@@ -299,11 +299,11 @@ UITextFieldDelegate>
                         [self hideLoading];
     } andFailureBlock:^(NSArray *errorMessages) {
         
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                     message:@"Error setting payment method"
                                    delegate:nil
                           cancelButtonTitle:nil
-                          otherButtonTitles:@"OK", nil] show];
+                          otherButtonTitles:STRING_OK, nil] show];
         
                         [self hideLoading];
     }];
@@ -403,7 +403,7 @@ UITextFieldDelegate>
         
         if(collectionView == self.collectionView)
         {
-            [headerView loadHeaderWithText:@"Payment"];
+            [headerView loadHeaderWithText:STRING_PAYMENT];
         }
         reusableview = headerView;
     }

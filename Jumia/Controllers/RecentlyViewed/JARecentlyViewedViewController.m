@@ -53,14 +53,14 @@
     [super viewDidLoad];
     
     self.selectedSizeAndAddToCart = NO;
-    self.navBarLayout.title = @"Recently Viewed";
+    self.navBarLayout.title = STRING_RECENTLY_VIEWED;
     
     self.collectionView.backgroundColor = UIColorFromRGB(0xc8c8c8);
     
     self.emptyListView.layer.cornerRadius = 3.0f;
     
     self.emptyListLabel.textColor = UIColorFromRGB(0xcccccc);
-    self.emptyListLabel.text = @"No recently viewed products here";
+    self.emptyListLabel.text = STRING_NO_RECENTLY_VIEWED_PRODUCTS;
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -130,7 +130,7 @@
         
         JAButtonCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
         
-        [cell loadWithButtonName:@"Clear Recently Viewed"];
+        [cell loadWithButtonName:STRING_CLEAR_RECENTLY_VIEWED];
         
         [cell.button addTarget:self
                         action:@selector(clearAllButtonPressed)
@@ -153,9 +153,9 @@
 
         NSString* chosenSimpleName = [self.chosenSimpleNames objectAtIndex:indexPath.row];
         if ([chosenSimpleName isEqualToString:@""]) {
-            [cell.sizeButton setTitle:@"Size" forState:UIControlStateNormal];
+            [cell.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
         } else {
-            [cell.sizeButton setTitle:[NSString stringWithFormat:@"Size: %@", chosenSimpleName] forState:UIControlStateNormal];
+            [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimpleName] forState:UIControlStateNormal];
         }
         
         cell.sizeButton.tag = indexPath.row;
@@ -187,7 +187,7 @@
         JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
         pdv.productUrl = product.url;
         pdv.fromCatalogue = YES;
-        pdv.previousCategory = @"Recently Viewed";
+        pdv.previousCategory = STRING_RECENTLY_VIEWED;
         pdv.arrayWithRelatedItems = [tempArray copy];
         
         [self.navigationController pushViewController:pdv
@@ -241,21 +241,21 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                  message:@"Product added"
+                      [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                                  message:STRING_ITEM_WAS_ADDED_TO_CART
                                                  delegate:nil
                                         cancelButtonTitle:nil
-                                        otherButtonTitles:@"Ok", nil] show];
+                                        otherButtonTitles:STRING_OK, nil] show];
                       
                       [self hideLoading];
                       
                   } andFailureBlock:^(NSArray *errorMessages) {
                       
-                      [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                  message:@"Error adding to the cart"
+                      [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                                  message:STRING_ERROR_ADDING_TO_CART
                                                  delegate:nil
                                         cancelButtonTitle:nil
-                                        otherButtonTitles:@"Ok", nil] show];
+                                        otherButtonTitles:STRING_OK, nil] show];
                       
                       [self hideLoading];
                       
@@ -314,7 +314,7 @@
     UIButton *tmpbutton = [UIButton buttonWithType:UIButtonTypeCustom];
     [tmpbutton setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
     [tmpbutton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-    [tmpbutton setTitle:@"Done" forState:UIControlStateNormal];
+    [tmpbutton setTitle:STRING_DONE forState:UIControlStateNormal];
     [tmpbutton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [tmpbutton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [tmpbutton addTarget:self action:@selector(selectSize:) forControlEvents:UIControlEventTouchUpInside];

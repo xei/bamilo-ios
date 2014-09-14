@@ -36,8 +36,8 @@
     
     self.contentView.layer.cornerRadius = 5.0f;
     
-    self.firstLabel.text = @"Please type in your email.";
-    self.secondLabel.text = @"We will send you a link to change the password";
+    self.firstLabel.text = STRING_TYPE_YOUR_EMAIL;
+    self.secondLabel.text = STRING_WE_WILL_SEND_PASSWORD;
     
     self.forgotPasswordViewCurrentY = CGRectGetMaxY(self.secondLabel.frame) + 1.0f;
     
@@ -67,11 +67,11 @@
          
          [self hideLoading];
          
-         [[[UIAlertView alloc] initWithTitle:@"Jumia"
+         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                      message:@"There was an error"
                                     delegate:nil
                            cancelButtonTitle:nil
-                           otherButtonTitles:@"OK", nil] show];
+                           otherButtonTitles:STRING_OK, nil] show];
          
          [self.navigationController popViewControllerAnimated:YES];
      }];
@@ -87,7 +87,7 @@
     [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
     [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
     [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
-    [self.forgotPasswordButton setTitle:@"Submit" forState:UIControlStateNormal];
+    [self.forgotPasswordButton setTitle:STRING_SUBMIT forState:UIControlStateNormal];
     [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.forgotPasswordButton addTarget:self action:@selector(forgotPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.forgotPasswordButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
@@ -112,11 +112,11 @@
          [self.dynamicForm resetValues];
          [self hideLoading];
          
-         [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                     message:@"Email sent"
+         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                     message:STRING_EMAIL_SENT
                                     delegate:nil
                            cancelButtonTitle:nil
-                           otherButtonTitles:@"OK", nil] show];
+                           otherButtonTitles:STRING_OK, nil] show];
          
      } andFailureBlock:^(id errorObject)
      {
@@ -126,29 +126,29 @@
          {
              [self.dynamicForm validateFields:errorObject];
              
-             [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                         message:@"Invalid fields"
+             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                         message:STRING_ERROR_INVALID_FIELDS
                                         delegate:nil
                                cancelButtonTitle:nil
-                               otherButtonTitles:@"OK", nil] show];
+                               otherButtonTitles:STRING_OK, nil] show];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm checkErrors];
              
-             [[[UIAlertView alloc] initWithTitle:@"Jumia"
+             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                          message:[errorObject componentsJoinedByString:@","]
                                         delegate:nil
                                cancelButtonTitle:nil
-                               otherButtonTitles:@"OK", nil] show];
+                               otherButtonTitles:STRING_OK, nil] show];
          }
          else
          {
-             [[[UIAlertView alloc] initWithTitle:@"Jumia"
+             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                          message:@"Generic error"
                                         delegate:nil
                                cancelButtonTitle:nil
-                               otherButtonTitles:@"OK", nil] show];
+                               otherButtonTitles:STRING_OK, nil] show];
          }
      }];
 }

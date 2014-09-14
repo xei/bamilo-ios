@@ -24,7 +24,7 @@
 {
     [super viewDidLoad];
     
-    self.navBarLayout.title = @"Filters";
+    self.navBarLayout.title = STRING_FILTERS;
     self.navBarLayout.showEditButton = YES;
     self.navBarLayout.showDoneButton = YES;
     
@@ -132,7 +132,7 @@
     }
 
     if (-1 == filterIndex) {
-        cell.textLabel.text = @"Categories";
+        cell.textLabel.text = STRING_CATEGORIES;
         cell.detailTextLabel.text = [self stringWithSelectedCategory];
     } else {
         RIFilter* filter = [self.filtersArray objectAtIndex:filterIndex];
@@ -145,7 +145,7 @@
 
 - (NSString*)stringWithSelectedCategory
 {
-    NSString* string = @"All";
+    NSString* string = STRING_ALL;
     
     if (VALID_NOTEMPTY(self.selectedCategory, RICategory)) {
         string = self.selectedCategory.name;
@@ -156,7 +156,7 @@
 
 - (NSString*)stringWithSelectedOptionsFromFilter:(RIFilter*)filter
 {
-    NSString* string = @"All";
+    NSString* string = STRING_ALL;
     
     if (NOTEMPTY(filter.options)) {
         

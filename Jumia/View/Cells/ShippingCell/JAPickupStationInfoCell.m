@@ -61,7 +61,7 @@
     [self.cityLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.cityLabel setTextColor:UIColorFromRGB(0x666666)];
     
-    NSString *cityLabelString = @"City: ";
+    NSString *cityLabelString = STRING_CITY;
     NSString *trimmedCityString = [pickupStation.city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSRange cityRange = NSMakeRange(cityLabelString.length, trimmedCityString.length);
     NSMutableAttributedString *finalCityString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", cityLabelString, trimmedCityString] attributes:labelAttributes];
@@ -81,7 +81,7 @@
     [self.addressLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.addressLabel setTextColor:UIColorFromRGB(0x666666)];
 
-    NSString *addressLabelString = @"Address: ";
+    NSString *addressLabelString = STRING_ADDRESS;
     NSString *trimmedAddressString = [pickupStation.address stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSRange addressRange = NSMakeRange(addressLabelString.length, trimmedAddressString.length);
     NSMutableAttributedString *finalAddressString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", addressLabelString,trimmedAddressString] attributes:labelAttributes];
@@ -101,7 +101,7 @@
     [self.openingHours setLineBreakMode:NSLineBreakByWordWrapping];
     [self.openingHours setTextColor:UIColorFromRGB(0x666666)];
     
-    NSString *openingHoursString = @"Opening Hours: ";
+    NSString *openingHoursString = STRING_OPENING_HOURS;
     NSString *trimmedOpeningHoursString = [pickupStation.openingHours stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSRange openingHoursRange = NSMakeRange(openingHoursString.length, trimmedOpeningHoursString.length);
     NSMutableAttributedString *finalOpeningHoursString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", openingHoursString, trimmedOpeningHoursString] attributes:labelAttributes];
@@ -208,7 +208,7 @@
     [label setLineBreakMode:NSLineBreakByWordWrapping];
     [label setTextColor:UIColorFromRGB(0x666666)];
     
-    NSString *cityLabelString = @"City: ";
+    NSString *cityLabelString = STRING_CITY;
     NSString *trimmedCityString = [pickupStation.city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSRange cityRange = NSMakeRange(cityLabelString.length, trimmedCityString.length);
     NSMutableAttributedString *finalCityString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", cityLabelString, trimmedCityString] attributes:labelAttributes];
@@ -219,7 +219,7 @@
     
     totalHeight += label.frame.size.height;
 
-    NSString *addressLabelString = @"Address: ";
+    NSString *addressLabelString = STRING_ADDRESS;
     NSString *trimmedAddressString = [pickupStation.address stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSRange addressRange = NSMakeRange(addressLabelString.length, trimmedAddressString.length);
     NSMutableAttributedString *finalAddressString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", addressLabelString,trimmedAddressString] attributes:labelAttributes];
@@ -232,7 +232,7 @@
     
     totalHeight += label.frame.size.height;
     
-    NSString *openingHoursString = @"Opening Hours: ";
+    NSString *openingHoursString = STRING_OPENING_HOURS;
     NSString *trimmedOpeningHoursString = [pickupStation.openingHours stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSRange openingHoursRange = NSMakeRange(openingHoursString.length, trimmedOpeningHoursString.length);
     NSMutableAttributedString *finalOpeningHoursString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", openingHoursString, trimmedOpeningHoursString] attributes:labelAttributes];

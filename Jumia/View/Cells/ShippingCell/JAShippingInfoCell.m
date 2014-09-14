@@ -30,7 +30,7 @@
     NSDictionary* shippingFeeLabelAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue" size:13.0f], NSFontAttributeName, nil];
     NSDictionary* shippingFeeAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f], NSFontAttributeName, nil];
     
-    NSString *shippingFeeLabel = @"Shipping Fee: ";
+    NSString *shippingFeeLabel = STRING_SHIPPING_FEE;
     NSRange shippingFeeRange = NSMakeRange(shippingFeeLabel.length, shippingFee.length);
     NSMutableAttributedString *finalshippingFeeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", shippingFeeLabel, shippingFee]
                                                                                                attributes:shippingFeeLabelAttributes];
@@ -44,7 +44,7 @@
 
 -(void)loadWithPickupStation
 {
-    [self.label setText:@"Please select"];
+    [self.label setText:STRING_PLEASE_SELECT];
 }
 
 -(void)setPickupStationRegion:(NSString*)pickupStationRegion

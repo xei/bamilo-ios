@@ -30,7 +30,7 @@
     
     self.recentProductImageView.hidden = ![product.isNew boolValue];
     self.recentProductLabel.hidden = ![product.isNew boolValue];
-    self.recentProductLabel.text = @"NEW";
+    self.recentProductLabel.text = STRING_NEW;
     self.recentProductLabel.transform = CGAffineTransformMakeRotation (-M_PI/4);
     
     self.brandLabel.text = product.brand;
@@ -62,7 +62,7 @@
     } else {
         self.sizeButton.hidden = NO;
     }
-    [self.sizeButton setTitle:@"Size" forState:UIControlStateNormal];
+    [self.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
     [self.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
     [self.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
 }

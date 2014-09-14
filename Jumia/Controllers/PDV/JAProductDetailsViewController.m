@@ -72,7 +72,7 @@
     {
         [self.descriptionView removeFromSuperview];
         
-        self.featuresTitleLabel.text = @"Product Features";
+        self.featuresTitleLabel.text = STRING_PRODUCT_FEATURES;
         
         self.featuresTextLabel.text = self.descriptionText;
         [self.featuresTextLabel sizeToFit];
@@ -86,8 +86,8 @@
     }
     else
     {
-        self.featuresTitleLabel.text = @"Product Features";
-        self.descriptionTitleLabel.text = @"Product Description";
+        self.featuresTitleLabel.text = STRING_PRODUCT_FEATURES;
+        self.descriptionTitleLabel.text = STRING_PRODUCT_DESCRIPTION;
 
         self.featuresTextLabel.text = self.featuresText;
         [self.featuresTextLabel sizeToFit];

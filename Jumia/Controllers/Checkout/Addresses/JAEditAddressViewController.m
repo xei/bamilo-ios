@@ -61,7 +61,7 @@ UIPickerViewDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navBarLayout.title = @"Checkout";
+    self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;
     
@@ -86,11 +86,11 @@ UIPickerViewDelegate>
      {
          [self finishedFormLoading];
          
-         [[[UIAlertView alloc] initWithTitle:@"Jumia"
+         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                      message:@"There was an error"
                                     delegate:nil
                            cancelButtonTitle:nil
-                           otherButtonTitles:@"OK", nil] show];
+                           otherButtonTitles:STRING_OK, nil] show];
      }];
 }
 
@@ -98,7 +98,7 @@ UIPickerViewDelegate>
 {
     CGFloat availableWidth = self.stepView.frame.size.width;
     
-    [self.stepLabel setText:@"2. Address"];
+    [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
     [self.stepLabel sizeToFit];
     
     CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;
@@ -127,8 +127,8 @@ UIPickerViewDelegate>
     
     self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
     [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
-    [self.bottomView addButton:@"Cancel" target:self action:@selector(cancelButtonPressed)];
-    [self.bottomView addButton:@"Save Changes" target:self action:@selector(saveChangesButtonPressed)];
+    [self.bottomView addButton:STRING_CANCEL target:self action:@selector(cancelButtonPressed)];
+    [self.bottomView addButton:STRING_SAVE_CHANGES target:self action:@selector(saveChangesButtonPressed)];
     
     [self.view addSubview:self.bottomView];
 }
@@ -186,7 +186,7 @@ UIPickerViewDelegate>
     self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, self.addressViewCurrentY, self.contentView.frame.size.width - 12.0f, 25.0f)];
     [self.headerLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.headerLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.headerLabel setText:@"Edit Address"];
+    [self.headerLabel setText:STRING_EDIT_ADDRESS];
     [self.headerLabel setBackgroundColor:[UIColor clearColor]];
     [self.contentView addSubview:self.headerLabel];
     self.addressViewCurrentY = CGRectGetMaxY(self.headerLabel.frame);
@@ -255,11 +255,11 @@ UIPickerViewDelegate>
     
     if(self.hasErrors)
     {
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                    message:@"Invalid Fields"
+        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                    message:STRING_ERROR_INVALID_FIELDS
                                    delegate:nil
                           cancelButtonTitle:nil
-                          otherButtonTitles:@"OK", nil] show];
+                          otherButtonTitles:STRING_OK, nil] show];
         self.hasErrors = NO;
     }
     else
@@ -443,7 +443,7 @@ UIPickerViewDelegate>
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
     [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-    [button setTitle:@"Done" forState:UIControlStateNormal];
+    [button setTitle:STRING_DONE forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(radioOptionChanged:) forControlEvents:UIControlEventTouchUpInside];

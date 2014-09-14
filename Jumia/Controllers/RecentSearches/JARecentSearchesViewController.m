@@ -32,9 +32,10 @@
 {
     [super viewDidLoad];
     
-    self.navBarLayout.title = @"Recent Searches";
+    self.navBarLayout.title = STRING_RECENT_SEARCHES;
         
     self.noSearchesView.layer.cornerRadius = 5.0f;
+    [self.noSearchesLabel setText:STRING_NO_RECENT_SEARCHES];
     
     self.recentSearches = [NSMutableArray new];
     
@@ -77,7 +78,7 @@
         [self.button setBackgroundImage:[UIImage imageNamed:@"grayBig_disabled"]
                                forState:UIControlStateDisabled];
         
-        [self.button setTitle:@"Clear Recent Searches"
+        [self.button setTitle:STRING_CLEAR_RECENT_SEARCHES
                      forState:UIControlStateNormal];
         
         [self.button addTarget:self

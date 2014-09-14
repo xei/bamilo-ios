@@ -21,9 +21,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.navBarLayout.title = @"Categories";
-    self.navBarLayout.backButtonTitle = @"Filters";
+
+    self.navBarLayout.title = STRING_CATEGORIES;
+    self.navBarLayout.backButtonTitle = STRING_FILTERS;
     self.navBarLayout.showDoneButton = YES;
     
     self.tableView.delegate = self;

@@ -38,4 +38,7 @@
     #import "JABaseViewController.h"
     #import "JADynamicForm.h"
     #import "RIApi.h"
+    #import "RILocalizationWrapper.h"
+    #import "JAStrings.h"
+
 #endif

@@ -63,7 +63,7 @@
 {
     [super viewDidLoad];
     
-    self.navBarLayout.title = @"My Favourites";
+    self.navBarLayout.title = STRING_MY_FAVOURITES;
     
     self.addAllToCartCount = 0;
     self.selectedSizeAndAddToCart = NO;
@@ -75,7 +75,7 @@
     self.emptyFavoritesView.layer.cornerRadius = 3.0f;
     
     self.emptyFavoritesLabel.textColor = UIColorFromRGB(0xcccccc);
-    self.emptyFavoritesLabel.text = @"You have no favorite items at the moment";
+    self.emptyFavoritesLabel.text = STRING_NO_FAVOURITES;
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -152,7 +152,7 @@
         
         JAButtonCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
         
-        [cell loadWithButtonName:@"Add All Items to Cart"];
+        [cell loadWithButtonName:STRING_ADD_ALL_TO_CART];
         
         [cell.button addTarget:self
                         action:@selector(addAllToCart)
@@ -179,9 +179,9 @@
         
         NSString* chosenSimpleName = [self.chosenSimpleNames objectAtIndex:indexPath.row];
         if ([chosenSimpleName isEqualToString:@""]) {
-            [cell.sizeButton setTitle:@"Size" forState:UIControlStateNormal];
+            [cell.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
         } else {
-            [cell.sizeButton setTitle:[NSString stringWithFormat:@"Size: %@", chosenSimpleName] forState:UIControlStateNormal];
+            [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimpleName] forState:UIControlStateNormal];
         }
         cell.sizeButton.tag = indexPath.row;
         [cell.sizeButton addTarget:self
@@ -212,7 +212,7 @@
         JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
         pdv.productUrl = product.url;
         pdv.fromCatalogue = YES;
-        pdv.previousCategory = @"Favorites";
+        pdv.previousCategory = STRING_MY_FAVOURITES;
         pdv.arrayWithRelatedItems = [tempArray copy];
         
         [self.navigationController pushViewController:pdv
@@ -234,10 +234,10 @@
                 //nothing is selected, abort
                 
                 [[[UIAlertView alloc] initWithTitle:@"Error"
-                                            message:@"Please choose size for all products"
+                                            message:STRING_CHOOSE_SIZE_FOR_ALL_PRODUCTS
                                            delegate:nil
                                   cancelButtonTitle:nil
-                                  otherButtonTitles:@"Ok", nil] show];
+                                  otherButtonTitles:STRING_OK, nil] show];
                 
                 return;
             }
@@ -374,11 +374,11 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                  message:@"Product added"
+                      [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                                  message:STRING_ITEM_WAS_ADDED_TO_CART
                                                  delegate:nil
                                         cancelButtonTitle:nil
-                                        otherButtonTitles:@"Ok", nil] show];
+                                        otherButtonTitles:STRING_OK, nil] show];
                       
                       [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
                           
@@ -396,11 +396,11 @@
                       
                   } andFailureBlock:^(NSArray *errorMessages) {
                       
-                      [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                  message:@"Error adding to the cart"
+                      [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                                  message:STRING_ERROR_ADDING_TO_CART
                                                  delegate:nil
                                         cancelButtonTitle:nil
-                                        otherButtonTitles:@"Ok", nil] show];
+                                        otherButtonTitles:STRING_OK, nil] show];
                       
                       [self hideLoading];
                       
@@ -447,7 +447,7 @@
     UIButton *tmpbutton = [UIButton buttonWithType:UIButtonTypeCustom];
     [tmpbutton setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
     [tmpbutton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-    [tmpbutton setTitle:@"Done" forState:UIControlStateNormal];
+    [tmpbutton setTitle:STRING_DONE forState:UIControlStateNormal];
     [tmpbutton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [tmpbutton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [tmpbutton addTarget:self action:@selector(selectSize:) forControlEvents:UIControlEventTouchUpInside];

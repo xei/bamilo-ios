@@ -74,11 +74,11 @@
     }
     else
     {
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                     message:@"Please enter the order ID."
                                    delegate:nil
                           cancelButtonTitle:nil
-                          otherButtonTitles:@"Ok", nil] show];
+                          otherButtonTitles:STRING_OK, nil] show];
     }
 }
 
@@ -116,7 +116,7 @@
     UILabel *creationDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, startingY, 150, 20)];
     creationDateLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
     creationDateLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    creationDateLabel.text = @"Creation date:";
+    creationDateLabel.text = STRING_CREATION_DATE;
     [creationDateLabel sizeToFit];
     [self.variableView addSubview:creationDateLabel];
     
@@ -133,7 +133,7 @@
     UILabel *paymentMethodLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, startingY, 150, 20)];
     paymentMethodLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
     paymentMethodLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    paymentMethodLabel.text = @"Payment method:";
+    paymentMethodLabel.text = STRING_PAYMENT_METHOD;
     [paymentMethodLabel sizeToFit];
     [self.variableView addSubview:paymentMethodLabel];
     
@@ -150,7 +150,7 @@
     UILabel *productsLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, startingY, 296, 20)];
     productsLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
     productsLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    productsLabel.text = @"Products:";
+    productsLabel.text = STRING_PRODUCTS;
     [productsLabel sizeToFit];
     [self.variableView addSubview:productsLabel];
     
@@ -171,7 +171,7 @@
         UILabel *labelQuantity = [[UILabel alloc] initWithFrame:CGRectMake(6, startingY, 296, 40)];
         labelQuantity.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
         labelQuantity.textColor = UIColorFromRGB(0x666666);
-        labelQuantity.text = [NSString stringWithFormat:@"Quantity: %@", [item.quantity stringValue]];
+        labelQuantity.text = [NSString stringWithFormat:STRING_QUANTITY, [item.quantity stringValue]];
         [labelQuantity sizeToFit];
         [self.variableView addSubview:labelQuantity];
         
@@ -221,7 +221,7 @@
     noResultsLabel.numberOfLines = 0;
     noResultsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     noResultsLabel.textColor = UIColorFromRGB(0x666666);
-    noResultsLabel.text = @"No results found for the searched Order ID.\nPlease recheck the Order ID and try again.";
+    noResultsLabel.text = STRING_ERROR_NO_RESULTS_FOR_TRACKING_ID;
     [self.variableView addSubview:noResultsLabel];
     
     self.variableViewHeightConstraint.constant = noResultsLabel.frame.size.height + 46;
@@ -236,20 +236,20 @@
 - (void)initViewElements
 {
     self.navBarLayout.showLogo = NO;
-    self.navBarLayout.title = @"Order Status";
+    self.navBarLayout.title = STRING_ORDER_STATUS;
     
     self.topView.layer.cornerRadius = 4.0f;
     
-    self.trackOrderLabel.text = @"Track Your Order";
+    self.trackOrderLabel.text = STRING_TRACK_YOUR_ORDER;
     self.trackOrderLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.imageViewLine.backgroundColor = UIColorFromRGB(0xfaa41a);
     
-    self.orderTextField.placeholder = @"Order ID";
+    self.orderTextField.placeholder = STRING_ORDER_ID;
     self.orderTextField.textColor = UIColorFromRGB(0x666666);
     
     self.imageViewTextField.backgroundColor = UIColorFromRGB(0xcccccc);
     
-    [self.buttonTrack setTitle:@"Track Order"
+    [self.buttonTrack setTitle:STRING_TRACK_ORDER
                       forState:UIControlStateNormal];
     
     [self.buttonTrack setTitleColor:UIColorFromRGB(0x4e4e4e)

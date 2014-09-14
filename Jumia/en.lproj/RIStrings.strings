@@ -1,0 +1,160 @@
+/* 
+  RIStrings.strings
+  Jumia
+
+  Created by Pedro Lopes on 13/09/14.
+  Copyright (c) 2014 Rocket Internet. All rights reserved.
+*/
+
+"string_jumia" = "Jumia";
+"string_update_necessary_title" = "Update necessary";
+"string_update_necessary_message" = "We found something that we needed to fix to make shopping experience in Jumia even better! You will need to update before continue using the app.";
+"string_update_available_title" = "Update available";
+"string_update_available_message" = "There is a new update available that we prepared to make shopping experience in Jumia even better! Make sure you upgrade today!";
+"string_update" = "Update!";
+"string_ok_update" = "Ok, Update!";
+"string_no_thanks" = "No, thanks.";
+
+"ok_label" = "OK";
+"done_label" = "Done";
+"back_label" = "Back";
+"submit_label" = "Submit";
+
+"login_label" = "Login";
+"home" = "Home";
+"categories" = "Categories";
+"favourites" = "My Favourites";
+"recent_searches" = "Recent Searches";
+"recently_viewed" = "Recently Viewed";
+"my_account" = "My Account";
+"nav_track_order" = "Track my Order";
+"nav_country" = "Change Country";
+"sign_in" = "Sing In";
+"sign_out" = "Sign Out";
+"string_filters" = "Filters";
+"categories_toplevel_title" = "All Categories";
+"string_apply" = "Apply";
+"search_label" = "Search";
+"shopping_cart" = "Shopping Cart";
+"navigation_cart_empty" = "Your cart is empty";
+"string_vat_shipping_included" = "VAT and Shipping costs included";
+
+"teaser_campaign_button_first_line" = "HOT";
+"teaser_campaign_button_second_line" = "OFFERS";
+"string_top_brands" = "Top Brands";
+"string_top_categories" = "Top Categories";
+"string_top_sellers" = "Top Sellers";
+
+"string_new" = "NEW";
+"string_size" = "Size";
+"string_review" = "%@ review";
+"string_reviews" = "%@ reviews";
+"string_quantity" = "Quantity: %@";
+"products_sort_bestrated" = "Best Rating";
+"products_sort_popularity" = "Popularity";
+"products_sort_newin" = "New in";
+"products_sort_priceup" = "Price up";
+"products_sort_pricedown" = "Price down";
+"products_sort_name" = "Name";
+"products_sort_brand" = "Brand";
+"all_label" = "All";
+"string_with_discount_only" = "With discount only";
+
+"favourite_no_favourites" = "You have no favourite items at the moment";
+"favourite_addalltocart" = "Add All Items to Cart";
+"added_to_shop_cart_dialog_text" = "Item was added to shopping cart";
+"error_add_to_cart_failed" = "Adding to cart failed";
+"string_size_with_value" = "Size: %@";
+"string_choose_size_for_all_products" = "Please choose size for all products";
+"add_to_shopping_cart" = "Add to Cart";
+
+"string_variations" = "Variations";
+"string_rate_now" = "Rate Now";
+"related_items" = "Related Items";
+"product_features_title" = "Product Features";
+"product_description_title" = "Product Description";
+"share_checkout_this_product" = "Check out this product I found:";
+"rating_question" = "You have used this Product? Rate it now!";
+"writereview_send" = "Send Review";
+"submit_title" = "Review sent";
+"write_comment" = "Write a Review";
+"string_posted_by" = "posted by %@, %@";
+"string_posted_by_anonymous" = "posted by Anonymous User, %@";
+"string_price" = "Price";
+"string_appearance" = "Appearance";
+"rating_quality" = "Quality";
+
+"cart_label" = "Cart";
+"wishlist_notiems" = "You have no items in the cart";
+"continue_shopping" = "Continue Shopping";
+"my_order_coupon_label" = "Coupon";
+"voucher_use" = "Use";
+"voucher_remove" = "Remove";
+"voucher_message_hint" = "Enter your coupon code here";
+"call_to_order" = "Call to Order";
+"shoppingcart_article" = "1 article";
+"shoppingcart_articles" = "%d articles";
+"error_add_to_shopping_cart_quantity" = "You cannot order more than the allowed quantity. Sorry.";
+"shipping" = "Shipping";
+"free_label" = "Free";
+"extra_costs_label" = "Extra Costs";
+"my_order_voucher_label" = "Voucher";
+"my_order_total_label" = "Total";
+"checkout_button_text" = "Proceed to Checkout";
+"sub_total_title" = "Subtotal";
+"vat_string" = "VAT";
+
+"signup_label" = "Signup";
+"facebook_signup_button_text" = "Sign up with Facebook";
+"facebook_login_button_text" = "Login with Facebook";
+"or_text" = "OR";
+"fgt_pass" = "Forgot Password?";
+"forgotten_password" = "Please type in your email.";
+"forgotten_password_sub_text" = "We will send you a link to change the password.";
+"forgotten_password_successtext" = "Email sent";
+
+"checkout_label" = "Checkout";
+"checkout_header_step_1" = "1. About you";
+"next_button" = "Next";
+"login_sectiontitle" = "Credentials";
+"register_title" = "Create Account";
+"register_sectiontitle" = "Account Data";
+"registration_text" = "Register";
+
+"checkout_header_step_2" = "2. Address";
+"action_label_add_address" = "Add New Address";
+"billing_same_label" = "Billing to the same address";
+"billing_shipping_label" = "Shipping Address";
+"billing_billing_label" = "Billing Address";
+"billing_def_shipping_label" = "Default Shipping Address";
+"billing_others_label" = "Other Addresses";
+"setting_address_error" = "Error setting billing/shipping address";
+"cancel_label" = "Cancel";
+"save_changes_label" = "Save Changes";
+"edit_address" = "Edit Address";
+"validation_errortext" = "There were errors on the data submited, please check your input fields.";
+
+"checkout_header_step_3" = "3. Shipping";
+"string_city" = "City: ";
+"string_address" = "Address: ";
+"string_opening_hours" = "Opening Hours: ";
+"string_please_select" = "Please Select";
+"order_summary_shipping_fee_label" = "Shipping Fee:";
+
+"checkout_header_step_4" = "4. Payment";
+"payment" = "Payment";
+
+"creation_date" = "Creation Date:";
+"payment_method" = "Payment Method:";
+"order_track_products" = "Products:";
+"string_error_no_results_for_tracking_id" = "No results found for the searched order id.\nPlease recheck the order id and try again.";
+"track_your_order" = "Track Your Order";
+"track_order" = "Track Order";
+"track_order_hint" = "Order id";
+"string_order_status" = "order status";
+
+"recentsearch_no_searches" = "No Recent Searches";
+"recentsearch_clear_searches" = "Clear Recent Searches";
+
+"recentlyview_no_searches" = "No Recently Viewed Products Here";
+"recentlyview_clear_viewed" = "Clear Recently Viewed";

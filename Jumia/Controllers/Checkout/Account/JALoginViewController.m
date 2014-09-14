@@ -82,7 +82,7 @@ FBLoginViewDelegate
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navBarLayout.title = @"Checkout";
+    self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;
     
@@ -112,11 +112,11 @@ FBLoginViewDelegate
            
            self.numberOfFormsToLoad--;
            
-           [[[UIAlertView alloc] initWithTitle:@"Jumia"
+           [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                        message:@"There was an error"
                                       delegate:nil
                              cancelButtonTitle:nil
-                             otherButtonTitles:@"OK", nil] show];
+                             otherButtonTitles:STRING_OK, nil] show];
            
        }];
     
@@ -140,11 +140,11 @@ FBLoginViewDelegate
        } failureBlock:^(NSArray *errorMessage) {
            self.numberOfFormsToLoad--;
            
-           [[[UIAlertView alloc] initWithTitle:@"Jumia"
+           [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                        message:@"There was an error"
                                       delegate:nil
                              cancelButtonTitle:nil
-                             otherButtonTitles:@"OK", nil] show];
+                             otherButtonTitles:STRING_OK, nil] show];
            
        }];
 }
@@ -155,7 +155,7 @@ FBLoginViewDelegate
     
     CGFloat availableWidth = self.stepView.frame.size.width;
     
-    [self.stepLabel setText:@"1. About you"];
+    [self.stepLabel setText:STRING_CHECKOUT_ABOUT_YOU];
     [self.stepLabel sizeToFit];
     
     CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;
@@ -179,7 +179,7 @@ FBLoginViewDelegate
                                             action:@selector(showLogin)];
     [self.loginView addGestureRecognizer:showLoginViewTap];
     [self.loginLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.loginLabel setText:@"Login"];
+    [self.loginLabel setText:STRING_LOGIN];
     [self.loginSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     
     self.signUpView.layer.cornerRadius = 5.0f;
@@ -188,7 +188,7 @@ FBLoginViewDelegate
                                             action:@selector(showSignup)];
     [self.signUpView addGestureRecognizer:showSignupViewTap];
     [self.signUpLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.signUpLabel setText:@"Signup"];
+    [self.signUpLabel setText:STRING_SIGNUP];
     [self.signUpSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
 }
 
@@ -211,7 +211,7 @@ FBLoginViewDelegate
     [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
     [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
     [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
-    [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
+    [self.loginButton setTitle:STRING_LOGIN forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.loginButton addTarget:self action:@selector(loginButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.loginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
@@ -223,7 +223,7 @@ FBLoginViewDelegate
     self.forgotButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.forgotButton setFrame:CGRectMake(6.0f, self.loginFormHeight, 296.0f, 30.0f)];
     [self.forgotButton setBackgroundColor:[UIColor clearColor]];
-    [self.forgotButton setTitle:@"Forgot Password?" forState:UIControlStateNormal];
+    [self.forgotButton setTitle:STRING_FORGOT_PASSWORD forState:UIControlStateNormal];
     [self.forgotButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
     [self.forgotButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [self.forgotButton addTarget:self action:@selector(forgotButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -235,7 +235,7 @@ FBLoginViewDelegate
     self.facebookLoginSeparator = [[UIView alloc] initWithFrame:CGRectZero];
     
     self.facebookLoginSeparatorLabel = [[UILabel alloc] init];
-    [self.facebookLoginSeparatorLabel setText:@"OR"];
+    [self.facebookLoginSeparatorLabel setText:STRING_OR];
     [self.facebookLoginSeparatorLabel setTextColor:UIColorFromRGB(0xcccccc)];
     [self.facebookLoginSeparatorLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.facebookLoginSeparatorLabel sizeToFit];
@@ -283,7 +283,7 @@ FBLoginViewDelegate
     }
     
     self.facebookLoginLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 296.0f, 44.0f)];
-    [self.facebookLoginLabel setText:@"Login with Facebook"];
+    [self.facebookLoginLabel setText:STRING_LOGIN_WITH_FACEBOOK];
     [self.facebookLoginLabel setTextColor:UIColorFromRGB(0xffffff)];
     [self.facebookLoginLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.facebookLoginLabel setTextAlignment:NSTextAlignmentCenter];
@@ -300,7 +300,7 @@ FBLoginViewDelegate
     [self.signUpButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
     [self.signUpButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
     [self.signUpButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
-    [self.signUpButton setTitle:@"Signup" forState:UIControlStateNormal];
+    [self.signUpButton setTitle:STRING_SIGNUP forState:UIControlStateNormal];
     [self.signUpButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.signUpButton addTarget:self action:@selector(signUpButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.signUpButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
@@ -312,7 +312,7 @@ FBLoginViewDelegate
     self.facebookSignupSeparator = [[UIView alloc] initWithFrame:CGRectZero];
     
     self.facebookSignupSeparatorLabel = [[UILabel alloc] init];
-    [self.facebookSignupSeparatorLabel setText:@"OR"];
+    [self.facebookSignupSeparatorLabel setText:STRING_OR];
     [self.facebookSignupSeparatorLabel setTextColor:UIColorFromRGB(0xcccccc)];
     [self.facebookSignupSeparatorLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.facebookSignupSeparatorLabel sizeToFit];
@@ -360,7 +360,7 @@ FBLoginViewDelegate
     }
     
     self.facebookSingupLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 296.0f, 44.0f)];
-    [self.facebookSingupLabel setText:@"Signup with Facebook"];
+    [self.facebookSingupLabel setText:STRING_SIGNUP_WITH_FACEBOOK];
     [self.facebookSingupLabel setTextColor:UIColorFromRGB(0xffffff)];
     [self.facebookSingupLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.facebookSingupLabel setTextAlignment:NSTextAlignmentCenter];
@@ -508,28 +508,28 @@ FBLoginViewDelegate
         {
             [self.loginDynamicForm validateFields:errorObject];
             
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:@"Invalid fields"
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                        message:STRING_ERROR_INVALID_FIELDS
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.loginDynamicForm checkErrors];
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                         message:[errorObject componentsJoinedByString:@","]
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
         }
         else
         {
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                         message:@"Generic error"
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
         }
     }];
 }
@@ -569,28 +569,28 @@ FBLoginViewDelegate
         {
             [self.signupDynamicForm validateFields:errorObject];
             
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:@"Invalid fields"
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                        message:STRING_ERROR_INVALID_FIELDS
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.signupDynamicForm checkErrors];
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                         message:[errorObject componentsJoinedByString:@","]
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
         }
         else
         {
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                         message:@"Generic error"
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
         }
     }];
 }
@@ -648,11 +648,11 @@ FBLoginViewDelegate
                                              } andFailureBlock:^(NSArray *errorObject) {
                                                  [self hideLoading];
                                                  
-                                                 [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                 [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                                                              message:@"Error doing login."
                                                                             delegate:nil
                                                                    cancelButtonTitle:nil
-                                                                   otherButtonTitles:@"OK", nil] show];
+                                                                   otherButtonTitles:STRING_OK, nil] show];
                                              }];
     }
 }
@@ -697,7 +697,7 @@ FBLoginViewDelegate
         [[[UIAlertView alloc] initWithTitle:alertTitle
                                     message:alertMessage
                                    delegate:nil
-                          cancelButtonTitle:@"OK"
+                          cancelButtonTitle:STRING_OK
                           otherButtonTitles:nil] show];
     }
 }

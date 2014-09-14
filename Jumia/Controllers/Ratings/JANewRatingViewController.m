@@ -71,9 +71,9 @@
                                       self.priceView.frame.size.height);
     [self.view addSubview:self.priceView];
     
-    self.labelFixed.text = @"You have used this Product? Rate it now!";
+    self.labelFixed.text = STRING_RATE_PRODUCT;
     
-    [self.sendReview setTitle:@"Send Review"
+    [self.sendReview setTitle:STRING_SEND_REVIEW
                      forState:UIControlStateNormal];
     
     [self.sendReview setTitleColor:UIColorFromRGB(0x4e4e4e)
@@ -134,22 +134,22 @@
                
                [self hideLoading];
                
-               [[[UIAlertView alloc] initWithTitle:@"Jumia"
+               [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                            message:@"There was an error"
                                           delegate:nil
                                  cancelButtonTitle:nil
-                                 otherButtonTitles:@"OK", nil] show];
+                                 otherButtonTitles:STRING_OK, nil] show];
            }];
         
     } andFailureBlock:^(NSArray *errorMessages) {
         
         [self hideLoading];
         
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                     message:@"There was an error"
                                    delegate:nil
                           cancelButtonTitle:nil
-                          otherButtonTitles:@"OK", nil] show];
+                          otherButtonTitles:STRING_OK, nil] show];
         
     }];
 }
@@ -257,11 +257,11 @@
             
             [self hideLoading];
             
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:@"Review submited with sucess."
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                        message:STRING_REVIEW_SENT
                                        delegate:self
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"Ok", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
             
             
         } andFailureBlock:^(id errorObject) {
@@ -273,31 +273,31 @@
             {
                 [self.ratingDynamicForm validateFields:errorObject];
                 
-                [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                            message:@"Invalid fields"
+                [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                            message:STRING_ERROR_INVALID_FIELDS
                                            delegate:nil
                                   cancelButtonTitle:nil
-                                  otherButtonTitles:@"OK", nil] show];
+                                  otherButtonTitles:STRING_OK, nil] show];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
                 [self.ratingDynamicForm checkErrors];
                 
-                [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                             message:[errorObject componentsJoinedByString:@","]
                                            delegate:nil
                                   cancelButtonTitle:nil
-                                  otherButtonTitles:@"OK", nil] show];
+                                  otherButtonTitles:STRING_OK, nil] show];
             }
             else
             {
                 [self.ratingDynamicForm checkErrors];
                 
-                [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                             message:@"Generic error"
                                            delegate:nil
                                   cancelButtonTitle:nil
-                                  otherButtonTitles:@"OK", nil] show];
+                                  otherButtonTitles:STRING_OK, nil] show];
             }
         }];
 }

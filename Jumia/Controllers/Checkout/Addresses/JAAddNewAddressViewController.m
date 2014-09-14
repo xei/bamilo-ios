@@ -92,7 +92,7 @@ UIPickerViewDelegate>
     
     if(self.showBackButton)
     {
-        self.navBarLayout.backButtonTitle = @"Checkout";
+        self.navBarLayout.backButtonTitle = STRING_CHECKOUT;
         self.navBarLayout.showLogo = NO;
     }
     
@@ -123,11 +123,11 @@ UIPickerViewDelegate>
      {
          [self finishedFormLoading];
          
-         [[[UIAlertView alloc] initWithTitle:@"Jumia"
+         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                      message:@"There was an error"
                                     delegate:nil
                            cancelButtonTitle:nil
-                           otherButtonTitles:@"OK", nil] show];
+                           otherButtonTitles:STRING_OK, nil] show];
      }];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
@@ -141,7 +141,7 @@ UIPickerViewDelegate>
 {
     CGFloat availableWidth = self.stepView.frame.size.width;
     
-    [self.stepLabel setText:@"2. Address"];
+    [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
     [self.stepLabel sizeToFit];
     
     CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;
@@ -171,7 +171,7 @@ UIPickerViewDelegate>
     
     self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
     [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
-    [self.bottomView addButton:@"Next" target:self action:@selector(createAddressButtonPressed)];
+    [self.bottomView addButton:STRING_NEXT target:self action:@selector(createAddressButtonPressed)];
     
     [self.view addSubview:self.bottomView];
 }
@@ -187,7 +187,7 @@ UIPickerViewDelegate>
     self.shippingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, self.shippingAddressViewCurrentY, self.shippingContentView.frame.size.width - 12.0f, 25.0f)];
     [self.shippingHeaderLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.shippingHeaderLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.shippingHeaderLabel setText:@"Add New Address"];
+    [self.shippingHeaderLabel setText:STRING_ADD_NEW_ADDRESS];
     [self.shippingHeaderLabel setBackgroundColor:[UIColor clearColor]];
     [self.shippingContentView addSubview:self.shippingHeaderLabel];
     self.shippingAddressViewCurrentY = CGRectGetMaxY(self.shippingHeaderLabel.frame);
@@ -212,7 +212,7 @@ UIPickerViewDelegate>
     self.billingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, self.billingAddressViewCurrentY, self.billingContentView.frame.size.width - 12.0f, 25.0f)];
     [self.billingHeaderLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.billingHeaderLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.billingHeaderLabel setText:@"Billing Address"];
+    [self.billingHeaderLabel setText:STRING_BILLING_ADDRESSES];
     [self.billingHeaderLabel setBackgroundColor:[UIColor clearColor]];
     [self.billingContentView addSubview:self.billingHeaderLabel];
     self.billingAddressViewCurrentY = CGRectGetMaxY(self.billingHeaderLabel.frame);
@@ -231,7 +231,7 @@ UIPickerViewDelegate>
     {
         JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
         [check setup];
-        [check.labelText setText:@"Billing to the same address"];
+        [check.labelText setText:STRING_BILLING_SAME_ADDRESSES];
         [check.switchComponent setOn:YES];
         [check.switchComponent addTarget:self action:@selector(changedAddressState:) forControlEvents:UIControlEventValueChanged];
         
@@ -258,7 +258,7 @@ UIPickerViewDelegate>
 
 -(void)showBillingAddressForm
 {
-    [self.shippingHeaderLabel setText:@"Shipping Address"];
+    [self.shippingHeaderLabel setText:STRING_SHIPPING_ADDRESSES];
     
     [self.billingContentView setHidden:NO];
     [self.billingContentView setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.shippingContentView.frame) + 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.billingAddressViewCurrentY + 12.0f)];
@@ -267,7 +267,7 @@ UIPickerViewDelegate>
 
 -(void)hideBillingAddressForm
 {
-    [self.shippingHeaderLabel setText:@"Add New Address"];
+    [self.shippingHeaderLabel setText:STRING_ADD_NEW_ADDRESS];
     [self.billingDynamicForm resetValues];
     
     [self.billingContentView setHidden:YES];
@@ -460,11 +460,11 @@ UIPickerViewDelegate>
     
     if(self.hasErrors)
     {
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                    message:@"Invalid Fields"
+        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                    message:STRING_ERROR_INVALID_FIELDS
                                    delegate:nil
                           cancelButtonTitle:nil
-                          otherButtonTitles:@"OK", nil] show];
+                          otherButtonTitles:STRING_OK, nil] show];
         self.hasErrors = NO;
     }
     else
@@ -629,7 +629,7 @@ UIPickerViewDelegate>
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
     [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-    [button setTitle:@"Done" forState:UIControlStateNormal];
+    [button setTitle:STRING_DONE forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(radioOptionChanged:) forControlEvents:UIControlEventTouchUpInside];
