@@ -65,7 +65,7 @@
                                       self.priceView.frame.size.height);
     [self.view addSubview:self.priceView];
     
-    self.reviewsNumber.text = [NSString stringWithFormat:@"%@ Reviews", self.productRatings.commentsCount];
+    self.reviewsNumber.text = [NSString stringWithFormat:STRING_REVIEWS, self.productRatings.commentsCount];
     
     NSInteger media = 0;
     
@@ -81,12 +81,12 @@
     
     self.resumeView.layer.cornerRadius = 4.0f;
     
-    [self.writeReviewButton setTitle:@"Write a Review"
+    [self.writeReviewButton setTitle:STRING_WRITE_REVIEW
                             forState:UIControlStateNormal];
     [self.writeReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
                                  forState:UIControlStateNormal];
     
-    self.labelUsedProduct.text = @"You have used this Product? Rate it now!";
+    self.labelUsedProduct.text = STRING_RATE_PRODUCT;
     
     self.tableViewComments.layer.cornerRadius = 4.0f;
     self.tableViewComments.allowsSelection = NO;
@@ -158,9 +158,9 @@
 {
     JAReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reviewCell"];
     
-    cell.labelPrice.text = @"Price";
-    cell.labelAppearance.text = @"Appearance";
-    cell.labelQuality.text = @"Quality";
+    cell.labelPrice.text = STRING_PRICE;
+    cell.labelAppearance.text = STRING_APPEARENCE;
+    cell.labelQuality.text = STRING_QUANTITY;
     
     RIRatingComment *comment = [self.productRatings.comments objectAtIndex:indexPath.row];
     
@@ -200,9 +200,9 @@
     NSString *string;
     
     if (comment.nickname.length > 0) {
-        string = [NSString stringWithFormat:@"posted by %@, %@", comment.nickname, comment.createdAt];
+        string = [NSString stringWithFormat:STRING_POSTED_BY, comment.nickname, comment.createdAt];
     } else {
-        string = [NSString stringWithFormat:@"posted by Anonimous User, %@", comment.createdAt];
+        string = [NSString stringWithFormat:STRING_POSTED_BY_ANONYMOUS, comment.createdAt];
     }
     
     cell.labelAuthorDate.text = string;

@@ -46,16 +46,16 @@
         self.numberOfReviewsLabel.font = JACatalogCellLightFont;
         self.numberOfReviewsLabel.textColor = JACatalogCellGrayFontColor;
         if (1 == [product.sum integerValue]) {
-            self.numberOfReviewsLabel.text = [NSString stringWithFormat:@"%@ review", [product.sum stringValue]];
+            self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEW, [product.sum stringValue]];
         } else {
-            self.numberOfReviewsLabel.text = [NSString stringWithFormat:@"%@ reviews", [product.sum stringValue]];
+            self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [product.sum stringValue]];
         }
     } else {
         [self.ratingsView removeFromSuperview];
     }
     
     [self.addToCartButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.addToCartButton setTitle:@"Add to Cart" forState:UIControlStateNormal];
+    [self.addToCartButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
 }
 
 - (void)loadWithCartItem:(RICartItem *)cartItem
@@ -64,7 +64,7 @@
     
     [self.ratingsView removeFromSuperview];
     
-    NSString *stringQuantity = [NSString stringWithFormat:@"Quantity: %@", [[cartItem quantity] stringValue]];
+    NSString *stringQuantity = [NSString stringWithFormat:STRING_QUANTITY, [[cartItem quantity] stringValue]];
     [self.quantityButton setBackgroundColor:[UIColor clearColor]];
     [self.quantityButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
     [self.quantityButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];

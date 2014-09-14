@@ -25,7 +25,7 @@
     [super viewDidLoad];
     
     self.navBarLayout.title = self.filter.name;
-    self.navBarLayout.backButtonTitle = @"Filters";
+    self.navBarLayout.backButtonTitle = STRING_FILTERS;
     self.navBarLayout.showDoneButton = YES;
 
     self.tableView.delegate = self;

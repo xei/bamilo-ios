@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navBarLayout.title = CHECKOUT_LABEL;
+    self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;
     
@@ -32,7 +32,7 @@
 {
     self.bottomView = [[JAButtonWithBlur alloc] init];
     [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
-    [self.bottomView addButton:@"Next" target:self action:@selector(nextStepButtonPressed)];
+    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
     
     [self.view addSubview:self.bottomView];
 }

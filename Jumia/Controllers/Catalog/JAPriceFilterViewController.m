@@ -24,8 +24,8 @@
 {
     [super viewDidLoad];
     
-    self.navBarLayout.title = @"Price";
-    self.navBarLayout.backButtonTitle = @"Filters";
+    self.navBarLayout.title = STRING_PRICE;
+    self.navBarLayout.backButtonTitle = STRING_FILTERS;
     self.navBarLayout.showDoneButton = YES;
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -43,7 +43,7 @@
     
     [self sliderMoved:nil];
     
-    self.discountLabel.text = @"With discount only";
+    self.discountLabel.text = STRING_WITH_DISCOUNT_ONLY;
     self.discountSwitch.on = self.priceFilterOption.discountOnly;
 }
 

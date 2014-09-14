@@ -15,8 +15,8 @@
     self = [super init];
     if (self) {
         //defaults
-        self.backButtonTitle=@"Back";
-        self.doneButtonTitle=@"Done";
+        self.backButtonTitle=STRING_BACK;
+        self.doneButtonTitle=STRING_DONE;
         self.showMenuButton=YES;
         self.showCartButton=YES;
         self.showLogo=YES;
@@ -44,7 +44,7 @@
         _backButtonTitle=backButtonTitle;
         self.showBackButton = YES;
     } else {
-        _backButtonTitle = @"Back";
+        _backButtonTitle = STRING_BACK;
     }
 }
 
@@ -123,7 +123,7 @@
         _doneButtonTitle=doneButtonTitle;
         self.showDoneButton = YES;
     } else {
-        _doneButtonTitle = @"Done";
+        _doneButtonTitle = STRING_DONE;
     }
 }
 

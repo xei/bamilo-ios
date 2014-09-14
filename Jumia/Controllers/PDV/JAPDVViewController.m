@@ -217,7 +217,7 @@
         
         self.variationsSection.layer.cornerRadius = 4.0f;
         
-        self.variationsSection.titleLabel.text = @"Variations";
+        self.variationsSection.titleLabel.text = STRING_VARIATIONS;
         
         float start = 0.0;
         
@@ -267,11 +267,11 @@
                                          
                                          if ([ratings.commentsCount integerValue] > 0)
                                          {
-                                             self.productInfoSection.numberOfReviewsLabel.text = [NSString stringWithFormat:@"%@ Reviews", ratings.commentsCount];
+                                             self.productInfoSection.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, ratings.commentsCount];
                                          }
                                          else
                                          {
-                                             self.productInfoSection.numberOfReviewsLabel.text = @"Rate now";
+                                             self.productInfoSection.numberOfReviewsLabel.text = STRING_RATE_NOW;
                                          }
                                          
                                          NSInteger media = 0;
@@ -334,7 +334,7 @@
     else if (self.product.productSimples.count > 1)
     {
         [self.productInfoSection.sizeButton setEnabled:YES  ];
-        [self.productInfoSection.sizeButton setTitle:@"Size"
+        [self.productInfoSection.sizeButton setTitle:STRING_SIZE
                                             forState:UIControlStateNormal];
         
         [self.productInfoSection.sizeButton addTarget:self
@@ -359,7 +359,7 @@
     {
         if (self.arrayWithRelatedItems.count > 0)
         {
-            self.relatedItems.topLabel.text = @"Related Items";
+            self.relatedItems.topLabel.text = STRING_RELATED_ITEMS;
             
             self.relatedItems.frame = CGRectMake(6,
                                                  startingElement,
@@ -431,13 +431,13 @@
     
     if ([model isEqualToString:@"iPhone"])
     {
-        [ctaView addButton:CALL_TO_ORDER
+        [ctaView addButton:STRING_CALL_TO_ORDER
                     target:self
                     action:@selector(callToOrder)];
     }
 
     
-    [ctaView addButton:ADD_TO_SHOPPING_CART
+    [ctaView addButton:STRING_ADD_TO_SHOPPING_CART
                    target:self
                    action:@selector(addToCart)];
     
@@ -512,7 +512,7 @@
     JAActivityViewController *activityController = [[JAActivityViewController alloc] initWithActivityItems:objectsToShare
                                                                                      applicationActivities:nil];
     
-    NSString *stringToShare = @"Great product at Jumia";
+    NSString *stringToShare = STRING_SHARE_PRODUCT_MESSAGE;
 
     [activityController setValue:stringToShare
                           forKey:@"subject"];
@@ -557,7 +557,7 @@
 
 - (void)addToCart
 {
-    if ([self.productInfoSection.sizeButton.titleLabel.text isEqualToString:@"Size"])
+    if ([self.productInfoSection.sizeButton.titleLabel.text isEqualToString:STRING_SIZE])
     {
         self.openPickerFromCart = YES;
         [self showSizePicker];
@@ -581,21 +581,21 @@
                           NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                           [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                           
-                          [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                      message:@"Product added"
+                          [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                                      message:STRING_ITEM_WAS_ADDED_TO_CART
                                                      delegate:nil
                                             cancelButtonTitle:nil
-                                            otherButtonTitles:@"Ok", nil] show];
+                                            otherButtonTitles:STRING_OK, nil] show];
                           
                           [self hideLoading];
                           
                       } andFailureBlock:^(NSArray *errorMessages) {
                           
-                          [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                                      message:@"Error adding to the cart"
+                          [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                                      message:STRING_ERROR_ADDING_TO_CART
                                                      delegate:nil
                                             cancelButtonTitle:nil
-                                            otherButtonTitles:@"Ok", nil] show];
+                                            otherButtonTitles:STRING_OK, nil] show];
                           
                           [self hideLoading];
                           

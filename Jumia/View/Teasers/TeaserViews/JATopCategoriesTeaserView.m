@@ -41,7 +41,7 @@
                                                                     currentY,
                                                                     contentView.bounds.size.width - JATopCategoriesTeaserViewHorizontalMargin*2,
                                                                     JATopCategoriesTeaserViewTitleHeight)];
-    titleLabel.text = @"Top Categories";
+    titleLabel.text = STRING_TOP_CATEGORIES;
     titleLabel.font = JATopCategoriesTeaserViewTitleFont
     titleLabel.textColor = JATopCategoriesTeaserViewTitleColor;
     [contentView addSubview:titleLabel];
@@ -86,7 +86,7 @@
                                                                              currentY,
                                                                              contentView.bounds.size.width - JATopCategoriesTeaserViewHorizontalMargin*2,
                                                                              JATopCategoriesTeaserViewCellHeight)];
-    allCategoriesLabel.text = @"All Categories";
+    allCategoriesLabel.text = STRING_ALL_CATEGORIES;
     allCategoriesLabel.font = JATopCategoriesTeaserViewAllCategoriesCellFont;
     allCategoriesLabel.textColor = JATopCategoriesTeaserViewCellColor;
     [contentView addSubview:allCategoriesLabel];

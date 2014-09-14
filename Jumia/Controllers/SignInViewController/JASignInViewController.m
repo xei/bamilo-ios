@@ -42,7 +42,7 @@ FBLoginViewDelegate
 {
     [super viewDidLoad];
     
-    self.navBarLayout.title = LOGIN_LABEL;
+    self.navBarLayout.title = STRING_LOGIN;
     
     [self showLoading];
     
@@ -75,7 +75,7 @@ FBLoginViewDelegate
         }
     }
     self.facebookLoginLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 296.0f, 44.0f)];
-    [self.facebookLoginLabel setText:@"Login with Facebook"];
+    [self.facebookLoginLabel setText:STRING_LOGIN_WITH_FACEBOOK];
     [self.facebookLoginLabel setTextColor:UIColorFromRGB(0xffffff)];
     [self.facebookLoginLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.facebookLoginLabel setTextAlignment:NSTextAlignmentCenter];
@@ -104,11 +104,11 @@ FBLoginViewDelegate
            
            [self finishedFormLoading];
            
-           [[[UIAlertView alloc] initWithTitle:@"Jumia"
+           [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                        message:@"There was an error"
                                       delegate:nil
                              cancelButtonTitle:nil
-                             otherButtonTitles:@"OK", nil] show];
+                             otherButtonTitles:STRING_OK, nil] show];
            
        }];
 }
@@ -124,7 +124,7 @@ FBLoginViewDelegate
     [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
     [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
     [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
-    [self.loginButton setTitle:LOGIN_LABEL forState:UIControlStateNormal];
+    [self.loginButton setTitle:STRING_LOGIN forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.loginButton addTarget:self action:@selector(loginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.loginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
@@ -135,7 +135,7 @@ FBLoginViewDelegate
     self.forgotPasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.forgotPasswordButton setFrame:CGRectMake(6.0f, self.loginViewCurrentY, 296.0f, 30.0f)];
     [self.forgotPasswordButton setBackgroundColor:[UIColor clearColor]];
-    [self.forgotPasswordButton setTitle:@"Forgot Password?" forState:UIControlStateNormal];
+    [self.forgotPasswordButton setTitle:STRING_FORGOT_PASSWORD forState:UIControlStateNormal];
     [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
     [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];
@@ -202,7 +202,7 @@ FBLoginViewDelegate
          
          [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                              object:@{@"index": @(0),
-                                                                      @"name": @"Home"}];
+                                                                      @"name": STRING_HOME}];
          
          [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                              object:nil];
@@ -220,28 +220,28 @@ FBLoginViewDelegate
          {
              [self.dynamicForm validateFields:errorObject];
              
-             [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                         message:@"Invalid fields"
+             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                         message:STRING_ERROR_INVALID_FIELDS
                                         delegate:nil
                                cancelButtonTitle:nil
-                               otherButtonTitles:@"OK", nil] show];
+                               otherButtonTitles:STRING_OK, nil] show];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm checkErrors];
-             [[[UIAlertView alloc] initWithTitle:@"Jumia"
+             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                          message:[errorObject componentsJoinedByString:@","]
                                         delegate:nil
                                cancelButtonTitle:nil
-                               otherButtonTitles:@"OK", nil] show];
+                               otherButtonTitles:STRING_OK, nil] show];
          }
          else
          {
-             [[[UIAlertView alloc] initWithTitle:@"Jumia"
+             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                         message:@"Generic error"
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
         }
     }];
 }
@@ -282,7 +282,7 @@ FBLoginViewDelegate
 
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                                                                      object:@{@"index": @(0),
-                                                                                                              @"name": @"Home"}];
+                                                                                                              @"name": STRING_HOME}];
                                                  
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                                                      object:nil];
@@ -296,11 +296,11 @@ FBLoginViewDelegate
                                                  
                                                  [self hideLoading];
                                                  
-                                                 [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                                 [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                                                              message:@"Error doing login."
                                                                             delegate:nil
                                                                    cancelButtonTitle:nil
-                                                                   otherButtonTitles:@"OK", nil] show];
+                                                                   otherButtonTitles:STRING_OK, nil] show];
                                              }];
     }
 }
@@ -345,7 +345,7 @@ FBLoginViewDelegate
         [[[UIAlertView alloc] initWithTitle:alertTitle
                                     message:alertMessage
                                    delegate:nil
-                          cancelButtonTitle:@"OK"
+                          cancelButtonTitle:STRING_OK
                           otherButtonTitles:nil] show];
     }
 }

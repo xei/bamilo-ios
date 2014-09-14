@@ -40,7 +40,7 @@
                                                                     currentY,
                                                                     contentView.bounds.size.width - JAPopularBrandsTeaserViewHorizontalMargin*2,
                                                                     JAPopularBrandsTeaserViewTitleHeight)];
-    titleLabel.text = @"Top Brands";
+    titleLabel.text = STRING_TOP_BRANDS;
     titleLabel.font = JAPopularBrandsTeaserViewTitleFont
     titleLabel.textColor = JAPopularBrandsTeaserViewTitleColor;
     [contentView addSubview:titleLabel];

@@ -82,7 +82,7 @@
     //there's a white rectangle where these two labels will go in. its measures are (4, 0, 61, 56)
     
     UILabel* hotLabel = [[UILabel alloc] init];
-    hotLabel.text = @"HOT";
+    hotLabel.text = STRING_HOT;
     hotLabel.font = JACampaignsTeaserViewHotLabelFont;
     hotLabel.textColor = JACampaignsTeaserViewHotLabelColor;
     hotLabel.textAlignment = NSTextAlignmentCenter;
@@ -94,7 +94,7 @@
     [contentView addSubview:hotLabel];
     
     UILabel* offersLabel = [[UILabel alloc] init];
-    offersLabel.text = @"OFFERS";
+    offersLabel.text = STRING_OFFERS;
     offersLabel.font = JACampaignsTeaserViewOffersLabelFont;
     offersLabel.textColor = JACampaignsTeaserViewOffersLabelColor;
     offersLabel.textAlignment = NSTextAlignmentCenter;

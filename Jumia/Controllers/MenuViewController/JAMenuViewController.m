@@ -86,8 +86,8 @@
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cartViewPressed:)];
     tapRecognizer.numberOfTapsRequired = 1;
     [self.cartView addGestureRecognizer:tapRecognizer];
-    self.cartLabelTitle.text = @"Shopping Cart";
-    self.cartLabelTotalCost.text = @"Your cart is empty";
+    self.cartLabelTitle.text = STRING_SHOPPING_CART;
+    self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
     self.cartLabelDetails.text = @"";
     self.cartItensNumber.text = @"";
     
@@ -106,11 +106,11 @@
         
         [self hideLoading];
         
-        [[[UIAlertView alloc] initWithTitle:@"Jumia"
+        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                     message:@"Error getting the categories."
                                    delegate:nil
                           cancelButtonTitle:nil
-                          otherButtonTitles:@"OK", nil] show];
+                          otherButtonTitles:STRING_OK, nil] show];
         
     }];
 }
@@ -129,14 +129,14 @@
         
         if(0 == [[cart cartCount] integerValue])
         {
-            self.cartLabelTotalCost.text = @"Your cart is empty";
+            self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
             self.cartLabelDetails.text = @"";
             self.cartItensNumber.text = @"";
         }
         else
         {
             self.cartLabelTotalCost.text =  [cart cartValueFormatted];
-            self.cartLabelDetails.text = @"VAT and Shipping costs included";
+            self.cartLabelDetails.text = STRING_VAT_SHIPPING_INCLUDED;
             self.cartItensNumber.text = [[cart cartCount] stringValue];
         }
     }
@@ -158,7 +158,7 @@
 {
     if ([segue.identifier isEqualToString:@"showSubCategories"]) {
         [segue.destinationViewController setSourceCategoriesArray:self.categories];
-        [segue.destinationViewController setSubCategoriesTitle:@"Categories"];
+        [segue.destinationViewController setSubCategoriesTitle:STRING_CATEGORIES];
     }
 }
 
@@ -279,7 +279,7 @@
         // I changed the index to 99 to know that it's to display a search result
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                             object:@{@"index": @(99),
-                                                                     @"name": @"Search",
+                                                                     @"name": STRING_SEARCH,
                                                                      @"text": suggestion.item }];
         
     } else {
@@ -409,7 +409,7 @@
     // I changed the index to 99 to know that it's to display a search result
     [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                         object:@{@"index": @(99),
-                                                                 @"name": @"Search",
+                                                                 @"name": STRING_SEARCH,
                                                                  @"text": searchBar.text }];
 }
 
@@ -515,37 +515,37 @@
 
 - (void)initSourceArray
 {
-    self.sourceArray = [@[@{ @"name": @"Home",
+    self.sourceArray = [@[@{ @"name": STRING_HOME,
                              @"image": @"ico_home",
                              @"selected": @"ico_home_pressed" },
-                          @{ @"name": @"Categories",
+                          @{ @"name": STRING_CATEGORIES,
                              @"image": @"ico_categories",
                              @"selected": @"ico_categories_pressed" },
-                          @{ @"name": @"My Favourites",
+                          @{ @"name": STRING_MY_FAVOURITES,
                              @"image": @"ico_favourites",
                              @"selected": @"ico_favourites_pressed" },
-                          @{ @"name": @"Recent Searches",
+                          @{ @"name": STRING_RECENT_SEARCHES,
                              @"image": @"ico_recentsearches",
                              @"selected": @"ico_recentsearches_pressed" },
-                          @{ @"name": @"Recently Viewed",
+                          @{ @"name": STRING_RECENTLY_VIEWED,
                              @"image": @"ico_recentlyviewed",
                              @"selected": @"ico_recentlyviewed_pressed" },
-                          @{ @"name": @"My Account",
+                          @{ @"name": STRING_MY_ACCOUNT,
                              @"image": @"ico_myaccount",
                              @"selected": @"ico_myaccount_pressed" },
-                          @{ @"name": @"Track my Order",
+                          @{ @"name": STRING_TRACK_MY_ORDER,
                              @"image": @"ico_trackorder",
                              @"selected": @"ico_trackorder_pressed" },
-                          @{ @"name": @"Choose Country",
+                          @{ @"name": STRING_CHOOSE_COUNTRY,
                              @"image": @"ico_choosecountry",
                              @"selected": @"ico_choosecountry_pressed" },
-                          @{ @"name": @"Sign In",
+                          @{ @"name": STRING_SIGN_IN,
                              @"image": @"ico_sign",
                              @"selected": @"ico_signpressed" }] mutableCopy];
     
     if ([RICustomer checkIfUserIsLogged])
     {
-        NSDictionary *dic = @{ @"name": @"Sign Out",
+        NSDictionary *dic = @{ @"name": STRING_SIGN_OUT,
                                @"image": @"ico_sign",
                                @"selected": @"ico_signpressed" };
         
@@ -559,7 +559,7 @@
 
 - (void)userDidLogin
 {
-    NSDictionary *dic = @{ @"name": @"Sign Out",
+    NSDictionary *dic = @{ @"name": STRING_SIGN_OUT,
                            @"image": @"ico_sign",
                            @"selected": @"ico_signpressed" };
     
@@ -570,7 +570,7 @@
 
 - (void)userDidLogout
 {
-    NSDictionary *dic = @{ @"name": @"Sign In",
+    NSDictionary *dic = @{ @"name": STRING_SIGN_IN,
                            @"image": @"ico_sign",
                            @"selected": @"ico_signpressed" };
     

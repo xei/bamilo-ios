@@ -219,7 +219,7 @@
         NSNumber *index = [selectedItem objectForKey:@"index"];
         
         if ([index isEqual:@(0)]) {
-            [self changeCenterPanel:@"Home"];
+            [self changeCenterPanel:STRING_HOME];
             
         } else {
             if ([index isEqual:@(99)])
@@ -242,7 +242,7 @@
 
 - (void)changeCenterPanel:(NSString *)newScreenName
 {
-    if ([newScreenName isEqualToString:@"Home"])
+    if ([newScreenName isEqualToString:STRING_HOME])
     {
         if (![[self topViewController] isKindOfClass:[JAHomeViewController class]])
         {
@@ -254,7 +254,7 @@
             self.viewControllers = @[home];
         }
     }
-    else if ([newScreenName isEqualToString:@"My Favourites"])
+    else if ([newScreenName isEqualToString:STRING_MY_FAVOURITES])
     {
         if (![[self topViewController] isKindOfClass:[JAMyFavouritesViewController class]])
         {
@@ -266,7 +266,7 @@
             self.viewControllers = @[favourites];
         }
     }
-    else if ([newScreenName isEqualToString:@"Choose Country"])
+    else if ([newScreenName isEqualToString:STRING_CHOOSE_COUNTRY])
     {
         if (![[self topViewController] isKindOfClass:[JAChooseCountryViewController class]])
         {
@@ -276,7 +276,7 @@
                             animated:YES];
         }
     }
-    else if ([newScreenName isEqualToString:@"Recent Searches"])
+    else if ([newScreenName isEqualToString:STRING_RECENT_SEARCHES])
     {
         if (![[self topViewController] isKindOfClass:[JARecentSearchesViewController class]])
         {
@@ -288,7 +288,7 @@
             self.viewControllers = @[searches];
         }
     }
-    else if ([newScreenName isEqualToString:@"Sign In"])
+    else if ([newScreenName isEqualToString:STRING_SIGN_IN])
     {
         if (![[self topViewController] isKindOfClass:[JASignInViewController class]])
         {
@@ -300,7 +300,7 @@
             self.viewControllers = @[signInViewController];
         }
     }
-    else if ([newScreenName isEqualToString:@"Recently Viewed"])
+    else if ([newScreenName isEqualToString:STRING_RECENTLY_VIEWED])
     {
         if (![[self topViewController] isKindOfClass:[JARecentlyViewedViewController class]])
         {
@@ -312,7 +312,7 @@
             self.viewControllers = @[recentlyViewed];
         }
     }
-    else if([newScreenName isEqualToString:@"My Account"])
+    else if([newScreenName isEqualToString:STRING_MY_ACCOUNT])
     {
         if([RICustomer checkIfUserIsLogged])
         {
@@ -331,7 +331,7 @@
             }
         }
     }
-    else if ([newScreenName isEqualToString:@"Track my Order"])
+    else if ([newScreenName isEqualToString:STRING_TRACK_MY_ORDER])
     {
         if (![[self topViewController] isKindOfClass:[JATrackMyOrderViewController class]])
         {
@@ -406,7 +406,7 @@
 
 - (void) showHomeScreen
 {
-    [self changeCenterPanel:@"Home"];
+    [self changeCenterPanel:STRING_HOME];
 }
 
 #pragma mark - Teaser Actions
@@ -425,7 +425,7 @@
         
         catalog.catalogUrl = url;
         catalog.navBarLayout.title = title;
-        catalog.navBarLayout.backButtonTitle = @"Home";
+        catalog.navBarLayout.backButtonTitle = STRING_HOME;
         
         [self pushViewController:catalog
                         animated:YES];
@@ -486,7 +486,7 @@
         }
         else
         {
-            pdv.previousCategory = @"Home";
+            pdv.previousCategory = STRING_HOME;
         }
         
         [self pushViewController:pdv
@@ -498,8 +498,8 @@
 {
     JACategoriesViewController* categoriesViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"categoriesViewController"];
     
-    categoriesViewController.navBarLayout.title = @"All Categories";
-    categoriesViewController.navBarLayout.backButtonTitle = @"Home";
+    categoriesViewController.navBarLayout.title = STRING_ALL_CATEGORIES;
+    categoriesViewController.navBarLayout.backButtonTitle = STRING_HOME;
     
     [self pushViewController:categoriesViewController animated:YES];
 }
@@ -519,7 +519,7 @@
         catalog.category = category;
         
         catalog.navBarLayout.title = category.name;
-        catalog.navBarLayout.backButtonTitle = @"All Categories";
+        catalog.navBarLayout.backButtonTitle = STRING_ALL_CATEGORIES;
         
         [self pushViewController:catalog
                         animated:YES];
@@ -544,7 +544,7 @@
 {
     JAForgotPasswordViewController *forgotVC = [self.storyboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
     
-    forgotVC.navBarLayout.backButtonTitle = LOGIN_LABEL;
+    forgotVC.navBarLayout.backButtonTitle = STRING_LOGIN;
     
     [self pushViewController:forgotVC animated:YES];
 }
@@ -560,7 +560,7 @@
 {
     JAForgotPasswordViewController *forgotVC = [self.storyboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
     
-    forgotVC.navBarLayout.backButtonTitle = CHECKOUT_LABEL;
+    forgotVC.navBarLayout.backButtonTitle = STRING_CHECKOUT;
     
     [self pushViewController:forgotVC animated:YES];
 }

@@ -101,7 +101,7 @@ UIAlertViewDelegate
                               self.isPopupOpened = YES;
                               if(isUpdateMandatory)
                               {
-                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update necessary" message:@"We found something that we needed to fix to make shopping experience in Jumia even better! You will need to update before continue using the app." delegate:self cancelButtonTitle:@"Ok, Update!" otherButtonTitles:nil];
+                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:STRING_UPDATE_NECESSARY_MESSAGE delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
                                   [alert setTag:kForceUpdateAlertViewTag];
                                   [alert show];
                                   
@@ -109,7 +109,7 @@ UIAlertViewDelegate
                               }
                               else
                               {
-                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update available" message:@"There is a new update available that we prepared to make shopping experience in Jumia even better! Make sure you upgrade today!" delegate:self cancelButtonTitle:@"No, thanks." otherButtonTitles:@"Update!", nil];
+                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:STRING_UPDATE_AVAILABLE_MESSAGE delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
                                   [alert setTag:kUpdateAvailableAlertViewTag];
                                   [alert show];
                               }
@@ -155,7 +155,7 @@ UIAlertViewDelegate
                                   self.isPopupOpened = YES;
                                   if(isUpdateMandatory)
                                   {
-                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update necessary" message:@"We found something that we needed to fix to make shopping experience in Jumia even better! You will need to update before continue using the app." delegate:self cancelButtonTitle:@"Ok, Update!" otherButtonTitles:nil];
+                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:STRING_UPDATE_NECESSARY_MESSAGE delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
                                       [alert setTag:kForceUpdateAlertViewTag];
                                       [alert show];
                                       
@@ -163,7 +163,7 @@ UIAlertViewDelegate
                                   }
                                   else
                                   {
-                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update available" message:@"There is a new update available that we prepared to make shopping experience in Jumia even better! Make sure you upgrade today!" delegate:self cancelButtonTitle:@"No, thanks." otherButtonTitles:@"Update!", nil];
+                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:STRING_UPDATE_AVAILABLE_MESSAGE delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
                                       [alert setTag:kUpdateAvailableAlertViewTag];
                                       [alert show];
                                   }
@@ -184,8 +184,8 @@ UIAlertViewDelegate
             JAChooseCountryViewController *choose = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
             
             choose.navBarLayout.showMenuButton = NO;
-            choose.navBarLayout.doneButtonTitle = @"Apply";
-            choose.navBarLayout.title = @"Choose Country";
+            choose.navBarLayout.doneButtonTitle = STRING_APPLY;
+            choose.navBarLayout.title = STRING_CHOOSE_COUNTRY;
             
             //center navigation doesn't exit yet, create a "fake" nav bar
             self.navigationBarView = [JANavigationBarView getNewNavBarView];
@@ -279,7 +279,7 @@ UIAlertViewDelegate
                               self.isPopupOpened = YES;
                               if(isUpdateMandatory)
                               {
-                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update necessary" message:@"We found something that we needed to fix to make shopping experience in Jumia even better! You will need to update before continue using the app." delegate:self cancelButtonTitle:@"Ok, Update!" otherButtonTitles:nil];
+                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:STRING_UPDATE_NECESSARY_MESSAGE delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
                                   [alert setTag:kForceUpdateAlertViewTag];
                                   [alert show];
                                   
@@ -287,7 +287,7 @@ UIAlertViewDelegate
                               }
                               else
                               {
-                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update available" message:@"There is a new update available that we prepared to make shopping experience in Jumia even better! Make sure you upgrade today!" delegate:self cancelButtonTitle:@"No, thanks." otherButtonTitles:@"Update!", nil];
+                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:STRING_UPDATE_AVAILABLE_MESSAGE delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
                                   [alert setTag:kUpdateAvailableAlertViewTag];
                                   [alert show];
                               }

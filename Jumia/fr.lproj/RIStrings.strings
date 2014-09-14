@@ -6,20 +6,151 @@
   Copyright (c) 2014 Rocket Internet. All rights reserved.
 */
 
-"login_label" = "Connectez-vous";
+"string_jumia" = "Jumia";
+"string_update_necessary_title" = "Update necessary";
+"string_update_necessary_message" = "We found something that we needed to fix to make shopping experience in Jumia even better! You will need to update before continue using the app.";
+"string_update_available_title" = "Update available";
+"string_update_available_message" = "There is a new update available that we prepared to make shopping experience in Jumia even better! Make sure you upgrade today!";
+"string_update" = "Update!";
+"string_ok_update" = "Ok, Update!";
+"string_no_thanks" = "No, thanks.";
 
+"ok_label" = "OK";
+"done_label" = "Valider";
+"back_label" = "Retour";
+"submit_label" = "Soumettre";
+
+"login_label" = "Connectez-vous";
+"home" = "Accueil";
+"categories" = "Catégories";
+"favourites" = "Mes Favoris";
+"recent_searches" = "Recherches Récentes";
+"recently_viewed" = "Derniers Produits Vus";
+"my_account" = "Mon compte";
+"nav_track_order" = "Suivi de commande";
+"nav_country" = "Choisir le pays";
+"sign_in" = "Accéder au compte";
+"sign_out" = "Se déconnecter";
+"string_filters" = "Filters";
+"categories_toplevel_title" = "Toutes les catégories";
+"string_apply" = "Apply";
+"search_label" = "Rechercher";
+"shopping_cart" = "Panier d\'achat";
+"navigation_cart_empty" = "Votre panier est vide";
+"string_vat_shipping_included" = "VAT and Shipping costs included";
+
+"teaser_campaign_button_first_line" = "HOT";
+"teaser_campaign_button_second_line" = "OFFERS";
+"string_top_brands" = "Top Brands";
+"string_top_categories" = "Top Categories";
+"string_top_sellers" = "Top Sellers";
+
+"string_new" = "NEW";
+"string_size" = "Size";
+"string_review" = "%@ Avis";
+"string_reviews" = "%@ Avis";
+"string_quantity" = "Quantity: %@";
+"products_sort_bestrated" = "Mieux Notés";
+"products_sort_popularity" = "Popularité";
+"products_sort_newin" = "Nouveautés";
+"products_sort_priceup" = "Prix croissant";
+"products_sort_pricedown" = "Prix décroissant";
+"products_sort_name" = "Nom";
+"products_sort_brand" = "Marque";
+"all_label" = "Tout";
+"string_with_discount_only" = "With discount only";
+
+"favourite_no_favourites" = "Vous n\'avez pas de favoris pour le moment";
+"favourite_addalltocart" = "Tout ajouter au Panier";
+"added_to_shop_cart_dialog_text" = "Le produit a été ajouté au panier";
+"error_add_to_cart_failed" = "L\'ajout au panier n\'a pas fonctionné";
+"string_size_with_value" = "Size: %@";
+"string_choose_size_for_all_products" = "Please choose size for all products";
 "add_to_shopping_cart" = "Ajouter au panier";
+
+"string_variations" = "Variations";
+"string_rate_now" = "Rate Now";
+"related_items" = "Produits Similaires";
+"product_features_title" = "Spécificités du produit";
+"product_description_title" = "Description du produit";
+"share_checkout_this_product" = "Découvre vite le produit que j\'ai trouvé!";
+"rating_question" = "Avez-vous acheté / utilisé ce produit? Notez le!";
+"writereview_send" = "Envoyer votre avis";
+"submit_title" = "Avis envoyé";
+"write_comment" = "Donnez-nous notre avis";
+"posted_by" = "Posté par";
+"string_posted_by_anonymous" = "posted by Anonymous User, %@";
+"string_price" = "Price";
+"string_appearance" = "Appearance";
+"rating_quality" = "Qualité";
 
 "cart_label" = "Panier";
 "wishlist_notiems" = "Vous n\'avez pas d\'articles dans le panier";
 "continue_shopping" = "Continuer votre shopping!";
+"my_order_coupon_label" = "Coupon";
 "voucher_use" = "Utiliser";
 "voucher_remove" = "Supprimer";
 "voucher_message_hint" = "Entrez votre Code Promotionnel ici";
 "call_to_order" = "Appeler pour commander";
+"shoppingcart_article" = "1 Produit";
+"shoppingcart_articles" = "%d Produits";
+"error_add_to_shopping_cart_quantity" = "Vous ne pouvez pas commander plus que la quantité disponible. Désolé.";
+"shipping" = "Livraison";
+"free_label" = "Gratuit";
+"extra_costs_label" = "Frais Supplémentaires";
+"my_order_voucher_label" = "Code promotionel";
+"my_order_total_label" = "Total";
+"checkout_button_text" = "Valider la commande";
+"sub_total_title" = "Sous-total";
+"vat_string" = "TTC";
+
+"signup_label" = "Créer un compte"	;
+"facebook_signup_button_text" = "Créer un compte via Facebook";
+"facebook_login_button_text" = "Se connecter via Facebook";
+"or_text" = "OU";
+"fgt_pass" = "Mot de passe oublié ?";
+"forgotten_password" = "Veillez entrer votre e-mail.";
+"forgotten_password_sub_text" = "Nous vous enverrons un lien pour modifier le mot de passe.";
+"forgotten_password_successtext" = "Email envoyé";
 
 "checkout_label" = "Checkout";
 "checkout_header_step_1" = "1. Informations client";
+"next_button" = "Suivant";
+
 "checkout_header_step_2" = "2. Adresse";
+"billing_same_label" = "Facturer à la même adresse";
+"billing_shipping_label" = "Adresse de livraison";
+"billing_billing_label" = "Adresse de facturation";
+"billing_def_shipping_label" = "Adresse de livraison par défaut";
+"billing_others_label" = "Autres adresses";
+"action_label_add_address" = "Ajouter une nouvelle adresse";
+"setting_address_error" = "Error setting billing/shipping address";
+"cancel_label" = "Annuler";
+"save_changes_label" = "Enregistrer les changements";
+"edit_address" = "Modifier l\'adresse";
+"validation_errortext" = "Il y a des erreurs dans les données communiquées, vérifiez les différents champs renseignés";
+
 "checkout_header_step_3" = "3. Livraison";
+"string_city" = "City: ";
+"string_address" = "Address: ";
+"string_opening_hours" = "Opening Hours: ";
+"string_please_select" = "Please Select";
+"order_summary_shipping_fee_label" = "Frais de livraison:";
+
 "checkout_header_step_4" = "4. Paiement";
+"payment" = "Paiement";
+
+"creation_date" = "Date de création:";
+"payment_method" = "Méthode de Paiement:";
+"order_track_products" = "Produits:";
+"string_error_no_results_for_tracking_id" = "Aucun résultat pour le numéro de commande recherché.\nS\'il vous plaît vérifiez à nouveau le numéro de commande et réessayez.";
+"track_your_order" = "Suivre votre commande";
+"track_order" = "Suivre la commande";
+"track_order_hint" = "Numéro de commande";
+"string_order_status" = "order status";
+
+"recentsearch_no_searches" = "Aucune Recherche Récente";
+"recentsearch_clear_searches" = "Effacer les Recherches Récentes";
+
+"recentlyview_no_searches" = "Aucun Dernier Produit Vu";
+"recentlyview_clear_viewed" = "Effacer les Derniers Produits Vus";

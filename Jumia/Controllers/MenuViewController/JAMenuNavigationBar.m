@@ -26,7 +26,7 @@
         
         self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(6, 0, 235, 44)];
         self.searchBar.barTintColor = [UIColor whiteColor];
-        self.searchBar.placeholder = @"Search";
+        self.searchBar.placeholder = STRING_SEARCH;
         
         [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
         

@@ -34,8 +34,8 @@
 {
     [super viewDidLoad];
     
-    self.navBarLayout.title = @"Choose Country";
-    self.navBarLayout.doneButtonTitle = @"Apply";
+    self.navBarLayout.title = STRING_CHOOSE_COUNTRY;
+    self.navBarLayout.doneButtonTitle = STRING_APPLY;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applyButtonPressed)

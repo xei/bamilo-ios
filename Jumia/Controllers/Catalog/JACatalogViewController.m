@@ -72,7 +72,7 @@
     
     [self changeToList];
     
-    NSArray* sortList = [NSArray arrayWithObjects:@"Best Rating", @"Popularity", @"New In", @"Price Up", @"Price Down", @"Name", @"Brand", nil];
+    NSArray* sortList = [NSArray arrayWithObjects:STRING_BEST_RATING, STRING_POPULARITY, STRING_NEW_IN, STRING_PRICE_UP, STRING_PRICE_DOWN, STRING_NAME, STRING_BRAND, nil];
     
     self.sortingMethod = NSIntegerMax;
     //this will trigger load methods
@@ -163,11 +163,11 @@
                                            self.backupFrame = self.collectionView.frame;
                                            [self addUndefinedSearchView:undefSearchTerm];
                                        } else {
-                                           [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                           [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                                                        message:@"Error processing request temp"
                                                                       delegate:nil
                                                              cancelButtonTitle:nil
-                                                             otherButtonTitles:@"Ok", nil] show];
+                                                             otherButtonTitles:STRING_OK, nil] show];
                                        }
                                    }];
     }
@@ -413,7 +413,7 @@
 {
     [[RITrackingWrapper sharedInstance] trackEvent:self.catalogUrl
                                              value:nil
-                                            action:@"Filters"
+                                            action:STRING_FILTERS
                                           category:@"Catalog"
                                               data:nil];
     

@@ -9,22 +9,153 @@
 #ifndef Jumia_JAStrings_h
 #define Jumia_JAStrings_h
 
-#define LOGIN_LABEL RILocalizedString(@"login_label", nil)
+#define STRING_JUMIA RILocalizedString(@"string_jumia", nil)
+#define STRING_UPDATE_NECESSARY_TITLE RILocalizedString(@"string_update_necessary_title", nil) // Not translated
+#define STRING_UPDATE_NECESSARY_MESSAGE RILocalizedString(@"string_update_necessary_message", nil) // Not translated
+#define STRING_UPDATE_AVAILABLE_TITLE RILocalizedString(@"string_update_available_title", nil) // Not translated
+#define STRING_UPDATE_AVAILABLE_MESSAGE RILocalizedString(@"string_update_available_message", nil) // Not translated
+#define STRING_UPDATE RILocalizedString(@"string_update", nil) // Not translated
+#define STRING_OK_UPDATE RILocalizedString(@"string_ok_update", nil) // Not translated
+#define STRING_NO_THANKS RILocalizedString(@"string_no_thanks", nil) // Not translated
 
-#define ADD_TO_SHOPPING_CART RILocalizedString(@"add_to_shopping_cart", nil)
+#define STRING_OK RILocalizedString(@"ok_label", nil)
+#define STRING_DONE RILocalizedString(@"done_label", nil)
+#define STRING_BACK RILocalizedString(@"back_label", nil)
+#define STRING_SUBMIT RILocalizedString(@"submit_label", nil)
 
-#define CART_LABEL RILocalizedString(@"cart_label", nil)
-#define WISHLIST_NOITEMS RILocalizedString(@"wishlist_notiems", nil)
-#define CONTINUE_SHOPPING RILocalizedString(@"continue_shopping", nil)
-#define VOUCHER_USE RILocalizedString(@"voucher_use", nil)
-#define VOUCHER_REMOVE RILocalizedString(@"voucher_remove", nil)
-#define VOUCHER_MESSAGE_HINT RILocalizedString(@"voucher_message_hint", nil)
-#define CALL_TO_ORDER RILocalizedString(@"call_to_order", nil)
+#define STRING_LOGIN RILocalizedString(@"login_label", nil)
+#define STRING_HOME RILocalizedString(@"home", nil)
+#define STRING_CATEGORIES RILocalizedString(@"categories", nil)
+#define STRING_MY_FAVOURITES RILocalizedString(@"favourites", nil)
+#define STRING_RECENT_SEARCHES RILocalizedString(@"recent_searches", nil)
+#define STRING_RECENTLY_VIEWED RILocalizedString(@"recently_viewed", nil)
+#define STRING_MY_ACCOUNT RILocalizedString(@"my_account", nil)
+#define STRING_TRACK_MY_ORDER RILocalizedString(@"nav_track_order", nil)
+#define STRING_CHOOSE_COUNTRY RILocalizedString(@"nav_country", nil)
+#define STRING_SIGN_IN RILocalizedString(@"sign_in", nil)
+#define STRING_SIGN_OUT RILocalizedString(@"sign_out", nil)
+#define STRING_FILTERS RILocalizedString(@"string_filters", nil) // Not translated
+#define STRING_ALL_CATEGORIES RILocalizedString(@"categories_toplevel_title", nil)
+#define STRING_APPLY RILocalizedString(@"string_apply", nil) // Not translated
+#define STRING_SEARCH RILocalizedString(@"search_label", nil)
+#define STRING_SHOPPING_CART RILocalizedString(@"shopping_cart", nil)
+#define STRING_YOUR_CART_IS_EMPTY RILocalizedString(@"navigation_cart_empty", nil)
+#define STRING_VAT_SHIPPING_INCLUDED RILocalizedString(@"string_vat_shipping_included", nil) // Not translated
 
-#define CHECKOUT_LABEL RILocalizedString(@"checkout_label", nil)
-#define CHECKOUT_HEADER_STEP_1 RILocalizedString(@"checkout_header_step_1", nil)
-#define CHECKOUT_HEADER_STEP_2 RILocalizedString(@"checkout_header_step_2", nil)
-#define CHECKOUT_HEADER_STEP_3 RILocalizedString(@"checkout_header_step_3", nil)
-#define CHECKOUT_HEADER_STEP_4 RILocalizedString(@"checkout_header_step_4", nil)
+#define STRING_HOT RILocalizedString(@"teaser_campaign_button_first_line", nil)
+#define STRING_OFFERS RILocalizedString(@"teaser_campaign_button_second_line", nil)
+#define STRING_TOP_BRANDS RILocalizedString(@"string_top_brands", nil) // Not translated
+#define STRING_TOP_CATEGORIES RILocalizedString(@"string_top_categories", nil) // Not translated
+#define STRING_TOP_SELLERS RILocalizedString(@"string_top_sellers", nil) // Not translated
+
+#define STRING_NEW RILocalizedString(@"string_new", nil) // Not translated
+#define STRING_SIZE RILocalizedString(@"string_size", nil) // Not translated
+#define STRING_REVIEW RILocalizedString(@"string_review", nil) // Not translated
+#define STRING_REVIEWS RILocalizedString(@"string_reviews", nil)
+#define STRING_QUANTITY RILocalizedString(@"string_quantity", nil) // Not translated
+
+#define STRING_BEST_RATING RILocalizedString(@"products_sort_bestrated", nil)
+#define STRING_POPULARITY RILocalizedString(@"products_sort_popularity", nil)
+#define STRING_NEW_IN RILocalizedString(@"products_sort_newin", nil)
+#define STRING_PRICE_UP RILocalizedString(@"products_sort_priceup", nil)
+#define STRING_PRICE_DOWN RILocalizedString(@"products_sort_pricedown", nil)
+#define STRING_NAME RILocalizedString(@"products_sort_name", nil)
+#define STRING_BRAND RILocalizedString(@"products_sort_brand", nil)
+#define STRING_ALL RILocalizedString(@"all_label", nil)
+#define STRING_WITH_DISCOUNT_ONLY RILocalizedString(@"string_with_discount_only", nil); // Not translated
+
+#define STRING_NO_FAVOURITES RILocalizedString(@"favourite_no_favourites", nil)
+#define STRING_ADD_ALL_TO_CART RILocalizedString(@"favourite_addalltocart", nil)
+#define STRING_ITEM_WAS_ADDED_TO_CART RILocalizedString(@"added_to_shop_cart_dialog_text", nil)
+#define STRING_ERROR_ADDING_TO_CART RILocalizedString(@"error_add_to_cart_failed", nil)
+#define STRING_SIZE_WITH_VALUE RILocalizedString(@"string_size_with_value", nil) // Not translated
+#define STRING_CHOOSE_SIZE_FOR_ALL_PRODUCTS RILocalizedString(@"string_choose_size_for_all_products", nil) // Not translated
+#define STRING_ADD_TO_SHOPPING_CART RILocalizedString(@"add_to_shopping_cart", nil)
+#define STRING_VARIATIONS RILocalizedString(@"string_variations", nil) // Not translated
+#define STRING_RATE_NOW RILocalizedString(@"string_rate_now", nil) // Not translated
+#define STRING_RELATED_ITEMS RILocalizedString(@"related_items", nil)
+#define STRING_PRODUCT_FEATURES RILocalizedString(@"product_features_title", nil)
+#define STRING_PRODUCT_DESCRIPTION RILocalizedString(@"product_description_title", nil)
+#define STRING_SHARE_PRODUCT_MESSAGE RILocalizedString(@"share_checkout_this_product", nil)
+#define STRING_RATE_PRODUCT RILocalizedString(@"rating_question", nil)
+#define STRING_SEND_REVIEW RILocalizedString(@"writereview_send", nil)
+#define STRING_REVIEW_SENT RILocalizedString(@"submit_title", nil)
+#define STRING_WRITE_REVIEW RILocalizedString(@"write_comment", nil)
+#define STRING_POSTED_BY RILocalizedString(@"string_posted_by", nil)
+#define STRING_POSTED_BY_ANONYMOUS RILocalizedString(@"string_posted_by_anonymous", nil) // Not translated
+#define STRING_PRICE RILocalizedString(@"string_price", nil) // Not translated
+#define STRING_APPEARENCE RILocalizedString(@"string_appearance", nil) // Not translated
+#define STRING_QUALITY RILocalizedString(@"rating_quality", nil)
+
+#define STRING_CART RILocalizedString(@"cart_label", nil)
+#define STRING_NO_ITEMS_IN_CART RILocalizedString(@"wishlist_notiems", nil)
+#define STRING_CONTINUE_SHOPPING RILocalizedString(@"continue_shopping", nil)
+#define STRING_COUPON RILocalizedString(@"my_order_coupon_label", nil)
+#define STRING_USE RILocalizedString(@"voucher_use", nil)
+#define STRING_REMOVE RILocalizedString(@"voucher_remove", nil)
+#define STRING_ENTER_COUPON RILocalizedString(@"voucher_message_hint", nil)
+#define STRING_CALL_TO_ORDER RILocalizedString(@"call_to_order", nil)
+#define STRING_ARTICLE RILocalizedString(@"shoppingcart_article", nil)
+#define STRING_ARTICLES RILocalizedString(@"shoppingcart_articles", nil)
+#define STRING_ERROR_CHANGING_QUANTITY RILocalizedString(@"error_add_to_shopping_cart_quantity", nil)
+#define STRING_SHIPPING RILocalizedString(@"shipping", nil)
+#define STRING_FREE RILocalizedString(@"free_label", nil)
+#define STRING_EXTRA_COSTS RILocalizedString(@"extra_costs_label", nil)
+#define STRING_VOUCHER RILocalizedString(@"my_order_voucher_label", nil)
+#define STRING_TOTAL RILocalizedString(@"my_order_total_label", nil)
+#define STRING_PROCEED_TO_CHECKOUT RILocalizedString(@"checkout_button_text", nil)
+#define STRING_SUBTOTAL RILocalizedString(@"sub_total_title", nil)
+#define STRING_VAT RILocalizedString(@"vat_string", nil)
+
+#define STRING_SIGNUP RILocalizedString(@"signup_label", nil)
+#define STRING_LOGIN_WITH_FACEBOOK RILocalizedString(@"facebook_login_button_text", nil)
+#define STRING_OR RILocalizedString(@"or_text", nil)
+#define STRING_SIGNUP_WITH_FACEBOOK RILocalizedString(@"facebook_signup_button_text", nil)
+#define STRING_FORGOT_PASSWORD RILocalizedString(@"fgt_pass", nil)
+#define STRING_TYPE_YOUR_EMAIL RILocalizedString(@"forgotten_password", nil)
+#define STRING_WE_WILL_SEND_PASSWORD RILocalizedString(@"forgotten_password_sub_text", nil)
+#define STRING_EMAIL_SENT RILocalizedString(@"forgotten_password_successtext", nil)
+
+#define STRING_CHECKOUT RILocalizedString(@"checkout_label", nil) // Not translated
+#define STRING_CHECKOUT_ABOUT_YOU RILocalizedString(@"checkout_header_step_1", nil)
+#define STRING_NEXT RILocalizedString(@"next_button", nil)
+
+#define STRING_CHECKOUT_ADDRESS RILocalizedString(@"checkout_header_step_2", nil)
+#define STRING_ADD_NEW_ADDRESS RILocalizedString(@"action_label_add_address", nil)
+#define STRING_BILLING_SAME_ADDRESSES RILocalizedString(@"billing_same_label", nil)
+#define STRING_SHIPPING_ADDRESSES RILocalizedString(@"billing_shipping_label", nil)
+#define STRING_BILLING_ADDRESSES RILocalizedString(@"billing_billing_label", nil)
+#define STRING_DEFAULT_SHIPPING_ADDRESSES RILocalizedString(@"billing_def_shipping_label", nil)
+#define STRING_OTHER_ADDRESSES RILocalizedString(@"billing_others_label", nil)
+#define STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS RILocalizedString(@"setting_address_error", nil) // Not translated
+#define STRING_CANCEL RILocalizedString(@"cancel_label", nil)
+#define STRING_SAVE_CHANGES RILocalizedString(@"save_changes_label", nil)
+#define STRING_EDIT_ADDRESS RILocalizedString(@"edit_address", validation_errortext)
+#define STRING_ERROR_INVALID_FIELDS RILocalizedString(@"edit_address", nil)
+
+#define STRING_CHECKOUT_SHIPPING RILocalizedString(@"checkout_header_step_3", nil)
+#define STRING_CITY RILocalizedString(@"string_city", nil) // Not translated
+#define STRING_ADDRESS RILocalizedString(@"string_address", nil) // Not translated
+#define STRING_OPENING_HOURS RILocalizedString(@"string_opening_hours", nil) // Not translated
+#define STRING_PLEASE_SELECT RILocalizedString(@"string_please_select", nil) // Not translated
+#define STRING_SHIPPING_FEE RILocalizedString(@"order_summary_shipping_fee_label", nil)
+
+#define STRING_CHECKOUT_PAYMENT RILocalizedString(@"checkout_header_step_4", nil)
+#define STRING_PAYMENT RILocalizedString(@"payment", nil)
+
+#define STRING_CREATION_DATE RILocalizedString(@"creation_date", nil)
+#define STRING_PAYMENT_METHOD RILocalizedString(@"payment_method", nil)
+#define STRING_PRODUCTS RILocalizedString(@"order_track_products", nil)
+#define STRING_ERROR_NO_RESULTS_FOR_TRACKING_ID RILocalizedString(@"string_error_no_results_for_tracking_id", nil)
+#define STRING_TRACK_YOUR_ORDER RILocalizedString(@"track_your_order", nil)
+#define STRING_TRACK_ORDER RILocalizedString(@"track_order", nil)
+#define STRING_ORDER_ID RILocalizedString(@"track_order_hint", nil)
+#define STRING_ORDER_STATUS RILocalizedString(@"string_order_status", nil) // Not translated
+
+#define STRING_NO_RECENT_SEARCHES RILocalizedString(@"recentsearch_no_searches", nil)
+#define STRING_CLEAR_RECENT_SEARCHES RILocalizedString(@"recentsearch_clear_searches", nil)
+
+#define STRING_NO_RECENTLY_VIEWED_PRODUCTS RILocalizedString(@"recentlyview_no_searches", nil)
+#define STRING_CLEAR_RECENTLY_VIEWED RILocalizedString(@"recentlyview_clear_viewed", nil)
 
 #endif

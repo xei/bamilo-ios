@@ -96,11 +96,11 @@ UIPickerViewDelegate>
            
            [self finishedFormLoading];
            
-           [[[UIAlertView alloc] initWithTitle:@"Jumia"
+           [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                        message:@"There was an error"
                                       delegate:nil
                              cancelButtonTitle:nil
-                             otherButtonTitles:@"OK", nil] show];
+                             otherButtonTitles:STRING_OK, nil] show];
        }];
 }
 
@@ -123,7 +123,7 @@ UIPickerViewDelegate>
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.loginButton setFrame:CGRectMake(6.0f, self.registerViewCurrentY, 296.0f, 30.0f)];
     [self.loginButton setBackgroundColor:[UIColor clearColor]];
-    [self.loginButton setTitle:LOGIN_LABEL forState:UIControlStateNormal];
+    [self.loginButton setTitle:STRING_LOGIN forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [self.loginButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];
@@ -158,7 +158,7 @@ UIPickerViewDelegate>
 
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                             object:@{@"index": @(0),
-                                                                     @"name": @"Home"}];
+                                                                     @"name": STRING_HOME}];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
@@ -177,29 +177,29 @@ UIPickerViewDelegate>
         {
             [self.dynamicForm validateFields:errorObject];
             
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:@"Invalid fields"
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                        message:STRING_ERROR_INVALID_FIELDS
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.dynamicForm checkErrors];
 
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                         message:[errorObject componentsJoinedByString:@","]
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
         }
         else
         {
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                         message:@"Generic error"
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
         }        
     }];
 }
@@ -315,7 +315,7 @@ UIPickerViewDelegate>
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
     [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-    [button setTitle:@"Done" forState:UIControlStateNormal];
+    [button setTitle:STRING_DONE forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(birthdayChanged:) forControlEvents:UIControlEventTouchUpInside];
@@ -383,7 +383,7 @@ UIPickerViewDelegate>
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
     [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-    [button setTitle:@"Done" forState:UIControlStateNormal];
+    [button setTitle:STRING_DONE forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(radioOptionChanged:) forControlEvents:UIControlEventTouchUpInside];

@@ -72,7 +72,7 @@ UIPickerViewDelegate>
                                           category:@"NativeCheckout"
                                               data:nil];
     
-    self.navBarLayout.title = CHECKOUT_LABEL;
+    self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;    
     
@@ -101,7 +101,7 @@ UIPickerViewDelegate>
 {
     CGFloat availableWidth = self.stepView.frame.size.width;
     
-    [self.stepLabel setText:CHECKOUT_HEADER_STEP_3];
+    [self.stepLabel setText:STRING_CHECKOUT_SHIPPING];
     [self.stepLabel sizeToFit];
     
     CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;
@@ -153,7 +153,7 @@ UIPickerViewDelegate>
     
     self.bottomView = [[JAButtonWithBlur alloc] init];
     [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
-    [self.bottomView addButton:@"Next" target:self action:@selector(nextStepButtonPressed)];
+    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
     
     [self.view addSubview:self.bottomView];
 }
@@ -267,7 +267,7 @@ UIPickerViewDelegate>
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
     [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-    [button setTitle:@"Done" forState:UIControlStateNormal];
+    [button setTitle:STRING_DONE forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(regionSelected:) forControlEvents:UIControlEventTouchUpInside];
@@ -395,20 +395,20 @@ UIPickerViewDelegate>
                              } andFailureBlock:^(NSArray *errorMessages) {
                                  [self hideLoading];
                                  
-                                 [[[UIAlertView alloc] initWithTitle:@"Jumia"
+                                 [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                                              message:@"Error setting shipping method"
                                                             delegate:nil
                                                    cancelButtonTitle:nil
-                                                   otherButtonTitles:@"OK", nil] show];
+                                                   otherButtonTitles:STRING_OK, nil] show];
                              }];
         }
         else
         {
-            [[[UIAlertView alloc] initWithTitle:@"Jumia"
-                                        message:@"Invalid Fields"
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                        message:STRING_ERROR_INVALID_FIELDS
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
+                              otherButtonTitles:STRING_OK, nil] show];
         }
     }
 }
@@ -557,7 +557,7 @@ UIPickerViewDelegate>
                 NSString *shippingFee = [[self.checkout cart] shippingValueFormatted];
                 if(0 == [[[self.checkout cart] shippingValue] integerValue])
                 {
-                    shippingFee = @"Free";
+                    shippingFee = STRING_FREE;
                 }
                 [shippingInfoCell loadWithShippingFee:shippingFee];
                 
@@ -621,7 +621,7 @@ UIPickerViewDelegate>
         
         if(collectionView == self.collectionView)
         {
-            [headerView loadHeaderWithText:@"Shipping"];
+            [headerView loadHeaderWithText:STRING_SHIPPING];
         }
         reusableview = headerView;
     }

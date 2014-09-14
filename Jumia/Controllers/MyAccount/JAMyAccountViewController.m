@@ -20,7 +20,7 @@
 {
     [super viewDidLoad];
     
-    self.navBarLayout.title = @"Sign In";
+    self.navBarLayout.title = STRING_SIGN_IN;
 }
 
 - (void)didReceiveMemoryWarning
