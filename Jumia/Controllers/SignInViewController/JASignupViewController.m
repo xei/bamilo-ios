@@ -44,7 +44,7 @@ UIPickerViewDelegate>
 {
     [super viewDidLoad];
     
-    self.navBarLayout.title = @"Create Account";
+    self.navBarLayout.title = STRING_CREATE_ACCOUNT;
     
     self.registerViewCurrentY = 0.0f;
     
@@ -59,7 +59,7 @@ UIPickerViewDelegate>
     self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, self.registerViewCurrentY, self.contentView.frame.size.width - 12.0f, 25.0f)];
     [self.headerLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.headerLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.headerLabel setText:@"Account Data"];
+    [self.headerLabel setText:STRING_ACCOUNT_DATA];
     [self.headerLabel setBackgroundColor:[UIColor clearColor]];
     [self.contentView addSubview:self.headerLabel];
     self.registerViewCurrentY = CGRectGetMaxY(self.headerLabel.frame);
@@ -112,7 +112,7 @@ UIPickerViewDelegate>
     [self.registerButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
     [self.registerButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
     [self.registerButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
-    [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
+    [self.registerButton setTitle:STRING_REGISTER forState:UIControlStateNormal];
     [self.registerButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.registerButton addTarget:self action:@selector(registerButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.registerButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];

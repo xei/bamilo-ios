@@ -119,6 +119,10 @@
 #define STRING_CHECKOUT RILocalizedString(@"checkout_label", nil) // Not translated
 #define STRING_CHECKOUT_ABOUT_YOU RILocalizedString(@"checkout_header_step_1", nil)
 #define STRING_NEXT RILocalizedString(@"next_button", nil)
+#define STRING_CREDENTIALS RILocalizedString(@"login_sectiontitle", nil)
+#define STRING_CREATE_ACCOUNT RILocalizedString(@"register_title", nil)
+#define STRING_ACCOUNT_DATA RILocalizedString(@"register_sectiontitle", nil)
+#define STRING_REGISTER RILocalizedString(@"registration_text", nil)
 
 #define STRING_CHECKOUT_ADDRESS RILocalizedString(@"checkout_header_step_2", nil)
 #define STRING_ADD_NEW_ADDRESS RILocalizedString(@"action_label_add_address", nil)

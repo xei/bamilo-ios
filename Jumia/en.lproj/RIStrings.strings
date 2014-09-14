@@ -116,6 +116,10 @@
 "checkout_label" = "Checkout";
 "checkout_header_step_1" = "1. About you";
 "next_button" = "Next";
+"login_sectiontitle" = "Credentials";
+"register_title" = "Create Account";
+"register_sectiontitle" = "Account Data";
+"registration_text" = "Register";
 
 "checkout_header_step_2" = "2. Address";
 "action_label_add_address" = "Add New Address";

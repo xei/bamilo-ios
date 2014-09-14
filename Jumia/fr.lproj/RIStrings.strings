@@ -116,6 +116,10 @@
 "checkout_label" = "Checkout";
 "checkout_header_step_1" = "1. Informations client";
 "next_button" = "Suivant";
+"login_sectiontitle" = "Identifiants ";
+"register_title" = "Créer un compte";
+"register_sectiontitle" = "Données du compte";
+"registration_text" = "Enregistrer";
 
 "checkout_header_step_2" = "2. Adresse";
 "billing_same_label" = "Facturer à la même adresse";

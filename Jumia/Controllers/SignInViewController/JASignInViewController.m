@@ -48,7 +48,7 @@ FBLoginViewDelegate
     
     self.loginView.layer.cornerRadius = 5.0f;
     
-    [self.loginLabel setText:@"Credentials"];
+    [self.loginLabel setText:STRING_CREDENTIALS];
     [self.loginLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     
     [self.loginSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
@@ -150,7 +150,7 @@ FBLoginViewDelegate
     [self.signUpButton setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"] forState:UIControlStateHighlighted];
     [self.signUpButton setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"] forState:UIControlStateSelected];
     [self.signUpButton setBackgroundImage:[UIImage imageNamed:@"grayBig_disabled"] forState:UIControlStateDisabled];
-    [self.signUpButton setTitle:@"Create Account" forState:UIControlStateNormal];
+    [self.signUpButton setTitle:STRING_CREATE_ACCOUNT forState:UIControlStateNormal];
     [self.signUpButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.signUpButton addTarget:self action:@selector(signUpButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.signUpButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
