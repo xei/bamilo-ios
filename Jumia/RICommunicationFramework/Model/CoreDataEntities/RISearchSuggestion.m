@@ -150,8 +150,8 @@
                                                                       }
                                                                       else
                                                                       {
-                                                                          for (RISearchSuggestion *tempSearch in suggestionsForQuery) {
-                                                                              for (RISearchSuggestion *otherSearch in requestSuggestions) {
+                                                                          for (RISearchSuggestion *otherSearch in requestSuggestions) {
+                                                                              for (RISearchSuggestion *tempSearch in suggestionsForQuery) {
                                                                                   if (![tempSearch.item isEqualToString:otherSearch.item]) {
                                                                                       [suggestions addObject:otherSearch];
                                                                                   }
@@ -434,6 +434,8 @@
                         
                         if ([productDic objectForKey:@"price"]) {
                             product.price = [productDic objectForKey:@"price"];
+                            product.priceFormatted = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
+                                                                                 country:[RICountryConfiguration getCurrentConfiguration]];
                         }
                         
                         if ([productDic objectForKey:@"brand"]) {

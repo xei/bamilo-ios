@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray* productsArray;
 @property (assign, nonatomic) BOOL selectedSizeAndAddToCart;
+@property (assign, nonatomic) BOOL finishedAddingAllToCart;
 
 @property (nonatomic, assign)NSInteger addAllToCartCount;
 
@@ -67,6 +68,7 @@
     
     self.addAllToCartCount = 0;
     self.selectedSizeAndAddToCart = NO;
+    self.finishedAddingAllToCart = NO;
     
     self.navigationItem.hidesBackButton = YES;
     
@@ -100,8 +102,25 @@
     [self showLoading];
     
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+        
+        NSMutableArray *tempArray = [favoriteProducts mutableCopy];
+        
+        [tempArray sortUsingComparator:^(RIProduct *obj1, RIProduct *obj2)
+         {
+             NSComparisonResult result = [obj1.price compare:obj2.price];
+             
+             switch (result)
+             {
+                 case NSOrderedAscending: return (NSComparisonResult)NSOrderedDescending; break;
+                 case NSOrderedDescending: return (NSComparisonResult)NSOrderedAscending; break;
+                 case NSOrderedSame: return (NSComparisonResult)NSOrderedSame; break;
+                     
+                 default: return (NSComparisonResult)NSOrderedSame; break;
+             }
+         }];
+
         [self hideLoading];
-        [self updateListsWith:favoriteProducts];
+        [self updateListsWith:[tempArray copy]];
     } andFailureBlock:^(NSArray *error) {
         [self hideLoading];
     }];
@@ -298,6 +317,8 @@
         } andFailureBlock:^(NSArray *error) {
         }];
     }
+    
+    self.finishedAddingAllToCart = YES;
 }
 
 - (void)addAddAllToCartFinished
@@ -305,11 +326,23 @@
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cartData forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-    } andFailureBlock:^(NSArray *errorMessages) {
         
+        if (self.finishedAddingAllToCart) {
+            self.finishedAddingAllToCart = NO;
+            [self hideLoading];
+        }
+    } andFailureBlock:^(NSArray *errorMessages) {
+        if (self.finishedAddingAllToCart) {
+            self.finishedAddingAllToCart = NO;
+            [self hideLoading];
+        }
     }];
+    
     [self updateListsWith:nil];
-    [self hideLoading];
+    
+    if (!self.finishedAddingAllToCart) {
+        [self hideLoading];
+    }
 }
 
 - (void)removeFromFavoritesPressed:(UIButton*)button
@@ -342,6 +375,14 @@
     } else {
         NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
         if ([simpleName isEqualToString:@""]) {
+            
+            // Turn the title red
+            JACatalogCell *cell = (JACatalogCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:button.tag
+                                                                                                  inSection:0]];
+            
+            [cell.sizeButton setTitleColor:[UIColor redColor]
+                                  forState:UIControlStateNormal];
+            
             self.selectedSizeAndAddToCart = YES;
                         
             [self sizeButtonPressed:button];
@@ -498,6 +539,12 @@
     [self.collectionView reloadData];
     
     if (self.selectedSizeAndAddToCart) {
+        JACatalogCell *cell = (JACatalogCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:button.tag
+                                                                                                               inSection:0]];
+        
+        [cell.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+        [cell.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+        
         self.selectedSizeAndAddToCart = NO;
         
         [self addToCartPressed:button];

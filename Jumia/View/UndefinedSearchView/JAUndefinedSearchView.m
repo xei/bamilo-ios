@@ -71,7 +71,7 @@
     NSInteger stringTextLenght = text.length;
     
     UIFont *stringTextFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
-    UIFont *subStringTextFont = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+    UIFont *subStringTextFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0f];
     UIColor *stringTextColor = UIColorFromRGB(0X666666);
     
     
@@ -145,9 +145,7 @@
             singleItem.labelBrand.text = product.brand;
             singleItem.labelName.text = product.name;
             singleItem.productUrl = product.url;
-            
-            singleItem.labelPrice.text = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
-                                                                     country:[RICountryConfiguration getCurrentConfiguration]];
+            singleItem.labelPrice.text = product.priceFormatted;
             
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                   action:@selector(productSelected:)];

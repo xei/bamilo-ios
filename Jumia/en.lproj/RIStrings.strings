@@ -92,8 +92,8 @@
 "voucher_remove" = "Remove";
 "voucher_message_hint" = "Enter your coupon code here";
 "call_to_order" = "Call to Order";
-"shoppingcart_article" = "1 article";
-"shoppingcart_articles" = "%d articles";
+"string_article" = "1 article";
+"string_articles" = "%d articles";
 "error_add_to_shopping_cart_quantity" = "You cannot order more than the allowed quantity. Sorry.";
 "shipping" = "Shipping";
 "free_label" = "Free";
