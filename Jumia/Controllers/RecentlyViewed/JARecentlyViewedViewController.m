@@ -115,7 +115,7 @@
 {
     if (self.productsArray.count == indexPath.row) {
         return CGSizeMake(self.view.frame.size.width,
-                          50.0f);
+                          55.0f);
     } else {
         return CGSizeMake(self.view.frame.size.width,
                           98.0f);
