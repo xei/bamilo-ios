@@ -150,8 +150,8 @@
                                                                       }
                                                                       else
                                                                       {
-                                                                          for (RISearchSuggestion *tempSearch in suggestionsForQuery) {
-                                                                              for (RISearchSuggestion *otherSearch in requestSuggestions) {
+                                                                          for (RISearchSuggestion *otherSearch in requestSuggestions) {
+                                                                              for (RISearchSuggestion *tempSearch in suggestionsForQuery) {
                                                                                   if (![tempSearch.item isEqualToString:otherSearch.item]) {
                                                                                       [suggestions addObject:otherSearch];
                                                                                   }
