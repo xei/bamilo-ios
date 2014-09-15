@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *maxPrice;
 @property (strong, nonatomic) NSString *price;
+@property (strong, nonatomic) NSString *priceFormatted;
 @property (strong, nonatomic) NSNumber *maxPercentageSaving;
 @property (strong, nonatomic) NSString *brand;
 @property (strong, nonatomic) NSString *url;
