@@ -146,7 +146,6 @@
             singleItem.labelName.text = product.name;
             singleItem.productUrl = product.url;
             
-            // FALAR COM O MIGUEL
             singleItem.labelPrice.text = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
                                                                      country:[RICountryConfiguration getCurrentConfiguration]];
             
