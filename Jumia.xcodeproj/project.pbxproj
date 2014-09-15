@@ -175,7 +175,6 @@
 		B5A302C919811E9200F71726 /* RIProductSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027A19811E9200F71726 /* RIProductSimple.m */; };
 		B5A302CA19811E9200F71726 /* RISearchSuggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027C19811E9200F71726 /* RISearchSuggestion.m */; };
 		B5A302CB19811E9200F71726 /* RISection.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027E19811E9200F71726 /* RISection.m */; };
-		B5A302CC19811E9200F71726 /* RITeaser.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028019811E9200F71726 /* RITeaser.m */; };
 		B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028219811E9200F71726 /* RITeaserCategory.m */; };
 		B5A302CE19811E9200F71726 /* RITeaserGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028419811E9200F71726 /* RITeaserGroup.m */; };
 		B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028619811E9200F71726 /* RITeaserImage.m */; };
@@ -228,6 +227,7 @@
 		B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */; };
 		B5FE9FB719A1FD1B006F7D63 /* RITrackingDebug.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */; };
 		B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FE9FBB19A204F1006F7D63 /* RINewRelicTracker.m */; };
+		CE13256819C7355000B5018E /* RITeaser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13256719C7355000B5018E /* RITeaser.m */; };
 		CE13787019A2304500CA0751 /* JACategoryFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13786F19A2304500CA0751 /* JACategoryFilterViewController.m */; };
 		CE13787819A357B400CA0751 /* JACategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13787719A357B400CA0751 /* JACategoriesViewController.m */; };
 		CE13789519A4DC4E00CA0751 /* JARecentlyViewedListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE13789419A4DC4E00CA0751 /* JARecentlyViewedListCell.xib */; };
@@ -602,8 +602,6 @@
 		B5A3027C19811E9200F71726 /* RISearchSuggestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISearchSuggestion.m; sourceTree = "<group>"; };
 		B5A3027D19811E9200F71726 /* RISection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISection.h; sourceTree = "<group>"; };
 		B5A3027E19811E9200F71726 /* RISection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISection.m; sourceTree = "<group>"; };
-		B5A3027F19811E9200F71726 /* RITeaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RITeaser.h; sourceTree = "<group>"; };
-		B5A3028019811E9200F71726 /* RITeaser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RITeaser.m; sourceTree = "<group>"; };
 		B5A3028119811E9200F71726 /* RITeaserCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RITeaserCategory.h; sourceTree = "<group>"; };
 		B5A3028219811E9200F71726 /* RITeaserCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RITeaserCategory.m; sourceTree = "<group>"; };
 		B5A3028319811E9200F71726 /* RITeaserGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RITeaserGroup.h; sourceTree = "<group>"; };
@@ -692,6 +690,8 @@
 		B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug.plist; sourceTree = "<group>"; };
 		B5FE9FBA19A204F1006F7D63 /* RINewRelicTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RINewRelicTracker.h; sourceTree = "<group>"; };
 		B5FE9FBB19A204F1006F7D63 /* RINewRelicTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RINewRelicTracker.m; sourceTree = "<group>"; };
+		CE13256619C7355000B5018E /* RITeaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RITeaser.h; sourceTree = "<group>"; };
+		CE13256719C7355000B5018E /* RITeaser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RITeaser.m; sourceTree = "<group>"; };
 		CE13786E19A2304500CA0751 /* JACategoryFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACategoryFilterViewController.h; sourceTree = "<group>"; };
 		CE13786F19A2304500CA0751 /* JACategoryFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACategoryFilterViewController.m; sourceTree = "<group>"; };
 		CE13787619A357B400CA0751 /* JACategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACategoriesViewController.h; sourceTree = "<group>"; };
@@ -1727,8 +1727,8 @@
 				B5A3027C19811E9200F71726 /* RISearchSuggestion.m */,
 				B5A3027D19811E9200F71726 /* RISection.h */,
 				B5A3027E19811E9200F71726 /* RISection.m */,
-				B5A3027F19811E9200F71726 /* RITeaser.h */,
-				B5A3028019811E9200F71726 /* RITeaser.m */,
+				CE13256619C7355000B5018E /* RITeaser.h */,
+				CE13256719C7355000B5018E /* RITeaser.m */,
 				B5A3028119811E9200F71726 /* RITeaserCategory.h */,
 				B5A3028219811E9200F71726 /* RITeaserCategory.m */,
 				B5A3028319811E9200F71726 /* RITeaserGroup.h */,
@@ -2347,7 +2347,6 @@
 				CE2F576E19913B33000A9E09 /* JACatalogListCell.m in Sources */,
 				4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */,
 				B5A302BE19811E9200F71726 /* RIConfiguration.m in Sources */,
-				B5A302CC19811E9200F71726 /* RITeaser.m in Sources */,
 				4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */,
 				CE13787819A357B400CA0751 /* JACategoriesViewController.m in Sources */,
 				B5A302D019811E9200F71726 /* RITeaserProduct.m in Sources */,
@@ -2400,6 +2399,7 @@
 				4A01EE4919922729005F5AD1 /* JAPDVPicker.m in Sources */,
 				B5A302DA19811E9200F71726 /* RICommunicationWrapper.m in Sources */,
 				4A3719BD19C05F52002D4199 /* JAUndefinedSearchView.m in Sources */,
+				CE13256819C7355000B5018E /* RITeaser.m in Sources */,
 				CE13787019A2304500CA0751 /* JACategoryFilterViewController.m in Sources */,
 				B59DCA7E19B88DDB00DE7960 /* JAAddNewAddressCell.m in Sources */,
 				CE44586D198BD20A00CE7E8D /* JATopSellersTeaserView.m in Sources */,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6172.15" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
@@ -190,6 +190,7 @@
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="RITeaser" representedClassName="RITeaser" syncable="YES">
+        <attribute name="targetType" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="teaserGroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaserGroup" inverseName="teasers" inverseEntity="RITeaserGroup" syncable="YES"/>
         <relationship name="teaserImages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaserImage" inverseName="teaser" inverseEntity="RITeaserImage" syncable="YES"/>
         <relationship name="teaserProducts" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaserProduct" inverseName="teaser" inverseEntity="RITeaserProduct" syncable="YES"/>
@@ -268,7 +269,7 @@
         <element name="RISearchSuggestion" positionX="-648" positionY="27" width="128" height="105"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
         <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
-        <element name="RITeaser" positionX="-686" positionY="527" width="128" height="103"/>
+        <element name="RITeaser" positionX="-686" positionY="527" width="128" height="120"/>
         <element name="RITeaserCategory" positionX="-686" positionY="245" width="128" height="133"/>
         <element name="RITeaserGroup" positionX="-686" positionY="398" width="128" height="103"/>
         <element name="RITeaserImage" positionX="-486" positionY="558" width="128" height="118"/>
