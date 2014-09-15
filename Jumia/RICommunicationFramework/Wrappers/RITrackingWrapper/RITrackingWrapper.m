@@ -10,7 +10,6 @@
 #import "RIGoogleAnalyticsTracker.h"
 #import "RIBugSenseTracker.h"
 #import "RIOpenURLHandler.h"
-#import "RIAdXTracker.h"
 #import "RIAd4PushTracker.h"
 #import "RINewRelicTracker.h"
 
@@ -69,11 +68,10 @@ static dispatch_once_t sharedInstanceToken;
     
     RIGoogleAnalyticsTracker *googleAnalyticsTracker = [[RIGoogleAnalyticsTracker alloc] init];
     RIBugSenseTracker *bugsenseTracker = [[RIBugSenseTracker alloc] init];
-    RIAdXTracker *adxTracker = [[RIAdXTracker alloc] init];
     RIAd4PushTracker *ad4PushTracker = [[RIAd4PushTracker alloc] init];
     RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
     
-    self.trackers = @[googleAnalyticsTracker, bugsenseTracker, adxTracker, ad4PushTracker, newRelicTracker];
+    self.trackers = @[googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, newRelicTracker];
     
     if (launchOptions) {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)

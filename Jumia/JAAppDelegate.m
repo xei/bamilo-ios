@@ -38,7 +38,6 @@
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];
 #endif
     
-    
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
                                                                        launchOptions:launchOptions];
     
@@ -55,6 +54,9 @@
      setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                              [UIColor orangeColor], NSForegroundColorAttributeName,
                              [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
+    
+    // Push Notifications Activation
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
     
     return YES;
 }
@@ -111,6 +113,11 @@
                                   fallbackHandler:^(FBAppCall *call) {
                                       NSLog(@"Unhandled deep link: %@", url);
                                   }];
+    
+    if (url)
+    {
+        [[RITrackingWrapper sharedInstance] trackOpenURL:url];
+    }
     
     return urlWasHandled;
 }

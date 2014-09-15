@@ -27,4 +27,6 @@ extern NSString * const kRIGoogleAnalyticsTrackingID;
 
 + (instancetype)sharedInstance;
 
+- (void)trackCampaignWithDictionay:(NSDictionary *)data;
+
 @end
