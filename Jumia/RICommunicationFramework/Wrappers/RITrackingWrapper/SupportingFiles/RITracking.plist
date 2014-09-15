@@ -3,8 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>kRIAdd4PushPrivateKey</key>
-	<string></string>
+	<string>25ec0c7fdc70721975c8654bdfb5b7c197838c07</string>
 	<key>kRIAdd4PushUserID</key>
+	<string>rocketinternet7990bb1f9a853af</string>
+	<key>New item</key>
 	<string></string>
 	<key>kRIAdd4PushDeviceToken</key>
 	<string></string>
