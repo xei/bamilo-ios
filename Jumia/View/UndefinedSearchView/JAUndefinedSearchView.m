@@ -145,9 +145,7 @@
             singleItem.labelBrand.text = product.brand;
             singleItem.labelName.text = product.name;
             singleItem.productUrl = product.url;
-            
-            singleItem.labelPrice.text = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
-                                                                     country:[RICountryConfiguration getCurrentConfiguration]];
+            singleItem.labelPrice.text = product.priceFormatted;
             
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                   action:@selector(productSelected:)];

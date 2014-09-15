@@ -434,6 +434,8 @@
                         
                         if ([productDic objectForKey:@"price"]) {
                             product.price = [productDic objectForKey:@"price"];
+                            product.priceFormatted = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
+                                                                                 country:[RICountryConfiguration getCurrentConfiguration]];
                         }
                         
                         if ([productDic objectForKey:@"brand"]) {
