@@ -81,6 +81,24 @@ static dispatch_once_t sharedInstanceToken;
 
 }
 
+#pragma mark - Track campaign
+
+- (void)trackCampaignWithDictionay:(NSDictionary *)data
+{
+    RIDebugLog(@"Google Analytics tracker tracks campaign");
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    
+    if (!tracker) {
+        RIRaiseError(@"Missing default Google Analytics tracker");
+        return;
+    }
+    
+    NSDictionary *dict = [[[GAIDictionaryBuilder createAppView] setAll:data] build];
+    
+    [tracker send:dict];
+}
+
 #pragma mark - RIExceptionTracking protocol
 
 - (void)trackExceptionWithName:(NSString *)name
