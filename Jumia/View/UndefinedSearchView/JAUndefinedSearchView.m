@@ -71,7 +71,7 @@
     NSInteger stringTextLenght = text.length;
     
     UIFont *stringTextFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
-    UIFont *subStringTextFont = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+    UIFont *subStringTextFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0f];
     UIColor *stringTextColor = UIColorFromRGB(0X666666);
     
     
