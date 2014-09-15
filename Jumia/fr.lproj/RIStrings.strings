@@ -92,8 +92,8 @@
 "voucher_remove" = "Supprimer";
 "voucher_message_hint" = "Entrez votre Code Promotionnel ici";
 "call_to_order" = "Appeler pour commander";
-"shoppingcart_article" = "1 Produit";
-"shoppingcart_articles" = "%d Produits";
+"string_article" = "1 Produit";
+"string_articles" = "%d Produits";
 "error_add_to_shopping_cart_quantity" = "Vous ne pouvez pas commander plus que la quantité disponible. Désolé.";
 "shipping" = "Livraison";
 "free_label" = "Gratuit";
