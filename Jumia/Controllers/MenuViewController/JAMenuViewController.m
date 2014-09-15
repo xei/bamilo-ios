@@ -273,6 +273,8 @@
         
         RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
     
+        NSString *item = suggestion.item;
+        
         [RISearchSuggestion saveSearchSuggestionOnDB:suggestion.item
                                       isRecentSearch:YES];
         
@@ -280,7 +282,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                             object:@{@"index": @(99),
                                                                      @"name": STRING_SEARCH,
-                                                                     @"text": suggestion.item }];
+                                                                     @"text": item }];
         
     } else {
         

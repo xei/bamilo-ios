@@ -6,7 +6,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             scope = "0"
@@ -231,6 +231,36 @@
             endingLineNumber = "474"
             landmarkName = "-loginButtonPressed"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[JALoginViewController loginButtonPressed]"
+                  moduleName = "Jumia"
+                  urlString = "file:///Users/miguelchaves/Documents/JUMIAIOS/Jumia/Controllers/Checkout/Account/JALoginViewController.m"
+                  timestampString = "432465240.406186"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "474"
+                  endingLineNumber = "474"
+                  offsetFromSymbolStart = "135">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__43-[JALoginViewController loginButtonPressed]_block_invoke"
+                  moduleName = "Jumia"
+                  urlString = "file:///Users/miguelchaves/Documents/JUMIAIOS/Jumia/Controllers/Checkout/Account/JALoginViewController.m"
+                  timestampString = "432465240.406507"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "474"
+                  endingLineNumber = "474"
+                  offsetFromSymbolStart = "66">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
