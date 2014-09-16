@@ -842,6 +842,21 @@ static char ja_kvoContext;
         self.tapView = [[UIView alloc] init];
     }
     [self _toggleScrollsToTopForCenter:NO left:YES right:NO];
+    
+    //add shadow if no shadow is already there
+    BOOL placeShadow = YES;
+    for (UIView* view in [self.centerPanel.view subviews]) {
+        if (-1 == view.tag) {
+            placeShadow = NO;
+            break;
+        }
+    }
+    if (placeShadow) {
+        UIView* shadowView = [[UIView alloc] initWithFrame:self.centerPanel.view.frame];
+        shadowView.tag = -1;
+        shadowView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+        [self.centerPanel.view addSubview:shadowView];
+    }
 }
 
 - (void)_showRightPanel:(BOOL)animated bounce:(BOOL)shouldBounce {
@@ -867,6 +882,13 @@ static char ja_kvoContext;
 }
 
 - (void)_showCenterPanel:(BOOL)animated bounce:(BOOL)shouldBounce {
+    //remove shadow
+    for (UIView* view in [self.centerPanel.view subviews]) {
+        if (-1 == view.tag) {
+            [view removeFromSuperview];
+        }
+    }
+    
     self.state = JASidePanelCenterVisible;
     
     [self _adjustCenterFrame];

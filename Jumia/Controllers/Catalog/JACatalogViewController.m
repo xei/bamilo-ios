@@ -145,6 +145,7 @@
                                        }
                                        
                                        self.navBarLayout.subTitle = [NSString stringWithFormat:@"%d", results.count];
+                                       [self reloadNavBar];
                                        
                                        [self.productsArray addObjectsFromArray:results];
                                        
