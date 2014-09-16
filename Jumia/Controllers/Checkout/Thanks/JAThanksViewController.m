@@ -23,6 +23,9 @@
     
     self.navBarLayout.showCartButton = NO;
     
+    // Notification to clean cart
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
+    
     if(VALID_NOTEMPTY(self.orderNumber, NSString))
     {
         [self.orderNumberLabel setText:self.orderNumber];

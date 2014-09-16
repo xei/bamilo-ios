@@ -16,6 +16,7 @@
 #define kUserLoggedOutNotification @"NOTIFICATION_USER_LOGGED_OUT"
 #define kCancelLoadingNotificationName @"CANCEL_LOADING_NOTIFICATION"
 #define kCancelButtonPressedInMenuSearchBar @"PRESSED_BACK_BUTTON_NOTIFICATION"
+#define kUpdateSideMenuCartNotification @"NOTIFICATION_SIDE_MENU_UPDATE_CART"
 //************
 
 //************ root view controller notifications
