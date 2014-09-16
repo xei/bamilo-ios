@@ -10,6 +10,8 @@
 
 @interface JAThanksViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *orderNumberLabel;
+
 @end
 
 @implementation JAThanksViewController
@@ -18,6 +20,14 @@
     [super viewDidLoad];
  
     self.navBarLayout.title = @"Thanks";
+    
+    self.navBarLayout.showCartButton = NO;
+    
+    if(VALID_NOTEMPTY(self.orderNumber, NSString))
+    {
+        [self.orderNumberLabel setText:self.orderNumber];
+        [self.orderNumberLabel sizeToFit];
+    }
 }
 
 @end
