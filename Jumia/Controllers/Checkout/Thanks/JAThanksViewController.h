@@ -10,4 +10,6 @@
 
 @interface JAThanksViewController : JABaseViewController
 
+@property (strong, nonatomic) NSString *orderNumber;
+
 @end

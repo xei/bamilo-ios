@@ -151,7 +151,6 @@
 		B5A3025019811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A3020119811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */; };
 		B5A3025119811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A3020219811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape.xib */; };
 		B5A3025219811E8A00F71726 /* BMA4SiPhoneWebViewNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A3020319811E8900F71726 /* BMA4SiPhoneWebViewNotifView.xib */; };
-		B5A3025319811E8A00F71726 /* AdXTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3020619811E8900F71726 /* AdXTracking.m */; };
 		B5A3025419811E8A00F71726 /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A3020719811E8900F71726 /* BugSense-iOS.framework */; };
 		B5A3025519811E8A00F71726 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A3021C19811E8A00F71726 /* libAdIdAccess.a */; };
 		B5A3025619811E8A00F71726 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A3021D19811E8A00F71726 /* libGoogleAnalyticsServices.a */; };
@@ -196,7 +195,6 @@
 		B5A302E019811E9200F71726 /* RITracking_example.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5A302AE19811E9200F71726 /* RITracking_example.plist */; };
 		B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B019811E9200F71726 /* RITrackingConfiguration.m */; };
 		B5A302E219811E9200F71726 /* RIAd4PushTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B319811E9200F71726 /* RIAd4PushTracker.m */; };
-		B5A302E319811E9200F71726 /* RIAdXTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B519811E9200F71726 /* RIAdXTracker.m */; };
 		B5A302E419811E9200F71726 /* RIBugSenseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B719811E9200F71726 /* RIBugSenseTracker.m */; };
 		B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B919811E9200F71726 /* RIGoogleAnalyticsTracker.m */; };
 		B5A302E619811E9200F71726 /* RIURLCacheWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302BC19811E9200F71726 /* RIURLCacheWrapper.m */; };
@@ -538,8 +536,6 @@
 		B5A3020119811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
 		B5A3020219811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape.xib"; sourceTree = "<group>"; };
 		B5A3020319811E8900F71726 /* BMA4SiPhoneWebViewNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneWebViewNotifView.xib; sourceTree = "<group>"; };
-		B5A3020519811E8900F71726 /* AdXTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdXTracking.h; sourceTree = "<group>"; };
-		B5A3020619811E8900F71726 /* AdXTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdXTracking.m; sourceTree = "<group>"; };
 		B5A3020719811E8900F71726 /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "BugSense-iOS.framework"; sourceTree = "<group>"; };
 		B5A3020B19811E8A00F71726 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
 		B5A3020C19811E8A00F71726 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
@@ -642,8 +638,6 @@
 		B5A302B019811E9200F71726 /* RITrackingConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RITrackingConfiguration.m; sourceTree = "<group>"; };
 		B5A302B219811E9200F71726 /* RIAd4PushTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAd4PushTracker.h; sourceTree = "<group>"; };
 		B5A302B319811E9200F71726 /* RIAd4PushTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAd4PushTracker.m; sourceTree = "<group>"; };
-		B5A302B419811E9200F71726 /* RIAdXTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAdXTracker.h; sourceTree = "<group>"; };
-		B5A302B519811E9200F71726 /* RIAdXTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAdXTracker.m; sourceTree = "<group>"; };
 		B5A302B619811E9200F71726 /* RIBugSenseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIBugSenseTracker.h; sourceTree = "<group>"; };
 		B5A302B719811E9200F71726 /* RIBugSenseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIBugSenseTracker.m; sourceTree = "<group>"; };
 		B5A302B819811E9200F71726 /* RIGoogleAnalyticsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIGoogleAnalyticsTracker.h; sourceTree = "<group>"; };
@@ -1446,7 +1440,6 @@
 				B5EF759B19814EF000005B13 /* FacebookSDK.framework */,
 				B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */,
 				B5A301D319811E8900F71726 /* Ad4ScreenTrackingSDK */,
-				B5A3020419811E8900F71726 /* ADXTracker */,
 				B5A3020719811E8900F71726 /* BugSense-iOS.framework */,
 				B5A3020819811E8A00F71726 /* GoogleAnalyticsServicesiOS_3.08 */,
 				B5A3021E19811E8A00F71726 /* SDWebImage */,
@@ -1571,15 +1564,6 @@
 				B5A3020319811E8900F71726 /* BMA4SiPhoneWebViewNotifView.xib */,
 			);
 			path = WebViewBanner;
-			sourceTree = "<group>";
-		};
-		B5A3020419811E8900F71726 /* ADXTracker */ = {
-			isa = PBXGroup;
-			children = (
-				B5A3020519811E8900F71726 /* AdXTracking.h */,
-				B5A3020619811E8900F71726 /* AdXTracking.m */,
-			);
-			path = ADXTracker;
 			sourceTree = "<group>";
 		};
 		B5A3020819811E8A00F71726 /* GoogleAnalyticsServicesiOS_3.08 */ = {
@@ -1872,8 +1856,6 @@
 			children = (
 				B5A302B219811E9200F71726 /* RIAd4PushTracker.h */,
 				B5A302B319811E9200F71726 /* RIAd4PushTracker.m */,
-				B5A302B419811E9200F71726 /* RIAdXTracker.h */,
-				B5A302B519811E9200F71726 /* RIAdXTracker.m */,
 				B5A302B619811E9200F71726 /* RIBugSenseTracker.h */,
 				B5A302B719811E9200F71726 /* RIBugSenseTracker.m */,
 				B5A302B819811E9200F71726 /* RIGoogleAnalyticsTracker.h */,
@@ -2413,7 +2395,6 @@
 				B510B01519AE466B00A9754A /* JARadioComponent.m in Sources */,
 				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
 				B510B01719AE466B00A9754A /* JATextFieldComponent.m in Sources */,
-				B5A3025319811E8A00F71726 /* AdXTracking.m in Sources */,
 				B5A302C619811E9200F71726 /* RIImageResolution.m in Sources */,
 				B5A302E619811E9200F71726 /* RIURLCacheWrapper.m in Sources */,
 				B59DCA6A19B8521A00DE7960 /* JAButtonWithBlur.m in Sources */,
@@ -2446,7 +2427,6 @@
 				4A39213A19891FC400B70A9C /* JAMyFavouritesViewController.m in Sources */,
 				4A18856419B8A368003337FC /* JAActivityViewController.m in Sources */,
 				B59D195F19C33122004843C3 /* JAOrderViewController.m in Sources */,
-				B5A302E319811E9200F71726 /* RIAdXTracker.m in Sources */,
 				B55CF29119BE072800A6C6B6 /* JAShippingInfoCell.m in Sources */,
 				4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */,
 				CEDEB9C9199BA8FA0022BAB5 /* NMRangeSlider.m in Sources */,
