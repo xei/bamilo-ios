@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     
-    self.navBarLayout.title = STRING_SIGN_IN;
+    self.navBarLayout.title = STRING_MY_ACCOUNT;
     
     // Get the form for the forgot password
     [RIForm getForm:@"changepassword"
