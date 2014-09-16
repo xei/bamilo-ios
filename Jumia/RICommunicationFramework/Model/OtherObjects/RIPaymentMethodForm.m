@@ -112,7 +112,6 @@
         {
             for (RIPaymentMethodFormOption *formOption in [field options])
             {
-                NSLog(@"%@ - %@", option, [formOption value]);
                 if([option isEqualToString:[formOption value]])
                 {
                     if(VALID_NOTEMPTY(formOption.form, RIForm) && VALID_NOTEMPTY(formOption.form.fields, NSOrderedSet))
