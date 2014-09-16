@@ -239,7 +239,7 @@
                   symbolName = "-[JALoginViewController loginButtonPressed]"
                   moduleName = "Jumia"
                   urlString = "file:///Users/miguelchaves/Documents/JUMIAIOS/Jumia/Controllers/Checkout/Account/JALoginViewController.m"
-                  timestampString = "432560103.736435"
+                  timestampString = "432560982.690824"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "474"
@@ -253,7 +253,7 @@
                   symbolName = "__43-[JALoginViewController loginButtonPressed]_block_invoke"
                   moduleName = "Jumia"
                   urlString = "file:///Users/miguelchaves/Documents/JUMIAIOS/Jumia/Controllers/Checkout/Account/JALoginViewController.m"
-                  timestampString = "432560103.736619"
+                  timestampString = "432560982.690994"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "474"
@@ -788,6 +788,38 @@
             startingLineNumber = "317"
             endingLineNumber = "317"
             landmarkName = "-changeCenterPanel:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jumia/Controllers/MyAccount/JAMyAccountViewController.m"
+            timestampString = "432568326.209967"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jumia/Controllers/MyAccount/JAMyAccountViewController.m"
+            timestampString = "432568328.0343"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
