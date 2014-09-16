@@ -13,8 +13,11 @@
 @interface JAMyAccountViewController ()
 
 @property (strong, nonatomic) JADynamicForm *changePasswordForm;
+@property (strong, nonatomic) JADynamicForm *manageNewsletterForm;
 @property (assign, nonatomic) float changePasswordFormHeight;
+@property (assign, nonatomic) float manageNewsletterFormHeight;
 @property (weak, nonatomic) IBOutlet UIView *changePasswordView;
+@property (weak, nonatomic) IBOutlet UIView *manageNewsletterView;
 @property (weak, nonatomic) IBOutlet UISwitch *switchPushNotification;
 
 @end
@@ -56,6 +59,33 @@
            
        }];
     
+    // Get the form for the newsletter
+    [RIForm getForm:@"managenewsletters"
+       successBlock:^(RIForm *form) {
+           
+           self.manageNewsletterForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
+           self.manageNewsletterFormHeight = 0.0f;
+           
+           for(UIView *view in self.manageNewsletterForm.formViews)
+           {
+               [self.manageNewsletterView addSubview:view];
+               
+               if(CGRectGetMaxY(view.frame) > self.manageNewsletterFormHeight)
+               {
+                   self.manageNewsletterFormHeight = CGRectGetMaxY(view.frame);
+               }
+           }
+           
+       } failureBlock:^(NSArray *errorMessage) {
+           
+           [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                       message:@"There was an error"
+                                      delegate:nil
+                             cancelButtonTitle:nil
+                             otherButtonTitles:STRING_OK, nil] show];
+           
+       }];
+    
     // Verify if the push notifications are enabled
     UIRemoteNotificationType types = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
     
@@ -78,12 +108,77 @@
 
 - (void)changePushNotificationStatus:(id)sender
 {
-    
+    if (self.switchPushNotification.on)
+    {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                                UIRemoteNotificationTypeSound |
+                                                                                UIRemoteNotificationTypeAlert |
+                                                                                UIRemoteNotificationTypeBadge |
+                                                                                UIRemoteNotificationTypeSound |
+                                                                                UIRemoteNotificationTypeAlert)];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+    }
 }
 
 - (void)changeNewsletterStatus:(id)sender
 {
+    [self.manageNewsletterForm resignResponder];
     
+    [self showLoading];
+    
+    [RIForm sendForm:[self.manageNewsletterForm form] parameters:[self.manageNewsletterForm getValues] successBlock:^(id object) {
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                                 value:nil
+                                                action:@"ChangeNewsletter"
+                                              category:@"Account"
+                                                  data:nil];
+        
+        [self.manageNewsletterForm resetValues];
+        
+        [self hideLoading];
+        
+        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                    message:@"Newsletter settings changed"
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:STRING_OK, nil] show];
+        
+    } andFailureBlock:^(id errorObject) {
+        [self hideLoading];
+        
+        if(VALID_NOTEMPTY(errorObject, NSDictionary))
+        {
+            [self.manageNewsletterForm validateFields:errorObject];
+            
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                        message:STRING_ERROR_INVALID_FIELDS
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:STRING_OK, nil] show];
+        }
+        else if(VALID_NOTEMPTY(errorObject, NSArray))
+        {
+            [self.manageNewsletterForm checkErrors];
+            
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                        message:[errorObject componentsJoinedByString:@","]
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:STRING_OK, nil] show];
+        }
+        else
+        {
+            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                        message:@"Generic error"
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:STRING_OK, nil] show];
+        }
+    }];
 }
 
 - (void)changePassword

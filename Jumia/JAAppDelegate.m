@@ -56,7 +56,12 @@
                              [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
     
     // Push Notifications Activation
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                            UIRemoteNotificationTypeSound |
+                                                                            UIRemoteNotificationTypeAlert |
+                                                                            UIRemoteNotificationTypeBadge |
+                                                                            UIRemoteNotificationTypeSound |
+                                                                            UIRemoteNotificationTypeAlert)];
     
     return YES;
 }
