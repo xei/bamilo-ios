@@ -19,7 +19,7 @@
         if (VALID_NOTEMPTY([jsonObject objectForKey:@"type"], NSString)) {
             
             NSString *type = [jsonObject objectForKey:@"type"];
-            if([@"submit-external" isEqualToString:type] || [@"auto-submit-external" isEqualToString:type])
+            if([@"submit-external" isEqualToString:type] || [@"auto-submit-external" isEqualToString:type] || [@"render-internal" isEqualToString:type])
             {
                 paymentInfo.type = RIPaymentInformationCheckoutShowWebviewWithForm;
             }

@@ -48,17 +48,15 @@
         {
             if(RIPaymentInformationCheckoutEnded == checkout.paymentInformation.type)
             {
-                NSLog(@"DOES NOT NEED EXTERNAL WEBVIEW");
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[checkout.orderNr] forKeys:@[@"order_number"]];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification
                                                                     object:nil
-                                                                  userInfo:nil];
+                                                                  userInfo:userInfo];
                 
             }
             else
             {
-                NSLog(@"NEEDS EXTERNAL WEBVIEW %d - %@", checkout.paymentInformation.type, checkout.paymentInformation.method);
-                
                 NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[checkout.paymentInformation] forKeys:@[@"payment_information"]];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification
