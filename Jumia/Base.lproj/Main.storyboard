@@ -511,6 +511,7 @@
                         <segue destination="y7p-zP-v5K" kind="push" identifier="showCatalog" id="Pnc-cP-ATg"/>
                         <segue destination="ghr-t8-OwX" kind="push" identifier="segueToMyAccount" id="Fv7-Im-hF1"/>
                         <segue destination="OuJ-bo-0Lu" kind="push" identifier="pushTrackOrder" id="k6z-HH-SJs"/>
+                        <segue destination="79x-mL-1sG" kind="push" identifier="pushMyAccount" id="dgo-jl-I4C"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D9k-Dg-apF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1167,6 +1168,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F8P-XE-SZ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2512" y="924"/>
+        </scene>
+        <!--My Account View Controller-->
+        <scene sceneID="sFf-N2-4gQ">
+            <objects>
+                <viewController storyboardIdentifier="myAccountViewController" id="79x-mL-1sG" customClass="JAMyAccountViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pR8-eH-xV8"/>
+                        <viewControllerLayoutGuide type="bottom" id="l2e-af-FLu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7jt-py-GWa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="HMH-7d-BjS"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tyB-ld-o7R" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2512" y="1619"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="PB4-GR-7g5">

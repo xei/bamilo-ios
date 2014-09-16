@@ -239,12 +239,12 @@
                   symbolName = "-[JALoginViewController loginButtonPressed]"
                   moduleName = "Jumia"
                   urlString = "file:///Users/miguelchaves/Documents/JUMIAIOS/Jumia/Controllers/Checkout/Account/JALoginViewController.m"
-                  timestampString = "432492846.004063"
+                  timestampString = "432560103.736435"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "474"
                   endingLineNumber = "474"
-                  offsetFromSymbolStart = "172">
+                  offsetFromSymbolStart = "135">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -253,12 +253,12 @@
                   symbolName = "__43-[JALoginViewController loginButtonPressed]_block_invoke"
                   moduleName = "Jumia"
                   urlString = "file:///Users/miguelchaves/Documents/JUMIAIOS/Jumia/Controllers/Checkout/Account/JALoginViewController.m"
-                  timestampString = "432492846.004332"
+                  timestampString = "432560103.736619"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "474"
                   endingLineNumber = "474"
-                  offsetFromSymbolStart = "80">
+                  offsetFromSymbolStart = "66">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -403,7 +403,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "416"
             endingLineNumber = "416"
-            landmarkName = "-didSelectTeaserWithCatalogUrl:"
+            landmarkName = "-showHomeScreen"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -499,7 +499,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "100"
             endingLineNumber = "100"
-            landmarkName = "-application:didRegisterForRemoteNotificationsWithDeviceToken:"
+            landmarkName = "-application:didReceiveLocalNotification:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -515,7 +515,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "105"
             endingLineNumber = "105"
-            landmarkName = "-application:didReceiveRemoteNotification:"
+            landmarkName = "-application:openURL:sourceApplication:annotation:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -531,7 +531,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "110"
             endingLineNumber = "110"
-            landmarkName = "-application:didReceiveLocalNotification:"
+            landmarkName = "-application:openURL:sourceApplication:annotation:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -724,6 +724,70 @@
             startingLineNumber = "301"
             endingLineNumber = "301"
             landmarkName = "-handlePushNotificationWithOpenURL:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jumia/Controllers/MyAccount/JAMyAccountViewController.m"
+            timestampString = "432558470.24847"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jumia/Controllers/MyAccount/JAMyAccountViewController.m"
+            timestampString = "432558470.24847"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jumia/Controllers/MyAccount/JAMyAccountViewController.m"
+            timestampString = "432558457.758788"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jumia/Controllers/JARootViewController/JACenterNavigationController.m"
+            timestampString = "432558725.393191"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "317"
+            endingLineNumber = "317"
+            landmarkName = "-changeCenterPanel:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
