@@ -12,7 +12,7 @@
 <UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (strong, nonatomic) NSMutableURLRequest *originalRequest;
+@property (strong, nonatomic) NSURLRequest  *originalRequest;
 
 @end
 
@@ -25,6 +25,8 @@
     
     [self.webView setDelegate:self];
     
+    self.originalRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[RIApi getCountryUrlInUse]]];
+
     [self loadPaymentMethodRequest];
 }
 
@@ -36,14 +38,13 @@
         if(RIPaymentInformationCheckoutShowWebviewWithUrl == self.paymentInformation.type && VALID_NOTEMPTY(self.paymentInformation.url, NSString))
         {
             NSLog(@"RIPaymentInformationCheckoutShowWebviewWithUrl %@", self.paymentInformation.url);
-            self.originalRequest = [self createRequestWithUrl:self.paymentInformation.url];
-            [self.webView loadRequest:self.originalRequest];
+            [self.webView loadRequest:[self createRequestWithUrl:self.paymentInformation.url]];
         }
         else if(RIPaymentInformationCheckoutShowWebviewWithForm == self.paymentInformation.type && VALID_NOTEMPTY(self.paymentInformation.form, RIForm) && VALID_NOTEMPTY(self.paymentInformation.form.action, NSString))
         {
             NSLog(@"RIPaymentInformationCheckoutShowWebviewWithForm %@", self.paymentInformation.form.action);
             
-            self.originalRequest = [self createRequestWithUrl:self.paymentInformation.form.action];
+            NSMutableURLRequest *request = [self createRequestWithUrl:self.paymentInformation.form.action];
             
             BOOL isPOST = NO;
             if(VALID_NOTEMPTY(self.paymentInformation.form.method, NSString) && [@"post" isEqualToString:[self.paymentInformation.method lowercaseString]])
@@ -57,13 +58,13 @@
                 if (!isPOST)
                 {
                     NSString *urlWithParameters = [NSString stringWithFormat:@"%@?%@", self.paymentInformation.form.action, [self getParametersString:parameters]];
-                    [self.originalRequest setURL:[NSURL URLWithString:urlWithParameters]];
+                    [request setURL:[NSURL URLWithString:urlWithParameters]];
                 }
                 else
                 {
                     NSError *error = nil;
                     
-                    [self.originalRequest setHTTPBody:[[self getParametersString:parameters] dataUsingEncoding:NSUTF8StringEncoding]];
+                    [request setHTTPBody:[[self getParametersString:parameters] dataUsingEncoding:NSUTF8StringEncoding]];
                     
                     if (error)
                     {
@@ -72,7 +73,7 @@
                 }
             }
             
-            [self.webView loadRequest:self.originalRequest];
+            [self.webView loadRequest:request];
         }
     }
 }
@@ -166,7 +167,7 @@
     BOOL shouldNavigate = NO;
     
     NSString *existingAuthValue = [request valueForHTTPHeaderField:@"Authorization"];
-    if (![[[request URL] host] isEqualToString:[[self.originalRequest URL] host]] && existingAuthValue == nil)
+    if ([[url host] isEqualToString:[[self.originalRequest URL] host]] && existingAuthValue == nil)
     {
         NSMutableURLRequest *newRequest = [NSMutableURLRequest requestWithURL:url];
         NSString *authStr = [NSString stringWithFormat:@"%@:%@", RI_USERNAME, RI_PASSWORD];

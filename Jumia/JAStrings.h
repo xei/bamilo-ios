@@ -24,6 +24,7 @@
 #define STRING_SUBMIT RILocalizedString(@"submit_label", nil)
 
 #define STRING_LOGIN RILocalizedString(@"login_label", nil)
+#define STRING_LOGOUT RILocalizedString(@"action_label_logout", nil)
 #define STRING_HOME RILocalizedString(@"home", nil)
 #define STRING_CATEGORIES RILocalizedString(@"categories", nil)
 #define STRING_MY_FAVOURITES RILocalizedString(@"favourites", nil)
@@ -32,8 +33,6 @@
 #define STRING_MY_ACCOUNT RILocalizedString(@"my_account", nil)
 #define STRING_TRACK_MY_ORDER RILocalizedString(@"nav_track_order", nil)
 #define STRING_CHOOSE_COUNTRY RILocalizedString(@"nav_country", nil)
-#define STRING_SIGN_IN RILocalizedString(@"sign_in", nil)
-#define STRING_SIGN_OUT RILocalizedString(@"sign_out", nil)
 #define STRING_FILTERS RILocalizedString(@"string_filters", nil) // Not translated
 #define STRING_ALL_CATEGORIES RILocalizedString(@"categories_toplevel_title", nil)
 #define STRING_APPLY RILocalizedString(@"string_apply", nil) // Not translated
@@ -155,6 +154,8 @@
 #define STRING_TRACK_ORDER RILocalizedString(@"track_order", nil)
 #define STRING_ORDER_ID RILocalizedString(@"track_order_hint", nil)
 #define STRING_ORDER_STATUS RILocalizedString(@"string_order_status", nil) // Not translated
+#define STRING_LOOSING_ORDER_TITLE RILocalizedString(@"string_loosing_order_title", nil)
+#define STRING_LOOSING_ORDER_MESSAGE RILocalizedString(@"string_loosing_order_message", nil)
 
 #define STRING_NO_RECENT_SEARCHES RILocalizedString(@"recentsearch_no_searches", nil)
 #define STRING_CLEAR_RECENT_SEARCHES RILocalizedString(@"recentsearch_clear_searches", nil)
