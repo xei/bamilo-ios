@@ -42,19 +42,42 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.sourceCategoriesArray.count;
+    return self.sourceCategoriesArray.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    UITableViewCell *cell;
     
-    RICategory *category = [self.sourceCategoriesArray objectAtIndex:indexPath.row];
+    if (0 == indexPath.row) {
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:@"parentCategoryCell"];
+        
+        cell.backgroundColor = UIColorFromRGB(0xf2f2f2);
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
+        
+        if (VALID_NOTEMPTY(self.parentCategory, RICategory)) {
+            
+            cell.textLabel.text = [self.parentCategory.name uppercaseString];
+            cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        } else {
+            
+            cell.textLabel.text = [STRING_CATEGORIES uppercaseString];
+            cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
+        }
+    } else {
     
-    cell.textLabel.text = category.name;
-    
-    if (category.children.count > 0) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        NSInteger realIndex = indexPath.row - 1;
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        
+        RICategory *category = [self.sourceCategoriesArray objectAtIndex:realIndex];
+        
+        cell.textLabel.text = category.name;
+        
+        if (category.children.count > 0) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
     }
     
     return cell;
@@ -65,44 +88,54 @@
     [tableView deselectRowAtIndexPath:indexPath
                              animated:YES];
     
-    RICategory *category = [self.sourceCategoriesArray objectAtIndex:indexPath.row];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:category.name
-                                             value:nil
-                                            action:@"Categories"
-                                          category:@"Catalog"
-                                              data:nil];
-    
-    if (category.children.count > 0) {
+    if (0 == indexPath.row) {
         
-        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main"
-                                                        bundle:nil];
-        
-        JASubCategoriesViewController *newSubCategories = [story instantiateViewControllerWithIdentifier:@"subCategoriesViewController"];
-        newSubCategories.sourceCategoriesArray = category.children.array;
-        newSubCategories.subCategoriesTitle = category.name;
-        
-        [self.navigationController pushViewController:newSubCategories
-                                             animated:YES];
+        if (VALID_NOTEMPTY(self.parentCategory, RICategory)) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
+                                                                object:@{@"category":self.parentCategory}];
+        }
     } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
-                                                            object:@{@"category":category}];
+        NSInteger realIndex = indexPath.row - 1;
+        
+        RICategory *category = [self.sourceCategoriesArray objectAtIndex:realIndex];
+
+        [[RITrackingWrapper sharedInstance] trackEvent:category.name
+                                                 value:nil
+                                                action:@"Categories"
+                                              category:@"Catalog"
+                                                  data:nil];
+        
+        if (VALID(category, RICategory) && category.children.count > 0) {
+            
+            UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main"
+                                                            bundle:nil];
+            
+            JASubCategoriesViewController *newSubCategories = [story instantiateViewControllerWithIdentifier:@"subCategoriesViewController"];
+            newSubCategories.sourceCategoriesArray = category.children.array;
+            newSubCategories.parentCategory = category;
+            
+            [self.navigationController pushViewController:newSubCategories
+                                                 animated:YES];
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
+                                                                object:@{@"category":category}];
+        }
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 30.0f;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sectionHeader"];
-    
-    cell.textLabel.text = self.subCategoriesTitle;
-    
-    return cell;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 30.0f;
+//}
+//
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sectionHeader"];
+//    
+//    cell.textLabel.text = self.subCategoriesTitle;
+//    
+//    return cell;
+//}
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {

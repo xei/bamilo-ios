@@ -20,8 +20,13 @@
 }
 
 - (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage
+                          targetType:(NSInteger)targetType;
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushCatalogWithUrl
+    NSString* notificationName = kTeaserNotificationPushCatalogWithUrl;
+    if (1 == targetType) {
+        notificationName = kTeaserNotificationPushPDVWithUrl;
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                         object:nil
                                                       userInfo:[NSDictionary dictionaryWithObjects:@[teaserImage.url,teaserImage.teaserDescription] forKeys:@[@"url",@"title"]]];
 }
