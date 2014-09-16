@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class RICategory;
+
 @interface JASubCategoriesViewController : UIViewController
 
+@property (strong, nonatomic) RICategory *parentCategory;
 @property (strong, nonatomic) NSArray *sourceCategoriesArray;
-@property (strong, nonatomic) NSString *subCategoriesTitle;
 
 @end
