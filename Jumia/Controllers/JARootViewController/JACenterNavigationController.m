@@ -36,6 +36,7 @@
 #import "JANavigationBarLayout.h"
 #import "RICustomer.h"
 #import "JATrackMyOrderViewController.h"
+#import "JAMyAccountViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -316,7 +317,15 @@
     {
         if([RICustomer checkIfUserIsLogged])
         {
-            
+            if (![[self topViewController] isKindOfClass:[JAMyAccountViewController class]])
+            {
+                JAMyAccountViewController *myAccountViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myAccountViewController"];
+                
+                [self pushViewController:myAccountViewController
+                                animated:YES];
+                
+                self.viewControllers = @[myAccountViewController];
+            }
         }
         else
         {

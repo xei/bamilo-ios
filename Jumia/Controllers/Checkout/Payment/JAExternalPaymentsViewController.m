@@ -8,11 +8,11 @@
 
 #import "JAExternalPaymentsViewController.h"
 #import "RIPaymentInformation.h"
-
 @interface JAExternalPaymentsViewController ()
 <UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) NSMutableURLRequest *originalRequest;
 
 @end
 
@@ -35,62 +35,35 @@
     {
         if(RIPaymentInformationCheckoutShowWebviewWithUrl == self.paymentInformation.type && VALID_NOTEMPTY(self.paymentInformation.url, NSString))
         {
-            NSURL *url = [NSURL URLWithString:self.paymentInformation.url];
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-            
-            BOOL isPOST = NO;
-            if(VALID_NOTEMPTY(self.paymentInformation.method, NSString))
-            {
-                if([@"post" isEqualToString:[self.paymentInformation.method lowercaseString]])
-                {
-                    isPOST = YES;
-                }
-                [request setHTTPMethod:self.paymentInformation.method];
-            }
-            
-            [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
-            
-            [self showLoading];
-            
-            [self.webView loadRequest:request];
+            NSLog(@"RIPaymentInformationCheckoutShowWebviewWithUrl %@", self.paymentInformation.url);
+            self.originalRequest = [self createRequestWithUrl:self.paymentInformation.url];
+            [self.webView loadRequest:self.originalRequest];
         }
         else if(RIPaymentInformationCheckoutShowWebviewWithForm == self.paymentInformation.type && VALID_NOTEMPTY(self.paymentInformation.form, RIForm) && VALID_NOTEMPTY(self.paymentInformation.form.action, NSString))
         {
-            NSURL *url = [NSURL URLWithString:self.paymentInformation.form.action];
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+            NSLog(@"RIPaymentInformationCheckoutShowWebviewWithForm %@", self.paymentInformation.form.action);
+            
+            self.originalRequest = [self createRequestWithUrl:self.paymentInformation.form.action];
             
             BOOL isPOST = NO;
-            if(VALID_NOTEMPTY(self.paymentInformation.form.method, NSString))
+            if(VALID_NOTEMPTY(self.paymentInformation.form.method, NSString) && [@"post" isEqualToString:[self.paymentInformation.method lowercaseString]])
             {
-                if([@"post" isEqualToString:[self.paymentInformation.method lowercaseString]])
-                {
-                    isPOST = YES;
-                }
-                [request setHTTPMethod:self.paymentInformation.form.method];
+                isPOST = YES;
             }
-            
-            [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
             
             NSDictionary *parameters = [RIForm getParametersForForm:self.paymentInformation.form];
             if(VALID_NOTEMPTY(parameters, NSDictionary))
             {
                 if (!isPOST)
                 {
-                    NSString *urlWithParameters = [NSString stringWithFormat:@"%@?%@", [url absoluteString], [self getParametersString:parameters]];
-                    [request setURL:[NSURL URLWithString:urlWithParameters]];
+                    NSString *urlWithParameters = [NSString stringWithFormat:@"%@?%@", self.paymentInformation.form.action, [self getParametersString:parameters]];
+                    [self.originalRequest setURL:[NSURL URLWithString:urlWithParameters]];
                 }
                 else
                 {
                     NSError *error = nil;
                     
-                    [request setValue:RI_HTTP_CONTENT_TYPE_HEADER_FORM_DATA_VALUE forHTTPHeaderField:RI_HTTP_CONTENT_TYPE_HEADER_NAME];
-                    [request setHTTPBody:[[self getParametersString:parameters] dataUsingEncoding:NSUTF8StringEncoding]];
-                    
-//                    [request setValue:RI_HTTP_CONTENT_TYPE_HEADER_JSON_VALUE forHTTPHeaderField:RI_HTTP_CONTENT_TYPE_HEADER_NAME];
-//                    [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters options:0 error:&error]];
-
-//                    [request setValue:RI_HTTP_CONTENT_TYPE_HEADER_PLIST_VALUE forHTTPHeaderField:RI_HTTP_CONTENT_TYPE_HEADER_NAME];
-//                    [request setHTTPBody:[NSPropertyListSerialization dataWithPropertyList:parameters format:NSPropertyListXMLFormat_v1_0 options:0 error:&error]];
+                    [self.originalRequest setHTTPBody:[[self getParametersString:parameters] dataUsingEncoding:NSUTF8StringEncoding]];
                     
                     if (error)
                     {
@@ -99,11 +72,24 @@
                 }
             }
             
-            [self showLoading];
-            
-            [self.webView loadRequest:request];
+            [self.webView loadRequest:self.originalRequest];
         }
     }
+}
+
+- (NSMutableURLRequest *)createRequestWithUrl:(NSString*)url
+{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    
+    if(VALID_NOTEMPTY(self.paymentInformation.form.method, NSString) && [@"post" isEqualToString:[self.paymentInformation.method lowercaseString]])
+    {
+        [request setHTTPMethod:RI_HTTP_METHOD_POST];
+    }
+    
+    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    [request setHTTPShouldHandleCookies:YES];
+    
+    return request;
 }
 
 - (NSString *) getParametersString:(NSDictionary *)parameters {
@@ -142,18 +128,79 @@
     return output;
 }
 
+- (void) checkAppObject
+{
+    NSString *jsonAppObjectString = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementById('jsonAppObject').innerHTML"];
+    
+    NSError *error;
+    NSData *jsonAppObjectData = [jsonAppObjectString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:jsonAppObjectData
+                                                                 options:kNilOptions
+                                                                   error:&error];
+    
+    if(VALID_NOTEMPTY(jsonResponse, NSDictionary) && ISEMPTY(error))
+    {
+        NSString *orderNumber = [jsonResponse objectForKey:@"order_nr"];
+        if(!VALID_NOTEMPTY(orderNumber, NSString))
+        {
+            orderNumber = [jsonResponse objectForKey:@"orderNr"];
+        }
+        
+        if(VALID_NOTEMPTY(orderNumber, NSString))
+        {
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[orderNumber] forKeys:@[@"order_number"]];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification
+                                                                object:nil
+                                                              userInfo:userInfo];
+        }
+    }
+}
+
 #pragma mark UIWebViewDelegate
+
+-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    NSURL *url = [request URL];
+    
+    BOOL shouldNavigate = NO;
+    
+    NSString *existingAuthValue = [request valueForHTTPHeaderField:@"Authorization"];
+    if (![[[request URL] host] isEqualToString:[[self.originalRequest URL] host]] && existingAuthValue == nil)
+    {
+        NSMutableURLRequest *newRequest = [NSMutableURLRequest requestWithURL:url];
+        NSString *authStr = [NSString stringWithFormat:@"%@:%@", RI_USERNAME, RI_PASSWORD];
+        NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64EncodedStringWithOptions:0]];
+        [newRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
+        
+        //Append any other info from the old request
+        [webView loadRequest:newRequest];
+    }
+    else
+    {
+        shouldNavigate = YES;
+    }
+    
+    
+    return shouldNavigate;
+}
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    NSLog(@"didFailLoadWithError");
     [self hideLoading];
+}
+
+-(void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [self showLoading];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"webViewDidFinishLoad");
     [self hideLoading];
+    
+    [self checkAppObject];
 }
 
 @end
