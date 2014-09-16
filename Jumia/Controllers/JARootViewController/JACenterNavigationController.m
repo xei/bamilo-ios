@@ -194,7 +194,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutThanksScreen)
+                                             selector:@selector(showCheckoutThanksScreen:)
                                                  name:kShowCheckoutThanksScreenNotification
                                                object:nil];
     
@@ -627,9 +627,11 @@
     [self pushViewController:externalPaymentsVC animated:YES];
 }
 
-- (void)showCheckoutThanksScreen
+- (void)showCheckoutThanksScreen:(NSNotification *)notification
 {
     JAThanksViewController *thanksVC = [self.storyboard instantiateViewControllerWithIdentifier:@"thanksViewController"];
+    
+    thanksVC.orderNumber = [notification.userInfo objectForKey:@"order_number"];
     
     [self pushViewController:thanksVC animated:YES];
 }
