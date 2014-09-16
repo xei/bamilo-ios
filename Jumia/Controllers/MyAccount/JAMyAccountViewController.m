@@ -110,7 +110,12 @@
 {
     if (self.switchPushNotification.on)
     {
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                                UIRemoteNotificationTypeSound |
+                                                                                UIRemoteNotificationTypeAlert |
+                                                                                UIRemoteNotificationTypeBadge |
+                                                                                UIRemoteNotificationTypeSound |
+                                                                                UIRemoteNotificationTypeAlert)];
     }
     else
     {
