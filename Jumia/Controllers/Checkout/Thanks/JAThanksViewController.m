@@ -27,6 +27,10 @@
     {
         [self.orderNumberLabel setText:self.orderNumber];
         [self.orderNumberLabel sizeToFit];
+        [self.orderNumberLabel setFrame:CGRectMake(self.orderNumberLabel.frame.origin.x,
+                                                  self.orderNumberLabel.frame.origin.y,
+                                                  self.orderNumberLabel.frame.size.width,
+                                                   self.orderNumberLabel.frame.size.height)];
     }
 }
 
