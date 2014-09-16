@@ -54,15 +54,16 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"parentCategoryCell"];
         
         cell.backgroundColor = UIColorFromRGB(0xf2f2f2);
-        cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
         
         if (VALID_NOTEMPTY(self.parentCategory, RICategory)) {
             
-            cell.textLabel.text = self.parentCategory.name;
+            cell.textLabel.text = [self.parentCategory.name uppercaseString];
+            cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
         } else {
             
-            cell.textLabel.text = STRING_CATEGORIES;
+            cell.textLabel.text = [STRING_CATEGORIES uppercaseString];
+            cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
         }
     } else {
     
