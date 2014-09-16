@@ -112,10 +112,7 @@
     {
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
                                                                                 UIRemoteNotificationTypeSound |
-                                                                                UIRemoteNotificationTypeAlert |
-                                                                                UIRemoteNotificationTypeBadge |
-                                                                                UIRemoteNotificationTypeSound |
-                                                                                UIRemoteNotificationTypeAlert)];
+                                                                                UIRemoteNotificationTypeAlert )];
     }
     else
     {

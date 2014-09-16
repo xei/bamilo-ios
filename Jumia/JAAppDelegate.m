@@ -58,10 +58,7 @@
     // Push Notifications Activation
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
                                                                             UIRemoteNotificationTypeSound |
-                                                                            UIRemoteNotificationTypeAlert |
-                                                                            UIRemoteNotificationTypeBadge |
-                                                                            UIRemoteNotificationTypeSound |
-                                                                            UIRemoteNotificationTypeAlert)];
+                                                                            UIRemoteNotificationTypeAlert )];
     
     return YES;
 }
