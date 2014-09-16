@@ -24,7 +24,8 @@
 
 - (void)load;
 
-- (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage;
+- (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage
+                          targetType:(NSInteger)targetType;
 - (void)teaserPressedWithTeaserText:(RITeaserText*)teaserText;
 - (void)teaserPressedWithTeaserProduct:(RITeaserProduct*)teaserProduct;
 - (void)teaserPressedWithTeaserTextForCampaigns:(RITeaserText *)teaserText;

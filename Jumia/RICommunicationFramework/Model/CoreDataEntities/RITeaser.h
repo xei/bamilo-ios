@@ -1,8 +1,8 @@
 //
 //  RITeaser.h
-//  Comunication Project
+//  Jumia
 //
-//  Created by Miguel Chaves on 22/Jul/14.
+//  Created by Telmo Pinto on 15/09/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
@@ -13,10 +13,11 @@
 
 @interface RITeaser : NSManagedObject
 
+@property (nonatomic, retain) NSNumber * targetType;
 @property (nonatomic, retain) RITeaserGroup *teaserGroup;
 @property (nonatomic, retain) NSOrderedSet *teaserImages;
-@property (nonatomic, retain) NSOrderedSet *teaserTexts;
 @property (nonatomic, retain) NSOrderedSet *teaserProducts;
+@property (nonatomic, retain) NSOrderedSet *teaserTexts;
 
 /**
  *  Method to parse an RITeaser given a JSON object and his type of Teaser and the country configurations
@@ -48,16 +49,6 @@
 - (void)removeTeaserImagesObject:(RITeaserImage *)value;
 - (void)addTeaserImages:(NSOrderedSet *)values;
 - (void)removeTeaserImages:(NSOrderedSet *)values;
-- (void)insertObject:(RITeaserText *)value inTeaserTextsAtIndex:(NSUInteger)idx;
-- (void)removeObjectFromTeaserTextsAtIndex:(NSUInteger)idx;
-- (void)insertTeaserTexts:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
-- (void)removeTeaserTextsAtIndexes:(NSIndexSet *)indexes;
-- (void)replaceObjectInTeaserTextsAtIndex:(NSUInteger)idx withObject:(RITeaserText *)value;
-- (void)replaceTeaserTextsAtIndexes:(NSIndexSet *)indexes withTeaserTexts:(NSArray *)values;
-- (void)addTeaserTextsObject:(RITeaserText *)value;
-- (void)removeTeaserTextsObject:(RITeaserText *)value;
-- (void)addTeaserTexts:(NSOrderedSet *)values;
-- (void)removeTeaserTexts:(NSOrderedSet *)values;
 - (void)insertObject:(RITeaserProduct *)value inTeaserProductsAtIndex:(NSUInteger)idx;
 - (void)removeObjectFromTeaserProductsAtIndex:(NSUInteger)idx;
 - (void)insertTeaserProducts:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
@@ -68,5 +59,14 @@
 - (void)removeTeaserProductsObject:(RITeaserProduct *)value;
 - (void)addTeaserProducts:(NSOrderedSet *)values;
 - (void)removeTeaserProducts:(NSOrderedSet *)values;
-
+- (void)insertObject:(RITeaserText *)value inTeaserTextsAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromTeaserTextsAtIndex:(NSUInteger)idx;
+- (void)insertTeaserTexts:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeTeaserTextsAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInTeaserTextsAtIndex:(NSUInteger)idx withObject:(RITeaserText *)value;
+- (void)replaceTeaserTextsAtIndexes:(NSIndexSet *)indexes withTeaserTexts:(NSArray *)values;
+- (void)addTeaserTextsObject:(RITeaserText *)value;
+- (void)removeTeaserTextsObject:(RITeaserText *)value;
+- (void)addTeaserTexts:(NSOrderedSet *)values;
+- (void)removeTeaserTexts:(NSOrderedSet *)values;
 @end

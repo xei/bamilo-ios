@@ -158,7 +158,6 @@
 {
     if ([segue.identifier isEqualToString:@"showSubCategories"]) {
         [segue.destinationViewController setSourceCategoriesArray:self.categories];
-        [segue.destinationViewController setSubCategoriesTitle:STRING_CATEGORIES];
     }
 }
 

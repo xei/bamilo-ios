@@ -65,7 +65,8 @@
     
     RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
     
-    [self teaserPressedWithTeaserImage:teaserImage];
+    [self teaserPressedWithTeaserImage:teaserImage
+                            targetType:[teaser.targetType integerValue]];
 }
 
 @end

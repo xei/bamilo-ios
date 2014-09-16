@@ -373,7 +373,7 @@
                                                             object:nil
                                                           userInfo:@{ @"url" : product.url,
                                                                       @"fromCatalog" : @"YES",
-                                                                      @"previousCategory" : @"",
+                                                                      @"previousCategory" : self.navBarLayout.title,
                                                                       @"relatedItems" : tempArray ,
                                                                       @"delegate": self }];
     }
