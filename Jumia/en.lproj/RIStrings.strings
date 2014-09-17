@@ -38,6 +38,8 @@
 "shopping_cart" = "Shopping Cart";
 "navigation_cart_empty" = "Your cart is empty";
 "string_vat_shipping_included" = "VAT and Shipping costs included";
+"string_user_data" = "User Data";
+"string_user_email_notifications" = "Email Notifications";
 
 "teaser_campaign_button_first_line" = "HOT";
 "teaser_campaign_button_second_line" = "OFFERS";

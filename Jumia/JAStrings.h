@@ -41,6 +41,8 @@
 #define STRING_SHOPPING_CART RILocalizedString(@"shopping_cart", nil)
 #define STRING_YOUR_CART_IS_EMPTY RILocalizedString(@"navigation_cart_empty", nil)
 #define STRING_VAT_SHIPPING_INCLUDED RILocalizedString(@"string_vat_shipping_included", nil) // Not translated
+#define STRING_USER_DATA RILocalizedString(@"string_user_data", nil) // Not translated
+#define STRING_USER_EMAIL_NOTIFICATIONS RILocalizedString(@"string_user_email_notifications", nil) // Not translated
 
 #define STRING_HOT RILocalizedString(@"teaser_campaign_button_first_line", nil)
 #define STRING_OFFERS RILocalizedString(@"teaser_campaign_button_second_line", nil)

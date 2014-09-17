@@ -37,6 +37,8 @@
 #import "RICustomer.h"
 #import "JATrackMyOrderViewController.h"
 #import "JAMyAccountViewController.h"
+#import "JAUserDataViewController.h"
+#import "JAEmailNotificationsViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -351,6 +353,26 @@
                             animated:YES];
             
             self.viewControllers = @[trackOrder];
+        }
+    }
+    else if ([newScreenName isEqualToString:STRING_USER_DATA])
+    {
+        if (![[self topViewController] isKindOfClass:[JAUserDataViewController class]])
+        {
+            JAUserDataViewController *userData = [self.storyboard instantiateViewControllerWithIdentifier:@"userDataViewController"];
+            
+            [self pushViewController:userData
+                            animated:YES];
+        }
+    }
+    else if ([newScreenName isEqualToString:STRING_USER_EMAIL_NOTIFICATIONS])
+    {
+        if (![[self topViewController] isKindOfClass:[JAEmailNotificationsViewController class]])
+        {
+            JAEmailNotificationsViewController *email = [self.storyboard instantiateViewControllerWithIdentifier:@"emailNotificationsViewController"];
+            
+            [self pushViewController:email
+                            animated:YES];
         }
     }
     
