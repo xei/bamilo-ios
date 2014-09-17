@@ -25,6 +25,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "JASidePanelController.h"
+#import "JAMenuViewController.h"
 
 static char ja_kvoContext;
 
@@ -408,6 +409,27 @@ static char ja_kvoContext;
         }
         if (self.state == JASidePanelLeftVisible) {
             self.visiblePanel = _leftPanel;
+        }
+    }
+}
+
+- (void)updateLeftPanelInformation:(NSDictionary*)userInfo
+{
+    if (VALID_NOTEMPTY(_leftPanel, UINavigationController))
+    {
+        UINavigationController *asd = (UINavigationController *)_leftPanel;
+        if(VALID_NOTEMPTY([asd topViewController], JAMenuViewController))
+        {
+            JAMenuViewController* menuVC = (JAMenuViewController*) [asd topViewController];
+            if([userInfo objectForKey:kUpdateCartNotificationValue])
+            {
+                [menuVC setCart:[userInfo objectForKey:kUpdateCartNotificationValue]];
+            }
+            
+            if([userInfo objectForKey:kExternalPaymentValue])
+            {
+                [menuVC setNeedsExternalPaymentMethod:[[userInfo objectForKey:kExternalPaymentValue] boolValue]];
+            }
         }
     }
 }
@@ -821,8 +843,50 @@ static char ja_kvoContext;
 }
 
 #pragma mark - Showing Panels
+- (void)_showLeftPanel:(BOOL)animated bounce:(BOOL)shouldBounce userInfo:(NSDictionary*)userInfo {
+    
+    self.state = JASidePanelLeftVisible;
+    [self _loadLeftPanel];
+    
+    [self _adjustCenterFrame];
+    
+    if (animated) {
+        [self _animateCenterPanel:shouldBounce completion:^(BOOL finished) {
+            [self updateLeftPanelInformation:userInfo];
+        }];
+    } else {
+        self.centerPanelContainer.frame = _centerPanelRestingFrame;	
+        [self styleContainer:self.centerPanelContainer animate:NO duration:0.0f];
+        if (self.style == JASidePanelMultipleActive || self.pushesSidePanels) {
+            [self _layoutSideContainers:NO duration:0.0f];
+        }
+    }
+    
+    if (self.style == JASidePanelSingleActive) {
+        self.tapView = [[UIView alloc] init];
+    }
+    [self _toggleScrollsToTopForCenter:NO left:YES right:NO];
+    
+    //add shadow if no shadow is already there
+    BOOL placeShadow = YES;
+    for (UIView* view in [self.centerPanel.view subviews]) {
+        if (-1 == view.tag) {
+            placeShadow = NO;
+            break;
+        }
+    }
+    if (placeShadow) {
+        UIView* shadowView = [[UIView alloc] initWithFrame:self.centerPanel.view.frame];
+        shadowView.tag = -1;
+        shadowView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+        [self.centerPanel.view addSubview:shadowView];
+    }
+    
+    [self updateLeftPanelInformation:userInfo];
+}
 
 - (void)_showLeftPanel:(BOOL)animated bounce:(BOOL)shouldBounce {
+    
     self.state = JASidePanelLeftVisible;
     [self _loadLeftPanel];
     
@@ -831,7 +895,7 @@ static char ja_kvoContext;
     if (animated) {
         [self _animateCenterPanel:shouldBounce completion:nil];
     } else {
-        self.centerPanelContainer.frame = _centerPanelRestingFrame;	
+        self.centerPanelContainer.frame = _centerPanelRestingFrame;
         [self styleContainer:self.centerPanelContainer animate:NO duration:0.0f];
         if (self.style == JASidePanelMultipleActive || self.pushesSidePanels) {
             [self _layoutSideContainers:NO duration:0.0f];
@@ -992,6 +1056,10 @@ static char ja_kvoContext;
 
 - (void)showLeftPanelAnimated:(BOOL)animated {
     [self _showLeftPanel:animated bounce:NO];
+}
+
+- (void)showLeftPanelAnimated:(BOOL)animated userInfo:(NSDictionary*)userInfo {
+    [self _showLeftPanel:animated bounce:NO userInfo:userInfo];
 }
 
 - (void)showRightPanelAnimated:(BOOL)animated {

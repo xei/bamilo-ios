@@ -8,6 +8,7 @@
 
 #import "JARootViewController.h"
 #import "JACenterNavigationController.h"
+#import "JAMenuViewController.h"
 
 @interface JARootViewController ()
 
@@ -24,10 +25,9 @@
     self.shouldResizeLeftPanel = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(openMainMenu)
+                                             selector:@selector(openMainMenu:)
                                                  name:kOpenMenuNotification
                                                object:nil];
-    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCenterViewController)
@@ -73,9 +73,9 @@
     self.allowLeftSwipe = YES;
 }
 
-- (void)openMainMenu
+- (void)openMainMenu:(NSNotification *)notification
 {
-    [self showLeftPanelAnimated:YES];
+    [self showLeftPanelAnimated:YES userInfo:notification.userInfo];
 }
 
 - (void)showCenterViewController
