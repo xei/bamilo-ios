@@ -21,6 +21,7 @@
 "submit_label" = "Submit";
 
 "login_label" = "Login";
+"action_label_logout" = "Logout";
 "home" = "Home";
 "categories" = "Categories";
 "favourites" = "My Favourites";
@@ -29,8 +30,6 @@
 "my_account" = "My Account";
 "nav_track_order" = "Track my Order";
 "nav_country" = "Change Country";
-"sign_in" = "Sing In";
-"sign_out" = "Sign Out";
 "string_filters" = "Filters";
 "categories_toplevel_title" = "All Categories";
 "string_apply" = "Apply";
@@ -151,7 +150,9 @@
 "track_your_order" = "Track Your Order";
 "track_order" = "Track Order";
 "track_order_hint" = "Order id";
-"string_order_status" = "order status";
+"string_order_status" = "Order Status";
+"string_loosing_order_title" = "Warning";
+"string_loosing_order_message" = "If you leave the checkout process your order will be invalidated.";
 
 "recentsearch_no_searches" = "No Recent Searches";
 "recentsearch_clear_searches" = "Clear Recent Searches";

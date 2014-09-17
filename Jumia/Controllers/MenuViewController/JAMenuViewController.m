@@ -75,7 +75,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateCart:)
-                                                 name:kUpdateCartNotification
+                                                 name:kUpdateSideMenuCartNotification
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -122,7 +122,7 @@
 
 - (void)updateCart:(NSNotification*) notification
 {
-    if ([kUpdateCartNotification isEqualToString:notification.name])
+    if (VALID_NOTEMPTY(notification, NSNotification) && [kUpdateSideMenuCartNotification isEqualToString:notification.name])
     {
         NSDictionary* userInfo = notification.userInfo;
         RICart *cart = [userInfo objectForKey:kUpdateCartNotificationValue];
@@ -139,6 +139,12 @@
             self.cartLabelDetails.text = STRING_VAT_SHIPPING_INCLUDED;
             self.cartItensNumber.text = [[cart cartCount] stringValue];
         }
+    }
+    else
+    {
+        self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
+        self.cartLabelDetails.text = @"";
+        self.cartItensNumber.text = @"";
     }
 }
 
@@ -540,13 +546,13 @@
                           @{ @"name": STRING_CHOOSE_COUNTRY,
                              @"image": @"ico_choosecountry",
                              @"selected": @"ico_choosecountry_pressed" },
-                          @{ @"name": STRING_SIGN_IN,
+                          @{ @"name": STRING_LOGIN,
                              @"image": @"ico_sign",
                              @"selected": @"ico_signpressed" }] mutableCopy];
     
     if ([RICustomer checkIfUserIsLogged])
     {
-        NSDictionary *dic = @{ @"name": STRING_SIGN_OUT,
+        NSDictionary *dic = @{ @"name": STRING_LOGOUT,
                                @"image": @"ico_sign",
                                @"selected": @"ico_signpressed" };
         
@@ -560,7 +566,7 @@
 
 - (void)userDidLogin
 {
-    NSDictionary *dic = @{ @"name": STRING_SIGN_OUT,
+    NSDictionary *dic = @{ @"name": STRING_LOGOUT,
                            @"image": @"ico_sign",
                            @"selected": @"ico_signpressed" };
     
@@ -571,7 +577,7 @@
 
 - (void)userDidLogout
 {
-    NSDictionary *dic = @{ @"name": STRING_SIGN_IN,
+    NSDictionary *dic = @{ @"name": STRING_LOGIN,
                            @"image": @"ico_sign",
                            @"selected": @"ico_signpressed" };
     
