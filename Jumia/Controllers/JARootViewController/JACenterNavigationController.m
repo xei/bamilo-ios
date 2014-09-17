@@ -38,20 +38,9 @@
 #import "JATrackMyOrderViewController.h"
 #import "JAMyAccountViewController.h"
 
-typedef NS_ENUM(NSUInteger, JACenterNavigationControllerAction) {
-    JACenterNavigationControllerOpenCart = 0,
-    JACenterNavigationControllerOpenCategories = 1,
-    JACenterNavigationControllerOpenOther = 2,
-    JACenterNavigationControllerUndefined = 3
-};
-
 @interface JACenterNavigationController ()
-<UIAlertViewDelegate>
 
 @property (strong, nonatomic) RICart *cart;
-@property (assign, nonatomic) BOOL needsExternalPaymentMethod;
-@property (assign, nonatomic) JACenterNavigationControllerAction nextAction;
-@property (strong, nonatomic) NSString *nextActionValue;
 
 @end
 
@@ -62,8 +51,6 @@ typedef NS_ENUM(NSUInteger, JACenterNavigationControllerAction) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.nextAction = JACenterNavigationControllerUndefined;
     
     [self customizeNavigationBar];
     
@@ -252,70 +239,96 @@ typedef NS_ENUM(NSUInteger, JACenterNavigationControllerAction) {
             }
         }
     }
+    
 }
 
 - (void)changeCenterPanel:(NSString *)newScreenName
 {
-    self.nextAction = JACenterNavigationControllerOpenOther;
-    self.nextActionValue = newScreenName;
-    
-    if(self.needsExternalPaymentMethod)
+    if ([newScreenName isEqualToString:STRING_HOME])
     {
-        [[[UIAlertView alloc] initWithTitle:STRING_LOOSING_ORDER_TITLE
-                                    message:STRING_LOOSING_ORDER_MESSAGE
-                                   delegate:self
-                          cancelButtonTitle:STRING_CANCEL
-                          otherButtonTitles:STRING_OK, nil] show];
-     }
-    else
+        if (![[self topViewController] isKindOfClass:[JAHomeViewController class]])
+        {
+            JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+            
+            [self pushViewController:home
+                            animated:YES];
+            
+            self.viewControllers = @[home];
+        }
+    }
+    else if ([newScreenName isEqualToString:STRING_MY_FAVOURITES])
     {
-        if ([newScreenName isEqualToString:STRING_HOME])
+        if (![[self topViewController] isKindOfClass:[JAMyFavouritesViewController class]])
         {
-            if (![[self topViewController] isKindOfClass:[JAHomeViewController class]])
+            JAMyFavouritesViewController *favourites = [self.storyboard instantiateViewControllerWithIdentifier:@"myFavouritesViewController"];
+            
+            [self pushViewController:favourites
+                            animated:YES];
+            
+            self.viewControllers = @[favourites];
+        }
+    }
+    else if ([newScreenName isEqualToString:STRING_CHOOSE_COUNTRY])
+    {
+        if (![[self topViewController] isKindOfClass:[JAChooseCountryViewController class]])
+        {
+            JAChooseCountryViewController *country = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
+            
+            [self pushViewController:country
+                            animated:YES];
+        }
+    }
+    else if ([newScreenName isEqualToString:STRING_RECENT_SEARCHES])
+    {
+        if (![[self topViewController] isKindOfClass:[JARecentSearchesViewController class]])
+        {
+            JARecentSearchesViewController *searches = [self.storyboard instantiateViewControllerWithIdentifier:@"recentSearchesViewController"];
+            
+            [self pushViewController:searches
+                            animated:YES];
+            
+            self.viewControllers = @[searches];
+        }
+    }
+    else if ([newScreenName isEqualToString:STRING_LOGIN])
+    {
+        if (![[self topViewController] isKindOfClass:[JASignInViewController class]])
+        {
+            JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+            
+            [self pushViewController:signInViewController
+                            animated:YES];
+            
+            self.viewControllers = @[signInViewController];
+        }
+    }
+    else if ([newScreenName isEqualToString:STRING_RECENTLY_VIEWED])
+    {
+        if (![[self topViewController] isKindOfClass:[JARecentlyViewedViewController class]])
+        {
+            JARecentlyViewedViewController *recentlyViewed = [self.storyboard instantiateViewControllerWithIdentifier:@"recentlyViewedViewController"];
+            
+            [self pushViewController:recentlyViewed
+                            animated:YES];
+            
+            self.viewControllers = @[recentlyViewed];
+        }
+    }
+    else if([newScreenName isEqualToString:STRING_MY_ACCOUNT])
+    {
+        if([RICustomer checkIfUserIsLogged])
+        {
+            if (![[self topViewController] isKindOfClass:[JAMyAccountViewController class]])
             {
-                JAHomeViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+                JAMyAccountViewController *myAccountViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myAccountViewController"];
                 
-                [self pushViewController:home
+                [self pushViewController:myAccountViewController
                                 animated:YES];
                 
-                self.viewControllers = @[home];
+                self.viewControllers = @[myAccountViewController];
             }
         }
-        else if ([newScreenName isEqualToString:STRING_MY_FAVOURITES])
-        {
-            if (![[self topViewController] isKindOfClass:[JAMyFavouritesViewController class]])
-            {
-                JAMyFavouritesViewController *favourites = [self.storyboard instantiateViewControllerWithIdentifier:@"myFavouritesViewController"];
-                
-                [self pushViewController:favourites
-                                animated:YES];
-                
-                self.viewControllers = @[favourites];
-            }
-        }
-        else if ([newScreenName isEqualToString:STRING_CHOOSE_COUNTRY])
-        {
-            if (![[self topViewController] isKindOfClass:[JAChooseCountryViewController class]])
-            {
-                JAChooseCountryViewController *country = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
-                
-                [self pushViewController:country
-                                animated:YES];
-            }
-        }
-        else if ([newScreenName isEqualToString:STRING_RECENT_SEARCHES])
-        {
-            if (![[self topViewController] isKindOfClass:[JARecentSearchesViewController class]])
-            {
-                JARecentSearchesViewController *searches = [self.storyboard instantiateViewControllerWithIdentifier:@"recentSearchesViewController"];
-                
-                [self pushViewController:searches
-                                animated:YES];
-                
-                self.viewControllers = @[searches];
-            }
-        }
-        else if ([newScreenName isEqualToString:STRING_LOGIN])
+        else
         {
             if (![[self topViewController] isKindOfClass:[JASignInViewController class]])
             {
@@ -327,64 +340,26 @@ typedef NS_ENUM(NSUInteger, JACenterNavigationControllerAction) {
                 self.viewControllers = @[signInViewController];
             }
         }
-        else if ([newScreenName isEqualToString:STRING_RECENTLY_VIEWED])
-        {
-            if (![[self topViewController] isKindOfClass:[JARecentlyViewedViewController class]])
-            {
-                JARecentlyViewedViewController *recentlyViewed = [self.storyboard instantiateViewControllerWithIdentifier:@"recentlyViewedViewController"];
-                
-                [self pushViewController:recentlyViewed
-                                animated:YES];
-                
-                self.viewControllers = @[recentlyViewed];
-            }
-        }
-        else if([newScreenName isEqualToString:STRING_MY_ACCOUNT])
-        {
-            if([RICustomer checkIfUserIsLogged])
-            {
-                if (![[self topViewController] isKindOfClass:[JAMyAccountViewController class]])
-                {
-                    JAMyAccountViewController *myAccountViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myAccountViewController"];
-                    
-                    [self pushViewController:myAccountViewController
-                                    animated:YES];
-                    
-                    self.viewControllers = @[myAccountViewController];
-                }
-            }
-            else
-            {
-                if (![[self topViewController] isKindOfClass:[JASignInViewController class]])
-                {
-                    JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
-                    
-                    [self pushViewController:signInViewController
-                                    animated:YES];
-                    
-                    self.viewControllers = @[signInViewController];
-                }
-            }
-        }
-        else if ([newScreenName isEqualToString:STRING_TRACK_MY_ORDER])
-        {
-            if (![[self topViewController] isKindOfClass:[JATrackMyOrderViewController class]])
-            {
-                JATrackMyOrderViewController *trackOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"jaTrackOrderViewController"];
-                
-                [self pushViewController:trackOrder
-                                animated:YES];
-                
-                self.viewControllers = @[trackOrder];
-            }
-        }
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                                 value:nil
-                                                action:newScreenName
-                                              category:@"ActionOverflow"
-                                                  data:nil];
     }
+    else if ([newScreenName isEqualToString:STRING_TRACK_MY_ORDER])
+    {
+        if (![[self topViewController] isKindOfClass:[JATrackMyOrderViewController class]])
+        {
+            JATrackMyOrderViewController *trackOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"jaTrackOrderViewController"];
+            
+            [self pushViewController:trackOrder
+                            animated:YES];
+            
+            self.viewControllers = @[trackOrder];
+        }
+    }
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
+                                             value:nil
+                                            action:newScreenName
+                                          category:@"ActionOverflow"
+                                              data:nil];
+    
 }
 
 - (void)pushCatalogToShowSearchResults:(NSString *)query
@@ -415,11 +390,9 @@ typedef NS_ENUM(NSUInteger, JACenterNavigationControllerAction) {
 
 - (void)didSelectLeafCategoryInMenu:(NSNotification *)notification
 {
-    self.nextAction = JACenterNavigationControllerOpenCategories;
-
     NSDictionary *selectedItem = [notification object];
     RICategory* category = [selectedItem objectForKey:@"category"];
-
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
@@ -651,8 +624,6 @@ typedef NS_ENUM(NSUInteger, JACenterNavigationControllerAction) {
 
 - (void)showCheckoutFinishScreen
 {
-    self.needsExternalPaymentMethod = NO;
-    
     JAOrderViewController *orderVC = [self.storyboard instantiateViewControllerWithIdentifier:@"orderViewController"];
     
     [self pushViewController:orderVC animated:YES];
@@ -660,13 +631,14 @@ typedef NS_ENUM(NSUInteger, JACenterNavigationControllerAction) {
 
 - (void)showCheckoutExternalPaymentsScreen:(NSNotification *)notification
 {
-    self.needsExternalPaymentMethod = YES;
-    
     JAExternalPaymentsViewController *externalPaymentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
     
     externalPaymentsVC.paymentInformation = [notification.userInfo objectForKey:@"payment_information"];
     
     [self pushViewController:externalPaymentsVC animated:YES];
+    
+    // post notification to let side menu know that an external payment was opened;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kActivateExternalPayment object:nil userInfo:nil];
 }
 
 - (void)showCheckoutThanksScreen:(NSNotification *)notification
@@ -761,9 +733,10 @@ typedef NS_ENUM(NSUInteger, JACenterNavigationControllerAction) {
 
 - (void)updateCart:(NSNotification*) notification
 {
+    NSDictionary* userInfo = nil;
     if(VALID_NOTEMPTY(notification, NSNotification))
     {
-        NSDictionary* userInfo = notification.userInfo;
+        userInfo = notification.userInfo;
         self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
         
         if(VALID_NOTEMPTY(self.cart, RICart))
@@ -774,17 +747,14 @@ typedef NS_ENUM(NSUInteger, JACenterNavigationControllerAction) {
         {
             [self.navigationBarView updateCartProductCount:0];
         }
-
-        // post side menu notification;
-        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateSideMenuCartNotification object:nil userInfo:userInfo];
     }
     else
     {
         [self.navigationBarView updateCartProductCount:0];
-        
-        // post side menu notification;
-        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateSideMenuCartNotification object:nil userInfo:nil];
     }
+    
+    // post side menu notification;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateSideMenuCartNotification object:nil userInfo:userInfo];
 }
 
 #pragma mark - Navbar Button actions
@@ -809,53 +779,32 @@ typedef NS_ENUM(NSUInteger, JACenterNavigationControllerAction) {
 
 - (void)openCart
 {
-    self.nextAction = JACenterNavigationControllerOpenCart;
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
     if (![[self topViewController] isKindOfClass:[JACartViewController class]])
     {
-        
         JACartViewController *cartViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cartViewController"];
         [cartViewController setCart:self.cart];
         
         [self popToRootViewControllerAnimated:NO];
         [self pushViewController:cartViewController animated:YES];
     }
+    
 }
 
 - (void)openMenu
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
-                                                        object:nil];
-}
-
-#pragma mark UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if(1 == buttonIndex)
+    NSDictionary* userInfo = nil;
+    
+    if(VALID_NOTEMPTY(self.cart, RICart))
     {
-        // post side menu notification;
-        [self updateCart:nil];
-        
-        self.needsExternalPaymentMethod = NO;
-        
-        switch (self.nextAction) {
-            case JACenterNavigationControllerOpenCart:
-                [self openCart];
-                break;
-            case JACenterNavigationControllerOpenCategories:
-
-                break;
-            case JACenterNavigationControllerOpenOther:
-                [self changeCenterPanel:self.nextActionValue];
-                break;
-            JACenterNavigationControllerUndefined:
-            default:
-                break;
-        }
+       userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
+                                                        object:nil
+                                                      userInfo:userInfo];
 }
 
 @end
