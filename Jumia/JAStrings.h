@@ -22,6 +22,7 @@
 #define STRING_DONE RILocalizedString(@"done_label", nil)
 #define STRING_BACK RILocalizedString(@"back_label", nil)
 #define STRING_SUBMIT RILocalizedString(@"submit_label", nil)
+#define STRING_ERROR RILocalizedString(@"string_error", nil)
 
 #define STRING_LOGIN RILocalizedString(@"login_label", nil)
 #define STRING_LOGOUT RILocalizedString(@"action_label_logout", nil)

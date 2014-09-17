@@ -17,11 +17,18 @@
 #import "RISearchSuggestion.h"
 #import "RICart.h"
 
+typedef NS_ENUM(NSUInteger, JAMenuViewControllerAction) {
+    JAMenuViewControllerOpenSearchBar = 0,
+    JAMenuViewControllerOpenCart = 1,
+    JAMenuViewControllerOpenSideMenuItem = 2
+};
+
 @interface JAMenuViewController ()
 <
-    UITableViewDataSource,
-    UITableViewDelegate,
-    UISearchBarDelegate
+UITableViewDataSource,
+UITableViewDelegate,
+UISearchBarDelegate,
+UIAlertViewDelegate
 >
 
 @property (strong, nonatomic) NSMutableArray *sourceArray;
@@ -36,6 +43,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelDetails;
 @property (weak, nonatomic) IBOutlet UILabel *cartItensNumber;
 @property (weak, nonatomic) IBOutlet UIView *cartView;
+
+// Handle external payment actions
+@property (assign, nonatomic) BOOL needsExternalPaymentMethod;
+@property (assign, nonatomic) JAMenuViewControllerAction nextAction;
+@property (strong, nonatomic) NSIndexPath *nextActionIndexPath;
 
 @end
 
@@ -72,15 +84,20 @@
                                              selector:@selector(userDidLogin)
                                                  name:kUserLoggedInNotification
                                                object:nil];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateCart:)
                                                  name:kUpdateSideMenuCartNotification
                                                object:nil];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:nil
                                                  name:kUserLoggedOutNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(activateExternalPayment)
+                                                 name:kActivateExternalPayment
                                                object:nil];
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cartViewPressed:)];
@@ -148,9 +165,26 @@
     }
 }
 
+- (void)activateExternalPayment
+{
+    self.needsExternalPaymentMethod = YES;
+}
+
 - (void)cartViewPressed:(UIGestureRecognizer*)sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification object:nil userInfo:nil];
+    self.nextAction = JAMenuViewControllerOpenCart;
+    if(self.needsExternalPaymentMethod)
+    {
+        [[[UIAlertView alloc] initWithTitle:STRING_LOOSING_ORDER_TITLE
+                                    message:STRING_LOOSING_ORDER_MESSAGE
+                                   delegate:self
+                          cancelButtonTitle:STRING_CANCEL
+                          otherButtonTitles:STRING_OK, nil] show];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification object:nil userInfo:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -187,9 +221,12 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    if (self.resultsTableView == tableView) {
-        for (UIView *view in cell.subviews) {
-            if ([view isKindOfClass:[UIImageView class]]) {
+    if (self.resultsTableView == tableView)
+    {
+        for (UIView *view in cell.subviews)
+        {
+            if ([view isKindOfClass:[UIImageView class]])
+            {
                 [view removeFromSuperview];
             }
         }
@@ -199,9 +236,11 @@
         NSString *text = sugestion.item;
         NSString *searchedText = self.customNavBar.searchBar.text;
         
-        if (text.length == 0) {
-            text = @"Error";
+        if (text.length == 0)
+        {
+            text = STRING_ERROR;
         }
+        
         NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:text];
         NSInteger stringTextLenght = text.length;
         
@@ -211,12 +250,12 @@
         
         
         [stringText addAttribute:NSFontAttributeName
-                               value:stringTextFont
-                               range:NSMakeRange(0, stringTextLenght)];
+                           value:stringTextFont
+                           range:NSMakeRange(0, stringTextLenght)];
         
         [stringText addAttribute:NSStrokeColorAttributeName
-                               value:stringTextColor
-                               range:NSMakeRange(0, stringTextLenght)];
+                           value:stringTextColor
+                           range:NSMakeRange(0, stringTextLenght)];
         
         NSRange range = [text rangeOfString:searchedText];
         
@@ -226,9 +265,12 @@
         
         cell.textLabel.attributedText = stringText;
         
-        if (1 == sugestion.isRecentSearch) {
+        if (1 == sugestion.isRecentSearch)
+        {
             cell.imageView.image = [UIImage imageNamed:@"ico_recentsearchsuggestion"];
-        } else {
+        }
+        else
+        {
             cell.imageView.image = [UIImage imageNamed:@"ico_searchsuggestion"];
         }
         
@@ -243,14 +285,15 @@
         line2.backgroundColor = UIColorFromRGB(0xcccccc);
         [cell.viewForBaselineLayout addSubview:line2];
         
-    } else {
-        
+    } else
+    {
         cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
         
         cell.imageView.image = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"image"]];
         cell.imageView.highlightedImage = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"selected"]];
         
-        if (1 == indexPath.row) {
+        if (1 == indexPath.row)
+        {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
@@ -272,69 +315,90 @@
     
     [self.customNavBar resignFirstResponder];
     
-    if (self.resultsTableView == tableView) {
-        
-        [self.customNavBar.searchBar resignFirstResponder];
-        
-        RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
+    self.nextAction = JAMenuViewControllerOpenSideMenuItem;
+    self.nextActionIndexPath = indexPath;
     
-        NSString *item = suggestion.item;
-        
-        [RISearchSuggestion saveSearchSuggestionOnDB:suggestion.item
-                                      isRecentSearch:YES];
-        
-        // I changed the index to 99 to know that it's to display a search result
-        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                            object:@{@"index": @(99),
-                                                                     @"name": STRING_SEARCH,
-                                                                     @"text": item }];
-        
-    } else {
-        
-        if (1 == indexPath.row) {
+    if(self.needsExternalPaymentMethod)
+    {
+        [[[UIAlertView alloc] initWithTitle:STRING_LOOSING_ORDER_TITLE
+                                    message:STRING_LOOSING_ORDER_MESSAGE
+                                   delegate:self
+                          cancelButtonTitle:STRING_CANCEL
+                          otherButtonTitles:STRING_OK, nil] show];
+    }
+    else
+    {
+        if (self.resultsTableView == tableView)
+        {
+            [self.customNavBar.searchBar resignFirstResponder];
             
-            [self.customNavBar addBackButtonToNavBar];
+            RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
             
-            [self performSegueWithIdentifier:@"showSubCategories"
-                                      sender:nil];
-        } else {
+            NSString *item = suggestion.item;
             
-            if (8 == indexPath.row) {
-                if ([RICustomer checkIfUserIsLogged])
+            [RISearchSuggestion saveSearchSuggestionOnDB:suggestion.item
+                                          isRecentSearch:YES];
+            
+            // I changed the index to 99 to know that it's to display a search result
+            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                object:@{@"index": @(99),
+                                                                         @"name": STRING_SEARCH,
+                                                                         @"text": item }];
+        }
+        else
+        {
+            if (1 == indexPath.row)
+            {
+                [self.customNavBar addBackButtonToNavBar];
+                [self performSegueWithIdentifier:@"showSubCategories"
+                                          sender:nil];
+            }
+            else
+            {
+                if (8 == indexPath.row)
                 {
-                    __block NSString *custumerId = [RICustomer getCustomerId];
-                    
-                    [RICustomer logoutCustomerWithSuccessBlock:^{
+                    if ([RICustomer checkIfUserIsLogged])
+                    {
+                        __block NSString *custumerId = [RICustomer getCustomerId];
                         
-                        [[RITrackingWrapper sharedInstance] trackEvent:custumerId
-                                                                 value:nil
-                                                                action:@"LogoutSuccess"
-                                                              category:@"Account"
-                                                                  data:nil];
-                        
-                        [[FBSession activeSession] closeAndClearTokenInformation];
-                        
-                        NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-                        
-                        for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
-                            [cookies deleteCookie:cookie];
-                        }
-                        
-                        [self userDidLogout];
-                        
-                    } andFailureBlock:^(NSArray *errorObject) {
-                        
-                        [[FBSession activeSession] closeAndClearTokenInformation];
-                        
-                        NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-                        
-                        for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
-                            [cookies deleteCookie:cookie];
-                        }
-                        
-                        [self userDidLogout];
-                        
-                    }];
+                        [RICustomer logoutCustomerWithSuccessBlock:^{
+                            
+                            [[RITrackingWrapper sharedInstance] trackEvent:custumerId
+                                                                     value:nil
+                                                                    action:@"LogoutSuccess"
+                                                                  category:@"Account"
+                                                                      data:nil];
+                            
+                            [[FBSession activeSession] closeAndClearTokenInformation];
+                            
+                            NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+                            
+                            for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
+                                [cookies deleteCookie:cookie];
+                            }
+                            
+                            [self userDidLogout];
+                            
+                        } andFailureBlock:^(NSArray *errorObject) {
+                            
+                            [[FBSession activeSession] closeAndClearTokenInformation];
+                            
+                            NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+                            
+                            for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
+                                [cookies deleteCookie:cookie];
+                            }
+                            
+                            [self userDidLogout];
+                            
+                        }];
+                    }
+                    else
+                    {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                            object:@{@"index": @(indexPath.row),
+                                                                                     @"name": [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"]}];
+                    }
                 }
                 else
                 {
@@ -342,12 +406,6 @@
                                                                         object:@{@"index": @(indexPath.row),
                                                                                  @"name": [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"]}];
                 }
-            }
-            else
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                                    object:@{@"index": @(indexPath.row),
-                                                                             @"name": [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"]}];
             }
         }
     }
@@ -357,22 +415,27 @@
 
 - (void)didPressedBackButton
 {
-    if (self.resultsTableView != nil) {
+    if (VALID_NOTEMPTY(self.resultsTableView, UITableView))
+    {
         [self.customNavBar.searchBar resignFirstResponder];
         self.customNavBar.searchBar.text = @"";
         [self.customNavBar removeBackButtonFromNavBar];
         [self removeResultsTableViewFromView];
-    } else {
+    } else
+    {
         
         self.customNavBar.backButton.userInteractionEnabled = NO;
         
-        if (self.navigationController.viewControllers.count > 1) {
-            if (self.navigationController.viewControllers.count == 2) {
+        if (self.navigationController.viewControllers.count > 1)
+        {
+            if (self.navigationController.viewControllers.count == 2)
+            {
                 [self.customNavBar removeBackButtonFromNavBar];
             }
             
             [self.navigationController popViewControllerAnimated:YES];
-        } else {
+        } else
+        {
             [self.customNavBar removeBackButtonFromNavBar];
         }
         
@@ -393,16 +456,28 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    if (self.customNavBar.isBackVisible) {
-        [self.customNavBar removeBackButtonFromNavBarNoResetVariable];
-    } else {
-        [self.customNavBar removeBackButtonFromNavBar];
+    self.nextAction = JAMenuViewControllerOpenSearchBar;
+    if(self.needsExternalPaymentMethod)
+    {
+        [[[UIAlertView alloc] initWithTitle:STRING_LOOSING_ORDER_TITLE
+                                    message:STRING_LOOSING_ORDER_MESSAGE
+                                   delegate:self
+                          cancelButtonTitle:STRING_CANCEL
+                          otherButtonTitles:STRING_OK, nil] show];
+    }
+    else
+    {
+        if (self.customNavBar.isBackVisible) {
+            [self.customNavBar removeBackButtonFromNavBarNoResetVariable];
+        } else {
+            [self.customNavBar removeBackButtonFromNavBar];
+        }
+        
+        searchBar.showsCancelButton = YES;
+        
+        [self addResultsTableViewToView];
     }
     
-    searchBar.showsCancelButton = YES;
-    
-    [self addResultsTableViewToView];
-        
     return YES;
 }
 
@@ -584,6 +659,32 @@
     [self.sourceArray removeLastObject];
     [self.sourceArray addObject:dic];
     [self.tableViewMenu reloadData];
+}
+
+#pragma mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(1 == buttonIndex)
+    {
+        self.needsExternalPaymentMethod = NO;
+        switch (self.nextAction) {
+            case JAMenuViewControllerOpenSearchBar:
+                [self.customNavBar becomeFirstResponder];
+                break;
+            case JAMenuViewControllerOpenCart:
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification object:nil userInfo:nil];
+                break;
+            case JAMenuViewControllerOpenSideMenuItem:
+                if(VALID_NOTEMPTY(self.nextActionIndexPath, NSIndexPath))
+                {
+                    [self tableView:self.tableViewMenu didSelectRowAtIndexPath:self.nextActionIndexPath];
+                }
+                break;
+            default:
+                break;
+        }
+        
+    }
 }
 
 @end
