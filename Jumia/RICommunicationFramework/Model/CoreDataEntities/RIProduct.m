@@ -403,25 +403,34 @@
                successBlock:(void (^)(void))successBlock
             andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
+    NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
+    
+    BOOL productExists = NO;
+    for (RIProduct* currentProduct in allProducts) {
+        if ([currentProduct.sku isEqualToString:product.sku]) {
+            
+            //found it, so just change the product by deleting the previous entry
+            product.recentlyViewedDate = [NSDate date];
+            product.isFavorite = currentProduct.isFavorite;
+            [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
+            [RIProduct saveProduct:product];
+            productExists = YES;
+            break;
+        }
+    }
+    if (NO == productExists) {
+        //did not find it, so save the product
+        product.recentlyViewedDate = [NSDate date];
+        [RIProduct saveProduct:product];
+    }
+    
+    //now we need to check if there are more than 15 products
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
-        NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
-        
-        RIProduct* productToDelete;
-        
-        for (RIProduct* recentProduct in allProducts) {
+        if (VALID_NOTEMPTY(recentlyViewedProducts, NSArray) && recentlyViewedProducts.count > 15) {
             
-            if ([recentProduct.sku isEqualToString:product.sku]) {
-                //same product, delete this one
-                productToDelete = recentProduct;
-                //in order to force deletion, make sure it is not a favorite
-                productToDelete.isFavorite = nil;
-                break;
-            }
-        }
-        
-        if (ISEMPTY(productToDelete) && recentlyViewedProducts.count >= 15) {
-            //we've hit the limit, delete the older product
+            //there are more than 15, we need to remove the oldest
+            RIProduct* productToDelete = nil;
             for (RIProduct* recentProduct in recentlyViewedProducts) {
                 
                 if (ISEMPTY(productToDelete)) {
@@ -433,23 +442,19 @@
                     }
                 }
             }
-        }
         
-        if (VALID_NOTEMPTY(productToDelete, RIProduct)) {
-            productToDelete.recentlyViewedDate = nil;
-            if (NO == [productToDelete.isFavorite boolValue]) {
-                [[RIDataBaseWrapper sharedInstance] deleteObject:productToDelete];
+            if (VALID_NOTEMPTY(productToDelete, RIProduct)) {
+                [RIProduct removeFromRecentlyViewed:productToDelete successBlock:^{
+                    if (successBlock) {
+                        successBlock();
+                    }
+                } andFailureBlock:^(NSArray *error) {
+                    if (failureBlock) {
+                        failureBlock(error);
+                    }
+                }];
             }
         }
-        
-        //add the new product
-        product.recentlyViewedDate = [NSDate date];
-        [RIProduct saveProduct:product];
-        
-        if (successBlock) {
-            successBlock();
-        }
-        
     } andFailureBlock:^(NSArray *error) {
         if (failureBlock) {
             failureBlock(error);
@@ -463,16 +468,45 @@
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
         for (RIProduct* productToDelete in recentlyViewedProducts) {
-            //remove the product
-            if (productToDelete.isFavorite) {
+            if (VALID_NOTEMPTY(productToDelete.isFavorite, NSNumber) && YES == [productToDelete.isFavorite boolValue]) {
                 //has date, don't delete, just remove recentlyViewedDate
                 productToDelete.recentlyViewedDate = nil;
             } else {
+                //remove the product
                 [[RIDataBaseWrapper sharedInstance] deleteObject:productToDelete];
             }
             [[RIDataBaseWrapper sharedInstance] saveContext];
         }
         
+        if (successBlock) {
+            successBlock();
+        }
+        
+    } andFailureBlock:^(NSArray *error) {
+        if (failureBlock) {
+            failureBlock(error);
+        }
+    }];
+}
+
++ (void)removeFromRecentlyViewed:(RIProduct *)product
+                    successBlock:(void (^)(void))successBlock
+                 andFailureBlock:(void (^)(NSArray *error))failureBlock;
+{
+    [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
+        
+        for (RIProduct* currentProduct in recentlyViewedProducts) {
+            if ([currentProduct.sku isEqualToString:product.sku]) {
+                //found it
+                
+                if (VALID_NOTEMPTY(currentProduct.isFavorite, NSNumber) && YES == [currentProduct.isFavorite boolValue]) {
+                    currentProduct.recentlyViewedDate = nil;
+                } else {
+                    [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
+                }
+                [[RIDataBaseWrapper sharedInstance] saveContext];
+            }
+        }
         if (successBlock) {
             successBlock();
         }
@@ -516,25 +550,21 @@
        andFailureBlock:(void (^)(NSArray *error))failureBlock;
 {
     NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
-    
-    BOOL alreadyFavorite = NO;
-    
-    for (RIProduct* favorite in allProducts) {
-        
-        if ([favorite.sku isEqualToString:product.sku]) {
-            //same product
-            if (VALID_NOTEMPTY(favorite.isFavorite, NSNumber) && YES == [favorite.isFavorite boolValue]) {
-                //its already a favorite
-                alreadyFavorite = YES;
-            }
+
+    BOOL productExists = NO;
+    for (RIProduct* currentProduct in allProducts) {
+        if ([currentProduct.sku isEqualToString:product.sku]) {
+            
+            //found it
+            currentProduct.isFavorite = [NSNumber numberWithBool:YES];
+            [[RIDataBaseWrapper sharedInstance] saveContext];
+            productExists = YES;
             break;
         }
     }
     
-    if (NO == alreadyFavorite) {
-        //make sure this is YES
+    if (NO == productExists) {
         product.isFavorite = [NSNumber numberWithBool:YES];
-        //add the new product
         [RIProduct saveProduct:product];
     }
     
@@ -549,38 +579,27 @@
 {
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
         
-        RIProduct* productToDelete;
-        NSMutableArray* updatedFavoritesList = [NSMutableArray new];
+        NSMutableArray* newFavoriteList = [NSMutableArray new];
         
-        for (RIProduct* favorite in favoriteProducts) {
-            if ([favorite.sku isEqualToString:product.sku]) {
-                //found product, delete it
-                productToDelete = favorite;
+        for (RIProduct* currentProduct in favoriteProducts) {
+            if ([currentProduct.sku isEqualToString:product.sku]) {
+                //found it
+                
+                if (VALID_NOTEMPTY(currentProduct.recentlyViewedDate, NSDate)) {
+                    //do not delete, just remove favorite variable
+                    currentProduct.isFavorite = nil;
+                } else {
+                    [[RIDataBaseWrapper sharedInstance] deleteObject:product];
+                }
+                [[RIDataBaseWrapper sharedInstance] saveContext];
             } else {
-                //not the product we're looking for, add to updated list
-                [updatedFavoritesList addObject:favorite];
+                [newFavoriteList addObject:currentProduct];
             }
         }
-        
-        //remove the product
-        if (VALID_NOTEMPTY(productToDelete, RIProduct)) {
-            if (productToDelete.recentlyViewedDate) {
-                //has date, don't delete, just remove favorite
-                productToDelete.isFavorite = nil;
-            } else {
-                [[RIDataBaseWrapper sharedInstance] deleteObject:productToDelete];
-            }
-            [[RIDataBaseWrapper sharedInstance] saveContext];
-        }
-        
-        if (successBlock) {
-            successBlock([updatedFavoritesList copy]);
-        }
+        successBlock([newFavoriteList copy]);
         
     } andFailureBlock:^(NSArray *error) {
-        if (failureBlock) {
-            failureBlock(error);
-        }
+        failureBlock(error);
     }];
 }
 

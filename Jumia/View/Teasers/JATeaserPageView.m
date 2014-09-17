@@ -85,6 +85,7 @@
                                                                                                                 self.bounds.size.width,
                                                                                                                 1)]; //height is set by the view itself
                 [self addSubview:topSellersTeaserView];
+                topSellersTeaserView.groupTitle = teaserGroup.title;
                 [topSellersTeaserView setTeasers:teaserGroup.teasers];
                 [topSellersTeaserView load];
                 
@@ -109,6 +110,7 @@
                                                                                                                         self.bounds.size.width,
                                                                                                                         1)]; //height is set by the view itself
                 [self addSubview:topSellersTeaserView];
+                topSellersTeaserView.groupTitle = teaserGroup.title;
                 [topSellersTeaserView setTeasers:teaserGroup.teasers];
                 [topSellersTeaserView load];
                 
@@ -135,6 +137,7 @@
                                                                                                      self.bounds.size.width,
                                                                                                      1)]; //height is set by the view itself
             [self addSubview:smallTeaserView];
+            smallTeaserView.groupTitle = teaserGroup.title;
             [smallTeaserView setTeasers:teaserGroup.teasers];
             [smallTeaserView load];
             
@@ -182,6 +185,7 @@
                                                                                                                              self.bounds.size.width,
                                                                                                                              1)]; //height is set by the view itself
             [self addSubview:topCategoriesTeaserView];
+            topCategoriesTeaserView.groupTitle = teaserGroup.title;
             [topCategoriesTeaserView setTeasers:teaserGroup.teasers];
             [topCategoriesTeaserView load];
             
@@ -205,6 +209,7 @@
                                                                                                                              self.bounds.size.width,
                                                                                                                              1)]; //height is set by the view itself
             [self addSubview:popularBrandsTeaserView];
+            popularBrandsTeaserView.groupTitle = teaserGroup.title;
             [popularBrandsTeaserView setTeasers:teaserGroup.teasers];
             [popularBrandsTeaserView load];
             

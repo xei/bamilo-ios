@@ -45,7 +45,6 @@ UIAlertViewDelegate
 @property (weak, nonatomic) IBOutlet UIView *cartView;
 
 // Handle external payment actions
-@property (assign, nonatomic) BOOL needsExternalPaymentMethod;
 @property (assign, nonatomic) JAMenuViewControllerAction nextAction;
 @property (strong, nonatomic) NSIndexPath *nextActionIndexPath;
 
@@ -86,27 +85,28 @@ UIAlertViewDelegate
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateCart:)
-                                                 name:kUpdateSideMenuCartNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:nil
                                                  name:kUserLoggedOutNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(activateExternalPayment)
-                                                 name:kActivateExternalPayment
-                                               object:nil];
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cartViewPressed:)];
     tapRecognizer.numberOfTapsRequired = 1;
     [self.cartView addGestureRecognizer:tapRecognizer];
     self.cartLabelTitle.text = STRING_SHOPPING_CART;
-    self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
-    self.cartLabelDetails.text = @"";
-    self.cartItensNumber.text = @"";
+    
+    if(0 == [[self.cart cartCount] integerValue])
+    {
+        self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
+        self.cartLabelDetails.text = @"";
+        self.cartItensNumber.text = @"";
+    }
+    else
+    {
+        self.cartLabelTotalCost.text =  [self.cart cartValueFormatted];
+        self.cartLabelDetails.text = STRING_VAT_SHIPPING_INCLUDED;
+        self.cartItensNumber.text = [[self.cart cartCount] stringValue];
+    }
     
     [self.customNavBar setSearchBarDelegate:self];
     
@@ -135,39 +135,6 @@ UIAlertViewDelegate
 - (void)viewWillAppear:(BOOL)animated
 {
     //this is here to override super DO NOT CALL SUPER
-}
-
-- (void)updateCart:(NSNotification*) notification
-{
-    if (VALID_NOTEMPTY(notification, NSNotification) && [kUpdateSideMenuCartNotification isEqualToString:notification.name])
-    {
-        NSDictionary* userInfo = notification.userInfo;
-        RICart *cart = [userInfo objectForKey:kUpdateCartNotificationValue];
-        
-        if(0 == [[cart cartCount] integerValue])
-        {
-            self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
-            self.cartLabelDetails.text = @"";
-            self.cartItensNumber.text = @"";
-        }
-        else
-        {
-            self.cartLabelTotalCost.text =  [cart cartValueFormatted];
-            self.cartLabelDetails.text = STRING_VAT_SHIPPING_INCLUDED;
-            self.cartItensNumber.text = [[cart cartCount] stringValue];
-        }
-    }
-    else
-    {
-        self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
-        self.cartLabelDetails.text = @"";
-        self.cartItensNumber.text = @"";
-    }
-}
-
-- (void)activateExternalPayment
-{
-    self.needsExternalPaymentMethod = YES;
 }
 
 - (void)cartViewPressed:(UIGestureRecognizer*)sender
@@ -667,6 +634,9 @@ UIAlertViewDelegate
     if(1 == buttonIndex)
     {
         self.needsExternalPaymentMethod = NO;
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDeactivateExternalPaymentNotification object:nil userInfo:nil];
+        
         switch (self.nextAction) {
             case JAMenuViewControllerOpenSearchBar:
                 [self.customNavBar becomeFirstResponder];
@@ -683,7 +653,16 @@ UIAlertViewDelegate
             default:
                 break;
         }
-        
+    }
+    else
+    {
+        switch (self.nextAction) {
+            case JAMenuViewControllerOpenSearchBar:
+                [self.customNavBar resignFirstResponder];
+                break;
+            default:
+                break;
+        }
     }
 }
 

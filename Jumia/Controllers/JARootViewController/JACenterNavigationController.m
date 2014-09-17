@@ -43,6 +43,7 @@
 @interface JACenterNavigationController ()
 
 @property (strong, nonatomic) RICart *cart;
+@property (assign, nonatomic) BOOL neeedsExternalPaymentMethod;
 
 @end
 
@@ -53,6 +54,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.neeedsExternalPaymentMethod = NO;
     
     [self customizeNavigationBar];
     
@@ -201,6 +204,10 @@
                                                  name:kShowCheckoutThanksScreenNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(deactivateExternalPayment)
+                                                 name:kDeactivateExternalPaymentNotification
+                                               object:nil];
     
 }
 
@@ -659,14 +666,13 @@
 
 - (void)showCheckoutExternalPaymentsScreen:(NSNotification *)notification
 {
+    self.neeedsExternalPaymentMethod = YES;
+    
     JAExternalPaymentsViewController *externalPaymentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
     
     externalPaymentsVC.paymentInformation = [notification.userInfo objectForKey:@"payment_information"];
     
     [self pushViewController:externalPaymentsVC animated:YES];
-    
-    // post notification to let side menu know that an external payment was opened;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kActivateExternalPayment object:nil userInfo:nil];
 }
 
 - (void)showCheckoutThanksScreen:(NSNotification *)notification
@@ -676,6 +682,11 @@
     thanksVC.orderNumber = [notification.userInfo objectForKey:@"order_number"];
     
     [self pushViewController:thanksVC animated:YES];
+}
+
+- (void)deactivateExternalPayment
+{
+    self.neeedsExternalPaymentMethod = NO;
 }
 
 #pragma mark - Choose Country
@@ -823,16 +834,18 @@
 
 - (void)openMenu
 {
-    NSDictionary* userInfo = nil;
+    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];;
     
     if(VALID_NOTEMPTY(self.cart, RICart))
     {
-       userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
+        [userInfo setObject:self.cart forKey:kUpdateCartNotificationValue];
     }
+    
+    [userInfo setObject:[NSNumber numberWithBool:self.neeedsExternalPaymentMethod] forKey:kExternalPaymentValue];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
                                                         object:nil
-                                                      userInfo:userInfo];
+                                                      userInfo:[userInfo copy]];
 }
 
 @end
