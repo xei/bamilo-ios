@@ -58,6 +58,11 @@ UITextFieldDelegate>
 {
     [super viewDidLoad];
     
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+    
+    [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    
     [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
                                              value:nil
                                             action:@"CheckoutPaymentMethods"
@@ -82,7 +87,7 @@ UITextFieldDelegate>
          self.paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:checkout.paymentMethodForm];
          
          self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:checkout.paymentMethodForm];
-
+         
          [self finishedLoadingPaymentMethods];
      } andFailureBlock:^(NSArray *errorMessages)
      {
@@ -228,13 +233,14 @@ UITextFieldDelegate>
                                                                       collectionViewHeight)];
                              
                              [self.couponView setFrame:CGRectMake(6.0f,
-                                                                  CGRectGetMaxY(self.collectionView.frame) + 6.0f,
+                                                                  self.collectionView.frame.origin.y + collectionViewHeight + 6.0f,
                                                                   308.0f,
                                                                   86.0f)];
+                             
                          }];
         
         [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
-                                                   self.collectionView.frame.origin.y + collectionViewHeight + self.couponView.frame.size.height + self.bottomView.frame.size.height + 6.0f)];
+                                                   self.collectionView.frame.origin.y + collectionViewHeight + 92.0f + self.bottomView.frame.size.height + 6.0f)];
         
     }
     
@@ -297,16 +303,16 @@ UITextFieldDelegate>
                         [JAUtils goToCheckoutNextStep:checkout.nextStep inStoryboard:self.storyboard];
                         
                         [self hideLoading];
-    } andFailureBlock:^(NSArray *errorMessages) {
-        
-        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                    message:@"Error setting payment method"
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:STRING_OK, nil] show];
-        
+                    } andFailureBlock:^(NSArray *errorMessages) {
+                        
+                        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                                    message:@"Error setting payment method"
+                                                   delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:STRING_OK, nil] show];
+                        
                         [self hideLoading];
-    }];
+                    }];
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
@@ -415,6 +421,8 @@ UITextFieldDelegate>
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.couponTextField resignFirstResponder];
+    
     if(collectionView == self.collectionView && VALID_NOTEMPTY(self.paymentMethods, NSArray))
     {
         if(indexPath.row != self.collectionViewIndexSelected.row && indexPath.row < [self.paymentMethods count])
@@ -449,6 +457,43 @@ UITextFieldDelegate>
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
+}
+
+#pragma mark Observers
+
+- (void)keyboardDidShow:(NSNotification*)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSValue *value = info[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame = [value CGRectValue];
+    CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
+    
+    CGPoint scrollPoint = CGPointMake(self.scrollView.contentOffset.x, CGRectGetMaxY(self.couponView.frame) - keyboardFrame.size.height);
+    
+    [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x,
+                                         self.scrollView.frame.origin.y,
+                                         self.scrollView.frame.size.width,
+                                         self.scrollView.frame.size.height - keyboardFrame.size.height)];
+
+    [self.scrollView setContentOffset:scrollPoint animated:YES];
+}
+
+- (void)keyboardDidHide:(NSNotification*)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSValue *value = info[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame = [value CGRectValue];
+    CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
+    
+    [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x,
+                                         self.scrollView.frame.origin.y,
+                                         self.scrollView.frame.size.width,
+                                         self.scrollView.frame.size.height + keyboardFrame.size.height)];
+    
+    
+    [self.scrollView setContentOffset:CGPointMake(0.0f, 0.0f) animated:YES];
 }
 
 @end
