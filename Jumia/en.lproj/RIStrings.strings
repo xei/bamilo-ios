@@ -19,6 +19,7 @@
 "done_label" = "Done";
 "back_label" = "Back";
 "submit_label" = "Submit";
+"string_error" = "Error";
 
 "login_label" = "Login";
 "action_label_logout" = "Logout";

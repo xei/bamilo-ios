@@ -340,6 +340,19 @@
         [self.productInfoSection.sizeButton addTarget:self
                                                action:@selector(showSizePicker)
                                      forControlEvents:UIControlEventTouchUpInside];
+        
+        if (self.preSelectedSize.length > 0)
+        {
+            for (RIProductSimple *simple in self.product.productSimples)
+            {
+                if ([simple.attributeSize isEqualToString:self.preSelectedSize])
+                {
+                    [self.productInfoSection.sizeButton setTitle:simple.attributeSize
+                                                        forState:UIControlStateNormal];
+                    break;
+                }
+            }
+        }
     }
     
     

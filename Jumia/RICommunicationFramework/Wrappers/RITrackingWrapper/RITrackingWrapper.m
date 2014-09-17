@@ -181,9 +181,11 @@ static dispatch_once_t sharedInstanceToken;
         [handler handleOpenURL:url];
     }
     
+    [[RIAd4PushTracker sharedInstance] trackOpenURL:url];
+    /*
     [self RI_callTrackersConformToProtocol:@protocol(RIOpenURLTracking)
                                   selector:@selector(trackOpenURL:)
-                                 arguments:@[url]];
+                                 arguments:@[url]]; */
 }
 
 #pragma mark - RIScreenTracking protocol
@@ -202,6 +204,7 @@ static dispatch_once_t sharedInstanceToken;
 - (void)applicationDidRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
     RIDebugLog(@"Application did register for remote notification");
+    
     
     [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking)
                                   selector:@selector(applicationDidRegisterForRemoteNotificationsWithDeviceToken:) arguments:@[deviceToken]];

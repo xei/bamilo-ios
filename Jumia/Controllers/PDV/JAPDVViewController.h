@@ -23,7 +23,7 @@
 @property (assign, nonatomic) BOOL fromCatalogue;
 @property (strong, nonatomic) NSArray *arrayWithRelatedItems;
 @property (strong, nonatomic) NSString *previousCategory;
+@property (strong, nonatomic) NSString *preSelectedSize;
 @property (nonatomic, assign) id<JAPDVViewControllerDelegate>delegate;
-
 
 @end

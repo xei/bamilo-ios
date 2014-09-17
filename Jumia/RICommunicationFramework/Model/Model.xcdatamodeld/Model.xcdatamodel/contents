@@ -26,6 +26,7 @@
     </entity>
     <entity name="RIApi" representedClassName="RIApi" syncable="YES">
         <attribute name="actionName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryIso" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="countryUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="curVersion" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="minVersion" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
@@ -252,7 +253,7 @@
     </entity>
     <elements>
         <element name="RIAddress" positionX="90" positionY="666" width="128" height="375"/>
-        <element name="RIApi" positionX="-308" positionY="227" width="128" height="120"/>
+        <element name="RIApi" positionX="-308" positionY="227" width="128" height="135"/>
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="133"/>
         <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="195"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="210"/>

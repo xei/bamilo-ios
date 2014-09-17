@@ -19,6 +19,7 @@
 
 @property (nonatomic, retain) NSString * countryUrl;
 @property (nonatomic, retain) NSString * actionName;
+@property (nonatomic, retain) NSString * countryIso;
 @property (nonatomic, retain) NSNumber * curVersion;
 @property (nonatomic, retain) NSNumber * minVersion;
 @property (nonatomic, retain) NSOrderedSet *sections;
@@ -48,7 +49,8 @@
  *
  *  @return the parsed RIApi
  */
-+ (RIApi *)parseApi:(NSDictionary *)api;
++ (RIApi *)parseApi:(NSDictionary *)api
+         countryIso:(NSString *)countryIso;
 
 /**
  *  Save in the core data a given RIApi
@@ -65,12 +67,18 @@
 + (BOOL)checkIfHaveCountrySelected;
 
 /**
-
  *  get the current url in use
  *
  *  @return the url
  */
 + (NSString *)getCountryUrlInUse;
+
+/**
+ *  get the current country iso in use
+ *
+ *  @return the country iso
+ */
++ (NSString *)getCountryIsoInUse;
 
 @end
 

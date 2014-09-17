@@ -19,6 +19,7 @@
 "done_label" = "Valider";
 "back_label" = "Retour";
 "submit_label" = "Soumettre";
+"string_error" = "Error";
 
 "login_label" = "Connectez-vous";
 "action_label_logout" = "Se déconnecter";
