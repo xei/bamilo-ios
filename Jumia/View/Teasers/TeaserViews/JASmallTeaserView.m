@@ -51,6 +51,7 @@
                                     self.bounds.size.height)];
         [button setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_grid"]];
         [button addTarget:self action:@selector(teaserImagePressed:) forControlEvents:UIControlEventTouchUpInside];
+        button.tag = i;
         [self addSubview:button];
         
         currentX += button.frame.size.width;
