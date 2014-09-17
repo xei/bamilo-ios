@@ -12,5 +12,6 @@
 @interface JASplashViewController : JABaseViewController
 
 @property (strong, nonatomic) RICountry *selectedCountry;
+@property (strong, nonatomic) NSDictionary *tempNotification;
 
 @end

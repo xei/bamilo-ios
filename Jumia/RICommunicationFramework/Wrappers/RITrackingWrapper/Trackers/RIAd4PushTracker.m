@@ -14,7 +14,10 @@
 #import "GAIFields.h"
 #import "RIGoogleAnalyticsTracker.h"
 #import "JAAppDelegate.h"
-#import "JAHomeViewController.h"
+#import "RICategory.h"
+#import "RICountry.h"
+#import "RIApi.h"
+#import "JASplashViewController.h"
 
 @implementation RIAd4PushTracker
 
@@ -23,6 +26,9 @@ NSString * const kRIAdd4PushPrivateKey = @"kRIAdd4PushPrivateKey";
 NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 @synthesize queue;
+
+static RIAd4PushTracker *sharedInstance;
+static dispatch_once_t sharedInstanceToken;
 
 - (id)init
 {
@@ -33,6 +39,15 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         self.queue.maxConcurrentOperationCount = 1;
     }
     return self;
+}
+
++ (instancetype)sharedInstance
+{
+    dispatch_once(&sharedInstanceToken, ^{
+        sharedInstance = [[RIAd4PushTracker alloc] init];
+    });
+    
+    return sharedInstance;
 }
 
 #pragma mark - RITracker protocol
@@ -201,51 +216,144 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     
     if (notification != nil && [notification objectForKey:@"u"] != nil)
     {
-        UINavigationController *navigationController = [self getNavigationController];
-        UIStoryboard *storyboard = [self getCurrentStoryBoard];
-        BOOL iPadInterface = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? YES : NO;
-        
         NSString *urlString = [notification objectForKey:@"u"];
-        NSString *forthLetter = @"";
-        NSString *cartPositionString = @"";
-
-        if ([urlString length] >= 7)
-        {
-            cartPositionString = [urlString substringWithRange:NSMakeRange(3, 4)];
-        }
         
-        if ([urlString length] >= 4)
-        {
-            forthLetter = [urlString substringWithRange:NSMakeRange(3, 1)];
-        }
+        // Check if the country is the same
+        NSString *currentCountry = [RIApi getCountryIsoInUse];
+        NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
         
-        if (VALID(navigationController, UINavigationController))
+        if ([currentCountry isEqualToString:countryFromUrl])
         {
-            if ([forthLetter isEqualToString:@""])
+            NSString *forthLetter = @"";
+            NSString *cartPositionString = @"";
+            
+            if ([urlString length] >= 7)
             {
-                [self pushHomeViewControllerWithNavigationController:navigationController
-                                                       andStoryboard:storyboard
-                                                    andiPadInterface:iPadInterface];
-            } //else if ([forthLetter isEqualToString:@"d"]) {
-//                [self pushProductDetailViewControllerWithNavigationController:navigationController
-//                                                                andStoryboard:storyboard
-//                                                             andiPadInterface:iPadInterface
-//                                                                 andURLString:urlString];
-//            } else if ([forthLetter isEqualToString:@"c"]) {
-//                [self pushCatalogViewControllerWithNavigationController:navigationController
-//                                                          andStoryboard:storyboard
-//                                                       andiPadInterface:iPadInterface
-//                                                           andURLString:urlString];
-//            } else if ([forthLetter isEqualToString:@"l"]) {
-//                [self pushLoginViewControllerWithNavigationController:navigationController
-//                                                        andStoryboard:storyboard
-//                                                     andiPadInterface:iPadInterface];
-//                
-//            } else if ([forthLetter isEqualToString:@"r"]) {
-//                [self pushRegistrationViewControllerWithNavigationController:navigationController
-//                                                               andStoryboard:storyboard
-//                                                            andiPadInterface:iPadInterface];
-//            }
+                cartPositionString = [urlString substringWithRange:NSMakeRange(3, 4)];
+            }
+            
+            if ([cartPositionString isEqualToString:@"cart"])
+            {
+                [self pushCartViewController];
+            }
+            else
+            {
+                if ([urlString length] >= 4)
+                {
+                    forthLetter = [urlString substringWithRange:NSMakeRange(3, 1)];
+                }
+                
+                if ([forthLetter isEqualToString:@""])
+                {
+                    // Home
+                    [self pushHomeViewController];
+                }
+                else if ([forthLetter isEqualToString:@"c"])
+                {
+                    // Catalog view - category name
+                    NSString *categoryName = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    
+                    [self pushCatalogViewControllerWithCategoryId:nil
+                                                     categoryName:categoryName
+                                                       searchTerm:nil];
+                }
+                else if ([forthLetter isEqualToString:@"n"])
+                {
+                    // Catalog view - category id
+                    NSString *categoryId = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    
+                    [self pushCatalogViewControllerWithCategoryId:categoryId
+                                                     categoryName:nil
+                                                       searchTerm:nil];
+                }
+                else if ([forthLetter isEqualToString:@"s"])
+                {
+                    // Catalog view - search term
+                    NSString *searchTerm = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    
+                    [self pushCatalogViewControllerWithCategoryId:nil
+                                                     categoryName:nil
+                                                       searchTerm:searchTerm];
+                }
+                else if ([forthLetter isEqualToString:@"d"])
+                {
+                    // PDV
+                    // Example: jumia://ng/d/BL683ELACCDPNGAMZ?size=1
+                    
+                    // Check if there is field size
+                    if ([urlString containsString:@"?size="])
+                    {
+                        NSRange range = [urlString rangeOfString:@"?size="];
+                        NSString *size = [urlString substringWithRange:NSMakeRange(range.length + range.location, urlString.length - (range.length + range.location))];
+                        
+                        NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, range.location - 5)];
+                        NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, pdvSku];
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                            object:nil
+                                                                          userInfo:@{ @"url" : finalUrl,
+                                                                                      @"size": size }];
+                    }
+                    else
+                    {
+                        NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                        NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, pdvSku];
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                            object:nil
+                                                                          userInfo:@{ @"url" : finalUrl }];
+                    }
+                }
+                else if ([forthLetter isEqualToString:@"cart"])
+                {
+                    // Cart
+                    [self pushCartViewController];
+                }
+                else if ([forthLetter isEqualToString:@"w"])
+                {
+                    // Wishlist
+                    [self pushWishList];
+                }
+                else if ([forthLetter isEqualToString:@"o"])
+                {
+                    // Order overview
+                    [self pushOrderOverView];
+                }
+                else if ([forthLetter isEqualToString:@"l"])
+                {
+                    // Login
+                    [self pushLoginViewController];
+                }
+                else if ([forthLetter isEqualToString:@"r"])
+                {
+                    // Register
+                    [self pushLoginViewController];
+                }
+            }
+        }
+        else
+        {
+            // Change country
+            [RICountry getCountriesWithSuccessBlock:^(id countries) {
+                
+                for (RICountry *country in countries)
+                {
+                    if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
+                    {
+                        JASplashViewController* rootViewController = (JASplashViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"splashViewController"];
+                        
+                        rootViewController.selectedCountry = country;
+                        rootViewController.tempNotification = notification;
+                        
+                        [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+                    }
+                }
+                
+            } andFailureBlock:^(NSArray *errorMessages) {
+                
+                [self pushHomeViewController];
+                
+            }];
         }
     }
 }
@@ -267,13 +375,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     {
         if ([facebookSchema isEqualToString:urlScheme])
         {
-            UINavigationController *navigationController = [self getNavigationController];
-            UIStoryboard *storyboard = [self getCurrentStoryBoard];
-            BOOL iPadInterface = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? YES : NO;
-            
-            [self pushHomeViewControllerWithNavigationController:navigationController
-                                                   andStoryboard:storyboard
-                                                andiPadInterface:iPadInterface];
+            [self pushHomeViewController];
             
             return;
         }
@@ -324,34 +426,91 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 #pragma mark - Push view controllers
 
-- (void)pushHomeViewControllerWithNavigationController:(UINavigationController *)navigationController
-                                         andStoryboard:(UIStoryboard *)storyboard
-                                      andiPadInterface:(BOOL)iPadInterface
+- (void)pushHomeViewController
 {
-    JAHomeViewController *homeViewController = [storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
-    
-    [navigationController setViewControllers:@[homeViewController]
-                                    animated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                        object:@{@"index": @(0),
+                                                                 @"name": STRING_HOME }];
+}
+
+- (void)pushCatalogViewControllerWithCategoryId:(NSString *)categoryId
+                                   categoryName:(NSString *)categoryName
+                                     searchTerm:(NSString *)searchTerm
+{
+    if (categoryId.length > 0)
+    {
+        [RICategory getCategoriesWithSuccessBlock:^(id categories) {
+            
+            for (RICategory *category in categories)
+            {
+                if ([category.uid isEqualToString:categoryId])
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
+                                                                        object:@{@"category":category}];
+                    
+                    break;
+                }
+            }
+        } andFailureBlock:^(NSArray *errorMessage) {
+            [self pushHomeViewController];
+        }];
+    }
+    else if (categoryName.length > 0)
+    {
+        [RICategory getCategoriesWithSuccessBlock:^(id categories) {
+            
+            for (RICategory *category in categories)
+            {
+                if ([category.urlKey isEqualToString:categoryName])
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
+                                                                        object:@{@"category":category}];
+                    
+                    break;
+                }
+            }
+        } andFailureBlock:^(NSArray *errorMessage) {
+            [self pushHomeViewController];
+        }];
+    }
+    else if (searchTerm.length > 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                            object:@{@"index": @(99),
+                                                                     @"name": STRING_SEARCH,
+                                                                     @"text": searchTerm }];
+    }
+}
+
+- (void)pushCartViewController
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification
+                                                        object:nil];
+}
+
+- (void)pushWishList
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                        object:@{@"index": @(90),
+                                                                 @"name": STRING_MY_FAVOURITES }];
+}
+
+- (void)pushOrderOverView
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                        object:@{@"index": @(90),
+                                                                 @"name": STRING_TRACK_MY_ORDER }];
+}
+
+- (void)pushLoginViewController
+{
+    // The index 90 is to know it's from deeplink
+    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                        object:@{@"index": @(90),
+                                                                 @"name": STRING_LOGIN }];
 }
 
 #pragma mark - Auxiliar methods
-
-- (UINavigationController *)getNavigationController
-{
-    JAAppDelegate *appDelegate = (JAAppDelegate *)[[UIApplication sharedApplication] delegate];
-    UINavigationController *tempNavController = (UINavigationController *)appDelegate.window.rootViewController;
-    
-    return tempNavController;
-}
-
-- (UIStoryboard *)getCurrentStoryBoard
-{
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    } else {
-        return [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    }
-}
 
 - (NSDictionary *)parseQueryString:(NSString *)query
 {
