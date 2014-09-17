@@ -20,6 +20,7 @@
 
 @dynamic countryUrl;
 @dynamic actionName;
+@dynamic countryIso;
 @dynamic curVersion;
 @dynamic minVersion;
 @dynamic sections;
@@ -57,7 +58,8 @@
                                                                   // insert the country url
                                                                   [metadata addEntriesFromDictionary:@{ @"countryUrl" : url }];
                                                                   
-                                                                  RIApi* newApi = [RIApi parseApi:metadata];
+                                                                  RIApi* newApi = [RIApi parseApi:metadata
+                                                                                       countryIso:country.countryIso];
                                                                   
                                                                   BOOL hasUpdate = NO;
                                                                   BOOL isUpdateMandatory = NO;
@@ -171,14 +173,31 @@
     }
 }
 
++ (NSString *)getCountryIsoInUse
+{
+    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+    
+    if (0 == apiArray.count) {
+        return @"";
+    } else {
+        RIApi *api = [apiArray firstObject];
+        return api.countryIso;
+    }
+}
+
 #pragma mark - Parser
 
-+ (RIApi *)parseApi:(NSDictionary*)api;
++ (RIApi *)parseApi:(NSDictionary*)api
+         countryIso:(NSString *)countryIso;
 {
     RIApi* newApi = (RIApi*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIApi class])];
     
     if ([api objectForKey:@"action_name"]) {
         newApi.actionName = [api objectForKey:@"action_name"];
+    }
+    
+    if (countryIso.length > 0) {
+        newApi.countryIso = countryIso;
     }
     
     if ([api objectForKey:@"countryUrl"]) {

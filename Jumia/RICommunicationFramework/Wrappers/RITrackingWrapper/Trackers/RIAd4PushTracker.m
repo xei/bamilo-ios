@@ -14,6 +14,10 @@
 #import "GAIFields.h"
 #import "RIGoogleAnalyticsTracker.h"
 #import "JAAppDelegate.h"
+#import "RICategory.h"
+#import "RICountry.h"
+#import "RIApi.h"
+#import "JASplashViewController.h"
 
 @implementation RIAd4PushTracker
 
@@ -213,82 +217,143 @@ static dispatch_once_t sharedInstanceToken;
     if (notification != nil && [notification objectForKey:@"u"] != nil)
     {
         NSString *urlString = [notification objectForKey:@"u"];
-        NSString *forthLetter = @"";
-        NSString *cartPositionString = @"";
-
-        if ([urlString length] >= 7)
-        {
-            cartPositionString = [urlString substringWithRange:NSMakeRange(3, 4)];
-        }
         
-        if ([cartPositionString isEqualToString:@"cart"])
+        // Check if the country is the same
+        NSString *currentCountry = [RIApi getCountryIsoInUse];
+        NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
+        
+        if ([currentCountry isEqualToString:countryFromUrl])
         {
-            [self pushCartViewController];
+            NSString *forthLetter = @"";
+            NSString *cartPositionString = @"";
+            
+            if ([urlString length] >= 7)
+            {
+                cartPositionString = [urlString substringWithRange:NSMakeRange(3, 4)];
+            }
+            
+            if ([cartPositionString isEqualToString:@"cart"])
+            {
+                [self pushCartViewController];
+            }
+            else
+            {
+                if ([urlString length] >= 4)
+                {
+                    forthLetter = [urlString substringWithRange:NSMakeRange(3, 1)];
+                }
+                
+                if ([forthLetter isEqualToString:@""])
+                {
+                    // Home
+                    [self pushHomeViewController];
+                }
+                else if ([forthLetter isEqualToString:@"c"])
+                {
+                    // Catalog view - category name
+                    NSString *categoryName = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    
+                    [self pushCatalogViewControllerWithCategoryId:nil
+                                                     categoryName:categoryName
+                                                       searchTerm:nil];
+                }
+                else if ([forthLetter isEqualToString:@"n"])
+                {
+                    // Catalog view - category id
+                    NSString *categoryId = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    
+                    [self pushCatalogViewControllerWithCategoryId:categoryId
+                                                     categoryName:nil
+                                                       searchTerm:nil];
+                }
+                else if ([forthLetter isEqualToString:@"s"])
+                {
+                    // Catalog view - search term
+                    NSString *searchTerm = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    
+                    [self pushCatalogViewControllerWithCategoryId:nil
+                                                     categoryName:nil
+                                                       searchTerm:searchTerm];
+                }
+                else if ([forthLetter isEqualToString:@"d"])
+                {
+                    // PDV
+                    // Example: jumia://ng/d/BL683ELACCDPNGAMZ?size=1
+                    
+                    // Check if there is field size
+                    if ([urlString containsString:@"?size="])
+                    {
+                        NSRange range = [urlString rangeOfString:@"?size="];
+                        NSString *size = [urlString substringWithRange:NSMakeRange(range.length + range.location, urlString.length - (range.length + range.location))];
+                        
+                        NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, range.location - 5)];
+                        NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, pdvSku];
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                            object:nil
+                                                                          userInfo:@{ @"url" : finalUrl,
+                                                                                      @"size": size }];
+                    }
+                    else
+                    {
+                        NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                        NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, pdvSku];
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                            object:nil
+                                                                          userInfo:@{ @"url" : finalUrl }];
+                    }
+                }
+                else if ([forthLetter isEqualToString:@"cart"])
+                {
+                    // Cart
+                    [self pushCartViewController];
+                }
+                else if ([forthLetter isEqualToString:@"w"])
+                {
+                    // Wishlist
+                    [self pushWishList];
+                }
+                else if ([forthLetter isEqualToString:@"o"])
+                {
+                    // Order overview
+                    [self pushOrderOverView];
+                }
+                else if ([forthLetter isEqualToString:@"l"])
+                {
+                    // Login
+                    [self pushLoginViewController];
+                }
+                else if ([forthLetter isEqualToString:@"r"])
+                {
+                    // Register
+                    [self pushLoginViewController];
+                }
+            }
         }
         else
         {
-            if ([urlString length] >= 4)
-            {
-                forthLetter = [urlString substringWithRange:NSMakeRange(3, 1)];
-            }
-            
-            if ([forthLetter isEqualToString:@""])
-            {
-                // Home
-                [self pushHomeViewController];
-            }
-            else if ([forthLetter isEqualToString:@"c"])
-            {
-                // Catalog view - category name
-            }
-            else if ([forthLetter isEqualToString:@"n"])
-            {
-                // Catalog view - category id
-            }
-            else if ([forthLetter isEqualToString:@"s"])
-            {
-                // Catalog view - search term
-            }
-            else if ([forthLetter isEqualToString:@"d"])
-            {
-                // PDV
-                // Example: jumia://ng/d/BL683ELACCDPNGAMZ?size=1
+            // Change country
+            [RICountry getCountriesWithSuccessBlock:^(id countries) {
                 
-                // Check if there is field size
-                if ([urlString containsString:@"?size="])
+                for (RICountry *country in countries)
                 {
-                    
+                    if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
+                    {
+                        JASplashViewController* rootViewController = (JASplashViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"splashViewController"];
+                        
+                        rootViewController.selectedCountry = country;
+                        rootViewController.tempNotification = notification;
+                        
+                        [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+                    }
                 }
-                else
-                {
-                    NSString *pdvUrl = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                }
-            }
-            else if ([forthLetter isEqualToString:@"cart"])
-            {
-                // Cart
-                [self pushCartViewController];
-            }
-            else if ([forthLetter isEqualToString:@"w"])
-            {
-                // Wishlist
-                [self pushWishList];
-            }
-            else if ([forthLetter isEqualToString:@"o"])
-            {
-                // Order overview
-                [self pushOrderOverView];
-            }
-            else if ([forthLetter isEqualToString:@"l"])
-            {
-                // Login
-                [self pushLoginViewController];
-            }
-            else if ([forthLetter isEqualToString:@"r"])
-            {
-                // Register
-                [self pushLoginViewController];
-            }
+                
+            } andFailureBlock:^(NSArray *errorMessages) {
+                
+                [self pushHomeViewController];
+                
+            }];
         }
     }
 }
@@ -372,13 +437,49 @@ static dispatch_once_t sharedInstanceToken;
                                    categoryName:(NSString *)categoryName
                                      searchTerm:(NSString *)searchTerm
 {
-    
-}
-
-- (void)pushPdvViewControllerWithSku:(NSString *)sku
-                                size:(NSString *)size
-{
-    
+    if (categoryId.length > 0)
+    {
+        [RICategory getCategoriesWithSuccessBlock:^(id categories) {
+            
+            for (RICategory *category in categories)
+            {
+                if ([category.uid isEqualToString:categoryId])
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
+                                                                        object:@{@"category":category}];
+                    
+                    break;
+                }
+            }
+        } andFailureBlock:^(NSArray *errorMessage) {
+            [self pushHomeViewController];
+        }];
+    }
+    else if (categoryName.length > 0)
+    {
+        [RICategory getCategoriesWithSuccessBlock:^(id categories) {
+            
+            for (RICategory *category in categories)
+            {
+                if ([category.urlKey isEqualToString:categoryName])
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
+                                                                        object:@{@"category":category}];
+                    
+                    break;
+                }
+            }
+        } andFailureBlock:^(NSArray *errorMessage) {
+            [self pushHomeViewController];
+        }];
+    }
+    else if (searchTerm.length > 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                            object:@{@"index": @(99),
+                                                                     @"name": STRING_SEARCH,
+                                                                     @"text": searchTerm }];
+    }
 }
 
 - (void)pushCartViewController
@@ -406,7 +507,7 @@ static dispatch_once_t sharedInstanceToken;
     // The index 90 is to know it's from deeplink
     [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                         object:@{@"index": @(90),
-                                                                 @"name": STRING_SIGN_IN }];
+                                                                 @"name": STRING_LOGIN }];
 }
 
 #pragma mark - Auxiliar methods

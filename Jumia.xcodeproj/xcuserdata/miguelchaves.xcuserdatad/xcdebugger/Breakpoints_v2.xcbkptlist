@@ -9,29 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Jumia/RICommunicationFramework/Wrappers/RITrackingWrapper/Trackers/RIAd4PushTracker.m"
-            timestampString = "432577425.82414"
+            filePath = "Jumia/RICommunicationFramework/Model/OtherObjects/RICountry.m"
+            timestampString = "432643731.128953"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "230"
-            endingLineNumber = "230"
-            landmarkName = "-handleNotificationWithDictionary:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Jumia/Controllers/MenuViewController/JAMenuViewController.m"
-            timestampString = "432634053.577952"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "262"
-            endingLineNumber = "262"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "+getCountryConfigurationInUse"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

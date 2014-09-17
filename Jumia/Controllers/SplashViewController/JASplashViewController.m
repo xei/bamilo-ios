@@ -14,6 +14,7 @@
 #import "JAChooseCountryViewController.h"
 #import "JANavigationBarView.h"
 #import <FacebookSDK/FBSession.h>
+#import "RIAd4PushTracker.h"
 
 @interface JASplashViewController ()
 <
@@ -249,9 +250,26 @@ UIAlertViewDelegate
             
             [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
             
+            // Changed country in deeplink
+            if (self.tempNotification)
+            {
+                [NSTimer scheduledTimerWithTimeInterval:0.3
+                                                 target:self
+                                               selector:@selector(finishNotification)
+                                               userInfo:nil
+                                                repeats:NO];
+            }
+            
             [self hideLoading];
         }];
     }
+}
+
+- (void)finishNotification
+{
+    NSDictionary *temp = self.tempNotification;
+    self.tempNotification = nil;
+    [[RIAd4PushTracker sharedInstance] handleNotificationWithDictionary:temp];
 }
 
 - (void)didReceiveMemoryWarning

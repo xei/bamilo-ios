@@ -527,6 +527,12 @@ typedef NS_ENUM(NSUInteger, JACenterNavigationControllerAction) {
             pdv.previousCategory = STRING_HOME;
         }
         
+        // For deeplink
+        if ([notification.userInfo objectForKey:@"size"])
+        {
+            pdv.preSelectedSize = [notification.userInfo objectForKey:@"size"];
+        }
+        
         [self pushViewController:pdv
                         animated:YES];
     }
