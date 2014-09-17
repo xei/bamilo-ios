@@ -23,6 +23,8 @@
     
     self.navBarLayout.showCartButton = NO;
     
+    self.navBarLayout.title = STRING_CHECKOUT;
+    
     [self.webView setDelegate:self];
     
     self.originalRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[RIApi getCountryUrlInUse]]];

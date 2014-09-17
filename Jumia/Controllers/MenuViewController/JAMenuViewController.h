@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class RICart;
+
 @interface JAMenuViewController : JABaseViewController
+
+@property (strong, nonatomic) RICart *cart;
+@property (assign, nonatomic) BOOL needsExternalPaymentMethod;
 
 @end
