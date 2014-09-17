@@ -66,6 +66,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="selected" image="btn_removeitem_pressed"/>
+                                <state key="highlighted" image="btn_removeitem_pressed"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AJj-tf-drM">
                                 <rect key="frame" x="80" y="58" width="70" height="30"/>
