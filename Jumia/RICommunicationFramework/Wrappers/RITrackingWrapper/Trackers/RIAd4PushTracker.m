@@ -281,9 +281,10 @@ static dispatch_once_t sharedInstanceToken;
                     // Example: jumia://ng/d/BL683ELACCDPNGAMZ?size=1
                     
                     // Check if there is field size
-                    if ([urlString containsString:@"?size="])
+                    
+                    NSRange range = [[urlString lowercaseString] rangeOfString:@"?size="];
+                    if(NSNotFound != range.location)
                     {
-                        NSRange range = [urlString rangeOfString:@"?size="];
                         NSString *size = [urlString substringWithRange:NSMakeRange(range.length + range.location, urlString.length - (range.length + range.location))];
                         
                         NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, range.location - 5)];
