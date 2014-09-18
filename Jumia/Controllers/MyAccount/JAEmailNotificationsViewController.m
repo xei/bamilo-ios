@@ -9,6 +9,8 @@
 #import "JAEmailNotificationsViewController.h"
 #import "RIForm.h"
 #import "JAButtonWithBlur.h"
+#import "RICustomer.h"
+#import "JANewsletterComponent.h"
 
 @interface JAEmailNotificationsViewController ()
 <
@@ -56,8 +58,7 @@
                self.formHeight = CGRectGetMaxY(view.frame);
            }
            
-           self.height.constant = self.formHeight + 10;
-           [self.view updateConstraints];
+           self.height.constant = self.formHeight - 22;
            
            self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
            self.ctaView.backgroundColor = [UIColor clearColor];
@@ -74,6 +75,8 @@
            [self.buttonView addSubview:self.ctaView];
            
            [self hideLoading];
+           
+           [self.view updateConstraints];
            
        } failureBlock:^(NSArray *errorMessage) {
            
