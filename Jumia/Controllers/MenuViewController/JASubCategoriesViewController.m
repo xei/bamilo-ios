@@ -55,6 +55,7 @@
         
         cell.backgroundColor = UIColorFromRGB(0xf2f2f2);
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
         
         if (VALID_NOTEMPTY(self.parentCategory, RICategory)) {
             
