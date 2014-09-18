@@ -677,6 +677,8 @@
 
 - (void)showCheckoutThanksScreen:(NSNotification *)notification
 {
+    self.neeedsExternalPaymentMethod = NO;
+    
     JAThanksViewController *thanksVC = [self.storyboard instantiateViewControllerWithIdentifier:@"thanksViewController"];
     
     thanksVC.orderNumber = [notification.userInfo objectForKey:@"order_number"];
