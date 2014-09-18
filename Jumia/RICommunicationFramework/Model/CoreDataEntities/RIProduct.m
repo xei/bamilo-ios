@@ -462,6 +462,12 @@
     }];
 }
 
++ (void)removeFromRecentlyViewed:(RIProduct *)product
+{
+    [[RIDataBaseWrapper sharedInstance] deleteObject:product];
+    [[RIDataBaseWrapper sharedInstance] saveContext];
+}
+
 + (void)removeAllRecentlyViewedWithSuccessBlock:(void (^)(void))successBlock
                                 andFailureBlock:(void (^)(NSArray *))failureBlock;
 {
