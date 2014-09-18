@@ -61,7 +61,7 @@ UITextFieldDelegate>
     [super viewDidLoad];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+    [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
     [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
     
@@ -459,14 +459,6 @@ UITextFieldDelegate>
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
-    
-    CGPoint scrollPoint = CGPointMake(self.scrollView.contentOffset.x, CGRectGetMaxY(self.couponView.frame));
-    [self.scrollView setContentOffset:scrollPoint animated:YES];
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    [self.scrollView setContentOffset:CGPointMake(0.0f, 0.0f) animated:NO];
 }
 
 #pragma mark Observers
@@ -485,7 +477,7 @@ UITextFieldDelegate>
                                          self.scrollView.frame.size.height - self.keyboardFrame.size.height)];
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.contentSize.width,
-                                               self.scrollView.contentSize.height - 66.0f)];
+                                               self.scrollView.contentSize.height - 64.0f)];
 }
 
 - (void)keyboardDidHide:(NSNotification*)notification
@@ -502,7 +494,7 @@ UITextFieldDelegate>
                                          self.scrollView.frame.size.height + keyboardFrame.size.height)];
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.contentSize.width,
-                                               self.scrollView.contentSize.height + 66.0f)];
+                                               self.scrollView.contentSize.height + 64.0f)];
 }
 
 @end
