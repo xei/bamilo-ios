@@ -137,6 +137,41 @@ typedef NS_ENUM(NSInteger, RICartState) {
 @end
 
 /**
+ *  Protocol constants
+ */
+#define kRIEventTypeKey     @"RIEventTypeKey"
+#define kRIEventValueKey    @"RIEventValueKey"
+#define kRIEventActionKey   @"RIEventActionKey"
+#define kRIEventLabelKey    @"RIEventLabelKey"
+#define kRIEventCategoryKey @"RIEventCategoryKey"
+
+/**
+ *  Struct to identify events
+ */
+typedef NS_ENUM(NSInteger, RIEventType) {
+    RIEventAutoLogin = 0,
+    RIEventLogin = 1,
+    RIEventRegister = 2,
+    RIEventFacebookLogin = 3,
+    RIEventLogout = 4,
+    RIEventSideMenu = 5,
+    RIEventCategories = 6,
+    RIEventCatalog = 7,
+    RIEventFilter = 8,
+    RIEventSort = 9,
+    RIEventViewProductDetails = 10,
+    RIEventRelatedItem = 11,
+    RIEventAddToCart = 12,
+    RIEventRemoveFromCart = 13,
+    RIEventAddToWishlist = 14,
+    RIEventRemoveFromWishlist = 15,
+    RIEventRateProduct = 16,
+    RIEventSearch = 17,
+    RIEventShare = 18,
+    RIEventCheckout = 19
+};
+
+/**
  *  This protocol implements tracking to an event
  */
 @protocol RIEventTracking <NSObject>
@@ -147,16 +182,10 @@ typedef NS_ENUM(NSInteger, RICartState) {
  * The event may be triggered by the user and further information, such as category, action and
  * value are available.
  *
- * @param event Name of the event
- * @param value (optional) The value of the action
- * @param action (optional) An identifier for the user action
- * @param category (optional) An identifier for the category of the app the user is in
- * @param data (optional) Additional data about the event
+ * @param eventType Type of the event
+ * @param data (mandatory) Data about the event
  */
-- (void)trackEvent:(NSString *)event
-             value:(NSNumber *)value
-            action:(NSString *)action
-          category:(NSString *)category
+- (void)trackEvent:(NSNumber *)eventType
               data:(NSDictionary *)data;
 
 @end
@@ -285,6 +314,11 @@ typedef NS_ENUM(NSInteger, RICartState) {
  *  Queue to avoid different trackers to stall each other or the app flow.
  */
 @property NSOperationQueue *queue;
+
+/**
+ *  Array with the registered events for a tracker
+ */
+@property NSArray *registeredEvents;
 
 /**
  *  Hook to recognise an app launch, given launch options

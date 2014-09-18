@@ -192,11 +192,13 @@ FBLoginViewDelegate
      {
          [self.dynamicForm resetValues];
          
-         [[RITrackingWrapper sharedInstance] trackEvent:((RICustomer *)object).idCustomer
-                                                  value:nil
-                                                 action:@"LoginSuccess"
-                                               category:@"Account"
-                                                   data:nil];
+         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+         [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventLabelKey];
+         [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
+         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+         
+         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogin]
+                                                   data:[trackingDictionary copy]];
          
          [self hideLoading];
          
@@ -208,11 +210,12 @@ FBLoginViewDelegate
                                                              object:nil];
      } andFailureBlock:^(id errorObject) {
          
-         [[RITrackingWrapper sharedInstance] trackEvent:nil
-                                                  value:nil
-                                                 action:@"LoginFailed"
-                                               category:@"Account"
-                                                   data:nil];
+         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+         [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
+         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+         
+         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogin]
+                                                   data:[trackingDictionary copy]];
          
          [self hideLoading];
          
@@ -270,11 +273,13 @@ FBLoginViewDelegate
         [RICustomer loginCustomerByFacebookWithParameters:parameters
                                              successBlock:^(id customer) {
                                                  
-                                                 [[RITrackingWrapper sharedInstance] trackEvent:((RICustomer *)customer).idCustomer
-                                                                                          value:nil
-                                                                                         action:@"FacebookLoginSuccess"
-                                                                                       category:@"Account"
-                                                                                           data:nil];
+                                                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                                 [trackingDictionary setValue:((RICustomer *)customer).idCustomer forKey:kRIEventLabelKey];
+                                                 [trackingDictionary setValue:@"FacebookLoginSuccess" forKey:kRIEventActionKey];
+                                                 [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                                                 
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLogin]
+                                                                                           data:[trackingDictionary copy]];
                                                  
                                                  [self.dynamicForm resetValues];
                                                  
@@ -288,11 +293,12 @@ FBLoginViewDelegate
                                                                                                      object:nil];
                                              } andFailureBlock:^(NSArray *errorObject) {
                                                  
-                                                 [[RITrackingWrapper sharedInstance] trackEvent:nil
-                                                                                          value:nil
-                                                                                         action:@"LoginFailed"
-                                                                                       category:@"Account"
-                                                                                           data:nil];
+                                                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                                 [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
+                                                 [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                                                 
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLogin]
+                                                                                           data:[trackingDictionary copy]];
                                                  
                                                  [self hideLoading];
                                                  

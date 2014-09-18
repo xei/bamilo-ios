@@ -247,13 +247,15 @@
 
                       }];
                       
-                      
-                      [[RITrackingWrapper sharedInstance] trackEvent:product.sku
-                                                               value:product.price
-                                                              action:@"AddToCart"
-                                                            category:@"Catalog"
-                                                                data:nil];
+                      NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                      [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
+                      [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
+                      [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                      [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
 
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+                                                                data:[trackingDictionary copy]];
+                      
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       

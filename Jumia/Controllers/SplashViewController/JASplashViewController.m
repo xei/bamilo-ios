@@ -245,7 +245,21 @@ UIAlertViewDelegate
 {
     if(!self.isPopupOpened)
     {
-        [RICustomer autoLogin:^{
+        [RICustomer autoLogin:^(BOOL success){
+            
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+
+            if(success)
+            {
+                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                [trackingDictionary setValue:@"AutoLoginSuccess" forKey:kRIEventActionKey];
+            }
+            else
+            {
+                [trackingDictionary setValue:@"AutoLoginFailed" forKey:kRIEventActionKey];
+            }
+            
             UIViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
             
             [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
@@ -261,6 +275,11 @@ UIAlertViewDelegate
             }
             
             [self hideLoading];
+            
+           
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAutoLogin]
+                                                      data:[trackingDictionary copy]];
+                        
         }];
     }
 }

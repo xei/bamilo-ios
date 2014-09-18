@@ -380,12 +380,12 @@
         }
     }
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                             value:nil
-                                            action:newScreenName
-                                          category:@"ActionOverflow"
-                                              data:nil];
-    
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:newScreenName forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"ActionOverflow" forKey:kRIEventCategoryKey];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSideMenu]
+                                              data:[trackingDictionary copy]];
 }
 
 - (void)pushCatalogToShowSearchResults:(NSString *)query

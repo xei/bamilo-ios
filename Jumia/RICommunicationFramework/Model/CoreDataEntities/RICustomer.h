@@ -25,7 +25,7 @@
 @property (nonatomic, retain) NSString * loginMethod;
 @property (nonatomic, retain) NSOrderedSet *addresses;
 
-+ (NSString*)autoLogin:(void (^)())returnBlock;
++ (NSString*)autoLogin:(void (^)(BOOL success))returnBlock;
 
 /**
  * Method to login user via facebook
