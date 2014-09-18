@@ -8,6 +8,7 @@
 
 #import "JACheckBoxWithOptionsComponent.h"
 #import "RIFieldOption.h"
+#import "JANewsletterComponent.h"
 
 @implementation JACheckBoxWithOptionsComponent
 
@@ -47,10 +48,12 @@
     {
         RIFieldOption *option = [[field options] objectAtIndex:i];
         
-        JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
-        [check.labelText setText:option.label];
-        [check.switchComponent setTag:i];
-        [check.switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
+        JANewsletterComponent *check = [JANewsletterComponent getNewJANewsletterComponent];
+        [check.textLabel setText:option.label];
+        [check.optionSwitch setTag:i];
+        check.optionSwitch.on = [option.isUserSubscribed boolValue];
+        
+        [check.optionSwitch addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
         
         CGRect frame = check.frame;
         frame.origin.y = startingY;

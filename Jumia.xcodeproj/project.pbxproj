@@ -58,6 +58,8 @@
 		4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AE730C8198F8C8B000CA1DD /* JAPDVImageSection.xib */; };
 		4AE865BD19C9D7C400406159 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */; };
 		4AE865C019C9D7F100406159 /* JAEmailNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */; };
+		4AE999FE19CAE38D00F28A7D /* JANewsletterComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE999FD19CAE38D00F28A7D /* JANewsletterComponent.m */; };
+		4AE99A0219CAE3B300F28A7D /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AE99A0119CAE3B300F28A7D /* JANewsletterComponent.xib */; };
 		4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */; };
 		4AFC7F94199BC124007D67F4 /* JASignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F93199BC124007D67F4 /* JASignupViewController.m */; };
 		B5007AC219A4E8EC0024035A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007ABE19A4E8EC0024035A /* HockeySDK.framework */; };
@@ -394,6 +396,9 @@
 		4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUserDataViewController.m; sourceTree = "<group>"; };
 		4AE865BE19C9D7F100406159 /* JAEmailNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAEmailNotificationsViewController.h; sourceTree = "<group>"; };
 		4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAEmailNotificationsViewController.m; sourceTree = "<group>"; };
+		4AE999FC19CAE38D00F28A7D /* JANewsletterComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterComponent.h; sourceTree = "<group>"; };
+		4AE999FD19CAE38D00F28A7D /* JANewsletterComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewsletterComponent.m; sourceTree = "<group>"; };
+		4AE99A0119CAE3B300F28A7D /* JANewsletterComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewsletterComponent.xib; sourceTree = "<group>"; };
 		4AFC7F8F199BC0BE007D67F4 /* JASignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignInViewController.h; sourceTree = "<group>"; };
 		4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignInViewController.m; sourceTree = "<group>"; };
 		4AFC7F92199BC124007D67F4 /* JASignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignupViewController.h; sourceTree = "<group>"; };
@@ -1176,6 +1181,9 @@
 				4A85AEE919B9D410000019CE /* JAStarsComponent.h */,
 				4A85AEEA19B9D410000019CE /* JAStarsComponent.m */,
 				4A85AEEC19B9D4A0000019CE /* JAStarsComponent.xib */,
+				4AE999FC19CAE38D00F28A7D /* JANewsletterComponent.h */,
+				4AE999FD19CAE38D00F28A7D /* JANewsletterComponent.m */,
+				4AE99A0119CAE3B300F28A7D /* JANewsletterComponent.xib */,
 			);
 			path = DynamicForms;
 			sourceTree = "<group>";
@@ -2217,6 +2225,7 @@
 				B5A3023E19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
 				B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */,
 				CEDEB9C7199BA8FA0022BAB5 /* slider-metal-trackBackground.png in Resources */,
+				4AE99A0219CAE3B300F28A7D /* JANewsletterComponent.xib in Resources */,
 				CEDEB9C8199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png in Resources */,
 				CEDEB9B0199BA8FA0022BAB5 /* slider-default-handle-highlighted@2x.png in Resources */,
 				CEDEB9C2199BA8FA0022BAB5 /* slider-metal-handle-highlighted@2x.png in Resources */,
@@ -2355,6 +2364,7 @@
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
 				B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */,
 				B5A302D119811E9200F71726 /* RITeaserText.m in Sources */,
+				4AE999FE19CAE38D00F28A7D /* JANewsletterComponent.m in Sources */,
 				B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */,
 				B5225E1B1989308300C18F1E /* RIPaymentMethodFormOption.m in Sources */,
 				4AE730B8198F8ACA000CA1DD /* JAPDVImageSection.m in Sources */,
