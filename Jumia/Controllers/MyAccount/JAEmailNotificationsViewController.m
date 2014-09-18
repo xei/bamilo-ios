@@ -1,0 +1,152 @@
+//
+//  JAEmailNotificationsViewController.m
+//  Jumia
+//
+//  Created by Miguel Chaves on 17/Sep/14.
+//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//
+
+#import "JAEmailNotificationsViewController.h"
+#import "RIForm.h"
+#import "JAButtonWithBlur.h"
+
+@interface JAEmailNotificationsViewController ()
+<
+    JADynamicFormDelegate
+>
+
+@property (strong, nonatomic) JADynamicForm *dynamicForm;
+@property (strong, nonatomic) IBOutlet UIView *topView;
+@property (assign, nonatomic) float formHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *height;
+@property (strong, nonatomic) JAButtonWithBlur *ctaView;
+@property (weak, nonatomic) IBOutlet UIView *buttonView;
+
+@end
+
+@implementation JAEmailNotificationsViewController
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.navBarLayout.showBackButton = YES;
+    self.navBarLayout.showLogo = NO;
+    self.navBarLayout.title = STRING_USER_EMAIL_NOTIFICATIONS;
+    self.buttonView.backgroundColor = JABackgroundGrey;
+    
+    self.topView.layer.cornerRadius = 4.0f;
+    
+    [self showLoading];
+    
+    self.formHeight = 0.0f;
+    
+    [RIForm getForm:@"managenewsletters"
+       successBlock:^(RIForm *form) {
+           
+           self.dynamicForm = [[JADynamicForm alloc] initWithForm:form
+                                                                delegate:self
+                                                            startingPosition:self.formHeight];
+           
+           for(UIView *view in self.dynamicForm.formViews)
+           {
+               [self.topView addSubview:view];
+               self.formHeight = CGRectGetMaxY(view.frame);
+           }
+           
+           self.height.constant = self.formHeight + 10;
+           [self.view updateConstraints];
+           
+           self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
+           self.ctaView.backgroundColor = [UIColor clearColor];
+           
+           [self.ctaView setFrame:CGRectMake(0,
+                                             0,
+                                             self.view.frame.size.width,
+                                             50)];
+           
+           [self.ctaView addButton:STRING_SAVE_CHANGES
+                            target:self
+                            action:@selector(updatePreferences)];
+           
+           [self.buttonView addSubview:self.ctaView];
+           
+           [self hideLoading];
+           
+       } failureBlock:^(NSArray *errorMessage) {
+           
+           [self hideLoading];
+           
+           [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                       message:@"There was an error"
+                                      delegate:nil
+                             cancelButtonTitle:nil
+                             otherButtonTitles:STRING_OK, nil] show];
+       }];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Action
+
+- (void)updatePreferences
+{
+    [self.dynamicForm resignResponder];
+    
+    [self showLoading];
+    
+    [RIForm sendForm:[self.dynamicForm form]
+          parameters:[self.dynamicForm getValues]
+        successBlock:^(id object)
+     {
+         [self.dynamicForm resetValues];
+         
+         [self hideLoading];
+         
+         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                     message:STRING_PREFERENCES_UPDATED
+                                    delegate:nil
+                           cancelButtonTitle:nil
+                           otherButtonTitles:STRING_OK, nil] show];
+         
+     } andFailureBlock:^(id errorObject)
+     {
+         [self hideLoading];
+         
+         if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         {
+             [self.dynamicForm validateFields:errorObject];
+             
+             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                         message:STRING_ERROR_INVALID_FIELDS
+                                        delegate:nil
+                               cancelButtonTitle:nil
+                               otherButtonTitles:STRING_OK, nil] show];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSArray))
+         {
+             [self.dynamicForm checkErrors];
+             
+             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                         message:[errorObject componentsJoinedByString:@","]
+                                        delegate:nil
+                               cancelButtonTitle:nil
+                               otherButtonTitles:STRING_OK, nil] show];
+         }
+         else
+         {
+             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
+                                         message:@"Generic error"
+                                        delegate:nil
+                               cancelButtonTitle:nil
+                               otherButtonTitles:STRING_OK, nil] show];
+         }
+     }];
+}
+
+@end
