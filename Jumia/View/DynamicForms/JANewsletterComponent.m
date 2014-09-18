@@ -36,6 +36,7 @@
 - (void)setup
 {
     [self.textLabel setTextColor:UIColorFromRGB(0x666666)];
+    self.lineImageView.backgroundColor = UIColorFromRGB(0xcccccc);
     
     self.storedValue = @"";
 }
