@@ -50,6 +50,8 @@ UITextFieldDelegate>
 @property (strong, nonatomic) NSIndexPath *collectionViewIndexSelected;
 @property (strong, nonatomic) RIPaymentMethodFormOption* selectedPaymentMethod;
 
+@property (assign, nonatomic) CGRect keyboardFrame;
+
 @end
 
 @implementation JAPaymentViewController
@@ -59,7 +61,7 @@ UITextFieldDelegate>
     [super viewDidLoad];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+    [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
     [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
     
@@ -252,6 +254,8 @@ UITextFieldDelegate>
 - (void)useCouponButtonPressed
 {
     [self.couponTextField resignFirstResponder];
+    
+    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
     
     [self showLoading];
     NSString *voucherCode = [self.couponTextField text];
@@ -467,16 +471,15 @@ UITextFieldDelegate>
     NSValue *value = info[UIKeyboardFrameEndUserInfoKey];
     
     CGRect rawFrame = [value CGRectValue];
-    CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
-    
-    CGPoint scrollPoint = CGPointMake(self.scrollView.contentOffset.x, CGRectGetMaxY(self.couponView.frame) - keyboardFrame.size.height);
+    self.keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
     
     [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x,
                                          self.scrollView.frame.origin.y,
                                          self.scrollView.frame.size.width,
-                                         self.scrollView.frame.size.height - keyboardFrame.size.height)];
-
-    [self.scrollView setContentOffset:scrollPoint animated:YES];
+                                         self.scrollView.frame.size.height - self.keyboardFrame.size.height)];
+    
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.contentSize.width,
+                                               self.scrollView.contentSize.height - 64.0f)];
 }
 
 - (void)keyboardDidHide:(NSNotification*)notification
@@ -492,8 +495,8 @@ UITextFieldDelegate>
                                          self.scrollView.frame.size.width,
                                          self.scrollView.frame.size.height + keyboardFrame.size.height)];
     
-    
-    [self.scrollView setContentOffset:CGPointMake(0.0f, 0.0f) animated:YES];
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.contentSize.width,
+                                               self.scrollView.contentSize.height + 64.0f)];
 }
 
 @end

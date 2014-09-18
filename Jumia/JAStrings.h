@@ -180,4 +180,9 @@
 #define STRING_CHANGED_PASSWORD_SUCCESS RILocalizedString(@"password_changed_success", nil) // Not translated
 #define STRING_PREFERENCES_UPDATED RILocalizedString(@"preferences_updated", nil) // Not translated
 
+#define STRING_THANK_YOU_ORDER_TITLE RILocalizedString(@"thank_you_order_title", nil) // Not translated
+#define STRING_ORDER_SUCCESS RILocalizedString(@"order_success", nil) // Not translated
+#define STRING_ORDER_TRACK_SUCCESS RILocalizedString(@"order_track_success", nil) // Not translated
+#define STRING_ORDER_TRACK_LINK RILocalizedString(@"order_track_link", nil) // Not translated
+
 #endif

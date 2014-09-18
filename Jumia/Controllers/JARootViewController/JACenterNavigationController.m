@@ -208,6 +208,11 @@
                                              selector:@selector(deactivateExternalPayment)
                                                  name:kDeactivateExternalPaymentNotification
                                                object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showTrackOrderViewController:)
+                                                 name:kShowTrackOrderScreenNotification
+                                               object:nil];
     
 }
 
@@ -352,15 +357,7 @@
     }
     else if ([newScreenName isEqualToString:STRING_TRACK_MY_ORDER])
     {
-        if (![[self topViewController] isKindOfClass:[JATrackMyOrderViewController class]])
-        {
-            JATrackMyOrderViewController *trackOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"jaTrackOrderViewController"];
-            
-            [self pushViewController:trackOrder
-                            animated:YES];
-            
-            self.viewControllers = @[trackOrder];
-        }
+        [self showTrackOrderViewController:nil];
     }
     else if ([newScreenName isEqualToString:STRING_USER_DATA])
     {
@@ -447,6 +444,23 @@
 - (void) showHomeScreen
 {
     [self changeCenterPanel:STRING_HOME];
+}
+
+- (void)showTrackOrderViewController:(NSNotification*)notification
+{
+    if (![[self topViewController] isKindOfClass:[JATrackMyOrderViewController class]])
+    {
+        JATrackMyOrderViewController *trackOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"jaTrackOrderViewController"];
+ 
+        if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSString)) {
+            trackOrder.startingTrackOrderNumber = notification.object;
+        }
+        
+        [self pushViewController:trackOrder
+                        animated:YES];
+        
+        self.viewControllers = @[trackOrder];
+    }
 }
 
 #pragma mark - Teaser Actions
@@ -677,6 +691,8 @@
 
 - (void)showCheckoutThanksScreen:(NSNotification *)notification
 {
+    self.neeedsExternalPaymentMethod = NO;
+    
     JAThanksViewController *thanksVC = [self.storyboard instantiateViewControllerWithIdentifier:@"thanksViewController"];
     
     thanksVC.orderNumber = [notification.userInfo objectForKey:@"order_number"];
@@ -772,11 +788,19 @@
 
 - (void)updateCart:(NSNotification*) notification
 {
-    NSDictionary* userInfo = nil;
+    NSMutableDictionary* userInfo = nil;
     if(VALID_NOTEMPTY(notification, NSNotification))
     {
-        userInfo = notification.userInfo;
-        self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
+        userInfo = [[NSMutableDictionary alloc] initWithDictionary:notification.userInfo];
+        
+        if(VALID_NOTEMPTY([userInfo objectForKey:kUpdateCartNotificationValue], RICart))
+        {
+            self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
+        }
+        else
+        {
+            self.cart = nil;
+        }
         
         if(VALID_NOTEMPTY(self.cart, RICart))
         {
@@ -784,11 +808,13 @@
         }
         else
         {
+            [userInfo removeObjectForKey:kUpdateCartNotificationValue];
             [self.navigationBarView updateCartProductCount:0];
         }
     }
     else
     {
+        self.cart = nil;
         [self.navigationBarView updateCartProductCount:0];
     }
     
