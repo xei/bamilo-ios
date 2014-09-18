@@ -23,6 +23,23 @@
     [super viewDidLoad];
     
     self.shouldResizeLeftPanel = YES;
+
+    //we need to allow panning for all view controllers
+    //(we will de-activate it in each JABaseViewController
+    self.panningLimitedToTopViewController = NO;
+    
+    //notifications to turn swipe on and off
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(turnOffLeftSwipe)
+                                                 name:kTurnOffLeftSwipePanelNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(turnOnLeftSwipe)
+                                                 name:kTurnOnLeftSwipePanelNotification
+                                               object:nil];
+    
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(openMainMenu:)
@@ -32,16 +49,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCenterViewController)
                                                  name:kOpenCenterPanelNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(turnOffLeftSwipe)
-                                                 name:kTurnOffLeftSwipePanelNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(turnOnLeftSwipe)
-                                                 name:kTurnOnLeftSwipePanelNotification
                                                object:nil];
 }
 
