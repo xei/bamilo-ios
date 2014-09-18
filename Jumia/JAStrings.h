@@ -164,4 +164,20 @@
 #define STRING_NO_RECENTLY_VIEWED_PRODUCTS RILocalizedString(@"recentlyview_no_searches", nil)
 #define STRING_CLEAR_RECENTLY_VIEWED RILocalizedString(@"recentlyview_clear_viewed", nil)
 
+#define STRING_USER_DATA RILocalizedString(@"string_user_data", nil) // Not translated
+#define STRING_USER_EMAIL_NOTIFICATIONS RILocalizedString(@"string_user_email_notifications", nil) // Not translated
+#define STRING_ACCOUNT_SETTINGS RILocalizedString(@"section_title_account", nil)
+#define STRING_CHANGE_PASS_MANAGE_EMAIL RILocalizedString(@"option2_description", nil)
+#define STRING_EMAIL_NOTIFICATIONS RILocalizedString(@"myaccount_email_notifications", nil)
+#define STRING_SUBSCRIVE_UNSUBSCRIVE RILocalizedString(@"option3_description", nil)
+#define STRING_NOTIFICATIONS_SETTINGS RILocalizedString(@"section_title_notification", nil)
+#define STRING_NOTIFICATIONS RILocalizedString(@"notifications", nil)
+#define STRING_RECEIVE_EXCLUSIVE_OFFERS RILocalizedString(@"notifications_summary", nil)
+#define STRING_SOUND RILocalizedString(@"sound", nil)
+#define STRING_PLAY_SOUND RILocalizedString(@"sound_summary", nil)
+#define STRING_YOUR_PERSONAL_DATA RILocalizedString(@"personal_data_label", nil)
+#define STRING_NEW_PASSWORD RILocalizedString(@"new_password_label", nil)
+#define STRING_CHANGED_PASSWORD_SUCCESS RILocalizedString(@"password_changed_success", nil) // Not translated
+#define STRING_PREFERENCES_UPDATED RILocalizedString(@"preferences_updated", nil) // Not translated
+
 #endif
