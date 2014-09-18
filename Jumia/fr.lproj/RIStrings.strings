@@ -78,7 +78,7 @@
 "writereview_send" = "Envoyer votre avis";
 "submit_title" = "Avis envoyé";
 "write_comment" = "Donnez-nous notre avis";
-"posted_by" = "Posté par";
+"string_posted_by" = "Posté par %@, %@";
 "string_posted_by_anonymous" = "posted by Anonymous User, %@";
 "string_price" = "Price";
 "string_appearance" = "Appearance";

@@ -361,11 +361,12 @@ UIAlertViewDelegate
                         
                         [RICustomer logoutCustomerWithSuccessBlock:^{
                             
-                            [[RITrackingWrapper sharedInstance] trackEvent:custumerId
-                                                                     value:nil
-                                                                    action:@"LogoutSuccess"
-                                                                  category:@"Account"
-                                                                      data:nil];
+                            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                            [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
+                            [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
+                            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
+                                                                      data:[trackingDictionary copy]];
                             
                             [[FBSession activeSession] closeAndClearTokenInformation];
                             

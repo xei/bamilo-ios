@@ -7,12 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Adjust.h"
 
 extern NSString * const kRIAdjustToken;
 
 @interface RIAdjustTracker : NSObject
 <
-RITracker
+RITracker,
+RIEventTracking,
+AdjustDelegate
 >
 
 @end

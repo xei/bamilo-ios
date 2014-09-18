@@ -294,11 +294,14 @@
                                 simple:productSimple.sku
                       withSuccessBlock:^(RICart *cart) {
                           
-                          [[RITrackingWrapper sharedInstance] trackEvent:product.sku
-                                                                   value:product.price
-                                                                  action:@"AddToCart"
-                                                                category:@"Catalog"
-                                                                    data:nil];
+                          NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                          [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
+                          [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
+                          [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                          [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+                          
+                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+                                                                    data:[trackingDictionary copy]];
                           
                           self.addAllToCartCount--;
                           
@@ -309,11 +312,15 @@
                       }];
         
         [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
-            [[RITrackingWrapper sharedInstance] trackEvent:product.sku
-                                                     value:product.price
-                                                    action:@"RemoveFromWishlist"
-                                                  category:@"Catalog"
-                                                      data:nil];
+            
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+            [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
+                                                      data:[trackingDictionary copy]];
         } andFailureBlock:^(NSArray *error) {
         }];
     }
@@ -351,11 +358,15 @@
     
     [self showLoading];
     [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
-        [[RITrackingWrapper sharedInstance] trackEvent:product.sku
-                                                 value:product.price
-                                                action:@"RemoveFromWishlist"
-                                              category:@"Catalog"
-                                                  data:nil];
+        
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
+                                                  data:[trackingDictionary copy]];
         
         [self hideLoading];
         [self updateListsWith:favoriteProducts];
@@ -406,11 +417,14 @@
                             simple:productSimple.sku
                   withSuccessBlock:^(RICart *cart) {
                       
-                      [[RITrackingWrapper sharedInstance] trackEvent:product.sku
-                                                               value:product.price
-                                                              action:@"AddToCart"
-                                                            category:@"Catalog"
-                                                                data:nil];
+                      NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                      [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
+                      [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
+                      [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                      [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+                      
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+                                                                data:[trackingDictionary copy]];
                       
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -423,11 +437,14 @@
                       
                       [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
                           
-                          [[RITrackingWrapper sharedInstance] trackEvent:product.sku
-                                                                   value:product.price
-                                                                  action:@"RemoveFromWishlist"
-                                                                category:@"Catalog"
-                                                                    data:nil];
+                          NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                          [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
+                          [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
+                          [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                          [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+                          
+                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
+                                                                    data:[trackingDictionary copy]];
                           
                           [self updateListsWith:favoriteProducts];
                           [self hideLoading];

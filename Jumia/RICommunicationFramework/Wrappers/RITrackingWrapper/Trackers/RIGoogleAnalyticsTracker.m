@@ -27,6 +27,7 @@ NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
 @implementation RIGoogleAnalyticsTracker
 
 @synthesize queue;
+@synthesize registeredEvents;
 
 static RIGoogleAnalyticsTracker *sharedInstance;
 static dispatch_once_t sharedInstanceToken;
@@ -38,6 +39,29 @@ static dispatch_once_t sharedInstanceToken;
     if ((self = [super init])) {
         self.queue = [[NSOperationQueue alloc] init];
         self.queue.maxConcurrentOperationCount = 1;
+        
+        NSMutableArray *events = [[NSMutableArray alloc] init];
+        [events addObject:[NSNumber numberWithInt:RIEventAutoLogin]];
+        [events addObject:[NSNumber numberWithInt:RIEventLogin]];
+        [events addObject:[NSNumber numberWithInt:RIEventRegister]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookLogin]];
+        [events addObject:[NSNumber numberWithInt:RIEventLogout]];
+        [events addObject:[NSNumber numberWithInt:RIEventSideMenu]];
+        [events addObject:[NSNumber numberWithInt:RIEventCategories]];
+        [events addObject:[NSNumber numberWithInt:RIEventCatalog]];
+        [events addObject:[NSNumber numberWithInt:RIEventFilter]];
+        [events addObject:[NSNumber numberWithInt:RIEventSort]];
+        [events addObject:[NSNumber numberWithInt:RIEventViewProductDetails]];
+        [events addObject:[NSNumber numberWithInt:RIEventRelatedItem]];
+        [events addObject:[NSNumber numberWithInt:RIEventAddToCart]];
+        [events addObject:[NSNumber numberWithInt:RIEventRemoveFromCart]];
+        [events addObject:[NSNumber numberWithInt:RIEventAddToWishlist]];
+        [events addObject:[NSNumber numberWithInt:RIEventRemoveFromWishlist]];
+        [events addObject:[NSNumber numberWithInt:RIEventRateProduct]];
+        [events addObject:[NSNumber numberWithInt:RIEventSearch]];
+        [events addObject:[NSNumber numberWithInt:RIEventShare]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckout]];
+        self.registeredEvents = [events copy];
     }
     return self;
 }
@@ -137,13 +161,9 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - RIEventTracking
 
--(void)trackEvent:(NSString *)event
-            value:(NSNumber *)value
-           action:(NSString *)action
-         category:(NSString *)category
-             data:(NSDictionary *)data
+-(void)trackEvent:(NSNumber*)eventType data:(NSDictionary *)data
 {
-    RIDebugLog(@"Google Analytics - Tracking event: %@", event);
+    RIDebugLog(@"Google Analytics - Tracking event: %@", eventType);
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
@@ -152,12 +172,31 @@ static dispatch_once_t sharedInstanceToken;
         return;
     }
     
-    NSDictionary *dict = [[GAIDictionaryBuilder createEventWithCategory:category
-                                                                 action:action
-                                                                  label:event
-                                                                  value:value] build];
+    if(ISEMPTY(data))
+    {
+        RIRaiseError(@"Missing event data");
+        return;
+    }
     
-    [tracker send:dict];
+    if([self.registeredEvents containsObject:eventType])
+    {
+        NSLog(@"Google Analytics - Event registered");
+        
+        NSString *category = [data objectForKey:kRIEventCategoryKey];
+        NSString *action = [data objectForKey:kRIEventActionKey];
+        NSString *label = [data objectForKey:kRIEventLabelKey];
+        NSNumber *value = [data objectForKey:kRIEventValueKey];
+        
+        NSDictionary *dict = [[GAIDictionaryBuilder createEventWithCategory:category
+                                                                     action:action
+                                                                      label:label
+                                                                      value:value] build];
+        [tracker send:dict];
+    }
+    else
+    {
+        NSLog(@"Google Analytics - Event not registered");
+    }
 }
 
 #pragma mark - RIEcommerceEventTracking

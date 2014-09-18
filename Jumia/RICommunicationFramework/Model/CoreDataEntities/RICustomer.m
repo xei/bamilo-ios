@@ -32,7 +32,7 @@
 @dynamic addresses;
 @synthesize costumerRequestID;
 
-+ (NSString*)autoLogin:(void (^)())returnBlock
++ (NSString*)autoLogin:(void (^)(BOOL success))returnBlock
 {
     NSString *operationID = nil;
     
@@ -54,23 +54,13 @@
             
             [RICustomer loginCustomerByFacebookWithParameters:parameters
                                                  successBlock:^(id customer) {
-                                                     
-                                                     [[RITrackingWrapper sharedInstance] trackEvent:((RICustomer *)customer).idCustomer
-                                                                                              value:nil
-                                                                                             action:@"AutoLoginSuccess"
-                                                                                           category:@"Account"
-                                                                                               data:nil];
-                                                     
-                                                     returnBlock();
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         returnBlock(YES);
+                                                     });
                                                  } andFailureBlock:^(NSArray *errorObject) {
-                                                     
-                                                     [[RITrackingWrapper sharedInstance] trackEvent:nil
-                                                                                              value:nil
-                                                                                             action:@"AutoLoginFailed"
-                                                                                           category:@"Account"
-                                                                                               data:nil];
-                                                     
-                                                     returnBlock();
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         returnBlock(NO);
+                                                     });
                                                  }];
         }
         else if([@"normal" isEqualToString:customerObject.loginMethod])
@@ -83,36 +73,34 @@
                         [RIForm sendForm:form parameters:parameters
                             successBlock:^(id jsonObject)
                          {
-                             [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                                                      value:nil
-                                                                     action:@"AutoLoginSuccess"
-                                                                   category:@"Account"
-                                                                       data:nil];
-                             
-                             returnBlock();
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 returnBlock(YES);
+                             });
                          } andFailureBlock:^(id errorObject)
                          {
-                             [[RITrackingWrapper sharedInstance] trackEvent:nil
-                                                                      value:nil
-                                                                     action:@"AutoLoginFailed"
-                                                                   category:@"Account"
-                                                                       data:nil];
-                             
-                             returnBlock();
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 returnBlock(NO);
+                             });
                          }];
                     } failureBlock:^(NSArray *errorMessage)
                     {
-                        returnBlock();
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            returnBlock(NO);
+                        });
                     }];
         }
         else
         {
-            returnBlock();
+            dispatch_async(dispatch_get_main_queue(), ^{
+                returnBlock(NO);
+            });
         }
     }
     else
     {
-        returnBlock();
+        dispatch_async(dispatch_get_main_queue(), ^{
+            returnBlock(NO);
+        });
     }
     
     return operationID;

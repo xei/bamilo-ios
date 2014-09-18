@@ -26,6 +26,7 @@ NSString * const kRIAdd4PushPrivateKey = @"kRIAdd4PushPrivateKey";
 NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 @synthesize queue;
+@synthesize registeredEvents;
 
 static RIAd4PushTracker *sharedInstance;
 static dispatch_once_t sharedInstanceToken;

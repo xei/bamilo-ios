@@ -529,11 +529,13 @@
 
 -(void)goToHomeScreen
 {
-    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                             value:nil
-                                            action:@"ContinueShopping"
-                                          category:@"Checkout"
-                                              data:nil];
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                              data:[trackingDictionary copy]];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
@@ -728,11 +730,13 @@
         [self showLoading];
         [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
             
-            [[RITrackingWrapper sharedInstance] trackEvent:nil
-                                                     value:nil
-                                                    action:@"Started"
-                                                  category:@"Checkout"
-                                                      data:nil];
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                      data:[trackingDictionary copy]];
             
             [self hideLoading];
 
@@ -753,11 +757,13 @@
             
         } andFailureBlock:^(NSArray *errorMessages) {
             
-            [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                                     value:nil
-                                                    action:@"NativeCheckoutError"
-                                                  category:@"NativeCheckout"
-                                                      data:nil];
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                      data:[trackingDictionary copy]];
             
             [self hideLoading];
             

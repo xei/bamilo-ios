@@ -220,39 +220,31 @@
             
             for (JAStarsComponent *component in self.ratingStarsArray)
             {
+                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                [trackingDictionary setValue:self.ratingProductSku forKey:kRIEventLabelKey];
+                [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                [trackingDictionary setValue:@(component.starValue) forKey:kRIEventValueKey];
+
                 if ([component.idRatingType isEqualToString:@"1"])
                 {
-                    [[RITrackingWrapper sharedInstance] trackEvent:self.ratingProductSku
-                                                             value:@(component.starValue)
-                                                            action:@"RateProductPrice"
-                                                          category:@"Catalog"
-                                                              data:nil];
+                    [trackingDictionary setValue:@"RateProductPrice" forKey:kRIEventActionKey];
                 }
                 else if ([component.idRatingType isEqualToString:@"2"])
                 {
-                    [[RITrackingWrapper sharedInstance] trackEvent:self.ratingProductSku
-                                                             value:@(component.starValue)
-                                                            action:@"RateProductAppearance"
-                                                          category:@"Catalog"
-                                                              data:nil];
+                    [trackingDictionary setValue:@"RateProductAppearance" forKey:kRIEventActionKey];
                 }
                 else if ([component.idRatingType isEqualToString:@"3"])
                 {
-                    [[RITrackingWrapper sharedInstance] trackEvent:self.ratingProductSku
-                                                             value:@(component.starValue)
-                                                            action:@"RateProductQuality"
-                                                          category:@"Catalog"
-                                                              data:nil];
+                    [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
                 }
                 else
                 {
                     // There is no indication about the default tracking for rating
-                    [[RITrackingWrapper sharedInstance] trackEvent:self.ratingProductSku
-                                                             value:@(component.starValue)
-                                                            action:@"RateProductQuality"
-                                                          category:@"Catalog"
-                                                              data:nil];
+                    [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
                 }
+                
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProduct]
+                                                          data:[trackingDictionary copy]];
             }
             
             [self hideLoading];

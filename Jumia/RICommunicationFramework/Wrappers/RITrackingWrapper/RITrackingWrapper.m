@@ -67,7 +67,7 @@ static dispatch_once_t sharedInstanceToken;
         return;
     }
     
-    RIGoogleAnalyticsTracker *googleAnalyticsTracker = [[RIGoogleAnalyticsTracker alloc] init];
+    RIGoogleAnalyticsTracker *googleAnalyticsTracker = [RIGoogleAnalyticsTracker sharedInstance];
     RIBugSenseTracker *bugsenseTracker = [[RIBugSenseTracker alloc] init];
     RIAd4PushTracker *ad4PushTracker = [[RIAd4PushTracker alloc] init];
     RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
@@ -93,20 +93,14 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - RIEventTracking protocol
 
-- (void)trackEvent:(NSString *)event
-             value:(NSNumber *)value
-            action:(NSString *)action
-          category:(NSString *)category
+- (void)trackEvent:(NSNumber* )eventType
               data:(NSDictionary *)data
 {
-    RIDebugLog(@"Tracking event: '%@' with value: %@ with action: %@ with category: %@ and data: %@"
-               , event, value, action, category, data);
+    RIDebugLog(@"Tracking event: '%@' with data: %@", eventType, data);
     
-    [[RIGoogleAnalyticsTracker sharedInstance] trackEvent:event
-                                                    value:value
-                                                   action:action
-                                                 category:category
-                                                     data:data];
+    [self RI_callTrackersConformToProtocol:@protocol(RIEventTracking)
+                                  selector:@selector(trackEvent:data:)
+                                 arguments:[NSArray arrayWithObjects:eventType, data, nil]];
 }
 
 #pragma mark - RIExceptionTracking protocolx
@@ -185,9 +179,9 @@ static dispatch_once_t sharedInstanceToken;
     
     [[RIAd4PushTracker sharedInstance] trackOpenURL:url];
     /*
-    [self RI_callTrackersConformToProtocol:@protocol(RIOpenURLTracking)
-                                  selector:@selector(trackOpenURL:)
-                                 arguments:@[url]]; */
+     [self RI_callTrackersConformToProtocol:@protocol(RIOpenURLTracking)
+     selector:@selector(trackOpenURL:)
+     arguments:@[url]]; */
 }
 
 #pragma mark - RIScreenTracking protocol
@@ -298,9 +292,9 @@ static dispatch_once_t sharedInstanceToken;
         return;
     }
     
-   [self RI_callTrackersConformToProtocol:@protocol(RILaunchEventTracker)
-                                 selector:@selector(sendLaunchEventWithData:)
-                                arguments:@[dataDictionary]];
+    [self RI_callTrackersConformToProtocol:@protocol(RILaunchEventTracker)
+                                  selector:@selector(sendLaunchEventWithData:)
+                                 arguments:@[dataDictionary]];
 }
 
 
@@ -324,7 +318,8 @@ static dispatch_once_t sharedInstanceToken;
                 [invocation setSelector:selector];
                 
                 for (NSUInteger idx = 0; idx < arguments.count; idx++) {
-                    [invocation setArgument:(__bridge void *)(arguments[idx]) atIndex:idx];
+                    NSObject *argument = [arguments objectAtIndex:idx];
+                    [invocation setArgument:&argument atIndex:idx + 2];
                 }
                 
                 [invocation setTarget:tracker];

@@ -7,13 +7,13 @@
 //
 
 #import "RIAdjustTracker.h"
-#import "Adjust.h"
 
 NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
 @implementation RIAdjustTracker
 
 @synthesize queue;
+@synthesize registeredEvents;
 
 - (id)init
 {
@@ -22,6 +22,29 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     if ((self = [super init])) {
         self.queue = [[NSOperationQueue alloc] init];
         self.queue.maxConcurrentOperationCount = 1;
+        
+        NSMutableArray *events = [[NSMutableArray alloc] init];
+//        [events addObject:[NSNumber numberWithInt:RIEventAutoLogin]];
+//        [events addObject:[NSNumber numberWithInt:RIEventLogin]];
+//        [events addObject:[NSNumber numberWithInt:RIEventRegister]];
+//        [events addObject:[NSNumber numberWithInt:RIEventFacebookLogin]];
+//        [events addObject:[NSNumber numberWithInt:RIEventLogout]];
+//        [events addObject:[NSNumber numberWithInt:RIEventSideMenu]];
+//        [events addObject:[NSNumber numberWithInt:RIEventCategories]];
+//        [events addObject:[NSNumber numberWithInt:RIEventCatalog]];
+//        [events addObject:[NSNumber numberWithInt:RIEventFilter]];
+//        [events addObject:[NSNumber numberWithInt:RIEventSort]];
+//        [events addObject:[NSNumber numberWithInt:RIEventViewProductDetails]];
+//        [events addObject:[NSNumber numberWithInt:RIEventRelatedItem]];
+//        [events addObject:[NSNumber numberWithInt:RIEventAddToCart]];
+//        [events addObject:[NSNumber numberWithInt:RIEventRemoveFromCart]];
+//        [events addObject:[NSNumber numberWithInt:RIEventAddToWishlist]];
+//        [events addObject:[NSNumber numberWithInt:RIEventRemoveFromWishlist]];
+//        [events addObject:[NSNumber numberWithInt:RIEventRateProduct]];
+//        [events addObject:[NSNumber numberWithInt:RIEventSearch]];
+//        [events addObject:[NSNumber numberWithInt:RIEventShare]];
+//        [events addObject:[NSNumber numberWithInt:RIEventCheckout]];
+        self.registeredEvents = [events copy];
     }
     return self;
 }
@@ -30,7 +53,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
 - (void)applicationDidLaunchWithOptions:(NSDictionary *)options
 {
-    RIDebugLog(@"BugSense tracker tracks application launch");
+    RIDebugLog(@"Adjust tracker tracks application launch");
     
     NSString *apiKey = [RITrackingConfiguration valueForKey:kRIAdjustToken];
     
@@ -50,6 +73,35 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     NSLog(@"Adjust setEnvironment as AIEnvironmentProduction");
 #endif
     
+    [Adjust setDelegate:self];
+}
+
+#pragma mark RIEventTracking protocol
+
+- (void)trackEvent:(NSNumber *)eventType data:(NSDictionary *)data
+{
+    NSLog(@"Adjust - Tracking event = %@, data %@", eventType, data);
+    if([self.registeredEvents containsObject:eventType])
+    {
+        NSLog(@"Adjust - Event registered");
+    }
+    else
+    {
+        NSLog(@"Adjust - Event not registered");
+    }
+}
+
+#pragma mark AdjustDelegate
+- (void)adjustFinishedTrackingWithResponse:(AIResponseData *)responseData
+{
+    if(responseData.success)
+    {
+        NSLog(@"adjustFinishedTrackingWithResponse success: %@", responseData.activityKindString);
+    }
+    else
+    {
+        NSLog(@"adjustFinishedTrackingWithResponse error: %@ - %@", responseData.activityKindString, responseData.error);
+    }
 }
 
 @end

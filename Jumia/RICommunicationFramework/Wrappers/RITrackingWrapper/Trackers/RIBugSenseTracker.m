@@ -14,6 +14,7 @@ NSString * const kRIBugsenseAPIKey = @"RIBugsenseAPIKey";
 @implementation RIBugSenseTracker
 
 @synthesize queue;
+@synthesize registeredEvents;
 
 - (id)init
 {

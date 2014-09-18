@@ -100,11 +100,13 @@
         
         RICategory *category = [self.sourceCategoriesArray objectAtIndex:realIndex];
 
-        [[RITrackingWrapper sharedInstance] trackEvent:category.name
-                                                 value:nil
-                                                action:@"Categories"
-                                              category:@"Catalog"
-                                                  data:nil];
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:category.name forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"Categories" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCategories]
+                                                  data:[trackingDictionary copy]];
         
         if (VALID(category, RICategory) && category.children.count > 0) {
             
