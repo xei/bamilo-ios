@@ -232,6 +232,22 @@
                             simple:productSimple.sku
                   withSuccessBlock:^(RICart *cart) {
                       
+                      [RIProduct removeFromRecentlyViewed:product];
+                      
+                      [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
+
+                          self.productsArray = recentlyViewedProducts;
+                          self.chosenSimpleNames = [NSMutableArray new];
+                          for (int i = 0; i < self.productsArray.count; i++) {
+                              [self.chosenSimpleNames addObject:@""];
+                          }
+                          [self.collectionView reloadData];
+                          
+                      } andFailureBlock:^(NSArray *error) {
+
+                      }];
+                      
+                      
                       [[RITrackingWrapper sharedInstance] trackEvent:product.sku
                                                                value:product.price
                                                               action:@"AddToCart"
