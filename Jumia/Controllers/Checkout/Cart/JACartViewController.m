@@ -24,6 +24,7 @@
 @interface JACartViewController ()
 
 @property (nonatomic, strong) NSString *voucherCode;
+@property (nonatomic, assign) CGRect keyboardFrame;
 
 @end
 
@@ -36,6 +37,11 @@
     self.navBarLayout.title = STRING_CART;
     
     self.view.backgroundColor = JABackgroundGrey;
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+    
+    [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
     
     [self.emptyCartView setHidden:YES];
     [self.emptyCartLabel setHidden:YES];
@@ -913,5 +919,36 @@
     NSString *title = [NSString stringWithFormat:@"%d", (row + 1)];
     return title;
 }
+
+#pragma mark Observers
+
+- (void)keyboardDidShow:(NSNotification*)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSValue *value = info[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame = [value CGRectValue];
+    self.keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
+    
+    [self.cartScrollView setFrame:CGRectMake(self.cartScrollView.frame.origin.x,
+                                             self.cartScrollView.frame.origin.y,
+                                             self.cartScrollView.frame.size.width,
+                                             self.cartScrollView.frame.size.height - self.keyboardFrame.size.height)];
+}
+
+- (void)keyboardDidHide:(NSNotification*)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSValue *value = info[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame = [value CGRectValue];
+    CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
+    
+    [self.cartScrollView setFrame:CGRectMake(self.cartScrollView.frame.origin.x,
+                                             self.cartScrollView.frame.origin.y,
+                                             self.cartScrollView.frame.size.width,
+                                             self.cartScrollView.frame.size.height + keyboardFrame.size.height)];;
+}
+
 
 @end
