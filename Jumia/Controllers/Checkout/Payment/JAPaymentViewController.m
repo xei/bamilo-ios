@@ -255,6 +255,8 @@ UITextFieldDelegate>
 {
     [self.couponTextField resignFirstResponder];
     
+    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
+    
     [self showLoading];
     NSString *voucherCode = [self.couponTextField text];
     
