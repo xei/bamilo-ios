@@ -160,3 +160,19 @@
 
 "recentlyview_no_searches" = "No Recently Viewed Products Here";
 "recentlyview_clear_viewed" = "Clear Recently Viewed";
+
+"string_user_data" = "User Data";
+"string_user_email_notifications" = "Email Notifications";
+"section_title_account" = "Account Settings";
+"option2_description" = "Change Password, manage email";
+"myaccount_email_notifications" = "Email Notifications";
+"option3_description" = "Subscribe or Unsubscribe";
+"section_title_notification" = "Notification Settings";
+"notifications" = "Notifications";
+"notifications_summary" = "Receive exclusive offers and personal updates";
+"sound" = "Sound";
+"sound_summary" = "Play sound on incoming notifications";
+"personal_data_label" = "Your Personal Data";
+"new_password_label" = "New Password";
+"password_changed_success" = "Password changed with success.";
+"preferences_updated" = "Preferences updated";

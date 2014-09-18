@@ -56,6 +56,8 @@
 		4AE730BE198F8ADF000CA1DD /* JAPDVRelatedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730BD198F8ADF000CA1DD /* JAPDVRelatedItem.m */; };
 		4AE730C7198F8B05000CA1DD /* JAPDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */; };
 		4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AE730C8198F8C8B000CA1DD /* JAPDVImageSection.xib */; };
+		4AE865BD19C9D7C400406159 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */; };
+		4AE865C019C9D7F100406159 /* JAEmailNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */; };
 		4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */; };
 		4AFC7F94199BC124007D67F4 /* JASignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F93199BC124007D67F4 /* JASignupViewController.m */; };
 		B5007AC219A4E8EC0024035A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007ABE19A4E8EC0024035A /* HockeySDK.framework */; };
@@ -388,6 +390,10 @@
 		4AE730C5198F8B05000CA1DD /* JAPDVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVViewController.h; sourceTree = "<group>"; };
 		4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVViewController.m; sourceTree = "<group>"; };
 		4AE730C8198F8C8B000CA1DD /* JAPDVImageSection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVImageSection.xib; sourceTree = "<group>"; };
+		4AE865BB19C9D7C400406159 /* JAUserDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAUserDataViewController.h; sourceTree = "<group>"; };
+		4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUserDataViewController.m; sourceTree = "<group>"; };
+		4AE865BE19C9D7F100406159 /* JAEmailNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAEmailNotificationsViewController.h; sourceTree = "<group>"; };
+		4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAEmailNotificationsViewController.m; sourceTree = "<group>"; };
 		4AFC7F8F199BC0BE007D67F4 /* JASignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignInViewController.h; sourceTree = "<group>"; };
 		4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignInViewController.m; sourceTree = "<group>"; };
 		4AFC7F92199BC124007D67F4 /* JASignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignupViewController.h; sourceTree = "<group>"; };
@@ -877,6 +883,10 @@
 			children = (
 				4A39213219891FB200B70A9C /* JAMyAccountViewController.h */,
 				4A39213319891FB200B70A9C /* JAMyAccountViewController.m */,
+				4AE865BB19C9D7C400406159 /* JAUserDataViewController.h */,
+				4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */,
+				4AE865BE19C9D7F100406159 /* JAEmailNotificationsViewController.h */,
+				4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */,
 			);
 			path = MyAccount;
 			sourceTree = "<group>";
@@ -2324,6 +2334,7 @@
 				B57DC97E19B90AB10080C818 /* JAEditAddressViewController.m in Sources */,
 				4A85AEEB19B9D410000019CE /* JAStarsComponent.m in Sources */,
 				4A39213419891FB200B70A9C /* JAMyAccountViewController.m in Sources */,
+				4AE865C019C9D7F100406159 /* JAEmailNotificationsViewController.m in Sources */,
 				CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */,
 				B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */,
 				CE2F576E19913B33000A9E09 /* JACatalogListCell.m in Sources */,
@@ -2370,6 +2381,7 @@
 				4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */,
 				B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */,
 				4A944FF8199290F200C02734 /* JARatingsViewController.m in Sources */,
+				4AE865BD19C9D7C400406159 /* JAUserDataViewController.m in Sources */,
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
 				B59D196319C333CF004843C3 /* JAExternalPaymentsViewController.m in Sources */,
 				4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */,
