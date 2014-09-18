@@ -126,6 +126,14 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
             andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 /**
+ *  Method to remove a recentrly viewed product
+ *
+ *  @param the product to be removed from the recently viewed list
+ *
+ */
++ (void)removeFromRecentlyViewed:(RIProduct *)product;
+
+/**
  *  Method to delete all recently viewed products from coredata
  */
 + (void)removeAllRecentlyViewedWithSuccessBlock:(void (^)(void))successBlock

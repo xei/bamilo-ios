@@ -9,6 +9,7 @@
 #import "RICustomer.h"
 #import "RIAddress.h"
 #import "RIForm.h"
+#import "RINewsletterCategory.h"
 
 @interface RICustomer ()
 
@@ -447,6 +448,25 @@
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:customer];
     [[RIDataBaseWrapper sharedInstance] saveContext];
+}
+
+#pragma mark - Save newsletter preferences
+
++ (void)updateCustomerNewsletterWithJson:(NSDictionary *)json
+{
+    if ([json objectForKey:@"subscribed_categories"])
+    {
+        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+        
+        NSArray *newsletterArray = [json objectForKey:@"subscribed_categories"];
+        
+        for (NSDictionary *dic in newsletterArray)
+        {
+            RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
+            [RINewsletterCategory saveNewsLetterCategory:newsletter];
+        }
+    }
 }
 
 @end

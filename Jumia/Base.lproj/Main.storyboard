@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Splash View Controller-->
@@ -1347,18 +1347,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="87F-rk-XRC">
-                                <rect key="frame" x="6" y="6" width="308" height="123"/>
+                                <rect key="frame" x="6" y="6" width="308" height="155"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="308" id="hTB-VK-yEQ"/>
-                                    <constraint firstAttribute="height" constant="123" id="yKI-RA-C6c"/>
+                                    <constraint firstAttribute="height" constant="155" id="yKI-RA-C6c"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhx-Ha-G6w">
-                                <rect key="frame" x="0.0" y="133" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="183" width="320" height="106"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="tMj-TH-en2"/>
+                                    <constraint firstAttribute="height" constant="106" id="tMj-TH-en2"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1366,7 +1366,7 @@
                         <constraints>
                             <constraint firstItem="87F-rk-XRC" firstAttribute="top" secondItem="iXN-N6-sQJ" secondAttribute="bottom" constant="6" id="0zo-m4-iyw"/>
                             <constraint firstItem="87F-rk-XRC" firstAttribute="leading" secondItem="Tfc-Ff-EQd" secondAttribute="leading" constant="6" id="L5O-e3-2xS"/>
-                            <constraint firstItem="bhx-Ha-G6w" firstAttribute="top" secondItem="87F-rk-XRC" secondAttribute="bottom" constant="4" id="bsz-3b-Bkr"/>
+                            <constraint firstItem="bhx-Ha-G6w" firstAttribute="top" secondItem="87F-rk-XRC" secondAttribute="bottom" constant="22" id="bsz-3b-Bkr"/>
                             <constraint firstItem="bhx-Ha-G6w" firstAttribute="leading" secondItem="Tfc-Ff-EQd" secondAttribute="leading" id="l8J-si-Acv"/>
                             <constraint firstAttribute="trailing" secondItem="87F-rk-XRC" secondAttribute="trailing" constant="6" id="oN6-aB-3rY"/>
                             <constraint firstAttribute="trailing" secondItem="bhx-Ha-G6w" secondAttribute="trailing" id="zOb-OJ-mDz"/>
@@ -2658,21 +2658,78 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0f5-tu-QZJ">
-                                <rect key="frame" x="47" y="241" width="226" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cSD-f4-L6r">
+                                <rect key="frame" x="6" y="6" width="308" height="345"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="successIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ATZ-Hs-pJM">
+                                        <rect key="frame" x="107" y="20" width="95" height="95"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fM4-Ig-6fY">
+                                        <rect key="frame" x="8" y="130" width="292" height="35"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3a-SQ-tRU">
+                                        <rect key="frame" x="8" y="285" width="292" height="35"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IrD-XV-ayF">
+                                        <rect key="frame" x="8" y="184" width="292" height="35"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="000000" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7li-cQ-83d">
+                                        <rect key="frame" x="86" y="239" width="135" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MQr-Lx-Khj">
+                                        <rect key="frame" x="81" y="235" width="148" height="30"/>
+                                        <state key="normal" backgroundImage="trackNumberBox">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BsI-FI-JPm" userLabel="Continue Shopping Button">
+                                <rect key="frame" x="6" y="452" width="308" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="9P1-N0-8Ot"/>
+                                    <constraint firstAttribute="width" constant="308" id="p83-3F-DUh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <state key="normal" title="Button" backgroundImage="orangeBig_normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled" title="Button" backgroundImage="orangeBig_disabled"/>
+                                <state key="selected" backgroundImage="orangeBig_highlighted"/>
+                                <state key="highlighted" backgroundImage="orangeBig_highlighted"/>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="BsI-FI-JPm" secondAttribute="trailing" constant="-10" id="59h-76-2Ra"/>
+                            <constraint firstItem="BsI-FI-JPm" firstAttribute="leading" secondItem="nhs-qm-qB2" secondAttribute="leadingMargin" constant="-10" id="CEq-kH-EZR"/>
+                            <constraint firstItem="hi2-Ks-I4T" firstAttribute="top" secondItem="BsI-FI-JPm" secondAttribute="bottom" constant="8" id="DQA-vr-GDZ"/>
+                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="J9h-47-Hya"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
-                        <outlet property="orderNumberLabel" destination="0f5-tu-QZJ" id="vw8-4n-jb7"/>
+                        <outlet property="contentView" destination="cSD-f4-L6r" id="62w-Iz-Gwk"/>
+                        <outlet property="continueShoppingButton" destination="BsI-FI-JPm" id="Hlc-Z7-e17"/>
+                        <outlet property="orderCopyButton" destination="MQr-Lx-Khj" id="Hwj-Nv-3gu"/>
+                        <outlet property="orderNumberField" destination="7li-cQ-83d" id="thF-q4-f8Q"/>
+                        <outlet property="successMessage" destination="IrD-XV-ayF" id="PBQ-Yj-C2d"/>
+                        <outlet property="thankYouLabel" destination="fM4-Ig-6fY" id="BKL-ev-EKY"/>
+                        <outlet property="trackOrderMessage" destination="Q3a-SQ-tRU" id="Ldh-C8-K3x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jmj-pj-aBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3009,7 +3066,9 @@
         <image name="orangeMedium_disabled" width="296" height="44"/>
         <image name="orangeMedium_highlight" width="296" height="44"/>
         <image name="orangeMedium_normal" width="296" height="44"/>
+        <image name="successIcon" width="95" height="95"/>
         <image name="tick_selected" width="14" height="14"/>
+        <image name="trackNumberBox" width="148" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
