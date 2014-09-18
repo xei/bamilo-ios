@@ -10,4 +10,6 @@
 
 @interface JATrackMyOrderViewController : JABaseViewController
 
+@property (nonatomic, strong)NSString* startingTrackOrderNumber;
+
 @end
