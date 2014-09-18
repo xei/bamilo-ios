@@ -201,7 +201,7 @@
 		B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B919811E9200F71726 /* RIGoogleAnalyticsTracker.m */; };
 		B5A302E619811E9200F71726 /* RIURLCacheWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302BC19811E9200F71726 /* RIURLCacheWrapper.m */; };
 		B5A302E819811EBF00F71726 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302E719811EBF00F71726 /* CFNetwork.framework */; };
-		B5A302EA19811ECB00F71726 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302E919811ECB00F71726 /* AdSupport.framework */; };
+		B5A302EA19811ECB00F71726 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302E919811ECB00F71726 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B5A302EC19811ED700F71726 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302EB19811ED700F71726 /* libz.dylib */; };
 		B5A302EE19811EDD00F71726 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302ED19811EDD00F71726 /* libsqlite3.dylib */; };
 		B5A302F019811EE300F71726 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302EF19811EE300F71726 /* CoreData.framework */; };
@@ -222,6 +222,24 @@
 		B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F61986C41D0094C92C /* RICheckout.m */; };
 		B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759B19814EF000005B13 /* FacebookSDK.framework */; };
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
+		B5FBD57919CAF22F00BD9510 /* Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD55919CAF22F00BD9510 /* Adjust.m */; };
+		B5FBD57A19CAF22F00BD9510 /* AIActivityHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD55B19CAF22F00BD9510 /* AIActivityHandler.m */; };
+		B5FBD57B19CAF22F00BD9510 /* AIActivityKind.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD55D19CAF22F00BD9510 /* AIActivityKind.m */; };
+		B5FBD57C19CAF22F00BD9510 /* AIActivityPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD55F19CAF22F00BD9510 /* AIActivityPackage.m */; };
+		B5FBD57D19CAF22F00BD9510 /* AIActivityState.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD56119CAF22F00BD9510 /* AIActivityState.m */; };
+		B5FBD57E19CAF22F00BD9510 /* NSData+AIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD56419CAF22F00BD9510 /* NSData+AIAdditions.m */; };
+		B5FBD57F19CAF22F00BD9510 /* NSString+AIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD56619CAF22F00BD9510 /* NSString+AIAdditions.m */; };
+		B5FBD58019CAF22F00BD9510 /* UIDevice+AIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD56819CAF22F00BD9510 /* UIDevice+AIAdditions.m */; };
+		B5FBD58119CAF22F00BD9510 /* AIAdjustFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD56A19CAF22F00BD9510 /* AIAdjustFactory.m */; };
+		B5FBD58219CAF22F00BD9510 /* AILogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD56C19CAF22F00BD9510 /* AILogger.m */; };
+		B5FBD58319CAF22F00BD9510 /* AIPackageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD56E19CAF22F00BD9510 /* AIPackageBuilder.m */; };
+		B5FBD58419CAF22F00BD9510 /* AIPackageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD57019CAF22F00BD9510 /* AIPackageHandler.m */; };
+		B5FBD58519CAF22F00BD9510 /* AIRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD57219CAF22F00BD9510 /* AIRequestHandler.m */; };
+		B5FBD58619CAF22F00BD9510 /* AIResponseData.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD57419CAF22F00BD9510 /* AIResponseData.m */; };
+		B5FBD58719CAF22F00BD9510 /* AITimer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD57619CAF22F00BD9510 /* AITimer.m */; };
+		B5FBD58819CAF22F00BD9510 /* AIUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD57819CAF22F00BD9510 /* AIUtil.m */; };
+		B5FBD58A19CAF26800BD9510 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FBD58919CAF26800BD9510 /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		B5FBD58D19CAF2F400BD9510 /* RIAdjustTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD58C19CAF2F400BD9510 /* RIAdjustTracker.m */; };
 		B5FE9FB119A1F362006F7D63 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */; };
 		B5FE9FB319A1F4C6006F7D63 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */; };
 		B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */; };
@@ -684,6 +702,41 @@
 		B5C682F71986C41D0094C92C /* RICheckout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICheckout.h; sourceTree = "<group>"; };
 		B5EF759B19814EF000005B13 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
+		B5FBD55819CAF22F00BD9510 /* Adjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Adjust.h; sourceTree = "<group>"; };
+		B5FBD55919CAF22F00BD9510 /* Adjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Adjust.m; sourceTree = "<group>"; };
+		B5FBD55A19CAF22F00BD9510 /* AIActivityHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIActivityHandler.h; sourceTree = "<group>"; };
+		B5FBD55B19CAF22F00BD9510 /* AIActivityHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIActivityHandler.m; sourceTree = "<group>"; };
+		B5FBD55C19CAF22F00BD9510 /* AIActivityKind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIActivityKind.h; sourceTree = "<group>"; };
+		B5FBD55D19CAF22F00BD9510 /* AIActivityKind.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIActivityKind.m; sourceTree = "<group>"; };
+		B5FBD55E19CAF22F00BD9510 /* AIActivityPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIActivityPackage.h; sourceTree = "<group>"; };
+		B5FBD55F19CAF22F00BD9510 /* AIActivityPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIActivityPackage.m; sourceTree = "<group>"; };
+		B5FBD56019CAF22F00BD9510 /* AIActivityState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIActivityState.h; sourceTree = "<group>"; };
+		B5FBD56119CAF22F00BD9510 /* AIActivityState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIActivityState.m; sourceTree = "<group>"; };
+		B5FBD56319CAF22F00BD9510 /* NSData+AIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AIAdditions.h"; sourceTree = "<group>"; };
+		B5FBD56419CAF22F00BD9510 /* NSData+AIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AIAdditions.m"; sourceTree = "<group>"; };
+		B5FBD56519CAF22F00BD9510 /* NSString+AIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+AIAdditions.h"; sourceTree = "<group>"; };
+		B5FBD56619CAF22F00BD9510 /* NSString+AIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AIAdditions.m"; sourceTree = "<group>"; };
+		B5FBD56719CAF22F00BD9510 /* UIDevice+AIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+AIAdditions.h"; sourceTree = "<group>"; };
+		B5FBD56819CAF22F00BD9510 /* UIDevice+AIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+AIAdditions.m"; sourceTree = "<group>"; };
+		B5FBD56919CAF22F00BD9510 /* AIAdjustFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIAdjustFactory.h; sourceTree = "<group>"; };
+		B5FBD56A19CAF22F00BD9510 /* AIAdjustFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIAdjustFactory.m; sourceTree = "<group>"; };
+		B5FBD56B19CAF22F00BD9510 /* AILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AILogger.h; sourceTree = "<group>"; };
+		B5FBD56C19CAF22F00BD9510 /* AILogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AILogger.m; sourceTree = "<group>"; };
+		B5FBD56D19CAF22F00BD9510 /* AIPackageBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIPackageBuilder.h; sourceTree = "<group>"; };
+		B5FBD56E19CAF22F00BD9510 /* AIPackageBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIPackageBuilder.m; sourceTree = "<group>"; };
+		B5FBD56F19CAF22F00BD9510 /* AIPackageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIPackageHandler.h; sourceTree = "<group>"; };
+		B5FBD57019CAF22F00BD9510 /* AIPackageHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIPackageHandler.m; sourceTree = "<group>"; };
+		B5FBD57119CAF22F00BD9510 /* AIRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIRequestHandler.h; sourceTree = "<group>"; };
+		B5FBD57219CAF22F00BD9510 /* AIRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIRequestHandler.m; sourceTree = "<group>"; };
+		B5FBD57319CAF22F00BD9510 /* AIResponseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIResponseData.h; sourceTree = "<group>"; };
+		B5FBD57419CAF22F00BD9510 /* AIResponseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIResponseData.m; sourceTree = "<group>"; };
+		B5FBD57519CAF22F00BD9510 /* AITimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AITimer.h; sourceTree = "<group>"; };
+		B5FBD57619CAF22F00BD9510 /* AITimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AITimer.m; sourceTree = "<group>"; };
+		B5FBD57719CAF22F00BD9510 /* AIUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIUtil.h; sourceTree = "<group>"; };
+		B5FBD57819CAF22F00BD9510 /* AIUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIUtil.m; sourceTree = "<group>"; };
+		B5FBD58919CAF26800BD9510 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		B5FBD58B19CAF2F400BD9510 /* RIAdjustTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAdjustTracker.h; sourceTree = "<group>"; };
+		B5FBD58C19CAF2F400BD9510 /* RIAdjustTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAdjustTracker.m; sourceTree = "<group>"; };
 		B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
 		B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking.plist; sourceTree = "<group>"; };
@@ -793,6 +846,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5FBD58A19CAF26800BD9510 /* iAd.framework in Frameworks */,
+				B5A302EA19811ECB00F71726 /* AdSupport.framework in Frameworks */,
 				B5007AC819A4E92F0024035A /* Security.framework in Frameworks */,
 				B5007AC619A4E9170024035A /* CoreText.framework in Frameworks */,
 				B5FE9FB119A1F362006F7D63 /* CoreTelephony.framework in Frameworks */,
@@ -808,7 +863,6 @@
 				B5A302F019811EE300F71726 /* CoreData.framework in Frameworks */,
 				B5A302EE19811EDD00F71726 /* libsqlite3.dylib in Frameworks */,
 				B5A302EC19811ED700F71726 /* libz.dylib in Frameworks */,
-				B5A302EA19811ECB00F71726 /* AdSupport.framework in Frameworks */,
 				B5A302E819811EBF00F71726 /* CFNetwork.framework in Frameworks */,
 				B5A3025419811E8A00F71726 /* BugSense-iOS.framework in Frameworks */,
 				B5A3025519811E8A00F71726 /* libAdIdAccess.a in Frameworks */,
@@ -1418,6 +1472,7 @@
 		B5A301D119811E7600F71726 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5FBD58919CAF26800BD9510 /* iAd.framework */,
 				B5007AC719A4E92F0024035A /* Security.framework */,
 				B5007AC519A4E9170024035A /* CoreText.framework */,
 				B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */,
@@ -1443,6 +1498,7 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5FBD55719CAF22F00BD9510 /* Adjust */,
 				B59DCA6319B710DA00DE7960 /* FXBlurView */,
 				B5007ABD19A4E8EC0024035A /* HockeySDK.embeddedframework */,
 				B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */,
@@ -1864,6 +1920,8 @@
 		B5A302B119811E9200F71726 /* Trackers */ = {
 			isa = PBXGroup;
 			children = (
+				B5FBD58B19CAF2F400BD9510 /* RIAdjustTracker.h */,
+				B5FBD58C19CAF2F400BD9510 /* RIAdjustTracker.m */,
 				B5A302B219811E9200F71726 /* RIAd4PushTracker.h */,
 				B5A302B319811E9200F71726 /* RIAd4PushTracker.m */,
 				B5A302B619811E9200F71726 /* RIBugSenseTracker.h */,
@@ -1926,6 +1984,53 @@
 				B5C1E33619BA1E73009C422C /* UIImageView+JA.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		B5FBD55719CAF22F00BD9510 /* Adjust */ = {
+			isa = PBXGroup;
+			children = (
+				B5FBD55819CAF22F00BD9510 /* Adjust.h */,
+				B5FBD55919CAF22F00BD9510 /* Adjust.m */,
+				B5FBD55A19CAF22F00BD9510 /* AIActivityHandler.h */,
+				B5FBD55B19CAF22F00BD9510 /* AIActivityHandler.m */,
+				B5FBD55C19CAF22F00BD9510 /* AIActivityKind.h */,
+				B5FBD55D19CAF22F00BD9510 /* AIActivityKind.m */,
+				B5FBD55E19CAF22F00BD9510 /* AIActivityPackage.h */,
+				B5FBD55F19CAF22F00BD9510 /* AIActivityPackage.m */,
+				B5FBD56019CAF22F00BD9510 /* AIActivityState.h */,
+				B5FBD56119CAF22F00BD9510 /* AIActivityState.m */,
+				B5FBD56219CAF22F00BD9510 /* AIAdditions */,
+				B5FBD56919CAF22F00BD9510 /* AIAdjustFactory.h */,
+				B5FBD56A19CAF22F00BD9510 /* AIAdjustFactory.m */,
+				B5FBD56B19CAF22F00BD9510 /* AILogger.h */,
+				B5FBD56C19CAF22F00BD9510 /* AILogger.m */,
+				B5FBD56D19CAF22F00BD9510 /* AIPackageBuilder.h */,
+				B5FBD56E19CAF22F00BD9510 /* AIPackageBuilder.m */,
+				B5FBD56F19CAF22F00BD9510 /* AIPackageHandler.h */,
+				B5FBD57019CAF22F00BD9510 /* AIPackageHandler.m */,
+				B5FBD57119CAF22F00BD9510 /* AIRequestHandler.h */,
+				B5FBD57219CAF22F00BD9510 /* AIRequestHandler.m */,
+				B5FBD57319CAF22F00BD9510 /* AIResponseData.h */,
+				B5FBD57419CAF22F00BD9510 /* AIResponseData.m */,
+				B5FBD57519CAF22F00BD9510 /* AITimer.h */,
+				B5FBD57619CAF22F00BD9510 /* AITimer.m */,
+				B5FBD57719CAF22F00BD9510 /* AIUtil.h */,
+				B5FBD57819CAF22F00BD9510 /* AIUtil.m */,
+			);
+			path = Adjust;
+			sourceTree = "<group>";
+		};
+		B5FBD56219CAF22F00BD9510 /* AIAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				B5FBD56319CAF22F00BD9510 /* NSData+AIAdditions.h */,
+				B5FBD56419CAF22F00BD9510 /* NSData+AIAdditions.m */,
+				B5FBD56519CAF22F00BD9510 /* NSString+AIAdditions.h */,
+				B5FBD56619CAF22F00BD9510 /* NSString+AIAdditions.m */,
+				B5FBD56719CAF22F00BD9510 /* UIDevice+AIAdditions.h */,
+				B5FBD56819CAF22F00BD9510 /* UIDevice+AIAdditions.m */,
+			);
+			path = AIAdditions;
 			sourceTree = "<group>";
 		};
 		CE13787519A357B400CA0751 /* Categories */ = {
@@ -2322,10 +2427,13 @@
 				B5A302C519811E9200F71726 /* RIImage.m in Sources */,
 				B501E88D19BEF7DE00BE51DD /* JAPickupStationInfoCell.m in Sources */,
 				B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */,
+				B5FBD58D19CAF2F400BD9510 /* RIAdjustTracker.m in Sources */,
 				4A454F4A199CE67500B44821 /* JAForgotPasswordViewController.m in Sources */,
 				B5A302DB19811E9200F71726 /* RIOperation.m in Sources */,
+				B5FBD57C19CAF22F00BD9510 /* AIActivityPackage.m in Sources */,
 				B5C1E33719BA1E73009C422C /* UIImageView+JA.m in Sources */,
 				B59D196719C333F4004843C3 /* JAThanksViewController.m in Sources */,
+				B5FBD58319CAF22F00BD9510 /* AIPackageBuilder.m in Sources */,
 				B5A302D519811E9200F71726 /* RICountry.m in Sources */,
 				4A944FF51992805100C02734 /* RIProductRatings.m in Sources */,
 				B5A3025E19811E8A00F71726 /* UIImageView+WebCache.m in Sources */,
@@ -2337,6 +2445,7 @@
 				4AE865C019C9D7F100406159 /* JAEmailNotificationsViewController.m in Sources */,
 				CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */,
 				B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */,
+				B5FBD58719CAF22F00BD9510 /* AITimer.m in Sources */,
 				CE2F576E19913B33000A9E09 /* JACatalogListCell.m in Sources */,
 				4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */,
 				B5A302BE19811E9200F71726 /* RIConfiguration.m in Sources */,
@@ -2351,6 +2460,7 @@
 				B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */,
 				B5A3023319811E8A00F71726 /* BMA4SViewController.m in Sources */,
 				B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */,
+				B5FBD58619CAF22F00BD9510 /* AIResponseData.m in Sources */,
 				B58DBF3919C0AF9600D4678A /* JAPaymentCell.m in Sources */,
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
 				B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */,
@@ -2367,6 +2477,7 @@
 				4A39213019891F7800B70A9C /* JARecentlyViewedViewController.m in Sources */,
 				B5A3025A19811E8A00F71726 /* SDWebImageDownloader.m in Sources */,
 				CED30C2A199CC8F200C67F4B /* JAColorFilterCell.m in Sources */,
+				B5FBD58219CAF22F00BD9510 /* AILogger.m in Sources */,
 				B50B03A0198A5434002046DF /* JAAddressesViewController.m in Sources */,
 				4A1892D219939A0C0036F327 /* JAReviewCell.m in Sources */,
 				4AE242E81986570F00E37C90 /* JAMenuViewController.m in Sources */,
@@ -2376,6 +2487,7 @@
 				B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */,
 				B59DCA6119B710B100DE7960 /* RIRegion.m in Sources */,
 				B5A302D819811E9200F71726 /* RIProductReview.m in Sources */,
+				B5FBD57B19CAF22F00BD9510 /* AIActivityKind.m in Sources */,
 				CE44587C198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m in Sources */,
 				CE445875198BD5D800CE7E8D /* JASmallTeaserView.m in Sources */,
 				4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */,
@@ -2385,10 +2497,13 @@
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
 				B59D196319C333CF004843C3 /* JAExternalPaymentsViewController.m in Sources */,
 				4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */,
+				B5FBD57D19CAF22F00BD9510 /* AIActivityState.m in Sources */,
 				CE55A4E71993672600EE75DE /* JARatingsView.m in Sources */,
 				CE55A4E41992873300EE75DE /* RIProduct.m in Sources */,
 				CE97D2EE19AE1ED50090D01C /* JANavigationBarLayout.m in Sources */,
+				B5FBD58119CAF22F00BD9510 /* AIAdjustFactory.m in Sources */,
 				B5225E1C1989308300C18F1E /* RIPaymentMethodFormField.m in Sources */,
+				B5FBD57F19CAF22F00BD9510 /* NSString+AIAdditions.m in Sources */,
 				B5A302D419811E9200F71726 /* Model.xcdatamodeld in Sources */,
 				4A01EE4919922729005F5AD1 /* JAPDVPicker.m in Sources */,
 				B5A302DA19811E9200F71726 /* RICommunicationWrapper.m in Sources */,
@@ -2405,10 +2520,12 @@
 				B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */,
 				B530D57119C1998B0052FEDA /* JACheckoutForms.m in Sources */,
 				B510B01519AE466B00A9754A /* JARadioComponent.m in Sources */,
+				B5FBD58419CAF22F00BD9510 /* AIPackageHandler.m in Sources */,
 				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
 				B510B01719AE466B00A9754A /* JATextFieldComponent.m in Sources */,
 				B5A302C619811E9200F71726 /* RIImageResolution.m in Sources */,
 				B5A302E619811E9200F71726 /* RIURLCacheWrapper.m in Sources */,
+				B5FBD58519CAF22F00BD9510 /* AIRequestHandler.m in Sources */,
 				B59DCA6A19B8521A00DE7960 /* JAButtonWithBlur.m in Sources */,
 				B50B039D198A5420002046DF /* JALoginViewController.m in Sources */,
 				B5A302C019811E9200F71726 /* RICategory.m in Sources */,
@@ -2418,6 +2535,7 @@
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
 				CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */,
 				CE33CA0119AB36FA00333B1A /* JAPriceView.m in Sources */,
+				B5FBD57A19CAF22F00BD9510 /* AIActivityHandler.m in Sources */,
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
 				B5A302D319811E9200F71726 /* RIVariation.m in Sources */,
 				CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */,
@@ -2442,7 +2560,9 @@
 				B55CF29119BE072800A6C6B6 /* JAShippingInfoCell.m in Sources */,
 				4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */,
 				CEDEB9C9199BA8FA0022BAB5 /* NMRangeSlider.m in Sources */,
+				B5FBD58819CAF22F00BD9510 /* AIUtil.m in Sources */,
 				B5A3025919811E8A00F71726 /* SDWebImageDecoder.m in Sources */,
+				B5FBD57E19CAF22F00BD9510 /* NSData+AIAdditions.m in Sources */,
 				CEE91B9C1989065A0078DFC9 /* JATeaserPageView.m in Sources */,
 				4A4ABF0C198B903B00342D92 /* JACountryCell.m in Sources */,
 				4A39212719891F2D00B70A9C /* JATrackMyOrderViewController.m in Sources */,
@@ -2453,8 +2573,10 @@
 				B5A302E419811E9200F71726 /* RIBugSenseTracker.m in Sources */,
 				4A454F38199CBD4D00B44821 /* RICustomer.m in Sources */,
 				B5A302DF19811E9200F71726 /* RIOpenURLHandler.m in Sources */,
+				B5FBD57919CAF22F00BD9510 /* Adjust.m in Sources */,
 				B517FDFC198265AD00F65253 /* RICartItem.m in Sources */,
 				4A480C2C19951E9700E054B8 /* JAProductDetailsViewController.m in Sources */,
+				B5FBD58019CAF22F00BD9510 /* UIDevice+AIAdditions.m in Sources */,
 				B5A3025819811E8A00F71726 /* SDImageCache.m in Sources */,
 				B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */,
 				B510B01019AE466B00A9754A /* JABirthDateComponent.m in Sources */,

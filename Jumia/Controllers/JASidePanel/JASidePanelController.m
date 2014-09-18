@@ -417,10 +417,11 @@ static char ja_kvoContext;
 {
     if (VALID_NOTEMPTY(_leftPanel, UINavigationController))
     {
-        UINavigationController *asd = (UINavigationController *)_leftPanel;
-        if(VALID_NOTEMPTY([asd topViewController], JAMenuViewController))
+        UINavigationController *navigationController = (UINavigationController *)_leftPanel;
+        if(VALID_NOTEMPTY([navigationController topViewController], JAMenuViewController))
         {
-            JAMenuViewController* menuVC = (JAMenuViewController*) [asd topViewController];
+            JAMenuViewController* menuVC = (JAMenuViewController*) [navigationController topViewController];
+            [menuVC setCart:nil];
             if([userInfo objectForKey:kUpdateCartNotificationValue])
             {
                 [menuVC setCart:[userInfo objectForKey:kUpdateCartNotificationValue]];

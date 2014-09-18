@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>kRIAdjustToken</key>
+	<string>fkh3gvku8ral</string>
 	<key>kRIAdd4PushPrivateKey</key>
 	<string>b89ee3e0a06d9fff00ef5dd48b0d0fc244c65642</string>
 	<key>kRIAdd4PushUserID</key>
