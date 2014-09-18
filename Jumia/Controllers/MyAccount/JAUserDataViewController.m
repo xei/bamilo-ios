@@ -53,7 +53,7 @@
     self.personalDataView.layer.cornerRadius = 4.0f;
     self.changePasswordView.layer.cornerRadius = 4.0f;
     self.personalTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.personalTitleLabel.text = @"Your Personal Data";
+    self.personalTitleLabel.text = STRING_YOUR_PERSONAL_DATA;
     
     self.personalLine.backgroundColor = UIColorFromRGB(0xfaa41a);
     self.changePasswordImageView.backgroundColor = UIColorFromRGB(0xfaa41a);
@@ -62,7 +62,7 @@
     self.emailLabel.textColor = UIColorFromRGB(0x666666);
     
     self.changePasswordTitle.textColor = UIColorFromRGB(0x4e4e4e);
-    self.changePasswordTitle.text = @"New Password";
+    self.changePasswordTitle.text = STRING_NEW_PASSWORD;
     
     [self showLoading];
     
@@ -117,7 +117,7 @@
            [self hideLoading];
            
            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                       message:@"There was an error"
+                                       message:STRING_EDIT_ADDRESS
                                       delegate:nil
                              cancelButtonTitle:nil
                              otherButtonTitles:STRING_OK, nil] show];
@@ -169,7 +169,7 @@
          [self hideLoading];
          
          [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                     message:@"Password alterada com sucesso!"
+                                     message:STRING_CHANGED_PASSWORD_SUCCESS
                                     delegate:nil
                            cancelButtonTitle:nil
                            otherButtonTitles:STRING_OK, nil] show];

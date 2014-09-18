@@ -45,37 +45,37 @@
     
     self.accountView.layer.cornerRadius = 4.0f;
     self.accountTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.accountTitleLabel.text = @"Account Settings";
+    self.accountTitleLabel.text = STRING_ACCOUNT_SETTINGS;
     
     self.userLineImageView.backgroundColor = UIColorFromRGB(0xfaa41a);
     self.accountLine.backgroundColor = UIColorFromRGB(0xcccccc);
     
     self.userDataLabel.textColor = UIColorFromRGB(0x666666);
-    self.userDataLabel.text = @"User Data";
+    self.userDataLabel.text = STRING_USER_DATA;
     self.userDataDetailLabel.textColor = UIColorFromRGB(0x666666);
-    self.userDataDetailLabel.text = @"Change password, manage email";
+    self.userDataDetailLabel.text = STRING_CHANGE_PASS_MANAGE_EMAIL;
     
     self.emailLabel.textColor = UIColorFromRGB(0x666666);
-    self.emailLabel.text = @"Email Notifications";
+    self.emailLabel.text = STRING_EMAIL_NOTIFICATIONS;
     self.emailLabelDetail.textColor = UIColorFromRGB(0x666666);
-    self.emailLabelDetail.text = @"Subscribe or unsubscribe";
+    self.emailLabelDetail.text = STRING_SUBSCRIVE_UNSUBSCRIVE;
     
     self.notificationView.layer.cornerRadius = 4.0f;
     self.notificationTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.notificationTitleLabel.text = @"Notification Settings";
+    self.notificationTitleLabel.text = STRING_NOTIFICATIONS_SETTINGS;
     
     self.notificationTitleLine.backgroundColor = UIColorFromRGB(0xfaa41a);
     self.lineUnderNotificationLabel.backgroundColor = UIColorFromRGB(0xcccccc);
     
     self.notificationLabel.textColor = UIColorFromRGB(0x666666);
-    self.notificationLabel.text = @"Notifications";
+    self.notificationLabel.text = STRING_NOTIFICATIONS;
     self.notificationDetailLabel.textColor = UIColorFromRGB(0x666666);
-    self.notificationDetailLabel.text = @"Receive exclusive offers and personal updates";
+    self.notificationDetailLabel.text = STRING_RECEIVE_EXCLUSIVE_OFFERS;
     
     self.labelSound.textColor = UIColorFromRGB(0x666666);
-    self.labelSound.text = @"Sound";
+    self.labelSound.text = STRING_SOUND;
     self.labelDetailSound.textColor = UIColorFromRGB(0x666666);
-    self.labelDetailSound.text = @"Play sound on incoming notifications";
+    self.labelDetailSound.text = STRING_PLAY_SOUND;
 }
 
 - (void)didReceiveMemoryWarning

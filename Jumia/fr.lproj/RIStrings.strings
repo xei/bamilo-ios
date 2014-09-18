@@ -38,8 +38,6 @@
 "shopping_cart" = "Panier d\'achat";
 "navigation_cart_empty" = "Votre panier est vide";
 "string_vat_shipping_included" = "VAT and Shipping costs included";
-"string_user_data" = "User Data";
-"string_user_email_notifications" = "Email Notifications";
 
 "teaser_campaign_button_first_line" = "HOT";
 "teaser_campaign_button_second_line" = "OFFERS";
@@ -162,3 +160,19 @@
 
 "recentlyview_no_searches" = "Aucun Dernier Produit Vu";
 "recentlyview_clear_viewed" = "Effacer les Derniers Produits Vus";
+
+"string_user_data" = "User Data";
+"string_user_email_notifications" = "Email Notifications";
+"section_title_account" = "Paramètres du compte";
+"option2_description" = "Changez votre mot de passe, gérez votre courrier électronique";
+"myaccount_email_notifications" = "Préférence eMails";
+"option3_description" = "S\'inscrire ou Se désinscrire";
+"section_title_notification" = "Paramètres de notification";
+"notifications" = "Notifications";
+"notifications_summary" = "Recevez des offres exclusives et mises à jour personnelles";
+"sound" = "Son";
+"sound_summary" = "Emettre un son sur les notifications entrantes";
+"personal_data_label" = "Vos données personnelles";
+"new_password_label" = "Nouveau mot de passe";
+"password_changed_success" = "Password changed with success.";
+"preferences_updated" = "Preferences updated";

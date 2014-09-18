@@ -109,7 +109,7 @@
          [self hideLoading];
          
          [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                     message:@"Preferences updated"
+                                     message:STRING_PREFERENCES_UPDATED
                                     delegate:nil
                            cancelButtonTitle:nil
                            otherButtonTitles:STRING_OK, nil] show];
