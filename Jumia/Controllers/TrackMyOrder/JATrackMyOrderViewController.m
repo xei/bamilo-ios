@@ -246,6 +246,9 @@
     
     self.orderTextField.placeholder = STRING_ORDER_ID;
     self.orderTextField.textColor = UIColorFromRGB(0x666666);
+    if (VALID_NOTEMPTY(self.startingTrackOrderNumber, NSString)) {
+        self.orderTextField.text = self.startingTrackOrderNumber;
+    }
     
     self.imageViewTextField.backgroundColor = UIColorFromRGB(0xcccccc);
     

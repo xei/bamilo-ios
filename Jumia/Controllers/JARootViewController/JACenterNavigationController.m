@@ -208,6 +208,11 @@
                                              selector:@selector(deactivateExternalPayment)
                                                  name:kDeactivateExternalPaymentNotification
                                                object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showTrackOrderViewController:)
+                                                 name:kShowTrackOrderScreenNotification
+                                               object:nil];
     
 }
 
@@ -352,15 +357,7 @@
     }
     else if ([newScreenName isEqualToString:STRING_TRACK_MY_ORDER])
     {
-        if (![[self topViewController] isKindOfClass:[JATrackMyOrderViewController class]])
-        {
-            JATrackMyOrderViewController *trackOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"jaTrackOrderViewController"];
-            
-            [self pushViewController:trackOrder
-                            animated:YES];
-            
-            self.viewControllers = @[trackOrder];
-        }
+        [self showTrackOrderViewController:nil];
     }
     else if ([newScreenName isEqualToString:STRING_USER_DATA])
     {
@@ -447,6 +444,23 @@
 - (void) showHomeScreen
 {
     [self changeCenterPanel:STRING_HOME];
+}
+
+- (void)showTrackOrderViewController:(NSNotification*)notification
+{
+    if (![[self topViewController] isKindOfClass:[JATrackMyOrderViewController class]])
+    {
+        JATrackMyOrderViewController *trackOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"jaTrackOrderViewController"];
+ 
+        if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSString)) {
+            trackOrder.startingTrackOrderNumber = notification.object;
+        }
+        
+        [self pushViewController:trackOrder
+                        animated:YES];
+        
+        self.viewControllers = @[trackOrder];
+    }
 }
 
 #pragma mark - Teaser Actions

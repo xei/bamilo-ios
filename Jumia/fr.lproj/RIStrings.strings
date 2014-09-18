@@ -176,3 +176,8 @@
 "new_password_label" = "Nouveau mot de passe";
 "password_changed_success" = "Password changed with success.";
 "preferences_updated" = "Preferences updated";
+
+"thank_you_order_title" = "Merci!";
+"order_success" = "Votre commande a été enregistré avec succès, sous le numéro suivant:";
+"order_track_success" = "YVous pouvez suivre le statut de votre commande en allant dans la rubrique dédiée dans l'application";
+"order_track_link" = "statut de votre commande";
