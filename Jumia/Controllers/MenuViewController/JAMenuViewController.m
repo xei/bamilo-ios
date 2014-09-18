@@ -89,13 +89,17 @@ UIAlertViewDelegate
                                                  name:kUserLoggedOutNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateCart:)
+                                                 name:kUpdateSideMenuCartNotification
+                                               object:nil];
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cartViewPressed:)];
     tapRecognizer.numberOfTapsRequired = 1;
     [self.cartView addGestureRecognizer:tapRecognizer];
     self.cartLabelTitle.text = STRING_SHOPPING_CART;
     
-    if(0 == [[self.cart cartCount] integerValue])
+    if(!VALID_NOTEMPTY(self.cart, RICart) || 0 == [[self.cart cartCount] integerValue])
     {
         self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
         self.cartLabelDetails.text = @"";
@@ -130,6 +134,33 @@ UIAlertViewDelegate
                           otherButtonTitles:STRING_OK, nil] show];
         
     }];
+}
+
+-(void)updateCart:(NSNotification*)notification
+{
+    self.cart = nil;
+
+    if(VALID_NOTEMPTY(notification, NSNotification))
+    {
+        NSDictionary *userInfo = notification.userInfo;
+        if([userInfo objectForKey:kUpdateCartNotificationValue])
+        {
+            self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
+        }
+    }
+    
+    if(!VALID_NOTEMPTY(self.cart, RICart) || 0 == [[self.cart cartCount] integerValue])
+    {
+        self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
+        self.cartLabelDetails.text = @"";
+        self.cartItensNumber.text = @"";
+    }
+    else
+    {
+        self.cartLabelTotalCost.text =  [self.cart cartValueFormatted];
+        self.cartLabelDetails.text = STRING_VAT_SHIPPING_INCLUDED;
+        self.cartItensNumber.text = [[self.cart cartCount] stringValue];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

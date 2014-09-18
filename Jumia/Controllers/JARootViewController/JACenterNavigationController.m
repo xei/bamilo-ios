@@ -774,11 +774,19 @@
 
 - (void)updateCart:(NSNotification*) notification
 {
-    NSDictionary* userInfo = nil;
+    NSMutableDictionary* userInfo = nil;
     if(VALID_NOTEMPTY(notification, NSNotification))
     {
-        userInfo = notification.userInfo;
-        self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
+        userInfo = [[NSMutableDictionary alloc] initWithDictionary:notification.userInfo];
+        
+        if(VALID_NOTEMPTY([userInfo objectForKey:kUpdateCartNotificationValue], RICart))
+        {
+            self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
+        }
+        else
+        {
+            self.cart = nil;
+        }
         
         if(VALID_NOTEMPTY(self.cart, RICart))
         {
@@ -786,11 +794,13 @@
         }
         else
         {
+            [userInfo removeObjectForKey:kUpdateCartNotificationValue];
             [self.navigationBarView updateCartProductCount:0];
         }
     }
     else
     {
+        self.cart = nil;
         [self.navigationBarView updateCartProductCount:0];
     }
     
