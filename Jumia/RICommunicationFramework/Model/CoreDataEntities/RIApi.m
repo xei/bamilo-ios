@@ -30,6 +30,7 @@
                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
     NSString *url;
+    NSString *countryIso;
     
     if (ISEMPTY(country))
     {
@@ -38,11 +39,13 @@
         {
             RIApi* api = [apiArrayFromCoreData firstObject];
             url = api.countryUrl;
+            countryIso = api.countryIso;
         }
     } else
     {
         [[RIDataBaseWrapper sharedInstance] resetApplicationModel];
         url = country.url;
+        countryIso = country.countryIso;
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", url, RI_API_VERSION, RI_API_INFO]]
@@ -59,7 +62,7 @@
                                                                   [metadata addEntriesFromDictionary:@{ @"countryUrl" : url }];
                                                                   
                                                                   RIApi* newApi = [RIApi parseApi:metadata
-                                                                                       countryIso:country.countryIso];
+                                                                                       countryIso:countryIso];
                                                                   
                                                                   BOOL hasUpdate = NO;
                                                                   BOOL isUpdateMandatory = NO;

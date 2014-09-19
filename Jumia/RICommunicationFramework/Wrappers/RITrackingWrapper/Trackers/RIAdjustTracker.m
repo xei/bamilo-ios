@@ -188,12 +188,14 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
 - (void)trackCheckout:(NSDictionary *)data
 {
+    RIDebugLog(@"Adjust - Ecommerce event with data:%@", data);
+    
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     [parameters setObject:[data objectForKey:kRILaunchEventAppVersionDataKey] forKey:kAdjustEventAppVersionDataKey];
     [parameters setObject:[data objectForKey:kRILaunchEventDeviceModelDataKey] forKey:kAdjustEventDeviceModelDataKey];
     [parameters setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kAdjustEventShopCountryKey];
     [parameters setObject:[data objectForKey:kRIEventUserIdKey]  forKey:kAdjustEventUserIdKey];
-    [parameters setObject:[data objectForKey:kRIEcommerceSkusKey]  forKey:kAdjustEventSkusKey];
+    [parameters setObject:[[data objectForKey:kRIEcommerceSkusKey] componentsJoinedByString:@","]  forKey:kAdjustEventSkusKey];
     [parameters setObject:[data objectForKey:kRIEcommerceTransactionIdKey]  forKey:kAdjustEventTransactionIdKey];
 
     NSNumber *transactionValue = [data objectForKey:kRIEcommerceTotalValueKey];

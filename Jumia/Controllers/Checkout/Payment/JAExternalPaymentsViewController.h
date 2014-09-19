@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class RIPaymentInformation;
+@class RICheckout;
 
 @interface JAExternalPaymentsViewController : JABaseViewController
 
-@property (strong, nonatomic) RIPaymentInformation *paymentInformation;
+@property (strong, nonatomic) RICheckout *checkout;
 
 @end
