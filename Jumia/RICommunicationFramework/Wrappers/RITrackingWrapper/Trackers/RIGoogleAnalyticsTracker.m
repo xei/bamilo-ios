@@ -29,6 +29,8 @@ NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
 @synthesize queue;
 @synthesize registeredEvents;
 
+static RIGoogleAnalyticsTracker *sharedInstance;
+
 - (id)init
 {
     NSLog(@"Initializing Google Analytics tracker");
@@ -39,9 +41,12 @@ NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
         
         NSMutableArray *events = [[NSMutableArray alloc] init];
         [events addObject:[NSNumber numberWithInt:RIEventAutoLogin]];
-        [events addObject:[NSNumber numberWithInt:RIEventLogin]];
-        [events addObject:[NSNumber numberWithInt:RIEventRegister]];
-        [events addObject:[NSNumber numberWithInt:RIEventFacebookLogin]];
+        [events addObject:[NSNumber numberWithInt:RIEventLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventLoginFail]];
+        [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventRegisterFail]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookLoginFail]];
         [events addObject:[NSNumber numberWithInt:RIEventLogout]];
         [events addObject:[NSNumber numberWithInt:RIEventSideMenu]];
         [events addObject:[NSNumber numberWithInt:RIEventCategories]];
@@ -51,23 +56,25 @@ NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
         [events addObject:[NSNumber numberWithInt:RIEventViewProductDetails]];
         [events addObject:[NSNumber numberWithInt:RIEventRelatedItem]];
         [events addObject:[NSNumber numberWithInt:RIEventAddToCart]];
-        [events addObject:[NSNumber numberWithInt:RIEventRemoveFromCart]];
         [events addObject:[NSNumber numberWithInt:RIEventAddToWishlist]];
         [events addObject:[NSNumber numberWithInt:RIEventRemoveFromWishlist]];
         [events addObject:[NSNumber numberWithInt:RIEventRateProduct]];
         [events addObject:[NSNumber numberWithInt:RIEventSearch]];
-        [events addObject:[NSNumber numberWithInt:RIEventShare]];
+        [events addObject:[NSNumber numberWithInt:RIEventShareFacebook]];
+        [events addObject:[NSNumber numberWithInt:RIEventShareTwitter]];
+        [events addObject:[NSNumber numberWithInt:RIEventShareEmail]];
+        [events addObject:[NSNumber numberWithInt:RIEventShareSMS]];
+        [events addObject:[NSNumber numberWithInt:RIEventShareOther]];
         [events addObject:[NSNumber numberWithInt:RIEventCheckout]];
         [events addObject:[NSNumber numberWithInt:RIEventNewsletter]];
+        
         self.registeredEvents = [events copy];
     }
     return self;
 }
 
-+ (void)initGATrackerWithCountryConfiguration:(RICountryConfiguration *)config
++ (void)initGATrackerWithId:(NSString*)trackingId
 {
-    NSString *trackingId = config.gaId;
-    
     if (!trackingId) {
         RIRaiseError(@"Missing Google Analytics Tracking ID in tracking properties");
         return;
@@ -261,24 +268,24 @@ NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
     [tracker send:dict];
 }
 
-#pragma mark - RILaunchEventTracker implementation
-
-- (void)sendLaunchEventWithData:(NSDictionary *)dataDictionary;
-{
-    RIDebugLog(@"Google Analytics - Launch event with data:%@", dataDictionary);
-    
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    if (!tracker) {
-        RIRaiseError(@"Missing default Google Analytics tracker");
-        return;
-    }
-    
-    //$$$ WHAT TO SEND
-    NSDictionary *dict = [[GAIDictionaryBuilder createEventWithCategory:nil
-                                                                 action:kRILaunchEventKey
-                                                                  label:nil
-                                                                  value:nil] build];
-    [tracker send:dict];
-}
+//#pragma mark - RILaunchEventTracker implementation
+//
+//- (void)sendLaunchEventWithData:(NSDictionary *)dataDictionary;
+//{
+//    RIDebugLog(@"Google Analytics - Launch event with data:%@", dataDictionary);
+//    
+//    id tracker = [[GAI sharedInstance] defaultTracker];
+//    if (!tracker) {
+//        RIRaiseError(@"Missing default Google Analytics tracker");
+//        return;
+//    }
+//    
+//    //$$$ WHAT TO SEND
+//    NSDictionary *dict = [[GAIDictionaryBuilder createEventWithCategory:nil
+//                                                                 action:kRILaunchEventKey
+//                                                                  label:nil
+//                                                                  value:nil] build];
+//    [tracker send:dict];
+//}
 
 @end

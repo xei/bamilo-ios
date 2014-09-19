@@ -10,6 +10,7 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "RICustomer.h"
+#import "JAUtils.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 @interface JASignInViewController ()
@@ -196,8 +197,13 @@ FBLoginViewDelegate
          [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventLabelKey];
          [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
          [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+         [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventUserIdKey];
+         [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+         [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
          
-         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogin]
+         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
                                                    data:[trackingDictionary copy]];
          
          [self hideLoading];
@@ -214,7 +220,7 @@ FBLoginViewDelegate
          [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
          [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
          
-         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogin]
+         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginFail]
                                                    data:[trackingDictionary copy]];
          
          [self hideLoading];
@@ -277,8 +283,13 @@ FBLoginViewDelegate
                                                  [trackingDictionary setValue:((RICustomer *)customer).idCustomer forKey:kRIEventLabelKey];
                                                  [trackingDictionary setValue:@"FacebookLoginSuccess" forKey:kRIEventActionKey];
                                                  [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                                                 [trackingDictionary setValue:((RICustomer *)customer).idCustomer forKey:kRIEventUserIdKey];
+                                                 [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                                 [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                                 [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
                                                  
-                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLogin]
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]
                                                                                            data:[trackingDictionary copy]];
                                                  
                                                  [self.dynamicForm resetValues];
@@ -297,7 +308,7 @@ FBLoginViewDelegate
                                                  [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
                                                  [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
                                                  
-                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLogin]
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginFail]
                                                                                            data:[trackingDictionary copy]];
                                                  
                                                  [self hideLoading];
