@@ -684,7 +684,7 @@
     
     JAExternalPaymentsViewController *externalPaymentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
     
-    externalPaymentsVC.paymentInformation = [notification.userInfo objectForKey:@"payment_information"];
+    externalPaymentsVC.checkout = [notification.userInfo objectForKey:@"checkout"];
     
     [self pushViewController:externalPaymentsVC animated:YES];
 }
@@ -695,6 +695,8 @@
     
     JAThanksViewController *thanksVC = [self.storyboard instantiateViewControllerWithIdentifier:@"thanksViewController"];
     
+    thanksVC.checkout = [notification.userInfo objectForKey:@"checkout"];
+    thanksVC.cart = self.cart;
     thanksVC.orderNumber = [notification.userInfo objectForKey:@"order_number"];
     
     [self pushViewController:thanksVC animated:YES];
