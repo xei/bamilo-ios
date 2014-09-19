@@ -330,6 +330,20 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 @end
 
 /**
+ *  RICampaignTracker protocol implements the campaign tracking
+ */
+@protocol RICampaignTracker <NSObject>
+
+/**
+ *  Track a given campaign
+ *
+ *  @param options The campaign data
+ */
+- (void)trackCampaingWithData:(NSDictionary *)data;
+
+@end
+
+/**
  *  Interface of the RITracking
  */
 @interface RITrackingWrapper : NSObject
@@ -341,7 +355,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIOpenURLTracking,
     RIEcommerceEventTracking,
     RITrackingTiming,
-    RILaunchEventTracker
+    RILaunchEventTracker,
+    RICampaignTracker
 >
 
 /**

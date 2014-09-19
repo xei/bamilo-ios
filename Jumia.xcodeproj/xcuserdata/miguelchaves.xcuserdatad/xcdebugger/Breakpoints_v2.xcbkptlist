@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "123"
             endingLineNumber = "123"
-            landmarkName = "+getCountryConfigurationInUse"
+            landmarkName = "+cancelRequest:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -192,6 +192,22 @@
             startingLineNumber = "409"
             endingLineNumber = "409"
             landmarkName = "-addToCartPressed:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jumia/RICommunicationFramework/Wrappers/RITrackingWrapper/RITrackingWrapper.m"
+            timestampString = "432815009.860973"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
+            landmarkName = "-trackCampaingWithData:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
