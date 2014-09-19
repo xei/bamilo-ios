@@ -22,11 +22,14 @@ extern NSString * const kRIGoogleAnalyticsTrackingID;
     RIScreenTracking,
     RIEcommerceEventTracking,
     RITrackingTiming,
-    RILaunchEventTracker
+    RILaunchEventTracker,
+    RICampaignTracker
 >
 
-+ (instancetype)sharedInstance;
+//+ (instancetype)sharedInstance;
 
-- (void)trackCampaignWithDictionay:(NSDictionary *)data;
+//- (void)trackCampaignWithDictionay:(NSDictionary *)data;
+
++ (void)initGATrackerWithCountryConfiguration:(RICountryConfiguration *)config;
 
 @end

@@ -212,7 +212,7 @@ static dispatch_once_t sharedInstanceToken;
                                       @"keyword",kGAICampaignKeyword,
                                       @"1",kGAICampaignId, nil];
         
-        [[RIGoogleAnalyticsTracker sharedInstance] trackCampaignWithDictionay:campaignData];
+        [[RITrackingWrapper sharedInstance] trackCampaingWithData:campaignData];
     }
     
     if (notification != nil && [notification objectForKey:@"u"] != nil)

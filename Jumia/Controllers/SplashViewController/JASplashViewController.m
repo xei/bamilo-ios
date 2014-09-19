@@ -15,6 +15,7 @@
 #import "JANavigationBarView.h"
 #import <FacebookSDK/FBSession.h>
 #import "RIAd4PushTracker.h"
+#import "RIGoogleAnalyticsTracker.h"
 
 @interface JASplashViewController ()
 <
@@ -97,6 +98,7 @@ UIAlertViewDelegate
         
         [RIApi startApiWithCountry:self.selectedCountry
                       successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                          
                           if(hasUpdate)
                           {
                               self.isPopupOpened = YES;
@@ -276,6 +278,8 @@ UIAlertViewDelegate
             
             [self hideLoading];
             
+            RICountryConfiguration *config = [RICountryConfiguration getCurrentConfiguration];
+            [RIGoogleAnalyticsTracker initGATrackerWithCountryConfiguration:config];
            
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAutoLogin]
                                                       data:[trackingDictionary copy]];
@@ -311,6 +315,7 @@ UIAlertViewDelegate
         
         [RIApi startApiWithCountry:country
                       successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                          
                           if(hasUpdate)
                           {
                               self.isPopupOpened = YES;

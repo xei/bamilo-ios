@@ -67,7 +67,7 @@ static dispatch_once_t sharedInstanceToken;
         return;
     }
     
-    RIGoogleAnalyticsTracker *googleAnalyticsTracker = [RIGoogleAnalyticsTracker sharedInstance];
+    RIGoogleAnalyticsTracker *googleAnalyticsTracker = [[RIGoogleAnalyticsTracker alloc] init];
     RIBugSenseTracker *bugsenseTracker = [[RIBugSenseTracker alloc] init];
     RIAd4PushTracker *ad4PushTracker = [[RIAd4PushTracker alloc] init];
     RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
@@ -297,6 +297,21 @@ static dispatch_once_t sharedInstanceToken;
                                  arguments:@[dataDictionary]];
 }
 
+#pragma mark - Campaign protocol
+
+- (void)trackCampaingWithData:(NSDictionary *)data
+{
+    RIDebugLog(@"Tracking campaign with data '%@'", data);
+    
+    if (!self.trackers) {
+        RIRaiseError(@"Invalid call with non-existent trackers. Initialisation may have failed.");
+        return;
+    }
+    
+    [self RI_callTrackersConformToProtocol:@protocol(RICampaignTracker)
+                                  selector:@selector(trackCampaingWithData:)
+                                 arguments:@[data]];
+}
 
 #pragma mark - Private methods
 

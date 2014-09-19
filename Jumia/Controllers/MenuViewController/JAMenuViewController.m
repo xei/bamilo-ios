@@ -215,17 +215,31 @@ UIAlertViewDelegate
     return 44.f;
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.resultsTableView == tableView)
+    {
+        for (UIView *view in cell.viewForBaselineLayout.subviews)
+        {
+            if ([view isKindOfClass:[UIImageView class]])
+            {
+                [view removeFromSuperview];
+            }
+        }
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     if (self.resultsTableView == tableView)
     {
-        for (UIView *view in cell.subviews)
+        for (UIView *view in cell.viewForBaselineLayout.subviews)
         {
             if ([view isKindOfClass:[UIImageView class]])
             {
-                [view removeFromSuperview];
+                    [view removeFromSuperview];
             }
         }
         
@@ -276,6 +290,7 @@ UIAlertViewDelegate
         {
             UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
             line.backgroundColor = UIColorFromRGB(0xcccccc);
+            line.tag = 99;
             [cell.viewForBaselineLayout addSubview:line];
         }
         
@@ -515,6 +530,9 @@ UIAlertViewDelegate
         [RISearchSuggestion getSuggestionsForQuery:searchText
                                       successBlock:^(NSArray *suggestions) {
                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                              [self.resultsArray removeAllObjects];
+                                              [self.resultsTableView reloadData];
+                                              
                                               self.resultsArray = [suggestions mutableCopy];
                                               
                                               [self.resultsTableView reloadSections:[NSIndexSet indexSetWithIndex:0]
