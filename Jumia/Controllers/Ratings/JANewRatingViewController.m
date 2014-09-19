@@ -16,6 +16,7 @@
 #import "JAStarsComponent.h"
 #import "RICustomer.h"
 #import "JAPriceView.h"
+#import "JAUtils.h"
 
 @interface JANewRatingViewController ()
 <
@@ -242,6 +243,13 @@
                     // There is no indication about the default tracking for rating
                     [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
                 }
+                
+                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                [trackingDictionary setValue:self.ratingProductSku forKey:kRIEventSkuKey];
                 
                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProduct]
                                                           data:[trackingDictionary copy]];

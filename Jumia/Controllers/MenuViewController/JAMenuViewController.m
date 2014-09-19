@@ -10,6 +10,7 @@
 #import "JASubCategoriesViewController.h"
 #import "RICategory.h"
 #import "JAMenuNavigationBar.h"
+#import "JAUtils.h"
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
 #import <FacebookSDK/FacebookSDK.h>
@@ -392,6 +393,12 @@ UIAlertViewDelegate
                             [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
                             [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
                             [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                            [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
+                            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                            
                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
                                                                       data:[trackingDictionary copy]];
                             

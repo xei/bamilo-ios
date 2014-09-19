@@ -8,6 +8,15 @@
 
 #import "RIAdjustTracker.h"
 
+#define kAdjustEventDurationDataKey     @"duration"
+#define kAdjustEventAppVersionDataKey   @"app_version"
+#define kAdjustEventDeviceModelDataKey  @"device_type"
+#define kAdjustEventShopCountryKey      @"shop_country"
+#define kAdjustEventUserIdKey           @"user_id"
+#define kAdjustEventSkuKey              @"sku"
+#define kAdjustEventCurrencyCodeKey     @"currency_code"
+#define kAdjustEventPriceKey            @"price"
+
 NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
 @implementation RIAdjustTracker
@@ -24,11 +33,10 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         self.queue.maxConcurrentOperationCount = 1;
         
         NSMutableArray *events = [[NSMutableArray alloc] init];
-//        [events addObject:[NSNumber numberWithInt:RIEventAutoLogin]];
-//        [events addObject:[NSNumber numberWithInt:RIEventLogin]];
-//        [events addObject:[NSNumber numberWithInt:RIEventRegister]];
-//        [events addObject:[NSNumber numberWithInt:RIEventFacebookLogin]];
-//        [events addObject:[NSNumber numberWithInt:RIEventLogout]];
+        [events addObject:[NSNumber numberWithInt:RIEventLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventLogout]];
 //        [events addObject:[NSNumber numberWithInt:RIEventSideMenu]];
 //        [events addObject:[NSNumber numberWithInt:RIEventCategories]];
 //        [events addObject:[NSNumber numberWithInt:RIEventCatalog]];
@@ -36,14 +44,19 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 //        [events addObject:[NSNumber numberWithInt:RIEventSort]];
 //        [events addObject:[NSNumber numberWithInt:RIEventViewProductDetails]];
 //        [events addObject:[NSNumber numberWithInt:RIEventRelatedItem]];
-//        [events addObject:[NSNumber numberWithInt:RIEventAddToCart]];
-//        [events addObject:[NSNumber numberWithInt:RIEventRemoveFromCart]];
-//        [events addObject:[NSNumber numberWithInt:RIEventAddToWishlist]];
-//        [events addObject:[NSNumber numberWithInt:RIEventRemoveFromWishlist]];
-//        [events addObject:[NSNumber numberWithInt:RIEventRateProduct]];
+        [events addObject:[NSNumber numberWithInt:RIEventAddToCart]];
+        [events addObject:[NSNumber numberWithInt:RIEventRemoveFromCart]];
+        [events addObject:[NSNumber numberWithInt:RIEventAddToWishlist]];
+        [events addObject:[NSNumber numberWithInt:RIEventRemoveFromWishlist]];
+        [events addObject:[NSNumber numberWithInt:RIEventRateProduct]];
 //        [events addObject:[NSNumber numberWithInt:RIEventSearch]];
-//        [events addObject:[NSNumber numberWithInt:RIEventShare]];
+        [events addObject:[NSNumber numberWithInt:RIEventShareFacebook]];
+        [events addObject:[NSNumber numberWithInt:RIEventShareTwitter]];
+        [events addObject:[NSNumber numberWithInt:RIEventShareEmail]];
+        [events addObject:[NSNumber numberWithInt:RIEventShareSMS]];
+        [events addObject:[NSNumber numberWithInt:RIEventShareOther]];
 //        [events addObject:[NSNumber numberWithInt:RIEventCheckout]];
+        [events addObject:[NSNumber numberWithInt:RIEventCallToOrder]];
         self.registeredEvents = [events copy];
     }
     return self;
@@ -84,6 +97,79 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     if([self.registeredEvents containsObject:eventType])
     {
         NSLog(@"Adjust - Event registered");
+        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+        [parameters setObject:[data objectForKey:kRILaunchEventAppVersionDataKey] forKey:kRILaunchEventAppVersionDataKey];
+        [parameters setObject:[data objectForKey:kRILaunchEventDeviceModelDataKey] forKey:kRILaunchEventDeviceModelDataKey];
+        [parameters setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kAdjustEventShopCountryKey];
+        [parameters setObject:[data objectForKey:kRIEventUserIdKey]  forKey:kAdjustEventUserIdKey];
+        
+        NSString *eventKey = @"";
+        NSInteger eventTypeInt = [eventType integerValue];
+        switch (eventTypeInt) {
+            case RIEventLoginSuccess:
+                eventKey = @"1uv3mg";
+                break;
+            case RIEventLogout:
+                eventKey = @"qdcwli";
+                break;
+            case RIEventRegisterSuccess:
+                eventKey = @"mkq863";
+                break;
+            case RIEventAddToCart:
+                eventKey = @"c5vseo";
+                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
+                [parameters setObject:[data objectForKey:kRIEventCurrencyCodeKey]  forKey:kAdjustEventCurrencyCodeKey];
+                [parameters setObject:[data objectForKey:kRIEventPriceKey]  forKey:kAdjustEventPriceKey];
+                break;
+            case RIEventRemoveFromCart:
+                eventKey = @"ew5nzy";
+                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
+                [parameters setObject:[data objectForKey:kRIEventCurrencyCodeKey]  forKey:kAdjustEventCurrencyCodeKey];
+                [parameters setObject:[data objectForKey:kRIEventPriceKey]  forKey:kAdjustEventPriceKey];
+                break;
+            case RIEventAddToWishlist:
+                eventKey = @"g6en5v";
+                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
+                [parameters setObject:[data objectForKey:kRIEventCurrencyCodeKey]  forKey:kAdjustEventCurrencyCodeKey];
+                [parameters setObject:[data objectForKey:kRIEventPriceKey]  forKey:kAdjustEventPriceKey];
+                break;
+            case RIEventRemoveFromWishlist:
+                eventKey = @"v878b6";
+                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
+                [parameters setObject:[data objectForKey:kRIEventCurrencyCodeKey]  forKey:kAdjustEventCurrencyCodeKey];
+                [parameters setObject:[data objectForKey:kRIEventPriceKey]  forKey:kAdjustEventPriceKey];
+                break;
+            case RIEventFacebookLoginSuccess:
+                eventKey = @"u98xtu";
+                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
+            case RIEventShareFacebook:
+                eventKey = @"kj8g12";
+                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
+                break;
+            case RIEventShareTwitter:
+                eventKey = @"pzlwy3";
+                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
+                break;
+            case RIEventShareEmail:
+                eventKey = @"i83rho";
+                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
+                break;
+            case RIEventShareSMS:
+                eventKey = @"lxq8jt";
+                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
+                break;
+            case RIEventCallToOrder:
+                eventKey = @"eaaq0p";
+                break;
+            case RIEventRateProduct:
+                eventKey = @"b0mavy";
+                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
+                break;
+            default:
+                break;
+        }
+        
+        [Adjust trackEvent:eventKey withParameters:parameters];
     }
     else
     {
@@ -91,7 +177,22 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     }
 }
 
+#pragma mark - RILaunchEventTracker implementation
+
+- (void)sendLaunchEventWithData:(NSDictionary *)dataDictionary;
+{
+    RIDebugLog(@"Adjust - Launch event with data:%@", dataDictionary);
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    [parameters setObject:[dataDictionary objectForKey:kRILaunchEventAppVersionDataKey] forKey:kAdjustEventAppVersionDataKey];
+    [parameters setObject:[dataDictionary objectForKey:kRILaunchEventDeviceModelDataKey] forKey:kAdjustEventDeviceModelDataKey];
+    [parameters setObject:[dataDictionary objectForKey:kRILaunchEventDurationDataKey] forKey:kAdjustEventDurationDataKey];
+    
+    [Adjust trackEvent:@"2x9nt2" withParameters:parameters];
+}
+
 #pragma mark AdjustDelegate
+
 - (void)adjustFinishedTrackingWithResponse:(AIResponseData *)responseData
 {
     if(responseData.success)

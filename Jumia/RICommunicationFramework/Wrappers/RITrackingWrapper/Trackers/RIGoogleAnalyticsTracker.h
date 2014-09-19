@@ -22,10 +22,10 @@ extern NSString * const kRIGoogleAnalyticsTrackingID;
     RIScreenTracking,
     RIEcommerceEventTracking,
     RITrackingTiming,
-    RILaunchEventTracker,
+//    RILaunchEventTracker,
     RICampaignTracker
 >
 
-+ (void)initGATrackerWithCountryConfiguration:(RICountryConfiguration *)config;
++ (void)initGATrackerWithId:(NSString *)trackingId;
 
 @end

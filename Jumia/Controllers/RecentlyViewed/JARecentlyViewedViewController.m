@@ -13,6 +13,8 @@
 #import "RIProduct.h"
 #import "RIProductSimple.h"
 #import "RICart.h"
+#import "JAUtils.h"
+#import "RICustomer.h"
 
 @interface JARecentlyViewedViewController ()
 
@@ -252,7 +254,15 @@
                       [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
                       [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
                       [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
-
+                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                      [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                      [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+                      [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+                      [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                      
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
                       

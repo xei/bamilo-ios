@@ -7,6 +7,7 @@
 //
 
 #import "JASignupViewController.h"
+#import "JAUtils.h"
 #import "RIForm.h"
 #import "RIField.h"
 #import "RIFieldDataSetComponent.h"
@@ -150,8 +151,13 @@ UIPickerViewDelegate>
         [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"CreateSuccess" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegister]
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterSuccess]
                                                   data:[trackingDictionary copy]];
         
         [self.dynamicForm resetValues];
@@ -171,7 +177,7 @@ UIPickerViewDelegate>
         [trackingDictionary setValue:@"CreateFailed" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegister]
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterFail]
                                                   data:[trackingDictionary copy]];
         
         [self hideLoading];
