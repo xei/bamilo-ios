@@ -73,6 +73,15 @@
     self.continueShoppingButton.layer.cornerRadius = 5.0f;
     
     [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"Finished" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+    [trackingDictionary setValue:[NSNumber numberWithInteger:[self.orderNumber integerValue]] forKey:kRIEventValueKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                              data:[trackingDictionary copy]];
 }
 
 - (void)copyOrderNumber

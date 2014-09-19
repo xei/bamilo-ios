@@ -107,6 +107,39 @@
           parameters:[self.dynamicForm getValues]
         successBlock:^(id object)
      {
+         BOOL notSelectedNewsletter = YES;
+         
+         for (UIView *view in self.dynamicForm.formViews) {
+             if ([view isKindOfClass:[JACheckBoxWithOptionsComponent class]])
+             {
+                 if (((JACheckBoxWithOptionsComponent *)view).values.count > 0)
+                 {
+                     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                     [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
+                     [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                     
+                     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+                                                               data:[trackingDictionary copy]];
+                     
+                     notSelectedNewsletter = NO;
+                     
+                     break;
+                 }
+             }
+         }
+         
+         if (notSelectedNewsletter)
+         {
+             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+             [trackingDictionary setValue:@"UnsubscribeNewsletter" forKey:kRIEventActionKey];
+             [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+             
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+                                                       data:[trackingDictionary copy]];
+         }
+         
          [self.dynamicForm resetValues];
          
          [self hideLoading];

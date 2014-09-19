@@ -7,7 +7,6 @@
 //
 
 #import "RISearchSuggestion.h"
-#import "RIProduct.h"
 
 @implementation RISearchType
 
@@ -180,11 +179,13 @@
 + (NSString *)getResultsForSearch:(NSString *)query
                              page:(NSString *)page
                          maxItems:(NSString *)maxItems
+                    sortingMethod:(RICatalogSorting)sortingMethod
                      successBlock:(void (^)(NSArray *results))successBlock
                   andFailureBlock:(void (^)(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    NSString *tempString = [NSString stringWithFormat:@"%@%@/search?setDevice=mobileApi&q=%@&page=%@&maxitems=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, query, page, maxItems];
+    NSString *tempString = [NSString stringWithFormat:@"%@%@/search?setDevice=mobileApi&q=%@&page=%@&maxitems=%@&%@", [RIApi getCountryUrlInUse], RI_API_VERSION, query, page, maxItems,
+                            [RIProduct urlComponentForSortingMethod:sortingMethod]];
     NSURL *url = [NSURL URLWithString:tempString];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
