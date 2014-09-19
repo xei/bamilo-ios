@@ -60,6 +60,11 @@
                                                                             UIRemoteNotificationTypeSound |
                                                                             UIRemoteNotificationTypeAlert )];
     
+    if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey] != nil)
+    {
+        [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
+    }
+    
     return YES;
 }
 
