@@ -29,9 +29,6 @@ NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
 @synthesize queue;
 @synthesize registeredEvents;
 
-static RIGoogleAnalyticsTracker *sharedInstance;
-static dispatch_once_t sharedInstanceToken;
-
 - (id)init
 {
     NSLog(@"Initializing Google Analytics tracker");
@@ -61,21 +58,11 @@ static dispatch_once_t sharedInstanceToken;
         [events addObject:[NSNumber numberWithInt:RIEventSearch]];
         [events addObject:[NSNumber numberWithInt:RIEventShare]];
         [events addObject:[NSNumber numberWithInt:RIEventCheckout]];
+        [events addObject:[NSNumber numberWithInt:RIEventNewsletter]];
         self.registeredEvents = [events copy];
     }
     return self;
 }
-
-//+ (instancetype)sharedInstance
-//{
-//    dispatch_once(&sharedInstanceToken, ^{
-//        sharedInstance = [[RIGoogleAnalyticsTracker alloc] init];
-//        
-//        RIDebugLog(@"Google Analytics tracker tracks application launch");
-//    });
-//    
-//    return sharedInstance;
-//}
 
 + (void)initGATrackerWithCountryConfiguration:(RICountryConfiguration *)config
 {

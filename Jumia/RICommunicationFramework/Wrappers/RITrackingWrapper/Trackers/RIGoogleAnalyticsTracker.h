@@ -26,10 +26,6 @@ extern NSString * const kRIGoogleAnalyticsTrackingID;
     RICampaignTracker
 >
 
-//+ (instancetype)sharedInstance;
-
-//- (void)trackCampaignWithDictionay:(NSDictionary *)data;
-
 + (void)initGATrackerWithCountryConfiguration:(RICountryConfiguration *)config;
 
 @end
