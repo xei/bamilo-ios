@@ -119,7 +119,7 @@
                      [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
                      [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
                      
-                     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+                     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
                                                                data:[trackingDictionary copy]];
                      
                      notSelectedNewsletter = NO;
@@ -136,7 +136,7 @@
              [trackingDictionary setValue:@"UnsubscribeNewsletter" forKey:kRIEventActionKey];
              [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
              
-             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
                                                        data:[trackingDictionary copy]];
          }
          

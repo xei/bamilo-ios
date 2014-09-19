@@ -168,7 +168,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventRateProduct = 16,
     RIEventSearch = 17,
     RIEventShare = 18,
-    RIEventCheckout = 19
+    RIEventCheckout = 19,
+    RIEventNewsletter = 20
 };
 
 /**
