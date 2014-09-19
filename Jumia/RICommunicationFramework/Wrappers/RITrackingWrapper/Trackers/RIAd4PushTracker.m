@@ -153,10 +153,9 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - RIEcommerceEventTracking
 
--(void)trackCheckoutWithTransactionId:(NSString *)idTransaction
-                                total:(RITrackingTotal *)total
+-(void)trackCheckout:(NSDictionary *)data
 {
-    RIDebugLog(@"Ad4Push - Tracking checkout");
+    RIDebugLog(@"Ad4Push - Tracking checkout with data: %@", data);
     
     id tracker = [BMA4SNotification sharedBMA4S];
     
@@ -165,35 +164,13 @@ static dispatch_once_t sharedInstanceToken;
         return;
     }
     
-    [BMA4STracker trackPurchaseWithId:idTransaction
-                             currency:total.currency
-                           totalPrice:[total.net doubleValue]];
-}
-
--(void)trackProductAddToCart:(RITrackingProduct *)product
-{
-    RIDebugLog(@"Ad4Push - Tracking add product to cart: %@", product.name);
+    NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
+    NSString *currency = [data objectForKey:kRIEcommerceTransactionIdKey];
+    NSNumber *total = [data objectForKey:kRIEcommerceTotalValueKey];
     
-    id tracker = [BMA4SNotification sharedBMA4S];
-    
-    if (!tracker) {
-        RIRaiseError(@"Missing Ad4Push tracker");
-        return;
-    }
-
-    [BMA4STracker trackCartWithId:nil
-            modificationWithLabel:product.name
-                 forArticleWithId:product.identifier
-                         category:product.category
-                            price:[product.price doubleValue]
-                         currency:product.currency
-                         quantity:[product.quantity longValue]];
-}
-
--(void)trackRemoveFromCartForProductWithID:(NSString *)idTransaction
-                                  quantity:(NSNumber *)quantity
-{
-
+    [BMA4STracker trackPurchaseWithId:transactionId
+                             currency:currency
+                           totalPrice:[total doubleValue]];
 }
 
 #pragma mark - Private methods for deeplinkg

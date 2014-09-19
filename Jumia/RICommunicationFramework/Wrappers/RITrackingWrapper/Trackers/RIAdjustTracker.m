@@ -16,6 +16,8 @@
 #define kAdjustEventSkuKey              @"sku"
 #define kAdjustEventCurrencyCodeKey     @"currency_code"
 #define kAdjustEventPriceKey            @"price"
+#define kAdjustEventSkusKey             @"skus"
+#define kAdjustEventTransactionIdKey    @"transaction_id"
 
 NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
@@ -37,25 +39,16 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventLogout]];
-//        [events addObject:[NSNumber numberWithInt:RIEventSideMenu]];
-//        [events addObject:[NSNumber numberWithInt:RIEventCategories]];
-//        [events addObject:[NSNumber numberWithInt:RIEventCatalog]];
-//        [events addObject:[NSNumber numberWithInt:RIEventFilter]];
-//        [events addObject:[NSNumber numberWithInt:RIEventSort]];
-//        [events addObject:[NSNumber numberWithInt:RIEventViewProductDetails]];
-//        [events addObject:[NSNumber numberWithInt:RIEventRelatedItem]];
         [events addObject:[NSNumber numberWithInt:RIEventAddToCart]];
         [events addObject:[NSNumber numberWithInt:RIEventRemoveFromCart]];
         [events addObject:[NSNumber numberWithInt:RIEventAddToWishlist]];
         [events addObject:[NSNumber numberWithInt:RIEventRemoveFromWishlist]];
         [events addObject:[NSNumber numberWithInt:RIEventRateProduct]];
-//        [events addObject:[NSNumber numberWithInt:RIEventSearch]];
         [events addObject:[NSNumber numberWithInt:RIEventShareFacebook]];
         [events addObject:[NSNumber numberWithInt:RIEventShareTwitter]];
         [events addObject:[NSNumber numberWithInt:RIEventShareEmail]];
         [events addObject:[NSNumber numberWithInt:RIEventShareSMS]];
         [events addObject:[NSNumber numberWithInt:RIEventShareOther]];
-//        [events addObject:[NSNumber numberWithInt:RIEventCheckout]];
         [events addObject:[NSNumber numberWithInt:RIEventCallToOrder]];
         self.registeredEvents = [events copy];
     }
@@ -98,8 +91,8 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     {
         NSLog(@"Adjust - Event registered");
         NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-        [parameters setObject:[data objectForKey:kRILaunchEventAppVersionDataKey] forKey:kRILaunchEventAppVersionDataKey];
-        [parameters setObject:[data objectForKey:kRILaunchEventDeviceModelDataKey] forKey:kRILaunchEventDeviceModelDataKey];
+        [parameters setObject:[data objectForKey:kRILaunchEventAppVersionDataKey] forKey:kAdjustEventAppVersionDataKey];
+        [parameters setObject:[data objectForKey:kRILaunchEventDeviceModelDataKey] forKey:kAdjustEventDeviceModelDataKey];
         [parameters setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kAdjustEventShopCountryKey];
         [parameters setObject:[data objectForKey:kRIEventUserIdKey]  forKey:kAdjustEventUserIdKey];
         
@@ -189,6 +182,30 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     [parameters setObject:[dataDictionary objectForKey:kRILaunchEventDurationDataKey] forKey:kAdjustEventDurationDataKey];
     
     [Adjust trackEvent:@"2x9nt2" withParameters:parameters];
+}
+
+#pragma mark - RIEcommerceEventTracking implementation
+
+- (void)trackCheckout:(NSDictionary *)data
+{
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    [parameters setObject:[data objectForKey:kRILaunchEventAppVersionDataKey] forKey:kAdjustEventAppVersionDataKey];
+    [parameters setObject:[data objectForKey:kRILaunchEventDeviceModelDataKey] forKey:kAdjustEventDeviceModelDataKey];
+    [parameters setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kAdjustEventShopCountryKey];
+    [parameters setObject:[data objectForKey:kRIEventUserIdKey]  forKey:kAdjustEventUserIdKey];
+    [parameters setObject:[data objectForKey:kRIEcommerceSkusKey]  forKey:kAdjustEventSkusKey];
+    [parameters setObject:[data objectForKey:kRIEcommerceTransactionIdKey]  forKey:kAdjustEventTransactionIdKey];
+
+    NSNumber *transactionValue = [data objectForKey:kRIEcommerceTotalValueKey];
+
+    NSString *eventKey = @"jk6lja";
+    NSNumber *guest = [data objectForKey:kRIEcommerceGuestKey];
+    if([guest boolValue])
+    {
+        eventKey = @"m1il3s";
+    }
+
+    [Adjust trackRevenue:[transactionValue floatValue] forEvent:eventKey withParameters:parameters];
 }
 
 #pragma mark AdjustDelegate

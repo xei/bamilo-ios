@@ -237,28 +237,15 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 @end
 
 /**
- *  Interface of the RITrackingTotal, used for the commerce tracking
+ *  Protocol constants
  */
-@interface RITrackingTotal : NSObject
-
-/**
- *  Net of the order
- */
-@property NSNumber *net;
-/**
- *  Tax of the order
- */
-@property NSNumber *tax;
-/**
- *  Shipping price of the order
- */
-@property NSNumber *shipping;
-/**
- *  Currency of the order
- */
-@property NSString *currency;
-
-@end
+#define kRIEcommerceTransactionIdKey @"RIEcommerceTransactionIdKey"
+#define kRIEcommerceTaxKey           @"RIEcommerceTaxKey"
+#define kRIEcommerceShippingKey      @"RIEcommerceShippingKey"
+#define kRIEcommerceCurrencyKey      @"RIEcommerceCurrencyKey"
+#define kRIEcommerceTotalValueKey    @"RIEcommerceTotalValueKey"
+#define kRIEcommerceSkusKey          @"RIEcommerceSkusValueKey"
+#define kRIEcommerceGuestKey         @"RIEcommerceGuestKey"
 
 /**
  *  This protocol implements tracking to the commerce transactions
@@ -273,25 +260,9 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  *  This method with include any previous calls to trackAddToCartForProductWithID and
  *  trackRemoveFromCartForProductWithID.
  *
- *  @param idTrans The transaction ID
- *  @param total RITrackingProduct product
+ *  @param data The transaction data
  */
-- (void)trackCheckoutWithTransactionId:(NSString *)idTransaction total:(RITrackingTotal *)total;
-
-/**
- *  Track a product that was added to the cart
- *
- *  @param product The product added
- */
-- (void)trackProductAddToCart:(RITrackingProduct *)product;
-
-/**
- *  Track a product that was removed from the cart
- *
- *  @param idTrans The transaction ID
- *  @param quantity The quantity removed from the cart
- */
-- (void)trackRemoveFromCartForProductWithID:(NSString *)idTransaction quantity:(NSNumber *)quantity;
+- (void)trackCheckout:(NSDictionary *)data;
 
 @end
 

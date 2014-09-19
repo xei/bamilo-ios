@@ -197,10 +197,9 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 
 #pragma mark - RIEcommerceEventTracking
 
--(void)trackCheckoutWithTransactionId:(NSString *)idTransaction
-                                total:(RITrackingTotal *)total
+-(void)trackCheckout:(NSDictionary *)data
 {
-    RIDebugLog(@"Google Analytics - Tracking checkout with transaction id: %@", idTransaction);
+    RIDebugLog(@"Google Analytics - Tracking checkout with transaction id: %@", data);
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
@@ -209,12 +208,17 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         return;
     }
     
-    NSDictionary *dict = [[GAIDictionaryBuilder createTransactionWithId:idTransaction
+    NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
+    NSNumber *tax = [data objectForKey:kRIEcommerceTransactionIdKey];
+    NSNumber *shipping = [data objectForKey:kRIEcommerceTransactionIdKey];
+    NSString *currency = [data objectForKey:kRIEcommerceTransactionIdKey];
+    
+    NSDictionary *dict = [[GAIDictionaryBuilder createTransactionWithId:transactionId
                                                             affiliation:nil
                                                                 revenue:nil
-                                                                    tax:total.tax
-                                                               shipping:total.shipping
-                                                           currencyCode:total.currency] build];
+                                                                    tax:tax
+                                                               shipping:shipping
+                                                           currencyCode:currency] build];
     
     [tracker send:dict];
 }

@@ -16,6 +16,7 @@ extern NSString * const kRIAdjustToken;
 RITracker,
 RIEventTracking,
 RILaunchEventTracker,
+RIEcommerceEventTracking,
 AdjustDelegate
 >
 

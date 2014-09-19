@@ -226,47 +226,13 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - RIEcommerceTracking protocol
 
-- (void)trackCheckoutWithTransactionId:(NSString *)idTransaction total:(RITrackingTotal *)total
+- (void)trackCheckout:(NSDictionary *)data
 {
-    self.cartState = RICartDidCheckout;
-    self.productCount = 0;
-    
-    RIDebugLog(@"Tracking checkout with ID: %@", idTransaction);
+    RIDebugLog(@"Tracking checkout with data: %@", data);
     
     [self RI_callTrackersConformToProtocol:@protocol(RIEcommerceEventTracking)
-                                  selector:@selector(trackCheckoutWithTransactionId:total:)
-                                 arguments:@[idTransaction,
-                                             total]];
-}
-
-- (void)trackProductAddToCart:(RITrackingProduct *)product
-{
-    self.cartState = RICartHasItems;
-    self.productCount += [product.quantity intValue];
-    
-    RIDebugLog(@"Tracking product added to cart: %@", product.name);
-    
-    [self RI_callTrackersConformToProtocol:@protocol(RIEcommerceEventTracking)
-                                  selector:@selector(trackProductAddToCart:)
-                                 arguments:@[product]];
-}
-
-- (void)trackRemoveFromCartForProductWithID:(NSString *)idTransaction quantity:(NSNumber *)quantity
-{
-    self.productCount -= [quantity intValue];
-    
-    if (self.productCount == 0) {
-        self.cartState = RICartEmpty;
-    } else {
-        self.cartState = RICartHasItems;
-    }
-    
-    RIDebugLog(@"Tracking product removed from cart");
-    
-    [self RI_callTrackersConformToProtocol:@protocol(RIEcommerceEventTracking)
-                                  selector:@selector(trackRemoveFromCartForProductWithID:quantity:)
-                                 arguments:@[idTransaction,
-                                             quantity]];
+                                  selector:@selector(trackCheckout:)
+                                 arguments:@[data]];
 }
 
 #pragma mark - RITrackingTiming protocol
