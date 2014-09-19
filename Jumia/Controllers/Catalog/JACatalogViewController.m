@@ -111,6 +111,7 @@
         [RISearchSuggestion getResultsForSearch:self.searchString
                                            page:@"1"
                                        maxItems:[NSString stringWithFormat:@"%d",JACatalogViewControllerMaxProducts]
+                                  sortingMethod:self.sortingMethod
                                    successBlock:^(NSArray *results) {
                                        
                                        if (!self.isFirstLoadTracking) {
@@ -368,16 +369,6 @@
                                                                       @"relatedItems" : tempArray ,
                                                                       @"delegate": self }];
     }
-    
-//    JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
-//    pdv.productUrl = product.url;
-//    pdv.fromCatalogue = YES;
-//    pdv.previousCategory = self.category.name;
-//    pdv.arrayWithRelatedItems = [tempArray copy];
-//    pdv.delegate = self;
-//    
-//    [self.navigationController pushViewController:pdv
-//                                         animated:YES];
 }
 
 #pragma mark - JAPickerScrollViewDelegate

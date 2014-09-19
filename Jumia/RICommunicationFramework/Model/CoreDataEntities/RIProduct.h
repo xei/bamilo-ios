@@ -184,6 +184,8 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  */
 + (RIProduct *)parseProduct:(NSDictionary *)productJSON country:(RICountryConfiguration*)country;
 
++ (NSString*)urlComponentForSortingMethod:(RICatalogSorting)sortingMethod;
+
 @end
 
 @interface RIProduct (CoreDataGeneratedAccessors)

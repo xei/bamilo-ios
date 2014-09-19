@@ -23,6 +23,15 @@ typedef NS_ENUM(NSUInteger, JAMenuViewControllerAction) {
     JAMenuViewControllerOpenSideMenuItem = 2
 };
 
+typedef enum ScrollDirection {
+    ScrollDirectionNone,
+    ScrollDirectionRight,
+    ScrollDirectionLeft,
+    ScrollDirectionUp,
+    ScrollDirectionDown,
+    ScrollDirectionCrazy,
+} ScrollDirection;
+
 @interface JAMenuViewController ()
 <
 UITableViewDataSource,
@@ -43,6 +52,7 @@ UIAlertViewDelegate
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelDetails;
 @property (weak, nonatomic) IBOutlet UILabel *cartItensNumber;
 @property (weak, nonatomic) IBOutlet UIView *cartView;
+@property (nonatomic, assign) CGFloat yOffset;
 
 // Handle external payment actions
 @property (assign, nonatomic) JAMenuViewControllerAction nextAction;
@@ -63,6 +73,8 @@ UIAlertViewDelegate
     [self showLoading];
     
     [self initSourceArray];
+    
+    self.yOffset = 0.0;
     
     self.customNavBar = [[JAMenuNavigationBar alloc] init];
     [self.navigationController setValue:self.customNavBar
@@ -679,6 +691,7 @@ UIAlertViewDelegate
 }
 
 #pragma mark UIAlertViewDelegate
+
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if(1 == buttonIndex)
@@ -713,6 +726,24 @@ UIAlertViewDelegate
             default:
                 break;
         }
+    }
+}
+
+#pragma mark - Scrollview delegate (For results table)
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y < self.yOffset) {
+        
+        // scrolls down.
+        self.yOffset = scrollView.contentOffset.y;
+    }
+    else
+    {
+        // scrolls up.
+        self.yOffset = scrollView.contentOffset.y;
+        
+        [self.customNavBar.searchBar resignFirstResponder];
     }
 }
 
