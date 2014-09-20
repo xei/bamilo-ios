@@ -37,6 +37,9 @@ UIAlertViewDelegate
 
 - (void)viewDidLoad
 {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kDidFirstBuyKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [super viewDidLoad];
 
     self.startTime = [NSDate date];

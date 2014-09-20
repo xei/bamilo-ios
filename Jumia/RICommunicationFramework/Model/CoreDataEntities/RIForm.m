@@ -199,9 +199,13 @@
                                                                   }
                                                                   else if([@"Alice_Module_Mobapi_Form_Ext1m1_Customer_RegisterSignupForm" isEqualToString:form.uid])
                                                                   {
-                                                                      responseProcessed = YES;
-                                                                      RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"] plainPassword:password loginMethod:@"signup"];
-                                                                      successBlock(customer);
+                                                                      NSDictionary *data = [metadata objectForKey:@"data"];
+                                                                      if(VALID_NOTEMPTY(data, NSDictionary))
+                                                                      {
+                                                                          responseProcessed = YES;
+                                                                          RICustomer *customer = [RICustomer parseCustomerWithJson:[data objectForKey:@"user"] plainPassword:password loginMethod:@"signup"];
+                                                                          successBlock(customer);
+                                                                      }
                                                                   }
                                                                   else if([@"address-form" isEqualToString:form.uid])
                                                                   {
