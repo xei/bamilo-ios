@@ -183,7 +183,14 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventCheckout = 26,
     RIEventNewsletter = 27,
     RIEventCallToOrder = 28,
-    RIEventGuestCustomer = 29
+    RIEventGuestCustomer = 29,
+    RIEventFacebookHome = 30,
+    RIEventFacebookViewListing = 31,
+    RIEventFacebookViewProduct = 32,
+    RIEventFacebookSearch = 33,
+    RIEventFacebookViewWishlist = 34,
+    RIEventFacebookViewCart = 35,
+    RIEventFacebookViewTransaction = 36
 };
 
 /**

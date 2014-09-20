@@ -50,7 +50,15 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [events addObject:[NSNumber numberWithInt:RIEventShareSMS]];
         [events addObject:[NSNumber numberWithInt:RIEventShareOther]];
         [events addObject:[NSNumber numberWithInt:RIEventCallToOrder]];
-        [events addObject:[NSNumber numberWithInt:RIEventGuestCustomer]];        
+        [events addObject:[NSNumber numberWithInt:RIEventGuestCustomer]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookHome]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookViewListing]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookViewProduct]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookSearch]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookViewWishlist]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookViewCart]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookViewTransaction]];
+        
         self.registeredEvents = [events copy];
     }
     return self;
@@ -95,7 +103,12 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [parameters setObject:[data objectForKey:kRILaunchEventAppVersionDataKey] forKey:kAdjustEventAppVersionDataKey];
         [parameters setObject:[data objectForKey:kRILaunchEventDeviceModelDataKey] forKey:kAdjustEventDeviceModelDataKey];
         [parameters setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kAdjustEventShopCountryKey];
-        [parameters setObject:[data objectForKey:kRIEventUserIdKey]  forKey:kAdjustEventUserIdKey];
+        
+        NSString *userId = [data objectForKey:kRIEventUserIdKey];
+        if(VALID_NOTEMPTY(userId, NSString) && ![@"0" isEqualToString:userId])
+        {
+            [parameters setObject:[data objectForKey:kRIEventUserIdKey]  forKey:kAdjustEventUserIdKey];
+        }
         
         NSString *eventKey = @"";
         NSInteger eventTypeInt = [eventType integerValue];
@@ -158,6 +171,31 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             case RIEventRateProduct:
                 eventKey = @"b0mavy";
                 [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
+                break;
+            case RIEventGuestCustomer:
+                eventKey = @"z9v5ec";
+                break;
+                // TODO: Missing implementation
+            case RIEventFacebookHome:
+                eventKey = @"xgdla8";
+                break;
+            case RIEventFacebookViewListing:
+                eventKey = @"hdcfgj";
+                break;
+            case RIEventFacebookViewProduct:
+                eventKey = @"e91496";
+                break;
+            case RIEventFacebookSearch:
+                eventKey = @"g240ad";
+                break;
+            case RIEventFacebookViewWishlist:
+                eventKey = @"sshinc";
+                break;
+            case RIEventFacebookViewCart:
+                eventKey = @"adojsu";
+                break;
+            case RIEventFacebookViewTransaction:
+                eventKey = @"29kvfe";
                 break;
             default:
                 break;
