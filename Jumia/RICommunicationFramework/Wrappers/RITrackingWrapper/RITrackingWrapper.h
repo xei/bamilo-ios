@@ -182,7 +182,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventShareOther = 25,
     RIEventCheckout = 26,
     RIEventNewsletter = 27,
-    RIEventCallToOrder = 28
+    RIEventCallToOrder = 28,
+    RIEventGuestCustomer = 29
 };
 
 /**

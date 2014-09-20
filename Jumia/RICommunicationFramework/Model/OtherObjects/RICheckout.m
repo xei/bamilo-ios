@@ -104,7 +104,7 @@
 }
 
 + (NSString*)setShippingAddress:(RIForm*)form
-                    parameters:(NSDictionary*)parameters
+                     parameters:(NSDictionary*)parameters
                    successBlock:(void (^)(RICheckout *checkout))successBlock
                 andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
@@ -305,6 +305,35 @@
                                                                   failureBlock(nil);
                                                               }
                                                           }];
+}
+
++ (NSString*)getConversionRate:(void (^)(CGFloat rate))returnBlock
+{
+    __block NSString *operationID = [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+        
+        NSURL *rateConversionURL = [NSURL URLWithString:[NSString stringWithFormat:RI_RATE_CONVERSION, configuration.currencyIso]];
+        
+        operationID = [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:rateConversionURL
+                                                                       parameters:nil
+                                                                   httpMethodPost:NO
+                                                                        cacheType:RIURLCacheNoCache
+                                                                        cacheTime:RIURLCacheNoTime
+                                                                     successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                                         if(VALID_NOTEMPTY(jsonObject, NSDictionary) && [jsonObject objectForKey:@"rate"])
+                                                                         {
+                                                                             returnBlock([[jsonObject objectForKey:@"rate"] floatValue]);
+                                                                         }
+                                                                         else
+                                                                         {
+                                                                             returnBlock(1.0f);
+                                                                         }
+                                                                     } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObjectt) {
+                                                                         returnBlock(1.0f);
+                                                                     }];
+    } andFailureBlock:^(NSArray *errorMessages) {
+        returnBlock(1.0f);
+    }];
+    return operationID;
 }
 
 #pragma mark - Cancel request

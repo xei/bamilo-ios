@@ -61,3 +61,4 @@ NSString *const RI_API_GET_SHIPPING_ADDRESS_FORM = @"multistep/shipping/";
 NSString *const RI_API_GET_SHIPPING_METHODS_FORM = @"multistep/shippingmethod/";
 NSString *const RI_API_GET_PAYMENT_METHODS_FORM = @"multistep/paymentmethod/";
 NSString *const RI_API_FINISH_CHECKOUT = @"multistep/finish/";
+NSString *const RI_RATE_CONVERSION = @"http://rate-exchange.appspot.com/currency?from=%@&to=EUR";

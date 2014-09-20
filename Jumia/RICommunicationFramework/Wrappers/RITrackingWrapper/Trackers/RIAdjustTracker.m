@@ -50,6 +50,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [events addObject:[NSNumber numberWithInt:RIEventShareSMS]];
         [events addObject:[NSNumber numberWithInt:RIEventShareOther]];
         [events addObject:[NSNumber numberWithInt:RIEventCallToOrder]];
+        [events addObject:[NSNumber numberWithInt:RIEventGuestCustomer]];        
         self.registeredEvents = [events copy];
     }
     return self;
@@ -202,7 +203,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
     NSString *eventKey = @"jk6lja";
     NSNumber *guest = [data objectForKey:kRIEcommerceGuestKey];
-    if([guest boolValue])
+    if(VALID_NOTEMPTY(guest, NSNumber) && [guest boolValue])
     {
         eventKey = @"m1il3s";
     }

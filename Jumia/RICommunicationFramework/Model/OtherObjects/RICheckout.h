@@ -135,6 +135,13 @@
                             andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 
 /**
+ * Method to get the conversion rate between the current currency code and EUR
+ *
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString*)getConversionRate:(void (^)(CGFloat rate))returnBlock;
+
+/**
  * Method to parse the checkout object
  *
  * @param the block where the success response can be processed
