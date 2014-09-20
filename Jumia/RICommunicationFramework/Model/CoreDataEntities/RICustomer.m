@@ -122,6 +122,20 @@
     }
 }
 
++ (NSString *)getCustomerGender
+{
+    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
+    
+    NSString *gender = nil;
+    if (customers.count > 0)
+    {
+        RICustomer *customer = (RICustomer *)customers[0];
+        gender = customer.gender;
+    }
+    
+    return gender;
+}
+
 + (BOOL)wasSignup
 {
     BOOL wasSignup = NO;
