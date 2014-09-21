@@ -41,4 +41,6 @@
     #import "RILocalizationWrapper.h"
     #import "JAStrings.h"
 
+    #import "JASuccessView.h"
+    #import "JAErrorView.h"
 #endif

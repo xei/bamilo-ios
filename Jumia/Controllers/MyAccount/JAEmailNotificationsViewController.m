@@ -82,11 +82,9 @@
            
            [self hideLoading];
            
-           [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                       message:@"There was an error"
-                                      delegate:nil
-                             cancelButtonTitle:nil
-                             otherButtonTitles:STRING_OK, nil] show];
+           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+           [errorView setErrorTitle:STRING_ERROR
+                           andAddTo:self];
        }];
 }
 
@@ -144,11 +142,9 @@
          
          [self hideLoading];
          
-         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                     message:STRING_PREFERENCES_UPDATED
-                                    delegate:nil
-                           cancelButtonTitle:nil
-                           otherButtonTitles:STRING_OK, nil] show];
+         JASuccessView *success = [JASuccessView getNewJASuccessView];
+         [success setSuccessTitle:STRING_PREFERENCES_UPDATED
+                         andAddTo:self];
          
      } andFailureBlock:^(id errorObject)
      {

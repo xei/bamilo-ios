@@ -14,8 +14,8 @@
 
 @interface JASignInViewController ()
 <
-JADynamicFormDelegate,
-FBLoginViewDelegate
+    JADynamicFormDelegate,
+    FBLoginViewDelegate
 >
 
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
@@ -104,11 +104,9 @@ FBLoginViewDelegate
            
            [self finishedFormLoading];
            
-           [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                       message:@"There was an error"
-                                      delegate:nil
-                             cancelButtonTitle:nil
-                             otherButtonTitles:STRING_OK, nil] show];
+           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+           [errorView setErrorTitle:STRING_ERROR
+                           andAddTo:self];
            
        }];
 }
@@ -223,29 +221,26 @@ FBLoginViewDelegate
          {
              [self.dynamicForm validateFields:errorObject];
              
-             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                         message:STRING_ERROR_INVALID_FIELDS
-                                        delegate:nil
-                               cancelButtonTitle:nil
-                               otherButtonTitles:STRING_OK, nil] show];
+             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+             [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
+                             andAddTo:self];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm checkErrors];
-             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                         message:[errorObject componentsJoinedByString:@","]
-                                        delegate:nil
-                               cancelButtonTitle:nil
-                               otherButtonTitles:STRING_OK, nil] show];
+             
+             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+             [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
+                             andAddTo:self];
          }
          else
          {
-             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                        message:@"Generic error"
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:STRING_OK, nil] show];
-        }
+             [self.dynamicForm checkErrors];
+             
+             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+             [errorView setErrorTitle:@"Generic error"
+                             andAddTo:self];
+         }
     }];
 }
 
@@ -307,6 +302,7 @@ FBLoginViewDelegate
                                                                             delegate:nil
                                                                    cancelButtonTitle:nil
                                                                    otherButtonTitles:STRING_OK, nil] show];
+
                                              }];
     }
 }
@@ -347,12 +343,11 @@ FBLoginViewDelegate
         NSLog(@"Unexpected error:%@", error);
     }
     
-    if (alertMessage) {
-        [[[UIAlertView alloc] initWithTitle:alertTitle
-                                    message:alertMessage
-                                   delegate:nil
-                          cancelButtonTitle:STRING_OK
-                          otherButtonTitles:nil] show];
+    if (alertMessage)
+    {
+        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+        [errorView setErrorTitle:alertMessage
+                        andAddTo:self];
     }
 }
 

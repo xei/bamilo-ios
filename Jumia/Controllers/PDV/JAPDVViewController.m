@@ -605,23 +605,19 @@
                           NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                           [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                           
-                          [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                      message:STRING_ITEM_WAS_ADDED_TO_CART
-                                                     delegate:nil
-                                            cancelButtonTitle:nil
-                                            otherButtonTitles:STRING_OK, nil] show];
+                          JASuccessView *success = [JASuccessView getNewJASuccessView];
+                          [success setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
+                                          andAddTo:self];
                           
                           [self hideLoading];
                           
                       } andFailureBlock:^(NSArray *errorMessages) {
                           
-                          [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                      message:STRING_ERROR_ADDING_TO_CART
-                                                     delegate:nil
-                                            cancelButtonTitle:nil
-                                            otherButtonTitles:STRING_OK, nil] show];
-                          
                           [self hideLoading];
+                          
+                          JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                          [errorView setErrorTitle:STRING_ERROR_ADDING_TO_CART
+                                          andAddTo:self];
                           
                       }];
     }
@@ -756,8 +752,16 @@
                 [self.delegate changedFavoriteStateOfProduct:self.product];
             }
             
+            JASuccessView *success = [JASuccessView getNewJASuccessView];
+            [success setSuccessTitle:@"Added to favourites."
+                            andAddTo:self];
+            
         } andFailureBlock:^(NSArray *error) {
-            //[self hideLoading];
+#warning confirm this messages
+            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+            [errorView setErrorTitle:@"Error adding to favourites"
+                            andAddTo:self];
+            
         }];
     } else {
         [RIProduct removeFromFavorites:self.product successBlock:^(NSArray *favoriteProducts) {
@@ -773,11 +777,19 @@
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                       data:[trackingDictionary copy]];
             
+#warning confirm this messages
+            JASuccessView *success = [JASuccessView getNewJASuccessView];
+            [success setSuccessTitle:@"Removed from favourites."
+                            andAddTo:self];
+            
             if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
                 [self.delegate changedFavoriteStateOfProduct:self.product];
             }
         } andFailureBlock:^(NSArray *error) {
-           // [self hideLoading];
+            
+            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+            [errorView setErrorTitle:@"Error removing from favourites"
+                            andAddTo:self];
         }];
     }
 }

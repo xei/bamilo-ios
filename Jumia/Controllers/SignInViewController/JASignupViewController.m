@@ -13,9 +13,11 @@
 #import "RICustomer.h"
 
 @interface JASignupViewController ()
-<JADynamicFormDelegate,
-UIPickerViewDataSource,
-UIPickerViewDelegate>
+<
+    JADynamicFormDelegate,
+    UIPickerViewDataSource,
+    UIPickerViewDelegate
+>
 
 @property (strong, nonatomic) UIScrollView *contentScrollView;
 @property (strong, nonatomic) UIView *contentView;
@@ -96,11 +98,9 @@ UIPickerViewDelegate>
            
            [self finishedFormLoading];
            
-           [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                       message:@"There was an error"
-                                      delegate:nil
-                             cancelButtonTitle:nil
-                             otherButtonTitles:STRING_OK, nil] show];
+           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+           [errorView setErrorTitle:STRING_ERROR
+                           andAddTo:self];
        }];
 }
 

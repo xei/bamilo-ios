@@ -63,6 +63,10 @@
 		4AE99A0219CAE3B300F28A7D /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AE99A0119CAE3B300F28A7D /* JANewsletterComponent.xib */; };
 		4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */; };
 		4AFC7F94199BC124007D67F4 /* JASignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F93199BC124007D67F4 /* JASignupViewController.m */; };
+		8C38E18319CF164A0007F6F9 /* JASuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C38E18119CF164A0007F6F9 /* JASuccessView.m */; };
+		8C38E18419CF164A0007F6F9 /* JASuccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C38E18219CF164A0007F6F9 /* JASuccessView.xib */; };
+		8C38E18719CF16F50007F6F9 /* JAErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C38E18619CF16F50007F6F9 /* JAErrorView.m */; };
+		8C38E18919CF170F0007F6F9 /* JAErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C38E18819CF170F0007F6F9 /* JAErrorView.xib */; };
 		B5007AC219A4E8EC0024035A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007ABE19A4E8EC0024035A /* HockeySDK.framework */; };
 		B5007AC319A4E8EC0024035A /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */; };
 		B5007AC419A4E8EC0024035A /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */; };
@@ -424,6 +428,12 @@
 		4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignInViewController.m; sourceTree = "<group>"; };
 		4AFC7F92199BC124007D67F4 /* JASignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignupViewController.h; sourceTree = "<group>"; };
 		4AFC7F93199BC124007D67F4 /* JASignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignupViewController.m; sourceTree = "<group>"; };
+		8C38E18019CF164A0007F6F9 /* JASuccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASuccessView.h; sourceTree = "<group>"; };
+		8C38E18119CF164A0007F6F9 /* JASuccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASuccessView.m; sourceTree = "<group>"; };
+		8C38E18219CF164A0007F6F9 /* JASuccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JASuccessView.xib; sourceTree = "<group>"; };
+		8C38E18519CF16F50007F6F9 /* JAErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAErrorView.h; sourceTree = "<group>"; };
+		8C38E18619CF16F50007F6F9 /* JAErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAErrorView.m; sourceTree = "<group>"; };
+		8C38E18819CF170F0007F6F9 /* JAErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAErrorView.xib; sourceTree = "<group>"; };
 		B5007ABE19A4E8EC0024035A /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
 		B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
@@ -1047,6 +1057,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8C38E17F19CF164A0007F6F9 /* ErrorViews */,
 				B530D56E19C199690052FEDA /* CheckoutForms */,
 				4A3719BA19C05F3C002D4199 /* UndefinedSearchView */,
 				B59DCA6719B851F700DE7960 /* Buttons */,
@@ -1184,6 +1195,19 @@
 				4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */,
 			);
 			path = SignInViewController;
+			sourceTree = "<group>";
+		};
+		8C38E17F19CF164A0007F6F9 /* ErrorViews */ = {
+			isa = PBXGroup;
+			children = (
+				8C38E18019CF164A0007F6F9 /* JASuccessView.h */,
+				8C38E18119CF164A0007F6F9 /* JASuccessView.m */,
+				8C38E18219CF164A0007F6F9 /* JASuccessView.xib */,
+				8C38E18519CF16F50007F6F9 /* JAErrorView.h */,
+				8C38E18619CF16F50007F6F9 /* JAErrorView.m */,
+				8C38E18819CF170F0007F6F9 /* JAErrorView.xib */,
+			);
+			path = ErrorViews;
 			sourceTree = "<group>";
 		};
 		B5007ABD19A4E8EC0024035A /* HockeySDK.embeddedframework */ = {
@@ -2373,10 +2397,12 @@
 				CEDEB9B1199BA8FA0022BAB5 /* slider-default-handle.png in Resources */,
 				4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */,
 				B5A3024419811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
+				8C38E18419CF164A0007F6F9 /* JASuccessView.xib in Resources */,
 				B5A3024019811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */,
 				CE2F577019913B6D000A9E09 /* JACatalogListCell.xib in Resources */,
 				4A01EE4B19922736005F5AD1 /* JAPDVPicker.xib in Resources */,
 				B5A3024F19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
+				8C38E18919CF170F0007F6F9 /* JAErrorView.xib in Resources */,
 				B5A3024B19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
 				CEDEB9BB199BA8FA0022BAB5 /* slider-default7-track.png in Resources */,
 				B5A3023419811E8A00F71726 /* A4S.bundle in Resources */,
@@ -2536,6 +2562,7 @@
 				CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */,
 				B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */,
 				B530D57119C1998B0052FEDA /* JACheckoutForms.m in Sources */,
+				8C38E18719CF16F50007F6F9 /* JAErrorView.m in Sources */,
 				B510B01519AE466B00A9754A /* JARadioComponent.m in Sources */,
 				B5FBD58419CAF22F00BD9510 /* AIPackageHandler.m in Sources */,
 				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
@@ -2587,6 +2614,7 @@
 				B59DCA6F19B8712500DE7960 /* JAAddressCell.m in Sources */,
 				B5A302C719811E9200F71726 /* RILanguage.m in Sources */,
 				B5A302E219811E9200F71726 /* RIAd4PushTracker.m in Sources */,
+				8C38E18319CF164A0007F6F9 /* JASuccessView.m in Sources */,
 				B5A302E419811E9200F71726 /* RIBugSenseTracker.m in Sources */,
 				B5A302DF19811E9200F71726 /* RIOpenURLHandler.m in Sources */,
 				B5FBD57919CAF22F00BD9510 /* Adjust.m in Sources */,

@@ -74,11 +74,10 @@
     }
     else
     {
-        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                    message:@"Please enter the order ID."
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:STRING_OK, nil] show];
+#warning add string here
+        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+        [errorView setErrorTitle:@"Please enter the order ID."
+                        andAddTo:self];
     }
 }
 

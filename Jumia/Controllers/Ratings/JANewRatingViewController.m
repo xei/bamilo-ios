@@ -145,11 +145,9 @@
         
         [self hideLoading];
         
-        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                    message:@"There was an error"
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:STRING_OK, nil] show];
+        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+        [errorView setErrorTitle:STRING_ERROR
+                        andAddTo:self];
         
     }];
 }
@@ -249,47 +247,37 @@
             
             [self hideLoading];
             
-            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                        message:STRING_REVIEW_SENT
-                                       delegate:self
-                              cancelButtonTitle:nil
-                              otherButtonTitles:STRING_OK, nil] show];
-            
+            JASuccessView *success = [JASuccessView getNewJASuccessView];
+            [success setSuccessTitle:STRING_REVIEW_SENT
+                            andAddTo:self];
             
         } andFailureBlock:^(id errorObject) {
             
             [self hideLoading];
             
-            
             if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {
                 [self.ratingDynamicForm validateFields:errorObject];
                 
-                [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                            message:STRING_ERROR_INVALID_FIELDS
-                                           delegate:nil
-                                  cancelButtonTitle:nil
-                                  otherButtonTitles:STRING_OK, nil] show];
+                JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
+                                andAddTo:self];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
                 [self.ratingDynamicForm checkErrors];
                 
-                [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                            message:[errorObject componentsJoinedByString:@","]
-                                           delegate:nil
-                                  cancelButtonTitle:nil
-                                  otherButtonTitles:STRING_OK, nil] show];
+                JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
+                                andAddTo:self];
             }
             else
             {
                 [self.ratingDynamicForm checkErrors];
                 
-                [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                            message:@"Generic error"
-                                           delegate:nil
-                                  cancelButtonTitle:nil
-                                  otherButtonTitles:STRING_OK, nil] show];
+                JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                [errorView setErrorTitle:@"Generic error"
+                                andAddTo:self];
             }
         }];
 }
