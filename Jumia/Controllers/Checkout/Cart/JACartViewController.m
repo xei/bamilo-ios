@@ -81,6 +81,73 @@
     [self showLoading];
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
         self.cart = cartData;
+        
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+        NSMutableDictionary *trackingDictionary = nil;
+        NSMutableDictionary *viewCartTrackingProducts = [[NSMutableDictionary alloc] init];
+        NSInteger productIndex = 1;
+        
+        NSArray *cartItemsKeys = [[self.cart cartItems] allKeys];
+        for (NSString *cartItemKey in cartItemsKeys)
+        {
+            RICartItem *cartItem = [[self.cart cartItems] objectForKey:cartItemKey];
+
+            trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+            NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
+            if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
+            {
+                [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
+            }
+            [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+            [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+            [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
+            [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+            
+            NSString *discount = @"false";
+            NSString *price = [cartItem.price stringValue];
+            if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber) && [cartItem.specialPrice floatValue] < [cartItem.price floatValue])
+            {
+                discount = @"true";
+                price = [cartItem.specialPrice stringValue];
+            }
+           
+            [trackingDictionary setValue:[cartItem.price stringValue] forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:price forKey:kRIEventDiscountKey];
+            [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
+            [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
+            [trackingDictionary setValue:[cartData.cartCleanValue stringValue] forKey:kRIEventTotalCartKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
+                                                      data:[trackingDictionary copy]];
+            
+            NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
+            [viewCartTrackingProduct setValue:cartItem.sku forKey:@"sku"];
+            [viewCartTrackingProduct setValue:price forKey:@"price"];
+            [viewCartTrackingProduct setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:@"currency"];
+            [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:@"quantity"];
+            [viewCartTrackingProducts setValue:viewCartTrackingProduct forKey:[NSString stringWithFormat:@"product%d", productIndex]];
+            productIndex++;
+        }
+        
+        trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+        [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+        
+        if(VALID_NOTEMPTY(viewCartTrackingProducts, NSMutableDictionary))
+        {
+            [trackingDictionary addEntriesFromDictionary:viewCartTrackingProducts];
+        }
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCart]
+                                                  data:[trackingDictionary copy]];
+        
         [self loadCartInfo];
         [self hideLoading];
     } andFailureBlock:^(NSArray *errorMessages) {

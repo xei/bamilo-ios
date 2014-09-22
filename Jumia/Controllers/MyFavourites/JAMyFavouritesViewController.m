@@ -121,6 +121,64 @@
              }
          }];
 
+        CGFloat totalWishlistValue = 0.0f;
+        for(RIProduct *product in tempArray)
+        {
+            if(VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] < [product.price floatValue] )
+            {
+                totalWishlistValue += [product.specialPrice floatValue];
+            }
+            else
+            {
+                totalWishlistValue += [product.price floatValue];
+            }
+        }
+        
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+        NSMutableDictionary *trackingDictionary = nil;
+        for(RIProduct *product in tempArray)
+        {
+            trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+            NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
+            if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
+            {
+                [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
+            }
+            [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+            [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+            [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+            [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+            
+            NSString *discount = @"false";
+            NSString *price = [product.price stringValue];
+            if (VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] < [product.price floatValue])
+            {
+                price = [product.specialPrice stringValue];
+                discount = @"true";
+            }
+
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];            
+            [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
+            [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
+            if (VALID_NOTEMPTY(product.productSimples, NSArray) && 1 == product.productSimples.count)
+            {
+                RIProductSimple *tempProduct = product.productSimples[0];
+                if (VALID_NOTEMPTY(tempProduct.attributeSize, NSString))
+                {
+                    [trackingDictionary setValue:tempProduct.attributeSize forKey:kRIEventSizeKey];
+                }
+            }
+            
+            [trackingDictionary setValue:[NSString stringWithFormat:@"%f",totalWishlistValue] forKey:kRIEventTotalWishlistKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewWishlist]
+                                                      data:[trackingDictionary copy]];
+        }
+        
         [self hideLoading];
         [self updateListsWith:[tempArray copy]];
     } andFailureBlock:^(NSArray *error) {

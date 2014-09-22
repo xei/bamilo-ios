@@ -164,6 +164,9 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventDiscountKey         @"RIEventDiscountKey"
 #define kRIEventBrandKey            @"RIEventBrandKey"
 #define kRIEventSizeKey             @"RIEventSizeKey"
+#define kRIEventTotalWishlistKey    @"RIEventTotalWishlistKey"
+#define kRIEventQuantityKey         @"RIEventQuantityKey"
+#define kRIEventTotalCartKey        @"RIEventTotalCartKey"
 
 /**
  *  Struct to identify events
