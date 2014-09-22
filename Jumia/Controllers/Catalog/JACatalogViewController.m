@@ -484,9 +484,8 @@
                                         
                                         [self hideLoading];
                                         
-#warning confirm this strings
                                         JASuccessView *success = [JASuccessView getNewJASuccessView];
-                                        [success setSuccessTitle:@"Item added to wish list."
+                                        [success setSuccessTitle:STRING_ADDED_TO_WISHLIST
                                                         andAddTo:self];
                                         
                                     } andFailureBlock:^(NSArray *error) {

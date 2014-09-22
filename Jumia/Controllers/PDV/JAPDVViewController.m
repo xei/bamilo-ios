@@ -574,6 +574,11 @@
                               sender:nil];
 }
 
+- (void)addProductToWishList
+{
+    
+}
+
 - (void)goToRatinsMainScreen
 {
     if (0 == self.commentsCount) {        
@@ -643,11 +648,6 @@
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypePostToTwitter];
     
     [self presentViewController:activityController animated:YES completion:nil];
-}
-
-- (void)addProductToWishList
-{
-    
 }
 
 - (void)addToCart
@@ -868,13 +868,13 @@
             }
             
             JASuccessView *success = [JASuccessView getNewJASuccessView];
-            [success setSuccessTitle:@"Added to favourites."
+            [success setSuccessTitle:STRING_ADDED_TO_WISHLIST
                             andAddTo:self];
             
         } andFailureBlock:^(NSArray *error) {
-#warning confirm this messages
+
             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:@"Error adding to favourites"
+            [errorView setErrorTitle:STRING_ERROR_ADDING_TO_WISHLIST
                             andAddTo:self];
             
         }];
@@ -899,10 +899,8 @@
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                       data:[trackingDictionary copy]];
-            
-#warning confirm this messages
             JASuccessView *success = [JASuccessView getNewJASuccessView];
-            [success setSuccessTitle:@"Removed from favourites."
+            [success setSuccessTitle:STRING_ADDED_TO_WISHLIST
                             andAddTo:self];
             
             if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
@@ -911,7 +909,7 @@
         } andFailureBlock:^(NSArray *error) {
             
             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:@"Error removing from favourites"
+            [errorView setErrorTitle:STRING_ERROR_ADDING_TO_WISHLIST
                             andAddTo:self];
         }];
     }
