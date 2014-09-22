@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RICheckout.h"
 
 @interface JAUtils : NSObject
 
-+ (void) goToCheckoutNextStep:(NSString*)nextStep
-                 inStoryboard:(UIStoryboard*)storyboard;
++ (void) goToCheckout:(RICheckout*)checkout
+         inStoryboard:(UIStoryboard*)storyboard;
 
 + (unsigned int)intFromHexString:(NSString *) hexStr;
 

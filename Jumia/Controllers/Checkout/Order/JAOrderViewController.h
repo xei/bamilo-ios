@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RICheckout.h"
 
 @interface JAOrderViewController : JABaseViewController
+
+@property (nonatomic, strong)RICheckout* checkout;
 
 @end
