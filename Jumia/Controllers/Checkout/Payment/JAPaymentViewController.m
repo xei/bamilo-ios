@@ -64,12 +64,14 @@ UITextFieldDelegate>
     [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
     [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"CheckoutPaymentMethods" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                             value:nil
-                                            action:@"CheckoutPaymentMethods"
-                                          category:@"NativeCheckout"
-                                              data:nil];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                              data:[trackingDictionary copy]];
     
     self.navBarLayout.title = STRING_CHECKOUT;
     

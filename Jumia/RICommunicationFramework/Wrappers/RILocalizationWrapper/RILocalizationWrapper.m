@@ -12,7 +12,7 @@
 
 + (NSString *)localizedString:(NSString *)key;
 {
-    NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:@"language_code"];
+    NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
     NSDictionary *componentsFromLocale =  [NSLocale componentsFromLocaleIdentifier:locale];
     NSString *languageCode = [componentsFromLocale objectForKey:NSLocaleLanguageCode];
     

@@ -10,6 +10,7 @@
 #import "JASubCategoriesViewController.h"
 #import "RICategory.h"
 #import "JAMenuNavigationBar.h"
+#import "JAUtils.h"
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
 #import <FacebookSDK/FacebookSDK.h>
@@ -22,6 +23,15 @@ typedef NS_ENUM(NSUInteger, JAMenuViewControllerAction) {
     JAMenuViewControllerOpenCart = 1,
     JAMenuViewControllerOpenSideMenuItem = 2
 };
+
+typedef enum ScrollDirection {
+    ScrollDirectionNone,
+    ScrollDirectionRight,
+    ScrollDirectionLeft,
+    ScrollDirectionUp,
+    ScrollDirectionDown,
+    ScrollDirectionCrazy,
+} ScrollDirection;
 
 @interface JAMenuViewController ()
 <
@@ -43,6 +53,7 @@ UIAlertViewDelegate
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelDetails;
 @property (weak, nonatomic) IBOutlet UILabel *cartItensNumber;
 @property (weak, nonatomic) IBOutlet UIView *cartView;
+@property (nonatomic, assign) CGFloat yOffset;
 
 // Handle external payment actions
 @property (assign, nonatomic) JAMenuViewControllerAction nextAction;
@@ -63,6 +74,8 @@ UIAlertViewDelegate
     [self showLoading];
     
     [self initSourceArray];
+    
+    self.yOffset = 0.0;
     
     self.customNavBar = [[JAMenuNavigationBar alloc] init];
     [self.navigationController setValue:self.customNavBar
@@ -215,17 +228,31 @@ UIAlertViewDelegate
     return 44.f;
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.resultsTableView == tableView)
+    {
+        for (UIView *view in cell.viewForBaselineLayout.subviews)
+        {
+            if ([view isKindOfClass:[UIImageView class]])
+            {
+                [view removeFromSuperview];
+            }
+        }
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     if (self.resultsTableView == tableView)
     {
-        for (UIView *view in cell.subviews)
+        for (UIView *view in cell.viewForBaselineLayout.subviews)
         {
             if ([view isKindOfClass:[UIImageView class]])
             {
-                [view removeFromSuperview];
+                    [view removeFromSuperview];
             }
         }
         
@@ -276,6 +303,7 @@ UIAlertViewDelegate
         {
             UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
             line.backgroundColor = UIColorFromRGB(0xcccccc);
+            line.tag = 99;
             [cell.viewForBaselineLayout addSubview:line];
         }
         
@@ -361,11 +389,18 @@ UIAlertViewDelegate
                         
                         [RICustomer logoutCustomerWithSuccessBlock:^{
                             
-                            [[RITrackingWrapper sharedInstance] trackEvent:custumerId
-                                                                     value:nil
-                                                                    action:@"LogoutSuccess"
-                                                                  category:@"Account"
-                                                                      data:nil];
+                            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                            [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
+                            [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
+                            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                            [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
+                            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                            
+                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
+                                                                      data:[trackingDictionary copy]];
                             
                             [[FBSession activeSession] closeAndClearTokenInformation];
                             
@@ -514,6 +549,9 @@ UIAlertViewDelegate
         [RISearchSuggestion getSuggestionsForQuery:searchText
                                       successBlock:^(NSArray *suggestions) {
                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                              [self.resultsArray removeAllObjects];
+                                              [self.resultsTableView reloadData];
+                                              
                                               self.resultsArray = [suggestions mutableCopy];
                                               
                                               [self.resultsTableView reloadSections:[NSIndexSet indexSetWithIndex:0]
@@ -660,6 +698,7 @@ UIAlertViewDelegate
 }
 
 #pragma mark UIAlertViewDelegate
+
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if(1 == buttonIndex)
@@ -694,6 +733,24 @@ UIAlertViewDelegate
             default:
                 break;
         }
+    }
+}
+
+#pragma mark - Scrollview delegate (For results table)
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y < self.yOffset) {
+        
+        // scrolls down.
+        self.yOffset = scrollView.contentOffset.y;
+    }
+    else
+    {
+        // scrolls up.
+        self.yOffset = scrollView.contentOffset.y;
+        
+        [self.customNavBar.searchBar resignFirstResponder];
     }
 }
 

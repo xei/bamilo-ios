@@ -8,6 +8,8 @@
 
 #import "JACheckBoxWithOptionsComponent.h"
 #import "RIFieldOption.h"
+#import "JANewsletterComponent.h"
+#import "RINewsletterCategory.h"
 
 @implementation JACheckBoxWithOptionsComponent
 
@@ -47,10 +49,39 @@
     {
         RIFieldOption *option = [[field options] objectAtIndex:i];
         
-        JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
-        [check.labelText setText:option.label];
-        [check.switchComponent setTag:i];
-        [check.switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
+        JANewsletterComponent *check = [JANewsletterComponent getNewJANewsletterComponent];
+        [check setup];
+        [check setupWithField:field];
+        [check.textLabel setText:option.label];
+        [check.optionSwitch setTag:i];
+
+        NSArray *newsletterOption = [RINewsletterCategory getNewsletter];
+        
+        if (0 == newsletterOption.count)
+        {
+            check.optionSwitch.on = NO;
+        }
+        else
+        {
+            BOOL finded = NO;
+            
+            for (RINewsletterCategory *newsletter in newsletterOption)
+            {
+                if ([[newsletter.idNewsletterCategory stringValue] isEqualToString:option.value])
+                {
+                    check.optionSwitch.on = YES;
+                    finded = YES;
+                    break;
+                }
+            }
+            
+            if (!finded)
+            {
+                check.optionSwitch.on = NO;
+            }
+        }
+        
+        [check.optionSwitch addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
         
         CGRect frame = check.frame;
         frame.origin.y = startingY;

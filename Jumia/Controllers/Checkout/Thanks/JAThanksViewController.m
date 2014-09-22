@@ -8,6 +8,7 @@
 
 #import "JAThanksViewController.h"
 #import "RICustomer.h"
+#import "JAUtils.h"
 
 @interface JAThanksViewController ()
 
@@ -73,6 +74,35 @@
     self.continueShoppingButton.layer.cornerRadius = 5.0f;
     
     [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"Finished" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+    [trackingDictionary setValue:[NSNumber numberWithInteger:[self.orderNumber integerValue]] forKey:kRIEventValueKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                              data:[trackingDictionary copy]];
+    
+    NSMutableDictionary *ecommerceDictionary = [[NSMutableDictionary alloc] init];
+    [ecommerceDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+    [ecommerceDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    [ecommerceDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    [ecommerceDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+    [ecommerceDictionary setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
+    [ecommerceDictionary setValue:[NSNumber numberWithBool:[RICustomer wasSignup]] forKey:kRIEcommerceGuestKey];
+    NSDictionary *products = self.cart.cartItems;
+    if(VALID_NOTEMPTY(products, NSDictionary))
+    {
+        [ecommerceDictionary setValue:[products allKeys] forKey:kRIEcommerceSkusKey];
+    }
+    
+    [ecommerceDictionary setValue:self.checkout.orderSummary.shippingAmount forKey:kRIEcommerceShippingKey];
+    [ecommerceDictionary setValue:self.checkout.orderSummary.taxAmount forKey:kRIEcommerceTaxKey];
+    [ecommerceDictionary setValue:self.checkout.orderSummary.grandTotal forKey:kRIEcommerceTotalValueKey];
+    
+    [[RITrackingWrapper sharedInstance] trackCheckout:ecommerceDictionary];
 }
 
 - (void)copyOrderNumber
@@ -82,11 +112,13 @@
 
 - (void)goToHomeScreen
 {
-    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                             value:nil
-                                            action:@"ContinueShopping"
-                                          category:@"Checkout"
-                                              data:nil];
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                              data:[trackingDictionary copy]];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }

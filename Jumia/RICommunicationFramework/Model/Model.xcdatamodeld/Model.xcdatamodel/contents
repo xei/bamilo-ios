@@ -125,6 +125,10 @@
         <attribute name="langName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="countryConfig" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RICountryConfiguration" inverseName="languages" inverseEntity="RICountryConfiguration" syncable="YES"/>
     </entity>
+    <entity name="RINewsletterCategory" representedClassName="RINewsletterCategory" syncable="YES">
+        <attribute name="idNewsletterCategory" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="RIProduct" representedClassName="RIProduct" syncable="YES">
         <attribute name="activatedAt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="attributeCareLabel" optional="YES" attributeType="String" syncable="YES"/>
@@ -256,7 +260,7 @@
         <element name="RIApi" positionX="-308" positionY="227" width="128" height="135"/>
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="133"/>
         <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="195"/>
-        <element name="RICustomer" positionX="279" positionY="650" width="128" height="210"/>
+        <element name="RICustomer" positionX="279" positionY="650" width="128" height="208"/>
         <element name="RIField" positionX="-299" positionY="681" width="128" height="268"/>
         <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="73"/>
         <element name="RIFieldOption" positionX="-137" positionY="963" width="128" height="118"/>
@@ -278,5 +282,6 @@
         <element name="RITeaserText" positionX="-684" positionY="677" width="128" height="88"/>
         <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
         <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>
+        <element name="RINewsletterCategory" positionX="-486" positionY="-63" width="128" height="73"/>
     </elements>
 </model>

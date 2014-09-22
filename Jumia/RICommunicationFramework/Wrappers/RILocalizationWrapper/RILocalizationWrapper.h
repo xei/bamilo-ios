@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define kLanguageCodeKey @"language_code"
+
 @interface RILocalizationWrapper : NSObject
 
 #define RILocalizedString(key, comment) [RILocalizationWrapper localizedString:key]

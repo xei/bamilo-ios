@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Splash View Controller-->
@@ -1347,18 +1346,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="87F-rk-XRC">
-                                <rect key="frame" x="6" y="6" width="308" height="123"/>
+                                <rect key="frame" x="6" y="6" width="308" height="155"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="308" id="hTB-VK-yEQ"/>
-                                    <constraint firstAttribute="height" constant="123" id="yKI-RA-C6c"/>
+                                    <constraint firstAttribute="height" constant="155" id="yKI-RA-C6c"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhx-Ha-G6w">
-                                <rect key="frame" x="0.0" y="133" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="183" width="320" height="106"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="tMj-TH-en2"/>
+                                    <constraint firstAttribute="height" constant="106" id="tMj-TH-en2"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1366,7 +1365,7 @@
                         <constraints>
                             <constraint firstItem="87F-rk-XRC" firstAttribute="top" secondItem="iXN-N6-sQJ" secondAttribute="bottom" constant="6" id="0zo-m4-iyw"/>
                             <constraint firstItem="87F-rk-XRC" firstAttribute="leading" secondItem="Tfc-Ff-EQd" secondAttribute="leading" constant="6" id="L5O-e3-2xS"/>
-                            <constraint firstItem="bhx-Ha-G6w" firstAttribute="top" secondItem="87F-rk-XRC" secondAttribute="bottom" constant="4" id="bsz-3b-Bkr"/>
+                            <constraint firstItem="bhx-Ha-G6w" firstAttribute="top" secondItem="87F-rk-XRC" secondAttribute="bottom" constant="22" id="bsz-3b-Bkr"/>
                             <constraint firstItem="bhx-Ha-G6w" firstAttribute="leading" secondItem="Tfc-Ff-EQd" secondAttribute="leading" id="l8J-si-Acv"/>
                             <constraint firstAttribute="trailing" secondItem="87F-rk-XRC" secondAttribute="trailing" constant="6" id="oN6-aB-3rY"/>
                             <constraint firstAttribute="trailing" secondItem="bhx-Ha-G6w" secondAttribute="trailing" id="zOb-OJ-mDz"/>
@@ -2713,9 +2712,9 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="BsI-FI-JPm" secondAttribute="trailing" constant="-10" id="59h-76-2Ra"/>
-                            <constraint firstItem="BsI-FI-JPm" firstAttribute="leading" secondItem="nhs-qm-qB2" secondAttribute="leadingMargin" constant="-10" id="CEq-kH-EZR"/>
+                            <constraint firstAttribute="trailing" secondItem="BsI-FI-JPm" secondAttribute="trailing" constant="6" id="DOW-xf-Jbk"/>
                             <constraint firstItem="hi2-Ks-I4T" firstAttribute="top" secondItem="BsI-FI-JPm" secondAttribute="bottom" constant="8" id="DQA-vr-GDZ"/>
+                            <constraint firstItem="BsI-FI-JPm" firstAttribute="leading" secondItem="nhs-qm-qB2" secondAttribute="leading" constant="6" id="pfR-5o-foB"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>

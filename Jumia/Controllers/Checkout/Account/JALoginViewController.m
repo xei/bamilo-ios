@@ -473,11 +473,12 @@ FBLoginViewDelegate
     
     [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object) {
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                                 value:nil
-                                                action:@"CheckoutAboutYou"
-                                              category:@"NativeCheckout"
-                                                  data:nil];
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                  data:[trackingDictionary copy]];
         
         [self.loginDynamicForm resetValues];
         
@@ -618,11 +619,12 @@ FBLoginViewDelegate
         [RICustomer loginCustomerByFacebookWithParameters:parameters
                                              successBlock:^(id customer) {
                                                  
-                                                 [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                                                                          value:nil
-                                                                                         action:@"CheckoutAboutYou"
-                                                                                       category:@"NativeCheckout"
-                                                                                           data:nil];
+                                                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                                 [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                                                 [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];
+                                                 [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                                                           data:[trackingDictionary copy]];
                                                  
                                                  [self.loginDynamicForm resetValues];
                                                  

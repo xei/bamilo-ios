@@ -10,6 +10,7 @@
 #import "RIProduct.h"
 #import "JACatalogListCell.h"
 #import "JACatalogGridCell.h"
+#import "JAUtils.h"
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
 
@@ -111,16 +112,20 @@
         [RISearchSuggestion getResultsForSearch:self.searchString
                                            page:@"1"
                                        maxItems:[NSString stringWithFormat:@"%d",JACatalogViewControllerMaxProducts]
+                                  sortingMethod:self.sortingMethod
                                    successBlock:^(NSArray *results) {
                                        
                                        if (!self.isFirstLoadTracking) {
                                            self.isFirstLoadTracking = YES;
                                            
-                                           [[RITrackingWrapper sharedInstance] trackEvent:self.searchString
-                                                                                    value:@(results.count)
-                                                                                   action:@"Search"
-                                                                                 category:@"Catalog"
-                                                                                     data:nil];
+                                           NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                           [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                                           [trackingDictionary setValue:@"Search" forKey:kRIEventActionKey];
+                                           [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                                           [trackingDictionary setValue:@(results.count) forKey:kRIEventValueKey];
+                                           
+                                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
+                                                                                     data:[trackingDictionary copy]];
                                        }
                                        
                                        if (0 == results.count || JACatalogViewControllerMaxProducts > results.count) {
@@ -242,11 +247,13 @@
                     }];
     [self.collectionView reloadData];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                             value:nil
-                                            action:@"List"
-                                          category:@"Catalog"
-                                              data:nil];
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"List" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCatalog]
+                                              data:[trackingDictionary copy]];
 }
 
 - (void)changeToGrid
@@ -264,11 +271,13 @@
                     }];
     [self.collectionView reloadData];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                             value:nil
-                                            action:@"Grid"
-                                          category:@"Catalog"
-                                              data:nil];
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"Grid" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCatalog]
+                                              data:[trackingDictionary copy]];
 }
 
 #pragma mark - UICollectionView
@@ -361,16 +370,6 @@
                                                                       @"relatedItems" : tempArray ,
                                                                       @"delegate": self }];
     }
-    
-//    JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
-//    pdv.productUrl = product.url;
-//    pdv.fromCatalogue = YES;
-//    pdv.previousCategory = self.category.name;
-//    pdv.arrayWithRelatedItems = [tempArray copy];
-//    pdv.delegate = self;
-//    
-//    [self.navigationController pushViewController:pdv
-//                                         animated:YES];
 }
 
 #pragma mark - JAPickerScrollViewDelegate
@@ -383,11 +382,13 @@
         [self resetCatalog];
         [self loadMoreProducts];
         
-        [[RITrackingWrapper sharedInstance] trackEvent:self.title
-                                                 value:nil
-                                                action:@"SortingOnCatalog"
-                                              category:@"Catalog"
-                                                  data:nil];
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:self.title forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"SortingOnCatalog" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSort]
+                                                  data:[trackingDictionary copy]];
     }
 }
 
@@ -395,11 +396,13 @@
 
 - (void)updatedFiltersAndCategory:(RICategory *)category;
 {
-    [[RITrackingWrapper sharedInstance] trackEvent:self.catalogUrl
-                                             value:nil
-                                            action:STRING_FILTERS
-                                          category:@"Catalog"
-                                              data:nil];
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:self.catalogUrl forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:STRING_FILTERS forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFilter]
+                                              data:[trackingDictionary copy]];
     
     self.filterCategory = category;
     [self resetCatalog];
@@ -462,11 +465,23 @@
                                 successBlock:^(id completeProduct) {
                                     [RIProduct addToFavorites:completeProduct successBlock:^{
                                         
-                                        [[RITrackingWrapper sharedInstance] trackEvent:product.sku
-                                                                                 value:product.price
-                                                                                action:@"AddtoWishlist"
-                                                                              category:@"Catalog"
-                                                                                  data:nil];
+                                        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                        [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
+                                        [trackingDictionary setValue:@"AddtoWishlist" forKey:kRIEventActionKey];
+                                        [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                                        [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+                                        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                                        [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+                                        [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+                                        [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                                        
+                                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
+                                                                                  data:[trackingDictionary copy]];
+                                        
                                         
                                         [self hideLoading];
                                     } andFailureBlock:^(NSArray *error) {
@@ -478,11 +493,22 @@
     } else {
         [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
             
-            [[RITrackingWrapper sharedInstance] trackEvent:product.sku
-                                                     value:product.price
-                                                    action:@"RemoveFromWishlist"
-                                                  category:@"Catalog"
-                                                      data:nil];
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+            [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+            [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+            [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
+                                                      data:[trackingDictionary copy]];
             
             //update favoriteProducts
             [self hideLoading];

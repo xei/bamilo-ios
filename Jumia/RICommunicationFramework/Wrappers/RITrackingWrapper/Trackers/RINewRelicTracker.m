@@ -13,6 +13,7 @@ NSString * const kRINewRelicTokenAPIKey = @"RINewRelicTokenAPIKey";
 @implementation RINewRelicTracker
 
 @synthesize queue;
+@synthesize registeredEvents;
 
 - (id)init
 {

@@ -352,7 +352,7 @@
         {
             if(RIPaymentInformationCheckoutEnded == checkout.paymentInformation.type)
             {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[checkout.orderNr] forKeys:@[@"order_number"]];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[checkout.orderNr, checkout] forKeys:@[@"order_number", @"checkout"]];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification
                                                                     object:nil
@@ -361,7 +361,7 @@
             }
             else
             {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[checkout.paymentInformation] forKeys:@[@"payment_information"]];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[checkout] forKeys:@[@"checkout"]];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification
                                                                     object:nil

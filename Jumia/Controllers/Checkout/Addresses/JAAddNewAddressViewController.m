@@ -130,11 +130,13 @@ UIPickerViewDelegate>
                            otherButtonTitles:STRING_OK, nil] show];
      }];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                             value:nil
-                                            action:@"CheckoutMyAddress"
-                                          category:@"NativeCheckout"
-                                              data:nil];
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"CheckoutMyAddress" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                              data:[trackingDictionary copy]];
 }
 
 -(void)setupViews
@@ -400,22 +402,26 @@ UIPickerViewDelegate>
               parameters:billingParameters
             successBlock:^(id object)
          {
-             [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                                      value:nil
-                                                     action:@"CheckoutCreateAddress"
-                                                   category:@"NativeCheckout"
-                                                       data:nil];
+             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+             [trackingDictionary setValue:@"CheckoutCreateAddress" forKey:kRIEventActionKey];
+             [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+             
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                       data:[trackingDictionary copy]];
              
              self.checkout = object;
              [self.billingDynamicForm resetValues];
              self.numberOfRequests--;
          } andFailureBlock:^(id errorObject)
          {
-             [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                                      value:nil
-                                                     action:@"NativeCheckoutError"
-                                                   category:@"NativeCheckout"
-                                                       data:nil];
+             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+             [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
+             [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+             
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                       data:[trackingDictionary copy]];
              
              self.hasErrors = YES;
              self.numberOfRequests--;

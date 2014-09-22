@@ -25,7 +25,7 @@
 @property (nonatomic, retain) NSString * loginMethod;
 @property (nonatomic, retain) NSOrderedSet *addresses;
 
-+ (NSString*)autoLogin:(void (^)())returnBlock;
++ (NSString*)autoLogin:(void (^)(BOOL success))returnBlock;
 
 /**
  * Method to login user via facebook
@@ -68,6 +68,13 @@
 + (NSString *)getCustomerId;
 
 /**
+ * Method to check id the user dir a signup or not
+ *
+ * @return YES if the user did a signup
+ */
++ (BOOL)wasSignup;
+
+/**
  * Method to parse user json object
  *
  * @return an initialized RICustomer object
@@ -107,6 +114,8 @@
  */
 + (NSString *)requestPasswordReset:(void (^)())successBlock
                    andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
+
++ (void)updateCustomerNewsletterWithJson:(NSDictionary *)json;
 
 @end
 

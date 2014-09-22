@@ -380,12 +380,12 @@
         }
     }
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                             value:nil
-                                            action:newScreenName
-                                          category:@"ActionOverflow"
-                                              data:nil];
-    
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:newScreenName forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"ActionOverflow" forKey:kRIEventCategoryKey];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSideMenu]
+                                              data:[trackingDictionary copy]];
 }
 
 - (void)pushCatalogToShowSearchResults:(NSString *)query
@@ -688,7 +688,7 @@
     
     JAExternalPaymentsViewController *externalPaymentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
     
-    externalPaymentsVC.paymentInformation = [notification.userInfo objectForKey:@"payment_information"];
+    externalPaymentsVC.checkout = [notification.userInfo objectForKey:@"checkout"];
     
     [self pushViewController:externalPaymentsVC animated:YES];
 }
@@ -699,6 +699,8 @@
     
     JAThanksViewController *thanksVC = [self.storyboard instantiateViewControllerWithIdentifier:@"thanksViewController"];
     
+    thanksVC.checkout = [notification.userInfo objectForKey:@"checkout"];
+    thanksVC.cart = self.cart;
     thanksVC.orderNumber = [notification.userInfo objectForKey:@"order_number"];
     
     [self pushViewController:thanksVC animated:YES];

@@ -12,6 +12,7 @@
 #import "RICustomer.h"
 #import "RIFieldOption.h"
 #import "RICheckout.h"
+#import "RINewsletterCategory.h"
 
 @implementation RIForm
 
@@ -47,6 +48,48 @@
                                                                    
                                                                    if (VALID_NOTEMPTY(metadata, NSDictionary) && VALID_NOTEMPTY([metadata objectForKey:@"data"], NSArray)) {
                                                                        NSArray* data = [metadata objectForKey:@"data"];
+                                                                       
+                                                                       // Update user newsletter preferences
+                                                                       for (NSDictionary *dic in data)
+                                                                       {
+                                                                           if ([dic objectForKey:@"id"])
+                                                                           {
+                                                                               if ([[dic objectForKey:@"id"] isEqualToString:@"Alice_Module_Mobapi_Form_Ext1m3_Customer_NewsletterManageForm"])
+                                                                               {
+                                                                                   NSArray *fields = [dic objectForKey:@"fields"];
+                                                                                   
+                                                                                   for (NSDictionary *field in fields)
+                                                                                   {
+                                                                                       NSArray *options = [field objectForKey:@"options"];
+                                                                                       
+                                                                                       [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
+                                                                                       [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                                                       
+                                                                                       for (NSDictionary *optionField in options)
+                                                                                       {
+                                                                                           NSInteger subs = [[optionField objectForKey:@"user_subscribed"] integerValue];
+                                                                                           
+                                                                                           if (1 == subs)
+                                                                                           {
+                                                                                               NSMutableDictionary *temp = [NSMutableDictionary new];
+                                                                                               
+                                                                                               if ([optionField objectForKey:@"value"]) {
+                                                                                                   [temp addEntriesFromDictionary:@{@"id_newsletter_category" : [optionField objectForKey:@"value"]} ];
+                                                                                               }
+                                                                                               
+                                                                                               if ([optionField objectForKey:@"label"]) {
+                                                                                                   [temp addEntriesFromDictionary:@{@"name" : [optionField objectForKey:@"label"]} ];
+                                                                                               }
+                                                                                               
+                                                                                               RINewsletterCategory *tempNews = [RINewsletterCategory parseNewsletterCategory:[temp copy]];
+                                                                                               [RINewsletterCategory saveNewsLetterCategory:tempNews];
+                                                                                           }
+                                                                                       }
+                                                                                   }
+                                                                               }
+                                                                           }
+                                                                       }
+                                                                       
                                                                        RIForm* newForm = [RIForm parseForm:[data firstObject]];
                                                                        
                                                                        [RIForm saveForm:newForm];
@@ -156,15 +199,25 @@
                                                                   }
                                                                   else if([@"Alice_Module_Mobapi_Form_Ext1m1_Customer_RegisterSignupForm" isEqualToString:form.uid])
                                                                   {
-                                                                      responseProcessed = YES;
-                                                                      RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"] plainPassword:password loginMethod:@"signup"];
-                                                                      successBlock(customer);
+                                                                      NSDictionary *data = [metadata objectForKey:@"data"];
+                                                                      if(VALID_NOTEMPTY(data, NSDictionary))
+                                                                      {
+                                                                          responseProcessed = YES;
+                                                                          RICustomer *customer = [RICustomer parseCustomerWithJson:[data objectForKey:@"user"] plainPassword:password loginMethod:@"signup"];
+                                                                          successBlock(customer);
+                                                                      }
                                                                   }
                                                                   else if([@"address-form" isEqualToString:form.uid])
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICheckout *checkout = [RICheckout parseCheckout:metadata country:nil];
                                                                       successBlock(checkout);
+                                                                  }
+                                                                  else if ([@"Alice_Module_Mobapi_Form_Ext1m3_Customer_NewsletterManageForm" isEqualToString:form.uid])
+                                                                  {
+                                                                      [RICustomer updateCustomerNewsletterWithJson:metadata];
+                                                                      responseProcessed = YES;
+                                                                      successBlock(nil);
                                                                   }
                                                                   else
                                                                   {

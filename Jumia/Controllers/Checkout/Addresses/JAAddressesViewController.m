@@ -110,11 +110,13 @@ UICollectionViewDelegateFlowLayout>
         
     } andFailureBlock:^(NSArray *errorMessages) {
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                                 value:nil
-                                                action:@"NativeCheckoutError"
-                                              category:@"NativeCheckout"
-                                                  data:nil];
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                  data:[trackingDictionary copy]];
         
         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                     message:[errorMessages componentsJoinedByString:@","]
@@ -735,11 +737,13 @@ UICollectionViewDelegateFlowLayout>
             [JAUtils goToCheckout:checkout inStoryboard:self.storyboard];
         } andFailureBlock:^(NSArray *errorMessages) {
             
-            [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                                     value:nil
-                                                    action:@"NativeCheckoutError"
-                                                  category:@"NativeCheckout"
-                                                      data:nil];
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                      data:[trackingDictionary copy]];
             
             [self hideLoading];
             
@@ -750,12 +754,15 @@ UICollectionViewDelegateFlowLayout>
                               otherButtonTitles:STRING_OK, nil] show];
         }];
     } andFailureBlock:^(NSArray *errorMessages) {
+
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                                 value:nil
-                                                action:@"NativeCheckoutError"
-                                              category:@"NativeCheckout"
-                                                  data:nil];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                  data:[trackingDictionary copy]];
+        
         [self hideLoading];
     }];
 }

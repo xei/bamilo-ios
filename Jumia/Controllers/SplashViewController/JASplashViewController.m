@@ -15,16 +15,19 @@
 #import "JANavigationBarView.h"
 #import <FacebookSDK/FBSession.h>
 #import "RIAd4PushTracker.h"
+#import "RIGoogleAnalyticsTracker.h"
+#import "JAUtils.h"
 
 @interface JASplashViewController ()
 <
 UIAlertViewDelegate
 >
 
-@property (nonatomic, assign) BOOL isPopupOpened;
-@property (nonatomic, assign) NSInteger requestCount;
 @property (weak, nonatomic) IBOutlet UIImageView *splashImage;
+@property (assign, nonatomic) BOOL isPopupOpened;
+@property (assign, nonatomic) NSInteger requestCount;
 @property (strong, nonatomic) JANavigationBarView *navigationBarView;
+@property (strong, nonatomic) NSDate *startTime;
 
 @end
 
@@ -34,7 +37,12 @@ UIAlertViewDelegate
 
 - (void)viewDidLoad
 {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kDidFirstBuyKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [super viewDidLoad];
+
+    self.startTime = [NSDate date];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectCountry:)
@@ -47,49 +55,6 @@ UIAlertViewDelegate
         
         [self showLoading];
         
-//        // Change the Facebook app id
-//        NSString *appId;
-//        
-//#warning Necessary to check if the facebook app id is changed properly
-//        
-//        if ([self.selectedCountry.countryIso isEqualToString:@"MA"]) {
-//            appId = @"518468904830623";
-//        } else if ([self.selectedCountry.countryIso isEqualToString:@"CI"]) {
-//            appId = @"472507709498904";
-//        } else if ([self.selectedCountry.countryIso isEqualToString:@"NG"]) {
-//            appId = @"321703697936806";
-//        } else if ([self.selectedCountry.countryIso isEqualToString:@"EG"]) {
-//            appId = @"390085037744566";
-//        } else if ([self.selectedCountry.countryIso isEqualToString:@"KE"]) {
-//            appId = @"319581271497227";
-//        } else if ([self.selectedCountry.countryIso isEqualToString:@"UG"]) {
-//            appId = @"321703697936806";
-//        } else if ([self.selectedCountry.countryIso isEqualToString:@"GH"]) {
-//            appId = @"321703697936806";
-//        } else {
-//            appId = @"321703697936806";
-//        }
-//
-//        NSString *path = [[NSBundle mainBundle] pathForResource:@"Info"
-//                                                         ofType:@"plist"];
-//        NSMutableDictionary *menuDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:path];
-//        [menuDictionary removeObjectForKey:@"FacebookAppID"];
-//        [menuDictionary addEntriesFromDictionary:@{@"FacebookAppID": appId}];
-//        
-//        NSError *error;
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//        NSString *documentsDirectory = [paths objectAtIndex:0];
-//        
-//        NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:@"Info.plist"];
-//        
-//        if (![[NSFileManager defaultManager] fileExistsAtPath: path])
-//        {
-//            NSString *bundle = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
-//            [[NSFileManager defaultManager]  copyItemAtPath:bundle toPath:path error:&error];
-//        }
-//        
-//        [menuDictionary writeToFile:plistPath atomically: YES];
-        
         self.requestCount = 0;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
@@ -97,6 +62,7 @@ UIAlertViewDelegate
         
         [RIApi startApiWithCountry:self.selectedCountry
                       successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                          
                           if(hasUpdate)
                           {
                               self.isPopupOpened = YES;
@@ -245,10 +211,42 @@ UIAlertViewDelegate
 {
     if(!self.isPopupOpened)
     {
-        [RICustomer autoLogin:^{
+        [RICustomer autoLogin:^(BOOL success){
+            
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+
+            if(success)
+            {
+                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                [trackingDictionary setValue:@"AutoLoginSuccess" forKey:kRIEventActionKey];
+            }
+            else
+            {
+                [trackingDictionary setValue:@"AutoLoginFailed" forKey:kRIEventActionKey];
+            }
+            
             UIViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
             
             [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+            
+            CGFloat duration = fabs([self.startTime timeIntervalSinceNow] * 1000);
+            
+            RICountryConfiguration *config = [RICountryConfiguration getCurrentConfiguration];
+            [RIGoogleAnalyticsTracker initGATrackerWithId:config.gaId];
+            
+            NSMutableDictionary *launchData = [[NSMutableDictionary alloc] init];
+            [launchData setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
+            
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            [launchData setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+            
+            [launchData setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+            
+            [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAutoLogin]
+                                                      data:[trackingDictionary copy]];
             
             // Changed country in deeplink
             if (self.tempNotification)
@@ -269,6 +267,7 @@ UIAlertViewDelegate
 {
     NSDictionary *temp = self.tempNotification;
     self.tempNotification = nil;
+    
     [[RIAd4PushTracker sharedInstance] handleNotificationWithDictionary:temp];
 }
 
@@ -292,6 +291,7 @@ UIAlertViewDelegate
         
         [RIApi startApiWithCountry:country
                       successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                          
                           if(hasUpdate)
                           {
                               self.isPopupOpened = YES;

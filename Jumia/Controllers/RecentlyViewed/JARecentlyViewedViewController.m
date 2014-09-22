@@ -13,6 +13,8 @@
 #import "RIProduct.h"
 #import "RIProductSimple.h"
 #import "RICart.h"
+#import "JAUtils.h"
+#import "RICustomer.h"
 
 @interface JARecentlyViewedViewController ()
 
@@ -232,12 +234,38 @@
                             simple:productSimple.sku
                   withSuccessBlock:^(RICart *cart) {
                       
-                      [[RITrackingWrapper sharedInstance] trackEvent:product.sku
-                                                               value:product.price
-                                                              action:@"AddToCart"
-                                                            category:@"Catalog"
-                                                                data:nil];
+                      [RIProduct removeFromRecentlyViewed:product];
+                      
+                      [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
 
+                          self.productsArray = recentlyViewedProducts;
+                          self.chosenSimpleNames = [NSMutableArray new];
+                          for (int i = 0; i < self.productsArray.count; i++) {
+                              [self.chosenSimpleNames addObject:@""];
+                          }
+                          [self.collectionView reloadData];
+                          
+                      } andFailureBlock:^(NSArray *error) {
+
+                      }];
+                      
+                      NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                      [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
+                      [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
+                      [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                      [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                      [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                      [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+                      [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+                      [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                      
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+                                                                data:[trackingDictionary copy]];
+                      
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       

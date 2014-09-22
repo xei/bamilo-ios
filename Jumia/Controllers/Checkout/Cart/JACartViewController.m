@@ -14,6 +14,7 @@
 #import "JAConstants.h"
 #import "JACartListHeaderView.h"
 #import "JAPriceView.h"
+#import "JAUtils.h"
 #import "RIForm.h"
 #import "RIField.h"
 #import "RICart.h"
@@ -529,11 +530,13 @@
 
 -(void)goToHomeScreen
 {
-    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                             value:nil
-                                            action:@"ContinueShopping"
-                                          category:@"Checkout"
-                                              data:nil];
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                              data:[trackingDictionary copy]];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
@@ -551,6 +554,19 @@
                                       sku:product.simpleSku
                          withSuccessBlock:^(RICart *cart) {
                              self.cart = cart;
+                             
+                             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                             [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                             [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                             [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+                             [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+                             [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                             
+                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
+                                                                       data:[trackingDictionary copy]];
                              
                              NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                              [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -728,11 +744,13 @@
         [self showLoading];
         [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
             
-            [[RITrackingWrapper sharedInstance] trackEvent:nil
-                                                     value:nil
-                                                    action:@"Started"
-                                                  category:@"Checkout"
-                                                      data:nil];
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                      data:[trackingDictionary copy]];
             
             [self hideLoading];
 
@@ -753,11 +771,13 @@
             
         } andFailureBlock:^(NSArray *errorMessages) {
             
-            [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                                     value:nil
-                                                    action:@"NativeCheckoutError"
-                                                  category:@"NativeCheckout"
-                                                      data:nil];
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                      data:[trackingDictionary copy]];
             
             [self hideLoading];
             
@@ -780,7 +800,18 @@
 {
     [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
         UIDevice *device = [UIDevice currentDevice];
-        if ([[device model] isEqualToString:@"iPhone"] ) {
+        if ([[device model] isEqualToString:@"iPhone"] )
+        {
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
+                                                      data:[trackingDictionary copy]];
+            
             NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
         }

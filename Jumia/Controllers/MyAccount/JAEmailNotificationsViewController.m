@@ -9,6 +9,8 @@
 #import "JAEmailNotificationsViewController.h"
 #import "RIForm.h"
 #import "JAButtonWithBlur.h"
+#import "RICustomer.h"
+#import "JANewsletterComponent.h"
 
 @interface JAEmailNotificationsViewController ()
 <
@@ -56,8 +58,7 @@
                self.formHeight = CGRectGetMaxY(view.frame);
            }
            
-           self.height.constant = self.formHeight + 10;
-           [self.view updateConstraints];
+           self.height.constant = self.formHeight - 22;
            
            self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
            self.ctaView.backgroundColor = [UIColor clearColor];
@@ -74,6 +75,8 @@
            [self.buttonView addSubview:self.ctaView];
            
            [self hideLoading];
+           
+           [self.view updateConstraints];
            
        } failureBlock:^(NSArray *errorMessage) {
            
@@ -104,6 +107,39 @@
           parameters:[self.dynamicForm getValues]
         successBlock:^(id object)
      {
+         BOOL notSelectedNewsletter = YES;
+         
+         for (UIView *view in self.dynamicForm.formViews) {
+             if ([view isKindOfClass:[JACheckBoxWithOptionsComponent class]])
+             {
+                 if (((JACheckBoxWithOptionsComponent *)view).values.count > 0)
+                 {
+                     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                     [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
+                     [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                     
+                     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
+                                                               data:[trackingDictionary copy]];
+                     
+                     notSelectedNewsletter = NO;
+                     
+                     break;
+                 }
+             }
+         }
+         
+         if (notSelectedNewsletter)
+         {
+             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+             [trackingDictionary setValue:@"UnsubscribeNewsletter" forKey:kRIEventActionKey];
+             [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+             
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
+                                                       data:[trackingDictionary copy]];
+         }
+         
          [self.dynamicForm resetValues];
          
          [self hideLoading];

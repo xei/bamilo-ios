@@ -9,6 +9,7 @@
 #import "RICustomer.h"
 #import "RIAddress.h"
 #import "RIForm.h"
+#import "RINewsletterCategory.h"
 
 @interface RICustomer ()
 
@@ -31,7 +32,7 @@
 @dynamic addresses;
 @synthesize costumerRequestID;
 
-+ (NSString*)autoLogin:(void (^)())returnBlock
++ (NSString*)autoLogin:(void (^)(BOOL success))returnBlock
 {
     NSString *operationID = nil;
     
@@ -53,23 +54,13 @@
             
             [RICustomer loginCustomerByFacebookWithParameters:parameters
                                                  successBlock:^(id customer) {
-                                                     
-                                                     [[RITrackingWrapper sharedInstance] trackEvent:((RICustomer *)customer).idCustomer
-                                                                                              value:nil
-                                                                                             action:@"AutoLoginSuccess"
-                                                                                           category:@"Account"
-                                                                                               data:nil];
-                                                     
-                                                     returnBlock();
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         returnBlock(YES);
+                                                     });
                                                  } andFailureBlock:^(NSArray *errorObject) {
-                                                     
-                                                     [[RITrackingWrapper sharedInstance] trackEvent:nil
-                                                                                              value:nil
-                                                                                             action:@"AutoLoginFailed"
-                                                                                           category:@"Account"
-                                                                                               data:nil];
-                                                     
-                                                     returnBlock();
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         returnBlock(NO);
+                                                     });
                                                  }];
         }
         else if([@"normal" isEqualToString:customerObject.loginMethod])
@@ -82,36 +73,34 @@
                         [RIForm sendForm:form parameters:parameters
                             successBlock:^(id jsonObject)
                          {
-                             [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                                                      value:nil
-                                                                     action:@"AutoLoginSuccess"
-                                                                   category:@"Account"
-                                                                       data:nil];
-                             
-                             returnBlock();
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 returnBlock(YES);
+                             });
                          } andFailureBlock:^(id errorObject)
                          {
-                             [[RITrackingWrapper sharedInstance] trackEvent:nil
-                                                                      value:nil
-                                                                     action:@"AutoLoginFailed"
-                                                                   category:@"Account"
-                                                                       data:nil];
-                             
-                             returnBlock();
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 returnBlock(NO);
+                             });
                          }];
                     } failureBlock:^(NSArray *errorMessage)
                     {
-                        returnBlock();
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            returnBlock(NO);
+                        });
                     }];
         }
         else
         {
-            returnBlock();
+            dispatch_async(dispatch_get_main_queue(), ^{
+                returnBlock(NO);
+            });
         }
     }
     else
     {
-        returnBlock();
+        dispatch_async(dispatch_get_main_queue(), ^{
+            returnBlock(NO);
+        });
     }
     
     return operationID;
@@ -132,6 +121,21 @@
         return @"0";
     }
 }
+
++ (BOOL)wasSignup
+{
+    BOOL wasSignup = NO;
+    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
+    
+    if (customers.count > 0)
+    {
+        RICustomer *customer = (RICustomer *)customers[0];
+        wasSignup = [@"signup" isEqualToString:customer.loginMethod];
+    }
+    
+    return wasSignup;
+}
+
 
 #pragma mark - Facebook Login
 
@@ -447,6 +451,25 @@
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:customer];
     [[RIDataBaseWrapper sharedInstance] saveContext];
+}
+
+#pragma mark - Save newsletter preferences
+
++ (void)updateCustomerNewsletterWithJson:(NSDictionary *)json
+{
+    if ([json objectForKey:@"subscribed_categories"])
+    {
+        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+        
+        NSArray *newsletterArray = [json objectForKey:@"subscribed_categories"];
+        
+        for (NSDictionary *dic in newsletterArray)
+        {
+            RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
+            [RINewsletterCategory saveNewsLetterCategory:newsletter];
+        }
+    }
 }
 
 @end

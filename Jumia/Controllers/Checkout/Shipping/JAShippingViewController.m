@@ -66,11 +66,13 @@ UIPickerViewDelegate>
 {
     [super viewDidLoad];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[RICustomer getCustomerId]
-                                             value:nil
-                                            action:@"CheckoutShippingMethods"
-                                          category:@"NativeCheckout"
-                                              data:nil];
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"CheckoutShippingMethods" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                              data:[trackingDictionary copy]];
     
     self.navBarLayout.title = STRING_CHECKOUT;
     
