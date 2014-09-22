@@ -11,9 +11,14 @@
 @interface JANoConnectionView ()
 
 @property (weak, nonatomic) IBOutlet UIView *noNetworkView;
+@property (weak, nonatomic) IBOutlet UIButton *retryButton;
+// No internet connection
 @property (weak, nonatomic) IBOutlet UIImageView *noInternetImageView;
 @property (weak, nonatomic) IBOutlet UILabel *textLabel;
-@property (weak, nonatomic) IBOutlet UIButton *retryButton;
+// Generic error
+@property (weak, nonatomic) IBOutlet UIImageView *genericImageView;
+@property (weak, nonatomic) IBOutlet UILabel *genericErrorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *genericDetailLabel;
 
 @end
 
@@ -36,19 +41,41 @@ void(^retryBock)(BOOL dismiss);
     return nil;
 }
 
-- (void)setupNoConnectionView
+- (void)setupNoConnectionViewForNoInternetConnection:(BOOL)internetConnection
 {
-    self.backgroundColor = UIColorFromRGB(0xc8c8c8);
-    self.noNetworkView.layer.cornerRadius = 4.0f;
-    self.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    
     [self.retryButton setTitleColor:UIColorFromRGB(0x4e4e4e)
                            forState:UIControlStateNormal];
     
-    self.textLabel.text = @"No Network";
-
     [self.retryButton setTitle:@"Try Again"
                       forState:UIControlStateNormal];
+    
+    self.backgroundColor = UIColorFromRGB(0xc8c8c8);
+    self.noNetworkView.layer.cornerRadius = 4.0f;
+    self.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.genericErrorLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.genericDetailLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    
+    if (internetConnection)
+    {
+        self.textLabel.text = @"No Network";
+        
+        self.noInternetImageView.hidden = NO;
+        self.textLabel.hidden = NO;
+        self.genericImageView.hidden = YES;
+        self.genericErrorLabel.hidden = YES;
+        self.genericDetailLabel.hidden = YES;
+    }
+    else
+    {
+        self.noInternetImageView.hidden = YES;
+        self.textLabel.hidden = YES;
+        self.genericImageView.hidden = NO;
+        self.genericErrorLabel.hidden = NO;
+        self.genericDetailLabel.hidden = NO;
+        
+        self.genericErrorLabel.text = @"Oops!";
+        self.genericDetailLabel.text = @"Something seems broken. Please try again.";
+    }
 }
 
 - (IBAction)retryConnectionButtonTapped:(id)sender

@@ -11,7 +11,8 @@
 
 @interface JATrackMyOrderViewController ()
 <
-    UITextFieldDelegate
+    UITextFieldDelegate,
+    JANoConnectionViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
@@ -55,29 +56,68 @@
     
     if (self.orderTextField.text.length > 0)
     {
-        [self showLoading];
-        
-        [RIOrder trackOrderWithOrderNumber:self.orderTextField.text
-                          WithSuccessBlock:^(RITrackOrder *trackingOrder) {
-                              
-                              [self buildContentForOrder:trackingOrder];
-                              
-                              [self hideLoading];
-                              
-                          } andFailureBlock:^(NSArray *errorMessages) {
-                              
-                              [self builContentForNoResult];
-                              
-                              [self hideLoading];
-                              
-                          }];
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+            [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+            lostConnection.delegate = self;
+            [lostConnection setRetryBlock:^(BOOL dismiss) {
+                [self loadOrderDetails];
+            }];
+            
+            [self.view addSubview:lostConnection];
+        }
+        else
+        {
+            [self loadOrderDetails];
+        }
     }
     else
     {
-#warning add string here
         JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:@"Please enter the order ID."
+        [errorView setErrorTitle:STRING_ENTER_ORDER_ID
                         andAddTo:self];
+    }
+}
+
+- (void)loadOrderDetails
+{
+    [self showLoading];
+    
+    [RIOrder trackOrderWithOrderNumber:self.orderTextField.text
+                      WithSuccessBlock:^(RITrackOrder *trackingOrder) {
+                          
+                          [self buildContentForOrder:trackingOrder];
+                          
+                          [self hideLoading];
+                          
+                      } andFailureBlock:^(NSArray *errorMessages) {
+                          
+                          [self builContentForNoResult];
+                          
+                          [self hideLoading];
+                          
+                      }];
+}
+
+#pragma mark - No internet connection
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self loadOrderDetails];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self loadOrderDetails];
     }
 }
 

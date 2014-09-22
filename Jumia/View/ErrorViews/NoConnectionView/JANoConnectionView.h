@@ -22,7 +22,7 @@
 
 + (JANoConnectionView *)getNewJANoConnectionView;
 
-- (void)setupNoConnectionView;
+- (void)setupNoConnectionViewForNoInternetConnection:(BOOL)internetConnection;
 
 - (IBAction)retryConnectionButtonTapped:(id)sender;
 

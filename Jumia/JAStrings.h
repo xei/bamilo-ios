@@ -187,4 +187,7 @@
 
 #define STRING_MY_ORDER_LABEL RILocalizedString(@"my_order_label", nil)
 #define STRING_MY_ORDER_PAYMENT RILocalizedString(@"my_order_payment", nil)
+
+#define STRING_ENTER_ORDER_ID RILocalizedString(@"enter_order_id", nil) // Not ranslated
+
 #endif

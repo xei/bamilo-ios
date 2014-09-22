@@ -40,9 +40,9 @@
         
         for (UIView *view in viewController.view.subviews)
         {
-            if ([view isKindOfClass:[JASuccessView class]])
+            if ([view isKindOfClass:[JAErrorView class]])
             {
-                [((JASuccessView *)view) udpateViewWithNewTitle:title];
+                [((JAErrorView *)view) udpateViewWithNewTitle:title];
                 findedSuccessView = YES;
                 break;
             }
