@@ -30,6 +30,8 @@
 @property (strong, nonatomic) UIPickerView *sizePicker;
 @property (nonatomic, strong) NSMutableArray* chosenSimpleNames;
 
+@property (strong, nonatomic) UIButton *backupButton; // for the retry connection, is necessary to store the button
+
 @end
 
 @implementation JARecentlyViewedViewController
@@ -197,9 +199,51 @@
     }
 }
 
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self finishAddToCartWithButton:self.backupButton];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self finishAddToCartWithButton:self.backupButton];
+    }
+}
+
 #pragma mark - Button Actions
 
 - (void)addToCartPressed:(UIButton*)button;
+{
+    self.backupButton = button;
+    
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self finishAddToCartWithButton:button];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self finishAddToCartWithButton:button];
+    }
+}
+
+- (void)finishAddToCartWithButton:(UIButton *)button
 {
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     
@@ -237,7 +281,7 @@
                       [RIProduct removeFromRecentlyViewed:product];
                       
                       [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
-
+                          
                           self.productsArray = recentlyViewedProducts;
                           self.chosenSimpleNames = [NSMutableArray new];
                           for (int i = 0; i < self.productsArray.count; i++) {
@@ -246,7 +290,7 @@
                           [self.collectionView reloadData];
                           
                       } andFailureBlock:^(NSArray *error) {
-
+                          
                       }];
                       
                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -269,27 +313,22 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                  message:STRING_ITEM_WAS_ADDED_TO_CART
-                                                 delegate:nil
-                                        cancelButtonTitle:nil
-                                        otherButtonTitles:STRING_OK, nil] show];
-                      
                       [self hideLoading];
+                      
+                      JASuccessView *success = [JASuccessView getNewJASuccessView];
+                      [success setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
+                                      andAddTo:self];
                       
                   } andFailureBlock:^(NSArray *errorMessages) {
                       
-                      [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                  message:STRING_ERROR_ADDING_TO_CART
-                                                 delegate:nil
-                                        cancelButtonTitle:nil
-                                        otherButtonTitles:STRING_OK, nil] show];
-                      
                       [self hideLoading];
+                      
+                      JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                      [errorView setErrorTitle:STRING_ERROR_ADDING_TO_CART
+                                      andAddTo:self];
                       
                   }];
 }
-
 
 - (void)clearAllButtonPressed
 {

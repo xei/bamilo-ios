@@ -152,11 +152,10 @@
                                            self.backupFrame = self.collectionView.frame;
                                            [self addUndefinedSearchView:undefSearchTerm];
                                        } else {
-                                           [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                                       message:@"Error processing request temp"
-                                                                      delegate:nil
-                                                             cancelButtonTitle:nil
-                                                             otherButtonTitles:STRING_OK, nil] show];
+
+                                           JASuccessView *success = [JASuccessView getNewJASuccessView];
+                                           [success setSuccessTitle:STRING_ERROR
+                                                           andAddTo:self];
                                        }
                                    }];
     }
@@ -484,11 +483,25 @@
                                         
                                         
                                         [self hideLoading];
+                                        
+#warning confirm this strings
+                                        JASuccessView *success = [JASuccessView getNewJASuccessView];
+                                        [success setSuccessTitle:@"Item added to wish list."
+                                                        andAddTo:self];
+                                        
                                     } andFailureBlock:^(NSArray *error) {
                                         [self hideLoading];
+                                        
+                                        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                                        [errorView setErrorTitle:STRING_ERROR
+                                                        andAddTo:self];
                                     }];
                                 } andFailureBlock:^(NSArray *error) {
                                     [self hideLoading];
+                                    
+                                    JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                                    [errorView setErrorTitle:STRING_ERROR
+                                                    andAddTo:self];
                                 }];
     } else {
         [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
@@ -512,8 +525,17 @@
             
             //update favoriteProducts
             [self hideLoading];
+            
+            JASuccessView *success = [JASuccessView getNewJASuccessView];
+            [success setSuccessTitle:@"Item removed from wish list."
+                            andAddTo:self];
+            
         } andFailureBlock:^(NSArray *error) {
             [self hideLoading];
+            
+            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+            [errorView setErrorTitle:STRING_ERROR
+                            andAddTo:self];
         }];
     }
 }

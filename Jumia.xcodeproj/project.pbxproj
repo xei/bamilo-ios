@@ -13,10 +13,13 @@
 		4A01EE63199259D1005F5AD1 /* JAPDVGalleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A01EE62199259D1005F5AD1 /* JAPDVGalleryView.xib */; };
 		4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */; };
 		4A1270FB1987EFB0004142F5 /* JAMenuNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1270FA1987EFB0004142F5 /* JAMenuNavigationBar.m */; };
-		4A18856119B8A1D4003337FC /* JAShareActivityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A18856019B8A1D4003337FC /* JAShareActivityProvider.m */; };
 		4A18856419B8A368003337FC /* JAActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A18856319B8A368003337FC /* JAActivityViewController.m */; };
 		4A1892D219939A0C0036F327 /* JAReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D119939A0C0036F327 /* JAReviewCell.m */; };
 		4A1892D51993BCC90036F327 /* JANewRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D41993BCC90036F327 /* JANewRatingViewController.m */; };
+		4A19C51019D018F10070D194 /* JAShareActivityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */; };
+		4A19C51419D019100070D194 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C51319D019100070D194 /* Reachability.m */; };
+		4A19C51919D01ABE0070D194 /* JANoConnectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C51819D01ABE0070D194 /* JANoConnectionView.m */; };
+		4A19C51B19D01B4D0070D194 /* JANoConnectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A19C51A19D01B4D0070D194 /* JANoConnectionView.xib */; };
 		4A1C00D81987F2EB00A0109E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302FB19811F2200F71726 /* UIKit.framework */; };
 		4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1C8E3D199B789D0045BD8D /* RIFieldDataSetComponent.m */; };
 		4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */; };
@@ -63,6 +66,10 @@
 		4AE99A0219CAE3B300F28A7D /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AE99A0119CAE3B300F28A7D /* JANewsletterComponent.xib */; };
 		4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */; };
 		4AFC7F94199BC124007D67F4 /* JASignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F93199BC124007D67F4 /* JASignupViewController.m */; };
+		8C38E18319CF164A0007F6F9 /* JASuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C38E18119CF164A0007F6F9 /* JASuccessView.m */; };
+		8C38E18419CF164A0007F6F9 /* JASuccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C38E18219CF164A0007F6F9 /* JASuccessView.xib */; };
+		8C38E18719CF16F50007F6F9 /* JAErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C38E18619CF16F50007F6F9 /* JAErrorView.m */; };
+		8C38E18919CF170F0007F6F9 /* JAErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C38E18819CF170F0007F6F9 /* JAErrorView.xib */; };
 		B5007AC219A4E8EC0024035A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007ABE19A4E8EC0024035A /* HockeySDK.framework */; };
 		B5007AC319A4E8EC0024035A /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */; };
 		B5007AC419A4E8EC0024035A /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */; };
@@ -336,14 +343,19 @@
 		4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASubCategoriesViewController.m; sourceTree = "<group>"; };
 		4A1270F91987EFB0004142F5 /* JAMenuNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMenuNavigationBar.h; sourceTree = "<group>"; };
 		4A1270FA1987EFB0004142F5 /* JAMenuNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMenuNavigationBar.m; sourceTree = "<group>"; };
-		4A18855F19B8A1D4003337FC /* JAShareActivityProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAShareActivityProvider.h; sourceTree = "<group>"; };
-		4A18856019B8A1D4003337FC /* JAShareActivityProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAShareActivityProvider.m; sourceTree = "<group>"; };
 		4A18856219B8A368003337FC /* JAActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAActivityViewController.h; sourceTree = "<group>"; };
 		4A18856319B8A368003337FC /* JAActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAActivityViewController.m; sourceTree = "<group>"; };
 		4A1892D019939A0C0036F327 /* JAReviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAReviewCell.h; sourceTree = "<group>"; };
 		4A1892D119939A0C0036F327 /* JAReviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAReviewCell.m; sourceTree = "<group>"; };
 		4A1892D31993BCC90036F327 /* JANewRatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewRatingViewController.h; sourceTree = "<group>"; };
 		4A1892D41993BCC90036F327 /* JANewRatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewRatingViewController.m; sourceTree = "<group>"; };
+		4A19C50E19D018F10070D194 /* JAShareActivityProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAShareActivityProvider.h; path = Utils/JAShareActivityProvider.h; sourceTree = "<group>"; };
+		4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAShareActivityProvider.m; path = Utils/JAShareActivityProvider.m; sourceTree = "<group>"; };
+		4A19C51219D019100070D194 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		4A19C51319D019100070D194 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		4A19C51719D01ABE0070D194 /* JANoConnectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANoConnectionView.h; sourceTree = "<group>"; };
+		4A19C51819D01ABE0070D194 /* JANoConnectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANoConnectionView.m; sourceTree = "<group>"; };
+		4A19C51A19D01B4D0070D194 /* JANoConnectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANoConnectionView.xib; sourceTree = "<group>"; };
 		4A1C8E3C199B789D0045BD8D /* RIFieldDataSetComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldDataSetComponent.h; sourceTree = "<group>"; };
 		4A1C8E3D199B789D0045BD8D /* RIFieldDataSetComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIFieldDataSetComponent.m; sourceTree = "<group>"; };
 		4A2FD83F199119D900C65C1D /* JAPDVProductInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVProductInfo.h; sourceTree = "<group>"; };
@@ -424,6 +436,12 @@
 		4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignInViewController.m; sourceTree = "<group>"; };
 		4AFC7F92199BC124007D67F4 /* JASignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignupViewController.h; sourceTree = "<group>"; };
 		4AFC7F93199BC124007D67F4 /* JASignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignupViewController.m; sourceTree = "<group>"; };
+		8C38E18019CF164A0007F6F9 /* JASuccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASuccessView.h; sourceTree = "<group>"; };
+		8C38E18119CF164A0007F6F9 /* JASuccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASuccessView.m; sourceTree = "<group>"; };
+		8C38E18219CF164A0007F6F9 /* JASuccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JASuccessView.xib; sourceTree = "<group>"; };
+		8C38E18519CF16F50007F6F9 /* JAErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAErrorView.h; sourceTree = "<group>"; };
+		8C38E18619CF16F50007F6F9 /* JAErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAErrorView.m; sourceTree = "<group>"; };
+		8C38E18819CF170F0007F6F9 /* JAErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAErrorView.xib; sourceTree = "<group>"; };
 		B5007ABE19A4E8EC0024035A /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
 		B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
@@ -921,6 +939,26 @@
 			path = ReviewCell;
 			sourceTree = "<group>";
 		};
+		4A19C51119D019100070D194 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				4A19C51219D019100070D194 /* Reachability.h */,
+				4A19C51319D019100070D194 /* Reachability.m */,
+			);
+			name = Reachability;
+			path = Utils/Reachability;
+			sourceTree = "<group>";
+		};
+		4A19C51619D01AAD0070D194 /* NoConnectionView */ = {
+			isa = PBXGroup;
+			children = (
+				4A19C51719D01ABE0070D194 /* JANoConnectionView.h */,
+				4A19C51819D01ABE0070D194 /* JANoConnectionView.m */,
+				4A19C51A19D01B4D0070D194 /* JANoConnectionView.xib */,
+			);
+			path = NoConnectionView;
+			sourceTree = "<group>";
+		};
 		4A3719BA19C05F3C002D4199 /* UndefinedSearchView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1047,6 +1085,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8C38E17F19CF164A0007F6F9 /* ErrorViews */,
 				B530D56E19C199690052FEDA /* CheckoutForms */,
 				4A3719BA19C05F3C002D4199 /* UndefinedSearchView */,
 				B59DCA6719B851F700DE7960 /* Buttons */,
@@ -1186,6 +1225,20 @@
 			path = SignInViewController;
 			sourceTree = "<group>";
 		};
+		8C38E17F19CF164A0007F6F9 /* ErrorViews */ = {
+			isa = PBXGroup;
+			children = (
+				4A19C51619D01AAD0070D194 /* NoConnectionView */,
+				8C38E18019CF164A0007F6F9 /* JASuccessView.h */,
+				8C38E18119CF164A0007F6F9 /* JASuccessView.m */,
+				8C38E18219CF164A0007F6F9 /* JASuccessView.xib */,
+				8C38E18519CF16F50007F6F9 /* JAErrorView.h */,
+				8C38E18619CF16F50007F6F9 /* JAErrorView.m */,
+				8C38E18819CF170F0007F6F9 /* JAErrorView.xib */,
+			);
+			path = ErrorViews;
+			sourceTree = "<group>";
+		};
 		B5007ABD19A4E8EC0024035A /* HockeySDK.embeddedframework */ = {
 			isa = PBXGroup;
 			children = (
@@ -1207,10 +1260,11 @@
 		B50B03A8198A883D002046DF /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4A19C51119D019100070D194 /* Reachability */,
+				4A19C50E19D018F10070D194 /* JAShareActivityProvider.h */,
+				4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */,
 				B50B03A9198A8861002046DF /* JAUtils.h */,
 				B50B03AA198A8861002046DF /* JAUtils.m */,
-				4A18855F19B8A1D4003337FC /* JAShareActivityProvider.h */,
-				4A18856019B8A1D4003337FC /* JAShareActivityProvider.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -2306,6 +2360,7 @@
 			files = (
 				CEC3F71219A5FBF800DE12F6 /* JAFavoriteListCell.xib in Resources */,
 				B501E88E19BEF7DE00BE51DD /* JAPickupStationInfoCell.xib in Resources */,
+				4A19C51B19D01B4D0070D194 /* JANoConnectionView.xib in Resources */,
 				B58767FF19BB62B3001651D6 /* JAShippingCell.xib in Resources */,
 				B5A3023A19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
 				CEDEB9BA199BA8FA0022BAB5 /* slider-default7-handle@2x.png in Resources */,
@@ -2373,10 +2428,12 @@
 				CEDEB9B1199BA8FA0022BAB5 /* slider-default-handle.png in Resources */,
 				4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */,
 				B5A3024419811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
+				8C38E18419CF164A0007F6F9 /* JASuccessView.xib in Resources */,
 				B5A3024019811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */,
 				CE2F577019913B6D000A9E09 /* JACatalogListCell.xib in Resources */,
 				4A01EE4B19922736005F5AD1 /* JAPDVPicker.xib in Resources */,
 				B5A3024F19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
+				8C38E18919CF170F0007F6F9 /* JAErrorView.xib in Resources */,
 				B5A3024B19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
 				CEDEB9BB199BA8FA0022BAB5 /* slider-default7-track.png in Resources */,
 				B5A3023419811E8A00F71726 /* A4S.bundle in Resources */,
@@ -2425,7 +2482,6 @@
 				B5A302D719811E9200F71726 /* RIError.m in Sources */,
 				CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */,
 				B50B03A6198A544A002046DF /* JAShippingViewController.m in Sources */,
-				4A18856119B8A1D4003337FC /* JAShareActivityProvider.m in Sources */,
 				B510B01219AE466B00A9754A /* JACheckBoxComponent.m in Sources */,
 				B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */,
 				CED30C24199CAA5C00C67F4B /* JAGenericFilterViewController.m in Sources */,
@@ -2449,6 +2505,7 @@
 				B5C1E33719BA1E73009C422C /* UIImageView+JA.m in Sources */,
 				B59D196719C333F4004843C3 /* JAThanksViewController.m in Sources */,
 				B5FBD58319CAF22F00BD9510 /* AIPackageBuilder.m in Sources */,
+				4A19C51019D018F10070D194 /* JAShareActivityProvider.m in Sources */,
 				B5A302D519811E9200F71726 /* RICountry.m in Sources */,
 				4A944FF51992805100C02734 /* RIProductRatings.m in Sources */,
 				B5A3025E19811E8A00F71726 /* UIImageView+WebCache.m in Sources */,
@@ -2461,6 +2518,7 @@
 				4AE865C019C9D7F100406159 /* JAEmailNotificationsViewController.m in Sources */,
 				CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */,
 				B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */,
+				4A19C51919D01ABE0070D194 /* JANoConnectionView.m in Sources */,
 				B5FBD58719CAF22F00BD9510 /* AITimer.m in Sources */,
 				CE2F576E19913B33000A9E09 /* JACatalogListCell.m in Sources */,
 				4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */,
@@ -2536,6 +2594,7 @@
 				CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */,
 				B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */,
 				B530D57119C1998B0052FEDA /* JACheckoutForms.m in Sources */,
+				8C38E18719CF16F50007F6F9 /* JAErrorView.m in Sources */,
 				B510B01519AE466B00A9754A /* JARadioComponent.m in Sources */,
 				B5FBD58419CAF22F00BD9510 /* AIPackageHandler.m in Sources */,
 				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
@@ -2583,10 +2642,12 @@
 				CEE91B9C1989065A0078DFC9 /* JATeaserPageView.m in Sources */,
 				4A4ABF0C198B903B00342D92 /* JACountryCell.m in Sources */,
 				4A39212719891F2D00B70A9C /* JATrackMyOrderViewController.m in Sources */,
+				4A19C51419D019100070D194 /* Reachability.m in Sources */,
 				CE44586B198BD20A00CE7E8D /* JAMainTeaserView.m in Sources */,
 				B59DCA6F19B8712500DE7960 /* JAAddressCell.m in Sources */,
 				B5A302C719811E9200F71726 /* RILanguage.m in Sources */,
 				B5A302E219811E9200F71726 /* RIAd4PushTracker.m in Sources */,
+				8C38E18319CF164A0007F6F9 /* JASuccessView.m in Sources */,
 				B5A302E419811E9200F71726 /* RIBugSenseTracker.m in Sources */,
 				B5A302DF19811E9200F71726 /* RIOpenURLHandler.m in Sources */,
 				B5FBD57919CAF22F00BD9510 /* Adjust.m in Sources */,

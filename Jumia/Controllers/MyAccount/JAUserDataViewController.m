@@ -116,11 +116,10 @@
            
            [self hideLoading];
            
-           [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                       message:STRING_EDIT_ADDRESS
-                                      delegate:nil
-                             cancelButtonTitle:nil
-                             otherButtonTitles:STRING_OK, nil] show];
+           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+           [errorView setErrorTitle:STRING_EDIT_ADDRESS
+                           andAddTo:self];
+
        }];
 }
 
@@ -168,11 +167,9 @@
          
          [self hideLoading];
          
-         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                     message:STRING_CHANGED_PASSWORD_SUCCESS
-                                    delegate:nil
-                           cancelButtonTitle:nil
-                           otherButtonTitles:STRING_OK, nil] show];
+         JASuccessView *success = [JASuccessView getNewJASuccessView];
+         [success setSuccessTitle:STRING_CHANGED_PASSWORD_SUCCESS
+                         andAddTo:self];
          
      } andFailureBlock:^(id errorObject)
      {
