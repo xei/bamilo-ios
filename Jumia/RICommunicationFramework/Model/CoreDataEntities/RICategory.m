@@ -117,6 +117,28 @@
     return newCategories;
 }
 
++ (NSString*)getTree:(NSString*)categoryId
+{
+    NSString *categoryTree = @"";
+    if(VALID_NOTEMPTY(categoryId, NSString))
+    {
+        NSArray* savedCategoryArray = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"uid" andPropertyValue:categoryId];
+        
+        if(VALID_NOTEMPTY(savedCategoryArray, NSArray))
+        {
+            RICategory *savedCategory = [savedCategoryArray objectAtIndex:0];
+            categoryTree = savedCategory.name;
+            
+            RICategory *parentCategory = savedCategory.parent;
+            while (VALID_NOTEMPTY(parentCategory, RICategory))
+            {
+                categoryTree = [NSString stringWithFormat:@"%@,%@", parentCategory.name, categoryTree];
+                parentCategory = parentCategory.parent;
+            }
+        }
+    }
+    return categoryTree;
+}
 
 + (RICategory *)parseCategory:(NSDictionary *)category
 {

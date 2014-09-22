@@ -77,6 +77,8 @@
 
 // Preferences
 #define kDidFirstBuyKey @"did_first_buy"
+#define kNumberOfSessions @"amount_sessions"
+#define kSessionDate @"session_date"
 
 // Colors
 

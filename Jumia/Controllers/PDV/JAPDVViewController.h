@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Social/Social.h>
 #import "RIProduct.h"
+#import "RICategory.h"
 
 @protocol JAPDVViewControllerDelegate <NSObject>
 
@@ -20,6 +21,7 @@
 
 @property (strong, nonatomic) RIProduct *product;
 @property (strong, nonatomic) NSString* productUrl;
+@property (strong, nonatomic) RICategory *category;
 @property (assign, nonatomic) BOOL fromCatalogue;
 @property (strong, nonatomic) NSArray *arrayWithRelatedItems;
 @property (strong, nonatomic) NSString *previousCategory;
