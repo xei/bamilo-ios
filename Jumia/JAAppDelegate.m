@@ -10,6 +10,8 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <HockeySDK/HockeySDK.h>
 
+#define kSessionDuration 1800.0f
+
 @interface JAAppDelegate ()
 
 @end
@@ -43,6 +45,8 @@
     
     [FBLoginView class];
     
+    [self checkSession];
+    
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xeaeaea)];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
@@ -68,6 +72,31 @@
     return YES;
 }
 
+- (void)checkSession
+{
+    NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
+    if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
+    {
+        NSInteger numberOfSessionsInteger = [numberOfSessions integerValue];
+        NSDate *startSessionDate = [[NSUserDefaults standardUserDefaults] objectForKey:kSessionDate];
+        if(VALID_NOTEMPTY(startSessionDate, NSDate))
+        {
+            CGFloat timeSinceStartOfSession = [startSessionDate timeIntervalSinceNow];
+            if(fabs(timeSinceStartOfSession) > kSessionDuration)
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kSessionDate];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:numberOfSessionsInteger + 1] forKey:kNumberOfSessions];
+            }
+        }
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kSessionDate];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:1] forKey:kNumberOfSessions];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     
@@ -80,7 +109,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    
+    [self checkSession];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

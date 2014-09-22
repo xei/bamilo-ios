@@ -10,6 +10,8 @@
 #import "RITeaserCategory.h"
 #import "JATeaserPageView.h"
 #import "JATeaserView.h"
+#import "JAUtils.h"
+#import "RICustomer.h"
 
 @interface JAHomeViewController ()
 
@@ -27,6 +29,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+
+    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
+    if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
+    {
+        [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
+    }
+    
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+    [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+    [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookHome]
+                                              data:[trackingDictionary copy]];
     
     self.teaserCategoryScrollView.delegate = self;
     self.teaserPagesScrollView.pagingEnabled = YES;

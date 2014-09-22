@@ -115,16 +115,45 @@
                                   sortingMethod:self.sortingMethod
                                    successBlock:^(NSArray *results) {
                                        
-                                       if (!self.isFirstLoadTracking) {
+                                       // Track events only in the first load of the products
+                                       if (!self.isFirstLoadTracking)
+                                       {
                                            self.isFirstLoadTracking = YES;
                                            
+                                           NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                           NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
                                            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                           
                                            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
                                            [trackingDictionary setValue:@"Search" forKey:kRIEventActionKey];
                                            [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
                                            [trackingDictionary setValue:@(results.count) forKey:kRIEventValueKey];
+                                           [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                           [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                           [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+                                           [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                                           [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                           [trackingDictionary setValue:self.searchString forKey:kRIEventKeywordsKey];
                                            
                                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
+                                                                                     data:[trackingDictionary copy]];
+                                           
+                                           trackingDictionary = [[NSMutableDictionary alloc] init];
+                                           NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
+                                           if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
+                                           {
+                                               [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
+                                           }
+                                           
+                                           [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                           [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                           [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+                                           [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                                           [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                           
+                                           [trackingDictionary setValue:self.searchString forKey:kRIEventQueryKey];
+                                           
+                                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
                                                                                      data:[trackingDictionary copy]];
                                        }
                                        
@@ -172,12 +201,13 @@
             if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.apiUrl, NSString)) {
                 urlToUse = self.filterCategory.apiUrl;
             }
+            
             [RIProduct getProductsWithCatalogUrl:urlToUse
                                    sortingMethod:self.sortingMethod
                                             page:[self getCurrentPage]+1
                                         maxItems:JACatalogViewControllerMaxProducts
                                          filters:self.filtersArray
-                                    successBlock:^(NSArray* products, NSString* productCount, NSArray* filters, NSArray* categories) {
+                                    successBlock:^(NSArray* products, NSString* productCount, NSArray* filters, NSString *categoryId, NSArray* categories) {
                                         
                                         self.navBarLayout.subTitle = productCount;
                                         [self reloadNavBar];
@@ -186,12 +216,77 @@
                                             self.filtersArray = filters;
                                         }
                                         
+                                        RICategory *category = nil;
                                         if (NOTEMPTY(categories)) {
                                             self.categoriesArray = categories;
+                                            category = [categories objectAtIndex:0];
                                         }
                                         
                                         if (0 == products.count || JACatalogViewControllerMaxProducts > products.count) {
                                             self.loadedEverything = YES;
+                                        }
+                                        
+                                        // Track events only in the first load of the products
+                                        if (!self.isFirstLoadTracking)
+                                        {
+                                            self.isFirstLoadTracking = YES;
+                                            
+                                            NSMutableArray *productsToTrack = [[NSMutableArray alloc] init];
+                                            for(RIProduct *product in products)
+                                            {
+                                                [productsToTrack addObject:[product sku]];
+                                                if([productsToTrack count] == 3)
+                                                {
+                                                    break;
+                                                }
+                                            }
+                                            
+                                            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                            NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+                                            
+                                            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                            
+                                            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                            [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+                                            [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                                            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                            [trackingDictionary setValue:productsToTrack forKey:kRIEventSkusKey];
+                                            
+                                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewListing]
+                                                                                      data:[trackingDictionary copy]];
+                                            
+                                            NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
+                                            if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
+                                            {
+                                                [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
+                                            }
+                                            
+                                            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                            [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+                                            [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                                            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+
+                                            if(VALID_NOTEMPTY(self.category, RICategory))
+                                            {
+                                                [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+                                                [trackingDictionary setValue:self.category.uid forKey:kRIEventCategoryIdKey];
+                                                
+                                                [trackingDictionary setValue:[RICategory getTree:self.category.uid] forKey:kRIEventTreeKey];
+                                            }
+                                            else if(VALID_NOTEMPTY(categoryId, NSString))
+                                            {
+                                                [trackingDictionary setValue:category.name forKey:kRIEventCategoryNameKey];
+                                                [trackingDictionary setValue:categoryId forKey:kRIEventCategoryIdKey];
+                                                
+                                                [trackingDictionary setValue:[RICategory getTree:categoryId] forKey:kRIEventTreeKey];
+                                            }
+                                            
+                                            [trackingDictionary setValue:productsToTrack forKey:kRIEventSkusKey];
+                                            
+                                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing]
+                                                                                      data:[trackingDictionary copy]];
                                         }
                                         
                                         [self.productsArray addObjectsFromArray:products];
@@ -356,8 +451,9 @@
                                                           userInfo:@{ @"url" : product.url,
                                                                       @"previousCategory" : temp,
                                                                       @"fromCatalog" : @"YES",
-                                                                      @"relatedItems" : tempArray ,
-                                                                      @"delegate": self }];
+                                                                      @"relatedItems" : tempArray,
+                                                                      @"delegate" : self,
+                                                                      @"category" : self.category}];
     }
     else
     {
@@ -575,6 +671,7 @@
     pdv.fromCatalogue = NO;
     pdv.previousCategory = self.category.name;
     pdv.delegate = self;
+    pdv.category = self.category;
     
     [self.navigationController pushViewController:pdv
                                          animated:YES];

@@ -543,6 +543,11 @@
             pdv.previousCategory = STRING_HOME;
         }
         
+        if ([notification.userInfo objectForKey:@"category"])
+        {
+            pdv.category = [notification.userInfo objectForKey:@"category"];
+        }
+        
         // For deeplink
         if ([notification.userInfo objectForKey:@"size"])
         {
