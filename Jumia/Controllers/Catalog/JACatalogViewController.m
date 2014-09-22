@@ -504,7 +504,7 @@
                                                     andAddTo:self];
                                 }];
     } else {
-        [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+        [RIProduct removeFromFavorites:product successBlock:^(void) {
             
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];

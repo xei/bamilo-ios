@@ -879,7 +879,7 @@
             
         }];
     } else {
-        [RIProduct removeFromFavorites:self.product successBlock:^(NSArray *favoriteProducts) {
+        [RIProduct removeFromFavorites:self.product successBlock:^(void) {
             //update favoriteProducts
             //[self hideLoading];
             

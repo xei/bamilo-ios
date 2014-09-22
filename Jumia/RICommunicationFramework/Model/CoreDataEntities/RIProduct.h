@@ -167,7 +167,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *
  */
 + (void)removeFromFavorites:(RIProduct*)product
-               successBlock:(void (^)(NSArray* favoriteProducts))successBlock
+               successBlock:(void (^)(void))successBlock
             andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 /**

@@ -319,7 +319,7 @@
                           
                       }];
         
-        [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+        [RIProduct removeFromFavorites:product successBlock:^(void) {
             
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
@@ -376,7 +376,7 @@
     __block NSNumber *tempPrice = product.price;
     
     [self showLoading];
-    [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+    [RIProduct removeFromFavorites:product successBlock:^(void) {
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:tempSku forKey:kRIEventLabelKey];
@@ -395,8 +395,12 @@
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                   data:[trackingDictionary copy]];
         
-        [self hideLoading];
-        [self updateListsWith:favoriteProducts];
+        [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+            [self updateListsWith:favoriteProducts];
+            [self hideLoading];
+        } andFailureBlock:^(NSArray *error) {
+            [self hideLoading];
+        }];
     } andFailureBlock:^(NSArray *error) {
         [self hideLoading];
     }];
@@ -470,7 +474,7 @@
                                         cancelButtonTitle:nil
                                         otherButtonTitles:STRING_OK, nil] show];
                       
-                      [RIProduct removeFromFavorites:product successBlock:^(NSArray *favoriteProducts) {
+                      [RIProduct removeFromFavorites:product successBlock:^(void) {
                           
                           NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                           [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
@@ -488,9 +492,13 @@
                           
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                                     data:[trackingDictionary copy]];
-                          
-                          [self updateListsWith:favoriteProducts];
-                          [self hideLoading];
+                        
+                          [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+                              [self updateListsWith:favoriteProducts];
+                              [self hideLoading];
+                          } andFailureBlock:^(NSArray *error) {
+                              [self hideLoading];
+                          }];
                       } andFailureBlock:^(NSArray *error) {
                           [self hideLoading];
                       }];
