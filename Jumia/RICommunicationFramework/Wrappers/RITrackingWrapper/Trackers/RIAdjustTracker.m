@@ -1,3 +1,4 @@
+
 //
 //  RIAdjustTracker.m
 //  Jumia
@@ -19,10 +20,19 @@
 #define kAdjustEventSkusKey             @"skus"
 #define kAdjustEventTransactionIdKey    @"transaction_id"
 #define kAdjustEventGenderKey           @"gender"
+#define kAdjustAmountTransactionsKey    @"amount_transactions"
+#define kAdjustAmountSessionsKey        @"amount_sessions"
+#define kAdjustEventCategoryNameKey     @"category"
+#define kAdjustEventCategoryIdKey       @"category_id"
+#define kAdjustEventTreeKey             @"tree"
+#define kAdjustEventQueryKey            @"query"
 #define kAdjustEventProductKey          @"product"
 #define kAdjustEventProductsKey         @"products"
 #define kAdjustEventKeywordsKey         @"keywords"
 #define kAdjustEventNewCustomerKey      @"new_customer"
+#define kAdjustEventDiscountKey         @"discount"
+#define kAdjustEventBrandKey            @"brand"
+#define kAdjustEventSizeKey             @"size"
 
 NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
@@ -33,7 +43,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
 - (id)init
 {
-    NSLog(@"Initializing BugSense tracker");
+    RIDebugLog(@"Initializing Adjust tracker");
     
     if ((self = [super init])) {
         self.queue = [[NSOperationQueue alloc] init];
@@ -108,7 +118,6 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     NSLog(@"Adjust - Tracking event = %@, data %@", eventType, data);
     if([self.registeredEvents containsObject:eventType])
     {
-        NSLog(@"Adjust - Event registered");
         NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
         [parameters setObject:[data objectForKey:kRILaunchEventAppVersionDataKey] forKey:kAdjustEventAppVersionDataKey];
         [parameters setObject:[data objectForKey:kRILaunchEventDeviceModelDataKey] forKey:kAdjustEventDeviceModelDataKey];
@@ -118,6 +127,96 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         if(VALID_NOTEMPTY(userId, NSString) && ![@"0" isEqualToString:userId])
         {
             [parameters setObject:[data objectForKey:kRIEventUserIdKey]  forKey:kAdjustEventUserIdKey];
+        }
+        
+        NSString *sku = [data objectForKey:kRIEventSkuKey];
+        if(VALID_NOTEMPTY(sku, NSString))
+        {
+            [parameters setObject:sku forKey:kAdjustEventSkuKey];
+        }
+        
+        NSString *currencyCode = [data objectForKey:kRIEventCurrencyCodeKey];
+        if(VALID_NOTEMPTY(currencyCode, NSString))
+        {
+            [parameters setObject:currencyCode forKey:kAdjustEventCurrencyCodeKey];
+        }
+        
+        NSString *price = [data objectForKey:kRIEventPriceKey];
+        if(VALID_NOTEMPTY(price, NSString))
+        {
+            [parameters setObject:price forKey:kAdjustEventPriceKey];
+        }
+        
+        NSString *numberOfSessions = [data objectForKey:kRIEventAmountSessions];
+        if(VALID_NOTEMPTY(numberOfSessions, NSString))
+        {
+            [parameters setObject:numberOfSessions forKey:kAdjustAmountSessionsKey];
+        }
+        
+        NSString *gender = [data objectForKey:kRIEventGenderKey];
+        if(VALID_NOTEMPTY(gender, NSString))
+        {
+            [parameters setObject:gender forKey:kAdjustEventGenderKey];
+        }
+        
+        NSString *categoryName = [data objectForKey:kRIEventCategoryNameKey];
+        if(VALID_NOTEMPTY(categoryName, NSString))
+        {
+            [parameters setObject:categoryName forKey:kAdjustEventCategoryNameKey];
+        }
+        
+        NSArray *skus = [data objectForKey:kRIEventSkusKey];
+        if(VALID_NOTEMPTY(skus, NSArray))
+        {
+            [parameters setObject:[skus componentsJoinedByString:@","] forKey:kAdjustEventSkusKey];
+        }
+        
+        NSString *categoryId = [data objectForKey:kRIEventCategoryIdKey];
+        if(VALID_NOTEMPTY(categoryId, NSString))
+        {
+            [parameters setObject:categoryId forKey:kAdjustEventCategoryIdKey];
+        }
+        
+        NSString *categoryTree = [data objectForKey:kRIEventTreeKey];
+        if(VALID_NOTEMPTY(categoryTree, NSString))
+        {
+            [parameters setObject:categoryTree forKey:kAdjustEventTreeKey];
+        }
+        
+        NSString *query = [data objectForKey:kRIEventQueryKey];
+        if(VALID_NOTEMPTY(query, NSString))
+        {
+            [parameters setObject:query forKey:kAdjustEventQueryKey];
+        }
+        
+        NSString *product = [data objectForKey:kRIEventProductKey];
+        if(VALID_NOTEMPTY(product, NSString))
+        {
+            [parameters setObject:product forKey:kAdjustEventProductKey];
+        }
+        
+        NSString *keywords = [data objectForKey:kRIEventKeywordsKey];
+        if(VALID_NOTEMPTY(keywords, NSString))
+        {
+            [parameters setObject:keywords forKey:kAdjustEventKeywordsKey];
+        }
+        
+        NSString *brand = [data objectForKey:kRIEventBrandKey];
+        if(VALID_NOTEMPTY(brand, NSString))
+        {
+            [parameters setObject:brand forKey:kAdjustEventBrandKey];
+        }
+        
+        NSString *discount = [data objectForKey:kRIEventDiscountKey];
+        if(VALID_NOTEMPTY(discount, NSString))
+        {
+            [parameters setObject:discount forKey:kAdjustEventDiscountKey];
+        }
+        
+        NSString *size = [data objectForKey:kRIEventSizeKey];
+        if(VALID_NOTEMPTY(size, NSString))
+        {
+            [parameters setObject:size forKey:kAdjustEventSizeKey];
         }
         
         NSString *eventKey = @"";
@@ -134,58 +233,39 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
                 break;
             case RIEventAddToCart:
                 eventKey = @"c5vseo";
-                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
-                [parameters setObject:[data objectForKey:kRIEventCurrencyCodeKey]  forKey:kAdjustEventCurrencyCodeKey];
-                [parameters setObject:[data objectForKey:kRIEventPriceKey]  forKey:kAdjustEventPriceKey];
                 break;
             case RIEventRemoveFromCart:
                 eventKey = @"ew5nzy";
-                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
-                [parameters setObject:[data objectForKey:kRIEventCurrencyCodeKey]  forKey:kAdjustEventCurrencyCodeKey];
-                [parameters setObject:[data objectForKey:kRIEventPriceKey]  forKey:kAdjustEventPriceKey];
                 break;
             case RIEventAddToWishlist:
                 eventKey = @"g6en5v";
-                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
-                [parameters setObject:[data objectForKey:kRIEventCurrencyCodeKey]  forKey:kAdjustEventCurrencyCodeKey];
-                [parameters setObject:[data objectForKey:kRIEventPriceKey]  forKey:kAdjustEventPriceKey];
                 break;
             case RIEventRemoveFromWishlist:
                 eventKey = @"v878b6";
-                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
-                [parameters setObject:[data objectForKey:kRIEventCurrencyCodeKey]  forKey:kAdjustEventCurrencyCodeKey];
-                [parameters setObject:[data objectForKey:kRIEventPriceKey]  forKey:kAdjustEventPriceKey];
                 break;
             case RIEventFacebookLoginSuccess:
                 eventKey = @"u98xtu";
-                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
             case RIEventShareFacebook:
                 eventKey = @"kj8g12";
-                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
                 break;
             case RIEventShareTwitter:
                 eventKey = @"pzlwy3";
-                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
                 break;
             case RIEventShareEmail:
                 eventKey = @"i83rho";
-                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
                 break;
             case RIEventShareSMS:
                 eventKey = @"lxq8jt";
-                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
                 break;
             case RIEventCallToOrder:
                 eventKey = @"eaaq0p";
                 break;
             case RIEventRateProduct:
                 eventKey = @"b0mavy";
-                [parameters setObject:[data objectForKey:kRIEventSkuKey]  forKey:kAdjustEventSkuKey];
                 break;
             case RIEventGuestCustomer:
                 eventKey = @"z9v5ec";
                 break;
-                // TODO: Missing implementation
             case RIEventSearch:
                 eventKey = @"469opz";
                 break;
@@ -195,12 +275,14 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             case RIEventViewListing:
                 eventKey = @"rce3dz";
                 break;
+                // TODO: Missing implementation - re targting
             case RIEventViewCart:
                 eventKey = @"3lv2b5";
                 break;
             case RIEventTransactionConfirm:
                 eventKey = @"mtzu4i";
                 break;
+            // TODO: End implementation - re targting
             case RIEventFacebookHome:
                 eventKey = @"xgdla8";
                 break;
@@ -213,6 +295,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             case RIEventFacebookSearch:
                 eventKey = @"g240ad";
                 break;
+                // TODO: Missing implementation - facebook audiences
             case RIEventFacebookViewWishlist:
                 eventKey = @"sshinc";
                 break;
@@ -221,16 +304,13 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
                 break;
             case RIEventFacebookViewTransaction:
                 eventKey = @"29kvfe";
+            // TODO: End implementation - facebook audiences
                 break;
             default:
                 break;
         }
         
         [Adjust trackEvent:eventKey withParameters:parameters];
-    }
-    else
-    {
-        NSLog(@"Adjust - Event not registered");
     }
 }
 
@@ -252,13 +332,13 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     NSString *userId = [dataDictionary objectForKey:kRIEventUserIdKey];
     if(VALID_NOTEMPTY(userId, NSString) && ![@"0" isEqualToString:userId])
     {
-        [parameters setObject:[dataDictionary objectForKey:kRIEventUserIdKey]  forKey:kAdjustEventUserIdKey];
+        [parameters setObject:userId  forKey:kAdjustEventUserIdKey];
     }
     
     NSString *gender = [dataDictionary objectForKey:kRIEventGenderKey];
     if(VALID_NOTEMPTY(gender, NSString))
     {
-        [parameters setObject:[dataDictionary objectForKey:kRIEventGenderKey]  forKey:kAdjustEventGenderKey];
+        [parameters setObject:gender  forKey:kAdjustEventGenderKey];
     }
 
     [Adjust trackEvent:@"xnjttw" withParameters:parameters];

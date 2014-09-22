@@ -63,6 +63,8 @@
 + (NSArray*)parseCategories:(NSArray*)categories
                 persistData:(BOOL)persistData;
 
++ (NSString*)getTree:(NSString*)categoryId;
+
 @end
 
 @interface RICategory (CoreDataGeneratedAccessors)

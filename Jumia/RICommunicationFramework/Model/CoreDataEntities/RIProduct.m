@@ -91,7 +91,7 @@
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
-                           successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSArray* categories))successBlock
+                           successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
                         andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     BOOL discountMode = NO;
@@ -117,7 +117,7 @@
 }
 
 + (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSArray* categories))successBlock
+                        successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
                      andFailureBlock:(void (^)(NSArray *error))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
@@ -154,6 +154,8 @@
                                                                       
                                                                       NSString* productCount = [metadata objectForKey:@"product_count"];
                                                                       
+                                                                      NSString *categoryId = [metadata objectForKey:@"category_ids"];
+                                                                      
                                                                       NSArray* results = [metadata objectForKey:@"results"];
                                                                       
                                                                       if (VALID_NOTEMPTY(results, NSArray)) {
@@ -167,7 +169,7 @@
                                                                           }
                                                                           
                                                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                                                              successBlock(products, productCount, filtersArray, categoriesArray);
+                                                                              successBlock(products, productCount, filtersArray, categoryId, categoriesArray);
                                                                           });
                                                                       }
                                                                   }
@@ -580,12 +582,10 @@
 }
 
 + (void)removeFromFavorites:(RIProduct*)product
-               successBlock:(void (^)(NSArray* favoriteProducts))successBlock
+               successBlock:(void (^)(void))successBlock
             andFailureBlock:(void (^)(NSArray *error))failureBlock;
 {
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
-        
-        NSMutableArray* newFavoriteList = [NSMutableArray new];
         
         for (RIProduct* currentProduct in favoriteProducts) {
             if ([currentProduct.sku isEqualToString:product.sku]) {
@@ -598,14 +598,15 @@
                     [[RIDataBaseWrapper sharedInstance] deleteObject:product];
                 }
                 [[RIDataBaseWrapper sharedInstance] saveContext];
-            } else {
-                [newFavoriteList addObject:currentProduct];
             }
         }
-        successBlock([newFavoriteList copy]);
-        
+        if (successBlock) {
+            successBlock();
+        }
     } andFailureBlock:^(NSArray *error) {
-        failureBlock(error);
+        if (failureBlock) {
+            failureBlock(error);
+        }
     }];
 }
 
