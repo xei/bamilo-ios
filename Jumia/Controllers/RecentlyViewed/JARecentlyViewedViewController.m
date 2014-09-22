@@ -269,23 +269,19 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                  message:STRING_ITEM_WAS_ADDED_TO_CART
-                                                 delegate:nil
-                                        cancelButtonTitle:nil
-                                        otherButtonTitles:STRING_OK, nil] show];
-                      
                       [self hideLoading];
+                      
+                      JASuccessView *success = [JASuccessView getNewJASuccessView];
+                      [success setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
+                                      andAddTo:self];
                       
                   } andFailureBlock:^(NSArray *errorMessages) {
                       
-                      [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                  message:STRING_ERROR_ADDING_TO_CART
-                                                 delegate:nil
-                                        cancelButtonTitle:nil
-                                        otherButtonTitles:STRING_OK, nil] show];
-                      
                       [self hideLoading];
+                      
+                      JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                      [errorView setErrorTitle:STRING_ERROR_ADDING_TO_CART
+                                      andAddTo:self];
                       
                   }];
 }

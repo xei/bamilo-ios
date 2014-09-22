@@ -254,11 +254,9 @@
             if ([string isEqualToString:@""]) {
                 //nothing is selected, abort
                 
-                [[[UIAlertView alloc] initWithTitle:@"Error"
-                                            message:STRING_CHOOSE_SIZE_FOR_ALL_PRODUCTS
-                                           delegate:nil
-                                  cancelButtonTitle:nil
-                                  otherButtonTitles:STRING_OK, nil] show];
+                JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                [errorView setErrorTitle:STRING_CHOOSE_SIZE_FOR_ALL_PRODUCTS
+                                andAddTo:self];
                 
                 return;
             }
@@ -496,11 +494,9 @@
                       
                   } andFailureBlock:^(NSArray *errorMessages) {
                       
-                      [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                  message:STRING_ERROR_ADDING_TO_CART
-                                                 delegate:nil
-                                        cancelButtonTitle:nil
-                                        otherButtonTitles:STRING_OK, nil] show];
+                      JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                      [errorView setErrorTitle:STRING_ERROR_ADDING_TO_CART
+                                      andAddTo:self];
                       
                       [self hideLoading];
                       

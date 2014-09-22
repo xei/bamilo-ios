@@ -67,11 +67,9 @@
          
          [self hideLoading];
          
-         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                     message:@"There was an error"
-                                    delegate:nil
-                           cancelButtonTitle:nil
-                           otherButtonTitles:STRING_OK, nil] show];
+         JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+         [errorView setErrorTitle:STRING_ERROR
+                         andAddTo:self];
          
          [self.navigationController popViewControllerAnimated:YES];
      }];
@@ -112,11 +110,9 @@
          [self.dynamicForm resetValues];
          [self hideLoading];
          
-         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                     message:STRING_EMAIL_SENT
-                                    delegate:nil
-                           cancelButtonTitle:nil
-                           otherButtonTitles:STRING_OK, nil] show];
+         JASuccessView *success = [JASuccessView getNewJASuccessView];
+         [success setSuccessTitle:STRING_EMAIL_SENT
+                         andAddTo:self];
          
      } andFailureBlock:^(id errorObject)
      {
