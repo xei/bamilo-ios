@@ -734,7 +734,7 @@ UICollectionViewDelegateFlowLayout>
             
             [self hideLoading];
             
-            [JAUtils goToCheckoutNextStep:checkout.nextStep inStoryboard:self.storyboard];
+            [JAUtils goToCheckout:checkout inStoryboard:self.storyboard];
         } andFailureBlock:^(NSArray *errorMessages) {
             
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
