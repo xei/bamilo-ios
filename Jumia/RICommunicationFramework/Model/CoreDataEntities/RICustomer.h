@@ -68,6 +68,13 @@
 + (NSString *)getCustomerId;
 
 /**
+ * Method to get the current user gender
+ *
+ * @return a string with the customer gender
+ */
++ (NSString *)getCustomerGender;
+
+/**
  * Method to check id the user dir a signup or not
  *
  * @return YES if the user did a signup

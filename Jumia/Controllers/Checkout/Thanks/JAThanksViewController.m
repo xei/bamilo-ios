@@ -84,25 +84,53 @@
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
                                               data:[trackingDictionary copy]];
     
-    NSMutableDictionary *ecommerceDictionary = [[NSMutableDictionary alloc] init];
-    [ecommerceDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-    [ecommerceDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-    [ecommerceDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    [ecommerceDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-    [ecommerceDictionary setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
-    [ecommerceDictionary setValue:[NSNumber numberWithBool:[RICustomer wasSignup]] forKey:kRIEcommerceGuestKey];
-    NSDictionary *products = self.cart.cartItems;
-    if(VALID_NOTEMPTY(products, NSDictionary))
+    BOOL userDidFirstBuy = [[[NSUserDefaults standardUserDefaults] objectForKey:kDidFirstBuyKey] boolValue];
+    if([RICustomer wasSignup] && !userDidFirstBuy)
     {
-        [ecommerceDictionary setValue:[products allKeys] forKey:kRIEcommerceSkusKey];
+        // Send customer event
+        NSMutableDictionary *customerDictionary = [[NSMutableDictionary alloc] init];
+        [customerDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+        [customerDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+        [customerDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        [customerDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        [customerDictionary setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithFloat:RIEventGuestCustomer] data:customerDictionary];
     }
     
-    [ecommerceDictionary setValue:self.checkout.orderSummary.shippingAmount forKey:kRIEcommerceShippingKey];
-    [ecommerceDictionary setValue:self.checkout.orderSummary.taxAmount forKey:kRIEcommerceTaxKey];
-    [ecommerceDictionary setValue:self.checkout.orderSummary.grandTotal forKey:kRIEcommerceTotalValueKey];
-    
-    [[RITrackingWrapper sharedInstance] trackCheckout:ecommerceDictionary];
+    [RICheckout getConversionRate:^(CGFloat rate)
+    {
+        NSMutableDictionary *ecommerceDictionary = [[NSMutableDictionary alloc] init];
+        [ecommerceDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+        [ecommerceDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+        [ecommerceDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        [ecommerceDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        [ecommerceDictionary setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
+        NSDictionary *products = self.checkout.cart.cartItems;
+        if(VALID_NOTEMPTY(products, NSDictionary))
+        {
+            [ecommerceDictionary setValue:[products allKeys] forKey:kRIEcommerceSkusKey];
+        }
+        
+        [ecommerceDictionary setValue:self.checkout.orderSummary.shippingAmount forKey:kRIEcommerceShippingKey];
+        [ecommerceDictionary setValue:self.checkout.orderSummary.taxAmount forKey:kRIEcommerceTaxKey];
+        
+        NSNumber *grandTotal = self.checkout.orderSummary.grandTotal;
+        NSNumber *convertedGrandTotal = [NSNumber numberWithFloat:([grandTotal floatValue] * rate)];
+        
+        [ecommerceDictionary setValue:convertedGrandTotal forKey:kRIEcommerceTotalValueKey];
+        
+        if([RICustomer wasSignup] && !userDidFirstBuy)
+        {
+            [ecommerceDictionary setValue:[NSNumber numberWithBool:[RICustomer wasSignup]] forKey:kRIEcommerceGuestKey];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kDidFirstBuyKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
+        [[RITrackingWrapper sharedInstance] trackCheckout:ecommerceDictionary];
+    }];
 }
 
 - (void)copyOrderNumber
