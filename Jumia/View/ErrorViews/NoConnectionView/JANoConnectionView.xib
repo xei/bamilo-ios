@@ -23,6 +23,21 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="img_errorscreen" translatesAutoresizingMaskIntoConstraints="NO" id="yV9-kH-HG7">
+                            <rect key="frame" x="92" y="16" width="120" height="96"/>
+                        </imageView>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7V-cA-9b0" userLabel="Label generic">
+                            <rect key="frame" x="8" y="128" width="292" height="21"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZF-vb-QYh" userLabel="Label generic details">
+                            <rect key="frame" x="8" y="163" width="292" height="21"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -37,7 +52,7 @@
                     <state key="selected" backgroundImage="grayBig_highlighted"/>
                     <state key="highlighted" backgroundImage="grayBig_highlighted"/>
                     <connections>
-                        <action selector="retryConnectionButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="dQA-0e-02H"/>
+                        <action selector="retryConnectionButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="dTu-7T-0EE"/>
                     </connections>
                 </button>
             </subviews>
@@ -45,9 +60,12 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="genericDetailLabel" destination="vZF-vb-QYh" id="8bg-0W-rIF"/>
+                <outlet property="genericErrorLabel" destination="a7V-cA-9b0" id="Osa-UN-nXN"/>
+                <outlet property="genericImageView" destination="yV9-kH-HG7" id="Qo2-Th-UAM"/>
                 <outlet property="noInternetImageView" destination="OMs-vw-tGv" id="aJf-9N-kad"/>
                 <outlet property="noNetworkView" destination="C9J-iB-7kg" id="v1R-uc-ffx"/>
-                <outlet property="retryButton" destination="XBP-2c-RqZ" id="nQ2-ud-BBF"/>
+                <outlet property="retryButton" destination="XBP-2c-RqZ" id="Pt4-2M-1Bi"/>
                 <outlet property="textLabel" destination="HdF-jO-fhJ" id="G9q-FA-ltB"/>
             </connections>
             <point key="canvasLocation" x="443" y="153"/>
@@ -57,6 +75,7 @@
         <image name="grayBig_disabled" width="308" height="44"/>
         <image name="grayBig_highlighted" width="308" height="44"/>
         <image name="grayBig_normal" width="308" height="44"/>
+        <image name="img_errorscreen" width="120" height="96"/>
         <image name="img_nonetwork" width="135" height="96"/>
     </resources>
 </document>
