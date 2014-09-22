@@ -10,34 +10,34 @@
 
 @implementation JAUtils
 
-+ (void) goToCheckoutNextStep:(NSString*)nextStep
-                 inStoryboard:(UIStoryboard*)storyboard
++ (void) goToCheckout:(RICheckout*)checkout
+         inStoryboard:(UIStoryboard*)storyboard
 {
-    if([@"createAddress" isEqualToString:nextStep])
+    if([@"createAddress" isEqualToString:checkout.nextStep])
     {
     }
-    else if([@"billing" isEqualToString:nextStep])
+    else if([@"billing" isEqualToString:checkout.nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
                                                             object:nil
                                                           userInfo:nil];
     }
-    else if([@"shippingMethod" isEqualToString:nextStep])
+    else if([@"shippingMethod" isEqualToString:checkout.nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification
                                                             object:nil
                                                           userInfo:nil];
     }
-    else if([@"paymentMethod" isEqualToString:nextStep])
+    else if([@"paymentMethod" isEqualToString:checkout.nextStep])
     {        
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
                                                             object:nil
                                                           userInfo:nil];
     }
-    else if([@"finish" isEqualToString:nextStep])
+    else if([@"finish" isEqualToString:checkout.nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutFinishScreenNotification
-                                                            object:nil
+                                                            object:checkout
                                                           userInfo:nil];
     }
 }

@@ -185,4 +185,6 @@
 #define STRING_ORDER_TRACK_SUCCESS RILocalizedString(@"order_track_success", nil) // Not translated
 #define STRING_ORDER_TRACK_LINK RILocalizedString(@"order_track_link", nil) // Not translated
 
+#define STRING_MY_ORDER_LABEL RILocalizedString(@"my_order_label", nil)
+#define STRING_MY_ORDER_PAYMENT RILocalizedString(@"my_order_payment", nil)
 #endif

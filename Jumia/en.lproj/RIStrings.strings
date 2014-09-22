@@ -181,3 +181,6 @@
 "order_success" = "Your order has been successfully registered with the number:";
 "order_track_success" = "You can track your order visiting the order status area in this app";
 "order_track_link" = "order status";
+
+"my_order_label" = "My Order";
+"my_order_payment" = "Payment Options";
