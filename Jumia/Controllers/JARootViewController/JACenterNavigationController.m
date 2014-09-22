@@ -190,7 +190,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutFinishScreen)
+                                             selector:@selector(showCheckoutFinishScreen:)
                                                  name:kShowCheckoutFinishScreenNotification
                                                object:nil];
     
@@ -671,9 +671,13 @@
     [self pushViewController:paymentVC animated:YES];
 }
 
-- (void)showCheckoutFinishScreen
+- (void)showCheckoutFinishScreen:(NSNotification*)notification
 {
     JAOrderViewController *orderVC = [self.storyboard instantiateViewControllerWithIdentifier:@"orderViewController"];
+    
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, RICheckout)) {
+        orderVC.checkout = notification.object;
+    }
     
     [self pushViewController:orderVC animated:YES];
 }
@@ -696,7 +700,6 @@
     JAThanksViewController *thanksVC = [self.storyboard instantiateViewControllerWithIdentifier:@"thanksViewController"];
     
     thanksVC.checkout = [notification.userInfo objectForKey:@"checkout"];
-    thanksVC.cart = self.cart;
     thanksVC.orderNumber = [notification.userInfo objectForKey:@"order_number"];
     
     [self pushViewController:thanksVC animated:YES];

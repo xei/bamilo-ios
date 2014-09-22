@@ -306,7 +306,7 @@ UITextFieldDelegate>
                       parameters:parameters
                     successBlock:^(RICheckout *checkout) {
                         
-                        [JAUtils goToCheckoutNextStep:checkout.nextStep inStoryboard:self.storyboard];
+                        [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
                         
                         [self hideLoading];
                     } andFailureBlock:^(NSArray *errorMessages) {

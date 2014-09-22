@@ -264,7 +264,7 @@ UIPickerViewDelegate>
     }
     else
     {
-        [JAUtils goToCheckoutNextStep:self.checkout.nextStep inStoryboard:self.storyboard];
+        [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
     }
 }
 

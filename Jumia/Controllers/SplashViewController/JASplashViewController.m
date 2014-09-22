@@ -242,6 +242,9 @@ UIAlertViewDelegate
             [launchData setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
             
             [launchData setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+            [launchData setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+            [launchData setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+            [launchData setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
             
             [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
             
