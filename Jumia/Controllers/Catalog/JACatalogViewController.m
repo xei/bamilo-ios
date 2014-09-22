@@ -414,8 +414,8 @@
 {
     for (int i = 0; i < self.productsArray.count; i++) {
         RIProduct* currentProduct = [self.productsArray objectAtIndex:i];
-        currentProduct.isFavorite = product.isFavorite;
         if ([currentProduct.sku isEqualToString:product.sku]) {
+            currentProduct.isFavorite = product.isFavorite;
             [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]];
         }
     }
