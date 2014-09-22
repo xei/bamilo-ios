@@ -10,9 +10,11 @@
 #import "JACatalogListCell.h"
 #import "JAButtonCell.h"
 #import "JAPDVViewController.h"
+#import "JAUtils.h"
 #import "RIProduct.h"
 #import "RIProductSimple.h"
 #import "RICart.h"
+#import "RICustomer.h"
 
 @interface JAMyFavouritesViewController ()
 
@@ -297,6 +299,14 @@
                           [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
                           [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
                           [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+                          [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                          [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                          [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                          NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                          [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                          [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+                          [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+                          [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                           
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                     data:[trackingDictionary copy]];
@@ -316,6 +326,14 @@
             [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
             [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+            [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+            [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                       data:[trackingDictionary copy]];
@@ -362,6 +380,14 @@
         [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
         [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+        [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+        [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                   data:[trackingDictionary copy]];
@@ -420,6 +446,14 @@
                       [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
                       [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
                       [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                      [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                      [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+                      [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+                      [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
@@ -440,6 +474,14 @@
                           [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
                           [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
                           [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+                          [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                          [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                          [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                          NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                          [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                          [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+                          [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+                          [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                           
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                                     data:[trackingDictionary copy]];

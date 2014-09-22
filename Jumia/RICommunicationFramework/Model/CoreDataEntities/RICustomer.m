@@ -122,6 +122,21 @@
     }
 }
 
++ (BOOL)wasSignup
+{
+    BOOL wasSignup = NO;
+    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
+    
+    if (customers.count > 0)
+    {
+        RICustomer *customer = (RICustomer *)customers[0];
+        wasSignup = [@"signup" isEqualToString:customer.loginMethod];
+    }
+    
+    return wasSignup;
+}
+
+
 #pragma mark - Facebook Login
 
 + (NSString*)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters

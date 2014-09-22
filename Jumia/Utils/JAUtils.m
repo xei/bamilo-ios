@@ -7,6 +7,8 @@
 //
 
 #import "JAUtils.h"
+#include <sys/types.h>
+#include <sys/sysctl.h>
 
 @implementation JAUtils
 
@@ -56,6 +58,34 @@
     [scanner scanHexInt:&hexInt];
     
     return hexInt;
+}
+
++ (NSString *)getDeviceModel
+{
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    
+    char *machine = malloc(size);
+    sysctlbyname("hw.machine", machine, &size, NULL, 0);
+    
+    NSString *platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
+    platform = [JAUtils platformType:platform];
+    
+    free(machine);
+    
+    return platform;
+}
+
++ (NSString *) platformType:(NSString *)platform
+{
+    if ([platform isEqualToString:@"i386"]) {
+        return @"Simulator";
+    }
+    if ([platform isEqualToString:@"x86_64"]) {
+        return @"Simulator";
+    }
+    
+    return platform;
 }
 
 @end

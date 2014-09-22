@@ -8,6 +8,7 @@
 
 #import "JAThanksViewController.h"
 #import "RICustomer.h"
+#import "JAUtils.h"
 
 @interface JAThanksViewController ()
 
@@ -82,6 +83,26 @@
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
                                               data:[trackingDictionary copy]];
+    
+    NSMutableDictionary *ecommerceDictionary = [[NSMutableDictionary alloc] init];
+    [ecommerceDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+    [ecommerceDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    [ecommerceDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    [ecommerceDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+    [ecommerceDictionary setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
+    [ecommerceDictionary setValue:[NSNumber numberWithBool:[RICustomer wasSignup]] forKey:kRIEcommerceGuestKey];
+    NSDictionary *products = self.cart.cartItems;
+    if(VALID_NOTEMPTY(products, NSDictionary))
+    {
+        [ecommerceDictionary setValue:[products allKeys] forKey:kRIEcommerceSkusKey];
+    }
+    
+    [ecommerceDictionary setValue:self.checkout.orderSummary.shippingAmount forKey:kRIEcommerceShippingKey];
+    [ecommerceDictionary setValue:self.checkout.orderSummary.taxAmount forKey:kRIEcommerceTaxKey];
+    [ecommerceDictionary setValue:self.checkout.orderSummary.grandTotal forKey:kRIEcommerceTotalValueKey];
+    
+    [[RITrackingWrapper sharedInstance] trackCheckout:ecommerceDictionary];
 }
 
 - (void)copyOrderNumber

@@ -139,37 +139,51 @@ typedef NS_ENUM(NSInteger, RICartState) {
 /**
  *  Protocol constants
  */
-#define kRIEventTypeKey     @"RIEventTypeKey"
-#define kRIEventValueKey    @"RIEventValueKey"
-#define kRIEventActionKey   @"RIEventActionKey"
-#define kRIEventLabelKey    @"RIEventLabelKey"
-#define kRIEventCategoryKey @"RIEventCategoryKey"
+#define kRIEventTypeKey         @"RIEventTypeKey"
+#define kRIEventValueKey        @"RIEventValueKey"
+#define kRIEventActionKey       @"RIEventActionKey"
+#define kRIEventLabelKey        @"RIEventLabelKey"
+#define kRIEventCategoryKey     @"RIEventCategoryKey"
+#define kRIEventShopCountryKey  @"RIEventShopCountryKey"
+#define kRIEventUserIdKey       @"RIEventUserIdKey"
+#define kRIEventSkuKey          @"RIEventSkuKey"
+#define kRIEventCurrencyCodeKey @"RIEventCurrencyCodeKey"
+#define kRIEventPriceKey        @"RIEventPriceKey"
 
 /**
  *  Struct to identify events
  */
 typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventAutoLogin = 0,
-    RIEventLogin = 1,
-    RIEventRegister = 2,
-    RIEventFacebookLogin = 3,
-    RIEventLogout = 4,
-    RIEventSideMenu = 5,
-    RIEventCategories = 6,
-    RIEventCatalog = 7,
-    RIEventFilter = 8,
-    RIEventSort = 9,
-    RIEventViewProductDetails = 10,
-    RIEventRelatedItem = 11,
-    RIEventAddToCart = 12,
-    RIEventRemoveFromCart = 13,
-    RIEventAddToWishlist = 14,
-    RIEventRemoveFromWishlist = 15,
-    RIEventRateProduct = 16,
-    RIEventSearch = 17,
-    RIEventShare = 18,
-    RIEventCheckout = 19,
-    RIEventNewsletter = 20
+    RIEventLoginSuccess = 1,
+    RIEventLoginFail = 2,
+    RIEventRegisterSuccess = 3,
+    RIEventRegisterFail = 4,
+    RIEventFacebookLoginSuccess = 5,
+    RIEventFacebookLoginFail = 6,
+    RIEventLogout = 7,
+    RIEventSideMenu = 8,
+    RIEventCategories = 9,
+    RIEventCatalog = 10,
+    RIEventFilter = 11,
+    RIEventSort = 12,
+    RIEventViewProductDetails = 13,
+    RIEventRelatedItem = 14,
+    RIEventAddToCart = 15,
+    RIEventRemoveFromCart = 16,
+    RIEventAddToWishlist = 17,
+    RIEventRemoveFromWishlist = 18,
+    RIEventRateProduct = 19,
+    RIEventSearch = 20,
+    RIEventShareFacebook = 21,
+    RIEventShareTwitter = 22,
+    RIEventShareEmail = 23,
+    RIEventShareSMS = 24,
+    RIEventShareOther = 25,
+    RIEventCheckout = 26,
+    RIEventNewsletter = 27,
+    RIEventCallToOrder = 28,
+    RIEventGuestCustomer = 29
 };
 
 /**
@@ -224,28 +238,15 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 @end
 
 /**
- *  Interface of the RITrackingTotal, used for the commerce tracking
+ *  Protocol constants
  */
-@interface RITrackingTotal : NSObject
-
-/**
- *  Net of the order
- */
-@property NSNumber *net;
-/**
- *  Tax of the order
- */
-@property NSNumber *tax;
-/**
- *  Shipping price of the order
- */
-@property NSNumber *shipping;
-/**
- *  Currency of the order
- */
-@property NSString *currency;
-
-@end
+#define kRIEcommerceTransactionIdKey @"RIEcommerceTransactionIdKey"
+#define kRIEcommerceTaxKey           @"RIEcommerceTaxKey"
+#define kRIEcommerceShippingKey      @"RIEcommerceShippingKey"
+#define kRIEcommerceCurrencyKey      @"RIEcommerceCurrencyKey"
+#define kRIEcommerceTotalValueKey    @"RIEcommerceTotalValueKey"
+#define kRIEcommerceSkusKey          @"RIEcommerceSkusValueKey"
+#define kRIEcommerceGuestKey         @"RIEcommerceGuestKey"
 
 /**
  *  This protocol implements tracking to the commerce transactions
@@ -260,25 +261,9 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  *  This method with include any previous calls to trackAddToCartForProductWithID and
  *  trackRemoveFromCartForProductWithID.
  *
- *  @param idTrans The transaction ID
- *  @param total RITrackingProduct product
+ *  @param data The transaction data
  */
-- (void)trackCheckoutWithTransactionId:(NSString *)idTransaction total:(RITrackingTotal *)total;
-
-/**
- *  Track a product that was added to the cart
- *
- *  @param product The product added
- */
-- (void)trackProductAddToCart:(RITrackingProduct *)product;
-
-/**
- *  Track a product that was removed from the cart
- *
- *  @param idTrans The transaction ID
- *  @param quantity The quantity removed from the cart
- */
-- (void)trackRemoveFromCartForProductWithID:(NSString *)idTransaction quantity:(NSNumber *)quantity;
+- (void)trackCheckout:(NSDictionary *)data;
 
 @end
 

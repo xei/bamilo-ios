@@ -75,6 +75,9 @@
 // App url (this is needed to redirect to itunes connect to update the app)
 #define kAppStoreUrl @"https://itunes.apple.com/us/app/the-iconic-app/id686483021?ls=1&mt=8"
 
+// Preferences
+#define kDidFirstBuyKey @"did_first_buy"
+
 // Colors
 
 // Colors - Backgrounds

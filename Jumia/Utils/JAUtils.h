@@ -15,4 +15,6 @@
 
 + (unsigned int)intFromHexString:(NSString *) hexStr;
 
++ (NSString *)getDeviceModel;
+
 @end
