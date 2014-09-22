@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "img_nonetwork.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "ico_error_notificationbar@2x.png"
+      "filename" : "img_nonetwork@2x.png"
     },
     {
       "idiom" : "universal",
