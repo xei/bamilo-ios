@@ -46,13 +46,9 @@
     self.currentY = self.scrollView.bounds.origin.y + 6.0f;
     [self setupOrderView];
     [self setupSubtotalView];
-    NSString* shippingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.shippingAddress];
-    NSString* billingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.billingAddress];
-    if ([billingAddress isEqualToString:shippingAddress]) {
-        billingAddress = STRING_BILLING_SAME_ADDRESSES;
-    }
-    [self setupGenericAddressViewWithTitle:STRING_SHIPPING_ADDRESSES address:shippingAddress];
-    [self setupGenericAddressViewWithTitle:STRING_BILLING_ADDRESSES address:billingAddress];
+    [self setupShippingAddressView];
+    [self setupBillingAddressView];
+    [self setupShippingMethodView];
     [self setupPaymentOptionsView];
     
     //not relative to scroll
@@ -277,10 +273,29 @@
     self.currentY += subtotalContentView.frame.size.height + 5.0f;
 }
 
+- (void)setupShippingAddressView
+{
+    NSString* shippingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.shippingAddress];
+    [self setupGenericAddressViewWithTitle:STRING_SHIPPING_ADDRESSES address:shippingAddress editButtonSelector:@selector(editButtonForShippingAddress)];
+}
+
+- (void)setupBillingAddressView
+{
+    NSString* shippingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.shippingAddress];
+    NSString* billingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.billingAddress];
+    if ([billingAddress isEqualToString:shippingAddress]) {
+        billingAddress = STRING_BILLING_SAME_ADDRESSES;
+    }
+    [self setupGenericAddressViewWithTitle:STRING_BILLING_ADDRESSES address:billingAddress editButtonSelector:@selector(editButtonForBillingAddress)];
+}
+
 - (void)setupGenericAddressViewWithTitle:(NSString*)title
                                  address:(NSString*)address
+                      editButtonSelector:(SEL)selector
 {
     UIView* addressContentView = [self placeContentViewWithTitle:title atYPosition:self.currentY];
+    
+    [self addEditButtonToContentView:addressContentView withSelector:selector];
     
     UILabel* addressLabel = [UILabel new];
     addressLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
@@ -382,9 +397,37 @@
     return addressText;
 }
 
+- (void)setupShippingMethodView
+{
+    UIView* shippingContentView = [self placeContentViewWithTitle:STRING_SHIPPING atYPosition:self.currentY];
+    
+    [self addEditButtonToContentView:shippingContentView withSelector:@selector(editButtonForShippingMethod)];
+    
+    UILabel* shippingMethodLabel = [UILabel new];
+    shippingMethodLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+    shippingMethodLabel.textColor = UIColorFromRGB(0x666666);
+    shippingMethodLabel.text = self.checkout.orderSummary.shippingMethod;
+    shippingMethodLabel.numberOfLines = 0;
+    [shippingMethodLabel sizeToFit];
+    shippingMethodLabel.frame = CGRectMake(shippingContentView.bounds.origin.x + 6.0f,
+                                           shippingContentView.frame.size.height + 10.0f,
+                                           shippingContentView.frame.size.width - 6.0f,
+                                           shippingMethodLabel.frame.size.height);
+    [shippingContentView addSubview:shippingMethodLabel];
+    
+    shippingContentView.frame = CGRectMake(shippingContentView.frame.origin.x,
+                                           shippingContentView.frame.origin.y,
+                                           shippingContentView.frame.size.width,
+                                           CGRectGetMaxY(shippingMethodLabel.frame) + 10.0f);
+    
+    self.currentY += shippingContentView.frame.size.height + 5.0f;
+}
+
 - (void)setupPaymentOptionsView
 {
     UIView* paymentContentView = [self placeContentViewWithTitle:STRING_PAYMENT_METHOD atYPosition:self.currentY];
+    
+    [self addEditButtonToContentView:paymentContentView withSelector:@selector(editButtonForPaymentMethod)];
     
     UILabel* paymentTitleLabel = [UILabel new];
     paymentTitleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
@@ -393,9 +436,9 @@
     paymentTitleLabel.numberOfLines = 0;
     [paymentTitleLabel sizeToFit];
     paymentTitleLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
-                                    paymentContentView.frame.size.height + 10.0f,
-                                    paymentContentView.frame.size.width - 6.0f,
-                                    paymentTitleLabel.frame.size.height);
+                                         paymentContentView.frame.size.height + 10.0f,
+                                         paymentContentView.frame.size.width - 6.0f,
+                                         paymentTitleLabel.frame.size.height);
     [paymentContentView addSubview:paymentTitleLabel];
     
     paymentContentView.frame = CGRectMake(paymentContentView.frame.origin.x,
@@ -502,6 +545,22 @@
                                      currentContentY)];
 }
 
+- (void)addEditButtonToContentView:(UIView*)contentView
+                      withSelector:(SEL)selector
+{
+    if (selector) {
+        UIButton* editButton = [[UIButton alloc] initWithFrame:CGRectMake(contentView.bounds.size.width - 50.0f,
+                                                                          contentView.bounds.origin.y,
+                                                                          50.0f,
+                                                                          26.0f)];
+        [editButton setTitle:@"Edit" forState:UIControlStateNormal];
+        [editButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+        [editButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f]];
+        [editButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
+        [contentView addSubview:editButton];
+    }
+}
+
 
 #pragma mark - Button actions
 
@@ -539,6 +598,34 @@
         NSLog(@"FAILED Finishing checkout");
         [self hideLoading];
     }];
+}
+
+- (void)editButtonForShippingAddress
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                        object:nil
+                                                      userInfo:nil];
+}
+
+- (void)editButtonForBillingAddress
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                        object:nil
+                                                      userInfo:nil];
+}
+
+- (void)editButtonForShippingMethod
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification
+                                                        object:nil
+                                                      userInfo:nil];
+}
+
+- (void)editButtonForPaymentMethod
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
+                                                        object:nil
+                                                      userInfo:nil];
 }
 
 @end
