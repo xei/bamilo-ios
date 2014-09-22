@@ -31,7 +31,10 @@
     
     self.view.backgroundColor = JABackgroundGrey;
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
+                                                                     self.view.bounds.origin.y,
+                                                                     self.view.bounds.size.width,
+                                                                     self.view.bounds.size.height - 64.0f)];
     [self.view addSubview:self.scrollView];
     
     [self setupViews];
@@ -43,12 +46,20 @@
     self.currentY = self.scrollView.bounds.origin.y + 6.0f;
     [self setupOrderView];
     [self setupSubtotalView];
-    [self setupShippingAddressView];
-    [self setupBillingAddressView];
+    NSString* shippingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.shippingAddress];
+    NSString* billingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.billingAddress];
+    if ([billingAddress isEqualToString:shippingAddress]) {
+        billingAddress = STRING_BILLING_SAME_ADDRESSES;
+    }
+    [self setupGenericAddressViewWithTitle:STRING_SHIPPING_ADDRESSES address:shippingAddress];
+    [self setupGenericAddressViewWithTitle:STRING_BILLING_ADDRESSES address:billingAddress];
     [self setupPaymentOptionsView];
     
     //not relative to scroll
     [self setupConfirmButton];
+    
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
+                                               self.currentY + self.bottomView.frame.size.height)];
 }
 
 - (void)setupOrderView
@@ -263,22 +274,174 @@
                                            subtotalContentView.frame.size.width,
                                            CGRectGetMaxY(extraCostsLabel.frame) + 10.0f);
     
-    self.currentY += subtotalContentView.frame.size.height;
+    self.currentY += subtotalContentView.frame.size.height + 5.0f;
 }
 
-- (void)setupShippingAddressView
+- (void)setupGenericAddressViewWithTitle:(NSString*)title
+                                 address:(NSString*)address
 {
+    UIView* addressContentView = [self placeContentViewWithTitle:title atYPosition:self.currentY];
     
+    UILabel* addressLabel = [UILabel new];
+    addressLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    addressLabel.textColor = UIColorFromRGB(0x666666);
+    addressLabel.text = address;
+    addressLabel.numberOfLines = 0;
+    [addressLabel sizeToFit];
+    addressLabel.frame = CGRectMake(addressContentView.bounds.origin.x + 6.0f,
+                                    addressContentView.frame.size.height + 10.0f,
+                                    addressContentView.frame.size.width - 6.0f,
+                                    addressLabel.frame.size.height);
+    [addressContentView addSubview:addressLabel];
+    
+    addressContentView.frame = CGRectMake(addressContentView.frame.origin.x,
+                                          addressContentView.frame.origin.y,
+                                          addressContentView.frame.size.width,
+                                          CGRectGetMaxY(addressLabel.frame) + 10.0f);
+    
+    self.currentY += addressContentView.frame.size.height + 5.0f;
 }
 
-- (void)setupBillingAddressView
+- (NSString*)getAddressStringFromAddress:(RIAddress*)address;
 {
+    NSString* addressText = @"";
     
+    if(VALID_NOTEMPTY(address.firstName, NSString) && VALID_NOTEMPTY(address.lastName, NSString))
+    {
+        addressText = [NSString stringWithFormat:@"%@ %@", address.firstName, address.lastName];
+    }
+    else if(VALID_NOTEMPTY(address.firstName, NSString))
+    {
+        addressText = address.firstName;
+    }
+    else if(VALID_NOTEMPTY(address.lastName, NSString))
+    {
+        addressText = address.lastName;
+    }
+    
+    if(VALID_NOTEMPTY(address.address, NSString))
+    {
+        if(VALID_NOTEMPTY(addressText, NSString))
+        {
+            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.address];
+        }
+        else
+        {
+            addressText = address.address;
+        }
+    }
+    
+    if(VALID_NOTEMPTY(address.address2, NSString))
+    {
+        if(VALID_NOTEMPTY(addressText, NSString))
+        {
+            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.address2];
+        }
+        else
+        {
+            addressText = address.address2;
+        }
+    }
+    
+    if(VALID_NOTEMPTY(address.city, NSString))
+    {
+        if(VALID_NOTEMPTY(addressText, NSString))
+        {
+            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.city];
+        }
+        else
+        {
+            addressText = address.city;
+        }
+    }
+    
+    if(VALID_NOTEMPTY(address.postcode, NSString))
+    {
+        if(VALID_NOTEMPTY(addressText, NSString))
+        {
+            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.postcode];
+        }
+        else
+        {
+            addressText = address.postcode;
+        }
+    }
+    
+    if(VALID_NOTEMPTY(address.phone, NSString))
+    {
+        if(VALID_NOTEMPTY(addressText, NSString))
+        {
+            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.phone];
+        }
+        else
+        {
+            addressText = address.phone;
+        }
+    }
+    
+    return addressText;
 }
 
 - (void)setupPaymentOptionsView
 {
+    UIView* paymentContentView = [self placeContentViewWithTitle:STRING_PAYMENT_METHOD atYPosition:self.currentY];
+    
+    UILabel* paymentTitleLabel = [UILabel new];
+    paymentTitleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+    paymentTitleLabel.textColor = UIColorFromRGB(0x666666);
+    paymentTitleLabel.text = self.checkout.orderSummary.paymentMethod;
+    paymentTitleLabel.numberOfLines = 0;
+    [paymentTitleLabel sizeToFit];
+    paymentTitleLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
+                                    paymentContentView.frame.size.height + 10.0f,
+                                    paymentContentView.frame.size.width - 6.0f,
+                                    paymentTitleLabel.frame.size.height);
+    [paymentContentView addSubview:paymentTitleLabel];
+    
+    paymentContentView.frame = CGRectMake(paymentContentView.frame.origin.x,
+                                          paymentContentView.frame.origin.y,
+                                          paymentContentView.frame.size.width,
+                                          CGRectGetMaxY(paymentTitleLabel.frame));
+    
+    if (VALID_NOTEMPTY(self.checkout.orderSummary.discountCouponCode, NSString)) {
+        
+        UILabel* couponTitleLabel = [UILabel new];
+        couponTitleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+        couponTitleLabel.textColor = UIColorFromRGB(0x666666);
+        couponTitleLabel.text = self.checkout.orderSummary.paymentMethod;
+        couponTitleLabel.numberOfLines = 0;
+        [couponTitleLabel sizeToFit];
+        couponTitleLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
+                                            CGRectGetMaxY(paymentTitleLabel.frame) + 15.0f,
+                                            paymentContentView.frame.size.width - 6.0f,
+                                            couponTitleLabel.frame.size.height);
+        [paymentContentView addSubview:couponTitleLabel];
+        
+        UILabel* couponCodeLabel = [UILabel new];
+        couponCodeLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+        couponCodeLabel.textColor = UIColorFromRGB(0x666666);
+        couponCodeLabel.text = self.checkout.orderSummary.paymentMethod;
+        couponCodeLabel.numberOfLines = 0;
+        [couponCodeLabel sizeToFit];
+        couponCodeLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
+                                           CGRectGetMaxY(couponTitleLabel.frame) + 5.0f,
+                                           paymentContentView.frame.size.width - 6.0f,
+                                           couponCodeLabel.frame.size.height);
+        [paymentContentView addSubview:couponCodeLabel];
+        
+        paymentContentView.frame = CGRectMake(paymentContentView.frame.origin.x,
+                                              paymentContentView.frame.origin.y,
+                                              paymentContentView.frame.size.width,
+                                              CGRectGetMaxY(paymentContentView.frame));
+    }
+    
 
+    paymentContentView.frame = CGRectMake(paymentContentView.frame.origin.x,
+                                          paymentContentView.frame.origin.y,
+                                          paymentContentView.frame.size.width,
+                                          paymentContentView.frame.size.height + 10.0f);
+    
+    self.currentY += paymentContentView.frame.size.height + 5.0f;
 }
 
 - (void)setupConfirmButton
@@ -290,7 +453,7 @@
     [self.view addSubview:self.bottomView];
 }
 
-#pragma mark - Content view build methods
+#pragma mark - Content view auxiliary methods
 
 - (UIView*)placeContentViewWithTitle:(NSString*)title
                          atYPosition:(CGFloat)yPosition;
@@ -301,7 +464,7 @@
                                                                    1)];
     contentView.backgroundColor = [UIColor whiteColor];
     contentView.layer.cornerRadius = 5.0f;
-    [self.view addSubview:contentView];
+    [self.scrollView addSubview:contentView];
     
     [self addTitle:title toContentView:contentView];
     
@@ -338,6 +501,7 @@
                                      contentView.frame.size.width,
                                      currentContentY)];
 }
+
 
 #pragma mark - Button actions
 
