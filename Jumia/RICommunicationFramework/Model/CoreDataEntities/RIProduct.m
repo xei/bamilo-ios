@@ -580,12 +580,10 @@
 }
 
 + (void)removeFromFavorites:(RIProduct*)product
-               successBlock:(void (^)(NSArray* favoriteProducts))successBlock
+               successBlock:(void (^)(void))successBlock
             andFailureBlock:(void (^)(NSArray *error))failureBlock;
 {
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
-        
-        NSMutableArray* newFavoriteList = [NSMutableArray new];
         
         for (RIProduct* currentProduct in favoriteProducts) {
             if ([currentProduct.sku isEqualToString:product.sku]) {
@@ -598,14 +596,15 @@
                     [[RIDataBaseWrapper sharedInstance] deleteObject:product];
                 }
                 [[RIDataBaseWrapper sharedInstance] saveContext];
-            } else {
-                [newFavoriteList addObject:currentProduct];
             }
         }
-        successBlock([newFavoriteList copy]);
-        
+        if (successBlock) {
+            successBlock();
+        }
     } andFailureBlock:^(NSArray *error) {
-        failureBlock(error);
+        if (failureBlock) {
+            failureBlock(error);
+        }
     }];
 }
 
