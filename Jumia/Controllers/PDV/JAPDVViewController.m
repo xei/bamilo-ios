@@ -36,7 +36,8 @@
 @interface JAPDVViewController ()
 <
     JAPDVGalleryViewDelegate,
-    JAActivityViewControllerDelegate
+    JAActivityViewControllerDelegate,
+    JANoConnectionViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
@@ -74,19 +75,61 @@
     }
 
     // Always load the product details when entering PDV
-    if (VALID_NOTEMPTY(self.productUrl, NSString)) {
-        [self showLoading];
-        [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
-            [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
-            self.product = product;
-            [self hideLoading];
-            [self productLoaded];
-        } andFailureBlock:^(NSArray *error) {
-            [self hideLoading];
-        }];
+    if (VALID_NOTEMPTY(self.productUrl, NSString))
+    {
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+            [lostConnection setupNoConnectionView];
+            lostConnection.delegate = self;
+            [lostConnection setRetryBlock:^(BOOL dismiss) {
+                [self loadCompleteProduct];
+            }];
+            
+            [self.view addSubview:lostConnection];
+        }
+        else
+        {
+            [self loadCompleteProduct];
+        }
     }
 }
 
+- (void)loadCompleteProduct
+{
+    [self showLoading];
+    [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
+        [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
+        self.product = product;
+        [self hideLoading];
+        [self productLoaded];
+    } andFailureBlock:^(NSArray *error) {
+        [self hideLoading];
+    }];
+}
+
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionView];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self loadCompleteProduct];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self loadCompleteProduct];
+    }
+}
+
+#pragma mark - Product loaded
 
 - (void)productLoaded
 {

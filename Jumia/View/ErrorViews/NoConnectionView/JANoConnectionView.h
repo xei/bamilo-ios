@@ -10,6 +10,8 @@
 
 @protocol JANoConnectionViewDelegate <NSObject>
 
+@required
+
 - (void)retryConnection;
 
 @end

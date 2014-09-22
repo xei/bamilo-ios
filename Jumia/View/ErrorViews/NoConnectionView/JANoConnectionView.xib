@@ -36,6 +36,9 @@
                     <state key="disabled" backgroundImage="grayBig_disabled"/>
                     <state key="selected" backgroundImage="grayBig_highlighted"/>
                     <state key="highlighted" backgroundImage="grayBig_highlighted"/>
+                    <connections>
+                        <action selector="retryConnectionButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="dQA-0e-02H"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -44,6 +47,7 @@
             <connections>
                 <outlet property="noInternetImageView" destination="OMs-vw-tGv" id="aJf-9N-kad"/>
                 <outlet property="noNetworkView" destination="C9J-iB-7kg" id="v1R-uc-ffx"/>
+                <outlet property="retryButton" destination="XBP-2c-RqZ" id="nQ2-ud-BBF"/>
                 <outlet property="textLabel" destination="HdF-jO-fhJ" id="G9q-FA-ltB"/>
             </connections>
             <point key="canvasLocation" x="443" y="153"/>

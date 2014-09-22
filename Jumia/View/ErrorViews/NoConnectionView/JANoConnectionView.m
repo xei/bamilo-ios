@@ -44,6 +44,11 @@ void(^retryBock)(BOOL dismiss);
     
     [self.retryButton setTitleColor:UIColorFromRGB(0x4e4e4e)
                            forState:UIControlStateNormal];
+    
+    self.textLabel.text = @"No Network";
+
+    [self.retryButton setTitle:@"Try Again"
+                      forState:UIControlStateNormal];
 }
 
 - (IBAction)retryConnectionButtonTapped:(id)sender
