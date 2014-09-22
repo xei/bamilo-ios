@@ -8,6 +8,12 @@
 
 #import "JAErrorView.h"
 
+@interface JAErrorView ()
+
+@property (strong, nonatomic) NSTimer *timer;
+
+@end
+
 @implementation JAErrorView
 
 + (JAErrorView *)getNewJAErrorView
@@ -30,48 +36,63 @@
 {
     if (VALID(title, NSString))
     {
-        CGRect tempFrame = CGRectMake(0,
-                                      -44,
-                                      320,
-                                      44);
+        BOOL findedSuccessView = NO;
         
-        self.frame = tempFrame;
+        for (UIView *view in viewController.view.subviews)
+        {
+            if ([view isKindOfClass:[JASuccessView class]])
+            {
+                [((JASuccessView *)view) udpateViewWithNewTitle:title];
+                findedSuccessView = YES;
+                break;
+            }
+        }
         
-        self.backgroundColor = UIColorFromRGB(0xe77979);
-        self.alpha = 0.95f;
-        
-        self.titleLabel.textColor = UIColorFromRGB(0xffffff);
-        
-        self.titleLabel.text = title;
-        
-        [viewController.view addSubview:self];
-        
-        [self adjustFrames];
-        
-        [UIView animateWithDuration:0.5f
-                         animations:^{
-                             CGRect newFrame = CGRectMake(0,
-                                                          0,
-                                                          320,
-                                                          44);
-                             
-                             self.frame = newFrame;
-                         }];
-        
-        // Add tap to remove
-        self.titleLabel.userInteractionEnabled = YES;
-        self.errorImageView.userInteractionEnabled = YES;
-        
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                              action:@selector(removeErrorView)];
-        [self.titleLabel addGestureRecognizer:tap];
-        [self.errorImageView addGestureRecognizer:tap];
-        
-        [NSTimer scheduledTimerWithTimeInterval:4.0f
-                                         target:self
-                                       selector:@selector(removeErrorView)
-                                       userInfo:nil
-                                        repeats:NO];
+        if (!findedSuccessView)
+        {
+            CGRect tempFrame = CGRectMake(0,
+                                          -44,
+                                          320,
+                                          44);
+            
+            self.frame = tempFrame;
+            
+            self.backgroundColor = UIColorFromRGB(0xe77979);
+            self.alpha = 0.95f;
+            
+            self.titleLabel.textColor = UIColorFromRGB(0xffffff);
+            
+            self.titleLabel.text = title;
+            
+            [viewController.view addSubview:self];
+            
+            [self adjustFrames];
+            
+            [UIView animateWithDuration:0.5f
+                             animations:^{
+                                 CGRect newFrame = CGRectMake(0,
+                                                              0,
+                                                              320,
+                                                              44);
+                                 
+                                 self.frame = newFrame;
+                             }];
+            
+            // Add tap to remove
+            self.titleLabel.userInteractionEnabled = YES;
+            self.errorImageView.userInteractionEnabled = YES;
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(removeErrorView)];
+            [self.titleLabel addGestureRecognizer:tap];
+            [self.errorImageView addGestureRecognizer:tap];
+            
+            [NSTimer scheduledTimerWithTimeInterval:4.0f
+                                             target:self
+                                           selector:@selector(removeErrorView)
+                                           userInfo:nil
+                                            repeats:NO];
+        }
     }
 }
 
@@ -113,6 +134,26 @@
                                        self.titleLabel.frame.size.height);
     
     [self layoutSubviews];
+}
+
+- (void)udpateViewWithNewTitle:(NSString *)newTitle
+{
+    if (VALID(newTitle, NSString))
+    {
+        [self.timer invalidate];
+        
+        [UIView animateWithDuration:1.0f
+                         animations:^{
+                             self.titleLabel.text = newTitle;
+                             [self adjustFrames];
+                         }];
+        
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:4.0f
+                                                      target:self
+                                                    selector:@selector(removeErrorView)
+                                                    userInfo:nil
+                                                     repeats:NO];
+    }
 }
 
 @end

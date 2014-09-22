@@ -18,4 +18,6 @@
 - (void)setErrorTitle:(NSString *)title
              andAddTo:(UIViewController *)viewController;
 
+- (void)udpateViewWithNewTitle:(NSString *)newTitle;
+
 @end
