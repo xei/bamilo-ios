@@ -38,37 +38,21 @@
                                                   self.teaserPagesScrollView.frame.size.width,
                                                   self.view.frame.size.height - self.teaserCategoryScrollView.frame.size.height - 64.0f);
     
-    [RITeaserCategory getTeaserCategoriesWithSuccessBlock:^(id teaserCategories) {
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self completeTeasersLoading];
+        }];
         
-        self.teaserCategories = teaserCategories;
-        
-        NSMutableArray* titles = [NSMutableArray new];
-        self.teaserPageViews = [NSMutableArray new];
-        
-        CGFloat currentPageX = self.teaserPagesScrollView.bounds.origin.x;
-        
-        for (RITeaserCategory* teaserCategory in teaserCategories) {
-            [titles addObject:teaserCategory.homePageTitle];
-            
-            JATeaserPageView* teaserPageView = [[JATeaserPageView alloc] initWithFrame:CGRectMake(currentPageX,
-                                                                                                  self.teaserPagesScrollView.bounds.origin.y,
-                                                                                                  self.teaserPagesScrollView.bounds.size.width,
-                                                                                                  self.teaserPagesScrollView.bounds.size.height)];
-            teaserPageView.teaserCategory = teaserCategory;
-            [self.teaserPagesScrollView addSubview:teaserPageView];
-            [self.teaserPageViews addObject:teaserPageView];
-            
-            currentPageX += teaserPageView.frame.size.width;
-        }
-        
-        [self.teaserCategoryScrollView setOptions:titles];
-        
-        [self.teaserPagesScrollView setContentSize:CGSizeMake(currentPageX,
-                                                              self.teaserPagesScrollView.frame.size.height)];
-        
-    } andFailureBlock:^(NSArray *errorMessage) {
-        
-    }];
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self completeTeasersLoading];
+    }
 }
 
 - (void)stopLoading
@@ -119,6 +103,62 @@
 - (void)removeNotifications
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)completeTeasersLoading
+{
+    [RITeaserCategory getTeaserCategoriesWithSuccessBlock:^(id teaserCategories) {
+        
+        self.teaserCategories = teaserCategories;
+        
+        NSMutableArray* titles = [NSMutableArray new];
+        self.teaserPageViews = [NSMutableArray new];
+        
+        CGFloat currentPageX = self.teaserPagesScrollView.bounds.origin.x;
+        
+        for (RITeaserCategory* teaserCategory in teaserCategories) {
+            [titles addObject:teaserCategory.homePageTitle];
+            
+            JATeaserPageView* teaserPageView = [[JATeaserPageView alloc] initWithFrame:CGRectMake(currentPageX,
+                                                                                                  self.teaserPagesScrollView.bounds.origin.y,
+                                                                                                  self.teaserPagesScrollView.bounds.size.width,
+                                                                                                  self.teaserPagesScrollView.bounds.size.height)];
+            teaserPageView.teaserCategory = teaserCategory;
+            [self.teaserPagesScrollView addSubview:teaserPageView];
+            [self.teaserPageViews addObject:teaserPageView];
+            
+            currentPageX += teaserPageView.frame.size.width;
+        }
+        
+        [self.teaserCategoryScrollView setOptions:titles];
+        
+        [self.teaserPagesScrollView setContentSize:CGSizeMake(currentPageX,
+                                                              self.teaserPagesScrollView.frame.size.height)];
+        
+    } andFailureBlock:^(NSArray *errorMessage) {
+        
+    }];
+}
+
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self completeTeasersLoading];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self completeTeasersLoading];
+    }
 }
 
 #pragma mark - JATeaserCategoryScrollViewDelegate

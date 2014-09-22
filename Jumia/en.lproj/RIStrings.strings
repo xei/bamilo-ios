@@ -184,3 +184,5 @@
 
 "my_order_label" = "My Order";
 "my_order_payment" = "Payment Options";
+
+"enter_order_id" = "Please enter the order ID";

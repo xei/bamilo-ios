@@ -59,6 +59,8 @@ void(^retryBock)(BOOL dismiss);
     {
         self.textLabel.text = @"No Network";
         
+        self.noInternetImageView.hidden = NO;
+        self.textLabel.hidden = NO;
         self.genericImageView.hidden = YES;
         self.genericErrorLabel.hidden = YES;
         self.genericDetailLabel.hidden = YES;
