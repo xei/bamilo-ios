@@ -12,8 +12,8 @@
 @interface JABaseViewController ()
 
 @property (assign, nonatomic) int requestNumber;
-@property (strong, nonatomic) UIImageView *loadingImageView;
-@property (strong, nonatomic) UIActivityIndicatorView *loadingSpinner;
+@property (strong, nonatomic) UIView *loadingView;
+@property (nonatomic, strong) UIImageView *loadingAnimation;
 
 @end
 
@@ -32,7 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.hidesBackButton = YES;
     self.title = @"";
@@ -41,18 +41,31 @@
     
     self.requestNumber = 0;
     
-    self.loadingImageView = [[UIImageView alloc] initWithFrame:((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame];
-    self.loadingImageView.backgroundColor = [UIColor blackColor];
-    self.loadingImageView.alpha = 0.0f;
-    self.loadingImageView.userInteractionEnabled = YES;
+    self.loadingView = [[UIImageView alloc] initWithFrame:((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame];
+    self.loadingView.backgroundColor = [UIColor blackColor];
+    self.loadingView.alpha = 0.0f;
+    self.loadingView.userInteractionEnabled = YES;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(cancelLoading)];
-    [self.loadingImageView addGestureRecognizer:tap];
+    [self.loadingView addGestureRecognizer:tap];
     
-    self.loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    self.loadingSpinner.center = self.loadingImageView.center;
-    self.loadingImageView.alpha = 0.0f;
+    UIImage* image = [UIImage imageNamed:@"loadingAnimationFrame1"];
+    self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0,
+                                                                          0,
+                                                                          image.size.width,
+                                                                          image.size.height)];
+    self.loadingAnimation.animationDuration = 1.0f;
+    NSMutableArray* animationFrames = [NSMutableArray new];
+    for (int i = 1; i <= 24; i++) {
+        NSString* frameName = [NSString stringWithFormat:@"loadingAnimationFrame%d", i];
+        UIImage* frame = [UIImage imageNamed:frameName];
+        [animationFrames addObject:frame];
+    }
+    self.loadingAnimation.animationImages = [animationFrames copy];
+    self.loadingAnimation.center = self.loadingView.center;
+    
+    self.loadingView.alpha = 0.0f;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -75,15 +88,15 @@
     self.requestNumber++;
     
     if(1 == self.requestNumber) {
-        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingImageView];
-        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingSpinner];
+        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingView];
+        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingAnimation];
         
-        [self.loadingSpinner startAnimating];
+        [self.loadingAnimation startAnimating];
         
         [UIView animateWithDuration:0.4f
                          animations:^{
-                             self.loadingImageView.alpha = 0.6f;
-                             self.loadingSpinner.alpha = 0.6f;
+                             self.loadingView.alpha = 0.5f;
+                             self.loadingAnimation.alpha = 0.5f;
                          }];
     }
 }
@@ -97,11 +110,11 @@
     if(0 == self.requestNumber) {
         [UIView animateWithDuration:0.4f
                          animations:^{
-                             self.loadingImageView.alpha = 0.0f;
-                             self.loadingSpinner.alpha = 0.0f;
+                             self.loadingView.alpha = 0.0f;
+                             self.loadingAnimation.alpha = 0.0f;
                          } completion:^(BOOL finished) {
-                             [self.loadingImageView removeFromSuperview];
-                             [self.loadingSpinner removeFromSuperview];
+                             [self.loadingView removeFromSuperview];
+                             [self.loadingAnimation removeFromSuperview];
                          }];
     }
 }
