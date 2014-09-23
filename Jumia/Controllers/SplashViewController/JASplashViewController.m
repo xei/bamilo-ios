@@ -21,7 +21,8 @@
 
 @interface JASplashViewController ()
 <
-UIAlertViewDelegate
+    UIAlertViewDelegate,
+    JANoConnectionViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIImageView *splashImage;
@@ -50,6 +51,25 @@ UIAlertViewDelegate
                                                  name:kSelectedCountryNotification
                                                object:nil];
     
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueProcessing];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueProcessing];
+    }
+}
+
+- (void)continueProcessing
+{
     if (self.selectedCountry)
     {
         self.navigationController.navigationBarHidden = YES;
@@ -178,6 +198,27 @@ UIAlertViewDelegate
         {
             self.splashImage.image = [UIImage imageNamed:@"splash4"];
         }
+    }
+}
+
+#pragma mark - No internet connection
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueProcessing];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueProcessing];
     }
 }
 

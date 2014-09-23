@@ -99,11 +99,24 @@
     NSInteger productIndex = 1;
     
     NSArray *cartItemsKeys = [self.checkout.cart.cartItems allKeys];
+    
+    NSMutableDictionary *productDic = [NSMutableDictionary new];
+    NSMutableArray *productsArray = [NSMutableArray new];
+    
     for (NSString *cartItemKey in cartItemsKeys)
     {
         trackingDictionary = [[NSMutableDictionary alloc] init];
 
         RICartItem *cartItem = [self.checkout.cart.cartItems objectForKey:cartItemKey];
+        
+        [productDic setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
+        [productDic setValue:cartItem.name forKey:kRIEventProductName];
+        [productDic setValue:cartItem.sku forKey:kRIEventSkuKey];
+        [productDic setValue:cartItem.price forKey:kRIEventPriceKey];
+        [productDic setValue:cartItem.quantity forKey:kRIEventQuantityKey];
+        [productDic setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+        
+        [productsArray addObject:productDic];
         
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
         NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
@@ -203,6 +216,8 @@
             [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kDidFirstBuyKey];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
+        
+        [ecommerceDictionary setValue:[productsArray copy] forKey:kRIEcommerceProducts];
         
         [[RITrackingWrapper sharedInstance] trackCheckout:ecommerceDictionary];
     }];

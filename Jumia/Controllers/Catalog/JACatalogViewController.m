@@ -36,6 +36,8 @@
 @property (assign, nonatomic) CGRect backupFrame;
 @property (assign, nonatomic) BOOL isFirstLoadTracking;
 
+@property (strong, nonatomic) UIButton *backupButton; // for the retry
+
 @end
 
 @implementation JACatalogViewController
@@ -549,6 +551,27 @@
 
 - (void)addToFavoritesPressed:(UIButton*)button
 {
+    self.backupButton = button;
+    
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueAddingToFavouritesWithButton:self.backupButton];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueAddingToFavouritesWithButton:self.backupButton];
+    }
+}
+
+- (void)continueAddingToFavouritesWithButton:(UIButton *)button
+{
     button.selected = !button.selected;
     
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
@@ -580,9 +603,8 @@
                                         
                                         [self hideLoading];
                                         
-#warning confirm this strings
                                         JASuccessView *success = [JASuccessView getNewJASuccessView];
-                                        [success setSuccessTitle:@"Item added to wish list."
+                                        [success setSuccessTitle:STRING_ADDED_TO_WISHLIST
                                                         andAddTo:self];
                                         
                                     } andFailureBlock:^(NSArray *error) {
@@ -633,6 +655,27 @@
             [errorView setErrorTitle:STRING_ERROR
                             andAddTo:self];
         }];
+    }
+}
+
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueAddingToFavouritesWithButton:self.backupButton];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueAddingToFavouritesWithButton:self.backupButton];
     }
 }
 

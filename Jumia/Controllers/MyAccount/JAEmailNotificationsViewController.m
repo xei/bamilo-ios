@@ -14,7 +14,8 @@
 
 @interface JAEmailNotificationsViewController ()
 <
-    JADynamicFormDelegate
+    JADynamicFormDelegate,
+    JANoConnectionViewDelegate
 >
 
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
@@ -97,6 +98,25 @@
 
 - (void)updatePreferences
 {
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueUpdatePreferences];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueUpdatePreferences];
+    }
+}
+
+- (void)continueUpdatePreferences
+{
     [self.dynamicForm resignResponder];
     
     [self showLoading];
@@ -154,31 +174,48 @@
          {
              [self.dynamicForm validateFields:errorObject];
              
-             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                         message:STRING_ERROR_INVALID_FIELDS
-                                        delegate:nil
-                               cancelButtonTitle:nil
-                               otherButtonTitles:STRING_OK, nil] show];
+             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+             [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
+                             andAddTo:self];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm checkErrors];
              
-             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                         message:[errorObject componentsJoinedByString:@","]
-                                        delegate:nil
-                               cancelButtonTitle:nil
-                               otherButtonTitles:STRING_OK, nil] show];
+             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+             [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
+                             andAddTo:self];
          }
          else
          {
-             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                         message:@"Generic error"
-                                        delegate:nil
-                               cancelButtonTitle:nil
-                               otherButtonTitles:STRING_OK, nil] show];
+             [self.dynamicForm checkErrors];
+             
+             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+             [errorView setErrorTitle:STRING_ERROR
+                             andAddTo:self];
          }
      }];
+}
+
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueUpdatePreferences];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueUpdatePreferences];
+    }
 }
 
 @end

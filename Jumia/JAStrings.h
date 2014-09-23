@@ -189,5 +189,7 @@
 #define STRING_MY_ORDER_PAYMENT RILocalizedString(@"my_order_payment", nil)
 
 #define STRING_ENTER_ORDER_ID RILocalizedString(@"enter_order_id", nil) // Not ranslated
+#define STRING_ADDED_TO_WISHLIST RILocalizedString(@"item_added_to_wishlist", nil) // Not ranslated
+#define STRING_ERROR_ADDING_TO_WISHLIST RILocalizedString(@"error_adding_to_wishlist", nil) // Not ranslated
 
 #endif

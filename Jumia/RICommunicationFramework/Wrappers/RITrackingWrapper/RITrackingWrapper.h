@@ -147,6 +147,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventShopCountryKey      @"RIEventShopCountryKey"
 #define kRIEventUserIdKey           @"RIEventUserIdKey"
 #define kRIEventSkuKey              @"RIEventSkuKey"
+#define kRIEventProductName         @"kRIEventProductName"
 #define kRIEventCurrencyCodeKey     @"RIEventCurrencyCodeKey"
 #define kRIEventPriceKey            @"RIEventPriceKey"
 #define kRIEventGenderKey           @"RIEventGenderKey"
@@ -278,6 +279,7 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 #define kRIEcommerceTotalValueKey    @"RIEcommerceTotalValueKey"
 #define kRIEcommerceSkusKey          @"RIEcommerceSkusValueKey"
 #define kRIEcommerceGuestKey         @"RIEcommerceGuestKey"
+#define kRIEcommerceProducts         @"kRIEcommerceProducts"
 
 /**
  *  This protocol implements tracking to the commerce transactions

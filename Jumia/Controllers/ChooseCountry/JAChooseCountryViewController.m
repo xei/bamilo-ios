@@ -16,7 +16,8 @@
 @interface JAChooseCountryViewController ()
 <
     UITableViewDelegate,
-    UITableViewDataSource
+    UITableViewDataSource,
+    JANoConnectionViewDelegate
 >
 
 @property (strong, nonatomic) NSArray *countriesArray;
@@ -44,6 +45,63 @@
     
     self.tableViewContries.layer.cornerRadius = 5.0f;
     
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self loadData];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self loadData];
+    }
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self hideLoading];
+}
+
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self loadData];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self loadData];
+    }
+}
+
+#pragma mark - Load data
+
+- (void)loadData
+{
     [self showLoading];
     
     self.requestId = [RICountry getCountriesWithSuccessBlock:^(id countries) {
@@ -60,7 +118,7 @@
         
         if (0 != countryUrl.length) {
             NSInteger index = 0;
-
+            
             for (RICountry *country in countries) {
                 if ([country.url isEqualToString:countryUrl]) {
                     tempIndex = [NSIndexPath indexPathForItem:index
@@ -80,21 +138,6 @@
         [self hideLoading];
         
     }];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [self hideLoading];
 }
 
 #pragma mark - Selected apply

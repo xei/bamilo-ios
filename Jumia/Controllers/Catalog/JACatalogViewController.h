@@ -13,7 +13,16 @@
 #import "JAPDVViewController.h"
 #import "JAUndefinedSearchView.h"
 
-@interface JACatalogViewController : JABaseViewController <JAPickerScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, JAMainFiltersViewControllerDelegate, JAPDVViewControllerDelegate, JAUndefinedSearchViewDelegate>
+@interface JACatalogViewController : JABaseViewController
+<
+    JAPickerScrollViewDelegate,
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    JAMainFiltersViewControllerDelegate,
+    JAPDVViewControllerDelegate,
+    JAUndefinedSearchViewDelegate,
+    JANoConnectionViewDelegate
+>
 
 @property (nonatomic, strong)RICategory* category;
 @property (nonatomic, strong)NSString* catalogUrl;

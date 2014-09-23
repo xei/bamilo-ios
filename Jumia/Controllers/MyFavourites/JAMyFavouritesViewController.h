@@ -8,6 +8,13 @@
 
 #import "JABaseViewController.h"
 
-@interface JAMyFavouritesViewController : JABaseViewController <UICollectionViewDataSource, UICollectionViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface JAMyFavouritesViewController : JABaseViewController
+<
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    UIPickerViewDataSource,
+    UIPickerViewDelegate,
+    JANoConnectionViewDelegate
+>
 
 @end

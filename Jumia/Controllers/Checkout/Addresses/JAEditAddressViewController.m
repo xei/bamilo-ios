@@ -86,11 +86,9 @@ UIPickerViewDelegate>
      {
          [self finishedFormLoading];
          
-         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                     message:@"There was an error"
-                                    delegate:nil
-                           cancelButtonTitle:nil
-                           otherButtonTitles:STRING_OK, nil] show];
+         JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+         [errorView setErrorTitle:STRING_ERROR
+                         andAddTo:self];
      }];
 }
 
@@ -255,11 +253,10 @@ UIPickerViewDelegate>
     
     if(self.hasErrors)
     {
-        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                    message:STRING_ERROR_INVALID_FIELDS
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:STRING_OK, nil] show];
+        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+        [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
+                        andAddTo:self];
+        
         self.hasErrors = NO;
     }
     else

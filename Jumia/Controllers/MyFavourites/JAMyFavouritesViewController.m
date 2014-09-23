@@ -33,6 +33,8 @@
 @property (strong, nonatomic) UIPickerView *sizePicker;
 @property (nonatomic, strong) NSMutableArray* chosenSimpleNames;
 
+@property (strong, nonatomic) UIButton *backupButton; // for the retry connection, is necessary to store the button
+
 @end
 
 @implementation JAMyFavouritesViewController
@@ -468,6 +470,48 @@
 
 - (void)addToCartPressed:(UIButton*)button;
 {
+    self.backupButton = button;
+    
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self finishAddToCart:button];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self finishAddToCart:button];
+    }
+}
+
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self finishAddToCart:self.backupButton];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self finishAddToCart:self.backupButton];
+    }
+}
+
+- (void)finishAddToCart:(UIButton *)button
+{
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     
     RIProductSimple* productSimple;
@@ -480,13 +524,13 @@
             
             // Turn the title red
             JACatalogCell *cell = (JACatalogCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:button.tag
-                                                                                                  inSection:0]];
+                                                                                                                   inSection:0]];
             
             [cell.sizeButton setTitleColor:[UIColor redColor]
                                   forState:UIControlStateNormal];
             
             self.selectedSizeAndAddToCart = YES;
-                        
+            
             [self sizeButtonPressed:button];
             
             return;
@@ -528,11 +572,9 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                  message:STRING_ITEM_WAS_ADDED_TO_CART
-                                                 delegate:nil
-                                        cancelButtonTitle:nil
-                                        otherButtonTitles:STRING_OK, nil] show];
+                      JASuccessView *successView = [JASuccessView getNewJASuccessView];
+                      [successView setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
+                                          andAddTo:self];
                       
                       [RIProduct removeFromFavorites:product successBlock:^(void) {
                           
@@ -713,7 +755,5 @@
     NSString *title = [NSString stringWithFormat:@"%@", simpleName];
     return title;
 }
-
-
 
 @end

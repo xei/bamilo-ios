@@ -12,7 +12,15 @@
 @class RICart;
 @class RICartItem;
 
-@interface JACartViewController : JABaseViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface JACartViewController : JABaseViewController
+<
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    UITextFieldDelegate,
+    UIPickerViewDataSource,
+    UIPickerViewDelegate,
+    JANoConnectionViewDelegate
+>
 
 @property (strong, nonatomic) RICart *cart;
 @property (strong, nonatomic) RICartItem *currentItem;
