@@ -572,9 +572,9 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                      [errorView setErrorTitle:STRING_ITEM_WAS_ADDED_TO_CART
-                                      andAddTo:self];
+                      JASuccessView *successView = [JASuccessView getNewJASuccessView];
+                      [successView setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
+                                          andAddTo:self];
                       
                       [RIProduct removeFromFavorites:product successBlock:^(void) {
                           
