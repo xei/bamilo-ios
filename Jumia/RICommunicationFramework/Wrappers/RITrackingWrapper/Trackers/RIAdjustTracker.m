@@ -36,6 +36,7 @@
 #define kAdjustEventTotalWishlistKey    @"total_wishlist"
 #define kAdjustEventQuantityKey         @"quantity"
 #define kAdjustEventTotalCartKey        @"total_cart"
+#define kAdjustEventTotalTransactionKey @"total_transaction"
 
 NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
@@ -179,14 +180,12 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             case RIEventViewListing:
                 eventKey = @"rce3dz";
                 break;
-                // TODO: Missing implementation - re targting
             case RIEventViewCart:
                 eventKey = @"3lv2b5";
                 break;
             case RIEventTransactionConfirm:
                 eventKey = @"mtzu4i";
                 break;
-            // TODO: End implementation - re targting
             case RIEventFacebookHome:
                 eventKey = @"xgdla8";
                 break;
@@ -205,10 +204,8 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             case RIEventFacebookViewCart:
                 eventKey = @"adojsu";
                 break;
-                // TODO: Missing implementation - facebook audiences
             case RIEventFacebookViewTransaction:
                 eventKey = @"29kvfe";
-            // TODO: End implementation - facebook audiences
                 break;
             default:
                 break;
@@ -337,6 +334,24 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     if(VALID_NOTEMPTY(totalCartValue, NSString))
     {
         [parameters setObject:totalCartValue forKey:kAdjustEventTotalCartKey];
+    }
+
+    NSString *newCustomer = [data objectForKey:kRIEventNewCustomerKey];
+    if(VALID_NOTEMPTY(newCustomer, NSString))
+    {
+        [parameters setObject:newCustomer forKey:kAdjustEventNewCustomerKey];
+    }
+    
+    NSString *transactionId = [data objectForKey:kRIEventTransactionIdKey];
+    if(VALID_NOTEMPTY(transactionId, NSString))
+    {
+        [parameters setObject:transactionId forKey:kAdjustEventTransactionIdKey];
+    }
+    
+    NSString *totalTransaction = [data objectForKey:kRIEventTotalTransactionKey];
+    if(VALID_NOTEMPTY(totalTransaction, NSString))
+    {
+        [parameters setObject:totalTransaction forKey:kAdjustEventTotalTransactionKey];
     }
     
     return [parameters copy];
