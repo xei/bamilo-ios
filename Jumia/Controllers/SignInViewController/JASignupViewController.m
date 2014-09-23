@@ -17,7 +17,8 @@
 <
     JADynamicFormDelegate,
     UIPickerViewDataSource,
-    UIPickerViewDelegate
+    UIPickerViewDelegate,
+    JANoConnectionViewDelegate
 >
 
 @property (strong, nonatomic) UIScrollView *contentScrollView;
@@ -137,16 +138,56 @@
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.contentView.frame.origin.y + self.contentView.frame.size.height + 6.0f)];
 }
 
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueRegister];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueRegister];
+    }
+}
+
 #pragma mark - Actions
 
 - (void)registerButtonPressed:(id)sender
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueRegister];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueRegister];
+    }
+}
+
+- (void)continueRegister
 {
     [self.dynamicForm resignResponder];
     
     [self showLoading];
     
     [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object) {
-
+        
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"CreateSuccess" forKey:kRIEventActionKey];
@@ -163,7 +204,7 @@
         [self.dynamicForm resetValues];
         
         [self hideLoading];
-
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                             object:@{@"index": @(0),
                                                                      @"name": STRING_HOME}];
@@ -186,30 +227,26 @@
         {
             [self.dynamicForm validateFields:errorObject];
             
-            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                        message:STRING_ERROR_INVALID_FIELDS
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:STRING_OK, nil] show];
+            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+            [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
+                            andAddTo:self];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.dynamicForm checkErrors];
-
-            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                        message:[errorObject componentsJoinedByString:@","]
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:STRING_OK, nil] show];
+            
+            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+            [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
+                            andAddTo:self];
         }
         else
         {
-            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                        message:@"Generic error"
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:STRING_OK, nil] show];
-        }        
+            [self.dynamicForm checkErrors];
+            
+            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+            [errorView setErrorTitle:STRING_ERROR
+                            andAddTo:self];
+        }
     }];
 }
 

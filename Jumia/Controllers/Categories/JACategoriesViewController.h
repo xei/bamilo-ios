@@ -8,6 +8,11 @@
 
 #import "JABaseViewController.h"
 
-@interface JACategoriesViewController : JABaseViewController <UITableViewDelegate, UITableViewDataSource>
+@interface JACategoriesViewController : JABaseViewController
+<
+    UITableViewDelegate,
+    UITableViewDataSource,
+    JANoConnectionViewDelegate
+>
 
 @end

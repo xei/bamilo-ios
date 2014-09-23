@@ -11,7 +11,10 @@
 #import "RICustomer.h"
 
 @interface JAForgotPasswordViewController ()
-<JADynamicFormDelegate>
+<
+    JADynamicFormDelegate,
+    JANoConnectionViewDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UILabel *firstLabel;
@@ -95,9 +98,49 @@
     self.forgotPasswordViewHeightConstrain.constant = self.forgotPasswordViewCurrentY;
 }
 
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueForgotPassword];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueForgotPassword];
+    }
+}
+
 #pragma mark - Action
 
 - (void)forgotPasswordButtonPressed:(id)sender
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueForgotPassword];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueForgotPassword];
+    }
+}
+
+- (void)continueForgotPassword
 {
     [self.dynamicForm resignResponder];
     
@@ -122,29 +165,25 @@
          {
              [self.dynamicForm validateFields:errorObject];
              
-             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                         message:STRING_ERROR_INVALID_FIELDS
-                                        delegate:nil
-                               cancelButtonTitle:nil
-                               otherButtonTitles:STRING_OK, nil] show];
+             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+             [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
+                             andAddTo:self];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm checkErrors];
              
-             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                         message:[errorObject componentsJoinedByString:@","]
-                                        delegate:nil
-                               cancelButtonTitle:nil
-                               otherButtonTitles:STRING_OK, nil] show];
+             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+             [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
+                             andAddTo:self];
          }
          else
          {
-             [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                         message:@"Generic error"
-                                        delegate:nil
-                               cancelButtonTitle:nil
-                               otherButtonTitles:STRING_OK, nil] show];
+             [self.dynamicForm checkErrors];
+             
+             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+             [errorView setErrorTitle:STRING_ERROR
+                             andAddTo:self];
          }
      }];
 }

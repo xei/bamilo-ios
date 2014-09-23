@@ -16,7 +16,8 @@
 @interface JASignInViewController ()
 <
     JADynamicFormDelegate,
-    FBLoginViewDelegate
+    FBLoginViewDelegate,
+    JANoConnectionViewDelegate
 >
 
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
@@ -113,6 +114,7 @@
 }
 
 #pragma mark - Action
+
 - (void)finishedFormLoading
 {
     self.loginViewCurrentY += 15.0f;
@@ -183,6 +185,27 @@
 {
     [self.dynamicForm resignResponder];
     
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueLogin];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueLogin];
+    }
+}
+
+- (void)continueLogin
+{
+    [self.dynamicForm resignResponder];
+    
     [self showLoading];
     
     [RIForm sendForm:[self.dynamicForm form]
@@ -244,10 +267,31 @@
              [self.dynamicForm checkErrors];
              
              JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:@"Generic error"
+             [errorView setErrorTitle:STRING_ERROR
                              andAddTo:self];
          }
-    }];
+     }];
+}
+
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueLogin];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueLogin];
+    }
 }
 
 #pragma mark - Facebook Delegate

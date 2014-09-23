@@ -18,7 +18,6 @@
 
 @implementation JACategoriesViewController
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -26,7 +25,27 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueLoading];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueLoading];
+    }
+}
+
+- (void)continueLoading
+{
     [self showLoading];
+    
     [RICategory getCategoriesWithSuccessBlock:^(id categories) {
         self.categories = categories;
         [self hideLoading];
@@ -34,6 +53,27 @@
     } andFailureBlock:^(NSArray *errorMessage) {
         [self hideLoading];
     }];
+}
+
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueLoading];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueLoading];
+    }
 }
 
 #pragma mark - UITableView
