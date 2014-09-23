@@ -379,7 +379,8 @@ static dispatch_once_t sharedInstanceToken;
             }
         }
         
-        if (![urlHost isEqualToString:@"com.jumia.ios.dev"])
+        NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+        if (![urlHost isEqualToString:bundleIdentifier])
         {
             path = [urlHost stringByAppendingString:path];
         }
