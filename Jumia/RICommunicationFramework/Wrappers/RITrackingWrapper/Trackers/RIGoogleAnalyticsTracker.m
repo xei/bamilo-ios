@@ -161,21 +161,21 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 {
     RIDebugLog(@"Google Analytics - Tracking event: %@", eventType);
     
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    
-    if (!tracker) {
-        RIRaiseError(@"Missing default Google Analytics tracker");
-        return;
-    }
-    
-    if(ISEMPTY(data))
-    {
-        RIRaiseError(@"Missing event data");
-        return;
-    }
-    
     if([self.registeredEvents containsObject:eventType])
     {
+        id tracker = [[GAI sharedInstance] defaultTracker];
+        
+        if (!tracker) {
+            RIRaiseError(@"Missing default Google Analytics tracker");
+            return;
+        }
+        
+        if(ISEMPTY(data))
+        {
+            RIRaiseError(@"Missing event data");
+            return;
+        }
+        
         NSLog(@"Google Analytics - Event registered");
         
         NSString *category = [data objectForKey:kRIEventCategoryKey];
