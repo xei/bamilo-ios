@@ -221,6 +221,22 @@ static RIGoogleAnalyticsTracker *sharedInstance;
                                                            currencyCode:currency] build];
     
     [tracker send:dict];
+    
+    if ([data objectForKey:kRIEcommerceProducts])
+    {
+        NSArray *tempArray = [data objectForKey:kRIEcommerceProducts];
+        
+        for (NSDictionary *tempProduct in tempArray)
+        {
+            [tracker send:[[GAIDictionaryBuilder createItemWithTransactionId:[tempProduct objectForKey:kRIEcommerceTransactionIdKey]
+                                                                        name:[tempProduct objectForKey:kRIEventProductName]
+                                                                         sku:[tempProduct objectForKey:kRIEventSkuKey]
+                                                                    category:nil
+                                                                       price:[tempProduct objectForKey:kRIEventPriceKey]
+                                                                    quantity:[tempProduct objectForKey:kRIEventQuantityKey]
+                                                                currencyCode:[tempProduct objectForKey:kRIEventCurrencyCodeKey]] build]];
+        }
+    }
 }
 
 -(void)trackProductAddToCart:(RITrackingProduct *)product
