@@ -760,6 +760,11 @@ UICollectionViewDelegateFlowLayout>
                                                   data:[trackingDictionary copy]];
         
         [self hideLoading];
+        
+        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+        [errorView setErrorTitle:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS
+                        andAddTo:self];
+
     }];
 }
 

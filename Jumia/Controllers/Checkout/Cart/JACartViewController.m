@@ -78,6 +78,25 @@
     
     [self.cartScrollView addSubview:self.productCollectionView];
     
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueLoading];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueLoading];
+    }
+}
+
+- (void)continueLoading
+{
     [self showLoading];
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
         self.cart = cartData;
@@ -92,7 +111,7 @@
         for (NSString *cartItemKey in cartItemsKeys)
         {
             RICartItem *cartItem = [[self.cart cartItems] objectForKey:cartItemKey];
-
+            
             trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
             NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
@@ -114,7 +133,7 @@
                 discount = @"true";
                 price = [cartItem.specialPrice stringValue];
             }
-           
+            
             [trackingDictionary setValue:price forKey:kRIEventPriceKey];
             [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
             [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
@@ -1048,5 +1067,25 @@
                                              self.cartScrollView.frame.size.height + keyboardFrame.size.height)];;
 }
 
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueLoading];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueLoading];
+    }
+}
 
 @end

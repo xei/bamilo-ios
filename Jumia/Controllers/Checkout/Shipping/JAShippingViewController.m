@@ -20,11 +20,14 @@
 #define kPickupStationKey @"pickupstation"
 
 @interface JAShippingViewController ()
-<UICollectionViewDataSource,
+<
+UICollectionViewDataSource,
 UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout,
 UIPickerViewDataSource,
-UIPickerViewDelegate>
+UIPickerViewDelegate,
+JANoConnectionViewDelegate
+>
 
 // Steps
 @property (weak, nonatomic) IBOutlet UIView *stepView;
@@ -83,6 +86,25 @@ UIPickerViewDelegate>
     
     [self setupViews];
     
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueLoading];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueLoading];
+    }
+}
+
+- (void)continueLoading
+{
     [self showLoading];
     [RICheckout getShippingMethodFormWithSuccessBlock:^(RICheckout *checkout)
      {
@@ -406,11 +428,9 @@ UIPickerViewDelegate>
         }
         else
         {
-            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                        message:STRING_ERROR_INVALID_FIELDS
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:STRING_OK, nil] show];
+            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+            [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
+                            andAddTo:self];
         }
     }
 }
@@ -726,6 +746,27 @@ UIPickerViewDelegate>
         }
     }
     return  titleForRow;
+}
+
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueLoading];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueLoading];
+    }
 }
 
 @end
