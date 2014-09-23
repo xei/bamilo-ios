@@ -15,7 +15,6 @@
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (strong, nonatomic) NSURLRequest  *originalRequest;
-@property (strong, nonatomic) RIPaymentInformation *paymentInformation;
 
 @end
 
@@ -23,8 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.paymentInformation = self.checkout.paymentInformation;
     
     self.navBarLayout.showCartButton = NO;
     
