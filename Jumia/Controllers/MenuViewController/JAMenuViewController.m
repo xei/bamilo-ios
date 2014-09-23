@@ -140,11 +140,9 @@ UIAlertViewDelegate
         
         [self hideLoading];
         
-        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                    message:@"Error getting the categories."
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:STRING_OK, nil] show];
+        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+        [errorView setErrorTitle:STRING_ERROR
+                        andAddTo:self];
         
     }];
 }

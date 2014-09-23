@@ -118,11 +118,9 @@ UICollectionViewDelegateFlowLayout>
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
                                                   data:[trackingDictionary copy]];
         
-        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                    message:[errorMessages componentsJoinedByString:@","]
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:STRING_OK, nil] show];
+        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+        [errorView setErrorTitle:[errorMessages componentsJoinedByString:@","]
+                        andAddTo:self];
         
         [self hideLoading];
         [self finishedLoadingAddresses];
@@ -747,11 +745,9 @@ UICollectionViewDelegateFlowLayout>
             
             [self hideLoading];
             
-            [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                        message:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:STRING_OK, nil] show];
+            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+            [errorView setErrorTitle:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS
+                            andAddTo:self];
         }];
     } andFailureBlock:^(NSArray *errorMessages) {
 

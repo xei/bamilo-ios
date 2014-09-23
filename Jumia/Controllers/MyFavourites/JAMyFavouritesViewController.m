@@ -572,11 +572,9 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                  message:STRING_ITEM_WAS_ADDED_TO_CART
-                                                 delegate:nil
-                                        cancelButtonTitle:nil
-                                        otherButtonTitles:STRING_OK, nil] show];
+                      JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                      [errorView setErrorTitle:STRING_ITEM_WAS_ADDED_TO_CART
+                                      andAddTo:self];
                       
                       [RIProduct removeFromFavorites:product successBlock:^(void) {
                           
