@@ -115,8 +115,8 @@
                 price = [cartItem.specialPrice stringValue];
             }
            
-            [trackingDictionary setValue:[cartItem.price stringValue] forKey:kRIEventPriceKey];
-            [trackingDictionary setValue:price forKey:kRIEventDiscountKey];
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
             [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
             [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
             [trackingDictionary setValue:[cartData.cartCleanValue stringValue] forKey:kRIEventTotalCartKey];

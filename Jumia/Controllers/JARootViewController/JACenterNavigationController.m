@@ -694,6 +694,7 @@
     JAExternalPaymentsViewController *externalPaymentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
     
     externalPaymentsVC.checkout = [notification.userInfo objectForKey:@"checkout"];
+    externalPaymentsVC.paymentInformation = [notification.userInfo objectForKey:@"payment_information"];
     
     [self pushViewController:externalPaymentsVC animated:YES];
 }

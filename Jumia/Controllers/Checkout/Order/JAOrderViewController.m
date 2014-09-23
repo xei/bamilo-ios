@@ -584,7 +584,7 @@
             }
             else
             {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[self.checkout] forKeys:@[@"checkout"]];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[checkout.paymentInformation, self.checkout] forKeys:@[@"payment_information", @"checkout"]];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification
                                                                     object:nil
