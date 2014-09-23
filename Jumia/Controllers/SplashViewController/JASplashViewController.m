@@ -16,6 +16,7 @@
 #import <FacebookSDK/FBSession.h>
 #import "RIAd4PushTracker.h"
 #import "RIGoogleAnalyticsTracker.h"
+#import "RICountry.h"
 #import "JAUtils.h"
 
 @interface JASplashViewController ()
@@ -213,55 +214,63 @@ UIAlertViewDelegate
     {
         [RICustomer autoLogin:^(BOOL success){
             
-            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-
-            if(success)
-            {
-                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-                [trackingDictionary setValue:@"AutoLoginSuccess" forKey:kRIEventActionKey];
-            }
-            else
-            {
-                [trackingDictionary setValue:@"AutoLoginFailed" forKey:kRIEventActionKey];
-            }
-            
-            UIViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
-            
-            [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
-            
-            CGFloat duration = fabs([self.startTime timeIntervalSinceNow] * 1000);
-            
-            RICountryConfiguration *config = [RICountryConfiguration getCurrentConfiguration];
-            [RIGoogleAnalyticsTracker initGATrackerWithId:config.gaId];
-            
-            NSMutableDictionary *launchData = [[NSMutableDictionary alloc] init];
-            [launchData setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
-            
-            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-            [launchData setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-            
-            [launchData setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-            [launchData setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-            [launchData setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-            [launchData setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-            
-            [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAutoLogin]
-                                                      data:[trackingDictionary copy]];
-            
-            // Changed country in deeplink
-            if (self.tempNotification)
-            {
-                [NSTimer scheduledTimerWithTimeInterval:0.3
-                                                 target:self
-                                               selector:@selector(finishNotification)
-                                               userInfo:nil
-                                                repeats:NO];
-            }
-            
-            [self hideLoading];
+            [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration)
+             {
+                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                 [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                 
+                 if(success)
+                 {
+                     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                     [trackingDictionary setValue:@"AutoLoginSuccess" forKey:kRIEventActionKey];
+                 }
+                 else
+                 {
+                     [trackingDictionary setValue:@"AutoLoginFailed" forKey:kRIEventActionKey];
+                 }
+                 
+                 CGFloat duration = fabs([self.startTime timeIntervalSinceNow] * 1000);
+                 
+                 [RIGoogleAnalyticsTracker initGATrackerWithId:configuration.gaId];
+                 
+                 NSMutableDictionary *launchData = [[NSMutableDictionary alloc] init];
+                 [launchData setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
+                 
+                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                 [launchData setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                 
+                 [launchData setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                 [launchData setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                 [launchData setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                 [launchData setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                 
+                 [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
+                 
+                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAutoLogin]
+                                                           data:[trackingDictionary copy]];
+                 
+                 [self hideLoading];
+                 
+                 // Changed country in deeplink
+                 if (self.tempNotification)
+                 {
+                     [NSTimer scheduledTimerWithTimeInterval:0.3
+                                                      target:self
+                                                    selector:@selector(finishNotification)
+                                                    userInfo:nil
+                                                     repeats:NO];
+                 }
+                 else
+                 {
+                     UIViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
+                     
+                     [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+                 }
+                 
+             } andFailureBlock:^(NSArray *errorMessages)
+             {
+                 
+             }];
         }];
     }
 }
