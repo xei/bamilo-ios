@@ -19,7 +19,7 @@
 #if defined(DEBUG) && DEBUG
     countryListURL = [NSString stringWithFormat:@"%@/staging", RI_COUNTRIES_URL];
 #endif
-    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@", RI_COUNTRIES_URL]]
+    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
                                                          httpMethodPost:NO
                                                               cacheType:RIURLCacheNoCache
