@@ -7,7 +7,11 @@
 //
 
 #import "JABaseViewController.h"
+#import "RICategory.h"
 
 @interface JACategoriesViewController : JABaseViewController <UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) RICategory* currentCategory;
+@property (nonatomic, strong) NSString* backTitle;
 
 @end

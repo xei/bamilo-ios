@@ -115,7 +115,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectTeaserWithAllCategories)
+                                             selector:@selector(didSelectTeaserWithAllCategories:)
                                                  name:kDidSelectTeaserWithAllCategoriesNofication
                                                object:nil];
     
@@ -559,12 +559,28 @@
     }
 }
 
-- (void)didSelectTeaserWithAllCategories
+- (void)didSelectTeaserWithAllCategories:(NSNotification*)notification
 {
     JACategoriesViewController* categoriesViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"categoriesViewController"];
     
     categoriesViewController.navBarLayout.title = STRING_ALL_CATEGORIES;
     categoriesViewController.navBarLayout.backButtonTitle = STRING_HOME;
+    
+    NSDictionary* objectdic = notification.object;
+    if (VALID_NOTEMPTY(objectdic, NSDictionary)) {
+        RICategory* category = [objectdic objectForKey:@"category"];
+        if (VALID_NOTEMPTY(category, RICategory)) {
+            categoriesViewController.currentCategory = category;
+        }
+    }
+    
+    NSDictionary* infodic = notification.userInfo;
+    if (VALID_NOTEMPTY(infodic, NSDictionary)) {
+        NSString* backTitle = [infodic objectForKey:@"backButtonTitle"];
+        if (VALID_NOTEMPTY(backTitle, NSString)) {
+            categoriesViewController.backTitle = backTitle;
+        }
+    }
     
     [self pushViewController:categoriesViewController animated:YES];
 }
