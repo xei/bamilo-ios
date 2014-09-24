@@ -14,12 +14,12 @@
 
 @interface JACartViewController : JABaseViewController
 <
-    UICollectionViewDataSource,
-    UICollectionViewDelegate,
-    UITextFieldDelegate,
-    UIPickerViewDataSource,
-    UIPickerViewDelegate,
-    JANoConnectionViewDelegate
+UICollectionViewDataSource,
+UICollectionViewDelegate,
+UITextFieldDelegate,
+UIPickerViewDataSource,
+UIPickerViewDelegate,
+JANoConnectionViewDelegate
 >
 
 @property (strong, nonatomic) RICart *cart;
@@ -70,5 +70,7 @@
 @property (strong, nonatomic) UIView *quantityPickerBackgroundView;
 @property (strong, nonatomic) UIToolbar *quantityPickerToolbar;
 @property (strong, nonatomic) UIPickerView *quantityPicker;
+
+@property (nonatomic, retain) NSString* A4SViewControllerAlias;
 
 @end

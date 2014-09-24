@@ -68,6 +68,8 @@
 {
     [super viewDidLoad];
     
+    self.A4SViewControllerAlias = @"MYFAVOURITES";
+    
     self.navBarLayout.title = STRING_MY_FAVOURITES;
     
     self.addAllToCartCount = 0;
@@ -122,7 +124,7 @@
                  default: return (NSComparisonResult)NSOrderedSame; break;
              }
          }];
-
+        
         CGFloat totalWishlistValue = 0.0f;
         for(RIProduct *product in tempArray)
         {
@@ -162,8 +164,8 @@
                 price = [product.specialPrice stringValue];
                 discount = @"true";
             }
-
-            [trackingDictionary setValue:price forKey:kRIEventPriceKey];            
+            
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
             [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
             [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
             if (VALID_NOTEMPTY(product.productSimples, NSArray) && 1 == product.productSimples.count)
@@ -181,6 +183,9 @@
                                                       data:[trackingDictionary copy]];
         }
         
+        // notify the InAppNotification SDK that this the active view controller
+        [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+        
         [self hideLoading];
         [self updateListsWith:[tempArray copy]];
     } andFailureBlock:^(NSArray *error) {
@@ -195,6 +200,12 @@
         [self.chosenSimpleNames addObject:@""];
     }
     self.productsArray = products;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
 #pragma mark - UICollectionView
@@ -603,7 +614,7 @@
                           
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                                     data:[trackingDictionary copy]];
-                        
+                          
                           [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
                               [self updateListsWith:favoriteProducts];
                               [self hideLoading];

@@ -15,10 +15,10 @@
 
 @interface JASignupViewController ()
 <
-    JADynamicFormDelegate,
-    UIPickerViewDataSource,
-    UIPickerViewDelegate,
-    JANoConnectionViewDelegate
+JADynamicFormDelegate,
+UIPickerViewDataSource,
+UIPickerViewDelegate,
+JANoConnectionViewDelegate
 >
 
 @property (strong, nonatomic) UIScrollView *contentScrollView;
@@ -47,6 +47,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.A4SViewControllerAlias = @"ACCOUNT";
     
     self.navBarLayout.title = STRING_CREATE_ACCOUNT;
     
@@ -96,7 +98,6 @@
            [self finishedFormLoading];
            
        } failureBlock:^(NSArray *errorMessage) {
-           [self hideLoading];
            
            [self finishedFormLoading];
            
@@ -136,6 +137,17 @@
     
     [self.contentView setFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.registerViewCurrentY)];
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.contentView.frame.origin.y + self.contentView.frame.size.height + 6.0f)];
+    
+    [self hideLoading];
+    
+    // notify the InAppNotification SDK that this the active view controller
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
 #pragma mark - No connection delegate

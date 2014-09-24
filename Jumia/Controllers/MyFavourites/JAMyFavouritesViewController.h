@@ -10,11 +10,13 @@
 
 @interface JAMyFavouritesViewController : JABaseViewController
 <
-    UICollectionViewDataSource,
-    UICollectionViewDelegate,
-    UIPickerViewDataSource,
-    UIPickerViewDelegate,
-    JANoConnectionViewDelegate
+UICollectionViewDataSource,
+UICollectionViewDelegate,
+UIPickerViewDataSource,
+UIPickerViewDelegate,
+JANoConnectionViewDelegate
 >
+
+@property (nonatomic, retain) NSString* A4SViewControllerAlias;
 
 @end

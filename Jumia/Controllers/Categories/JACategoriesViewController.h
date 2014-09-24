@@ -19,4 +19,6 @@
 @property (nonatomic, strong) RICategory* currentCategory;
 @property (nonatomic, strong) NSString* backTitle;
 
+@property (nonatomic, retain) NSString* A4SViewControllerAlias;
+
 @end

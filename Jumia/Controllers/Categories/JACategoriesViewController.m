@@ -22,6 +22,8 @@
 {
     [super viewDidLoad];
     
+    self.A4SViewControllerAlias = @"CATEGORY";
+    
     self.view.backgroundColor = JABackgroundGrey;
     
     self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
@@ -57,6 +59,12 @@
     }
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
+}
+
 - (void)continueLoading
 {
     [self showLoading];
@@ -74,6 +82,10 @@
 - (void)categoryLoadingFinished:(NSArray*)categories
 {
     [self hideLoading];
+    
+    // notify the InAppNotification SDK that this the active view controller
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+    
     self.categories = categories;
     [self.tableView reloadData];
     

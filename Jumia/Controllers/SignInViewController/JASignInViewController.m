@@ -15,9 +15,9 @@
 
 @interface JASignInViewController ()
 <
-    JADynamicFormDelegate,
-    FBLoginViewDelegate,
-    JANoConnectionViewDelegate
+JADynamicFormDelegate,
+FBLoginViewDelegate,
+JANoConnectionViewDelegate
 >
 
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
@@ -43,6 +43,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.A4SViewControllerAlias = @"ACCOUNT";
     
     self.navBarLayout.title = STRING_LOGIN;
     
@@ -161,6 +163,15 @@
     self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) + 10.0f) - 200.0f;
     
     [self hideLoading];
+    
+    // notify the InAppNotification SDK that this the active view controller
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
 - (void)signUpButtonPressed:(id)sender
@@ -334,7 +345,7 @@
                                                  [self.dynamicForm resetValues];
                                                  
                                                  [self hideLoading];
-
+                                                 
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                                                                      object:@{@"index": @(0),
                                                                                                               @"name": STRING_HOME}];
@@ -355,7 +366,7 @@
                                                  JAErrorView *errorView = [JAErrorView getNewJAErrorView];
                                                  [errorView setErrorTitle:STRING_ERROR
                                                                  andAddTo:self];
-
+                                                 
                                              }];
     }
 }
