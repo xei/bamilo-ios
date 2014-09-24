@@ -11,6 +11,12 @@
 #import "JANewsletterComponent.h"
 #import "RINewsletterCategory.h"
 
+@interface JACheckBoxWithOptionsComponent ()
+
+@property (nonatomic, strong) IBOutlet UIView *subViews;
+
+@end
+
 @implementation JACheckBoxWithOptionsComponent
 
 + (JACheckBoxWithOptionsComponent *)getNewJACheckBoxWithOptionsComponent
@@ -87,10 +93,17 @@
         frame.origin.y = startingY;
         check.frame = frame;
         startingY += check.frame.size.height;
+
+        [check.lineImageView setHidden:NO];
+        if(i == ([[field options] count] - 1))
+        {
+            [check.lineImageView setHidden:YES];
+        }
         
-        [self addSubview:check];
+        [self.subViews addSubview:check];
     }
     
+    [self.subViews setFrame:CGRectMake(self.subViews.frame.origin.x, 21312 + self.subViews.frame.origin.y, self.subViews.frame.size.width, startingY)];
     [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, startingY)];
 }
 
