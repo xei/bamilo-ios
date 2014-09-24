@@ -66,6 +66,11 @@
 #define kDoneShouldChangeStateNotification @"DONE_SHOULD_CHANGE_NOTIFICATION"
 #define kDidPressDoneNotification @"DID_PRESS_DONE_NOTIFICATION"
 #define kDidPressEditNotification @"DID_PRESS_EDIT_NOTIFICATION"
+
+// Ad4Push Notifications
+#define A4S_INAPP_NOTIF_VIEW_DID_APPEAR @"A4S_INAPP_NOTIF_VIEW_DID_APPEAR"
+#define A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR @"A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR"
+
 //************
 
 //my account notifications
