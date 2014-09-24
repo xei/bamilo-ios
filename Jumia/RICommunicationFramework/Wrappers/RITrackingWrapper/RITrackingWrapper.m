@@ -177,11 +177,9 @@ static dispatch_once_t sharedInstanceToken;
         [handler handleOpenURL:url];
     }
     
-    [[RIAd4PushTracker sharedInstance] trackOpenURL:url];
-    /*
-     [self RI_callTrackersConformToProtocol:@protocol(RIOpenURLTracking)
-     selector:@selector(trackOpenURL:)
-     arguments:@[url]]; */
+    [self RI_callTrackersConformToProtocol:@protocol(RIOpenURLTracking)
+                                  selector:@selector(trackOpenURL:)
+                                 arguments:@[url]];
 }
 
 #pragma mark - RIScreenTracking protocol

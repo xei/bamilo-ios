@@ -119,7 +119,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
 - (void)trackEvent:(NSNumber *)eventType data:(NSDictionary *)data
 {
-    NSLog(@"Adjust - Tracking event = %@, data %@", eventType, data);
+    RIDebugLog(@"Adjust - Tracking event = %@, data %@", eventType, data);
     if([self.registeredEvents containsObject:eventType])
     {
         NSDictionary *parameters = [self createParameters:data];
