@@ -191,3 +191,4 @@
 
 "error_add_to_cart_failed_for_x_products" = "Adding to cart failed for %d products";
 "error_add_to_cart_failed_for_1_product" = "Adding to cart failed for 1 product";
+"save_label" = "Save";

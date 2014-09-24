@@ -30,8 +30,7 @@
 @property (strong, nonatomic) JADynamicForm *changePasswordForm;
 @property (assign, nonatomic) float formHeight;
 @property (assign, nonatomic) NSInteger numberOfFields;
-@property (strong, nonatomic) JAButtonWithBlur *ctaView;
-@property (weak, nonatomic) IBOutlet UIView *buttonView;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
 
 @end
 
@@ -44,8 +43,6 @@
     [super viewDidLoad];
     
     self.numberOfFields = 0;
-    
-    self.buttonView.backgroundColor = JABackgroundGrey;
     
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
@@ -99,19 +96,8 @@
            self.changePasswordHeight.constant = self.formHeight + 20;
            [self.view updateConstraints];
            
-           self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
-           self.ctaView.backgroundColor = [UIColor clearColor];
-           
-           [self.ctaView setFrame:CGRectMake(0,
-                                             0,
-                                             self.view.frame.size.width,
-                                             60)];
-           
-           [self.ctaView addButton:STRING_SAVE_CHANGES
-                            target:self
-                            action:@selector(saveNewPassword)];
-           
-           [self.buttonView addSubview:self.ctaView];
+           [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
+           [self.saveButton addTarget:self action:@selector(saveNewPassword) forControlEvents:UIControlEventTouchUpInside];
            
        } failureBlock:^(NSArray *errorMessage) {
            
@@ -186,10 +172,9 @@
          [self.changePasswordForm resetValues];
          
          [self hideLoading];
-         
-         JASuccessView *success = [JASuccessView getNewJASuccessView];
-         [success setSuccessTitle:STRING_CHANGED_PASSWORD_SUCCESS
-                         andAddTo:self];
+                  
+         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSaveUserDataNotification object:nil];
+         [self.navigationController popViewControllerAnimated:YES];
          
      } andFailureBlock:^(id errorObject)
      {

@@ -410,6 +410,8 @@ UIAlertViewDelegate
                             
                             [self userDidLogout];
                             
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                            
                         } andFailureBlock:^(NSArray *errorObject) {
                             
                             [[FBSession activeSession] closeAndClearTokenInformation];

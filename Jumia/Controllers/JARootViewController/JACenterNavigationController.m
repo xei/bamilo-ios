@@ -330,16 +330,30 @@
     }
     else if([newScreenName isEqualToString:STRING_MY_ACCOUNT])
     {
+        if (![[self topViewController] isKindOfClass:[JAMyAccountViewController class]])
+        {
+            JAMyAccountViewController *myAccountViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myAccountViewController"];
+            
+            [self pushViewController:myAccountViewController
+                            animated:YES];
+            
+            self.viewControllers = @[myAccountViewController];
+        }
+    }
+    else if ([newScreenName isEqualToString:STRING_TRACK_MY_ORDER])
+    {
+        [self showTrackOrderViewController:nil];
+    }
+    else if ([newScreenName isEqualToString:STRING_USER_DATA])
+    {
         if([RICustomer checkIfUserIsLogged])
         {
-            if (![[self topViewController] isKindOfClass:[JAMyAccountViewController class]])
+            if (![[self topViewController] isKindOfClass:[JAUserDataViewController class]])
             {
-                JAMyAccountViewController *myAccountViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myAccountViewController"];
+                JAUserDataViewController *userData = [self.storyboard instantiateViewControllerWithIdentifier:@"userDataViewController"];
                 
-                [self pushViewController:myAccountViewController
+                [self pushViewController:userData
                                 animated:YES];
-                
-                self.viewControllers = @[myAccountViewController];
             }
         }
         else
@@ -354,29 +368,31 @@
                 self.viewControllers = @[signInViewController];
             }
         }
-    }
-    else if ([newScreenName isEqualToString:STRING_TRACK_MY_ORDER])
-    {
-        [self showTrackOrderViewController:nil];
-    }
-    else if ([newScreenName isEqualToString:STRING_USER_DATA])
-    {
-        if (![[self topViewController] isKindOfClass:[JAUserDataViewController class]])
-        {
-            JAUserDataViewController *userData = [self.storyboard instantiateViewControllerWithIdentifier:@"userDataViewController"];
-            
-            [self pushViewController:userData
-                            animated:YES];
-        }
+
     }
     else if ([newScreenName isEqualToString:STRING_USER_EMAIL_NOTIFICATIONS])
     {
-        if (![[self topViewController] isKindOfClass:[JAEmailNotificationsViewController class]])
+        if([RICustomer checkIfUserIsLogged])
         {
-            JAEmailNotificationsViewController *email = [self.storyboard instantiateViewControllerWithIdentifier:@"emailNotificationsViewController"];
-            
-            [self pushViewController:email
-                            animated:YES];
+            if (![[self topViewController] isKindOfClass:[JAEmailNotificationsViewController class]])
+            {
+                JAEmailNotificationsViewController *email = [self.storyboard instantiateViewControllerWithIdentifier:@"emailNotificationsViewController"];
+                
+                [self pushViewController:email
+                                animated:YES];
+            }
+        }
+        else
+        {
+            if (![[self topViewController] isKindOfClass:[JASignInViewController class]])
+            {
+                JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+                
+                [self pushViewController:signInViewController
+                                animated:YES];
+                
+                self.viewControllers = @[signInViewController];
+            }
         }
     }
     
