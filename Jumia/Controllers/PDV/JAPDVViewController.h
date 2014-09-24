@@ -26,6 +26,7 @@
 @property (strong, nonatomic) NSArray *arrayWithRelatedItems;
 @property (strong, nonatomic) NSString *previousCategory;
 @property (strong, nonatomic) NSString *preSelectedSize;
+@property (assign, nonatomic) BOOL showBackButton;
 @property (nonatomic, assign) id<JAPDVViewControllerDelegate>delegate;
 
 @end

@@ -445,6 +445,7 @@
     
     NSString *temp = self.category.name;
     
+    
     if (temp.length > 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
@@ -453,7 +454,8 @@
                                                                       @"fromCatalog" : @"YES",
                                                                       @"relatedItems" : tempArray,
                                                                       @"delegate" : self,
-                                                                      @"category" : self.category}];
+                                                                      @"category" : self.category,
+                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
     }
     else
     {
@@ -463,7 +465,8 @@
                                                                       @"fromCatalog" : @"YES",
                                                                       @"previousCategory" : self.navBarLayout.title,
                                                                       @"relatedItems" : tempArray ,
-                                                                      @"delegate": self }];
+                                                                      @"delegate": self ,
+                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
     }
 }
 
