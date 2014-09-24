@@ -57,14 +57,12 @@
                self.formHeight = CGRectGetMaxY(view.frame);
            }
            
-           self.height.constant = self.formHeight - 22;
+           self.height.constant = self.formHeight + 6.0f;
            
            [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
            [self.saveButton addTarget:self action:@selector(updatePreferences) forControlEvents:UIControlEventTouchUpInside];
            
            [self hideLoading];
-           
-           [self.view updateConstraints];
            
        } failureBlock:^(NSArray *errorMessage) {
            
