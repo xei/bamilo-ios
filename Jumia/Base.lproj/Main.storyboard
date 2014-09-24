@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
@@ -1275,23 +1275,31 @@
                                             <constraint firstItem="wOS-Uf-xBU" firstAttribute="top" secondItem="Ba5-TS-uht" secondAttribute="bottom" constant="4" id="vPN-aQ-086"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bt5-LS-08s">
-                                        <rect key="frame" x="0.0" y="283" width="320" height="75"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vwj-RC-hFb" userLabel="Continue Shopping Button">
+                                        <rect key="frame" x="6" y="287" width="308" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="320" id="jPI-Dc-QwG"/>
-                                            <constraint firstAttribute="height" constant="75" id="p9Z-9B-XhY"/>
+                                            <constraint firstAttribute="height" constant="44" id="HRx-5f-eia"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="308" id="HuD-Uw-7Eb"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Voc-n8-Otb"/>
+                                            <constraint firstAttribute="width" constant="308" id="XT7-3G-oiS"/>
                                         </constraints>
-                                    </view>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <state key="normal" title="Button" backgroundImage="orangeBig_normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="disabled" title="Button" backgroundImage="orangeBig_disabled"/>
+                                        <state key="selected" backgroundImage="orangeBig_highlighted"/>
+                                        <state key="highlighted" backgroundImage="orangeBig_highlighted"/>
+                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="Bt5-LS-08s" firstAttribute="leading" secondItem="3Te-4x-ZNf" secondAttribute="leading" id="0yt-AP-gKx"/>
-                                    <constraint firstItem="Bt5-LS-08s" firstAttribute="top" secondItem="kBD-Yl-sJi" secondAttribute="bottom" constant="4" id="Jit-kg-Y9Z"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vwj-RC-hFb" secondAttribute="trailing" constant="6" id="EhE-6Z-5yr"/>
+                                    <constraint firstItem="Vwj-RC-hFb" firstAttribute="top" secondItem="kBD-Yl-sJi" secondAttribute="bottom" constant="8" id="LOc-FQ-Y4I"/>
                                     <constraint firstItem="kBD-Yl-sJi" firstAttribute="top" secondItem="R0h-eA-f4I" secondAttribute="bottom" constant="5" id="Lqc-Oq-wVU"/>
                                     <constraint firstAttribute="trailing" secondItem="kBD-Yl-sJi" secondAttribute="trailing" constant="6" id="Nz9-lX-zrZ"/>
+                                    <constraint firstItem="Vwj-RC-hFb" firstAttribute="leading" secondItem="3Te-4x-ZNf" secondAttribute="leading" constant="6" id="cN4-31-93K"/>
                                     <constraint firstItem="R0h-eA-f4I" firstAttribute="top" secondItem="3Te-4x-ZNf" secondAttribute="top" constant="6" id="k5S-K0-MVR"/>
                                     <constraint firstAttribute="trailing" secondItem="R0h-eA-f4I" secondAttribute="trailing" constant="6" id="oel-kS-Fkh"/>
-                                    <constraint firstAttribute="trailing" secondItem="Bt5-LS-08s" secondAttribute="trailing" id="rec-up-l8J"/>
                                     <constraint firstItem="kBD-Yl-sJi" firstAttribute="leading" secondItem="3Te-4x-ZNf" secondAttribute="leading" constant="6" id="uio-HR-Pzj"/>
                                     <constraint firstItem="R0h-eA-f4I" firstAttribute="leading" secondItem="3Te-4x-ZNf" secondAttribute="leading" constant="6" id="wwN-bP-Hrm"/>
                                 </constraints>
@@ -1308,7 +1316,6 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="9Tb-EO-QJb"/>
                     <connections>
-                        <outlet property="buttonView" destination="Bt5-LS-08s" id="6iQ-Y3-f8e"/>
                         <outlet property="changePasswordHeight" destination="t5j-dj-RW8" id="QVm-nc-G6q"/>
                         <outlet property="changePasswordImageView" destination="wOS-Uf-xBU" id="MpA-Ky-u9b"/>
                         <outlet property="changePasswordTitle" destination="Ba5-TS-uht" id="oW8-dB-YV1"/>
@@ -1319,6 +1326,7 @@
                         <outlet property="personalDataView" destination="R0h-eA-f4I" id="jbQ-f5-hWF"/>
                         <outlet property="personalLine" destination="jGm-co-aHU" id="krW-Yh-UeN"/>
                         <outlet property="personalTitleLabel" destination="vKa-jt-POd" id="s9d-2c-BTi"/>
+                        <outlet property="saveButton" destination="Vwj-RC-hFb" id="lPn-2D-P8q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qAA-fQ-0HE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1337,37 +1345,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="87F-rk-XRC">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="87F-rk-XRC">
                                 <rect key="frame" x="6" y="6" width="308" height="155"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="308" id="hTB-VK-yEQ"/>
-                                    <constraint firstAttribute="height" constant="155" id="yKI-RA-C6c"/>
-                                </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhx-Ha-G6w">
-                                <rect key="frame" x="0.0" y="183" width="320" height="106"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="106" id="tMj-TH-en2"/>
-                                </constraints>
-                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9g-QW-gsD" userLabel="Continue Shopping Button">
+                                <rect key="frame" x="6" y="169" width="308" height="44"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <state key="normal" title="Button" backgroundImage="orangeBig_normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled" title="Button" backgroundImage="orangeBig_disabled"/>
+                                <state key="selected" backgroundImage="orangeBig_highlighted"/>
+                                <state key="highlighted" backgroundImage="orangeBig_highlighted"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="87F-rk-XRC" firstAttribute="top" secondItem="iXN-N6-sQJ" secondAttribute="bottom" constant="6" id="0zo-m4-iyw"/>
-                            <constraint firstItem="87F-rk-XRC" firstAttribute="leading" secondItem="Tfc-Ff-EQd" secondAttribute="leading" constant="6" id="L5O-e3-2xS"/>
-                            <constraint firstItem="bhx-Ha-G6w" firstAttribute="top" secondItem="87F-rk-XRC" secondAttribute="bottom" constant="22" id="bsz-3b-Bkr"/>
-                            <constraint firstItem="bhx-Ha-G6w" firstAttribute="leading" secondItem="Tfc-Ff-EQd" secondAttribute="leading" id="l8J-si-Acv"/>
-                            <constraint firstAttribute="trailing" secondItem="87F-rk-XRC" secondAttribute="trailing" constant="6" id="oN6-aB-3rY"/>
-                            <constraint firstAttribute="trailing" secondItem="bhx-Ha-G6w" secondAttribute="trailing" id="zOb-OJ-mDz"/>
-                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="BeD-Xo-O09"/>
                     <connections>
-                        <outlet property="buttonView" destination="bhx-Ha-G6w" id="pAc-N2-Js2"/>
-                        <outlet property="height" destination="yKI-RA-C6c" id="awF-hk-rv5"/>
+                        <outlet property="saveButton" destination="C9g-QW-gsD" id="w0q-zc-TiL"/>
                         <outlet property="topView" destination="87F-rk-XRC" id="k6u-iX-OXt"/>
                     </connections>
                 </viewController>

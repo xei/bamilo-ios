@@ -22,8 +22,7 @@
 @property (strong, nonatomic) IBOutlet UIView *topView;
 @property (assign, nonatomic) float formHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *height;
-@property (strong, nonatomic) JAButtonWithBlur *ctaView;
-@property (weak, nonatomic) IBOutlet UIView *buttonView;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
 
 @end
 
@@ -38,7 +37,6 @@
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_USER_EMAIL_NOTIFICATIONS;
-    self.buttonView.backgroundColor = JABackgroundGrey;
     
     self.topView.layer.cornerRadius = 4.0f;
     
@@ -61,19 +59,8 @@
            
            self.height.constant = self.formHeight - 22;
            
-           self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
-           self.ctaView.backgroundColor = [UIColor clearColor];
-           
-           [self.ctaView setFrame:CGRectMake(0,
-                                             0,
-                                             self.view.frame.size.width,
-                                             50)];
-           
-           [self.ctaView addButton:STRING_SAVE_LABEL
-                            target:self
-                            action:@selector(updatePreferences)];
-           
-           [self.buttonView addSubview:self.ctaView];
+           [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
+           [self.saveButton addTarget:self action:@selector(updatePreferences) forControlEvents:UIControlEventTouchUpInside];
            
            [self hideLoading];
            
