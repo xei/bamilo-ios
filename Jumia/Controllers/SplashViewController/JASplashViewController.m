@@ -295,11 +295,7 @@
                  // Changed country in deeplink
                  if (self.tempNotification)
                  {
-                     [NSTimer scheduledTimerWithTimeInterval:0.3
-                                                      target:self
-                                                    selector:@selector(finishNotification)
-                                                    userInfo:nil
-                                                     repeats:NO];
+                     [self finishNotification];
                  }
                  else
                  {
@@ -318,10 +314,14 @@
 
 - (void)finishNotification
 {
-    NSDictionary *temp = self.tempNotification;
+    NSDictionary *temp = [self.tempNotification copy];
     self.tempNotification = nil;
     
-    [[RIAd4PushTracker sharedInstance] handleNotificationWithDictionary:temp];
+    JARootViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
+    
+    rootViewController.notification = temp;
+    
+    [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
 }
 
 - (void)didReceiveMemoryWarning
@@ -334,7 +334,8 @@
 - (void)didSelectCountry:(NSNotification*)notification
 {
     RICountry *country = notification.object;
-    if (VALID_NOTEMPTY(country, RICountry)) {
+    if (VALID_NOTEMPTY(country, RICountry))
+    {
         [self showLoading];
         
         self.requestCount = 0;

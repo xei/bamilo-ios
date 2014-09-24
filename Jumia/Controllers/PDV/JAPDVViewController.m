@@ -65,13 +65,10 @@
     
     self.navBarLayout.showLogo = NO;
 
-    if (self.previousCategory.length > 0)
+    self.navBarLayout.showBackButton = self.showBackButton;
+    if (self.showBackButton && self.previousCategory.length > 0)
     {
         self.navBarLayout.backButtonTitle = self.previousCategory;
-    }
-    else
-    {
-        self.navBarLayout.showBackButton = YES;
     }
 
     // Always load the product details when entering PDV
@@ -613,7 +610,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
                                                       userInfo:@{ @"url" : tempProduct.url,
-                                                                  @"previousCategory" : @"" }];
+                                                                  @"previousCategory" : @"",
+                                                                  @"show_back_button" : [NSNumber numberWithBool:self.showBackButton]}];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:tempProduct.sku forKey:kRIEventLabelKey];
