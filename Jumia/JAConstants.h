@@ -68,6 +68,10 @@
 #define kDidPressEditNotification @"DID_PRESS_EDIT_NOTIFICATION"
 //************
 
+//my account notifications
+#define kDidSaveUserDataNotification @"DID_SAVE_USER_DATA_NOTIFICATION"
+#define kDidSaveEmailNotificationsNotification @"DID_SAVE_EMAIL_NOTIFICATIONS_NOTIFICATION"
+
 // Update alert view
 #define kForceUpdateAlertViewTag 0
 #define kUpdateAvailableAlertViewTag 1

@@ -162,9 +162,8 @@
          
          [self hideLoading];
          
-         JASuccessView *success = [JASuccessView getNewJASuccessView];
-         [success setSuccessTitle:STRING_PREFERENCES_UPDATED
-                         andAddTo:self];
+         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSaveEmailNotificationsNotification object:nil];
+         [self.navigationController popViewControllerAnimated:YES];
          
      } andFailureBlock:^(id errorObject)
      {

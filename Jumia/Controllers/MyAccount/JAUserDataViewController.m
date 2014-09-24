@@ -186,10 +186,9 @@
          [self.changePasswordForm resetValues];
          
          [self hideLoading];
-         
-         JASuccessView *success = [JASuccessView getNewJASuccessView];
-         [success setSuccessTitle:STRING_CHANGED_PASSWORD_SUCCESS
-                         andAddTo:self];
+                  
+         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSaveUserDataNotification object:nil];
+         [self.navigationController popViewControllerAnimated:YES];
          
      } andFailureBlock:^(id errorObject)
      {

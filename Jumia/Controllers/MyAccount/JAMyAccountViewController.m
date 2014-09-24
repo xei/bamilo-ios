@@ -43,6 +43,15 @@
     
     self.navBarLayout.title = STRING_MY_ACCOUNT;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showUserDataSavedMessage)
+                                                 name:kDidSaveUserDataNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showEmailNotificationsSavedMessage)
+                                                 name:kDidSaveEmailNotificationsNotification
+                                               object:nil];
+    
     self.accountView.layer.cornerRadius = 4.0f;
     self.accountTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.accountTitleLabel.text = STRING_ACCOUNT_SETTINGS;
@@ -81,6 +90,11 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Actions
@@ -130,6 +144,20 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                         object:@{@"index": @(50),
                                                                  @"name": STRING_USER_EMAIL_NOTIFICATIONS }];
+}
+
+-(void)showUserDataSavedMessage
+{
+    JASuccessView *success = [JASuccessView getNewJASuccessView];
+    [success setSuccessTitle:STRING_CHANGED_PASSWORD_SUCCESS
+                    andAddTo:self];
+}
+
+- (void)showEmailNotificationsSavedMessage
+{
+    JASuccessView *success = [JASuccessView getNewJASuccessView];
+    [success setSuccessTitle:STRING_PREFERENCES_UPDATED
+                    andAddTo:self];
 }
 
 @end
