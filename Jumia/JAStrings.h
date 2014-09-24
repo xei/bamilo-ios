@@ -192,4 +192,7 @@
 #define STRING_ADDED_TO_WISHLIST RILocalizedString(@"item_added_to_wishlist", nil) // Not ranslated
 #define STRING_ERROR_ADDING_TO_WISHLIST RILocalizedString(@"error_adding_to_wishlist", nil) // Not ranslated
 
+#define STRING_ERROR_ADD_TO_CART_FAILED_FOR_X_PRODUCTS RILocalizedString(@"error_add_to_cart_failed_for_x_products", nil) // Not ranslated
+#define STRING_ERROR_ADD_TO_CART_FAILED_FOR_1_PRODUCT RILocalizedString(@"error_add_to_cart_failed_for_1_product", nil) // Not ranslated
+
 #endif

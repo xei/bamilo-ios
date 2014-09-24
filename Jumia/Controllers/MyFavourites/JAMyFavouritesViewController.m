@@ -423,6 +423,15 @@
     }];
     
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+        if (VALID_NOTEMPTY(favoriteProducts, NSArray)) {
+            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+            NSString* errorMessage = STRING_ERROR_ADD_TO_CART_FAILED_FOR_1_PRODUCT;
+            if (1 < favoriteProducts.count) {
+                errorMessage = [NSString stringWithFormat:STRING_ERROR_ADD_TO_CART_FAILED_FOR_X_PRODUCTS, favoriteProducts.count];
+            }
+            [errorView setErrorTitle:errorMessage
+                            andAddTo:self];
+        }
         [self updateListsWith:favoriteProducts];
         [self hideLoading];
     } andFailureBlock:^(NSArray *error) {
