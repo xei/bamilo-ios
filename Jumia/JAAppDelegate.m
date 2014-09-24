@@ -163,8 +163,7 @@
                 
             } andFailureBlock:^(NSArray *errorMessages) {
                 
-//                [self pushHomeViewController];
-//                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
             }];
         }
     }

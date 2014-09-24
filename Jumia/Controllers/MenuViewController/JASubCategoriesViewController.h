@@ -15,4 +15,6 @@
 @property (strong, nonatomic) RICategory *parentCategory;
 @property (strong, nonatomic) NSArray *sourceCategoriesArray;
 
+@property (nonatomic, retain) NSString* A4SViewControllerAlias;
+
 @end

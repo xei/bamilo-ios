@@ -34,7 +34,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
- 
+    
+    self.A4SViewControllerAlias = @"CART";
+    
     self.navBarLayout.title = STRING_CART;
     
     self.view.backgroundColor = JABackgroundGrey;
@@ -69,7 +71,7 @@
     
     UINib *cartListCellNib = [UINib nibWithNibName:@"JACartListCell" bundle:nil];
     [self.productCollectionView registerNib:cartListCellNib forCellWithReuseIdentifier:@"cartListCell"];
-
+    
     UINib *cartListHeaderNib = [UINib nibWithNibName:@"JACartListHeaderView" bundle:nil];
     [self.productCollectionView registerNib:cartListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
     
@@ -169,10 +171,20 @@
         
         [self loadCartInfo];
         [self hideLoading];
+        
+        // notify the InAppNotification SDK that this the active view controller
+        [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+        
     } andFailureBlock:^(NSArray *errorMessages) {
         [self setupEmptyCart];
         [self hideLoading];
     }];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
 - (void)loadCartInfo
@@ -837,7 +849,7 @@
                                                       data:[trackingDictionary copy]];
             
             [self hideLoading];
-
+            
             if(VALID_NOTEMPTY(adressList, NSDictionary))
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
@@ -959,15 +971,15 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionReusableView *reusableview = [[UICollectionReusableView alloc] init];
-
+    
     if (kind == UICollectionElementKindSectionHeader) {
         JACartListHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader" forIndexPath:indexPath];
-
+        
         [headerView loadHeaderWithText:@"Items"];
-
+        
         reusableview = headerView;
     }
-
+    
     return reusableview;
 }
 

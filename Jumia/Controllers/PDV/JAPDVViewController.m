@@ -35,9 +35,9 @@
 
 @interface JAPDVViewController ()
 <
-    JAPDVGalleryViewDelegate,
-    JAActivityViewControllerDelegate,
-    JANoConnectionViewDelegate
+JAPDVGalleryViewDelegate,
+JAActivityViewControllerDelegate,
+JANoConnectionViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
@@ -63,14 +63,16 @@
 {
     [super viewDidLoad];
     
+    self.A4SViewControllerAlias = @"PRODUCT";
+    
     self.navBarLayout.showLogo = NO;
-
+    
     self.navBarLayout.showBackButton = self.showBackButton;
     if (self.showBackButton && self.previousCategory.length > 0)
     {
         self.navBarLayout.backButtonTitle = self.previousCategory;
     }
-
+    
     // Always load the product details when entering PDV
     if (VALID_NOTEMPTY(self.productUrl, NSString))
     {
@@ -92,6 +94,12 @@
     }
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -101,6 +109,10 @@
 {
     [self showLoading];
     [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
+        
+        // notify the InAppNotification SDK that this the active view controller
+        [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+        
         [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
         self.product = product;
         
@@ -126,21 +138,21 @@
         [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
         
         NSString *discount = @"false";
-         if (self.product.maxSavingPercentage.length > 0)
-         {
-             discount = @"true";
-         }
+        if (self.product.maxSavingPercentage.length > 0)
+        {
+            discount = @"true";
+        }
         [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
-
+        
         if (VALID_NOTEMPTY(self.product.productSimples, NSArray) && 1 == self.product.productSimples.count)
         {
             RIProductSimple *tempProduct = self.product.productSimples[0];
             if (VALID_NOTEMPTY(tempProduct.attributeSize, NSString))
             {
-                 [trackingDictionary setValue:tempProduct.attributeSize forKey:kRIEventSizeKey];
+                [trackingDictionary setValue:tempProduct.attributeSize forKey:kRIEventSizeKey];
             }
         }
-
+        
         if(VALID_NOTEMPTY(self.category, RICategory))
         {
             [trackingDictionary setValue:[RICategory getTree:self.category.uid] forKey:kRIEventTreeKey];
@@ -568,11 +580,11 @@
                     target:self
                     action:@selector(callToOrder)];
     }
-
+    
     
     [ctaView addButton:STRING_ADD_TO_SHOPPING_CART
-                   target:self
-                   action:@selector(addToCart)];
+                target:self
+                action:@selector(addToCart)];
     
     [self.view addSubview:ctaView];
     
@@ -606,7 +618,7 @@
     JAPDVSingleRelatedItem *view = (JAPDVSingleRelatedItem *)tap.view;
     
     RIProduct *tempProduct = view.product;
-
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
                                                       userInfo:@{ @"url" : tempProduct.url,
@@ -636,7 +648,7 @@
 
 - (void)goToRatinsMainScreen
 {
-    if (0 == self.commentsCount) {        
+    if (0 == self.commentsCount) {
         [self performSegueWithIdentifier:@"segueNewReview"
                                   sender:nil];
     } else {
@@ -655,7 +667,7 @@
                                                                                      applicationActivities:nil];
     
     NSString *stringToShare = STRING_SHARE_PRODUCT_MESSAGE;
-
+    
     [activityController setValue:stringToShare
                           forKey:@"subject"];
     
@@ -683,7 +695,7 @@
             type = @"SMS";
             eventType = [NSNumber numberWithInt:RIEventShareSMS];
         }
-    
+        
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
         [trackingDictionary setValue:type forKey:kRIEventActionKey];
@@ -695,7 +707,7 @@
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
         [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
-
+        
         [[RITrackingWrapper sharedInstance] trackEvent:eventType
                                                   data:[trackingDictionary copy]];
     };
@@ -788,7 +800,7 @@
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
                                                       data:[trackingDictionary copy]];
-
+            
             
             NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
@@ -927,7 +939,7 @@
                             andAddTo:self];
             
         } andFailureBlock:^(NSArray *error) {
-
+            
             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
             [errorView setErrorTitle:STRING_ERROR_ADDING_TO_WISHLIST
                             andAddTo:self];

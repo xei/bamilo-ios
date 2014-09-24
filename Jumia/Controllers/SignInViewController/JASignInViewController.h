@@ -10,4 +10,6 @@
 
 @interface JASignInViewController : JABaseViewController
 
+@property (nonatomic, retain) NSString* A4SViewControllerAlias;
+
 @end

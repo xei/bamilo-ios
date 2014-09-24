@@ -29,4 +29,6 @@
 @property (assign, nonatomic) BOOL showBackButton;
 @property (nonatomic, assign) id<JAPDVViewControllerDelegate>delegate;
 
+@property (nonatomic, retain) NSString* A4SViewControllerAlias;
+
 @end
