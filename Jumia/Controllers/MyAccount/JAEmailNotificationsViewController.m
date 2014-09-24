@@ -69,7 +69,7 @@
                                              self.view.frame.size.width,
                                              50)];
            
-           [self.ctaView addButton:STRING_SAVE_CHANGES
+           [self.ctaView addButton:STRING_SAVE_LABEL
                             target:self
                             action:@selector(updatePreferences)];
            
