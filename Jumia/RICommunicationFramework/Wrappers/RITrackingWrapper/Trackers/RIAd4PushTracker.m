@@ -196,143 +196,115 @@ static dispatch_once_t sharedInstanceToken;
     {
         NSString *urlString = [notification objectForKey:@"u"];
         
-        // Check if the country is the same
-        NSString *currentCountry = [RIApi getCountryIsoInUse];
-        NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
         
-        if ([currentCountry isEqualToString:countryFromUrl])
+        NSString *forthLetter = @"";
+        NSString *cartPositionString = @"";
+        
+        if ([urlString length] >= 7)
         {
-            NSString *forthLetter = @"";
-            NSString *cartPositionString = @"";
-            
-            if ([urlString length] >= 7)
-            {
-                cartPositionString = [urlString substringWithRange:NSMakeRange(3, 4)];
-            }
-            
-            if ([cartPositionString isEqualToString:@"cart"])
-            {
-                [self pushCartViewController];
-            }
-            else
-            {
-                if ([urlString length] >= 4)
-                {
-                    forthLetter = [urlString substringWithRange:NSMakeRange(3, 1)];
-                }
-                
-                if ([forthLetter isEqualToString:@""])
-                {
-                    // Home
-                    [self pushHomeViewController];
-                }
-                else if ([forthLetter isEqualToString:@"c"])
-                {
-                    // Catalog view - category name
-                    NSString *categoryName = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                    
-                    [self pushCatalogViewControllerWithCategoryId:nil
-                                                     categoryName:categoryName
-                                                       searchTerm:nil];
-                }
-                else if ([forthLetter isEqualToString:@"n"])
-                {
-                    // Catalog view - category id
-                    NSString *categoryId = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                    
-                    [self pushCatalogViewControllerWithCategoryId:categoryId
-                                                     categoryName:nil
-                                                       searchTerm:nil];
-                }
-                else if ([forthLetter isEqualToString:@"s"])
-                {
-                    // Catalog view - search term
-                    NSString *searchTerm = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                    
-                    [self pushCatalogViewControllerWithCategoryId:nil
-                                                     categoryName:nil
-                                                       searchTerm:searchTerm];
-                }
-                else if ([forthLetter isEqualToString:@"d"])
-                {
-                    // PDV
-                    // Example: jumia://ng/d/BL683ELACCDPNGAMZ?size=1
-                    
-                    // Check if there is field size
-                    
-                    NSRange range = [[urlString lowercaseString] rangeOfString:@"?size="];
-                    if(NSNotFound != range.location)
-                    {
-                        NSString *size = [urlString substringWithRange:NSMakeRange(range.length + range.location, urlString.length - (range.length + range.location))];
-                        
-                        NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, range.location - 5)];
-                        NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, pdvSku];
-                        
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                                            object:nil
-                                                                          userInfo:@{ @"url" : finalUrl,
-                                                                                      @"size": size }];
-                    }
-                    else
-                    {
-                        NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                        NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, pdvSku];
-                        
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                                            object:nil
-                                                                          userInfo:@{ @"url" : finalUrl }];
-                    }
-                }
-                else if ([forthLetter isEqualToString:@"cart"])
-                {
-                    // Cart
-                    [self pushCartViewController];
-                }
-                else if ([forthLetter isEqualToString:@"w"])
-                {
-                    // Wishlist
-                    [self pushWishList];
-                }
-                else if ([forthLetter isEqualToString:@"o"])
-                {
-                    // Order overview
-                    [self pushOrderOverView];
-                }
-                else if ([forthLetter isEqualToString:@"l"])
-                {
-                    // Login
-                    [self pushLoginViewController];
-                }
-                else if ([forthLetter isEqualToString:@"r"])
-                {
-                    // Register
-                    [self pushLoginViewController];
-                }
-            }
+            cartPositionString = [urlString substringWithRange:NSMakeRange(3, 4)];
+        }
+        
+        if ([cartPositionString isEqualToString:@"cart"])
+        {
+            [self pushCartViewController];
         }
         else
         {
-            // Change country
-            [RICountry getCountriesWithSuccessBlock:^(id countries) {
-                
-                for (RICountry *country in countries)
-                {
-                    if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
-                    {
-                        JASplashViewController* rootViewController = (JASplashViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"splashViewController"];
-                        
-                        rootViewController.selectedCountry = country;
-                        rootViewController.tempNotification = notification;
-                        
-                        [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
-                    }
-                }
-                
-            } andFailureBlock:^(NSArray *errorMessages) {
-                
+            if ([urlString length] >= 4)
+            {
+                forthLetter = [urlString substringWithRange:NSMakeRange(3, 1)];
+            }
+            
+            if ([forthLetter isEqualToString:@""])
+            {
+                // Home
                 [self pushHomeViewController];
+            }
+            else if ([forthLetter isEqualToString:@"c"])
+            {
+                // Catalog view - category name
+                NSString *categoryName = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
                 
-            }];
+                [self pushCatalogViewControllerWithCategoryId:nil
+                                                 categoryName:categoryName
+                                                   searchTerm:nil];
+            }
+            else if ([forthLetter isEqualToString:@"n"])
+            {
+                // Catalog view - category id
+                NSString *categoryId = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                
+                [self pushCatalogViewControllerWithCategoryId:categoryId
+                                                 categoryName:nil
+                                                   searchTerm:nil];
+            }
+            else if ([forthLetter isEqualToString:@"s"])
+            {
+                // Catalog view - search term
+                NSString *searchTerm = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                
+                [self pushCatalogViewControllerWithCategoryId:nil
+                                                 categoryName:nil
+                                                   searchTerm:searchTerm];
+            }
+            else if ([forthLetter isEqualToString:@"d"])
+            {
+                // PDV
+                // Example: jumia://ng/d/BL683ELACCDPNGAMZ?size=1
+                
+                // Check if there is field size
+                
+                NSRange range = [[urlString lowercaseString] rangeOfString:@"?size="];
+                if(NSNotFound != range.location)
+                {
+                    NSString *size = [urlString substringWithRange:NSMakeRange(range.length + range.location, urlString.length - (range.length + range.location))];
+                    
+                    NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, range.location - 5)];
+                    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, pdvSku];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                        object:nil
+                                                                      userInfo:@{ @"url" : finalUrl,
+                                                                                  @"size": size,
+                                                                                  @"show_back_button" : [NSNumber numberWithBool:NO]}];
+                }
+                else
+                {
+                    NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, pdvSku];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                        object:nil
+                                                                      userInfo:@{ @"url" : finalUrl ,
+                                                                                  @"show_back_button" : [NSNumber numberWithBool:NO]}];
+                }
+            }
+            else if ([forthLetter isEqualToString:@"cart"])
+            {
+                // Cart
+                [self pushCartViewController];
+            }
+            else if ([forthLetter isEqualToString:@"w"])
+            {
+                // Wishlist
+                [self pushWishList];
+            }
+            else if ([forthLetter isEqualToString:@"o"])
+            {
+                // Order overview
+                [self pushOrderOverView];
+            }
+            else if ([forthLetter isEqualToString:@"l"])
+            {
+                // Login
+                [self pushLoginViewController];
+            }
+            else if ([forthLetter isEqualToString:@"r"])
+            {
+                // Register
+                [self pushLoginViewController];
+            }
         }
     }
 }
@@ -379,7 +351,8 @@ static dispatch_once_t sharedInstanceToken;
             }
         }
         
-        if (![urlHost isEqualToString:@"com.jumia.ios.dev"])
+        NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+        if (![urlHost isEqualToString:bundleIdentifier])
         {
             path = [urlHost stringByAppendingString:path];
         }

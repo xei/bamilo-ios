@@ -21,7 +21,8 @@
 
 @interface JASplashViewController ()
 <
-UIAlertViewDelegate
+    UIAlertViewDelegate,
+    JANoConnectionViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIImageView *splashImage;
@@ -50,6 +51,25 @@ UIAlertViewDelegate
                                                  name:kSelectedCountryNotification
                                                object:nil];
     
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueProcessing];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueProcessing];
+    }
+}
+
+- (void)continueProcessing
+{
     if (self.selectedCountry)
     {
         self.navigationController.navigationBarHidden = YES;
@@ -181,6 +201,27 @@ UIAlertViewDelegate
     }
 }
 
+#pragma mark - No internet connection
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueProcessing];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueProcessing];
+    }
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -254,11 +295,7 @@ UIAlertViewDelegate
                  // Changed country in deeplink
                  if (self.tempNotification)
                  {
-                     [NSTimer scheduledTimerWithTimeInterval:0.3
-                                                      target:self
-                                                    selector:@selector(finishNotification)
-                                                    userInfo:nil
-                                                     repeats:NO];
+                     [self finishNotification];
                  }
                  else
                  {
@@ -277,10 +314,14 @@ UIAlertViewDelegate
 
 - (void)finishNotification
 {
-    NSDictionary *temp = self.tempNotification;
+    NSDictionary *temp = [self.tempNotification copy];
     self.tempNotification = nil;
     
-    [[RIAd4PushTracker sharedInstance] handleNotificationWithDictionary:temp];
+    JARootViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
+    
+    rootViewController.notification = temp;
+    
+    [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
 }
 
 - (void)didReceiveMemoryWarning
@@ -293,7 +334,8 @@ UIAlertViewDelegate
 - (void)didSelectCountry:(NSNotification*)notification
 {
     RICountry *country = notification.object;
-    if (VALID_NOTEMPTY(country, RICountry)) {
+    if (VALID_NOTEMPTY(country, RICountry))
+    {
         [self showLoading];
         
         self.requestCount = 0;

@@ -7,6 +7,7 @@
 //
 
 #import "JAAppDelegate.h"
+#import "JARootViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <HockeySDK/HockeySDK.h>
 
@@ -131,7 +132,42 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
+    if (VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"u"], NSString))
+    {
+        NSString *urlString = [userInfo objectForKey:@"u"];
+        
+        // Check if the country is the same
+        NSString *currentCountry = [RIApi getCountryIsoInUse];
+        NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
+        
+        if([currentCountry isEqualToString:countryFromUrl])
+        {
+            JARootViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
+            
+            rootViewController.notification = userInfo;
+            
+            [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+        }
+        else
+        {
+            // Change country
+            [RICountry getCountriesWithSuccessBlock:^(id countries) {
+                
+                for (RICountry *country in countries)
+                {
+                    if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
+                    {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:country userInfo:userInfo];
+                    }
+                }
+                
+            } andFailureBlock:^(NSArray *errorMessages) {
+                
+//                [self pushHomeViewController];
+//                
+            }];
+        }
+    }
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification

@@ -22,7 +22,8 @@
 <
     UITextFieldDelegate,
     JADynamicFormDelegate,
-    UIAlertViewDelegate
+    UIAlertViewDelegate,
+    JANoConnectionViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -135,11 +136,9 @@
                
                [self hideLoading];
                
-               [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                           message:@"There was an error"
-                                          delegate:nil
-                                 cancelButtonTitle:nil
-                                 otherButtonTitles:STRING_OK, nil] show];
+               JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+               [errorView setErrorTitle:STRING_ERROR
+                               andAddTo:self];
            }];
         
     } andFailureBlock:^(NSArray *errorMessages) {
@@ -194,9 +193,49 @@
                      }];
 }
 
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueSendingReview];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueSendingReview];
+    }
+}
+
 #pragma mark - Send review
 
 - (IBAction)sendReview:(id)sender
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueSendingReview];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueSendingReview];
+    }
+}
+
+- (void)continueSendingReview
 {
     [self showLoading];
     
@@ -223,7 +262,7 @@
                 [trackingDictionary setValue:self.ratingProductSku forKey:kRIEventLabelKey];
                 [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
                 [trackingDictionary setValue:@(component.starValue) forKey:kRIEventValueKey];
-
+                
                 if ([component.idRatingType isEqualToString:@"1"])
                 {
                     [trackingDictionary setValue:@"RateProductPrice" forKey:kRIEventActionKey];

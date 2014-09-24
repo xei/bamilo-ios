@@ -10,4 +10,6 @@
 
 @interface JARootViewController : JASidePanelController
 
+@property (nonatomic, assign) NSDictionary *notification;
+
 @end

@@ -28,6 +28,4 @@ extern NSString * const kRIAdd4PushDeviceToken;
 
 - (void)trackOpenURL:(NSURL *)url;
 
-- (void)handleNotificationWithDictionary:(NSDictionary *)notification;
-
 @end

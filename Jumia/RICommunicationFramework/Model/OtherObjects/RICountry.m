@@ -15,33 +15,29 @@
 + (NSString*)getCountriesWithSuccessBlock:(void (^)(id countries))successBlock
                           andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@", RI_COUNTRIES_URL]]
+    NSString *countryListURL = RI_COUNTRIES_URL;
+#if defined(DEBUG) && DEBUG
+    countryListURL = [NSString stringWithFormat:@"%@/staging", RI_COUNTRIES_URL];
+#endif
+    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
                                                          httpMethodPost:NO
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
                                                            successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                               NSArray *countriesArray = [RICountry parseCountriesWithJson:jsonObject];
                                                                
-                                                               NSMutableArray *stagingCountries = [[NSMutableArray alloc] init];
-                                                               
-                                                               for(RICountry *country in countriesArray)
+                                                               if (VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
                                                                {
-                                                                   NSString *newUrl = [country.url stringByReplacingOccurrencesOfString:@"www"
-                                                                                                                             withString:@"alice-staging"];
+                                                                   NSDictionary *metadataObject = [jsonObject objectForKey:@"metadata"];
+                                                                   NSArray *countriesArray = [RICountry parseCountriesWithJson:metadataObject];
                                                                    
-                                                                   country.name = [NSString stringWithFormat:@"%@ - Staging", country.name];
-                                                                   country.url = newUrl;
-                                                                   
-                                                                   [stagingCountries addObject:country];
-                                                               }
-                                                               
-                                                               if(VALID_NOTEMPTY(stagingCountries, NSArray))
-                                                               {
-                                                                   successBlock(stagingCountries);
-                                                               } else
-                                                               {
-                                                                   failureBlock(nil);
+                                                                   if(VALID_NOTEMPTY(countriesArray, NSArray))
+                                                                   {
+                                                                       successBlock(countriesArray);
+                                                                   } else
+                                                                   {
+                                                                       failureBlock(nil);
+                                                                   }
                                                                }
                                                            } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                                if(NOTEMPTY(errorJsonObject))

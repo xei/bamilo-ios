@@ -554,6 +554,11 @@
             pdv.preSelectedSize = [notification.userInfo objectForKey:@"size"];
         }
         
+        if([notification.userInfo objectForKey:@"show_back_button"])
+        {
+            pdv.showBackButton = [[notification.userInfo objectForKey:@"show_back_button"] boolValue];
+        }
+    
         [self pushViewController:pdv
                         animated:YES];
     }
@@ -739,8 +744,11 @@
     RICountry *country = notification.object;
     if (VALID_NOTEMPTY(country, RICountry)) {
         UINavigationController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+        
         JASplashViewController *splash = [self.storyboard instantiateViewControllerWithIdentifier:@"splashViewController"];
         splash.selectedCountry = country;
+        splash.tempNotification = notification.userInfo;
+        
         rootViewController.viewControllers = @[splash];
         
         [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;

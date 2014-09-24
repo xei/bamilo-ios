@@ -18,7 +18,6 @@
 
 @implementation JACategoriesViewController
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -41,6 +40,25 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueLoading];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueLoading];
+    }
+}
+
+- (void)continueLoading
+{
     [self showLoading];
     if (VALID_NOTEMPTY(self.currentCategory, RICategory)) {
         [self categoryLoadingFinished:[self.currentCategory.children array]];
@@ -72,6 +90,27 @@
                                           self.contentView.frame.size.width,
                                           contentHeight)];
     [self.tableView setFrame:self.contentView.bounds];
+}
+
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self continueLoading];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self continueLoading];
+    }
 }
 
 #pragma mark - UITableView

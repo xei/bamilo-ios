@@ -370,7 +370,10 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     
     [Adjust trackEvent:@"2x9nt2" withParameters:parameters];
     
-    [parameters setObject:[dataDictionary objectForKey:kRIEventShopCountryKey] forKey:kAdjustEventShopCountryKey];
+    if ([dataDictionary objectForKey:kRIEventShopCountryKey])
+    {
+        [parameters setObject:[dataDictionary objectForKey:kRIEventShopCountryKey] forKey:kAdjustEventShopCountryKey];
+    }
     
     NSString *userId = [dataDictionary objectForKey:kRIEventUserIdKey];
     if(VALID_NOTEMPTY(userId, NSString) && ![@"0" isEqualToString:userId])

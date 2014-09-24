@@ -306,6 +306,13 @@ UITextFieldDelegate>
                       parameters:parameters
                     successBlock:^(RICheckout *checkout) {
                         
+                        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                        [trackingDictionary setValue:@"CheckoutMyOrder" forKey:kRIEventActionKey];
+                        [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSideMenu]
+                                                                  data:[trackingDictionary copy]];
+                        
                         [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
                         
                         [self hideLoading];

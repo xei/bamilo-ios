@@ -30,7 +30,7 @@ BOOL RI_HTTP_REQUEST_SHOULD_RETRY = YES;
 NSInteger RI_HTTP_REQUEST_NUMBER_OF_RETRIES = 3;
 NSInteger RI_HTTP_REQUEST_TIMEOUT = 30;
 
-NSString *const RI_COUNTRIES_URL = @"https://www.jumia.com/mobapi/ventures.json";
+NSString *const RI_COUNTRIES_URL = @"http://www.jumia.com/mobapi/availablecountries";
 NSString *const RI_BASE_URL = @"https://alice-staging.jumia.com.ng/mobapi/";
 NSString *const RI_API_VERSION = @"v1.4/";
 NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
