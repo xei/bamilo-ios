@@ -7,17 +7,38 @@
 //
 
 #import "RIAd4PushTracker.h"
-#import "BMA4SNotification.h"
-#import "BMA4STracker.h"
-#import "BMA4SInAppNotification.h"
-#import "BMA4STracker+Analytics.h"
+#import <libBMA4SSDK/BMA4SSDK.h>
 #import "GAIFields.h"
 #import "RIGoogleAnalyticsTracker.h"
-#import "JAAppDelegate.h"
 #import "RICategory.h"
-#import "RICountry.h"
-#import "RIApi.h"
-#import "JASplashViewController.h"
+
+#define kAd4PushProfileShopCountryKey                       @"shopCountry"
+#define kAd4PushProfileUserIdKey                            @"userID"
+#define kAd4PushProfileRegistrationStatusKey                @"registrationStatus"
+#define kAd4PushProfileFirstNameKey                         @"firstName"
+#define kAd4PushProfileStatusInAppKey                       @"statusInApp"
+#define kAd4PushProfileOrderStatusKey                       @"orderStatus"
+#define kAd4PushProfileUserGenderKey                        @"userGender"
+#define kAd4PushProfileLastOrderDateKey                     @"lastOrderDate"
+#define kAd4PushProfileAggregatedNumberOfPurchaseKey        @"aggregatedNumberOfPurchase"
+#define kAd4PushProfileCartStatusKey                        @"cartStatus"
+#define kAd4PushProfileCartValueKey                         @"cartValue"
+#define kAd4PushProfilePurchaseGrandTotalKey                @"purchaseGrandTotal"
+#define kAd4PushProfileLastMovedFromFavtoCartKey            @"lastMovedFromFavtoCart"
+#define kAd4PushProfileCouponStatusKey                      @"couponStatus"
+#define kAd4PushProfileAvgCartValueKey                      @"avgCartValue"
+#define kAd4PushProfileLastSearchKey                        @"lastSearch"
+#define kAd4PushProfileLastSearchDateKey                    @"lastSearchDate"
+#define kAd4PushProfileLastPurchaseCategoryKey              @"lastPurchaseCategory"
+#define kAd4PushProfileLastFavouritesProductKey             @"lastFavouritesProduct"
+#define kAd4PushProfileWishlistStatusKey                    @"wishlistStatus"
+#define kAd4PushProfileLastFavouritesProductDateKey         @"lastFavouritesProductDate"
+#define kAd4PushProfileFilterBrandKey                       @"filterBrand"
+#define kAd4PushProfileFilterColorKey                       @"filterColor"
+#define kAd4PushProfileFilterCategoryKey                    @"filterCategory"
+#define kAd4PushProfileFilterPriceKey                       @"filterPrice"
+#define kAd4PushProfileCampaignPageViewCountKey             @"campaignPageViewCount"
+#define kAd4PushProfileMostVisitedCategoryKey               @"mostVisitedCategory"
 
 @implementation RIAd4PushTracker
 
@@ -29,7 +50,6 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 @synthesize registeredEvents;
 
 static RIAd4PushTracker *sharedInstance;
-static dispatch_once_t sharedInstanceToken;
 
 - (id)init
 {
@@ -38,17 +58,18 @@ static dispatch_once_t sharedInstanceToken;
     if ((self = [super init])) {
         self.queue = [[NSOperationQueue alloc] init];
         self.queue.maxConcurrentOperationCount = 1;
+        
+        NSMutableArray *events = [[NSMutableArray alloc] init];
+        
+        [events addObject:[NSNumber numberWithInt:RIEventLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventAddToCart]];
+        [events addObject:[NSNumber numberWithInt:RIEventAddToWishlist]];
+        
+        self.registeredEvents = [events copy];
     }
     return self;
-}
-
-+ (instancetype)sharedInstance
-{
-    dispatch_once(&sharedInstanceToken, ^{
-        sharedInstance = [[RIAd4PushTracker alloc] init];
-    });
-    
-    return sharedInstance;
 }
 
 #pragma mark - RITracker protocol
@@ -149,6 +170,61 @@ static dispatch_once_t sharedInstanceToken;
     [[BMA4SNotification sharedBMA4S] applicationHandleOpenUrl:url];
     
     [self handlePushNotificationWithOpenURL:url];
+}
+
+#pragma mark - RILaunchEventTracker implementation
+
+- (void)sendLaunchEventWithData:(NSDictionary *)dataDictionary;
+{
+    RIDebugLog(@"Ad4Push - Launch event with data:%@", dataDictionary);
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+
+    //    [BMA4STracker trackEventWithType:1003 parameters:array];
+}
+
+#pragma mark - RIEventTracking
+- (void)trackEvent:(NSNumber *)eventType data:(NSDictionary *)data
+{
+    RIDebugLog(@"Ad4Push - Tracking event = %@, data %@", eventType, data);
+    if([self.registeredEvents containsObject:eventType])
+    {
+        NSInteger event = [eventType integerValue];
+        switch (event) {
+            case RIEventLoginSuccess:
+//                [BMA4STracker trackEventWithType:1001 parameters:array];
+
+                break;
+            case RIEventRegisterSuccess:
+//                [BMA4STracker trackLeadWithLabel:<#(NSString *)#> value:<#(NSString *)#>]
+                break;
+            case RIEventFacebookLoginSuccess:
+//                [BMA4STracker trackEventWithType:1002 parameters:array];
+                break;
+            case RIEventAddToCart:
+//                    [BMA4STracker trackCartWithId:<#(NSString *)#> forArticleWithId:<#(NSString *)#> andLabel:<#(NSString *)#> category:<#(NSString *)#> price:<#(double)#> currency:<#(NSString *)#> quantity:<#(long)#>]
+                break;
+            case RIEventAddToWishlist:
+//                [BMA4STracker trackEventWithType:1005 parameters:array];
+                break;
+            default:
+//                [BMA4STracker trackEventWithType:1001 parameters:array];
+                break;
+        }
+        
+//        NSDictionary *parameters = [self createParameters:data];
+//        [[BMA4SNotification sharedBMA4S] synchroniseProfile:parameters];
+        
+//        NSArray* array = [NSArray arrayWithObject:@"ApplicationStart=successful;userId=000"];
+//        [BMA4STracker trackEventWithType:1001 parameters:array];
+    }
+}
+
+- (NSDictionary*)createParameters:(NSDictionary*)data
+{
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    return [parameters copy];
 }
 
 #pragma mark - RIEcommerceEventTracking
