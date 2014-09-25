@@ -759,6 +759,14 @@ JANoConnectionViewDelegate
                               [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
                               [trackingDictionary setValue:[self.product.price stringValue] forKey:kRIEventPriceKey];
                               [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
+                              [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
+                              
+                              if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+                              {
+                                  NSArray *categoryIds = [self.product.categoryIds array];
+                                  [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
+                              }
+
                               [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                               
                               [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]

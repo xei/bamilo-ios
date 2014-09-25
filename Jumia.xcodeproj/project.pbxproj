@@ -131,6 +131,38 @@
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
 		B5A301BC19811D0700F71726 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		B5A301C819811D0700F71726 /* JumiaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301C719811D0700F71726 /* JumiaTests.m */; };
+		B5A3023319811E8A00F71726 /* BMA4SViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301D619811E8900F71726 /* BMA4SViewController.m */; };
+		B5A3023419811E8A00F71726 /* A4S.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B5A301DF19811E8900F71726 /* A4S.bundle */; };
+		B5A3023519811E8A00F71726 /* libAd4ScreenTrackingSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A301E019811E8900F71726 /* libAd4ScreenTrackingSDK.a */; };
+		B5A3023619811E8A00F71726 /* BMA4SCloseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B5A301E219811E8900F71726 /* BMA4SCloseButton.png */; };
+		B5A3023719811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301E419811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib */; };
+		B5A3023819811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301E519811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib */; };
+		B5A3023919811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301E619811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib */; };
+		B5A3023A19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301E719811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib */; };
+		B5A3023B19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301E819811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib */; };
+		B5A3023C19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301E919811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView.xib */; };
+		B5A3023D19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301EB19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib */; };
+		B5A3023E19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301EC19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib */; };
+		B5A3023F19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301ED19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib */; };
+		B5A3024019811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301EE19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib */; };
+		B5A3024119811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301EF19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib */; };
+		B5A3024219811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301F019811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView.xib */; };
+		B5A3024319811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301F219811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib */; };
+		B5A3024419811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301F319811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib */; };
+		B5A3024519811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301F419811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib */; };
+		B5A3024619811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301F519811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib */; };
+		B5A3024719811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301F619811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib */; };
+		B5A3024819811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301F719811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib */; };
+		B5A3024919811E8A00F71726 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301F919811E8900F71726 /* BMA4SiPhoneTextNotifView-iPad.xib */; };
+		B5A3024A19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301FA19811E8900F71726 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib */; };
+		B5A3024B19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301FB19811E8900F71726 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib */; };
+		B5A3024C19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301FC19811E8900F71726 /* BMA4SiPhoneTextNotifView-landscape.xib */; };
+		B5A3024D19811E8A00F71726 /* BMA4SiPhoneTextNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301FD19811E8900F71726 /* BMA4SiPhoneTextNotifView.xib */; };
+		B5A3024E19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A301FF19811E8900F71726 /* BMA4SiPhoneWebViewNotifView-iPad.xib */; };
+		B5A3024F19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A3020019811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib */; };
+		B5A3025019811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A3020119811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */; };
+		B5A3025119811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A3020219811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape.xib */; };
+		B5A3025219811E8A00F71726 /* BMA4SiPhoneWebViewNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A3020319811E8900F71726 /* BMA4SiPhoneWebViewNotifView.xib */; };
 		B5A3025419811E8A00F71726 /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A3020719811E8900F71726 /* BugSense-iOS.framework */; };
 		B5A3025519811E8A00F71726 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A3021C19811E8A00F71726 /* libAdIdAccess.a */; };
 		B5A3025619811E8A00F71726 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A3021D19811E8A00F71726 /* libGoogleAnalyticsServices.a */; };
@@ -190,38 +222,6 @@
 		B5A302FA19811F1E00F71726 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
 		B5A30303198121A400F71726 /* JABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A30301198121A400F71726 /* JABaseViewController.m */; };
 		B5C1E33719BA1E73009C422C /* UIImageView+JA.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1E33619BA1E73009C422C /* UIImageView+JA.m */; };
-		B5C60F8819D40C5D00A1804B /* BMA4SViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C60F6219D40C5D00A1804B /* BMA4SViewController.m */; };
-		B5C60F8919D40C5D00A1804B /* libBMA4SSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5C60F6319D40C5D00A1804B /* libBMA4SSDK.framework */; };
-		B5C60F8A19D40C5D00A1804B /* A4S.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F6519D40C5D00A1804B /* A4S.bundle */; };
-		B5C60F8B19D40C5D00A1804B /* BMA4SCloseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F6619D40C5D00A1804B /* BMA4SCloseButton.png */; };
-		B5C60F8C19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F6819D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib */; };
-		B5C60F8D19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F6919D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib */; };
-		B5C60F8E19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F6A19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib */; };
-		B5C60F8F19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F6B19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib */; };
-		B5C60F9019D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F6C19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib */; };
-		B5C60F9119D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F6D19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView.xib */; };
-		B5C60F9219D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F6F19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib */; };
-		B5C60F9319D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7019D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib */; };
-		B5C60F9419D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7119D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib */; };
-		B5C60F9519D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7219D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib */; };
-		B5C60F9619D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7319D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib */; };
-		B5C60F9719D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7419D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView.xib */; };
-		B5C60F9819D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7619D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib */; };
-		B5C60F9919D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7719D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib */; };
-		B5C60F9A19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7819D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib */; };
-		B5C60F9B19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7919D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib */; };
-		B5C60F9C19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7A19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib */; };
-		B5C60F9D19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7B19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib */; };
-		B5C60F9E19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7D19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-iPad.xib */; };
-		B5C60F9F19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7E19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape-iPad.xib */; };
-		B5C60FA019D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F7F19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape-ret4.xib */; };
-		B5C60FA119D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F8019D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape.xib */; };
-		B5C60FA219D40C5D00A1804B /* BMA4SiPhoneTextNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F8119D40C5D00A1804B /* BMA4SiPhoneTextNotifView.xib */; };
-		B5C60FA319D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F8319D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-iPad.xib */; };
-		B5C60FA419D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F8419D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib */; };
-		B5C60FA519D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F8519D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */; };
-		B5C60FA619D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F8619D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape.xib */; };
-		B5C60FA719D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60F8719D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView.xib */; };
 		B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */; };
 		B5C61BC319B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BC219B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m */; };
 		B5C61BC519B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C61BC419B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib */; };
@@ -547,6 +547,45 @@
 		B5A301C119811D0700F71726 /* JumiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JumiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A301C619811D0700F71726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5A301C719811D0700F71726 /* JumiaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JumiaTests.m; sourceTree = "<group>"; };
+		B5A301D519811E8900F71726 /* BMA4SViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMA4SViewController.h; sourceTree = "<group>"; };
+		B5A301D619811E8900F71726 /* BMA4SViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMA4SViewController.m; sourceTree = "<group>"; };
+		B5A301D819811E8900F71726 /* A4SWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A4SWebView.h; sourceTree = "<group>"; };
+		B5A301D919811E8900F71726 /* BMA4SInAppNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMA4SInAppNotification.h; sourceTree = "<group>"; };
+		B5A301DA19811E8900F71726 /* BMA4SNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMA4SNotification.h; sourceTree = "<group>"; };
+		B5A301DB19811E8900F71726 /* BMA4STracker+Analytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BMA4STracker+Analytics.h"; sourceTree = "<group>"; };
+		B5A301DC19811E8900F71726 /* BMA4STracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMA4STracker.h; sourceTree = "<group>"; };
+		B5A301DD19811E8900F71726 /* BMA4SViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMA4SViewController.h; sourceTree = "<group>"; };
+		B5A301DF19811E8900F71726 /* A4S.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = A4S.bundle; sourceTree = "<group>"; };
+		B5A301E019811E8900F71726 /* libAd4ScreenTrackingSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAd4ScreenTrackingSDK.a; sourceTree = "<group>"; };
+		B5A301E219811E8900F71726 /* BMA4SCloseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BMA4SCloseButton.png; sourceTree = "<group>"; };
+		B5A301E419811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialTextNotifView-iPad.xib"; sourceTree = "<group>"; };
+		B5A301E519811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib"; sourceTree = "<group>"; };
+		B5A301E619811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
+		B5A301E719811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialTextNotifView-landscape.xib"; sourceTree = "<group>"; };
+		B5A301E819811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialTextNotifView-ret4.xib"; sourceTree = "<group>"; };
+		B5A301E919811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneIntersticialTextNotifView.xib; sourceTree = "<group>"; };
+		B5A301EB19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib"; sourceTree = "<group>"; };
+		B5A301EC19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib"; sourceTree = "<group>"; };
+		B5A301ED19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
+		B5A301EE19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib"; sourceTree = "<group>"; };
+		B5A301EF19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib"; sourceTree = "<group>"; };
+		B5A301F019811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneIntersticialWebViewNotifView.xib; sourceTree = "<group>"; };
+		B5A301F219811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib"; sourceTree = "<group>"; };
+		B5A301F319811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib"; sourceTree = "<group>"; };
+		B5A301F419811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
+		B5A301F519811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib"; sourceTree = "<group>"; };
+		B5A301F619811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib"; sourceTree = "<group>"; };
+		B5A301F719811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib; sourceTree = "<group>"; };
+		B5A301F919811E8900F71726 /* BMA4SiPhoneTextNotifView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneTextNotifView-iPad.xib"; sourceTree = "<group>"; };
+		B5A301FA19811E8900F71726 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneTextNotifView-landscape-iPad.xib"; sourceTree = "<group>"; };
+		B5A301FB19811E8900F71726 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneTextNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
+		B5A301FC19811E8900F71726 /* BMA4SiPhoneTextNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneTextNotifView-landscape.xib"; sourceTree = "<group>"; };
+		B5A301FD19811E8900F71726 /* BMA4SiPhoneTextNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneTextNotifView.xib; sourceTree = "<group>"; };
+		B5A301FF19811E8900F71726 /* BMA4SiPhoneWebViewNotifView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-iPad.xib"; sourceTree = "<group>"; };
+		B5A3020019811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape-iPad.xib"; sourceTree = "<group>"; };
+		B5A3020119811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
+		B5A3020219811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape.xib"; sourceTree = "<group>"; };
+		B5A3020319811E8900F71726 /* BMA4SiPhoneWebViewNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneWebViewNotifView.xib; sourceTree = "<group>"; };
 		B5A3020719811E8900F71726 /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "BugSense-iOS.framework"; sourceTree = "<group>"; };
 		B5A3020B19811E8A00F71726 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
 		B5A3020C19811E8A00F71726 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
@@ -672,39 +711,6 @@
 		B5A30302198121A400F71726 /* JABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABaseViewController.h; sourceTree = "<group>"; };
 		B5C1E33519BA1E73009C422C /* UIImageView+JA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+JA.h"; path = "Categories/UIImageView+JA.h"; sourceTree = "<group>"; };
 		B5C1E33619BA1E73009C422C /* UIImageView+JA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+JA.m"; path = "Categories/UIImageView+JA.m"; sourceTree = "<group>"; };
-		B5C60F6119D40C5D00A1804B /* BMA4SViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMA4SViewController.h; sourceTree = "<group>"; };
-		B5C60F6219D40C5D00A1804B /* BMA4SViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMA4SViewController.m; sourceTree = "<group>"; };
-		B5C60F6319D40C5D00A1804B /* libBMA4SSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libBMA4SSDK.framework; sourceTree = "<group>"; };
-		B5C60F6519D40C5D00A1804B /* A4S.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = A4S.bundle; sourceTree = "<group>"; };
-		B5C60F6619D40C5D00A1804B /* BMA4SCloseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BMA4SCloseButton.png; sourceTree = "<group>"; };
-		B5C60F6819D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialTextNotifView-iPad.xib"; sourceTree = "<group>"; };
-		B5C60F6919D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib"; sourceTree = "<group>"; };
-		B5C60F6A19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
-		B5C60F6B19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialTextNotifView-landscape.xib"; sourceTree = "<group>"; };
-		B5C60F6C19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialTextNotifView-ret4.xib"; sourceTree = "<group>"; };
-		B5C60F6D19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneIntersticialTextNotifView.xib; sourceTree = "<group>"; };
-		B5C60F6F19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib"; sourceTree = "<group>"; };
-		B5C60F7019D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib"; sourceTree = "<group>"; };
-		B5C60F7119D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
-		B5C60F7219D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib"; sourceTree = "<group>"; };
-		B5C60F7319D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib"; sourceTree = "<group>"; };
-		B5C60F7419D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneIntersticialWebViewNotifView.xib; sourceTree = "<group>"; };
-		B5C60F7619D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib"; sourceTree = "<group>"; };
-		B5C60F7719D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib"; sourceTree = "<group>"; };
-		B5C60F7819D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
-		B5C60F7919D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib"; sourceTree = "<group>"; };
-		B5C60F7A19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib"; sourceTree = "<group>"; };
-		B5C60F7B19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib; sourceTree = "<group>"; };
-		B5C60F7D19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneTextNotifView-iPad.xib"; sourceTree = "<group>"; };
-		B5C60F7E19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneTextNotifView-landscape-iPad.xib"; sourceTree = "<group>"; };
-		B5C60F7F19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneTextNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
-		B5C60F8019D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneTextNotifView-landscape.xib"; sourceTree = "<group>"; };
-		B5C60F8119D40C5D00A1804B /* BMA4SiPhoneTextNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneTextNotifView.xib; sourceTree = "<group>"; };
-		B5C60F8319D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-iPad.xib"; sourceTree = "<group>"; };
-		B5C60F8419D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape-iPad.xib"; sourceTree = "<group>"; };
-		B5C60F8519D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
-		B5C60F8619D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape.xib"; sourceTree = "<group>"; };
-		B5C60F8719D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneWebViewNotifView.xib; sourceTree = "<group>"; };
 		B5C61BBE19B0BB7F00840E93 /* RIFieldOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldOption.h; sourceTree = "<group>"; };
 		B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIFieldOption.m; sourceTree = "<group>"; };
 		B5C61BC119B0DAD600840E93 /* JACheckBoxWithOptionsComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACheckBoxWithOptionsComponent.h; sourceTree = "<group>"; };
@@ -887,7 +893,7 @@
 				B5A3025419811E8A00F71726 /* BugSense-iOS.framework in Frameworks */,
 				B5A3025519811E8A00F71726 /* libAdIdAccess.a in Frameworks */,
 				B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */,
-				B5C60F8919D40C5D00A1804B /* libBMA4SSDK.framework in Frameworks */,
+				B5A3023519811E8A00F71726 /* libAd4ScreenTrackingSDK.a in Frameworks */,
 				B5FE9FB319A1F4C6006F7D63 /* NewRelicAgent.framework in Frameworks */,
 				B5007AC219A4E8EC0024035A /* HockeySDK.framework in Frameworks */,
 				B5A3025619811E8A00F71726 /* libGoogleAnalyticsServices.a in Frameworks */,
@@ -1558,19 +1564,137 @@
 			isa = PBXGroup;
 			children = (
 				B5FBD55719CAF22F00BD9510 /* Adjust */,
-				B5C60F5F19D40C5D00A1804B /* BMA4SSDK */,
 				B59DCA6319B710DA00DE7960 /* FXBlurView */,
 				B5007ABD19A4E8EC0024035A /* HockeySDK.embeddedframework */,
 				B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */,
 				CEDEB98F199BA8FA0022BAB5 /* NMRangeSlider */,
 				B5EF759B19814EF000005B13 /* FacebookSDK.framework */,
 				B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */,
+				B5A301D319811E8900F71726 /* Ad4ScreenTrackingSDK */,
 				B5A3020719811E8900F71726 /* BugSense-iOS.framework */,
 				B5A3020819811E8A00F71726 /* GoogleAnalyticsServicesiOS_3.08 */,
 				B5A3021E19811E8A00F71726 /* SDWebImage */,
 			);
 			name = ExternalFrameworks;
 			path = Jumia/ExternalFrameworks;
+			sourceTree = "<group>";
+		};
+		B5A301D319811E8900F71726 /* Ad4ScreenTrackingSDK */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301D419811E8900F71726 /* BMA4SViewController */,
+				B5A301D719811E8900F71726 /* headers */,
+				B5A301DE19811E8900F71726 /* lib */,
+				B5A301E119811E8900F71726 /* Resources */,
+			);
+			path = Ad4ScreenTrackingSDK;
+			sourceTree = "<group>";
+		};
+		B5A301D419811E8900F71726 /* BMA4SViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301D519811E8900F71726 /* BMA4SViewController.h */,
+				B5A301D619811E8900F71726 /* BMA4SViewController.m */,
+			);
+			path = BMA4SViewController;
+			sourceTree = "<group>";
+		};
+		B5A301D719811E8900F71726 /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301D819811E8900F71726 /* A4SWebView.h */,
+				B5A301D919811E8900F71726 /* BMA4SInAppNotification.h */,
+				B5A301DA19811E8900F71726 /* BMA4SNotification.h */,
+				B5A301DB19811E8900F71726 /* BMA4STracker+Analytics.h */,
+				B5A301DC19811E8900F71726 /* BMA4STracker.h */,
+				B5A301DD19811E8900F71726 /* BMA4SViewController.h */,
+			);
+			path = headers;
+			sourceTree = "<group>";
+		};
+		B5A301DE19811E8900F71726 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301DF19811E8900F71726 /* A4S.bundle */,
+				B5A301E019811E8900F71726 /* libAd4ScreenTrackingSDK.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		B5A301E119811E8900F71726 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301E219811E8900F71726 /* BMA4SCloseButton.png */,
+				B5A301E319811E8900F71726 /* InterstitialTextNotif */,
+				B5A301EA19811E8900F71726 /* InterstitialWebView */,
+				B5A301F119811E8900F71726 /* InterstitialWebViewWithToolBar */,
+				B5A301F819811E8900F71726 /* TextBanner */,
+				B5A301FE19811E8900F71726 /* WebViewBanner */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B5A301E319811E8900F71726 /* InterstitialTextNotif */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301E419811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib */,
+				B5A301E519811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib */,
+				B5A301E619811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib */,
+				B5A301E719811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib */,
+				B5A301E819811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib */,
+				B5A301E919811E8900F71726 /* BMA4SiPhoneIntersticialTextNotifView.xib */,
+			);
+			path = InterstitialTextNotif;
+			sourceTree = "<group>";
+		};
+		B5A301EA19811E8900F71726 /* InterstitialWebView */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301EB19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib */,
+				B5A301EC19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib */,
+				B5A301ED19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib */,
+				B5A301EE19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib */,
+				B5A301EF19811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib */,
+				B5A301F019811E8900F71726 /* BMA4SiPhoneIntersticialWebViewNotifView.xib */,
+			);
+			path = InterstitialWebView;
+			sourceTree = "<group>";
+		};
+		B5A301F119811E8900F71726 /* InterstitialWebViewWithToolBar */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301F219811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib */,
+				B5A301F319811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib */,
+				B5A301F419811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib */,
+				B5A301F519811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib */,
+				B5A301F619811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib */,
+				B5A301F719811E8900F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib */,
+			);
+			path = InterstitialWebViewWithToolBar;
+			sourceTree = "<group>";
+		};
+		B5A301F819811E8900F71726 /* TextBanner */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301F919811E8900F71726 /* BMA4SiPhoneTextNotifView-iPad.xib */,
+				B5A301FA19811E8900F71726 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib */,
+				B5A301FB19811E8900F71726 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib */,
+				B5A301FC19811E8900F71726 /* BMA4SiPhoneTextNotifView-landscape.xib */,
+				B5A301FD19811E8900F71726 /* BMA4SiPhoneTextNotifView.xib */,
+			);
+			path = TextBanner;
+			sourceTree = "<group>";
+		};
+		B5A301FE19811E8900F71726 /* WebViewBanner */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301FF19811E8900F71726 /* BMA4SiPhoneWebViewNotifView-iPad.xib */,
+				B5A3020019811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib */,
+				B5A3020119811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */,
+				B5A3020219811E8900F71726 /* BMA4SiPhoneWebViewNotifView-landscape.xib */,
+				B5A3020319811E8900F71726 /* BMA4SiPhoneWebViewNotifView.xib */,
+			);
+			path = WebViewBanner;
 			sourceTree = "<group>";
 		};
 		B5A3020819811E8A00F71726 /* GoogleAnalyticsServicesiOS_3.08 */ = {
@@ -1929,102 +2053,6 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		B5C60F5F19D40C5D00A1804B /* BMA4SSDK */ = {
-			isa = PBXGroup;
-			children = (
-				B5C60F6019D40C5D00A1804B /* BMA4SViewController */,
-				B5C60F6319D40C5D00A1804B /* libBMA4SSDK.framework */,
-				B5C60F6419D40C5D00A1804B /* Resources */,
-			);
-			path = BMA4SSDK;
-			sourceTree = "<group>";
-		};
-		B5C60F6019D40C5D00A1804B /* BMA4SViewController */ = {
-			isa = PBXGroup;
-			children = (
-				B5C60F6119D40C5D00A1804B /* BMA4SViewController.h */,
-				B5C60F6219D40C5D00A1804B /* BMA4SViewController.m */,
-			);
-			path = BMA4SViewController;
-			sourceTree = "<group>";
-		};
-		B5C60F6419D40C5D00A1804B /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				B5C60F6519D40C5D00A1804B /* A4S.bundle */,
-				B5C60F6619D40C5D00A1804B /* BMA4SCloseButton.png */,
-				B5C60F6719D40C5D00A1804B /* InterstitialTextNotif */,
-				B5C60F6E19D40C5D00A1804B /* InterstitialWebView */,
-				B5C60F7519D40C5D00A1804B /* InterstitialWebViewWithToolBar */,
-				B5C60F7C19D40C5D00A1804B /* TextBanner */,
-				B5C60F8219D40C5D00A1804B /* WebViewBanner */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		B5C60F6719D40C5D00A1804B /* InterstitialTextNotif */ = {
-			isa = PBXGroup;
-			children = (
-				B5C60F6819D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib */,
-				B5C60F6919D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib */,
-				B5C60F6A19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib */,
-				B5C60F6B19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib */,
-				B5C60F6C19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib */,
-				B5C60F6D19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView.xib */,
-			);
-			path = InterstitialTextNotif;
-			sourceTree = "<group>";
-		};
-		B5C60F6E19D40C5D00A1804B /* InterstitialWebView */ = {
-			isa = PBXGroup;
-			children = (
-				B5C60F6F19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib */,
-				B5C60F7019D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib */,
-				B5C60F7119D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib */,
-				B5C60F7219D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib */,
-				B5C60F7319D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib */,
-				B5C60F7419D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView.xib */,
-			);
-			path = InterstitialWebView;
-			sourceTree = "<group>";
-		};
-		B5C60F7519D40C5D00A1804B /* InterstitialWebViewWithToolBar */ = {
-			isa = PBXGroup;
-			children = (
-				B5C60F7619D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib */,
-				B5C60F7719D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib */,
-				B5C60F7819D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib */,
-				B5C60F7919D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib */,
-				B5C60F7A19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib */,
-				B5C60F7B19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib */,
-			);
-			path = InterstitialWebViewWithToolBar;
-			sourceTree = "<group>";
-		};
-		B5C60F7C19D40C5D00A1804B /* TextBanner */ = {
-			isa = PBXGroup;
-			children = (
-				B5C60F7D19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-iPad.xib */,
-				B5C60F7E19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape-iPad.xib */,
-				B5C60F7F19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape-ret4.xib */,
-				B5C60F8019D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape.xib */,
-				B5C60F8119D40C5D00A1804B /* BMA4SiPhoneTextNotifView.xib */,
-			);
-			path = TextBanner;
-			sourceTree = "<group>";
-		};
-		B5C60F8219D40C5D00A1804B /* WebViewBanner */ = {
-			isa = PBXGroup;
-			children = (
-				B5C60F8319D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-iPad.xib */,
-				B5C60F8419D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib */,
-				B5C60F8519D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */,
-				B5C60F8619D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape.xib */,
-				B5C60F8719D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView.xib */,
-			);
-			path = WebViewBanner;
-			sourceTree = "<group>";
-		};
 		B5FBD55719CAF22F00BD9510 /* Adjust */ = {
 			isa = PBXGroup;
 			children = (
@@ -2334,102 +2362,102 @@
 				B501E88E19BEF7DE00BE51DD /* JAPickupStationInfoCell.xib in Resources */,
 				4A19C51B19D01B4D0070D194 /* JANoConnectionView.xib in Resources */,
 				B58767FF19BB62B3001651D6 /* JAShippingCell.xib in Resources */,
+				B5A3023A19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
 				CEDEB9BA199BA8FA0022BAB5 /* slider-default7-handle@2x.png in Resources */,
 				B55CF29019BE072800A6C6B6 /* JAShippingInfoCell.xib in Resources */,
 				B501E88919BE20C100BE51DD /* JAPickupRegionsCell.xib in Resources */,
-				B5C60FA119D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */,
-				B5C60F8A19D40C5D00A1804B /* A4S.bundle in Resources */,
-				B5C60F9F19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
-				B5C60F9719D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
-				B5C60F9219D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */,
 				4A392143198925E300B70A9C /* JANavigationBarView.xib in Resources */,
-				B5C60FA319D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
 				B5210E8619C4863400FDB0D1 /* RIStrings.strings in Resources */,
 				CEDEB9C3199BA8FA0022BAB5 /* slider-metal-handle.png in Resources */,
 				CEDEB9C4199BA8FA0022BAB5 /* slider-metal-handle@2x.png in Resources */,
+				B5A3024A19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
+				B5A3024719811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */,
 				4A85AEED19B9D4A0000019CE /* JAStarsComponent.xib in Resources */,
 				CEDEB9AF199BA8FA0022BAB5 /* slider-default-handle-highlighted.png in Resources */,
+				B5A3024319811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */,
 				CEDEB9B5199BA8FA0022BAB5 /* slider-default-trackBackground.png in Resources */,
-				B5C60F8B19D40C5D00A1804B /* BMA4SCloseButton.png in Resources */,
 				4A01EE63199259D1005F5AD1 /* JAPDVGalleryView.xib in Resources */,
 				B510B01619AE466B00A9754A /* JARadioComponent.xib in Resources */,
 				CEDEB9B2199BA8FA0022BAB5 /* slider-default-handle@2x.png in Resources */,
-				B5C60F9519D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */,
+				B5A3024919811E8A00F71726 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
+				B5A3024819811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
+				B5A3023819811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
 				4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */,
 				B59DCA7F19B88DDB00DE7960 /* JAAddNewAddressCell.xib in Resources */,
-				B5C60F9319D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
 				B5C61BC519B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib in Resources */,
+				B5A3023619811E8A00F71726 /* BMA4SCloseButton.png in Resources */,
+				B5A3023E19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
 				B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */,
-				B5C60F9119D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */,
 				CEDEB9C7199BA8FA0022BAB5 /* slider-metal-trackBackground.png in Resources */,
 				4AE99A0219CAE3B300F28A7D /* JANewsletterComponent.xib in Resources */,
 				CEDEB9C8199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png in Resources */,
 				CEDEB9B0199BA8FA0022BAB5 /* slider-default-handle-highlighted@2x.png in Resources */,
 				CEDEB9C2199BA8FA0022BAB5 /* slider-metal-handle-highlighted@2x.png in Resources */,
-				B5C60FA519D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */,
-				B5C60F8C19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
-				B5C60F9819D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */,
 				CEDEB9B9199BA8FA0022BAB5 /* slider-default7-handle.png in Resources */,
 				CEC3F71D19A5FDDA00DE12F6 /* JAGrayButtonCell.xib in Resources */,
-				B5C60F9019D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
-				B5C60F9619D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib in Resources */,
+				B5A3023F19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
 				B510B01119AE466B00A9754A /* JABirthDateComponent.xib in Resources */,
 				CEDEB9C0199BA8FA0022BAB5 /* slider-default7-trackCrossedOver@2x.png in Resources */,
 				CEDEB9B7199BA8FA0022BAB5 /* slider-default-trackCrossedOver@2x.png in Resources */,
+				B5A3024619811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
 				B58DBF3A19C0AF9600D4678A /* JAPaymentCell.xib in Resources */,
-				B5C60F8F19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
 				CE2FB75819938EB500E7CD00 /* JACatalogGridCell.xib in Resources */,
+				B5A3024219811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
 				B510B01819AE466B00A9754A /* JATextFieldComponent.xib in Resources */,
 				B59DCA7719B88DAD00DE7960 /* JASwitchCell.xib in Resources */,
 				4A3719BF19C05F5D002D4199 /* JAUndefinedSearchView.xib in Resources */,
+				B5A3023919811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib in Resources */,
 				B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */,
+				B5A3024C19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				B5007AC419A4E8EC0024035A /* HockeySDKResources.bundle in Resources */,
 				4A4F12EA198FF35600F93C89 /* JAPDVRelatedItem.xib in Resources */,
 				B5007AC319A4E8EC0024035A /* HockeySDK.xcconfig in Resources */,
-				B5C60FA619D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
-				B5C60FA719D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView.xib in Resources */,
 				CEDEB9BD199BA8FA0022BAB5 /* slider-default7-trackBackground.png in Resources */,
 				CEDEB9B4199BA8FA0022BAB5 /* slider-default-track@2x.png in Resources */,
-				B5C60F9E19D40C5D00A1804B /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
 				CEDEB9C5199BA8FA0022BAB5 /* slider-metal-track.png in Resources */,
 				B510B01319AE466B00A9754A /* JACheckBoxComponent.xib in Resources */,
-				B5C60FA419D40C5D00A1804B /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
 				CEDEB9BF199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png in Resources */,
-				B5C60F9B19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
 				CEDEB9C1199BA8FA0022BAB5 /* slider-metal-handle-highlighted.png in Resources */,
 				4A2FD843199119D900C65C1D /* JAPDVProductInfo.xib in Resources */,
 				B5FE9FB719A1FD1B006F7D63 /* RITrackingDebug.plist in Resources */,
 				CEC3F71E19A5FDDA00DE12F6 /* JAOrangeButtonCell.xib in Resources */,
-				B5C60F9D19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
-				B5C60F8E19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib in Resources */,
+				B5A3024519811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */,
+				B5A3023C19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */,
 				CEDEB9C6199BA8FA0022BAB5 /* slider-metal-track@2x.png in Resources */,
 				CEDEB9B1199BA8FA0022BAB5 /* slider-default-handle.png in Resources */,
-				B5C60F9919D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
 				4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */,
+				B5A3024419811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
 				8C38E18419CF164A0007F6F9 /* JASuccessView.xib in Resources */,
+				B5A3024019811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */,
 				CE2F577019913B6D000A9E09 /* JACatalogListCell.xib in Resources */,
 				4A01EE4B19922736005F5AD1 /* JAPDVPicker.xib in Resources */,
-				B5C60F9419D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
+				B5A3024F19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
 				8C38E18919CF170F0007F6F9 /* JAErrorView.xib in Resources */,
+				B5A3024B19811E8A00F71726 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
 				CEDEB9BB199BA8FA0022BAB5 /* slider-default7-track.png in Resources */,
+				B5A3023419811E8A00F71726 /* A4S.bundle in Resources */,
+				B5A3023B19811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
 				CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */,
 				CE13789519A4DC4E00CA0751 /* JARecentlyViewedListCell.xib in Resources */,
-				B5C60F9C19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */,
 				B59DCA7019B8712500DE7960 /* JAAddressCell.xib in Resources */,
+				B5A3023719811E8A00F71726 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
 				B56BBF3319A60D5400F4B1A3 /* JACartListCell.xib in Resources */,
 				B5A301BC19811D0700F71726 /* Images.xcassets in Resources */,
-				B5C60FA219D40C5D00A1804B /* BMA4SiPhoneTextNotifView.xib in Resources */,
-				B5C60F9A19D40C5D00A1804B /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */,
 				CEDEB9B6199BA8FA0022BAB5 /* slider-default-trackCrossedOver.png in Resources */,
 				CEDEB9BE199BA8FA0022BAB5 /* slider-default7-trackBackground@2x.png in Resources */,
-				B5C60F8D19D40C5D00A1804B /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
+				B5A3024D19811E8A00F71726 /* BMA4SiPhoneTextNotifView.xib in Resources */,
+				B5A3023D19811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */,
 				CEDEB9B3199BA8FA0022BAB5 /* slider-default-track.png in Resources */,
+				B5A3024E19811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
 				CE69B587198662E6005CC699 /* Main.storyboard in Resources */,
-				B5C60FA019D40C5D00A1804B /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
 				CEDEB9B8199BA8FA0022BAB5 /* slider-default_trackBackground@2x.png in Resources */,
+				B5A3025119811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
+				B5A3024119811E8A00F71726 /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib in Resources */,
 				CEDEB9BC199BA8FA0022BAB5 /* slider-default7-track@2x.png in Resources */,
 				B5A302E019811E9200F71726 /* RITracking_example.plist in Resources */,
+				B5A3025219811E8A00F71726 /* BMA4SiPhoneWebViewNotifView.xib in Resources */,
+				B5A3025019811E8A00F71726 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2504,6 +2532,7 @@
 				B5225E30198950C500C18F1E /* JACartViewController.m in Sources */,
 				4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */,
 				B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */,
+				B5A3023319811E8A00F71726 /* BMA4SViewController.m in Sources */,
 				B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */,
 				B5FBD58619CAF22F00BD9510 /* AIResponseData.m in Sources */,
 				B58DBF3919C0AF9600D4678A /* JAPaymentCell.m in Sources */,
@@ -2543,7 +2572,6 @@
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
 				B59D196319C333CF004843C3 /* JAExternalPaymentsViewController.m in Sources */,
 				4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */,
-				B5C60F8819D40C5D00A1804B /* BMA4SViewController.m in Sources */,
 				B5FBD57D19CAF22F00BD9510 /* AIActivityState.m in Sources */,
 				CE55A4E71993672600EE75DE /* JARatingsView.m in Sources */,
 				CE55A4E41992873300EE75DE /* RIProduct.m in Sources */,
@@ -2734,7 +2762,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -2873,7 +2900,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -2906,7 +2932,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";

@@ -147,7 +147,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventShopCountryKey      @"RIEventShopCountryKey"
 #define kRIEventUserIdKey           @"RIEventUserIdKey"
 #define kRIEventSkuKey              @"RIEventSkuKey"
-#define kRIEventProductName         @"kRIEventProductName"
+#define kRIEventProductNameKey      @"RIEventProductNameKey"
 #define kRIEventCurrencyCodeKey     @"RIEventCurrencyCodeKey"
 #define kRIEventPriceKey            @"RIEventPriceKey"
 #define kRIEventGenderKey           @"RIEventGenderKey"

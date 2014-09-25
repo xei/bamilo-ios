@@ -229,7 +229,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         for (NSDictionary *tempProduct in tempArray)
         {
             [tracker send:[[GAIDictionaryBuilder createItemWithTransactionId:[tempProduct objectForKey:kRIEcommerceTransactionIdKey]
-                                                                        name:[tempProduct objectForKey:kRIEventProductName]
+                                                                        name:[tempProduct objectForKey:kRIEventProductNameKey]
                                                                          sku:[tempProduct objectForKey:kRIEventSkuKey]
                                                                     category:nil
                                                                        price:[tempProduct objectForKey:kRIEventPriceKey]

@@ -7,38 +7,17 @@
 //
 
 #import "RIAd4PushTracker.h"
-#import <libBMA4SSDK/BMA4SSDK.h>
+#import "BMA4SNotification.h"
+#import "BMA4STracker.h"
+#import "BMA4SInAppNotification.h"
+#import "BMA4STracker+Analytics.h"
 #import "GAIFields.h"
 #import "RIGoogleAnalyticsTracker.h"
+#import "JAAppDelegate.h"
 #import "RICategory.h"
-
-#define kAd4PushProfileShopCountryKey                       @"shopCountry"
-#define kAd4PushProfileUserIdKey                            @"userID"
-#define kAd4PushProfileRegistrationStatusKey                @"registrationStatus"
-#define kAd4PushProfileFirstNameKey                         @"firstName"
-#define kAd4PushProfileStatusInAppKey                       @"statusInApp"
-#define kAd4PushProfileOrderStatusKey                       @"orderStatus"
-#define kAd4PushProfileUserGenderKey                        @"userGender"
-#define kAd4PushProfileLastOrderDateKey                     @"lastOrderDate"
-#define kAd4PushProfileAggregatedNumberOfPurchaseKey        @"aggregatedNumberOfPurchase"
-#define kAd4PushProfileCartStatusKey                        @"cartStatus"
-#define kAd4PushProfileCartValueKey                         @"cartValue"
-#define kAd4PushProfilePurchaseGrandTotalKey                @"purchaseGrandTotal"
-#define kAd4PushProfileLastMovedFromFavtoCartKey            @"lastMovedFromFavtoCart"
-#define kAd4PushProfileCouponStatusKey                      @"couponStatus"
-#define kAd4PushProfileAvgCartValueKey                      @"avgCartValue"
-#define kAd4PushProfileLastSearchKey                        @"lastSearch"
-#define kAd4PushProfileLastSearchDateKey                    @"lastSearchDate"
-#define kAd4PushProfileLastPurchaseCategoryKey              @"lastPurchaseCategory"
-#define kAd4PushProfileLastFavouritesProductKey             @"lastFavouritesProduct"
-#define kAd4PushProfileWishlistStatusKey                    @"wishlistStatus"
-#define kAd4PushProfileLastFavouritesProductDateKey         @"lastFavouritesProductDate"
-#define kAd4PushProfileFilterBrandKey                       @"filterBrand"
-#define kAd4PushProfileFilterColorKey                       @"filterColor"
-#define kAd4PushProfileFilterCategoryKey                    @"filterCategory"
-#define kAd4PushProfileFilterPriceKey                       @"filterPrice"
-#define kAd4PushProfileCampaignPageViewCountKey             @"campaignPageViewCount"
-#define kAd4PushProfileMostVisitedCategoryKey               @"mostVisitedCategory"
+#import "RICountry.h"
+#import "RIApi.h"
+#import "JASplashViewController.h"
 
 @implementation RIAd4PushTracker
 
@@ -50,6 +29,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 @synthesize registeredEvents;
 
 static RIAd4PushTracker *sharedInstance;
+static dispatch_once_t sharedInstanceToken;
 
 - (id)init
 {
@@ -58,18 +38,17 @@ static RIAd4PushTracker *sharedInstance;
     if ((self = [super init])) {
         self.queue = [[NSOperationQueue alloc] init];
         self.queue.maxConcurrentOperationCount = 1;
-        
-        NSMutableArray *events = [[NSMutableArray alloc] init];
-        
-        [events addObject:[NSNumber numberWithInt:RIEventLoginSuccess]];
-        [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
-        [events addObject:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]];
-        [events addObject:[NSNumber numberWithInt:RIEventAddToCart]];
-        [events addObject:[NSNumber numberWithInt:RIEventAddToWishlist]];
-        
-        self.registeredEvents = [events copy];
     }
     return self;
+}
+
++ (instancetype)sharedInstance
+{
+    dispatch_once(&sharedInstanceToken, ^{
+        sharedInstance = [[RIAd4PushTracker alloc] init];
+    });
+    
+    return sharedInstance;
 }
 
 #pragma mark - RITracker protocol
@@ -178,45 +157,93 @@ static RIAd4PushTracker *sharedInstance;
 {
     RIDebugLog(@"Ad4Push - Launch event with data:%@", dataDictionary);
     
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-
-    //    [BMA4STracker trackEventWithType:1003 parameters:array];
+    BOOL hasAppOpended = [[[NSUserDefaults standardUserDefaults] objectForKey:@"has_app_opened"] boolValue];
+    if(!hasAppOpended)
+    {
+        NSDate *date = [NSDate date];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        
+        NSMutableArray *parameters = [[NSMutableArray alloc] initWithObjects:[NSString stringWithFormat:@"firstOpenDate=%@", [dateFormatter stringFromDate:date]], nil];
+        
+        [BMA4STracker trackEventWithType:1003 parameters:parameters];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"has_app_opened"];
+        [[NSUserDefaults standardUserDefaults] synchronize];        
+    }
 }
 
 #pragma mark - RIEventTracking
 - (void)trackEvent:(NSNumber *)eventType data:(NSDictionary *)data
 {
     RIDebugLog(@"Ad4Push - Tracking event = %@, data %@", eventType, data);
+    
+    NSString *articleId = @"";
+    if(VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString))
+    {
+        articleId = [data objectForKey:kRIEventSkuKey];
+    }
+    
+    NSString *name = @"";
+    if(VALID_NOTEMPTY([data objectForKey:kRIEventProductNameKey], NSString))
+    {
+        name = [data objectForKey:kRIEventProductNameKey];
+    }
+    
+    NSString *categoryId = @"";
+    if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryIdKey], NSString))
+    {
+        categoryId = [data objectForKey:kRIEventCategoryIdKey];
+    }
+    
+    NSString *price = @"";
+    if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSString))
+    {
+        price = [data objectForKey:kRIEventPriceKey];
+    }
+    
+    NSString *currency = @"";
+    if(VALID_NOTEMPTY([data objectForKey:kRIEventCurrencyCodeKey], NSString))
+    {
+        currency = [data objectForKey:kRIEventCurrencyCodeKey];
+    }
+    
     if([self.registeredEvents containsObject:eventType])
     {
+        NSMutableArray *parameters = [[NSMutableArray alloc] init];
         NSInteger event = [eventType integerValue];
         switch (event) {
             case RIEventLoginSuccess:
-//                [BMA4STracker trackEventWithType:1001 parameters:array];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
+                {
+                    [parameters addObject:[NSString stringWithFormat:@"loginUserID=%@", [data objectForKey:kRIEventUserIdKey]]];
+                }
+                [BMA4STracker trackEventWithType:1001 parameters:parameters];
 
                 break;
             case RIEventRegisterSuccess:
-//                [BMA4STracker trackLeadWithLabel:<#(NSString *)#> value:<#(NSString *)#>]
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
+                {
+                    [BMA4STracker trackLeadWithLabel:@"customerID" value:[data objectForKey:kRIEventUserIdKey]];
+                }
                 break;
             case RIEventFacebookLoginSuccess:
-//                [BMA4STracker trackEventWithType:1002 parameters:array];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
+                {
+                    [parameters addObject:[NSString stringWithFormat:@"loginUserID=%@", [data objectForKey:kRIEventUserIdKey]]];
+                }
+                [BMA4STracker trackEventWithType:1002 parameters:parameters];
                 break;
             case RIEventAddToCart:
-//                    [BMA4STracker trackCartWithId:<#(NSString *)#> forArticleWithId:<#(NSString *)#> andLabel:<#(NSString *)#> category:<#(NSString *)#> price:<#(double)#> currency:<#(NSString *)#> quantity:<#(long)#>]
+                [BMA4STracker trackCartWithId:@"1" modificationWithLabel:name forArticleWithId:articleId category:categoryId price:[price doubleValue] currency:currency quantity:1];
                 break;
             case RIEventAddToWishlist:
-//                [BMA4STracker trackEventWithType:1005 parameters:array];
+                [BMA4STracker trackEventWithType:1005 parameters:parameters];
                 break;
             default:
-//                [BMA4STracker trackEventWithType:1001 parameters:array];
                 break;
         }
-        
-//        NSDictionary *parameters = [self createParameters:data];
-//        [[BMA4SNotification sharedBMA4S] synchroniseProfile:parameters];
-        
-//        NSArray* array = [NSArray arrayWithObject:@"ApplicationStart=successful;userId=000"];
-//        [BMA4STracker trackEventWithType:1001 parameters:array];
     }
 }
 
