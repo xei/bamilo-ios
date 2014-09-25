@@ -633,7 +633,7 @@
     [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutContinueShopping]
                                               data:[trackingDictionary copy]];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
@@ -845,7 +845,7 @@
             [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
             
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
                                                       data:[trackingDictionary copy]];
             
             [self hideLoading];
@@ -872,7 +872,7 @@
             [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
             
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                       data:[trackingDictionary copy]];
             
             [self hideLoading];

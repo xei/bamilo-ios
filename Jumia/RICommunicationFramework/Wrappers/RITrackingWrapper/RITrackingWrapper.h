@@ -170,6 +170,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventTotalCartKey        @"RIEventTotalCartKey"
 #define kRIEventTransactionIdKey    @"RIEventTransactionIdKey"
 #define kRIEventTotalTransactionKey @"RIEventTotalTransactionKey"
+#define kRIEventUserFirstNameKey    @"RIEventUserFirstNameKey"
 
 /**
  *  Struct to identify events
@@ -178,44 +179,53 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventAutoLogin = 0,
     RIEventLoginSuccess = 1,
     RIEventLoginFail = 2,
-    RIEventRegisterSuccess = 3,
-    RIEventRegisterFail = 4,
-    RIEventFacebookLoginSuccess = 5,
-    RIEventFacebookLoginFail = 6,
-    RIEventLogout = 7,
-    RIEventSideMenu = 8,
-    RIEventCategories = 9,
-    RIEventCatalog = 10,
-    RIEventFilter = 11,
-    RIEventSort = 12,
-    RIEventViewProductDetails = 13,
-    RIEventRelatedItem = 14,
-    RIEventAddToCart = 15,
-    RIEventRemoveFromCart = 16,
-    RIEventAddToWishlist = 17,
-    RIEventRemoveFromWishlist = 18,
-    RIEventRateProduct = 19,
-    RIEventSearch = 20,
-    RIEventShareFacebook = 21,
-    RIEventShareTwitter = 22,
-    RIEventShareEmail = 23,
-    RIEventShareSMS = 24,
-    RIEventShareOther = 25,
-    RIEventCheckout = 26,
-    RIEventNewsletter = 27,
-    RIEventCallToOrder = 28,
-    RIEventGuestCustomer = 29,
-    RIEventViewProduct = 30,
-    RIEventViewListing = 31,
-    RIEventViewCart = 32,
-    RIEventTransactionConfirm = 33,
-    RIEventFacebookHome = 34,
-    RIEventFacebookViewListing = 35,
-    RIEventFacebookViewProduct = 36,
-    RIEventFacebookSearch = 37,
-    RIEventFacebookViewWishlist = 38,
-    RIEventFacebookViewCart = 39,
-    RIEventFacebookViewTransaction = 50
+    RIEventRegisterStart = 3,
+    RIEventRegisterSuccess = 4,
+    RIEventRegisterFail = 5,
+    RIEventFacebookLoginSuccess = 6,
+    RIEventFacebookLoginFail = 7,
+    RIEventLogout = 8,
+    RIEventSideMenu = 9,
+    RIEventCategories = 10,
+    RIEventCatalog = 11,
+    RIEventFilter = 12,
+    RIEventSort = 13,
+    RIEventViewProductDetails = 14,
+    RIEventRelatedItem = 15,
+    RIEventAddToCart = 16,
+    RIEventRemoveFromCart = 17,
+    RIEventAddToWishlist = 18,
+    RIEventRemoveFromWishlist = 19,
+    RIEventRateProduct = 20,
+    RIEventSearch = 21,
+    RIEventShareFacebook = 22,
+    RIEventShareTwitter = 23,
+    RIEventShareEmail = 24,
+    RIEventShareSMS = 25,
+    RIEventShareOther = 26,
+    RIEventCheckoutStart = 27,
+    RIEventCheckoutAboutYou = 28,
+    RIEventCheckoutAddresses = 29,
+    RIEventCheckoutShipping = 30,
+    RIEventCheckoutPayment = 31,
+    RIEventCheckoutEnd = 32,
+    RIEventCheckoutContinueShopping = 33,
+    RIEventCheckoutError = 34,
+    RIEventNewsletter = 35,
+    RIEventCallToOrder = 36,
+    RIEventGuestCustomer = 37,
+    RIEventViewProduct = 38,
+    RIEventViewListing = 39,
+    RIEventViewCart = 40,
+    RIEventTransactionConfirm = 41,
+    RIEventFacebookHome = 42,
+    RIEventFacebookViewListing = 43,
+    RIEventFacebookViewProduct = 44,
+    RIEventFacebookSearch = 45,
+    RIEventFacebookViewWishlist = 46,
+    RIEventFacebookViewCart = 47,
+    RIEventFacebookViewTransaction = 48,
+    RIEventChangeCountry = 49
 };
 
 /**
@@ -272,14 +282,17 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 /**
  *  Protocol constants
  */
-#define kRIEcommerceTransactionIdKey @"RIEcommerceTransactionIdKey"
-#define kRIEcommerceTaxKey           @"RIEcommerceTaxKey"
-#define kRIEcommerceShippingKey      @"RIEcommerceShippingKey"
-#define kRIEcommerceCurrencyKey      @"RIEcommerceCurrencyKey"
-#define kRIEcommerceTotalValueKey    @"RIEcommerceTotalValueKey"
-#define kRIEcommerceSkusKey          @"RIEcommerceSkusValueKey"
-#define kRIEcommerceGuestKey         @"RIEcommerceGuestKey"
-#define kRIEcommerceProducts         @"kRIEcommerceProducts"
+#define kRIEcommerceTransactionIdKey        @"RIEcommerceTransactionIdKey"
+#define kRIEcommerceTaxKey                  @"RIEcommerceTaxKey"
+#define kRIEcommerceShippingKey             @"RIEcommerceShippingKey"
+#define kRIEcommerceCurrencyKey             @"RIEcommerceCurrencyKey"
+#define kRIEcommerceTotalValueKey           @"RIEcommerceTotalValueKey"
+#define kRIEcommerceConvertedTotalValueKey  @"RIEcommerceConvertedTotalValueKey"
+#define kRIEcommerceSkusKey                 @"RIEcommerceSkusValueKey"
+#define kRIEcommerceGuestKey                @"RIEcommerceGuestKey"
+#define kRIEcommerceProducts                @"RIEcommerceProducts"
+#define kRIEcommerceCouponKey               @"RIEcommerceCouponKey"
+#define kRIEcommerceCartAverageValueKey     @"RIEcommerceCartAverageValueKey"
 
 /**
  *  This protocol implements tracking to the commerce transactions

@@ -70,7 +70,7 @@ UITextFieldDelegate>
     [trackingDictionary setValue:@"CheckoutPaymentMethods" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPayment]
                                               data:[trackingDictionary copy]];
     
     self.navBarLayout.title = STRING_CHECKOUT;

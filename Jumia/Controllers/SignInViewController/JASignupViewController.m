@@ -80,6 +80,8 @@ JANoConnectionViewDelegate
     
     self.originalFrame = self.contentScrollView.frame;
     
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventRegisterStart] data:nil];
+    
     [self showLoading];
     
     [RIForm getForm:@"register"
@@ -205,6 +207,7 @@ JANoConnectionViewDelegate
         [trackingDictionary setValue:@"CreateSuccess" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
         [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:((RICustomer *)object).gender forKey:kRIEventGenderKey];
         [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
         [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];

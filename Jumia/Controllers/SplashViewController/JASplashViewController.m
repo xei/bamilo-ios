@@ -138,6 +138,7 @@
             
             [RIApi startApiWithCountry:nil
                           successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                              
                               if(hasUpdate)
                               {
                                   self.isPopupOpened = YES;
@@ -290,6 +291,12 @@
                  [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAutoLogin]
                                                            data:[trackingDictionary copy]];
                  
+                 trackingDictionary = [[NSMutableDictionary alloc] init];
+                 [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                 
+                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventChangeCountry]
+                                                           data:[trackingDictionary copy]];
+                 
                  [self hideLoading];
                  
                  // Changed country in deeplink
@@ -345,7 +352,7 @@
         
         [RIApi startApiWithCountry:country
                       successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
-                          
+
                           if(hasUpdate)
                           {
                               self.isPopupOpened = YES;
