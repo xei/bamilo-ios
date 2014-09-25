@@ -133,7 +133,7 @@ UIPickerViewDelegate>
     [trackingDictionary setValue:@"CheckoutMyAddress" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddresses]
                                               data:[trackingDictionary copy]];
 }
 
@@ -405,7 +405,7 @@ UIPickerViewDelegate>
              [trackingDictionary setValue:@"CheckoutCreateAddress" forKey:kRIEventActionKey];
              [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
              
-             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddresses]
                                                        data:[trackingDictionary copy]];
              
              self.checkout = object;
@@ -418,7 +418,7 @@ UIPickerViewDelegate>
              [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
              [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
              
-             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                        data:[trackingDictionary copy]];
              
              self.hasErrors = YES;

@@ -115,7 +115,7 @@ UICollectionViewDelegateFlowLayout>
         [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                   data:[trackingDictionary copy]];
         
         JAErrorView *errorView = [JAErrorView getNewJAErrorView];
@@ -740,7 +740,7 @@ UICollectionViewDelegateFlowLayout>
             [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
             
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                       data:[trackingDictionary copy]];
             
             [self hideLoading];
@@ -756,7 +756,7 @@ UICollectionViewDelegateFlowLayout>
         [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                   data:[trackingDictionary copy]];
         
         [self hideLoading];

@@ -473,7 +473,7 @@ FBLoginViewDelegate
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAboutYou]
                                                   data:[trackingDictionary copy]];
         
         [self.loginDynamicForm resetValues];
@@ -613,7 +613,7 @@ FBLoginViewDelegate
                                                  [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
                                                  [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];
                                                  [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAboutYou]
                                                                                            data:[trackingDictionary copy]];
                                                  
                                                  [self.loginDynamicForm resetValues];

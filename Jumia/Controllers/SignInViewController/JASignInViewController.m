@@ -230,6 +230,7 @@ JANoConnectionViewDelegate
          [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
          [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
          [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventUserIdKey];
+         [trackingDictionary setValue:((RICustomer *)object).firstName forKey:kRIEventUserFirstNameKey];
          [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
          [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
          NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];

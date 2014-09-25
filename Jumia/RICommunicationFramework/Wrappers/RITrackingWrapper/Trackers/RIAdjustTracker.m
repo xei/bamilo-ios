@@ -404,7 +404,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     [parameters setObject:[[data objectForKey:kRIEcommerceSkusKey] componentsJoinedByString:@","]  forKey:kAdjustEventSkusKey];
     [parameters setObject:[data objectForKey:kRIEcommerceTransactionIdKey]  forKey:kAdjustEventTransactionIdKey];
 
-    NSNumber *transactionValue = [data objectForKey:kRIEcommerceTotalValueKey];
+    NSNumber *transactionValue = [data objectForKey:kRIEcommerceConvertedTotalValueKey];
 
     NSString *eventKey = @"jk6lja";
     NSNumber *guest = [data objectForKey:kRIEcommerceGuestKey];
