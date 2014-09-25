@@ -281,6 +281,7 @@
 		CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE55A4E819936B6300EE75DE /* JARatingsView.xib */; };
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
 		CE97D2EE19AE1ED50090D01C /* JANavigationBarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */; };
+		CEA8986119D426FA006776B2 /* RICampaign.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA8986019D426FA006776B2 /* RICampaign.m */; };
 		CEC3F71219A5FBF800DE12F6 /* JAFavoriteListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71119A5FBF800DE12F6 /* JAFavoriteListCell.xib */; };
 		CEC3F71C19A5FDDA00DE12F6 /* JAButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC3F71919A5FDDA00DE12F6 /* JAButtonCell.m */; };
 		CEC3F71D19A5FDDA00DE12F6 /* JAGrayButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71A19A5FDDA00DE12F6 /* JAGrayButtonCell.xib */; };
@@ -816,6 +817,8 @@
 		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		CE97D2EC19AE1ED50090D01C /* JANavigationBarLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANavigationBarLayout.h; sourceTree = "<group>"; };
 		CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANavigationBarLayout.m; sourceTree = "<group>"; };
+		CEA8985F19D426FA006776B2 /* RICampaign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICampaign.h; sourceTree = "<group>"; };
+		CEA8986019D426FA006776B2 /* RICampaign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICampaign.m; sourceTree = "<group>"; };
 		CEC3F71119A5FBF800DE12F6 /* JAFavoriteListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFavoriteListCell.xib; sourceTree = "<group>"; };
 		CEC3F71819A5FDDA00DE12F6 /* JAButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAButtonCell.h; sourceTree = "<group>"; };
 		CEC3F71919A5FDDA00DE12F6 /* JAButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAButtonCell.m; sourceTree = "<group>"; };
@@ -1913,6 +1916,8 @@
 				B59DCA5F19B710B100DE7960 /* RICity.m */,
 				B59DCA5E19B710B100DE7960 /* RIRegion.h */,
 				B59DCA5D19B710B100DE7960 /* RIRegion.m */,
+				CEA8985F19D426FA006776B2 /* RICampaign.h */,
+				CEA8986019D426FA006776B2 /* RICampaign.m */,
 			);
 			path = OtherObjects;
 			sourceTree = "<group>";
@@ -2497,6 +2502,7 @@
 				CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */,
 				B5A302C519811E9200F71726 /* RIImage.m in Sources */,
 				B501E88D19BEF7DE00BE51DD /* JAPickupStationInfoCell.m in Sources */,
+				CEA8986119D426FA006776B2 /* RICampaign.m in Sources */,
 				B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */,
 				B5FBD58D19CAF2F400BD9510 /* RIAdjustTracker.m in Sources */,
 				4A454F4A199CE67500B44821 /* JAForgotPasswordViewController.m in Sources */,
