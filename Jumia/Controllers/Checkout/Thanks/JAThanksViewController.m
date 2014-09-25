@@ -110,7 +110,7 @@
         RICartItem *cartItem = [self.checkout.cart.cartItems objectForKey:cartItemKey];
         
         [productDic setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
-        [productDic setValue:cartItem.name forKey:kRIEventProductName];
+        [productDic setValue:cartItem.name forKey:kRIEventProductNameKey];
         [productDic setValue:cartItem.sku forKey:kRIEventSkuKey];
         [productDic setValue:cartItem.price forKey:kRIEventPriceKey];
         [productDic setValue:cartItem.quantity forKey:kRIEventQuantityKey];
