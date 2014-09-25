@@ -14,70 +14,115 @@
 #import "RIImageResolution.h"
 #import "RICountry.h"
 #import "RICountryConfiguration.h"
+#import "RIStaticBlockIndex.h"
 
 @implementation RIApi
 
+@dynamic countryUrl;
 @dynamic actionName;
-@dynamic curMobVersion;
+@dynamic countryIso;
 @dynamic curVersion;
-@dynamic minMobVersion;
 @dynamic minVersion;
 @dynamic sections;
 
-+ (NSString *)startApiWithSuccessBlock:(void (^)(id api))successBlock
-                       andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
++ (NSString *)startApiWithCountry:(RICountry *)country
+                     successBlock:(void (^)(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory))successBlock
+                  andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_INFO]]
+    NSString *url;
+    NSString *countryIso;
+    
+    if (ISEMPTY(country))
+    {
+        NSArray* apiArrayFromCoreData = [[RIDataBaseWrapper sharedInstance]allEntriesOfType:NSStringFromClass([RIApi class])];
+        if(VALID_NOTEMPTY(apiArrayFromCoreData, NSArray))
+        {
+            RIApi* api = [apiArrayFromCoreData firstObject];
+            url = api.countryUrl;
+            countryIso = api.countryIso;
+        }
+    } else
+    {
+        [[RIDataBaseWrapper sharedInstance] resetApplicationModel];
+        url = country.url;
+        countryIso = country.countryIso;
+    }
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", url, RI_API_VERSION, RI_API_INFO]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
-                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              NSMutableDictionary* metadata = [[NSMutableDictionary alloc] initWithDictionary:[jsonObject objectForKey:@"metadata"]];
                                                               
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                   
-                                                                  RIApi* newApi = [RIApi parseApi:metadata];
+                                                                  // insert the country url
+                                                                  [metadata addEntriesFromDictionary:@{ @"countryUrl" : url }];
                                                                   
-                                                                  //check coredata for api
+                                                                  RIApi* newApi = [RIApi parseApi:metadata
+                                                                                       countryIso:countryIso];
                                                                   
-                                                                  NSArray* apiArrayFromCoreData = [[RIDataBaseWrapper sharedInstance]allEntriesOfType:NSStringFromClass([RIApi class])];
+                                                                  BOOL hasUpdate = NO;
+                                                                  BOOL isUpdateMandatory = NO;
                                                                   
-                                                                  RIApi* oldApi = [apiArrayFromCoreData firstObject];
-                                                                  
-                                                                  for (RISection* newSection in newApi.sections) {
-                                                                      
-                                                                      BOOL sectionNeedsDownload = YES;
-                                                                      
-                                                                      if (VALID(oldApi, RIApi)) {
-                                                                          for (RISection* oldSection in oldApi.sections) {
-                                                                              
-                                                                              if ([newSection.name isEqualToString:oldSection.name]) {
-                                                                                  //found it
-                                                                                  if ([newSection.md5 isEqualToString:oldSection.md5]) {
-                                                                                      
-                                                                                      sectionNeedsDownload = NO;
-                                                                                  }
-                                                                              }
-                                                                          }
+                                                                  NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                                                  NSString *installedVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+                                                                  if(VALID_NOTEMPTY(installedVersion, NSString))
+                                                                  {
+                                                                      CGFloat installedVersionNumber = [installedVersion floatValue];
+                                                                      if(installedVersionNumber < [newApi.minVersion floatValue])
+                                                                      {
+                                                                          hasUpdate = YES;
+                                                                          isUpdateMandatory = YES;
                                                                       }
-                                                                      
-                                                                      if (sectionNeedsDownload) {
-                                                                          
-                                                                          [RIApi requestSectionContent:newSection successBlock:^() {
-                                                                              
-                                                                          } andFailureBlock:^(id error) {
-                                                                              
-                                                                          }];
+                                                                      else if(installedVersionNumber < [newApi.curVersion floatValue])
+                                                                      {
+                                                                          hasUpdate = YES;
                                                                       }
                                                                   }
                                                                   
-                                                                  //save new api in coredata
+                                                                  if(!isUpdateMandatory)
+                                                                  {
+                                                                      //check coredata for api
+                                                                      NSArray* apiArrayFromCoreData = [[RIDataBaseWrapper sharedInstance]allEntriesOfType:NSStringFromClass([RIApi class])];
+                                                                      
+                                                                      RIApi* oldApi = [apiArrayFromCoreData firstObject];
+                                                                      
+                                                                      for (RISection* newSection in newApi.sections) {
+                                                                          
+                                                                          BOOL sectionNeedsDownload = YES;
+                                                                          
+                                                                          if (VALID(oldApi, RIApi)) {
+                                                                              for (RISection* oldSection in oldApi.sections) {
+                                                                                  
+                                                                                  if ([newSection.name isEqualToString:oldSection.name]) {
+                                                                                      //found it
+                                                                                      if ([newSection.md5 isEqualToString:oldSection.md5]) {
+                                                                                          
+                                                                                          sectionNeedsDownload = NO;
+                                                                                      }
+                                                                                  }
+                                                                              }
+                                                                          }
+                                                                          
+                                                                          if (sectionNeedsDownload) {
+                                                                              
+                                                                              [RIApi requestSectionContent:newSection forCountry:url successBlock:^() {
+                                                                                  
+                                                                              } andFailureBlock:^(id error) {
+                                                                                  
+                                                                              }];
+                                                                          }
+                                                                      }
+                                                                      
+                                                                      //save new api in coredata
+                                                                      [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIApi class])];
+                                                                      [RIApi saveApi:newApi];
+                                                                  }
                                                                   
-                                                                  [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIApi class])];
-                                                                  [RIApi saveApi:newApi];
-                                                                  
-                                                                  successBlock(newApi);
+                                                                  successBlock(newApi, hasUpdate, isUpdateMandatory);
                                                                   return;
                                                               }
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
@@ -104,8 +149,49 @@
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
 }
 
+#pragma mark - Verify if there is API stored
 
-+ (RIApi *)parseApi:(NSDictionary*)api;
++ (BOOL)checkIfHaveCountrySelected
+{
+    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+    
+    if (0 == apiArray.count) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+#pragma mark - Get country code
+
++ (NSString *)getCountryUrlInUse
+{
+    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+    
+    if (0 == apiArray.count) {
+        return @"";
+    } else {
+        RIApi *api = [apiArray firstObject];
+        return api.countryUrl;
+    }
+}
+
++ (NSString *)getCountryIsoInUse
+{
+    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+    
+    if (0 == apiArray.count) {
+        return @"";
+    } else {
+        RIApi *api = [apiArray firstObject];
+        return api.countryIso;
+    }
+}
+
+#pragma mark - Parser
+
++ (RIApi *)parseApi:(NSDictionary*)api
+         countryIso:(NSString *)countryIso;
 {
     RIApi* newApi = (RIApi*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIApi class])];
     
@@ -113,7 +199,26 @@
         newApi.actionName = [api objectForKey:@"action_name"];
     }
     
-    //VERSION STUFF IS MISSING FOR NOW
+    if (countryIso.length > 0) {
+        newApi.countryIso = countryIso;
+    }
+    
+    if ([api objectForKey:@"countryUrl"]) {
+        newApi.countryUrl = [api objectForKey:@"countryUrl"];
+    }
+    
+    NSDictionary *versionInfo = [api objectForKey:@"version"];
+    if (VALID_NOTEMPTY(versionInfo, NSDictionary))
+    {
+        NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+        NSDictionary *bundleVersionInfo = [versionInfo objectForKey:bundleIdentifier];
+        
+        if(VALID_NOTEMPTY(bundleVersionInfo, NSDictionary))
+        {
+            newApi.curVersion = [bundleVersionInfo objectForKey:@"cur_version"];
+            newApi.minVersion = [bundleVersionInfo objectForKey:@"min_version"];
+        }
+    }
     
     NSArray* data = [api objectForKey:@"data"];
     
@@ -145,18 +250,23 @@
 }
 
 + (void)requestSectionContent:(RISection*)section
+                   forCountry:(NSString*)url
                  successBlock:(void (^)(void))successBlock
               andFailureBlock:(void (^)(NSArray* errorMessages))failureBlock
 {
     if ([section.name isEqualToString:@"categories"])
     {
-        [RICategory loadCategoriesIntoDatabaseWithSuccessBlock:^(id categories) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
+        [RICategory loadCategoriesIntoDatabaseForCountry:url withSuccessBlock:^(id categories) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(NSArray* errorMessages) {
             failureBlock(errorMessages);
         }];
     } else if ([section.name isEqualToString:@"forms"]) {
-        [RIFormIndex loadFormIndexesIntoDatabaseWithSuccessBlock:^(id formIndexes) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
+        [RIFormIndex loadFormIndexesIntoDatabaseForCountry:url withSuccessBlock:^(id formIndexes) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(NSArray *errorMessage) {
             failureBlock(errorMessage);
@@ -164,7 +274,9 @@
     }
     else if ([section.name isEqualToString:@"teasers"])
     {
-        [RITeaserCategory loadTeaserCategoriesIntoDatabaseWithSuccessBlock:^(id teasers) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
+        [RITeaserCategory loadTeaserCategoriesIntoDatabaseForCountry:url withSuccessBlock:^(id teasers) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(NSArray *errorMessage) {
             failureBlock(errorMessage);
@@ -172,17 +284,28 @@
     }
     else if ([section.name isEqualToString:@"imageresolutions"])
     {
-        [RIImageResolution loadImageResolutionsIntoDatabaseWithSuccessBlock:^{
-            
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
+        [RIImageResolution loadImageResolutionsIntoDatabaseForCountry:url withSuccessBlock:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(NSArray *errorMessage) {
             
         }];
     }
     else if ([section.name isEqualToString:@"countryconfs"])
     {
-        [RICountry loadCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-            
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
+        [RICountry loadCountryConfigurationForCountry:url withSuccessBlock:^(RICountryConfiguration *configuration) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(NSArray *errorMessages) {
+            
+        }];
+    }
+    else if ([section.name isEqualToString:@"static_blocks"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
+        [RIStaticBlockIndex loadStaticBlockIndexesIntoDatabaseForCountry:url withSuccessBlock:^(id staticBlockIndexes) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+        } andFailureBlock:^(NSArray *errorMessage) {
             
         }];
     }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="JAPDVGalleryView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yoV-Ym-Fet">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
+                    <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="Hf9-aH-CKX"/>
+                    </constraints>
+                </imageView>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pck-Hn-bj8">
+                    <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                    <connections>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="4Dg-P0-Adf"/>
+                    </connections>
+                </scrollView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hhg-hR-pqI">
+                    <rect key="frame" x="256" y="40" width="46" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="3Du-Vm-Nc8"/>
+                    </constraints>
+                    <state key="normal" title="Done">
+                        <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected">
+                        <color key="titleColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="dismiss:" destination="iN0-l3-epB" eventType="touchUpInside" id="D6f-9t-cxV"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="yoV-Ym-Fet" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ChE-Ri-lld"/>
+                <constraint firstItem="Pck-Hn-bj8" firstAttribute="top" secondItem="yoV-Ym-Fet" secondAttribute="bottom" id="G2P-da-DmX"/>
+                <constraint firstAttribute="bottom" secondItem="Pck-Hn-bj8" secondAttribute="bottom" id="LyN-aX-rbI"/>
+                <constraint firstItem="Pck-Hn-bj8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="P2X-ok-Ql3"/>
+                <constraint firstItem="Hhg-hR-pqI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="256" id="QAL-GU-sM4"/>
+                <constraint firstAttribute="trailing" secondItem="yoV-Ym-Fet" secondAttribute="trailing" id="dh9-Mf-eS3"/>
+                <constraint firstItem="Hhg-hR-pqI" firstAttribute="top" secondItem="yoV-Ym-Fet" secondAttribute="bottom" constant="20" id="eyb-Xe-IIN"/>
+                <constraint firstItem="yoV-Ym-Fet" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qhu-zF-XM8"/>
+                <constraint firstAttribute="trailing" secondItem="Pck-Hn-bj8" secondAttribute="trailing" id="tgX-Ff-CCW"/>
+                <constraint firstAttribute="trailing" secondItem="Hhg-hR-pqI" secondAttribute="trailing" constant="18" id="vKT-rL-mIx"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <connections>
+                <outlet property="scrollViewImages" destination="Pck-Hn-bj8" id="Abd-0m-PS7"/>
+            </connections>
+            <point key="canvasLocation" x="394" y="144"/>
+        </view>
+    </objects>
+</document>

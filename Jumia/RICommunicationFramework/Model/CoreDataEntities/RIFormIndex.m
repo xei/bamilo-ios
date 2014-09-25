@@ -13,14 +13,14 @@
 @implementation RIFormIndex
 
 @dynamic uid;
-@dynamic md5;
 @dynamic url;
 @dynamic form;
 
-+ (NSString*)loadFormIndexesIntoDatabaseWithSuccessBlock:(void (^)(id formIndexes))successBlock
-                                         andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString*)loadFormIndexesIntoDatabaseForCountry:(NSString*)countryUrl
+                                  withSuccessBlock:(void (^)(id formIndexes))successBlock
+                                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_FORMS_INDEX]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_FORMS_INDEX]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
@@ -47,17 +47,25 @@
                                                           }];
 }
 
-+ (NSString*)getFormIndexesWithWithSuccessBlock:(void (^)(id formIndexes))successBlock
-                                andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString*)getFormWithIndexId:(NSString*)formIndexID
+                   successBlock:(void (^)(RIFormIndex *formIndex))successBlock
+                andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 {
-    NSArray* allFormIndexes = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIFormIndex class])];
-    if(VALID_NOTEMPTY(allFormIndexes, NSArray))
+    NSArray* formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"uid" andPropertyValue:formIndexID];
+    if(VALID_NOTEMPTY(formIndexes, NSArray))
     {
-        successBlock(allFormIndexes);
+        successBlock([formIndexes objectAtIndex:0]);
         return nil;
     } else {
-        return [RIFormIndex loadFormIndexesIntoDatabaseWithSuccessBlock:^(id formIndexes) {
-            successBlock(formIndexes);
+        return [RIFormIndex loadFormIndexesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] withSuccessBlock:^(id formIndexes) {
+            formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"uid" andPropertyValue:formIndexID];
+            if(VALID_NOTEMPTY(formIndexes, NSArray))
+            {
+                successBlock([formIndexes objectAtIndex:0]);
+            } else
+            {
+                failureBlock(nil);
+            }
         } andFailureBlock:failureBlock];
     }
 }
@@ -69,7 +77,7 @@
     NSMutableArray* newFormIndexes = [NSMutableArray new];
     
     NSArray* data = [formIndexesJSON objectForKey:@"data"];
-
+    
     if (VALID_NOTEMPTY(data, NSArray)) {
         
         for (NSDictionary* formIndexJSON in data) {
@@ -91,9 +99,6 @@
     
     if ([formIndexJSON objectForKey:@"id"]) {
         newFormIndex.uid = [formIndexJSON objectForKey:@"id"];
-    }
-    if ([formIndexJSON objectForKey:@"md5"]) {
-        newFormIndex.md5 = [formIndexJSON objectForKey:@"md5"];
     }
     if ([formIndexJSON objectForKey:@"url"]) {
         newFormIndex.url = [formIndexJSON objectForKey:@"url"];

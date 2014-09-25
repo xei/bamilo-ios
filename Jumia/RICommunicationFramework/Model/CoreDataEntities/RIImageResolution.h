@@ -39,8 +39,9 @@ typedef NSUInteger RIImageType;
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString*)loadImageResolutionsIntoDatabaseWithSuccessBlock:(void (^)())successBlock
-                                              andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString*)loadImageResolutionsIntoDatabaseForCountry:(NSString*)countryUrl
+                                       withSuccessBlock:(void (^)())successBlock
+                                        andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 
 /**
  * Method to cancel the request

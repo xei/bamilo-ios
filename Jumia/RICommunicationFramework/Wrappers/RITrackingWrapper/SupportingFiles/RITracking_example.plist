@@ -8,16 +8,6 @@
 	<string>rocketinternetf45d9fa321cd70a</string>
 	<key>kRIAdd4PushDeviceToken</key>
 	<string>ad4push1234devicetoken</string>
-	<key>kRIAdXAppleId</key>
-	<string>123456789</string>
-	<key>kRIAdXClientId</key>
-	<string>ritracking123</string>
-	<key>kRIAdXURLScheme</key>
-	<string>ADX12345</string>
-	<key>kRIAdXiPadBundleId</key>
-	<string>com.ritracking.ipadbundleid</string>
-	<key>kRIAdXiPhoneBundleId</key>
-	<string>com.ritracking.iphonebundleid</string>
 	<key>RIGoogleAnalyticsTrackingID</key>
 	<string>abc1234</string>
 	<key>RIBugsenseAPIKey</key>

@@ -17,62 +17,98 @@
 @dynamic url;
 @dynamic brand;
 @dynamic maxPrice;
+@dynamic maxPriceFormatted;
 @dynamic price;
+@dynamic priceFormatted;
 @dynamic maxSpecialPrice;
+@dynamic maxSpecialPriceFormatted;
 @dynamic specialPrice;
+@dynamic specialPriceFormatted;
 @dynamic maxSavingPercentage;
 @dynamic imageUrl;
 @dynamic teaser;
 
 + (RITeaserProduct *)parseTeaserProduct:(NSDictionary *)json
+                   countryConfiguration:(RICountryConfiguration*)countryConfiguration;
 {
     RITeaserProduct *product = (RITeaserProduct*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaserProduct class])];
 
-    if ([json objectForKey:@"sku"]) {
-        product.uid = [json objectForKey:@"sku"];
-    }
-    
-    if ([json objectForKey:@"name"]) {
-        product.name = [json objectForKey:@"name"];
-    }
-    
-    if ([json objectForKey:@"url"]) {
-        product.url = [json objectForKey:@"url"];
-    }
-    
-    if ([json objectForKey:@"brand"]) {
-        product.brand = [json objectForKey:@"brand"];
-    }
-    
-    if ([json objectForKey:@"max_price"]) {
-        id tempObj = [json objectForKey:@"max_price"];
+    if ([json objectForKey:@"attributes"]) {
+        NSDictionary *attributes = [json objectForKey:@"attributes"];
         
-        if (![tempObj isKindOfClass:[NSNull class]]) {
-            product.maxPrice = [json objectForKey:@"max_price"];
+        if ([attributes objectForKey:@"sku"]) {
+            product.uid = [attributes objectForKey:@"sku"];
         }
-    }
-    
-    if ([json objectForKey:@"price"]) {
-        id tempObj = [json objectForKey:@"price"];
         
-        if (![tempObj isKindOfClass:[NSNull class]]) {
-            product.price = [json objectForKey:@"price"];
+        if ([attributes objectForKey:@"name"]) {
+            product.name = [attributes objectForKey:@"name"];
         }
-    }
-    
-    if ([json objectForKey:@"max_special_price"]) {
-        id tempObj = [json objectForKey:@"max_special_price"];
         
-        if (![tempObj isKindOfClass:[NSNull class]]) {
-            product.maxSpecialPrice = [json objectForKey:@"max_special_price"];
+        if ([attributes objectForKey:@"url"]) {
+            product.url = [attributes objectForKey:@"url"];
         }
+        
+        if ([attributes objectForKey:@"brand"]) {
+            product.brand = [attributes objectForKey:@"brand"];
+        }
+        
+        if ([attributes objectForKey:@"max_price"]) {
+            id tempObj = [attributes objectForKey:@"max_price"];
+            
+            if (![tempObj isKindOfClass:[NSNull class]]) {
+                product.maxPrice = [attributes objectForKey:@"max_price"];
+                product.maxPriceFormatted = [RICountryConfiguration formatPrice:product.maxPrice country:countryConfiguration];
+            }
+        }
+        
+        if ([attributes objectForKey:@"price"]) {
+            id tempObj = [attributes objectForKey:@"price"];
+            
+            if (![tempObj isKindOfClass:[NSNull class]]) {
+                product.price = [attributes objectForKey:@"price"];
+                product.priceFormatted = [RICountryConfiguration formatPrice:product.price country:countryConfiguration];
+            }
+        }
+        
+        if ([attributes objectForKey:@"special_price"]) {
+            id tempObj = [attributes objectForKey:@"special_price"];
+            
+            if (![tempObj isKindOfClass:[NSNull class]]) {
+                product.specialPrice = [attributes objectForKey:@"special_price"];
+                product.specialPriceFormatted = [RICountryConfiguration formatPrice:product.specialPrice country:countryConfiguration];
+            }
+        }
+        
+        if ([attributes objectForKey:@"max_special_price"]) {
+            id tempObj = [attributes objectForKey:@"max_special_price"];
+            
+            if (![tempObj isKindOfClass:[NSNull class]]) {
+                product.maxSpecialPrice = [attributes objectForKey:@"max_special_price"];
+                product.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:product.maxSpecialPrice country:countryConfiguration];
+            }
+        }
+        
+        if ([attributes objectForKey:@"max_saving_percentage"]) {
+            id tempObj = [attributes objectForKey:@"max_saving_percentage"];
+            
+            if (![tempObj isKindOfClass:[NSNull class]]) {
+                product.maxSavingPercentage = [attributes objectForKey:@"max_saving_percentage"];
+            }
+        }
+        
     }
     
-    if ([json objectForKey:@"max_saving_percentage"]) {
-        id tempObj = [json objectForKey:@"max_saving_percentage"];
+    if ([json objectForKey:@"images"]) {
         
-        if (![tempObj isKindOfClass:[NSNull class]]) {
-            product.maxSavingPercentage = [json objectForKey:@"max_saving_percentage"];
+        NSArray *imageList = [json objectForKey:@"images"];
+        
+        if (VALID_NOTEMPTY(imageList, NSArray)) {
+            
+            NSDictionary* imageDict = [imageList firstObject];
+            
+            if (VALID_NOTEMPTY(imageDict, NSDictionary) && [imageDict objectForKey:@"path"]) {
+                product.imageUrl = [imageDict objectForKey:@"path"];
+            }
         }
     }
     

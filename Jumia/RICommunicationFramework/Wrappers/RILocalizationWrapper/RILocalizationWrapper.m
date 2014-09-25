@@ -10,10 +10,12 @@
 
 @implementation RILocalizationWrapper
 
-
 + (NSString *)localizedString:(NSString *)key;
 {
-    NSString *languageCode = @"en";
+    NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
+    NSDictionary *componentsFromLocale =  [NSLocale componentsFromLocaleIdentifier:locale];
+    NSString *languageCode = [componentsFromLocale objectForKey:NSLocaleLanguageCode];
+    
     static NSBundle * bundle = nil;
     NSString * path = [[NSBundle mainBundle] pathForResource:languageCode
                                                       ofType:@"lproj"];

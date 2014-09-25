@@ -19,9 +19,13 @@ extern NSString * const kRIAdd4PushDeviceToken;
 @interface RIAd4PushTracker : NSObject
 <
     RITracker,
+    RILaunchEventTracker,
+    RIEventTracking,
     RINotificationTracking,
     RIOpenURLTracking,
     RIEcommerceEventTracking
 >
+
+- (void)trackOpenURL:(NSURL *)url;
 
 @end

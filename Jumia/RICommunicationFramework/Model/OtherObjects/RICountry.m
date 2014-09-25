@@ -15,19 +15,29 @@
 + (NSString*)getCountriesWithSuccessBlock:(void (^)(id countries))successBlock
                           andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@", RI_COUNTRIES_URL]]
+    NSString *countryListURL = RI_COUNTRIES_URL;
+#if defined(DEBUG) && DEBUG
+    countryListURL = [NSString stringWithFormat:@"%@/staging", RI_COUNTRIES_URL];
+#endif
+    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
-                                                         httpMethodPost:YES
+                                                         httpMethodPost:NO
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
                                                            successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                               NSArray *countriesArray = [RICountry parseCountriesWithJson:jsonObject];
-                                                               if(VALID_NOTEMPTY(countriesArray, NSArray))
+                                                               
+                                                               if (VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
                                                                {
-                                                                   successBlock(countriesArray);
-                                                               } else
-                                                               {
-                                                                   failureBlock(nil);
+                                                                   NSDictionary *metadataObject = [jsonObject objectForKey:@"metadata"];
+                                                                   NSArray *countriesArray = [RICountry parseCountriesWithJson:metadataObject];
+                                                                   
+                                                                   if(VALID_NOTEMPTY(countriesArray, NSArray))
+                                                                   {
+                                                                       successBlock(countriesArray);
+                                                                   } else
+                                                                   {
+                                                                       failureBlock(nil);
+                                                                   }
                                                                }
                                                            } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                                if(NOTEMPTY(errorJsonObject))
@@ -44,10 +54,11 @@
                                                            }];
 }
 
-+ (NSString *)loadCountryConfigurationWithSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
-                                       andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
++ (NSString *)loadCountryConfigurationForCountry:(NSString*)countryUrl
+                                withSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
+                                 andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_COUNTRY_CONFIGURATION]]
+    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_COUNTRY_CONFIGURATION]]
                                                              parameters:nil
                                                          httpMethodPost:YES
                                                               cacheType:RIURLCacheNoCache
@@ -86,12 +97,21 @@
     if (VALID_NOTEMPTY(configuration, NSArray)) {
         successBlock([configuration firstObject]);
     } else {
-        operationID = [RICountry loadCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+        operationID = [RICountry loadCountryConfigurationForCountry:[RIApi getCountryUrlInUse] withSuccessBlock:^(RICountryConfiguration *configuration) {
             successBlock(configuration);
         } andFailureBlock:failureBlock];
     }
     
     return operationID;
+}
+
++ (NSString *)getCountryPhoneNumber
+{
+    NSArray *configuration = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
+    
+    RICountryConfiguration *config = (RICountryConfiguration *)configuration[0];
+    
+    return config.phoneNumber;
 }
 
 #pragma mark - Cancel request

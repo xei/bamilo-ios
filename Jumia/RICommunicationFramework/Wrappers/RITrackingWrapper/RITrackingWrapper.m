@@ -10,8 +10,9 @@
 #import "RIGoogleAnalyticsTracker.h"
 #import "RIBugSenseTracker.h"
 #import "RIOpenURLHandler.h"
-#import "RIAdXTracker.h"
 #import "RIAd4PushTracker.h"
+#import "RINewRelicTracker.h"
+#import "RIAdjustTracker.h"
 
 @interface RITrackingWrapper ()
 
@@ -68,10 +69,11 @@ static dispatch_once_t sharedInstanceToken;
     
     RIGoogleAnalyticsTracker *googleAnalyticsTracker = [[RIGoogleAnalyticsTracker alloc] init];
     RIBugSenseTracker *bugsenseTracker = [[RIBugSenseTracker alloc] init];
-    RIAdXTracker *adxTracker = [[RIAdXTracker alloc] init];
     RIAd4PushTracker *ad4PushTracker = [[RIAd4PushTracker alloc] init];
+    RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
+    RIAdjustTracker *adjustTracker = [[RIAdjustTracker alloc] init];
     
-    self.trackers = @[googleAnalyticsTracker, bugsenseTracker, adxTracker, ad4PushTracker];
+    self.trackers = @[googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, newRelicTracker, adjustTracker];
     
     if (launchOptions) {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)
@@ -84,29 +86,21 @@ static dispatch_once_t sharedInstanceToken;
     }
 }
 
-- (RICartState)getCarState
+- (RICartState)getCartState
 {
     return self.cartState;
 }
 
 #pragma mark - RIEventTracking protocol
 
-- (void)trackEvent:(NSString *)event
-             value:(NSNumber *)value
-            action:(NSString *)action
-          category:(NSString *)category
+- (void)trackEvent:(NSNumber* )eventType
               data:(NSDictionary *)data
 {
-    RIDebugLog(@"Tracking event: '%@' with value: %@ with action: %@ with category: %@ and data: %@"
-               , event, value, action, category, data);
+    RIDebugLog(@"Tracking event: '%@' with data: %@", eventType, data);
     
     [self RI_callTrackersConformToProtocol:@protocol(RIEventTracking)
-                                  selector:@selector(trackEvent:value:action:category:data:)
-                                 arguments:@[event,
-                                             value,
-                                             action,
-                                             category,
-                                             data]];
+                                  selector:@selector(trackEvent:data:)
+                                 arguments:[NSArray arrayWithObjects:eventType, data, nil]];
 }
 
 #pragma mark - RIExceptionTracking protocolx
@@ -205,6 +199,7 @@ static dispatch_once_t sharedInstanceToken;
 {
     RIDebugLog(@"Application did register for remote notification");
     
+    
     [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking)
                                   selector:@selector(applicationDidRegisterForRemoteNotificationsWithDeviceToken:) arguments:@[deviceToken]];
 }
@@ -229,47 +224,13 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - RIEcommerceTracking protocol
 
-- (void)trackCheckoutWithTransactionId:(NSString *)idTransaction total:(RITrackingTotal *)total
+- (void)trackCheckout:(NSDictionary *)data
 {
-    self.cartState = RICartDidCheckout;
-    self.productCount = 0;
-    
-    RIDebugLog(@"Tracking checkout with ID: %@", idTransaction);
+    RIDebugLog(@"Tracking checkout with data: %@", data);
     
     [self RI_callTrackersConformToProtocol:@protocol(RIEcommerceEventTracking)
-                                  selector:@selector(trackCheckoutWithTransactionId:total:)
-                                 arguments:@[idTransaction,
-                                             total]];
-}
-
-- (void)trackProductAddToCart:(RITrackingProduct *)product
-{
-    self.cartState = RICartHasItems;
-    self.productCount += [product.quantity intValue];
-    
-    RIDebugLog(@"Tracking product added to cart: %@", product.name);
-    
-    [self RI_callTrackersConformToProtocol:@protocol(RIEcommerceEventTracking)
-                                  selector:@selector(trackProductAddToCart:)
-                                 arguments:@[product]];
-}
-
-- (void)trackRemoveFromCartForProductWithID:(NSString *)idTransaction quantity:(NSNumber *)quantity
-{
-    self.productCount -= [quantity intValue];
-    
-    if (self.productCount == 0) {
-        self.cartState = RICartEmpty;
-    } else {
-        self.cartState = RICartHasItems;
-    }
-    
-    RIDebugLog(@"Tracking product removed from cart");
-    
-    [self RI_callTrackersConformToProtocol:@protocol(RIEcommerceEventTracking)
-                                  selector:@selector(trackRemoveFromCartForProductWithID:quantity:)
-                                 arguments:@[idTransaction,
-                                             quantity]];
+                                  selector:@selector(trackCheckout:)
+                                 arguments:@[data]];
 }
 
 #pragma mark - RITrackingTiming protocol
@@ -295,11 +256,26 @@ static dispatch_once_t sharedInstanceToken;
         return;
     }
     
-   [self RI_callTrackersConformToProtocol:@protocol(RILaunchEventTracker)
-                                 selector:@selector(sendLaunchEventWithData:)
-                                arguments:@[dataDictionary]];
+    [self RI_callTrackersConformToProtocol:@protocol(RILaunchEventTracker)
+                                  selector:@selector(sendLaunchEventWithData:)
+                                 arguments:@[dataDictionary]];
 }
 
+#pragma mark - Campaign protocol
+
+- (void)trackCampaingWithData:(NSDictionary *)data
+{
+    RIDebugLog(@"Tracking campaign with data '%@'", data);
+    
+    if (!self.trackers) {
+        RIRaiseError(@"Invalid call with non-existent trackers. Initialisation may have failed.");
+        return;
+    }
+    
+    [self RI_callTrackersConformToProtocol:@protocol(RICampaignTracker)
+                                  selector:@selector(trackCampaingWithData:)
+                                 arguments:@[data]];
+}
 
 #pragma mark - Private methods
 
@@ -321,7 +297,8 @@ static dispatch_once_t sharedInstanceToken;
                 [invocation setSelector:selector];
                 
                 for (NSUInteger idx = 0; idx < arguments.count; idx++) {
-                    [invocation setArgument:(__bridge void *)(arguments[idx]) atIndex:idx];
+                    NSObject *argument = [arguments objectAtIndex:idx];
+                    [invocation setArgument:&argument atIndex:idx + 2];
                 }
                 
                 [invocation setTarget:tracker];

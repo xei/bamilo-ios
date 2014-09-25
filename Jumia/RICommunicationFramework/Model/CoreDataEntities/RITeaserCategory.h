@@ -23,24 +23,25 @@
 /**
  *  Method to load teasers from the server into core data.
  *
- *  @param the success block containing the obtained teasers
+ *  @param the success block containing the obtained teaser categories
  *  @param the failure block containing the error message
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)loadTeaserCategoriesIntoDatabaseWithSuccessBlock:(void (^)(id teasers))successBlock
-                                               andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString *)loadTeaserCategoriesIntoDatabaseForCountry:(NSString*)url
+                                        withSuccessBlock:(void (^)(id teaserCategories))successBlock
+                                         andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 
 /**
  *  Method to load teasers. It checks if they are stored in the core data, and case they aren't
  *  requests them to the server
  *
- *  @param the success block containing the obtained teasers
+ *  @param the success block containing the obtained teaser categories
  *  @param the failure block containing the error message
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)getTeaserCategoriesWithSuccessBlock:(void (^)(id teasers))successBlock
++ (NSString *)getTeaserCategoriesWithSuccessBlock:(void (^)(id teaserCategories))successBlock
                                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 
 /**

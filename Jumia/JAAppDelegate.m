@@ -7,134 +7,190 @@
 //
 
 #import "JAAppDelegate.h"
+#import "JARootViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import <HockeySDK/HockeySDK.h>
+
+#define kSessionDuration 1800.0f
 
 @interface JAAppDelegate ()
 
 @end
 
 @implementation JAAppDelegate
-            
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    
+#if defined(DEBUG) && DEBUG
+    
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+    [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    
+    // we will run authenticateInstallation only if it is a from hockey
+#if defined(HOCKEY) && HOCKEY
+    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
+#endif
+    
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug" ofType:@"plist"];
+#else
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];
+#endif
+    
+    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
+                                                                       launchOptions:launchOptions];
+    
+    [FBLoginView class];
+    
+    [self checkSession];
+    
+    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xeaeaea)];
+    
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
+     setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                             UIColorFromRGB(0xc8c8c8), NSForegroundColorAttributeName,
+                             [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
+    
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
+     setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                             [UIColor orangeColor], NSForegroundColorAttributeName,
+                             [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
+    
+    // Push Notifications Activation
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                            UIRemoteNotificationTypeSound |
+                                                                            UIRemoteNotificationTypeAlert )];
+    
+    if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey] != nil)
+    {
+        [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
+    }
+    
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
-}
-
-- (void)saveContext {
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        } 
+- (void)checkSession
+{
+    NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
+    if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
+    {
+        NSInteger numberOfSessionsInteger = [numberOfSessions integerValue];
+        NSDate *startSessionDate = [[NSUserDefaults standardUserDefaults] objectForKey:kSessionDate];
+        if(VALID_NOTEMPTY(startSessionDate, NSDate))
+        {
+            CGFloat timeSinceStartOfSession = [startSessionDate timeIntervalSinceNow];
+            if(fabs(timeSinceStartOfSession) > kSessionDuration)
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kSessionDate];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:numberOfSessionsInteger + 1] forKey:kNumberOfSessions];
+            }
+        }
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kSessionDate];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:1] forKey:kNumberOfSessions];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 
-#pragma mark - Core Data stack
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    
+}
 
-// Returns the managed object context for the application.
-// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
-- (NSManagedObjectContext *)managedObjectContext {
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    [self checkSession];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    
+}
+
+#pragma mark - Push notification
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    if (VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"u"], NSString))
+    {
+        NSString *urlString = [userInfo objectForKey:@"u"];
+        
+        // Check if the country is the same
+        NSString *currentCountry = [RIApi getCountryIsoInUse];
+        NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
+        
+        if([currentCountry isEqualToString:countryFromUrl])
+        {
+            JARootViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
+            
+            rootViewController.notification = userInfo;
+            
+            [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+        }
+        else
+        {
+            // Change country
+            [RICountry getCountriesWithSuccessBlock:^(id countries) {
+                
+                for (RICountry *country in countries)
+                {
+                    if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
+                    {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:country userInfo:userInfo];
+                    }
+                }
+                
+            } andFailureBlock:^(NSArray *errorMessages) {
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+            }];
+        }
+    }
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    [[RITrackingWrapper sharedInstance] applicationDidReceiveLocalNotification:notification];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    BOOL urlWasHandled = [FBAppCall handleOpenURL:url
+                                sourceApplication:sourceApplication
+                                  fallbackHandler:^(FBAppCall *call) {
+                                      NSLog(@"Unhandled deep link: %@", url);
+                                  }];
+    
+    if (url)
+    {
+        [[RITrackingWrapper sharedInstance] trackOpenURL:url];
     }
     
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    return _managedObjectContext;
-}
-
-// Returns the managed object model for the application.
-// If the model doesn't already exist, it is created from the application's model.
-- (NSManagedObjectModel *)managedObjectModel {
-    if (_managedObjectModel != nil) {
-        return _managedObjectModel;
-    }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Jumia" withExtension:@"momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    return _managedObjectModel;
-}
-
-// Returns the persistent store coordinator for the application.
-// If the coordinator doesn't already exist, it is created and the application's store added to it.
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    if (_persistentStoreCoordinator != nil) {
-        return _persistentStoreCoordinator;
-    }
-    
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Jumia.sqlite"];
-    
-    NSError *error = nil;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-         
-         Typical reasons for an error here include:
-         * The persistent store is not accessible;
-         * The schema for the persistent store is incompatible with current managed object model.
-         Check the error message to determine what the actual problem was.
-         
-         
-         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
-         
-         If you encounter schema incompatibility errors during development, you can reduce their frequency by:
-         * Simply deleting the existing store:
-         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
-         
-         * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
-         @{NSMigratePersistentStoresAutomaticallyOption:@YES, NSInferMappingModelAutomaticallyOption:@YES}
-         
-         Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
-         
-         */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }    
-    
-    return _persistentStoreCoordinator;
-}
-
-#pragma mark - Application's Documents directory
-
-// Returns the URL to the application's Documents directory.
-- (NSURL *)applicationDocumentsDirectory {
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    return urlWasHandled;
 }
 
 @end

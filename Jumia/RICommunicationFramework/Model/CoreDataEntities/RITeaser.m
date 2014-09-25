@@ -1,8 +1,8 @@
 //
 //  RITeaser.m
-//  Comunication Project
+//  Jumia
 //
-//  Created by Miguel Chaves on 22/Jul/14.
+//  Created by Telmo Pinto on 15/09/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
@@ -15,13 +15,15 @@
 
 @implementation RITeaser
 
+@dynamic targetType;
 @dynamic teaserGroup;
 @dynamic teaserImages;
-@dynamic teaserTexts;
 @dynamic teaserProducts;
+@dynamic teaserTexts;
 
 + (RITeaser *)parseTeaser:(NSDictionary *)json
                    ofType:(NSInteger)type
+     countryConfiguration:(RICountryConfiguration*)countryConfiguration;
 {
     RITeaser *teaser = (RITeaser*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaser class])];
     
@@ -47,6 +49,15 @@
                         
                         [teaser addTeaserImagesObject:image];
                     }
+                }
+                
+                //THIS IS THE ONLY CASE IN WHICH TARGET TYPE MATTERS.
+                //It will tell us what type of link the image has
+                if ([attributes objectForKey:@"target_type"]) {
+                    NSString* targetTypeString = [attributes objectForKey:@"target_type"];
+                    NSNumberFormatter * f = [NSNumberFormatter new];
+                    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+                    teaser.targetType = [f numberFromString:targetTypeString];
                 }
             }
             
@@ -82,28 +93,14 @@
             
         case 2: {
             
-            if ([json objectForKey:@"attributes"]) {
-                NSDictionary *attributes = [json objectForKey:@"attributes"];
-                
-                RITeaserProduct *product = [RITeaserProduct parseTeaserProduct:attributes];
-                product.teaser = teaser;
-                
-                [teaser addTeaserProductsObject:product];
-            }
             
-            if ([json objectForKey:@"images"]) {
-                
-                NSArray *imageList = [json objectForKey:@"images"];
-                
-                for (NSDictionary *imageDic in imageList) {
-                    RITeaserImage *image = [RITeaserImage parseTeaserImage:imageDic];
-                    image.teaser = teaser;
-                    
-                    [teaser addTeaserImagesObject:image];
-                }
-            }
+            RITeaserProduct *product = [RITeaserProduct parseTeaserProduct:json countryConfiguration:countryConfiguration];
+            product.teaser = teaser;
+            
+            [teaser addTeaserProductsObject:product];
+            
         }
-    
+            
             break;
             
         case 3: {
@@ -111,7 +108,7 @@
             RITeaserText *teaserText = [RITeaserText parseTeaserText:json];
             teaserText.teaser = teaser;
             [teaser addTeaserTextsObject:teaserText];
-
+            
         }
             
             break;
@@ -159,11 +156,11 @@
             
         }
             break;
-    
+            
         default:
             break;
     }
-
+    
     return teaser;
 }
 

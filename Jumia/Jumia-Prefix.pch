@@ -12,14 +12,37 @@
 #warning "This project uses features only available in iOS SDK 3.0 and later."
 #endif
 
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
-#import "RIWrapperConfiguration.h"
-#import "RICommunicationWrapper.h"
-#import "RIDataBaseWrapper.h"
-#import "RITrackingWrapper.h"
+#ifndef VALID
+#define VALID(__OBJECT, __CLASSNAME) (nil != __OBJECT && [__OBJECT isKindOfClass:[__CLASSNAME class]])
+#endif
 
-#import "RIConfiguration.h"
+#ifndef VALID_ISEMPTY
+#define VALID_ISEMPTY(__OBJECT, __CLASSNAME) (VALID(__OBJECT, __CLASSNAME) == YES && ISEMPTY(__OBJECT) == YES)
+#endif
+
+#ifndef VALID_NOTEMPTY
+#define VALID_NOTEMPTY(__OBJECT, __CLASSNAME) (VALID(__OBJECT, __CLASSNAME) == YES && ISEMPTY(__OBJECT) == NO)
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+    #import "RIWrapperConfiguration.h"
+    #import "RICommunicationWrapper.h"
+    #import "RIDataBaseWrapper.h"
+    #import "RITrackingWrapper.h"
+
+    #import "RIConfiguration.h"
+    #import "JAConstants.h"
+    #import "JABaseViewController.h"
+    #import "JADynamicForm.h"
+    #import "RIApi.h"
+    #import "RILocalizationWrapper.h"
+    #import "JAStrings.h"
+
+    #import "JASuccessView.h"
+    #import "JAErrorView.h"
+    #import "Reachability.h"
+    #import "JANoConnectionView.h"
 #endif

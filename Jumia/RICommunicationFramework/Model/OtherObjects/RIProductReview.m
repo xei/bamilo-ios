@@ -29,28 +29,32 @@
     if (VALID_NOTEMPTY(sku, NSString)) {
         NSDictionary *dic = @{@"sku": sku };
         operationID = [[RICommunicationWrapper sharedInstance]
-                       sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_RATING_OPTIONS]]
+                       sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_RATING_OPTIONS]]
                        parameters:dic
                        httpMethodPost:YES
                        cacheType:RIURLCacheDBCache
                        cacheTime:RIURLCacheDefaultTime
                        successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                            
-                           successBlock([RIProductReview parseReviewWithDictionay:jsonObject]);
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                               successBlock([RIProductReview parseReviewWithDictionay:jsonObject]);
+                           });
                            
                        } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
                            
-                           if(NOTEMPTY(errorJsonObject))
-                           {
-                               failureBlock([RIError getErrorMessages:errorJsonObject]);
-                           } else if(NOTEMPTY(errorObject))
-                           {
-                               NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                               failureBlock(errorArray);
-                           } else
-                           {
-                               failureBlock(nil);
-                           }
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                               if(NOTEMPTY(errorJsonObject))
+                               {
+                                   failureBlock([RIError getErrorMessages:errorJsonObject]);
+                               } else if(NOTEMPTY(errorObject))
+                               {
+                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                   failureBlock(errorArray);
+                               } else
+                               {
+                                   failureBlock(nil);
+                               }
+                           });
                        }];
     } else {
         failureBlock(nil);

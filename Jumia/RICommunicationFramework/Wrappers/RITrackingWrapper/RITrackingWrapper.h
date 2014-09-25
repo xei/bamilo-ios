@@ -137,6 +137,88 @@ typedef NS_ENUM(NSInteger, RICartState) {
 @end
 
 /**
+ *  Protocol constants
+ */
+#define kRIEventTypeKey             @"RIEventTypeKey"
+#define kRIEventValueKey            @"RIEventValueKey"
+#define kRIEventActionKey           @"RIEventActionKey"
+#define kRIEventLabelKey            @"RIEventLabelKey"
+#define kRIEventCategoryKey         @"RIEventCategoryKey"
+#define kRIEventShopCountryKey      @"RIEventShopCountryKey"
+#define kRIEventUserIdKey           @"RIEventUserIdKey"
+#define kRIEventSkuKey              @"RIEventSkuKey"
+#define kRIEventProductName         @"kRIEventProductName"
+#define kRIEventCurrencyCodeKey     @"RIEventCurrencyCodeKey"
+#define kRIEventPriceKey            @"RIEventPriceKey"
+#define kRIEventGenderKey           @"RIEventGenderKey"
+#define kRIEventAmountTransactions  @"RIEventAmountTransactions"
+#define kRIEventAmountSessions      @"RIEventAmountSessions"
+#define kRIEventCategoryIdKey       @"RIEventCategoryIdKey"
+#define kRIEventSkusKey             @"RIEventSkusKey"
+#define kRIEventCategoryNameKey     @"RIEventCategoryNameKey"
+#define kRIEventTreeKey             @"RIEventTreeKey"
+#define kRIEventQueryKey            @"RIEventQueryKey"
+#define kRIEventProductKey          @"RIEventProductKey"
+#define kRIEventProductsKey         @"RIEventProducstKey"
+#define kRIEventKeywordsKey         @"RIEventKeywordsKey"
+#define kRIEventNewCustomerKey      @"RIEventNewCustomerKey"
+#define kRIEventDiscountKey         @"RIEventDiscountKey"
+#define kRIEventBrandKey            @"RIEventBrandKey"
+#define kRIEventSizeKey             @"RIEventSizeKey"
+#define kRIEventTotalWishlistKey    @"RIEventTotalWishlistKey"
+#define kRIEventQuantityKey         @"RIEventQuantityKey"
+#define kRIEventTotalCartKey        @"RIEventTotalCartKey"
+#define kRIEventTransactionIdKey    @"RIEventTransactionIdKey"
+#define kRIEventTotalTransactionKey @"RIEventTotalTransactionKey"
+
+/**
+ *  Struct to identify events
+ */
+typedef NS_ENUM(NSInteger, RIEventType) {
+    RIEventAutoLogin = 0,
+    RIEventLoginSuccess = 1,
+    RIEventLoginFail = 2,
+    RIEventRegisterSuccess = 3,
+    RIEventRegisterFail = 4,
+    RIEventFacebookLoginSuccess = 5,
+    RIEventFacebookLoginFail = 6,
+    RIEventLogout = 7,
+    RIEventSideMenu = 8,
+    RIEventCategories = 9,
+    RIEventCatalog = 10,
+    RIEventFilter = 11,
+    RIEventSort = 12,
+    RIEventViewProductDetails = 13,
+    RIEventRelatedItem = 14,
+    RIEventAddToCart = 15,
+    RIEventRemoveFromCart = 16,
+    RIEventAddToWishlist = 17,
+    RIEventRemoveFromWishlist = 18,
+    RIEventRateProduct = 19,
+    RIEventSearch = 20,
+    RIEventShareFacebook = 21,
+    RIEventShareTwitter = 22,
+    RIEventShareEmail = 23,
+    RIEventShareSMS = 24,
+    RIEventShareOther = 25,
+    RIEventCheckout = 26,
+    RIEventNewsletter = 27,
+    RIEventCallToOrder = 28,
+    RIEventGuestCustomer = 29,
+    RIEventViewProduct = 30,
+    RIEventViewListing = 31,
+    RIEventViewCart = 32,
+    RIEventTransactionConfirm = 33,
+    RIEventFacebookHome = 34,
+    RIEventFacebookViewListing = 35,
+    RIEventFacebookViewProduct = 36,
+    RIEventFacebookSearch = 37,
+    RIEventFacebookViewWishlist = 38,
+    RIEventFacebookViewCart = 39,
+    RIEventFacebookViewTransaction = 50
+};
+
+/**
  *  This protocol implements tracking to an event
  */
 @protocol RIEventTracking <NSObject>
@@ -147,16 +229,10 @@ typedef NS_ENUM(NSInteger, RICartState) {
  * The event may be triggered by the user and further information, such as category, action and
  * value are available.
  *
- * @param event Name of the event
- * @param value (optional) The value of the action
- * @param action (optional) An identifier for the user action
- * @param category (optional) An identifier for the category of the app the user is in
- * @param data (optional) Additional data about the event
+ * @param eventType Type of the event
+ * @param data (mandatory) Data about the event
  */
-- (void)trackEvent:(NSString *)event
-             value:(NSNumber *)value
-            action:(NSString *)action
-          category:(NSString *)category
+- (void)trackEvent:(NSNumber *)eventType
               data:(NSDictionary *)data;
 
 @end
@@ -194,28 +270,16 @@ typedef NS_ENUM(NSInteger, RICartState) {
 @end
 
 /**
- *  Interface of the RITrackingTotal, used for the commerce tracking
+ *  Protocol constants
  */
-@interface RITrackingTotal : NSObject
-
-/**
- *  Net of the order
- */
-@property NSNumber *net;
-/**
- *  Tax of the order
- */
-@property NSNumber *tax;
-/**
- *  Shipping price of the order
- */
-@property NSNumber *shipping;
-/**
- *  Currency of the order
- */
-@property NSString *currency;
-
-@end
+#define kRIEcommerceTransactionIdKey @"RIEcommerceTransactionIdKey"
+#define kRIEcommerceTaxKey           @"RIEcommerceTaxKey"
+#define kRIEcommerceShippingKey      @"RIEcommerceShippingKey"
+#define kRIEcommerceCurrencyKey      @"RIEcommerceCurrencyKey"
+#define kRIEcommerceTotalValueKey    @"RIEcommerceTotalValueKey"
+#define kRIEcommerceSkusKey          @"RIEcommerceSkusValueKey"
+#define kRIEcommerceGuestKey         @"RIEcommerceGuestKey"
+#define kRIEcommerceProducts         @"kRIEcommerceProducts"
 
 /**
  *  This protocol implements tracking to the commerce transactions
@@ -230,25 +294,9 @@ typedef NS_ENUM(NSInteger, RICartState) {
  *  This method with include any previous calls to trackAddToCartForProductWithID and
  *  trackRemoveFromCartForProductWithID.
  *
- *  @param idTrans The transaction ID
- *  @param total RITrackingProduct product
+ *  @param data The transaction data
  */
-- (void)trackCheckoutWithTransactionId:(NSString *)idTransaction total:(RITrackingTotal *)total;
-
-/**
- *  Track a product that was added to the cart
- *
- *  @param product The product added
- */
-- (void)trackProductAddToCart:(RITrackingProduct *)product;
-
-/**
- *  Track a product that was removed from the cart
- *
- *  @param idTrans The transaction ID
- *  @param quantity The quantity removed from the cart
- */
-- (void)trackRemoveFromCartForProductWithID:(NSString *)idTransaction quantity:(NSNumber *)quantity;
+- (void)trackCheckout:(NSDictionary *)data;
 
 @end
 
@@ -287,11 +335,30 @@ typedef NS_ENUM(NSInteger, RICartState) {
 @property NSOperationQueue *queue;
 
 /**
+ *  Array with the registered events for a tracker
+ */
+@property NSArray *registeredEvents;
+
+/**
  *  Hook to recognise an app launch, given launch options
  *
  *  @param options The launching options.
  */
 - (void)applicationDidLaunchWithOptions:(NSDictionary *)options;
+
+@end
+
+/**
+ *  RICampaignTracker protocol implements the campaign tracking
+ */
+@protocol RICampaignTracker <NSObject>
+
+/**
+ *  Track a given campaign
+ *
+ *  @param options The campaign data
+ */
+- (void)trackCampaingWithData:(NSDictionary *)data;
 
 @end
 
@@ -307,7 +374,8 @@ typedef NS_ENUM(NSInteger, RICartState) {
     RIOpenURLTracking,
     RIEcommerceEventTracking,
     RITrackingTiming,
-    RILaunchEventTracker
+    RILaunchEventTracker,
+    RICampaignTracker
 >
 
 /**
@@ -339,6 +407,6 @@ typedef NS_ENUM(NSInteger, RICartState) {
 /**
  *  Returns the state of the cart
  */
-- (RICartState)getCarState;
+- (RICartState)getCartState;
 
 @end

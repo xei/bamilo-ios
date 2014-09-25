@@ -7,8 +7,6 @@
 //
 
 #import "RICategory.h"
-#import "RICategory.h"
-
 
 @implementation RICategory
 
@@ -19,9 +17,11 @@
 @dynamic children;
 @dynamic parent;
 
-+ (NSString *)loadCategoriesIntoDatabaseWithSuccessBlock:(void (^)(id categories))successBlock andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
++ (NSString *)loadCategoriesIntoDatabaseForCountry:(NSString *)country
+                                  withSuccessBlock:(void (^)(id categories))successBlock
+                                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_CATALOG_CATEGORIES]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", country, RI_API_VERSION, RI_CATALOG_CATEGORIES]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
@@ -31,7 +31,7 @@
                                                                   NSArray* data = [metadata objectForKey:@"data"];
                                                                   if (VALID_NOTEMPTY(data, NSArray))
                                                                   {
-                                                                      successBlock([RICategory parseCategories:data]);
+                                                                      successBlock([RICategory parseCategories:data persistData:YES]);
                                                                   } else
                                                                   {
                                                                       failureBlock(nil);
@@ -55,6 +55,7 @@
                                                           }];
 }
 
+
 + (void)getCategoriesWithSuccessBlock:(void (^)(id categores))successBlock andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
     NSArray* databaseParentCategories = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"parent" andPropertyValue:nil];
@@ -66,7 +67,7 @@
             failureBlock(nil);
         }
     } else {
-        [RICategory loadCategoriesIntoDatabaseWithSuccessBlock:^(id categories) {
+        [RICategory loadCategoriesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] withSuccessBlock:^(id categories) {
             
             NSArray* parentCategories = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"parent" andPropertyValue:nil];
             if (VALID_NOTEMPTY(parentCategories, NSArray)) {
@@ -86,18 +87,29 @@
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
 }
 
-+ (NSArray*)parseCategories:(NSArray*)categories;
++ (NSArray*)parseCategories:(NSArray*)categories
+                persistData:(BOOL)persistData;
 {
-    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICategory class])];
+    if (persistData) {
+        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICategory class])];
+    }
     
     NSMutableArray* newCategories = [NSMutableArray new];
+    
+    //test if array as another array inside
+    NSArray* insideArray = [categories firstObject];
+    if (VALID(insideArray, NSArray)) {
+        categories = insideArray;
+    }
     
     for (NSDictionary* categoryJSON in categories) {
         
         if (VALID_NOTEMPTY(categoryJSON, NSDictionary)) {
             
             RICategory* category = [RICategory parseCategory:categoryJSON];
-            [RICategory saveCategory:category];
+            if (persistData) {
+                [RICategory saveCategory:category];
+            }
             [newCategories addObject:category];
         }
     }
@@ -105,6 +117,28 @@
     return newCategories;
 }
 
++ (NSString*)getTree:(NSString*)categoryId
+{
+    NSString *categoryTree = @"";
+    if(VALID_NOTEMPTY(categoryId, NSString))
+    {
+        NSArray* savedCategoryArray = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"uid" andPropertyValue:categoryId];
+        
+        if(VALID_NOTEMPTY(savedCategoryArray, NSArray))
+        {
+            RICategory *savedCategory = [savedCategoryArray objectAtIndex:0];
+            categoryTree = savedCategory.name;
+            
+            RICategory *parentCategory = savedCategory.parent;
+            while (VALID_NOTEMPTY(parentCategory, RICategory))
+            {
+                categoryTree = [NSString stringWithFormat:@"%@,%@", parentCategory.name, categoryTree];
+                parentCategory = parentCategory.parent;
+            }
+        }
+    }
+    return categoryTree;
+}
 
 + (RICategory *)parseCategory:(NSDictionary *)category
 {
@@ -121,6 +155,9 @@
     }
     if ([category objectForKey:@"url_key"]) {
         newCategory.urlKey = [category objectForKey:@"url_key"];
+    }
+    if ([category objectForKey:@"url"]) {
+        newCategory.apiUrl = [category objectForKey:@"url"];
     }
     if ([category objectForKey:@"api_url"]) {
         newCategory.apiUrl = [category objectForKey:@"api_url"];

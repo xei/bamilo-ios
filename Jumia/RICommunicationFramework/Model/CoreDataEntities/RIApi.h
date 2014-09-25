@@ -8,15 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "RICountry.h"
+
+#define RISectionRequestStartedNotificationName @"SECTION_REQUEST_STARTED"
+#define RISectionRequestEndedNotificationName @"SECTION_REQUEST_ENDED"
 
 @class RISection;
 
 @interface RIApi : NSManagedObject
 
+@property (nonatomic, retain) NSString * countryUrl;
 @property (nonatomic, retain) NSString * actionName;
-@property (nonatomic, retain) NSNumber * curMobVersion;
+@property (nonatomic, retain) NSString * countryIso;
 @property (nonatomic, retain) NSNumber * curVersion;
-@property (nonatomic, retain) NSNumber * minMobVersion;
 @property (nonatomic, retain) NSNumber * minVersion;
 @property (nonatomic, retain) NSOrderedSet *sections;
 
@@ -29,8 +33,9 @@
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)startApiWithSuccessBlock:(void (^)(id api))successBlock
-                       andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString *)startApiWithCountry:(RICountry *)country
+                     successBlock:(void (^)(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory))successBlock
+                  andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 
 /**
  *  Method to cancel the request
@@ -44,7 +49,8 @@
  *
  *  @return the parsed RIApi
  */
-+ (RIApi *)parseApi:(NSDictionary *)api;
++ (RIApi *)parseApi:(NSDictionary *)api
+         countryIso:(NSString *)countryIso;
 
 /**
  *  Save in the core data a given RIApi
@@ -52,6 +58,27 @@
  *  @param the RIApi to save
  */
 + (void)saveApi:(RIApi *)api;
+
+/**
+ *  Check if the app was allready started
+ *
+ *  @return a boolean
+ */
++ (BOOL)checkIfHaveCountrySelected;
+
+/**
+ *  get the current url in use
+ *
+ *  @return the url
+ */
++ (NSString *)getCountryUrlInUse;
+
+/**
+ *  get the current country iso in use
+ *
+ *  @return the country iso
+ */
++ (NSString *)getCountryIsoInUse;
 
 @end
 

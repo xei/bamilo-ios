@@ -28,8 +28,9 @@
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)loadCategoriesIntoDatabaseWithSuccessBlock:(void (^)(id categories))successBlock
-                                         andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString *)loadCategoriesIntoDatabaseForCountry:(NSString *)country
+                                  withSuccessBlock:(void (^)(id categories))successBlock
+                                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 
 /**
  *  Method to load categories. It checks if they are stored in the core data, and case they aren't
@@ -49,6 +50,20 @@
  *  @param the operationID
  */
 + (void)cancelRequest:(NSString *)operationID;
+
+/**
+ *  Method to parse categories.
+ *
+ *  @param the json array of categories to be parsed
+ *  @param a bool indicating whether or not these categories are to be saved in core data (if this
+ *          is true, the old categories are replaced by the new ones)
+ *
+ *  @return an array of the parsed categories
+ */
++ (NSArray*)parseCategories:(NSArray*)categories
+                persistData:(BOOL)persistData;
+
++ (NSString*)getTree:(NSString*)categoryId;
 
 @end
 

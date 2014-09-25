@@ -14,14 +14,15 @@
 @interface RIFormIndex : NSManagedObject
 
 @property (nonatomic, retain) NSString * uid;
-@property (nonatomic, retain) NSString * md5;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) RIForm *form;
 
-+ (NSString*)loadFormIndexesIntoDatabaseWithSuccessBlock:(void (^)(id formIndexes))successBlock
-                                         andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
-+ (NSString*)getFormIndexesWithWithSuccessBlock:(void (^)(id formIndexes))successBlock
-                                andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString*)loadFormIndexesIntoDatabaseForCountry:(NSString*)countryUrl
+                                  withSuccessBlock:(void (^)(id formIndexes))successBlock
+                                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
++ (NSString*)getFormWithIndexId:(NSString*)formIndexID
+                   successBlock:(void (^)(RIFormIndex *formIndex))successBlock
+                andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
 + (NSArray*)parseFormIndexes:(NSDictionary*)formIndexesJSON;
 + (RIFormIndex*)parseFormIndex:(NSDictionary*)formIndexJSON;
 + (void)saveFormIndex:(RIFormIndex*)formIndex;

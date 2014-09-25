@@ -1,27 +1,34 @@
 //
 //  RIField.m
-//  Comunication Project
+//  Jumia
 //
-//  Created by Telmo Pinto on 23/07/14.
+//  Created by Pedro Lopes on 29/08/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
 #import "RIField.h"
+#import "RIFieldDataSetComponent.h"
+#import "RIFieldOption.h"
 #import "RIForm.h"
 
 
 @implementation RIField
 
 @dynamic key;
-@dynamic type;
-@dynamic requiredMessage;
-@dynamic min;
+@dynamic label;
 @dynamic max;
-@dynamic regex;
-@dynamic value;
+@dynamic min;
 @dynamic name;
+@dynamic regex;
+@dynamic required;
+@dynamic requiredMessage;
+@dynamic type;
 @dynamic uid;
+@dynamic value;
+@dynamic dataSet;
+@dynamic apiCall;
 @dynamic form;
+@dynamic options;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 {
@@ -33,14 +40,58 @@
     if ([fieldJSON objectForKey:@"type"]) {
         newField.type = [fieldJSON objectForKey:@"type"];
     }
-    if ([fieldJSON objectForKey:@"value"]) {
-        newField.value = [fieldJSON objectForKey:@"value"];
+
+    id value = [fieldJSON objectForKey:@"value"];
+    if (VALID(value, NSString))
+    {
+        newField.value = (NSString *)value;
     }
+    else if(VALID(value, NSNumber))
+    {
+        newField.value = [((NSNumber *)value) stringValue];
+    }
+    
     if ([fieldJSON objectForKey:@"id"]) {
         newField.uid = [fieldJSON objectForKey:@"id"];
     }
     if ([fieldJSON objectForKey:@"name"]) {
         newField.name = [fieldJSON objectForKey:@"name"];
+    }
+    if ([fieldJSON objectForKey:@"label"]) {
+        newField.label = [fieldJSON objectForKey:@"label"];
+    }
+    
+    if (VALID_NOTEMPTY([fieldJSON objectForKey:@"dataset"], NSArray))
+    {
+        NSArray *dataSetArray = [fieldJSON objectForKey:@"dataset"];
+        
+        for (NSString *tempString in dataSetArray) {
+            RIFieldDataSetComponent *component = [RIFieldDataSetComponent parseDataSetComponent:tempString];
+            component.field = newField;
+            [newField addDataSetObject:component];
+        }
+    }
+    else if (VALID_NOTEMPTY([fieldJSON objectForKey:@"dataset"], NSDictionary))
+    {
+        NSDictionary *dataSetDictionary = [fieldJSON objectForKey:@"dataset"];
+        if(VALID_NOTEMPTY([dataSetDictionary objectForKey:@"api_call"], NSString))
+        {
+            newField.apiCall = [dataSetDictionary objectForKey:@"api_call"];
+        }
+    }
+    
+    
+    if ([fieldJSON objectForKey:@"options"]) {
+        NSArray *optionsArray = [fieldJSON objectForKey:@"options"];
+        
+        for (NSDictionary *optionObject in optionsArray) {
+            if(VALID_NOTEMPTY(optionObject, NSDictionary))
+            {
+                RIFieldOption *option = [RIFieldOption parseFieldOption:optionObject];
+                option.field = newField;
+                [newField addOptionsObject:option];
+            }
+        }
     }
     
     NSDictionary* rules = [fieldJSON objectForKey:@"rules"];
@@ -48,18 +99,23 @@
     if (VALID_NOTEMPTY(rules, NSDictionary)) {
         
         if ([rules objectForKey:@"regex"]) {
-            newField.regex = [fieldJSON objectForKey:@"regex"];
+            newField.regex = [rules objectForKey:@"regex"];
         }
         if ([rules objectForKey:@"min"]) {
-            newField.min = [fieldJSON objectForKey:@"min"];
+            newField.min = [rules objectForKey:@"min"];
         }
         if ([rules objectForKey:@"max"]) {
-            newField.max = [fieldJSON objectForKey:@"max"];
+            newField.max = [rules objectForKey:@"max"];
         }
         
-        NSDictionary* required = [rules objectForKey:@"required"];
+        id required = [rules objectForKey:@"required"];
         if (VALID_NOTEMPTY(required, NSDictionary) && [required objectForKey:@"message"]) {
+            newField.required = [NSNumber numberWithBool:YES];
             newField.requiredMessage = [required objectForKey:@"message"];
+        }
+        else if(required)
+        {
+            newField.required = [NSNumber numberWithBool:[required boolValue]];
         }
     }
     

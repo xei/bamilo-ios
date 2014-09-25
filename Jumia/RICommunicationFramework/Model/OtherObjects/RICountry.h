@@ -36,8 +36,9 @@
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)loadCountryConfigurationWithSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
-                                       andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
++ (NSString *)loadCountryConfigurationForCountry:(NSString*)countryUrl
+                                withSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
+                                 andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
 
 /**
  * Method to request the configuration to a given country
@@ -48,6 +49,13 @@
  */
 + (NSString *)getCountryConfigurationWithSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
                                       andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+
+/**
+ * Method to request the phone number for the stored country
+ *
+ * @return the phone number for the country
+ */
++ (NSString *)getCountryPhoneNumber;
 
 /**
  * Method to cancel the request

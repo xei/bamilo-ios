@@ -19,11 +19,12 @@
 @property (nonatomic, retain) RITeaserCategory *teaserCategory;
 
 /**
- *  Method to parse an RITeaserGroup given a JSON object
+ *  Method to parse an RITeaserGroup given a JSON object and a country configuration
  *
  *  @return the parsed RITeaserGroup
  */
-+ (RITeaserGroup *)parseTeaserGroup:(NSDictionary *)json;
++ (RITeaserGroup *)parseTeaserGroup:(NSDictionary *)json
+               countryConfiguration:(RICountryConfiguration*)countryConfiguration;
 
 /**
  *  Save in the core data a given RITeaserGroup

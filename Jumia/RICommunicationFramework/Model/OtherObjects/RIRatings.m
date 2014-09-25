@@ -26,7 +26,7 @@
 + (NSString*)getRatingsWithSuccessBlock:(void (^)(id ratings))successBlock
                         andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_RATING_OPTIONS]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_RATING_OPTIONS]]
                                                             parameters:nil
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
@@ -34,7 +34,7 @@
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                              if (VALID_NOTEMPTY(metadata, NSDictionary) && VALID_NOTEMPTY([metadata objectForKey:@"data"], NSDictionary)) {
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                   NSDictionary *dataDic = [metadata objectForKey:@"data"];
                                                                   NSMutableArray *returnArray = [NSMutableArray new];
                                                                   

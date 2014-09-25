@@ -23,10 +23,11 @@
 @dynamic height;
 @dynamic extension;
 
-+ (NSString*)loadImageResolutionsIntoDatabaseWithSuccessBlock:(void (^)())successBlock
-                                              andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
++ (NSString*)loadImageResolutionsIntoDatabaseForCountry:(NSString*)countryUrl
+                                       withSuccessBlock:(void (^)())successBlock
+                                        andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", RI_BASE_URL, RI_API_VERSION, RI_API_IMAGE_RESOLUTIONS]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_IMAGE_RESOLUTIONS]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
