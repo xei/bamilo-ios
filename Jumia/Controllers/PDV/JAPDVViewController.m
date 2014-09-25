@@ -763,7 +763,7 @@ JANoConnectionViewDelegate
                               
                               if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
                               {
-                                  NSArray *categoryIds = [product.categoryIds array];
+                                  NSArray *categoryIds = [self.product.categoryIds array];
                                   [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
                               }
 
