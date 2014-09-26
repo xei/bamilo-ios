@@ -171,6 +171,12 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventTransactionIdKey    @"RIEventTransactionIdKey"
 #define kRIEventTotalTransactionKey @"RIEventTotalTransactionKey"
 #define kRIEventUserFirstNameKey    @"RIEventUserFirstNameKey"
+#define kRIEventBrandFilterKey      @"RIEventBrandFilterKey"
+#define kRIEventColorFilterKey      @"RIEventColorFilterKey"
+#define kRIEventCategoryFilterKey   @"RIEventCategoryFilterKey"
+#define kRIEventPriceFilterKey      @"RIEventPriceFilterKey"
+#define kRIEventNumberOfProductsKey @"RIEventNumberOfProductsKey"
+#define kRIEventTopCategoryKey      @"RIEventTopCategoryKey"
 
 /**
  *  Struct to identify events
@@ -225,7 +231,10 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventFacebookViewWishlist = 46,
     RIEventFacebookViewCart = 47,
     RIEventFacebookViewTransaction = 48,
-    RIEventChangeCountry = 49
+    RIEventChangeCountry = 49,
+    RIEventViewCampaign = 50,
+    RIEventTopCategory = 51,
+    RIEventAddFromWishlistToCart = 52
 };
 
 /**

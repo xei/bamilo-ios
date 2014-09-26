@@ -112,6 +112,14 @@ UITableViewDelegate
         RICategory *category = [self.sourceCategoriesArray objectAtIndex:realIndex];
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        if(ISEMPTY(category.parent))
+        {
+            [trackingDictionary setObject:[RICategory getTopCategory:category] forKey:kRIEventTopCategoryKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTopCategory]
+                                                      data:[trackingDictionary copy]];
+        }
+
+        trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:category.name forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"Categories" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];

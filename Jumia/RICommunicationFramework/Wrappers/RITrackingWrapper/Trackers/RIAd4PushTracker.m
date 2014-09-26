@@ -77,7 +77,11 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutStart]];
         [events addObject:[NSNumber numberWithInt:RIEventSearch]];
         [events addObject:[NSNumber numberWithInt:RIEventChangeCountry]];
-        
+        [events addObject:[NSNumber numberWithInt:RIEventFilter]];
+        [events addObject:[NSNumber numberWithInt:RIEventViewCampaign]];
+        [events addObject:[NSNumber numberWithInt:RIEventTopCategory]];
+        [events addObject:[NSNumber numberWithInt:RIEventAddFromWishlistToCart]];
+
         self.registeredEvents = [events copy];
         
         NSDictionary *deviceInfo = [NSDictionary dictionaryWithObject:@"0" forKey:kAd4PushProfileUserIdKey];
@@ -221,8 +225,18 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         NSString *categoryId = @"";
         NSString *price = @"";
         NSString *currency = @"";
-        NSInteger numberOfProductsInWishlistValue = 0;
         NSNumber *numberOfProductsInWishlist = nil;
+        NSInteger numberOfProductsInWishlistValue = 0;
+        NSNumber *campaignNumber = nil;
+        NSInteger campaignNumberValue = 0;
+        NSNumber *colorFilter = nil;
+        NSInteger colorFilterValue = 0;
+        NSNumber *priceFilter = nil;
+        NSInteger priceFilterValue = 0;
+        NSNumber *brandFilter = nil;
+        NSInteger brandFilterValue = 0;
+        NSNumber *categoryFilter = nil;
+        NSInteger categoryFilterValue = 0;
         
         NSDate *date = [NSDate date];
         
@@ -323,6 +337,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 }
                 numberOfProductsInWishlistValue++;
                 numberOfProductsInWishlist = [NSNumber numberWithInt:numberOfProductsInWishlistValue];
+                [[NSUserDefaults standardUserDefaults] setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [deviceInfo setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
                 [deviceInfo setObject:currentDate forKey:kAd4PushProfileLastFavouritesProductKey];
@@ -339,6 +354,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 }
                 numberOfProductsInWishlistValue--;
                 numberOfProductsInWishlist = [NSNumber numberWithInt:numberOfProductsInWishlistValue];
+                [[NSUserDefaults standardUserDefaults] setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [deviceInfo setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
                 [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
@@ -354,6 +370,86 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 break;
             case RIEventChangeCountry:
                 [deviceInfo setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kAd4PushProfileShopCountryKey];
+                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                break;
+            case RIEventFilter:
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandFilterKey], NSString))
+                {
+                    brandFilter = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileFilterBrandKey];
+                    if(VALID_NOTEMPTY(brandFilter, NSNumber))
+                    {
+                        brandFilterValue = [brandFilter integerValue];
+                    }
+                    brandFilterValue++;
+                    brandFilter = [NSNumber numberWithInt:brandFilterValue];
+                    [[NSUserDefaults standardUserDefaults] setObject:brandFilter forKey:kAd4PushProfileFilterBrandKey];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    [deviceInfo setObject:brandFilter forKey:kAd4PushProfileFilterBrandKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventColorFilterKey], NSString))
+                {
+                    colorFilter = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileFilterColorKey];
+                    if(VALID_NOTEMPTY(colorFilter, NSNumber))
+                    {
+                        colorFilterValue = [colorFilter integerValue];
+                    }
+                    colorFilterValue++;
+                    colorFilter = [NSNumber numberWithInt:colorFilterValue];
+                    [[NSUserDefaults standardUserDefaults] setObject:colorFilter forKey:kAd4PushProfileFilterColorKey];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    [deviceInfo setObject:colorFilter forKey:kAd4PushProfileFilterColorKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryFilterKey], NSString))
+                {
+                    categoryFilter = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileFilterCategoryKey];
+                    if(VALID_NOTEMPTY(categoryFilter, NSNumber))
+                    {
+                        categoryFilterValue = [categoryFilter integerValue];
+                    }
+                    categoryFilterValue++;
+                    categoryFilter = [NSNumber numberWithInt:categoryFilterValue];
+                    [[NSUserDefaults standardUserDefaults] setObject:categoryFilter forKey:kAd4PushProfileFilterCategoryKey];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    [deviceInfo setObject:categoryFilter forKey:kAd4PushProfileFilterCategoryKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceFilterKey], NSString))
+                {
+                    priceFilter = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileFilterPriceKey];
+                    if(VALID_NOTEMPTY(priceFilter, NSNumber))
+                    {
+                        priceFilterValue = [priceFilter integerValue];
+                    }
+                    priceFilterValue++;
+                    priceFilter = [NSNumber numberWithInt:priceFilterValue];
+                    [[NSUserDefaults standardUserDefaults] setObject:priceFilter forKey:kAd4PushProfileFilterPriceKey];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    [deviceInfo setObject:priceFilter forKey:kAd4PushProfileFilterPriceKey];
+                }
+                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                break;
+            case RIEventTopCategory:
+                [deviceInfo setObject:[data objectForKey:kRIEventTopCategoryKey] forKey:kAd4PushProfileMostVisitedCategoryKey];
+                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                break;
+            case RIEventViewCampaign:
+                campaignNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileCampaignPageViewCountKey];
+                if(VALID_NOTEMPTY(campaignNumber, NSNumber))
+                {
+                    campaignNumberValue = [campaignNumber integerValue];
+                }
+                campaignNumberValue++;
+                campaignNumber = [NSNumber numberWithInt:campaignNumberValue];
+                [[NSUserDefaults standardUserDefaults] setObject:campaignNumber forKey:kAd4PushProfileCampaignPageViewCountKey];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [deviceInfo setObject:campaignNumber forKey:kAd4PushProfileCampaignPageViewCountKey];
+                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                break;
+            case RIEventAddFromWishlistToCart:
+                [deviceInfo setObject:[data objectForKey:kRIEventNumberOfProductsKey] forKey:kAd4PushProfileLastMovedFromFavtoCartKey];
                 [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
                 break;
             default:
