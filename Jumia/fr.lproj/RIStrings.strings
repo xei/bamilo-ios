@@ -186,8 +186,10 @@
 "my_order_payment" = "Mode de paiement";
 
 "enter_order_id" = "Please enter the order ID";
-"item_added_to_wishlist" = "Item added to wish list.";
+"products_added_favourite" = "Produit ajouté aux Favoris";
 "error_adding_to_wishlist" = "Error adding to favourites";
+"products_removed_favourite" = "Produit supprimé de Mes Favoris";
+"error_removing_from_wishlist" = "Error removing from favourites";
 
 "error_add_to_cart_failed_for_x_products" = "Adding to cart failed for %d products";
 "error_add_to_cart_failed_for_1_product" = "Adding to cart failed for 1 product";

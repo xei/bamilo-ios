@@ -975,7 +975,7 @@ JANoConnectionViewDelegate
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                       data:[trackingDictionary copy]];
             JASuccessView *success = [JASuccessView getNewJASuccessView];
-            [success setSuccessTitle:STRING_ADDED_TO_WISHLIST
+            [success setSuccessTitle:STRING_REMOVED_FROM_WISHLIST
                             andAddTo:self];
             
             if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {

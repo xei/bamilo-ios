@@ -500,9 +500,11 @@
     [trackingDictionary setValue:self.catalogUrl forKey:kRIEventLabelKey];
     [trackingDictionary setValue:STRING_FILTERS forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-    
+
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFilter]
                                               data:[trackingDictionary copy]];
+    
+    
     
     self.filterCategory = category;
     [self resetCatalog];
@@ -648,7 +650,7 @@
             [self hideLoading];
             
             JASuccessView *success = [JASuccessView getNewJASuccessView];
-            [success setSuccessTitle:@"Item removed from wish list."
+            [success setSuccessTitle:STRING_REMOVED_FROM_WISHLIST
                             andAddTo:self];
             
         } andFailureBlock:^(NSArray *error) {
