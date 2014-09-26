@@ -153,7 +153,7 @@
                                              selector:@selector(showForgotPasswordScreen)
                                                  name:kShowForgotPasswordScreenNotification
                                                object:nil];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutLoginScreen)
                                                  name:kShowCheckoutLoginScreenNotification
@@ -208,7 +208,7 @@
                                              selector:@selector(deactivateExternalPayment)
                                                  name:kDeactivateExternalPaymentNotification
                                                object:nil];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showTrackOrderViewController:)
                                                  name:kShowTrackOrderScreenNotification
@@ -234,7 +234,7 @@
         NSNumber *index = [selectedItem objectForKey:@"index"];
         
         if ([index isEqual:@(0)]) {
-            [self changeCenterPanel:STRING_HOME];
+            [self changeCenterPanel:STRING_HOME notification:notification];
             
         } else {
             if ([index isEqual:@(99)])
@@ -249,14 +249,14 @@
             }
             else
             {
-                [self changeCenterPanel:[selectedItem objectForKey:@"name"]];
+                [self changeCenterPanel:[selectedItem objectForKey:@"name"] notification:notification];
             }
         }
     }
     
 }
 
-- (void)changeCenterPanel:(NSString *)newScreenName
+- (void)changeCenterPanel:(NSString *)newScreenName notification:(NSNotification *)notification
 {
     if ([newScreenName isEqualToString:STRING_HOME])
     {
@@ -362,13 +362,13 @@
             {
                 JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
                 
+                signInViewController.nextNotification = notification;
+                
                 [self pushViewController:signInViewController
                                 animated:YES];
-                
-                self.viewControllers = @[signInViewController];
             }
         }
-
+        
     }
     else if ([newScreenName isEqualToString:STRING_USER_EMAIL_NOTIFICATIONS])
     {
@@ -388,10 +388,10 @@
             {
                 JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
                 
+                signInViewController.nextNotification = notification;
+                
                 [self pushViewController:signInViewController
                                 animated:YES];
-                
-                self.viewControllers = @[signInViewController];
             }
         }
     }
@@ -459,7 +459,7 @@
 
 - (void) showHomeScreen
 {
-    [self changeCenterPanel:STRING_HOME];
+    [self changeCenterPanel:STRING_HOME notification:nil];
 }
 
 - (void)showTrackOrderViewController:(NSNotification*)notification
@@ -467,7 +467,7 @@
     if (![[self topViewController] isKindOfClass:[JATrackMyOrderViewController class]])
     {
         JATrackMyOrderViewController *trackOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"jaTrackOrderViewController"];
- 
+        
         if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSString)) {
             trackOrder.startingTrackOrderNumber = notification.object;
         }
@@ -574,7 +574,7 @@
         {
             pdv.showBackButton = [[notification.userInfo objectForKey:@"show_back_button"] boolValue];
         }
-    
+        
         [self pushViewController:pdv
                         animated:YES];
     }
