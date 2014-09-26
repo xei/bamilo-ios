@@ -14,6 +14,7 @@
 @dynamic name;
 @dynamic uid;
 @dynamic urlKey;
+@dynamic numberOfTimesSeen;
 @dynamic children;
 @dynamic parent;
 
@@ -140,6 +141,39 @@
     return categoryTree;
 }
 
++ (NSString*)getTopCategory:(RICategory*)seenCategory
+{
+    [RICategory seenCategory:seenCategory];
+    
+    RICategory *topCategory = nil;
+    
+    NSArray* databaseParentCategories = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"parent" andPropertyValue:nil];
+    for(RICategory *category in databaseParentCategories)
+    {
+        if(ISEMPTY(topCategory))
+        {
+            topCategory = category;
+        }
+        else
+        {
+            if([topCategory.numberOfTimesSeen intValue] < [category.numberOfTimesSeen intValue])
+            {
+                topCategory = category;
+            }
+        }
+    }
+    
+    return topCategory.name;
+}
+
++ (void)seenCategory:(RICategory*)seenCategory
+{
+    if(VALID_NOTEMPTY(seenCategory, RICategory))
+    {
+        seenCategory.numberOfTimesSeen = [NSNumber numberWithInt:([seenCategory.numberOfTimesSeen intValue] + 1)];
+    }
+}
+
 + (RICategory *)parseCategory:(NSDictionary *)category
 {
     RICategory* newCategory;
@@ -162,6 +196,8 @@
     if ([category objectForKey:@"api_url"]) {
         newCategory.apiUrl = [category objectForKey:@"api_url"];
     }
+    
+    newCategory.numberOfTimesSeen = [NSNumber numberWithInt:0];
     
     NSArray* childrenArray = [category objectForKey:@"children"];
     

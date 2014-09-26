@@ -26,6 +26,7 @@
 @property (assign, nonatomic) BOOL finishedAddingAllToCart;
 
 @property (nonatomic, assign)NSInteger addAllToCartCount;
+@property (nonatomic, assign)NSInteger totalProdutsInWishlist;
 
 // size picker view
 @property (strong, nonatomic) UIView *sizePickerBackgroundView;
@@ -72,7 +73,9 @@
     
     self.navBarLayout.title = STRING_MY_FAVOURITES;
     
-    self.addAllToCartCount = 0;
+    self.totalProdutsInWishlist = 0;
+    self.addAllToCartCount = -1;
+    
     self.selectedSizeAndAddToCart = NO;
     self.finishedAddingAllToCart = NO;
     
@@ -336,6 +339,7 @@
     
     [self showLoading];
     
+    self.totalProdutsInWishlist = self.productsArray.count;
     self.addAllToCartCount = self.productsArray.count;
     
     for (int i = 0; i < self.chosenSimpleNames.count; i++) {
@@ -450,10 +454,17 @@
             }
             [errorView setErrorTitle:errorMessage
                             andAddTo:self];
+            
+            self.totalProdutsInWishlist -= [favoriteProducts count];
         }
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart] data:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.totalProdutsInWishlist] forKey:kRIEventNumberOfProductsKey]];
+        
         [self updateListsWith:favoriteProducts];
         [self hideLoading];
     } andFailureBlock:^(NSArray *error) {
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart] data:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.totalProdutsInWishlist] forKey:kRIEventNumberOfProductsKey]];
+
         [self hideLoading];
     }];
 }

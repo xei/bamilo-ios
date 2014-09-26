@@ -74,7 +74,8 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutContinueShopping]];
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutError]];
         [events addObject:[NSNumber numberWithInt:RIEventNewsletter]];
-        
+        [events addObject:[NSNumber numberWithInt:RIEventViewCampaign]];
+
         self.registeredEvents = [events copy];
     }
     return self;

@@ -13,6 +13,7 @@
 #import "JAUtils.h"
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
+#import "RIFilter.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
@@ -500,11 +501,51 @@
     [trackingDictionary setValue:self.catalogUrl forKey:kRIEventLabelKey];
     [trackingDictionary setValue:STRING_FILTERS forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+    
+    if(VALID_NOTEMPTY(self.filtersArray, NSArray))
+    {
+        for(RIFilter *filter in self.filtersArray)
+        {
+            if (VALID_NOTEMPTY(filter.uid, NSString) && VALID_NOTEMPTY(filter.options, NSArray) && 0 < filter.options.count)
+            {
+                NSLog(@"filter name %@ - uid %@", filter.name, filter.uid);
+                if ([@"price" isEqualToString:filter.uid])
+                {
+                    RIFilterOption* filterOption = [filter.options firstObject];
+                    if (VALID_NOTEMPTY(filterOption, RIFilterOption))
+                    {
+                        if (filterOption.lowerValue != filterOption.min || filterOption.upperValue != filterOption.max) {
+                            [trackingDictionary setObject:filter.name forKey:kRIEventPriceFilterKey];
+                        }
+                    }
+                } else
+                {
+                    for (RIFilterOption* filterOption in filter.options)
+                    {
+                        if (filterOption.selected)
+                        {
+                            if([@"brand" isEqualToString:filter.uid])
+                            {
+                                [trackingDictionary setObject:filter.name forKey:kRIEventBrandFilterKey];
+                            }
+                            else if([@"color_family" isEqualToString:filter.uid])
+                            {
+                                [trackingDictionary setObject:filter.name forKey:kRIEventColorFilterKey];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    if(VALID_NOTEMPTY(category, RICategory))
+    {
+        [trackingDictionary setObject:@"category" forKey:kRIEventCategoryFilterKey];
+    }
 
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFilter]
                                               data:[trackingDictionary copy]];
-    
-    
     
     self.filterCategory = category;
     [self resetCatalog];

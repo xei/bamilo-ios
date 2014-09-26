@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * uid;
 @property (nonatomic, retain) NSString * urlKey;
+@property (nonatomic, retain) NSNumber *numberOfTimesSeen;
 @property (nonatomic, retain) NSOrderedSet *children;
 @property (nonatomic, retain) RICategory *parent;
 
@@ -63,7 +64,20 @@
 + (NSArray*)parseCategories:(NSArray*)categories
                 persistData:(BOOL)persistData;
 
+/**
+ *  Method to obtain the tree of categories.
+ *
+ *  @return a string with the categories tree of a category
+ */
 + (NSString*)getTree:(NSString*)categoryId;
+
+/**
+ *  Method to obtain the most seen category
+ *
+ *  @param the category clicked by the user
+ *  @return a string with the most seen category
+ */
++ (NSString*)getTopCategory:(RICategory*)seenCategory;
 
 @end
 
