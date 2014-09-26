@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>kGTMToken</key>
+	<string>GTM-TH5GMC</string>
 	<key>kRIAdjustToken</key>
 	<string>fkh3gvku8ral</string>
 	<key>kRIAdd4PushPrivateKey</key>

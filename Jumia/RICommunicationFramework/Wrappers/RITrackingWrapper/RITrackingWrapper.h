@@ -257,38 +257,6 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 @end
 
 /**
- *  Interface of the RITrackingProduct, that is the product used for the commerce tracking
- */
-@interface RITrackingProduct : NSObject
-
-/**
- *  Identifier of the product
- */
-@property NSString *identifier;
-/**
- *  Name of the product
- */
-@property NSString *name;
-/**
- *  Quantity of the product
- */
-@property NSNumber *quantity;
-/**
- *  Price of the product
- */
-@property NSNumber *price;
-/**
- *  Currency of the product price
- */
-@property NSString *currency;
-/**
- *  Category of the product
- */
-@property NSString *category;
-
-@end
-
-/**
  *  Protocol constants
  */
 #define kRIEcommerceTransactionIdKey        @"RIEcommerceTransactionIdKey"
@@ -365,8 +333,9 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  *  Hook to recognise an app launch, given launch options
  *
  *  @param options The launching options.
+ *  @param parameters Extra parameters for tracking
  */
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options;
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options parameters:(NSDictionary*)parameters;
 
 @end
 
@@ -415,9 +384,11 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  *
  *  @param path Path to the configuration file (plist file).
  *  @param launchOptions The launching options.
+ *  @param parameters Extra parameters for tracking
  */
 - (void)startWithConfigurationFromPropertyListAtPath:(NSString *)path
-                                       launchOptions:(NSDictionary *)launchOptions;
+                                       launchOptions:(NSDictionary *)launchOptions
+                                          parameters:(NSDictionary *)parameters;
 
 /**
  *  Creates and initializes an `RITracking`object

@@ -13,6 +13,7 @@
 #import "RIAd4PushTracker.h"
 #import "RINewRelicTracker.h"
 #import "RIAdjustTracker.h"
+#import "RIGTMTracker.h"
 
 @interface RITrackingWrapper ()
 
@@ -55,6 +56,7 @@ static dispatch_once_t sharedInstanceToken;
 
 - (void)startWithConfigurationFromPropertyListAtPath:(NSString *)path
                                        launchOptions:(NSDictionary *)launchOptions
+                                          parameters:(NSDictionary *)parameters
 {
     RIDebugLog(@"Starting initialisation with launch options '%@' and property list at path '%@'",
                launchOptions, path);
@@ -72,18 +74,25 @@ static dispatch_once_t sharedInstanceToken;
     RIAd4PushTracker *ad4PushTracker = [[RIAd4PushTracker alloc] init];
     RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
     RIAdjustTracker *adjustTracker = [[RIAdjustTracker alloc] init];
+    RIGTMTracker *gtmTracker = [[RIGTMTracker alloc] init];
     
-    self.trackers = @[googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, newRelicTracker, adjustTracker];
+    self.trackers = @[googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, newRelicTracker, adjustTracker, gtmTracker];
     
-    if (launchOptions) {
-        [self RI_callTrackersConformToProtocol:@protocol(RITracker)
-                                      selector:@selector(applicationDidLaunchWithOptions:)
-                                     arguments:@[launchOptions]];
-    } else {
-        [self RI_callTrackersConformToProtocol:@protocol(RITracker)
-                                      selector:@selector(applicationDidLaunchWithOptions:)
-                                     arguments:nil];
+    NSDictionary *launchOptionsDictionary = [[NSDictionary alloc] init];
+    if(VALID_NOTEMPTY(launchOptions, NSDictionary))
+    {
+        launchOptionsDictionary = [launchOptions copy];
     }
+    
+    NSDictionary *parametersDictionary = [[NSDictionary alloc] init];
+    if(VALID_NOTEMPTY(parameters, NSDictionary))
+    {
+        parametersDictionary = [parameters copy];
+    }
+    
+    [self RI_callTrackersConformToProtocol:@protocol(RITracker)
+                                  selector:@selector(applicationDidLaunchWithOptions:parameters:)
+                                 arguments:@[launchOptionsDictionary, parametersDictionary]];
 }
 
 - (RICartState)getCartState
