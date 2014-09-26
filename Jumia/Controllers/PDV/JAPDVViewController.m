@@ -52,6 +52,7 @@ JANoConnectionViewDelegate
 @property (weak, nonatomic) IBOutlet UIView *ctaView;
 @property (assign, nonatomic) NSInteger commentsCount;
 @property (assign, nonatomic) BOOL openPickerFromCart;
+@property (strong, nonatomic) RIProductSimple *currentSimple;
 
 @end
 
@@ -318,10 +319,6 @@ JANoConnectionViewDelegate
                                       action:@selector(shareProduct)
                             forControlEvents:UIControlEventTouchUpInside];
     
-    [self.imageSection.wishListButton addTarget:self
-                                         action:@selector(addProductToWishList)
-                               forControlEvents:UIControlEventTouchUpInside];
-    
     UIImage *img = [UIImage imageNamed:@"img_badge_discount"];
     CGSize imgSize = self.imageSection.discountLabel.frame.size;
     
@@ -450,11 +447,11 @@ JANoConnectionViewDelegate
     else if (self.product.productSimples.count == 1)
     {
         [self.productInfoSection.sizeButton setEnabled:NO];
-        RIProductSimple *tempProduct = self.product.productSimples[0];
+        self.currentSimple = self.product.productSimples[0];
         
-        if (tempProduct.attributeSize)
+        if (VALID_NOTEMPTY(self.currentSimple.attributeSize, NSString))
         {
-            [self.productInfoSection.sizeButton setTitle:tempProduct.attributeSize
+            [self.productInfoSection.sizeButton setTitle:self.currentSimple.attributeSize
                                                 forState:UIControlStateNormal];
         }
         else
@@ -465,7 +462,7 @@ JANoConnectionViewDelegate
     }
     else if (self.product.productSimples.count > 1)
     {
-        [self.productInfoSection.sizeButton setEnabled:YES  ];
+        [self.productInfoSection.sizeButton setEnabled:YES];
         [self.productInfoSection.sizeButton setTitle:STRING_SIZE
                                             forState:UIControlStateNormal];
         
@@ -502,7 +499,7 @@ JANoConnectionViewDelegate
     
     if (self.fromCatalogue)
     {
-        if (self.arrayWithRelatedItems.count > 0)
+        if (VALID_NOTEMPTY(self.arrayWithRelatedItems, NSArray) && self.arrayWithRelatedItems.count > 1)
         {
             self.relatedItems.topLabel.text = STRING_RELATED_ITEMS;
             
@@ -521,7 +518,7 @@ JANoConnectionViewDelegate
             
             for (RIProduct *product in self.arrayWithRelatedItems)
             {
-                if (![product.name isEqualToString:self.product.name])
+                if (![product.sku isEqualToString:self.product.sku])
                 {
                     if (product.images.count > 0)
                     {
@@ -556,6 +553,10 @@ JANoConnectionViewDelegate
             }
             
             [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height)];
+        }
+        else
+        {
+            [self.relatedItems removeFromSuperview];
         }
     }
     
@@ -639,11 +640,6 @@ JANoConnectionViewDelegate
 {
     [self performSegueWithIdentifier:@"segueToDetails"
                               sender:nil];
-}
-
-- (void)addProductToWishList
-{
-    
 }
 
 - (void)goToRatinsMainScreen
@@ -739,12 +735,11 @@ JANoConnectionViewDelegate
         }
         else
         {
-            
             [self showLoading];
             
             [RICart addProductWithQuantity:@"1"
                                        sku:self.product.sku
-                                    simple:((RIProduct *)[self.product.productSimples firstObject]).sku
+                                    simple:self.currentSimple.sku
                           withSuccessBlock:^(RICart *cart) {
                               
                               NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -854,9 +849,9 @@ JANoConnectionViewDelegate
 - (void)didSelectedValueInPicker
 {
     NSUInteger selectedRow = [self.picker.picker selectedRowInComponent:0];
-    RIProductSimple *simple = [self.pickerDataSource objectAtIndex:selectedRow];
+    self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
     
-    [self.productInfoSection.sizeButton setTitle:simple.attributeSize
+    [self.productInfoSection.sizeButton setTitle:self.currentSimple.attributeSize
                                         forState:UIControlStateNormal];
     
     CGRect frame = self.picker.frame;
@@ -870,6 +865,7 @@ JANoConnectionViewDelegate
                          
                          if (self.openPickerFromCart)
                          {
+                             self.openPickerFromCart = NO;
                              [self addToCart];
                          }
                      }];

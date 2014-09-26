@@ -127,6 +127,7 @@
 		B59DCA7719B88DAD00DE7960 /* JASwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7519B88DAD00DE7960 /* JASwitchCell.xib */; };
 		B59DCA7E19B88DDB00DE7960 /* JAAddNewAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA7C19B88DDB00DE7960 /* JAAddNewAddressCell.m */; };
 		B59DCA7F19B88DDB00DE7960 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
+		B5A0059019D5A1EE0069C0A9 /* RIGTMTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A0058F19D5A1EE0069C0A9 /* RIGTMTracker.m */; };
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
 		B5A301BC19811D0700F71726 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
@@ -538,6 +539,8 @@
 		B59DCA7B19B88DDB00DE7960 /* JAAddNewAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAAddNewAddressCell.h; path = AddressCell/JAAddNewAddressCell.h; sourceTree = "<group>"; };
 		B59DCA7C19B88DDB00DE7960 /* JAAddNewAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAAddNewAddressCell.m; path = AddressCell/JAAddNewAddressCell.m; sourceTree = "<group>"; };
 		B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAAddNewAddressCell.xib; path = AddressCell/JAAddNewAddressCell.xib; sourceTree = "<group>"; };
+		B5A0058E19D5A1EE0069C0A9 /* RIGTMTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIGTMTracker.h; sourceTree = "<group>"; };
+		B5A0058F19D5A1EE0069C0A9 /* RIGTMTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIGTMTracker.m; sourceTree = "<group>"; };
 		B5A301A819811D0700F71726 /* Jumia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jumia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A301AC19811D0700F71726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5A301AD19811D0700F71726 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1997,6 +2000,8 @@
 				B5A302B919811E9200F71726 /* RIGoogleAnalyticsTracker.m */,
 				B5FE9FBA19A204F1006F7D63 /* RINewRelicTracker.h */,
 				B5FE9FBB19A204F1006F7D63 /* RINewRelicTracker.m */,
+				B5A0058E19D5A1EE0069C0A9 /* RIGTMTracker.h */,
+				B5A0058F19D5A1EE0069C0A9 /* RIGTMTracker.m */,
 			);
 			path = Trackers;
 			sourceTree = "<group>";
@@ -2615,6 +2620,7 @@
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
 				B5A302D319811E9200F71726 /* RIVariation.m in Sources */,
 				CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */,
+				B5A0059019D5A1EE0069C0A9 /* RIGTMTracker.m in Sources */,
 				B5A30303198121A400F71726 /* JABaseViewController.m in Sources */,
 				B59DCA5919B70C2E00DE7960 /* JATextField.m in Sources */,
 				B5A302CB19811E9200F71726 /* RISection.m in Sources */,

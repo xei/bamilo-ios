@@ -104,7 +104,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     NSLog(@"Initialized Google Analytics %d", [GAI sharedInstance].trackUncaughtExceptions);
 }
 
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options parameters:(NSDictionary *)parameters
 {
 
 }
@@ -245,34 +245,6 @@ static RIGoogleAnalyticsTracker *sharedInstance;
                                                                 currencyCode:[tempProduct objectForKey:kRIEventCurrencyCodeKey]] build]];
         }
     }
-}
-
--(void)trackProductAddToCart:(RITrackingProduct *)product
-{
-    RIDebugLog(@"Google Analytics - Tracking product added to cart: %@", product.name);
-    
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    
-    if (!tracker) {
-        RIRaiseError(@"Missing default Google Analytics tracker");
-        return;
-    }
-    
-    NSDictionary *dict = [[GAIDictionaryBuilder createItemWithTransactionId:nil
-                                                                       name:product.name
-                                                                        sku:product.identifier
-                                                                   category:product.category
-                                                                      price:product.price
-                                                                   quantity:product.quantity
-                                                               currencyCode:product.currency] build];
-    
-    [tracker send:dict];
-}
-
--(void)trackRemoveFromCartForProductWithID:(NSString *)idTransaction
-                                  quantity:(NSNumber *)quantity
-{
-
 }
 
 #pragma mark - RITrackingTiming implementation

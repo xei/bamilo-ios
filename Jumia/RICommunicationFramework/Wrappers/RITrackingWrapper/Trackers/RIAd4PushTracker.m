@@ -83,16 +83,13 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         [events addObject:[NSNumber numberWithInt:RIEventAddFromWishlistToCart]];
 
         self.registeredEvents = [events copy];
-        
-        NSDictionary *deviceInfo = [NSDictionary dictionaryWithObject:@"0" forKey:kAd4PushProfileUserIdKey];
-        [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
     }
     return self;
 }
 
 #pragma mark - RITracker protocol
 
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options parameters:(NSDictionary*)parameters
 {
     RIDebugLog(@"Add4Push tracker tracks application launch");
     
@@ -124,6 +121,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     dispatch_async(dispatch_get_main_queue(), ^{
        [[BMA4SNotification sharedBMA4S] didFinishLaunchingWithOptions:options]; 
     });
+    
+    NSDictionary *deviceInfo = [NSDictionary dictionaryWithObject:@"0" forKey:kAd4PushProfileUserIdKey];
+    [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
 }
 
 #pragma mark - RINotificationTracking protocol

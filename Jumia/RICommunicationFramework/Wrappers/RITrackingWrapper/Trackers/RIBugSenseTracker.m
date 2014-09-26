@@ -29,7 +29,7 @@ NSString * const kRIBugsenseAPIKey = @"RIBugsenseAPIKey";
 
 #pragma mark - RITracker protocol
 
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options parameters:(NSDictionary *)parameters
 {
     RIDebugLog(@"BugSense tracker tracks application launch");
     

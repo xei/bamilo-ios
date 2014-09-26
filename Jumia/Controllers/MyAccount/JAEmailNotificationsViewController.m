@@ -59,6 +59,7 @@
            
            self.height.constant = self.formHeight + 6.0f;
            
+           [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
            [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
            [self.saveButton addTarget:self action:@selector(updatePreferences) forControlEvents:UIControlEventTouchUpInside];
            
