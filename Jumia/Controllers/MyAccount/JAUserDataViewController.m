@@ -96,6 +96,7 @@
            self.changePasswordHeight.constant = self.formHeight + 20;
            [self.view updateConstraints];
            
+           [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];           
            [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
            [self.saveButton addTarget:self action:@selector(saveNewPassword) forControlEvents:UIControlEventTouchUpInside];
            
