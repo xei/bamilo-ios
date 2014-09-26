@@ -11,5 +11,6 @@
 @interface JASignInViewController : JABaseViewController
 
 @property (nonatomic, retain) NSString* A4SViewControllerAlias;
+@property (nonatomic, strong) NSNotification *nextNotification;
 
 @end

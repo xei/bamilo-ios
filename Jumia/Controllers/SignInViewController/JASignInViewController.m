@@ -241,12 +241,25 @@ JANoConnectionViewDelegate
          
          [self hideLoading];
          
-         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                             object:@{@"index": @(0),
-                                                                      @"name": STRING_HOME}];
-         
          [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                              object:nil];
+         
+         if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
+         {
+             [self.navigationController popViewControllerAnimated:NO];
+             
+             [[NSNotificationCenter defaultCenter] postNotificationName:self.nextNotification.name
+                                                                 object:self.nextNotification.object
+                                                               userInfo:self.nextNotification.userInfo];             
+         }
+         else
+         {
+             
+             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                 object:@{@"index": @(0),
+                                                                          @"name": STRING_HOME}];
+         }
+         
      } andFailureBlock:^(id errorObject) {
          
          NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

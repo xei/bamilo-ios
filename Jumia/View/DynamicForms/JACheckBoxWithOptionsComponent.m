@@ -50,7 +50,7 @@
     
     [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     
-    CGFloat startingY = CGRectGetMaxY(self.separator.frame);
+    CGFloat startingY = 0.0f;
     for(int i = 0; i < [[field options] count]; i++)
     {
         RIFieldOption *option = [[field options] objectAtIndex:i];
@@ -103,8 +103,8 @@
         [self.subViews addSubview:check];
     }
     
-    [self.subViews setFrame:CGRectMake(self.subViews.frame.origin.x, 21312 + self.subViews.frame.origin.y, self.subViews.frame.size.width, startingY)];
-    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, startingY)];
+    [self.subViews setFrame:CGRectMake(self.subViews.frame.origin.x, self.subViews.frame.origin.y, self.subViews.frame.size.width, startingY)];
+    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, CGRectGetMaxY(self.separator.frame) +startingY)];
 }
 
 -(void)changedState:(UISwitch*)sender
