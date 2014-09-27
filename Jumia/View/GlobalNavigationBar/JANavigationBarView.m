@@ -8,6 +8,12 @@
 
 #import "JANavigationBarView.h"
 
+@interface JANavigationBarView ()
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *backButtonWidth;
+
+@end
+
 @implementation JANavigationBarView
 
 + (JANavigationBarView *)getNewNavBarView
@@ -153,8 +159,14 @@
         NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
         CGSize backButtonTextSize = [backButtonText sizeWithAttributes:attributes];
         CGRect frame = self.backButton.frame;
-        frame.size.width = 6.0f + backButtonTextSize.width + 11.0f + 12.0f;
+        CGFloat backButtonMaxWidth = backButtonTextSize.width;
+        if(backButtonTextSize.width > 80.0f && VALID_NOTEMPTY(self.titleLabel.text, NSString) && !self.titleLabel.hidden)
+        {
+            backButtonMaxWidth = 80.0f;
+        }
+        frame.size.width = 6.0f + backButtonMaxWidth + 11.0f + 12.0f;
         self.backButton.frame = frame;
+        self.backButtonWidth.constant = frame.size.width;
         leftItemFrame = frame;
     }
     else if(!self.leftButton.hidden)
@@ -199,21 +211,16 @@
     NSString *titleLabelText = self.titleLabel.text;
     NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
     CGSize titleLabelTextSize = [titleLabelText sizeWithAttributes:titleLabelAttributes];
-    if (titleLabelTextSize.width <= titleLabelWidth)
+    if (titleLabelTextSize.width > titleLabelWidth)
     {
-        [self.titleLabel setFrame:CGRectMake(titleLabelLeftMargin,
-                                             self.titleLabel.frame.origin.y,
-                                             titleLabelWidth,
-                                             self.titleLabel.frame.size.height)];
+        titleLabelWidth = self.frame.size.width - leftItemFrame.size.width - rightItemFrame.size.width - 6.0f;
+        titleLabelLeftMargin = (self.frame.size.width - titleLabelWidth) / 2 + 12.0;
     }
-    else
-    {
-        titleLabelWidth = self.frame.size.width - leftItemFrame.size.width - rightItemFrame.size.width;
-        [self.titleLabel setFrame:CGRectMake(titleLabelLeftMargin,
-                                             self.titleLabel.frame.origin.y,
-                                             titleLabelWidth,
-                                             self.titleLabel.frame.size.height)];
-    }
+
+    [self.titleLabel setFrame:CGRectMake(titleLabelLeftMargin,
+                                         self.titleLabel.frame.origin.y,
+                                         titleLabelWidth,
+                                         self.titleLabel.frame.size.height)];
 }
 
 - (void)hideCenterItems
