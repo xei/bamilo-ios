@@ -11,6 +11,8 @@
 @interface JANavigationBarView ()
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *backButtonWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabelWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabelLeftMargin;
 
 @end
 
@@ -217,10 +219,8 @@
         titleLabelLeftMargin = (self.frame.size.width - titleLabelWidth) / 2 + 12.0;
     }
 
-    [self.titleLabel setFrame:CGRectMake(titleLabelLeftMargin,
-                                         self.titleLabel.frame.origin.y,
-                                         titleLabelWidth,
-                                         self.titleLabel.frame.size.height)];
+    self.titleLabelLeftMargin.constant = titleLabelLeftMargin;
+    self.titleLabelWidth.constant = titleLabelWidth;
 }
 
 - (void)hideCenterItems
