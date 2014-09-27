@@ -328,10 +328,8 @@
             if ([string isEqualToString:@""]) {
                 //nothing is selected, abort
                 
-                JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                [errorView setErrorTitle:STRING_CHOOSE_SIZE_FOR_ALL_PRODUCTS
-                                andAddTo:self];
-                
+                [self showMessage:STRING_CHOOSE_SIZE_FOR_ALL_PRODUCTS success:NO];
+
                 return;
             }
         }
@@ -447,13 +445,12 @@
     
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
         if (VALID_NOTEMPTY(favoriteProducts, NSArray)) {
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
             NSString* errorMessage = STRING_ERROR_ADD_TO_CART_FAILED_FOR_1_PRODUCT;
             if (1 < favoriteProducts.count) {
                 errorMessage = [NSString stringWithFormat:STRING_ERROR_ADD_TO_CART_FAILED_FOR_X_PRODUCTS, favoriteProducts.count];
             }
-            [errorView setErrorTitle:errorMessage
-                            andAddTo:self];
+
+            [self showMessage:errorMessage success:NO];
             
             self.totalProdutsInWishlist -= [favoriteProducts count];
         }
@@ -619,9 +616,7 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      JASuccessView *successView = [JASuccessView getNewJASuccessView];
-                      [successView setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
-                                          andAddTo:self];
+                      [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
                       
                       [RIProduct removeFromFavorites:product successBlock:^(void) {
                           
@@ -654,12 +649,9 @@
                       
                   } andFailureBlock:^(NSArray *errorMessages) {
                       
-                      JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                      [errorView setErrorTitle:STRING_ERROR_ADDING_TO_CART
-                                      andAddTo:self];
+                      [self showMessage:STRING_ERROR_ADDING_TO_CART success:NO];
                       
-                      [self hideLoading];
-                      
+                      [self hideLoading];                      
                   }];
 }
 

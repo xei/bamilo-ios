@@ -104,10 +104,7 @@
            
            [self hideLoading];
            
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_EDIT_ADDRESS
-                           andAddTo:self];
-
+           [self showMessage:STRING_EDIT_ADDRESS success:NO];           
        }];
 }
 
@@ -185,25 +182,19 @@
          {
              [self.changePasswordForm validateFields:errorObject];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.changePasswordForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                             andAddTo:self];
+             [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
          }
          else
          {
              [self.changePasswordForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR success:NO];
          }
      }];
 }

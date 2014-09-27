@@ -103,9 +103,7 @@ JANoConnectionViewDelegate
            
            [self finishedFormLoading];
            
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_ERROR
-                           andAddTo:self];
+           [self showMessage:STRING_ERROR success:NO];
        }];
 }
 
@@ -242,25 +240,19 @@ JANoConnectionViewDelegate
         {
             [self.dynamicForm validateFields:errorObject];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.dynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                            andAddTo:self];
+            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
         }
         else
         {
             [self.dynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR success:NO];
         }
     }];
 }

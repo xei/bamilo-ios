@@ -74,9 +74,7 @@
     }
     else
     {
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:STRING_ENTER_ORDER_ID
-                        andAddTo:self];
+        [self showMessage:STRING_ENTER_ORDER_ID success:NO];
     }
 }
 

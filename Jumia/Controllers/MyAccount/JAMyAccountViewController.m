@@ -148,16 +148,12 @@
 
 -(void)showUserDataSavedMessage
 {
-    JASuccessView *success = [JASuccessView getNewJASuccessView];
-    [success setSuccessTitle:STRING_CHANGED_PASSWORD_SUCCESS
-                    andAddTo:self];
+    [self showMessage:STRING_CHANGED_PASSWORD_SUCCESS success:YES];
 }
 
 - (void)showEmailNotificationsSavedMessage
 {
-    JASuccessView *success = [JASuccessView getNewJASuccessView];
-    [success setSuccessTitle:STRING_PREFERENCES_UPDATED
-                    andAddTo:self];
+    [self showMessage:STRING_PREFERENCES_UPDATED success:YES];
 }
 
 @end

@@ -774,9 +774,7 @@
                             [self removePickerView];
                             [self hideLoading];
                             
-                            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                            [errorView setErrorTitle:STRING_ERROR_CHANGING_QUANTITY
-                                            andAddTo:self];
+                            [self showMessage:STRING_ERROR_CHANGING_QUANTITY success:NO];
                         }];
     }
     else

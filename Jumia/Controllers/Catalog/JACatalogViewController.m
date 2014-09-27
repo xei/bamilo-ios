@@ -185,9 +185,7 @@
                                            [self addUndefinedSearchView:undefSearchTerm];
                                        } else {
 
-                                           JASuccessView *success = [JASuccessView getNewJASuccessView];
-                                           [success setSuccessTitle:STRING_ERROR
-                                                           andAddTo:self];
+                                           [self showMessage:STRING_ERROR success:NO];
                                        }
                                    }];
     }
@@ -649,23 +647,17 @@
                                         
                                         [self hideLoading];
                                         
-                                        JASuccessView *success = [JASuccessView getNewJASuccessView];
-                                        [success setSuccessTitle:STRING_ADDED_TO_WISHLIST
-                                                        andAddTo:self];
+                                        [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
                                         
                                     } andFailureBlock:^(NSArray *error) {
                                         [self hideLoading];
                                         
-                                        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                                        [errorView setErrorTitle:STRING_ERROR
-                                                        andAddTo:self];
+                                        [self showMessage:STRING_ERROR success:NO];
                                     }];
                                 } andFailureBlock:^(NSArray *error) {
                                     [self hideLoading];
                                     
-                                    JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                                    [errorView setErrorTitle:STRING_ERROR
-                                                    andAddTo:self];
+                                    [self showMessage:STRING_ERROR success:NO];
                                 }];
     } else {
         [RIProduct removeFromFavorites:product successBlock:^(void) {
@@ -690,16 +682,12 @@
             //update favoriteProducts
             [self hideLoading];
             
-            JASuccessView *success = [JASuccessView getNewJASuccessView];
-            [success setSuccessTitle:STRING_REMOVED_FROM_WISHLIST
-                            andAddTo:self];
+            [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
             
         } andFailureBlock:^(NSArray *error) {
             [self hideLoading];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR success:NO];
         }];
     }
 }

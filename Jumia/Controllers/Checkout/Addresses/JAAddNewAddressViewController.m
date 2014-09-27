@@ -123,9 +123,7 @@ UIPickerViewDelegate>
      {
          [self finishedFormLoading];
          
-         JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-         [errorView setErrorTitle:STRING_ERROR
-                         andAddTo:self];
+         [self showMessage:STRING_ERROR success:NO];
      }];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -464,9 +462,7 @@ UIPickerViewDelegate>
     
     if(self.hasErrors)
     {
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                        andAddTo:self];
+        [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         
         self.hasErrors = NO;
     }
