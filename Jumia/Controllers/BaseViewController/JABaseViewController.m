@@ -125,4 +125,10 @@
                                                         object:nil];
 }
 
+- (void)showMessage:(NSString*)message success:(BOOL)success
+{
+    JAMessageView *messageView = [JAMessageView getNewJAMessageView];
+    [messageView setTitle:message success:success addTo:self];
+}
+
 @end

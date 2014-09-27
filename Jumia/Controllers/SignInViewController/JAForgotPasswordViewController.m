@@ -70,9 +70,7 @@
          
          [self hideLoading];
          
-         JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-         [errorView setErrorTitle:STRING_ERROR
-                         andAddTo:self];
+         [self showMessage:STRING_ERROR success:NO];
          
          [self.navigationController popViewControllerAnimated:YES];
      }];
@@ -153,10 +151,7 @@
          [self.dynamicForm resetValues];
          [self hideLoading];
          
-         JASuccessView *success = [JASuccessView getNewJASuccessView];
-         [success setSuccessTitle:STRING_EMAIL_SENT
-                         andAddTo:self];
-         
+         [self showMessage:STRING_EMAIL_SENT success:YES];         
      } andFailureBlock:^(id errorObject)
      {
          [self hideLoading];
@@ -165,25 +160,19 @@
          {
              [self.dynamicForm validateFields:errorObject];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                             andAddTo:self];
+             [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
          }
          else
          {
              [self.dynamicForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR success:NO];
          }
      }];
 }

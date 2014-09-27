@@ -136,19 +136,14 @@
                
                [self hideLoading];
                
-               JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-               [errorView setErrorTitle:STRING_ERROR
-                               andAddTo:self];
+               [self showMessage:STRING_ERROR success:NO];
            }];
         
     } andFailureBlock:^(NSArray *errorMessages) {
         
         [self hideLoading];
         
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:STRING_ERROR
-                        andAddTo:self];
-        
+        [self showMessage:STRING_ERROR success:NO];
     }];
 }
 
@@ -294,9 +289,7 @@
             
             [self hideLoading];
             
-            JASuccessView *success = [JASuccessView getNewJASuccessView];
-            [success setSuccessTitle:STRING_REVIEW_SENT
-                            andAddTo:self];
+            [self showMessage:STRING_REVIEW_SENT success:YES];
             
         } andFailureBlock:^(id errorObject) {
             
@@ -306,25 +299,19 @@
             {
                 [self.ratingDynamicForm validateFields:errorObject];
                 
-                JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                                andAddTo:self];
+                [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
                 [self.ratingDynamicForm checkErrors];
                 
-                JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                                andAddTo:self];
+                [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
             }
             else
             {
                 [self.ratingDynamicForm checkErrors];
                 
-                JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                [errorView setErrorTitle:@"Generic error"
-                                andAddTo:self];
+                [self showMessage:STRING_ERROR success:NO];
             }
         }];
 }

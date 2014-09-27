@@ -770,9 +770,7 @@ JANoConnectionViewDelegate
                               NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                               [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                               
-                              JASuccessView *success = [JASuccessView getNewJASuccessView];
-                              [success setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
-                                              andAddTo:self];
+                              [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
                               
                               [self hideLoading];
                               
@@ -780,10 +778,7 @@ JANoConnectionViewDelegate
                               
                               [self hideLoading];
                               
-                              JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                              [errorView setErrorTitle:STRING_ERROR_ADDING_TO_CART
-                                              andAddTo:self];
-                              
+                              [self showMessage:STRING_ERROR_ADDING_TO_CART success:NO];
                           }];
         }
     }
@@ -938,16 +933,11 @@ JANoConnectionViewDelegate
                 [self.delegate changedFavoriteStateOfProduct:self.product];
             }
             
-            JASuccessView *success = [JASuccessView getNewJASuccessView];
-            [success setSuccessTitle:STRING_ADDED_TO_WISHLIST
-                            andAddTo:self];
+            [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
             
         } andFailureBlock:^(NSArray *error) {
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_ADDING_TO_WISHLIST
-                            andAddTo:self];
-            
+            [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
         }];
     } else {
         [RIProduct removeFromFavorites:self.product successBlock:^(void) {
@@ -970,18 +960,15 @@ JANoConnectionViewDelegate
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                       data:[trackingDictionary copy]];
-            JASuccessView *success = [JASuccessView getNewJASuccessView];
-            [success setSuccessTitle:STRING_REMOVED_FROM_WISHLIST
-                            andAddTo:self];
+            
+            [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
             
             if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
                 [self.delegate changedFavoriteStateOfProduct:self.product];
             }
         } andFailureBlock:^(NSArray *error) {
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_ADDING_TO_WISHLIST
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
         }];
     }
 }

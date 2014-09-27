@@ -324,18 +324,13 @@
                       
                       [self hideLoading];
                       
-                      JASuccessView *success = [JASuccessView getNewJASuccessView];
-                      [success setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
-                                      andAddTo:self];
+                      [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
                       
                   } andFailureBlock:^(NSArray *errorMessages) {
                       
                       [self hideLoading];
                       
-                      JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                      [errorView setErrorTitle:STRING_ERROR_ADDING_TO_CART
-                                      andAddTo:self];
-                      
+                      [self showMessage:STRING_ERROR_ADDING_TO_CART success:NO];
                   }];
 }
 

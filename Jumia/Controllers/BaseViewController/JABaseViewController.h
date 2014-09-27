@@ -29,5 +29,8 @@
  */
 - (void)hideLoading;
 
+
+- (void)showMessage:(NSString*)message success:(BOOL)success;
+
 @end
 

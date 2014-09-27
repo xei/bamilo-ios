@@ -118,10 +118,8 @@ UICollectionViewDelegateFlowLayout>
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                   data:[trackingDictionary copy]];
         
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:[errorMessages componentsJoinedByString:@","]
-                        andAddTo:self];
-        
+        [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
+
         [self hideLoading];
         [self finishedLoadingAddresses];
     }];
@@ -745,9 +743,7 @@ UICollectionViewDelegateFlowLayout>
             
             [self hideLoading];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
         }];
     } andFailureBlock:^(NSArray *errorMessages) {
 
@@ -761,10 +757,7 @@ UICollectionViewDelegateFlowLayout>
         
         [self hideLoading];
         
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS
-                        andAddTo:self];
-
+        [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
     }];
 }
 

@@ -8,6 +8,14 @@
 
 #import "JANavigationBarView.h"
 
+@interface JANavigationBarView ()
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *backButtonWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabelWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabelLeftMargin;
+
+@end
+
 @implementation JANavigationBarView
 
 + (JANavigationBarView *)getNewNavBarView
@@ -153,8 +161,14 @@
         NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
         CGSize backButtonTextSize = [backButtonText sizeWithAttributes:attributes];
         CGRect frame = self.backButton.frame;
-        frame.size.width = 6.0f + backButtonTextSize.width + 11.0f + 12.0f;
+        CGFloat backButtonMaxWidth = backButtonTextSize.width;
+        if(backButtonTextSize.width > 80.0f && VALID_NOTEMPTY(self.titleLabel.text, NSString) && !self.titleLabel.hidden)
+        {
+            backButtonMaxWidth = 80.0f;
+        }
+        frame.size.width = 6.0f + backButtonMaxWidth + 11.0f + 12.0f;
         self.backButton.frame = frame;
+        self.backButtonWidth.constant = frame.size.width;
         leftItemFrame = frame;
     }
     else if(!self.leftButton.hidden)
@@ -171,24 +185,42 @@
     CGRect rightItemFrame = CGRectZero;
     if(!self.doneButton.hidden)
     {
-        rightItemFrame = self.doneButton.frame;
+        NSString *doneButtonText = self.doneButton.titleLabel.text;
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
+        CGSize doneButtonTextSize = [doneButtonText sizeWithAttributes:attributes];
+        CGRect frame = self.doneButton.frame;
+        frame.size.width = 6.0f + doneButtonTextSize.width;
+        self.doneButton.frame = frame;
+        rightItemFrame = frame;
     }
     else if(!self.cartButton.hidden)
     {
         rightItemFrame = self.cartButton.frame;
     }
+    
+    CGFloat titleLabelWidth = 0.0f;
+    CGFloat titleLabelLeftMargin = 0.0f;
+    if(leftItemFrame.size.width >= rightItemFrame.size.width)
+    {
+        titleLabelLeftMargin = leftItemFrame.size.width + 3.0f;
+    }
     else
     {
-        rightItemFrame = CGRectMake(self.frame.size.width - leftItemFrame.size.width - 3.0f,
-                                    0.0f,
-                                    0.0f,
-                                    0.0f);
+        titleLabelLeftMargin = rightItemFrame.size.width + 3.0f;
     }
+    titleLabelWidth = self.frame.size.width - (2 * titleLabelLeftMargin);
     
-    [self.titleLabel setFrame:CGRectMake(CGRectGetMaxX(leftItemFrame) + 3.0f,
-                                         self.titleLabel.frame.origin.y,
-                                         CGRectGetMinX(rightItemFrame) - 3.0f - CGRectGetMaxX(leftItemFrame),
-                                         self.titleLabel.frame.size.height)];
+    NSString *titleLabelText = self.titleLabel.text;
+    NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
+    CGSize titleLabelTextSize = [titleLabelText sizeWithAttributes:titleLabelAttributes];
+    if (titleLabelTextSize.width > titleLabelWidth)
+    {
+        titleLabelWidth = self.frame.size.width - leftItemFrame.size.width - rightItemFrame.size.width - 6.0f;
+        titleLabelLeftMargin = (self.frame.size.width - titleLabelWidth) / 2 + 12.0;
+    }
+
+    self.titleLabelLeftMargin.constant = titleLabelLeftMargin;
+    self.titleLabelWidth.constant = titleLabelWidth;
 }
 
 - (void)hideCenterItems

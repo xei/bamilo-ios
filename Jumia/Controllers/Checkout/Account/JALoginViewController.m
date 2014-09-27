@@ -112,10 +112,7 @@ FBLoginViewDelegate
            
            self.numberOfFormsToLoad--;
            
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_ERROR
-                           andAddTo:self];
-           
+           [self showMessage:STRING_ERROR success:NO];
        }];
     
     [RIForm getForm:@"registersignup"
@@ -138,10 +135,7 @@ FBLoginViewDelegate
        } failureBlock:^(NSArray *errorMessage) {
            self.numberOfFormsToLoad--;
            
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_ERROR
-                           andAddTo:self];
-           
+           [self showMessage:STRING_ERROR success:NO];
        }];
 }
 
@@ -505,25 +499,19 @@ FBLoginViewDelegate
         {
             [self.loginDynamicForm validateFields:errorObject];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.loginDynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                            andAddTo:self];
+            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
         }
         else
         {
             [self.loginDynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR success:NO];
         }
     }];
 }
@@ -563,25 +551,19 @@ FBLoginViewDelegate
         {
             [self.signupDynamicForm validateFields:errorObject];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.signupDynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                            andAddTo:self];
+            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
         }
         else
         {
             [self.signupDynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR success:NO];
         }
     }];
 }
@@ -640,9 +622,7 @@ FBLoginViewDelegate
                                              } andFailureBlock:^(NSArray *errorObject) {
                                                  [self hideLoading];
                                                  
-                                                 JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                                                 [errorView setErrorTitle:STRING_ERROR
-                                                                 andAddTo:self];
+                                                 [self showMessage:STRING_ERROR success:NO];
                                              }];
     }
 }
@@ -684,9 +664,7 @@ FBLoginViewDelegate
     }
     
     if (alertMessage) {
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:alertMessage
-                        andAddTo:self];
+         [self showMessage:alertMessage success:NO];
     }
 }
 

@@ -428,9 +428,7 @@ JANoConnectionViewDelegate
         }
         else
         {
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         }
     }
 }

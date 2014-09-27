@@ -140,10 +140,7 @@ UIAlertViewDelegate
         
         [self hideLoading];
         
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:STRING_ERROR
-                        andAddTo:self];
-        
+        [self showMessage:STRING_ERROR success:NO];
     }];
 }
 
