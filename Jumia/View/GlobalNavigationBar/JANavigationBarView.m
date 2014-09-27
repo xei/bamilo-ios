@@ -171,24 +171,49 @@
     CGRect rightItemFrame = CGRectZero;
     if(!self.doneButton.hidden)
     {
-        rightItemFrame = self.doneButton.frame;
+        NSString *doneButtonText = self.doneButton.titleLabel.text;
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
+        CGSize doneButtonTextSize = [doneButtonText sizeWithAttributes:attributes];
+        CGRect frame = self.doneButton.frame;
+        frame.size.width = 6.0f + doneButtonTextSize.width;
+        self.doneButton.frame = frame;
+        rightItemFrame = frame;
     }
     else if(!self.cartButton.hidden)
     {
         rightItemFrame = self.cartButton.frame;
     }
+    
+    CGFloat titleLabelWidth = 0.0f;
+    CGFloat titleLabelLeftMargin = 0.0f;
+    if(leftItemFrame.size.width >= rightItemFrame.size.width)
+    {
+        titleLabelLeftMargin = leftItemFrame.size.width + 3.0f;
+    }
     else
     {
-        rightItemFrame = CGRectMake(self.frame.size.width - leftItemFrame.size.width - 3.0f,
-                                    0.0f,
-                                    0.0f,
-                                    0.0f);
+        titleLabelLeftMargin = rightItemFrame.size.width + 3.0f;
     }
+    titleLabelWidth = self.frame.size.width - (2 * titleLabelLeftMargin);
     
-    [self.titleLabel setFrame:CGRectMake(CGRectGetMaxX(leftItemFrame) + 3.0f,
-                                         self.titleLabel.frame.origin.y,
-                                         CGRectGetMinX(rightItemFrame) - 3.0f - CGRectGetMaxX(leftItemFrame),
-                                         self.titleLabel.frame.size.height)];
+    NSString *titleLabelText = self.titleLabel.text;
+    NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
+    CGSize titleLabelTextSize = [titleLabelText sizeWithAttributes:titleLabelAttributes];
+    if (titleLabelTextSize.width <= titleLabelWidth)
+    {
+        [self.titleLabel setFrame:CGRectMake(titleLabelLeftMargin,
+                                             self.titleLabel.frame.origin.y,
+                                             titleLabelWidth,
+                                             self.titleLabel.frame.size.height)];
+    }
+    else
+    {
+        titleLabelWidth = self.frame.size.width - leftItemFrame.size.width - rightItemFrame.size.width;
+        [self.titleLabel setFrame:CGRectMake(titleLabelLeftMargin,
+                                             self.titleLabel.frame.origin.y,
+                                             titleLabelWidth,
+                                             self.titleLabel.frame.size.height)];
+    }
 }
 
 - (void)hideCenterItems
