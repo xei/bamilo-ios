@@ -333,9 +333,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  *  Hook to recognise an app launch, given launch options
  *
  *  @param options The launching options.
- *  @param parameters Extra parameters for tracking
  */
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options parameters:(NSDictionary*)parameters;
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options;
 
 @end
 
@@ -384,11 +383,9 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  *
  *  @param path Path to the configuration file (plist file).
  *  @param launchOptions The launching options.
- *  @param parameters Extra parameters for tracking
  */
 - (void)startWithConfigurationFromPropertyListAtPath:(NSString *)path
-                                       launchOptions:(NSDictionary *)launchOptions
-                                          parameters:(NSDictionary *)parameters;
+                                       launchOptions:(NSDictionary *)launchOptions;
 
 /**
  *  Creates and initializes an `RITracking`object

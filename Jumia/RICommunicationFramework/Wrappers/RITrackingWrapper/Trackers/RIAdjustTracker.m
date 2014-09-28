@@ -90,7 +90,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
 #pragma mark - RITracker protocol
 
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options parameters:(NSDictionary *)parameters
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options
 {
     RIDebugLog(@"Adjust tracker tracks application launch");
     

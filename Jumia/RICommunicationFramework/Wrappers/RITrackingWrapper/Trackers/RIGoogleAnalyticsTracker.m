@@ -104,7 +104,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     NSLog(@"Initialized Google Analytics %d", [GAI sharedInstance].trackUncaughtExceptions);
 }
 
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options parameters:(NSDictionary *)parameters
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options
 {
 
 }

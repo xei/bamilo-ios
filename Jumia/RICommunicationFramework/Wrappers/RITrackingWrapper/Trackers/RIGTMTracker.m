@@ -42,7 +42,7 @@ NSString * const kGTMToken = @"kGTMToken";
 
 #pragma mark - RITracker protocol
 
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options parameters:(NSDictionary *)parameters
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options
 {
     RIDebugLog(@"GTM tracker tracks application launch");
 

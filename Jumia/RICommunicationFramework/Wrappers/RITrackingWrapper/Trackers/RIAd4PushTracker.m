@@ -89,7 +89,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 #pragma mark - RITracker protocol
 
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options parameters:(NSDictionary*)parameters
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options
 {
     RIDebugLog(@"Add4Push tracker tracks application launch");
     
