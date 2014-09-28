@@ -68,6 +68,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         NSMutableArray *events = [[NSMutableArray alloc] init];
         
         [events addObject:[NSNumber numberWithInt:RIEventLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventAutoLoginSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventRegisterStart]];
         [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]];
@@ -258,7 +259,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         NSInteger event = [eventType integerValue];
         switch (event) {
             case RIEventLoginSuccess:
-            case RIEventAutoLogin:
+            case RIEventAutoLoginSuccess:
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
                 {
                     [parameters addObject:[NSString stringWithFormat:@"loginUserID=%@", [data objectForKey:kRIEventUserIdKey]]];

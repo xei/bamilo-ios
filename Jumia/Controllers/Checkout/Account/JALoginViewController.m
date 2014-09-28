@@ -10,6 +10,7 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "RICustomer.h"
+#import "JAUtils.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 @interface JALoginViewController ()
@@ -463,7 +464,33 @@ FBLoginViewDelegate
     
     [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object) {
         
+        RICustomer *customerObject = ((RICustomer *)object);
+        
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
+        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+        [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
+        [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+        
+        NSDate* now = [NSDate date];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+        NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+        [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
+                                                  data:[trackingDictionary copy]];
+        
+        trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
@@ -494,6 +521,15 @@ FBLoginViewDelegate
         
     } andFailureBlock:^(id errorObject) {
         [self hideLoading];
+        
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginFail]
+                                                  data:[trackingDictionary copy]];
+        
         
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
@@ -534,6 +570,11 @@ FBLoginViewDelegate
     [RIForm sendForm:[self.signupDynamicForm form] parameters:[self.signupDynamicForm getValues] successBlock:^(id object) {
         [self.signupDynamicForm resetValues];
         
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSignupSuccess]
+                                                  data:trackingDictionary];
+        
         [self hideLoading];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
@@ -545,6 +586,11 @@ FBLoginViewDelegate
                                                             object:nil
                                                           userInfo:userInfo];
     } andFailureBlock:^(id errorObject) {
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSignupFail]
+                                                  data:trackingDictionary];
+
         [self hideLoading];
         
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
@@ -591,7 +637,26 @@ FBLoginViewDelegate
         [RICustomer loginCustomerByFacebookWithParameters:parameters
                                              successBlock:^(id customer) {
                                                  
+                                                 RICustomer *customerObject = ((RICustomer *)customer);
+                                                 
                                                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                                 [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
+                                                 [trackingDictionary setValue:@"FacebookLoginSuccess" forKey:kRIEventActionKey];
+                                                 [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                                                 [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
+                                                 [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                                 [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                                 [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
+                                                 [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+                                                 
+                                                 NSDate* now = [NSDate date];
+                                                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                                                 [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                                                 NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+                                                 NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+                                                 [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+                                                 
+                                                 trackingDictionary = [[NSMutableDictionary alloc] init];
                                                  [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
                                                  [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];
                                                  [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
@@ -621,6 +686,14 @@ FBLoginViewDelegate
                                                  }
                                              } andFailureBlock:^(NSArray *errorObject) {
                                                  [self hideLoading];
+                                                 
+                                                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                                 [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
+                                                 [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                                                 [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+                                                 
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginFail]
+                                                                                           data:[trackingDictionary copy]];
                                                  
                                                  [self showMessage:STRING_ERROR success:NO];
                                              }];

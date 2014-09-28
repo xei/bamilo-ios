@@ -11,6 +11,7 @@
 @interface RIGTMTracker : NSObject
 <
 RITracker,
+RILaunchEventTracker,
 RIEventTracking
 >
 

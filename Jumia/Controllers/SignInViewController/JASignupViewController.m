@@ -210,6 +210,14 @@ JANoConnectionViewDelegate
         [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        if(self.fromSideMenu)
+        {
+            [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+        }
+        else
+        {
+            [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+        }
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterSuccess]
                                                   data:[trackingDictionary copy]];
@@ -230,6 +238,14 @@ JANoConnectionViewDelegate
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:@"CreateFailed" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+        if(self.fromSideMenu)
+        {
+            [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+        }
+        else
+        {
+            [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+        }
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterFail]
                                                   data:[trackingDictionary copy]];
@@ -261,9 +277,19 @@ JANoConnectionViewDelegate
 {
     [self.dynamicForm resignResponder];
     
+    [self.navigationController popViewControllerAnimated:NO];
+    
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    
+    if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
+    {
+        [userInfo setObject:self.nextNotification forKey:@"notification"];
+    }
+    [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
+
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
                                                         object:nil
-                                                      userInfo:nil];
+                                                      userInfo:userInfo];
 }
 
 - (void)birthdayChanged:(id)sender

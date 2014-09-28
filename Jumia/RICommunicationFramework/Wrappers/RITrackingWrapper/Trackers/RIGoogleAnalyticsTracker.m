@@ -40,7 +40,8 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         self.queue.maxConcurrentOperationCount = 1;
         
         NSMutableArray *events = [[NSMutableArray alloc] init];
-        [events addObject:[NSNumber numberWithInt:RIEventAutoLogin]];
+        [events addObject:[NSNumber numberWithInt:RIEventAutoLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventAutoLoginFail]];
         [events addObject:[NSNumber numberWithInt:RIEventLoginSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventLoginFail]];
         [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
