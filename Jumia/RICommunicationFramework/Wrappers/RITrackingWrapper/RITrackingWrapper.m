@@ -56,7 +56,6 @@ static dispatch_once_t sharedInstanceToken;
 
 - (void)startWithConfigurationFromPropertyListAtPath:(NSString *)path
                                        launchOptions:(NSDictionary *)launchOptions
-                                          parameters:(NSDictionary *)parameters
 {
     RIDebugLog(@"Starting initialisation with launch options '%@' and property list at path '%@'",
                launchOptions, path);
@@ -78,21 +77,18 @@ static dispatch_once_t sharedInstanceToken;
     
     self.trackers = @[googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, newRelicTracker, adjustTracker, gtmTracker];
     
-    NSDictionary *launchOptionsDictionary = [[NSDictionary alloc] init];
     if(VALID_NOTEMPTY(launchOptions, NSDictionary))
     {
-        launchOptionsDictionary = [launchOptions copy];
+        [self RI_callTrackersConformToProtocol:@protocol(RITracker)
+                                      selector:@selector(applicationDidLaunchWithOptions:)
+                                     arguments:@[launchOptions]];
     }
-    
-    NSDictionary *parametersDictionary = [[NSDictionary alloc] init];
-    if(VALID_NOTEMPTY(parameters, NSDictionary))
+    else
     {
-        parametersDictionary = [parameters copy];
+        [self RI_callTrackersConformToProtocol:@protocol(RITracker)
+                                      selector:@selector(applicationDidLaunchWithOptions:)
+                                     arguments:nil];
     }
-    
-    [self RI_callTrackersConformToProtocol:@protocol(RITracker)
-                                  selector:@selector(applicationDidLaunchWithOptions:parameters:)
-                                 arguments:@[launchOptionsDictionary, parametersDictionary]];
 }
 
 - (RICartState)getCartState

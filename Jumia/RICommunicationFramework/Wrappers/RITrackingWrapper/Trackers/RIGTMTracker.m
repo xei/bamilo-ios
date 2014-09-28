@@ -10,6 +10,20 @@
 #import "TAGContainer.h"
 #import "TAGContainerOpener.h"
 #import "TAGManager.h"
+#import "TAGDataLayer.h"
+
+#define kGTMEventKey                        @"event"
+#define kGTMEventSourceKey                  @"source"
+#define kGTMEventCampaignKey                @"campaign"
+#define kGTMEventAppVersionKey              @"appVersion"
+#define kGTMEventShopCountryKey             @"shopCountry"
+#define kGTMEventLoginMethodKey             @"loginMethod"
+#define kGTMEventLoginLocationKey           @"loginLocation"
+#define kGTMEventCustomerIdKey              @"customerId"
+#define kGTMEventUserAgeKey                 @"userAge"
+#define kGTMEventUserGenderKey              @"userGender"
+#define kGTMEventAccountCreationDateKey     @"accountCreationDate"
+#define kGTMEventNumberPurchasesKey         @"numberPurchases"
 
 NSString * const kGTMToken = @"kGTMToken";
 
@@ -35,6 +49,17 @@ NSString * const kGTMToken = @"kGTMToken";
         
         NSMutableArray *events = [[NSMutableArray alloc] init];        
         
+        [events addObject:[NSNumber numberWithInt:RIEventLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventAutoLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventLoginFail]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookLoginFail]];
+        [events addObject:[NSNumber numberWithInt:RIEventAutoLoginFail]];
+        [events addObject:[NSNumber numberWithInt:RIEventSignupSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventSignupFail]];
+        [events addObject:[NSNumber numberWithInt:RIEventRegisterFail]];
+
         self.registeredEvents = [events copy];
     }
     return self;
@@ -42,7 +67,7 @@ NSString * const kGTMToken = @"kGTMToken";
 
 #pragma mark - RITracker protocol
 
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options parameters:(NSDictionary *)parameters
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options
 {
     RIDebugLog(@"GTM tracker tracks application launch");
 
@@ -78,6 +103,42 @@ NSString * const kGTMToken = @"kGTMToken";
     // Other methods calls that use this container.
 }
 
+#pragma mark - RILaunchEventTracker implementation
+
+- (void)sendLaunchEventWithData:(NSDictionary *)dataDictionary;
+{
+    RIDebugLog(@"GTM - Launch event with data:%@", dataDictionary);
+
+    // The container should have already been opened, otherwise events pushed to
+    // the data layer will not fire tags in that container.
+    TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
+    
+    NSMutableDictionary *pushedData = [[NSMutableDictionary alloc] init];
+    [pushedData setObject:@"openApp" forKey:kGTMEventKey];
+
+    if(VALID_NOTEMPTY([dataDictionary objectForKey:kRILaunchEventSourceKey], NSString))
+    {
+        [pushedData setObject:[dataDictionary objectForKey:kRILaunchEventSourceKey] forKey:kGTMEventSourceKey];
+    }
+    
+    if(VALID_NOTEMPTY([dataDictionary objectForKey:kRILaunchEventCampaignKey], NSString))
+    {
+        [pushedData setObject:[dataDictionary objectForKey:kRILaunchEventCampaignKey] forKey:kGTMEventCampaignKey];
+    }
+    
+    if(VALID_NOTEMPTY([dataDictionary objectForKey:kRILaunchEventAppVersionDataKey], NSString))
+    {
+        [pushedData setObject:[dataDictionary objectForKey:kRILaunchEventAppVersionDataKey] forKey:kGTMEventAppVersionKey];
+    }
+    
+    if(VALID_NOTEMPTY([dataDictionary objectForKey:kRIEventShopCountryKey], NSString))
+    {
+        [pushedData setObject:[dataDictionary objectForKey:kRIEventShopCountryKey] forKey:kGTMEventShopCountryKey];
+    }
+    
+    [dataLayer push:pushedData];
+}
+
 #pragma mark RIEventTracking protocol
 
 - (void)trackEvent:(NSNumber *)eventType data:(NSDictionary *)data
@@ -85,7 +146,115 @@ NSString * const kGTMToken = @"kGTMToken";
     RIDebugLog(@"GTM - Tracking event = %@, data %@", eventType, data);
     if([self.registeredEvents containsObject:eventType])
     {
- 
+        TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
+        
+        NSMutableDictionary *pushedData = [[NSMutableDictionary alloc] init];
+        
+        NSInteger eventTypeInt = [eventType integerValue];
+        switch (eventTypeInt) {
+            case RIEventLoginSuccess:
+                [pushedData setObject:@"login" forKey:kGTMEventKey];
+                [pushedData setObject:@"Email Auth" forKey:kGTMEventLoginMethodKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventLoginLocationKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventUserIdKey] forKey:kGTMEventCustomerIdKey];
+                }
+                break;
+            case RIEventFacebookLoginSuccess:
+                [pushedData setObject:@"login" forKey:kGTMEventKey];
+                [pushedData setObject:@"Facebook" forKey:kGTMEventLoginMethodKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventLoginLocationKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventUserIdKey] forKey:kGTMEventCustomerIdKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventAgeKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventAgeKey] forKey:kGTMEventUserAgeKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventGenderKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventGenderKey] forKey:kGTMEventUserGenderKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventAccountDateKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventAccountDateKey] forKey:kGTMEventAccountCreationDateKey];
+                }
+                break;
+            case RIEventAutoLoginSuccess:
+                [pushedData setObject:@"autoLogin" forKey:kGTMEventKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventUserIdKey] forKey:kGTMEventCustomerIdKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventAgeKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventAgeKey] forKey:kGTMEventUserAgeKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventGenderKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventGenderKey] forKey:kGTMEventUserGenderKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventAccountDateKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventAccountDateKey] forKey:kGTMEventAccountCreationDateKey];
+                }
+                break;
+            case RIEventLoginFail:
+                [pushedData setObject:@"loginFailed" forKey:kGTMEventKey];
+                [pushedData setObject:@"Email Auth" forKey:kGTMEventLoginMethodKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventLoginLocationKey];
+                }
+                break;
+            case RIEventFacebookLoginFail:
+                [pushedData setObject:@"loginFailed" forKey:kGTMEventKey];
+                [pushedData setObject:@"Facebook" forKey:kGTMEventLoginMethodKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventLoginLocationKey];
+                }
+                break;
+            case RIEventAutoLoginFail:
+                [pushedData setObject:@"autoLoginFailed" forKey:kGTMEventKey];
+                break;
+            case RIEventLogout:
+                [pushedData setObject:@"logout" forKey:kGTMEventKey];
+                [pushedData setObject:@"Side menu" forKey:kRIEventLocationKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventUserIdKey] forKey:kGTMEventCustomerIdKey];
+                }
+                break;
+            case RIEventRegisterSuccess:
+            case RIEventSignupSuccess:
+                [pushedData setObject:@"register" forKey:kGTMEventKey];
+                [pushedData setObject:@"Email Auth" forKey:kGTMEventLoginMethodKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventLoginLocationKey];
+                }
+                break;
+            case RIEventRegisterFail:
+            case RIEventSignupFail:
+                [pushedData setObject:@"registerFailed" forKey:kGTMEventKey];
+                [pushedData setObject:@"Email Auth" forKey:kGTMEventLoginMethodKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventLoginLocationKey];
+                }
+                break;
+        }
+
+        [dataLayer push:pushedData];
     }
 }
 

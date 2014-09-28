@@ -42,8 +42,7 @@
 #endif
     
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
-                                                                       launchOptions:launchOptions
-                                                                          parameters:nil];
+                                                                       launchOptions:launchOptions];
     
     [FBLoginView class];
     

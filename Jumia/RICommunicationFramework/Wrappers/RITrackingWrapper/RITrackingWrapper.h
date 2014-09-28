@@ -177,64 +177,70 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventPriceFilterKey      @"RIEventPriceFilterKey"
 #define kRIEventNumberOfProductsKey @"RIEventNumberOfProductsKey"
 #define kRIEventTopCategoryKey      @"RIEventTopCategoryKey"
+#define kRIEventLocationKey         @"RIEventLocationKey"
+#define kRIEventAccountDateKey      @"RIEventAccountDateKey"
+#define kRIEventAgeKey              @"RIEventAgeKey"
 
 /**
  *  Struct to identify events
  */
 typedef NS_ENUM(NSInteger, RIEventType) {
-    RIEventAutoLogin = 0,
-    RIEventLoginSuccess = 1,
-    RIEventLoginFail = 2,
-    RIEventRegisterStart = 3,
-    RIEventRegisterSuccess = 4,
-    RIEventRegisterFail = 5,
-    RIEventFacebookLoginSuccess = 6,
-    RIEventFacebookLoginFail = 7,
-    RIEventLogout = 8,
-    RIEventSideMenu = 9,
-    RIEventCategories = 10,
-    RIEventCatalog = 11,
-    RIEventFilter = 12,
-    RIEventSort = 13,
-    RIEventViewProductDetails = 14,
-    RIEventRelatedItem = 15,
-    RIEventAddToCart = 16,
-    RIEventRemoveFromCart = 17,
-    RIEventAddToWishlist = 18,
-    RIEventRemoveFromWishlist = 19,
-    RIEventRateProduct = 20,
-    RIEventSearch = 21,
-    RIEventShareFacebook = 22,
-    RIEventShareTwitter = 23,
-    RIEventShareEmail = 24,
-    RIEventShareSMS = 25,
-    RIEventShareOther = 26,
-    RIEventCheckoutStart = 27,
-    RIEventCheckoutAboutYou = 28,
-    RIEventCheckoutAddresses = 29,
-    RIEventCheckoutShipping = 30,
-    RIEventCheckoutPayment = 31,
-    RIEventCheckoutEnd = 32,
-    RIEventCheckoutContinueShopping = 33,
-    RIEventCheckoutError = 34,
-    RIEventNewsletter = 35,
-    RIEventCallToOrder = 36,
-    RIEventGuestCustomer = 37,
-    RIEventViewProduct = 38,
-    RIEventViewListing = 39,
-    RIEventViewCart = 40,
-    RIEventTransactionConfirm = 41,
-    RIEventFacebookHome = 42,
-    RIEventFacebookViewListing = 43,
-    RIEventFacebookViewProduct = 44,
-    RIEventFacebookSearch = 45,
-    RIEventFacebookViewWishlist = 46,
-    RIEventFacebookViewCart = 47,
-    RIEventFacebookViewTransaction = 48,
-    RIEventChangeCountry = 49,
-    RIEventViewCampaign = 50,
-    RIEventTopCategory = 51,
-    RIEventAddFromWishlistToCart = 52
+    RIEventAutoLoginSuccess = 0,
+    RIEventAutoLoginFail = 1,
+    RIEventLoginSuccess = 2,
+    RIEventLoginFail = 3,
+    RIEventRegisterStart = 4,
+    RIEventRegisterSuccess = 5,
+    RIEventRegisterFail = 6,
+    RIEventFacebookLoginSuccess = 7,
+    RIEventFacebookLoginFail = 8,
+    RIEventLogout = 9,
+    RIEventSideMenu = 10,
+    RIEventCategories = 11,
+    RIEventCatalog = 12,
+    RIEventFilter = 13,
+    RIEventSort = 14,
+    RIEventViewProductDetails = 15,
+    RIEventRelatedItem = 16,
+    RIEventAddToCart = 17,
+    RIEventRemoveFromCart = 18,
+    RIEventAddToWishlist = 19,
+    RIEventRemoveFromWishlist = 20,
+    RIEventRateProduct = 21,
+    RIEventSearch = 22,
+    RIEventShareFacebook = 23,
+    RIEventShareTwitter = 24,
+    RIEventShareEmail = 25,
+    RIEventShareSMS = 26,
+    RIEventShareOther = 27,
+    RIEventCheckoutStart = 28,
+    RIEventCheckoutAboutYou = 29,
+    RIEventCheckoutAddresses = 30,
+    RIEventCheckoutShipping = 31,
+    RIEventCheckoutPayment = 32,
+    RIEventCheckoutEnd = 33,
+    RIEventCheckoutContinueShopping = 34,
+    RIEventCheckoutError = 35,
+    RIEventNewsletter = 36,
+    RIEventCallToOrder = 37,
+    RIEventGuestCustomer = 38,
+    RIEventViewProduct = 39,
+    RIEventViewListing = 40,
+    RIEventViewCart = 41,
+    RIEventTransactionConfirm = 42,
+    RIEventFacebookHome = 43,
+    RIEventFacebookViewListing = 44,
+    RIEventFacebookViewProduct = 45,
+    RIEventFacebookSearch = 46,
+    RIEventFacebookViewWishlist = 47,
+    RIEventFacebookViewCart = 48,
+    RIEventFacebookViewTransaction = 49,
+    RIEventChangeCountry = 50,
+    RIEventViewCampaign = 51,
+    RIEventTopCategory = 52,
+    RIEventAddFromWishlistToCart = 53,
+    RIEventSignupSuccess = 54,
+    RIEventSignupFail = 55
 };
 
 /**
@@ -309,10 +315,11 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  *  Protocol constants
  */
 #define kRILaunchEventInitialViewLoadedNotification @"RILaunchInitialViewLoadedNotification"
-#define kRILaunchEventKey @"LAUNCH"
-#define kRILaunchEventDurationDataKey @"duration"
-#define kRILaunchEventAppVersionDataKey @"app_version"
-#define kRILaunchEventDeviceModelDataKey @"device_model"
+#define kRILaunchEventDurationDataKey               @"RILaunchEventDurationDataKey"
+#define kRILaunchEventAppVersionDataKey             @"RILaunchEventAppVersionDataKey"
+#define kRILaunchEventDeviceModelDataKey            @"RILaunchEventDeviceModelDataKey"
+#define kRILaunchEventCampaignKey                   @"RILaunchEventCampaignKey"
+#define kRILaunchEventSourceKey                     @"RILaunchEventSourceKey"
 
 /**
  *  RITracker protocol implements the initialization of the trackers
@@ -333,9 +340,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  *  Hook to recognise an app launch, given launch options
  *
  *  @param options The launching options.
- *  @param parameters Extra parameters for tracking
  */
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options parameters:(NSDictionary*)parameters;
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options;
 
 @end
 
@@ -384,11 +390,9 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  *
  *  @param path Path to the configuration file (plist file).
  *  @param launchOptions The launching options.
- *  @param parameters Extra parameters for tracking
  */
 - (void)startWithConfigurationFromPropertyListAtPath:(NSString *)path
-                                       launchOptions:(NSDictionary *)launchOptions
-                                          parameters:(NSDictionary *)parameters;
+                                       launchOptions:(NSDictionary *)launchOptions;
 
 /**
  *  Creates and initializes an `RITracking`object

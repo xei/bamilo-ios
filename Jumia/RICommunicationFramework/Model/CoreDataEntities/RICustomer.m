@@ -32,7 +32,7 @@
 @dynamic addresses;
 @synthesize costumerRequestID;
 
-+ (NSString*)autoLogin:(void (^)(BOOL success))returnBlock
++ (NSString*)autoLogin:(void (^)(BOOL success, RICustomer *customer))returnBlock
 {
     NSString *operationID = nil;
     
@@ -55,11 +55,11 @@
             [RICustomer loginCustomerByFacebookWithParameters:parameters
                                                  successBlock:^(id customer) {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                         returnBlock(YES);
+                                                         returnBlock(YES, customer);
                                                      });
                                                  } andFailureBlock:^(NSArray *errorObject) {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                         returnBlock(NO);
+                                                         returnBlock(NO, nil);
                                                      });
                                                  }];
         }
@@ -74,32 +74,32 @@
                             successBlock:^(id jsonObject)
                          {
                              dispatch_async(dispatch_get_main_queue(), ^{
-                                 returnBlock(YES);
+                                 returnBlock(YES, jsonObject);
                              });
                          } andFailureBlock:^(id errorObject)
                          {
                              dispatch_async(dispatch_get_main_queue(), ^{
-                                 returnBlock(NO);
+                                 returnBlock(NO, nil);
                              });
                          }];
                     } failureBlock:^(NSArray *errorMessage)
                     {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            returnBlock(NO);
+                            returnBlock(NO, nil);
                         });
                     }];
         }
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                returnBlock(NO);
+                returnBlock(NO, nil);
             });
         }
     }
     else
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            returnBlock(NO);
+            returnBlock(NO, nil);
         });
     }
     

@@ -140,12 +140,12 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSignUpScreen)
+                                             selector:@selector(showSignUpScreen:)
                                                  name:kShowSignUpScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSignInScreen)
+                                             selector:@selector(showSignInScreen:)
                                                  name:kShowSignInScreenNotification
                                                object:nil];
     
@@ -310,6 +310,8 @@
         {
             JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
             
+            signInViewController.fromSideMenu = YES;
+            
             [self pushViewController:signInViewController
                             animated:YES];
             
@@ -362,6 +364,7 @@
             {
                 JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
                 
+                signInViewController.fromSideMenu = NO;
                 signInViewController.nextNotification = notification;
                 
                 [self pushViewController:signInViewController
@@ -388,6 +391,7 @@
             {
                 JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
                 
+                signInViewController.fromSideMenu = NO;
                 signInViewController.nextNotification = notification;
                 
                 [self pushViewController:signInViewController
@@ -628,17 +632,23 @@
     }
 }
 
-- (void)showSignUpScreen
+- (void)showSignUpScreen:(NSNotification *)notification
 {
     JASignupViewController *signUpVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signUpViewController"];
+
+    signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
+    signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
     
     [self pushViewController:signUpVC animated:YES];
 }
 
-- (void)showSignInScreen
+- (void)showSignInScreen:(NSNotification *)notification
 {
     JASignInViewController *signInVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
     
+    signInVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
+    signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+        
     [self pushViewController:signInVC animated:YES];
 }
 

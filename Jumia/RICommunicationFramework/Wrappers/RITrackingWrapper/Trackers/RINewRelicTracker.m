@@ -28,7 +28,7 @@ NSString * const kRINewRelicTokenAPIKey = @"RINewRelicTokenAPIKey";
 
 #pragma mark - RITracker protocol
 
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options parameters:(NSDictionary *)parameters
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options
 {
     RIDebugLog(@"NewRelic tracker tracks application launch");
     
