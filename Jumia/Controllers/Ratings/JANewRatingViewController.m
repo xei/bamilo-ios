@@ -17,6 +17,7 @@
 #import "RICustomer.h"
 #import "JAPriceView.h"
 #import "JAUtils.h"
+#import "RIProduct.h"
 
 @interface JANewRatingViewController ()
 <
@@ -40,7 +41,6 @@
 @property (nonatomic, strong) JAPriceView *priceView;
 @property (assign, nonatomic) NSInteger numberOfFields;
 
-
 @end
 
 @implementation JANewRatingViewController
@@ -56,15 +56,15 @@
     
     self.originalFrame = self.centerView.frame;
     
-    self.brandLabel.text = self.ratingProductBrand;
-    self.nameLabel.text = self.ratingProductNameForLabel;
+    self.brandLabel.text = self.product.brand;
+    self.nameLabel.text = self.product.name;
     
     [self.oldPriceLabel removeFromSuperview];
     [self.labelNewPrice removeFromSuperview];
     
     self.priceView = [[JAPriceView alloc] init];
-    [self.priceView loadWithPrice:self.ratingProductOldPriceForLabel
-                     specialPrice:self.ratingProductNewPriceForLabel
+    [self.priceView loadWithPrice:self.product.priceFormatted
+                     specialPrice:self.product.specialPriceFormatted
                          fontSize:14.0f
             specialPriceOnTheLeft:NO];
     self.priceView.frame = CGRectMake(12.0f,
@@ -245,34 +245,43 @@
     }
     
     [parameters addEntriesFromDictionary:@{@"rating-customer": [RICustomer getCustomerId]}];
-    [parameters addEntriesFromDictionary:@{@"rating-catalog-sku": self.ratingProductSku}];
+    [parameters addEntriesFromDictionary:@{@"rating-catalog-sku": self.product.sku}];
     
     [RIForm sendForm:self.ratingDynamicForm.form
           parameters:parameters
         successBlock:^(id object) {
             
+            NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
+            [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
+            [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
+            [globalRateDictionary setObject:[self.product.price stringValue] forKey:kRIEventPriceKey];
+            
             for (JAStarsComponent *component in self.ratingStarsArray)
             {
                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                [trackingDictionary setValue:self.ratingProductSku forKey:kRIEventLabelKey];
+                [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
                 [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
                 [trackingDictionary setValue:@(component.starValue) forKey:kRIEventValueKey];
                 
                 if ([component.idRatingType isEqualToString:@"1"])
                 {
+                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.starValue] forKey:kRIEventRatingPriceKey];
                     [trackingDictionary setValue:@"RateProductPrice" forKey:kRIEventActionKey];
                 }
                 else if ([component.idRatingType isEqualToString:@"2"])
                 {
+                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.starValue] forKey:kRIEventRatingAppearanceKey];
                     [trackingDictionary setValue:@"RateProductAppearance" forKey:kRIEventActionKey];
                 }
                 else if ([component.idRatingType isEqualToString:@"3"])
                 {
+                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.starValue] forKey:kRIEventRatingQualityKey];
                     [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
                 }
                 else
                 {
                     // There is no indication about the default tracking for rating
+                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.starValue] forKey:kRIEventRatingKey];
                     [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
                 }
                 
@@ -281,12 +290,15 @@
                 [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                 [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                [trackingDictionary setValue:self.ratingProductSku forKey:kRIEventSkuKey];
+                [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
                 
                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProduct]
                                                           data:[trackingDictionary copy]];
             }
-            
+
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProductGlobal]
+                                                      data:[globalRateDictionary copy]];
+
             [self hideLoading];
             
             [self showMessage:STRING_REVIEW_SENT success:YES];

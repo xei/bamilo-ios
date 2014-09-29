@@ -180,6 +180,10 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventLocationKey         @"RIEventLocationKey"
 #define kRIEventAccountDateKey      @"RIEventAccountDateKey"
 #define kRIEventAgeKey              @"RIEventAgeKey"
+#define kRIEventRatingKey           @"RIEventRatingKey"
+#define kRIEventRatingPriceKey      @"RIEventRatingPriceKey"
+#define kRIEventRatingAppearanceKey @"RIEventRatingAppearanceKey"
+#define kRIEventRatingQualityKey    @"RIEventRatingQualityKey"
 
 /**
  *  Struct to identify events
@@ -241,6 +245,9 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventAddFromWishlistToCart = 53,
     RIEventSignupSuccess = 54,
     RIEventSignupFail = 55,
+    RIEventIncreaseQuantity = 56,
+    RIEventDecreaseQuantity = 57,
+    RIEventRateProductGlobal = 58
 };
 
 /**

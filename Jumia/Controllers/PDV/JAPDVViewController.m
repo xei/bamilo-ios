@@ -169,6 +169,21 @@ JANoConnectionViewDelegate
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
         [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
         [trackingDictionary setValue:self.product.sku forKey:kRIEventProductKey];
+        [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
+        [trackingDictionary setValue:[self.product.price stringValue] forKey:kRIEventPriceKey];
+        [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+        
+        NSString *discountPercentage = @"0";
+        if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
+        {
+            discountPercentage = self.product.maxSavingPercentage;
+        }
+        [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+        [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+        if(VALID_NOTEMPTY(self.category, RICategory))
+        {
+            [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+        }
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewProduct]
                                                   data:[trackingDictionary copy]];
@@ -248,9 +263,7 @@ JANoConnectionViewDelegate
     if ([segue.identifier isEqualToString:@"showRatingsMain"])
     {
         [segue.destinationViewController setProductRatings:self.productRatings];
-        [segue.destinationViewController setProductBrand:self.product.brand];
-        [segue.destinationViewController setProductNewPrice:self.product.specialPriceFormatted];
-        [segue.destinationViewController setProductOldPrice:self.product.priceFormatted];
+        [segue.destinationViewController setProduct:self.product];
     }
     else if ([segue.identifier isEqualToString:@"segueToDetails"])
     {
@@ -271,11 +284,7 @@ JANoConnectionViewDelegate
     }
     else if ([segue.identifier isEqualToString:@"segueNewReview"])
     {
-        [segue.destinationViewController setRatingProductSku:self.productRatings.productSku];
-        [segue.destinationViewController setRatingProductBrand:self.product.brand];
-        [segue.destinationViewController setRatingProductNameForLabel:self.productRatings.productName];
-        [segue.destinationViewController setRatingProductNewPriceForLabel:self.product.specialPriceFormatted];
-        [segue.destinationViewController setRatingProductOldPriceForLabel:self.product.priceFormatted];
+        [segue.destinationViewController setProduct:self.product];
     }
 }
 
@@ -389,6 +398,8 @@ JANoConnectionViewDelegate
     
     [self showLoading];
     
+    [self.productInfoSection setNumberOfStars:[self.product.avr integerValue]];
+    
     [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
                                          
@@ -401,18 +412,6 @@ JANoConnectionViewDelegate
                                          else
                                          {
                                              self.productInfoSection.numberOfReviewsLabel.text = STRING_RATE_NOW;
-                                         }
-                                         
-                                         NSInteger media = 0;
-                                         
-                                         for (RIRatingComment *rating in ratings.comments) {
-                                             media += [rating.avgRating integerValue];
-                                         }
-                                         
-                                         if (media > 0) {
-                                             media = (media / ratings.comments.count);
-                                             
-                                             [self.productInfoSection setNumberOfStars:media];
                                          }
                                          
                                          self.productRatings = ratings;
@@ -429,7 +428,7 @@ JANoConnectionViewDelegate
                                          
                                      }];
     
-    self.productInfoSection.specificationsLabel.text = @"Specifications";
+    self.productInfoSection.specificationsLabel.text = STRING_SPECIFICATIONS;
     
     self.productInfoSection.layer.cornerRadius = 4.0f;
     
@@ -767,6 +766,22 @@ JANoConnectionViewDelegate
                               }
 
                               [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                              
+                              [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
+                              
+                              NSString *discountPercentage = @"0";
+                              if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
+                              {
+                                  discountPercentage = self.product.maxSavingPercentage;
+                              }
+                              [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+                              [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+                              [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+                              [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
+                              if(VALID_NOTEMPTY(self.category, RICategory))
+                              {
+                                  [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+                              }
                               
                               [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                         data:[trackingDictionary copy]];

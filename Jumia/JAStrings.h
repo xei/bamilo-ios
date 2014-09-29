@@ -198,5 +198,6 @@
 #define STRING_ERROR_ADD_TO_CART_FAILED_FOR_1_PRODUCT RILocalizedString(@"error_add_to_cart_failed_for_1_product", nil) // Not ranslated
 
 #define STRING_SAVE_LABEL RILocalizedString(@"save_label", nil)
+#define STRING_SPECIFICATIONS RILocalizedString(@"product_specifications", nil)
 
 #endif

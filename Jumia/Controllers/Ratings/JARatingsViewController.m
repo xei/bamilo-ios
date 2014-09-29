@@ -11,6 +11,7 @@
 #import "JAReviewCell.h"
 #import "JANewRatingViewController.h"
 #import "JAPriceView.h"
+#import "RIProduct.h"
 
 @interface JARatingsViewController ()
 <
@@ -48,15 +49,15 @@
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
-    self.brandLabel.text = self.productBrand;
-    self.nameLabel.text = self.productRatings.productName;
+    self.brandLabel.text = self.product.brand;
+    self.nameLabel.text = self.product.name;
     
     [self.oldPriceLabel removeFromSuperview];
     [self.labelNewPrice removeFromSuperview];
     
     self.priceView = [[JAPriceView alloc] init];
-    [self.priceView loadWithPrice:self.productOldPrice
-                     specialPrice:self.productNewPrice
+    [self.priceView loadWithPrice:self.product.priceFormatted
+                     specialPrice:self.product.specialPriceFormatted
                          fontSize:14.0f
             specialPriceOnTheLeft:NO];
     self.priceView.frame = CGRectMake(12.0f,
@@ -102,11 +103,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showNewRating"]) {
-        [segue.destinationViewController setRatingProductSku:self.productRatings.productSku];
-        [segue.destinationViewController setRatingProductBrand:self.productBrand];
-        [segue.destinationViewController setRatingProductNameForLabel:self.productRatings.productName];
-        [segue.destinationViewController setRatingProductNewPriceForLabel:self.productNewPrice];
-        [segue.destinationViewController setRatingProductOldPriceForLabel:self.productOldPrice];
+        [segue.destinationViewController setProduct:self.product];
     }
 }
 

@@ -389,6 +389,18 @@
                           
                           [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                           
+                          [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
+                          
+                          NSString *discountPercentage = @"0";
+                          if(VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
+                          {
+                              discountPercentage = product.maxSavingPercentage;
+                          }
+                          [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+                          [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
+                          [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+                          [trackingDictionary setValue:@"Wishlist" forKey:kRIEventLocationKey];
+
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                     data:[trackingDictionary copy]];
                           
@@ -609,6 +621,18 @@
                       }
                       
                       [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                      
+                      [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
+                      
+                      NSString *discountPercentage = @"0";
+                      if(VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
+                      {
+                          discountPercentage = product.maxSavingPercentage;
+                      }
+                      [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+                      [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
+                      [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:@"Wishlist" forKey:kRIEventLocationKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
