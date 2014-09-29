@@ -124,7 +124,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     });
     
     NSDictionary *deviceInfo = [NSDictionary dictionaryWithObject:@"0" forKey:kAd4PushProfileUserIdKey];
-    [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+    [BMA4STracker updateDeviceInfo:deviceInfo];
 }
 
 #pragma mark - RINotificationTracking protocol
@@ -274,11 +274,11 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 [deviceInfo setObject:userStatus forKey:kAd4PushProfileStatusInAppKey];
                 
                 [BMA4STracker trackEventWithType:1001 parameters:parameters];
-                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventRegisterStart:
                 [deviceInfo setObject:kAd4PushProfileStatusStarted forKey:kAd4PushProfileRegistrationStatusKey];
-                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventRegisterSuccess:
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
@@ -293,7 +293,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 }
                 
                 [deviceInfo setObject:kAd4PushProfileStatusDone forKey:kAd4PushProfileRegistrationStatusKey];
-                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventFacebookLoginSuccess:
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
@@ -327,8 +327,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 {
                     currency = [data objectForKey:kRIEventCurrencyCodeKey];
                 }
-
-                [BMA4STracker trackCartWithId:@"1" modificationWithLabel:name forArticleWithId:articleId category:categoryId price:[price doubleValue] currency:currency quantity:1];
+                [BMA4STracker trackCartWithId:@"1" forArticleWithId:articleId andLabel:name category:categoryId price:[price doubleValue] currency:currency quantity:1];
                 break;
             case RIEventAddToWishlist:
                 numberOfProductsInWishlist = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileWishlistStatusKey];
@@ -343,7 +342,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 [deviceInfo setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
                 [deviceInfo setObject:currentDate forKey:kAd4PushProfileLastFavouritesProductKey];
                 [deviceInfo setObject:[data objectForKey:kRIEventSkuKey] forKey:kAd4PushProfileLastFavouritesProductDateKey];
-                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 
                 [BMA4STracker trackEventWithType:1005 parameters:parameters];
                 break;
@@ -358,20 +357,20 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 [[NSUserDefaults standardUserDefaults] setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [deviceInfo setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
-                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventCheckoutStart:
                 [deviceInfo setObject:kAd4PushProfileStatusStarted forKey:kAd4PushProfileOrderStatusKey];
-                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventSearch:
                 [deviceInfo setObject:currentDate forKey:kAd4PushProfileLastSearchDateKey];
                 [deviceInfo setObject:[data objectForKey:kRIEventKeywordsKey] forKey:kAd4PushProfileLastSearchKey];
-                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventChangeCountry:
                 [deviceInfo setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kAd4PushProfileShopCountryKey];
-                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventFilter:
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandFilterKey], NSString))
@@ -430,11 +429,11 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     
                     [deviceInfo setObject:priceFilter forKey:kAd4PushProfileFilterPriceKey];
                 }
-                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventTopCategory:
                 [deviceInfo setObject:[data objectForKey:kRIEventTopCategoryKey] forKey:kAd4PushProfileMostVisitedCategoryKey];
-                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventViewCampaign:
                 campaignNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileCampaignPageViewCountKey];
@@ -447,11 +446,11 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 [[NSUserDefaults standardUserDefaults] setObject:campaignNumber forKey:kAd4PushProfileCampaignPageViewCountKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [deviceInfo setObject:campaignNumber forKey:kAd4PushProfileCampaignPageViewCountKey];
-                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventAddFromWishlistToCart:
                 [deviceInfo setObject:[data objectForKey:kRIEventNumberOfProductsKey] forKey:kAd4PushProfileLastMovedFromFavtoCartKey];
-                [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             default:
                 break;
@@ -532,7 +531,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-    [[BMA4SNotification sharedBMA4S] synchroniseProfile:deviceInfo];
+    [BMA4STracker updateDeviceInfo:deviceInfo];
     
     NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
     NSString *currency = [data objectForKey:kRIEcommerceTransactionIdKey];
