@@ -369,30 +369,30 @@ UIPickerViewDelegate>
     
     if(self.isBillingAddress && self.isShippingAddress)
     {
-        [shippingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
-        [shippingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
+        [shippingParameters setValue:@"1" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_billing"]];
+        [shippingParameters setValue:@"1" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_shipping"]];
     }
     else if(self.isBillingAddress)
     {
-        [shippingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
-        [shippingParameters setValue:@"0" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
+        [shippingParameters setValue:@"1" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_billing"]];
+        [shippingParameters setValue:@"0" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_shipping"]];
     }
     else if(self.isShippingAddress)
     {
-        [shippingParameters setValue:@"0" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
-        [shippingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
+        [shippingParameters setValue:@"0" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_billing"]];
+        [shippingParameters setValue:@"1" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_shipping"]];
     }
     
     if(![self.billingContentView isHidden])
     {
         self.numberOfRequests = 2;
         
-        [shippingParameters setValue:@"0" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
+        [shippingParameters setValue:@"0" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_billing"]];
         
         NSMutableDictionary *billingParameters = [[NSMutableDictionary alloc] initWithDictionary:[self.billingDynamicForm getValues]];
         
-        [billingParameters setValue:@"0" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
-        [billingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
+        [billingParameters setValue:@"0" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_shipping"]];
+        [billingParameters setValue:@"1" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_billing"]];
         
         [RIForm sendForm:[self.billingDynamicForm form]
               parameters:billingParameters

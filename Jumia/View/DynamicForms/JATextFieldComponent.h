@@ -33,4 +33,6 @@
 
 -(void)resetValue;
 
+-(NSString*)getFieldName;
+
 @end
