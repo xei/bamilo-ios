@@ -120,6 +120,8 @@
                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
                      [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
                      [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                     [trackingDictionary setValue:@"My Account" forKey:kRIEventLocationKey];
                      
                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
                                                                data:[trackingDictionary copy]];

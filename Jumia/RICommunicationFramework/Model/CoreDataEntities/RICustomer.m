@@ -452,6 +452,8 @@
         }
     }
     
+    [self updateCustomerNewsletterWithJson:json];
+    
     [RICustomer saveCustomer:customer];
     
     return customer;
@@ -477,6 +479,19 @@
         [[RIDataBaseWrapper sharedInstance] saveContext];
         
         NSArray *newsletterArray = [json objectForKey:@"subscribed_categories"];
+        
+        for (NSDictionary *dic in newsletterArray)
+        {
+            RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
+            [RINewsletterCategory saveNewsLetterCategory:newsletter];
+        }
+    }
+    else if ([json objectForKey:@"newsletter_subscription"])
+    {
+        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+        
+        NSArray *newsletterArray = [json objectForKey:@"newsletter_subscription"];
         
         for (NSDictionary *dic in newsletterArray)
         {
