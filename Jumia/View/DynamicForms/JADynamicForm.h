@@ -74,4 +74,6 @@
 
 -(void)resignResponder;
 
+- (NSString*)getFieldNameForKey:(NSString*)key;
+
 @end

@@ -54,6 +54,8 @@
     for(int i = 0; i < [[field options] count]; i++)
     {
         RIFieldOption *option = [[field options] objectAtIndex:i];
+        NSString *fieldKey = [self.field name];
+        fieldKey = [fieldKey stringByReplacingOccurrencesOfString:@"[]" withString:[NSString stringWithFormat:@"[%@]", [option value]]];
         
         JANewsletterComponent *check = [JANewsletterComponent getNewJANewsletterComponent];
         [check setup];
@@ -63,7 +65,7 @@
 
         NSArray *newsletterOption = [RINewsletterCategory getNewsletter];
         
-        if (0 == newsletterOption.count)
+        if (ISEMPTY(newsletterOption) || 0 == newsletterOption.count)
         {
             check.optionSwitch.on = NO;
         }
@@ -75,6 +77,7 @@
             {
                 if ([[newsletter.idNewsletterCategory stringValue] isEqualToString:option.value])
                 {
+                    [self.values setObject:option.value forKey:fieldKey];                    
                     check.optionSwitch.on = YES;
                     finded = YES;
                     break;

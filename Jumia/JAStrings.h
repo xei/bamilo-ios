@@ -134,8 +134,8 @@
 #define STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS RILocalizedString(@"setting_address_error", nil) // Not translated
 #define STRING_CANCEL RILocalizedString(@"cancel_label", nil)
 #define STRING_SAVE_CHANGES RILocalizedString(@"save_changes_label", nil)
-#define STRING_EDIT_ADDRESS RILocalizedString(@"edit_address", validation_errortext)
-#define STRING_ERROR_INVALID_FIELDS RILocalizedString(@"edit_address", nil)
+#define STRING_EDIT_ADDRESS RILocalizedString(@"edit_address", nil)
+#define STRING_ERROR_INVALID_FIELDS RILocalizedString(@"validation_errortext", nil)
 
 #define STRING_CHECKOUT_SHIPPING RILocalizedString(@"checkout_header_step_3", nil)
 #define STRING_CITY RILocalizedString(@"string_city", nil) // Not translated

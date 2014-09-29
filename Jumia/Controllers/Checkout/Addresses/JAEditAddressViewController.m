@@ -209,9 +209,9 @@ UIPickerViewDelegate>
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.dynamicForm getValues]];
     
-    [parameters setValue:[self.editAddress uid] forKey:@"Alice_Module_Customer_Model_AddressForm[id_customer_address]"];
-    [parameters setValue:[self.editAddress isDefaultShipping] forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
-    [parameters setValue:[self.editAddress isDefaultBilling] forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
+    [parameters setValue:[self.editAddress uid] forKey:[self.dynamicForm getFieldNameForKey:@"id_customer_address"]];
+    [parameters setValue:[self.editAddress isDefaultShipping] forKey:[self.dynamicForm getFieldNameForKey:@"is_default_shipping"]];
+    [parameters setValue:[self.editAddress isDefaultBilling] forKey:[self.dynamicForm getFieldNameForKey:@"is_default_billing"]];
     
     [RIForm sendForm:[self.dynamicForm form]
           parameters:parameters
