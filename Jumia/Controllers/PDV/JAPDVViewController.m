@@ -703,6 +703,10 @@ JANoConnectionViewDelegate
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
         [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
+        if(VALID_NOTEMPTY(self.category, RICategory))
+        {
+            [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+        }
         
         [[RITrackingWrapper sharedInstance] trackEvent:eventType
                                                   data:[trackingDictionary copy]];

@@ -137,7 +137,13 @@
                                            [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
                                            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                                            [trackingDictionary setValue:self.searchString forKey:kRIEventKeywordsKey];
-                                           
+                                           NSInteger numberOfResults = 0;
+                                           if(VALID_NOTEMPTY(results, NSArray))
+                                           {
+                                               numberOfResults = [results count];
+                                           }
+                                           [trackingDictionary setValue:[NSNumber numberWithInt:numberOfResults] forKey:kRIEventNumberOfProductsKey];
+
                                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
                                                                                      data:[trackingDictionary copy]];
                                            

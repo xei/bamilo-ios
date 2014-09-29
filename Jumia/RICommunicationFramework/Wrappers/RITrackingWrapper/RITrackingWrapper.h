@@ -240,7 +240,7 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventTopCategory = 52,
     RIEventAddFromWishlistToCart = 53,
     RIEventSignupSuccess = 54,
-    RIEventSignupFail = 55
+    RIEventSignupFail = 55,
 };
 
 /**
