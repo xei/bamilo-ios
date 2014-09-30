@@ -154,34 +154,6 @@
 
 -(void)adjustTitleFrame
 {
-    CGRect leftItemFrame = CGRectZero;
-    if(!self.backButton.hidden)
-    {
-        NSString *backButtonText = self.backButton.titleLabel.text;
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
-        CGSize backButtonTextSize = [backButtonText sizeWithAttributes:attributes];
-        CGRect frame = self.backButton.frame;
-        CGFloat backButtonMaxWidth = backButtonTextSize.width;
-        if(backButtonTextSize.width > 80.0f && VALID_NOTEMPTY(self.titleLabel.text, NSString) && !self.titleLabel.hidden)
-        {
-            backButtonMaxWidth = 80.0f;
-        }
-        frame.size.width = 6.0f + backButtonMaxWidth + 11.0f + 12.0f;
-        self.backButton.frame = frame;
-        self.backButtonWidth.constant = frame.size.width;
-        leftItemFrame = frame;
-    }
-    else if(!self.leftButton.hidden)
-    {
-        [self.leftButton sizeToFit];
-        leftItemFrame = self.leftButton.frame;
-    }
-    else if(!self.editButton.hidden)
-    {
-        [self.editButton sizeToFit];
-        leftItemFrame = self.editButton.frame;
-    }
-    
     CGRect rightItemFrame = CGRectZero;
     if(!self.doneButton.hidden)
     {
@@ -196,6 +168,40 @@
     else if(!self.cartButton.hidden)
     {
         rightItemFrame = self.cartButton.frame;
+    }
+    
+    CGRect leftItemFrame = CGRectZero;
+    if(!self.backButton.hidden)
+    {
+        NSString *backButtonText = self.backButton.titleLabel.text;
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
+        CGSize backButtonTextSize = [backButtonText sizeWithAttributes:attributes];
+        CGRect frame = self.backButton.frame;
+        CGFloat backButtonMaxWidth = backButtonTextSize.width;
+        if(backButtonTextSize.width > 80.0f && !self.titleLabel.hidden)
+        {
+            backButtonMaxWidth = 80.0f;
+            frame.size.width = 6.0f + backButtonMaxWidth + 11.0f + 12.0f;
+        }
+        else
+        {
+            backButtonMaxWidth = self.frame.size.width - rightItemFrame.size.width - 12.0f;
+            frame.size.width = 6.0f + backButtonMaxWidth + 11.0f;
+        }
+            
+        self.backButton.frame = frame;
+        self.backButtonWidth.constant = frame.size.width;
+        leftItemFrame = frame;
+    }
+    else if(!self.leftButton.hidden)
+    {
+        [self.leftButton sizeToFit];
+        leftItemFrame = self.leftButton.frame;
+    }
+    else if(!self.editButton.hidden)
+    {
+        [self.editButton sizeToFit];
+        leftItemFrame = self.editButton.frame;
     }
     
     CGFloat titleLabelWidth = 0.0f;
