@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAPickerScrollView.h"
 
-@interface JACampaignsViewController : JABaseViewController
+@interface JACampaignsViewController : JABaseViewController <JAPickerScrollViewDelegate>
 
 @property (nonatomic, strong)NSArray* campaignTeasers;
 @property (nonatomic, strong)NSString* startingTitle;

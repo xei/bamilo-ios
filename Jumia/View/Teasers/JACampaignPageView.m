@@ -52,13 +52,13 @@
         [campaignView setFrame:CGRectMake(self.scrollView.bounds.origin.x,
                                           currentY,
                                           self.scrollView.frame.size.width,
-                                          338)];
+                                          338.0f)];
         [self.scrollView addSubview:campaignView];
         [campaignView loadWithCampaign:campaign];
         currentY += campaignView.frame.size.height;
     }
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
-                                             currentY);
+                                             currentY + 4.0f);
 }
 
 
