@@ -206,6 +206,8 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
     
+    self.screenName = @"CartEmpty";
+    
     [self.emptyCartView setHidden:NO];
     [self.emptyCartLabel setHidden:NO];
     [self.continueShoppingButton setHidden:NO];
@@ -226,6 +228,8 @@
 
 -(void)setupCart
 {
+    self.screenName = @"CartWithItems";
+    
     [self.emptyCartView setHidden:YES];
     [self.emptyCartLabel setHidden:YES];
     [self.continueShoppingButton setHidden:YES];

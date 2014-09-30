@@ -105,7 +105,24 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    
+    JARootViewController* mainController = (JARootViewController*)  self.window.rootViewController;
+    if(VALID_NOTEMPTY(mainController, JARootViewController))
+    {
+        UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
+        if(VALID_NOTEMPTY(centerPanel, UINavigationController))
+        {
+            NSArray *viewControllers = centerPanel.viewControllers;
+            if(VALID_NOTEMPTY(viewControllers, NSArray))
+            {
+                JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
+                NSString *screenName = rootViewController.screenName;
+                if(VALID_NOTEMPTY(screenName, NSString))
+                {
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCloseApp] data:[NSDictionary dictionaryWithObject:screenName forKey:kRIEventScreenNameKey]];
+                }
+            }
+        }
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

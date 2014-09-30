@@ -22,6 +22,7 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"ShopCategories";
     self.A4SViewControllerAlias = @"CATEGORY";
     
     self.view.backgroundColor = JABackgroundGrey;

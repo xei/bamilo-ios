@@ -43,7 +43,9 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [super viewDidLoad];
-
+    
+    self.screenName = @"SplashScreen";
+    
     self.startTime = [NSDate date];
     
     [[NSNotificationCenter defaultCenter] addObserver:self

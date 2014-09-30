@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 
+@property (nonatomic, strong)NSString *screenName;
 
 /**
  * Method to force Nav bar to reload. This is called in viewWillAppear

@@ -74,7 +74,7 @@
 #define kGTMEventTransactionProductPriceKey     @"price"
 #define kGTMEventTransactionProductCurrencyKey  @"currency"
 #define kGTMEventTransactionProductQuantityKey  @"quantity"
-
+#define kGTMEventScreenNameKey                  @"screenName"
 
 NSString * const kGTMToken = @"kGTMToken";
 
@@ -136,7 +136,8 @@ NSString * const kGTMToken = @"kGTMToken";
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutAddAddressFail]];
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]];
-        
+        [events addObject:[NSNumber numberWithInt:RIEventCloseApp]];
+
         self.registeredEvents = [events copy];
     }
     
@@ -882,6 +883,10 @@ NSString * const kGTMToken = @"kGTMToken";
                 {
                     [pushedData setObject:[data objectForKey:kRIEventTotalTransactionKey] forKey:kGTMEventTransactionTotalKey];
                 }
+                break;
+            case RIEventCloseApp:
+                [pushedData setObject:@"openScreen" forKey:kGTMEventKey];
+                [pushedData setObject:[data objectForKey:kRIEventScreenNameKey] forKey:kGTMEventScreenNameKey];
                 break;
         }
         

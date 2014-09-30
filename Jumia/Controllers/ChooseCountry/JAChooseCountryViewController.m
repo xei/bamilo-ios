@@ -35,6 +35,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"ChooseCountry";
+    
     self.navBarLayout.title = STRING_CHOOSE_COUNTRY;
     self.navBarLayout.doneButtonTitle = STRING_APPLY;
     

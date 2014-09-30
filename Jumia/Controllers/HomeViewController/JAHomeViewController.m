@@ -30,6 +30,7 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"ShopMain";
     self.A4SViewControllerAlias = @"HOME";
     
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];

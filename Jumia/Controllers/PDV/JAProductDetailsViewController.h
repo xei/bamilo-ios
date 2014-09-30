@@ -8,13 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class RIProduct;
+
 @interface JAProductDetailsViewController : JABaseViewController
 
-@property (strong, nonatomic) NSString *stringBrand;
-@property (strong, nonatomic) NSString *stringName;
-@property (strong, nonatomic) NSString *stringNewPrice;
-@property (strong, nonatomic) NSString *stringOldPrice;
-@property (strong, nonatomic) NSString *featuresText;
-@property (strong, nonatomic) NSString *descriptionText;
+@property (nonatomic, strong) RIProduct *product;
 
 @end

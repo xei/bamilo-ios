@@ -83,6 +83,8 @@ FBLoginViewDelegate
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.screenName = @"CheckoutStart";
+    
     self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;

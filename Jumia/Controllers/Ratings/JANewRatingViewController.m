@@ -51,6 +51,15 @@
 {
     [super viewDidLoad];
     
+    if(VALID_NOTEMPTY(self.product.sku, NSString))
+    {
+        self.screenName = [NSString stringWithFormat:@"WriteRatingScreen / %@", self.product.sku];
+    }
+    else
+    {
+        self.screenName = @"WriteRatingScreen";
+    }
+    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     

@@ -69,6 +69,7 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"SearchResults";
     self.A4SViewControllerAlias = @"MYFAVOURITES";
     
     self.navBarLayout.title = STRING_MY_FAVOURITES;

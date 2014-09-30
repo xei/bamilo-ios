@@ -41,6 +41,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"CustomerAccount";
+    
     self.navBarLayout.title = STRING_MY_ACCOUNT;
     
     [[NSNotificationCenter defaultCenter] addObserver:self

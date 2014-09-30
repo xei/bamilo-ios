@@ -61,6 +61,8 @@ UIPickerViewDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.screenName = @"EditAddress";
+    
     self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;

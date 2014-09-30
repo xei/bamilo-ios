@@ -24,6 +24,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"PriceFilter";
+    
     self.navBarLayout.title = STRING_PRICE;
     self.navBarLayout.backButtonTitle = STRING_FILTERS;
     self.navBarLayout.showDoneButton = YES;

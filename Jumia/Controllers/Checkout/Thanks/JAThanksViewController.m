@@ -28,6 +28,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
  
+    self.screenName = @"CheckoutFinish";
+    
     self.navBarLayout.title = STRING_CHECKOUT;
     self.navBarLayout.showCartButton = NO;
     

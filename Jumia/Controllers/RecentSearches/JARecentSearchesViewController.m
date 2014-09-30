@@ -32,6 +32,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"RecentSearches";
+    
     self.navBarLayout.title = STRING_RECENT_SEARCHES;
         
     self.noSearchesView.layer.cornerRadius = 5.0f;

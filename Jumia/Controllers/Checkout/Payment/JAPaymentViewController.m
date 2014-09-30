@@ -60,6 +60,8 @@ UITextFieldDelegate>
 {
     [super viewDidLoad];
     
+    self.screenName = @"Payment";
+    
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     

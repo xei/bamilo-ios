@@ -42,6 +42,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"CustomerData";
+    
     self.numberOfFields = 0;
     
     self.navBarLayout.showBackButton = YES;

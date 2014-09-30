@@ -188,6 +188,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventFilterTypeKey       @"RIEventFilterTypeKey"
 #define kRIEventSortTypeKey         @"RIEventSortTypeKey"
 #define kRIEventPaymentMethodKey    @"RIEventPaymentMethodKey"
+#define kRIEventScreenNameKey       @"RIEventScreenNameKey"
 
 /**
  *  Struct to identify events
@@ -259,7 +260,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventCheckoutAddAddressSuccess = 63,
     RIEventCheckoutAddAddressFail = 64,
     RIEventCheckoutPaymentSuccess = 65,
-    RIEventCheckoutPaymentFail = 66
+    RIEventCheckoutPaymentFail = 66,
+    RIEventCloseApp = 67
 };
 
 /**

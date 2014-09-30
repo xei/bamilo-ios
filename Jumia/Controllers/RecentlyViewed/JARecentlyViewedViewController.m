@@ -56,6 +56,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"RecentlyViewed";
+    
     self.selectedSizeAndAddToCart = NO;
     self.navBarLayout.title = STRING_RECENTLY_VIEWED;
     
