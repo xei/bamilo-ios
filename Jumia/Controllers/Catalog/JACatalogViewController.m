@@ -56,6 +56,7 @@
     self.viewToggleButton.backgroundColor = JACatalogViewControllerButtonColor;
     
     self.sortingScrollView.delegate = self;
+    self.sortingScrollView.startingIndex = 1;
 
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;

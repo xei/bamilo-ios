@@ -41,15 +41,21 @@
     
     CGFloat currentX = 0.0f;
     
+    NSInteger startingIndex = 0;
     self.campaignPages = [NSMutableArray new];
     NSMutableArray* optionList = [NSMutableArray new];
     if (VALID_NOTEMPTY(self.campaignTeasers, NSArray)) {
-        for (RITeaser* teaser in self.campaignTeasers) {
+        for (int i = 0; i < self.campaignTeasers.count; i++) {
+            RITeaser* teaser = [self.campaignTeasers objectAtIndex:i];
             if (VALID_NOTEMPTY(teaser.teaserTexts, NSOrderedSet)) {
                 RITeaserText* teaserText = [teaser.teaserTexts firstObject];
                 if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
 
                     [optionList addObject:teaserText.name];
+                    
+                    if ([teaserText.name isEqualToString:self.startingTitle]) {
+                        startingIndex = i;
+                    }
                     
                     JACampaignPageView* campaignPage = [[JACampaignPageView alloc] initWithFrame:CGRectMake(currentX,
                                                                                                             self.scrollView.bounds.origin.y,
@@ -63,6 +69,8 @@
             }
         }
     }
+    
+    self.pickerScrollView.startingIndex = startingIndex;
     
     //this will trigger load methods
     [self.pickerScrollView setOptions:optionList];

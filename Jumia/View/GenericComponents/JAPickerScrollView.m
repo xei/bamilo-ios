@@ -82,8 +82,10 @@
     
 //    [self selectLabelAtIndex:0];
     //this should always start at index 1
-    self.selectedIndex = 0;
-    [self scrollLeft];
+    if(self.startingIndex > 0) {
+        self.selectedIndex = self.startingIndex-1;
+        [self scrollLeft];
+    }
     
     UIImage* indicatorImage = [UIImage imageNamed:JAPickerScrollViewIndicatorImageName];
     self.arrowImageView = [[UIImageView alloc] initWithImage:indicatorImage];
