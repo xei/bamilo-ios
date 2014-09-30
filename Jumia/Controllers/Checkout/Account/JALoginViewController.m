@@ -657,7 +657,13 @@ FBLoginViewDelegate
                                                  NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
                                                  NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
                                                  [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+                                                 [trackingDictionary setValue:@"Checkou" forKey:kRIEventLocationKey];
+                                                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                                 [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
                                                  
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]
+                                                                                           data:[trackingDictionary copy]];
+
                                                  trackingDictionary = [[NSMutableDictionary alloc] init];
                                                  [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
                                                  [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];

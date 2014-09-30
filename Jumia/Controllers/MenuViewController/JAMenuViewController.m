@@ -383,6 +383,7 @@ UIAlertViewDelegate
                     if ([RICustomer checkIfUserIsLogged])
                     {
                         __block NSString *custumerId = [RICustomer getCustomerId];
+                        [[FBSession activeSession] closeAndClearTokenInformation];
                         
                         [RICustomer logoutCustomerWithSuccessBlock:^{
                             
@@ -399,8 +400,6 @@ UIAlertViewDelegate
                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
                                                                       data:[trackingDictionary copy]];
                             
-                            [[FBSession activeSession] closeAndClearTokenInformation];
-                            
                             NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
                             
                             for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
@@ -412,8 +411,6 @@ UIAlertViewDelegate
                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
                             
                         } andFailureBlock:^(NSArray *errorObject) {
-                            
-                            [[FBSession activeSession] closeAndClearTokenInformation];
                             
                             NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
                             
