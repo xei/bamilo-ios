@@ -266,6 +266,7 @@
 		CE2FB75819938EB500E7CD00 /* JACatalogGridCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2FB75719938EB500E7CD00 /* JACatalogGridCell.xib */; };
 		CE2FB75B1993BCB900E7CD00 /* JACatalogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2FB75A1993BCB900E7CD00 /* JACatalogCell.m */; };
 		CE33CA0119AB36FA00333B1A /* JAPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE33CA0019AB36FA00333B1A /* JAPriceView.m */; };
+		CE3AF8FB19DAB4EC00D8C51B /* JAPercentageBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF8FA19DAB4EC00D8C51B /* JAPercentageBarView.m */; };
 		CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */; };
 		CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */; };
 		CE44586B198BD20A00CE7E8D /* JAMainTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445866198BD20A00CE7E8D /* JAMainTeaserView.m */; };
@@ -282,6 +283,7 @@
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
 		CE97D2EE19AE1ED50090D01C /* JANavigationBarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */; };
 		CEA8986119D426FA006776B2 /* RICampaign.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA8986019D426FA006776B2 /* RICampaign.m */; };
+		CEA8986519D45365006776B2 /* JACampaignsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA8986419D45365006776B2 /* JACampaignsViewController.m */; };
 		CEC3F71219A5FBF800DE12F6 /* JAFavoriteListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71119A5FBF800DE12F6 /* JAFavoriteListCell.xib */; };
 		CEC3F71C19A5FDDA00DE12F6 /* JAButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC3F71919A5FDDA00DE12F6 /* JAButtonCell.m */; };
 		CEC3F71D19A5FDDA00DE12F6 /* JAGrayButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71A19A5FDDA00DE12F6 /* JAGrayButtonCell.xib */; };
@@ -321,6 +323,9 @@
 		CEDEB9C9199BA8FA0022BAB5 /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB9AE199BA8FA0022BAB5 /* NMRangeSlider.m */; };
 		CEE91B991987FF490078DFC9 /* JASplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B981987FF490078DFC9 /* JASplashViewController.m */; };
 		CEE91B9C1989065A0078DFC9 /* JATeaserPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */; };
+		CEFAC8D919D96BCD007E29D9 /* JACampaignPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFAC8D819D96BCD007E29D9 /* JACampaignPageView.m */; };
+		CEFAC8DC19D992BA007E29D9 /* JACampaignSingleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFAC8DB19D992BA007E29D9 /* JACampaignSingleView.m */; };
+		CEFAC8DE19D993A3007E29D9 /* JACampaignSingleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFAC8DD19D993A3007E29D9 /* JACampaignSingleView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -789,6 +794,8 @@
 		CE2FB75A1993BCB900E7CD00 /* JACatalogCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogCell.m; sourceTree = "<group>"; };
 		CE33C9FF19AB36FA00333B1A /* JAPriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPriceView.h; sourceTree = "<group>"; };
 		CE33CA0019AB36FA00333B1A /* JAPriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPriceView.m; sourceTree = "<group>"; };
+		CE3AF8F919DAB4EC00D8C51B /* JAPercentageBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPercentageBarView.h; sourceTree = "<group>"; };
+		CE3AF8FA19DAB4EC00D8C51B /* JAPercentageBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPercentageBarView.m; sourceTree = "<group>"; };
 		CE3FC5A51990E209003B4A27 /* JAPickerScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPickerScrollView.h; sourceTree = "<group>"; };
 		CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPickerScrollView.m; sourceTree = "<group>"; };
 		CE3FC5AC1990E25C003B4A27 /* JACatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogViewController.h; sourceTree = "<group>"; };
@@ -819,6 +826,8 @@
 		CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANavigationBarLayout.m; sourceTree = "<group>"; };
 		CEA8985F19D426FA006776B2 /* RICampaign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICampaign.h; sourceTree = "<group>"; };
 		CEA8986019D426FA006776B2 /* RICampaign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICampaign.m; sourceTree = "<group>"; };
+		CEA8986319D45365006776B2 /* JACampaignsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACampaignsViewController.h; path = Campaigns/JACampaignsViewController.h; sourceTree = "<group>"; };
+		CEA8986419D45365006776B2 /* JACampaignsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACampaignsViewController.m; path = Campaigns/JACampaignsViewController.m; sourceTree = "<group>"; };
 		CEC3F71119A5FBF800DE12F6 /* JAFavoriteListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFavoriteListCell.xib; sourceTree = "<group>"; };
 		CEC3F71819A5FDDA00DE12F6 /* JAButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAButtonCell.h; sourceTree = "<group>"; };
 		CEC3F71919A5FDDA00DE12F6 /* JAButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAButtonCell.m; sourceTree = "<group>"; };
@@ -868,6 +877,11 @@
 		CEE91B981987FF490078DFC9 /* JASplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASplashViewController.m; sourceTree = "<group>"; };
 		CEE91B9A1989065A0078DFC9 /* JATeaserPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATeaserPageView.h; sourceTree = "<group>"; };
 		CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATeaserPageView.m; sourceTree = "<group>"; };
+		CEFAC8D719D96BCD007E29D9 /* JACampaignPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACampaignPageView.h; sourceTree = "<group>"; };
+		CEFAC8D819D96BCD007E29D9 /* JACampaignPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACampaignPageView.m; sourceTree = "<group>"; };
+		CEFAC8DA19D992BA007E29D9 /* JACampaignSingleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACampaignSingleView.h; sourceTree = "<group>"; };
+		CEFAC8DB19D992BA007E29D9 /* JACampaignSingleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACampaignSingleView.m; sourceTree = "<group>"; };
+		CEFAC8DD19D993A3007E29D9 /* JACampaignSingleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACampaignSingleView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2018,6 +2032,7 @@
 		B5A302FF1981218E00F71726 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CEA8986219D4533C006776B2 /* Campaigns */,
 				CE13787519A357B400CA0751 /* Categories */,
 				4AFC7F8E199BC0B2007D67F4 /* SignInViewController */,
 				4A944FF2199273E000C02734 /* Ratings */,
@@ -2198,8 +2213,24 @@
 				CEE91B9A1989065A0078DFC9 /* JATeaserPageView.h */,
 				CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */,
 				CE445864198BD20A00CE7E8D /* TeaserViews */,
+				CEFAC8D719D96BCD007E29D9 /* JACampaignPageView.h */,
+				CEFAC8D819D96BCD007E29D9 /* JACampaignPageView.m */,
+				CEFAC8DA19D992BA007E29D9 /* JACampaignSingleView.h */,
+				CEFAC8DB19D992BA007E29D9 /* JACampaignSingleView.m */,
+				CEFAC8DD19D993A3007E29D9 /* JACampaignSingleView.xib */,
+				CE3AF8F919DAB4EC00D8C51B /* JAPercentageBarView.h */,
+				CE3AF8FA19DAB4EC00D8C51B /* JAPercentageBarView.m */,
 			);
 			path = Teasers;
+			sourceTree = "<group>";
+		};
+		CEA8986219D4533C006776B2 /* Campaigns */ = {
+			isa = PBXGroup;
+			children = (
+				CEA8986319D45365006776B2 /* JACampaignsViewController.h */,
+				CEA8986419D45365006776B2 /* JACampaignsViewController.m */,
+			);
+			name = Campaigns;
 			sourceTree = "<group>";
 		};
 		CEC3F71719A5FDDA00DE12F6 /* ButtonCell */ = {
@@ -2371,6 +2402,7 @@
 				CEDEB9BA199BA8FA0022BAB5 /* slider-default7-handle@2x.png in Resources */,
 				B55CF29019BE072800A6C6B6 /* JAShippingInfoCell.xib in Resources */,
 				B501E88919BE20C100BE51DD /* JAPickupRegionsCell.xib in Resources */,
+				CEFAC8DE19D993A3007E29D9 /* JACampaignSingleView.xib in Resources */,
 				4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */,
 				4A392143198925E300B70A9C /* JANavigationBarView.xib in Resources */,
 				B5210E8619C4863400FDB0D1 /* RIStrings.strings in Resources */,
@@ -2481,6 +2513,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A91AF5C19CB13F100F80D1E /* RICustomer.m in Sources */,
+				CEA8986519D45365006776B2 /* JACampaignsViewController.m in Sources */,
 				B5A302C919811E9200F71726 /* RIProductSimple.m in Sources */,
 				B542546B19AE9F7500C792FF /* JACartListHeaderView.m in Sources */,
 				B59DCA6619B710DA00DE7960 /* FXBlurView.m in Sources */,
@@ -2513,6 +2546,7 @@
 				B5FBD58319CAF22F00BD9510 /* AIPackageBuilder.m in Sources */,
 				4A19C51019D018F10070D194 /* JAShareActivityProvider.m in Sources */,
 				B5A302D519811E9200F71726 /* RICountry.m in Sources */,
+				CEFAC8D919D96BCD007E29D9 /* JACampaignPageView.m in Sources */,
 				4A944FF51992805100C02734 /* RIProductRatings.m in Sources */,
 				B5A3025E19811E8A00F71726 /* UIImageView+WebCache.m in Sources */,
 				CE445879198BF15B00CE7E8D /* JACampaignsTeaserView.m in Sources */,
@@ -2624,6 +2658,7 @@
 				B5A30303198121A400F71726 /* JABaseViewController.m in Sources */,
 				B59DCA5919B70C2E00DE7960 /* JATextField.m in Sources */,
 				B5A302CB19811E9200F71726 /* RISection.m in Sources */,
+				CE3AF8FB19DAB4EC00D8C51B /* JAPercentageBarView.m in Sources */,
 				B5C61BC319B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m in Sources */,
 				B517FDF91982517300F65253 /* RICart.m in Sources */,
 				B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */,
@@ -2659,6 +2694,7 @@
 				B5FBD57919CAF22F00BD9510 /* Adjust.m in Sources */,
 				B517FDFC198265AD00F65253 /* RICartItem.m in Sources */,
 				4A480C2C19951E9700E054B8 /* JAProductDetailsViewController.m in Sources */,
+				CEFAC8DC19D992BA007E29D9 /* JACampaignSingleView.m in Sources */,
 				B5FBD58019CAF22F00BD9510 /* UIDevice+AIAdditions.m in Sources */,
 				B5A3025819811E8A00F71726 /* SDImageCache.m in Sources */,
 				B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */,

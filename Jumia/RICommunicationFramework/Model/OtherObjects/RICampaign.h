@@ -28,7 +28,7 @@
 @property (nonatomic, strong) NSArray* imagesUrls;
 
 + (NSString *)getCampaignsWithUrl:(NSString*)url
-                     successBlock:(void (^)(NSArray* campaigns))successBlock
+                     successBlock:(void (^)(NSArray* campaigns, NSString* bannerImageUrl))successBlock
                   andFailureBlock:(void (^)(NSArray *error))failureBlock;
 
 @end

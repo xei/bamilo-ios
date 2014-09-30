@@ -11,7 +11,7 @@
 @implementation RICampaign
 
 + (NSString *)getCampaignsWithUrl:(NSString*)url
-                     successBlock:(void (^)(NSArray* campaigns))successBlock
+                     successBlock:(void (^)(NSArray* campaigns, NSString* bannerImageUrl))successBlock
                   andFailureBlock:(void (^)(NSArray *error))failureBlock;
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
@@ -24,12 +24,24 @@
                                                                   
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                   NSDictionary* data = [metadata objectForKey:@"data"];
+                                                                  
+                                                                  NSString* bannerImageUrl;
+                                                                  
+                                                                  NSDictionary* cms = [data objectForKey:@"cms"];
+                                                                  if (VALID_NOTEMPTY(cms, NSDictionary)) {
+                                                                      NSArray* bannerArray = [cms objectForKey:@"mobile_banner"];
+                                                                      if (VALID_NOTEMPTY(bannerArray, NSArray)) {
+                                                                          bannerImageUrl = [bannerArray firstObject];
+                                                                      }
+                                                                  }
+                                                                  
                                                                   NSDictionary* campaign = [data objectForKey:@"campaign"];
                                                                   NSArray* campaignData = [campaign objectForKey:@"data"];
                                                                   
                                                                   if (VALID_NOTEMPTY(campaignData, NSArray)) {
+                                                                      NSArray* campaignsArray = [RICampaign parseCampaigns:campaignData country:configuration];
                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                          successBlock([RICampaign parseCampaigns:campaignData country:configuration]);
+                                                                          successBlock(campaignsArray, bannerImageUrl);
                                                                       });
                                                                   }
                                                                   

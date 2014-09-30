@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -441,6 +440,7 @@
                         <outlet property="teaserCategoryScrollView" destination="MEv-bE-tYZ" id="7gC-g8-f4J"/>
                         <outlet property="teaserPagesScrollView" destination="bVK-fb-QVJ" id="hVZ-Y8-hXn"/>
                         <segue destination="lMd-fG-L2Y" kind="push" id="zNt-qO-beb"/>
+                        <segue destination="HxC-4Z-hee" kind="push" id="E3F-yU-gPU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -456,6 +456,25 @@
                 </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1128" y="-589"/>
+        </scene>
+        <!--Campaigns View Controller-->
+        <scene sceneID="JnK-HZ-uUo">
+            <objects>
+                <viewController storyboardIdentifier="campaignsViewController" id="HxC-4Z-hee" customClass="JACampaignsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eXn-DM-Zlx"/>
+                        <viewControllerLayoutGuide type="bottom" id="eDc-CR-OUq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wqz-wx-n6c">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hMV-Lk-pLb"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h2h-bh-I2J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1543" y="-589"/>
         </scene>
         <!--Categories View Controller-->
         <scene sceneID="1D2-QG-8TZ">
@@ -475,7 +494,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vA9-VB-bkS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1530" y="-589"/>
+            <point key="canvasLocation" x="1543" y="-1205"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="euH-wI-leh">

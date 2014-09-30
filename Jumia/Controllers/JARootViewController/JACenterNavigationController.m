@@ -39,6 +39,7 @@
 #import "JAMyAccountViewController.h"
 #import "JAUserDataViewController.h"
 #import "JAEmailNotificationsViewController.h"
+#import "JACampaignsViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -504,16 +505,22 @@
 
 - (void)didSelectCampaign:(NSNotification*)notification
 {
-#warning implement here the push for the campaigns
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
-    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSArray* campaignTeasers = [notification.userInfo objectForKey:@"campaignTeasers"];
     NSString* title = [notification.userInfo objectForKey:@"title"];
     
-    if (VALID_NOTEMPTY(url, NSString)) {
+    if (VALID_NOTEMPTY(campaignTeasers, NSArray)) {
         
+        JACampaignsViewController* campaignsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
         
+        campaignsVC.navBarLayout.title = @"";
+        campaignsVC.navBarLayout.backButtonTitle = STRING_HOME;
+        campaignsVC.campaignTeasers = campaignTeasers;
+        campaignsVC.startingTitle = title;
+        
+        [self pushViewController:campaignsVC animated:YES];
     }
 }
 
