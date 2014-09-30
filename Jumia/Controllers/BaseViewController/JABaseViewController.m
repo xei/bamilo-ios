@@ -127,8 +127,10 @@
 
 - (void)showMessage:(NSString*)message success:(BOOL)success
 {
+    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+
     JAMessageView *messageView = [JAMessageView getNewJAMessageView];
-    [messageView setTitle:message success:success addTo:self];
+    [messageView setTitle:message success:success addTo:window.rootViewController];
 }
 
 @end

@@ -140,7 +140,7 @@
             [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
             [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
             [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
-            [trackingDictionary setValue:[cartData.cartCleanValue stringValue] forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:[cartData.cartValue stringValue] forKey:kRIEventTotalCartKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
                                                       data:[trackingDictionary copy]];
@@ -646,7 +646,7 @@
         NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
         NSString *key = [cartItemsKeys objectAtIndex:button.tag];
         RICartItem *product = [self.cart.cartItems objectForKey:key];
-        
+        NSNumber *cartValue = self.cart.cartValue;
         [self showLoading];
         [RICart removeProductWithQuantity:[product.quantity stringValue]
                                       sku:product.simpleSku
@@ -662,6 +662,9 @@
                              [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
                              [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                              [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                             [trackingDictionary setValue:[product.quantity stringValue] forKey:kRIEventQuantityKey];
+                             [trackingDictionary setValue:cartValue forKey:kRIEventTotalCartKey];
+                             
                              
                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
                                                                        data:[trackingDictionary copy]];
@@ -749,6 +752,37 @@
     if(newQuantity != [[self.currentItem quantity] integerValue])
     {
         [self showLoading];
+        
+        NSNumber *event = [NSNumber numberWithInt:RIEventDecreaseQuantity];
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        
+        [trackingDictionary setValue:self.currentItem.price forKey:kRIEventPriceKey];
+        [trackingDictionary setValue:self.currentItem.sku forKey:kRIEventSkuKey];
+        [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+        NSString *discountPercentage = @"0";
+        if(VALID_NOTEMPTY(self.currentItem.savingPercentage, NSNumber))
+        {
+            discountPercentage = [self.currentItem.savingPercentage stringValue];
+        }
+        [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+        [trackingDictionary setValue:@"Cart" forKey:kRIEventLocationKey];
+        [trackingDictionary setValue:self.cart.cartValue  forKey:kRIEventTotalCartKey];
+        
+        NSInteger quantity = 0;
+        if(newQuantity > [[self.currentItem quantity] integerValue])
+        {
+            quantity = newQuantity - [[self.currentItem quantity] integerValue];
+            event = [NSNumber numberWithInt:RIEventIncreaseQuantity];
+        }
+        else
+        {
+            quantity = [[self.currentItem quantity] integerValue] - newQuantity;
+        }
+        [trackingDictionary setValue:[NSString stringWithFormat:@"%d", quantity] forKey:kRIEventQuantityKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:event
+                                                  data:[trackingDictionary copy]];
+        
         
         NSMutableDictionary *quantitiesToChange = [[NSMutableDictionary alloc] init];
         NSArray *cartItemsKeys = [[self.cart cartItems] allKeys];

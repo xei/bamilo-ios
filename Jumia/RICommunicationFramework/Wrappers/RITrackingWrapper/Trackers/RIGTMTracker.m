@@ -34,6 +34,20 @@
 #define kGTMEventShareLocationKey           @"shareLocation"
 #define kGTMEventProductSKUKey              @"productSKU"
 #define kGTMEventProductCategoryKey         @"productCategory"
+#define kGTMEventProductBrandKey            @"productBrand"
+#define kGTMEventProductSubCategoryKey      @"productSubcategory"
+#define kGTMEventProductPriceKey            @"productPrice"
+#define kGTMEventCurrencyKey                @"currency"
+#define kGTMEventDiscountKey                @"discount"
+#define kGTMEventProductRatingKey           @"productRating"
+#define kGTMEventProductQuantityKey         @"productQuantity"
+#define kGTMEventLocationKey                @"location"
+#define kGTMEventAverageRatingTotalKey      @"averageRatingTotal"
+#define kGTMEventQuantityCartKey            @"quantityCart"
+#define kGTMEventCartValueKey               @"cartValue"
+#define kGTMEventRatingPriceKey             @"ratingPrice"
+#define kGTMEventRatingAppearanceKey        @"ratingAppearance"
+#define kGTMEventRatingQualityKey           @"ratingQuality"
 
 NSString * const kGTMToken = @"kGTMToken";
 
@@ -77,7 +91,13 @@ NSString * const kGTMToken = @"kGTMToken";
         [events addObject:[NSNumber numberWithInt:RIEventShareSMS]];
         [events addObject:[NSNumber numberWithInt:RIEventShareOther]];
         [events addObject:[NSNumber numberWithInt:RIEventChangeCountry]];
-
+        [events addObject:[NSNumber numberWithInt:RIEventViewProduct]];
+        [events addObject:[NSNumber numberWithInt:RIEventAddToCart]];
+        [events addObject:[NSNumber numberWithInt:RIEventIncreaseQuantity]];
+        [events addObject:[NSNumber numberWithInt:RIEventRemoveFromCart]];
+        [events addObject:[NSNumber numberWithInt:RIEventDecreaseQuantity]];
+        [events addObject:[NSNumber numberWithInt:RIEventRateProductGlobal]];
+        
         self.registeredEvents = [events copy];
     }
     return self;
@@ -173,10 +193,14 @@ NSString * const kGTMToken = @"kGTMToken";
             case RIEventLoginSuccess:
                 [pushedData setObject:@"login" forKey:kGTMEventKey];
                 [pushedData setObject:@"Email Auth" forKey:kGTMEventLoginMethodKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventLoginLocationKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventLoginLocationKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventCustomerIdKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventUserIdKey] forKey:kGTMEventCustomerIdKey];
@@ -185,22 +209,32 @@ NSString * const kGTMToken = @"kGTMToken";
             case RIEventFacebookLoginSuccess:
                 [pushedData setObject:@"login" forKey:kGTMEventKey];
                 [pushedData setObject:@"Facebook" forKey:kGTMEventLoginMethodKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventLoginLocationKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventLoginLocationKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventCustomerIdKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventUserIdKey] forKey:kGTMEventCustomerIdKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventUserAgeKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventAgeKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventAgeKey] forKey:kGTMEventUserAgeKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventUserGenderKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventGenderKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventGenderKey] forKey:kGTMEventUserGenderKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventAccountCreationDateKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventAccountDateKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventAccountDateKey] forKey:kGTMEventAccountCreationDateKey];
@@ -208,18 +242,26 @@ NSString * const kGTMToken = @"kGTMToken";
                 break;
             case RIEventAutoLoginSuccess:
                 [pushedData setObject:@"autoLogin" forKey:kGTMEventKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventCustomerIdKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventUserIdKey] forKey:kGTMEventCustomerIdKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventUserAgeKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventAgeKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventAgeKey] forKey:kGTMEventUserAgeKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventUserGenderKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventGenderKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventGenderKey] forKey:kGTMEventUserGenderKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventAccountCreationDateKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventAccountDateKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventAccountDateKey] forKey:kGTMEventAccountCreationDateKey];
@@ -228,6 +270,8 @@ NSString * const kGTMToken = @"kGTMToken";
             case RIEventLoginFail:
                 [pushedData setObject:@"loginFailed" forKey:kGTMEventKey];
                 [pushedData setObject:@"Email Auth" forKey:kGTMEventLoginMethodKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventLoginLocationKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventLoginLocationKey];
@@ -236,6 +280,8 @@ NSString * const kGTMToken = @"kGTMToken";
             case RIEventFacebookLoginFail:
                 [pushedData setObject:@"loginFailed" forKey:kGTMEventKey];
                 [pushedData setObject:@"Facebook" forKey:kGTMEventLoginMethodKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventLoginLocationKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventLoginLocationKey];
@@ -247,6 +293,8 @@ NSString * const kGTMToken = @"kGTMToken";
             case RIEventLogout:
                 [pushedData setObject:@"logout" forKey:kGTMEventKey];
                 [pushedData setObject:@"Side menu" forKey:kRIEventLocationKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventCustomerIdKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventUserIdKey] forKey:kGTMEventCustomerIdKey];
@@ -256,6 +304,8 @@ NSString * const kGTMToken = @"kGTMToken";
             case RIEventSignupSuccess:
                 [pushedData setObject:@"register" forKey:kGTMEventKey];
                 [pushedData setObject:@"Email Auth" forKey:kGTMEventRegistrationMethodKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventRegistrationLocationKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventRegistrationLocationKey];
@@ -265,6 +315,8 @@ NSString * const kGTMToken = @"kGTMToken";
             case RIEventSignupFail:
                 [pushedData setObject:@"registerFailed" forKey:kGTMEventKey];
                 [pushedData setObject:@"Email Auth" forKey:kGTMEventRegistrationMethodKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventRegistrationLocationKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventRegistrationLocationKey];
@@ -272,10 +324,14 @@ NSString * const kGTMToken = @"kGTMToken";
                 break;
             case RIEventNewsletter:
                 [pushedData setObject:@"signUp" forKey:kGTMEventKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventSubscriberIdKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventUserIdKey] forKey:kGTMEventSubscriberIdKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventSignUpLocationKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventSignUpLocationKey];
@@ -283,10 +339,14 @@ NSString * const kGTMToken = @"kGTMToken";
                 break;
             case RIEventSearch:
                 [pushedData setObject:@"search" forKey:kGTMEventKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventSearchTermKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventKeywordsKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventKeywordsKey] forKey:kGTMEventSearchTermKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventResultsNumberKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventNumberOfProductsKey], NSNumber))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventNumberOfProductsKey] forKey:kGTMEventResultsNumberKey];
@@ -296,10 +356,14 @@ NSString * const kGTMToken = @"kGTMToken";
                 [pushedData setObject:@"shareProduct" forKey:kGTMEventKey];
                 [pushedData setObject:@"Email" forKey:kGTMEventSocialNetworkKey];
                 [pushedData setObject:@"Product Page" forKey:kGTMEventShareLocationKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductSKUKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventSkuKey] forKey:kGTMEventProductSKUKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductCategoryKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventProductCategoryKey];
@@ -309,10 +373,14 @@ NSString * const kGTMToken = @"kGTMToken";
                 [pushedData setObject:@"shareProduct" forKey:kGTMEventKey];
                 [pushedData setObject:@"Facebook" forKey:kGTMEventSocialNetworkKey];
                 [pushedData setObject:@"Product Page" forKey:kGTMEventShareLocationKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductSKUKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventSkuKey] forKey:kGTMEventProductSKUKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductCategoryKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventProductCategoryKey];
@@ -322,10 +390,14 @@ NSString * const kGTMToken = @"kGTMToken";
                 [pushedData setObject:@"shareProduct" forKey:kGTMEventKey];
                 [pushedData setObject:@"Twitter" forKey:kGTMEventSocialNetworkKey];
                 [pushedData setObject:@"Product Page" forKey:kGTMEventShareLocationKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductSKUKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventSkuKey] forKey:kGTMEventProductSKUKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductCategoryKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventProductCategoryKey];
@@ -335,10 +407,14 @@ NSString * const kGTMToken = @"kGTMToken";
                 [pushedData setObject:@"shareProduct" forKey:kGTMEventKey];
                 [pushedData setObject:@"SMS" forKey:kGTMEventSocialNetworkKey];
                 [pushedData setObject:@"Product Page" forKey:kGTMEventShareLocationKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductSKUKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventSkuKey] forKey:kGTMEventProductSKUKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductCategoryKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventProductCategoryKey];
@@ -348,10 +424,14 @@ NSString * const kGTMToken = @"kGTMToken";
                 [pushedData setObject:@"shareProduct" forKey:kGTMEventKey];
                 [pushedData setObject:@"Other" forKey:kGTMEventSocialNetworkKey];
                 [pushedData setObject:@"Product Page" forKey:kGTMEventShareLocationKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductSKUKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventSkuKey] forKey:kGTMEventProductSKUKey];
                 }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductCategoryKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventProductCategoryKey];
@@ -359,10 +439,199 @@ NSString * const kGTMToken = @"kGTMToken";
                 break;
             case RIEventChangeCountry:
                 [pushedData setObject:@"changeCountry" forKey:kGTMEventKey];
+
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventShopCountryKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventShopCountryKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kGTMEventShopCountryKey];
                 }
+                break;
+            case RIEventViewProduct:
+                [pushedData setObject:@"viewProduct" forKey:kGTMEventKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductSKUKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventProductKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventProductKey] forKey:kGTMEventProductSKUKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductBrandKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventBrandKey] forKey:kGTMEventProductBrandKey];
+                }
+
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductPriceKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventPriceKey] forKey:kGTMEventProductPriceKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventCurrencyKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCurrencyCodeKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventCurrencyCodeKey] forKey:kGTMEventCurrencyKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventDiscountKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventDiscountKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventDiscountKey] forKey:kGTMEventDiscountKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductRatingKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventRatingKey], NSNumber))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventRatingKey] forKey:kGTMEventProductRatingKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductCategoryKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventProductCategoryKey];
+                }
+
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductSubCategoryKey];
+                break;
+            case RIEventAddToCart:
+            case RIEventIncreaseQuantity:
+                [pushedData setObject:@"addToCart" forKey:kGTMEventKey];
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductSKUKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventSkuKey] forKey:kGTMEventProductSKUKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductBrandKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventBrandKey] forKey:kGTMEventProductBrandKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductPriceKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventPriceKey] forKey:kGTMEventProductPriceKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductCategoryKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventProductCategoryKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductSubCategoryKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventCurrencyKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCurrencyCodeKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventCurrencyCodeKey] forKey:kGTMEventCurrencyKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventDiscountKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventDiscountKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventDiscountKey] forKey:kGTMEventDiscountKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductQuantityKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventQuantityKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventQuantityKey] forKey:kGTMEventProductQuantityKey];
+                }
+
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventLocationKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventLocationKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductRatingKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventRatingKey], NSNumber))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventRatingKey] forKey:kGTMEventProductRatingKey];
+                }
+                
+                break;
+            case RIEventRemoveFromCart:
+            case RIEventDecreaseQuantity:
+                [pushedData setObject:@"removeFromCart" forKey:kGTMEventKey];
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductSKUKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventSkuKey] forKey:kGTMEventProductSKUKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductPriceKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventPriceKey] forKey:kGTMEventProductPriceKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductRatingKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventRatingKey], NSNumber))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventRatingKey] forKey:kGTMEventProductRatingKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductQuantityKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventQuantityKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventQuantityKey] forKey:kGTMEventProductQuantityKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventCartValueKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventTotalCartKey], NSNumber))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventTotalCartKey] forKey:kGTMEventCartValueKey];
+                }
+
+                break;
+            case RIEventRateProductGlobal:
+                [pushedData setObject:@"rateProduct" forKey:kGTMEventKey];
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventSkuKey] forKey:kGTMEventProductSKUKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductPriceKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventPriceKey] forKey:kGTMEventProductPriceKey];
+                }
+
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductBrandKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventBrandKey] forKey:kGTMEventProductBrandKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductRatingKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventRatingKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventRatingKey] forKey:kGTMEventProductRatingKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventRatingPriceKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventRatingPriceKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventRatingPriceKey] forKey:kGTMEventRatingPriceKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventRatingAppearanceKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventRatingAppearanceKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventRatingAppearanceKey] forKey:kGTMEventRatingAppearanceKey];
+                }
+                
+                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventRatingQualityKey];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventRatingQualityKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventRatingQualityKey] forKey:kGTMEventRatingQualityKey];
+                }
+                
                 break;
         }
 
