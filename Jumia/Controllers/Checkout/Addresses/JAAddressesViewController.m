@@ -57,6 +57,7 @@ UICollectionViewDelegateFlowLayout>
 {
     [super viewDidLoad];
     
+    self.screenName = @"Address";
     self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;

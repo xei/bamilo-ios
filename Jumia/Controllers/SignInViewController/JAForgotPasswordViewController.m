@@ -35,6 +35,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"ForgotPassword";
+    
     self.navBarLayout.showLogo = NO;
     
     self.contentView.layer.cornerRadius = 5.0f;

@@ -24,6 +24,11 @@
 {
     [super viewDidLoad];
     
+    if(VALID_NOTEMPTY(self.filter, RIFilter))
+    {
+        self.screenName =  [NSString stringWithFormat:@"%@Filter", self.filter.name];
+    }
+    
     self.navBarLayout.title = self.filter.name;
     self.navBarLayout.backButtonTitle = STRING_FILTERS;
     self.navBarLayout.showDoneButton = YES;

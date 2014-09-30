@@ -69,6 +69,8 @@ JANoConnectionViewDelegate
 {
     [super viewDidLoad];
     
+    self.screenName = @"Shipping";
+    
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"CheckoutShippingMethods" forKey:kRIEventActionKey];

@@ -24,6 +24,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"Filters";
+    
     self.navBarLayout.title = STRING_FILTERS;
     self.navBarLayout.showEditButton = YES;
     self.navBarLayout.showDoneButton = YES;

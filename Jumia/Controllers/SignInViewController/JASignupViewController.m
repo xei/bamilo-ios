@@ -49,6 +49,8 @@ JANoConnectionViewDelegate
 {
     [super viewDidLoad];
     
+    self.screenName = @"Register";
+    
     self.A4SViewControllerAlias = @"ACCOUNT";
     
     self.navBarLayout.title = STRING_CREATE_ACCOUNT;

@@ -38,6 +38,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"TrackOrder";
+    
     [self initViewElements];
 }
 

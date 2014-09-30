@@ -12,54 +12,69 @@
 #import "TAGManager.h"
 #import "TAGDataLayer.h"
 
-#define kGTMEventKey                        @"event"
-#define kGTMEventSourceKey                  @"source"
-#define kGTMEventCampaignKey                @"campaign"
-#define kGTMEventAppVersionKey              @"appVersion"
-#define kGTMEventShopCountryKey             @"shopCountry"
-#define kGTMEventLoginMethodKey             @"loginMethod"
-#define kGTMEventLoginLocationKey           @"loginLocation"
-#define kGTMEventCustomerIdKey              @"customerId"
-#define kGTMEventUserAgeKey                 @"userAge"
-#define kGTMEventUserGenderKey              @"userGender"
-#define kGTMEventAccountCreationDateKey     @"accountCreationDate"
-#define kGTMEventNumberPurchasesKey         @"numberPurchases"
-#define kGTMEventRegistrationMethodKey      @"registrationMethod"
-#define kGTMEventRegistrationLocationKey    @"registrationLocation"
-#define kGTMEventSubscriberIdKey            @"subscriberId"
-#define kGTMEventSignUpLocationKey          @"signUpLocation"
-#define kGTMEventSearchTermKey              @"searchTerm"
-#define kGTMEventResultsNumberKey           @"resultsNumber"
-#define kGTMEventSocialNetworkKey           @"socialNetwork"
-#define kGTMEventShareLocationKey           @"shareLocation"
-#define kGTMEventProductSKUKey              @"productSKU"
-#define kGTMEventProductCategoryKey         @"productCategory"
-#define kGTMEventProductBrandKey            @"productBrand"
-#define kGTMEventProductSubCategoryKey      @"productSubcategory"
-#define kGTMEventProductPriceKey            @"productPrice"
-#define kGTMEventCurrencyKey                @"currency"
-#define kGTMEventDiscountKey                @"discount"
-#define kGTMEventProductRatingKey           @"productRating"
-#define kGTMEventProductQuantityKey         @"productQuantity"
-#define kGTMEventLocationKey                @"location"
-#define kGTMEventAverageRatingTotalKey      @"averageRatingTotal"
-#define kGTMEventQuantityCartKey            @"quantityCart"
-#define kGTMEventCartValueKey               @"cartValue"
-#define kGTMEventRatingPriceKey             @"ratingPrice"
-#define kGTMEventRatingAppearanceKey        @"ratingAppearance"
-#define kGTMEventRatingQualityKey           @"ratingQuality"
-#define kGTMEventAverageRatingPriceKey      @"averageRatingPrice"
-#define kGTMEventAverageRatingAppearanceKey @"averageRatingAppearance"
-#define kGTMEventAverageRatingQualityKey    @"averageRatingQuality"
-#define kGTMEventAverageRatingTotalKey      @"averageRatingTotal"
-#define kGTMEventCategoryKey                @"category"
-#define kGTMEventSubCategoryKey             @"subcategory"
-#define kGTMEventPageNumberKey              @"pageNumber"
-#define kGTMEventFilterTypeKey              @"filterType"
-#define kGTMEventSortTypeKey                @"sortType"
-#define kGTMEventAddressCorrectKey          @"adressCorrect"
-#define kGTMEventPaymentMethodKey           @"paymentMethod"
-#define kGTMEventTransactionTotalKey        @"transactionTotal"
+#define kGTMEventKey                            @"event"
+#define kGTMEventSourceKey                      @"source"
+#define kGTMEventCampaignKey                    @"campaign"
+#define kGTMEventAppVersionKey                  @"appVersion"
+#define kGTMEventShopCountryKey                 @"shopCountry"
+#define kGTMEventLoginMethodKey                 @"loginMethod"
+#define kGTMEventLoginLocationKey               @"loginLocation"
+#define kGTMEventCustomerIdKey                  @"customerId"
+#define kGTMEventUserAgeKey                     @"userAge"
+#define kGTMEventUserGenderKey                  @"userGender"
+#define kGTMEventAccountCreationDateKey         @"accountCreationDate"
+#define kGTMEventNumberPurchasesKey             @"numberPurchases"
+#define kGTMEventRegistrationMethodKey          @"registrationMethod"
+#define kGTMEventRegistrationLocationKey        @"registrationLocation"
+#define kGTMEventSubscriberIdKey                @"subscriberId"
+#define kGTMEventSignUpLocationKey              @"signUpLocation"
+#define kGTMEventSearchTermKey                  @"searchTerm"
+#define kGTMEventResultsNumberKey               @"resultsNumber"
+#define kGTMEventSocialNetworkKey               @"socialNetwork"
+#define kGTMEventShareLocationKey               @"shareLocation"
+#define kGTMEventProductSKUKey                  @"productSKU"
+#define kGTMEventProductCategoryKey             @"productCategory"
+#define kGTMEventProductBrandKey                @"productBrand"
+#define kGTMEventProductSubCategoryKey          @"productSubcategory"
+#define kGTMEventProductPriceKey                @"productPrice"
+#define kGTMEventCurrencyKey                    @"currency"
+#define kGTMEventDiscountKey                    @"discount"
+#define kGTMEventProductRatingKey               @"productRating"
+#define kGTMEventProductQuantityKey             @"productQuantity"
+#define kGTMEventLocationKey                    @"location"
+#define kGTMEventAverageRatingTotalKey          @"averageRatingTotal"
+#define kGTMEventQuantityCartKey                @"quantityCart"
+#define kGTMEventCartValueKey                   @"cartValue"
+#define kGTMEventRatingPriceKey                 @"ratingPrice"
+#define kGTMEventRatingAppearanceKey            @"ratingAppearance"
+#define kGTMEventRatingQualityKey               @"ratingQuality"
+#define kGTMEventAverageRatingPriceKey          @"averageRatingPrice"
+#define kGTMEventAverageRatingAppearanceKey     @"averageRatingAppearance"
+#define kGTMEventAverageRatingQualityKey        @"averageRatingQuality"
+#define kGTMEventAverageRatingTotalKey          @"averageRatingTotal"
+#define kGTMEventCategoryKey                    @"category"
+#define kGTMEventSubCategoryKey                 @"subcategory"
+#define kGTMEventPageNumberKey                  @"pageNumber"
+#define kGTMEventFilterTypeKey                  @"filterType"
+#define kGTMEventSortTypeKey                    @"sortType"
+#define kGTMEventAddressCorrectKey              @"adressCorrect"
+#define kGTMEventPaymentMethodKey               @"paymentMethod"
+#define kGTMEventPreviousPurchasesKey           @"previousPurchases"
+#define kGTMEventTransactionTotalKey            @"transactionTotal"
+#define kGTMEventVoucherAmountKey               @"voucherAmount"
+#define kGTMEventTransactionIdKey               @"transactionId"
+#define kGTMEventTransactionAffiliationKey      @"transactionAffiliation"
+#define kGTMEventTransactionShippingKey         @"transactionShipping"
+#define kGTMEventTransactionTaxKey              @"transactionTax"
+#define kGTMEventTransactionCurrencyKey         @"transactionCurrency"
+#define kGTMEventTransactionProductsKey         @"transactionProducts"
+#define kGTMEventTransactionProductNameKey      @"name"
+#define kGTMEventTransactionProductSkuKey       @"sku"
+#define kGTMEventTransactionProductCategoryKey  @"category"
+#define kGTMEventTransactionProductPriceKey     @"price"
+#define kGTMEventTransactionProductCurrencyKey  @"currency"
+#define kGTMEventTransactionProductQuantityKey  @"quantity"
+#define kGTMEventScreenNameKey                  @"screenName"
 
 NSString * const kGTMToken = @"kGTMToken";
 
@@ -121,7 +136,8 @@ NSString * const kGTMToken = @"kGTMToken";
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutAddAddressFail]];
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]];
-        
+        [events addObject:[NSNumber numberWithInt:RIEventCloseApp]];
+
         self.registeredEvents = [events copy];
     }
     
@@ -846,7 +862,7 @@ NSString * const kGTMToken = @"kGTMToken";
                 break;
             case RIEventCheckoutPaymentSuccess:
                 [pushedData setObject:@"choosePayment" forKey:kGTMEventKey];
-
+                
                 [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventPaymentMethodKey];
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventPaymentMethodKey], NSString))
                 {
@@ -868,10 +884,134 @@ NSString * const kGTMToken = @"kGTMToken";
                     [pushedData setObject:[data objectForKey:kRIEventTotalTransactionKey] forKey:kGTMEventTransactionTotalKey];
                 }
                 break;
+            case RIEventCloseApp:
+                [pushedData setObject:@"openScreen" forKey:kGTMEventKey];
+                [pushedData setObject:[data objectForKey:kRIEventScreenNameKey] forKey:kGTMEventScreenNameKey];
+                break;
         }
         
         [dataLayer push:pushedData];
     }
 }
+
+#pragma mark - RIEcommerceEventTracking implementation
+
+- (void)trackCheckout:(NSDictionary *)data
+{
+    RIDebugLog(@"GTM - Ecommerce event with data:%@", data);
+    
+    // The container should have already been opened, otherwise events pushed to
+    // the data layer will not fire tags in that container.
+    TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
+    
+    NSMutableDictionary *pushedData = [NSMutableDictionary dictionary];
+    [pushedData setObject:@"transaction" forKey:kGTMEventKey];
+    
+    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventPaymentMethodKey];
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommercePaymentMethodKey], NSString))
+    {
+        [pushedData setObject:[data objectForKey:kRIEcommercePaymentMethodKey] forKey:kGTMEventPaymentMethodKey];
+    }
+    
+    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventVoucherAmountKey];
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceCouponKey], NSString))
+    {
+        [pushedData setObject:[data objectForKey:kRIEcommerceCouponKey] forKey:kGTMEventVoucherAmountKey];
+    }
+    
+    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventPreviousPurchasesKey];
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommercePreviousPurchases], NSNumber))
+    {
+        [pushedData setObject:[data objectForKey:kRIEcommercePreviousPurchases] forKey:kGTMEventPreviousPurchasesKey];
+    }
+    
+    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionIdKey];
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceTransactionIdKey], NSString))
+    {
+        [pushedData setObject:[data objectForKey:kRIEcommerceTransactionIdKey] forKey:kGTMEventTransactionIdKey];
+    }
+    
+    [pushedData setObject:@"In-App Store" forKey:kGTMEventTransactionAffiliationKey];
+    
+    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionTotalKey];
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceTotalValueKey], NSNumber))
+    {
+        [pushedData setObject:[data objectForKey:kRIEcommerceTotalValueKey] forKey:kGTMEventTransactionTotalKey];
+    }
+    
+    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionShippingKey];
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceShippingKey], NSNumber))
+    {
+        [pushedData setObject:[data objectForKey:kRIEcommerceShippingKey] forKey:kGTMEventTransactionShippingKey];
+    }
+    
+    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionTaxKey];
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceTaxKey], NSNumber))
+    {
+        [pushedData setObject:[data objectForKey:kRIEcommerceTaxKey] forKey:kGTMEventTransactionTaxKey];
+    }
+    
+    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionCurrencyKey];
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceCurrencyKey], NSNumber))
+    {
+        [pushedData setObject:[data objectForKey:kRIEcommerceCurrencyKey] forKey:kGTMEventTransactionCurrencyKey];
+    }
+    
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceProducts], NSArray))
+    {
+        NSMutableArray *productsArray = [[NSMutableArray alloc] init];
+        for(NSDictionary *product in  [data objectForKey:kRIEcommerceProducts])
+        {
+            if(VALID_NOTEMPTY(product, NSDictionary))
+            {
+                NSMutableDictionary *productDictionary = [[NSMutableDictionary alloc] init];
+                
+                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductNameKey];
+                if(VALID_NOTEMPTY([product objectForKey:kRIEventProductNameKey], NSString))
+                {
+                    [productDictionary setObject:[product objectForKey:kRIEventProductNameKey] forKey:kGTMEventTransactionProductNameKey];
+                }
+                
+                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductSkuKey];
+                if(VALID_NOTEMPTY([product objectForKey:kRIEventSkuKey], NSString))
+                {
+                    [productDictionary setObject:[product objectForKey:kRIEventSkuKey] forKey:kGTMEventTransactionProductSkuKey];
+                }
+                
+                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductCategoryKey];
+                
+                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductPriceKey];
+                if(VALID_NOTEMPTY([product objectForKey:kRIEventPriceKey], NSNumber))
+                {
+                    [productDictionary setObject:[product objectForKey:kRIEventPriceKey] forKey:kGTMEventTransactionProductPriceKey];
+                }
+                
+                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductCurrencyKey];
+                if(VALID_NOTEMPTY([product objectForKey:kRIEventCurrencyCodeKey], NSNumber))
+                {
+                    [productDictionary setObject:[product objectForKey:kRIEventCurrencyCodeKey] forKey:kGTMEventTransactionProductCurrencyKey];
+                }
+                
+                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductQuantityKey];
+                if(VALID_NOTEMPTY([product objectForKey:kRIEventQuantityKey], NSNumber))
+                {
+                    [productDictionary setObject:[product objectForKey:kRIEventQuantityKey] forKey:kGTMEventTransactionProductQuantityKey];
+                }
+                
+                
+                [productsArray addObject:productDictionary];
+            }
+        }
+        
+        if(VALID_NOTEMPTY(productsArray, NSMutableArray))
+        {
+            [pushedData setObject:productsArray forKey:kGTMEventTransactionProductsKey];
+        }
+    }
+
+    [dataLayer push:pushedData];
+}
+
+
 
 @end

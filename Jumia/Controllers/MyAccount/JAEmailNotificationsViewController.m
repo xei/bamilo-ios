@@ -34,6 +34,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"CustomerEmailNotifications";
+    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_USER_EMAIL_NOTIFICATIONS;

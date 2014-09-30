@@ -23,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.screenName = @"ExternalPayment";
+    
     self.navBarLayout.showCartButton = NO;
     
     self.navBarLayout.title = STRING_CHECKOUT;

@@ -86,6 +86,8 @@ UIPickerViewDelegate>
 {
     [super viewDidLoad];
     
+    self.screenName = @"NewAddress";
+    
     self.hasErrors = NO;
     
     self.navBarLayout.showCartButton = NO;

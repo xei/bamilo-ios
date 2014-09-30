@@ -60,6 +60,8 @@ UITextFieldDelegate>
 {
     [super viewDidLoad];
     
+    self.screenName = @"Payment";
+    
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
@@ -319,7 +321,7 @@ UITextFieldDelegate>
                                                                   data:[trackingDictionary copy]];
                         
                         
-                        [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
+                        [JAUtils goToCheckout:checkout inStoryboard:self.storyboard];
                         
                         [self hideLoading];
                     } andFailureBlock:^(NSArray *errorMessages) {

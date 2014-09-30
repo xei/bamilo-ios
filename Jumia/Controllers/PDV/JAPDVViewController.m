@@ -64,6 +64,15 @@ JANoConnectionViewDelegate
 {
     [super viewDidLoad];
     
+    if(VALID_NOTEMPTY(self.product.sku, NSString))
+    {
+        self.screenName = [NSString stringWithFormat:@"PDS / %@", self.product.sku];
+    }
+    else
+    {
+        self.screenName = @"PDS";
+    }
+    
     self.A4SViewControllerAlias = @"PRODUCT";
     
     self.navBarLayout.showLogo = NO;
@@ -267,12 +276,7 @@ JANoConnectionViewDelegate
     }
     else if ([segue.identifier isEqualToString:@"segueToDetails"])
     {
-        [segue.destinationViewController setStringBrand:self.product.brand];
-        [segue.destinationViewController setStringName:self.product.name];
-        [segue.destinationViewController setStringNewPrice:self.product.specialPriceFormatted];
-        [segue.destinationViewController setStringOldPrice:self.product.priceFormatted];
-        [segue.destinationViewController setFeaturesText:self.product.attributeShortDescription];
-        [segue.destinationViewController setDescriptionText:self.product.descriptionString];
+        [segue.destinationViewController setProduct:self.product];
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];

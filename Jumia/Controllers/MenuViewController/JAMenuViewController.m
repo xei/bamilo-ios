@@ -69,6 +69,8 @@ UIAlertViewDelegate
 {
     [super viewDidLoad];
     
+    self.screenName = @"LeftMenu";
+    
     self.title = @"";
     
     [self showLoading];

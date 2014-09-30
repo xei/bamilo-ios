@@ -12,7 +12,8 @@
 <
 RITracker,
 RILaunchEventTracker,
-RIEventTracking
+RIEventTracking,
+RIEcommerceEventTracking
 >
 
 @end

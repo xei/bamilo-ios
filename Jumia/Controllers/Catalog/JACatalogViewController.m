@@ -51,7 +51,23 @@
     {
         self.navBarLayout.showBackButton = YES;
     }
-
+    
+    if (self.searchString.length > 0)
+    {
+        self.screenName = @"SearchResults";
+    }
+    else
+    {
+        if(VALID_NOTEMPTY(self.category, RICategory))
+        {
+            self.screenName = [NSString stringWithFormat:@"Catalog / %@", self.category.name];
+        }
+        else
+        {
+            self.screenName = @"Catalog";
+        }
+    }
+    
     self.isFirstLoadTracking = NO;
     self.filterButton.backgroundColor = JACatalogViewControllerButtonColor;
     self.viewToggleButton.backgroundColor = JACatalogViewControllerButtonColor;

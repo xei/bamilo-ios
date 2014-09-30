@@ -22,6 +22,8 @@
 {
     [super viewDidLoad];
 
+    self.screenName = @"CategoryFilter";
+    
     self.navBarLayout.title = STRING_CATEGORIES;
     self.navBarLayout.backButtonTitle = STRING_FILTERS;
     self.navBarLayout.showDoneButton = YES;
