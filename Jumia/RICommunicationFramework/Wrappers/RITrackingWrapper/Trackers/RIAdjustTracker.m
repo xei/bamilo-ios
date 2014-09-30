@@ -150,6 +150,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
                 break;
             case RIEventFacebookLoginSuccess:
                 eventKey = @"u98xtu";
+                break;
             case RIEventShareFacebook:
                 eventKey = @"kj8g12";
                 break;
