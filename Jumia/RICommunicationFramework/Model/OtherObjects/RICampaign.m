@@ -8,6 +8,42 @@
 
 #import "RICampaign.h"
 
+@implementation RICampaignProductSimple
+
++ (RICampaignProductSimple*)parseCampaignProductSimple:(NSDictionary*)campaignProductSimpleJSON
+                                               country:(RICountryConfiguration*)country
+{
+    RICampaignProductSimple* campaignProductSimple = [[RICampaignProductSimple alloc] init];
+    
+    if ([campaignProductSimpleJSON objectForKey:@"save_price"]) {
+        if (![[campaignProductSimpleJSON objectForKey:@"save_price"] isKindOfClass:[NSNull class]]) {
+            campaignProductSimple.savePrice = [campaignProductSimpleJSON objectForKey:@"save_price"];
+            campaignProductSimple.savePriceFormatted = [RICountryConfiguration formatPrice:campaignProductSimple.savePrice country:country];
+        }
+    }
+    if ([campaignProductSimpleJSON objectForKey:@"price"]) {
+        if (![[campaignProductSimpleJSON objectForKey:@"price"] isKindOfClass:[NSNull class]]) {
+            campaignProductSimple.price = [campaignProductSimpleJSON objectForKey:@"price"];
+            campaignProductSimple.priceFormatted = [RICountryConfiguration formatPrice:campaignProductSimple.price country:country];
+        }
+    }
+    if ([campaignProductSimpleJSON objectForKey:@"sku"]) {
+        if (![[campaignProductSimpleJSON objectForKey:@"sku"] isKindOfClass:[NSNull class]]) {
+            campaignProductSimple.sku = [campaignProductSimpleJSON objectForKey:@"sku"];
+        }
+    }
+    if ([campaignProductSimpleJSON objectForKey:@"size"]) {
+        if (![[campaignProductSimpleJSON objectForKey:@"size"] isKindOfClass:[NSNull class]]) {
+            campaignProductSimple.size = [campaignProductSimpleJSON objectForKey:@"size"];
+        }
+    }
+    
+    return campaignProductSimple;
+}
+
+@end
+
+
 @implementation RICampaign
 
 + (NSString *)getCampaignsWithUrl:(NSString*)url
@@ -157,6 +193,23 @@
             campaign.imagesUrls = [imagesArray copy];
         }
         
+        NSArray* sizesArray = [campaignJSON objectForKey:@"sizes"];
+        if (VALID_NOTEMPTY(sizesArray, NSArray)) {
+            
+            NSMutableArray* productSimples = [NSMutableArray new];
+            
+            for (NSDictionary* sizeJSON in sizesArray) {
+                
+                if (VALID_NOTEMPTY(sizeJSON, NSDictionary)) {
+                    
+                    RICampaignProductSimple* campaignProductSimple = [RICampaignProductSimple parseCampaignProductSimple:sizeJSON
+                                                                                                                 country:country];
+                    [productSimples addObject:campaignProductSimple];
+                }
+            }
+            
+            campaign.productSimples = [productSimples copy];
+        }
     }
     
     return campaign;

@@ -10,12 +10,25 @@
 #import "RITeaser.h"
 #import "RITeaserText.h"
 #import "JACampaignPageView.h"
+#import "RICart.h"
+#import "RICampaign.h"
 
 @interface JACampaignsViewController ()
 
 @property (nonatomic, strong)NSMutableArray* campaignPages;
 @property (nonatomic, strong)JAPickerScrollView* pickerScrollView;
 @property (nonatomic, strong)UIScrollView* scrollView;
+
+// size picker view
+@property (strong, nonatomic) UIView *sizePickerBackgroundView;
+@property (strong, nonatomic) UIToolbar *sizePickerToolbar;
+@property (strong, nonatomic) UIPickerView *sizePicker;
+
+// for the retry connection, is necessary to store this stuff
+@property (nonatomic, strong)RICampaign* backupCampaign;
+@property (nonatomic, strong)NSString* backupSimpleSku;
+
+@property (nonatomic, strong)JACampaignSingleView* lastPressedCampaignSingleView;
 
 @end
 
@@ -61,6 +74,7 @@
                                                                                                             self.scrollView.bounds.origin.y,
                                                                                                             self.scrollView.bounds.size.width,
                                                                                                             self.scrollView.bounds.size.height)];
+                    campaignPage.delegate = self;
                     [self.campaignPages addObject:campaignPage];
                     [self.scrollView addSubview:campaignPage];
                     [campaignPage loadWithCampaignUrl:teaserText.url];
@@ -106,5 +120,197 @@
 {
     [self.pickerScrollView scrollRight];
 }
+
+#pragma mark - BUY BUTTON
+
+
+- (void)addToCartForProduct:(RICampaign*)campaign
+          withProductSimple:(NSString*)simpleSku;
+{
+    self.backupCampaign = campaign;
+    self.backupSimpleSku = simpleSku;
+    
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self finishAddToCart];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self finishAddToCart];
+    }
+}
+
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self finishAddToCart];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self finishAddToCart];
+    }
+}
+
+- (void)finishAddToCart
+{
+    [self showLoading];
+    [RICart addProductWithQuantity:@"1"
+                               sku:self.backupCampaign.sku
+                            simple:self.backupSimpleSku
+                  withSuccessBlock:^(RICart *cart) {
+                      
+//                      NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//                      [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
+//                      [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
+//                      [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+//                      [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+//                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+//                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+//                      [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+//                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+//                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+//                      [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+//                      [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+//                      [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+//                      
+//                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+//                                                                data:[trackingDictionary copy]];
+                      
+                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                      
+                      JASuccessView *successView = [JASuccessView getNewJASuccessView];
+                      [successView setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
+                                          andAddTo:self];
+                      
+                      [self hideLoading];
+                      
+                  } andFailureBlock:^(NSArray *error) {
+                      JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                      [errorView setErrorTitle:STRING_ERROR_ADDING_TO_CART
+                                      andAddTo:self];
+                      
+                      [self hideLoading];
+                  }];
+}
+
+- (void)sizePressedOnView:(JACampaignSingleView*)campaignSingleView;
+{
+    self.lastPressedCampaignSingleView = campaignSingleView;
+    
+    self.sizePickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                             0.0f,
+                                                                             self.view.frame.size.width,
+                                                                             self.view.frame.size.height)];
+    [self.sizePickerBackgroundView setBackgroundColor:[UIColor clearColor]];
+    
+    UITapGestureRecognizer *removePickerViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(removePickerView)];
+    [self.sizePickerBackgroundView addGestureRecognizer:removePickerViewTap];
+    
+    self.sizePicker = [[UIPickerView alloc] init];
+    [self.sizePicker setFrame:CGRectMake(self.sizePickerBackgroundView.frame.origin.x,
+                                         CGRectGetMaxY(self.sizePickerBackgroundView.frame) - self.sizePicker.frame.size.height,
+                                         self.sizePicker.frame.size.width,
+                                         self.sizePicker.frame.size.height)];
+    [self.sizePicker setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.sizePicker setAlpha:0.9];
+    [self.sizePicker setShowsSelectionIndicator:YES];
+    [self.sizePicker setDataSource:self];
+    [self.sizePicker setDelegate:self];
+    
+    self.sizePickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [self.sizePickerToolbar setTranslucent:NO];
+    [self.sizePickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.sizePickerToolbar setAlpha:0.9];
+    [self.sizePickerToolbar setFrame:CGRectMake(0.0f,
+                                                CGRectGetMinY(self.sizePicker.frame) - self.sizePickerToolbar.frame.size.height,
+                                                self.sizePickerToolbar.frame.size.width,
+                                                self.sizePickerToolbar.frame.size.height)];
+    
+    UIButton *tmpbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [tmpbutton setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
+    [tmpbutton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [tmpbutton setTitle:STRING_DONE forState:UIControlStateNormal];
+    [tmpbutton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [tmpbutton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [tmpbutton addTarget:self action:@selector(selectSize:) forControlEvents:UIControlEventTouchUpInside];
+    [tmpbutton sizeToFit];
+    
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:tmpbutton];
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    [self.sizePickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
+    
+    //simple index
+    NSInteger simpleIndex = 0;
+    for (int i = 0; i < campaignSingleView.campaign.productSimples.count; i++) {
+        RICampaignProductSimple* simple = [campaignSingleView.campaign.productSimples objectAtIndex:i];
+        if ([simple.size isEqualToString:campaignSingleView.chosenSize]) {
+            //found it
+            simpleIndex = i;
+        }
+    }
+    
+    [self.sizePicker selectRow:simpleIndex inComponent:0 animated:NO];
+    [self.sizePickerBackgroundView addSubview:self.sizePicker];
+    [self.sizePickerBackgroundView addSubview:self.sizePickerToolbar];
+    [self.view addSubview:self.sizePickerBackgroundView];
+}
+
+- (void)selectSize:(UIButton*)button
+{
+    NSInteger selectedIndex = [self.sizePicker selectedRowInComponent:0];
+    
+    RICampaignProductSimple* selectedSimple = [self.lastPressedCampaignSingleView.campaign.productSimples objectAtIndex:selectedIndex];
+    self.lastPressedCampaignSingleView.chosenSize = selectedSimple.size;
+    
+    [self removePickerView];
+}
+
+- (void)removePickerView
+{
+    [self.sizePicker removeFromSuperview];
+    self.sizePicker = nil;
+    
+    [self.sizePickerBackgroundView removeFromSuperview];
+    self.sizePickerBackgroundView = nil;
+}
+
+#pragma mark - UIPickerView
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return self.lastPressedCampaignSingleView.campaign.productSimples.count;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    RICampaignProductSimple* productSimple = [self.lastPressedCampaignSingleView.campaign.productSimples objectAtIndex:row];
+    return productSimple.size;
+}
+
 
 @end

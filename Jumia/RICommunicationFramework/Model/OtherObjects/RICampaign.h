@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@interface RICampaignProductSimple : NSObject
+
+@property (nonatomic, strong)NSString* sku;
+@property (nonatomic, strong)NSNumber* price;
+@property (nonatomic, strong)NSString* priceFormatted;
+@property (nonatomic, strong)NSNumber* savePrice;
+@property (nonatomic, strong)NSString* savePriceFormatted;
+@property (nonatomic, strong)NSString* size;
+
+@end
+
 @interface RICampaign : NSObject
 
 @property (nonatomic, strong) NSNumber* savePrice;
@@ -26,6 +37,7 @@
 @property (nonatomic, strong) NSString* brand;
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSArray* imagesUrls;
+@property (nonatomic, strong) NSArray* productSimples;
 
 + (NSString *)getCampaignsWithUrl:(NSString*)url
                      successBlock:(void (^)(NSArray* campaigns, NSString* bannerImageUrl))successBlock

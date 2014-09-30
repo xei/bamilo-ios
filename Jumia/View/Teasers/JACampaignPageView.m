@@ -8,7 +8,6 @@
 
 #import "JACampaignPageView.h"
 #import "RICampaign.h"
-#import "JACampaignSingleView.h"
 
 @interface JACampaignPageView()
 
@@ -49,6 +48,7 @@
     CGFloat currentY = self.scrollView.bounds.origin.y;
     for (RICampaign* campaign in self.campaigns) {
         JACampaignSingleView* campaignView = [JACampaignSingleView getNewJACampaignSingleView];
+        campaignView.delegate = self.delegate;
         [campaignView setFrame:CGRectMake(self.scrollView.bounds.origin.x,
                                           currentY,
                                           self.scrollView.frame.size.width,

@@ -14,6 +14,8 @@
 
 @interface JACampaignSingleView()
 
+@property (nonatomic, strong)RICampaign* campaign;
+
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 
 @property (weak, nonatomic) IBOutlet UILabel *discountLabel;
@@ -35,10 +37,21 @@
 @property (weak, nonatomic) IBOutlet UILabel *remainingStockLabel;
 @property (weak, nonatomic) IBOutlet UIButton *buyButton;
 
+@property (nonatomic, strong)UIControl* sizeControl;
+@property (nonatomic, strong)UILabel* sizeLabel;
 
 @end
 
 @implementation JACampaignSingleView
+
+@synthesize chosenSize=_chosenSize;
+- (void)setChosenSize:(NSString *)chosenSize
+{
+    _chosenSize = chosenSize;
+    if (VALID_NOTEMPTY(self.sizeLabel, UILabel)) {
+        self.sizeLabel.text = [NSString stringWithFormat:@"%@: %@", STRING_SIZE, chosenSize];
+    }
+}
 
 + (JACampaignSingleView *)getNewJACampaignSingleView
 {
@@ -59,6 +72,8 @@
 
 - (void)loadWithCampaign:(RICampaign*)campaign
 {
+    self.campaign = campaign;
+    
     self.backgroundColor = [UIColor clearColor];
     
     self.contentView.layer.cornerRadius = 5.0f;
@@ -155,6 +170,66 @@
     
     [self.buyButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
     [self.buyButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.buyButton addTarget:self action:@selector(buyButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (campaign.productSimples.count > 1) {
+        self.sizeControl = [[UIControl alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x,
+                                                                       self.bottomContentView.frame.origin.y + 10.0f - 44.0f,
+                                                                       self.contentView.bounds.size.width,
+                                                                       44.0f)];
+        self.sizeControl.backgroundColor = [UIColor whiteColor];
+        [self.contentView addSubview:self.sizeControl];
+        
+        [self.sizeControl addTarget:self
+                             action:@selector(sizeButtonPressed)
+                   forControlEvents:UIControlEventTouchUpInside];
+        
+        UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.sizeControl.bounds.origin.x,
+                                                                         self.sizeControl.bounds.origin.y,
+                                                                         self.sizeControl.bounds.size.width,
+                                                                         1.0f)];
+        separatorView.backgroundColor = JABackgroundGrey;
+        [self.sizeControl addSubview:separatorView];
+        
+        self.sizeLabel = [[UILabel alloc] init];
+        self.sizeLabel.text = STRING_SIZE;
+        self.sizeLabel.textColor = UIColorFromRGB(0x55a1ff);
+        self.sizeLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+        [self.sizeLabel setFrame:CGRectMake(self.sizeControl.bounds.origin.x + 10.0f,
+                                            self.sizeControl.bounds.origin.y,
+                                            self.sizeControl.bounds.size.width - 10.0f * 2,
+                                            self.sizeControl.bounds.size.height)];
+        [self.sizeControl addSubview:self.sizeLabel];
+    }
 }
+
+- (void)buyButtonPressed
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(addToCartForProduct:withProductSimple:)]) {
+        
+        NSString* simpleSku;
+        if (self.campaign.productSimples.count == 1) {
+            RICampaignProductSimple* simple = [self.campaign.productSimples firstObject];
+            simpleSku = simple.sku;
+        } else {
+            for (RICampaignProductSimple* simple in self.campaign.productSimples) {
+                if ([self.chosenSize isEqualToString:simple.size]) {
+                    //found it
+                    simpleSku = simple.sku;
+                }
+            }
+        }
+        [self.delegate addToCartForProduct:self.campaign
+                         withProductSimple:simpleSku];
+    }
+}
+
+- (void)sizeButtonPressed
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sizePressedOnView:)]) {
+        [self.delegate sizePressedOnView:self];
+    }
+}
+
 
 @end
