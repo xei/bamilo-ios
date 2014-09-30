@@ -184,6 +184,10 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventRatingPriceKey      @"RIEventRatingPriceKey"
 #define kRIEventRatingAppearanceKey @"RIEventRatingAppearanceKey"
 #define kRIEventRatingQualityKey    @"RIEventRatingQualityKey"
+#define kRIEventPageNumberKey       @"RIEventPageNumberKey"
+#define kRIEventFilterTypeKey       @"RIEventFilterTypeKey"
+#define kRIEventSortTypeKey         @"RIEventSortTypeKey"
+#define kRIEventPaymentMethodKey    @"RIEventPaymentMethodKey"
 
 /**
  *  Struct to identify events
@@ -222,32 +226,40 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventCheckoutAddresses = 30,
     RIEventCheckoutShipping = 31,
     RIEventCheckoutPayment = 32,
-    RIEventCheckoutEnd = 33,
-    RIEventCheckoutContinueShopping = 34,
-    RIEventCheckoutError = 35,
-    RIEventNewsletter = 36,
-    RIEventCallToOrder = 37,
-    RIEventGuestCustomer = 38,
-    RIEventViewProduct = 39,
-    RIEventViewListing = 40,
-    RIEventViewCart = 41,
-    RIEventTransactionConfirm = 42,
-    RIEventFacebookHome = 43,
-    RIEventFacebookViewListing = 44,
-    RIEventFacebookViewProduct = 45,
-    RIEventFacebookSearch = 46,
-    RIEventFacebookViewWishlist = 47,
-    RIEventFacebookViewCart = 48,
-    RIEventFacebookViewTransaction = 49,
-    RIEventChangeCountry = 50,
-    RIEventViewCampaign = 51,
-    RIEventTopCategory = 52,
-    RIEventAddFromWishlistToCart = 53,
-    RIEventSignupSuccess = 54,
-    RIEventSignupFail = 55,
-    RIEventIncreaseQuantity = 56,
-    RIEventDecreaseQuantity = 57,
-    RIEventRateProductGlobal = 58
+    RIEventCheckoutOrder = 33,
+    RIEventCheckoutEnd = 34,
+    RIEventCheckoutContinueShopping = 35,
+    RIEventCheckoutError = 36,
+    RIEventNewsletter = 37,
+    RIEventCallToOrder = 38,
+    RIEventGuestCustomer = 39,
+    RIEventViewProduct = 40,
+    RIEventViewListing = 41,
+    RIEventViewCart = 42,
+    RIEventTransactionConfirm = 43,
+    RIEventFacebookHome = 44,
+    RIEventFacebookViewListing = 45,
+    RIEventFacebookViewProduct = 46,
+    RIEventFacebookSearch = 47,
+    RIEventFacebookViewWishlist = 48,
+    RIEventFacebookViewCart = 49,
+    RIEventFacebookViewTransaction = 50,
+    RIEventChangeCountry = 51,
+    RIEventViewCampaign = 52,
+    RIEventTopCategory = 53,
+    RIEventAddFromWishlistToCart = 54,
+    RIEventSignupSuccess = 55,
+    RIEventSignupFail = 56,
+    RIEventIncreaseQuantity = 57,
+    RIEventDecreaseQuantity = 58,
+    RIEventRateProductGlobal = 59,
+    RIEventViewRatings = 60,
+    RIEventViewGTMListing = 61,
+    RIEventIndividualFilter = 62,
+    RIEventCheckoutAddAddressSuccess = 63,
+    RIEventCheckoutAddAddressFail = 64,
+    RIEventCheckoutPaymentSuccess = 65,
+    RIEventCheckoutPaymentFail = 66
 };
 
 /**

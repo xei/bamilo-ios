@@ -942,6 +942,20 @@ JANoConnectionViewDelegate
             [trackingDictionary setValue:[self.product.price stringValue] forKey:kRIEventPriceKey];
             [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
             [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+            [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
+            
+            NSString *discountPercentage = @"0";
+            if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
+            {
+                discountPercentage = self.product.maxSavingPercentage;
+            }
+            [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+            [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+            [trackingDictionary setValue:@"Catalog" forKey:kRIEventLocationKey];
+            if(VALID_NOTEMPTY(self.category, RICategory))
+            {
+                [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+            }
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
                                                       data:[trackingDictionary copy]];
@@ -975,6 +989,7 @@ JANoConnectionViewDelegate
             [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
             [trackingDictionary setValue:[self.product.price stringValue] forKey:kRIEventPriceKey];
             [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
+            [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
             [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]

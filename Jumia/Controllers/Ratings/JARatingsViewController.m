@@ -68,19 +68,9 @@
     
     self.reviewsNumber.text = [NSString stringWithFormat:STRING_REVIEWS, self.productRatings.commentsCount];
     
-    NSInteger media = 0;
+    [self setNumberOfStars:[self.product.avr integerValue]];
     
-    for (RIRatingComment *rating in self.productRatings.comments) {
-        media += [rating.avgRating integerValue];
-    }
-    
-    if (media > 0) {
-        media = (media / self.productRatings.comments.count);
-        
-        [self setNumberOfStars:media];
-    }
-    
-    self.resumeView.layer.cornerRadius = 4.0f;
+    self.resumeView.layer.cornerRadius = 5.0f;
     
     [self.writeReviewButton setTitle:STRING_WRITE_REVIEW
                             forState:UIControlStateNormal];
@@ -91,6 +81,14 @@
     
     self.tableViewComments.layer.cornerRadius = 4.0f;
     self.tableViewComments.allowsSelection = NO;
+
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
+    [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
+    [trackingDictionary setObject:[self.product.price stringValue] forKey:kRIEventPriceKey];
+    [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewRatings] data:trackingDictionary];
 }
 
 - (void)didReceiveMemoryWarning
@@ -218,84 +216,11 @@
 
 - (void)setNumberOfStars:(NSInteger)stars
 {
-    switch (stars) {
-        case 0: {
-            
-            self.star1.image = [self getEmptyStar];
-            self.star2.image = [self getEmptyStar];
-            self.star3.image = [self getEmptyStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 1: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getEmptyStar];
-            self.star3.image = [self getEmptyStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 2: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getFilledStar];
-            self.star3.image = [self getEmptyStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 3: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getFilledStar];
-            self.star3.image = [self getFilledStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 4: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getFilledStar];
-            self.star3.image = [self getFilledStar];
-            self.star4.image = [self getFilledStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 5: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getFilledStar];
-            self.star3.image = [self getFilledStar];
-            self.star4.image = [self getFilledStar];
-            self.star5.image = [self getFilledStar];
-            
-        }
-            break;
-            
-        default: {
-            
-            self.star1.image = [self getEmptyStar];
-            self.star2.image = [self getEmptyStar];
-            self.star3.image = [self getEmptyStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-    }
+    self.star1.image = stars < 1 ? [self getEmptyStar] : [self getFilledStar];
+    self.star2.image = stars < 2 ? [self getEmptyStar] : [self getFilledStar];
+    self.star3.image = stars < 3 ? [self getEmptyStar] : [self getFilledStar];
+    self.star4.image = stars < 4 ? [self getEmptyStar] : [self getFilledStar];
+    self.star5.image = stars < 5 ? [self getEmptyStar] : [self getFilledStar];
 }
 
 - (UIImage *)getEmptyStar

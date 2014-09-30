@@ -418,6 +418,7 @@
                               [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
                               [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
                               [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+                              [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
                               [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                               
                               [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
@@ -500,6 +501,7 @@
         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
         [trackingDictionary setValue:[tempPrice stringValue] forKey:kRIEventPriceKey];
         [trackingDictionary setValue:tempSku forKey:kRIEventSkuKey];
+        [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
         [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
@@ -656,6 +658,7 @@
                           [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
                           [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
                           [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+                          [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];                          
                           [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                           
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]

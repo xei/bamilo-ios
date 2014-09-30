@@ -166,6 +166,9 @@
             [trackingDictionary addEntriesFromDictionary:viewCartTrackingProducts];
         }
         
+        [trackingDictionary setValue:[NSNumber numberWithInt:[[cartData cartItems] count]] forKey:kRIEventQuantityKey];
+        [trackingDictionary setValue:[cartData cartValue] forKey:kRIEventTotalCartKey];
+        
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCart]
                                                   data:[trackingDictionary copy]];
         
@@ -876,6 +879,8 @@
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
             [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+            [trackingDictionary setValue:[NSNumber numberWithInt:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
+            [trackingDictionary setValue:[self.cart cartValue] forKey:kRIEventTotalCartKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
                                                       data:[trackingDictionary copy]];

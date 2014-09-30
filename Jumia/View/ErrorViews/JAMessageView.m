@@ -177,19 +177,20 @@
     {
         [self.timer invalidate];
         
-        [UIView animateWithDuration:1.0f
-                         animations:^{
-                             self.titleLabel.text = newTitle;
-                             [self adjustFrames:success];
-                             
-                             if(!success)
-                             {
-                                 self.errorImageView.frame = CGRectMake(self.errorImageView.frame.origin.x,
-                                                                        self.errorImageView.frame.origin.y,
-                                                                        self.errorImageView.frame.size.width,
-                                                                        17);
-                             }
-                         }];
+        self.titleLabel.text = newTitle;
+        [self adjustFrames:success];
+        
+        self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x,
+                                           self.titleLabel.frame.origin.y,
+                                           self.titleLabel.frame.size.width,
+                                           44);
+        if(!success)
+        {
+            self.errorImageView.frame = CGRectMake(self.errorImageView.frame.origin.x,
+                                                   self.errorImageView.frame.origin.y,
+                                                   self.errorImageView.frame.size.width,
+                                                   17);
+        }
         
         self.timer = [NSTimer scheduledTimerWithTimeInterval:4.0f
                                                       target:self

@@ -380,6 +380,36 @@
     return urlComponent;
 }
 
++ (NSString*)sortingName:(RICatalogSorting)sortingMethod
+{
+    NSString* sortingName = @"";
+    
+    switch (sortingMethod) {
+        case RICatalogSortingRating:
+            sortingName = @"Rating";
+            break;
+        case RICatalogSortingNewest:
+            sortingName = @"Newest";
+            break;
+        case RICatalogSortingPriceUp:
+            sortingName = @"Price up";
+            break;
+        case RICatalogSortingPriceDown:
+            sortingName = @"Price down";
+            break;
+        case RICatalogSortingName:
+            sortingName = @"Name";
+            break;
+        case RICatalogSortingBrand:
+            sortingName = @"Brand";
+            break;
+        default: //RICatalogSortingPopularity
+            break;
+    }
+    
+    return sortingName;
+}
+
 #pragma mark - Recently Viewed
 
 + (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock
