@@ -87,6 +87,9 @@
     self.labelSound.text = STRING_SOUND;
     self.labelDetailSound.textColor = UIColorFromRGB(0x666666);
     self.labelDetailSound.text = STRING_PLAY_SOUND;
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)didReceiveMemoryWarning

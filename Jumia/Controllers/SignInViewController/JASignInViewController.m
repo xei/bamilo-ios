@@ -163,6 +163,13 @@ JANoConnectionViewDelegate
     
     [self hideLoading];
     
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
+    
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
 }
@@ -411,12 +418,12 @@ JANoConnectionViewDelegate
                                                  
                                                  [self hideLoading];
                                                  
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                                                                     object:nil];
+                                                 
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                                                                      object:@{@"index": @(0),
                                                                                                               @"name": STRING_HOME}];
-                                                 
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                                     object:nil];
                                              } andFailureBlock:^(NSArray *errorObject) {
                                                  
                                                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

@@ -139,16 +139,25 @@
                    count++;
                }
                
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+
                [self hideLoading];
                
            } failureBlock:^(NSArray *errorMessage) {
                
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+
                [self hideLoading];
                
                [self showMessage:STRING_ERROR success:NO];
            }];
         
     } andFailureBlock:^(NSArray *errorMessages) {
+        
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
         
         [self hideLoading];
         

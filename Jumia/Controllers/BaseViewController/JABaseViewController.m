@@ -32,6 +32,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.firstLoading = YES;
+    
+    self.screenName = @"";
+    
+    self.startLoadingTime = [NSDate date];
 
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.hidesBackButton = YES;

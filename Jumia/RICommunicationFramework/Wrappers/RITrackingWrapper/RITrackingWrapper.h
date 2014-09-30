@@ -47,7 +47,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
  *  @param millis The time spent
  *  @param reference The reference of the event
  */
-- (void)trackTimingInMillis:(NSUInteger)millis reference:(NSString*)reference;
+- (void)trackTimingInMillis:(NSNumber*)millis reference:(NSString*)reference;
 
 @end
 
