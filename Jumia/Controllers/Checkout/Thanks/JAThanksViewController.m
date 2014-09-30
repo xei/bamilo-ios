@@ -262,6 +262,9 @@
         
         [[RITrackingWrapper sharedInstance] trackCheckout:ecommerceDictionary];
     }];
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)copyOrderNumber

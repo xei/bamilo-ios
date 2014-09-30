@@ -45,6 +45,9 @@
     for (RIFilterOption* filterOption in self.filter.options) {
         [self.selectedIndexes addObject:[NSNumber numberWithBool:filterOption.selected]];
     }
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)viewWillAppear:(BOOL)animated

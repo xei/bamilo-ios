@@ -26,6 +26,7 @@
 
 @property (nonatomic, strong) NSString *voucherCode;
 @property (nonatomic, assign) CGRect keyboardFrame;
+@property (nonatomic, assign) BOOL firstLoading;
 
 @end
 
@@ -34,6 +35,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.firstLoading = YES;
     
     self.A4SViewControllerAlias = @"CART";
     
@@ -175,11 +178,26 @@
         [self loadCartInfo];
         [self hideLoading];
         
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+
         // notify the InAppNotification SDK that this the active view controller
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         
     } andFailureBlock:^(NSArray *errorMessages) {
         [self setupEmptyCart];
+        
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+
         [self hideLoading];
     }];
 }

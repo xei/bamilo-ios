@@ -180,6 +180,10 @@
                                            
                                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
                                                                                      data:[trackingDictionary copy]];
+                                           
+                                           NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                                           [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+
                                        }
                                        
                                        if (0 == results.count || JACatalogViewControllerMaxProducts > results.count) {
@@ -268,8 +272,7 @@
                                             
                                             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                                             NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
-                                            
-                                            
+                                                                                        
                                             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
                                             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
                                             [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
@@ -311,6 +314,9 @@
                                             
                                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing]
                                                                                       data:[trackingDictionary copy]];
+                                            
+                                            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                                            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];                                            
                                         }
                                         
                                         trackingDictionary = [[NSMutableDictionary alloc] init];

@@ -95,7 +95,23 @@
         for (int i = 0; i < self.productsArray.count; i++) {
             [self.chosenSimpleNames addObject:@""];
         }
+        
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+
     } andFailureBlock:^(NSArray *error) {
+        
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+
         [self hideLoading];
     }];
 }

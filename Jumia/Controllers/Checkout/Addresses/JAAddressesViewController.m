@@ -49,6 +49,8 @@ UICollectionViewDelegateFlowLayout>
 // Bottom view
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
+@property (assign, nonatomic) BOOL firstLoading;
+
 @end
 
 @implementation JAAddressesViewController
@@ -56,6 +58,8 @@ UICollectionViewDelegateFlowLayout>
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.firstLoading = YES;
     
     self.screenName = @"Address";
     self.navBarLayout.title = STRING_CHECKOUT;
@@ -318,6 +322,13 @@ UICollectionViewDelegateFlowLayout>
     [self.secondAddressesCollectionView reloadData];
     
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
+    
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
 }
 
 -(BOOL)checkIfAddressIsAdded:(RIAddress*)addressToAdd addresses:(NSArray*)addresses

@@ -135,6 +135,9 @@
     self.bottomDistance.constant = 6;
     
     [self.view updateConstraints];
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)didReceiveMemoryWarning

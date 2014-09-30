@@ -102,6 +102,15 @@ JANoConnectionViewDelegate
             [self loadCompleteProduct];
         }
     }
+    else
+    {
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -197,9 +206,24 @@ JANoConnectionViewDelegate
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewProduct]
                                                   data:[trackingDictionary copy]];
         
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+        
         [self hideLoading];
         [self productLoaded];
     } andFailureBlock:^(NSArray *error) {
+        
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+        
         [self hideLoading];
     }];
 }

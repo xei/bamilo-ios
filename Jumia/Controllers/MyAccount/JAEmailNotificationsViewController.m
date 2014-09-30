@@ -65,10 +65,24 @@
            [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
            [self.saveButton addTarget:self action:@selector(updatePreferences) forControlEvents:UIControlEventTouchUpInside];
            
+           if(self.firstLoading)
+           {
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+               self.firstLoading = NO;
+           }
+
            [self hideLoading];
            
        } failureBlock:^(NSArray *errorMessage) {
            
+           if(self.firstLoading)
+           {
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+               self.firstLoading = NO;
+           }
+
            [self hideLoading];
            
            [self showMessage:STRING_ERROR success:NO];

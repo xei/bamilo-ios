@@ -216,6 +216,13 @@ UITextFieldDelegate>
     
     [self reloadCollectionView];
     
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
+
     [self hideLoading];
 }
 

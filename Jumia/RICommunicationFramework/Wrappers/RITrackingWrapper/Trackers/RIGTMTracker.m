@@ -75,6 +75,7 @@
 #define kGTMEventTransactionProductCurrencyKey  @"currency"
 #define kGTMEventTransactionProductQuantityKey  @"quantity"
 #define kGTMEventScreenNameKey                  @"screenName"
+#define kGTMEventLoadTimeKey                    @"loadTime"
 
 NSString * const kGTMToken = @"kGTMToken";
 
@@ -1013,5 +1014,21 @@ NSString * const kGTMToken = @"kGTMToken";
 }
 
 
+#pragma mark - RITrackingTiming implementation
+
+-(void)trackTimingInMillis:(NSNumber*)millis reference:(NSString *)reference
+{
+    RIDebugLog(@"GTM - Tracking timing: %lu %@", (unsigned long)millis, reference);
+    
+    // The container should have already been opened, otherwise events pushed to
+    // the data layer will not fire tags in that container.
+    TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
+
+    NSMutableDictionary *pushedData = [[NSMutableDictionary alloc] init];
+    [pushedData setObject:reference forKey:kGTMEventScreenNameKey];
+    [pushedData setObject:millis forKey:kGTMEventLoadTimeKey];
+    
+    [dataLayer push:pushedData];
+}
 
 @end

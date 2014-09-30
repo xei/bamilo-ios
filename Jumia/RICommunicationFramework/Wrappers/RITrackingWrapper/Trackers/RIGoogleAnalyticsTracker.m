@@ -251,7 +251,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 
 #pragma mark - RITrackingTiming implementation
 
--(void)trackTimingInMillis:(NSUInteger)millis reference:(NSString *)reference
+-(void)trackTimingInMillis:(NSNumber*)millis reference:(NSString *)reference
 {
     RIDebugLog(@"Google Analytics - Tracking timing: %lu %@", (unsigned long)millis, reference);
     
@@ -263,7 +263,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     }
     
     NSDictionary *dict = [[GAIDictionaryBuilder createTimingWithCategory:reference
-                                                                interval:[NSNumber numberWithInteger:millis]
+                                                                interval:millis
                                                                     name:nil
                                                                    label:nil] build];
     
