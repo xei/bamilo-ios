@@ -310,13 +310,25 @@ UITextFieldDelegate>
                         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
                         [trackingDictionary setValue:@"CheckoutMyOrder" forKey:kRIEventActionKey];
                         [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSideMenu]
+                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutOrder]
                                                                   data:[trackingDictionary copy]];
+               
+                        trackingDictionary = [[NSMutableDictionary alloc] init];
+                        [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]
+                                                                  data:[trackingDictionary copy]];
+                        
                         
                         [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
                         
                         [self hideLoading];
                     } andFailureBlock:^(NSArray *errorMessages) {
+                        
+                        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                        [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                        [trackingDictionary setValue:[[self.checkout orderSummary] grandTotal] forKey:kRIEventTotalTransactionKey];
+                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
+                                                                  data:[trackingDictionary copy]];
                         
                         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                                     message:@"Error setting payment method"

@@ -406,6 +406,9 @@ UIPickerViewDelegate>
              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddresses]
                                                        data:[trackingDictionary copy]];
              
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddAddressSuccess]
+                                                       data:nil];
+             
              self.checkout = object;
              [self.billingDynamicForm resetValues];
              self.numberOfRequests--;
@@ -419,6 +422,8 @@ UIPickerViewDelegate>
              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                        data:[trackingDictionary copy]];
              
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddAddressFail]
+                                                       data:nil];
              self.hasErrors = YES;
              self.numberOfRequests--;
              

@@ -186,6 +186,8 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 
 + (NSString*)urlComponentForSortingMethod:(RICatalogSorting)sortingMethod;
 
++ (NSString*)sortingName:(RICatalogSorting)sortingMethod;
+
 @end
 
 @interface RIProduct (CoreDataGeneratedAccessors)
