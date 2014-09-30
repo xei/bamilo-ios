@@ -51,7 +51,7 @@
         
         if (!findedView)
         {
-            self.frame = CGRectMake(0, 0, 320, 0);
+            self.frame = CGRectMake(0, 64, 320, 0);
             self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x,
                                                self.titleLabel.frame.origin.y,
                                                self.titleLabel.frame.size.width,
@@ -78,7 +78,7 @@
             [UIView animateWithDuration:0.5f
                              animations:^{
                                  
-                                 self.frame = CGRectMake(0, 0, 320, 44);
+                                 self.frame = CGRectMake(0, 64, 320, 44);
                                  self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x,
                                                                     self.titleLabel.frame.origin.y,
                                                                     self.titleLabel.frame.size.width,
@@ -115,7 +115,7 @@
         [UIView animateWithDuration:0.5f
                          animations:^{
                              [self.errorImageView setHidden:YES];
-                             self.frame = CGRectMake(0, 0, 320, 0);
+                             self.frame = CGRectMake(0, 64, 320, 0);
                              self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x,
                                                                 self.titleLabel.frame.origin.y,
                                                                 self.titleLabel.frame.size.width,
@@ -164,6 +164,15 @@
 
 - (void)udpateViewWithNewTitle:(NSString *)newTitle success:(BOOL)success
 {
+    if(!success)
+    {
+        self.backgroundColor = UIColorFromRGB(0xe77979);
+    }
+    else
+    {
+        self.backgroundColor = UIColorFromRGB(0x7dcb7d);
+    }
+    
     if (VALID(newTitle, NSString))
     {
         [self.timer invalidate];

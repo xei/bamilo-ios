@@ -303,6 +303,9 @@
             
             [self showMessage:STRING_REVIEW_SENT success:YES];
             
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+                                                                object:nil
+                                                              userInfo:nil];            
         } andFailureBlock:^(id errorObject) {
             
             [self hideLoading];
@@ -332,7 +335,9 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+                                                        object:nil
+                                                      userInfo:nil];
 }
 
 @end
