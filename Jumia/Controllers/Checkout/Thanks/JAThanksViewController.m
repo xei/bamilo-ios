@@ -195,7 +195,13 @@
         [ecommerceDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
         [ecommerceDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
         [ecommerceDictionary setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
+        [ecommerceDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEcommerceCurrencyKey];
+        
+        [ecommerceDictionary setValue:self.checkout.orderSummary.paymentMethod forKey:kRIEcommercePaymentMethodKey];
+        
         NSDictionary *products = self.checkout.cart.cartItems;
+        
+        NSMutableArray *ecommerceProductsArray = [[NSMutableArray alloc] init];
         CGFloat averageValue = 0.0f;
         if(VALID_NOTEMPTY(products, NSDictionary))
         {
@@ -204,19 +210,29 @@
             for(NSString *productKey in productsArray)
             {
                 RICartItem *product = [products objectForKey:productKey];
+                NSMutableDictionary *productDictionary = [[NSMutableDictionary alloc] init];
+                [productDictionary setObject:product.sku forKey:kRIEventSkuKey];
+                [productDictionary setObject:product.name forKey:kRIEventProductNameKey];
+                [productDictionary setObject:product.quantity forKey:kRIEventQuantityKey];
+                [productDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                
                 if(VALID_NOTEMPTY(product.specialPrice, NSNumber))
                 {
                     averageValue = [product.specialPrice floatValue];
+                    [productDictionary setObject:product.specialPrice forKey:kRIEventPriceKey];
                 }
                 else
                 {
                     averageValue = [product.price floatValue];
+                    [productDictionary setObject:product.price forKey:kRIEventPriceKey];
                 }
+                
+                [ecommerceProductsArray addObject:productDictionary];
             }
             
             averageValue = averageValue / [products count];
         }
-        [ecommerceDictionary setValue:[NSNumber numberWithFloat:averageValue] forKey:kRIEcommerceCartAverageValueKey];        
+        [ecommerceDictionary setValue:[NSNumber numberWithFloat:averageValue] forKey:kRIEcommerceCartAverageValueKey];
         
         if(VALID_NOTEMPTY(self.checkout.orderSummary.discountCouponCode, NSString))
         {
@@ -240,7 +256,7 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
         
-        [ecommerceDictionary setValue:[productsArray copy] forKey:kRIEcommerceProducts];
+        [ecommerceDictionary setValue:[ecommerceProductsArray copy] forKey:kRIEcommerceProducts];
         
         [[RITrackingWrapper sharedInstance] trackCheckout:ecommerceDictionary];
     }];

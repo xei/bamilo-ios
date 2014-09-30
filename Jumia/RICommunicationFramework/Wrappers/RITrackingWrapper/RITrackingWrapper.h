@@ -295,6 +295,9 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 #define kRIEcommerceProducts                @"RIEcommerceProducts"
 #define kRIEcommerceCouponKey               @"RIEcommerceCouponKey"
 #define kRIEcommerceCartAverageValueKey     @"RIEcommerceCartAverageValueKey"
+#define kRIEcommerceAffiliationKey          @"RIEcommerceAffiliationKey"
+#define kRIEcommercePaymentMethodKey        @"RIEcommercePaymentMethodKey"
+#define kRIEcommercePreviousPurchases       @"RIEcommercePreviousPurchases"
 
 /**
  *  This protocol implements tracking to the commerce transactions

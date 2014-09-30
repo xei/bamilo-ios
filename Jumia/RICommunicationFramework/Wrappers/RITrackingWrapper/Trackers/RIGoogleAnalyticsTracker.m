@@ -219,9 +219,9 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     }
     
     NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
-    NSNumber *tax = [data objectForKey:kRIEcommerceTransactionIdKey];
-    NSNumber *shipping = [data objectForKey:kRIEcommerceTransactionIdKey];
-    NSString *currency = [data objectForKey:kRIEcommerceTransactionIdKey];
+    NSNumber *tax = [data objectForKey:kRIEcommerceTaxKey];
+    NSNumber *shipping = [data objectForKey:kRIEcommerceShippingKey];
+    NSString *currency = [data objectForKey:kRIEcommerceCurrencyKey];
     
     NSDictionary *dict = [[GAIDictionaryBuilder createTransactionWithId:transactionId
                                                             affiliation:nil
@@ -238,7 +238,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         
         for (NSDictionary *tempProduct in tempArray)
         {
-            [tracker send:[[GAIDictionaryBuilder createItemWithTransactionId:[tempProduct objectForKey:kRIEcommerceTransactionIdKey]
+            [tracker send:[[GAIDictionaryBuilder createItemWithTransactionId:[data objectForKey:kRIEcommerceTransactionIdKey]
                                                                         name:[tempProduct objectForKey:kRIEventProductNameKey]
                                                                          sku:[tempProduct objectForKey:kRIEventSkuKey]
                                                                     category:nil
