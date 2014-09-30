@@ -109,8 +109,7 @@
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
         NSMutableDictionary *trackingDictionary = nil;
-        NSMutableDictionary *viewCartTrackingProducts = [[NSMutableDictionary alloc] init];
-        NSInteger productIndex = 1;
+        NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
         
         NSArray *cartItemsKeys = [[self.cart cartItems] allKeys];
         for (NSString *cartItemKey in cartItemsKeys)
@@ -149,12 +148,11 @@
                                                       data:[trackingDictionary copy]];
             
             NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
-            [viewCartTrackingProduct setValue:cartItem.sku forKey:@"sku"];
-            [viewCartTrackingProduct setValue:price forKey:@"price"];
-            [viewCartTrackingProduct setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:@"currency"];
-            [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:@"quantity"];
-            [viewCartTrackingProducts setValue:viewCartTrackingProduct forKey:[NSString stringWithFormat:@"product%d", productIndex]];
-            productIndex++;
+            [viewCartTrackingProduct setValue:cartItem.sku forKey:kRIEventSkuKey];
+            [viewCartTrackingProduct setValue:price forKey:kRIEventPriceKey];
+            [viewCartTrackingProduct setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+            [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
+            [viewCartTrackingProducts addObject:viewCartTrackingProduct];
         }
         
         trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -164,9 +162,9 @@
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
         [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
         
-        if(VALID_NOTEMPTY(viewCartTrackingProducts, NSMutableDictionary))
+        if(VALID_NOTEMPTY(viewCartTrackingProducts, NSMutableArray))
         {
-            [trackingDictionary addEntriesFromDictionary:viewCartTrackingProducts];
+            [trackingDictionary setObject:[viewCartTrackingProducts copy] forKey:kRIEventProductsKey];
         }
         
         [trackingDictionary setValue:[NSNumber numberWithInt:[[cartData cartItems] count]] forKey:kRIEventQuantityKey];
