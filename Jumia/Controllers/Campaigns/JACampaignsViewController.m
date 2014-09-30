@@ -37,6 +37,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navBarLayout.title = STRING_CAMPAIGNS;
+    
     self.pickerScrollView = [[JAPickerScrollView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
                                                                                  self.view.bounds.origin.y,
                                                                                  self.view.bounds.size.width,

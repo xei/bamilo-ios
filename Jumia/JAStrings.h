@@ -197,4 +197,11 @@
 
 #define STRING_SAVE_LABEL RILocalizedString(@"save_label", nil)
 
+#define STRING_CAMPAIGN_REMAINING_STOCK RILocalizedString(@"string_campaign_ramaining_stock", nil)
+#define STRING_CAMPAIGN_SAVE RILocalizedString(@"campaign_save", nil)
+#define STRING_CAMPAIGN_OFFER_ENDED RILocalizedString(@"campaing_offer_ended", nil)
+#define STRING_CAMPAIGN_TIMER_END RILocalizedString(@"campaing_timer_end", nil)
+#define STRING_OFF RILocalizedString(@"off_label", nil)
+#define STRING_CAMPAIGNS RILocalizedString(@"campaigns_label", nil)
+
 #endif

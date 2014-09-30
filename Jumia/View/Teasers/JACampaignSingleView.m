@@ -90,7 +90,7 @@
     self.discountLabel.textColor = [UIColor whiteColor];
     self.discountLabel.text = [NSString stringWithFormat:@"%d%%", [campaign.maxSavingPercentage integerValue]];
     self.offLabel.textColor = [UIColor whiteColor];
-    self.offLabel.text = @"OFF";
+    self.offLabel.text = STRING_OFF;
     
     self.titleLabel.textColor = UIColorFromRGB(0x666666);
     self.titleLabel.text = campaign.name;
@@ -99,7 +99,7 @@
     self.clockImageView = [[UIImageView alloc] initWithImage:clockImage];
 
     self.endLabel = [[UILabel alloc] init];
-    self.endLabel.text = @"Ends in:";
+    self.endLabel.text = STRING_CAMPAIGN_TIMER_END;
     self.endLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     self.endLabel.textColor = UIColorFromRGB(0x666666);
     [self.endLabel sizeToFit];
@@ -144,7 +144,7 @@
     [self.bottomContentView addSubview:self.priceView];
     
     self.savingLabel.textColor = UIColorFromRGB(0x666666);
-    self.savingLabel.text = @"You Save";
+    self.savingLabel.text = STRING_CAMPAIGN_SAVE;
     [self.savingLabel sizeToFit];
     
     self.savingMoneyLabel = [[UILabel alloc] init];
@@ -166,7 +166,7 @@
     [self.bottomContentView addSubview:self.percentageBarView];
     
     self.remainingStockLabel.textColor = UIColorFromRGB(0x666666);
-    self.remainingStockLabel.text = [NSString stringWithFormat:@"Remaining stock: %d%%", [campaign.stockPercentage integerValue]];
+    self.remainingStockLabel.text = [NSString stringWithFormat:STRING_CAMPAIGN_REMAINING_STOCK, [campaign.stockPercentage integerValue]];
     
     [self.buyButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
     [self.buyButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
