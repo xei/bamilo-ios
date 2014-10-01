@@ -132,7 +132,7 @@
         CGFloat totalWishlistValue = 0.0f;
         for(RIProduct *product in tempArray)
         {
-            if(VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] < [product.price floatValue] )
+            if(VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f)
             {
                 totalWishlistValue += [product.specialPrice floatValue];
             }
@@ -163,10 +163,15 @@
             
             NSString *discount = @"false";
             NSString *price = [product.price stringValue];
-            if (VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] < [product.price floatValue])
+            if (VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f)
             {
                 price = [product.specialPrice stringValue];
                 discount = @"true";
+            }
+            
+            if (VALID_NOTEMPTY(product.attributeColor, NSString))
+            {
+                [trackingDictionary setValue:product.attributeColor forKey:kRIEventColorKey];
             }
             
             [trackingDictionary setValue:price forKey:kRIEventPriceKey];
@@ -181,7 +186,7 @@
                 }
             }
             
-            [trackingDictionary setValue:[NSString stringWithFormat:@"%f",totalWishlistValue] forKey:kRIEventTotalWishlistKey];
+            [trackingDictionary setValue:[NSString stringWithFormat:@"%.2f",totalWishlistValue] forKey:kRIEventTotalWishlistKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewWishlist]
                                                       data:[trackingDictionary copy]];
@@ -393,7 +398,9 @@
                           [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                           NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                           [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                          [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+                          
+                          NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice :product.price;
+                          [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
                           [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                           [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
                           
@@ -432,7 +439,10 @@
                               [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                               NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                               [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                              [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+
+                              NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice :product.price;
+                              [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+
                               [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                               [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
                               [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
@@ -500,7 +510,7 @@
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     
     __block NSString *tempSku = product.sku;
-    __block NSNumber *tempPrice = product.price;
+    __block NSNumber *tempPrice = (VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice : product.price;
     
     [self showLoading];
     [RIProduct removeFromFavorites:product successBlock:^(void) {
@@ -672,7 +682,10 @@
                           [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                           NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                           [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                          [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+                          
+                          NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice : product.price;
+                          [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+
                           [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                           [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];                          
                           [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];

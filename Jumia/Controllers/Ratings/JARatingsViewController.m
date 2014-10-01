@@ -93,7 +93,10 @@
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
     [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
-    [trackingDictionary setObject:[self.product.price stringValue] forKey:kRIEventPriceKey];
+
+    NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
+    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+    
     [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
 
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewRatings] data:trackingDictionary];

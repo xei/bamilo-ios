@@ -132,7 +132,7 @@
             
             NSString *discount = @"false";
             NSString *price = [cartItem.price stringValue];
-            if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber) && [cartItem.specialPrice floatValue] < [cartItem.price floatValue])
+            if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber))
             {
                 discount = @"true";
                 price = [cartItem.specialPrice stringValue];
@@ -682,7 +682,10 @@
                              [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                              NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                              [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                             [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+                             
+                             NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber)  && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice : product.price;
+                             [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                             
                              [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                              [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                              [trackingDictionary setValue:[product.quantity stringValue] forKey:kRIEventQuantityKey];
@@ -779,7 +782,9 @@
         NSNumber *event = [NSNumber numberWithInt:RIEventDecreaseQuantity];
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         
-        [trackingDictionary setValue:self.currentItem.price forKey:kRIEventPriceKey];
+        NSNumber *price = VALID_NOTEMPTY(self.currentItem.specialPrice, NSNumber) ? self.currentItem.specialPrice : self.currentItem.price;
+        [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+
         [trackingDictionary setValue:self.currentItem.sku forKey:kRIEventSkuKey];
         [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
         NSString *discountPercentage = @"0";
