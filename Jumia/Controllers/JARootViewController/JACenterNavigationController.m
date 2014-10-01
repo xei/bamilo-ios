@@ -519,8 +519,6 @@
         
         JACampaignsViewController* campaignsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
         
-        campaignsVC.navBarLayout.title = @"";
-        campaignsVC.navBarLayout.backButtonTitle = STRING_HOME;
         campaignsVC.campaignTeasers = campaignTeasers;
         campaignsVC.startingTitle = title;
         

@@ -177,6 +177,13 @@
                 campaign.maxSavingPercentage = [campaignJSON objectForKey:@"max_saving_percentage"];
             }
         }
+        
+        if ([campaignJSON objectForKey:@"remaining_time"]) {
+            if (![[campaignJSON objectForKey:@"remaining_time"] isKindOfClass:[NSNull class]]) {
+                campaign.remainingTime = [campaignJSON objectForKey:@"remaining_time"];
+            }
+        }
+        
         if ([campaignJSON objectForKey:@"images"]) {
             
             NSMutableArray* imagesArray = [NSMutableArray new];

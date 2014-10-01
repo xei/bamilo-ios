@@ -20,6 +20,7 @@
 @property (nonatomic, strong)NSMutableArray* campaignPages;
 @property (nonatomic, strong)JAPickerScrollView* pickerScrollView;
 @property (nonatomic, strong)UIScrollView* scrollView;
+@property (nonatomic, assign)NSInteger elapsedTimeInSeconds;
 
 // size picker view
 @property (strong, nonatomic) UIView *sizePickerBackgroundView;
@@ -32,6 +33,8 @@
 
 @property (nonatomic, strong)JACampaignSingleView* lastPressedCampaignSingleView;
 
+@property (nonatomic, assign)BOOL shouldPushPDV;
+
 @end
 
 @implementation JACampaignsViewController
@@ -40,6 +43,7 @@
     [super viewDidLoad];
     
     self.navBarLayout.title = STRING_CAMPAIGNS;
+    self.navBarLayout.backButtonTitle = STRING_HOME;
     
     self.pickerScrollView = [[JAPickerScrollView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
                                                                                  self.view.bounds.origin.y,
@@ -54,6 +58,7 @@
                                                                      self.view.bounds.size.height - self.pickerScrollView.frame.size.height - 64.0f)];
     self.scrollView.pagingEnabled = YES;
     self.scrollView.scrollEnabled = NO;
+    self.scrollView.delegate = self;
     [self.view addSubview:self.scrollView];
     
     CGFloat currentX = 0.0f;
@@ -100,6 +105,15 @@
     [trackingDictionary setValue:@"Campaigns" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     
+    self.elapsedTimeInSeconds = 0;
+    [NSTimer scheduledTimerWithTimeInterval:1.0
+                                     target:self
+                                   selector:@selector(updateSeconds)
+                                   userInfo:nil
+                                    repeats:YES];
+    
+    self.shouldPushPDV = YES;
+    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
 }
 
@@ -124,16 +138,25 @@
 
 - (IBAction)swipeLeft:(id)sender
 {
+    self.shouldPushPDV = NO;
     [self.pickerScrollView scrollLeft];
 }
 
 - (IBAction)swipeRight:(id)sender
 {
+    self.shouldPushPDV = NO;
     [self.pickerScrollView scrollRight];
 }
 
 #pragma mark - JACampaignSingleViewDelegate
 
+- (void)updateSeconds
+{
+    self.elapsedTimeInSeconds++;
+    for (JACampaignPageView* campaignPage in self.campaignPages) {
+        [campaignPage updateTimerOnAllCampaigns:self.elapsedTimeInSeconds];
+    }
+}
 
 - (void)addToCartForProduct:(RICampaign*)campaign
           withProductSimple:(NSString*)simpleSku;
@@ -160,10 +183,12 @@
 
 - (void)pressedCampaignWithSku:(NSString*)sku;
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                        object:nil
-                                                      userInfo:@{ @"sku" : sku ,
-                                                                  @"show_back_button" : [NSNumber numberWithBool:YES]}];
+    if (self.shouldPushPDV) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                            object:nil
+                                                          userInfo:@{ @"sku" : sku ,
+                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
+    }
 }
 
 - (void)sizePressedOnView:(JACampaignSingleView*)campaignSingleView;
@@ -325,5 +350,13 @@
     return productSimple.size;
 }
 
+#pragma mark - UIScrollViewDelegate
+
+//this depends on animation existing. if in the future there is a case where no animation
+//happens on the scroll view, we have to move this to another scrollviewdelegate method
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    self.shouldPushPDV = YES;
+}
 
 @end

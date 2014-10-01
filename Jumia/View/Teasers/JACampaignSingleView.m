@@ -37,6 +37,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *remainingStockLabel;
 @property (weak, nonatomic) IBOutlet UIButton *buyButton;
 
+@property (nonatomic, strong)UIView* offerEndedContent;
+@property (nonatomic, strong)UILabel* offerEndedLabel;
+
 @property (nonatomic, strong)UIControl* sizeControl;
 @property (nonatomic, strong)UILabel* sizeLabel;
 
@@ -78,6 +81,19 @@
     
     self.contentView.layer.cornerRadius = 5.0f;
     
+    //TOP STUFF
+    self.discountLabel.textColor = [UIColor whiteColor];
+    self.discountLabel.text = [NSString stringWithFormat:@"%d%%", [campaign.maxSavingPercentage integerValue]];
+    self.offLabel.textColor = [UIColor whiteColor];
+    self.offLabel.text = STRING_OFF;
+    
+    self.titleLabel.textColor = UIColorFromRGB(0x666666);
+    self.titleLabel.text = campaign.name;
+
+    //IMAGE AREA
+    [self.imageView setImageWithURL:[NSURL URLWithString:[campaign.imagesUrls firstObject]]
+                 placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+    
     UIControl* backClickArea = [[UIControl alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x,
                                                                            self.imageView.frame.origin.y,
                                                                            self.contentView.bounds.size.width,
@@ -88,27 +104,47 @@
                       action:@selector(backViewPressed)
             forControlEvents:UIControlEventTouchUpInside];
     
-    self.bottomContentView.layer.cornerRadius = self.contentView.layer.cornerRadius;
-    UIView* coverupView = [[UIView alloc] initWithFrame:CGRectMake(self.bottomContentView.bounds.origin.x,
-                                                                   self.bottomContentView.bounds.origin.y,
-                                                                   self.bottomContentView.bounds.size.width,
-                                                                   10.0f)];
-    coverupView.backgroundColor = self.contentView.backgroundColor;
-    [self.bottomContentView addSubview:coverupView];
+    //OFFER ENDED
+    self.offerEndedLabel = [UILabel new];
+    self.offerEndedLabel.textAlignment = NSTextAlignmentCenter;
+    self.offerEndedLabel.numberOfLines = -1;
+    self.offerEndedLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0f];
+    self.offerEndedLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.offerEndedLabel.text = STRING_CAMPAIGN_OFFER_ENDED;
+    [self.offerEndedLabel sizeToFit];
     
-    self.bottomContentView.backgroundColor = UIColorFromRGB(0xfff7e6);
+    CGFloat width = self.offerEndedLabel.frame.size.width;
+    if (180.0f > width) {
+        width = 180.0f;
+    } else if (200.0f < width) {
+        width = 200.0f;
+    }
+    CGFloat height = self.offerEndedLabel.frame.size.height;
+    if (32.0f > height) {
+        height = 32.0f;
+    } else if (64.0f < height) {
+        height = 64.0f;
+    }
     
-    self.discountLabel.textColor = [UIColor whiteColor];
-    self.discountLabel.text = [NSString stringWithFormat:@"%d%%", [campaign.maxSavingPercentage integerValue]];
-    self.offLabel.textColor = [UIColor whiteColor];
-    self.offLabel.text = STRING_OFF;
+    self.offerEndedContent = [[UIView alloc] initWithFrame:CGRectMake((self.contentView.bounds.size.width - width) / 2,
+                                                                      (self.contentView.bounds.size.width - height) / 2,
+                                                                      width,
+                                                                      height)];
+    self.offerEndedContent.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.8f];
+    self.offerEndedContent.layer.cornerRadius = 5.0f;
+    self.offerEndedContent.layer.borderColor = [[UIColor blackColor] CGColor];
+    self.offerEndedContent.layer.borderWidth = 1.0f;
+    [self.contentView addSubview:self.offerEndedContent];
     
-    self.titleLabel.textColor = UIColorFromRGB(0x666666);
-    self.titleLabel.text = campaign.name;
-
+    [self.offerEndedLabel setFrame:self.offerEndedContent.bounds];
+    [self.offerEndedContent addSubview:self.offerEndedLabel];
+    
+    self.offerEndedContent.hidden = YES;
+    
+    //TIME COUNTER
     UIImage* clockImage = [UIImage imageNamed:@"ico_recentsearches_results"];
     self.clockImageView = [[UIImageView alloc] initWithImage:clockImage];
-
+    
     self.endLabel = [[UILabel alloc] init];
     self.endLabel.text = STRING_CAMPAIGN_TIMER_END;
     self.endLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
@@ -131,7 +167,7 @@
     [self.contentView addSubview:self.endLabel];
     
     self.timeLabel = [[UILabel alloc] init];
-    self.timeLabel.text = @"00:00:00";
+    [self updateTimeLabelText:0];
     self.timeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     self.timeLabel.textColor = UIColorFromRGB(0xcc0000);
     [self.timeLabel sizeToFit];
@@ -141,9 +177,16 @@
                                         self.timeLabel.frame.size.height)];
     [self.contentView addSubview:self.timeLabel];
     
+    //BOTTOM CONTENT
+    self.bottomContentView.layer.cornerRadius = self.contentView.layer.cornerRadius;
+    UIView* coverupView = [[UIView alloc] initWithFrame:CGRectMake(self.bottomContentView.bounds.origin.x,
+                                                                   self.bottomContentView.bounds.origin.y,
+                                                                   self.bottomContentView.bounds.size.width,
+                                                                   10.0f)];
+    coverupView.backgroundColor = self.contentView.backgroundColor;
+    [self.bottomContentView addSubview:coverupView];
     
-    [self.imageView setImageWithURL:[NSURL URLWithString:[campaign.imagesUrls firstObject]]
-                 placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+    self.bottomContentView.backgroundColor = UIColorFromRGB(0xfff7e6);
     
     self.priceView = [[JAPriceView alloc] initWithFrame:CGRectMake(self.remainingStockLabel.frame.origin.x,
                                                                    self.bottomContentView.bounds.origin.y + coverupView.frame.size.height + 3.0f,
@@ -212,6 +255,35 @@
                                             self.sizeControl.bounds.size.height)];
         [self.sizeControl addSubview:self.sizeLabel];
     }
+}
+
+- (void)updateTimeLabelText:(NSInteger)elapsedTimeInSeconds
+{
+    NSInteger remainingSeconds = [self.campaign.remainingTime integerValue];
+    remainingSeconds -= elapsedTimeInSeconds;
+    
+    if (0 > remainingSeconds) {
+        remainingSeconds = 0;
+        
+        self.offerEndedContent.hidden = NO;
+        self.imageView.alpha = 0.6f;
+    }
+    
+    NSInteger days = remainingSeconds / (24 * 3600);
+    remainingSeconds = remainingSeconds % (24 * 3600); //keep the remainder
+    NSInteger hours = remainingSeconds / 3600;
+    remainingSeconds = remainingSeconds % 3600; //keep the remainder
+    NSInteger minutes = remainingSeconds / 60;
+    remainingSeconds = remainingSeconds % 60; //keep the remainder
+    
+    NSString* timeString = [NSString stringWithFormat:@"%02d:%02d:%02d",hours,minutes,remainingSeconds];
+    
+    if (days > 0) {
+        timeString = [NSString stringWithFormat:@"%02d:%@",days,timeString];
+    }
+
+    self.timeLabel.text = timeString;
+    [self.timeLabel sizeToFit];
 }
 
 - (void)buyButtonPressed

@@ -38,6 +38,7 @@
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSArray* imagesUrls;
 @property (nonatomic, strong) NSArray* productSimples;
+@property (nonatomic, strong) NSNumber* remainingTime;
 
 + (NSString *)getCampaignsWithUrl:(NSString*)url
                      successBlock:(void (^)(NSArray* campaigns, NSString* bannerImageUrl))successBlock
