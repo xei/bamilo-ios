@@ -123,6 +123,8 @@
 
 - (void)loadMoreProducts
 {
+    NSNumber *pageNumber = [NSNumber numberWithInt:[self getCurrentPage] + 1];
+
     if (self.searchString.length > 0)
     {
         // In case of this is a search
@@ -130,7 +132,7 @@
         [self showLoading];
         
         [RISearchSuggestion getResultsForSearch:self.searchString
-                                           page:@"1"
+                                           page:[pageNumber stringValue]
                                        maxItems:[NSString stringWithFormat:@"%d",JACatalogViewControllerMaxProducts]
                                   sortingMethod:self.sortingMethod
                                    successBlock:^(NSArray *results) {
@@ -230,7 +232,6 @@
                 urlToUse = self.filterCategory.apiUrl;
             }
             
-            NSNumber *pageNumber = [NSNumber numberWithInt:[self getCurrentPage] + 1];
             [RIProduct getProductsWithCatalogUrl:urlToUse
                                    sortingMethod:self.sortingMethod
                                             page:[pageNumber integerValue]
