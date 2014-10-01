@@ -119,21 +119,21 @@
                                                               NSMutableArray *suggestions = [[NSMutableArray alloc] init];
                                                               
                                                               // Add recent search suggestions
-                                                              NSMutableArray *tempArray = [NSMutableArray new];
+                                                              NSMutableArray *databaseSuggesions = [NSMutableArray new];
                                                               
                                                               NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])];
                                                               
-                                                              for (RISearchSuggestion *tempSearch in searches) {
-                                                                  if ([tempSearch.item rangeOfString:query].location != NSNotFound) {
-                                                                      [tempArray addObject:tempSearch];
+                                                              for (RISearchSuggestion *tempSearch in searches)
+                                                              {
+                                                                  if ([tempSearch.item rangeOfString:query].location != NSNotFound)
+                                                                  {
+                                                                      [databaseSuggesions addObject:tempSearch];
                                                                   }
                                                               }
                                                               
-                                                              NSArray* suggestionsForQuery = [tempArray copy];
-                                                              
-                                                              if(VALID_NOTEMPTY(suggestionsForQuery, NSArray))
+                                                              if(VALID_NOTEMPTY(databaseSuggesions, NSMutableArray))
                                                               {
-                                                                  [suggestions addObjectsFromArray:suggestionsForQuery];
+                                                                  [suggestions addObjectsFromArray:[databaseSuggesions copy]];
                                                               }
                                                               
                                                               // Add request search suggestions
@@ -143,16 +143,19 @@
                                                                   NSArray *requestSuggestions = [RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"suggestions"]];
                                                                   if(VALID_NOTEMPTY(requestSuggestions, NSArray))
                                                                   {
-                                                                      if (searches.count == 0)
+                                                                      if (!VALID_NOTEMPTY(databaseSuggesions, NSMutableArray))
                                                                       {
                                                                           [suggestions addObjectsFromArray:requestSuggestions];
                                                                       }
                                                                       else
                                                                       {
-                                                                          for (RISearchSuggestion *otherSearch in requestSuggestions) {
-                                                                              for (RISearchSuggestion *tempSearch in suggestionsForQuery) {
-                                                                                  if (![tempSearch.item isEqualToString:otherSearch.item]) {
-                                                                                      [suggestions addObject:otherSearch];
+                                                                          for (RISearchSuggestion *requestSuggestion in requestSuggestions)
+                                                                          {
+                                                                              for (RISearchSuggestion *databaseSuggesion in databaseSuggesions)
+                                                                              {
+                                                                                  if (![databaseSuggesion.item isEqualToString:requestSuggestion.item])
+                                                                                  {
+                                                                                      [suggestions addObject:requestSuggestion];
                                                                                   }
                                                                               }
                                                                           }

@@ -580,10 +580,7 @@ UIAlertViewDelegate
         self.resultsTableView = [[UITableView alloc] initWithFrame:resultsTableFrame
                                                              style:UITableViewStyleGrouped];
         
-        self.resultsTableView.backgroundColor = [UIColor colorWithRed:1.0f
-                                                                green:1.0f
-                                                                 blue:1.0f
-                                                                alpha:0.78f];
+        self.resultsTableView.backgroundColor = UIColorFromRGB(0xffffff);
         self.resultsTableView.delegate = self;
         self.resultsTableView.dataSource = self;
         
