@@ -33,6 +33,8 @@
 
 @property (nonatomic, strong)JACampaignSingleView* lastPressedCampaignSingleView;
 
+@property (nonatomic, assign)BOOL shouldPushPDV;
+
 @end
 
 @implementation JACampaignsViewController
@@ -55,6 +57,7 @@
                                                                      self.view.bounds.size.height - self.pickerScrollView.frame.size.height - 64.0f)];
     self.scrollView.pagingEnabled = YES;
     self.scrollView.scrollEnabled = NO;
+    self.scrollView.delegate = self;
     [self.view addSubview:self.scrollView];
     
     CGFloat currentX = 0.0f;
@@ -108,6 +111,8 @@
                                    userInfo:nil
                                     repeats:YES];
     
+    self.shouldPushPDV = YES;
+    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
 }
 
@@ -132,11 +137,13 @@
 
 - (IBAction)swipeLeft:(id)sender
 {
+    self.shouldPushPDV = NO;
     [self.pickerScrollView scrollLeft];
 }
 
 - (IBAction)swipeRight:(id)sender
 {
+    self.shouldPushPDV = NO;
     [self.pickerScrollView scrollRight];
 }
 
@@ -175,10 +182,12 @@
 
 - (void)pressedCampaignWithSku:(NSString*)sku;
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                        object:nil
-                                                      userInfo:@{ @"sku" : sku ,
-                                                                  @"show_back_button" : [NSNumber numberWithBool:YES]}];
+    if (self.shouldPushPDV) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                            object:nil
+                                                          userInfo:@{ @"sku" : sku ,
+                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
+    }
 }
 
 - (void)sizePressedOnView:(JACampaignSingleView*)campaignSingleView;
@@ -340,5 +349,13 @@
     return productSimple.size;
 }
 
+#pragma mark - UIScrollViewDelegate
+
+//this depends on animation existing. if in the future there is a case where no animation
+//happens on the scroll view, we have to move this to another scrollviewdelegate method
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    self.shouldPushPDV = YES;
+}
 
 @end
