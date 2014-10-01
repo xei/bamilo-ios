@@ -20,6 +20,7 @@
 @property (nonatomic, strong)NSMutableArray* campaignPages;
 @property (nonatomic, strong)JAPickerScrollView* pickerScrollView;
 @property (nonatomic, strong)UIScrollView* scrollView;
+@property (nonatomic, assign)NSInteger elapsedTimeInSeconds;
 
 // size picker view
 @property (strong, nonatomic) UIView *sizePickerBackgroundView;
@@ -100,6 +101,13 @@
     [trackingDictionary setValue:@"Campaigns" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     
+    self.elapsedTimeInSeconds = 0;
+    [NSTimer scheduledTimerWithTimeInterval:1.0
+                                     target:self
+                                   selector:@selector(updateSeconds)
+                                   userInfo:nil
+                                    repeats:YES];
+    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
 }
 
@@ -134,6 +142,13 @@
 
 #pragma mark - JACampaignSingleViewDelegate
 
+- (void)updateSeconds
+{
+    self.elapsedTimeInSeconds++;
+    for (JACampaignPageView* campaignPage in self.campaignPages) {
+        [campaignPage updateTimerOnAllCampaigns:self.elapsedTimeInSeconds];
+    }
+}
 
 - (void)addToCartForProduct:(RICampaign*)campaign
           withProductSimple:(NSString*)simpleSku;

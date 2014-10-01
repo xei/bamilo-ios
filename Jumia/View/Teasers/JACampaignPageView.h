@@ -14,5 +14,6 @@
 @property (nonatomic, assign)id<JACampaignSingleViewDelegate>delegate;
 
 - (void)loadWithCampaignUrl:(NSString*)campaignUrl;
+- (void)updateTimerOnAllCampaigns:(NSInteger)elapsedTimeInSeconds;
 
 @end

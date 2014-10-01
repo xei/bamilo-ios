@@ -131,7 +131,7 @@
     [self.contentView addSubview:self.endLabel];
     
     self.timeLabel = [[UILabel alloc] init];
-    self.timeLabel.text = @"00:00:00";
+    [self updateTimeLabelText:0];
     self.timeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     self.timeLabel.textColor = UIColorFromRGB(0xcc0000);
     [self.timeLabel sizeToFit];
@@ -212,6 +212,32 @@
                                             self.sizeControl.bounds.size.height)];
         [self.sizeControl addSubview:self.sizeLabel];
     }
+}
+
+- (void)updateTimeLabelText:(NSInteger)elapsedTimeInSeconds
+{
+    NSInteger remainingSeconds = [self.campaign.remainingTime integerValue];
+    remainingSeconds -= elapsedTimeInSeconds;
+    
+    if (0 > remainingSeconds) {
+        remainingSeconds = 0;
+    }
+    
+    NSInteger days = remainingSeconds / (24 * 3600);
+    remainingSeconds = remainingSeconds % (24 * 3600); //keep the remainder
+    NSInteger hours = remainingSeconds / 3600;
+    remainingSeconds = remainingSeconds % 3600; //keep the remainder
+    NSInteger minutes = remainingSeconds / 60;
+    remainingSeconds = remainingSeconds % 60; //keep the remainder
+    
+    NSString* timeString = [NSString stringWithFormat:@"%02d:%02d:%02d",hours,minutes,remainingSeconds];
+    
+    if (days > 0) {
+        timeString = [NSString stringWithFormat:@"%02d:%@",days,timeString];
+    }
+
+    self.timeLabel.text = timeString;
+    [self.timeLabel sizeToFit];
 }
 
 - (void)buyButtonPressed

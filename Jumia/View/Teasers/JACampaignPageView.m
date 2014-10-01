@@ -14,6 +14,7 @@
 @property (nonatomic, strong)NSArray* campaigns;
 @property (nonatomic, strong)NSString* bannerImageUrl;
 @property (nonatomic, strong)UIScrollView* scrollView;
+@property (nonatomic, strong)NSMutableArray* campaignSingleViewsArray;
 
 @end
 
@@ -45,6 +46,7 @@
 
 - (void)loadCampaignViews
 {
+    self.campaignSingleViewsArray = [NSMutableArray new];
     CGFloat currentY = self.scrollView.bounds.origin.y;
     for (RICampaign* campaign in self.campaigns) {
         JACampaignSingleView* campaignView = [JACampaignSingleView getNewJACampaignSingleView];
@@ -54,6 +56,7 @@
                                           self.scrollView.frame.size.width,
                                           338.0f)];
         [self.scrollView addSubview:campaignView];
+        [self.campaignSingleViewsArray addObject:campaignView];
         [campaignView loadWithCampaign:campaign];
         currentY += campaignView.frame.size.height;
     }
@@ -61,5 +64,13 @@
                                              currentY + 4.0f);
 }
 
+- (void)updateTimerOnAllCampaigns:(NSInteger)elapsedTimeInSeconds
+{
+    if (VALID_NOTEMPTY(self.campaignSingleViewsArray, NSMutableArray)) {
+        for (JACampaignSingleView* campaignSingleView in self.campaignSingleViewsArray) {
+            [campaignSingleView updateTimeLabelText:elapsedTimeInSeconds];
+        }
+    }
+}
 
 @end

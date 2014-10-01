@@ -24,11 +24,13 @@
 
 @property (nonatomic, assign)id<JACampaignSingleViewDelegate>delegate;
 
+@property (nonatomic, readonly)RICampaign* campaign;
+@property (nonatomic, strong)NSString* chosenSize;
+
 + (JACampaignSingleView *)getNewJACampaignSingleView;
 
 - (void)loadWithCampaign:(RICampaign*)campaign;
 
-@property (nonatomic, readonly)RICampaign* campaign;
-@property (nonatomic, strong)NSString* chosenSize;
+- (void)updateTimeLabelText:(NSInteger)elapsedTimeInSeconds;
 
 @end
