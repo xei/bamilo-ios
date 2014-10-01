@@ -530,11 +530,13 @@
                                                         object:nil];
     
     NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* productSku = [notification.userInfo objectForKey:@"sku"];
     
-    if (VALID_NOTEMPTY(url, NSString))
+    if (VALID_NOTEMPTY(url, NSString) || VALID_NOTEMPTY(productSku, NSString))
     {
         JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
         pdv.productUrl = url;
+        pdv.productSku = productSku;
         
         if ([notification.userInfo objectForKey:@"fromCatalog"])
         {

@@ -123,7 +123,7 @@
     [self.pickerScrollView scrollRight];
 }
 
-#pragma mark - BUY BUTTON
+#pragma mark - JACampaignSingleViewDelegate
 
 
 - (void)addToCartForProduct:(RICampaign*)campaign
@@ -149,68 +149,12 @@
     }
 }
 
-#pragma mark - No connection delegate
-
-- (void)retryConnection
+- (void)pressedCampaignWithSku:(NSString*)sku;
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self finishAddToCart];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self finishAddToCart];
-    }
-}
-
-- (void)finishAddToCart
-{
-    [self showLoading];
-    [RICart addProductWithQuantity:@"1"
-                               sku:self.backupCampaign.sku
-                            simple:self.backupSimpleSku
-                  withSuccessBlock:^(RICart *cart) {
-                      
-//                      NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//                      [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
-//                      [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
-//                      [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-//                      [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
-//                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-//                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-//                      [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-//                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-//                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-//                      [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
-//                      [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
-//                      [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-//                      
-//                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
-//                                                                data:[trackingDictionary copy]];
-                      
-                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-                      
-                      JASuccessView *successView = [JASuccessView getNewJASuccessView];
-                      [successView setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
-                                          andAddTo:self];
-                      
-                      [self hideLoading];
-                      
-                  } andFailureBlock:^(NSArray *error) {
-                      JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                      [errorView setErrorTitle:STRING_ERROR_ADDING_TO_CART
-                                      andAddTo:self];
-                      
-                      [self hideLoading];
-                  }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                        object:nil
+                                                      userInfo:@{ @"sku" : sku ,
+                                                                  @"show_back_button" : [NSNumber numberWithBool:YES]}];
 }
 
 - (void)sizePressedOnView:(JACampaignSingleView*)campaignSingleView;
@@ -276,6 +220,70 @@
     [self.sizePickerBackgroundView addSubview:self.sizePicker];
     [self.sizePickerBackgroundView addSubview:self.sizePickerToolbar];
     [self.view addSubview:self.sizePickerBackgroundView];
+}
+
+#pragma mark - No connection delegate
+
+- (void)retryConnection
+{
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
+        lostConnection.delegate = self;
+        [lostConnection setRetryBlock:^(BOOL dismiss) {
+            [self finishAddToCart];
+        }];
+        
+        [self.view addSubview:lostConnection];
+    }
+    else
+    {
+        [self finishAddToCart];
+    }
+}
+
+- (void)finishAddToCart
+{
+    [self showLoading];
+    [RICart addProductWithQuantity:@"1"
+                               sku:self.backupCampaign.sku
+                            simple:self.backupSimpleSku
+                  withSuccessBlock:^(RICart *cart) {
+                      
+//                      NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//                      [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
+//                      [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
+//                      [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+//                      [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+//                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+//                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+//                      [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+//                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+//                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+//                      [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+//                      [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+//                      [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+//                      
+//                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+//                                                                data:[trackingDictionary copy]];
+                      
+                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                      
+                      JASuccessView *successView = [JASuccessView getNewJASuccessView];
+                      [successView setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
+                                          andAddTo:self];
+                      
+                      [self hideLoading];
+                      
+                  } andFailureBlock:^(NSArray *error) {
+                      JAErrorView *errorView = [JAErrorView getNewJAErrorView];
+                      [errorView setErrorTitle:STRING_ERROR_ADDING_TO_CART
+                                      andAddTo:self];
+                      
+                      [self hideLoading];
+                  }];
 }
 
 - (void)selectSize:(UIButton*)button

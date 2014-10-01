@@ -16,6 +16,7 @@
 - (void)addToCartForProduct:(RICampaign*)campaign
           withProductSimple:(NSString*)simpleSku;
 - (void)sizePressedOnView:(JACampaignSingleView*)campaignSingleView;
+- (void)pressedCampaignWithSku:(NSString*)sku;
 
 @end
 

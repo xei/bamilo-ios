@@ -77,6 +77,17 @@
     self.backgroundColor = [UIColor clearColor];
     
     self.contentView.layer.cornerRadius = 5.0f;
+    
+    UIControl* backClickArea = [[UIControl alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x,
+                                                                           self.imageView.frame.origin.y,
+                                                                           self.contentView.bounds.size.width,
+                                                                           self.imageView.frame.size.height)];
+    [self.contentView addSubview:backClickArea];
+    [self.contentView sendSubviewToBack:self.contentView];
+    [backClickArea addTarget:self
+                      action:@selector(backViewPressed)
+            forControlEvents:UIControlEventTouchUpInside];
+    
     self.bottomContentView.layer.cornerRadius = self.contentView.layer.cornerRadius;
     UIView* coverupView = [[UIView alloc] initWithFrame:CGRectMake(self.bottomContentView.bounds.origin.x,
                                                                    self.bottomContentView.bounds.origin.y,
@@ -231,5 +242,11 @@
     }
 }
 
+- (void)backViewPressed
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(pressedCampaignWithSku:)]) {
+        [self.delegate pressedCampaignWithSku:self.campaign.sku];
+    }
+}
 
 @end
