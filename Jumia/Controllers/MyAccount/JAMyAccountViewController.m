@@ -82,11 +82,13 @@
     self.notificationLabel.text = STRING_NOTIFICATIONS;
     self.notificationDetailLabel.textColor = UIColorFromRGB(0x666666);
     self.notificationDetailLabel.text = STRING_RECEIVE_EXCLUSIVE_OFFERS;
+    [self.notificationSwitch setAccessibilityLabel:STRING_NOTIFICATIONS];
     
     self.labelSound.textColor = UIColorFromRGB(0x666666);
     self.labelSound.text = STRING_SOUND;
     self.labelDetailSound.textColor = UIColorFromRGB(0x666666);
     self.labelDetailSound.text = STRING_PLAY_SOUND;
+    [self.switchSound setAccessibilityLabel:STRING_SOUND];
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
