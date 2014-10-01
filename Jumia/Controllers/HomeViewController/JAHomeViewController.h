@@ -11,10 +11,12 @@
 
 @interface JAHomeViewController : JABaseViewController
 <
-    JAPickerScrollViewDelegate,
-    UIScrollViewDelegate,
-    JANoConnectionViewDelegate
+JAPickerScrollViewDelegate,
+UIScrollViewDelegate,
+JANoConnectionViewDelegate
 >
+
+@property (nonatomic, retain) NSString* A4SViewControllerAlias;
 
 - (void)stopLoading;
 

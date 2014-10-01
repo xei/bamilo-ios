@@ -61,6 +61,8 @@ UIPickerViewDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.screenName = @"EditAddress";
+    
     self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;
@@ -86,9 +88,7 @@ UIPickerViewDelegate>
      {
          [self finishedFormLoading];
          
-         JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-         [errorView setErrorTitle:STRING_ERROR
-                         andAddTo:self];
+         [self showMessage:STRING_ERROR success:NO];
      }];
 }
 
@@ -203,6 +203,13 @@ UIPickerViewDelegate>
     
     [self.contentView setFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.addressViewCurrentY)];
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.contentView.frame.origin.y + self.contentView.frame.size.height + self.bottomView.frame.size.height)];
+    
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
 }
 
 -(void)saveChangesButtonPressed
@@ -211,9 +218,9 @@ UIPickerViewDelegate>
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.dynamicForm getValues]];
     
-    [parameters setValue:[self.editAddress uid] forKey:@"Alice_Module_Customer_Model_AddressForm[id_customer_address]"];
-    [parameters setValue:[self.editAddress isDefaultShipping] forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
-    [parameters setValue:[self.editAddress isDefaultBilling] forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
+    [parameters setValue:[self.editAddress uid] forKey:[self.dynamicForm getFieldNameForKey:@"id_customer_address"]];
+    [parameters setValue:[self.editAddress isDefaultShipping] forKey:[self.dynamicForm getFieldNameForKey:@"is_default_shipping"]];
+    [parameters setValue:[self.editAddress isDefaultBilling] forKey:[self.dynamicForm getFieldNameForKey:@"is_default_billing"]];
     
     [RIForm sendForm:[self.dynamicForm form]
           parameters:parameters
@@ -253,9 +260,7 @@ UIPickerViewDelegate>
     
     if(self.hasErrors)
     {
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                        andAddTo:self];
+        [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         
         self.hasErrors = NO;
     }

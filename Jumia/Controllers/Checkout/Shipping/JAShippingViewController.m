@@ -69,12 +69,14 @@ JANoConnectionViewDelegate
 {
     [super viewDidLoad];
     
+    self.screenName = @"Shipping";
+    
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"CheckoutShippingMethods" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutShipping]
                                               data:[trackingDictionary copy]];
     
     self.navBarLayout.title = STRING_CHECKOUT;
@@ -214,6 +216,14 @@ JANoConnectionViewDelegate
         
         [self reloadCollectionView];
     }
+    
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
+
     [self hideLoading];
 }
 
@@ -428,9 +438,7 @@ JANoConnectionViewDelegate
         }
         else
         {
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         }
     }
 }

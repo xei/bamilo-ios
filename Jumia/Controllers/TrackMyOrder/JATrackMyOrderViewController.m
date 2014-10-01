@@ -38,6 +38,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"TrackOrder";
+    
     [self initViewElements];
 }
 
@@ -74,9 +76,7 @@
     }
     else
     {
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:STRING_ENTER_ORDER_ID
-                        andAddTo:self];
+        [self showMessage:STRING_ENTER_ORDER_ID success:NO];
     }
 }
 
@@ -89,12 +89,26 @@
                           
                           [self buildContentForOrder:trackingOrder];
                           
+                          if(self.firstLoading)
+                          {
+                              NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                              [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                              self.firstLoading = NO;
+                          }
+
                           [self hideLoading];
                           
                       } andFailureBlock:^(NSArray *errorMessages) {
                           
                           [self builContentForNoResult];
                           
+                          if(self.firstLoading)
+                          {
+                              NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                              [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                              self.firstLoading = NO;
+                          }
+
                           [self hideLoading];
                           
                       }];

@@ -34,6 +34,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"CustomerEmailNotifications";
+    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_USER_EMAIL_NOTIFICATIONS;
@@ -57,22 +59,33 @@
                self.formHeight = CGRectGetMaxY(view.frame);
            }
            
-           self.height.constant = self.formHeight - 22;
+           self.height.constant = self.formHeight + 6.0f;
            
+           [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
            [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
            [self.saveButton addTarget:self action:@selector(updatePreferences) forControlEvents:UIControlEventTouchUpInside];
            
+           if(self.firstLoading)
+           {
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+               self.firstLoading = NO;
+           }
+
            [self hideLoading];
-           
-           [self.view updateConstraints];
            
        } failureBlock:^(NSArray *errorMessage) {
            
+           if(self.firstLoading)
+           {
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+               self.firstLoading = NO;
+           }
+
            [self hideLoading];
            
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_ERROR
-                           andAddTo:self];
+           [self showMessage:STRING_ERROR success:NO];
        }];
 }
 
@@ -123,6 +136,8 @@
                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
                      [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
                      [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                     [trackingDictionary setValue:@"My Account" forKey:kRIEventLocationKey];
                      
                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
                                                                data:[trackingDictionary copy]];
@@ -160,25 +175,19 @@
          {
              [self.dynamicForm validateFields:errorObject];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                             andAddTo:self];
+             [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
          }
          else
          {
              [self.dynamicForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR success:NO];
          }
      }];
 }

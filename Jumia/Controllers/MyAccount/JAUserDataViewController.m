@@ -42,6 +42,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"CustomerData";
+    
     self.numberOfFields = 0;
     
     self.navBarLayout.showBackButton = YES;
@@ -96,17 +98,29 @@
            self.changePasswordHeight.constant = self.formHeight + 20;
            [self.view updateConstraints];
            
+           [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];           
            [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
            [self.saveButton addTarget:self action:@selector(saveNewPassword) forControlEvents:UIControlEventTouchUpInside];
            
+           if(self.firstLoading)
+           {
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+               self.firstLoading = NO;
+           }
+
        } failureBlock:^(NSArray *errorMessage) {
            
+           if(self.firstLoading)
+           {
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+               self.firstLoading = NO;
+           }
+
            [self hideLoading];
            
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_EDIT_ADDRESS
-                           andAddTo:self];
-
+           [self showMessage:STRING_EDIT_ADDRESS success:NO];           
        }];
 }
 
@@ -184,25 +198,19 @@
          {
              [self.changePasswordForm validateFields:errorObject];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.changePasswordForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                             andAddTo:self];
+             [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
          }
          else
          {
              [self.changePasswordForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR success:NO];
          }
      }];
 }

@@ -13,6 +13,9 @@
 
 @property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 
+@property (nonatomic, strong)NSString *screenName;
+@property (nonatomic, strong)NSDate *startLoadingTime;
+@property (nonatomic, assign)BOOL firstLoading;
 
 /**
  * Method to force Nav bar to reload. This is called in viewWillAppear
@@ -28,6 +31,9 @@
  * Method to hide loading
  */
 - (void)hideLoading;
+
+
+- (void)showMessage:(NSString*)message success:(BOOL)success;
 
 @end
 

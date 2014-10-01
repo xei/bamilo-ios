@@ -60,6 +60,8 @@ UITextFieldDelegate>
 {
     [super viewDidLoad];
     
+    self.screenName = @"Payment";
+    
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
@@ -70,7 +72,7 @@ UITextFieldDelegate>
     [trackingDictionary setValue:@"CheckoutPaymentMethods" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPayment]
                                               data:[trackingDictionary copy]];
     
     self.navBarLayout.title = STRING_CHECKOUT;
@@ -214,6 +216,13 @@ UITextFieldDelegate>
     
     [self reloadCollectionView];
     
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
+
     [self hideLoading];
 }
 
@@ -310,13 +319,25 @@ UITextFieldDelegate>
                         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
                         [trackingDictionary setValue:@"CheckoutMyOrder" forKey:kRIEventActionKey];
                         [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSideMenu]
+                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutOrder]
+                                                                  data:[trackingDictionary copy]];
+               
+                        trackingDictionary = [[NSMutableDictionary alloc] init];
+                        [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]
                                                                   data:[trackingDictionary copy]];
                         
-                        [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
+                        
+                        [JAUtils goToCheckout:checkout inStoryboard:self.storyboard];
                         
                         [self hideLoading];
                     } andFailureBlock:^(NSArray *errorMessages) {
+                        
+                        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                        [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                        [trackingDictionary setValue:[[self.checkout orderSummary] grandTotal] forKey:kRIEventTotalTransactionKey];
+                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
+                                                                  data:[trackingDictionary copy]];
                         
                         [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
                                                     message:@"Error setting payment method"

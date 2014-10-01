@@ -325,13 +325,13 @@
                                                                          }
                                                                          else
                                                                          {
-                                                                             returnBlock(1.0f);
+                                                                             returnBlock(0.0f);
                                                                          }
                                                                      } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObjectt) {
-                                                                         returnBlock(1.0f);
+                                                                         returnBlock(0.0f);
                                                                      }];
     } andFailureBlock:^(NSArray *errorMessages) {
-        returnBlock(1.0f);
+        returnBlock(0.0f);
     }];
     return operationID;
 }

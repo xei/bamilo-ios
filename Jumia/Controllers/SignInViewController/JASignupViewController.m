@@ -12,13 +12,14 @@
 #import "RIField.h"
 #import "RIFieldDataSetComponent.h"
 #import "RICustomer.h"
+#import "RINewsletterCategory.h"
 
 @interface JASignupViewController ()
 <
-    JADynamicFormDelegate,
-    UIPickerViewDataSource,
-    UIPickerViewDelegate,
-    JANoConnectionViewDelegate
+JADynamicFormDelegate,
+UIPickerViewDataSource,
+UIPickerViewDelegate,
+JANoConnectionViewDelegate
 >
 
 @property (strong, nonatomic) UIScrollView *contentScrollView;
@@ -47,6 +48,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.screenName = @"Register";
+    
+    self.A4SViewControllerAlias = @"ACCOUNT";
     
     self.navBarLayout.title = STRING_CREATE_ACCOUNT;
     
@@ -78,6 +83,8 @@
     
     self.originalFrame = self.contentScrollView.frame;
     
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventRegisterStart] data:nil];
+    
     [self showLoading];
     
     [RIForm getForm:@"register"
@@ -96,13 +103,10 @@
            [self finishedFormLoading];
            
        } failureBlock:^(NSArray *errorMessage) {
-           [self hideLoading];
            
            [self finishedFormLoading];
            
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_ERROR
-                           andAddTo:self];
+           [self showMessage:STRING_ERROR success:NO];
        }];
 }
 
@@ -136,6 +140,24 @@
     
     [self.contentView setFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.registerViewCurrentY)];
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.contentView.frame.origin.y + self.contentView.frame.size.height + 6.0f)];
+    
+    [self hideLoading];
+    
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
+
+    // notify the InAppNotification SDK that this the active view controller
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
 #pragma mark - No connection delegate
@@ -193,13 +215,36 @@
         [trackingDictionary setValue:@"CreateSuccess" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
         [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:((RICustomer *)object).gender forKey:kRIEventGenderKey];
         [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
         [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        if(self.fromSideMenu)
+        {
+            [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+        }
+        else
+        {
+            [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+        }
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterSuccess]
                                                   data:[trackingDictionary copy]];
+        
+        NSArray *newsletterOption = [RINewsletterCategory getNewsletter];
+        if(VALID_NOTEMPTY(newsletterOption, NSArray))
+        {
+            trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:@"Register" forKey:kRIEventLocationKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
+                                                      data:[trackingDictionary copy]];
+        }
         
         [self.dynamicForm resetValues];
         
@@ -217,6 +262,14 @@
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:@"CreateFailed" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+        if(self.fromSideMenu)
+        {
+            [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+        }
+        else
+        {
+            [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+        }
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterFail]
                                                   data:[trackingDictionary copy]];
@@ -227,25 +280,19 @@
         {
             [self.dynamicForm validateFields:errorObject];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.dynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                            andAddTo:self];
+            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
         }
         else
         {
             [self.dynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR success:NO];
         }
     }];
 }
@@ -254,9 +301,19 @@
 {
     [self.dynamicForm resignResponder];
     
+    [self.navigationController popViewControllerAnimated:NO];
+    
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    
+    if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
+    {
+        [userInfo setObject:self.nextNotification forKey:@"notification"];
+    }
+    [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
+
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
                                                         object:nil
-                                                      userInfo:nil];
+                                                      userInfo:userInfo];
 }
 
 - (void)birthdayChanged:(id)sender

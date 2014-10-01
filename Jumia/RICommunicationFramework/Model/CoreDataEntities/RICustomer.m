@@ -32,7 +32,7 @@
 @dynamic addresses;
 @synthesize costumerRequestID;
 
-+ (NSString*)autoLogin:(void (^)(BOOL success))returnBlock
++ (NSString*)autoLogin:(void (^)(BOOL success, RICustomer *customer))returnBlock
 {
     NSString *operationID = nil;
     
@@ -55,11 +55,11 @@
             [RICustomer loginCustomerByFacebookWithParameters:parameters
                                                  successBlock:^(id customer) {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                         returnBlock(YES);
+                                                         returnBlock(YES, customer);
                                                      });
                                                  } andFailureBlock:^(NSArray *errorObject) {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                         returnBlock(NO);
+                                                         returnBlock(NO, nil);
                                                      });
                                                  }];
         }
@@ -74,32 +74,32 @@
                             successBlock:^(id jsonObject)
                          {
                              dispatch_async(dispatch_get_main_queue(), ^{
-                                 returnBlock(YES);
+                                 returnBlock(YES, jsonObject);
                              });
                          } andFailureBlock:^(id errorObject)
                          {
                              dispatch_async(dispatch_get_main_queue(), ^{
-                                 returnBlock(NO);
+                                 returnBlock(NO, nil);
                              });
                          }];
                     } failureBlock:^(NSArray *errorMessage)
                     {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            returnBlock(NO);
+                            returnBlock(NO, nil);
                         });
                     }];
         }
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                returnBlock(NO);
+                returnBlock(NO, nil);
             });
         }
     }
     else
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            returnBlock(NO);
+            returnBlock(NO, nil);
         });
     }
     
@@ -452,6 +452,8 @@
         }
     }
     
+    [self updateCustomerNewsletterWithJson:json];
+    
     [RICustomer saveCustomer:customer];
     
     return customer;
@@ -477,6 +479,19 @@
         [[RIDataBaseWrapper sharedInstance] saveContext];
         
         NSArray *newsletterArray = [json objectForKey:@"subscribed_categories"];
+        
+        for (NSDictionary *dic in newsletterArray)
+        {
+            RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
+            [RINewsletterCategory saveNewsLetterCategory:newsletter];
+        }
+    }
+    else if ([json objectForKey:@"newsletter_subscription"])
+    {
+        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+        
+        NSArray *newsletterArray = [json objectForKey:@"newsletter_subscription"];
         
         for (NSDictionary *dic in newsletterArray)
         {

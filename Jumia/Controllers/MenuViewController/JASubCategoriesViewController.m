@@ -12,8 +12,8 @@
 
 @interface JASubCategoriesViewController ()
 <
-    UITableViewDataSource,
-    UITableViewDelegate
+UITableViewDataSource,
+UITableViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UITableView *tableViewCategories;
@@ -28,14 +28,25 @@
 {
     [super viewDidLoad];
     
+    self.A4SViewControllerAlias = @"SUBCATEGORY";
+    
     self.title = @"";
     self.navigationItem.leftBarButtonItems = nil;
     self.navigationItem.hidesBackButton = YES;
+    
+    // notify the InAppNotification SDK that this the active view controller
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
 #pragma mark - Tableview delegates and datasource
@@ -67,7 +78,7 @@
             cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
         }
     } else {
-    
+        
         NSInteger realIndex = indexPath.row - 1;
         
         cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
@@ -99,8 +110,16 @@
         NSInteger realIndex = indexPath.row - 1;
         
         RICategory *category = [self.sourceCategoriesArray objectAtIndex:realIndex];
-
+        
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        if(ISEMPTY(category.parent))
+        {
+            [trackingDictionary setObject:[RICategory getTopCategory:category] forKey:kRIEventTopCategoryKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTopCategory]
+                                                      data:[trackingDictionary copy]];
+        }
+
+        trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:category.name forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"Categories" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
@@ -134,9 +153,9 @@
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 //{
 //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sectionHeader"];
-//    
+//
 //    cell.textLabel.text = self.subCategoriesTitle;
-//    
+//
 //    return cell;
 //}
 

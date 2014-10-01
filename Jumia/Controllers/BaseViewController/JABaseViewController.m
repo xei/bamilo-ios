@@ -32,6 +32,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.firstLoading = YES;
+    
+    self.screenName = @"";
+    
+    self.startLoadingTime = [NSDate date];
 
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.hidesBackButton = YES;
@@ -123,6 +129,14 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kCancelLoadingNotificationName
                                                         object:nil];
+}
+
+- (void)showMessage:(NSString*)message success:(BOOL)success
+{
+    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+
+    JAMessageView *messageView = [JAMessageView getNewJAMessageView];
+    [messageView setTitle:message success:success addTo:window.rootViewController];
 }
 
 @end

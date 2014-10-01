@@ -11,6 +11,12 @@
 #import "JANewsletterComponent.h"
 #import "RINewsletterCategory.h"
 
+@interface JACheckBoxWithOptionsComponent ()
+
+@property (nonatomic, strong) IBOutlet UIView *subViews;
+
+@end
+
 @implementation JACheckBoxWithOptionsComponent
 
 + (JACheckBoxWithOptionsComponent *)getNewJACheckBoxWithOptionsComponent
@@ -44,10 +50,12 @@
     
     [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     
-    CGFloat startingY = CGRectGetMaxY(self.separator.frame);
+    CGFloat startingY = 0.0f;
     for(int i = 0; i < [[field options] count]; i++)
     {
         RIFieldOption *option = [[field options] objectAtIndex:i];
+        NSString *fieldKey = [self.field name];
+        fieldKey = [fieldKey stringByReplacingOccurrencesOfString:@"[]" withString:[NSString stringWithFormat:@"[%@]", [option value]]];
         
         JANewsletterComponent *check = [JANewsletterComponent getNewJANewsletterComponent];
         [check setup];
@@ -57,7 +65,7 @@
 
         NSArray *newsletterOption = [RINewsletterCategory getNewsletter];
         
-        if (0 == newsletterOption.count)
+        if (ISEMPTY(newsletterOption) || 0 == newsletterOption.count)
         {
             check.optionSwitch.on = NO;
         }
@@ -69,6 +77,7 @@
             {
                 if ([[newsletter.idNewsletterCategory stringValue] isEqualToString:option.value])
                 {
+                    [self.values setObject:option.value forKey:fieldKey];                    
                     check.optionSwitch.on = YES;
                     finded = YES;
                     break;
@@ -87,11 +96,18 @@
         frame.origin.y = startingY;
         check.frame = frame;
         startingY += check.frame.size.height;
+
+        [check.lineImageView setHidden:NO];
+        if(i == ([[field options] count] - 1))
+        {
+            [check.lineImageView setHidden:YES];
+        }
         
-        [self addSubview:check];
+        [self.subViews addSubview:check];
     }
     
-    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, startingY)];
+    [self.subViews setFrame:CGRectMake(self.subViews.frame.origin.x, self.subViews.frame.origin.y, self.subViews.frame.size.width, startingY)];
+    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, CGRectGetMaxY(self.separator.frame) +startingY)];
 }
 
 -(void)changedState:(UISwitch*)sender

@@ -271,17 +271,11 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      JASuccessView *successView = [JASuccessView getNewJASuccessView];
-                      [successView setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
-                                          andAddTo:self];
-                      
+                      [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
                       [self hideLoading];
                       
                   } andFailureBlock:^(NSArray *error) {
-                      JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                      [errorView setErrorTitle:STRING_ERROR_ADDING_TO_CART
-                                      andAddTo:self];
-                      
+                      [self showMessage:STRING_ERROR_ADDING_TO_CART success:NO];
                       [self hideLoading];
                   }];
 }

@@ -35,6 +35,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"ChooseCountry";
+    
     self.navBarLayout.title = STRING_CHOOSE_COUNTRY;
     self.navBarLayout.doneButtonTitle = STRING_APPLY;
     
@@ -133,8 +135,22 @@
             [self tableView:self.tableViewContries didSelectRowAtIndexPath:tempIndex];
         }
         
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+        
     } andFailureBlock:^(NSArray *errorMessages) {
         
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+
         [self hideLoading];
         
     }];

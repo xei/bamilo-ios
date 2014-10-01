@@ -13,6 +13,7 @@
 #import "JAUtils.h"
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
+#import "RIFilter.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
@@ -50,7 +51,23 @@
     {
         self.navBarLayout.showBackButton = YES;
     }
-
+    
+    if (self.searchString.length > 0)
+    {
+        self.screenName = @"SearchResults";
+    }
+    else
+    {
+        if(VALID_NOTEMPTY(self.category, RICategory))
+        {
+            self.screenName = [NSString stringWithFormat:@"Catalog / %@", self.category.name];
+        }
+        else
+        {
+            self.screenName = @"Catalog";
+        }
+    }
+    
     self.isFirstLoadTracking = NO;
     self.filterButton.backgroundColor = JACatalogViewControllerButtonColor;
     self.viewToggleButton.backgroundColor = JACatalogViewControllerButtonColor;
@@ -137,7 +154,13 @@
                                            [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
                                            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                                            [trackingDictionary setValue:self.searchString forKey:kRIEventKeywordsKey];
-                                           
+                                           NSInteger numberOfResults = 0;
+                                           if(VALID_NOTEMPTY(results, NSArray))
+                                           {
+                                               numberOfResults = [results count];
+                                           }
+                                           [trackingDictionary setValue:[NSNumber numberWithInt:numberOfResults] forKey:kRIEventNumberOfProductsKey];
+
                                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
                                                                                      data:[trackingDictionary copy]];
                                            
@@ -158,6 +181,10 @@
                                            
                                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
                                                                                      data:[trackingDictionary copy]];
+                                           
+                                           NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                                           [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+
                                        }
                                        
                                        if (0 == results.count || JACatalogViewControllerMaxProducts > results.count) {
@@ -185,9 +212,7 @@
                                            [self addUndefinedSearchView:undefSearchTerm];
                                        } else {
 
-                                           JASuccessView *success = [JASuccessView getNewJASuccessView];
-                                           [success setSuccessTitle:STRING_ERROR
-                                                           andAddTo:self];
+                                           [self showMessage:STRING_ERROR success:NO];
                                        }
                                    }];
     }
@@ -205,9 +230,10 @@
                 urlToUse = self.filterCategory.apiUrl;
             }
             
+            NSNumber *pageNumber = [NSNumber numberWithInt:[self getCurrentPage] + 1];
             [RIProduct getProductsWithCatalogUrl:urlToUse
                                    sortingMethod:self.sortingMethod
-                                            page:[self getCurrentPage]+1
+                                            page:[pageNumber integerValue]
                                         maxItems:JACatalogViewControllerMaxProducts
                                          filters:self.filtersArray
                                     successBlock:^(NSArray* products, NSString* productCount, NSArray* filters, NSString *categoryId, NSArray* categories) {
@@ -229,6 +255,7 @@
                                             self.loadedEverything = YES;
                                         }
                                         
+                                        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                                         // Track events only in the first load of the products
                                         if (!self.isFirstLoadTracking)
                                         {
@@ -246,9 +273,7 @@
                                             
                                             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                                             NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
-                                            
-                                            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                                            
+                                                                                        
                                             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
                                             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
                                             [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
@@ -290,7 +315,20 @@
                                             
                                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing]
                                                                                       data:[trackingDictionary copy]];
+                                            
+                                            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                                            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];                                            
                                         }
+                                        
+                                        trackingDictionary = [[NSMutableDictionary alloc] init];
+                                        if(VALID_NOTEMPTY(self.category, RICategory))
+                                        {
+                                            [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+                                        }
+                                        [trackingDictionary setValue:pageNumber forKey:kRIEventPageNumberKey];
+                                        
+                                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewGTMListing]
+                                                                                  data:[trackingDictionary copy]];
                                         
                                         [self.productsArray addObjectsFromArray:products];
                                         
@@ -487,6 +525,7 @@
         [trackingDictionary setValue:self.title forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"SortingOnCatalog" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:[RIProduct sortingName:self.sortingMethod] forKey:kRIEventSortTypeKey];
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSort]
                                                   data:[trackingDictionary copy]];
@@ -502,6 +541,57 @@
     [trackingDictionary setValue:STRING_FILTERS forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     
+    if(VALID_NOTEMPTY(self.filtersArray, NSArray))
+    {
+        for(RIFilter *filter in self.filtersArray)
+        {
+            if (VALID_NOTEMPTY(filter.uid, NSString) && VALID_NOTEMPTY(filter.options, NSArray) && 0 < filter.options.count)
+            {
+                NSLog(@"filter name %@ - uid %@", filter.name, filter.uid);
+                if ([@"price" isEqualToString:filter.uid])
+                {
+                    RIFilterOption* filterOption = [filter.options firstObject];
+                    if (VALID_NOTEMPTY(filterOption, RIFilterOption))
+                    {
+                        if (filterOption.lowerValue != filterOption.min || filterOption.upperValue != filterOption.max) {
+                            
+                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventIndividualFilter]
+                                                                      data:[NSDictionary dictionaryWithObject:filter.name forKey:kRIEventFilterTypeKey]];
+                            
+                            [trackingDictionary setObject:filter.name forKey:kRIEventPriceFilterKey];
+                        }
+                    }
+                } else
+                {
+                    for (RIFilterOption* filterOption in filter.options)
+                    {
+                        if (filterOption.selected)
+                        {
+                            
+                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventIndividualFilter]
+                                                                      data:[NSDictionary dictionaryWithObject:filter.name forKey:kRIEventFilterTypeKey]];
+                            if([@"brand" isEqualToString:filter.uid])
+                            {
+                                [trackingDictionary setObject:filter.name forKey:kRIEventBrandFilterKey];
+                            }
+                            else if([@"color_family" isEqualToString:filter.uid])
+                            {
+                                [trackingDictionary setObject:filter.name forKey:kRIEventColorFilterKey];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    if(VALID_NOTEMPTY(category, RICategory))
+    {
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventIndividualFilter]
+                                                  data:[NSDictionary dictionaryWithObject:@"category" forKey:kRIEventFilterTypeKey]];
+        [trackingDictionary setObject:@"category" forKey:kRIEventCategoryFilterKey];
+    }
+
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFilter]
                                               data:[trackingDictionary copy]];
     
@@ -601,29 +691,38 @@
                                         [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                                         [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                                         
+                                        [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
+                                        
+                                        NSString *discountPercentage = @"0";
+                                        if(VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
+                                        {
+                                            discountPercentage = product.maxSavingPercentage;
+                                        }
+                                        [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+                                        [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
+                                        [trackingDictionary setValue:@"Catalog" forKey:kRIEventLocationKey];
+                                        if(VALID_NOTEMPTY(self.category, RICategory))
+                                        {
+                                            [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+                                        }
+                                        
                                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
                                                                                   data:[trackingDictionary copy]];
                                         
                                         
                                         [self hideLoading];
                                         
-                                        JASuccessView *success = [JASuccessView getNewJASuccessView];
-                                        [success setSuccessTitle:STRING_ADDED_TO_WISHLIST
-                                                        andAddTo:self];
+                                        [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
                                         
                                     } andFailureBlock:^(NSArray *error) {
                                         [self hideLoading];
                                         
-                                        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                                        [errorView setErrorTitle:STRING_ERROR
-                                                        andAddTo:self];
+                                        [self showMessage:STRING_ERROR success:NO];
                                     }];
                                 } andFailureBlock:^(NSArray *error) {
                                     [self hideLoading];
                                     
-                                    JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                                    [errorView setErrorTitle:STRING_ERROR
-                                                    andAddTo:self];
+                                    [self showMessage:STRING_ERROR success:NO];
                                 }];
     } else {
         [RIProduct removeFromFavorites:product successBlock:^(void) {
@@ -640,6 +739,7 @@
             [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
             [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
             [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+            [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
             [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
@@ -648,16 +748,12 @@
             //update favoriteProducts
             [self hideLoading];
             
-            JASuccessView *success = [JASuccessView getNewJASuccessView];
-            [success setSuccessTitle:@"Item removed from wish list."
-                            andAddTo:self];
+            [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
             
         } andFailureBlock:^(NSArray *error) {
             [self hideLoading];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR success:NO];
         }];
     }
 }

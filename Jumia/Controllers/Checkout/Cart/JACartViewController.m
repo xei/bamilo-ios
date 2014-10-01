@@ -26,6 +26,7 @@
 
 @property (nonatomic, strong) NSString *voucherCode;
 @property (nonatomic, assign) CGRect keyboardFrame;
+@property (nonatomic, assign) BOOL firstLoading;
 
 @end
 
@@ -34,7 +35,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
- 
+    
+    self.firstLoading = YES;
+    
+    self.A4SViewControllerAlias = @"CART";
+    
     self.navBarLayout.title = STRING_CART;
     
     self.view.backgroundColor = JABackgroundGrey;
@@ -69,7 +74,7 @@
     
     UINib *cartListCellNib = [UINib nibWithNibName:@"JACartListCell" bundle:nil];
     [self.productCollectionView registerNib:cartListCellNib forCellWithReuseIdentifier:@"cartListCell"];
-
+    
     UINib *cartListHeaderNib = [UINib nibWithNibName:@"JACartListHeaderView" bundle:nil];
     [self.productCollectionView registerNib:cartListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
     
@@ -104,8 +109,7 @@
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
         NSMutableDictionary *trackingDictionary = nil;
-        NSMutableDictionary *viewCartTrackingProducts = [[NSMutableDictionary alloc] init];
-        NSInteger productIndex = 1;
+        NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
         
         NSArray *cartItemsKeys = [[self.cart cartItems] allKeys];
         for (NSString *cartItemKey in cartItemsKeys)
@@ -138,18 +142,17 @@
             [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
             [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
             [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
-            [trackingDictionary setValue:[cartData.cartCleanValue stringValue] forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:[cartData.cartValue stringValue] forKey:kRIEventTotalCartKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
                                                       data:[trackingDictionary copy]];
             
             NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
-            [viewCartTrackingProduct setValue:cartItem.sku forKey:@"sku"];
-            [viewCartTrackingProduct setValue:price forKey:@"price"];
-            [viewCartTrackingProduct setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:@"currency"];
-            [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:@"quantity"];
-            [viewCartTrackingProducts setValue:viewCartTrackingProduct forKey:[NSString stringWithFormat:@"product%d", productIndex]];
-            productIndex++;
+            [viewCartTrackingProduct setValue:cartItem.sku forKey:kRIEventSkuKey];
+            [viewCartTrackingProduct setValue:price forKey:kRIEventPriceKey];
+            [viewCartTrackingProduct setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+            [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
+            [viewCartTrackingProducts addObject:viewCartTrackingProduct];
         }
         
         trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -159,20 +162,48 @@
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
         [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
         
-        if(VALID_NOTEMPTY(viewCartTrackingProducts, NSMutableDictionary))
+        if(VALID_NOTEMPTY(viewCartTrackingProducts, NSMutableArray))
         {
-            [trackingDictionary addEntriesFromDictionary:viewCartTrackingProducts];
+            [trackingDictionary setObject:[viewCartTrackingProducts copy] forKey:kRIEventProductsKey];
         }
+        
+        [trackingDictionary setValue:[NSNumber numberWithInt:[[cartData cartItems] count]] forKey:kRIEventQuantityKey];
+        [trackingDictionary setValue:[cartData cartValue] forKey:kRIEventTotalCartKey];
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCart]
                                                   data:[trackingDictionary copy]];
         
         [self loadCartInfo];
         [self hideLoading];
+        
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+
+        // notify the InAppNotification SDK that this the active view controller
+        [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+        
     } andFailureBlock:^(NSArray *errorMessages) {
         [self setupEmptyCart];
+        
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+
         [self hideLoading];
     }];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
 - (void)loadCartInfo
@@ -190,6 +221,8 @@
 -(void)setupEmptyCart
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
+    
+    self.screenName = @"CartEmpty";
     
     [self.emptyCartView setHidden:NO];
     [self.emptyCartLabel setHidden:NO];
@@ -211,6 +244,8 @@
 
 -(void)setupCart
 {
+    self.screenName = @"CartWithItems";
+    
     [self.emptyCartView setHidden:YES];
     [self.emptyCartLabel setHidden:YES];
     [self.continueShoppingButton setHidden:YES];
@@ -621,7 +656,7 @@
     [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutContinueShopping]
                                               data:[trackingDictionary copy]];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
@@ -634,7 +669,7 @@
         NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
         NSString *key = [cartItemsKeys objectAtIndex:button.tag];
         RICartItem *product = [self.cart.cartItems objectForKey:key];
-        
+        NSNumber *cartValue = self.cart.cartValue;
         [self showLoading];
         [RICart removeProductWithQuantity:[product.quantity stringValue]
                                       sku:product.simpleSku
@@ -650,6 +685,9 @@
                              [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
                              [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                              [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                             [trackingDictionary setValue:[product.quantity stringValue] forKey:kRIEventQuantityKey];
+                             [trackingDictionary setValue:cartValue forKey:kRIEventTotalCartKey];
+                             
                              
                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
                                                                        data:[trackingDictionary copy]];
@@ -738,6 +776,37 @@
     {
         [self showLoading];
         
+        NSNumber *event = [NSNumber numberWithInt:RIEventDecreaseQuantity];
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        
+        [trackingDictionary setValue:self.currentItem.price forKey:kRIEventPriceKey];
+        [trackingDictionary setValue:self.currentItem.sku forKey:kRIEventSkuKey];
+        [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+        NSString *discountPercentage = @"0";
+        if(VALID_NOTEMPTY(self.currentItem.savingPercentage, NSNumber))
+        {
+            discountPercentage = [self.currentItem.savingPercentage stringValue];
+        }
+        [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+        [trackingDictionary setValue:@"Cart" forKey:kRIEventLocationKey];
+        [trackingDictionary setValue:self.cart.cartValue  forKey:kRIEventTotalCartKey];
+        
+        NSInteger quantity = 0;
+        if(newQuantity > [[self.currentItem quantity] integerValue])
+        {
+            quantity = newQuantity - [[self.currentItem quantity] integerValue];
+            event = [NSNumber numberWithInt:RIEventIncreaseQuantity];
+        }
+        else
+        {
+            quantity = [[self.currentItem quantity] integerValue] - newQuantity;
+        }
+        [trackingDictionary setValue:[NSString stringWithFormat:@"%d", quantity] forKey:kRIEventQuantityKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:event
+                                                  data:[trackingDictionary copy]];
+        
+        
         NSMutableDictionary *quantitiesToChange = [[NSMutableDictionary alloc] init];
         NSArray *cartItemsKeys = [[self.cart cartItems] allKeys];
         for (NSString *cartItemKey in cartItemsKeys)
@@ -762,9 +831,7 @@
                             [self removePickerView];
                             [self hideLoading];
                             
-                            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                            [errorView setErrorTitle:STRING_ERROR_CHANGING_QUANTITY
-                                            andAddTo:self];
+                            [self showMessage:STRING_ERROR_CHANGING_QUANTITY success:NO];
                         }];
     }
     else
@@ -832,12 +899,14 @@
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
             [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+            [trackingDictionary setValue:[NSNumber numberWithInt:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
+            [trackingDictionary setValue:[self.cart cartValue] forKey:kRIEventTotalCartKey];
             
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
                                                       data:[trackingDictionary copy]];
             
             [self hideLoading];
-
+            
             if(VALID_NOTEMPTY(adressList, NSDictionary))
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
@@ -860,7 +929,7 @@
             [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
             
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                       data:[trackingDictionary copy]];
             
             [self hideLoading];
@@ -959,15 +1028,15 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionReusableView *reusableview = [[UICollectionReusableView alloc] init];
-
+    
     if (kind == UICollectionElementKindSectionHeader) {
         JACartListHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader" forIndexPath:indexPath];
-
+        
         [headerView loadHeaderWithText:@"Items"];
-
+        
         reusableview = headerView;
     }
-
+    
     return reusableview;
 }
 

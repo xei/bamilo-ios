@@ -134,8 +134,8 @@
 #define STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS RILocalizedString(@"setting_address_error", nil) // Not translated
 #define STRING_CANCEL RILocalizedString(@"cancel_label", nil)
 #define STRING_SAVE_CHANGES RILocalizedString(@"save_changes_label", nil)
-#define STRING_EDIT_ADDRESS RILocalizedString(@"edit_address", validation_errortext)
-#define STRING_ERROR_INVALID_FIELDS RILocalizedString(@"edit_address", nil)
+#define STRING_EDIT_ADDRESS RILocalizedString(@"edit_address", nil)
+#define STRING_ERROR_INVALID_FIELDS RILocalizedString(@"validation_errortext", nil)
 
 #define STRING_CHECKOUT_SHIPPING RILocalizedString(@"checkout_header_step_3", nil)
 #define STRING_CITY RILocalizedString(@"string_city", nil) // Not translated
@@ -188,14 +188,17 @@
 #define STRING_MY_ORDER_LABEL RILocalizedString(@"my_order_label", nil)
 #define STRING_MY_ORDER_PAYMENT RILocalizedString(@"my_order_payment", nil)
 
-#define STRING_ENTER_ORDER_ID RILocalizedString(@"enter_order_id", nil) // Not ranslated
-#define STRING_ADDED_TO_WISHLIST RILocalizedString(@"item_added_to_wishlist", nil) // Not ranslated
-#define STRING_ERROR_ADDING_TO_WISHLIST RILocalizedString(@"error_adding_to_wishlist", nil) // Not ranslated
+#define STRING_ENTER_ORDER_ID RILocalizedString(@"enter_order_id", nil) // Not translated
+#define STRING_ADDED_TO_WISHLIST RILocalizedString(@"products_added_favourite", nil)
+#define STRING_ERROR_ADDING_TO_WISHLIST RILocalizedString(@"error_adding_to_wishlist", nil) // Not translated
+#define STRING_REMOVED_FROM_WISHLIST RILocalizedString(@"products_removed_favourite", nil)
+#define STRING_ERROR_REMOVING_FROM_WISHLIST RILocalizedString(@"error_removing_from_wishlist", nil) // Not translated
 
-#define STRING_ERROR_ADD_TO_CART_FAILED_FOR_X_PRODUCTS RILocalizedString(@"error_add_to_cart_failed_for_x_products", nil) // Not ranslated
+#define STRING_ERROR_ADD_TO_CART_FAILED_FOR_X_PRODUCTS RILocalizedString(@"error_add_to_cart_failed_for_x_products", nil) // Not translated
 #define STRING_ERROR_ADD_TO_CART_FAILED_FOR_1_PRODUCT RILocalizedString(@"error_add_to_cart_failed_for_1_product", nil) // Not ranslated
 
 #define STRING_SAVE_LABEL RILocalizedString(@"save_label", nil)
+#define STRING_SPECIFICATIONS RILocalizedString(@"product_specifications", nil)
 
 #define STRING_CAMPAIGN_REMAINING_STOCK RILocalizedString(@"string_campaign_ramaining_stock", nil)
 #define STRING_CAMPAIGN_SAVE RILocalizedString(@"campaign_save", nil)

@@ -30,11 +30,14 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"ShopMain";
+    self.A4SViewControllerAlias = @"HOME";
+    
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
-
+    
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-
+    
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
     if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
@@ -100,6 +103,12 @@
     [self removeNotifications];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
+}
+
 - (void)addNotifications
 {
     //we do this to make sure no notification is added more than once
@@ -158,8 +167,23 @@
         [self.teaserPagesScrollView setContentSize:CGSizeMake(currentPageX,
                                                               self.teaserPagesScrollView.frame.size.height)];
         
-    } andFailureBlock:^(NSArray *errorMessage) {
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+
+        // notify the InAppNotification SDK that this the active view controller
+        [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         
+    } andFailureBlock:^(NSArray *errorMessage) {
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
     }];
 }
 
@@ -239,7 +263,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-
+    
 }
 
 #pragma mark - Teaser actions

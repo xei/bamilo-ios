@@ -24,6 +24,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"PriceFilter";
+    
     self.navBarLayout.title = STRING_PRICE;
     self.navBarLayout.backButtonTitle = STRING_FILTERS;
     self.navBarLayout.showDoneButton = YES;
@@ -45,6 +47,9 @@
     
     self.discountLabel.text = STRING_WITH_DISCOUNT_ONLY;
     self.discountSwitch.on = self.priceFilterOption.discountOnly;
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)viewWillAppear:(BOOL)animated

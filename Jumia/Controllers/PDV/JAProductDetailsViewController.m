@@ -9,8 +9,16 @@
 #import "JAProductDetailsViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "JAPriceView.h"
+#import "RIProduct.h"
 
 @interface JAProductDetailsViewController ()
+
+@property (strong, nonatomic) NSString *stringBrand;
+@property (strong, nonatomic) NSString *stringName;
+@property (strong, nonatomic) NSString *stringNewPrice;
+@property (strong, nonatomic) NSString *stringOldPrice;
+@property (strong, nonatomic) NSString *featuresText;
+@property (strong, nonatomic) NSString *descriptionText;
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UILabel *labelName;
@@ -38,6 +46,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if(VALID_NOTEMPTY(self.product.sku, NSString))
+    {
+        self.screenName = [NSString stringWithFormat:@"PDSSecondScreen / %@", self.product.sku];
+    }
+    else
+    {
+        self.screenName = @"PDSSecondScreen";
+    }
+    
+    self.stringBrand = self.product.brand;
+    self.stringName = self.product.name;
+    self.stringNewPrice = self.product.specialPriceFormatted;
+    self.stringOldPrice = self.product.priceFormatted;
+    self.featuresText = self.product.attributeShortDescription;
+    self.descriptionText = self.product.descriptionString;
     
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
@@ -111,6 +135,9 @@
     self.bottomDistance.constant = 6;
     
     [self.view updateConstraints];
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)didReceiveMemoryWarning

@@ -10,6 +10,7 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "RICustomer.h"
+#import "JAUtils.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 @interface JALoginViewController ()
@@ -82,6 +83,8 @@ FBLoginViewDelegate
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.screenName = @"CheckoutStart";
+    
     self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;
@@ -112,10 +115,7 @@ FBLoginViewDelegate
            
            self.numberOfFormsToLoad--;
            
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_ERROR
-                           andAddTo:self];
-           
+           [self showMessage:STRING_ERROR success:NO];
        }];
     
     [RIForm getForm:@"registersignup"
@@ -138,10 +138,7 @@ FBLoginViewDelegate
        } failureBlock:^(NSArray *errorMessage) {
            self.numberOfFormsToLoad--;
            
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_ERROR
-                           andAddTo:self];
-           
+           [self showMessage:STRING_ERROR success:NO];
        }];
 }
 
@@ -193,6 +190,13 @@ FBLoginViewDelegate
     [self finishingSetupViews];
     
     [self hideLoading];
+    
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
     
     [self showLogin];
 }
@@ -469,11 +473,37 @@ FBLoginViewDelegate
     
     [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object) {
         
+        RICustomer *customerObject = ((RICustomer *)object);
+        
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
+        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+        [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
+        [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+        
+        NSDate* now = [NSDate date];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+        NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+        [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
+                                                  data:[trackingDictionary copy]];
+        
+        trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAboutYou]
                                                   data:[trackingDictionary copy]];
         
         [self.loginDynamicForm resetValues];
@@ -501,29 +531,32 @@ FBLoginViewDelegate
     } andFailureBlock:^(id errorObject) {
         [self hideLoading];
         
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginFail]
+                                                  data:[trackingDictionary copy]];
+        
+        
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.loginDynamicForm validateFields:errorObject];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.loginDynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                            andAddTo:self];
+            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
         }
         else
         {
             [self.loginDynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR success:NO];
         }
     }];
 }
@@ -546,6 +579,11 @@ FBLoginViewDelegate
     [RIForm sendForm:[self.signupDynamicForm form] parameters:[self.signupDynamicForm getValues] successBlock:^(id object) {
         [self.signupDynamicForm resetValues];
         
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSignupSuccess]
+                                                  data:trackingDictionary];
+        
         [self hideLoading];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
@@ -557,31 +595,30 @@ FBLoginViewDelegate
                                                             object:nil
                                                           userInfo:userInfo];
     } andFailureBlock:^(id errorObject) {
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSignupFail]
+                                                  data:trackingDictionary];
+
         [self hideLoading];
         
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.signupDynamicForm validateFields:errorObject];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.signupDynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                            andAddTo:self];
+            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
         }
         else
         {
             [self.signupDynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR success:NO];
         }
     }];
 }
@@ -609,11 +646,36 @@ FBLoginViewDelegate
         [RICustomer loginCustomerByFacebookWithParameters:parameters
                                              successBlock:^(id customer) {
                                                  
+                                                 RICustomer *customerObject = ((RICustomer *)customer);
+                                                 
                                                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                                 [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
+                                                 [trackingDictionary setValue:@"FacebookLoginSuccess" forKey:kRIEventActionKey];
+                                                 [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                                                 [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
+                                                 [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                                 [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                                 [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
+                                                 [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+                                                 
+                                                 NSDate* now = [NSDate date];
+                                                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                                                 [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                                                 NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+                                                 NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+                                                 [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+                                                 [trackingDictionary setValue:@"Checkou" forKey:kRIEventLocationKey];
+                                                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                                 [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                                                 
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]
+                                                                                           data:[trackingDictionary copy]];
+
+                                                 trackingDictionary = [[NSMutableDictionary alloc] init];
                                                  [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
                                                  [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];
                                                  [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAboutYou]
                                                                                            data:[trackingDictionary copy]];
                                                  
                                                  [self.loginDynamicForm resetValues];
@@ -640,9 +702,15 @@ FBLoginViewDelegate
                                              } andFailureBlock:^(NSArray *errorObject) {
                                                  [self hideLoading];
                                                  
-                                                 JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                                                 [errorView setErrorTitle:STRING_ERROR
-                                                                 andAddTo:self];
+                                                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                                 [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
+                                                 [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                                                 [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+                                                 
+                                                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginFail]
+                                                                                           data:[trackingDictionary copy]];
+                                                 
+                                                 [self showMessage:STRING_ERROR success:NO];
                                              }];
     }
 }
@@ -684,9 +752,7 @@ FBLoginViewDelegate
     }
     
     if (alertMessage) {
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:alertMessage
-                        andAddTo:self];
+         [self showMessage:alertMessage success:NO];
     }
 }
 

@@ -141,12 +141,12 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSignUpScreen)
+                                             selector:@selector(showSignUpScreen:)
                                                  name:kShowSignUpScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSignInScreen)
+                                             selector:@selector(showSignInScreen:)
                                                  name:kShowSignInScreenNotification
                                                object:nil];
     
@@ -154,7 +154,7 @@
                                              selector:@selector(showForgotPasswordScreen)
                                                  name:kShowForgotPasswordScreenNotification
                                                object:nil];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutLoginScreen)
                                                  name:kShowCheckoutLoginScreenNotification
@@ -209,7 +209,7 @@
                                              selector:@selector(deactivateExternalPayment)
                                                  name:kDeactivateExternalPaymentNotification
                                                object:nil];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showTrackOrderViewController:)
                                                  name:kShowTrackOrderScreenNotification
@@ -235,7 +235,7 @@
         NSNumber *index = [selectedItem objectForKey:@"index"];
         
         if ([index isEqual:@(0)]) {
-            [self changeCenterPanel:STRING_HOME];
+            [self changeCenterPanel:STRING_HOME notification:notification];
             
         } else {
             if ([index isEqual:@(99)])
@@ -250,14 +250,14 @@
             }
             else
             {
-                [self changeCenterPanel:[selectedItem objectForKey:@"name"]];
+                [self changeCenterPanel:[selectedItem objectForKey:@"name"] notification:notification];
             }
         }
     }
     
 }
 
-- (void)changeCenterPanel:(NSString *)newScreenName
+- (void)changeCenterPanel:(NSString *)newScreenName notification:(NSNotification *)notification
 {
     if ([newScreenName isEqualToString:STRING_HOME])
     {
@@ -311,6 +311,8 @@
         {
             JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
             
+            signInViewController.fromSideMenu = YES;
+            
             [self pushViewController:signInViewController
                             animated:YES];
             
@@ -363,13 +365,14 @@
             {
                 JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
                 
+                signInViewController.fromSideMenu = NO;
+                signInViewController.nextNotification = notification;
+                
                 [self pushViewController:signInViewController
                                 animated:YES];
-                
-                self.viewControllers = @[signInViewController];
             }
         }
-
+        
     }
     else if ([newScreenName isEqualToString:STRING_USER_EMAIL_NOTIFICATIONS])
     {
@@ -389,10 +392,11 @@
             {
                 JASignInViewController *signInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
                 
+                signInViewController.fromSideMenu = NO;
+                signInViewController.nextNotification = notification;
+                
                 [self pushViewController:signInViewController
                                 animated:YES];
-                
-                self.viewControllers = @[signInViewController];
             }
         }
     }
@@ -460,7 +464,7 @@
 
 - (void) showHomeScreen
 {
-    [self changeCenterPanel:STRING_HOME];
+    [self changeCenterPanel:STRING_HOME notification:nil];
 }
 
 - (void)showTrackOrderViewController:(NSNotification*)notification
@@ -468,7 +472,7 @@
     if (![[self topViewController] isKindOfClass:[JATrackMyOrderViewController class]])
     {
         JATrackMyOrderViewController *trackOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"jaTrackOrderViewController"];
- 
+        
         if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSString)) {
             trackOrder.startingTrackOrderNumber = notification.object;
         }
@@ -583,7 +587,7 @@
         {
             pdv.showBackButton = [[notification.userInfo objectForKey:@"show_back_button"] boolValue];
         }
-    
+        
         [self pushViewController:pdv
                         animated:YES];
     }
@@ -637,17 +641,23 @@
     }
 }
 
-- (void)showSignUpScreen
+- (void)showSignUpScreen:(NSNotification *)notification
 {
     JASignupViewController *signUpVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signUpViewController"];
+
+    signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
+    signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
     
     [self pushViewController:signUpVC animated:YES];
 }
 
-- (void)showSignInScreen
+- (void)showSignInScreen:(NSNotification *)notification
 {
     JASignInViewController *signInVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
     
+    signInVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
+    signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+        
     [self pushViewController:signInVC animated:YES];
 }
 

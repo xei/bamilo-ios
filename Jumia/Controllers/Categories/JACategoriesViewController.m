@@ -22,6 +22,9 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"ShopCategories";
+    self.A4SViewControllerAlias = @"CATEGORY";
+    
     self.view.backgroundColor = JABackgroundGrey;
     
     self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
@@ -57,6 +60,12 @@
     }
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
+}
+
 - (void)continueLoading
 {
     [self showLoading];
@@ -66,6 +75,14 @@
         [RICategory getCategoriesWithSuccessBlock:^(id categories) {
             [self categoryLoadingFinished:categories];
         } andFailureBlock:^(NSArray *errorMessage) {
+            
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
+            
             [self hideLoading];
         }];
     }
@@ -74,6 +91,10 @@
 - (void)categoryLoadingFinished:(NSArray*)categories
 {
     [self hideLoading];
+    
+    // notify the InAppNotification SDK that this the active view controller
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+    
     self.categories = categories;
     [self.tableView reloadData];
     
@@ -90,6 +111,13 @@
                                           self.contentView.frame.size.width,
                                           contentHeight)];
     [self.tableView setFrame:self.contentView.bounds];
+    
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }    
 }
 
 #pragma mark - No connection delegate

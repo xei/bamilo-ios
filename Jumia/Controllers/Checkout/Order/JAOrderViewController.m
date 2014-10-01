@@ -29,6 +29,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.screenName = @"OrderConfirmation";
+    
     self.navBarLayout.title = STRING_CHECKOUT;
     self.navBarLayout.showCartButton = NO;
     
@@ -41,6 +43,13 @@
     [self.view addSubview:self.scrollView];
     
     [self setupViews];
+    
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
 }
 
 -(void)setupViews

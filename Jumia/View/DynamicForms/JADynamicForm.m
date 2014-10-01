@@ -415,7 +415,7 @@
                 
                 if([@"address-form" isEqualToString:[self.form uid]] && [radioComponent isComponentWithKey:@"fk_customer_address_city"])
                 {
-                    [parameters setValue:radioComponent.textField.text forKey:@"Alice_Module_Customer_Model_AddressForm[city]"];
+                    [parameters setValue:radioComponent.textField.text forKey:[self getFieldNameForKey:@"city"]];
                 }
                 
                 if(VALID_NOTEMPTY([radioComponent getValues], NSDictionary))
@@ -456,7 +456,7 @@
                 }
                 if([@"address-form" isEqualToString:[self.form uid]] && [textFieldComponent isComponentWithKey:@"fk_customer_address_city"])
                 {
-                    [parameters setValue:textFieldComponent.textField.text forKey:@"Alice_Module_Customer_Model_AddressForm[city]"];
+                    [parameters setValue:textFieldComponent.textField.text forKey:[self getFieldNameForKey:@"city"]];
                 }
             }
         }
@@ -656,5 +656,25 @@
     
     return textFieldShouldEndEditing;
 }
+
+- (NSString*)getFieldNameForKey:(NSString*)key
+{
+    NSString *fieldId = @"";
+    if(VALID_NOTEMPTY(self.form, RIForm) && VALID_NOTEMPTY([self.form fields], NSOrderedSet))
+    {
+        NSArray *fields = [[self.form fields] array];
+        for (int i = 0; i < [fields count]; i++)
+        {
+            RIField *field = [fields objectAtIndex:i];
+            if([key isEqualToString:[field key]])
+            {
+                fieldId = [field name];
+                break;
+            }
+        }
+    }
+    return fieldId;
+}
+
 
 @end

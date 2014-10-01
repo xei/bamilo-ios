@@ -43,7 +43,9 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [super viewDidLoad];
-
+    
+    self.screenName = @"SplashScreen";
+    
     self.startTime = [NSDate date];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -138,6 +140,7 @@
             
             [RIApi startApiWithCountry:nil
                           successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                              
                               if(hasUpdate)
                               {
                                   self.isPopupOpened = YES;
@@ -253,21 +256,34 @@
 {
     if(!self.isPopupOpened)
     {
-        [RICustomer autoLogin:^(BOOL success){
+        [RICustomer autoLogin:^(BOOL success, RICustomer *customer){
             
             [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration)
              {
                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                  [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
                  
+                 NSNumber *event = [NSNumber numberWithInt:RIEventAutoLoginFail];
+                 [trackingDictionary setValue:@"AutoLoginFailed" forKey:kRIEventActionKey];
                  if(success)
                  {
-                     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                     event = [NSNumber numberWithInt:RIEventAutoLoginSuccess];
                      [trackingDictionary setValue:@"AutoLoginSuccess" forKey:kRIEventActionKey];
-                 }
-                 else
-                 {
-                     [trackingDictionary setValue:@"AutoLoginFailed" forKey:kRIEventActionKey];
+                     
+                     if(VALID_NOTEMPTY(customer, RICustomer))
+                     {
+                         [trackingDictionary setValue:customer.idCustomer forKey:kRIEventLabelKey];
+                         [trackingDictionary setValue:customer.idCustomer forKey:kRIEventUserIdKey];
+                         [trackingDictionary setValue:customer.gender forKey:kRIEventGenderKey];
+                         [trackingDictionary setValue:customer.createdAt forKey:kRIEventAccountDateKey];
+                         
+                         NSDate* now = [NSDate date];
+                         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                         NSDate *dateOfBirth = [dateFormatter dateFromString:customer.birthday];
+                         NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+                         [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+                     }
                  }
                  
                  CGFloat duration = fabs([self.startTime timeIntervalSinceNow] * 1000);
@@ -287,7 +303,13 @@
                  
                  [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
                  
-                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAutoLogin]
+                 [[RITrackingWrapper sharedInstance] trackEvent:event
+                                                           data:[trackingDictionary copy]];
+                 
+                 trackingDictionary = [[NSMutableDictionary alloc] init];
+                 [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                 
+                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventChangeCountry]
                                                            data:[trackingDictionary copy]];
                  
                  [self hideLoading];
@@ -345,7 +367,7 @@
         
         [RIApi startApiWithCountry:country
                       successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
-                          
+
                           if(hasUpdate)
                           {
                               self.isPopupOpened = YES;

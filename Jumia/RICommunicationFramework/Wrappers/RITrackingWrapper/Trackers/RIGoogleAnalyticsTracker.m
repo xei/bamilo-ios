@@ -40,7 +40,8 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         self.queue.maxConcurrentOperationCount = 1;
         
         NSMutableArray *events = [[NSMutableArray alloc] init];
-        [events addObject:[NSNumber numberWithInt:RIEventAutoLogin]];
+        [events addObject:[NSNumber numberWithInt:RIEventAutoLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventAutoLoginFail]];
         [events addObject:[NSNumber numberWithInt:RIEventLoginSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventLoginFail]];
         [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
@@ -65,9 +66,18 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         [events addObject:[NSNumber numberWithInt:RIEventShareEmail]];
         [events addObject:[NSNumber numberWithInt:RIEventShareSMS]];
         [events addObject:[NSNumber numberWithInt:RIEventShareOther]];
-        [events addObject:[NSNumber numberWithInt:RIEventCheckout]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutStart]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutAboutYou]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutAddresses]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutShipping]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutPayment]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutOrder]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutEnd]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutContinueShopping]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutError]];
         [events addObject:[NSNumber numberWithInt:RIEventNewsletter]];
-        
+        [events addObject:[NSNumber numberWithInt:RIEventViewCampaign]];
+
         self.registeredEvents = [events copy];
     }
     return self;
@@ -209,9 +219,9 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     }
     
     NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
-    NSNumber *tax = [data objectForKey:kRIEcommerceTransactionIdKey];
-    NSNumber *shipping = [data objectForKey:kRIEcommerceTransactionIdKey];
-    NSString *currency = [data objectForKey:kRIEcommerceTransactionIdKey];
+    NSNumber *tax = [data objectForKey:kRIEcommerceTaxKey];
+    NSNumber *shipping = [data objectForKey:kRIEcommerceShippingKey];
+    NSString *currency = [data objectForKey:kRIEcommerceCurrencyKey];
     
     NSDictionary *dict = [[GAIDictionaryBuilder createTransactionWithId:transactionId
                                                             affiliation:nil
@@ -228,8 +238,8 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         
         for (NSDictionary *tempProduct in tempArray)
         {
-            [tracker send:[[GAIDictionaryBuilder createItemWithTransactionId:[tempProduct objectForKey:kRIEcommerceTransactionIdKey]
-                                                                        name:[tempProduct objectForKey:kRIEventProductName]
+            [tracker send:[[GAIDictionaryBuilder createItemWithTransactionId:[data objectForKey:kRIEcommerceTransactionIdKey]
+                                                                        name:[tempProduct objectForKey:kRIEventProductNameKey]
                                                                          sku:[tempProduct objectForKey:kRIEventSkuKey]
                                                                     category:nil
                                                                        price:[tempProduct objectForKey:kRIEventPriceKey]
@@ -239,37 +249,9 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     }
 }
 
--(void)trackProductAddToCart:(RITrackingProduct *)product
-{
-    RIDebugLog(@"Google Analytics - Tracking product added to cart: %@", product.name);
-    
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    
-    if (!tracker) {
-        RIRaiseError(@"Missing default Google Analytics tracker");
-        return;
-    }
-    
-    NSDictionary *dict = [[GAIDictionaryBuilder createItemWithTransactionId:nil
-                                                                       name:product.name
-                                                                        sku:product.identifier
-                                                                   category:product.category
-                                                                      price:product.price
-                                                                   quantity:product.quantity
-                                                               currencyCode:product.currency] build];
-    
-    [tracker send:dict];
-}
-
--(void)trackRemoveFromCartForProductWithID:(NSString *)idTransaction
-                                  quantity:(NSNumber *)quantity
-{
-
-}
-
 #pragma mark - RITrackingTiming implementation
 
--(void)trackTimingInMillis:(NSUInteger)millis reference:(NSString *)reference
+-(void)trackTimingInMillis:(NSNumber*)millis reference:(NSString *)reference
 {
     RIDebugLog(@"Google Analytics - Tracking timing: %lu %@", (unsigned long)millis, reference);
     
@@ -281,7 +263,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     }
     
     NSDictionary *dict = [[GAIDictionaryBuilder createTimingWithCategory:reference
-                                                                interval:[NSNumber numberWithInteger:millis]
+                                                                interval:millis
                                                                     name:nil
                                                                    label:nil] build];
     
