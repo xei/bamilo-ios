@@ -272,7 +272,8 @@
             NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
-            [globalRateDictionary setObject:[self.product.price stringValue] forKey:kRIEventPriceKey];
+            NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
+            [globalRateDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
             
             for (JAStarsComponent *component in self.ratingStarsArray)
             {

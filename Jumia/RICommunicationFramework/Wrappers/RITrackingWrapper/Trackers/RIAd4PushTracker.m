@@ -488,16 +488,11 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     }
     [deviceInfo setObject:userStatus forKey:kAd4PushProfileStatusInAppKey];
 
-    NSInteger numberOfPurchasesValue = 0;
-    NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileAggregatedNumberOfPurchaseKey];
-    if(VALID_NOTEMPTY(numberOfPurchases, NSNumber))
+    NSNumber *numberOfPurchases = [NSNumber numberWithInt:0];
+    if(VALID_NOTEMPTY([data objectForKey:kRIEventAmountTransactions], NSNumber))
     {
-        numberOfPurchasesValue = [numberOfPurchases integerValue];
+        numberOfPurchases = [data objectForKey:kRIEventAmountTransactions];
     }
-    numberOfPurchasesValue++;
-    numberOfPurchases = [NSNumber numberWithInteger:numberOfPurchasesValue];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:numberOfPurchases forKey:kAd4PushProfileAggregatedNumberOfPurchaseKey];
     [deviceInfo setObject:numberOfPurchases forKey:kAd4PushProfileAggregatedNumberOfPurchaseKey];
     
     NSNumber *total = [data objectForKey:kRIEcommerceTotalValueKey];

@@ -982,7 +982,7 @@ NSString * const kGTMToken = @"kGTMToken";
                 [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductCategoryKey];
                 
                 [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductPriceKey];
-                if(VALID_NOTEMPTY([product objectForKey:kRIEventPriceKey], NSNumber))
+                if(VALID_NOTEMPTY([product objectForKey:kRIEventPriceKey], NSString))
                 {
                     [productDictionary setObject:[product objectForKey:kRIEventPriceKey] forKey:kGTMEventTransactionProductPriceKey];
                 }

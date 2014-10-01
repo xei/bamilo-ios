@@ -162,7 +162,8 @@ JANoConnectionViewDelegate
     
     [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
     self.product = product;
-    
+    NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
+
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
     
@@ -179,7 +180,8 @@ JANoConnectionViewDelegate
     [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
-    [trackingDictionary setValue:[self.product.price stringValue] forKey:kRIEventPriceKey];
+    
+    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
     [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
     
     [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
@@ -200,6 +202,11 @@ JANoConnectionViewDelegate
         }
     }
     
+    if (VALID_NOTEMPTY(self.product.attributeColor, NSString))
+    {
+        [trackingDictionary setValue:self.product.attributeColor forKey:kRIEventColorKey];
+    }
+    
     if(VALID_NOTEMPTY(self.category, RICategory))
     {
         [trackingDictionary setValue:[RICategory getTree:self.category.uid] forKey:kRIEventTreeKey];
@@ -216,7 +223,6 @@ JANoConnectionViewDelegate
     [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventProductKey];
     [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
-    [trackingDictionary setValue:[self.product.price stringValue] forKey:kRIEventPriceKey];
     [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
     
     NSString *discountPercentage = @"0";
@@ -224,6 +230,8 @@ JANoConnectionViewDelegate
     {
         discountPercentage = self.product.maxSavingPercentage;
     }
+
+    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
     [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
     if(VALID_NOTEMPTY(self.category, RICategory))
@@ -800,7 +808,10 @@ JANoConnectionViewDelegate
                               [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                               NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                               [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                              [trackingDictionary setValue:[self.product.price stringValue] forKey:kRIEventPriceKey];
+
+                              NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
+                              [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+
                               [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
                               [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
                               
@@ -984,7 +995,10 @@ JANoConnectionViewDelegate
             [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
             [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-            [trackingDictionary setValue:[self.product.price stringValue] forKey:kRIEventPriceKey];
+            
+            NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
+            [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+
             [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
             [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
             [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
@@ -1026,7 +1040,10 @@ JANoConnectionViewDelegate
             [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
             [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-            [trackingDictionary setValue:self.product.price forKey:kRIEventValueKey];
+
+            NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
+            [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+            
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
             [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
