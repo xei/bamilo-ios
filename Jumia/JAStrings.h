@@ -76,6 +76,7 @@
 #define STRING_RELATED_ITEMS RILocalizedString(@"related_items", nil)
 #define STRING_PRODUCT_FEATURES RILocalizedString(@"product_features_title", nil)
 #define STRING_PRODUCT_DESCRIPTION RILocalizedString(@"product_description_title", nil)
+#define STRING_SHARE_OBJECT RILocalizedString(@"share_subject", nil)
 #define STRING_SHARE_PRODUCT_MESSAGE RILocalizedString(@"share_checkout_this_product", nil)
 #define STRING_RATE_PRODUCT RILocalizedString(@"rating_question", nil)
 #define STRING_SEND_REVIEW RILocalizedString(@"writereview_send", nil)

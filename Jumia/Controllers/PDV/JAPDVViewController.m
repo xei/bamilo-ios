@@ -714,9 +714,7 @@ JANoConnectionViewDelegate
     JAActivityViewController *activityController = [[JAActivityViewController alloc] initWithActivityItems:objectsToShare
                                                                                      applicationActivities:nil];
     
-    NSString *stringToShare = STRING_SHARE_PRODUCT_MESSAGE;
-    
-    [activityController setValue:stringToShare
+    [activityController setValue:STRING_SHARE_OBJECT
                           forKey:@"subject"];
     
     activityController.completionHandler = ^(NSString *activityType, BOOL completed)
