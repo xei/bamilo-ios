@@ -638,7 +638,7 @@
                     //do not delete, just remove favorite variable
                     currentProduct.isFavorite = nil;
                 } else {
-                    [[RIDataBaseWrapper sharedInstance] deleteObject:product];
+                    [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
                 }
                 [[RIDataBaseWrapper sharedInstance] saveContext];
             }
