@@ -21,6 +21,7 @@
 
 @property (strong, nonatomic) RIProduct *product;
 @property (strong, nonatomic) NSString* productUrl;
+@property (strong, nonatomic) NSString* productSku;
 @property (strong, nonatomic) RICategory *category;
 @property (assign, nonatomic) BOOL fromCatalogue;
 @property (strong, nonatomic) NSArray *arrayWithRelatedItems;

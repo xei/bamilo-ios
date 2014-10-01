@@ -84,7 +84,7 @@ JANoConnectionViewDelegate
     }
     
     // Always load the product details when entering PDV
-    if (VALID_NOTEMPTY(self.productUrl, NSString))
+    if (VALID_NOTEMPTY(self.productUrl, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
     {
         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
         {
@@ -127,105 +127,122 @@ JANoConnectionViewDelegate
 - (void)loadCompleteProduct
 {
     [self showLoading];
-    [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
-        
-        // notify the InAppNotification SDK that this the active view controller
-        [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
-        
-        [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
-        self.product = product;
-        
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
-        
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-        NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
-        if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
-        {
-            [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
-        }
-        
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-        [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
-        [trackingDictionary setValue:[self.product.price stringValue] forKey:kRIEventPriceKey];
-        [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-        
-        [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
-        
-        NSString *discount = @"false";
-        if (self.product.maxSavingPercentage.length > 0)
-        {
-            discount = @"true";
-        }
-        [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
-        
-        if (VALID_NOTEMPTY(self.product.productSimples, NSArray) && 1 == self.product.productSimples.count)
-        {
-            RIProductSimple *tempProduct = self.product.productSimples[0];
-            if (VALID_NOTEMPTY(tempProduct.attributeSize, NSString))
+    
+    if (VALID_NOTEMPTY(self.productUrl, NSString)) {
+        [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
+            [self loadedProduct:product];
+        } andFailureBlock:^(NSArray *error) {
+            if(self.firstLoading)
             {
-                [trackingDictionary setValue:tempProduct.attributeSize forKey:kRIEventSizeKey];
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
             }
-        }
-        
-        if(VALID_NOTEMPTY(self.category, RICategory))
+            [self hideLoading];
+        }];
+    } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
+        [RIProduct getCompleteProductWithSku:self.productSku successBlock:^(id product) {
+            [self loadedProduct:product];
+        } andFailureBlock:^(NSArray *error) {
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
+            [self hideLoading];
+        }];
+    }
+}
+
+- (void)loadedProduct:(RIProduct*) product
+{
+    // notify the InAppNotification SDK that this the active view controller
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+    
+    [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
+    self.product = product;
+    
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+    
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
+    if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
+    {
+        [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
+    }
+    
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+    [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+    [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+    [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
+    [trackingDictionary setValue:[self.product.price stringValue] forKey:kRIEventPriceKey];
+    [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+    
+    [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
+    
+    NSString *discount = @"false";
+    if (self.product.maxSavingPercentage.length > 0)
+    {
+        discount = @"true";
+    }
+    [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
+    
+    if (VALID_NOTEMPTY(self.product.productSimples, NSArray) && 1 == self.product.productSimples.count)
+    {
+        RIProductSimple *tempProduct = self.product.productSimples[0];
+        if (VALID_NOTEMPTY(tempProduct.attributeSize, NSString))
         {
-            [trackingDictionary setValue:[RICategory getTree:self.category.uid] forKey:kRIEventTreeKey];
+            [trackingDictionary setValue:tempProduct.attributeSize forKey:kRIEventSizeKey];
         }
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewProduct]
-                                                  data:[trackingDictionary copy]];
-        
-        trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-        [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-        [trackingDictionary setValue:self.product.sku forKey:kRIEventProductKey];
-        [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
-        [trackingDictionary setValue:[self.product.price stringValue] forKey:kRIEventPriceKey];
-        [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-        
-        NSString *discountPercentage = @"0";
-        if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
-        {
-            discountPercentage = self.product.maxSavingPercentage;
-        }
-        [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
-        [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
-        if(VALID_NOTEMPTY(self.category, RICategory))
-        {
-            [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
-        }
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewProduct]
-                                                  data:[trackingDictionary copy]];
-        
-        if(self.firstLoading)
-        {
-            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-            self.firstLoading = NO;
-        }
-        
-        [self hideLoading];
-        [self productLoaded];
-    } andFailureBlock:^(NSArray *error) {
-        
-        if(self.firstLoading)
-        {
-            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-            self.firstLoading = NO;
-        }
-        
-        [self hideLoading];
-    }];
+    }
+    
+    if(VALID_NOTEMPTY(self.category, RICategory))
+    {
+        [trackingDictionary setValue:[RICategory getTree:self.category.uid] forKey:kRIEventTreeKey];
+    }
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewProduct]
+                                              data:[trackingDictionary copy]];
+    
+    trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+    [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    [trackingDictionary setValue:self.product.sku forKey:kRIEventProductKey];
+    [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
+    [trackingDictionary setValue:[self.product.price stringValue] forKey:kRIEventPriceKey];
+    [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+    
+    NSString *discountPercentage = @"0";
+    if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
+    {
+        discountPercentage = self.product.maxSavingPercentage;
+    }
+    [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+    [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+    if(VALID_NOTEMPTY(self.category, RICategory))
+    {
+        [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+    }
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewProduct]
+                                              data:[trackingDictionary copy]];
+    
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
+    
+    [self hideLoading];
+    [self productLoaded];
 }
 
 #pragma mark - No connection delegate

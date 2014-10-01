@@ -629,22 +629,20 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     NSString *size = [urlString substringWithRange:NSMakeRange(range.length + range.location, urlString.length - (range.length + range.location))];
                     
                     NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, range.location - 5)];
-                    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, pdvSku];
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                                         object:nil
-                                                                      userInfo:@{ @"url" : finalUrl,
+                                                                      userInfo:@{ @"sku" : pdvSku,
                                                                                   @"size": size,
                                                                                   @"show_back_button" : [NSNumber numberWithBool:NO]}];
                 }
                 else
                 {
                     NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, pdvSku];
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                                         object:nil
-                                                                      userInfo:@{ @"url" : finalUrl ,
+                                                                      userInfo:@{ @"sku" : pdvSku ,
                                                                                   @"show_back_button" : [NSNumber numberWithBool:NO]}];
                 }
             }

@@ -45,11 +45,12 @@
                                                       userInfo:[NSDictionary dictionaryWithObjects:@[teaserProduct.url] forKeys:@[@"url"]]];
 }
 
-- (void)teaserPressedWithTeaserTextForCampaigns:(RITeaserText *)teaserText
+- (void)teaserPressedWithTitle:(NSString*)title
+             inCampaignTeasers:(NSArray*)campaignTeasers;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushCatalogWithUrlForCampaigns
                                                         object:nil
-                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserText.url,teaserText.name] forKeys:@[@"url",@"title"]]];
+                                                      userInfo:[NSDictionary dictionaryWithObjects:@[title,campaignTeasers] forKeys:@[@"title",@"campaignTeasers"]]];
 }
 
 - (void)teaserAllCategoriesPressed

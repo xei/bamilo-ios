@@ -48,6 +48,19 @@
 
 @synthesize categoryIds;
 
++ (NSString *)getCompleteProductWithSku:(NSString*)sku
+                           successBlock:(void (^)(id product))successBlock
+                        andFailureBlock:(void (^)(NSArray *error))failureBlock
+{
+    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, sku];
+    return [RIProduct getCompleteProductWithUrl:finalUrl
+                                   successBlock:^(id product) {
+                                       successBlock(product);
+                                   } andFailureBlock:^(NSArray *error) {
+                                       failureBlock(error);
+                                   }];
+}
+
 + (NSString *)getCompleteProductWithUrl:(NSString*)url
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(NSArray *error))failureBlock

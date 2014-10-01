@@ -58,6 +58,19 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSOrderedSet *categoryIds;
 
 /**
+ *  Method to load a product and all its details given his sku. This method uses getCompleteProductWithUrl:successBlock:andFailureBlock:
+ *
+ *  @param the product sku
+ *  @param the success block containing the obtained product
+ *  @param the failure block containing the error message
+ *
+ *  @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString *)getCompleteProductWithSku:(NSString*)sku
+                           successBlock:(void (^)(id product))successBlock
+                        andFailureBlock:(void (^)(NSArray *error))failureBlock;
+
+/**
  *  Method to load a product and all its details given his url
  *
  *  @param the product url

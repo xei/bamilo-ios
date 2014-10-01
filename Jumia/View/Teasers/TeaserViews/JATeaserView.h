@@ -28,7 +28,8 @@
                           targetType:(NSInteger)targetType;
 - (void)teaserPressedWithTeaserText:(RITeaserText*)teaserText;
 - (void)teaserPressedWithTeaserProduct:(RITeaserProduct*)teaserProduct;
-- (void)teaserPressedWithTeaserTextForCampaigns:(RITeaserText *)teaserText;
+- (void)teaserPressedWithTitle:(NSString*)title
+             inCampaignTeasers:(NSArray*)campaignTeasers;
 - (void)teaserAllCategoriesPressed;
 
 @end
