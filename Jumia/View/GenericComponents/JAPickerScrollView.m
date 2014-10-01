@@ -80,11 +80,11 @@
     [self.scrollView setContentSize:CGSizeMake(currentWidth,
                                                self.scrollView.frame.size.height)];
     
-//    [self selectLabelAtIndex:0];
-    //this should always start at index 1
     if(self.startingIndex > 0) {
         self.selectedIndex = self.startingIndex-1;
         [self scrollLeft];
+    } else {
+        [self selectLabelAtIndex:0];
     }
     
     UIImage* indicatorImage = [UIImage imageNamed:JAPickerScrollViewIndicatorImageName];
