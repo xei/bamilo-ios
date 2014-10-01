@@ -189,6 +189,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventSortTypeKey         @"RIEventSortTypeKey"
 #define kRIEventPaymentMethodKey    @"RIEventPaymentMethodKey"
 #define kRIEventScreenNameKey       @"RIEventScreenNameKey"
+#define kRIEventColorKey            @"RIEventColorKey"
 
 /**
  *  Struct to identify events

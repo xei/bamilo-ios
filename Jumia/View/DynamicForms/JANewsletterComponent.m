@@ -55,6 +55,7 @@
     [self.optionSwitch addTarget:self
                           action:@selector(changedState:)
                 forControlEvents:UIControlEventValueChanged];
+    [self.optionSwitch setAccessibilityLabel:field.label];
     
     if(VALID_NOTEMPTY([self.field value], NSString))
     {

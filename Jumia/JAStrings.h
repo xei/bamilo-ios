@@ -62,7 +62,7 @@
 #define STRING_NAME RILocalizedString(@"products_sort_name", nil)
 #define STRING_BRAND RILocalizedString(@"products_sort_brand", nil)
 #define STRING_ALL RILocalizedString(@"all_label", nil)
-#define STRING_WITH_DISCOUNT_ONLY RILocalizedString(@"string_with_discount_only", nil); // Not translated
+#define STRING_WITH_DISCOUNT_ONLY RILocalizedString(@"string_with_discount_only", nil) // Not translated
 
 #define STRING_NO_FAVOURITES RILocalizedString(@"favourite_no_favourites", nil)
 #define STRING_ADD_ALL_TO_CART RILocalizedString(@"favourite_addalltocart", nil)
@@ -76,6 +76,7 @@
 #define STRING_RELATED_ITEMS RILocalizedString(@"related_items", nil)
 #define STRING_PRODUCT_FEATURES RILocalizedString(@"product_features_title", nil)
 #define STRING_PRODUCT_DESCRIPTION RILocalizedString(@"product_description_title", nil)
+#define STRING_SHARE_OBJECT RILocalizedString(@"share_subject", nil)
 #define STRING_SHARE_PRODUCT_MESSAGE RILocalizedString(@"share_checkout_this_product", nil)
 #define STRING_RATE_PRODUCT RILocalizedString(@"rating_question", nil)
 #define STRING_SEND_REVIEW RILocalizedString(@"writereview_send", nil)

@@ -687,7 +687,9 @@
                                         [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                                         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                                         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                                        [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+                                        NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber)  && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice : product.price;
+                                        [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                                        
                                         [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                                         [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                                         
@@ -737,7 +739,9 @@
             [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
             [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-            [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+            
+            NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber)  && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice : product.price;
+            [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
             [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
             [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
             [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];

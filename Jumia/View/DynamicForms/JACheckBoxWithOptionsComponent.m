@@ -62,12 +62,14 @@
         [check setupWithField:field];
         [check.textLabel setText:option.label];
         [check.optionSwitch setTag:i];
-
+        [check.optionSwitch setAccessibilityLabel:option.label];
+        
         NSArray *newsletterOption = [RINewsletterCategory getNewsletter];
         
         if (ISEMPTY(newsletterOption) || 0 == newsletterOption.count)
         {
             check.optionSwitch.on = NO;
+            [self.values setObject:@"-1" forKey:fieldKey];
         }
         else
         {
@@ -87,6 +89,7 @@
             if (!finded)
             {
                 check.optionSwitch.on = NO;
+                [self.values setObject:@"-1" forKey:fieldKey];
             }
         }
         
@@ -126,7 +129,7 @@
         }
         else
         {
-            [self.values removeObjectForKey:fieldKey];
+            [self.values setObject:@"-1" forKey:fieldKey];
         }
     }
 }

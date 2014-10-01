@@ -33,6 +33,7 @@
 #define kAdjustEventDiscountKey         @"discount"
 #define kAdjustEventBrandKey            @"brand"
 #define kAdjustEventSizeKey             @"size"
+#define kAdjustEventColorKey            @"colour"
 #define kAdjustEventTotalWishlistKey    @"total_wishlist"
 #define kAdjustEventQuantityKey         @"quantity"
 #define kAdjustEventTotalCartKey        @"total_cart"
@@ -255,6 +256,13 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [parameters setObject:numberOfSessions forKey:kAdjustAmountSessionsKey];
     }
     
+    NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
+    if(!VALID_NOTEMPTY(numberOfPurchases, NSNumber))
+    {
+        numberOfPurchases = [NSNumber numberWithInt:0];
+    }
+    [parameters setObject:[numberOfPurchases stringValue] forKey:kAdjustAmountTransactionsKey];
+    
     NSString *gender = [data objectForKey:kRIEventGenderKey];
     if(VALID_NOTEMPTY(gender, NSString))
     {
@@ -319,6 +327,12 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     if(VALID_NOTEMPTY(size, NSString))
     {
         [parameters setObject:size forKey:kAdjustEventSizeKey];
+    }
+    
+    NSString *color = [data objectForKey:kRIEventColorKey];
+    if (VALID_NOTEMPTY(color, NSString))
+    {
+        [parameters setValue:color forKey:kAdjustEventColorKey];
     }
     
     NSString *totalWishlistValue = [data objectForKey:kRIEventTotalWishlistKey];
@@ -441,6 +455,13 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     [parameters setObject:[[data objectForKey:kRIEcommerceSkusKey] componentsJoinedByString:@","]  forKey:kAdjustEventSkusKey];
     [parameters setObject:[data objectForKey:kRIEcommerceTransactionIdKey]  forKey:kAdjustEventTransactionIdKey];
 
+    NSNumber *numberOfPurchases = [NSNumber numberWithInt:0];
+    if(VALID_NOTEMPTY([data objectForKey:kRIEventAmountTransactions], NSNumber))
+    {
+        numberOfPurchases = [data objectForKey:kRIEventAmountTransactions];
+    }
+    [parameters setObject:[numberOfPurchases stringValue]  forKey:kAdjustAmountTransactionsKey];
+    
     NSNumber *transactionValue = [data objectForKey:kRIEcommerceConvertedTotalValueKey];
 
     NSString *eventKey = @"jk6lja";
@@ -464,7 +485,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
                     [productDictionary setObject:[product objectForKey:kRIEventSkuKey] forKey:kAdjustEventSkuKey];
                 }
                 
-                if(VALID_NOTEMPTY([product objectForKey:kRIEventPriceKey], NSNumber))
+                if(VALID_NOTEMPTY([product objectForKey:kRIEventPriceKey], NSString))
                 {
                     [productDictionary setObject:[product objectForKey:kRIEventPriceKey] forKey:kAdjustEventPriceKey];
                 }
