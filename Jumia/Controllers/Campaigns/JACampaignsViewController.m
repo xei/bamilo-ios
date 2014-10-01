@@ -12,6 +12,8 @@
 #import "JACampaignPageView.h"
 #import "RICart.h"
 #import "RICampaign.h"
+#import "RICustomer.h"
+#import "JAUtils.h"
 
 @interface JACampaignsViewController ()
 
@@ -92,6 +94,13 @@
     [self.pickerScrollView setOptions:optionList];
     
     [self.scrollView setContentSize:CGSizeMake(currentX, self.scrollView.frame.size.height)];
+    
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"Campaigns" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -251,22 +260,22 @@
                             simple:self.backupSimpleSku
                   withSuccessBlock:^(RICart *cart) {
                       
-//                      NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//                      [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
-//                      [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
-//                      [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-//                      [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
-//                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-//                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-//                      [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-//                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-//                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-//                      [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
-//                      [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
-//                      [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-//                      
-//                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
-//                                                                data:[trackingDictionary copy]];
+                      NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                      [trackingDictionary setValue:self.backupCampaign.sku forKey:kRIEventLabelKey];
+                      [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
+                      [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                      [trackingDictionary setValue:self.backupCampaign.price forKey:kRIEventValueKey];
+                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                      [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                      [trackingDictionary setValue:[self.backupCampaign.price stringValue] forKey:kRIEventPriceKey];
+                      [trackingDictionary setValue:self.backupCampaign.sku forKey:kRIEventSkuKey];
+                      [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                      
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+                                                                data:[trackingDictionary copy]];
                       
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
