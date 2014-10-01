@@ -106,6 +106,8 @@
 {
     [self showLoading];
     
+    NSString *countryUrl = [RIApi getCountryUrlInUse];
+    
     self.requestId = [RICountry getCountriesWithSuccessBlock:^(id countries) {
         
         self.countriesArray = [NSArray arrayWithArray:countries];
@@ -114,11 +116,10 @@
         
         [self.tableViewContries reloadData];
         
-        NSString *countryUrl = [RIApi getCountryUrlInUse];
-        
         NSIndexPath *tempIndex;
         
-        if (0 != countryUrl.length) {
+        if (VALID_NOTEMPTY(countryUrl, NSString))
+        {
             NSInteger index = 0;
             
             for (RICountry *country in countries) {
@@ -129,26 +130,29 @@
                 }
                 index++;
             }
+            
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
         }
         
         if (VALID_NOTEMPTY(tempIndex, NSIndexPath)) {
             [self tableView:self.tableViewContries didSelectRowAtIndexPath:tempIndex];
         }
         
-        if(self.firstLoading)
-        {
-            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-            self.firstLoading = NO;
-        }
-        
     } andFailureBlock:^(NSArray *errorMessages) {
         
-        if(self.firstLoading)
+        if (VALID_NOTEMPTY(countryUrl, NSString))
         {
-            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-            self.firstLoading = NO;
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
         }
 
         [self hideLoading];
