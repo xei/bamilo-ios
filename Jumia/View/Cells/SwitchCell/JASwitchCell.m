@@ -22,6 +22,7 @@
     self.backgroundColor = UIColorFromRGB(0xffffff);
     
     [self.label setText:text];
+    [self.switchView setAccessibilityLabel:text];
     
     [self.separator setHidden:YES];
     if(!isLastRow)

@@ -234,6 +234,7 @@ UIPickerViewDelegate>
         [check.labelText setText:STRING_BILLING_SAME_ADDRESSES];
         [check.switchComponent setOn:YES];
         [check.switchComponent addTarget:self action:@selector(changedAddressState:) forControlEvents:UIControlEventValueChanged];
+        [check.switchComponent setAccessibilityLabel:STRING_BILLING_SAME_ADDRESSES];
         
         CGRect frame = check.frame;
         frame.origin.y = self.shippingAddressViewCurrentY;
