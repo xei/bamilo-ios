@@ -17,6 +17,6 @@
 @property (nonatomic, strong)NSString* endDate;
 
 + (NSString *)getPromotionWithSuccessBlock:(void (^)(RIPromotion* promotion))successBlock
-                           andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 @end

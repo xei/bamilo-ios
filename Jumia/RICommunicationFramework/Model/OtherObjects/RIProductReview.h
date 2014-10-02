@@ -47,7 +47,7 @@
  */
 + (NSString *)getReviewForProductWithSku:(NSString *)sku
                             successBlock:(void (^)(id review))successBlock
-                         andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to cancel the request

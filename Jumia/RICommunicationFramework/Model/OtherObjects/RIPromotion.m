@@ -11,7 +11,7 @@
 @implementation RIPromotion
 
 + (NSString *)getPromotionWithSuccessBlock:(void (^)(RIPromotion* promotion))successBlock
-                           andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_PROMOTIONS_URL]]
                                                             parameters:nil
@@ -31,21 +31,21 @@
                                                                           return;
                                                                       }
                                                                   }
-                                                                  failureBlock(nil);
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
+                                                              } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
                                                               }];
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }

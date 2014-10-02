@@ -23,7 +23,7 @@
 
 + (NSString*)getReviewForProductWithSku:(NSString *)sku
                            successBlock:(void (^)(id review))successBlock
-                        andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     NSString *operationID = nil;
     if (VALID_NOTEMPTY(sku, NSString)) {
@@ -40,24 +40,24 @@
                                successBlock([RIProductReview parseReviewWithDictionay:jsonObject]);
                            });
                            
-                       } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+                       } failureBlock:^(RIApiResponse apiResponse,  NSDictionary *errorJsonObject, NSError *errorObject) {
                            
                            dispatch_async(dispatch_get_main_queue(), ^{
                                if(NOTEMPTY(errorJsonObject))
                                {
-                                   failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                } else if(NOTEMPTY(errorObject))
                                {
                                    NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                   failureBlock(errorArray);
+                                   failureBlock(apiResponse, errorArray);
                                } else
                                {
-                                   failureBlock(nil);
+                                   failureBlock(apiResponse, nil);
                                }
                            });
                        }];
     } else {
-        failureBlock(nil);
+        failureBlock(RIApiResponseUnknownError, nil);
     }
     
     return operationID;

@@ -43,14 +43,7 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(continueLoading) objects:nil];
-    }
-    else
-    {
-        [self continueLoading];
-    }
+    [self continueLoading];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -67,7 +60,7 @@
     } else {
         [RICategory getCategoriesWithSuccessBlock:^(id categories) {
             [self categoryLoadingFinished:categories];
-        } andFailureBlock:^(NSArray *errorMessage) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
             
             if(self.firstLoading)
             {
@@ -75,6 +68,13 @@
                 [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
                 self.firstLoading = NO;
             }
+            
+            BOOL noConnection = NO;
+            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+            {
+                noConnection = YES;
+            }
+            [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
             
             [self hideLoading];
         }];

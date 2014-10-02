@@ -111,39 +111,48 @@ JAActivityViewControllerDelegate
 
 - (void)loadCompleteProduct
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(loadCompleteProduct) objects:nil];
-    }
-    else
-    {
-        [self showLoading];
-        
-        if (VALID_NOTEMPTY(self.productUrl, NSString)) {
-            [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
-                [self loadedProduct:product];
-            } andFailureBlock:^(NSArray *error) {
-                if(self.firstLoading)
-                {
-                    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-                    self.firstLoading = NO;
-                }
-                [self hideLoading];
-            }];
-        } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
-            [RIProduct getCompleteProductWithSku:self.productSku successBlock:^(id product) {
-                [self loadedProduct:product];
-            } andFailureBlock:^(NSArray *error) {
-                if(self.firstLoading)
-                {
-                    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-                    self.firstLoading = NO;
-                }
-                [self hideLoading];
-            }];
-        }
+    [self showLoading];
+    
+    if (VALID_NOTEMPTY(self.productUrl, NSString)) {
+        [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
+            [self loadedProduct:product];
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
+            
+            BOOL noConnection = NO;
+            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+            {
+                noConnection = YES;
+            }
+            [self showErrorView:noConnection startingY:0.0f selector:@selector(loadCompleteProduct) objects:nil];
+            
+            [self hideLoading];
+        }];
+    } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
+        [RIProduct getCompleteProductWithSku:self.productSku successBlock:^(id product) {
+            [self loadedProduct:product];
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
+            
+            BOOL noConnection = NO;
+            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+            {
+                noConnection = YES;
+            }
+            [self showErrorView:noConnection startingY:0.0f selector:@selector(loadCompleteProduct) objects:nil];
+            
+            [self hideLoading];
+        }];
     }
 }
 
@@ -248,14 +257,7 @@ JAActivityViewControllerDelegate
 
 - (void)retryAddToCart
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(addToCart) objects:nil];
-    }
-    else
-    {
-        [self addToCart];
-    }
+    [self addToCart];
 }
 
 #pragma mark - Product loaded
@@ -440,7 +442,7 @@ JAActivityViewControllerDelegate
                                                                                        action:@selector(goToRatinsMainScreen)
                                                                              forControlEvents:UIControlEventTouchUpInside];
                                          
-                                     } andFailureBlock:^(NSArray *errorMessages) {
+                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                          
                                          [self hideLoading];
                                          
@@ -626,7 +628,7 @@ JAActivityViewControllerDelegate
         self.product = product;
         [self hideLoading];
         [self productLoaded];
-    } andFailureBlock:^(NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         [self hideLoading];
     }];
 }
@@ -734,84 +736,83 @@ JAActivityViewControllerDelegate
 
 - (void)addToCart
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    if ([self.productInfoSection.sizeButton.titleLabel.text isEqualToString:STRING_SIZE])
     {
-        [self showErrorView:YES controller:self selector:@selector(retryAddToCart) objects:nil];
+        self.openPickerFromCart = YES;
+        [self showSizePicker];
     }
     else
     {
-        if ([self.productInfoSection.sizeButton.titleLabel.text isEqualToString:STRING_SIZE])
-        {
-            self.openPickerFromCart = YES;
-            [self showSizePicker];
-        }
-        else
-        {
-            [self showLoading];
-            
-            [RICart addProductWithQuantity:@"1"
-                                       sku:self.product.sku
-                                    simple:self.currentSimple.sku
-                          withSuccessBlock:^(RICart *cart) {
-                              
-                              NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                              [trackingDictionary setValue:((RIProduct *)[self.product.productSimples firstObject]).sku forKey:kRIEventLabelKey];
-                              [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
-                              [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-                              [trackingDictionary setValue:((RIProduct *)[self.product.productSimples firstObject]).price forKey:kRIEventValueKey];
-                              [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                              [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                              [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                              NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                              [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        [self showLoading];
+        
+        [RICart addProductWithQuantity:@"1"
+                                   sku:self.product.sku
+                                simple:self.currentSimple.sku
+                      withSuccessBlock:^(RICart *cart) {
+                          
+                          NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                          [trackingDictionary setValue:((RIProduct *)[self.product.productSimples firstObject]).sku forKey:kRIEventLabelKey];
+                          [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
+                          [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                          [trackingDictionary setValue:((RIProduct *)[self.product.productSimples firstObject]).price forKey:kRIEventValueKey];
+                          [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                          [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                          [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                          NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                          [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                          
+                          NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
+                          [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                          
+                          [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
+                          [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
+                          
+                          if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+                          {
+                              NSArray *categoryIds = [self.product.categoryIds array];
+                              [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
+                          }
+                          
+                          [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                          
+                          [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
+                          
+                          NSString *discountPercentage = @"0";
+                          if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
+                          {
+                              discountPercentage = self.product.maxSavingPercentage;
+                          }
+                          [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+                          [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+                          [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+                          [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
+                          if(VALID_NOTEMPTY(self.category, RICategory))
+                          {
+                              [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+                          }
+                          
+                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+                                                                    data:[trackingDictionary copy]];
+                          
+                          NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                          [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                          
+                          [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
+                          
+                          [self hideLoading];
+                          
+                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                          
+                          [self hideLoading];
+                          
+                          NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
+                          if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                          {
+                              addToCartError = STRING_NO_NEWTORK;
+                          }
 
-                              NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
-                              [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
-
-                              [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
-                              [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
-                              
-                              if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
-                              {
-                                  NSArray *categoryIds = [self.product.categoryIds array];
-                                  [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
-                              }
-
-                              [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-                              
-                              [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
-                              
-                              NSString *discountPercentage = @"0";
-                              if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
-                              {
-                                  discountPercentage = self.product.maxSavingPercentage;
-                              }
-                              [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
-                              [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
-                              [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
-                              [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
-                              if(VALID_NOTEMPTY(self.category, RICategory))
-                              {
-                                  [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
-                              }
-                              
-                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
-                                                                        data:[trackingDictionary copy]];
-                              
-                              NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-                              [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-                              
-                              [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
-                              
-                              [self hideLoading];
-                              
-                          } andFailureBlock:^(NSArray *errorMessages) {
-                              
-                              [self hideLoading];
-                              
-                              [self showMessage:STRING_ERROR_ADDING_TO_CART success:NO];
-                          }];
-        }
+                          [self showMessage:addToCartError success:NO];
+                      }];
     }
 }
 
@@ -834,7 +835,7 @@ JAActivityViewControllerDelegate
             NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
         }
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
     }];
 }
 
@@ -983,7 +984,7 @@ JAActivityViewControllerDelegate
             
             [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
             
-        } andFailureBlock:^(NSArray *error) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
         }];
@@ -1018,7 +1019,7 @@ JAActivityViewControllerDelegate
             if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
                 [self.delegate changedFavoriteStateOfProduct:self.product];
             }
-        } andFailureBlock:^(NSArray *error) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
         }];

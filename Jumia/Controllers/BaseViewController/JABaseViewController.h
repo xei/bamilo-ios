@@ -40,7 +40,7 @@
 /**
  * Method to show error view
  */
-- (void)showErrorView:(BOOL)isNoInternetConnection controller:(id)controller selector:(SEL)selector objects:(NSArray*)objects;
+- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
 
 @end
 

@@ -20,6 +20,6 @@
 
 + (NSString *)getRegionsForUrl:(NSString*)url
                  successBlock:(void (^)(NSArray *regions))successBlock
-              andFailureBlock:(void (^)(NSArray *error))failureBlock;
+              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 @end

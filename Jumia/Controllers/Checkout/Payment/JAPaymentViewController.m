@@ -95,7 +95,7 @@ UITextFieldDelegate>
          self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:checkout.paymentMethodForm];
          
          [self finishedLoadingPaymentMethods];
-     } andFailureBlock:^(NSArray *errorMessages)
+     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
          [self finishedLoadingPaymentMethods];
      }];
@@ -279,7 +279,7 @@ UITextFieldDelegate>
             [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
             
             [self hideLoading];
-        } andFailureBlock:^(NSArray *errorMessages) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
             
             [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
@@ -293,7 +293,7 @@ UITextFieldDelegate>
             
             [self hideLoading];
             
-        } andFailureBlock:^(NSArray *errorMessages) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
             
             [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
@@ -331,7 +331,7 @@ UITextFieldDelegate>
                         [JAUtils goToCheckout:checkout inStoryboard:self.storyboard];
                         
                         [self hideLoading];
-                    } andFailureBlock:^(NSArray *errorMessages) {
+                    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                         
                         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                         [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];

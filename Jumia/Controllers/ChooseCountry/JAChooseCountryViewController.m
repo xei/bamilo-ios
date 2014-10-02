@@ -46,14 +46,7 @@
     
     self.tableViewContries.layer.cornerRadius = 5.0f;
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(loadData) objects:nil];
-    }
-    else
-    {
-        [self loadData];
-    }
+    [self loadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -114,7 +107,7 @@
             [self tableView:self.tableViewContries didSelectRowAtIndexPath:tempIndex];
         }
         
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         
         if (VALID_NOTEMPTY(countryUrl, NSString))
         {
@@ -126,6 +119,13 @@
             }
         }
 
+        BOOL noConnection = NO;
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            noConnection = YES;
+        }
+        [self showErrorView:noConnection startingY:0.0f selector:@selector(loadData) objects:nil];
+        
         [self hideLoading];
         
     }];

@@ -121,7 +121,7 @@ UIPickerViewDelegate>
          
          [self finishedFormLoading];
      }
-       failureBlock:^(NSArray *errorMessage)
+       failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
          [self finishedFormLoading];
          
@@ -422,7 +422,7 @@ UIPickerViewDelegate>
              self.checkout = object;
              [self.billingDynamicForm resetValues];
              self.numberOfRequests--;
-         } andFailureBlock:^(id errorObject)
+         } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
          {
              NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
              [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -455,7 +455,7 @@ UIPickerViewDelegate>
          self.checkout = object;
          [self.shippingDynamicForm resetValues];
          self.numberOfRequests--;
-     } andFailureBlock:^(id errorObject)
+     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          self.hasErrors = YES;
          self.numberOfRequests--;
@@ -543,7 +543,7 @@ UIPickerViewDelegate>
                     
                      [self hideLoading];
                      [self setupPickerView];
-                 } andFailureBlock:^(NSArray *error)
+                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
                  {
                      [self hideLoading];
                  }];
@@ -568,7 +568,7 @@ UIPickerViewDelegate>
                      
                      [self hideLoading];
                      [self setupPickerView];
-                 } andFailureBlock:^(NSArray *error)
+                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
                  {
                      [self hideLoading];
                  }];
@@ -715,11 +715,11 @@ UIPickerViewDelegate>
                              
                          [self hideLoading];
                          
-                     } andFailureBlock:^(NSArray *error) {
+                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                          [self hideLoading];
                      }];
                  }
-             } andFailureBlock:^(NSArray *error)
+             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
              {
                  [self hideLoading];
              }];

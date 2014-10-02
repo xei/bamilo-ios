@@ -37,7 +37,7 @@
  */
 + (NSString *)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
                                        successBlock:(void (^)(id customer))successBlock
-                                    andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
+                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 /**
  * Method to get current customer information
@@ -47,7 +47,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getCustomerWithSuccessBlock:(void (^)(id customer))successBlock
-                          andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 
 /**
@@ -58,7 +58,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)logoutCustomerWithSuccessBlock:(void (^)())successBlock
-                             andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
+                             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 /**
  * Method to get the current user id
@@ -120,7 +120,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)requestPasswordReset:(void (^)())successBlock
-                   andFailureBlock:(void (^)(NSArray *errorObject))failureBlock;
+                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 + (void)updateCustomerNewsletterWithJson:(NSDictionary *)json;
 

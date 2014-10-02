@@ -143,7 +143,7 @@
 
                [self hideLoading];
                
-           } failureBlock:^(NSArray *errorMessage) {
+           } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
                
                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
@@ -153,7 +153,7 @@
                [self showMessage:STRING_ERROR success:NO];
            }];
         
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         
         NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
         [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
@@ -209,14 +209,7 @@
 
 - (IBAction)sendReview:(id)sender
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(continueSendingReview) objects:nil];
-    }
-    else
-    {
-        [self continueSendingReview];
-    }
+    [self continueSendingReview];
 }
 
 - (void)continueSendingReview
@@ -296,11 +289,15 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
                                                                 object:nil
                                                               userInfo:nil];            
-        } andFailureBlock:^(id errorObject) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
             
             [self hideLoading];
             
-            if(VALID_NOTEMPTY(errorObject, NSDictionary))
+            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+            {
+                [self showMessage:STRING_NO_NEWTORK success:NO];
+            }
+            else if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {
                 [self.ratingDynamicForm validateFields:errorObject];
                 

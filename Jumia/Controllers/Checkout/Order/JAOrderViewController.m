@@ -575,14 +575,7 @@
 
 -(void)nextStepButtonPressed
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(continueNextStep) objects:nil];
-    }
-    else
-    {
-        [self continueNextStep];
-    }
+    [self continueNextStep];
 }
 
 - (void)continueNextStep
@@ -614,9 +607,15 @@
         }
         
         [self hideLoading];
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         
-        NSLog(@"FAILED Finishing checkout");
+        BOOL noConnection = NO;
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            noConnection = YES;
+        }
+        [self showErrorView:noConnection startingY:0.0f selector:@selector(continueNextStep) objects:nil];
+        
         [self hideLoading];
     }];
 }

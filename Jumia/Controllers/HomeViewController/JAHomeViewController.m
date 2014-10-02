@@ -65,14 +65,7 @@
                                                   self.teaserPagesScrollView.frame.size.width,
                                                   self.view.frame.size.height - self.teaserCategoryScrollView.frame.size.height - 64.0f);
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(completeTeasersLoading) objects:nil];
-    }
-    else
-    {
-        [self completeTeasersLoading];
-    }
+    [self completeTeasersLoading];
 }
 
 - (void)stopLoading
@@ -173,16 +166,23 @@
         
         [RIPromotion getPromotionWithSuccessBlock:^(RIPromotion *promotion) {
             [self loadPromotion:promotion];
-        } andFailureBlock:^(NSArray *error) {
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
             
         }];
-    } andFailureBlock:^(NSArray *errorMessage) {
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
         if(self.firstLoading)
         {
             NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
             self.firstLoading = NO;
         }
+        
+        BOOL noConnection = NO;
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            noConnection = YES;
+        }
+        [self showErrorView:noConnection startingY:0.0f selector:@selector(completeTeasersLoading) objects:nil];
     }];
 }
 

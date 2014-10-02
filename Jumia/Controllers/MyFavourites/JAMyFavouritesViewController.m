@@ -108,7 +108,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+ 
+    [self getFavorites];
+}
+
+- (void)getFavorites
+{
     [self showLoading];
     
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
@@ -204,7 +209,7 @@
 
         [self hideLoading];
         [self updateListsWith:[tempArray copy]];
-    } andFailureBlock:^(NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         
         if(self.firstLoading)
         {
@@ -212,6 +217,13 @@
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
             self.firstLoading = NO;
         }
+        
+        BOOL noConnection = NO;
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            noConnection = YES;
+        }
+        [self showErrorView:noConnection startingY:0.0f selector:@selector(getFavorites) objects:nil];
 
         [self hideLoading];
     }];
@@ -449,12 +461,12 @@
                               
                               [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                                         data:[trackingDictionary copy]];
-                          } andFailureBlock:^(NSArray *error) {
+                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                           }];
                           
                           self.addAllToCartCount--;
                           
-                      } andFailureBlock:^(NSArray *errorMessages) {
+                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                           
                           self.addAllToCartCount--;
                           
@@ -475,7 +487,7 @@
             self.finishedAddingAllToCart = NO;
             [self hideLoading];
         }
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         if (self.finishedAddingAllToCart) {
             self.finishedAddingAllToCart = NO;
             [self hideLoading];
@@ -498,7 +510,7 @@
         
         [self updateListsWith:favoriteProducts];
         [self hideLoading];
-    } andFailureBlock:^(NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart] data:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.totalProdutsInWishlist] forKey:kRIEventNumberOfProductsKey]];
 
         [self hideLoading];
@@ -536,10 +548,10 @@
         [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
             [self updateListsWith:favoriteProducts];
             [self hideLoading];
-        } andFailureBlock:^(NSArray *error) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             [self hideLoading];
         }];
-    } andFailureBlock:^(NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         [self hideLoading];
     }];
 }
@@ -548,14 +560,7 @@
 {
     self.backupButton = button;
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(finishAddToCart:) objects:[NSArray arrayWithObject:button]];
-    }
-    else
-    {
-        [self finishAddToCart:button];
-    }
+    [self finishAddToCart:button];
 }
 
 - (void)finishAddToCart:(UIButton *)button
@@ -668,16 +673,21 @@
                           [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
                               [self updateListsWith:favoriteProducts];
                               [self hideLoading];
-                          } andFailureBlock:^(NSArray *error) {
+                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                               [self hideLoading];
                           }];
-                      } andFailureBlock:^(NSArray *error) {
+                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                           [self hideLoading];
                       }];
                       
-                  } andFailureBlock:^(NSArray *errorMessages) {
+                  } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                       
-                      [self showMessage:STRING_ERROR_ADDING_TO_CART success:NO];
+                      NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
+                      if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                      {
+                          addToCartError = STRING_NO_NEWTORK;
+                      }
+                      [self showMessage:addToCartError success:NO];
                       
                       [self hideLoading];                      
                   }];

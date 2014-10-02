@@ -113,7 +113,7 @@ UICollectionViewDelegateFlowLayout>
                                                               userInfo:userInfo];
         }
         
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -743,7 +743,7 @@ UICollectionViewDelegateFlowLayout>
             [self hideLoading];
             
             [JAUtils goToCheckout:checkout inStoryboard:self.storyboard];
-        } andFailureBlock:^(NSArray *errorMessages) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -757,7 +757,7 @@ UICollectionViewDelegateFlowLayout>
             
             [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
         }];
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
 
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];

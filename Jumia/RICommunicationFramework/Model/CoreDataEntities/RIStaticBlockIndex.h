@@ -18,10 +18,10 @@
 
 + (NSString*)getStaticBlock:(NSString*)staticBlockKey
                successBlock:(void (^)(id staticBlock))successBlock
-               failureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+               failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 + (NSString*)loadStaticBlockIndexesIntoDatabaseForCountry:(NSString*)countryUrl
                                          withSuccessBlock:(void (^)(id staticBlockIndexes))successBlock
-                                          andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+                                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 + (NSArray*)parseStaticBlockIndexes:(NSDictionary*)staticBlockIndexesJSON;
 + (RIStaticBlockIndex*)parseStaticBlockIndex:(NSDictionary*)staticBlockIndexJSON;
 + (void)saveStaticBlockIndex:(RIStaticBlockIndex*)staticBlockIndex;

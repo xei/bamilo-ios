@@ -27,7 +27,7 @@
 
 + (NSString *)startApiWithCountry:(RICountry *)country
                      successBlock:(void (^)(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory))successBlock
-                  andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     NSString *url;
     NSString *countryIso;
@@ -111,7 +111,7 @@
                                                                               
                                                                               [RIApi requestSectionContent:newSection forCountry:url successBlock:^() {
                                                                                   
-                                                                              } andFailureBlock:^(id error) {
+                                                                              } andFailureBlock:^(RIApiResponse apiResponse,  id error) {
                                                                                   
                                                                               }];
                                                                           }
@@ -125,17 +125,17 @@
                                                                   successBlock(newApi, hasUpdate, isUpdateMandatory);
                                                                   return;
                                                               }
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
     
@@ -252,7 +252,7 @@
 + (void)requestSectionContent:(RISection*)section
                    forCountry:(NSString*)url
                  successBlock:(void (^)(void))successBlock
-              andFailureBlock:(void (^)(NSArray* errorMessages))failureBlock
+              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray* errorMessages))failureBlock
 {
     if ([section.name isEqualToString:@"categories"])
     {
@@ -260,16 +260,16 @@
         [RICategory loadCategoriesIntoDatabaseForCountry:url withSuccessBlock:^(id categories) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
-        } andFailureBlock:^(NSArray* errorMessages) {
-            failureBlock(errorMessages);
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray* errorMessages) {
+            failureBlock(apiResponse, errorMessages);
         }];
     } else if ([section.name isEqualToString:@"forms"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RIFormIndex loadFormIndexesIntoDatabaseForCountry:url withSuccessBlock:^(id formIndexes) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
-        } andFailureBlock:^(NSArray *errorMessage) {
-            failureBlock(errorMessage);
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+            failureBlock(apiResponse, errorMessage);
         }];
     }
     else if ([section.name isEqualToString:@"teasers"])
@@ -278,8 +278,8 @@
         [RITeaserCategory loadTeaserCategoriesIntoDatabaseForCountry:url withSuccessBlock:^(id teasers) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
-        } andFailureBlock:^(NSArray *errorMessage) {
-            failureBlock(errorMessage);
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+            failureBlock(apiResponse, errorMessage);
         }];
     }
     else if ([section.name isEqualToString:@"imageresolutions"])
@@ -287,7 +287,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RIImageResolution loadImageResolutionsIntoDatabaseForCountry:url withSuccessBlock:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
-        } andFailureBlock:^(NSArray *errorMessage) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
             
         }];
     }
@@ -296,7 +296,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RICountry loadCountryConfigurationForCountry:url withSuccessBlock:^(RICountryConfiguration *configuration) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
-        } andFailureBlock:^(NSArray *errorMessages) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             
         }];
     }
@@ -305,7 +305,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RIStaticBlockIndex loadStaticBlockIndexesIntoDatabaseForCountry:url withSuccessBlock:^(id staticBlockIndexes) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
-        } andFailureBlock:^(NSArray *errorMessage) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
             
         }];
     }

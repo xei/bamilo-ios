@@ -163,15 +163,8 @@
 {
     self.backupCampaign = campaign;
     self.backupSimpleSku = simpleSku;
-    
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(finishAddToCart) objects:nil];
-    }
-    else
-    {
-        [self finishAddToCart];
-    }
+
+    [self finishAddToCart];
 }
 
 - (void)pressedCampaignWithSku:(NSString*)sku;
@@ -280,8 +273,14 @@
                       [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
                       [self hideLoading];
                       
-                  } andFailureBlock:^(NSArray *error) {
-                      [self showMessage:STRING_ERROR_ADDING_TO_CART success:NO];
+                  } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                      NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
+                      if(RIApiResponseNoInternetConnection == apiResponse)
+                      {
+                          addToCartError = STRING_NO_NEWTORK;
+                      }
+                      
+                      [self showMessage:addToCartError success:NO];
                       [self hideLoading];
                   }];
 }

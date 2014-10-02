@@ -68,7 +68,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  */
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
-                        andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to load a product and all its details given his url
@@ -81,7 +81,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  */
 + (NSString *)getCompleteProductWithUrl:(NSString*)url
                            successBlock:(void (^)(id product))successBlock
-                        andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to load a set of products given a base product url, the sorting method and the paging info
@@ -103,7 +103,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
                            successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
-                        andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to load a set of products given an url
@@ -116,7 +116,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  */
 + (NSString *)getProductsWithFullUrl:(NSString*)url
                         successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
-                     andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to load a the recently viewed products from coredata
@@ -126,7 +126,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *
  */
 + (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock
-                                  andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to add a product to recently viewed list (and save it in coredata)
@@ -136,7 +136,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  */
 + (void)addToRecentlyViewed:(RIProduct*)product
                successBlock:(void (^)(void))successBlock
-            andFailureBlock:(void (^)(NSArray *error))failureBlock;
+            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to remove a recentrly viewed product
@@ -150,7 +150,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  Method to delete all recently viewed products from coredata
  */
 + (void)removeAllRecentlyViewedWithSuccessBlock:(void (^)(void))successBlock
-                                andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to load a the favorite products from coredata
@@ -160,7 +160,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *
  */
 + (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
-                            andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to add a product to favorites list (and save it in coredata)
@@ -170,7 +170,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  */
 + (void)addToFavorites:(RIProduct*)product
           successBlock:(void (^)(void))successBlock
-       andFailureBlock:(void (^)(NSArray *error))failureBlock;
+       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to remove a product from favorites list (and save it in coredata)
@@ -181,7 +181,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  */
 + (void)removeFromFavorites:(RIProduct*)product
                successBlock:(void (^)(void))successBlock
-            andFailureBlock:(void (^)(NSArray *error))failureBlock;
+            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to cancel the request

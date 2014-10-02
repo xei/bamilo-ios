@@ -85,7 +85,12 @@ UIPickerViewDelegate
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventRegisterStart] data:nil];
     
     [self showLoading];
-    
+
+    [self getRegisterForm];
+}
+
+- (void)getRegisterForm
+{
     [RIForm getForm:@"register"
        successBlock:^(RIForm *form) {
            [self hideLoading];
@@ -101,11 +106,16 @@ UIPickerViewDelegate
            
            [self finishedFormLoading];
            
-       } failureBlock:^(NSArray *errorMessage) {
+       } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
            
-           [self finishedFormLoading];
+           BOOL noConnection = NO;
+           if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+           {
+               noConnection = YES;
+           }
+           [self showErrorView:noConnection startingY:0.0f selector:@selector(getRegisterForm) objects:nil];
            
-           [self showMessage:STRING_ERROR success:NO];
+           [self hideLoading];
        }];
 }
 
@@ -163,14 +173,7 @@ UIPickerViewDelegate
 
 - (void)registerButtonPressed:(id)sender
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(continueRegister) objects:nil];
-    }
-    else
-    {
-        [self continueRegister];
-    }
+    [self continueRegister];
 }
 
 - (void)continueRegister
@@ -228,7 +231,7 @@ UIPickerViewDelegate
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
         
-    } andFailureBlock:^(id errorObject) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:@"CreateFailed" forKey:kRIEventActionKey];
@@ -247,7 +250,11 @@ UIPickerViewDelegate
         
         [self hideLoading];
         
-        if(VALID_NOTEMPTY(errorObject, NSDictionary))
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            [self showMessage:STRING_NO_NEWTORK success:NO];
+        }
+        else if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.dynamicForm validateFields:errorObject];
             

@@ -46,7 +46,7 @@
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getRatingsWithSuccessBlock:(void (^)(id ratings))successBlock
-                         andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to cancel the request

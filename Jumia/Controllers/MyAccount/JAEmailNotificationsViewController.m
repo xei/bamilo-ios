@@ -73,7 +73,7 @@
 
            [self hideLoading];
            
-       } failureBlock:^(NSArray *errorMessage) {
+       } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
            
            if(self.firstLoading)
            {
@@ -97,14 +97,7 @@
 
 - (void)updatePreferences
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(continueUpdatePreferences) objects:nil];
-    }
-    else
-    {
-        [self continueUpdatePreferences];
-    }
+    [self continueUpdatePreferences];
 }
 
 - (void)continueUpdatePreferences
@@ -159,11 +152,15 @@
          [[NSNotificationCenter defaultCenter] postNotificationName:kDidSaveEmailNotificationsNotification object:nil];
          [self.navigationController popViewControllerAnimated:YES];
          
-     } andFailureBlock:^(id errorObject)
+     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          [self hideLoading];
          
-         if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.dynamicForm validateFields:errorObject];
              

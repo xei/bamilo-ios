@@ -178,7 +178,7 @@
                     }
                 }
                 
-            } andFailureBlock:^(NSArray *errorMessages) {
+            } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
             }];

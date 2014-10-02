@@ -24,7 +24,7 @@
 
 + (NSString*)getForm:(NSString*)formIndexID
         successBlock:(void (^)(id form))successBlock
-        failureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+        failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 {
     //get form for index
     return [RIFormIndex getFormWithIndexId:formIndexID successBlock:^(RIFormIndex* formIndex) {
@@ -103,7 +103,7 @@
                                                                        });
                                                                    } else {
                                                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                                                           failureBlock(nil);
+                                                                           failureBlock(apiResponse, nil);
                                                                        });
                                                                    }
                                                                    
@@ -111,18 +111,18 @@
                                                                    if(NOTEMPTY(errorJsonObject))
                                                                    {
                                                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                                                           failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                           failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                                        });
                                                                    } else if(NOTEMPTY(errorObject))
                                                                    {
                                                                        dispatch_async(dispatch_get_main_queue(), ^{
                                                                            NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                           failureBlock(errorArray);
+                                                                           failureBlock(apiResponse, errorArray);
                                                                        });
                                                                    } else
                                                                    {
                                                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                                                           failureBlock(nil);
+                                                                           failureBlock(apiResponse, nil);
                                                                        });
                                                                    }
                                                                }];
@@ -138,7 +138,7 @@
 #pragma mark - Facebook Login
 + (NSString*)sendForm:(RIForm*)form
          successBlock:(void (^)(id object))successBlock
-      andFailureBlock:(void (^)(id errorObject))failureBlock
+      andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock
 {
     return [RIForm sendForm:form
                  parameters:[RIForm getParametersForForm:form]
@@ -149,7 +149,7 @@
 + (NSString*)sendForm:(RIForm*)form
            parameters:(NSDictionary*)parameters
          successBlock:(void (^)(id object))successBlock
-      andFailureBlock:(void (^)(id errorObject))failureBlock
+      andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock
 {
     BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     
@@ -233,34 +233,34 @@
                                                               
                                                               if(!responseProcessed)
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
                                                                   NSDictionary *errorDictionary = [RIError getErrorDictionary:errorJsonObject];
                                                                   NSArray *errorArray = [RIError getErrorMessages:errorJsonObject];
                                                                   if(VALID_NOTEMPTY(errorDictionary, NSDictionary))
                                                                   {
-                                                                      failureBlock(errorDictionary);
+                                                                      failureBlock(apiResponse, errorDictionary);
                                                                   }
                                                                   else if(VALID_NOTEMPTY(errorArray, NSArray))
                                                                   {
-                                                                      failureBlock(errorArray);
+                                                                      failureBlock(apiResponse, errorArray);
                                                                   }
                                                                   else
                                                                   {
-                                                                      failureBlock(nil);
+                                                                      failureBlock(apiResponse, nil);
                                                                   }
                                                               }
                                                               else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               }
                                                               else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }

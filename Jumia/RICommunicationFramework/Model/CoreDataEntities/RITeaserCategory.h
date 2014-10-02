@@ -30,7 +30,7 @@
  */
 + (NSString *)loadTeaserCategoriesIntoDatabaseForCountry:(NSString*)url
                                         withSuccessBlock:(void (^)(id teaserCategories))successBlock
-                                         andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+                                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 /**
  *  Method to load teasers. It checks if they are stored in the core data, and case they aren't
@@ -42,7 +42,7 @@
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getTeaserCategoriesWithSuccessBlock:(void (^)(id teaserCategories))successBlock
-                                  andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 /**
  *  Method to cancel the request

@@ -91,7 +91,7 @@
  */
 + (NSString *)getSuggestionsForQuery:(NSString *)query
                         successBlock:(void (^)(NSArray *suggestions))successBlock
-                     andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  * Method to request results for a given query
@@ -109,7 +109,7 @@
                          maxItems:(NSString *)maxItems
                     sortingMethod:(RICatalogSorting)sortingMethod
                      successBlock:(void (^)(NSArray *results))successBlock
-                  andFailureBlock:(void (^)(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
 
 /**
  * Method to put a recent search in top

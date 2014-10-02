@@ -138,7 +138,7 @@ UIAlertViewDelegate
         
         [self hideLoading];
         
-    } andFailureBlock:^(NSArray *errorMessage) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
         
         [self hideLoading];
         
@@ -410,7 +410,7 @@ UIAlertViewDelegate
                             
                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
                             
-                        } andFailureBlock:^(NSArray *errorObject) {
+                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                             
                             NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
                             
@@ -553,7 +553,7 @@ UIAlertViewDelegate
                                               [self.resultsTableView reloadSections:[NSIndexSet indexSetWithIndex:0]
                                                                    withRowAnimation:UITableViewRowAnimationFade];
                                           });
-                                      } andFailureBlock:^(NSArray *errorMessages) {
+                                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                           
                                       }];
     }
