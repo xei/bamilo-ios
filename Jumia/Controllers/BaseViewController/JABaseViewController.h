@@ -42,5 +42,7 @@
  */
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
 
+- (void)removeErrorView;
+
 @end
 
