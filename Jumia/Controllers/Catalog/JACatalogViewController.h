@@ -20,8 +20,7 @@
     UICollectionViewDelegate,
     JAMainFiltersViewControllerDelegate,
     JAPDVViewControllerDelegate,
-    JAUndefinedSearchViewDelegate,
-    JANoConnectionViewDelegate
+    JAUndefinedSearchViewDelegate
 >
 
 @property (nonatomic, strong)RICategory* category;

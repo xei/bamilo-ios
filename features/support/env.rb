@@ -30,6 +30,30 @@ def initvars
     @valid_email = "testcalabash@mailinator.com"
     @valid_password = "password1"
     
+    #my account
+    @account_settings = "Account Settings"
+    @notification_settings = "Notification Settings"
+    @user_data = "User Data"
+    @email_notifications = "Email Notifications"
+    @notifications = "Notifications"
+    @sound = "Sound"
+    
+    #user data
+    @your_personal_data = "Your Personal Data"
+    @retype_password = "Re-type password"
+    @save = "Save"
+    @error_empty_fields = "Empty Fields"
+    @error_min_characters = "Min 6 characters"
+    @error_password_not_match = "Passwords did not match"
+    @password_min_6 = "12345"
+    @password_changed_success = "Password changed with success."
+    
+    #email notifications
+    @newsletters_subscribed = "Newsletters Subscribed"
+    @newsletter_male = "Newsletter Male"
+    @newsletter_female = "Newsletter Female"
+    @preferences_updated = "Preferences updated"
+    
     
     
 end

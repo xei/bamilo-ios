@@ -67,14 +67,7 @@
     
     if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
     {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self completeTeasersLoading];
-        }];
-        
-        [self.view addSubview:lostConnection];
+        [self showErrorView:YES controller:self selector:@selector(completeTeasersLoading) objects:nil];
     }
     else
     {
@@ -198,27 +191,6 @@
     JAPromotionPopUp* promotionPopUp = [[JAPromotionPopUp alloc] initWithFrame:self.view.bounds];
     [promotionPopUp loadWithPromotion:promotion];
     [self.view addSubview:promotionPopUp];
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self completeTeasersLoading];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self completeTeasersLoading];
-    }
 }
 
 #pragma mark - JATeaserCategoryScrollViewDelegate

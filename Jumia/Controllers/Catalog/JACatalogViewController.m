@@ -105,9 +105,9 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
     
-    if (self.undefinedView) {
+    if (self.undefinedView)
+    {
         [self.undefinedView removeFromSuperview];
-        
         [self addUndefinedSearchView:self.undefinedBackup];
     }
 }
@@ -123,224 +123,235 @@
 
 - (void)loadMoreProducts
 {
-    if (self.searchString.length > 0)
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus] && ISEMPTY(self.productsArray))
     {
-        // In case of this is a search
-        
-        [self showLoading];
-        
-        [RISearchSuggestion getResultsForSearch:self.searchString
-                                           page:@"1"
-                                       maxItems:[NSString stringWithFormat:@"%d",JACatalogViewControllerMaxProducts]
-                                  sortingMethod:self.sortingMethod
-                                   successBlock:^(NSArray *results) {
-                                       
-                                       // Track events only in the first load of the products
-                                       if (!self.isFirstLoadTracking)
-                                       {
-                                           self.isFirstLoadTracking = YES;
-                                           
-                                           NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                                           NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
-                                           NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                                           
-                                           [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-                                           [trackingDictionary setValue:@"Search" forKey:kRIEventActionKey];
-                                           [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-                                           [trackingDictionary setValue:@(results.count) forKey:kRIEventValueKey];
-                                           [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                                           [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                                           [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-                                           [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-                                           [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                                           [trackingDictionary setValue:self.searchString forKey:kRIEventKeywordsKey];
-                                           NSInteger numberOfResults = 0;
-                                           if(VALID_NOTEMPTY(results, NSArray))
-                                           {
-                                               numberOfResults = [results count];
-                                           }
-                                           [trackingDictionary setValue:[NSNumber numberWithInt:numberOfResults] forKey:kRIEventNumberOfProductsKey];
-
-                                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
-                                                                                     data:[trackingDictionary copy]];
-                                           
-                                           trackingDictionary = [[NSMutableDictionary alloc] init];
-                                           NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
-                                           if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
-                                           {
-                                               [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
-                                           }
-                                           
-                                           [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                                           [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                                           [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-                                           [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-                                           [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                                           
-                                           [trackingDictionary setValue:self.searchString forKey:kRIEventQueryKey];
-                                           
-                                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
-                                                                                     data:[trackingDictionary copy]];
-                                           
-                                           NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                                           [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-
-                                       }
-                                       
-                                       if (0 == results.count || JACatalogViewControllerMaxProducts > results.count) {
-                                           self.loadedEverything = YES;
-                                       }
-                                       
-                                       self.navBarLayout.subTitle = [NSString stringWithFormat:@"%d", results.count];
-                                       [self reloadNavBar];
-                                       
-                                       [self.productsArray addObjectsFromArray:results];
-                                       
-                                       [self.collectionView reloadData];
-                                       
-                                       [self hideLoading];
-                                       
-                                   } andFailureBlock:^(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
-                                       
-                                       [self hideLoading];
-                                       
-                                       if (undefSearchTerm) {
-                                           self.navBarLayout.subTitle = @"0";
-                                           [self reloadNavBar];
-                                           self.undefinedBackup = undefSearchTerm;
-                                           self.backupFrame = self.collectionView.frame;
-                                           [self addUndefinedSearchView:undefSearchTerm];
-                                       } else {
-
-                                           [self showMessage:STRING_ERROR success:NO];
-                                       }
-                                   }];
+        [self showErrorView:YES controller:self selector:@selector(loadMoreProducts) objects:nil];
+    }
+    else if(NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        [self showMessage:STRING_SOMETHING_BROKEN success:NO];
     }
     else
     {
-        if (NO == self.loadedEverything) {
-            
+        NSNumber *pageNumber = [NSNumber numberWithInt:[self getCurrentPage] + 1];
+        
+        if (VALID_NOTEMPTY(self.searchString, NSString))
+        {
+            // In case of this is a search
             [self showLoading];
             
-            NSString* urlToUse = self.catalogUrl;
-            if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.apiUrl, NSString)) {
-                urlToUse = self.category.apiUrl;
-            }
-            if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.apiUrl, NSString)) {
-                urlToUse = self.filterCategory.apiUrl;
-            }
-            
-            NSNumber *pageNumber = [NSNumber numberWithInt:[self getCurrentPage] + 1];
-            [RIProduct getProductsWithCatalogUrl:urlToUse
-                                   sortingMethod:self.sortingMethod
-                                            page:[pageNumber integerValue]
-                                        maxItems:JACatalogViewControllerMaxProducts
-                                         filters:self.filtersArray
-                                    successBlock:^(NSArray* products, NSString* productCount, NSArray* filters, NSString *categoryId, NSArray* categories) {
-                                        
-                                        self.navBarLayout.subTitle = productCount;
-                                        [self reloadNavBar];
-                                        
-                                        if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
-                                            self.filtersArray = filters;
-                                        }
-                                        
-                                        RICategory *category = nil;
-                                        if (NOTEMPTY(categories)) {
-                                            self.categoriesArray = categories;
-                                            category = [categories objectAtIndex:0];
-                                        }
-                                        
-                                        if (0 == products.count || JACatalogViewControllerMaxProducts > products.count) {
-                                            self.loadedEverything = YES;
-                                        }
-                                        
-                                        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                                        // Track events only in the first load of the products
-                                        if (!self.isFirstLoadTracking)
-                                        {
-                                            self.isFirstLoadTracking = YES;
+            [RISearchSuggestion getResultsForSearch:self.searchString
+                                               page:[pageNumber stringValue]
+                                           maxItems:[NSString stringWithFormat:@"%d",JACatalogViewControllerMaxProducts]
+                                      sortingMethod:self.sortingMethod
+                                       successBlock:^(NSArray *results) {
+                                           
+                                           // Track events only in the first load of the products
+                                           if (!self.isFirstLoadTracking)
+                                           {
+                                               self.isFirstLoadTracking = YES;
+                                               
+                                               NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                               NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+                                               NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                               
+                                               [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                                               [trackingDictionary setValue:@"Search" forKey:kRIEventActionKey];
+                                               [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                                               [trackingDictionary setValue:@(results.count) forKey:kRIEventValueKey];
+                                               [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                               [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                               [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+                                               [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                                               [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                               [trackingDictionary setValue:self.searchString forKey:kRIEventKeywordsKey];
+                                               NSInteger numberOfResults = 0;
+                                               if(VALID_NOTEMPTY(results, NSArray))
+                                               {
+                                                   numberOfResults = [results count];
+                                               }
+                                               [trackingDictionary setValue:[NSNumber numberWithInt:numberOfResults] forKey:kRIEventNumberOfProductsKey];
+                                               
+                                               [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
+                                                                                         data:[trackingDictionary copy]];
+                                               
+                                               trackingDictionary = [[NSMutableDictionary alloc] init];
+                                               NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
+                                               if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
+                                               {
+                                                   [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
+                                               }
+                                               
+                                               [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                               [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                               [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+                                               [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                                               [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                               
+                                               [trackingDictionary setValue:self.searchString forKey:kRIEventQueryKey];
+                                               
+                                               [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
+                                                                                         data:[trackingDictionary copy]];
+                                               
+                                               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                                               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                                               
+                                           }
+                                           
+                                           if (0 == results.count || JACatalogViewControllerMaxProducts > results.count) {
+                                               self.loadedEverything = YES;
+                                           }
+                                           
+                                           self.navBarLayout.subTitle = [NSString stringWithFormat:@"%d", results.count];
+                                           [self reloadNavBar];
+                                           
+                                           [self.productsArray addObjectsFromArray:results];
+                                           
+                                           [self.collectionView reloadData];
+                                           
+                                           [self hideLoading];
+                                           
+                                       } andFailureBlock:^(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
+                                           
+                                           [self hideLoading];
+                                           
+                                           if (undefSearchTerm) {
+                                               self.navBarLayout.subTitle = @"0";
+                                               [self reloadNavBar];
+                                               self.undefinedBackup = undefSearchTerm;
+                                               self.backupFrame = self.collectionView.frame;
+                                               [self addUndefinedSearchView:undefSearchTerm];
+                                           } else {
+                                               
+                                               [self showMessage:STRING_ERROR success:NO];
+                                           }
+                                       }];
+        }
+        else
+        {
+            if (NO == self.loadedEverything) {
+                
+                [self showLoading];
+                
+                NSString* urlToUse = self.catalogUrl;
+                if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.apiUrl, NSString)) {
+                    urlToUse = self.category.apiUrl;
+                }
+                if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.apiUrl, NSString)) {
+                    urlToUse = self.filterCategory.apiUrl;
+                }
+                
+                [RIProduct getProductsWithCatalogUrl:urlToUse
+                                       sortingMethod:self.sortingMethod
+                                                page:[pageNumber integerValue]
+                                            maxItems:JACatalogViewControllerMaxProducts
+                                             filters:self.filtersArray
+                                        successBlock:^(NSArray* products, NSString* productCount, NSArray* filters, NSString *categoryId, NSArray* categories) {
                                             
-                                            NSMutableArray *productsToTrack = [[NSMutableArray alloc] init];
-                                            for(RIProduct *product in products)
+                                            self.navBarLayout.subTitle = productCount;
+                                            [self reloadNavBar];
+                                            
+                                            if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
+                                                self.filtersArray = filters;
+                                            }
+                                            
+                                            RICategory *category = nil;
+                                            if (NOTEMPTY(categories)) {
+                                                self.categoriesArray = categories;
+                                                category = [categories objectAtIndex:0];
+                                            }
+                                            
+                                            if (0 == products.count || JACatalogViewControllerMaxProducts > products.count) {
+                                                self.loadedEverything = YES;
+                                            }
+                                            
+                                            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                            // Track events only in the first load of the products
+                                            if (!self.isFirstLoadTracking)
                                             {
-                                                [productsToTrack addObject:[product sku]];
-                                                if([productsToTrack count] == 3)
+                                                self.isFirstLoadTracking = YES;
+                                                
+                                                NSMutableArray *productsToTrack = [[NSMutableArray alloc] init];
+                                                for(RIProduct *product in products)
                                                 {
-                                                    break;
+                                                    [productsToTrack addObject:[product sku]];
+                                                    if([productsToTrack count] == 3)
+                                                    {
+                                                        break;
+                                                    }
                                                 }
+                                                
+                                                NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                                NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+                                                
+                                                [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                                [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+                                                [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                                                [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                                [trackingDictionary setValue:productsToTrack forKey:kRIEventSkusKey];
+                                                
+                                                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewListing]
+                                                                                          data:[trackingDictionary copy]];
+                                                
+                                                NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
+                                                if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
+                                                {
+                                                    [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
+                                                }
+                                                
+                                                [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                                [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+                                                [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                                                [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                                
+                                                if(VALID_NOTEMPTY(self.category, RICategory))
+                                                {
+                                                    [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+                                                    [trackingDictionary setValue:self.category.uid forKey:kRIEventCategoryIdKey];
+                                                    
+                                                    [trackingDictionary setValue:[RICategory getTree:self.category.uid] forKey:kRIEventTreeKey];
+                                                }
+                                                else if(VALID_NOTEMPTY(categoryId, NSString))
+                                                {
+                                                    [trackingDictionary setValue:category.name forKey:kRIEventCategoryNameKey];
+                                                    [trackingDictionary setValue:categoryId forKey:kRIEventCategoryIdKey];
+                                                    
+                                                    [trackingDictionary setValue:[RICategory getTree:categoryId] forKey:kRIEventTreeKey];
+                                                }
+                                                
+                                                [trackingDictionary setValue:productsToTrack forKey:kRIEventSkusKey];
+                                                
+                                                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing]
+                                                                                          data:[trackingDictionary copy]];
+                                                
+                                                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                                                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
                                             }
                                             
-                                            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                                            NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
-                                                                                        
-                                            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                                            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                                            [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-                                            [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-                                            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                                            [trackingDictionary setValue:productsToTrack forKey:kRIEventSkusKey];
-                                            
-                                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewListing]
-                                                                                      data:[trackingDictionary copy]];
-                                            
-                                            NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
-                                            if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
-                                            {
-                                                [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
-                                            }
-                                            
-                                            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                                            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                                            [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-                                            [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-                                            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-
+                                            trackingDictionary = [[NSMutableDictionary alloc] init];
                                             if(VALID_NOTEMPTY(self.category, RICategory))
                                             {
                                                 [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
-                                                [trackingDictionary setValue:self.category.uid forKey:kRIEventCategoryIdKey];
-                                                
-                                                [trackingDictionary setValue:[RICategory getTree:self.category.uid] forKey:kRIEventTreeKey];
                                             }
-                                            else if(VALID_NOTEMPTY(categoryId, NSString))
-                                            {
-                                                [trackingDictionary setValue:category.name forKey:kRIEventCategoryNameKey];
-                                                [trackingDictionary setValue:categoryId forKey:kRIEventCategoryIdKey];
-                                                
-                                                [trackingDictionary setValue:[RICategory getTree:categoryId] forKey:kRIEventTreeKey];
-                                            }
+                                            [trackingDictionary setValue:pageNumber forKey:kRIEventPageNumberKey];
                                             
-                                            [trackingDictionary setValue:productsToTrack forKey:kRIEventSkusKey];
-                                            
-                                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing]
+                                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewGTMListing]
                                                                                       data:[trackingDictionary copy]];
                                             
-                                            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                                            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];                                            
-                                        }
-                                        
-                                        trackingDictionary = [[NSMutableDictionary alloc] init];
-                                        if(VALID_NOTEMPTY(self.category, RICategory))
-                                        {
-                                            [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
-                                        }
-                                        [trackingDictionary setValue:pageNumber forKey:kRIEventPageNumberKey];
-                                        
-                                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewGTMListing]
-                                                                                  data:[trackingDictionary copy]];
-                                        
-                                        [self.productsArray addObjectsFromArray:products];
-                                        
-                                        [self.collectionView reloadData];
-                                        
-                                        [self hideLoading];
-                                        
-                                    } andFailureBlock:^(NSArray *error) {
-                                        [self hideLoading];
-                                        [self resetCatalog];
-                                        [self.collectionView reloadData];
-                                    }];
+                                            [self.productsArray addObjectsFromArray:products];
+                                            
+                                            [self.collectionView reloadData];
+                                            
+                                            [self hideLoading];
+                                            
+                                        } andFailureBlock:^(NSArray *error) {
+                                            [self hideLoading];
+                                            [self resetCatalog];
+                                            [self.collectionView reloadData];
+                                        }];
+            }
         }
     }
 }
@@ -649,14 +660,7 @@
     
     if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
     {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueAddingToFavouritesWithButton:self.backupButton];
-        }];
-        
-        [self.view addSubview:lostConnection];
+        [self showErrorView:YES controller:self selector:@selector(continueAddingToFavouritesWithButton:) objects:[NSArray arrayWithObject:self.backupButton]];
     }
     else
     {
@@ -759,27 +763,6 @@
             
             [self showMessage:STRING_ERROR success:NO];
         }];
-    }
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueAddingToFavouritesWithButton:self.backupButton];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueAddingToFavouritesWithButton:self.backupButton];
     }
 }
 

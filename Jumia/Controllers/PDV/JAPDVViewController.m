@@ -36,8 +36,7 @@
 @interface JAPDVViewController ()
 <
 JAPDVGalleryViewDelegate,
-JAActivityViewControllerDelegate,
-JANoConnectionViewDelegate
+JAActivityViewControllerDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
@@ -86,21 +85,7 @@ JANoConnectionViewDelegate
     // Always load the product details when entering PDV
     if (VALID_NOTEMPTY(self.productUrl, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
     {
-        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-        {
-            JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-            [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-            lostConnection.delegate = self;
-            [lostConnection setRetryBlock:^(BOOL dismiss) {
-                [self loadCompleteProduct];
-            }];
-            
-            [self.view addSubview:lostConnection];
-        }
-        else
-        {
-            [self loadCompleteProduct];
-        }
+        [self loadCompleteProduct];
     }
     else
     {
@@ -126,34 +111,42 @@ JANoConnectionViewDelegate
 
 - (void)loadCompleteProduct
 {
-    [self showLoading];
-    
-    if (VALID_NOTEMPTY(self.productUrl, NSString)) {
-        [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
-            [self loadedProduct:product];
-        } andFailureBlock:^(NSArray *error) {
-            if(self.firstLoading)
-            {
-                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-                self.firstLoading = NO;
-            }
-            [self hideLoading];
-        }];
-    } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
-        [RIProduct getCompleteProductWithSku:self.productSku successBlock:^(id product) {
-            [self loadedProduct:product];
-        } andFailureBlock:^(NSArray *error) {
-            if(self.firstLoading)
-            {
-                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-                self.firstLoading = NO;
-            }
-            [self hideLoading];
-        }];
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        [self showErrorView:YES controller:self selector:@selector(loadCompleteProduct) objects:nil];
+    }
+    else
+    {
+        [self showLoading];
+        
+        if (VALID_NOTEMPTY(self.productUrl, NSString)) {
+            [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
+                [self loadedProduct:product];
+            } andFailureBlock:^(NSArray *error) {
+                if(self.firstLoading)
+                {
+                    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                    self.firstLoading = NO;
+                }
+                [self hideLoading];
+            }];
+        } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
+            [RIProduct getCompleteProductWithSku:self.productSku successBlock:^(id product) {
+                [self loadedProduct:product];
+            } andFailureBlock:^(NSArray *error) {
+                if(self.firstLoading)
+                {
+                    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                    self.firstLoading = NO;
+                }
+                [self hideLoading];
+            }];
+        }
     }
 }
+
 
 - (void)loadedProduct:(RIProduct*) product
 {
@@ -253,39 +246,11 @@ JANoConnectionViewDelegate
     [self productLoaded];
 }
 
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self loadCompleteProduct];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self loadCompleteProduct];
-    }
-}
-
 - (void)retryAddToCart
 {
     if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
     {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self addToCart];
-        }];
-        
-        [self.view addSubview:lostConnection];
+        [self showErrorView:YES controller:self selector:@selector(addToCart) objects:nil];
     }
     else
     {
@@ -771,14 +736,7 @@ JANoConnectionViewDelegate
 {
     if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
     {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self retryAddToCart];
-        }];
-        
-        [self.view addSubview:lostConnection];
+        [self showErrorView:YES controller:self selector:@selector(retryAddToCart) objects:nil];
     }
     else
     {

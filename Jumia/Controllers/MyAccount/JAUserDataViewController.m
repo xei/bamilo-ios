@@ -13,8 +13,7 @@
 
 @interface JAUserDataViewController ()
 <
-    JADynamicFormDelegate,
-    JANoConnectionViewDelegate
+    JADynamicFormDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
@@ -158,14 +157,7 @@
 {
     if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
     {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueSavingPassword];
-        }];
-        
-        [self.view addSubview:lostConnection];
+        [self showErrorView:YES controller:self selector:@selector(continueSavingPassword) objects:nil];
     }
     else
     {
@@ -213,27 +205,6 @@
              [self showMessage:STRING_ERROR success:NO];
          }
      }];
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueSavingPassword];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueSavingPassword];
-    }
 }
 
 @end

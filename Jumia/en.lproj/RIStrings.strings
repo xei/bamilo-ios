@@ -207,3 +207,7 @@
 
 "go_shop_text" = "Shop Now";
 "promotion_tip_tap_text" = "Tap the box above to copy the code to the clipboard and keep it handy for checkout";
+"string_try_again" = "Try Again";
+"string_no_newtork" = "No Network";
+"string_oops" = "Oops!";
+"string_something_broken" = "Something seems broken. Please try again.";

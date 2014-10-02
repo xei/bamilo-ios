@@ -12,9 +12,6 @@
 #import "UIImageView+WebCache.h"
 
 @interface JAOrderViewController ()
-<
-    JANoConnectionViewDelegate
->
 
 @property (nonatomic, assign) NSInteger currentY;
 @property (nonatomic, strong) UIScrollView* scrollView;
@@ -580,14 +577,7 @@
 {
     if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
     {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueNextStep];
-        }];
-        
-        [self.view addSubview:lostConnection];
+        [self showErrorView:YES controller:self selector:@selector(continueNextStep) objects:nil];
     }
     else
     {
@@ -629,27 +619,6 @@
         NSLog(@"FAILED Finishing checkout");
         [self hideLoading];
     }];
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueNextStep];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueNextStep];
-    }
 }
 
 - (void)editButtonForShippingAddress

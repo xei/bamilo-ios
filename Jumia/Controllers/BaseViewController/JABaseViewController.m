@@ -38,7 +38,7 @@
     self.screenName = @"";
     
     self.startLoadingTime = [NSDate date];
-
+    
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.hidesBackButton = YES;
     self.title = @"";
@@ -134,9 +134,36 @@
 - (void)showMessage:(NSString*)message success:(BOOL)success
 {
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
-
+    
     JAMessageView *messageView = [JAMessageView getNewJAMessageView];
     [messageView setTitle:message success:success addTo:window.rootViewController];
+}
+
+- (void)showErrorView:(BOOL)isNoInternetConnection controller:(id)controller selector:(SEL)selector objects:(NSArray*)objects
+{
+    JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+    [lostConnection setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
+    
+    [lostConnection setRetryBlock:^(BOOL dismiss)
+     {
+         if([controller respondsToSelector:selector])
+         {
+             if(ISEMPTY(objects))
+             {
+                 [controller performSelector:selector];
+             }
+             else if(1 == [objects count])
+             {
+                 [controller performSelector:selector withObject:[objects objectAtIndex:0]];
+             }
+             else if(2 == [objects count])
+             {
+                 [controller performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+             }
+         }
+     }];
+    
+    [self.view addSubview:lostConnection];
 }
 
 @end

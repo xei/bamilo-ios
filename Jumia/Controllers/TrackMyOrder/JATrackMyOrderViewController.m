@@ -11,8 +11,7 @@
 
 @interface JATrackMyOrderViewController ()
 <
-    UITextFieldDelegate,
-    JANoConnectionViewDelegate
+    UITextFieldDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
@@ -60,14 +59,7 @@
     {
         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
         {
-            JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-            [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-            lostConnection.delegate = self;
-            [lostConnection setRetryBlock:^(BOOL dismiss) {
-                [self loadOrderDetails];
-            }];
-            
-            [self.view addSubview:lostConnection];
+            [self showErrorView:YES controller:self selector:@selector(loadOrderDetails) objects:nil];
         }
         else
         {
@@ -112,27 +104,6 @@
                           [self hideLoading];
                           
                       }];
-}
-
-#pragma mark - No internet connection
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self loadOrderDetails];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self loadOrderDetails];
-    }
 }
 
 #pragma mark - Textfield delegate
