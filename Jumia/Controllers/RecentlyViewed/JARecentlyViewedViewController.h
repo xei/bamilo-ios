@@ -13,8 +13,7 @@
     UICollectionViewDataSource,
     UICollectionViewDelegate,
     UIPickerViewDataSource,
-    UIPickerViewDelegate,
-    JANoConnectionViewDelegate
+    UIPickerViewDelegate
 >
 
 @end

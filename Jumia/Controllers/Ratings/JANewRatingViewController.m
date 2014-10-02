@@ -23,8 +23,7 @@
 <
     UITextFieldDelegate,
     JADynamicFormDelegate,
-    UIAlertViewDelegate,
-    JANoConnectionViewDelegate
+    UIAlertViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -206,41 +205,13 @@
                      }];
 }
 
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueSendingReview];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueSendingReview];
-    }
-}
-
 #pragma mark - Send review
 
 - (IBAction)sendReview:(id)sender
 {
     if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
     {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueSendingReview];
-        }];
-        
-        [self.view addSubview:lostConnection];
+        [self showErrorView:YES controller:self selector:@selector(continueSendingReview) objects:nil];
     }
     else
     {

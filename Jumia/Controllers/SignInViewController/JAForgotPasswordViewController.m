@@ -12,8 +12,7 @@
 
 @interface JAForgotPasswordViewController ()
 <
-    JADynamicFormDelegate,
-    JANoConnectionViewDelegate
+    JADynamicFormDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
@@ -105,41 +104,13 @@
     }
 }
 
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueForgotPassword];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueForgotPassword];
-    }
-}
-
 #pragma mark - Action
 
 - (void)forgotPasswordButtonPressed:(id)sender
 {
     if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
     {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueForgotPassword];
-        }];
-        
-        [self.view addSubview:lostConnection];
+        [self showErrorView:YES controller:self selector:@selector(continueForgotPassword) objects:nil];
     }
     else
     {

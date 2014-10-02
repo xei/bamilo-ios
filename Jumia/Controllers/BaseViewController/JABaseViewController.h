@@ -32,8 +32,15 @@
  */
 - (void)hideLoading;
 
-
+/**
+ * Method to show message view under navigation bar
+ */
 - (void)showMessage:(NSString*)message success:(BOOL)success;
+
+/**
+ * Method to show error view
+ */
+- (void)showErrorView:(BOOL)isNoInternetConnection controller:(id)controller selector:(SEL)selector objects:(NSArray*)objects;
 
 @end
 

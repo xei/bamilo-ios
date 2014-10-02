@@ -18,8 +18,7 @@ UICollectionViewDataSource,
 UICollectionViewDelegate,
 UITextFieldDelegate,
 UIPickerViewDataSource,
-UIPickerViewDelegate,
-JANoConnectionViewDelegate
+UIPickerViewDelegate
 >
 
 @property (strong, nonatomic) RICart *cart;

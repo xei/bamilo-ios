@@ -12,8 +12,7 @@
 @interface JACategoriesViewController : JABaseViewController
 <
     UITableViewDelegate,
-    UITableViewDataSource,
-    JANoConnectionViewDelegate
+    UITableViewDataSource
 >
 
 @property (nonatomic, strong) RICategory* currentCategory;
