@@ -1,1 +1,1 @@
-#require 'calabash-cucumber/calabash_steps'
+require 'calabash-cucumber/calabash_steps'

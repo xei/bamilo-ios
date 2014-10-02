@@ -475,6 +475,12 @@
 		BBA145BA19DC56BF003F0CA7 /* 01_launch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A719DC56BF003F0CA7 /* 01_launch.rb */; };
 		BBA145BB19DC56BF003F0CA7 /* 02_pre_stop_hooks.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */; };
 		BBA145BC19DC56BF003F0CA7 /* env.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A919DC56BF003F0CA7 /* env.rb */; };
+		BBB12A9419DD485400656529 /* 07_forgot_password.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9319DD485400656529 /* 07_forgot_password.feature */; };
+		BBB12A9519DD485400656529 /* 07_forgot_password.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9319DD485400656529 /* 07_forgot_password.feature */; };
+		BBB12A9819DD874D00656529 /* 08_registration.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9719DD874D00656529 /* 08_registration.feature */; };
+		BBB12A9919DD874D00656529 /* 08_registration.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9719DD874D00656529 /* 08_registration.feature */; };
+		BBB12A9C19DDA01E00656529 /* 09_home.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9B19DDA01E00656529 /* 09_home.feature */; };
+		BBB12A9D19DDA01E00656529 /* 09_home.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9B19DDA01E00656529 /* 09_home.feature */; };
 		CE13256819C7355000B5018E /* RITeaser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13256719C7355000B5018E /* RITeaser.m */; };
 		CE13787019A2304500CA0751 /* JACategoryFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13786F19A2304500CA0751 /* JACategoryFilterViewController.m */; };
 		CE13787819A357B400CA0751 /* JACategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13787719A357B400CA0751 /* JACategoriesViewController.m */; };
@@ -1126,6 +1132,9 @@
 		BBA145A719DC56BF003F0CA7 /* 01_launch.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = 01_launch.rb; sourceTree = "<group>"; };
 		BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = 02_pre_stop_hooks.rb; sourceTree = "<group>"; };
 		BBA145A919DC56BF003F0CA7 /* env.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = env.rb; sourceTree = "<group>"; };
+		BBB12A9319DD485400656529 /* 07_forgot_password.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 07_forgot_password.feature; sourceTree = "<group>"; };
+		BBB12A9719DD874D00656529 /* 08_registration.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 08_registration.feature; sourceTree = "<group>"; };
+		BBB12A9B19DDA01E00656529 /* 09_home.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 09_home.feature; sourceTree = "<group>"; };
 		CE13256619C7355000B5018E /* RITeaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RITeaser.h; sourceTree = "<group>"; };
 		CE13256719C7355000B5018E /* RITeaser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RITeaser.m; sourceTree = "<group>"; };
 		CE13786E19A2304500CA0751 /* JACategoryFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACategoryFilterViewController.h; sourceTree = "<group>"; };
@@ -2549,6 +2558,7 @@
 				BBA1459519DC56BF003F0CA7 /* 01_login.feature */,
 				BBA1459619DC56BF003F0CA7 /* 02_logout.feature */,
 				BBA1459719DC56BF003F0CA7 /* 03_remember_email.feature */,
+				BBB12A9319DD485400656529 /* 07_forgot_password.feature */,
 			);
 			name = login;
 			sourceTree = "<group>";
@@ -2568,10 +2578,28 @@
 			children = (
 				BBA145BD19DC56F5003F0CA7 /* login */,
 				BBA145BE19DC5724003F0CA7 /* my account */,
+				BBB12A9619DD872600656529 /* registration */,
+				BBB12A9A19DDA00B00656529 /* home */,
 				BBA1459B19DC56BF003F0CA7 /* step_definitions */,
 				BBA145A619DC56BF003F0CA7 /* support */,
 			);
 			path = features;
+			sourceTree = "<group>";
+		};
+		BBB12A9619DD872600656529 /* registration */ = {
+			isa = PBXGroup;
+			children = (
+				BBB12A9719DD874D00656529 /* 08_registration.feature */,
+			);
+			name = registration;
+			sourceTree = "<group>";
+		};
+		BBB12A9A19DDA00B00656529 /* home */ = {
+			isa = PBXGroup;
+			children = (
+				BBB12A9B19DDA01E00656529 /* 09_home.feature */,
+			);
+			name = home;
 			sourceTree = "<group>";
 		};
 		CE13787519A357B400CA0751 /* Categories */ = {
@@ -2891,6 +2919,7 @@
 				f3c773007f5219bb357baa4a /* JAStarsComponent.xib in Resources */,
 				c59c6a3e586330701722adde /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib in Resources */,
 				8c80e586175eb9be57e6032b /* slider-default-handle-highlighted.png in Resources */,
+				BBB12A9519DD485400656529 /* 07_forgot_password.feature in Resources */,
 				56ef6f66787f1a1da2850bbd /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
 				650d04388e9ebf7643d08171 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
 				3d53d0ff180f7f9853dba337 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
@@ -2903,6 +2932,7 @@
 				9fe40da6008fc103a0ca8cbb /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
 				9b90f481e8f399f6ca0356b9 /* JACheckBoxWithOptionsComponent.xib in Resources */,
 				0ae503a9046dc0361e776798 /* RITracking.plist in Resources */,
+				BBB12A9919DD874D00656529 /* 08_registration.feature in Resources */,
 				3683c8aeaaa69a884e004685 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
 				7b4b2932f0f6a2cb69aabbfc /* slider-metal-trackBackground.png in Resources */,
 				df802e974e3a30b417f4fdfb /* JANewsletterComponent.xib in Resources */,
@@ -2958,6 +2988,7 @@
 				61cfabf0628c374f78080c28 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
 				cc25950211e1df6cf12e953f /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
 				e5c2612fb2a7b831d10cc411 /* JACartListCell.xib in Resources */,
+				BBB12A9D19DDA01E00656529 /* 09_home.feature in Resources */,
 				56f15b6e253bc2f40528064b /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
 				08ef99ddc54e22a84eeb2426 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
 				5b96210c79cb1f13300a1f62 /* Images.xcassets in Resources */,
@@ -2996,6 +3027,7 @@
 				4A392143198925E300B70A9C /* JANavigationBarView.xib in Resources */,
 				B5210E8619C4863400FDB0D1 /* RIStrings.strings in Resources */,
 				CEDEB9C3199BA8FA0022BAB5 /* slider-metal-handle.png in Resources */,
+				BBB12A9819DD874D00656529 /* 08_registration.feature in Resources */,
 				BBA145BA19DC56BF003F0CA7 /* 01_launch.rb in Resources */,
 				CEDEB9C4199BA8FA0022BAB5 /* slider-metal-handle@2x.png in Resources */,
 				4A85AEED19B9D4A0000019CE /* JAStarsComponent.xib in Resources */,
@@ -3057,6 +3089,7 @@
 				BBA145B119DC56BF003F0CA7 /* calabash_steps.rb in Resources */,
 				B5B5FDE719D99D06008B8059 /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */,
 				B5B5FDF019D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */,
+				BBB12A9419DD485400656529 /* 07_forgot_password.feature in Resources */,
 				4A2FD843199119D900C65C1D /* JAPDVProductInfo.xib in Resources */,
 				B5FE9FB719A1FD1B006F7D63 /* RITrackingDebug.plist in Resources */,
 				CEC3F71E19A5FDDA00DE12F6 /* JAOrangeButtonCell.xib in Resources */,
@@ -3064,6 +3097,7 @@
 				B5B5FDE919D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
 				CEDEB9B1199BA8FA0022BAB5 /* slider-default-handle.png in Resources */,
 				4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */,
+				BBB12A9C19DDA01E00656529 /* 09_home.feature in Resources */,
 				B5B5FDF419D99D06008B8059 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
 				CE2F577019913B6D000A9E09 /* JACatalogListCell.xib in Resources */,
 				4A01EE4B19922736005F5AD1 /* JAPDVPicker.xib in Resources */,
