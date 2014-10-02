@@ -205,3 +205,5 @@
 
 "product_specifications" = "Caractéristiques";
 
+"go_shop_text" = "J\'achète";
+"promotion_tip_tap_text" = "Cliquez sur la case ci-dessus pour copier le code dans le presse-papier et gardez le ainsi à portée de main pour le paiement final";
