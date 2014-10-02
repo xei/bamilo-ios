@@ -166,14 +166,7 @@
     
     if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
     {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self finishAddToCart];
-        }];
-        
-        [self.view addSubview:lostConnection];
+        [self showErrorView:YES controller:self selector:@selector(finishAddToCart) objects:nil];
     }
     else
     {
@@ -254,27 +247,6 @@
     [self.sizePickerBackgroundView addSubview:self.sizePicker];
     [self.sizePickerBackgroundView addSubview:self.sizePickerToolbar];
     [self.view addSubview:self.sizePickerBackgroundView];
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self finishAddToCart];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self finishAddToCart];
-    }
 }
 
 - (void)finishAddToCart

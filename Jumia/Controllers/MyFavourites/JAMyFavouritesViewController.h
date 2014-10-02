@@ -13,8 +13,7 @@
 UICollectionViewDataSource,
 UICollectionViewDelegate,
 UIPickerViewDataSource,
-UIPickerViewDelegate,
-JANoConnectionViewDelegate
+UIPickerViewDelegate
 >
 
 @property (nonatomic, retain) NSString* A4SViewControllerAlias;

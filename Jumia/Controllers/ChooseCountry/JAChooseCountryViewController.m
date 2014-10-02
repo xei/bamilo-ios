@@ -16,8 +16,7 @@
 @interface JAChooseCountryViewController ()
 <
     UITableViewDelegate,
-    UITableViewDataSource,
-    JANoConnectionViewDelegate
+    UITableViewDataSource
 >
 
 @property (strong, nonatomic) NSArray *countriesArray;
@@ -49,14 +48,7 @@
     
     if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
     {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self loadData];
-        }];
-        
-        [self.view addSubview:lostConnection];
+        [self showErrorView:YES controller:self selector:@selector(loadData) objects:nil];
     }
     else
     {
@@ -77,27 +69,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self hideLoading];
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self loadData];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self loadData];
-    }
 }
 
 #pragma mark - Load data
