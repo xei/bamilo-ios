@@ -55,16 +55,9 @@
     
     [self.view endEditing:YES];
     
-    if (self.orderTextField.text.length > 0)
+    if (VALID_NOTEMPTY(self.orderTextField.text, NSString))
     {
-        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-        {
-            [self showErrorView:YES controller:self selector:@selector(loadOrderDetails) objects:nil];
-        }
-        else
-        {
-            [self loadOrderDetails];
-        }
+        [self loadOrderDetails];
     }
     else
     {
@@ -90,9 +83,7 @@
 
                           [self hideLoading];
                           
-                      } andFailureBlock:^(NSArray *errorMessages) {
-                          
-                          [self builContentForNoResult];
+                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                           
                           if(self.firstLoading)
                           {
@@ -100,9 +91,17 @@
                               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
                               self.firstLoading = NO;
                           }
+                          
+                          if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                          {
+                              [self showErrorView:YES startingY:0.0f selector:@selector(loadOrderDetails) objects:nil];
+                          }
+                          else
+                          {                              
+                              [self builContentForNoResult];
+                          }
 
                           [self hideLoading];
-                          
                       }];
 }
 

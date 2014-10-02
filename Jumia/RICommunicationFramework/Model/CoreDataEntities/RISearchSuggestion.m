@@ -108,7 +108,7 @@
 
 + (NSString*)getSuggestionsForQuery:(NSString *)query
                        successBlock:(void (^)(NSArray *suggestions))successBlock
-                    andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_SEARCH_SUGGESTIONS]]
                                                             parameters:[NSDictionary dictionaryWithObject:query forKey:@"q"]
@@ -164,17 +164,17 @@
                                                               }
                                                               
                                                               successBlock([suggestions copy]);
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
@@ -184,7 +184,7 @@
                          maxItems:(NSString *)maxItems
                     sortingMethod:(RICatalogSorting)sortingMethod
                      successBlock:(void (^)(NSArray *results))successBlock
-                  andFailureBlock:(void (^)(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     NSString *tempString = [NSString stringWithFormat:@"%@%@/search?setDevice=mobileApi&q=%@&page=%@&maxitems=%@&%@", [RIApi getCountryUrlInUse], RI_API_VERSION, query, page, maxItems,
@@ -211,34 +211,34 @@
                                                                       successBlock([temp copy]);
                                                                   });
                                                                   
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                                                   
                                                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                                                      failureBlock(nil, nil);
+                                                                      failureBlock(apiResponse, nil, nil);
                                                                   });
                                                               }];
                                                               
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               
                                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                                   if ([errorJsonObject objectForKey:@"metadata"])
                                                                   {
-                                                                      failureBlock(nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
+                                                                      failureBlock(apiResponse, nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
                                                                   }
                                                                   else
                                                                   {
                                                                       if(NOTEMPTY(errorJsonObject))
                                                                       {
-                                                                          failureBlock([RIError getErrorMessages:errorJsonObject], nil);
+                                                                          failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject], nil);
                                                                       }
                                                                       else if(NOTEMPTY(errorObject))
                                                                       {
                                                                           NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                          failureBlock(errorArray, nil);
+                                                                          failureBlock(apiResponse, errorArray, nil);
                                                                       }
                                                                       else
                                                                       {
-                                                                          failureBlock(nil, nil);
+                                                                          failureBlock(apiResponse, nil, nil);
                                                                       }
                                                                   }
                                                               });

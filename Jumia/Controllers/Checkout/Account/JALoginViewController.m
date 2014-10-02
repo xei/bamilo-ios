@@ -65,6 +65,9 @@ FBLoginViewDelegate
 @property (strong, nonatomic) FBLoginView *facebookSingupView;
 @property (strong, nonatomic) UILabel *facebookSingupLabel;
 
+@property (assign, nonatomic) BOOL wasLoadedWithSucces;
+@property (assign, nonatomic) BOOL hasNoConnection;
+
 @end
 
 @implementation JALoginViewController
@@ -89,10 +92,18 @@ FBLoginViewDelegate
     
     self.navBarLayout.showCartButton = NO;
     
+    self.wasLoadedWithSucces = YES;
+    self.hasNoConnection = NO;
+
     [self setupViews];
     
     [self showLoading];
-    
+ 
+    [self getForms];
+}
+
+- (void)getForms
+{
     self.numberOfFormsToLoad = 2;
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
@@ -111,11 +122,14 @@ FBLoginViewDelegate
            
            self.numberOfFormsToLoad--;
            
-       } failureBlock:^(NSArray *errorMessage) {
+       } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+           if(RIApiResponseNoInternetConnection == apiResponse)
+           {
+               self.hasNoConnection = YES;
+           }
            
+           self.wasLoadedWithSucces = NO;
            self.numberOfFormsToLoad--;
-           
-           [self showMessage:STRING_ERROR success:NO];
        }];
     
     [RIForm getForm:@"registersignup"
@@ -135,10 +149,14 @@ FBLoginViewDelegate
            
            self.numberOfFormsToLoad--;
            
-       } failureBlock:^(NSArray *errorMessage) {
-           self.numberOfFormsToLoad--;
+       } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+           if(RIApiResponseNoInternetConnection == apiResponse)
+           {
+               self.hasNoConnection = YES;
+           }
            
-           [self showMessage:STRING_ERROR success:NO];
+           self.wasLoadedWithSucces = NO;
+           self.numberOfFormsToLoad--;
        }];
 }
 
@@ -187,10 +205,6 @@ FBLoginViewDelegate
 
 - (void) finishedFormsLoading
 {
-    [self finishingSetupViews];
-    
-    [self hideLoading];
-    
     if(self.firstLoading)
     {
         NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -198,7 +212,18 @@ FBLoginViewDelegate
         self.firstLoading = NO;
     }
     
-    [self showLogin];
+    if(self.wasLoadedWithSucces)
+    {
+        [self finishingSetupViews];
+        
+        [self showLogin];
+    }
+    else
+    {
+        [self showErrorView:self.hasNoConnection startingY:64.0f selector:@selector(getForms) objects:nil];
+    }
+    
+    [self hideLoading];
 }
 
 - (void) finishingSetupViews
@@ -528,7 +553,7 @@ FBLoginViewDelegate
                                                               userInfo:userInfo];
         }
         
-    } andFailureBlock:^(id errorObject) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         [self hideLoading];
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -594,7 +619,7 @@ FBLoginViewDelegate
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                             object:nil
                                                           userInfo:userInfo];
-    } andFailureBlock:^(id errorObject) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSignupFail]
@@ -699,7 +724,7 @@ FBLoginViewDelegate
                                                                                                          object:nil
                                                                                                        userInfo:userInfo];
                                                  }
-                                             } andFailureBlock:^(NSArray *errorObject) {
+                                             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                  [self hideLoading];
                                                  
                                                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

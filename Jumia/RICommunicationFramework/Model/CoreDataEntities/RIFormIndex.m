@@ -18,7 +18,7 @@
 
 + (NSString*)loadFormIndexesIntoDatabaseForCountry:(NSString*)countryUrl
                                   withSuccessBlock:(void (^)(id formIndexes))successBlock
-                                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
+                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_FORMS_INDEX]]
                                                             parameters:nil httpMethodPost:YES
@@ -30,26 +30,26 @@
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                   successBlock([RIFormIndex parseFormIndexes:metadata]);
                                                               } else {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
 
 + (NSString*)getFormWithIndexId:(NSString*)formIndexID
                    successBlock:(void (^)(RIFormIndex *formIndex))successBlock
-                andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 {
     NSArray* formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"uid" andPropertyValue:formIndexID];
     if(VALID_NOTEMPTY(formIndexes, NSArray))
@@ -64,7 +64,7 @@
                 successBlock([formIndexes objectAtIndex:0]);
             } else
             {
-                failureBlock(nil);
+                failureBlock(RIApiResponseUnknownError, nil);
             }
         } andFailureBlock:failureBlock];
     }

@@ -42,6 +42,6 @@
 
 + (NSString *)getCampaignsWithUrl:(NSString*)url
                      successBlock:(void (^)(NSArray* campaigns, NSString* bannerImageUrl))successBlock
-                  andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 @end

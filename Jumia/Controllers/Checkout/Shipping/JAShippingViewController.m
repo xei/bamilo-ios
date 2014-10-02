@@ -87,14 +87,7 @@ UIPickerViewDelegate
     
     [self setupViews];
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(continueLoading) objects:nil];
-    }
-    else
-    {
-        [self continueLoading];
-    }
+    [self continueLoading];
 }
 
 - (void)continueLoading
@@ -109,9 +102,15 @@ UIPickerViewDelegate
          self.shippingMethods = [RIShippingMethodForm getShippingMethods:checkout.shippingMethodForm];
          
          [self finishedLoadingShippingMethods];
-     } andFailureBlock:^(NSArray *errorMessages)
+     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
-         [self finishedLoadingShippingMethods];
+         BOOL noConnection = NO;
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             noConnection = YES;
+         }
+         
+         [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
      }];
 }
 
@@ -418,7 +417,7 @@ UIPickerViewDelegate
                                  
                                  [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
                                  
-                             } andFailureBlock:^(NSArray *errorMessages) {
+                             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                  [self hideLoading];
                                  
                                  [[[UIAlertView alloc] initWithTitle:STRING_JUMIA

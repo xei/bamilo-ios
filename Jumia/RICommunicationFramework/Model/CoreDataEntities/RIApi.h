@@ -35,7 +35,7 @@
  */
 + (NSString *)startApiWithCountry:(RICountry *)country
                      successBlock:(void (^)(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory))successBlock
-                  andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 /**
  *  Method to cancel the request

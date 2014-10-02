@@ -55,6 +55,6 @@
 
 + (NSString *)trackOrderWithOrderNumber:(NSString *)orderNumber
                        WithSuccessBlock:(void (^)(RITrackOrder *trackingOrder))successBlock
-                        andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 @end

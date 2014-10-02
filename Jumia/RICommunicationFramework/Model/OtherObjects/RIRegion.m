@@ -12,7 +12,7 @@
 
 + (NSString *)getRegionsForUrl:(NSString*)url
                   successBlock:(void (^)(NSArray *regions))successBlock
-               andFailureBlock:(void (^)(NSArray *error))failureBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
@@ -26,19 +26,19 @@
                                                                   successBlock([RIRegion parseRegions:metadata]);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }

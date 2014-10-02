@@ -84,7 +84,7 @@ UIPickerViewDelegate>
          
          [self finishedFormLoading];
      }
-       failureBlock:^(NSArray *errorMessage)
+       failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
          [self finishedFormLoading];
          
@@ -230,7 +230,7 @@ UIPickerViewDelegate>
          [self.dynamicForm resetValues];
          [self finishedRequests];
          
-     } andFailureBlock:^(id errorObject)
+     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          self.hasErrors = YES;
          
@@ -371,7 +371,7 @@ UIPickerViewDelegate>
                  
                  [self hideLoading];
                  [self setupPickerView];
-             } andFailureBlock:^(NSArray *error)
+             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
              {
                  [self hideLoading];
              }];
@@ -523,11 +523,11 @@ UIPickerViewDelegate>
                          
                          [self hideLoading];
                          
-                     } andFailureBlock:^(NSArray *error) {
+                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                          [self hideLoading];
                      }];
                  }
-             } andFailureBlock:^(NSArray *error)
+             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
              {
                  [self hideLoading];
              }];

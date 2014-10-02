@@ -89,7 +89,7 @@
                
                [self hideLoading];
                
-           } andFailureBlock:^(NSArray *errorMessages) {
+           } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                
                [self hideLoading];
            }];
@@ -108,7 +108,7 @@
                self.firstLoading = NO;
            }
 
-       } failureBlock:^(NSArray *errorMessage) {
+       } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
            
            if(self.firstLoading)
            {
@@ -155,14 +155,7 @@
 
 - (void)saveNewPassword
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(continueSavingPassword) objects:nil];
-    }
-    else
-    {
-        [self continueSavingPassword];
-    }
+    [self continueSavingPassword];
 }
 
 - (void)continueSavingPassword
@@ -182,11 +175,15 @@
          [[NSNotificationCenter defaultCenter] postNotificationName:kDidSaveUserDataNotification object:nil];
          [self.navigationController popViewControllerAnimated:YES];
          
-     } andFailureBlock:^(id errorObject)
+     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          [self hideLoading];
          
-         if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         if(RIApiResponseNoInternetConnection == apiResponse)
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.changePasswordForm validateFields:errorObject];
              

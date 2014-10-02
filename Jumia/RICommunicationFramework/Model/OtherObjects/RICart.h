@@ -45,7 +45,7 @@
                                  sku:(NSString *)sku
                               simple:(NSString *)simple
                     withSuccessBlock:(void (^)(RICart *cart))sucessBlock
-                     andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to remove product from cart
@@ -60,7 +60,7 @@
 + (NSString *)removeProductWithQuantity:(NSString *)quantity
                                     sku:(NSString *)sku
                        withSuccessBlock:(void (^)(RICart *cart))sucessBlock
-                        andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to get the cart data
@@ -71,7 +71,7 @@
  *  @return the string with the code to cancel the request
  */
 + (NSString *)getCartWithSuccessBlock:(void (^)(RICart *cartData))sucessBlock
-                      andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to get the cart change information
@@ -84,7 +84,7 @@
  */
 + (NSString *) changeQuantityInProducts:(NSDictionary *)productsQuantities
                        withSuccessBlock:(void (^)(RICart *cart))sucessBlock
-                        andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to add voucher information
@@ -97,7 +97,7 @@
  */
 + (NSString *) addVoucherWithCode:(NSString *)voucherCode
                  withSuccessBlock:(void (^)(RICart *cart))sucessBlock
-                  andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to remove voucher information
@@ -110,7 +110,7 @@
  */
 + (NSString *) removeVoucherWithCode:(NSString *)voucherCode
                     withSuccessBlock:(void (^)(RICart *cart))sucessBlock
-                     andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 + (RICart *)parseCart:(NSDictionary *)json country:(RICountryConfiguration*)country;
 

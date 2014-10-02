@@ -31,7 +31,7 @@
  */
 + (NSString *)loadCategoriesIntoDatabaseForCountry:(NSString *)country
                                   withSuccessBlock:(void (^)(id categories))successBlock
-                                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 /**
  *  Method to load categories. It checks if they are stored in the core data, and case they aren't
@@ -43,7 +43,7 @@
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (void)getCategoriesWithSuccessBlock:(void (^)(id categories))successBlock
-                      andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 /**
  *  Method to cancel the request

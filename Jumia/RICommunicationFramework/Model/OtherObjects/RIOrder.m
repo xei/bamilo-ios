@@ -95,7 +95,7 @@
 
 + (NSString *)trackOrderWithOrderNumber:(NSString *)orderNumber
                        WithSuccessBlock:(void (^)(RITrackOrder *trackingOrder))successBlock
-                        andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     NSString *operationID = nil;
     
@@ -116,24 +116,24 @@
                                successBlock([RIOrder parseTrackOrder:dic]);
                            });
                            
-                       } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+                       } failureBlock:^(RIApiResponse apiResponse,  NSDictionary *errorJsonObject, NSError *errorObject) {
                            
                            dispatch_async(dispatch_get_main_queue(), ^{
                                if(NOTEMPTY(errorJsonObject))
                                {
-                                   failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                } else if(NOTEMPTY(errorObject))
                                {
                                    NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                   failureBlock(errorArray);
+                                   failureBlock(apiResponse, errorArray);
                                } else
                                {
-                                   failureBlock(nil);
+                                   failureBlock(apiResponse, nil);
                                }
                            });
                        }];
     } else {
-        failureBlock(nil);
+        failureBlock(RIApiResponseUnknownError, nil);
     }
     
     return operationID;

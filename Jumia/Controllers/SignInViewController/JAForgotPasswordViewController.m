@@ -65,7 +65,7 @@
          [self hideLoading];
          
      }
-       failureBlock:^(NSArray *errorMessage)
+       failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
          [self finishedFormLoading];
          
@@ -108,14 +108,7 @@
 
 - (void)forgotPasswordButtonPressed:(id)sender
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(continueForgotPassword) objects:nil];
-    }
-    else
-    {
-        [self continueForgotPassword];
-    }
+    [self continueForgotPassword];
 }
 
 - (void)continueForgotPassword
@@ -132,11 +125,15 @@
          [self hideLoading];
          
          [self showMessage:STRING_EMAIL_SENT success:YES];         
-     } andFailureBlock:^(id errorObject)
+     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          [self hideLoading];
          
-         if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.dynamicForm validateFields:errorObject];
              

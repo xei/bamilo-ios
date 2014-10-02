@@ -50,7 +50,7 @@
  */
 + (NSString *)getRatingsForProductWithUrl:(NSString *)url
                              successBlock:(void (^)(RIProductRatings *ratings))successBlock
-                          andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to cancel the request
@@ -80,6 +80,6 @@
                           title:(NSString *)title
                         comment:(NSString *)comment
                    successBlock:(void (^)(BOOL success))successBlock
-                andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 @end

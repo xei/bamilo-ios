@@ -52,14 +52,7 @@
                                                  name:kSelectedCountryNotification
                                                object:nil];
     
-//    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-//    {
-//        [self showErrorView:YES controller:self selector:@selector(continueProcessing) objects:nil];
-//    }
-//    else
-//    {
-        [self continueProcessing];
-//    }
+    [self continueProcessing];
 }
 
 - (void)continueProcessing
@@ -102,8 +95,15 @@
                                   [self procedeToFirstAppScreen];
                               }
                           }
-                      } andFailureBlock:^(NSArray *errorMessage) {
+                      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
                           
+                          BOOL noInternet = NO;
+                          if(RIApiResponseNoInternetConnection == apiResponse)
+                          {
+                              noInternet = YES;
+                          }
+                          
+                          [self showErrorView:noInternet startingY:64.0f selector:@selector(continueProcessing) objects:nil];
                           [self hideLoading];
                           
                       }];
@@ -158,7 +158,16 @@
                                   }
                               }
                               
-                          } andFailureBlock:^(NSArray *errorMessage) {
+                          } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+
+                              BOOL noInternet = NO;
+                              if(RIApiResponseNoInternetConnection == apiResponse)
+                              {
+                                  noInternet = YES;
+                              }
+                              
+                              [self showErrorView:noInternet startingY:64.0f selector:@selector(continueProcessing) objects:nil];
+                              
                               [self hideLoading];
                           }];
         }
@@ -297,7 +306,7 @@
                      [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
                  }
                  
-             } andFailureBlock:^(NSArray *errorMessages)
+             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
              {
                  
              }];
@@ -364,7 +373,15 @@
                               }
                           }
                           
-                      } andFailureBlock:^(NSArray *errorMessage) {
+                      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+                          BOOL noInternet = NO;
+                          if(RIApiResponseNoInternetConnection == apiResponse)
+                          {
+                              noInternet = YES;
+                          }
+                          
+                          [self showErrorView:noInternet startingY:64.0f selector:@selector(continueProcessing) objects:nil];
+                          
                           [self hideLoading];
                       }];
     }

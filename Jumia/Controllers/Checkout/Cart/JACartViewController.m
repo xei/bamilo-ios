@@ -83,14 +83,7 @@
     
     [self.cartScrollView addSubview:self.productCollectionView];
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(continueLoading) objects:nil];
-    }
-    else
-    {
-        [self continueLoading];
-    }
+    [self continueLoading];
 }
 
 - (void)continueLoading
@@ -179,8 +172,7 @@
         // notify the InAppNotification SDK that this the active view controller
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         
-    } andFailureBlock:^(NSArray *errorMessages) {
-        [self setupEmptyCart];
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         
         if(self.firstLoading)
         {
@@ -188,6 +180,14 @@
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
             self.firstLoading = NO;
         }
+        
+        BOOL noConnection = NO;
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            noConnection = YES;
+        }
+       
+        [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
 
         [self hideLoading];
     }];
@@ -694,7 +694,7 @@
                              [self loadCartInfo];
                              
                              [self hideLoading];
-                         } andFailureBlock:^(NSArray *errorMessages) {
+                         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                              [self hideLoading];
                          }];
     }
@@ -825,7 +825,7 @@
                             [self removePickerView];
                             [self setupCart];
                             [self hideLoading];
-                        } andFailureBlock:^(NSArray *errorMessages) {
+                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                             [self removePickerView];
                             [self hideLoading];
                             
@@ -864,7 +864,7 @@
             
             [self setupCart];
             [self hideLoading];
-        } andFailureBlock:^(NSArray *errorMessages) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
             
             [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
@@ -878,7 +878,7 @@
             
             [self setupCart];
             [self hideLoading];
-        } andFailureBlock:^(NSArray *errorMessages) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
             
             [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
@@ -920,7 +920,7 @@
                                                                   userInfo:userInfo];
             }
             
-        } andFailureBlock:^(NSArray *errorMessages) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -966,7 +966,7 @@
             NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
         }
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
     }];
 }
 

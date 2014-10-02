@@ -27,7 +27,7 @@
 
 + (NSString *)loadTeaserCategoriesIntoDatabaseForCountry:(NSString*)countryUrl
                                         withSuccessBlock:(void (^)(id teaserCategories))successBlock
-                                         andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
+                                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_GET_TEASERS]]
                                                             parameters:nil httpMethodPost:YES
@@ -48,32 +48,32 @@
                                                                   }
                                                                   else
                                                                   {
-                                                                      failureBlock(nil);
+                                                                      failureBlock(apiResponse, nil);
                                                                   }
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil);
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
                                                               }];
                                                               
 
                                                               
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,   NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
 
 + (NSString*)getTeaserCategoriesWithSuccessBlock:(void (^)(id teaserCategories))successBlock
-                                 andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
+                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     NSString *operationID = nil;
     NSArray *allTeaserCategories = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RITeaserCategory class])];
@@ -85,7 +85,7 @@
             if (VALID_NOTEMPTY(teaserCategories, NSArray)) {
                 successBlock(teaserCategories);
             } else {
-                failureBlock(nil);
+                failureBlock(RIApiResponseUnknownError, nil);
             }
         } andFailureBlock:failureBlock];
     }

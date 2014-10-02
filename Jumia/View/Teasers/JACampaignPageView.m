@@ -33,7 +33,7 @@
             }
             self.campaigns = campaigns;
             [self loadCampaignViews];
-        } andFailureBlock:^(NSArray *error) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
         }];
     }

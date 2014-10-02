@@ -764,7 +764,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     break;
                 }
             }
-        } andFailureBlock:^(NSArray *errorMessage) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
             [self pushHomeViewController];
         }];
     }
@@ -782,7 +782,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     break;
                 }
             }
-        } andFailureBlock:^(NSArray *errorMessage) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
             [self pushHomeViewController];
         }];
     }

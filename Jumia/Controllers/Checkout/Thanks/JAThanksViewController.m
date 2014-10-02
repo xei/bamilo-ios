@@ -38,10 +38,10 @@
     // Notification to clean cart
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
     [RICart changeQuantityInProducts:nil
-                    withSuccessBlock:^(RICart *cart) {} andFailureBlock:^(NSArray *errorMessages) {}];
+                    withSuccessBlock:^(RICart *cart) {} andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {}];
     if (VALID_NOTEMPTY(self.checkout.orderSummary.discountCouponCode, NSString)) {
         [RICart removeVoucherWithCode:self.checkout.orderSummary.discountCouponCode
-                     withSuccessBlock:^(RICart *cart) {} andFailureBlock:^(NSArray *errorMessages) {}];
+                     withSuccessBlock:^(RICart *cart) {} andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {}];
     }
     
     self.contentView.layer.cornerRadius = 5.0f;

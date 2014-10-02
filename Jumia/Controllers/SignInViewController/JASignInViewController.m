@@ -90,7 +90,12 @@ FBLoginViewDelegate
     [self.facebookLoginButton removeFromSuperview];
     
     self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginView.frame) + 6.0f;
-    
+
+    [self getLoginForm];
+}
+
+- (void)getLoginForm
+{
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
            
@@ -105,11 +110,16 @@ FBLoginViewDelegate
            
            [self finishedFormLoading];
            
-       } failureBlock:^(NSArray *errorMessage) {
+       } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
            
-           [self finishedFormLoading];
+           BOOL noConnection = NO;
+           if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+           {
+               noConnection = YES;
+           }
+           [self showErrorView:noConnection startingY:0.0f selector:@selector(getLoginForm) objects:nil];
            
-           [self showMessage:STRING_ERROR success:NO];
+           [self hideLoading];
        }];
 }
 
@@ -211,14 +221,7 @@ FBLoginViewDelegate
 {
     [self.dynamicForm resignResponder];
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(continueLoading) objects:nil];
-    }
-    else
-    {
-        [self continueLogin];
-    }
+    [self continueLogin];
 }
 
 - (void)continueLogin
@@ -288,7 +291,7 @@ FBLoginViewDelegate
                                                                           @"name": STRING_HOME}];
          }
          
-     } andFailureBlock:^(id errorObject) {
+     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
          
          NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
          [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
@@ -307,7 +310,11 @@ FBLoginViewDelegate
          
          [self hideLoading];
          
-         if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.dynamicForm validateFields:errorObject];
              
@@ -395,7 +402,7 @@ FBLoginViewDelegate
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                                                                      object:@{@"index": @(0),
                                                                                                               @"name": STRING_HOME}];
-                                             } andFailureBlock:^(NSArray *errorObject) {
+                                             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                  
                                                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                                                  [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];

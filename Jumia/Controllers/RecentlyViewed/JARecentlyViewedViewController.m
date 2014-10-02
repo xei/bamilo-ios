@@ -103,7 +103,7 @@
             self.firstLoading = NO;
         }
 
-    } andFailureBlock:^(NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         
         if(self.firstLoading)
         {
@@ -222,15 +222,8 @@
 - (void)addToCartPressed:(UIButton*)button;
 {
     self.backupButton = button;
-    
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        [self showErrorView:YES controller:self selector:@selector(finishAddToCartWithButton:) objects:[NSArray arrayWithObject:button]];
-    }
-    else
-    {
-        [self finishAddToCartWithButton:button];
-    }
+
+    [self finishAddToCartWithButton:button];
 }
 
 - (void)finishAddToCartWithButton:(UIButton *)button
@@ -279,7 +272,7 @@
                           }
                           [self.collectionView reloadData];
                           
-                      } andFailureBlock:^(NSArray *error) {
+                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                           
                       }];
                       
@@ -330,11 +323,17 @@
                       
                       [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
                       
-                  } andFailureBlock:^(NSArray *errorMessages) {
+                  } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                       
                       [self hideLoading];
                       
-                      [self showMessage:STRING_ERROR_ADDING_TO_CART success:NO];
+                      NSString *errorAddToCart = STRING_ERROR_ADDING_TO_CART;
+                      if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                      {
+                          errorAddToCart = STRING_NO_NEWTORK;
+                      }
+
+                      [self showMessage:errorAddToCart success:NO];
                   }];
 }
 
@@ -344,7 +343,7 @@
     [RIProduct removeAllRecentlyViewedWithSuccessBlock:^{
         [self hideLoading];
         self.productsArray = nil;
-    } andFailureBlock:^(NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         [self hideLoading];
     }];
 }

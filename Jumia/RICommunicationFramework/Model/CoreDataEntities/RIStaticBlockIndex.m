@@ -17,7 +17,7 @@
 
 + (NSString*)getStaticBlock:(NSString*)staticBlockKey
                successBlock:(void (^)(id staticBlock))successBlock
-               failureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+               failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 {
     NSArray* staticBlockIndexes = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIStaticBlockIndex class])];
     
@@ -51,19 +51,19 @@
                                                                                   successBlock([data firstObject]);
                                                                               }
                                                                           } else {
-                                                                              failureBlock(nil);
+                                                                              failureBlock(apiResponse, nil);
                                                                           }
-                                                                      } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                                      } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                                           if(NOTEMPTY(errorJsonObject))
                                                                           {
-                                                                              failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                              failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                                           } else if(NOTEMPTY(errorObject))
                                                                           {
                                                                               NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                              failureBlock(errorArray);
+                                                                              failureBlock(apiResponse, errorArray);
                                                                           } else
                                                                           {
-                                                                              failureBlock(nil);
+                                                                              failureBlock(apiResponse, nil);
                                                                           }
                                                                       }];
             }
@@ -75,7 +75,7 @@
 
 + (NSString*)loadStaticBlockIndexesIntoDatabaseForCountry:(NSString*)countryUrl
                                          withSuccessBlock:(void (^)(id staticBlockIndexes))successBlock
-                                          andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+                                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_GET_STATICBLOCKS]]
                                                             parameters:nil httpMethodPost:YES
@@ -87,19 +87,19 @@
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                   successBlock([RIStaticBlockIndex parseStaticBlockIndexes:metadata]);
                                                               } else {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }

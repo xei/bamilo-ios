@@ -139,27 +139,34 @@
     [messageView setTitle:message success:success addTo:window.rootViewController];
 }
 
-- (void)showErrorView:(BOOL)isNoInternetConnection controller:(id)controller selector:(SEL)selector objects:(NSArray*)objects
+- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
 {
     JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
     [lostConnection setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
+    lostConnection.frame = CGRectMake(self.view.frame.origin.x,
+                                      startingY,
+                                      self.view.frame.size.width,
+                                      self.view.frame.size.height);
     
     [lostConnection setRetryBlock:^(BOOL dismiss)
      {
-         if([controller respondsToSelector:selector])
+         if([self respondsToSelector:selector])
          {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
              if(ISEMPTY(objects))
              {
-                 [controller performSelector:selector];
+                 [self performSelector:selector];
              }
              else if(1 == [objects count])
              {
-                 [controller performSelector:selector withObject:[objects objectAtIndex:0]];
+                 [self performSelector:selector withObject:[objects objectAtIndex:0]];
              }
              else if(2 == [objects count])
              {
-                 [controller performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+                 [self performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
              }
+#pragma clang diagnostic pop             
          }
      }];
     
