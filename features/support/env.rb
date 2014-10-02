@@ -9,8 +9,13 @@ require 'calabash-cucumber/cucumber'
 
 def initvars
     
+    #init
+    @wait_timeout = 5
+    
     #home
     @fashion = "Fashion"
+    @popular_categories = "PopularCategories"
+    @top_brands = "Top Brands"
     
     #side bar
     @hamburger_btn = "btn menu"
@@ -29,6 +34,7 @@ def initvars
     @invalid_password = "umapasswordqualquer"
     @valid_email = "testcalabash@mailinator.com"
     @valid_password = "password1"
+    @forgot_password = "Forgot Password?"
     
     #my account
     @account_settings = "Account Settings"
@@ -54,6 +60,31 @@ def initvars
     @newsletter_female = "Newsletter Female"
     @preferences_updated = "Preferences updated"
     
+    #forgot password
+    @please_type_email = "Please type in your email."
+    @submit = "Submit"
+    @error_empty_fields_fp = "Empty Fields"
+    @error_please_check_input = "There were errors on the data submited, please check your input fields."
+    @email_sent = "Email sent"
+    
+    #create account
+    @crate_account = "Create Account"
+    @account_data = "Account Data"
+    @birthday = "Birthday"
+    @done = "Done"
+    @gender = "Gender"
+    @receive_newsletter = "Receive Newsletter?"
+    @first_name = "First name"
+    @last_name = "Last name"
+    @retype_password_2 = "Retype password"
+    @newsletter = "Newsletter"
+    @register = "Register"
+    
+    #new user data
+    @first_name_text = "Tester"
+    @last_name_text = "Test"
+    @random = Time.now.to_i
+    @new_email = "testjumia+brunoqa"+@random.to_s+"@gmail.com"
     
     
 end

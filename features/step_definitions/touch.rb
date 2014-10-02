@@ -39,3 +39,19 @@ Then /^I change the newsletter settings$/ do
     touch("UISwitch marked:'"+@newsletter_male+"'")
     touch("UISwitch marked:'"+@newsletter_female+"'")
 end
+
+Then /^I touch the forgot password option$/ do
+    touch("view marked:'"+@forgot_password+"'")
+end
+
+Then /^I touch the Submit button$/ do
+    touch("view marked:'"+@submit+"'")
+end
+
+Then /^I touch the create account option$/ do
+    touch("view marked:'"+@crate_account+"'")
+end
+
+Then /^I touch the Register button$/ do
+    touch("view marked:'"+@register+"'")
+end
