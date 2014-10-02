@@ -204,3 +204,8 @@
 "campaigns_label" = "Campaigns";
 
 "product_specifications" = "Specification";
+
+"string_try_again" = "Try Again";
+"string_no_newtork" = "No Network";
+"string_oops" = "Oops!;
+"string_something_broken" = "Something seems broken. Please try again.";
