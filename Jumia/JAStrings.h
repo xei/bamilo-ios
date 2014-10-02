@@ -208,6 +208,8 @@
 #define STRING_OFF RILocalizedString(@"off_label", nil)
 #define STRING_CAMPAIGNS RILocalizedString(@"campaigns_label", nil)
 
+#define STRING_GO_SHOP RILocalizedString(@"go_shop_text", nil)
+#define STRING_PROMOTION_TIP_TAP RILocalizedString(@"promotion_tip_tap_text", nil)
 #define STRING_TRY_AGAIN RILocalizedString(@"string_try_again", nil) // Not translated
 #define STRING_NO_NEWTORK RILocalizedString(@"string_no_newtork", nil) // Not translated
 #define STRING_OOPS RILocalizedString(@"string_oops", nil) // Not translated

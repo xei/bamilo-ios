@@ -12,6 +12,7 @@
 #import "JATeaserView.h"
 #import "JAUtils.h"
 #import "RICustomer.h"
+#import "JAPromotionPopUp.h"
 
 @interface JAHomeViewController ()
 
@@ -170,6 +171,11 @@
         // notify the InAppNotification SDK that this the active view controller
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         
+        [RIPromotion getPromotionWithSuccessBlock:^(RIPromotion *promotion) {
+            [self loadPromotion:promotion];
+        } andFailureBlock:^(NSArray *error) {
+            
+        }];
     } andFailureBlock:^(NSArray *errorMessage) {
         if(self.firstLoading)
         {
@@ -178,6 +184,13 @@
             self.firstLoading = NO;
         }
     }];
+}
+
+- (void)loadPromotion:(RIPromotion*)promotion
+{
+    JAPromotionPopUp* promotionPopUp = [[JAPromotionPopUp alloc] initWithFrame:self.view.bounds];
+    [promotionPopUp loadWithPromotion:promotion];
+    [self.view addSubview:promotionPopUp];
 }
 
 #pragma mark - JATeaserCategoryScrollViewDelegate
