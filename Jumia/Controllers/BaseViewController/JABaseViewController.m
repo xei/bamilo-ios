@@ -166,11 +166,23 @@
              {
                  [self performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
              }
-#pragma clang diagnostic pop             
+#pragma clang diagnostic pop
          }
      }];
     
     [self.view addSubview:lostConnection];
+}
+
+- (void)removeErrorView
+{
+    for(UIView *view in self.view.subviews)
+    {
+        if([view isKindOfClass:[JANoConnectionView class]])
+        {
+            [view removeFromSuperview];
+            break;
+        }
+    }
 }
 
 @end

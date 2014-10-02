@@ -26,7 +26,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *catalogTopButton;
 @property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
-@property (nonatomic, strong) NSMutableArray* productsArray;
+@property (nonatomic, strong) NSMutableDictionary* productsMap;
 @property (nonatomic, strong) NSArray* filtersArray;
 @property (nonatomic, strong) NSArray* categoriesArray;
 @property (nonatomic, strong) RICategory* filterCategory;
@@ -46,6 +46,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.productsMap = [NSMutableDictionary new];
     
     if (self.forceShowBackButton)
     {
@@ -114,12 +116,31 @@
 
 - (void)resetCatalog
 {
-    //[self.collectionView setContentOffset:CGPointZero animated:NO];
-    
-    self.productsArray = [NSMutableArray new];
+    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
+    [self.productsMap setObject:[NSMutableArray new] forKey:key];
     
     self.loadedEverything = NO;
 }
+
+- (void)addProdutsToMap:(NSArray*)products
+{
+    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
+    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
+    
+    if(ISEMPTY(productsArray))
+    {
+        productsArray = [NSMutableArray new];
+    }
+    
+    if(VALID_NOTEMPTY(products, NSArray))
+    {
+        [productsArray addObjectsFromArray:products];
+    }
+    
+    [self.productsMap setObject:productsArray forKey:key];
+    [self.collectionView reloadData];
+}
+
 
 - (void)loadMoreProducts
 {
@@ -195,15 +216,15 @@
                                        self.navBarLayout.subTitle = [NSString stringWithFormat:@"%d", results.count];
                                        [self reloadNavBar];
                                        
-                                       [self.productsArray addObjectsFromArray:results];
-                                       
-                                       [self.collectionView reloadData];
+                                       [self addProdutsToMap:results];
                                        
                                        [self hideLoading];
                                        
                                    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
                                        
-                                       if(VALID_NOTEMPTY(self.productsArray, NSArray))
+                                       NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
+                                       NSMutableArray *productsArray = [self.productsMap objectForKey:key];
+                                       if(VALID_NOTEMPTY(productsArray, NSArray))
                                        {
                                            NSString *erroMessasge = STRING_ERROR;
                                            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
@@ -350,15 +371,15 @@
                                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewGTMListing]
                                                                                   data:[trackingDictionary copy]];
                                         
-                                        [self.productsArray addObjectsFromArray:products];
-                                        
-                                        [self.collectionView reloadData];
+                                        [self addProdutsToMap:products];
                                         
                                         [self hideLoading];
                                         
                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                         
-                                        if(VALID_NOTEMPTY(self.productsArray, NSArray))
+                                        NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
+                                        NSMutableArray *productsArray = [self.productsMap objectForKey:key];
+                                        if(VALID_NOTEMPTY(productsArray, NSArray))
                                         {
                                             NSString *erroMessasge = STRING_ERROR;
                                             if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
@@ -387,11 +408,14 @@
 
 - (NSInteger)getCurrentPage
 {
-    if (self.productsArray.count) {
-        return self.productsArray.count / JACatalogViewControllerMaxProducts;
-    } else {
-        return 0;
+    NSInteger currentPage = 0;
+    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
+    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
+    if (VALID_NOTEMPTY(productsArray, NSMutableArray))
+    {
+        currentPage = productsArray.count / JACatalogViewControllerMaxProducts;
     }
+    return currentPage;
 }
 
 #pragma mark - Actions
@@ -464,7 +488,9 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.productsArray.count;
+    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
+    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
+    return productsArray.count;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -483,11 +509,13 @@
         self.catalogTopButton.hidden = NO;
     }
     
-    if (self.productsArray.count - 5 == indexPath.row) {
+    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
+    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
+    if (productsArray.count - 5 <= indexPath.row) {
         [self loadMoreProducts];
     }
     
-    RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
+    RIProduct *product = [productsArray objectAtIndex:indexPath.row];
     
     NSString *cellIdentifier;
     if (self.viewToggleButton.selected) {
@@ -510,9 +538,11 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
+    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
+    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
+    RIProduct *product = [productsArray objectAtIndex:indexPath.row];
     
-    NSInteger count = self.productsArray.count;
+    NSInteger count = productsArray.count;
     
     if (count > 20) {
         count = 20;
@@ -521,7 +551,7 @@
     NSMutableArray *tempArray = [NSMutableArray new];
     
     for (int i = 0 ; i < count ; i ++) {
-        [tempArray addObject:[self.productsArray objectAtIndex:i]];
+        [tempArray addObject:[productsArray objectAtIndex:i]];
     }
     
     NSString *temp = self.category.name;
@@ -558,8 +588,19 @@
     if (index != self.sortingMethod) {
         self.sortingMethod = index;
         
-        [self resetCatalog];
-        [self loadMoreProducts];
+        [self removeErrorView];
+        
+        NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
+        NSMutableArray *productsArray = [self.productsMap objectForKey:key];
+        if(ISEMPTY(productsArray))
+        {
+            [self loadMoreProducts];
+        }
+        else
+        {
+            [self.collectionView reloadData];
+        }
+        [self.collectionView setContentOffset:CGPointZero animated:NO];
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:self.title forKey:kRIEventLabelKey];
@@ -644,9 +685,13 @@
 
 - (void)changedFavoriteStateOfProduct:(RIProduct*)product;
 {
-    for (int i = 0; i < self.productsArray.count; i++) {
-        RIProduct* currentProduct = [self.productsArray objectAtIndex:i];
-        if ([currentProduct.sku isEqualToString:product.sku]) {
+    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
+    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
+    for (int i = 0; i < productsArray.count; i++)
+    {
+        RIProduct* currentProduct = [productsArray objectAtIndex:i];
+        if ([currentProduct.sku isEqualToString:product.sku])
+        {
             currentProduct.isFavorite = product.isFavorite;
             [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]];
         }
@@ -694,7 +739,10 @@
 {
     button.selected = !button.selected;
     
-    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
+    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
+    
+    RIProduct* product = [productsArray objectAtIndex:button.tag];
     product.isFavorite = [NSNumber numberWithBool:button.selected];
     [self showLoading];
     if (button.selected)
