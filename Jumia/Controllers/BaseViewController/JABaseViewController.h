@@ -38,10 +38,18 @@
 - (void)showMessage:(NSString*)message success:(BOOL)success;
 
 /**
+ * Method to remove message view under navigation bar
+ */
+- (void)removeMessageView;
+
+/**
  * Method to show error view
  */
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
 
+/**
+ * Method to remove error view
+ */
 - (void)removeErrorView;
 
 @end

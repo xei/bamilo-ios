@@ -87,6 +87,15 @@
 
 - (void)openMainMenu:(NSNotification *)notification
 {
+    UIViewController *topViewController = [(JACenterNavigationController *)self.centerPanel topViewController];
+    if(VALID_NOTEMPTY(topViewController, UIViewController))
+    {
+        if([topViewController respondsToSelector:@selector(removeMessageView)])
+        {
+            [topViewController performSelector:@selector(removeMessageView)];
+        }
+    }
+    
     [self showLeftPanelAnimated:YES userInfo:notification.userInfo];
 }
 

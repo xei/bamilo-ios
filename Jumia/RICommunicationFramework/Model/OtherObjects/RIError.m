@@ -37,7 +37,7 @@
             {
                 if(VALID_NOTEMPTY([RILocalizationWrapper localizedErrorCode:errorCode], NSString) || ([errorCode caseInsensitiveCompare:[RILocalizationWrapper localizedErrorCode:errorCode]] == NSOrderedSame))
                 {
-                    [errorCodeStrings addObject:errorCode];
+                    [errorCodeStrings addObject:[RILocalizationWrapper localizedErrorCode:errorCode]];
                 }
             }
             else if(VALID_NOTEMPTY(errorCode, NSDictionary) && VALID_NOTEMPTY([errorCode objectForKey:@"message"], NSString))

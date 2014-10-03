@@ -37,15 +37,18 @@
 + (NSString *)localizedErrorCode:(NSString *)errorCode;
 {
     NSString *localizedErrorCode = nil;
-    NSString *languageCode = @"en";
+    NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
+    NSDictionary *componentsFromLocale =  [NSLocale componentsFromLocaleIdentifier:locale];
+    NSString *languageCode = [componentsFromLocale objectForKey:NSLocaleLanguageCode];
     
     if(NOTEMPTY(languageCode)) {
         NSString * path = [[NSBundle mainBundle] pathForResource:languageCode
                                                           ofType:@"lproj"];
         if(NOTEMPTY(path)) {
             NSBundle * bundle = [[NSBundle alloc] initWithPath:path];
-            if(NOTEMPTY(bundle)) {
-                localizedErrorCode = NSLocalizedStringFromTableInBundle(errorCode, @"RIStrings", bundle, key);
+            if(NOTEMPTY(bundle))
+            {
+                localizedErrorCode = NSLocalizedStringFromTableInBundle([errorCode lowercaseString], @"RIStrings", bundle, key);
             }
         }
     }

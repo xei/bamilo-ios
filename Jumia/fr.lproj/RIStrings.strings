@@ -211,3 +211,5 @@
 "string_no_newtork" = "No Network";
 "string_oops" = "Oops!";
 "string_something_broken" = "Something seems broken. Please try again.";
+
+"form_data_not_transferred" = "Il y a des erreurs dans les données communiquées, vérifiez les différents champs renseignés";
