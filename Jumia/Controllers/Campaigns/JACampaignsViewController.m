@@ -139,7 +139,7 @@
 - (IBAction)swipeLeft:(id)sender
 {
     self.shouldPushPDV = NO;
-    [self.pickerScrollView scrollLeft];
+    [self.pickerScrollView scrollLeftAnimated:YES];
 }
 
 - (IBAction)swipeRight:(id)sender

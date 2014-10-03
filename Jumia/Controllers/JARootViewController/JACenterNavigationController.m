@@ -418,8 +418,6 @@
     
     [self pushViewController:catalog
                     animated:YES];
-    
-    self.viewControllers = @[catalog];
 }
 
 - (void)pushCatalogForUndefinedSearchWithBrandUrl:(NSString *)brandUrl
@@ -439,11 +437,12 @@
 {
     NSDictionary *selectedItem = [notification object];
     RICategory* category = [selectedItem objectForKey:@"category"];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                        object:nil];
-    
-    if (VALID_NOTEMPTY(category, RICategory)) {
+    NSString* categoryId = [selectedItem objectForKey:@"category_id"];
+    NSString* categoryName = [selectedItem objectForKey:@"category_name"];
+    if (VALID_NOTEMPTY(category, RICategory))
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                            object:nil];
         
         JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
@@ -452,8 +451,25 @@
         
         [self pushViewController:catalog
                         animated:YES];
+    }
+    else if (VALID_NOTEMPTY(categoryId, NSString))
+    {
+        JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
-        self.viewControllers = @[catalog];
+        catalog.categoryId = categoryId;
+        
+        [self pushViewController:catalog
+                        animated:YES];
+    }
+    else if (VALID_NOTEMPTY(categoryName, NSString))
+    {
+        JACatalogViewController *catalog = [self.storyboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        
+        catalog.navBarLayout.title = categoryName;
+        catalog.categoryName = categoryName;
+        
+        [self pushViewController:catalog
+                        animated:YES];
     }
 }
 

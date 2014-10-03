@@ -47,14 +47,12 @@
 {
     [super viewDidLoad];
     
-    self.productsMap = [NSMutableDictionary new];
-    
     if (self.forceShowBackButton)
     {
         self.navBarLayout.showBackButton = YES;
     }
     
-    if (self.searchString.length > 0)
+    if (VALID_NOTEMPTY(self.searchString, NSString))
     {
         self.screenName = @"SearchResults";
     }
@@ -69,6 +67,20 @@
             self.screenName = @"Catalog";
         }
     }
+
+    if (VALID_NOTEMPTY(self.searchString, NSString) || VALID_NOTEMPTY(self.category, RICategory) || VALID_NOTEMPTY(self.catalogUrl, NSString))
+    {
+        [self setupViews];
+    }
+    else
+    {
+        [self getCategories];
+    }
+}
+
+- (void)setupViews
+{
+    self.productsMap = [NSMutableDictionary new];
     
     self.isFirstLoadTracking = NO;
     self.filterButton.backgroundColor = JACatalogViewControllerButtonColor;
@@ -76,7 +88,7 @@
     
     self.sortingScrollView.delegate = self;
     self.sortingScrollView.startingIndex = 1;
-
+    
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
@@ -93,11 +105,65 @@
     
     [self changeToList];
     
+    self.sortingMethod = NSIntegerMax;
+    
     NSArray* sortList = [NSArray arrayWithObjects:STRING_BEST_RATING, STRING_POPULARITY, STRING_NEW_IN, STRING_PRICE_UP, STRING_PRICE_DOWN, STRING_NAME, STRING_BRAND, nil];
     
-    self.sortingMethod = NSIntegerMax;
     //this will trigger load methods
     [self.sortingScrollView setOptions:sortList];
+}
+
+- (void)getCategories
+{
+    [self showLoading];
+    
+    [RICategory getCategoriesWithSuccessBlock:^(id categories)
+     {
+         for (RICategory *category in categories)
+         {
+             if(VALID_NOTEMPTY(self.categoryId, NSString))
+             {
+                 if ([self.categoryId isEqualToString:category.uid])
+                 {
+                     self.category = category;
+                     break;
+                 }
+             }
+             else if(VALID_NOTEMPTY(self.categoryName, NSString))
+             {
+                 if ([self.categoryName isEqualToString:category.name])
+                 {
+                     self.category = category;
+                     break;
+                 }
+             }
+         }
+         
+         if(VALID_NOTEMPTY(self.category, RICategory))
+         {
+             self .navBarLayout.title = self.category.name;
+             [self setupViews];
+         }
+         else
+         {
+             BOOL noConnection = NO;
+             if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+             {
+                 noConnection = YES;
+             }
+             [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(getCategories) objects:nil];
+         }
+         
+         [self hideLoading];
+         
+     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+         BOOL noConnection = NO;
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             noConnection = YES;
+         }
+         [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(getCategories) objects:nil];
+     }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -427,7 +493,7 @@
 
 - (IBAction)swipeLeft:(id)sender
 {
-    [self.sortingScrollView scrollLeft];
+    [self.sortingScrollView scrollLeftAnimated:YES];
 }
 
 - (void)changeToList
@@ -585,7 +651,8 @@
 
 - (void)selectedIndex:(NSInteger)index
 {
-    if (index != self.sortingMethod) {
+    if (index != self.sortingMethod)
+    {
         self.sortingMethod = index;
         
         [self removeErrorView];

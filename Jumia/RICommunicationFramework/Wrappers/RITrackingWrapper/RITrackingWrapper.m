@@ -227,6 +227,15 @@ static dispatch_once_t sharedInstanceToken;
                                  arguments:@[notification]];
 }
 
+- (void)handlePushNotifcation:(NSDictionary *)info
+{
+    RIDebugLog(@"Handling push notification with info '%@'", info);
+    
+    [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking)
+                                  selector:@selector(handlePushNotifcation:)
+                                 arguments:@[info]];
+}
+
 #pragma mark - RIEcommerceTracking protocol
 
 - (void)trackCheckout:(NSDictionary *)data

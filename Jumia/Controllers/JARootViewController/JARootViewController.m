@@ -50,11 +50,6 @@
                                              selector:@selector(showCenterViewController)
                                                  name:kOpenCenterPanelNotification
                                                object:nil];
-    
-    if(VALID_NOTEMPTY(self.notification, NSDictionary))
-    {
-        [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:self.notification];
-    }
 }
 
 - (void)dealloc

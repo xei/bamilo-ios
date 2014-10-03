@@ -77,6 +77,13 @@ typedef NS_ENUM(NSInteger, RICartState) {
  */
 - (void)applicationDidReceiveLocalNotification:(UILocalNotification *)notification;
 
+/**
+ *  Handle a push notification
+ *
+ *  @param info The push notification info.
+ */
+- (void)handlePushNotifcation:(NSDictionary *)info;
+
 @end
 
 /**
@@ -119,6 +126,9 @@ typedef NS_ENUM(NSInteger, RICartState) {
  */
 - (void)trackOpenURL:(NSURL *)url;
 
+/**
+ *  API protocol for deeplink URL tracking
+ */
 @optional
 
 /**
