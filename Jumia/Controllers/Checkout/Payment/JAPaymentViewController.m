@@ -71,7 +71,7 @@ UITextFieldDelegate>
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"CheckoutPaymentMethods" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-    
+    [trackingDictionary setValue:[self.checkout.cart cartValue] forKey:kRIEventValueKey];
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPayment]
                                               data:[trackingDictionary copy]];
     
@@ -316,13 +316,6 @@ UITextFieldDelegate>
                     successBlock:^(RICheckout *checkout) {
                         
                         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-                        [trackingDictionary setValue:@"CheckoutMyOrder" forKey:kRIEventActionKey];
-                        [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutOrder]
-                                                                  data:[trackingDictionary copy]];
-               
-                        trackingDictionary = [[NSMutableDictionary alloc] init];
                         [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]
                                                                   data:[trackingDictionary copy]];
