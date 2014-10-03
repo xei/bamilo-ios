@@ -68,9 +68,14 @@
         }
     }
 
+    [self setupViews];
+    
     if (VALID_NOTEMPTY(self.searchString, NSString) || VALID_NOTEMPTY(self.category, RICategory) || VALID_NOTEMPTY(self.catalogUrl, NSString))
     {
-        [self setupViews];
+        NSArray* sortList = [NSArray arrayWithObjects:STRING_BEST_RATING, STRING_POPULARITY, STRING_NEW_IN, STRING_PRICE_UP, STRING_PRICE_DOWN, STRING_NAME, STRING_BRAND, nil];
+        
+        //this will trigger load methods
+        [self.sortingScrollView setOptions:sortList];
     }
     else
     {
@@ -106,11 +111,6 @@
     [self changeToList];
     
     self.sortingMethod = NSIntegerMax;
-    
-    NSArray* sortList = [NSArray arrayWithObjects:STRING_BEST_RATING, STRING_POPULARITY, STRING_NEW_IN, STRING_PRICE_UP, STRING_PRICE_DOWN, STRING_NAME, STRING_BRAND, nil];
-    
-    //this will trigger load methods
-    [self.sortingScrollView setOptions:sortList];
 }
 
 - (void)getCategories
@@ -142,7 +142,11 @@
          if(VALID_NOTEMPTY(self.category, RICategory))
          {
              self .navBarLayout.title = self.category.name;
-             [self setupViews];
+             
+             NSArray* sortList = [NSArray arrayWithObjects:STRING_BEST_RATING, STRING_POPULARITY, STRING_NEW_IN, STRING_PRICE_UP, STRING_PRICE_DOWN, STRING_NAME, STRING_BRAND, nil];
+             
+             //this will trigger load methods
+             [self.sortingScrollView setOptions:sortList];
          }
          else
          {

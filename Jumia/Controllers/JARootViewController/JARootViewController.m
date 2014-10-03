@@ -50,6 +50,12 @@
                                              selector:@selector(showCenterViewController)
                                                  name:kOpenCenterPanelNotification
                                                object:nil];
+    
+    if(VALID_NOTEMPTY(self.notification, NSDictionary))
+    {
+        [[RITrackingWrapper sharedInstance] handlePushNotifcation:[self.notification copy]];
+        self.notification = nil;
+    }
 }
 
 - (void)dealloc

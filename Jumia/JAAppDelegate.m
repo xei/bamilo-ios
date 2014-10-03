@@ -146,7 +146,7 @@
             
             if([currentCountry isEqualToString:countryFromUrl])
             {
-                [[RITrackingWrapper sharedInstance] handlePushNotifcation:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:nil userInfo:userInfo];
             }
             else
             {
@@ -157,7 +157,8 @@
                     {
                         if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
                         {
-                            [[RITrackingWrapper sharedInstance] handlePushNotifcation:userInfo];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:country userInfo:userInfo];
+                            break;
                         }
                     }
                     

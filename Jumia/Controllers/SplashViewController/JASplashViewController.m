@@ -336,55 +336,54 @@
 - (void)didSelectCountry:(NSNotification*)notification
 {
     RICountry *country = notification.object;
-    if (VALID_NOTEMPTY(country, RICountry))
-    {
-        [self showLoading];
-        
-        self.requestCount = 0;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
-        
-        [RIApi startApiWithCountry:country
-                      successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
-
-                          if(hasUpdate)
+    
+    [self showLoading];
+    
+    self.requestCount = 0;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
+    
+    [RIApi startApiWithCountry:country
+                  successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                      
+                      if(hasUpdate)
+                      {
+                          self.isPopupOpened = YES;
+                          if(isUpdateMandatory)
                           {
-                              self.isPopupOpened = YES;
-                              if(isUpdateMandatory)
-                              {
-                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:STRING_UPDATE_NECESSARY_MESSAGE delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
-                                  [alert setTag:kForceUpdateAlertViewTag];
-                                  [alert show];
-                                  
-                                  [self hideLoading];
-                              }
-                              else
-                              {
-                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:STRING_UPDATE_AVAILABLE_MESSAGE delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
-                                  [alert setTag:kUpdateAvailableAlertViewTag];
-                                  [alert show];
-                              }
+                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:STRING_UPDATE_NECESSARY_MESSAGE delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
+                              [alert setTag:kForceUpdateAlertViewTag];
+                              [alert show];
+                              
+                              [self hideLoading];
                           }
                           else
                           {
-                              if (0 >= self.requestCount) {
-                                  [self procedeToFirstAppScreen];
-                              }
+                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:STRING_UPDATE_AVAILABLE_MESSAGE delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
+                              [alert setTag:kUpdateAvailableAlertViewTag];
+                              [alert show];
                           }
-                          
-                      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
-                          BOOL noInternet = NO;
-                          if(RIApiResponseNoInternetConnection == apiResponse)
-                          {
-                              noInternet = YES;
+                      }
+                      else
+                      {
+                          if (0 >= self.requestCount) {
+                              [self procedeToFirstAppScreen];
                           }
-                          
-                          [self showErrorView:noInternet startingY:64.0f selector:@selector(continueProcessing) objects:nil];
-                          
-                          [self hideLoading];
-                      }];
-    }
+                      }
+                      
+                  } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+                      BOOL noInternet = NO;
+                      if(RIApiResponseNoInternetConnection == apiResponse)
+                      {
+                          noInternet = YES;
+                      }
+                      
+                      [self showErrorView:noInternet startingY:64.0f selector:@selector(continueProcessing) objects:nil];
+                      
+                      [self hideLoading];
+                  }];
+
 }
 
 #pragma mark UIAlertView
