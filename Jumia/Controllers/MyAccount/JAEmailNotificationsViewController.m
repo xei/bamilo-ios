@@ -67,7 +67,7 @@
            
            [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
            [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
-           [self.saveButton addTarget:self action:@selector(updatePreferences) forControlEvents:UIControlEventTouchUpInside];
+           [self.saveButton addTarget:self action:@selector(continueUpdatePreferences) forControlEvents:UIControlEventTouchUpInside];
            
            if(self.firstLoading)
            {
