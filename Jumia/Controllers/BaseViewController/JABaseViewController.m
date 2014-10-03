@@ -139,6 +139,23 @@
     [messageView setTitle:message success:success addTo:window.rootViewController];
 }
 
+- (void)removeMessageView
+{
+    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+    if(VALID_NOTEMPTY(window.rootViewController, UIViewController) && VALID_NOTEMPTY(window.rootViewController.view, UIView))
+    {
+        for(UIView *view in window.rootViewController.view.subviews)
+        {
+            if([view isKindOfClass:[JAMessageView class]])
+            {
+                [view removeFromSuperview];
+                break;
+            }
+        }
+    }
+}
+
+
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
 {
     JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
