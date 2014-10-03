@@ -45,6 +45,11 @@
     
     self.formHeight = 0.0f;
     
+    [self getForm];
+}
+
+- (void)getForm
+{
     [RIForm getForm:@"managenewsletters"
        successBlock:^(RIForm *form) {
            
@@ -82,22 +87,20 @@
                self.firstLoading = NO;
            }
 
-           [self hideLoading];
+           BOOL noConnection = NO;
+           if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+           {
+               noConnection = YES;
+           }
+           [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
            
-           [self showMessage:STRING_ERROR success:NO];
+           [self hideLoading];
        }];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-#pragma mark - Action
-
-- (void)updatePreferences
-{
-    [self continueUpdatePreferences];
 }
 
 - (void)continueUpdatePreferences

@@ -67,6 +67,11 @@
     
     self.formHeight = 30.0f;
     
+    [self getForm];
+}
+
+- (void)getForm
+{
     [RIForm getForm:@"changepassword"
        successBlock:^(RIForm *form) {
            
@@ -86,27 +91,41 @@
                
                self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", ((RICustomer *)customer).firstName, ((RICustomer *)customer).lastName];
                self.emailLabel.text = ((RICustomer *)customer).email;
+
+               self.changePasswordHeight.constant = self.formHeight + 20;
+               [self.view updateConstraints];
+               
+               [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+               [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
+               [self.saveButton addTarget:self action:@selector(saveNewPassword) forControlEvents:UIControlEventTouchUpInside];
+               
+               if(self.firstLoading)
+               {
+                   NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                   [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                   self.firstLoading = NO;
+               }
                
                [self hideLoading];
                
            } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                
+               if(self.firstLoading)
+               {
+                   NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                   [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                   self.firstLoading = NO;
+               }
+               
+               BOOL noConnection = NO;
+               if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+               {
+                   noConnection = YES;
+               }
+               [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
+               
                [self hideLoading];
            }];
-           
-           self.changePasswordHeight.constant = self.formHeight + 20;
-           [self.view updateConstraints];
-           
-           [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];           
-           [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
-           [self.saveButton addTarget:self action:@selector(saveNewPassword) forControlEvents:UIControlEventTouchUpInside];
-           
-           if(self.firstLoading)
-           {
-               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-               self.firstLoading = NO;
-           }
 
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
            
@@ -117,9 +136,14 @@
                self.firstLoading = NO;
            }
 
-           [self hideLoading];
+           BOOL noConnection = NO;
+           if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+           {
+               noConnection = YES;
+           }
+           [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
            
-           [self showMessage:STRING_EDIT_ADDRESS success:NO];           
+           [self hideLoading];
        }];
 }
 
