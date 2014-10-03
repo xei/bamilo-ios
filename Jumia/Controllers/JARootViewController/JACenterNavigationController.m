@@ -783,8 +783,8 @@
 - (void)didSelectCountry:(NSNotification*)notification
 {
     RICountry *country = notification.object;
-    if (VALID_NOTEMPTY(country, RICountry)) {
-//        UINavigationController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+//    if (VALID_NOTEMPTY(country, RICountry)) {
+        UINavigationController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
         
         JASplashViewController *splash = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"splashViewController"];
         splash.selectedCountry = country;
@@ -792,9 +792,9 @@
         
         [self pushViewController:splash animated:NO];
         
-//        rootViewController.viewControllers = @[splash];
-//        [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
-    }
+        rootViewController.viewControllers = @[splash];
+        [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+//    }
 }
 
 #pragma mark - Recent Search
