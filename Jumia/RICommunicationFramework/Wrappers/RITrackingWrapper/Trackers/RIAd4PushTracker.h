@@ -26,6 +26,4 @@ extern NSString * const kRIAdd4PushDeviceToken;
     RIEcommerceEventTracking
 >
 
-- (void)trackOpenURL:(NSURL *)url;
-
 @end

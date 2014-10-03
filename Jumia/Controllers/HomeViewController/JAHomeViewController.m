@@ -231,7 +231,7 @@
 - (IBAction)swipeLeft:(id)sender
 {
     [self removeNotifications];
-    [self.teaserCategoryScrollView scrollLeft];
+    [self.teaserCategoryScrollView scrollLeftAnimated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate

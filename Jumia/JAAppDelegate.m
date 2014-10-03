@@ -98,11 +98,6 @@
     }
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    
-}
-
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     JARootViewController* mainController = (JARootViewController*)  self.window.rootViewController;
@@ -130,16 +125,6 @@
     [self checkSession];
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    
-}
-
 #pragma mark - Push notification
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -159,31 +144,29 @@
         
         if([currentCountry isEqualToString:countryFromUrl])
         {
-            JARootViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
-            
-            rootViewController.notification = userInfo;
-            
-            [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+            [[RITrackingWrapper sharedInstance] handlePushNotifcation:userInfo];
         }
         else
         {
             // Change country
-            [RICountry getCountriesWithSuccessBlock:^(id countries) {
-                
-                for (RICountry *country in countries)
-                {
-                    if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
-                    {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:country userInfo:userInfo];
-                    }
-                }
-                
-            } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-            }];
+            [RICountry getCountriesWithSuccessBlock:^(id countries)
+             {
+                 for (RICountry *country in countries)
+                 {
+                     if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
+                     {
+                         [[RITrackingWrapper sharedInstance] handlePushNotifcation:userInfo];
+                     }
+                 }
+                 
+             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+             {
+                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+             }];
         }
     }
+    
+    [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification

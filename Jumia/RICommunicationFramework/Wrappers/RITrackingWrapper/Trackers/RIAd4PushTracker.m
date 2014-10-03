@@ -155,8 +155,6 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     }
     
     [[BMA4SNotification sharedBMA4S] didReceiveRemoteNotification:userInfo];
-    
-    [self handleNotificationWithDictionary:userInfo];
 }
 
 - (void)applicationDidReceiveLocalNotification:(UILocalNotification *)notification
@@ -189,6 +187,13 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     [[BMA4SNotification sharedBMA4S] applicationHandleOpenUrl:url];
     
     [self handlePushNotificationWithOpenURL:url];
+}
+
+#pragma mark - RIPushNotificaitonTracking
+
+- (void)handlePushNotifcation:(NSDictionary *)info
+{
+    [self handleNotificationWithDictionary:info];
 }
 
 #pragma mark - RILaunchEventTracker implementation
@@ -696,15 +701,20 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         NSString *urlHost = [NSString stringWithString:url.host];
         NSString *urlQuery = nil;
         
-        if (url.query != nil) {
-            if ([url.query length] >= 5) {
-                if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"]) {
+        if (url.query != nil)
+        {
+            if ([url.query length] >= 5)
+            {
+                if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"])
+                {
                     NSRange range = [url.query rangeOfString:@"?ADXID"];
-                    if (range.location != NSNotFound) {
+                    if (range.location != NSNotFound)
+                    {
                         NSString *paramsWithoutAdXData = [url.query substringToIndex:range.location];
                         urlQuery = [NSString stringWithFormat:@"?%@",paramsWithoutAdXData];
                         path = [url.path stringByAppendingString:urlQuery];
-                    } else {
+                    } else
+                    {
                         urlQuery = [NSString stringWithFormat:@"?%@",url.query];
                         path = [url.path stringByAppendingString:urlQuery];
                     }
@@ -750,43 +760,15 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                                    categoryName:(NSString *)categoryName
                                      searchTerm:(NSString *)searchTerm
 {
-    if (categoryId.length > 0)
+    if(VALID_NOTEMPTY(categoryId, NSString))
     {
-        [RICategory getCategoriesWithSuccessBlock:^(id categories) {
-            
-            for (RICategory *category in categories)
-            {
-                if ([category.uid isEqualToString:categoryId])
-                {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
-                                                                        object:@{@"category":category}];
-                    
-                    break;
-                }
-            }
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-            [self pushHomeViewController];
-        }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_id":categoryId}];
     }
-    else if (categoryName.length > 0)
+    else if(VALID_NOTEMPTY(categoryName, NSString))
     {
-        [RICategory getCategoriesWithSuccessBlock:^(id categories) {
-            
-            for (RICategory *category in categories)
-            {
-                if ([category.urlKey isEqualToString:categoryName])
-                {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
-                                                                        object:@{@"category":category}];
-                    
-                    break;
-                }
-            }
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-            [self pushHomeViewController];
-        }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":categoryName}];
     }
-    else if (searchTerm.length > 0)
+    else if(VALID_NOTEMPTY(searchTerm, NSString))
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                             object:@{@"index": @(99),

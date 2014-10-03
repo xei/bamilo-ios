@@ -82,7 +82,7 @@
     
     if(self.startingIndex > 0) {
         self.selectedIndex = self.startingIndex-1;
-        [self scrollLeft];
+        [self scrollLeftAnimated:NO];
     } else {
         [self selectLabelAtIndex:0];
     }
@@ -121,7 +121,7 @@
     {
         if (point.x > (self.scrollView.frame.origin.x + self.scrollView.frame.size.width))
         {
-            [self scrollLeft];
+            [self scrollLeftAnimated:YES];
         }
     }
 }
@@ -149,7 +149,7 @@
     }
 }
 
-- (void)scrollLeft
+- (void)scrollLeftAnimated:(BOOL)animated
 {
     CGFloat newIndex = self.selectedIndex + 1;
     
@@ -157,7 +157,7 @@
         [self.scrollView scrollRectToVisible:CGRectMake(newIndex * self.scrollView.bounds.size.width,
                                                         self.scrollView.bounds.origin.y,
                                                         self.scrollView.bounds.size.width,
-                                                        self.scrollView.bounds.size.height) animated:YES];
+                                                        self.scrollView.bounds.size.height) animated:animated];
         [self selectLabelAtIndex:newIndex];
     }
 }
