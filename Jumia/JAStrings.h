@@ -215,4 +215,6 @@
 #define STRING_OOPS RILocalizedString(@"string_oops", nil) // Not translated
 #define STRING_SOMETHING_BROKEN RILocalizedString(@"string_something_broken", nil) // Not translated
 
+#define STRING_FORM_DATA_NOT_TRANSFERRED RILocalizedString(@"form_data_not_transferred", nil)
+
 #endif
