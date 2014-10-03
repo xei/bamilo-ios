@@ -218,6 +218,11 @@ JAActivityViewControllerDelegate
                                               data:[trackingDictionary copy]];
     
     trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"ViewProductDetails" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];    
+    [trackingDictionary setValue:price forKey:kRIEventValueKey];
+    
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
@@ -293,14 +298,6 @@ JAActivityViewControllerDelegate
     else if ([segue.identifier isEqualToString:@"segueToDetails"])
     {
         [segue.destinationViewController setProduct:self.product];
-        
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
-        [trackingDictionary setValue:@"ViewProductDetails" forKey:kRIEventActionKey];
-        [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewProductDetails]
-                                                  data:[trackingDictionary copy]];
     }
     else if ([segue.identifier isEqualToString:@"segueNewReview"])
     {

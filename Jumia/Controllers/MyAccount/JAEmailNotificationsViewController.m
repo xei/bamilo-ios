@@ -118,35 +118,39 @@
          for (UIView *view in self.dynamicForm.formViews) {
              if ([view isKindOfClass:[JACheckBoxWithOptionsComponent class]])
              {
-                 if (((JACheckBoxWithOptionsComponent *)view).values.count > 0)
+                 NSMutableDictionary *values = [(JACheckBoxWithOptionsComponent*)view values];
+                 if (VALID_NOTEMPTY(values, NSMutableDictionary))
                  {
-                     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-                     [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
-                     [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-                     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                     [trackingDictionary setValue:@"My Account" forKey:kRIEventLocationKey];
-                     
-                     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
-                                                               data:[trackingDictionary copy]];
-                     
-                     notSelectedNewsletter = NO;
-                     
-                     break;
+                     NSArray *keys = [values allKeys];
+                     for(NSString *key in keys)
+                     {
+                         NSString *value = [values objectForKey:key];
+                         if(VALID_NOTEMPTY(value, NSString) && ![@"-1" isEqualToString:value])
+                         {
+                             notSelectedNewsletter = NO;
+                             break;
+                         }
+                     }
                  }
              }
          }
          
+         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+         [trackingDictionary setValue:@"My Account" forKey:kRIEventLocationKey];
          if (notSelectedNewsletter)
          {
-             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
              [trackingDictionary setValue:@"UnsubscribeNewsletter" forKey:kRIEventActionKey];
-             [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-             
-             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
-                                                       data:[trackingDictionary copy]];
          }
+         else
+         {
+             [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
+         }
+
+         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
+                                                   data:[trackingDictionary copy]];
          
          [self.dynamicForm resetValues];
          
