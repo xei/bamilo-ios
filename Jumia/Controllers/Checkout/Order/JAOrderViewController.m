@@ -9,6 +9,7 @@
 #import "JAOrderViewController.h"
 #import "JAButtonWithBlur.h"
 #import "RICartItem.h"
+#import "RICustomer.h"
 #import "UIImageView+WebCache.h"
 
 @interface JAOrderViewController ()
@@ -41,6 +42,14 @@
     
     [self setupViews];
     
+    
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"CheckoutMyOrder" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+    [trackingDictionary setValue:[self.checkout.cart cartValue] forKey:kRIEventValueKey];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutOrder]
+                                              data:[trackingDictionary copy]];
     if(self.firstLoading)
     {
         NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];

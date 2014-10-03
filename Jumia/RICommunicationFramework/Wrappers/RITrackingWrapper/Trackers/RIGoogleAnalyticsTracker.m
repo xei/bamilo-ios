@@ -54,7 +54,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         [events addObject:[NSNumber numberWithInt:RIEventCatalog]];
         [events addObject:[NSNumber numberWithInt:RIEventFilter]];
         [events addObject:[NSNumber numberWithInt:RIEventSort]];
-        [events addObject:[NSNumber numberWithInt:RIEventViewProductDetails]];
+        [events addObject:[NSNumber numberWithInt:RIEventViewProduct]];
         [events addObject:[NSNumber numberWithInt:RIEventRelatedItem]];
         [events addObject:[NSNumber numberWithInt:RIEventAddToCart]];
         [events addObject:[NSNumber numberWithInt:RIEventAddToWishlist]];
@@ -199,10 +199,6 @@ static RIGoogleAnalyticsTracker *sharedInstance;
                                                                       value:value] build];
         [tracker send:dict];
     }
-    else
-    {
-        NSLog(@"Google Analytics - Event not registered");
-    }
 }
 
 #pragma mark - RIEcommerceEventTracking
@@ -222,10 +218,11 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     NSNumber *tax = [data objectForKey:kRIEcommerceTaxKey];
     NSNumber *shipping = [data objectForKey:kRIEcommerceShippingKey];
     NSString *currency = [data objectForKey:kRIEcommerceCurrencyKey];
+    NSNumber *revenue = [data objectForKey:kRIEcommerceTotalValueKey];    
     
     NSDictionary *dict = [[GAIDictionaryBuilder createTransactionWithId:transactionId
-                                                            affiliation:nil
-                                                                revenue:nil
+                                                            affiliation:@"In-App Store"
+                                                                revenue:revenue
                                                                     tax:tax
                                                                shipping:shipping
                                                            currencyCode:currency] build];
