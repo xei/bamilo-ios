@@ -197,8 +197,10 @@
     NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
     NSMutableArray *productsArray = [self.productsMap objectForKey:key];
     
+    BOOL isEmpty = NO;
     if(ISEMPTY(productsArray))
     {
+        isEmpty = YES;
         productsArray = [NSMutableArray new];
     }
     
@@ -209,6 +211,10 @@
     
     [self.productsMap setObject:productsArray forKey:key];
     [self.collectionView reloadData];
+    if(isEmpty)
+    {
+        [self.collectionView setContentOffset:CGPointZero animated:NO];
+    }
 }
 
 
@@ -670,8 +676,8 @@
         else
         {
             [self.collectionView reloadData];
+            [self.collectionView setContentOffset:CGPointZero animated:NO];            
         }
-        [self.collectionView setContentOffset:CGPointZero animated:NO];
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:self.title forKey:kRIEventLabelKey];
