@@ -21,8 +21,9 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIFont fontWithName:@"HelveticaNeue" size:fontSize], NSFontAttributeName,
                                 UIColorFromRGB(0xcc0000), NSForegroundColorAttributeName, nil];
-    if (VALID_NOTEMPTY(specialPrice, NSString)) {
-        
+
+    if (VALID_NOTEMPTY(specialPrice, NSString) && VALID_NOTEMPTY(price, NSString))
+    {
         NSDictionary* oldPriceAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                             [UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize], NSFontAttributeName,
                                             UIColorFromRGB(0xcccccc), NSForegroundColorAttributeName, nil];
@@ -31,7 +32,8 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
         finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", specialPrice, price]
                                                                   attributes:attributes];
         
-        if (specialPriceOnTheLeft) {
+        if (specialPriceOnTheLeft)
+        {
             oldPriceRange = NSMakeRange(0, price.length);
             finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", price, specialPrice]
                                                                       attributes:attributes];
@@ -40,8 +42,20 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
         [finalPriceString setAttributes:oldPriceAttributes
                                   range:oldPriceRange];
         
-    } else {
+    }
+    else if (VALID_NOTEMPTY(price, NSString))
+    {
         finalPriceString = [[NSMutableAttributedString alloc] initWithString:price attributes:attributes];
+    }
+    else if (VALID_NOTEMPTY(specialPrice, NSString))
+    {
+        // this should not happen.. this means that the API is only sending special price
+        finalPriceString = [[NSMutableAttributedString alloc] initWithString:specialPrice attributes:attributes];
+    }
+    else
+    {
+        // this should not happen.. this means that the API is not sending any price
+        finalPriceString  = [[NSMutableAttributedString alloc] initWithString:@"" attributes:attributes];
     }
     
     [label setAttributedText:finalPriceString];
