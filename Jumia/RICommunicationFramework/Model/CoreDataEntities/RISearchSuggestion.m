@@ -183,7 +183,7 @@
                              page:(NSString *)page
                          maxItems:(NSString *)maxItems
                     sortingMethod:(RICatalogSorting)sortingMethod
-                     successBlock:(void (^)(NSArray *results))successBlock
+                     successBlock:(void (^)(NSArray *results, NSNumber *productCount))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
@@ -198,9 +198,9 @@
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                                                                  NSDictionary *metadata = jsonObject[@"metadata"];
-                                                                  NSDictionary *results = metadata[@"results"];
-                                                                  
+                                                                  NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+                                                                  NSDictionary *results = [metadata objectForKey:@"results"];
+                                                                  NSNumber *productCount = [metadata objectForKey:@"product_count"];
                                                                   NSMutableArray *temp = [NSMutableArray new];
                                                                   
                                                                   for (NSDictionary *dic in results) {
@@ -208,7 +208,7 @@
                                                                   }
                                                                   
                                                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                                                      successBlock([temp copy]);
+                                                                      successBlock([temp copy], productCount);
                                                                   });
                                                                   
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
