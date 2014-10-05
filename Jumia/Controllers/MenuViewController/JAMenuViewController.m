@@ -356,11 +356,13 @@ UIAlertViewDelegate
             [self.customNavBar.searchBar resignFirstResponder];
             
             RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
-            
             NSString *item = suggestion.item;
             
-            [RISearchSuggestion saveSearchSuggestionOnDB:suggestion.item
-                                          isRecentSearch:YES];
+            if(!suggestion.isRecentSearch)
+            {
+                [RISearchSuggestion saveSearchSuggestionOnDB:suggestion.item
+                                              isRecentSearch:YES];
+            }
             
             // I changed the index to 99 to know that it's to display a search result
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification

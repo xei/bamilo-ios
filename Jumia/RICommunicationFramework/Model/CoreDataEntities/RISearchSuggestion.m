@@ -98,11 +98,6 @@
             [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
             [[RIDataBaseWrapper sharedInstance] saveContext];
         }
-        else
-        {
-            [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
-            [[RIDataBaseWrapper sharedInstance] saveContext];
-        }
     }
 }
 
@@ -125,7 +120,7 @@
                                                               
                                                               for (RISearchSuggestion *tempSearch in searches)
                                                               {
-                                                                  if ([tempSearch.item rangeOfString:query].location != NSNotFound)
+                                                                  if ([[tempSearch.item lowercaseString] rangeOfString:[query lowercaseString]].location != NSNotFound)
                                                                   {
                                                                       [databaseSuggesions addObject:tempSearch];
                                                                   }
