@@ -897,7 +897,6 @@
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
             [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
-            [trackingDictionary setValue:[self.cart cartValue] forKey:kRIEventValueKey];
             
             [trackingDictionary setValue:[NSNumber numberWithInt:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
             [trackingDictionary setValue:[self.cart cartValue] forKey:kRIEventTotalCartKey];
