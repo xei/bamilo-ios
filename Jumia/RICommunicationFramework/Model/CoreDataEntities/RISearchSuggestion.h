@@ -99,6 +99,8 @@
  * @param the query for which we want the results
  * @param the page number
  * @param the max items
+ * @param the sorting method
+ * @param the filters that are used
  * @param the block where the success response can be processed
  * @param the block where the failure response can be processed
  *
@@ -108,7 +110,8 @@
                              page:(NSString *)page
                          maxItems:(NSString *)maxItems
                     sortingMethod:(RICatalogSorting)sortingMethod
-                     successBlock:(void (^)(NSArray *results, NSNumber *productCount))successBlock
+                          filters:(NSArray*)filters
+                     successBlock:(void (^)(NSArray *results, NSArray *filters, NSNumber *productCount))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
 
 /**
