@@ -23,7 +23,6 @@
 - (void)loadWithCampaignUrl:(NSString*)campaignUrl;
 {
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
-    self.scrollView.accessibilityLabel = @"teaserPageScrollView";
     [self addSubview:self.scrollView];
     
     if (VALID_NOTEMPTY(campaignUrl, NSString)) {

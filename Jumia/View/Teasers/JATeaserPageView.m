@@ -26,6 +26,8 @@
 
 - (void)loadTeasers;
 {
+    self.accessibilityLabel = @"teaserPageScrollView";
+    
     if (NOTEMPTY(self.teaserCategory)) {
         
         self.backgroundColor = JABackgroundGrey;
