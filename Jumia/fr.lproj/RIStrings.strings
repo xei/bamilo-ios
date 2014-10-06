@@ -180,7 +180,7 @@
 
 "thank_you_order_title" = "Merci!";
 "order_success" = "Votre commande a été enregistré avec succès, sous le numéro suivant:";
-"order_track_success" = "YVous pouvez suivre le statut de votre commande en allant dans la rubrique dédiée dans l'application";
+"order_track_success" = "Vous pouvez suivre le statut de votre commande en allant dans la rubrique dédiée dans l'application";
 "order_track_link" = "statut de votre commande";
 
 "my_order_label" = "Ma commande";
