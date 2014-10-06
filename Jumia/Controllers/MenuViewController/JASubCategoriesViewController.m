@@ -79,6 +79,12 @@ UITableViewDelegate
         }
     } else {
         
+        for (UIView* view in cell.subviews) {
+            if (69 == view.tag) {
+                [view removeFromSuperview];
+            }
+        }
+        
         NSInteger realIndex = indexPath.row - 1;
         
         cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
@@ -90,6 +96,14 @@ UITableViewDelegate
         if (category.children.count > 0) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
+        
+        UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                     43.0f,
+                                                                     cell.frame.size.width,
+                                                                     1)];
+        separator.tag = 69;
+        separator.backgroundColor = JALabelGrey;
+        [cell addSubview:separator];
     }
     
     return cell;
