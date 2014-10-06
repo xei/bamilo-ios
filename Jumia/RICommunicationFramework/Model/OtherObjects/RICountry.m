@@ -16,7 +16,7 @@
                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     NSString *countryListURL = RI_COUNTRIES_URL;
-#if defined(DEBUG) && DEBUG
+#if defined(STAGING) && STAGING
     countryListURL = [NSString stringWithFormat:@"%@/staging", RI_COUNTRIES_URL];
 #endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
