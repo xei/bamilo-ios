@@ -24,7 +24,11 @@
     
 #if defined(DEBUG) && DEBUG
     
+#if defined(STAGING) && STAGING
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+#else
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"3c9ad1f5e09a65331e412821125cc2f2"];
+#endif
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
     
@@ -35,7 +39,7 @@
     
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug" ofType:@"plist"];
 #else
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"dc297f584830db92a1047ba154dadb9e"];
     [[BITHockeyManager sharedHockeyManager] startManager];
     
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];

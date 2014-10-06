@@ -3646,6 +3646,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 					"HOCKEY=1",
+					"STAGING=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -3721,6 +3722,149 @@
 			};
 			name = Hockey;
 		};
+		B595F70B19E2E53D00D90F1D /* HockeyLive */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"HOCKEY=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "8f97a1ce-529f-442a-8e6b-e7a1750af7bb";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv7s";
+			};
+			name = HockeyLive;
+		};
+		B595F70C19E2E53D00D90F1D /* HockeyLive */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
+				INFOPLIST_FILE = Jumia/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8f97a1ce-529f-442a-8e6b-e7a1750af7bb";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "armv7 armv7s";
+			};
+			name = HockeyLive;
+		};
+		B595F70D19E2E53D00D90F1D /* HockeyLive */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Jumia.app/Jumia";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = JumiaTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = HockeyLive;
+		};
+		B595F70E19E2E53D00D90F1D /* HockeyLive */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
+				INFOPLIST_FILE = Jumia/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+					"-force_load",
+					"\"$(SRCROOT)/calabash.framework/calabash\"",
+					"-lstdc++",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "armv7 armv7s";
+			};
+			name = HockeyLive;
+		};
 		B5A301C919811D0700F71726 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3748,6 +3892,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"STAGING=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -4002,6 +4147,7 @@
 			buildConfigurations = (
 				B5A301C919811D0700F71726 /* Debug */,
 				B5007ACA19A4F29D0024035A /* Hockey */,
+				B595F70B19E2E53D00D90F1D /* HockeyLive */,
 				B5A301CA19811D0700F71726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -4012,6 +4158,7 @@
 			buildConfigurations = (
 				B5A301CC19811D0700F71726 /* Debug */,
 				B5007ACB19A4F29D0024035A /* Hockey */,
+				B595F70C19E2E53D00D90F1D /* HockeyLive */,
 				B5A301CD19811D0700F71726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -4022,6 +4169,7 @@
 			buildConfigurations = (
 				B5A301CF19811D0700F71726 /* Debug */,
 				B5007ACC19A4F29D0024035A /* Hockey */,
+				B595F70D19E2E53D00D90F1D /* HockeyLive */,
 				B5A301D019811D0700F71726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -4032,6 +4180,7 @@
 			buildConfigurations = (
 				eaabdfc032da67d5570ab304 /* Debug */,
 				fa50d405be7c2e7bfb830627 /* Hockey */,
+				B595F70E19E2E53D00D90F1D /* HockeyLive */,
 				6b8124fbc48748052e9d82b3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

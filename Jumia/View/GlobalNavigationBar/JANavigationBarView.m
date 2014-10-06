@@ -1,4 +1,4 @@
-//
+    //
 //  JANavigationBarView.m
 //  Jumia
 //
@@ -185,8 +185,16 @@
         }
         else
         {
-            backButtonMaxWidth = self.frame.size.width - rightItemFrame.size.width - 12.0f;
-            frame.size.width = 6.0f + backButtonMaxWidth + 11.0f;
+            if(!self.titleLabel.hidden)
+            {
+                backButtonMaxWidth = backButtonTextSize.width;
+                frame.size.width = 6.0f + backButtonMaxWidth + 11.0f + 12.0f;
+            }
+            else
+            {
+                backButtonMaxWidth = self.frame.size.width - rightItemFrame.size.width - 12.0f;
+                frame.size.width = 6.0f + backButtonMaxWidth + 11.0f;
+            }
         }
             
         self.backButton.frame = frame;
