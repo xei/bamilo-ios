@@ -98,11 +98,6 @@
             [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
             [[RIDataBaseWrapper sharedInstance] saveContext];
         }
-        else
-        {
-            [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
-            [[RIDataBaseWrapper sharedInstance] saveContext];
-        }
     }
 }
 
@@ -125,7 +120,7 @@
                                                               
                                                               for (RISearchSuggestion *tempSearch in searches)
                                                               {
-                                                                  if ([tempSearch.item rangeOfString:query].location != NSNotFound)
+                                                                  if ([[tempSearch.item lowercaseString] rangeOfString:[query lowercaseString]].location != NSNotFound)
                                                                   {
                                                                       [databaseSuggesions addObject:tempSearch];
                                                                   }
@@ -183,7 +178,7 @@
                              page:(NSString *)page
                          maxItems:(NSString *)maxItems
                     sortingMethod:(RICatalogSorting)sortingMethod
-                     successBlock:(void (^)(NSArray *results))successBlock
+                     successBlock:(void (^)(NSArray *results, NSNumber *productCount))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
@@ -198,8 +193,20 @@
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                                                                  NSDictionary *metadata = jsonObject[@"metadata"];
-                                                                  NSDictionary *results = metadata[@"results"];
+                                                                  NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+                                                                  NSDictionary *results = [metadata objectForKey:@"results"];
+                                                                  
+                                                                  NSNumber *productCountValue = [NSNumber numberWithInt:0];
+                                                                  id productCount = [metadata objectForKey:@"product_count"];
+                                                                  if(VALID_NOTEMPTY(productCount, NSNumber))
+                                                                  {
+                                                                      productCountValue = productCount;
+                                                                  }
+                                                                  else if(VALID_NOTEMPTY(productCount, NSString))
+                                                                  {
+                                                                      NSString *productCountStirng = productCount;
+                                                                      productCountValue = [NSNumber numberWithInt:[productCountStirng intValue]];
+                                                                  }
                                                                   
                                                                   NSMutableArray *temp = [NSMutableArray new];
                                                                   
@@ -208,7 +215,7 @@
                                                                   }
                                                                   
                                                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                                                      successBlock([temp copy]);
+                                                                      successBlock([temp copy], productCountValue);
                                                                   });
                                                                   
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
