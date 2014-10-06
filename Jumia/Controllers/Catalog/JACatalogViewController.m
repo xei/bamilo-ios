@@ -297,7 +297,7 @@
                                            
                                            NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
                                            NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-                                           if (productsArray.count == [productCount integerValue])
+                                           if (0 == results.count || results.count < JACatalogViewControllerMaxProducts || [productCount integerValue] == productsArray.count)
                                            {
                                                self.loadedEverything = YES;
                                            }
@@ -379,7 +379,11 @@
                                                 category = [categories objectAtIndex:0];
                                             }
                                             
-                                            if (0 == products.count || JACatalogViewControllerMaxProducts > products.count) {
+                                            NSInteger productCountValue = [productCount intValue];
+                                            NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
+                                            NSMutableArray *productsArray = [self.productsMap objectForKey:key];
+                                            if (0 == products.count || products.count < JACatalogViewControllerMaxProducts || productCountValue == productsArray.count)
+                                            {
                                                 self.loadedEverything = YES;
                                             }
                                             

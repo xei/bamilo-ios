@@ -195,7 +195,6 @@
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
                                                                   NSDictionary *results = [metadata objectForKey:@"results"];
-//                                                                  NSNumber *productCount = [metadata objectForKey:@"product_count"];
                                                                   
                                                                   NSNumber *productCountValue = [NSNumber numberWithInt:0];
                                                                   id productCount = [metadata objectForKey:@"product_count"];
