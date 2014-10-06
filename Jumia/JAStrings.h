@@ -217,4 +217,6 @@
 
 #define STRING_FORM_DATA_NOT_TRANSFERRED RILocalizedString(@"form_data_not_transferred", nil)
 
+#define STRING_CONFIRM_ORDER RILocalizedString(@"my_order_confirm_button", nil)
+
 #endif

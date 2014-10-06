@@ -191,7 +191,7 @@
     UILabel* articlesLabel = [UILabel new];
     articlesLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     articlesLabel.textColor = UIColorFromRGB(0x666666);
-    articlesLabel.text = [NSString stringWithFormat:STRING_ARTICLES, self.checkout.cart.cartCount];
+    articlesLabel.text = [NSString stringWithFormat:STRING_ARTICLES, [self.checkout.cart.cartCount integerValue]];
     if (1 == [self.checkout.cart.cartCount integerValue]) {
         articlesLabel.text = STRING_ARTICLE;
     }
@@ -206,7 +206,7 @@
     totalLabel.textAlignment = NSTextAlignmentRight;
     totalLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     totalLabel.textColor = UIColorFromRGB(0x666666);
-    totalLabel.text = self.checkout.cart.cartValueFormatted;
+    totalLabel.text = self.checkout.cart.cartCleanValueFormatted;
     [totalLabel sizeToFit];
     totalLabel.frame = CGRectMake(CGRectGetMaxX(articlesLabel.frame),
                                      articlesLabel.frame.origin.y,
@@ -287,6 +287,34 @@
                                            subtotalContentView.frame.origin.y,
                                            subtotalContentView.frame.size.width,
                                            CGRectGetMaxY(extraCostsLabel.frame) + 10.0f);
+    
+    UILabel* finalTotalLabel = [UILabel new];
+    finalTotalLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0f];
+    finalTotalLabel.textColor = UIColorFromRGB(0x666666);
+    finalTotalLabel.text = STRING_TOTAL;
+    [finalTotalLabel sizeToFit];
+    finalTotalLabel.frame = CGRectMake(extraCostsLabel.frame.origin.x,
+                                       CGRectGetMaxY(extraCostsLabel.frame) + 5.0f,
+                                       extraCostsLabel.frame.size.width,
+                                       finalTotalLabel.frame.size.height);
+    [subtotalContentView addSubview:finalTotalLabel];
+    
+    UILabel* finalTotalValueLabel = [UILabel new];
+    finalTotalValueLabel.textAlignment = NSTextAlignmentRight;
+    finalTotalValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0f];
+    finalTotalValueLabel.textColor = UIColorFromRGB(0x666666);
+    finalTotalValueLabel.text = self.checkout.cart.cartValueFormatted;
+    [finalTotalValueLabel sizeToFit];
+    finalTotalValueLabel.frame = CGRectMake(CGRectGetMaxX(finalTotalLabel.frame),
+                                            finalTotalLabel.frame.origin.y,
+                                            totalLabel.frame.size.width,
+                                            finalTotalValueLabel.frame.size.height);
+    [subtotalContentView addSubview:finalTotalValueLabel];
+    
+    subtotalContentView.frame = CGRectMake(subtotalContentView.frame.origin.x,
+                                           subtotalContentView.frame.origin.y,
+                                           subtotalContentView.frame.size.width,
+                                           CGRectGetMaxY(finalTotalLabel.frame) + 10.0f);
     
     self.currentY += subtotalContentView.frame.size.height + 5.0f;
 }
@@ -509,7 +537,7 @@
 {
     self.bottomView = [[JAButtonWithBlur alloc] init];
     [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    [self.bottomView addButton:STRING_CONFIRM_ORDER target:self action:@selector(nextStepButtonPressed)];
     
     [self.view addSubview:self.bottomView];
 }
