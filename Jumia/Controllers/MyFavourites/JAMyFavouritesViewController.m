@@ -36,6 +36,8 @@
 
 @property (strong, nonatomic) UIButton *backupButton; // for the retry connection, is necessary to store the button
 
+@property (assign, nonatomic) BOOL addAllToCartClicked;
+
 @end
 
 @implementation JAMyFavouritesViewController
@@ -308,6 +310,12 @@
         NSString* chosenSimpleName = [self.chosenSimpleNames objectAtIndex:indexPath.row];
         if ([chosenSimpleName isEqualToString:@""]) {
             [cell.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
+
+            if(self.addAllToCartClicked)
+            {
+                [cell.sizeButton setTitleColor:UIColorFromRGB(0xcc0000) forState:UIControlStateNormal];
+            }
+
         } else {
             [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimpleName] forState:UIControlStateNormal];
         }
@@ -350,19 +358,43 @@
 
 #pragma mark - Button Actions
 
+- (void)addErrorToSizeButtons
+{
+    for (int i = 0; i < self.chosenSimpleNames.count; i++)
+    {
+        RIProduct* product = [self.productsArray objectAtIndex:i];
+        if (1 != product.productSimples.count)
+        {
+            //has more than one simple, lets check if there is a simple selected
+            NSString* string = [self.chosenSimpleNames objectAtIndex:i];
+            if ([string isEqualToString:@""])
+            {
+                JACatalogCell *cell = (JACatalogCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+                
+                [cell.sizeButton setTitleColor:UIColorFromRGB(0xcc0000) forState:UIControlStateNormal];
+            }
+        }
+    }
+}
+
 - (void)addAllToCart
 {
+    self.addAllToCartClicked = YES;
+
     //first lets check if we have all products with simples selected
     for (int i = 0; i < self.chosenSimpleNames.count; i++) {
         RIProduct* product = [self.productsArray objectAtIndex:i];
-        if (1 != product.productSimples.count) {
+        if (1 != product.productSimples.count)
+        {
             //has more than one simple, lets check if there is a simple selected
             NSString* string = [self.chosenSimpleNames objectAtIndex:i];
-            if ([string isEqualToString:@""]) {
+            if ([string isEqualToString:@""])
+            {
                 //nothing is selected, abort
                 
                 [self showMessage:STRING_CHOOSE_SIZE_FOR_ALL_PRODUCTS success:NO];
-
+                
+                [self addErrorToSizeButtons];
                 return;
             }
         }
@@ -494,6 +526,8 @@
         }
     }];
     
+    self.addAllToCartClicked = NO;
+
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
         if (VALID_NOTEMPTY(favoriteProducts, NSArray)) {
             NSString* errorMessage = STRING_ERROR_ADD_TO_CART_FAILED_FOR_1_PRODUCT;
@@ -509,6 +543,7 @@
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart] data:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.totalProdutsInWishlist] forKey:kRIEventNumberOfProductsKey]];
         
         [self updateListsWith:favoriteProducts];
+
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart] data:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.totalProdutsInWishlist] forKey:kRIEventNumberOfProductsKey]];
@@ -579,8 +614,7 @@
             JACatalogCell *cell = (JACatalogCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:button.tag
                                                                                                                    inSection:0]];
             
-            [cell.sizeButton setTitleColor:[UIColor redColor]
-                                  forState:UIControlStateNormal];
+            [cell.sizeButton setTitleColor:UIColorFromRGB(0xcc0000) forState:UIControlStateNormal];
             
             self.selectedSizeAndAddToCart = YES;
             
@@ -783,7 +817,8 @@
     [self removePickerView];
     [self.collectionView reloadData];
     
-    if (self.selectedSizeAndAddToCart) {
+    if (self.selectedSizeAndAddToCart)
+    {
         JACatalogCell *cell = (JACatalogCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:button.tag
                                                                                                                inSection:0]];
         
