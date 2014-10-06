@@ -253,6 +253,9 @@
     shippingValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     shippingValueLabel.textColor = UIColorFromRGB(0x666666);
     shippingValueLabel.text = self.checkout.cart.shippingValueFormatted;
+    if (0 == [self.checkout.cart.shippingValue integerValue]) {
+        shippingValueLabel.text = STRING_FREE;
+    }
     [shippingValueLabel sizeToFit];
     shippingValueLabel.frame = CGRectMake(CGRectGetMaxX(shippingLabel.frame),
                                           shippingLabel.frame.origin.y,
