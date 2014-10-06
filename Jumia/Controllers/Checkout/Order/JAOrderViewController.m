@@ -497,7 +497,7 @@
         UILabel* couponTitleLabel = [UILabel new];
         couponTitleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
         couponTitleLabel.textColor = UIColorFromRGB(0x666666);
-        couponTitleLabel.text = self.checkout.orderSummary.paymentMethod;
+        couponTitleLabel.text = STRING_COUPON;
         couponTitleLabel.numberOfLines = 0;
         [couponTitleLabel sizeToFit];
         couponTitleLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
@@ -507,13 +507,13 @@
         [paymentContentView addSubview:couponTitleLabel];
         
         UILabel* couponCodeLabel = [UILabel new];
-        couponCodeLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+        couponCodeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
         couponCodeLabel.textColor = UIColorFromRGB(0x666666);
-        couponCodeLabel.text = self.checkout.orderSummary.paymentMethod;
+        couponCodeLabel.text = self.checkout.orderSummary.discountCouponCode;
         couponCodeLabel.numberOfLines = 0;
         [couponCodeLabel sizeToFit];
         couponCodeLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
-                                           CGRectGetMaxY(couponTitleLabel.frame) + 5.0f,
+                                           CGRectGetMaxY(couponTitleLabel.frame),
                                            paymentContentView.frame.size.width - 6.0f,
                                            couponCodeLabel.frame.size.height);
         [paymentContentView addSubview:couponCodeLabel];
@@ -521,7 +521,7 @@
         paymentContentView.frame = CGRectMake(paymentContentView.frame.origin.x,
                                               paymentContentView.frame.origin.y,
                                               paymentContentView.frame.size.width,
-                                              CGRectGetMaxY(paymentContentView.frame));
+                                              CGRectGetMaxY(couponCodeLabel.frame));
     }
     
 
