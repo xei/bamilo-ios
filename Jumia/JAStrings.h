@@ -165,8 +165,8 @@
 #define STRING_NO_RECENTLY_VIEWED_PRODUCTS RILocalizedString(@"recentlyview_no_searches", nil)
 #define STRING_CLEAR_RECENTLY_VIEWED RILocalizedString(@"recentlyview_clear_viewed", nil)
 
-#define STRING_USER_DATA RILocalizedString(@"string_user_data", nil) // Not translated
-#define STRING_USER_EMAIL_NOTIFICATIONS RILocalizedString(@"string_user_email_notifications", nil) // Not translated
+#define STRING_USER_DATA RILocalizedString(@"string_user_data", nil)
+#define STRING_USER_EMAIL_NOTIFICATIONS RILocalizedString(@"string_user_email_notifications", nil)
 #define STRING_ACCOUNT_SETTINGS RILocalizedString(@"section_title_account", nil)
 #define STRING_CHANGE_PASS_MANAGE_EMAIL RILocalizedString(@"option2_description", nil)
 #define STRING_EMAIL_NOTIFICATIONS RILocalizedString(@"myaccount_email_notifications", nil)
@@ -178,8 +178,8 @@
 #define STRING_PLAY_SOUND RILocalizedString(@"sound_summary", nil)
 #define STRING_YOUR_PERSONAL_DATA RILocalizedString(@"personal_data_label", nil)
 #define STRING_NEW_PASSWORD RILocalizedString(@"new_password_label", nil)
-#define STRING_CHANGED_PASSWORD_SUCCESS RILocalizedString(@"password_changed_success", nil) // Not translated
-#define STRING_PREFERENCES_UPDATED RILocalizedString(@"preferences_updated", nil) // Not translated
+#define STRING_CHANGED_PASSWORD_SUCCESS RILocalizedString(@"password_changed_success", nil)
+#define STRING_PREFERENCES_UPDATED RILocalizedString(@"preferences_updated", nil)
 
 #define STRING_THANK_YOU_ORDER_TITLE RILocalizedString(@"thank_you_order_title", nil)
 #define STRING_ORDER_SUCCESS RILocalizedString(@"order_success", nil)
@@ -210,10 +210,10 @@
 
 #define STRING_GO_SHOP RILocalizedString(@"go_shop_text", nil)
 #define STRING_PROMOTION_TIP_TAP RILocalizedString(@"promotion_tip_tap_text", nil)
-#define STRING_TRY_AGAIN RILocalizedString(@"string_try_again", nil) // Not translated
-#define STRING_NO_NEWTORK RILocalizedString(@"string_no_newtork", nil) // Not translated
-#define STRING_OOPS RILocalizedString(@"string_oops", nil) // Not translated
-#define STRING_SOMETHING_BROKEN RILocalizedString(@"string_something_broken", nil) // Not translated
+#define STRING_TRY_AGAIN RILocalizedString(@"string_try_again", nil)
+#define STRING_NO_NEWTORK RILocalizedString(@"string_no_newtork", nil)
+#define STRING_OOPS RILocalizedString(@"string_oops", nil)
+#define STRING_SOMETHING_BROKEN RILocalizedString(@"string_something_broken", nil)
 
 #define STRING_FORM_DATA_NOT_TRANSFERRED RILocalizedString(@"form_data_not_transferred", nil)
 
