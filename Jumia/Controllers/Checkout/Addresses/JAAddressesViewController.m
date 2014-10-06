@@ -734,7 +734,8 @@ UICollectionViewDelegateFlowLayout>
             }
             else if([@"billingForm[shippingAddressDifferent]" isEqualToString:[field name]])
             {
-                [parameters setValue:[[self.billingAddress uid] isEqualToString:[self.shippingAddress uid]] ? @"0" : @"1" forKey:[field name]];
+                //Yes, the true and false are switched for this api request...
+                [parameters setValue:[[self.billingAddress uid] isEqualToString:[self.shippingAddress uid]] ? @"1" : @"0" forKey:[field name]];
             }
         }
         
