@@ -162,8 +162,8 @@
 "recentlyview_no_searches" = "Aucun Dernier Produit Vu";
 "recentlyview_clear_viewed" = "Effacer les Derniers Produits Vus";
 
-"string_user_data" = "User Data";
-"string_user_email_notifications" = "Email Notifications";
+"string_user_data" = "Données de l'utilisateur";
+"string_user_email_notifications" = "Notifications par email";
 "section_title_account" = "Paramètres du compte";
 "option2_description" = "Changez votre mot de passe, gérez votre courrier électronique";
 "myaccount_email_notifications" = "Préférence eMails";
@@ -175,8 +175,8 @@
 "sound_summary" = "Emettre un son sur les notifications entrantes";
 "personal_data_label" = "Vos données personnelles";
 "new_password_label" = "Nouveau mot de passe";
-"password_changed_success" = "Password changed with success.";
-"preferences_updated" = "Preferences updated";
+"password_changed_success" = "Changement de mot de passe effectué";
+"preferences_updated" = "Préférences mises à jour";
 
 "thank_you_order_title" = "Merci!";
 "order_success" = "Votre commande a été enregistré avec succès, sous le numéro suivant:";
@@ -207,10 +207,10 @@
 
 "go_shop_text" = "J\'achète";
 "promotion_tip_tap_text" = "Cliquez sur la case ci-dessus pour copier le code dans le presse-papier et gardez le ainsi à portée de main pour le paiement final";
-"string_try_again" = "Try Again";
-"string_no_newtork" = "No Network";
-"string_oops" = "Oops!";
-"string_something_broken" = "Something seems broken. Please try again.";
+"string_try_again" = "Réessayer";
+"string_no_newtork" = "Aucune connection.";
+"string_oops" = "Oups!";
+"string_something_broken" = "Une erreur s'est produite. Veuillez réessayer.";
 
 "form_data_not_transferred" = "Il y a des erreurs dans les données communiquées, vérifiez les différents champs renseignés";
 
