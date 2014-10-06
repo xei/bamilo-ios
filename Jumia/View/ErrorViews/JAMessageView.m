@@ -70,6 +70,7 @@
             
             self.titleLabel.textColor = UIColorFromRGB(0xffffff);
             self.titleLabel.text = title;
+            self.titleLabel.numberOfLines = 2;
             
             [viewController.view addSubview:self];
             
