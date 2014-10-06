@@ -195,7 +195,20 @@
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
                                                                   NSDictionary *results = [metadata objectForKey:@"results"];
-                                                                  NSNumber *productCount = [metadata objectForKey:@"product_count"];
+//                                                                  NSNumber *productCount = [metadata objectForKey:@"product_count"];
+                                                                  
+                                                                  NSNumber *productCountValue = [NSNumber numberWithInt:0];
+                                                                  id productCount = [metadata objectForKey:@"product_count"];
+                                                                  if(VALID_NOTEMPTY(productCount, NSNumber))
+                                                                  {
+                                                                      productCountValue = productCount;
+                                                                  }
+                                                                  else if(VALID_NOTEMPTY(productCount, NSString))
+                                                                  {
+                                                                      NSString *productCountStirng = productCount;
+                                                                      productCountValue = [NSNumber numberWithInt:[productCountStirng intValue]];
+                                                                  }
+                                                                  
                                                                   NSMutableArray *temp = [NSMutableArray new];
                                                                   
                                                                   for (NSDictionary *dic in results) {
@@ -203,7 +216,7 @@
                                                                   }
                                                                   
                                                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                                                      successBlock([temp copy], productCount);
+                                                                      successBlock([temp copy], productCountValue);
                                                                   });
                                                                   
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
