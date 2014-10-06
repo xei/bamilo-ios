@@ -213,3 +213,5 @@
 "string_something_broken" = "Une erreur s'est produite. Veuillez réessayer.";
 
 "form_data_not_transferred" = "Il y a des erreurs dans les données communiquées, vérifiez les différents champs renseignés";
+
+"my_order_confirm_button" = "Confirmer la commande";
