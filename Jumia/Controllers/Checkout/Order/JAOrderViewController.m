@@ -47,7 +47,7 @@
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"CheckoutMyOrder" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-    [trackingDictionary setValue:[self.checkout.cart cartValue] forKey:kRIEventValueKey];
+
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutOrder]
                                               data:[trackingDictionary copy]];
     if(self.firstLoading)
