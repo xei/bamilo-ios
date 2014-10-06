@@ -236,7 +236,12 @@
                                                page:[pageNumber stringValue]
                                            maxItems:[NSString stringWithFormat:@"%d",JACatalogViewControllerMaxProducts]
                                       sortingMethod:self.sortingMethod
-                                       successBlock:^(NSArray *results, NSNumber *productCount) {
+                                            filters:self.filtersArray
+                                       successBlock:^(NSArray *results, NSArray *filters, NSNumber *productCount) {
+                                           
+                                           if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
+                                               self.filtersArray = filters;
+                                           }
                                            
                                            // Track events only in the first load of the products
                                            if (!self.isFirstLoadTracking)

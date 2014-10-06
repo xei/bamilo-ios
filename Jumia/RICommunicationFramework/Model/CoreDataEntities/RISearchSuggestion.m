@@ -7,6 +7,7 @@
 //
 
 #import "RISearchSuggestion.h"
+#import "RIFilter.h"
 
 @implementation RISearchType
 
@@ -178,13 +179,56 @@
                              page:(NSString *)page
                          maxItems:(NSString *)maxItems
                     sortingMethod:(RICatalogSorting)sortingMethod
-                     successBlock:(void (^)(NSArray *results, NSNumber *productCount))successBlock
+                          filters:(NSArray*)filters
+                     successBlock:(void (^)(NSArray *results, NSArray *filters, NSNumber *productCount))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    NSString *tempString = [NSString stringWithFormat:@"%@%@/search?setDevice=mobileApi&q=%@&page=%@&maxitems=%@&%@", [RIApi getCountryUrlInUse], RI_API_VERSION, query, page, maxItems,
-                            [RIProduct urlComponentForSortingMethod:sortingMethod]];
-    NSURL *url = [NSURL URLWithString:tempString];
+    
+    BOOL discountMode = NO;
+    for (RIFilter* filter in filters)
+    {
+        for (RIFilterOption* filterOption in filter.options)
+        {
+            if (filterOption.discountOnly)
+            {
+                discountMode = YES;
+                break;
+            }
+        }
+    }
+    
+    NSString *tempUrl = [NSString stringWithFormat:@"%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION];
+    if (discountMode)
+    {
+        tempUrl = [NSString stringWithFormat:@"%@search/special-price/", tempUrl];
+    }
+    else
+    {
+        tempUrl = [NSString stringWithFormat:@"%@search/", tempUrl];
+    }
+    
+    NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
+    if(VALID_NOTEMPTY(filtersString, NSString))
+    {
+        if(NSNotFound == [@"q" rangeOfString:filtersString].location)
+        {
+            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@&%@&%@", tempUrl, query, page, maxItems,
+                       [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
+        }
+        else
+        {
+            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&page=%@&maxitems=%@&%@&%@", tempUrl, page, maxItems,
+                          [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
+        }
+    }
+    else
+    {
+        tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@&%@", tempUrl, query, page, maxItems,
+                   [RIProduct urlComponentForSortingMethod:sortingMethod]];
+    }
+
+    NSURL *url = [NSURL URLWithString:tempUrl];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:nil
@@ -208,6 +252,16 @@
                                                                       productCountValue = [NSNumber numberWithInt:[productCountStirng intValue]];
                                                                   }
                                                                   
+                                                                  NSArray* filtersJSON = [metadata objectForKey:@"filters"];
+                                                                  
+                                                                  NSArray* filtersArray;
+                                                                  
+                                                                  if (VALID_NOTEMPTY(filtersJSON, NSArray)) {
+                                                                      
+                                                                      filtersArray = [RIFilter parseFilters:filtersJSON];
+                                                                      
+                                                                  }
+
                                                                   NSMutableArray *temp = [NSMutableArray new];
                                                                   
                                                                   for (NSDictionary *dic in results) {
@@ -215,7 +269,7 @@
                                                                   }
                                                                   
                                                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                                                      successBlock([temp copy], productCountValue);
+                                                                      successBlock([temp copy], filtersArray, productCountValue);
                                                                   });
                                                                   
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
