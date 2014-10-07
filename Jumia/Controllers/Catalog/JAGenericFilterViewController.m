@@ -54,6 +54,9 @@
 {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+                                                        object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(doneButtonPressed)
                                                  name:kDidPressDoneNotification
