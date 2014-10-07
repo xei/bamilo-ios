@@ -24,6 +24,12 @@
 
 NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
 
+@interface RIGoogleAnalyticsTracker ()
+
+@property (nonatomic, strong) NSString *campaignUrl;
+
+@end
+
 @implementation RIGoogleAnalyticsTracker
 
 @synthesize queue;
@@ -35,7 +41,10 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 {
     NSLog(@"Initializing Google Analytics tracker");
     
-    if ((self = [super init])) {
+    if ((self = [super init]))
+    {
+        self.campaignUrl = @"";
+        
         self.queue = [[NSOperationQueue alloc] init];
         self.queue.maxConcurrentOperationCount = 1;
         
@@ -102,7 +111,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     // Setup the app version
     NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
     [[GAI sharedInstance].defaultTracker set:kGAIAppVersion value:version];
-    
+
     NSLog(@"Initialized Google Analytics %d", [GAI sharedInstance].trackUncaughtExceptions);
 }
 
@@ -126,11 +135,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     if(VALID_NOTEMPTY(campaignName, NSString))
     {
-        NSString *campaignUrl = [NSString stringWithFormat:@"utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
-
-        GAIDictionaryBuilder *hitParams = [[GAIDictionaryBuilder alloc] init];
-        [hitParams setCampaignParametersFromUrl:campaignUrl];
-        [tracker send:[[[GAIDictionaryBuilder createAppView] setAll:[hitParams build]] build]];
+        self.campaignUrl = [NSString stringWithFormat:@"utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
     }
 }
 
@@ -167,7 +172,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     }
     
     [tracker set:kGAIScreenName value:name];
-    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    [tracker send:[[[GAIDictionaryBuilder createAppView] setCampaignParametersFromUrl:self.campaignUrl] build]];
 }
 
 #pragma mark - RIEventTracking
@@ -198,10 +203,11 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         NSString *label = [data objectForKey:kRIEventLabelKey];
         NSNumber *value = [data objectForKey:kRIEventValueKey];
         
-        NSDictionary *dict = [[GAIDictionaryBuilder createEventWithCategory:category
-                                                                     action:action
-                                                                      label:label
-                                                                      value:value] build];
+        NSDictionary *dict = [[[GAIDictionaryBuilder createEventWithCategory:category
+                                                                      action:action
+                                                                       label:label
+                                                                       value:value]
+                               setCampaignParametersFromUrl:self.campaignUrl] build];
         [tracker send:dict];
     }
 }
@@ -225,14 +231,13 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     NSString *currency = [data objectForKey:kRIEcommerceCurrencyKey];
     NSNumber *revenue = [data objectForKey:kRIEcommerceTotalValueKey];    
     
-    NSDictionary *dict = [[GAIDictionaryBuilder createTransactionWithId:transactionId
-                                                            affiliation:@"In-App Store"
-                                                                revenue:revenue
-                                                                    tax:tax
-                                                               shipping:shipping
-                                                           currencyCode:currency] build];
-    
-    [tracker send:dict];
+    GAIDictionaryBuilder *dict = [GAIDictionaryBuilder createTransactionWithId:transactionId
+                                                                   affiliation:@"In-App Store"
+                                                                       revenue:revenue
+                                                                           tax:tax
+                                                                      shipping:shipping
+                                                                  currencyCode:currency];
+    [tracker send:[[dict setCampaignParametersFromUrl:self.campaignUrl] build]];
     
     if ([data objectForKey:kRIEcommerceProducts])
     {
@@ -240,13 +245,14 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         
         for (NSDictionary *tempProduct in tempArray)
         {
-            [tracker send:[[GAIDictionaryBuilder createItemWithTransactionId:[data objectForKey:kRIEcommerceTransactionIdKey]
-                                                                        name:[tempProduct objectForKey:kRIEventProductNameKey]
-                                                                         sku:[tempProduct objectForKey:kRIEventSkuKey]
-                                                                    category:nil
-                                                                       price:[tempProduct objectForKey:kRIEventPriceKey]
-                                                                    quantity:[tempProduct objectForKey:kRIEventQuantityKey]
-                                                                currencyCode:[tempProduct objectForKey:kRIEventCurrencyCodeKey]] build]];
+            GAIDictionaryBuilder *productDict = [GAIDictionaryBuilder createItemWithTransactionId:[data objectForKey:kRIEcommerceTransactionIdKey]
+                                                                                             name:[tempProduct objectForKey:kRIEventProductNameKey]
+                                                                                              sku:[tempProduct objectForKey:kRIEventSkuKey]
+                                                                                         category:nil
+                                                                                            price:[tempProduct objectForKey:kRIEventPriceKey]
+                                                                                         quantity:[tempProduct objectForKey:kRIEventQuantityKey]
+                                                                                     currencyCode:[tempProduct objectForKey:kRIEventCurrencyCodeKey]];
+            [tracker send:[[productDict setCampaignParametersFromUrl:self.campaignUrl] build]];
         }
     }
 }
@@ -264,10 +270,11 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         return;
     }
     
-    NSDictionary *dict = [[GAIDictionaryBuilder createTimingWithCategory:reference
-                                                                interval:millis
-                                                                    name:nil
-                                                                   label:nil] build];
+    NSDictionary *dict = [[[GAIDictionaryBuilder createTimingWithCategory:reference
+                                                                 interval:millis
+                                                                     name:nil
+                                                                    label:nil]
+                           setCampaignParametersFromUrl:self.campaignUrl] build];
     
     [tracker send:dict];
 }
