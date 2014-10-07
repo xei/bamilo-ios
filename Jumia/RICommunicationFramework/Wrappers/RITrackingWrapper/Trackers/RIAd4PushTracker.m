@@ -552,10 +552,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         NSDictionary *campaignData = [NSDictionary dictionaryWithObjectsAndKeys:
                                       @"push", kGAICampaignSource,
                                       @"referrer",kGAICampaignMedium,
-                                      campaignName, kGAICampaignName,
-                                      @"ad_variation1",kGAICampaignContent,
-                                      @"keyword",kGAICampaignKeyword,
-                                      @"1",kGAICampaignId, nil];
+                                      campaignName, kGAICampaignName, nil];
         
         [[RITrackingWrapper sharedInstance] trackCampaingWithData:campaignData];
     }
