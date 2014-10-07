@@ -785,9 +785,8 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 - (void)pushOrderOverView
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(90),
-                                                                 @"name": STRING_TRACK_MY_ORDER }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowTrackOrderScreenNotification
+                                                        object:nil];
 }
 
 - (void)pushLoginViewController
