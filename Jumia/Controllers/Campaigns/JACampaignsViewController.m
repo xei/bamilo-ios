@@ -32,7 +32,7 @@
 
 @property (nonatomic, strong)JACampaignSingleView* lastPressedCampaignSingleView;
 
-@property (nonatomic, assign)BOOL shouldPushPDV;
+@property (nonatomic, assign)BOOL shouldPerformButtonActions;
 
 @end
 
@@ -73,7 +73,7 @@
                                    userInfo:nil
                                     repeats:YES];
     
-    self.shouldPushPDV = YES;
+    self.shouldPerformButtonActions = YES;
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
 }
@@ -147,13 +147,13 @@
 
 - (IBAction)swipeLeft:(id)sender
 {
-    self.shouldPushPDV = NO;
+    self.shouldPerformButtonActions = NO;
     [self.pickerScrollView scrollLeftAnimated:YES];
 }
 
 - (IBAction)swipeRight:(id)sender
 {
-    self.shouldPushPDV = NO;
+    self.shouldPerformButtonActions = NO;
     [self.pickerScrollView scrollRight];
 }
 
@@ -183,15 +183,17 @@
 - (void)addToCartForProduct:(RICampaign*)campaign
           withProductSimple:(NSString*)simpleSku;
 {
-    self.backupCampaign = campaign;
-    self.backupSimpleSku = simpleSku;
-
-    [self finishAddToCart];
+    if (self.shouldPerformButtonActions) {
+        self.backupCampaign = campaign;
+        self.backupSimpleSku = simpleSku;
+        
+        [self finishAddToCart];
+    }
 }
 
 - (void)pressedCampaignWithSku:(NSString*)sku;
 {
-    if (self.shouldPushPDV) {
+    if (self.shouldPerformButtonActions) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
                                                           userInfo:@{ @"sku" : sku ,
@@ -349,7 +351,7 @@
 //happens on the scroll view, we have to move this to another scrollviewdelegate method
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    self.shouldPushPDV = YES;
+    self.shouldPerformButtonActions = YES;
 }
 
 @end
