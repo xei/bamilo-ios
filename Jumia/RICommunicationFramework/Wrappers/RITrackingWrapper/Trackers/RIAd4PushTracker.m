@@ -661,7 +661,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 else if ([forthLetter isEqualToString:@"r"])
                 {
                     // Register
-                    [self pushLoginViewController];
+                    [self pushRegisterViewController];
                 }
             }
         }
@@ -785,17 +785,20 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 - (void)pushOrderOverView
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(90),
-                                                                 @"name": STRING_TRACK_MY_ORDER }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowTrackOrderScreenNotification
+                                                        object:nil];
 }
 
 - (void)pushLoginViewController
 {
-    // The index 90 is to know it's from deeplink
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(90),
-                                                                 @"name": STRING_LOGIN }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
+                                                        object:nil];
+}
+
+- (void)pushRegisterViewController
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification
+                                                        object:nil];
 }
 
 #pragma mark - Auxiliar methods

@@ -151,6 +151,11 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showFavoritesViewController:)
+                                                 name:kShowFavoritesScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showForgotPasswordScreen)
                                                  name:kShowForgotPasswordScreenNotification
                                                object:nil];
@@ -276,11 +281,7 @@
     {
         if (![[self topViewController] isKindOfClass:[JAMyFavouritesViewController class]])
         {
-            JAMyFavouritesViewController *favourites = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"myFavouritesViewController"];
-            
-            [self pushViewController:favourites animated:YES];
-            
-//            self.viewControllers = @[favourites];
+            [self showFavoritesViewController:nil];
         }
     }
     else if ([newScreenName isEqualToString:STRING_CHOOSE_COUNTRY])
@@ -307,13 +308,7 @@
     {
         if (![[self topViewController] isKindOfClass:[JASignInViewController class]])
         {
-            JASignInViewController *signInViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"signInViewController"];
-            
-            signInViewController.fromSideMenu = YES;
-            
-            [self pushViewController:signInViewController animated:YES];
-            
-//            self.viewControllers = @[signInViewController];
+            [self showSignInScreen:nil];
         }
     }
     else if ([newScreenName isEqualToString:STRING_RECENTLY_VIEWED])
@@ -424,8 +419,6 @@
 
 - (void)didSelectLeafCategoryInMenu:(NSNotification *)notification
 {
-    NSLog(@"BEFORE %@", self.topViewController);
-    
     NSDictionary *selectedItem = [notification object];
     RICategory* category = [selectedItem objectForKey:@"category"];
     NSString* categoryId = [selectedItem objectForKey:@"category_id"];
@@ -458,15 +451,12 @@
     {
         JACatalogViewController *catalog = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
-        catalog.navBarLayout.title = categoryName;
         catalog.categoryName = categoryName;
         
         [self pushViewController:catalog animated:YES];
         
 //        self.viewControllers = @[catalog];
     }
-    
-    NSLog(@"AFTER %@", self.topViewController);
 }
 
 - (void) closeCurrentScreenNotificaion
@@ -477,6 +467,18 @@
 - (void) showHomeScreen
 {
     [self changeCenterPanel:STRING_HOME notification:nil];
+}
+
+- (void)showFavoritesViewController:(NSNotification*)notification
+{
+    if (![[self topViewController] isKindOfClass:[JAMyFavouritesViewController class]])
+    {
+        JAMyFavouritesViewController *favourites = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"myFavouritesViewController"];
+        
+        [self pushViewController:favourites animated:YES];
+        
+        //            self.viewControllers = @[favourites];
+    }
 }
 
 - (void)showTrackOrderViewController:(NSNotification*)notification
@@ -649,31 +651,54 @@
 
 - (void)showSignUpScreen:(NSNotification *)notification
 {
-    JASignupViewController *signUpVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"signUpViewController"];
-
-    signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
-    signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
-    
-    [self pushViewController:signUpVC animated:YES];
+    if (![[self topViewController] isKindOfClass:[JASignupViewController class]])
+    {
+        JASignupViewController *signUpVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"signUpViewController"];
+        
+        if(VALID_NOTEMPTY(notification, NSNotification))
+        {
+            signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
+            signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+        }
+        else
+        {
+            signUpVC.fromSideMenu = YES;
+        }
+        
+        [self pushViewController:signUpVC animated:YES];
+    }
 }
 
 - (void)showSignInScreen:(NSNotification *)notification
 {
-    JASignInViewController *signInVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"signInViewController"];
-    
-    signInVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
-    signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+    if (![[self topViewController] isKindOfClass:[JASignInViewController class]])
+    {
+        JASignInViewController *signInVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"signInViewController"];
         
-    [self pushViewController:signInVC animated:YES];
+        if(VALID_NOTEMPTY(notification, NSNotification))
+        {
+            signInVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
+            signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+        }
+        else
+        {
+            signInVC.fromSideMenu = YES;
+        }
+        
+        [self pushViewController:signInVC animated:YES];
+    }
 }
 
 - (void)showForgotPasswordScreen
 {
-    JAForgotPasswordViewController *forgotVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
-    
-    forgotVC.navBarLayout.backButtonTitle = STRING_LOGIN;
-    
-    [self pushViewController:forgotVC animated:YES];
+    if (![[self topViewController] isKindOfClass:[JAForgotPasswordViewController class]])
+    {
+        JAForgotPasswordViewController *forgotVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
+        
+        forgotVC.navBarLayout.backButtonTitle = STRING_LOGIN;
+        
+        [self pushViewController:forgotVC animated:YES];
+    }
 }
 
 - (void)showCheckoutLoginScreen

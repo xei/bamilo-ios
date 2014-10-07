@@ -138,6 +138,8 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
+
     if (VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"u"], NSString))
     {
         NSString *urlString = [userInfo objectForKey:@"u"];
@@ -177,8 +179,6 @@
             [[RITrackingWrapper sharedInstance] trackCampaignWithName:[userInfo objectForKey:@"UTM"]];
         }
     }
-    
-    [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
