@@ -40,6 +40,7 @@
 #import "JAUserDataViewController.h"
 #import "JAEmailNotificationsViewController.h"
 #import "JACampaignsViewController.h"
+#import "JAAppDelegate.h"
 
 @interface JACenterNavigationController ()
 
@@ -218,8 +219,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showTrackOrderViewController:)
                                                  name:kShowTrackOrderScreenNotification
-                                               object:nil];
-    
+                                               object:nil];    
 }
 
 - (void)didReceiveMemoryWarning
