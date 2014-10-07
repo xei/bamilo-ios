@@ -982,7 +982,7 @@
     NSInteger numberOfItemsInSection = 0;
     if(VALID_NOTEMPTY(self.cart, RICart))
     {
-        numberOfItemsInSection = [[self.cart cartCount] integerValue];
+        numberOfItemsInSection = [self.cart.cartItems allKeys].count;
     }
     
     return numberOfItemsInSection;
