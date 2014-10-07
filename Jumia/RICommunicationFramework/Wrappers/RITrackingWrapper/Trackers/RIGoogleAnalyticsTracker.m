@@ -135,8 +135,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     if(VALID_NOTEMPTY(campaignName, NSString))
     {
-        self.campaignData = [NSString stringWithFormat:@"utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
-        [tracker setCampaignParametersFromUrl:[NSString stringWithFormat:@"http://www.google.com?%@", self.campaignData]];
+        self.campaignData = [NSString stringWithFormat:@"http://www.google.com?utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
     }
 }
 
