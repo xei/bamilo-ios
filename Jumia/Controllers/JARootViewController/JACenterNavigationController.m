@@ -650,19 +650,22 @@
 {
     if (![[self topViewController] isKindOfClass:[JASignupViewController class]])
     {
-        JASignupViewController *signUpVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"signUpViewController"];
-        
-        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSDictionary))
+        if(![RICustomer checkIfUserIsLogged])
         {
-            signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
-            signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+            JASignupViewController *signUpVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"signUpViewController"];
+            
+            if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSDictionary))
+            {
+                signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
+                signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+            }
+            else
+            {
+                signUpVC.fromSideMenu = YES;
+            }
+            
+            [self pushViewController:signUpVC animated:YES];
         }
-        else
-        {
-            signUpVC.fromSideMenu = YES;
-        }
-        
-        [self pushViewController:signUpVC animated:YES];
     }
 }
 
@@ -670,19 +673,22 @@
 {
     if (![[self topViewController] isKindOfClass:[JASignInViewController class]])
     {
-        JASignInViewController *signInVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"signInViewController"];
-        
-        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSDictionary))
+        if(![RICustomer checkIfUserIsLogged])
         {
-            signInVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
-            signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+            JASignInViewController *signInVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"signInViewController"];
+            
+            if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSDictionary))
+            {
+                signInVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
+                signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+            }
+            else
+            {
+                signInVC.fromSideMenu = YES;
+            }
+            
+            [self pushViewController:signInVC animated:YES];
         }
-        else
-        {
-            signInVC.fromSideMenu = YES;
-        }
-        
-        [self pushViewController:signInVC animated:YES];
     }
 }
 
