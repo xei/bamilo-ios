@@ -422,6 +422,8 @@ UIAlertViewDelegate
                             
                             [self userDidLogout];
                             
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                            
                         }];
                     }
                     else

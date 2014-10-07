@@ -228,7 +228,8 @@ UIPickerViewDelegate>
      {
          self.checkout = object;
          [self.dynamicForm resetValues];
-         [self finishedRequests];
+         [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
+         [self hideLoading];
          
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
@@ -243,7 +244,15 @@ UIPickerViewDelegate>
              [self.dynamicForm checkErrors];
          }
          
-         [self finishedRequests];
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         } else {
+             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+         }
+         
+         self.hasErrors = NO;
+         [self hideLoading];
      }];
 }
 
@@ -252,22 +261,6 @@ UIPickerViewDelegate>
     [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
                                                         object:nil
                                                       userInfo:nil];
-}
-
--(void)finishedRequests
-{
-    [self hideLoading];
-    
-    if(self.hasErrors)
-    {
-        [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
-        
-        self.hasErrors = NO;
-    }
-    else
-    {
-        [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
-    }
 }
 
 -(void)radioOptionChanged:(id)sender

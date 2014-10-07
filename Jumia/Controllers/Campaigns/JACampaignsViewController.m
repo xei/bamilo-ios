@@ -9,6 +9,7 @@
 #import "JACampaignsViewController.h"
 #import "RITeaser.h"
 #import "RITeaserText.h"
+#import "RITeaserImage.h"
 #import "RICart.h"
 #import "RICampaign.h"
 #import "RICustomer.h"
@@ -113,6 +114,26 @@
                     [campaignPage loadWithCampaignUrl:teaserText.url];
                     currentX += campaignPage.frame.size.width;
                 }
+            } else if (VALID_NOTEMPTY(teaser.teaserImages, NSOrderedSet)) {
+                RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
+                if (VALID_NOTEMPTY(teaserImage, RITeaserImage)) {
+                    [optionList addObject:teaserImage.teaserDescription];
+                    
+                    if ([teaserImage.teaserDescription isEqualToString:self.startingTitle]) {
+                        startingIndex = i;
+                    }
+                    
+                    JACampaignPageView* campaignPage = [[JACampaignPageView alloc] initWithFrame:CGRectMake(currentX,
+                                                                                                            self.scrollView.bounds.origin.y,
+                                                                                                            self.scrollView.bounds.size.width,
+                                                                                                            self.scrollView.bounds.size.height)];
+                    campaignPage.singleViewDelegate = self;
+                    campaignPage.delegate = self;
+                    [self.campaignPages addObject:campaignPage];
+                    [self.scrollView addSubview:campaignPage];
+                    [campaignPage loadWithCampaignUrl:teaserImage.url];
+                    currentX += campaignPage.frame.size.width;
+                }
             }
         }
     }
@@ -183,7 +204,8 @@
 - (void)addToCartForProduct:(RICampaign*)campaign
           withProductSimple:(NSString*)simpleSku;
 {
-    if (self.shouldPerformButtonActions) {
+    //the flag shouldPerformButtonActions is used to fix the scrolling, if the campaignPages.count is 1, then it is not needed
+    if (self.shouldPerformButtonActions || 1 == self.campaignPages.count) {
         self.backupCampaign = campaign;
         self.backupSimpleSku = simpleSku;
         
@@ -193,7 +215,8 @@
 
 - (void)pressedCampaignWithSku:(NSString*)sku;
 {
-    if (self.shouldPerformButtonActions) {
+    //the flag shouldPerformButtonActions is used to fix the scrolling, if the campaignPages.count is 1, then it is not needed
+    if (self.shouldPerformButtonActions || 1 == self.campaignPages.count) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
                                                           userInfo:@{ @"sku" : sku ,

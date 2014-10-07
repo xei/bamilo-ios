@@ -244,6 +244,8 @@
                                                               [[RIDataBaseWrapper sharedInstance] saveContext];
                                                               successBlock();
                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
+                                                              [[RIDataBaseWrapper sharedInstance] saveContext];
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
                                                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
