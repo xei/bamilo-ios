@@ -281,13 +281,14 @@ UIPickerViewDelegate
     
     [self.navigationController popViewControllerAnimated:NO];
     
-    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *userInfo = nil;
     
     if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
     {
+        userInfo = [[NSMutableDictionary alloc] init];
         [userInfo setObject:self.nextNotification forKey:@"notification"];
+        [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
     }
-    [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
                                                         object:nil
