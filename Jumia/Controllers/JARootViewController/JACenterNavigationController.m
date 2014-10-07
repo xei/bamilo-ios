@@ -306,10 +306,7 @@
     }
     else if ([newScreenName isEqualToString:STRING_LOGIN])
     {
-        if (![[self topViewController] isKindOfClass:[JASignInViewController class]])
-        {
-            [self showSignInScreen:nil];
-        }
+        [self showSignInScreen:nil];
     }
     else if ([newScreenName isEqualToString:STRING_RECENTLY_VIEWED])
     {
@@ -655,7 +652,7 @@
     {
         JASignupViewController *signUpVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"signUpViewController"];
         
-        if(VALID_NOTEMPTY(notification, NSNotification))
+        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSDictionary))
         {
             signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
             signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
@@ -675,7 +672,7 @@
     {
         JASignInViewController *signInVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"signInViewController"];
         
-        if(VALID_NOTEMPTY(notification, NSNotification))
+        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSDictionary))
         {
             signInVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
             signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];

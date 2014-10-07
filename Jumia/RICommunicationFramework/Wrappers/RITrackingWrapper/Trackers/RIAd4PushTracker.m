@@ -778,9 +778,8 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 - (void)pushWishList
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(90),
-                                                                 @"name": STRING_MY_FAVOURITES }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowFavoritesScreenNotification
+                                                        object:nil];
 }
 
 - (void)pushOrderOverView
