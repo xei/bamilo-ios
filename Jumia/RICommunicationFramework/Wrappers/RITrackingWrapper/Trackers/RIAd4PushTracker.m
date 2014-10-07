@@ -534,7 +534,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     [BMA4STracker updateDeviceInfo:deviceInfo];
     
     NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
-    NSString *currency = [data objectForKey:kRIEcommerceTransactionIdKey];
+    NSString *currency = [data objectForKey:kRIEcommerceCurrencyKey];
     
     [BMA4STracker trackPurchaseWithId:transactionId
                              currency:currency
