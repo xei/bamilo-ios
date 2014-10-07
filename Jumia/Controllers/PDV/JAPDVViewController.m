@@ -256,7 +256,6 @@ JAActivityViewControllerDelegate
         self.firstLoading = NO;
     }
     
-    [self hideLoading];
     [self productLoaded];
 }
 
@@ -283,7 +282,22 @@ JAActivityViewControllerDelegate
     
     self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
     
-    [self fillTheViews];
+    [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
+                                     successBlock:^(RIProductRatings *ratings) {
+                                         
+                                         self.commentsCount = [ratings.commentsCount integerValue];
+                                         
+                                         self.productRatings = ratings;
+                                         
+                                         [self fillTheViews];
+                                         
+                                         [self hideLoading];
+                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                         
+                                         [self fillTheViews];
+                                         
+                                         [self hideLoading];
+                                     }];
 }
 
 #pragma mark - Navigation
@@ -413,37 +427,20 @@ JAActivityViewControllerDelegate
     
     self.productInfoSection.sizeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
-    [self showLoading];
-    
     [self.productInfoSection setNumberOfStars:[self.product.avr integerValue]];
     
-    [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
-                                     successBlock:^(RIProductRatings *ratings) {
-                                         
-                                         self.commentsCount = [ratings.commentsCount integerValue];
-                                         
-                                         if ([ratings.commentsCount integerValue] > 0)
-                                         {
-                                             self.productInfoSection.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, ratings.commentsCount];
-                                         }
-                                         else
-                                         {
-                                             self.productInfoSection.numberOfReviewsLabel.text = STRING_RATE_NOW;
-                                         }
-                                         
-                                         self.productRatings = ratings;
-                                         
-                                         [self hideLoading];
-                                         
-                                         [self.productInfoSection.goToReviewsButton addTarget:self
-                                                                                       action:@selector(goToRatinsMainScreen)
-                                                                             forControlEvents:UIControlEventTouchUpInside];
-                                         
-                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                                         
-                                         [self hideLoading];
-                                         
-                                     }];
+    if (self.commentsCount > 0)
+    {
+        self.productInfoSection.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, self.productRatings.commentsCount];
+    }
+    else
+    {
+        self.productInfoSection.numberOfReviewsLabel.text = STRING_RATE_NOW;
+    }
+    
+    [self.productInfoSection.goToReviewsButton addTarget:self
+                                                  action:@selector(goToRatinsMainScreen)
+                                        forControlEvents:UIControlEventTouchUpInside];
     
     self.productInfoSection.specificationsLabel.text = STRING_SPECIFICATIONS;
     
@@ -623,7 +620,6 @@ JAActivityViewControllerDelegate
     [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
         [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
         self.product = product;
-        [self hideLoading];
         [self productLoaded];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         [self hideLoading];
