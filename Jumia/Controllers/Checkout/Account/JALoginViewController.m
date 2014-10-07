@@ -65,7 +65,7 @@ FBLoginViewDelegate
 @property (strong, nonatomic) FBLoginView *facebookSingupView;
 @property (strong, nonatomic) UILabel *facebookSingupLabel;
 
-@property (assign, nonatomic) BOOL wasLoadedWithSucces;
+@property (assign, nonatomic) BOOL loadFailed;
 @property (assign, nonatomic) BOOL hasNoConnection;
 
 @end
@@ -92,7 +92,6 @@ FBLoginViewDelegate
     
     self.navBarLayout.showCartButton = NO;
     
-    self.wasLoadedWithSucces = YES;
     self.hasNoConnection = NO;
 
     [self setupViews];
@@ -104,6 +103,8 @@ FBLoginViewDelegate
 
 - (void)getForms
 {
+    self.loadFailed = NO; //resetting to NO, it is turned to YES if it fails
+    
     self.numberOfFormsToLoad = 2;
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
@@ -128,7 +129,7 @@ FBLoginViewDelegate
                self.hasNoConnection = YES;
            }
            
-           self.wasLoadedWithSucces = NO;
+           self.loadFailed = YES;
            self.numberOfFormsToLoad--;
        }];
     
@@ -155,7 +156,7 @@ FBLoginViewDelegate
                self.hasNoConnection = YES;
            }
            
-           self.wasLoadedWithSucces = NO;
+           self.loadFailed = YES;
            self.numberOfFormsToLoad--;
        }];
 }
@@ -212,7 +213,7 @@ FBLoginViewDelegate
         self.firstLoading = NO;
     }
     
-    if(self.wasLoadedWithSucces)
+    if(!self.loadFailed)
     {
         [self finishingSetupViews];
         
@@ -220,7 +221,7 @@ FBLoginViewDelegate
     }
     else
     {
-        [self showErrorView:self.hasNoConnection startingY:64.0f selector:@selector(getForms) objects:nil];
+        [self showErrorView:self.hasNoConnection startingY:0.0f selector:@selector(getForms) objects:nil];
     }
     
     [self hideLoading];
