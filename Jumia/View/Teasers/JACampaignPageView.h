@@ -9,9 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "JACampaignSingleView.h"
 
+@protocol JACampaignPageViewDelegate <NSObject>
+
+- (void)loadFailedWithResponse:(RIApiResponse)apiResponse;
+
+@end
+
 @interface JACampaignPageView : UIView
 
-@property (nonatomic, assign)id<JACampaignSingleViewDelegate>delegate;
+@property (nonatomic, assign)id<JACampaignPageViewDelegate>delegate;
+@property (nonatomic, assign)id<JACampaignSingleViewDelegate>singleViewDelegate;
 
 - (void)loadWithCampaignUrl:(NSString*)campaignUrl;
 - (void)updateTimerOnAllCampaigns:(NSInteger)elapsedTimeInSeconds;

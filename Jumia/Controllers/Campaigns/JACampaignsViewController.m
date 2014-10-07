@@ -9,7 +9,6 @@
 #import "JACampaignsViewController.h"
 #import "RITeaser.h"
 #import "RITeaserText.h"
-#import "JACampaignPageView.h"
 #import "RICart.h"
 #import "RICampaign.h"
 #import "RICustomer.h"
@@ -50,7 +49,6 @@
                                                                                  self.view.bounds.size.width,
                                                                                  44.0f)];
     self.pickerScrollView.delegate = self;
-    [self.view addSubview:self.pickerScrollView];
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
                                                                      CGRectGetMaxY(self.pickerScrollView.frame),
@@ -59,46 +57,9 @@
     self.scrollView.pagingEnabled = YES;
     self.scrollView.scrollEnabled = NO;
     self.scrollView.delegate = self;
-    [self.view addSubview:self.scrollView];
-    
-    CGFloat currentX = 0.0f;
-    
-    NSInteger startingIndex = 0;
-    self.campaignPages = [NSMutableArray new];
-    NSMutableArray* optionList = [NSMutableArray new];
-    if (VALID_NOTEMPTY(self.campaignTeasers, NSArray)) {
-        for (int i = 0; i < self.campaignTeasers.count; i++) {
-            RITeaser* teaser = [self.campaignTeasers objectAtIndex:i];
-            if (VALID_NOTEMPTY(teaser.teaserTexts, NSOrderedSet)) {
-                RITeaserText* teaserText = [teaser.teaserTexts firstObject];
-                if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
 
-                    [optionList addObject:teaserText.name];
-                    
-                    if ([teaserText.name isEqualToString:self.startingTitle]) {
-                        startingIndex = i;
-                    }
-                    
-                    JACampaignPageView* campaignPage = [[JACampaignPageView alloc] initWithFrame:CGRectMake(currentX,
-                                                                                                            self.scrollView.bounds.origin.y,
-                                                                                                            self.scrollView.bounds.size.width,
-                                                                                                            self.scrollView.bounds.size.height)];
-                    campaignPage.delegate = self;
-                    [self.campaignPages addObject:campaignPage];
-                    [self.scrollView addSubview:campaignPage];
-                    [campaignPage loadWithCampaignUrl:teaserText.url];
-                    currentX += campaignPage.frame.size.width;
-                }
-            }
-        }
-    }
     
-    self.pickerScrollView.startingIndex = startingIndex;
-    
-    //this will trigger load methods
-    [self.pickerScrollView setOptions:optionList];
-    
-    [self.scrollView setContentSize:CGSizeMake(currentX, self.scrollView.frame.size.height)];
+    [self loadCampaignPages];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -115,6 +76,54 @@
     self.shouldPushPDV = YES;
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
+}
+
+- (void)loadCampaignPages
+{
+    [self.view addSubview:self.pickerScrollView];
+    
+    [self.view addSubview:self.scrollView];
+    
+    CGFloat currentX = 0.0f;
+    
+    NSInteger startingIndex = 0;
+    self.campaignPages = [NSMutableArray new];
+    NSMutableArray* optionList = [NSMutableArray new];
+    if (VALID_NOTEMPTY(self.campaignTeasers, NSArray)) {
+        for (int i = 0; i < self.campaignTeasers.count; i++) {
+            RITeaser* teaser = [self.campaignTeasers objectAtIndex:i];
+            if (VALID_NOTEMPTY(teaser.teaserTexts, NSOrderedSet)) {
+                RITeaserText* teaserText = [teaser.teaserTexts firstObject];
+                if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
+                    
+                    [optionList addObject:teaserText.name];
+                    
+                    if ([teaserText.name isEqualToString:self.startingTitle]) {
+                        startingIndex = i;
+                    }
+                    
+                    JACampaignPageView* campaignPage = [[JACampaignPageView alloc] initWithFrame:CGRectMake(currentX,
+                                                                                                            self.scrollView.bounds.origin.y,
+                                                                                                            self.scrollView.bounds.size.width,
+                                                                                                            self.scrollView.bounds.size.height)];
+                    campaignPage.singleViewDelegate = self;
+                    campaignPage.delegate = self;
+                    [self.campaignPages addObject:campaignPage];
+                    [self.scrollView addSubview:campaignPage];
+                    [campaignPage loadWithCampaignUrl:teaserText.url];
+                    currentX += campaignPage.frame.size.width;
+                }
+            }
+        }
+    }
+    
+    self.pickerScrollView.startingIndex = startingIndex;
+    
+    //this will trigger load methods
+    [self.pickerScrollView setOptions:optionList];
+    
+    [self.scrollView setContentSize:CGSizeMake(currentX, self.scrollView.frame.size.height)];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -146,6 +155,19 @@
 {
     self.shouldPushPDV = NO;
     [self.pickerScrollView scrollRight];
+}
+
+#pragma mark - JACampaignPageViewDelegate
+
+- (void)loadFailedWithResponse:(RIApiResponse)apiResponse
+{
+    BOOL noConnection = NO;
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    {
+        noConnection = YES;
+    }
+    [self showErrorView:noConnection startingY:0.0f selector:@selector(loadCampaignPages) objects:nil];
+    
 }
 
 #pragma mark - JACampaignSingleViewDelegate
