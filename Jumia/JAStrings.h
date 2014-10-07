@@ -219,4 +219,7 @@
 
 #define STRING_CONFIRM_ORDER RILocalizedString(@"my_order_confirm_button", nil)
 
+#define STRING_ERROR_SETTING_PAYMENT_METHOD RILocalizedString(@"string_error_setting_payment_method", nil)
+#define STRING_ERROR_SETTING_SHIPPING_METHOD RILocalizedString(@"string_error_setting_shipping_method", nil)
+
 #endif

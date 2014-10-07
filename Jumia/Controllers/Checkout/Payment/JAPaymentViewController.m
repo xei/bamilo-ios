@@ -81,6 +81,11 @@ UITextFieldDelegate>
     
     [self setupViews];
     
+    [self continueLoading];
+}
+
+-(void)continueLoading
+{
     [self showLoading];
     [RICheckout getPaymentMethodFormWithSuccessBlock:^(RICheckout *checkout)
      {
@@ -97,7 +102,13 @@ UITextFieldDelegate>
          [self finishedLoadingPaymentMethods];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
-         [self finishedLoadingPaymentMethods];
+         BOOL noConnection = NO;
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             noConnection = YES;
+         }
+         
+         [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
      }];
 }
 
@@ -332,11 +343,14 @@ UITextFieldDelegate>
                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
                                                                   data:[trackingDictionary copy]];
                         
-                        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                    message:@"Error setting payment method"
-                                                   delegate:nil
-                                          cancelButtonTitle:nil
-                                          otherButtonTitles:STRING_OK, nil] show];
+                        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                        {
+                            [self showMessage:STRING_NO_NEWTORK success:NO];
+                        }
+                        else
+                        {
+                            [self showMessage:STRING_ERROR_SETTING_PAYMENT_METHOD success:NO];
+                        }
                         
                         [self hideLoading];
                     }];

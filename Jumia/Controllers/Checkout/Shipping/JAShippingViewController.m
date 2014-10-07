@@ -420,11 +420,14 @@ UIPickerViewDelegate
                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                  [self hideLoading];
                                  
-                                 [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                             message:@"Error setting shipping method"
-                                                            delegate:nil
-                                                   cancelButtonTitle:nil
-                                                   otherButtonTitles:STRING_OK, nil] show];
+                                 if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                                 {
+                                     [self showMessage:STRING_NO_NEWTORK success:NO];
+                                 }
+                                 else
+                                 {
+                                     [self showMessage:STRING_ERROR_SETTING_SHIPPING_METHOD success:NO];
+                                 }
                              }];
         }
         else
