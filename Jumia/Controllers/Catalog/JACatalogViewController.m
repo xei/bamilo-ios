@@ -132,7 +132,7 @@
              }
              else if(VALID_NOTEMPTY(self.categoryName, NSString))
              {
-                 if ([self.categoryName isEqualToString:category.name])
+                 if ([self.categoryName isEqualToString:category.urlKey])
                  {
                      self.category = category;
                      break;

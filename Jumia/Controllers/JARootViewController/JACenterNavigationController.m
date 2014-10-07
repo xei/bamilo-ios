@@ -424,8 +424,6 @@
 
 - (void)didSelectLeafCategoryInMenu:(NSNotification *)notification
 {
-    NSLog(@"BEFORE %@", self.topViewController);
-    
     NSDictionary *selectedItem = [notification object];
     RICategory* category = [selectedItem objectForKey:@"category"];
     NSString* categoryId = [selectedItem objectForKey:@"category_id"];
@@ -458,15 +456,12 @@
     {
         JACatalogViewController *catalog = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
-        catalog.navBarLayout.title = categoryName;
         catalog.categoryName = categoryName;
         
         [self pushViewController:catalog animated:YES];
         
 //        self.viewControllers = @[catalog];
     }
-    
-    NSLog(@"AFTER %@", self.topViewController);
 }
 
 - (void) closeCurrentScreenNotificaion
