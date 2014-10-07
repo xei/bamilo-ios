@@ -150,7 +150,14 @@
 
                [self hideLoading];
                
-               [self showMessage:STRING_ERROR success:NO];
+               if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+               {
+                   [self showMessage:STRING_NO_NEWTORK success:NO];
+               }
+               else
+               {
+                   [self showMessage:STRING_ERROR success:NO];
+               }
            }];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -160,7 +167,14 @@
         
         [self hideLoading];
         
-        [self showMessage:STRING_ERROR success:NO];
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            [self showMessage:STRING_NO_NEWTORK success:NO];
+        }
+        else
+        {
+            [self showMessage:STRING_ERROR success:NO];
+        }
     }];
 }
 
@@ -289,7 +303,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
                                                                 object:nil
                                                               userInfo:nil];            
-        } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
+        } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {
             
             [self hideLoading];
             
