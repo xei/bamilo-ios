@@ -187,6 +187,12 @@
          }
      }];
     
+    for (UIView* view in self.view.subviews) {
+        if ([view isKindOfClass:[JANoConnectionView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    
     [self.view addSubview:lostConnection];
 }
 
