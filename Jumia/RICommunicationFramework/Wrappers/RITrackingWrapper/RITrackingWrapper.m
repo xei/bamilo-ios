@@ -277,9 +277,9 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - Campaign protocol
 
-- (void)trackCampaingWithData:(NSDictionary *)data
+- (void)trackCampaignWithName:(NSString *)campaignName
 {
-    RIDebugLog(@"Tracking campaign with data '%@'", data);
+    RIDebugLog(@"Tracking campaign with name '%@'", campaignName);
     
     if (!self.trackers) {
         RIRaiseError(@"Invalid call with non-existent trackers. Initialisation may have failed.");
@@ -287,8 +287,8 @@ static dispatch_once_t sharedInstanceToken;
     }
     
     [self RI_callTrackersConformToProtocol:@protocol(RICampaignTracker)
-                                  selector:@selector(trackCampaingWithData:)
-                                 arguments:@[data]];
+                                  selector:@selector(trackCampaignWithName:)
+                                 arguments:@[campaignName]];
 }
 
 #pragma mark - Private methods

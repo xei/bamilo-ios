@@ -113,7 +113,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 
 #pragma mark - Track campaign
 
-- (void)trackCampaingWithData:(NSDictionary *)data
+- (void)trackCampaignWithName:(NSString *)campaignName
 {
     RIDebugLog(@"Google Analytics tracker tracks campaign");
     
@@ -124,21 +124,11 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         return;
     }
     
-    if(VALID_NOTEMPTY(data, NSDictionary))
+    if(VALID_NOTEMPTY(campaignName, NSString))
     {
+        NSString *campaignUrl = [NSString stringWithFormat:@"utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
+
         GAIDictionaryBuilder *hitParams = [[GAIDictionaryBuilder alloc] init];
-        
-        NSString *campaignUrl = @"";
-        NSArray *dictKeys = [data allKeys];
-        for(NSString *key in dictKeys)
-        {
-            NSString *value = [data objectForKey:key];
-            if(VALID_NOTEMPTY(key, NSString) && VALID_NOTEMPTY(value, NSString))
-            {
-                campaignUrl = [NSString stringWithFormat:@"%@%@=%@", campaignUrl, key, value];
-            }
-        }
-        
         [hitParams setCampaignParametersFromUrl:campaignUrl];
         [tracker send:[[[GAIDictionaryBuilder createAppView] setAll:[hitParams build]] build]];
     }
