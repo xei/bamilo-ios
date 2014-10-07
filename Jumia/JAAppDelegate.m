@@ -170,6 +170,13 @@
              }];
         }
     }
+    else
+    {
+        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"UTM"], NSString))
+        {
+            [[RITrackingWrapper sharedInstance] trackCampaignWithName:[userInfo objectForKey:@"UTM"]];
+        }
+    }
     
     [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
 }

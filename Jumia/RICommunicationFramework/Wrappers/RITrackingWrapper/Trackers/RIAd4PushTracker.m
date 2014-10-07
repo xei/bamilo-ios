@@ -545,128 +545,124 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 - (void)handleNotificationWithDictionary:(NSDictionary *)notification
 {
-    if (notification != nil && [notification objectForKey:@"UTM"] != nil && [[notification objectForKey:@"UTM"] length] > 0)
+    if(VALID_NOTEMPTY(notification, NSDictionary))
     {
-        NSString *campaignName = [NSString stringWithFormat:@"%@",[notification objectForKey:@"UTM"]];
-        
-        NSDictionary *campaignData = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      @"push", kGAICampaignSource,
-                                      @"referrer",kGAICampaignMedium,
-                                      campaignName, kGAICampaignName, nil];
-        
-        [[RITrackingWrapper sharedInstance] trackCampaingWithData:campaignData];
-    }
-    
-    if (notification != nil && [notification objectForKey:@"u"] != nil)
-    {
-        NSString *urlString = [notification objectForKey:@"u"];
-        
-        
-        NSString *forthLetter = @"";
-        NSString *cartPositionString = @"";
-        
-        if ([urlString length] >= 7)
+        if(VALID_NOTEMPTY([notification objectForKey:@"UTM"], NSString))
         {
-            cartPositionString = [urlString substringWithRange:NSMakeRange(3, 4)];
+            [[RITrackingWrapper sharedInstance] trackCampaignWithName:[notification objectForKey:@"UTM"]];
         }
         
-        if ([cartPositionString isEqualToString:@"cart"])
+        if(VALID_NOTEMPTY([notification objectForKey:@"u"], NSString))
         {
-            [self pushCartViewController];
-        }
-        else
-        {
-            if ([urlString length] >= 4)
+            NSString *urlString = [notification objectForKey:@"u"];
+            
+            
+            NSString *forthLetter = @"";
+            NSString *cartPositionString = @"";
+            
+            if ([urlString length] >= 7)
             {
-                forthLetter = [urlString substringWithRange:NSMakeRange(3, 1)];
+                cartPositionString = [urlString substringWithRange:NSMakeRange(3, 4)];
             }
             
-            if ([forthLetter isEqualToString:@""])
+            if ([cartPositionString isEqualToString:@"cart"])
             {
-                // Home
-                [self pushHomeViewController];
-            }
-            else if ([forthLetter isEqualToString:@"c"])
-            {
-                // Catalog view - category name
-                NSString *categoryName = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                
-                [self pushCatalogViewControllerWithCategoryId:nil
-                                                 categoryName:categoryName
-                                                   searchTerm:nil];
-            }
-            else if ([forthLetter isEqualToString:@"n"])
-            {
-                // Catalog view - category id
-                NSString *categoryId = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                
-                [self pushCatalogViewControllerWithCategoryId:categoryId
-                                                 categoryName:nil
-                                                   searchTerm:nil];
-            }
-            else if ([forthLetter isEqualToString:@"s"])
-            {
-                // Catalog view - search term
-                NSString *searchTerm = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                
-                [self pushCatalogViewControllerWithCategoryId:nil
-                                                 categoryName:nil
-                                                   searchTerm:searchTerm];
-            }
-            else if ([forthLetter isEqualToString:@"d"])
-            {
-                // PDV
-                // Example: jumia://ng/d/BL683ELACCDPNGAMZ?size=1
-                
-                // Check if there is field size
-                
-                NSRange range = [[urlString lowercaseString] rangeOfString:@"?size="];
-                if(NSNotFound != range.location)
-                {
-                    NSString *size = [urlString substringWithRange:NSMakeRange(range.length + range.location, urlString.length - (range.length + range.location))];
-                    
-                    NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, range.location - 5)];
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                                        object:nil
-                                                                      userInfo:@{ @"sku" : pdvSku,
-                                                                                  @"size": size,
-                                                                                  @"show_back_button" : [NSNumber numberWithBool:NO]}];
-                }
-                else
-                {
-                    NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                                        object:nil
-                                                                      userInfo:@{ @"sku" : pdvSku ,
-                                                                                  @"show_back_button" : [NSNumber numberWithBool:NO]}];
-                }
-            }
-            else if ([forthLetter isEqualToString:@"cart"])
-            {
-                // Cart
                 [self pushCartViewController];
             }
-            else if ([forthLetter isEqualToString:@"w"])
+            else
             {
-                // Wishlist
-                [self pushWishList];
-            }
-            else if ([forthLetter isEqualToString:@"o"])
-            {
-                // Order overview
-                [self pushOrderOverView];
-            }
-            else if ([forthLetter isEqualToString:@"l"])
-            {
-                // Login
-                [self pushLoginViewController];
-            }
-            else if ([forthLetter isEqualToString:@"r"])
-            {
-                // Register
-                [self pushLoginViewController];
+                if ([urlString length] >= 4)
+                {
+                    forthLetter = [urlString substringWithRange:NSMakeRange(3, 1)];
+                }
+                
+                if ([forthLetter isEqualToString:@""])
+                {
+                    // Home
+                    [self pushHomeViewController];
+                }
+                else if ([forthLetter isEqualToString:@"c"])
+                {
+                    // Catalog view - category name
+                    NSString *categoryName = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    
+                    [self pushCatalogViewControllerWithCategoryId:nil
+                                                     categoryName:categoryName
+                                                       searchTerm:nil];
+                }
+                else if ([forthLetter isEqualToString:@"n"])
+                {
+                    // Catalog view - category id
+                    NSString *categoryId = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    
+                    [self pushCatalogViewControllerWithCategoryId:categoryId
+                                                     categoryName:nil
+                                                       searchTerm:nil];
+                }
+                else if ([forthLetter isEqualToString:@"s"])
+                {
+                    // Catalog view - search term
+                    NSString *searchTerm = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    
+                    [self pushCatalogViewControllerWithCategoryId:nil
+                                                     categoryName:nil
+                                                       searchTerm:searchTerm];
+                }
+                else if ([forthLetter isEqualToString:@"d"])
+                {
+                    // PDV
+                    // Example: jumia://ng/d/BL683ELACCDPNGAMZ?size=1
+                    
+                    // Check if there is field size
+                    
+                    NSRange range = [[urlString lowercaseString] rangeOfString:@"?size="];
+                    if(NSNotFound != range.location)
+                    {
+                        NSString *size = [urlString substringWithRange:NSMakeRange(range.length + range.location, urlString.length - (range.length + range.location))];
+                        
+                        NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, range.location - 5)];
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                            object:nil
+                                                                          userInfo:@{ @"sku" : pdvSku,
+                                                                                      @"size": size,
+                                                                                      @"show_back_button" : [NSNumber numberWithBool:NO]}];
+                    }
+                    else
+                    {
+                        NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                            object:nil
+                                                                          userInfo:@{ @"sku" : pdvSku ,
+                                                                                      @"show_back_button" : [NSNumber numberWithBool:NO]}];
+                    }
+                }
+                else if ([forthLetter isEqualToString:@"cart"])
+                {
+                    // Cart
+                    [self pushCartViewController];
+                }
+                else if ([forthLetter isEqualToString:@"w"])
+                {
+                    // Wishlist
+                    [self pushWishList];
+                }
+                else if ([forthLetter isEqualToString:@"o"])
+                {
+                    // Order overview
+                    [self pushOrderOverView];
+                }
+                else if ([forthLetter isEqualToString:@"l"])
+                {
+                    // Login
+                    [self pushLoginViewController];
+                }
+                else if ([forthLetter isEqualToString:@"r"])
+                {
+                    // Register
+                    [self pushLoginViewController];
+                }
             }
         }
     }

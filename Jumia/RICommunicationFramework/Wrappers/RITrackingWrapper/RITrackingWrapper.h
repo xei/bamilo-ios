@@ -387,9 +387,9 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 /**
  *  Track a given campaign
  *
- *  @param options The campaign data
+ *  @param options The campaign name
  */
-- (void)trackCampaingWithData:(NSDictionary *)data;
+- (void)trackCampaignWithName:(NSString *)data;
 
 @end
 
