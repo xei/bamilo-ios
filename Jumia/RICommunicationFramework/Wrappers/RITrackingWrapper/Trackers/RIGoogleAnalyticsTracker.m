@@ -136,6 +136,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     if(VALID_NOTEMPTY(campaignName, NSString))
     {
         self.campaignUrl = [NSString stringWithFormat:@"utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
+        [tracker setCampaignParametersFromUrl:self.campaignUrl];
     }
 }
 
@@ -196,8 +197,6 @@ static RIGoogleAnalyticsTracker *sharedInstance;
             return;
         }
         
-        NSLog(@"Google Analytics - Event registered");
-        
         NSString *category = [data objectForKey:kRIEventCategoryKey];
         NSString *action = [data objectForKey:kRIEventActionKey];
         NSString *label = [data objectForKey:kRIEventLabelKey];
@@ -238,7 +237,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
                                                                       shipping:shipping
                                                                   currencyCode:currency];
     [tracker send:[[dict setCampaignParametersFromUrl:self.campaignUrl] build]];
-    
+
     if ([data objectForKey:kRIEcommerceProducts])
     {
         NSArray *tempArray = [data objectForKey:kRIEcommerceProducts];

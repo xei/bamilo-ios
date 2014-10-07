@@ -80,9 +80,12 @@
 NSString * const kGTMToken = @"kGTMToken";
 
 @interface RIGTMTracker ()
+<TAGContainerOpenerNotifier>
 
 @property (nonatomic, strong) TAGManager *tagManager;
 @property (nonatomic, strong) TAGContainer *container;
+@property (nonatomic, strong) NSMutableArray *pendingEvents;
+@property (nonatomic, assign) BOOL containerIsAvailable;
 
 @end
 
@@ -98,6 +101,9 @@ NSString * const kGTMToken = @"kGTMToken";
     if ((self = [super init])) {
         self.queue = [[NSOperationQueue alloc] init];
         self.queue.maxConcurrentOperationCount = 1;
+        
+        self.pendingEvents = [[NSMutableArray alloc] init];
+        self.containerIsAvailable = NO;
         
         NSMutableArray *events = [[NSMutableArray alloc] init];
         
@@ -171,16 +177,43 @@ NSString * const kGTMToken = @"kGTMToken";
      * @param openType The choice of how to open the container.
      * @param timeout The timeout period (default is 2.0 seconds).
      */
-    id future =
     [TAGContainerOpener openContainerWithId:containerId   // Update with your Container ID.
                                  tagManager:self.tagManager
-                                   openType:kTAGOpenTypePreferNonDefault
-                                    timeout:nil];
+                                   openType:kTAGOpenTypePreferFresh
+                                    timeout:nil
+                                   notifier:self];
+}
+
+- (void)containerAvailable:(TAGContainer *)container
+{
+    self.container = container;
+    self.containerIsAvailable = YES;
     
-    // Method calls that don't need the container.
+    // The container should have already been opened, otherwise events pushed to
+    // the data layer will not fire tags in that container.
+    TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
     
-    self.container = [future get];
-    // Other methods calls that use this container.
+    for(NSDictionary *event in self.pendingEvents)
+    {
+        [dataLayer push:event];
+    }
+    
+    self.pendingEvents = [[NSMutableArray alloc] init];
+}
+
+- (void)pushEvent:(NSDictionary*)event
+{
+    if(self.containerIsAvailable)
+    {
+        // The container should have already been opened, otherwise events pushed to
+        // the data layer will not fire tags in that container.
+        TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
+        [dataLayer push:event];
+    }
+    else
+    {
+        [self.pendingEvents addObject:event];
+    }
 }
 
 #pragma mark - RILaunchEventTracker implementation
@@ -188,11 +221,7 @@ NSString * const kGTMToken = @"kGTMToken";
 - (void)sendLaunchEventWithData:(NSDictionary *)dataDictionary;
 {
     RIDebugLog(@"GTM - Launch event with data:%@", dataDictionary);
-    
-    // The container should have already been opened, otherwise events pushed to
-    // the data layer will not fire tags in that container.
-    TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
-    
+
     NSMutableDictionary *pushedData = [[NSMutableDictionary alloc] init];
     [pushedData setObject:@"openApp" forKey:kGTMEventKey];
     
@@ -216,7 +245,7 @@ NSString * const kGTMToken = @"kGTMToken";
         [pushedData setObject:[dataDictionary objectForKey:kRIEventShopCountryKey] forKey:kGTMEventShopCountryKey];
     }
     
-    [dataLayer push:pushedData];
+    [self pushEvent:pushedData];
 }
 
 #pragma mark RIEventTracking protocol
@@ -226,8 +255,6 @@ NSString * const kGTMToken = @"kGTMToken";
     RIDebugLog(@"GTM - Tracking event = %@, data %@", eventType, data);
     if([self.registeredEvents containsObject:eventType])
     {
-        TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
-        
         NSMutableDictionary *pushedData = [[NSMutableDictionary alloc] init];
         
         NSInteger eventTypeInt = [eventType integerValue];
@@ -891,7 +918,7 @@ NSString * const kGTMToken = @"kGTMToken";
                 break;
         }
         
-        [dataLayer push:pushedData];
+        [self pushEvent:pushedData];
     }
 }
 
@@ -900,10 +927,6 @@ NSString * const kGTMToken = @"kGTMToken";
 - (void)trackCheckout:(NSDictionary *)data
 {
     RIDebugLog(@"GTM - Ecommerce event with data:%@", data);
-    
-    // The container should have already been opened, otherwise events pushed to
-    // the data layer will not fire tags in that container.
-    TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
     
     NSMutableDictionary *pushedData = [NSMutableDictionary dictionary];
     [pushedData setObject:@"transaction" forKey:kGTMEventKey];
@@ -1010,7 +1033,7 @@ NSString * const kGTMToken = @"kGTMToken";
         }
     }
 
-    [dataLayer push:pushedData];
+    [self pushEvent:pushedData];
 }
 
 
@@ -1020,15 +1043,11 @@ NSString * const kGTMToken = @"kGTMToken";
 {
     RIDebugLog(@"GTM - Tracking timing: %lu %@", (unsigned long)millis, reference);
     
-    // The container should have already been opened, otherwise events pushed to
-    // the data layer will not fire tags in that container.
-    TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
-
     NSMutableDictionary *pushedData = [[NSMutableDictionary alloc] init];
     [pushedData setObject:reference forKey:kGTMEventScreenNameKey];
     [pushedData setObject:millis forKey:kGTMEventLoadTimeKey];
     
-    [dataLayer push:pushedData];
+    [self pushEvent:pushedData];
 }
 
 @end
