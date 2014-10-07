@@ -125,7 +125,14 @@ UIPickerViewDelegate>
      {
          [self finishedFormLoading];
          
-         [self showMessage:STRING_ERROR success:NO];
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         }
+         else
+         {
+             [self showMessage:STRING_ERROR success:NO];
+         }
      }];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -459,8 +466,12 @@ UIPickerViewDelegate>
      {
          self.hasErrors = YES;
          self.numberOfRequests--;
-         
-         if(VALID_NOTEMPTY(errorObject, NSDictionary))
+        
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.shippingDynamicForm validateFields:errorObject];
          }
@@ -468,6 +479,10 @@ UIPickerViewDelegate>
          {
              [self.shippingDynamicForm checkErrors];
          }
+         else
+         {
+             [self showMessage:STRING_ERROR success:NO];
+         }         
      }];
 }
 

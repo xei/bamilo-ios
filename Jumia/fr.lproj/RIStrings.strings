@@ -215,3 +215,6 @@
 "form_data_not_transferred" = "Il y a des erreurs dans les données communiquées, vérifiez les différents champs renseignés";
 
 "my_order_confirm_button" = "Confirmer la commande";
+
+"string_error_setting_payment_method" = "Error setting payment method";
+"string_error_setting_shipping_method" = "Error setting shipping method";
