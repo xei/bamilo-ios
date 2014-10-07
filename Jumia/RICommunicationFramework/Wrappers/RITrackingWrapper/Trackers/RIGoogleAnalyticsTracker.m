@@ -124,22 +124,23 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         return;
     }
     
-    NSDictionary *dict = [[[GAIDictionaryBuilder createAppView] setAll:data] build];
-    [tracker send:dict];
-    
-    if(VALID_NOTEMPTY(dict, NSDictionary))
+    if(VALID_NOTEMPTY(data, NSDictionary))
     {
+        GAIDictionaryBuilder *hitParams = [[GAIDictionaryBuilder alloc] init];
+        
         NSString *campaignUrl = @"";
-        NSArray *dictKeys = [dict allKeys];
+        NSArray *dictKeys = [data allKeys];
         for(NSString *key in dictKeys)
         {
-            NSString *value = [dict objectForKey:key];
+            NSString *value = [data objectForKey:key];
             if(VALID_NOTEMPTY(key, NSString) && VALID_NOTEMPTY(value, NSString))
             {
                 campaignUrl = [NSString stringWithFormat:@"%@%@=%@", campaignUrl, key, value];
             }
         }
-        [tracker setCampaignParametersFromUrl:campaignUrl];
+        
+        [hitParams setCampaignParametersFromUrl:campaignUrl];
+        [tracker send:[[[GAIDictionaryBuilder createAppView] setAll:[hitParams build]] build]];
     }
 }
 
