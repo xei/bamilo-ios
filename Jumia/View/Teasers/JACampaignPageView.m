@@ -34,7 +34,9 @@
             self.campaigns = campaigns;
             [self loadCampaignViews];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(loadFailedWithResponse:)]) {
+                [self.delegate loadFailedWithResponse:apiResponse];
+            }
         }];
     }
 }
@@ -50,7 +52,7 @@
     CGFloat currentY = self.scrollView.bounds.origin.y;
     for (RICampaign* campaign in self.campaigns) {
         JACampaignSingleView* campaignView = [JACampaignSingleView getNewJACampaignSingleView];
-        campaignView.delegate = self.delegate;
+        campaignView.delegate = self.singleViewDelegate;
         [campaignView setFrame:CGRectMake(self.scrollView.bounds.origin.x,
                                           currentY,
                                           self.scrollView.frame.size.width,
