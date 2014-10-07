@@ -13,6 +13,7 @@
 #import "JAUtils.h"
 #import "RICustomer.h"
 #import "JAPromotionPopUp.h"
+#import "JAAppDelegate.h"
 
 @interface JAHomeViewController ()
 
@@ -30,6 +31,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSDictionary* initialUserInfo = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).initialUserInfo;
+    if (VALID_NOTEMPTY(initialUserInfo, NSDictionary))
+    {
+        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]) application:nil didReceiveRemoteNotification:[initialUserInfo copy]];
+        ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).initialUserInfo = nil;
+    }
     
     self.screenName = @"ShopMain";
     self.A4SViewControllerAlias = @"HOME";

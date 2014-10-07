@@ -69,8 +69,10 @@
                                                                             UIRemoteNotificationTypeSound |
                                                                             UIRemoteNotificationTypeAlert )];
     
-    if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey] != nil)
+    self.notificationChangedCountry = NO;
+    if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil)
     {
+        self.initialUserInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
     }
     
@@ -138,45 +140,48 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
-
-    if (VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"u"], NSString))
+    if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState)
     {
-        NSString *urlString = [userInfo objectForKey:@"u"];
+        [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
         
-        // Check if the country is the same
-        NSString *currentCountry = [RIApi getCountryIsoInUse];
-        NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
-        
-        if([currentCountry isEqualToString:countryFromUrl])
+        if (VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"u"], NSString))
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:nil userInfo:userInfo];
+            NSString *urlString = [userInfo objectForKey:@"u"];
+            
+            // Check if the country is the same
+            NSString *currentCountry = [RIApi getCountryIsoInUse];
+            NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
+            
+            if([currentCountry isEqualToString:countryFromUrl])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:nil userInfo:userInfo];
+            }
+            else
+            {
+                // Change country
+                [RICountry getCountriesWithSuccessBlock:^(id countries)
+                 {
+                     for (RICountry *country in countries)
+                     {
+                         if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
+                         {
+                             [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:country userInfo:userInfo];
+                             break;
+                         }
+                     }
+                     
+                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+                 {
+                     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                 }];
+            }
         }
         else
         {
-            // Change country
-            [RICountry getCountriesWithSuccessBlock:^(id countries)
-             {
-                 for (RICountry *country in countries)
-                 {
-                     if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
-                     {
-                         [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:country userInfo:userInfo];
-                         break;
-                     }
-                 }
-                 
-             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-             {
-                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-             }];
-        }
-    }
-    else
-    {
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"UTM"], NSString))
-        {
-            [[RITrackingWrapper sharedInstance] trackCampaignWithName:[userInfo objectForKey:@"UTM"]];
+            if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"UTM"], NSString))
+            {
+                [[RITrackingWrapper sharedInstance] trackCampaignWithName:[userInfo objectForKey:@"UTM"]];
+            }
         }
     }
 }
