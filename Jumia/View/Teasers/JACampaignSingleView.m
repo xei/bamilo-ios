@@ -288,36 +288,42 @@
 
 - (void)buyButtonPressed
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(addToCartForProduct:withProductSimple:)]) {
-        
-        NSString* simpleSku;
-        if (self.campaign.productSimples.count == 1) {
-            RICampaignProductSimple* simple = [self.campaign.productSimples firstObject];
-            simpleSku = simple.sku;
-        } else {
-            for (RICampaignProductSimple* simple in self.campaign.productSimples) {
-                if ([self.chosenSize isEqualToString:simple.size]) {
-                    //found it
-                    simpleSku = simple.sku;
+    if (YES == self.offerEndedContent.hidden) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(addToCartForProduct:withProductSimple:)]) {
+            
+            NSString* simpleSku;
+            if (self.campaign.productSimples.count == 1) {
+                RICampaignProductSimple* simple = [self.campaign.productSimples firstObject];
+                simpleSku = simple.sku;
+            } else {
+                for (RICampaignProductSimple* simple in self.campaign.productSimples) {
+                    if ([self.chosenSize isEqualToString:simple.size]) {
+                        //found it
+                        simpleSku = simple.sku;
+                    }
                 }
             }
+            [self.delegate addToCartForProduct:self.campaign
+                             withProductSimple:simpleSku];
         }
-        [self.delegate addToCartForProduct:self.campaign
-                         withProductSimple:simpleSku];
     }
 }
 
 - (void)sizeButtonPressed
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(sizePressedOnView:)]) {
-        [self.delegate sizePressedOnView:self];
+    if (YES == self.offerEndedContent.hidden) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(sizePressedOnView:)]) {
+            [self.delegate sizePressedOnView:self];
+        }
     }
 }
 
 - (void)backViewPressed
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(pressedCampaignWithSku:)]) {
-        [self.delegate pressedCampaignWithSku:self.campaign.sku];
+    if (YES == self.offerEndedContent.hidden) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(pressedCampaignWithSku:)]) {
+            [self.delegate pressedCampaignWithSku:self.campaign.sku];
+        }
     }
 }
 
