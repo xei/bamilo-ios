@@ -368,6 +368,7 @@ JAActivityViewControllerDelegate
     UIGraphicsEndImageContext();
     
     self.imageSection.discountLabel.backgroundColor = [UIColor colorWithPatternImage:newImage];
+    [self.imageSection.mainImage setAccessibilityLabel:@"pdv_main_image"];
     
     [self.mainScrollView addSubview:self.imageSection];
     
