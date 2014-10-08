@@ -40,7 +40,7 @@
 @dynamic sum;
 @dynamic url;
 @dynamic isNew;
-@dynamic isFavorite;
+@dynamic favoriteAddDate;
 @dynamic recentlyViewedDate;
 @dynamic images;
 @dynamic productSimples;
@@ -367,7 +367,7 @@
         }
     }
     
-    newProduct.isFavorite = [NSNumber numberWithBool:[RIProduct productIsFavoriteInDatabase:newProduct]];
+    newProduct.favoriteAddDate = [RIProduct productIsFavoriteInDatabase:newProduct];
     
     return newProduct;
 }
@@ -465,7 +465,7 @@
             
             //found it, so just change the product by deleting the previous entry
             product.recentlyViewedDate = [NSDate date];
-            product.isFavorite = currentProduct.isFavorite;
+            product.favoriteAddDate = currentProduct.favoriteAddDate;
             [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
             [RIProduct saveProduct:product];
             productExists = YES;
@@ -528,7 +528,7 @@
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
         for (RIProduct* productToDelete in recentlyViewedProducts) {
-            if (VALID_NOTEMPTY(productToDelete.isFavorite, NSNumber) && YES == [productToDelete.isFavorite boolValue]) {
+            if (VALID_NOTEMPTY(productToDelete.favoriteAddDate, NSDate)) {
                 //has date, don't delete, just remove recentlyViewedDate
                 productToDelete.recentlyViewedDate = nil;
             } else {
@@ -558,8 +558,8 @@
         for (RIProduct* currentProduct in recentlyViewedProducts) {
             if ([currentProduct.sku isEqualToString:product.sku]) {
                 //found it
-                
-                if (VALID_NOTEMPTY(currentProduct.isFavorite, NSNumber) && YES == [currentProduct.isFavorite boolValue]) {
+
+                if (VALID_NOTEMPTY(currentProduct.favoriteAddDate, NSDate)) {
                     currentProduct.recentlyViewedDate = nil;
                 } else {
                     [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
@@ -583,23 +583,18 @@
 + (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
                             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
-    NSArray* productsWithVariable = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"isFavorite"];
+    NSArray* productsWithVariable = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"favoriteAddDate"];
     NSMutableArray* favoriteProducts = [NSMutableArray new];
     for (RIProduct* product in productsWithVariable) {
-        if (VALID_NOTEMPTY(product.isFavorite, NSNumber) && YES == [product.isFavorite boolValue]) {
+        if (VALID_NOTEMPTY(product.favoriteAddDate, NSDate)) {
             [favoriteProducts addObject:product];
         }
     }
     
     if (VALID(favoriteProducts, NSArray) && successBlock) {
-        
-        //reverse array
-        NSMutableArray *reversedArray = [NSMutableArray arrayWithCapacity:favoriteProducts.count];
-        NSEnumerator *enumerator = [favoriteProducts reverseObjectEnumerator];
-        for (id element in enumerator) {
-            [reversedArray addObject:element];
-        }
-        successBlock(reversedArray);
+        NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"favoriteAddDate" ascending:NO];
+        NSArray *sorted = [favoriteProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
+        successBlock(sorted);
     } else if (failureBlock) {
         failureBlock(RIApiResponseUnknownError, nil);
     }
@@ -616,7 +611,7 @@
         if ([currentProduct.sku isEqualToString:product.sku]) {
             
             //found it
-            currentProduct.isFavorite = [NSNumber numberWithBool:YES];
+            currentProduct.favoriteAddDate = [NSDate date];
             [[RIDataBaseWrapper sharedInstance] saveContext];
             productExists = YES;
             break;
@@ -624,7 +619,7 @@
     }
     
     if (NO == productExists) {
-        product.isFavorite = [NSNumber numberWithBool:YES];
+        product.favoriteAddDate = [NSDate date];
         [RIProduct saveProduct:product];
     }
     
@@ -645,7 +640,7 @@
                 
                 if (VALID_NOTEMPTY(currentProduct.recentlyViewedDate, NSDate)) {
                     //do not delete, just remove favorite variable
-                    currentProduct.isFavorite = nil;
+                    currentProduct.favoriteAddDate = nil;
                 } else {
                     [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
                 }
@@ -662,17 +657,17 @@
     }];
 }
 
-+ (BOOL)productIsFavoriteInDatabase:(RIProduct*)product
++ (NSDate*)productIsFavoriteInDatabase:(RIProduct*)product
 {
     NSArray* productsWithVariable = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"sku" andPropertyValue:product.sku];
     
     for (RIProduct* possibleProduct in productsWithVariable) {
-        if (YES == [possibleProduct.isFavorite boolValue]) {
-            return YES;
+        if (VALID_NOTEMPTY(possibleProduct.favoriteAddDate, NSDate)) {
+            return possibleProduct.favoriteAddDate;
         }
     }
     
-    return NO;
+    return nil;
 }
 
 #pragma mark - Save method

@@ -55,7 +55,7 @@
     self.discountLabel.hidden = !product.maxSavingPercentage;
     self.discountImageView.hidden = !product.maxSavingPercentage;
     
-    self.favoriteButton.selected = [product.isFavorite boolValue];
+    self.favoriteButton.selected = VALID_NOTEMPTY(product.favoriteAddDate, NSDate);
     
     if (1 >= product.productSimples.count) {
         self.sizeButton.hidden = YES;

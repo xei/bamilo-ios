@@ -119,25 +119,8 @@
     [self showLoading];
     
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
-        
-        NSMutableArray *tempArray = [favoriteProducts mutableCopy];
-        
-        [tempArray sortUsingComparator:^(RIProduct *obj1, RIProduct *obj2)
-         {
-             NSComparisonResult result = [obj1.price compare:obj2.price];
-             
-             switch (result)
-             {
-                 case NSOrderedAscending: return (NSComparisonResult)NSOrderedDescending; break;
-                 case NSOrderedDescending: return (NSComparisonResult)NSOrderedAscending; break;
-                 case NSOrderedSame: return (NSComparisonResult)NSOrderedSame; break;
-                     
-                 default: return (NSComparisonResult)NSOrderedSame; break;
-             }
-         }];
-        
         CGFloat totalWishlistValue = 0.0f;
-        for(RIProduct *product in tempArray)
+        for(RIProduct *product in favoriteProducts)
         {
             if(VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f)
             {
@@ -152,7 +135,7 @@
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
         NSMutableDictionary *trackingDictionary = nil;
-        for(RIProduct *product in tempArray)
+        for(RIProduct *product in favoriteProducts)
         {
             trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
@@ -210,7 +193,7 @@
         }
 
         [self hideLoading];
-        [self updateListsWith:[tempArray copy]];
+        [self updateListsWith:[favoriteProducts copy]];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         
         if(self.firstLoading)
