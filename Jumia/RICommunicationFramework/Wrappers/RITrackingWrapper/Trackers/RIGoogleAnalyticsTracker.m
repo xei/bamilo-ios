@@ -26,7 +26,7 @@ NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
 
 @interface RIGoogleAnalyticsTracker ()
 
-@property (nonatomic, strong) NSString *campaignUrl;
+@property (nonatomic, strong) NSString *campaignData;
 
 @end
 
@@ -43,7 +43,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     if ((self = [super init]))
     {
-        self.campaignUrl = @"";
+        self.campaignData = @"";
         
         self.queue = [[NSOperationQueue alloc] init];
         self.queue.maxConcurrentOperationCount = 1;
@@ -135,7 +135,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     if(VALID_NOTEMPTY(campaignName, NSString))
     {
-        self.campaignUrl = [NSString stringWithFormat:@"utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
+        self.campaignData = [NSString stringWithFormat:@"http://www.google.com?utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
     }
 }
 
@@ -172,7 +172,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     }
     
     [tracker set:kGAIScreenName value:name];
-    [tracker send:[[[GAIDictionaryBuilder createAppView] setCampaignParametersFromUrl:self.campaignUrl] build]];
+    [tracker send:[[[GAIDictionaryBuilder createAppView] setCampaignParametersFromUrl:self.campaignData] build]];
 }
 
 #pragma mark - RIEventTracking
@@ -196,8 +196,6 @@ static RIGoogleAnalyticsTracker *sharedInstance;
             return;
         }
         
-        NSLog(@"Google Analytics - Event registered");
-        
         NSString *category = [data objectForKey:kRIEventCategoryKey];
         NSString *action = [data objectForKey:kRIEventActionKey];
         NSString *label = [data objectForKey:kRIEventLabelKey];
@@ -207,7 +205,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
                                                                       action:action
                                                                        label:label
                                                                        value:value]
-                               setCampaignParametersFromUrl:self.campaignUrl] build];
+                               setCampaignParametersFromUrl:self.campaignData] build];
         [tracker send:dict];
     }
 }
@@ -237,8 +235,8 @@ static RIGoogleAnalyticsTracker *sharedInstance;
                                                                            tax:tax
                                                                       shipping:shipping
                                                                   currencyCode:currency];
-    [tracker send:[[dict setCampaignParametersFromUrl:self.campaignUrl] build]];
-    
+    [tracker send:[[dict setCampaignParametersFromUrl:self.campaignData] build]];
+
     if ([data objectForKey:kRIEcommerceProducts])
     {
         NSArray *tempArray = [data objectForKey:kRIEcommerceProducts];
@@ -252,7 +250,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
                                                                                             price:[tempProduct objectForKey:kRIEventPriceKey]
                                                                                          quantity:[tempProduct objectForKey:kRIEventQuantityKey]
                                                                                      currencyCode:[tempProduct objectForKey:kRIEventCurrencyCodeKey]];
-            [tracker send:[[productDict setCampaignParametersFromUrl:self.campaignUrl] build]];
+            [tracker send:[[productDict setCampaignParametersFromUrl:self.campaignData] build]];
         }
     }
 }
@@ -274,7 +272,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
                                                                  interval:millis
                                                                      name:nil
                                                                     label:nil]
-                           setCampaignParametersFromUrl:self.campaignUrl] build];
+                           setCampaignParametersFromUrl:self.campaignData] build];
     
     [tracker send:dict];
 }
