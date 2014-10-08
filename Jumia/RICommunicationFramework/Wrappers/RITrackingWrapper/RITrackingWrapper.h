@@ -21,7 +21,7 @@ NSLog((@"Func: %s, Line: %d, %@"), __PRETTY_FUNCTION__, __LINE__, \
 #define RIDebugLog(fmt, ...) \
 if ([RITrackingWrapper sharedInstance].debug) NSLog(@"RITrackingWrapper: %@",[NSString stringWithFormat:(fmt), ##__VA_ARGS__]);
 #else
-#define RIDebugLog(fmt, ...) return;
+#define RIDebugLog(fmt, ...)
 #endif
 
 #import <Foundation/Foundation.h>
