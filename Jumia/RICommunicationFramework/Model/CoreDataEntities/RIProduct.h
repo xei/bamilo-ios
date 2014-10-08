@@ -48,7 +48,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSNumber * sum;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSNumber * isNew;
-@property (nonatomic, retain) NSNumber * isFavorite;
+@property (nonatomic, retain) NSDate * favoriteAddDate;
 @property (nonatomic, retain) NSDate * recentlyViewedDate;
 @property (nonatomic, retain) NSOrderedSet *images;
 @property (nonatomic, retain) NSOrderedSet *productSimples;

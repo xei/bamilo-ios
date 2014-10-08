@@ -793,7 +793,7 @@
         RIProduct* currentProduct = [productsArray objectAtIndex:i];
         if ([currentProduct.sku isEqualToString:product.sku])
         {
-            currentProduct.isFavorite = product.isFavorite;
+            currentProduct.favoriteAddDate = product.favoriteAddDate;
             [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]];
         }
     }
@@ -844,7 +844,11 @@
     NSMutableArray *productsArray = [self.productsMap objectForKey:key];
     
     RIProduct* product = [productsArray objectAtIndex:button.tag];
-    product.isFavorite = [NSNumber numberWithBool:button.selected];
+    if (button.selected) {
+        product.favoriteAddDate = [NSDate date];
+    } else {
+        product.favoriteAddDate = nil;
+    }
     [self showLoading];
     if (button.selected)
     {

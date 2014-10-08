@@ -273,7 +273,7 @@ JAActivityViewControllerDelegate
     [self.imageSection.wishListButton addTarget:self
                                          action:@selector(addToFavoritesPressed:)
                                forControlEvents:UIControlEventTouchUpInside];
-    self.imageSection.wishListButton.selected = [self.product.isFavorite boolValue];
+    self.imageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
     
     if (self.product.variations.count > 0) {
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
@@ -973,7 +973,11 @@ JAActivityViewControllerDelegate
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
                                                       data:[trackingDictionary copy]];
             
-            self.product.isFavorite = [NSNumber numberWithBool:button.selected];
+            if (button.selected) {
+                self.product.favoriteAddDate = [NSDate date];
+            } else {
+                self.product.favoriteAddDate = nil;
+            }
             
             if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
                 [self.delegate changedFavoriteStateOfProduct:self.product];
