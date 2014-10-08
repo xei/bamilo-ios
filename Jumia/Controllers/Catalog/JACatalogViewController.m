@@ -90,6 +90,7 @@
     
     self.isFirstLoadTracking = NO;
     self.filterButton.backgroundColor = JACatalogViewControllerButtonColor;
+    self.filterButton.enabled = NO;
     self.viewToggleButton.backgroundColor = JACatalogViewControllerButtonColor;
     
     self.sortingScrollView.delegate = self;
@@ -241,6 +242,7 @@
                                            
                                            if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
                                                self.filtersArray = filters;
+                                               self.filterButton.enabled = YES;
                                            }
                                            
                                            // Track events only in the first load of the products
@@ -376,6 +378,7 @@
                                             
                                             if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
                                                 self.filtersArray = filters;
+                                                self.filterButton.enabled = YES;
                                             }
                                             
                                             RICategory *category = nil;
