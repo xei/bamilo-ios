@@ -193,3 +193,19 @@ end
 Then /^I touch the remove from cart button$/ do
     touch("view marked:'"+@favorite_remove_button+"'")
 end
+
+Then /^I touch the proceed to checkout button$/ do
+    touch("view marked:'"+@proceed_to_chechout+"'")
+end
+
+Then /^I touch the product detail image$/ do
+    touch("UIImageView marked:'pdv_main_image'")
+end
+
+Then /^I touch the next button$/ do
+    touch("view marked:'"+@next+"'")
+end
+
+Then /^I touch the confirm order button$/ do
+    touch("view marked:'"+@confirm_order+"'")
+end

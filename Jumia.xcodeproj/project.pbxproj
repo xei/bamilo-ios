@@ -467,7 +467,6 @@
 		BB4F1BD419E2D4D600E89C3F /* navigation.rb in Resources */ = {isa = PBXBuildFile; fileRef = BB4F1BD319E2D4D600E89C3F /* navigation.rb */; };
 		BBA145AA19DC56BF003F0CA7 /* 01_login.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459519DC56BF003F0CA7 /* 01_login.feature */; };
 		BBA145AB19DC56BF003F0CA7 /* 02_logout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459619DC56BF003F0CA7 /* 02_logout.feature */; };
-		BBA145AC19DC56BF003F0CA7 /* 03_remember_email.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459719DC56BF003F0CA7 /* 03_remember_email.feature */; };
 		BBA145AD19DC56BF003F0CA7 /* 04_my_account.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459819DC56BF003F0CA7 /* 04_my_account.feature */; };
 		BBA145AE19DC56BF003F0CA7 /* 05_user_data.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */; };
 		BBA145AF19DC56BF003F0CA7 /* 06_email_notifications.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459A19DC56BF003F0CA7 /* 06_email_notifications.feature */; };
@@ -488,6 +487,8 @@
 		BBB12A9919DD874D00656529 /* 08_registration.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9719DD874D00656529 /* 08_registration.feature */; };
 		BBB12A9C19DDA01E00656529 /* 09_home.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9B19DDA01E00656529 /* 09_home.feature */; };
 		BBB12A9D19DDA01E00656529 /* 09_home.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9B19DDA01E00656529 /* 09_home.feature */; };
+		BBB7F57619E532FA00E898E3 /* 21_native_checkout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB7F57519E532FA00E898E3 /* 21_native_checkout.feature */; };
+		BBB7F57719E532FA00E898E3 /* 21_native_checkout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB7F57519E532FA00E898E3 /* 21_native_checkout.feature */; };
 		BBBA4CBD19E3F764004271B2 /* 13_related_items.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CBC19E3F764004271B2 /* 13_related_items.feature */; };
 		BBBA4CBE19E3F764004271B2 /* 13_related_items.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CBC19E3F764004271B2 /* 13_related_items.feature */; };
 		BBBA4CC119E3F902004271B2 /* 14_side_menu.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC019E3F902004271B2 /* 14_side_menu.feature */; };
@@ -1144,7 +1145,6 @@
 		BB4F1BD319E2D4D600E89C3F /* navigation.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = navigation.rb; sourceTree = "<group>"; };
 		BBA1459519DC56BF003F0CA7 /* 01_login.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 01_login.feature; sourceTree = "<group>"; };
 		BBA1459619DC56BF003F0CA7 /* 02_logout.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 02_logout.feature; sourceTree = "<group>"; };
-		BBA1459719DC56BF003F0CA7 /* 03_remember_email.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 03_remember_email.feature; sourceTree = "<group>"; };
 		BBA1459819DC56BF003F0CA7 /* 04_my_account.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 04_my_account.feature; sourceTree = "<group>"; };
 		BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 05_user_data.feature; sourceTree = "<group>"; };
 		BBA1459A19DC56BF003F0CA7 /* 06_email_notifications.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 06_email_notifications.feature; sourceTree = "<group>"; };
@@ -1162,6 +1162,7 @@
 		BBB12A9319DD485400656529 /* 07_forgot_password.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 07_forgot_password.feature; sourceTree = "<group>"; };
 		BBB12A9719DD874D00656529 /* 08_registration.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 08_registration.feature; sourceTree = "<group>"; };
 		BBB12A9B19DDA01E00656529 /* 09_home.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 09_home.feature; sourceTree = "<group>"; };
+		BBB7F57519E532FA00E898E3 /* 21_native_checkout.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 21_native_checkout.feature; sourceTree = "<group>"; };
 		BBBA4CBC19E3F764004271B2 /* 13_related_items.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 13_related_items.feature; sourceTree = "<group>"; };
 		BBBA4CC019E3F902004271B2 /* 14_side_menu.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 14_side_menu.feature; sourceTree = "<group>"; };
 		BBBA4CC419E41F83004271B2 /* 15_my_favourites.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 15_my_favourites.feature; sourceTree = "<group>"; };
@@ -2620,7 +2621,6 @@
 			children = (
 				BBA1459519DC56BF003F0CA7 /* 01_login.feature */,
 				BBA1459619DC56BF003F0CA7 /* 02_logout.feature */,
-				BBA1459719DC56BF003F0CA7 /* 03_remember_email.feature */,
 				BBB12A9319DD485400656529 /* 07_forgot_password.feature */,
 			);
 			name = login;
@@ -2652,6 +2652,7 @@
 				BBBA4CCB19E43382004271B2 /* recently viewed */,
 				BBBA4CCF19E4397F004271B2 /* track order */,
 				BBBA4CD619E4577E004271B2 /* cart */,
+				BBB7F57419E532D900E898E3 /* native checkout */,
 				BBA1459B19DC56BF003F0CA7 /* step_definitions */,
 				BBA145A619DC56BF003F0CA7 /* support */,
 			);
@@ -2672,6 +2673,14 @@
 				BBB12A9B19DDA01E00656529 /* 09_home.feature */,
 			);
 			name = home;
+			sourceTree = "<group>";
+		};
+		BBB7F57419E532D900E898E3 /* native checkout */ = {
+			isa = PBXGroup;
+			children = (
+				BBB7F57519E532FA00E898E3 /* 21_native_checkout.feature */,
+			);
+			name = "native checkout";
 			sourceTree = "<group>";
 		};
 		BBBA4CBF19E3F8E9004271B2 /* side menu */ = {
@@ -3025,6 +3034,7 @@
 			files = (
 				d7a6db2cb10440d1bc0b39d3 /* JAFavoriteListCell.xib in Resources */,
 				d4d033bbf2ace93ceba9031e /* JAPickupStationInfoCell.xib in Resources */,
+				BBB7F57719E532FA00E898E3 /* 21_native_checkout.feature in Resources */,
 				14af203c5f59a40d772466df /* JANoConnectionView.xib in Resources */,
 				e21f541d289492fe85dd190e /* JAShippingCell.xib in Resources */,
 				a0fb37b44e2006622629d2c3 /* slider-default7-handle@2x.png in Resources */,
@@ -3155,7 +3165,6 @@
 				B501E88919BE20C100BE51DD /* JAPickupRegionsCell.xib in Resources */,
 				4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */,
 				B5B5FDEC19D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib in Resources */,
-				BBA145AC19DC56BF003F0CA7 /* 03_remember_email.feature in Resources */,
 				4A392143198925E300B70A9C /* JANavigationBarView.xib in Resources */,
 				B5210E8619C4863400FDB0D1 /* RIStrings.strings in Resources */,
 				CEDEB9C3199BA8FA0022BAB5 /* slider-metal-handle.png in Resources */,
@@ -3192,6 +3201,7 @@
 				BBA145AB19DC56BF003F0CA7 /* 02_logout.feature in Resources */,
 				4AE99A0219CAE3B300F28A7D /* JANewsletterComponent.xib in Resources */,
 				CEDEB9C8199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png in Resources */,
+				BBB7F57619E532FA00E898E3 /* 21_native_checkout.feature in Resources */,
 				B5B5FDFB19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */,
 				B5B5FDF819D99D06008B8059 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				CEDEB9B0199BA8FA0022BAB5 /* slider-default-handle-highlighted@2x.png in Resources */,

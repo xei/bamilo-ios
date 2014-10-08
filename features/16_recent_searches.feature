@@ -21,10 +21,13 @@ Scenario: Dummy Search
 * I enter a valid search
 * I wait to see the catalog
 
+@recent_searches_rs
+Scenario: Touch a recent search
+* I touch the table list item number 0
+* I wait to see the catalog
+
 @recent_searches_cs
 Scenario: Clear recent searches
 * I touch the clear recent searches button
 * I wait to see the no recent searches screen
 
-#TODO
-#Scenario: Touch a recent search

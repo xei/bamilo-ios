@@ -27,10 +27,12 @@ Scenario: Dummy View
 * I wait for 2 seconds
 * I wait to see the product detail screen
 
+@recently_viewed_rv
+Scenario: Touch a recently viewed
+* I touch collection view item number 0
+* I wait to see the product detail screen
+
 @recently_viewed_cs
 Scenario: Clear recently viewed
 * I touch the clear recently viewed button
 * I wait to see the no recently viewed products screen
-
-#TODO
-#Scenario: Touch a recently viewed

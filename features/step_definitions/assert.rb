@@ -79,3 +79,7 @@ Then /^I should see all the side menu options$/ do
     check_element_exists("view marked:'"+@login+"'")
 end
 
+Then /^I should see call to order button$/ do
+    check_element_exists("view marked:'"+@call_to_order+"'")
+end
+

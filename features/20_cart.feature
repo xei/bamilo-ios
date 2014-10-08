@@ -95,4 +95,4 @@ Scenario: Call to Order
 * I wait to see the product added message
 * I touch the cart button
 * I wait to see the cart screen
-* I should see 
+* I should see call to order button
