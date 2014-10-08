@@ -458,6 +458,13 @@
 		B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */; };
 		B5FE9FB719A1FD1B006F7D63 /* RITrackingDebug.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */; };
 		B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FE9FBB19A204F1006F7D63 /* RINewRelicTracker.m */; };
+		BB128E9F19E2F4260033514F /* 10_search.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128E9E19E2F4260033514F /* 10_search.feature */; };
+		BB128EA019E2F4260033514F /* 10_search.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128E9E19E2F4260033514F /* 10_search.feature */; };
+		BB128EA319E2FA410033514F /* 11_catalog.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128EA219E2FA410033514F /* 11_catalog.feature */; };
+		BB128EA719E30B650033514F /* 12_product_details.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128EA619E30B650033514F /* 12_product_details.feature */; };
+		BB4F1BD119E2B15400E89C3F /* JAPromotionPopUp.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF91119DD5D6700D8C51B /* JAPromotionPopUp.m */; };
+		BB4F1BD219E2B16600E89C3F /* RIPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF91919DD8BC400D8C51B /* RIPromotion.m */; };
+		BB4F1BD419E2D4D600E89C3F /* navigation.rb in Resources */ = {isa = PBXBuildFile; fileRef = BB4F1BD319E2D4D600E89C3F /* navigation.rb */; };
 		BBA145AA19DC56BF003F0CA7 /* 01_login.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459519DC56BF003F0CA7 /* 01_login.feature */; };
 		BBA145AB19DC56BF003F0CA7 /* 02_logout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459619DC56BF003F0CA7 /* 02_logout.feature */; };
 		BBA145AC19DC56BF003F0CA7 /* 03_remember_email.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459719DC56BF003F0CA7 /* 03_remember_email.feature */; };
@@ -481,6 +488,22 @@
 		BBB12A9919DD874D00656529 /* 08_registration.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9719DD874D00656529 /* 08_registration.feature */; };
 		BBB12A9C19DDA01E00656529 /* 09_home.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9B19DDA01E00656529 /* 09_home.feature */; };
 		BBB12A9D19DDA01E00656529 /* 09_home.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9B19DDA01E00656529 /* 09_home.feature */; };
+		BBBA4CBD19E3F764004271B2 /* 13_related_items.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CBC19E3F764004271B2 /* 13_related_items.feature */; };
+		BBBA4CBE19E3F764004271B2 /* 13_related_items.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CBC19E3F764004271B2 /* 13_related_items.feature */; };
+		BBBA4CC119E3F902004271B2 /* 14_side_menu.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC019E3F902004271B2 /* 14_side_menu.feature */; };
+		BBBA4CC219E3F902004271B2 /* 14_side_menu.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC019E3F902004271B2 /* 14_side_menu.feature */; };
+		BBBA4CC519E41F83004271B2 /* 15_my_favourites.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC419E41F83004271B2 /* 15_my_favourites.feature */; };
+		BBBA4CC619E41F83004271B2 /* 15_my_favourites.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC419E41F83004271B2 /* 15_my_favourites.feature */; };
+		BBBA4CC919E42E9A004271B2 /* 16_recent_searches.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */; };
+		BBBA4CCA19E42E9A004271B2 /* 16_recent_searches.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */; };
+		BBBA4CCD19E4339F004271B2 /* 17_recently_viewed.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CCC19E4339F004271B2 /* 17_recently_viewed.feature */; };
+		BBBA4CCE19E4339F004271B2 /* 17_recently_viewed.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CCC19E4339F004271B2 /* 17_recently_viewed.feature */; };
+		BBBA4CD119E43993004271B2 /* 18_track_order.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD019E43993004271B2 /* 18_track_order.feature */; };
+		BBBA4CD219E43993004271B2 /* 18_track_order.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD019E43993004271B2 /* 18_track_order.feature */; };
+		BBBA4CD419E44CDC004271B2 /* 19_filters.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD319E44CDC004271B2 /* 19_filters.feature */; };
+		BBBA4CD519E44CDC004271B2 /* 19_filters.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD319E44CDC004271B2 /* 19_filters.feature */; };
+		BBBA4CD819E45799004271B2 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
+		BBBA4CD919E45799004271B2 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
 		CE13256819C7355000B5018E /* RITeaser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13256719C7355000B5018E /* RITeaser.m */; };
 		CE13787019A2304500CA0751 /* JACategoryFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13786F19A2304500CA0751 /* JACategoryFilterViewController.m */; };
 		CE13787819A357B400CA0751 /* JACategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13787719A357B400CA0751 /* JACategoriesViewController.m */; };
@@ -1115,6 +1138,10 @@
 		B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug.plist; sourceTree = "<group>"; };
 		B5FE9FBA19A204F1006F7D63 /* RINewRelicTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RINewRelicTracker.h; sourceTree = "<group>"; };
 		B5FE9FBB19A204F1006F7D63 /* RINewRelicTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RINewRelicTracker.m; sourceTree = "<group>"; };
+		BB128E9E19E2F4260033514F /* 10_search.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 10_search.feature; sourceTree = "<group>"; };
+		BB128EA219E2FA410033514F /* 11_catalog.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 11_catalog.feature; sourceTree = "<group>"; };
+		BB128EA619E30B650033514F /* 12_product_details.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 12_product_details.feature; sourceTree = "<group>"; };
+		BB4F1BD319E2D4D600E89C3F /* navigation.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = navigation.rb; sourceTree = "<group>"; };
 		BBA1459519DC56BF003F0CA7 /* 01_login.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 01_login.feature; sourceTree = "<group>"; };
 		BBA1459619DC56BF003F0CA7 /* 02_logout.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 02_logout.feature; sourceTree = "<group>"; };
 		BBA1459719DC56BF003F0CA7 /* 03_remember_email.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 03_remember_email.feature; sourceTree = "<group>"; };
@@ -1135,6 +1162,14 @@
 		BBB12A9319DD485400656529 /* 07_forgot_password.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 07_forgot_password.feature; sourceTree = "<group>"; };
 		BBB12A9719DD874D00656529 /* 08_registration.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 08_registration.feature; sourceTree = "<group>"; };
 		BBB12A9B19DDA01E00656529 /* 09_home.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 09_home.feature; sourceTree = "<group>"; };
+		BBBA4CBC19E3F764004271B2 /* 13_related_items.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 13_related_items.feature; sourceTree = "<group>"; };
+		BBBA4CC019E3F902004271B2 /* 14_side_menu.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 14_side_menu.feature; sourceTree = "<group>"; };
+		BBBA4CC419E41F83004271B2 /* 15_my_favourites.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 15_my_favourites.feature; sourceTree = "<group>"; };
+		BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 16_recent_searches.feature; sourceTree = "<group>"; };
+		BBBA4CCC19E4339F004271B2 /* 17_recently_viewed.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 17_recently_viewed.feature; sourceTree = "<group>"; };
+		BBBA4CD019E43993004271B2 /* 18_track_order.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 18_track_order.feature; sourceTree = "<group>"; };
+		BBBA4CD319E44CDC004271B2 /* 19_filters.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 19_filters.feature; sourceTree = "<group>"; };
+		BBBA4CD719E45799004271B2 /* 20_cart.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 20_cart.feature; sourceTree = "<group>"; };
 		CE13256619C7355000B5018E /* RITeaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RITeaser.h; sourceTree = "<group>"; };
 		CE13256719C7355000B5018E /* RITeaser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RITeaser.m; sourceTree = "<group>"; };
 		CE13786E19A2304500CA0751 /* JACategoryFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACategoryFilterViewController.h; sourceTree = "<group>"; };
@@ -2527,17 +2562,44 @@
 			path = AIAdditions;
 			sourceTree = "<group>";
 		};
+		BB128E9D19E2F4060033514F /* search */ = {
+			isa = PBXGroup;
+			children = (
+				BB128E9E19E2F4260033514F /* 10_search.feature */,
+			);
+			name = search;
+			sourceTree = "<group>";
+		};
+		BB128EA119E2FA2B0033514F /* catalog */ = {
+			isa = PBXGroup;
+			children = (
+				BB128EA219E2FA410033514F /* 11_catalog.feature */,
+				BBBA4CD319E44CDC004271B2 /* 19_filters.feature */,
+			);
+			name = catalog;
+			sourceTree = "<group>";
+		};
+		BB128EA519E30A2E0033514F /* product details */ = {
+			isa = PBXGroup;
+			children = (
+				BB128EA619E30B650033514F /* 12_product_details.feature */,
+				BBBA4CBC19E3F764004271B2 /* 13_related_items.feature */,
+			);
+			name = "product details";
+			sourceTree = "<group>";
+		};
 		BBA1459B19DC56BF003F0CA7 /* step_definitions */ = {
 			isa = PBXGroup;
 			children = (
-				BBA1459C19DC56BF003F0CA7 /* assert.rb */,
 				BBA1459D19DC56BF003F0CA7 /* calabash_steps.rb */,
+				BBA1459C19DC56BF003F0CA7 /* assert.rb */,
 				BBA1459E19DC56BF003F0CA7 /* init.rb */,
 				BBA1459F19DC56BF003F0CA7 /* keyboard.rb */,
 				BBA145A019DC56BF003F0CA7 /* multi_step.rb */,
 				BBA145A119DC56BF003F0CA7 /* my_first_steps.rb */,
 				BBA145A319DC56BF003F0CA7 /* touch.rb */,
 				BBA145A519DC56BF003F0CA7 /* wait.rb */,
+				BB4F1BD319E2D4D600E89C3F /* navigation.rb */,
 			);
 			path = step_definitions;
 			sourceTree = "<group>";
@@ -2580,6 +2642,15 @@
 				BBA145BE19DC5724003F0CA7 /* my account */,
 				BBB12A9619DD872600656529 /* registration */,
 				BBB12A9A19DDA00B00656529 /* home */,
+				BB128E9D19E2F4060033514F /* search */,
+				BB128EA119E2FA2B0033514F /* catalog */,
+				BB128EA519E30A2E0033514F /* product details */,
+				BBBA4CBF19E3F8E9004271B2 /* side menu */,
+				BBBA4CC319E41F69004271B2 /* my favourites */,
+				BBBA4CC719E42E74004271B2 /* recent searches */,
+				BBBA4CCB19E43382004271B2 /* recently viewed */,
+				BBBA4CCF19E4397F004271B2 /* track order */,
+				BBBA4CD619E4577E004271B2 /* cart */,
 				BBA1459B19DC56BF003F0CA7 /* step_definitions */,
 				BBA145A619DC56BF003F0CA7 /* support */,
 			);
@@ -2600,6 +2671,54 @@
 				BBB12A9B19DDA01E00656529 /* 09_home.feature */,
 			);
 			name = home;
+			sourceTree = "<group>";
+		};
+		BBBA4CBF19E3F8E9004271B2 /* side menu */ = {
+			isa = PBXGroup;
+			children = (
+				BBBA4CC019E3F902004271B2 /* 14_side_menu.feature */,
+			);
+			name = "side menu";
+			sourceTree = "<group>";
+		};
+		BBBA4CC319E41F69004271B2 /* my favourites */ = {
+			isa = PBXGroup;
+			children = (
+				BBBA4CC419E41F83004271B2 /* 15_my_favourites.feature */,
+			);
+			name = "my favourites";
+			sourceTree = "<group>";
+		};
+		BBBA4CC719E42E74004271B2 /* recent searches */ = {
+			isa = PBXGroup;
+			children = (
+				BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */,
+			);
+			name = "recent searches";
+			sourceTree = "<group>";
+		};
+		BBBA4CCB19E43382004271B2 /* recently viewed */ = {
+			isa = PBXGroup;
+			children = (
+				BBBA4CCC19E4339F004271B2 /* 17_recently_viewed.feature */,
+			);
+			name = "recently viewed";
+			sourceTree = "<group>";
+		};
+		BBBA4CCF19E4397F004271B2 /* track order */ = {
+			isa = PBXGroup;
+			children = (
+				BBBA4CD019E43993004271B2 /* 18_track_order.feature */,
+			);
+			name = "track order";
+			sourceTree = "<group>";
+		};
+		BBBA4CD619E4577E004271B2 /* cart */ = {
+			isa = PBXGroup;
+			children = (
+				BBBA4CD719E45799004271B2 /* 20_cart.feature */,
+			);
+			name = cart;
 			sourceTree = "<group>";
 		};
 		CE13787519A357B400CA0751 /* Categories */ = {
@@ -2911,6 +3030,9 @@
 				34a536cae01afe5c3273576f /* JAShippingInfoCell.xib in Resources */,
 				0950f15fccf17a6ebbc45e07 /* JAPickupRegionsCell.xib in Resources */,
 				f00ce9fe15cb6e122385dd86 /* JAPDVVariations.xib in Resources */,
+				BBBA4CCE19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
+				BBBA4CC619E41F83004271B2 /* 15_my_favourites.feature in Resources */,
+				BBBA4CD219E43993004271B2 /* 18_track_order.feature in Resources */,
 				b365a00e2177f670dc255f4f /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib in Resources */,
 				69c7ac2a38a28dc5589a97ca /* JANavigationBarView.xib in Resources */,
 				94febd202fcef8b0aaefb6e4 /* RIStrings.strings in Resources */,
@@ -2964,6 +3086,7 @@
 				81a5014f8866dce530164a99 /* JACheckBoxComponent.xib in Resources */,
 				4f946a6031dc658465b500d8 /* slider-default7-trackCrossedOver.png in Resources */,
 				5fabf66fb80ebc6b30c67313 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
+				BBBA4CD519E44CDC004271B2 /* 19_filters.feature in Resources */,
 				2da4b3c8c2024a70f4aa68b3 /* slider-metal-handle-highlighted.png in Resources */,
 				a2b0dc6d9bc2f3b3589ff3a4 /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */,
 				fd3f76b9df6b0e66b3f3fa9c /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */,
@@ -2971,10 +3094,13 @@
 				bc226a46ffc7b0880f9f8ab4 /* RITrackingDebug.plist in Resources */,
 				e8cdf19ae478212bba2a64b2 /* JAOrangeButtonCell.xib in Resources */,
 				551f1b565eeda72c3ef168a7 /* slider-metal-track@2x.png in Resources */,
+				BB128EA019E2F4260033514F /* 10_search.feature in Resources */,
 				5f128f8318895a6c4c72db34 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
 				726d7279ebb72574289c0727 /* slider-default-handle.png in Resources */,
 				e47ce7a837070778e1a89a47 /* JAPDVImageSection.xib in Resources */,
+				BBBA4CC219E3F902004271B2 /* 14_side_menu.feature in Resources */,
 				2a5a8bc17639656a763bd8af /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
+				BBBA4CD919E45799004271B2 /* 20_cart.feature in Resources */,
 				ff08457f9bea1c88653ee552 /* JACatalogListCell.xib in Resources */,
 				41ab1e1bc64b4983d74fa0f7 /* JAPDVPicker.xib in Resources */,
 				aaf39a3aa19f5d06443aedb7 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */,
@@ -2982,6 +3108,7 @@
 				ed6763c8490700c234cadbce /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */,
 				e1efb53ffcfdeb1283bc7d74 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
 				e68d4a8d58f0f15e0cdc4a34 /* slider-default7-track.png in Resources */,
+				BBBA4CCA19E42E9A004271B2 /* 16_recent_searches.feature in Resources */,
 				30c5e0f2e56744fd766c5c8c /* JARatingsView.xib in Resources */,
 				c420445e7d66919ded442ee4 /* JARecentlyViewedListCell.xib in Resources */,
 				ecded10b920d22a200c85616 /* JAAddressCell.xib in Resources */,
@@ -2989,6 +3116,7 @@
 				cc25950211e1df6cf12e953f /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
 				e5c2612fb2a7b831d10cc411 /* JACartListCell.xib in Resources */,
 				BBB12A9D19DDA01E00656529 /* 09_home.feature in Resources */,
+				BBBA4CBE19E3F764004271B2 /* 13_related_items.feature in Resources */,
 				56f15b6e253bc2f40528064b /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
 				08ef99ddc54e22a84eeb2426 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
 				5b96210c79cb1f13300a1f62 /* Images.xcassets in Resources */,
@@ -3012,7 +3140,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBBA4CBD19E3F764004271B2 /* 13_related_items.feature in Resources */,
 				BBA145B219DC56BF003F0CA7 /* init.rb in Resources */,
+				BBBA4CCD19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
 				CEC3F71219A5FBF800DE12F6 /* JAFavoriteListCell.xib in Resources */,
 				BBA145B319DC56BF003F0CA7 /* keyboard.rb in Resources */,
 				B501E88E19BEF7DE00BE51DD /* JAPickupStationInfoCell.xib in Resources */,
@@ -3020,6 +3150,7 @@
 				B58767FF19BB62B3001651D6 /* JAShippingCell.xib in Resources */,
 				CEDEB9BA199BA8FA0022BAB5 /* slider-default7-handle@2x.png in Resources */,
 				B55CF29019BE072800A6C6B6 /* JAShippingInfoCell.xib in Resources */,
+				BBBA4CC119E3F902004271B2 /* 14_side_menu.feature in Resources */,
 				B501E88919BE20C100BE51DD /* JAPickupRegionsCell.xib in Resources */,
 				4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */,
 				B5B5FDEC19D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib in Resources */,
@@ -3032,10 +3163,12 @@
 				CEDEB9C4199BA8FA0022BAB5 /* slider-metal-handle@2x.png in Resources */,
 				4A85AEED19B9D4A0000019CE /* JAStarsComponent.xib in Resources */,
 				B5B5FDE419D99D06008B8059 /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib in Resources */,
+				BB128EA719E30B650033514F /* 12_product_details.feature in Resources */,
 				BBA145B519DC56BF003F0CA7 /* my_first_steps.rb in Resources */,
 				CEDEB9AF199BA8FA0022BAB5 /* slider-default-handle-highlighted.png in Resources */,
 				B5B5FDFC19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
 				B5B5FDF519D99D06008B8059 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
+				BBBA4CD119E43993004271B2 /* 18_track_order.feature in Resources */,
 				BBA145AF19DC56BF003F0CA7 /* 06_email_notifications.feature in Resources */,
 				BBA145BB19DC56BF003F0CA7 /* 02_pre_stop_hooks.rb in Resources */,
 				B5B5FDED19D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
@@ -3043,12 +3176,14 @@
 				4A01EE63199259D1005F5AD1 /* JAPDVGalleryView.xib in Resources */,
 				B510B01619AE466B00A9754A /* JARadioComponent.xib in Resources */,
 				CEDEB9B2199BA8FA0022BAB5 /* slider-default-handle@2x.png in Resources */,
+				BBBA4CD819E45799004271B2 /* 20_cart.feature in Resources */,
 				4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */,
 				BBA145AE19DC56BF003F0CA7 /* 05_user_data.feature in Resources */,
 				B59DCA7F19B88DDB00DE7960 /* JAAddNewAddressCell.xib in Resources */,
 				B5B5FDE319D99D06008B8059 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
 				B5C61BC519B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib in Resources */,
 				B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */,
+				BBBA4CC919E42E9A004271B2 /* 16_recent_searches.feature in Resources */,
 				B5B5FDEA19D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
 				BBA145B719DC56BF003F0CA7 /* touch.rb in Resources */,
 				CEDEB9C7199BA8FA0022BAB5 /* slider-metal-trackBackground.png in Resources */,
@@ -3060,6 +3195,7 @@
 				B5B5FDF819D99D06008B8059 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				CEDEB9B0199BA8FA0022BAB5 /* slider-default-handle-highlighted@2x.png in Resources */,
 				CEDEB9C2199BA8FA0022BAB5 /* slider-metal-handle-highlighted@2x.png in Resources */,
+				BB4F1BD419E2D4D600E89C3F /* navigation.rb in Resources */,
 				CEDEB9B9199BA8FA0022BAB5 /* slider-default7-handle.png in Resources */,
 				CEC3F71D19A5FDDA00DE12F6 /* JAGrayButtonCell.xib in Resources */,
 				B510B01119AE466B00A9754A /* JABirthDateComponent.xib in Resources */,
@@ -3069,6 +3205,7 @@
 				B5B5FDFD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib in Resources */,
 				CE2FB75819938EB500E7CD00 /* JACatalogGridCell.xib in Resources */,
 				B510B01819AE466B00A9754A /* JATextFieldComponent.xib in Resources */,
+				BBBA4CC519E41F83004271B2 /* 15_my_favourites.feature in Resources */,
 				B5B5FDF219D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */,
 				B59DCA7719B88DAD00DE7960 /* JASwitchCell.xib in Resources */,
 				4A3719BF19C05F5D002D4199 /* JAUndefinedSearchView.xib in Resources */,
@@ -3079,6 +3216,7 @@
 				4A4F12EA198FF35600F93C89 /* JAPDVRelatedItem.xib in Resources */,
 				B5007AC319A4E8EC0024035A /* HockeySDK.xcconfig in Resources */,
 				CE3AF90A19DBF50800D8C51B /* JACampaignSingleView.xib in Resources */,
+				BB128EA319E2FA410033514F /* 11_catalog.feature in Resources */,
 				CEDEB9BD199BA8FA0022BAB5 /* slider-default7-trackBackground.png in Resources */,
 				CEDEB9B4199BA8FA0022BAB5 /* slider-default-track@2x.png in Resources */,
 				CEDEB9C5199BA8FA0022BAB5 /* slider-metal-track.png in Resources */,
@@ -3117,10 +3255,12 @@
 				B5B5FDFA19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
 				BBA145AD19DC56BF003F0CA7 /* 04_my_account.feature in Resources */,
 				B5B5FDF919D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
+				BB128E9F19E2F4260033514F /* 10_search.feature in Resources */,
 				B5A301BC19811D0700F71726 /* Images.xcassets in Resources */,
 				B5B5FDF319D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				CEDEB9B6199BA8FA0022BAB5 /* slider-default-trackCrossedOver.png in Resources */,
 				CEDEB9BE199BA8FA0022BAB5 /* slider-default7-trackBackground@2x.png in Resources */,
+				BBBA4CD419E44CDC004271B2 /* 19_filters.feature in Resources */,
 				B5B5FDF119D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
 				BBA145BC19DC56BF003F0CA7 /* env.rb in Resources */,
 				B5B5FDE119D99D06008B8059 /* BMA4SCloseButton.png in Resources */,
@@ -3149,6 +3289,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB4F1BD219E2B16600E89C3F /* RIPromotion.m in Sources */,
+				BB4F1BD119E2B15400E89C3F /* JAPromotionPopUp.m in Sources */,
 				4c2fef288bf2196e345a6ca6 /* RIProductSimple.m in Sources */,
 				ef9c559f71ceab6fa71c4313 /* JACartListHeaderView.m in Sources */,
 				8c281b362211f7077d4edb4b /* RINewsletterCategory.m in Sources */,

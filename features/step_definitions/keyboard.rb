@@ -118,3 +118,55 @@ Then /^I enter the registration data$/ do
     done
     touch("view marked:'"+@newsletter+"'")
 end
+
+Then /^I enter a valid search$/ do
+    touch("view marked:'"+@search+"'")
+    keyboard_enter_text @valid_search
+    done
+end
+
+Then /^I enter an invalid search$/ do
+    touch("view marked:'"+@search+"'")
+    keyboard_enter_text @invalid_search
+    done
+end
+
+Then /^I enter a review$/ do
+    touch("view marked:'"+@name+"'")
+    keyboard_enter_text @review_name
+    done
+    keyboard_enter_text @review_title
+    done
+    keyboard_enter_text @review_comment
+    done
+end
+
+Then /^I enter a (valid|invalid) order$/ do |option|
+    res = element_exists("view marked:'"+@order_id+"'")
+    if res == true
+        touch("view marked:'"+@order_id+"'")
+    else
+        res_2 = element_exists("view marked:'"+@track_order_id_valid+"'")
+        if res_2 == true
+            touch("view marked:'"+@track_order_id_valid+"'")
+            wait_for_keyboard
+            #touch("view marked:'"+@keyboard_delete_key+"'")
+            #TODO
+            set_text("textField index:0", "")
+            #keyboard_enter_text('Delete')
+        else
+            touch("view marked:'"+@track_order_id_invalid+"'")
+            wait_for_keyboard
+            #touch("view marked:'"+@keyboard_delete_key+"'")
+            #TODO
+            set_text("textField index:0", "")
+            #keyboard_enter_text('Delete')
+        end
+    end
+    case option.to_s
+    when "valid"
+    	keyboard_enter_text @track_order_id_valid
+    when "invalid"
+        keyboard_enter_text @track_order_id_invalid
+    end
+end

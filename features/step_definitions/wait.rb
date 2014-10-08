@@ -73,3 +73,96 @@ end
 Then /^I wait to see the create account page$/ do
     wait_for_elements_exist("view marked:'"+@account_data+"'", :timeout => @wait_timeout)
 end
+
+Then /^I wait to see the catalog$/ do
+    wait_for_elements_exist("view marked:'"+@popularity+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the no results found screen$/ do
+    wait_for_elements_exist("view marked:'"+@message_no_search_found+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the message item added to favorites$/ do
+    wait_for_elements_exist("view marked:'"+@message_item_add_favourites+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the message item removed from favorites$/ do
+    wait_for_elements_exist("view marked:'"+@message_item_removed_favourites+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the product detail screen$/ do
+    wait_for_elements_exist("view marked:'"+@share_button+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the message review sent$/ do
+    wait_for_elements_exist("view marked:'"+@review_sent+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the mail option$/ do
+    wait_for_elements_exist("view marked:'"+@mail+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the shopping cart$/ do
+    wait_for_elements_exist("view marked:'"+@no_items_message+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the categories$/ do
+    wait_for_elements_exist("view marked:'"+@categories+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the choose country screen$/ do
+    wait_for_elements_exist("view marked:'"+@change_country+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the my favourites screen$/ do
+    wait_for_elements_exist("view marked:'"+@my_favorites+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the empty favourites screen$/ do
+    wait_for_elements_exist("view marked:'"+@no_favourites_message+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the cart screen not empty$/ do
+    wait_for_elements_exist("view marked:'"+@proceed_to_chechout+"'", :timeout => @wait_timeout_extra)
+end
+
+Then /^I should see the recent searches screen$/ do
+    wait_for_elements_exist("view marked:'"+@recent_searches+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the no recent searches screen$/ do
+    wait_for_elements_exist("view marked:'"+@no_recent_searches_message+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the recently viewed screen$/ do
+    wait_for_elements_exist("view marked:'"+@recently_viewed+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the no recently viewed products screen$/ do
+    wait_for_elements_exist("view marked:'"+@no_recent_viewed_message+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the track order screen$/ do
+    wait_for_elements_exist("view marked:'"+@order_status+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the (valid|invalid) order information$/ do |option|
+    case option.to_s
+    when "valid"
+    	wait_for_elements_exist("view marked:'"+@creation_date+"'", :timeout => @wait_timeout_extra)
+    when "invalid"
+        wait_for_elements_exist("view marked:'"+@no_results_track_order_message+"'", :timeout => @wait_timeout)
+    end
+end
+
+Then /^I wait to see the filters screen$/ do
+    wait_for_elements_exist("view marked:'"+@filters+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the product added message$/ do
+    wait_for_elements_exist("view marked:'"+@item_added_to_cart_message+"'")
+end
+
+Then /^I wait to see the cart screen$/ do
+    wait_for_elements_exist("view marked:'"+@cart+"'")
+end
