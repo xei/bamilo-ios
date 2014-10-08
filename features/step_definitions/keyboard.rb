@@ -8,6 +8,7 @@ end
 
 Then /^I enter the right email and password$/ do
     touch("view marked:'"+@e_mail+"'")
+    wait_for_keyboard
     keyboard_enter_text @valid_email
     done
     touch("view marked:'"+@password+"'")
@@ -123,6 +124,11 @@ Then /^I enter a valid search$/ do
     touch("view marked:'"+@search+"'")
     keyboard_enter_text @valid_search
     done
+end
+
+Then /^I enter a valid search without press search$/ do
+    touch("view marked:'"+@search+"'")
+    keyboard_enter_text @valid_search
 end
 
 Then /^I enter an invalid search$/ do

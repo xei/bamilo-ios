@@ -1,5 +1,5 @@
 Then /^I wait to see the home$/ do
-    wait_for_elements_exist("view marked:'"+@fashion+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@fashion+"'", :timeout => @wait_timeout_extra)
 end
 
 Then /^I wait to see the side menu$/ do
@@ -160,9 +160,41 @@ Then /^I wait to see the filters screen$/ do
 end
 
 Then /^I wait to see the product added message$/ do
-    wait_for_elements_exist("view marked:'"+@item_added_to_cart_message+"'")
+    wait_for_elements_exist("view marked:'"+@item_added_to_cart_message+"'", :timeout => @wait_timeout)
 end
 
 Then /^I wait to see the cart screen$/ do
-    wait_for_elements_exist("view marked:'"+@cart+"'")
+    wait_for_elements_exist("view marked:'"+@cart+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the error change password empty fields$/ do
+    wait_for_elements_exist("view marked:'"+@error_empty_fields_cp+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait see the error empty fields on forgot password$/ do
+    wait_for_elements_exist("view marked:'"+@error_empty_fields_cp+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the error track order field empty$/ do
+    wait_for_elements_exist("view marked:'"+@empty_order_id_message+"'", :timeout => @wait_timeout)
+end
+
+Then /^I wait for the shippping address screen$/ do
+    wait_for_elements_exist("view marked:'"+@default_shipping_address+"'", :timeout => @wait_timeout_extra)
+end
+
+Then /^I wait for the shipping method screen$/ do
+    wait_for_elements_exist("view marked:'"+@shipping+"'", :timeout => @wait_timeout_extra)
+end
+
+Then /^I wait to see the payment screen$/ do
+    wait_for_elements_exist("view marked:'"+@payment+"'", :timeout => @wait_timeout_extra)
+end
+
+Then /^I wait to see the my order screen$/ do
+    wait_for_elements_exist("view marked:'"+@my_order+"'", :timeout => @wait_timeout_extra)
+end
+
+Then /^I wait to see the thank you screen$/ do
+    wait_for_elements_exist("view marked:'"+@thank_you+"'", :timeout => @wait_timeout_extra)
 end
