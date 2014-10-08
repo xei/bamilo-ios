@@ -60,6 +60,8 @@ UITextFieldDelegate>
 {
     [super viewDidLoad];
     
+    self.screenName = @"Payment";
+    
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
@@ -69,8 +71,8 @@ UITextFieldDelegate>
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"CheckoutPaymentMethods" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPayment]
                                               data:[trackingDictionary copy]];
     
     self.navBarLayout.title = STRING_CHECKOUT;
@@ -79,6 +81,11 @@ UITextFieldDelegate>
     
     [self setupViews];
     
+    [self continueLoading];
+}
+
+-(void)continueLoading
+{
     [self showLoading];
     [RICheckout getPaymentMethodFormWithSuccessBlock:^(RICheckout *checkout)
      {
@@ -93,9 +100,15 @@ UITextFieldDelegate>
          self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:checkout.paymentMethodForm];
          
          [self finishedLoadingPaymentMethods];
-     } andFailureBlock:^(NSArray *errorMessages)
+     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
-         [self finishedLoadingPaymentMethods];
+         BOOL noConnection = NO;
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             noConnection = YES;
+         }
+         
+         [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
      }];
 }
 
@@ -214,6 +227,13 @@ UITextFieldDelegate>
     
     [self reloadCollectionView];
     
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
+
     [self hideLoading];
 }
 
@@ -270,7 +290,7 @@ UITextFieldDelegate>
             [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
             
             [self hideLoading];
-        } andFailureBlock:^(NSArray *errorMessages) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
             
             [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
@@ -284,7 +304,7 @@ UITextFieldDelegate>
             
             [self hideLoading];
             
-        } andFailureBlock:^(NSArray *errorMessages) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
             
             [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
@@ -307,22 +327,30 @@ UITextFieldDelegate>
                     successBlock:^(RICheckout *checkout) {
                         
                         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-                        [trackingDictionary setValue:@"CheckoutMyOrder" forKey:kRIEventActionKey];
-                        [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSideMenu]
+                        [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]
                                                                   data:[trackingDictionary copy]];
                         
-                        [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
+                        
+                        [JAUtils goToCheckout:checkout inStoryboard:self.storyboard];
                         
                         [self hideLoading];
-                    } andFailureBlock:^(NSArray *errorMessages) {
+                    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                         
-                        [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                    message:@"Error setting payment method"
-                                                   delegate:nil
-                                          cancelButtonTitle:nil
-                                          otherButtonTitles:STRING_OK, nil] show];
+                        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                        [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                        [trackingDictionary setValue:[[self.checkout orderSummary] grandTotal] forKey:kRIEventTotalTransactionKey];
+                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
+                                                                  data:[trackingDictionary copy]];
+                        
+                        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                        {
+                            [self showMessage:STRING_NO_NEWTORK success:NO];
+                        }
+                        else
+                        {
+                            [self showMessage:STRING_ERROR_SETTING_PAYMENT_METHOD success:NO];
+                        }
                         
                         [self hideLoading];
                     }];

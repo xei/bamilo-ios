@@ -56,6 +56,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"RecentlyViewed";
+    
     self.selectedSizeAndAddToCart = NO;
     self.navBarLayout.title = STRING_RECENTLY_VIEWED;
     
@@ -93,7 +95,23 @@
         for (int i = 0; i < self.productsArray.count; i++) {
             [self.chosenSimpleNames addObject:@""];
         }
-    } andFailureBlock:^(NSArray *error) {
+        
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+        
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+
         [self hideLoading];
     }];
 }
@@ -199,48 +217,13 @@
     }
 }
 
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self finishAddToCartWithButton:self.backupButton];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self finishAddToCartWithButton:self.backupButton];
-    }
-}
-
 #pragma mark - Button Actions
 
 - (void)addToCartPressed:(UIButton*)button;
 {
     self.backupButton = button;
-    
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self finishAddToCartWithButton:button];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self finishAddToCartWithButton:button];
-    }
+
+    [self finishAddToCartWithButton:button];
 }
 
 - (void)finishAddToCartWithButton:(UIButton *)button
@@ -289,7 +272,7 @@
                           }
                           [self.collectionView reloadData];
                           
-                      } andFailureBlock:^(NSArray *error) {
+                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                           
                       }];
                       
@@ -303,9 +286,32 @@
                       [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                       NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                       [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                      [trackingDictionary setValue:[product.price stringValue] forKey:kRIEventPriceKey];
+
+                      NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice : product.price;
+                      [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                      
                       [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+                      [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
+                      
+                      if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
+                      {
+                          NSArray *categoryIds = [product.categoryIds array];
+                          [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
+                      }
+                      
                       [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                      
+                      [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
+                      
+                      NSString *discountPercentage = @"0";
+                      if(VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
+                      {
+                          discountPercentage = product.maxSavingPercentage;
+                      }
+                      [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+                      [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
+                      [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:@"Recently Viewed" forKey:kRIEventLocationKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
@@ -315,18 +321,19 @@
                       
                       [self hideLoading];
                       
-                      JASuccessView *success = [JASuccessView getNewJASuccessView];
-                      [success setSuccessTitle:STRING_ITEM_WAS_ADDED_TO_CART
-                                      andAddTo:self];
+                      [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
                       
-                  } andFailureBlock:^(NSArray *errorMessages) {
+                  } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                       
                       [self hideLoading];
                       
-                      JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                      [errorView setErrorTitle:STRING_ERROR_ADDING_TO_CART
-                                      andAddTo:self];
-                      
+                      NSString *errorAddToCart = STRING_ERROR_ADDING_TO_CART;
+                      if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                      {
+                          errorAddToCart = STRING_NO_NEWTORK;
+                      }
+
+                      [self showMessage:errorAddToCart success:NO];
                   }];
 }
 
@@ -336,7 +343,7 @@
     [RIProduct removeAllRecentlyViewedWithSuccessBlock:^{
         [self hideLoading];
         self.productsArray = nil;
-    } andFailureBlock:^(NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         [self hideLoading];
     }];
 }

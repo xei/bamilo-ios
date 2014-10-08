@@ -39,6 +39,7 @@
 #define kShowSignUpScreenNotification @"NOTIFICATION_SHOW_SIGN_UP_SCREEN"
 #define kShowSignInScreenNotification @"NOTIFICATION_SHOW_SIGN_IN_SCREEN"
 #define kShowForgotPasswordScreenNotification @"NOTIFICATION_SHOW_FORGOT_PASSWORD_SCREEN"
+#define kShowFavoritesScreenNotification @"NOTIFICATION_SHOW_FAVORITES_SCREEN"
 
 // Checkout
 #define kShowCheckoutForgotPasswordScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_FORGOT_PASSWORD_SCREEN"
@@ -82,7 +83,7 @@
 #define kUpdateAvailableAlertViewTag 1
 
 // App url (this is needed to redirect to itunes connect to update the app)
-#define kAppStoreUrl @"https://itunes.apple.com/us/app/the-iconic-app/id686483021?ls=1&mt=8"
+#define kAppStoreUrl @"https://itunes.apple.com/us/app/jumia-online-shopping/id925015459?ls=1&mt=8"
 
 // Preferences
 #define kDidFirstBuyKey @"did_first_buy"

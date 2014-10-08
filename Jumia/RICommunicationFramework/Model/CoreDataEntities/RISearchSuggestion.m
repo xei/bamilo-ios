@@ -7,6 +7,7 @@
 //
 
 #import "RISearchSuggestion.h"
+#import "RIFilter.h"
 
 @implementation RISearchType
 
@@ -98,17 +99,12 @@
             [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
             [[RIDataBaseWrapper sharedInstance] saveContext];
         }
-        else
-        {
-            [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
-            [[RIDataBaseWrapper sharedInstance] saveContext];
-        }
     }
 }
 
 + (NSString*)getSuggestionsForQuery:(NSString *)query
                        successBlock:(void (^)(NSArray *suggestions))successBlock
-                    andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_SEARCH_SUGGESTIONS]]
                                                             parameters:[NSDictionary dictionaryWithObject:query forKey:@"q"]
@@ -119,21 +115,21 @@
                                                               NSMutableArray *suggestions = [[NSMutableArray alloc] init];
                                                               
                                                               // Add recent search suggestions
-                                                              NSMutableArray *tempArray = [NSMutableArray new];
+                                                              NSMutableArray *databaseSuggesions = [NSMutableArray new];
                                                               
                                                               NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])];
                                                               
-                                                              for (RISearchSuggestion *tempSearch in searches) {
-                                                                  if ([tempSearch.item rangeOfString:query].location != NSNotFound) {
-                                                                      [tempArray addObject:tempSearch];
+                                                              for (RISearchSuggestion *tempSearch in searches)
+                                                              {
+                                                                  if ([[tempSearch.item lowercaseString] rangeOfString:[query lowercaseString]].location != NSNotFound)
+                                                                  {
+                                                                      [databaseSuggesions addObject:tempSearch];
                                                                   }
                                                               }
                                                               
-                                                              NSArray* suggestionsForQuery = [tempArray copy];
-                                                              
-                                                              if(VALID_NOTEMPTY(suggestionsForQuery, NSArray))
+                                                              if(VALID_NOTEMPTY(databaseSuggesions, NSMutableArray))
                                                               {
-                                                                  [suggestions addObjectsFromArray:suggestionsForQuery];
+                                                                  [suggestions addObjectsFromArray:[databaseSuggesions copy]];
                                                               }
                                                               
                                                               // Add request search suggestions
@@ -143,16 +139,19 @@
                                                                   NSArray *requestSuggestions = [RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"suggestions"]];
                                                                   if(VALID_NOTEMPTY(requestSuggestions, NSArray))
                                                                   {
-                                                                      if (searches.count == 0)
+                                                                      if (!VALID_NOTEMPTY(databaseSuggesions, NSMutableArray))
                                                                       {
                                                                           [suggestions addObjectsFromArray:requestSuggestions];
                                                                       }
                                                                       else
                                                                       {
-                                                                          for (RISearchSuggestion *otherSearch in requestSuggestions) {
-                                                                              for (RISearchSuggestion *tempSearch in suggestionsForQuery) {
-                                                                                  if (![tempSearch.item isEqualToString:otherSearch.item]) {
-                                                                                      [suggestions addObject:otherSearch];
+                                                                          for (RISearchSuggestion *requestSuggestion in requestSuggestions)
+                                                                          {
+                                                                              for (RISearchSuggestion *databaseSuggesion in databaseSuggesions)
+                                                                              {
+                                                                                  if (![databaseSuggesion.item isEqualToString:requestSuggestion.item])
+                                                                                  {
+                                                                                      [suggestions addObject:requestSuggestion];
                                                                                   }
                                                                               }
                                                                           }
@@ -161,17 +160,17 @@
                                                               }
                                                               
                                                               successBlock([suggestions copy]);
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
@@ -180,13 +179,56 @@
                              page:(NSString *)page
                          maxItems:(NSString *)maxItems
                     sortingMethod:(RICatalogSorting)sortingMethod
-                     successBlock:(void (^)(NSArray *results))successBlock
-                  andFailureBlock:(void (^)(NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
+                          filters:(NSArray*)filters
+                     successBlock:(void (^)(NSArray *results, NSArray *filters, NSNumber *productCount))successBlock
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    NSString *tempString = [NSString stringWithFormat:@"%@%@/search?setDevice=mobileApi&q=%@&page=%@&maxitems=%@&%@", [RIApi getCountryUrlInUse], RI_API_VERSION, query, page, maxItems,
-                            [RIProduct urlComponentForSortingMethod:sortingMethod]];
-    NSURL *url = [NSURL URLWithString:tempString];
+    
+    BOOL discountMode = NO;
+    for (RIFilter* filter in filters)
+    {
+        for (RIFilterOption* filterOption in filter.options)
+        {
+            if (filterOption.discountOnly)
+            {
+                discountMode = YES;
+                break;
+            }
+        }
+    }
+    
+    NSString *tempUrl = [NSString stringWithFormat:@"%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION];
+    if (discountMode)
+    {
+        tempUrl = [NSString stringWithFormat:@"%@search/special-price/", tempUrl];
+    }
+    else
+    {
+        tempUrl = [NSString stringWithFormat:@"%@search/", tempUrl];
+    }
+    
+    NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
+    if(VALID_NOTEMPTY(filtersString, NSString))
+    {
+        if(NSNotFound == [@"q" rangeOfString:filtersString].location)
+        {
+            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@&%@&%@", tempUrl, query, page, maxItems,
+                       [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
+        }
+        else
+        {
+            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&page=%@&maxitems=%@&%@&%@", tempUrl, page, maxItems,
+                          [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
+        }
+    }
+    else
+    {
+        tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@&%@", tempUrl, query, page, maxItems,
+                   [RIProduct urlComponentForSortingMethod:sortingMethod]];
+    }
+
+    NSURL *url = [NSURL URLWithString:tempUrl];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:nil
@@ -195,9 +237,31 @@
                                                              cacheTime:RIURLCacheNoTime
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                                                                  NSDictionary *metadata = jsonObject[@"metadata"];
-                                                                  NSDictionary *results = metadata[@"results"];
+                                                                  NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+                                                                  NSDictionary *results = [metadata objectForKey:@"results"];
                                                                   
+                                                                  NSNumber *productCountValue = [NSNumber numberWithInt:0];
+                                                                  id productCount = [metadata objectForKey:@"product_count"];
+                                                                  if(VALID_NOTEMPTY(productCount, NSNumber))
+                                                                  {
+                                                                      productCountValue = productCount;
+                                                                  }
+                                                                  else if(VALID_NOTEMPTY(productCount, NSString))
+                                                                  {
+                                                                      NSString *productCountStirng = productCount;
+                                                                      productCountValue = [NSNumber numberWithInt:[productCountStirng intValue]];
+                                                                  }
+                                                                  
+                                                                  NSArray* filtersJSON = [metadata objectForKey:@"filters"];
+                                                                  
+                                                                  NSArray* filtersArray;
+                                                                  
+                                                                  if (VALID_NOTEMPTY(filtersJSON, NSArray)) {
+                                                                      
+                                                                      filtersArray = [RIFilter parseFilters:filtersJSON];
+                                                                      
+                                                                  }
+
                                                                   NSMutableArray *temp = [NSMutableArray new];
                                                                   
                                                                   for (NSDictionary *dic in results) {
@@ -205,37 +269,37 @@
                                                                   }
                                                                   
                                                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                                                      successBlock([temp copy]);
+                                                                      successBlock([temp copy], filtersArray, productCountValue);
                                                                   });
                                                                   
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                                                   
                                                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                                                      failureBlock(nil, nil);
+                                                                      failureBlock(apiResponse, nil, nil);
                                                                   });
                                                               }];
                                                               
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               
                                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                                   if ([errorJsonObject objectForKey:@"metadata"])
                                                                   {
-                                                                      failureBlock(nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
+                                                                      failureBlock(apiResponse, nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
                                                                   }
                                                                   else
                                                                   {
                                                                       if(NOTEMPTY(errorJsonObject))
                                                                       {
-                                                                          failureBlock([RIError getErrorMessages:errorJsonObject], nil);
+                                                                          failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject], nil);
                                                                       }
                                                                       else if(NOTEMPTY(errorObject))
                                                                       {
                                                                           NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                          failureBlock(errorArray, nil);
+                                                                          failureBlock(apiResponse, errorArray, nil);
                                                                       }
                                                                       else
                                                                       {
-                                                                          failureBlock(nil, nil);
+                                                                          failureBlock(apiResponse, nil, nil);
                                                                       }
                                                                   }
                                                               });

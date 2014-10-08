@@ -50,22 +50,26 @@
     
     [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     
-    CGFloat startingY = CGRectGetMaxY(self.separator.frame);
+    CGFloat startingY = 0.0f;
     for(int i = 0; i < [[field options] count]; i++)
     {
         RIFieldOption *option = [[field options] objectAtIndex:i];
+        NSString *fieldKey = [self.field name];
+        fieldKey = [fieldKey stringByReplacingOccurrencesOfString:@"[]" withString:[NSString stringWithFormat:@"[%@]", [option value]]];
         
         JANewsletterComponent *check = [JANewsletterComponent getNewJANewsletterComponent];
         [check setup];
         [check setupWithField:field];
         [check.textLabel setText:option.label];
         [check.optionSwitch setTag:i];
-
+        [check.optionSwitch setAccessibilityLabel:option.label];
+        
         NSArray *newsletterOption = [RINewsletterCategory getNewsletter];
         
-        if (0 == newsletterOption.count)
+        if (ISEMPTY(newsletterOption) || 0 == newsletterOption.count)
         {
             check.optionSwitch.on = NO;
+            [self.values setObject:@"-1" forKey:fieldKey];
         }
         else
         {
@@ -75,6 +79,7 @@
             {
                 if ([[newsletter.idNewsletterCategory stringValue] isEqualToString:option.value])
                 {
+                    [self.values setObject:option.value forKey:fieldKey];                    
                     check.optionSwitch.on = YES;
                     finded = YES;
                     break;
@@ -84,6 +89,7 @@
             if (!finded)
             {
                 check.optionSwitch.on = NO;
+                [self.values setObject:@"-1" forKey:fieldKey];
             }
         }
         
@@ -103,8 +109,8 @@
         [self.subViews addSubview:check];
     }
     
-    [self.subViews setFrame:CGRectMake(self.subViews.frame.origin.x, 21312 + self.subViews.frame.origin.y, self.subViews.frame.size.width, startingY)];
-    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, startingY)];
+    [self.subViews setFrame:CGRectMake(self.subViews.frame.origin.x, self.subViews.frame.origin.y, self.subViews.frame.size.width, startingY)];
+    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, CGRectGetMaxY(self.separator.frame) +startingY)];
 }
 
 -(void)changedState:(UISwitch*)sender
@@ -123,7 +129,7 @@
         }
         else
         {
-            [self.values removeObjectForKey:fieldKey];
+            [self.values setObject:@"-1" forKey:fieldKey];
         }
     }
 }

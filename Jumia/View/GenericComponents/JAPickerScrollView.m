@@ -80,10 +80,12 @@
     [self.scrollView setContentSize:CGSizeMake(currentWidth,
                                                self.scrollView.frame.size.height)];
     
-//    [self selectLabelAtIndex:0];
-    //this should always start at index 1
-    self.selectedIndex = 0;
-    [self scrollLeft];
+    if(self.startingIndex > 0) {
+        self.selectedIndex = self.startingIndex-1;
+        [self scrollLeftAnimated:NO];
+    } else {
+        [self selectLabelAtIndex:0];
+    }
     
     UIImage* indicatorImage = [UIImage imageNamed:JAPickerScrollViewIndicatorImageName];
     self.arrowImageView = [[UIImageView alloc] initWithImage:indicatorImage];
@@ -119,7 +121,7 @@
     {
         if (point.x > (self.scrollView.frame.origin.x + self.scrollView.frame.size.width))
         {
-            [self scrollLeft];
+            [self scrollLeftAnimated:YES];
         }
     }
 }
@@ -147,7 +149,7 @@
     }
 }
 
-- (void)scrollLeft
+- (void)scrollLeftAnimated:(BOOL)animated
 {
     CGFloat newIndex = self.selectedIndex + 1;
     
@@ -155,7 +157,7 @@
         [self.scrollView scrollRectToVisible:CGRectMake(newIndex * self.scrollView.bounds.size.width,
                                                         self.scrollView.bounds.origin.y,
                                                         self.scrollView.bounds.size.width,
-                                                        self.scrollView.bounds.size.height) animated:YES];
+                                                        self.scrollView.bounds.size.height) animated:animated];
         [self selectLabelAtIndex:newIndex];
     }
 }

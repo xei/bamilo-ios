@@ -22,6 +22,8 @@
 {
     [super viewDidLoad];
 
+    self.screenName = @"CategoryFilter";
+    
     self.navBarLayout.title = STRING_CATEGORIES;
     self.navBarLayout.backButtonTitle = STRING_FILTERS;
     self.navBarLayout.showDoneButton = YES;
@@ -42,12 +44,18 @@
             break;
         }
     }
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+                                                        object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doneButtonPressed)
                                                  name:kDidPressDoneNotification
                                                object:nil];

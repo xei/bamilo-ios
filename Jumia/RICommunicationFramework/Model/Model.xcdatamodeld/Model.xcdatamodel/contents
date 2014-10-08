@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
@@ -35,6 +35,7 @@
     <entity name="RICategory" representedClassName="RICategory" syncable="YES">
         <attribute name="apiUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="numberOfTimesSeen" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="urlKey" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="children" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RICategory" inverseName="parent" inverseEntity="RICategory" syncable="YES"/>
@@ -258,7 +259,7 @@
     <elements>
         <element name="RIAddress" positionX="90" positionY="666" width="128" height="375"/>
         <element name="RIApi" positionX="-308" positionY="227" width="128" height="135"/>
-        <element name="RICategory" positionX="-261" positionY="27" width="128" height="133"/>
+        <element name="RICategory" positionX="-261" positionY="27" width="128" height="150"/>
         <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="195"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="208"/>
         <element name="RIField" positionX="-299" positionY="681" width="128" height="268"/>
@@ -269,6 +270,7 @@
         <element name="RIImage" positionX="27" positionY="486" width="128" height="135"/>
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
+        <element name="RINewsletterCategory" positionX="-486" positionY="-63" width="128" height="73"/>
         <element name="RIProduct" positionX="-99" positionY="0" width="128" height="495"/>
         <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
         <element name="RISearchSuggestion" positionX="-648" positionY="27" width="128" height="105"/>
@@ -282,6 +284,5 @@
         <element name="RITeaserText" positionX="-684" positionY="677" width="128" height="88"/>
         <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
         <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>
-        <element name="RINewsletterCategory" positionX="-486" positionY="-63" width="128" height="73"/>
     </elements>
 </model>

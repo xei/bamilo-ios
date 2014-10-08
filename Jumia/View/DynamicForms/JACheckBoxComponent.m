@@ -51,6 +51,7 @@
     }
     
     [self.switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
+    [self.switchComponent setAccessibilityLabel:field.label];
     
     if(VALID_NOTEMPTY([self.field value], NSString))
     {

@@ -16,8 +16,7 @@
 @interface JASignInViewController ()
 <
 JADynamicFormDelegate,
-FBLoginViewDelegate,
-JANoConnectionViewDelegate
+FBLoginViewDelegate
 >
 
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
@@ -43,6 +42,8 @@ JANoConnectionViewDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.screenName = @"Login";
     
     self.A4SViewControllerAlias = @"ACCOUNT";
     
@@ -89,7 +90,12 @@ JANoConnectionViewDelegate
     [self.facebookLoginButton removeFromSuperview];
     
     self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginView.frame) + 6.0f;
-    
+
+    [self getLoginForm];
+}
+
+- (void)getLoginForm
+{
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
            
@@ -104,14 +110,16 @@ JANoConnectionViewDelegate
            
            [self finishedFormLoading];
            
-       } failureBlock:^(NSArray *errorMessage) {
+       } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
            
-           [self finishedFormLoading];
+           BOOL noConnection = NO;
+           if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+           {
+               noConnection = YES;
+           }
+           [self showErrorView:noConnection startingY:0.0f selector:@selector(getLoginForm) objects:nil];
            
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_ERROR
-                           andAddTo:self];
-           
+           [self hideLoading];
        }];
 }
 
@@ -164,6 +172,13 @@ JANoConnectionViewDelegate
     
     [self hideLoading];
     
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
+    
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
 }
@@ -178,9 +193,20 @@ JANoConnectionViewDelegate
 {
     [self.dynamicForm resignResponder];
     
+    [self.navigationController popViewControllerAnimated:NO];
+    
+    NSMutableDictionary *userInfo = nil;
+    
+    if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
+    {
+        userInfo = [[NSMutableDictionary alloc] init];
+        [userInfo setObject:self.nextNotification forKey:@"notification"];
+        [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification
                                                         object:nil
-                                                      userInfo:nil];
+                                                      userInfo:userInfo];
 }
 
 - (void)forgotPasswordButtonPressed:(id)sender
@@ -196,21 +222,7 @@ JANoConnectionViewDelegate
 {
     [self.dynamicForm resignResponder];
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueLogin];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueLogin];
-    }
+    [self continueLogin];
 }
 
 - (void)continueLogin
@@ -225,84 +237,103 @@ JANoConnectionViewDelegate
      {
          [self.dynamicForm resetValues];
          
+         RICustomer *customerObject = ((RICustomer *)object);
+         
          NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-         [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventLabelKey];
+         [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
          [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
          [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-         [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventUserIdKey];
+         [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
+         [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
          [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
          [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];         
          [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+         if(self.fromSideMenu)
+         {
+             [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+         }
+         else
+         {
+             [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+         }
+         
+         [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
+         [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+         
+         NSDate* now = [NSDate date];
+         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+         NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+         NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+         [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
          
          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
                                                    data:[trackingDictionary copy]];
          
          [self hideLoading];
          
-         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                             object:@{@"index": @(0),
-                                                                      @"name": STRING_HOME}];
-         
          [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                              object:nil];
-     } andFailureBlock:^(id errorObject) {
+         
+         if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
+         {
+             [self.navigationController popViewControllerAnimated:NO];
+             
+             [[NSNotificationCenter defaultCenter] postNotificationName:self.nextNotification.name
+                                                                 object:self.nextNotification.object
+                                                               userInfo:self.nextNotification.userInfo];             
+         }
+         else
+         {
+             
+             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                 object:@{@"index": @(0),
+                                                                          @"name": STRING_HOME}];
+         }
+         
+     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
          
          NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
          [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
          [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+         if(self.fromSideMenu)
+         {
+             [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+         }
+         else
+         {
+             [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+         }
          
          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginFail]
                                                    data:[trackingDictionary copy]];
          
          [self hideLoading];
          
-         if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.dynamicForm validateFields:errorObject];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                             andAddTo:self];
+             [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
          }
          else
          {
              [self.dynamicForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR success:NO];
          }
      }];
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueLogin];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueLogin];
-    }
 }
 
 #pragma mark - Facebook Delegate
@@ -329,15 +360,35 @@ JANoConnectionViewDelegate
         [RICustomer loginCustomerByFacebookWithParameters:parameters
                                              successBlock:^(id customer) {
                                                  
+                                                 RICustomer *customerObject = ((RICustomer *)customer);
+                                                 
                                                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                                                 [trackingDictionary setValue:((RICustomer *)customer).idCustomer forKey:kRIEventLabelKey];
+                                                 [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
                                                  [trackingDictionary setValue:@"FacebookLoginSuccess" forKey:kRIEventActionKey];
                                                  [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-                                                 [trackingDictionary setValue:((RICustomer *)customer).idCustomer forKey:kRIEventUserIdKey];
+                                                 [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
                                                  [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
                                                  [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                                 [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
+                                                 [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+                                                 
+                                                 NSDate* now = [NSDate date];
+                                                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                                                 [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                                                 NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+                                                 NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+                                                 [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+                                                 
                                                  NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                                                  [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                                                 if(self.fromSideMenu)
+                                                 {
+                                                     [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+                                                 }
+                                                 else
+                                                 {
+                                                     [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+                                                 }
                                                  
                                                  [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]
                                                                                            data:[trackingDictionary copy]];
@@ -346,27 +397,32 @@ JANoConnectionViewDelegate
                                                  
                                                  [self hideLoading];
                                                  
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                                                                     object:nil];
+                                                 
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                                                                      object:@{@"index": @(0),
                                                                                                               @"name": STRING_HOME}];
-                                                 
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                                     object:nil];
-                                             } andFailureBlock:^(NSArray *errorObject) {
+                                             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                  
                                                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                                                  [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
                                                  [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                                                 if(self.fromSideMenu)
+                                                 {
+                                                     [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+                                                 }
+                                                 else
+                                                 {
+                                                     [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+                                                 }
                                                  
                                                  [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginFail]
                                                                                            data:[trackingDictionary copy]];
                                                  
                                                  [self hideLoading];
                                                  
-                                                 JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                                                 [errorView setErrorTitle:STRING_ERROR
-                                                                 andAddTo:self];
-                                                 
+                                                 [self showMessage:STRING_ERROR success:NO];
                                              }];
     }
 }
@@ -409,9 +465,7 @@ JANoConnectionViewDelegate
     
     if (alertMessage)
     {
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:alertMessage
-                        andAddTo:self];
+        [self showMessage:alertMessage success:NO];
     }
 }
 

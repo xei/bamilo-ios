@@ -22,7 +22,7 @@
 
 + (NSString *)getRatingsForProductWithUrl:(NSString *)url
                              successBlock:(void (^)(RIProductRatings *ratings))successBlock
-                          andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     NSString *operationID = nil;
     
@@ -40,24 +40,24 @@
                                successBlock([RIProductRatings parseRatingWithDictionay:jsonObject]);
                            });
                            
-                       } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+                       } failureBlock:^(RIApiResponse apiResponse,  NSDictionary *errorJsonObject, NSError *errorObject) {
                            
                            dispatch_async(dispatch_get_main_queue(), ^{
                                if(NOTEMPTY(errorJsonObject))
                                {
-                                   failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                } else if(NOTEMPTY(errorObject))
                                {
                                    NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                   failureBlock(errorArray);
+                                   failureBlock(apiResponse, errorArray);
                                } else
                                {
-                                   failureBlock(nil);
+                                   failureBlock(apiResponse, nil);
                                }
                            });
                        }];
     } else {
-        failureBlock(nil);
+        failureBlock(RIApiResponseUnknownError, nil);
     }
     
     return operationID;
@@ -70,13 +70,13 @@
                           title:(NSString *)title
                         comment:(NSString *)comment
                    successBlock:(void (^)(BOOL success))successBlock
-                andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     NSString *operationID = nil;
     
     if (VALID_NOTEMPTY(sku, NSString))
     {
-        NSString *url = [NSString stringWithFormat:@"%@%@rating/add/?rating-costumer=%@&rating-option--1=%@cenas&rating-catalog-sku=%@&RatingForm[comment]=%@&RatingForm[title]=%@&RatingForm[name]=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, userId, stars, sku, comment, title, name];
+        NSString *url = [NSString stringWithFormat:@"%@%@rating/add/?rating-costumer=%@&rating-option--1=%@&rating-catalog-sku=%@&RatingForm[comment]=%@&RatingForm[title]=%@&RatingForm[name]=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, userId, stars, sku, comment, title, name];
         operationID = [[RICommunicationWrapper sharedInstance]
                        sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@", url]]
                        parameters:nil
@@ -89,26 +89,26 @@
                                successBlock(YES);
                            });
                            
-                       } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+                       } failureBlock:^(RIApiResponse apiResponse,  NSDictionary *errorJsonObject, NSError *errorObject) {
                            
                            dispatch_async(dispatch_get_main_queue(), ^{
                                if(NOTEMPTY(errorJsonObject))
                                {
-                                   failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                } else if(NOTEMPTY(errorObject))
                                {
                                    NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                   failureBlock(errorArray);
+                                   failureBlock(apiResponse, errorArray);
                                } else
                                {
-                                   failureBlock(nil);
+                                   failureBlock(apiResponse, nil);
                                }
                            });
                        }];
     }
     else
     {
-        failureBlock(nil);
+        failureBlock(RIApiResponseUnknownError, nil);
     }
     
     return operationID;

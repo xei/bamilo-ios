@@ -21,8 +21,7 @@
 
 @interface JASplashViewController ()
 <
-    UIAlertViewDelegate,
-    JANoConnectionViewDelegate
+    UIAlertViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIImageView *splashImage;
@@ -43,7 +42,9 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [super viewDidLoad];
-
+    
+    self.screenName = @"SplashScreen";
+    
     self.startTime = [NSDate date];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -51,21 +52,7 @@
                                                  name:kSelectedCountryNotification
                                                object:nil];
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueProcessing];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueProcessing];
-    }
+    [self continueProcessing];
 }
 
 - (void)continueProcessing
@@ -108,8 +95,15 @@
                                   [self procedeToFirstAppScreen];
                               }
                           }
-                      } andFailureBlock:^(NSArray *errorMessage) {
+                      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
                           
+                          BOOL noInternet = NO;
+                          if(RIApiResponseNoInternetConnection == apiResponse)
+                          {
+                              noInternet = YES;
+                          }
+                          
+                          [self showErrorView:noInternet startingY:64.0f selector:@selector(continueProcessing) objects:nil];
                           [self hideLoading];
                           
                       }];
@@ -138,6 +132,7 @@
             
             [RIApi startApiWithCountry:nil
                           successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                              
                               if(hasUpdate)
                               {
                                   self.isPopupOpened = YES;
@@ -163,7 +158,16 @@
                                   }
                               }
                               
-                          } andFailureBlock:^(NSArray *errorMessage) {
+                          } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+
+                              BOOL noInternet = NO;
+                              if(RIApiResponseNoInternetConnection == apiResponse)
+                              {
+                                  noInternet = YES;
+                              }
+                              
+                              [self showErrorView:noInternet startingY:64.0f selector:@selector(continueProcessing) objects:nil];
+                              
                               [self hideLoading];
                           }];
         }
@@ -201,27 +205,6 @@
     }
 }
 
-#pragma mark - No internet connection
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueProcessing];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueProcessing];
-    }
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -253,21 +236,34 @@
 {
     if(!self.isPopupOpened)
     {
-        [RICustomer autoLogin:^(BOOL success){
+        [RICustomer autoLogin:^(BOOL success, RICustomer *customer){
             
             [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration)
              {
                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                  [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
                  
+                 NSNumber *event = [NSNumber numberWithInt:RIEventAutoLoginFail];
+                 [trackingDictionary setValue:@"AutoLoginFailed" forKey:kRIEventActionKey];
                  if(success)
                  {
-                     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                     event = [NSNumber numberWithInt:RIEventAutoLoginSuccess];
                      [trackingDictionary setValue:@"AutoLoginSuccess" forKey:kRIEventActionKey];
-                 }
-                 else
-                 {
-                     [trackingDictionary setValue:@"AutoLoginFailed" forKey:kRIEventActionKey];
+                     
+                     if(VALID_NOTEMPTY(customer, RICustomer))
+                     {
+                         [trackingDictionary setValue:customer.idCustomer forKey:kRIEventLabelKey];
+                         [trackingDictionary setValue:customer.idCustomer forKey:kRIEventUserIdKey];
+                         [trackingDictionary setValue:customer.gender forKey:kRIEventGenderKey];
+                         [trackingDictionary setValue:customer.createdAt forKey:kRIEventAccountDateKey];
+                         
+                         NSDate* now = [NSDate date];
+                         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                         NSDate *dateOfBirth = [dateFormatter dateFromString:customer.birthday];
+                         NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+                         [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+                     }
                  }
                  
                  CGFloat duration = fabs([self.startTime timeIntervalSinceNow] * 1000);
@@ -287,7 +283,13 @@
                  
                  [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
                  
-                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAutoLogin]
+                 [[RITrackingWrapper sharedInstance] trackEvent:event
+                                                           data:[trackingDictionary copy]];
+                 
+                 trackingDictionary = [[NSMutableDictionary alloc] init];
+                 [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                 
+                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventChangeCountry]
                                                            data:[trackingDictionary copy]];
                  
                  [self hideLoading];
@@ -304,7 +306,7 @@
                      [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
                  }
                  
-             } andFailureBlock:^(NSArray *errorMessages)
+             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
              {
                  
              }];
@@ -334,47 +336,54 @@
 - (void)didSelectCountry:(NSNotification*)notification
 {
     RICountry *country = notification.object;
-    if (VALID_NOTEMPTY(country, RICountry))
-    {
-        [self showLoading];
-        
-        self.requestCount = 0;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
-        
-        [RIApi startApiWithCountry:country
-                      successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
-                          
-                          if(hasUpdate)
+    
+    [self showLoading];
+    
+    self.requestCount = 0;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
+    
+    [RIApi startApiWithCountry:country
+                  successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+                      
+                      if(hasUpdate)
+                      {
+                          self.isPopupOpened = YES;
+                          if(isUpdateMandatory)
                           {
-                              self.isPopupOpened = YES;
-                              if(isUpdateMandatory)
-                              {
-                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:STRING_UPDATE_NECESSARY_MESSAGE delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
-                                  [alert setTag:kForceUpdateAlertViewTag];
-                                  [alert show];
-                                  
-                                  [self hideLoading];
-                              }
-                              else
-                              {
-                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:STRING_UPDATE_AVAILABLE_MESSAGE delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
-                                  [alert setTag:kUpdateAvailableAlertViewTag];
-                                  [alert show];
-                              }
+                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:STRING_UPDATE_NECESSARY_MESSAGE delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
+                              [alert setTag:kForceUpdateAlertViewTag];
+                              [alert show];
+                              
+                              [self hideLoading];
                           }
                           else
                           {
-                              if (0 >= self.requestCount) {
-                                  [self procedeToFirstAppScreen];
-                              }
+                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:STRING_UPDATE_AVAILABLE_MESSAGE delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
+                              [alert setTag:kUpdateAvailableAlertViewTag];
+                              [alert show];
                           }
-                          
-                      } andFailureBlock:^(NSArray *errorMessage) {
-                          [self hideLoading];
-                      }];
-    }
+                      }
+                      else
+                      {
+                          if (0 >= self.requestCount) {
+                              [self procedeToFirstAppScreen];
+                          }
+                      }
+                      
+                  } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+                      BOOL noInternet = NO;
+                      if(RIApiResponseNoInternetConnection == apiResponse)
+                      {
+                          noInternet = YES;
+                      }
+                      
+                      [self showErrorView:noInternet startingY:64.0f selector:@selector(continueProcessing) objects:nil];
+                      
+                      [self hideLoading];
+                  }];
+
 }
 
 #pragma mark UIAlertView

@@ -44,4 +44,6 @@
 
 -(NSString*)getApiCallUrl;
 
+-(NSString*)getFieldName;
+
 @end

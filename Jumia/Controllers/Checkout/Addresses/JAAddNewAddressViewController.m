@@ -86,6 +86,8 @@ UIPickerViewDelegate>
 {
     [super viewDidLoad];
     
+    self.screenName = @"NewAddress";
+    
     self.hasErrors = NO;
     
     self.navBarLayout.showCartButton = NO;
@@ -119,13 +121,18 @@ UIPickerViewDelegate>
          
          [self finishedFormLoading];
      }
-       failureBlock:^(NSArray *errorMessage)
+       failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
          [self finishedFormLoading];
          
-         JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-         [errorView setErrorTitle:STRING_ERROR
-                         andAddTo:self];
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         }
+         else
+         {
+             [self showMessage:STRING_ERROR success:NO];
+         }
      }];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -133,7 +140,7 @@ UIPickerViewDelegate>
     [trackingDictionary setValue:@"CheckoutMyAddress" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddresses]
                                               data:[trackingDictionary copy]];
 }
 
@@ -234,6 +241,7 @@ UIPickerViewDelegate>
         [check.labelText setText:STRING_BILLING_SAME_ADDRESSES];
         [check.switchComponent setOn:YES];
         [check.switchComponent addTarget:self action:@selector(changedAddressState:) forControlEvents:UIControlEventValueChanged];
+        [check.switchComponent setAccessibilityLabel:STRING_BILLING_SAME_ADDRESSES];
         
         CGRect frame = check.frame;
         frame.origin.y = self.shippingAddressViewCurrentY;
@@ -254,6 +262,13 @@ UIPickerViewDelegate>
     
     [self.shippingContentView setFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.shippingAddressViewCurrentY)];
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.bottomView.frame.size.height)];
+    
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
 }
 
 -(void)showBillingAddressForm
@@ -371,30 +386,30 @@ UIPickerViewDelegate>
     
     if(self.isBillingAddress && self.isShippingAddress)
     {
-        [shippingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
-        [shippingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
+        [shippingParameters setValue:@"1" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_billing"]];
+        [shippingParameters setValue:@"1" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_shipping"]];
     }
     else if(self.isBillingAddress)
     {
-        [shippingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
-        [shippingParameters setValue:@"0" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
+        [shippingParameters setValue:@"1" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_billing"]];
+        [shippingParameters setValue:@"0" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_shipping"]];
     }
     else if(self.isShippingAddress)
     {
-        [shippingParameters setValue:@"0" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
-        [shippingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
+        [shippingParameters setValue:@"0" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_billing"]];
+        [shippingParameters setValue:@"1" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_shipping"]];
     }
     
     if(![self.billingContentView isHidden])
     {
         self.numberOfRequests = 2;
         
-        [shippingParameters setValue:@"0" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
+        [shippingParameters setValue:@"0" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_billing"]];
         
         NSMutableDictionary *billingParameters = [[NSMutableDictionary alloc] initWithDictionary:[self.billingDynamicForm getValues]];
         
-        [billingParameters setValue:@"0" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_shipping]"];
-        [billingParameters setValue:@"1" forKey:@"Alice_Module_Customer_Model_AddressForm[is_default_billing]"];
+        [billingParameters setValue:@"0" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_shipping"]];
+        [billingParameters setValue:@"1" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_billing"]];
         
         [RIForm sendForm:[self.billingDynamicForm form]
               parameters:billingParameters
@@ -405,22 +420,27 @@ UIPickerViewDelegate>
              [trackingDictionary setValue:@"CheckoutCreateAddress" forKey:kRIEventActionKey];
              [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
              
-             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddresses]
                                                        data:[trackingDictionary copy]];
+             
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddAddressSuccess]
+                                                       data:nil];
              
              self.checkout = object;
              [self.billingDynamicForm resetValues];
              self.numberOfRequests--;
-         } andFailureBlock:^(id errorObject)
+         } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
          {
              NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
              [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
              [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
              [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
              
-             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                        data:[trackingDictionary copy]];
              
+             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddAddressFail]
+                                                       data:nil];
              self.hasErrors = YES;
              self.numberOfRequests--;
              
@@ -442,12 +462,16 @@ UIPickerViewDelegate>
          self.checkout = object;
          [self.shippingDynamicForm resetValues];
          self.numberOfRequests--;
-     } andFailureBlock:^(id errorObject)
+     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          self.hasErrors = YES;
          self.numberOfRequests--;
-         
-         if(VALID_NOTEMPTY(errorObject, NSDictionary))
+        
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.shippingDynamicForm validateFields:errorObject];
          }
@@ -455,6 +479,10 @@ UIPickerViewDelegate>
          {
              [self.shippingDynamicForm checkErrors];
          }
+         else
+         {
+             [self showMessage:STRING_ERROR success:NO];
+         }         
      }];
 }
 
@@ -464,9 +492,7 @@ UIPickerViewDelegate>
     
     if(self.hasErrors)
     {
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                        andAddTo:self];
+        [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         
         self.hasErrors = NO;
     }
@@ -532,7 +558,7 @@ UIPickerViewDelegate>
                     
                      [self hideLoading];
                      [self setupPickerView];
-                 } andFailureBlock:^(NSArray *error)
+                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
                  {
                      [self hideLoading];
                  }];
@@ -557,7 +583,7 @@ UIPickerViewDelegate>
                      
                      [self hideLoading];
                      [self setupPickerView];
-                 } andFailureBlock:^(NSArray *error)
+                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
                  {
                      [self hideLoading];
                  }];
@@ -704,11 +730,11 @@ UIPickerViewDelegate>
                              
                          [self hideLoading];
                          
-                     } andFailureBlock:^(NSArray *error) {
+                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                          [self hideLoading];
                      }];
                  }
-             } andFailureBlock:^(NSArray *error)
+             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
              {
                  [self hideLoading];
              }];

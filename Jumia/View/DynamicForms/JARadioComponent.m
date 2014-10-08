@@ -79,6 +79,11 @@
     return ([key isEqualToString:self.field.key]);
 }
 
+-(NSString*)getFieldName
+{
+    return self.field.name;
+}
+
 -(void)setValue:(NSString*)value
 {
     self.storedValue = value;

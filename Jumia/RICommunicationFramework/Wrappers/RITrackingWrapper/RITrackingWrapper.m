@@ -13,6 +13,7 @@
 #import "RIAd4PushTracker.h"
 #import "RINewRelicTracker.h"
 #import "RIAdjustTracker.h"
+#import "RIGTMTracker.h"
 
 @interface RITrackingWrapper ()
 
@@ -72,14 +73,18 @@ static dispatch_once_t sharedInstanceToken;
     RIAd4PushTracker *ad4PushTracker = [[RIAd4PushTracker alloc] init];
     RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
     RIAdjustTracker *adjustTracker = [[RIAdjustTracker alloc] init];
+    RIGTMTracker *gtmTracker = [[RIGTMTracker alloc] init];
     
-    self.trackers = @[googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, newRelicTracker, adjustTracker];
+    self.trackers = @[googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, newRelicTracker, adjustTracker, gtmTracker];
     
-    if (launchOptions) {
+    if(VALID_NOTEMPTY(launchOptions, NSDictionary))
+    {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)
                                       selector:@selector(applicationDidLaunchWithOptions:)
                                      arguments:@[launchOptions]];
-    } else {
+    }
+    else
+    {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)
                                       selector:@selector(applicationDidLaunchWithOptions:)
                                      arguments:nil];
@@ -222,6 +227,15 @@ static dispatch_once_t sharedInstanceToken;
                                  arguments:@[notification]];
 }
 
+- (void)handlePushNotifcation:(NSDictionary *)info
+{
+    RIDebugLog(@"Handling push notification with info '%@'", info);
+    
+    [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking)
+                                  selector:@selector(handlePushNotifcation:)
+                                 arguments:@[info]];
+}
+
 #pragma mark - RIEcommerceTracking protocol
 
 - (void)trackCheckout:(NSDictionary *)data
@@ -235,13 +249,13 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - RITrackingTiming protocol
 
--(void)trackTimingInMillis:(NSUInteger)millis reference:(NSString *)reference
+-(void)trackTimingInMillis:(NSNumber*)millis reference:(NSString *)reference
 {
     RIDebugLog(@"Tracking timing: %lu %@", (unsigned long)millis, reference);
     
     [self RI_callTrackersConformToProtocol:@protocol(RITrackingTiming)
                                   selector:@selector(trackTimingInMillis:reference:)
-                                 arguments:@[[NSNumber numberWithInteger:millis],
+                                 arguments:@[millis,
                                              reference]];
 }
 
@@ -263,9 +277,9 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - Campaign protocol
 
-- (void)trackCampaingWithData:(NSDictionary *)data
+- (void)trackCampaignWithName:(NSString *)campaignName
 {
-    RIDebugLog(@"Tracking campaign with data '%@'", data);
+    RIDebugLog(@"Tracking campaign with name '%@'", campaignName);
     
     if (!self.trackers) {
         RIRaiseError(@"Invalid call with non-existent trackers. Initialisation may have failed.");
@@ -273,8 +287,8 @@ static dispatch_once_t sharedInstanceToken;
     }
     
     [self RI_callTrackersConformToProtocol:@protocol(RICampaignTracker)
-                                  selector:@selector(trackCampaingWithData:)
-                                 arguments:@[data]];
+                                  selector:@selector(trackCampaignWithName:)
+                                 arguments:@[campaignName]];
 }
 
 #pragma mark - Private methods

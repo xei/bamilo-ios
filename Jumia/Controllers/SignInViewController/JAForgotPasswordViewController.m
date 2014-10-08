@@ -12,8 +12,7 @@
 
 @interface JAForgotPasswordViewController ()
 <
-    JADynamicFormDelegate,
-    JANoConnectionViewDelegate
+    JADynamicFormDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
@@ -34,6 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.screenName = @"ForgotPassword";
     
     self.navBarLayout.showLogo = NO;
     
@@ -64,15 +65,13 @@
          [self hideLoading];
          
      }
-       failureBlock:^(NSArray *errorMessage)
+       failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
          [self finishedFormLoading];
          
          [self hideLoading];
          
-         JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-         [errorView setErrorTitle:STRING_ERROR
-                         andAddTo:self];
+         [self showMessage:STRING_ERROR success:NO];
          
          [self.navigationController popViewControllerAnimated:YES];
      }];
@@ -96,26 +95,12 @@
     self.forgotPasswordViewCurrentY = CGRectGetMaxY(self.forgotPasswordButton.frame) + 6.0f;
     
     self.forgotPasswordViewHeightConstrain.constant = self.forgotPasswordViewCurrentY;
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    
+    if(self.firstLoading)
     {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueForgotPassword];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueForgotPassword];
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
     }
 }
 
@@ -123,21 +108,7 @@
 
 - (void)forgotPasswordButtonPressed:(id)sender
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueForgotPassword];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueForgotPassword];
-    }
+    [self continueForgotPassword];
 }
 
 - (void)continueForgotPassword
@@ -153,37 +124,32 @@
          [self.dynamicForm resetValues];
          [self hideLoading];
          
-         JASuccessView *success = [JASuccessView getNewJASuccessView];
-         [success setSuccessTitle:STRING_EMAIL_SENT
-                         andAddTo:self];
-         
-     } andFailureBlock:^(id errorObject)
+         [self showMessage:STRING_EMAIL_SENT success:YES];         
+     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          [self hideLoading];
          
-         if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.dynamicForm validateFields:errorObject];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                             andAddTo:self];
+             [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
          }
          else
          {
              [self.dynamicForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR success:NO];
          }
      }];
 }

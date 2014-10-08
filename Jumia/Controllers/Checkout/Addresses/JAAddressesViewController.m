@@ -49,6 +49,8 @@ UICollectionViewDelegateFlowLayout>
 // Bottom view
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
+@property (assign, nonatomic) BOOL firstLoading;
+
 @end
 
 @implementation JAAddressesViewController
@@ -57,6 +59,9 @@ UICollectionViewDelegateFlowLayout>
 {
     [super viewDidLoad];
     
+    self.firstLoading = YES;
+    
+    self.screenName = @"Address";
     self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;
@@ -108,20 +113,18 @@ UICollectionViewDelegateFlowLayout>
                                                               userInfo:userInfo];
         }
         
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                   data:[trackingDictionary copy]];
         
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:[errorMessages componentsJoinedByString:@","]
-                        andAddTo:self];
-        
+        [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
+
         [self hideLoading];
         [self finishedLoadingAddresses];
     }];
@@ -319,6 +322,13 @@ UICollectionViewDelegateFlowLayout>
     [self.secondAddressesCollectionView reloadData];
     
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
+    
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
 }
 
 -(BOOL)checkIfAddressIsAdded:(RIAddress*)addressToAdd addresses:(NSArray*)addresses
@@ -724,7 +734,8 @@ UICollectionViewDelegateFlowLayout>
             }
             else if([@"billingForm[shippingAddressDifferent]" isEqualToString:[field name]])
             {
-                [parameters setValue:[[self.billingAddress uid] isEqualToString:[self.shippingAddress uid]] ? @"0" : @"1" forKey:[field name]];
+                //Yes, the true and false are switched for this api request...
+                [parameters setValue:[[self.billingAddress uid] isEqualToString:[self.shippingAddress uid]] ? @"1" : @"0" forKey:[field name]];
             }
         }
         
@@ -733,38 +744,33 @@ UICollectionViewDelegateFlowLayout>
             [self hideLoading];
             
             [JAUtils goToCheckout:checkout inStoryboard:self.storyboard];
-        } andFailureBlock:^(NSArray *errorMessages) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
             [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
             
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                       data:[trackingDictionary copy]];
             
             [self hideLoading];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
         }];
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
 
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                   data:[trackingDictionary copy]];
         
         [self hideLoading];
         
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS
-                        andAddTo:self];
-
+        [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
     }];
 }
 

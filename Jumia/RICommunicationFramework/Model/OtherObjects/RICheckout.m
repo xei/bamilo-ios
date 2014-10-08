@@ -11,7 +11,7 @@
 @implementation RICheckout
 
 + (NSString*)getBillingAddressFormWithSuccessBlock:(void (^)(RICheckout *checkout))successBlock
-                                   andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_BILLING_ADDRESS_FORM]]
                                                             parameters:nil
@@ -27,23 +27,23 @@
                                                                       successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
                                                                   } else
                                                                   {
-                                                                      failureBlock(nil);
+                                                                      failureBlock(apiResponse, nil);
                                                                   }
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                                                   
                                                               }];
                                                               
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
@@ -51,7 +51,7 @@
 + (NSString*)setBillingAddress:(RIForm*)form
                     parameters:(NSDictionary*)parameters
                   successBlock:(void (^)(RICheckout *checkout))successBlock
-               andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     return [RIForm sendForm:form parameters:parameters successBlock:^(id object) {
         [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -60,16 +60,16 @@
                 successBlock([RICheckout parseCheckout:object country:configuration]);
             } else
             {
-                failureBlock(nil);
+                failureBlock(RIApiResponseUnknownError, nil);
             }
-        } andFailureBlock:^(id errorMessages) {
-            failureBlock(nil);
+        } andFailureBlock:^(RIApiResponse apiResponse,  id errorMessages) {
+            failureBlock(apiResponse, nil);
         }];
     } andFailureBlock:failureBlock];
 }
 
 + (NSString*)getShippingAddressFormWithSuccessBlock:(void (^)(RICheckout *checkout))successBlock
-                                    andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_SHIPPING_ADDRESS_FORM]]
                                                             parameters:nil
@@ -83,22 +83,22 @@
                                                                       successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
                                                                   } else
                                                                   {
-                                                                      failureBlock(nil);
+                                                                      failureBlock(apiResponse, nil);
                                                                   }
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil);
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
                                                               }];
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
@@ -106,7 +106,7 @@
 + (NSString*)setShippingAddress:(RIForm*)form
                      parameters:(NSDictionary*)parameters
                    successBlock:(void (^)(RICheckout *checkout))successBlock
-                andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     return [RIForm sendForm:form successBlock:^(id object) {
         [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -115,16 +115,16 @@
                 successBlock([RICheckout parseCheckout:object country:configuration]);
             } else
             {
-                failureBlock(nil);
+                failureBlock(RIApiResponseUnknownError, nil);
             }
-        } andFailureBlock:^(id errorMessages) {
-            failureBlock(nil);
+        } andFailureBlock:^(RIApiResponse apiResponse,  id errorMessages) {
+            failureBlock(apiResponse, nil);
         }];
     } andFailureBlock:failureBlock];
 }
 
 + (NSString*)getShippingMethodFormWithSuccessBlock:(void (^)(RICheckout *checkout))successBlock
-                                   andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_SHIPPING_METHODS_FORM]]
                                                             parameters:nil
@@ -138,22 +138,22 @@
                                                                       successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
                                                                   } else
                                                                   {
-                                                                      failureBlock(nil);
+                                                                      failureBlock(apiResponse, nil);
                                                                   }
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil);
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
                                                               }];
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
@@ -161,7 +161,7 @@
 + (NSString*)setShippingMethod:(RIShippingMethodForm*)form
                     parameters:(NSDictionary*)parameters
                   successBlock:(void (^)(RICheckout *checkout))successBlock
-               andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     
@@ -177,29 +177,29 @@
                                                                       successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
                                                                   } else
                                                                   {
-                                                                      failureBlock(nil);
+                                                                      failureBlock(apiResponse, nil);
                                                                   }
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil);
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
                                                               }];
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
 
 
 + (NSString*)getPaymentMethodFormWithSuccessBlock:(void (^)(RICheckout *checkout))successBlock
-                                  andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_PAYMENT_METHODS_FORM]]
                                                             parameters:nil
@@ -213,22 +213,22 @@
                                                                       successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
                                                                   } else
                                                                   {
-                                                                      failureBlock(nil);
+                                                                      failureBlock(apiResponse, nil);
                                                                   }
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil);
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
                                                               }];
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
@@ -236,7 +236,7 @@
 + (NSString*)setPaymentMethod:(RIPaymentMethodForm *)form
                    parameters:(NSDictionary*)parameters
                  successBlock:(void (^)(RICheckout *checkout))successBlock
-              andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     
@@ -252,28 +252,28 @@
                                                                       successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
                                                                   } else
                                                                   {
-                                                                      failureBlock(nil);
+                                                                      failureBlock(apiResponse, nil);
                                                                   }
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil);
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
                                                               }];
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
 
 + (NSString*)finishCheckoutWithSuccessBlock:(void (^)(RICheckout *checkout))successBlock
-                            andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock
+                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_FINISH_CHECKOUT]]
                                                             parameters:nil
@@ -287,22 +287,22 @@
                                                                       successBlock([RICheckout parseCheckout:[jsonObject objectForKey:@"metadata"] country:configuration]);
                                                                   } else
                                                                   {
-                                                                      failureBlock(nil);
+                                                                      failureBlock(apiResponse, nil);
                                                                   }
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil);
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
                                                               }];
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
@@ -325,13 +325,13 @@
                                                                          }
                                                                          else
                                                                          {
-                                                                             returnBlock(1.0f);
+                                                                             returnBlock(0.0f);
                                                                          }
-                                                                     } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObjectt) {
-                                                                         returnBlock(1.0f);
+                                                                     } failureBlock:^(RIApiResponse apiResponse,  NSDictionary *errorJsonObject, NSError *errorObjectt) {
+                                                                         returnBlock(0.0f);
                                                                      }];
-    } andFailureBlock:^(NSArray *errorMessages) {
-        returnBlock(1.0f);
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+        returnBlock(0.0f);
     }];
     return operationID;
 }

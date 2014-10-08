@@ -12,6 +12,8 @@
 #import "JATeaserView.h"
 #import "JAUtils.h"
 #import "RICustomer.h"
+#import "JAPromotionPopUp.h"
+#import "JAAppDelegate.h"
 
 @interface JAHomeViewController ()
 
@@ -30,6 +32,14 @@
 {
     [super viewDidLoad];
     
+    NSDictionary* initialUserInfo = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).initialUserInfo;
+    if (VALID_NOTEMPTY(initialUserInfo, NSDictionary))
+    {
+        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]) application:nil didReceiveRemoteNotification:[initialUserInfo copy]];
+        ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).initialUserInfo = nil;
+    }
+    
+    self.screenName = @"ShopMain";
     self.A4SViewControllerAlias = @"HOME";
     
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
@@ -53,6 +63,7 @@
                                               data:[trackingDictionary copy]];
     
     self.teaserCategoryScrollView.delegate = self;
+    self.teaserCategoryScrollView.startingIndex = 1;
     self.teaserPagesScrollView.pagingEnabled = YES;
     self.teaserPagesScrollView.scrollEnabled = NO;
     self.teaserPagesScrollView.delegate = self;
@@ -62,21 +73,7 @@
                                                   self.teaserPagesScrollView.frame.size.width,
                                                   self.view.frame.size.height - self.teaserCategoryScrollView.frame.size.height - 64.0f);
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self completeTeasersLoading];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self completeTeasersLoading];
-    }
+    [self completeTeasersLoading];
 }
 
 - (void)stopLoading
@@ -165,33 +162,43 @@
         [self.teaserPagesScrollView setContentSize:CGSizeMake(currentPageX,
                                                               self.teaserPagesScrollView.frame.size.height)];
         
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
+
         // notify the InAppNotification SDK that this the active view controller
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         
-    } andFailureBlock:^(NSArray *errorMessage) {
+        [RIPromotion getPromotionWithSuccessBlock:^(RIPromotion *promotion) {
+            [self loadPromotion:promotion];
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+            
+        }];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+            self.firstLoading = NO;
+        }
         
+        BOOL noConnection = NO;
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            noConnection = YES;
+        }
+        [self showErrorView:noConnection startingY:0.0f selector:@selector(completeTeasersLoading) objects:nil];
     }];
 }
 
-#pragma mark - No connection delegate
-
-- (void)retryConnection
+- (void)loadPromotion:(RIPromotion*)promotion
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self completeTeasersLoading];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self completeTeasersLoading];
-    }
+    JAPromotionPopUp* promotionPopUp = [[JAPromotionPopUp alloc] initWithFrame:self.view.bounds];
+    [promotionPopUp loadWithPromotion:promotion];
+    [self.view addSubview:promotionPopUp];
 }
 
 #pragma mark - JATeaserCategoryScrollViewDelegate
@@ -232,7 +239,7 @@
 - (IBAction)swipeLeft:(id)sender
 {
     [self removeNotifications];
-    [self.teaserCategoryScrollView scrollLeft];
+    [self.teaserCategoryScrollView scrollLeftAnimated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate

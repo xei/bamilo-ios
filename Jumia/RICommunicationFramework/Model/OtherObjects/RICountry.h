@@ -27,7 +27,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getCountriesWithSuccessBlock:(void (^)(id countries))successBlock
-                           andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  * Method to load the configuration to a given country
@@ -38,7 +38,7 @@
  */
 + (NSString *)loadCountryConfigurationForCountry:(NSString*)countryUrl
                                 withSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
-                                 andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  * Method to request the configuration to a given country
@@ -48,7 +48,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getCountryConfigurationWithSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
-                                      andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  * Method to request the phone number for the stored country

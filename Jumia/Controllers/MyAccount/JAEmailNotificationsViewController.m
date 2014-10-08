@@ -14,8 +14,7 @@
 
 @interface JAEmailNotificationsViewController ()
 <
-    JADynamicFormDelegate,
-    JANoConnectionViewDelegate
+    JADynamicFormDelegate
 >
 
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
@@ -34,6 +33,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"CustomerEmailNotifications";
+    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_USER_EMAIL_NOTIFICATIONS;
@@ -44,6 +45,11 @@
     
     self.formHeight = 0.0f;
     
+    [self getForm];
+}
+
+- (void)getForm
+{
     [RIForm getForm:@"managenewsletters"
        successBlock:^(RIForm *form) {
            
@@ -59,45 +65,42 @@
            
            self.height.constant = self.formHeight + 6.0f;
            
+           [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
            [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
-           [self.saveButton addTarget:self action:@selector(updatePreferences) forControlEvents:UIControlEventTouchUpInside];
+           [self.saveButton addTarget:self action:@selector(continueUpdatePreferences) forControlEvents:UIControlEventTouchUpInside];
            
+           if(self.firstLoading)
+           {
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+               self.firstLoading = NO;
+           }
+
            [self hideLoading];
            
-       } failureBlock:^(NSArray *errorMessage) {
+       } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+           
+           if(self.firstLoading)
+           {
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+               self.firstLoading = NO;
+           }
+
+           BOOL noConnection = NO;
+           if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+           {
+               noConnection = YES;
+           }
+           [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
            
            [self hideLoading];
-           
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_ERROR
-                           andAddTo:self];
        }];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-#pragma mark - Action
-
-- (void)updatePreferences
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueUpdatePreferences];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueUpdatePreferences];
-    }
 }
 
 - (void)continueUpdatePreferences
@@ -115,33 +118,39 @@
          for (UIView *view in self.dynamicForm.formViews) {
              if ([view isKindOfClass:[JACheckBoxWithOptionsComponent class]])
              {
-                 if (((JACheckBoxWithOptionsComponent *)view).values.count > 0)
+                 NSMutableDictionary *values = [(JACheckBoxWithOptionsComponent*)view values];
+                 if (VALID_NOTEMPTY(values, NSMutableDictionary))
                  {
-                     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-                     [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
-                     [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-                     
-                     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
-                                                               data:[trackingDictionary copy]];
-                     
-                     notSelectedNewsletter = NO;
-                     
-                     break;
+                     NSArray *keys = [values allKeys];
+                     for(NSString *key in keys)
+                     {
+                         NSString *value = [values objectForKey:key];
+                         if(VALID_NOTEMPTY(value, NSString) && ![@"-1" isEqualToString:value])
+                         {
+                             notSelectedNewsletter = NO;
+                             break;
+                         }
+                     }
                  }
              }
          }
          
+         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+         [trackingDictionary setValue:@"My Account" forKey:kRIEventLocationKey];
          if (notSelectedNewsletter)
          {
-             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
              [trackingDictionary setValue:@"UnsubscribeNewsletter" forKey:kRIEventActionKey];
-             [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-             
-             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
-                                                       data:[trackingDictionary copy]];
          }
+         else
+         {
+             [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
+         }
+
+         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
+                                                   data:[trackingDictionary copy]];
          
          [self.dynamicForm resetValues];
          
@@ -150,56 +159,33 @@
          [[NSNotificationCenter defaultCenter] postNotificationName:kDidSaveEmailNotificationsNotification object:nil];
          [self.navigationController popViewControllerAnimated:YES];
          
-     } andFailureBlock:^(id errorObject)
+     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          [self hideLoading];
          
-         if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.dynamicForm validateFields:errorObject];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                             andAddTo:self];
+             [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
          }
          else
          {
              [self.dynamicForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR success:NO];
          }
      }];
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueUpdatePreferences];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueUpdatePreferences];
-    }
 }
 
 @end

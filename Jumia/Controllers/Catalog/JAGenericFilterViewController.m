@@ -24,6 +24,11 @@
 {
     [super viewDidLoad];
     
+    if(VALID_NOTEMPTY(self.filter, RIFilter))
+    {
+        self.screenName =  [NSString stringWithFormat:@"%@Filter", self.filter.name];
+    }
+    
     self.navBarLayout.title = self.filter.name;
     self.navBarLayout.backButtonTitle = STRING_FILTERS;
     self.navBarLayout.showDoneButton = YES;
@@ -40,11 +45,17 @@
     for (RIFilterOption* filterOption in self.filter.options) {
         [self.selectedIndexes addObject:[NSNumber numberWithBool:filterOption.selected]];
     }
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+                                                        object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(doneButtonPressed)

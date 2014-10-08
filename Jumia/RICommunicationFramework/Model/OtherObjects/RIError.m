@@ -31,9 +31,22 @@
     else if(NOTEMPTY(error.errorCodes))
     {
         NSMutableArray *errorCodeStrings = [[NSMutableArray alloc] init];
-        for(NSString *errorCode in error.errorCodes) {
-            if(nil == [RILocalizationWrapper localizedErrorCode:errorCode] || ([errorCode caseInsensitiveCompare:[RILocalizationWrapper localizedErrorCode:errorCode]] == NSOrderedSame)) {
-                [errorCodeStrings addObject:errorCode];
+        for(id errorCode in error.errorCodes)
+        {
+            if(VALID_NOTEMPTY(errorCode, NSString))
+            {
+                if(VALID_NOTEMPTY([RILocalizationWrapper localizedErrorCode:errorCode], NSString) || ([errorCode caseInsensitiveCompare:[RILocalizationWrapper localizedErrorCode:errorCode]] == NSOrderedSame))
+                {
+                    [errorCodeStrings addObject:[RILocalizationWrapper localizedErrorCode:errorCode]];
+                }
+            }
+            else if(VALID_NOTEMPTY(errorCode, NSDictionary) && VALID_NOTEMPTY([errorCode objectForKey:@"message"], NSString))
+            {
+                NSString *errorMessage = [errorCode objectForKey:@"message"];
+                if(VALID_NOTEMPTY([RILocalizationWrapper localizedErrorCode:errorMessage], NSString) || ([errorMessage caseInsensitiveCompare:[RILocalizationWrapper localizedErrorCode:errorMessage]] == NSOrderedSame))
+                {
+                    [errorCodeStrings addObject:errorMessage];
+                }
             }
         }
         

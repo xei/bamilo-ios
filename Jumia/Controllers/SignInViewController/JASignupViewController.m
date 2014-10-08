@@ -12,13 +12,13 @@
 #import "RIField.h"
 #import "RIFieldDataSetComponent.h"
 #import "RICustomer.h"
+#import "RINewsletterCategory.h"
 
 @interface JASignupViewController ()
 <
 JADynamicFormDelegate,
 UIPickerViewDataSource,
-UIPickerViewDelegate,
-JANoConnectionViewDelegate
+UIPickerViewDelegate
 >
 
 @property (strong, nonatomic) UIScrollView *contentScrollView;
@@ -47,6 +47,8 @@ JANoConnectionViewDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.screenName = @"Register";
     
     self.A4SViewControllerAlias = @"ACCOUNT";
     
@@ -80,8 +82,15 @@ JANoConnectionViewDelegate
     
     self.originalFrame = self.contentScrollView.frame;
     
-    [self showLoading];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventRegisterStart] data:nil];
     
+    [self showLoading];
+
+    [self getRegisterForm];
+}
+
+- (void)getRegisterForm
+{
     [RIForm getForm:@"register"
        successBlock:^(RIForm *form) {
            [self hideLoading];
@@ -97,13 +106,16 @@ JANoConnectionViewDelegate
            
            [self finishedFormLoading];
            
-       } failureBlock:^(NSArray *errorMessage) {
+       } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
            
-           [self finishedFormLoading];
+           BOOL noConnection = NO;
+           if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+           {
+               noConnection = YES;
+           }
+           [self showErrorView:noConnection startingY:0.0f selector:@selector(getRegisterForm) objects:nil];
            
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_ERROR
-                           andAddTo:self];
+           [self hideLoading];
        }];
 }
 
@@ -140,6 +152,13 @@ JANoConnectionViewDelegate
     
     [self hideLoading];
     
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
+
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
 }
@@ -150,46 +169,11 @@ JANoConnectionViewDelegate
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueRegister];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueRegister];
-    }
-}
-
-#pragma mark - Actions
+#pragma mark - Actions  
 
 - (void)registerButtonPressed:(id)sender
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueRegister];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueRegister];
-    }
+    [self continueRegister];
 }
 
 - (void)continueRegister
@@ -205,13 +189,36 @@ JANoConnectionViewDelegate
         [trackingDictionary setValue:@"CreateSuccess" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
         [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:((RICustomer *)object).gender forKey:kRIEventGenderKey];
         [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
         [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        if(self.fromSideMenu)
+        {
+            [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+        }
+        else
+        {
+            [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+        }
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterSuccess]
                                                   data:[trackingDictionary copy]];
+        
+        NSArray *newsletterOption = [RINewsletterCategory getNewsletter];
+        if(VALID_NOTEMPTY(newsletterOption, NSArray))
+        {
+            trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:@"Register" forKey:kRIEventLocationKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
+                                                      data:[trackingDictionary copy]];
+        }
         
         [self.dynamicForm resetValues];
         
@@ -224,40 +231,46 @@ JANoConnectionViewDelegate
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
         
-    } andFailureBlock:^(id errorObject) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:@"CreateFailed" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+        if(self.fromSideMenu)
+        {
+            [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+        }
+        else
+        {
+            [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+        }
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterFail]
                                                   data:[trackingDictionary copy]];
         
         [self hideLoading];
         
-        if(VALID_NOTEMPTY(errorObject, NSDictionary))
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            [self showMessage:STRING_NO_NEWTORK success:NO];
+        }
+        else if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.dynamicForm validateFields:errorObject];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.dynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                            andAddTo:self];
+            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
         }
         else
         {
             [self.dynamicForm checkErrors];
             
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR success:NO];
         }
     }];
 }
@@ -266,9 +279,20 @@ JANoConnectionViewDelegate
 {
     [self.dynamicForm resignResponder];
     
+    [self.navigationController popViewControllerAnimated:NO];
+    
+    NSMutableDictionary *userInfo = nil;
+    
+    if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
+    {
+        userInfo = [[NSMutableDictionary alloc] init];
+        [userInfo setObject:self.nextNotification forKey:@"notification"];
+        [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
+    }
+
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
                                                         object:nil
-                                                      userInfo:nil];
+                                                      userInfo:userInfo];
 }
 
 - (void)birthdayChanged:(id)sender

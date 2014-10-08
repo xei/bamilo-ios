@@ -25,8 +25,7 @@ UICollectionViewDataSource,
 UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout,
 UIPickerViewDataSource,
-UIPickerViewDelegate,
-JANoConnectionViewDelegate
+UIPickerViewDelegate
 >
 
 // Steps
@@ -69,12 +68,14 @@ JANoConnectionViewDelegate
 {
     [super viewDidLoad];
     
+    self.screenName = @"Shipping";
+    
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"CheckoutShippingMethods" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutShipping]
                                               data:[trackingDictionary copy]];
     
     self.navBarLayout.title = STRING_CHECKOUT;
@@ -86,21 +87,7 @@ JANoConnectionViewDelegate
     
     [self setupViews];
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueLoading];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueLoading];
-    }
+    [self continueLoading];
 }
 
 - (void)continueLoading
@@ -115,9 +102,15 @@ JANoConnectionViewDelegate
          self.shippingMethods = [RIShippingMethodForm getShippingMethods:checkout.shippingMethodForm];
          
          [self finishedLoadingShippingMethods];
-     } andFailureBlock:^(NSArray *errorMessages)
+     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
-         [self finishedLoadingShippingMethods];
+         BOOL noConnection = NO;
+         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         {
+             noConnection = YES;
+         }
+         
+         [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
      }];
 }
 
@@ -214,6 +207,14 @@ JANoConnectionViewDelegate
         
         [self reloadCollectionView];
     }
+    
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
+
     [self hideLoading];
 }
 
@@ -416,21 +417,22 @@ JANoConnectionViewDelegate
                                  
                                  [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
                                  
-                             } andFailureBlock:^(NSArray *errorMessages) {
+                             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                  [self hideLoading];
                                  
-                                 [[[UIAlertView alloc] initWithTitle:STRING_JUMIA
-                                                             message:@"Error setting shipping method"
-                                                            delegate:nil
-                                                   cancelButtonTitle:nil
-                                                   otherButtonTitles:STRING_OK, nil] show];
+                                 if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                                 {
+                                     [self showMessage:STRING_NO_NEWTORK success:NO];
+                                 }
+                                 else
+                                 {
+                                     [self showMessage:STRING_ERROR_SETTING_SHIPPING_METHOD success:NO];
+                                 }
                              }];
         }
         else
         {
-            JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-            [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                            andAddTo:self];
+            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         }
     }
 }
@@ -746,27 +748,6 @@ JANoConnectionViewDelegate
         }
     }
     return  titleForRow;
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueLoading];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueLoading];
-    }
 }
 
 @end

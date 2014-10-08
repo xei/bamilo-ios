@@ -141,7 +141,6 @@
     RIOperation* operation = [[RIOperation alloc] init];
     NSString* operationID = [NSString stringWithFormat:@"%p",operation];
     [self.operations setObject:operation forKey:operationID];
-
     
     operation.successBlock = successBlock;
     operation.failureBlock = failureBlock;
@@ -188,14 +187,36 @@
                                                                      options:kNilOptions
                                                                        error:&error];
         if(ISEMPTY(error) && NOTEMPTY([responseJSON objectForKey:@"success"]) && [[responseJSON objectForKey:@"success"] boolValue]) {
-            operation.successBlock(RIApiResponseSuccess, responseJSON);
+            
+            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+            {
+                operation.failureBlock(RIApiResponseNoInternetConnection, responseJSON, nil);
+            }
+            else
+            {
+                operation.successBlock(RIApiResponseSuccess, responseJSON);
+            }
         } else {
             // This should not happen. If the request has an error it shouldn't be saved in cache
-            operation.failureBlock(RIApiResponseAPIError, responseJSON, nil);
+            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+            {
+                operation.failureBlock(RIApiResponseNoInternetConnection, responseJSON, nil);
+            }
+            else
+            {
+                operation.failureBlock(RIApiResponseAPIError, responseJSON, nil);
+            }
         }
         [self operationEnded:operation];
     } else {
-        [operation startRequest];
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+             operation.failureBlock(RIApiResponseNoInternetConnection, nil, nil);
+        }
+        else
+        {
+            [operation startRequest];
+        }
     }
 }
 

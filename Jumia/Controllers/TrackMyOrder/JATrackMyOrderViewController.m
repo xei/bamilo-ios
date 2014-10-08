@@ -11,8 +11,7 @@
 
 @interface JATrackMyOrderViewController ()
 <
-    UITextFieldDelegate,
-    JANoConnectionViewDelegate
+    UITextFieldDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
@@ -38,6 +37,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"TrackOrder";
+    
     [self initViewElements];
 }
 
@@ -54,29 +55,13 @@
     
     [self.view endEditing:YES];
     
-    if (self.orderTextField.text.length > 0)
+    if (VALID_NOTEMPTY(self.orderTextField.text, NSString))
     {
-        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-        {
-            JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-            [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-            lostConnection.delegate = self;
-            [lostConnection setRetryBlock:^(BOOL dismiss) {
-                [self loadOrderDetails];
-            }];
-            
-            [self.view addSubview:lostConnection];
-        }
-        else
-        {
-            [self loadOrderDetails];
-        }
+        [self loadOrderDetails];
     }
     else
     {
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:STRING_ENTER_ORDER_ID
-                        andAddTo:self];
+        [self showMessage:STRING_ENTER_ORDER_ID success:NO];
     }
 }
 
@@ -89,36 +74,35 @@
                           
                           [self buildContentForOrder:trackingOrder];
                           
+                          if(self.firstLoading)
+                          {
+                              NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                              [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                              self.firstLoading = NO;
+                          }
+
                           [self hideLoading];
                           
-                      } andFailureBlock:^(NSArray *errorMessages) {
+                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                           
-                          [self builContentForNoResult];
+                          if(self.firstLoading)
+                          {
+                              NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                              [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                              self.firstLoading = NO;
+                          }
                           
+                          if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                          {
+                              [self showErrorView:YES startingY:0.0f selector:@selector(loadOrderDetails) objects:nil];
+                          }
+                          else
+                          {                              
+                              [self builContentForNoResult];
+                          }
+
                           [self hideLoading];
-                          
                       }];
-}
-
-#pragma mark - No internet connection
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self loadOrderDetails];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self loadOrderDetails];
-    }
 }
 
 #pragma mark - Textfield delegate

@@ -41,7 +41,7 @@ typedef NSUInteger RIImageType;
  */
 + (NSString*)loadImageResolutionsIntoDatabaseForCountry:(NSString*)countryUrl
                                        withSuccessBlock:(void (^)())successBlock
-                                        andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+                                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 /**
  * Method to cancel the request

@@ -32,7 +32,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    self.firstLoading = YES;
+    
+    self.screenName = @"";
+    
+    self.startLoadingTime = [NSDate date];
+    
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.hidesBackButton = YES;
     self.title = @"";
@@ -123,6 +129,83 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kCancelLoadingNotificationName
                                                         object:nil];
+}
+
+- (void)showMessage:(NSString*)message success:(BOOL)success
+{
+    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+    
+    JAMessageView *messageView = [JAMessageView getNewJAMessageView];
+    [messageView setTitle:message success:success addTo:window.rootViewController];
+}
+
+- (void)removeMessageView
+{
+    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+    if(VALID_NOTEMPTY(window.rootViewController, UIViewController) && VALID_NOTEMPTY(window.rootViewController.view, UIView))
+    {
+        for(UIView *view in window.rootViewController.view.subviews)
+        {
+            if([view isKindOfClass:[JAMessageView class]])
+            {
+                [view removeFromSuperview];
+                break;
+            }
+        }
+    }
+}
+
+
+- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
+{
+    JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
+    [lostConnection setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
+    lostConnection.frame = CGRectMake(self.view.frame.origin.x,
+                                      startingY,
+                                      self.view.frame.size.width,
+                                      self.view.frame.size.height);
+    
+    [lostConnection setRetryBlock:^(BOOL dismiss)
+     {
+         if([self respondsToSelector:selector])
+         {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+             if(ISEMPTY(objects))
+             {
+                 [self performSelector:selector];
+             }
+             else if(1 == [objects count])
+             {
+                 [self performSelector:selector withObject:[objects objectAtIndex:0]];
+             }
+             else if(2 == [objects count])
+             {
+                 [self performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+             }
+#pragma clang diagnostic pop
+         }
+     }];
+    
+    for (UIView* view in self.view.subviews) {
+        if ([view isKindOfClass:[JANoConnectionView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    
+    [self.view addSubview:lostConnection];
+}
+
+- (void)removeErrorView
+{
+    for(UIView *view in self.view.subviews)
+    {
+        if([view isKindOfClass:[JANoConnectionView class]])
+        {
+            [view removeFromSuperview];
+            break;
+        }
+    }
 }
 
 @end

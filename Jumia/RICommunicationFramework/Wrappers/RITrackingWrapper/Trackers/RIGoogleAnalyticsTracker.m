@@ -24,6 +24,12 @@
 
 NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
 
+@interface RIGoogleAnalyticsTracker ()
+
+@property (nonatomic, strong) NSString *campaignData;
+
+@end
+
 @implementation RIGoogleAnalyticsTracker
 
 @synthesize queue;
@@ -35,12 +41,16 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 {
     NSLog(@"Initializing Google Analytics tracker");
     
-    if ((self = [super init])) {
+    if ((self = [super init]))
+    {
+        self.campaignData = @"";
+        
         self.queue = [[NSOperationQueue alloc] init];
         self.queue.maxConcurrentOperationCount = 1;
         
         NSMutableArray *events = [[NSMutableArray alloc] init];
-        [events addObject:[NSNumber numberWithInt:RIEventAutoLogin]];
+        [events addObject:[NSNumber numberWithInt:RIEventAutoLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventAutoLoginFail]];
         [events addObject:[NSNumber numberWithInt:RIEventLoginSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventLoginFail]];
         [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
@@ -53,7 +63,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         [events addObject:[NSNumber numberWithInt:RIEventCatalog]];
         [events addObject:[NSNumber numberWithInt:RIEventFilter]];
         [events addObject:[NSNumber numberWithInt:RIEventSort]];
-        [events addObject:[NSNumber numberWithInt:RIEventViewProductDetails]];
+        [events addObject:[NSNumber numberWithInt:RIEventViewProduct]];
         [events addObject:[NSNumber numberWithInt:RIEventRelatedItem]];
         [events addObject:[NSNumber numberWithInt:RIEventAddToCart]];
         [events addObject:[NSNumber numberWithInt:RIEventAddToWishlist]];
@@ -65,9 +75,18 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         [events addObject:[NSNumber numberWithInt:RIEventShareEmail]];
         [events addObject:[NSNumber numberWithInt:RIEventShareSMS]];
         [events addObject:[NSNumber numberWithInt:RIEventShareOther]];
-        [events addObject:[NSNumber numberWithInt:RIEventCheckout]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutStart]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutAboutYou]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutAddresses]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutShipping]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutPayment]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutOrder]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutEnd]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutContinueShopping]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutError]];
         [events addObject:[NSNumber numberWithInt:RIEventNewsletter]];
-        
+        [events addObject:[NSNumber numberWithInt:RIEventViewCampaign]];
+
         self.registeredEvents = [events copy];
     }
     return self;
@@ -92,7 +111,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     // Setup the app version
     NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
     [[GAI sharedInstance].defaultTracker set:kGAIAppVersion value:version];
-    
+
     NSLog(@"Initialized Google Analytics %d", [GAI sharedInstance].trackUncaughtExceptions);
 }
 
@@ -103,7 +122,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 
 #pragma mark - Track campaign
 
-- (void)trackCampaingWithData:(NSDictionary *)data
+- (void)trackCampaignWithName:(NSString *)campaignName
 {
     RIDebugLog(@"Google Analytics tracker tracks campaign");
     
@@ -114,9 +133,10 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         return;
     }
     
-    NSDictionary *dict = [[[GAIDictionaryBuilder createAppView] setAll:data] build];
-    
-    [tracker send:dict];
+    if(VALID_NOTEMPTY(campaignName, NSString))
+    {
+        self.campaignData = [NSString stringWithFormat:@"http://www.google.com?utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
+    }
 }
 
 #pragma mark - RIExceptionTracking protocol
@@ -152,7 +172,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     }
     
     [tracker set:kGAIScreenName value:name];
-    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    [tracker send:[[[GAIDictionaryBuilder createAppView] setCampaignParametersFromUrl:self.campaignData] build]];
 }
 
 #pragma mark - RIEventTracking
@@ -176,22 +196,17 @@ static RIGoogleAnalyticsTracker *sharedInstance;
             return;
         }
         
-        NSLog(@"Google Analytics - Event registered");
-        
         NSString *category = [data objectForKey:kRIEventCategoryKey];
         NSString *action = [data objectForKey:kRIEventActionKey];
         NSString *label = [data objectForKey:kRIEventLabelKey];
         NSNumber *value = [data objectForKey:kRIEventValueKey];
         
-        NSDictionary *dict = [[GAIDictionaryBuilder createEventWithCategory:category
-                                                                     action:action
-                                                                      label:label
-                                                                      value:value] build];
+        NSDictionary *dict = [[[GAIDictionaryBuilder createEventWithCategory:category
+                                                                      action:action
+                                                                       label:label
+                                                                       value:value]
+                               setCampaignParametersFromUrl:self.campaignData] build];
         [tracker send:dict];
-    }
-    else
-    {
-        NSLog(@"Google Analytics - Event not registered");
     }
 }
 
@@ -209,67 +224,40 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     }
     
     NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
-    NSNumber *tax = [data objectForKey:kRIEcommerceTransactionIdKey];
-    NSNumber *shipping = [data objectForKey:kRIEcommerceTransactionIdKey];
-    NSString *currency = [data objectForKey:kRIEcommerceTransactionIdKey];
+    NSNumber *tax = [data objectForKey:kRIEcommerceTaxKey];
+    NSNumber *shipping = [data objectForKey:kRIEcommerceShippingKey];
+    NSString *currency = [data objectForKey:kRIEcommerceCurrencyKey];
+    NSNumber *revenue = [data objectForKey:kRIEcommerceTotalValueKey];    
     
-    NSDictionary *dict = [[GAIDictionaryBuilder createTransactionWithId:transactionId
-                                                            affiliation:nil
-                                                                revenue:nil
-                                                                    tax:tax
-                                                               shipping:shipping
-                                                           currencyCode:currency] build];
-    
-    [tracker send:dict];
-    
+    GAIDictionaryBuilder *dict = [GAIDictionaryBuilder createTransactionWithId:transactionId
+                                                                   affiliation:@"In-App Store"
+                                                                       revenue:revenue
+                                                                           tax:tax
+                                                                      shipping:shipping
+                                                                  currencyCode:currency];
+    [tracker send:[[dict setCampaignParametersFromUrl:self.campaignData] build]];
+
     if ([data objectForKey:kRIEcommerceProducts])
     {
         NSArray *tempArray = [data objectForKey:kRIEcommerceProducts];
         
         for (NSDictionary *tempProduct in tempArray)
         {
-            [tracker send:[[GAIDictionaryBuilder createItemWithTransactionId:[tempProduct objectForKey:kRIEcommerceTransactionIdKey]
-                                                                        name:[tempProduct objectForKey:kRIEventProductName]
-                                                                         sku:[tempProduct objectForKey:kRIEventSkuKey]
-                                                                    category:nil
-                                                                       price:[tempProduct objectForKey:kRIEventPriceKey]
-                                                                    quantity:[tempProduct objectForKey:kRIEventQuantityKey]
-                                                                currencyCode:[tempProduct objectForKey:kRIEventCurrencyCodeKey]] build]];
+            GAIDictionaryBuilder *productDict = [GAIDictionaryBuilder createItemWithTransactionId:[data objectForKey:kRIEcommerceTransactionIdKey]
+                                                                                             name:[tempProduct objectForKey:kRIEventProductNameKey]
+                                                                                              sku:[tempProduct objectForKey:kRIEventSkuKey]
+                                                                                         category:nil
+                                                                                            price:[tempProduct objectForKey:kRIEventPriceKey]
+                                                                                         quantity:[tempProduct objectForKey:kRIEventQuantityKey]
+                                                                                     currencyCode:[tempProduct objectForKey:kRIEventCurrencyCodeKey]];
+            [tracker send:[[productDict setCampaignParametersFromUrl:self.campaignData] build]];
         }
     }
 }
 
--(void)trackProductAddToCart:(RITrackingProduct *)product
-{
-    RIDebugLog(@"Google Analytics - Tracking product added to cart: %@", product.name);
-    
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    
-    if (!tracker) {
-        RIRaiseError(@"Missing default Google Analytics tracker");
-        return;
-    }
-    
-    NSDictionary *dict = [[GAIDictionaryBuilder createItemWithTransactionId:nil
-                                                                       name:product.name
-                                                                        sku:product.identifier
-                                                                   category:product.category
-                                                                      price:product.price
-                                                                   quantity:product.quantity
-                                                               currencyCode:product.currency] build];
-    
-    [tracker send:dict];
-}
-
--(void)trackRemoveFromCartForProductWithID:(NSString *)idTransaction
-                                  quantity:(NSNumber *)quantity
-{
-
-}
-
 #pragma mark - RITrackingTiming implementation
 
--(void)trackTimingInMillis:(NSUInteger)millis reference:(NSString *)reference
+-(void)trackTimingInMillis:(NSNumber*)millis reference:(NSString *)reference
 {
     RIDebugLog(@"Google Analytics - Tracking timing: %lu %@", (unsigned long)millis, reference);
     
@@ -280,10 +268,11 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         return;
     }
     
-    NSDictionary *dict = [[GAIDictionaryBuilder createTimingWithCategory:reference
-                                                                interval:[NSNumber numberWithInteger:millis]
-                                                                    name:nil
-                                                                   label:nil] build];
+    NSDictionary *dict = [[[GAIDictionaryBuilder createTimingWithCategory:reference
+                                                                 interval:millis
+                                                                     name:nil
+                                                                    label:nil]
+                           setCampaignParametersFromUrl:self.campaignData] build];
     
     [tracker send:dict];
 }

@@ -28,6 +28,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
  
+    self.screenName = @"CheckoutFinish";
+    
     self.navBarLayout.title = STRING_CHECKOUT;
     self.navBarLayout.showCartButton = NO;
     
@@ -35,6 +37,12 @@
     
     // Notification to clean cart
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
+    [RICart changeQuantityInProducts:nil
+                    withSuccessBlock:^(RICart *cart) {} andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {}];
+    if (VALID_NOTEMPTY(self.checkout.orderSummary.discountCouponCode, NSString)) {
+        [RICart removeVoucherWithCode:self.checkout.orderSummary.discountCouponCode
+                     withSuccessBlock:^(RICart *cart) {} andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {}];
+    }
     
     self.contentView.layer.cornerRadius = 5.0f;
     self.thankYouLabel.textColor = UIColorFromRGB(0x666666);
@@ -85,6 +93,17 @@
     {
         isNewCustomer = @"true";
     }
+    
+    NSInteger numberOfPurchasesValue = 0;
+    NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
+    if(VALID_NOTEMPTY(numberOfPurchases, NSNumber))
+    {
+        numberOfPurchasesValue = [numberOfPurchases integerValue];
+    }
+    numberOfPurchasesValue++;
+    numberOfPurchases = [NSNumber numberWithInteger:numberOfPurchasesValue];
+    [[NSUserDefaults standardUserDefaults] setObject:numberOfPurchases forKey:kRIEventAmountTransactions];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -92,11 +111,10 @@
     [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
     [trackingDictionary setValue:[NSNumber numberWithInteger:[self.orderNumber integerValue]] forKey:kRIEventValueKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutEnd]
                                               data:[trackingDictionary copy]];
     
-    NSMutableDictionary *viewCartTrackingProducts = [[NSMutableDictionary alloc] init];
-    NSInteger productIndex = 1;
+    NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
     
     NSArray *cartItemsKeys = [self.checkout.cart.cartItems allKeys];
     
@@ -110,9 +128,18 @@
         RICartItem *cartItem = [self.checkout.cart.cartItems objectForKey:cartItemKey];
         
         [productDic setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
-        [productDic setValue:cartItem.name forKey:kRIEventProductName];
+        [productDic setValue:cartItem.name forKey:kRIEventProductNameKey];
         [productDic setValue:cartItem.sku forKey:kRIEventSkuKey];
-        [productDic setValue:cartItem.price forKey:kRIEventPriceKey];
+
+        NSString *discount = @"false";
+        NSString *price = [cartItem.price stringValue];
+        if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber))
+        {
+            discount = @"true";
+            price = [cartItem.specialPrice stringValue];
+        }
+
+        [productDic setValue:price forKey:kRIEventPriceKey];
         [productDic setValue:cartItem.quantity forKey:kRIEventQuantityKey];
         [productDic setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
         
@@ -131,13 +158,6 @@
         [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
         [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
 
-        NSString *discount = @"false";
-        NSString *price = [cartItem.price stringValue];
-        if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber) && [cartItem.specialPrice floatValue] < [cartItem.price floatValue])
-        {
-            discount = @"true";
-            price = [cartItem.specialPrice stringValue];
-        }
 
         [trackingDictionary setValue:price forKey:kRIEventPriceKey];
         [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
@@ -151,12 +171,11 @@
                                                   data:[trackingDictionary copy]];
 
         NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
-        [viewCartTrackingProduct setValue:cartItem.sku forKey:@"sku"];
-        [viewCartTrackingProduct setValue:price forKey:@"price"];
-        [viewCartTrackingProduct setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:@"currency"];
-        [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:@"quantity"];
-        [viewCartTrackingProducts setValue:viewCartTrackingProduct forKey:[NSString stringWithFormat:@"product%d", productIndex]];
-        productIndex++;
+        [viewCartTrackingProduct setValue:cartItem.sku forKey:kRIEventSkuKey];
+        [viewCartTrackingProduct setValue:price forKey:kRIEventPriceKey];
+        [viewCartTrackingProduct setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+        [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
+        [viewCartTrackingProducts addObject:viewCartTrackingProduct];
     }
 
     trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -167,9 +186,10 @@
     [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
     [trackingDictionary setValue:self.orderNumber forKey:kRIEventTransactionIdKey];
     [trackingDictionary setValue:isNewCustomer forKey:kRIEventNewCustomerKey];
-    if(VALID_NOTEMPTY(viewCartTrackingProducts, NSMutableDictionary))
+
+    if(VALID_NOTEMPTY(viewCartTrackingProducts, NSMutableArray))
     {
-        [trackingDictionary addEntriesFromDictionary:viewCartTrackingProducts];
+        [trackingDictionary setObject:[viewCartTrackingProducts copy] forKey:kRIEventProductsKey];
     }
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTransactionConfirm]
@@ -195,10 +215,48 @@
         [ecommerceDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
         [ecommerceDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
         [ecommerceDictionary setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
+        [ecommerceDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEcommerceCurrencyKey];
+        [ecommerceDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
+        [ecommerceDictionary setValue:self.checkout.orderSummary.paymentMethod forKey:kRIEcommercePaymentMethodKey];
+        
         NSDictionary *products = self.checkout.cart.cartItems;
+        
+        NSMutableArray *ecommerceProductsArray = [[NSMutableArray alloc] init];
+        CGFloat averageValue = 0.0f;
         if(VALID_NOTEMPTY(products, NSDictionary))
         {
             [ecommerceDictionary setValue:[products allKeys] forKey:kRIEcommerceSkusKey];
+            NSArray *productsArray = [products allKeys];
+            for(NSString *productKey in productsArray)
+            {
+                RICartItem *product = [products objectForKey:productKey];
+                NSMutableDictionary *productDictionary = [[NSMutableDictionary alloc] init];
+                [productDictionary setObject:product.sku forKey:kRIEventSkuKey];
+                [productDictionary setObject:product.name forKey:kRIEventProductNameKey];
+                [productDictionary setObject:product.quantity forKey:kRIEventQuantityKey];
+                [productDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+                
+                if(VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f)
+                {
+                    averageValue = [product.specialPrice floatValue];
+                    [productDictionary setObject:product.specialPrice forKey:kRIEventPriceKey];
+                }
+                else
+                {
+                    averageValue = [product.price floatValue];
+                    [productDictionary setObject:product.price forKey:kRIEventPriceKey];
+                }
+                
+                [ecommerceProductsArray addObject:productDictionary];
+            }
+            
+            averageValue = averageValue / [products count];
+        }
+        [ecommerceDictionary setValue:[NSNumber numberWithFloat:averageValue] forKey:kRIEcommerceCartAverageValueKey];
+        
+        if(VALID_NOTEMPTY(self.checkout.orderSummary.discountCouponCode, NSString))
+        {
+            [ecommerceDictionary setValue:self.checkout.orderSummary.discountCouponCode forKey:kRIEcommerceCouponKey];
         }
         
         [ecommerceDictionary setValue:self.checkout.orderSummary.shippingAmount forKey:kRIEcommerceShippingKey];
@@ -207,7 +265,8 @@
         NSNumber *grandTotal = self.checkout.orderSummary.grandTotal;
         NSNumber *convertedGrandTotal = [NSNumber numberWithFloat:([grandTotal floatValue] * rate)];
         
-        [ecommerceDictionary setValue:convertedGrandTotal forKey:kRIEcommerceTotalValueKey];
+        [ecommerceDictionary setValue:grandTotal forKey:kRIEcommerceTotalValueKey];
+        [ecommerceDictionary setValue:convertedGrandTotal forKey:kRIEcommerceConvertedTotalValueKey];
         
         if([RICustomer wasSignup] && !userDidFirstBuy)
         {
@@ -217,10 +276,13 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
         
-        [ecommerceDictionary setValue:[productsArray copy] forKey:kRIEcommerceProducts];
-        
+        [ecommerceDictionary setValue:[ecommerceProductsArray copy] forKey:kRIEcommerceProducts];
+
         [[RITrackingWrapper sharedInstance] trackCheckout:ecommerceDictionary];
     }];
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)copyOrderNumber
@@ -235,7 +297,7 @@
     [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckout]
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutContinueShopping]
                                               data:[trackingDictionary copy]];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];

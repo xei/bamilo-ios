@@ -48,9 +48,22 @@
 
 @synthesize categoryIds;
 
++ (NSString *)getCompleteProductWithSku:(NSString*)sku
+                           successBlock:(void (^)(id product))successBlock
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
+{
+    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, sku];
+    return [RIProduct getCompleteProductWithUrl:finalUrl
+                                   successBlock:^(id product) {
+                                       successBlock(product);
+                                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                       failureBlock(apiResponse, error);
+                                   }];
+}
+
 + (NSString *)getCompleteProductWithUrl:(NSString*)url
                            successBlock:(void (^)(id product))successBlock
-                        andFailureBlock:(void (^)(NSArray *error))failureBlock
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
@@ -66,22 +79,22 @@
                                                                       successBlock([RIProduct parseProduct:metadata country:configuration]);
                                                                   } else
                                                                   {
-                                                                      failureBlock(nil);
+                                                                      failureBlock(apiResponse, nil);
                                                                   }
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil);
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
                                                               }];
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
@@ -92,7 +105,7 @@
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
                            successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
-                        andFailureBlock:(void (^)(NSArray *error))failureBlock
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     BOOL discountMode = NO;
     for (RIFilter* filter in filters) {
@@ -110,7 +123,16 @@
         url = [NSString stringWithFormat:@"%@%@special-price/%@", countryUrl, RI_API_VERSION, endingUrl];
     }
     
-    NSString* fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], [RIFilter urlWithFiltersArray:filters]];
+    NSString* fullUrl = @"";
+    NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
+    if(VALID_NOTEMPTY(filtersString, NSString))
+    {
+        fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
+    }
+    else
+    {
+        fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod]];
+    }
     return [RIProduct getProductsWithFullUrl:fullUrl
                                 successBlock:successBlock
                              andFailureBlock:failureBlock];
@@ -118,7 +140,7 @@
 
 + (NSString *)getProductsWithFullUrl:(NSString*)url
                         successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
-                     andFailureBlock:(void (^)(NSArray *error))failureBlock
+                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
@@ -173,20 +195,20 @@
                                                                           });
                                                                       }
                                                                   }
-                                                              } andFailureBlock:^(NSArray *errorMessages) {
-                                                                  failureBlock(nil);
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
                                                               }];
-                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }
@@ -380,10 +402,40 @@
     return urlComponent;
 }
 
++ (NSString*)sortingName:(RICatalogSorting)sortingMethod
+{
+    NSString* sortingName = @"";
+    
+    switch (sortingMethod) {
+        case RICatalogSortingRating:
+            sortingName = @"Rating";
+            break;
+        case RICatalogSortingNewest:
+            sortingName = @"Newest";
+            break;
+        case RICatalogSortingPriceUp:
+            sortingName = @"Price up";
+            break;
+        case RICatalogSortingPriceDown:
+            sortingName = @"Price down";
+            break;
+        case RICatalogSortingName:
+            sortingName = @"Name";
+            break;
+        case RICatalogSortingBrand:
+            sortingName = @"Brand";
+            break;
+        default: //RICatalogSortingPopularity
+            break;
+    }
+    
+    return sortingName;
+}
+
 #pragma mark - Recently Viewed
 
 + (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock
-                                  andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     NSArray* recentlyViewedProducts = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"recentlyViewedDate"];
     
@@ -397,13 +449,13 @@
         }
         successBlock(reversedArray);
     } else if (failureBlock) {
-        failureBlock(nil);
+        failureBlock(RIApiResponseUnknownError, nil);
     }
 }
 
 + (void)addToRecentlyViewed:(RIProduct*)product
                successBlock:(void (^)(void))successBlock
-            andFailureBlock:(void (^)(NSArray *error))failureBlock
+            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
     
@@ -450,16 +502,16 @@
                     if (successBlock) {
                         successBlock();
                     }
-                } andFailureBlock:^(NSArray *error) {
+                } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                     if (failureBlock) {
-                        failureBlock(error);
+                        failureBlock(apiResponse, error);
                     }
                 }];
             }
         }
-    } andFailureBlock:^(NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         if (failureBlock) {
-            failureBlock(error);
+            failureBlock(apiResponse, error);
         }
     }];
 }
@@ -471,7 +523,7 @@
 }
 
 + (void)removeAllRecentlyViewedWithSuccessBlock:(void (^)(void))successBlock
-                                andFailureBlock:(void (^)(NSArray *))failureBlock;
+                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *))failureBlock;
 {
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
@@ -490,16 +542,16 @@
             successBlock();
         }
         
-    } andFailureBlock:^(NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         if (failureBlock) {
-            failureBlock(error);
+            failureBlock(apiResponse, error);
         }
     }];
 }
 
 + (void)removeFromRecentlyViewed:(RIProduct *)product
                     successBlock:(void (^)(void))successBlock
-                 andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
@@ -519,9 +571,9 @@
             successBlock();
         }
         
-    } andFailureBlock:^(NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         if (failureBlock) {
-            failureBlock(error);
+            failureBlock(apiResponse, error);
         }
     }];
 }
@@ -529,7 +581,7 @@
 #pragma mark - Favorites
 
 + (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
-                            andFailureBlock:(void (^)(NSArray *error))failureBlock;
+                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     NSArray* productsWithVariable = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"isFavorite"];
     NSMutableArray* favoriteProducts = [NSMutableArray new];
@@ -549,13 +601,13 @@
         }
         successBlock(reversedArray);
     } else if (failureBlock) {
-        failureBlock(nil);
+        failureBlock(RIApiResponseUnknownError, nil);
     }
 }
 
 + (void)addToFavorites:(RIProduct*)product
           successBlock:(void (^)(void))successBlock
-       andFailureBlock:(void (^)(NSArray *error))failureBlock;
+       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
 
@@ -583,7 +635,7 @@
 
 + (void)removeFromFavorites:(RIProduct*)product
                successBlock:(void (^)(void))successBlock
-            andFailureBlock:(void (^)(NSArray *error))failureBlock;
+            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
         
@@ -595,7 +647,7 @@
                     //do not delete, just remove favorite variable
                     currentProduct.isFavorite = nil;
                 } else {
-                    [[RIDataBaseWrapper sharedInstance] deleteObject:product];
+                    [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
                 }
                 [[RIDataBaseWrapper sharedInstance] saveContext];
             }
@@ -603,9 +655,9 @@
         if (successBlock) {
             successBlock();
         }
-    } andFailureBlock:^(NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         if (failureBlock) {
-            failureBlock(error);
+            failureBlock(apiResponse, error);
         }
     }];
 }

@@ -24,6 +24,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"Filters";
+    
     self.navBarLayout.title = STRING_FILTERS;
     self.navBarLayout.showEditButton = YES;
     self.navBarLayout.showDoneButton = YES;
@@ -31,6 +33,9 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)viewWillAppear:(BOOL)animated

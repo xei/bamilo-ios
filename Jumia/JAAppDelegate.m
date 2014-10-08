@@ -24,7 +24,11 @@
     
 #if defined(DEBUG) && DEBUG
     
+#if defined(STAGING) && STAGING
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+#else
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"3c9ad1f5e09a65331e412821125cc2f2"];
+#endif
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
     
@@ -35,7 +39,8 @@
     
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug" ofType:@"plist"];
 #else
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"dc297f584830db92a1047ba154dadb9e"];
+    [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
     
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];
@@ -65,8 +70,10 @@
                                                                             UIRemoteNotificationTypeSound |
                                                                             UIRemoteNotificationTypeAlert )];
     
-    if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey] != nil)
+    self.notificationChangedCountry = NO;
+    if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil)
     {
+        self.initialUserInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
     }
     
@@ -98,29 +105,31 @@
     }
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    
-}
-
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    
+    JARootViewController* mainController = (JARootViewController*)  self.window.rootViewController;
+    if(VALID_NOTEMPTY(mainController, JARootViewController))
+    {
+        UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
+        if(VALID_NOTEMPTY(centerPanel, UINavigationController))
+        {
+            NSArray *viewControllers = centerPanel.viewControllers;
+            if(VALID_NOTEMPTY(viewControllers, NSArray))
+            {
+                JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
+                NSString *screenName = rootViewController.screenName;
+                if(VALID_NOTEMPTY(screenName, NSString))
+                {
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCloseApp] data:[NSDictionary dictionaryWithObject:screenName forKey:kRIEventScreenNameKey]];
+                }
+            }
+        }
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [self checkSession];
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    
 }
 
 #pragma mark - Push notification
@@ -132,39 +141,48 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    if (VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"u"], NSString))
+    if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState)
     {
-        NSString *urlString = [userInfo objectForKey:@"u"];
+        [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
         
-        // Check if the country is the same
-        NSString *currentCountry = [RIApi getCountryIsoInUse];
-        NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
-        
-        if([currentCountry isEqualToString:countryFromUrl])
+        if (VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"u"], NSString))
         {
-            JARootViewController* rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rootViewController"];
+            NSString *urlString = [userInfo objectForKey:@"u"];
             
-            rootViewController.notification = userInfo;
+            // Check if the country is the same
+            NSString *currentCountry = [RIApi getCountryIsoInUse];
+            NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
             
-            [[[UIApplication sharedApplication] delegate] window].rootViewController = rootViewController;
+            if([currentCountry isEqualToString:countryFromUrl])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:nil userInfo:userInfo];
+            }
+            else
+            {
+                // Change country
+                [RICountry getCountriesWithSuccessBlock:^(id countries)
+                 {
+                     for (RICountry *country in countries)
+                     {
+                         if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
+                         {
+                             [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:country userInfo:userInfo];
+                             break;
+                         }
+                     }
+                     
+                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+                 {
+                     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                 }];
+            }
         }
         else
         {
-            // Change country
-            [RICountry getCountriesWithSuccessBlock:^(id countries) {
-                
-                for (RICountry *country in countries)
-                {
-                    if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
-                    {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:country userInfo:userInfo];
-                    }
-                }
-                
-            } andFailureBlock:^(NSArray *errorMessages) {
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-            }];
+            if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"UTM"], NSString))
+            {
+                [[RITrackingWrapper sharedInstance] trackCampaignWithName:[userInfo objectForKey:@"UTM"]];
+            }
         }
     }
 }

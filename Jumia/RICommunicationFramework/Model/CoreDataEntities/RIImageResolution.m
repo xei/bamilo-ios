@@ -25,7 +25,7 @@
 
 + (NSString*)loadImageResolutionsIntoDatabaseForCountry:(NSString*)countryUrl
                                        withSuccessBlock:(void (^)())successBlock
-                                        andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock
+                                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_IMAGE_RESOLUTIONS]]
                                                             parameters:nil httpMethodPost:YES
@@ -40,23 +40,23 @@
                                                                       successBlock([RIImageResolution parseImageResolutions:data]);
                                                                   } else
                                                                   {
-                                                                      failureBlock(nil);
+                                                                      failureBlock(apiResponse, nil);
                                                                   }
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                          } failureBlock:^(RIApiResponse apiResponse,   NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
-                                                                  failureBlock([RIError getErrorMessages:errorJsonObject]);
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                               } else if(NOTEMPTY(errorObject))
                                                               {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(errorArray);
+                                                                  failureBlock(apiResponse, errorArray);
                                                               } else
                                                               {
-                                                                  failureBlock(nil);
+                                                                  failureBlock(apiResponse, nil);
                                                               }
                                                           }];
 }

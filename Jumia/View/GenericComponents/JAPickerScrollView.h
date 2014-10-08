@@ -20,9 +20,11 @@
 @property (nonatomic, assign)id<JAPickerScrollViewDelegate> delegate;
 @property (nonatomic, assign) BOOL disableDelagation; // used in undefined search therm
 
+@property (nonatomic, assign)NSInteger startingIndex;
+
 - (void)setOptions:(NSArray*)options;
 
-- (void)scrollLeft;
+- (void)scrollLeftAnimated:(BOOL)animated;
 - (void)scrollRight;
 
 @end

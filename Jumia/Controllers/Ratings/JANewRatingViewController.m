@@ -17,13 +17,13 @@
 #import "RICustomer.h"
 #import "JAPriceView.h"
 #import "JAUtils.h"
+#import "RIProduct.h"
 
 @interface JANewRatingViewController ()
 <
     UITextFieldDelegate,
     JADynamicFormDelegate,
-    UIAlertViewDelegate,
-    JANoConnectionViewDelegate
+    UIAlertViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -40,7 +40,6 @@
 @property (nonatomic, strong) JAPriceView *priceView;
 @property (assign, nonatomic) NSInteger numberOfFields;
 
-
 @end
 
 @implementation JANewRatingViewController
@@ -51,20 +50,29 @@
 {
     [super viewDidLoad];
     
+    if(VALID_NOTEMPTY(self.product.sku, NSString))
+    {
+        self.screenName = [NSString stringWithFormat:@"WriteRatingScreen / %@", self.product.sku];
+    }
+    else
+    {
+        self.screenName = @"WriteRatingScreen";
+    }
+    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
     self.originalFrame = self.centerView.frame;
     
-    self.brandLabel.text = self.ratingProductBrand;
-    self.nameLabel.text = self.ratingProductNameForLabel;
+    self.brandLabel.text = self.product.brand;
+    self.nameLabel.text = self.product.name;
     
     [self.oldPriceLabel removeFromSuperview];
     [self.labelNewPrice removeFromSuperview];
     
     self.priceView = [[JAPriceView alloc] init];
-    [self.priceView loadWithPrice:self.ratingProductOldPriceForLabel
-                     specialPrice:self.ratingProductNewPriceForLabel
+    [self.priceView loadWithPrice:self.product.priceFormatted
+                     specialPrice:self.product.specialPriceFormatted
                          fontSize:14.0f
             specialPriceOnTheLeft:NO];
     self.priceView.frame = CGRectMake(12.0f,
@@ -130,25 +138,43 @@
                    count++;
                }
                
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+
                [self hideLoading];
                
-           } failureBlock:^(NSArray *errorMessage) {
+           } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
                
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+
                [self hideLoading];
                
-               JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-               [errorView setErrorTitle:STRING_ERROR
-                               andAddTo:self];
+               if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+               {
+                   [self showMessage:STRING_NO_NEWTORK success:NO];
+               }
+               else
+               {
+                   [self showMessage:STRING_ERROR success:NO];
+               }
            }];
         
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+        
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
         
         [self hideLoading];
         
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:STRING_ERROR
-                        andAddTo:self];
-        
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            [self showMessage:STRING_NO_NEWTORK success:NO];
+        }
+        else
+        {
+            [self showMessage:STRING_ERROR success:NO];
+        }
     }];
 }
 
@@ -193,46 +219,11 @@
                      }];
 }
 
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueSendingReview];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueSendingReview];
-    }
-}
-
 #pragma mark - Send review
 
 - (IBAction)sendReview:(id)sender
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueSendingReview];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueSendingReview];
-    }
+    [self continueSendingReview];
 }
 
 - (void)continueSendingReview
@@ -250,34 +241,44 @@
     }
     
     [parameters addEntriesFromDictionary:@{@"rating-customer": [RICustomer getCustomerId]}];
-    [parameters addEntriesFromDictionary:@{@"rating-catalog-sku": self.ratingProductSku}];
+    [parameters addEntriesFromDictionary:@{@"rating-catalog-sku": self.product.sku}];
     
     [RIForm sendForm:self.ratingDynamicForm.form
           parameters:parameters
         successBlock:^(id object) {
             
+            NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
+            [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
+            [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
+            NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
+            [globalRateDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+            
             for (JAStarsComponent *component in self.ratingStarsArray)
             {
                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                [trackingDictionary setValue:self.ratingProductSku forKey:kRIEventLabelKey];
+                [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
                 [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
                 [trackingDictionary setValue:@(component.starValue) forKey:kRIEventValueKey];
                 
                 if ([component.idRatingType isEqualToString:@"1"])
                 {
+                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.starValue] forKey:kRIEventRatingPriceKey];
                     [trackingDictionary setValue:@"RateProductPrice" forKey:kRIEventActionKey];
                 }
                 else if ([component.idRatingType isEqualToString:@"2"])
                 {
+                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.starValue] forKey:kRIEventRatingAppearanceKey];
                     [trackingDictionary setValue:@"RateProductAppearance" forKey:kRIEventActionKey];
                 }
                 else if ([component.idRatingType isEqualToString:@"3"])
                 {
+                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.starValue] forKey:kRIEventRatingQualityKey];
                     [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
                 }
                 else
                 {
                     // There is no indication about the default tracking for rating
+                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.starValue] forKey:kRIEventRatingKey];
                     [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
                 }
                 
@@ -286,45 +287,47 @@
                 [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                 [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                [trackingDictionary setValue:self.ratingProductSku forKey:kRIEventSkuKey];
+                [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
                 
                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProduct]
                                                           data:[trackingDictionary copy]];
             }
+
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProductGlobal]
+                                                      data:[globalRateDictionary copy]];
+
+            [self hideLoading];
+            
+            [self showMessage:STRING_REVIEW_SENT success:YES];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+                                                                object:nil
+                                                              userInfo:nil];            
+        } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {
             
             [self hideLoading];
             
-            JASuccessView *success = [JASuccessView getNewJASuccessView];
-            [success setSuccessTitle:STRING_REVIEW_SENT
-                            andAddTo:self];
-            
-        } andFailureBlock:^(id errorObject) {
-            
-            [self hideLoading];
-            
-            if(VALID_NOTEMPTY(errorObject, NSDictionary))
+            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+            {
+                [self showMessage:STRING_NO_NEWTORK success:NO];
+            }
+            else if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {
                 [self.ratingDynamicForm validateFields:errorObject];
                 
-                JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                                andAddTo:self];
+                [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
                 [self.ratingDynamicForm checkErrors];
                 
-                JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                                andAddTo:self];
+                [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
             }
             else
             {
                 [self.ratingDynamicForm checkErrors];
                 
-                JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-                [errorView setErrorTitle:@"Generic error"
-                                andAddTo:self];
+                [self showMessage:STRING_ERROR success:NO];
             }
         }];
 }
@@ -333,7 +336,9 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+                                                        object:nil
+                                                      userInfo:nil];
 }
 
 @end

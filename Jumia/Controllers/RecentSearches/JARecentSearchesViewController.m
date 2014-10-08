@@ -32,6 +32,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"RecentSearches";
+    
     self.navBarLayout.title = STRING_RECENT_SEARCHES;
         
     self.noSearchesView.layer.cornerRadius = 5.0f;
@@ -87,6 +89,9 @@
         
         [self.view addSubview:self.button];
     }
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)didReceiveMemoryWarning

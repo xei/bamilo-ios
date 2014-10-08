@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * uid;
 @property (nonatomic, retain) NSString * urlKey;
+@property (nonatomic, retain) NSNumber *numberOfTimesSeen;
 @property (nonatomic, retain) NSOrderedSet *children;
 @property (nonatomic, retain) RICategory *parent;
 
@@ -30,7 +31,7 @@
  */
 + (NSString *)loadCategoriesIntoDatabaseForCountry:(NSString *)country
                                   withSuccessBlock:(void (^)(id categories))successBlock
-                                   andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 /**
  *  Method to load categories. It checks if they are stored in the core data, and case they aren't
@@ -42,7 +43,7 @@
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (void)getCategoriesWithSuccessBlock:(void (^)(id categories))successBlock
-                      andFailureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 /**
  *  Method to cancel the request
@@ -63,7 +64,20 @@
 + (NSArray*)parseCategories:(NSArray*)categories
                 persistData:(BOOL)persistData;
 
+/**
+ *  Method to obtain the tree of categories.
+ *
+ *  @return a string with the categories tree of a category
+ */
 + (NSString*)getTree:(NSString*)categoryId;
+
+/**
+ *  Method to obtain the most seen category
+ *
+ *  @param the category clicked by the user
+ *  @return a string with the most seen category
+ */
++ (NSString*)getTopCategory:(RICategory*)seenCategory;
 
 @end
 

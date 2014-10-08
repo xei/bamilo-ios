@@ -30,7 +30,7 @@
 "recently_viewed" = "Recently Viewed";
 "my_account" = "My Account";
 "nav_track_order" = "Track my Order";
-"nav_country" = "Change Country";
+"nav_country" = "Choose Country";
 "string_filters" = "Filters";
 "categories_toplevel_title" = "All Categories";
 "string_apply" = "Apply";
@@ -73,6 +73,7 @@
 "related_items" = "Related Items";
 "product_features_title" = "Product Features";
 "product_description_title" = "Product Description";
+"share_subject" = "Jumia Sharing";
 "share_checkout_this_product" = "Check out this product I found:";
 "rating_question" = "You have used this Product? Rate it now!";
 "writereview_send" = "Send Review";
@@ -186,9 +187,34 @@
 "my_order_payment" = "Payment Options";
 
 "enter_order_id" = "Please enter the order ID";
-"item_added_to_wishlist" = "Item added to wish list.";
+"products_added_favourite" = "Item added to My Favourites";
 "error_adding_to_wishlist" = "Error adding to favourites";
+"products_removed_favourite" = "Item removed from My Favourites";
+"error_removing_from_wishlist" = "Error removing from favourites";
 
 "error_add_to_cart_failed_for_x_products" = "Adding to cart failed for %d products";
 "error_add_to_cart_failed_for_1_product" = "Adding to cart failed for 1 product";
 "save_label" = "Save";
+
+"string_campaign_ramaining_stock" = "Remaining Stock: %d%%";
+"campaign_save" = "You Save";
+"campaing_offer_ended" = "Offer Ended!";
+"campaing_timer_end" = "Ends in:";
+"off_label" = "OFF";
+"campaigns_label" = "Campaigns";
+
+"product_specifications" = "Specification";
+
+"go_shop_text" = "Shop Now";
+"promotion_tip_tap_text" = "Tap the box above to copy the code to the clipboard and keep it handy for checkout";
+"string_try_again" = "Try Again";
+"string_no_newtork" = "No Network";
+"string_oops" = "Oops!";
+"string_something_broken" = "Something seems broken. Please try again.";
+
+"form_data_not_transferred" = "There were errors on the data submited, please check your input fields.";
+
+"my_order_confirm_button" = "Confirm Order";
+
+"string_error_setting_payment_method" = "Error setting payment method";
+"string_error_setting_shipping_method" = "Error setting shipping method";

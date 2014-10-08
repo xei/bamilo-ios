@@ -44,6 +44,7 @@
         if(VALID_NOTEMPTY(self.product.url, NSString))
         {
             productUrl = self.product.url;
+            productUrl = [productUrl stringByReplacingOccurrencesOfString:@"mobapi/" withString:@""];
         }
         
         if(VALID_NOTEMPTY(self.product.name, NSString))
@@ -65,7 +66,7 @@
     
     if ([activityType isEqualToString:UIActivityTypeMessage])
     {
-        NSString *smsShare = [NSString stringWithFormat:@"Hello! Look I found something great which might interest you: %@", productUrl];
+        NSString *smsShare = [NSString stringWithFormat:@"%@: %@", STRING_SHARE_PRODUCT_MESSAGE, productUrl];
         
         return smsShare;
     }
@@ -75,14 +76,14 @@
         productUrl = [productUrl stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/mobapi"]
                                                            withString:@""];
         
-        NSString *emailShare = [NSString stringWithFormat:@"<html><body>Hello! Look I found something great which might interest you:<br><br><a href='%@'><img src='%@'></a><br><br><a href='%@'>%@</a></body></html>", productUrl, productImageUrl, productUrl, productName];
+        NSString *emailShare = [NSString stringWithFormat:@"<html><body>%@:<br><br><a href='%@'><img src='%@'></a><br><br><a href='%@'>%@</a></body></html>", STRING_SHARE_PRODUCT_MESSAGE, productUrl, productImageUrl, productUrl, productName];
         
         return emailShare;
     }
     
     else
     {
-        NSString *socialShare = [NSString stringWithFormat:@"Great product at Jumia: %@ \n\n%@", productName, productUrl];
+        NSString *socialShare = [NSString stringWithFormat:@"%@: %@ \n\n%@", STRING_SHARE_PRODUCT_MESSAGE, productName, productUrl];
         
         return socialShare;
     }

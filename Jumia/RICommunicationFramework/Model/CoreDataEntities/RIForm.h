@@ -24,7 +24,7 @@
 
 + (NSString*)getForm:(NSString*)formIndexID
         successBlock:(void (^)(id form))successBlock
-        failureBlock:(void (^)(NSArray *errorMessage))failureBlock;
+        failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 /**
  * Method to send a request to a form action
@@ -36,7 +36,7 @@
  */
 + (NSString*)sendForm:(RIForm*)form
          successBlock:(void (^)(id object))successBlock
-      andFailureBlock:(void (^)(id errorObject))failureBlock;
+      andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock;
 
 /**
  * Method to send a request to a form action
@@ -50,7 +50,7 @@
 + (NSString*)sendForm:(RIForm*)form
            parameters:(NSDictionary*)parameters
          successBlock:(void (^)(id object))successBlock
-      andFailureBlock:(void (^)(id errorObject))failureBlock;
+      andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock;
 
 + (void)cancelRequest:(NSString *)operationID;
 

@@ -75,11 +75,15 @@
     NSInteger index = control.tag;
     
     RITeaser* teaser = [self.teasers objectAtIndex:index];
-    
     RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
     
-    [self teaserPressedWithTeaserImage:teaserImage
-                            targetType:[teaser.targetType integerValue]];
+    if (2 == [teaser.targetType integerValue]) {
+        [self teaserPressedWithTitle:@"" inCampaignTeasers:[self.teasers array]];
+    } else {
+        [self teaserPressedWithTeaserImage:teaserImage
+                                targetType:[teaser.targetType integerValue]];
+    
+    }
 }
 
 @end

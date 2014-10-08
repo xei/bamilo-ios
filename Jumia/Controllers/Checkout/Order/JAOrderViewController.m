@@ -9,12 +9,10 @@
 #import "JAOrderViewController.h"
 #import "JAButtonWithBlur.h"
 #import "RICartItem.h"
+#import "RICustomer.h"
 #import "UIImageView+WebCache.h"
 
 @interface JAOrderViewController ()
-<
-    JANoConnectionViewDelegate
->
 
 @property (nonatomic, assign) NSInteger currentY;
 @property (nonatomic, strong) UIScrollView* scrollView;
@@ -29,6 +27,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.screenName = @"OrderConfirmation";
+    
     self.navBarLayout.title = STRING_CHECKOUT;
     self.navBarLayout.showCartButton = NO;
     
@@ -41,6 +41,21 @@
     [self.view addSubview:self.scrollView];
     
     [self setupViews];
+    
+    
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"CheckoutMyOrder" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutOrder]
+                                              data:[trackingDictionary copy]];
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
 }
 
 -(void)setupViews
@@ -176,7 +191,7 @@
     UILabel* articlesLabel = [UILabel new];
     articlesLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     articlesLabel.textColor = UIColorFromRGB(0x666666);
-    articlesLabel.text = [NSString stringWithFormat:STRING_ARTICLES, self.checkout.cart.cartCount];
+    articlesLabel.text = [NSString stringWithFormat:STRING_ARTICLES, [self.checkout.cart.cartCount integerValue]];
     if (1 == [self.checkout.cart.cartCount integerValue]) {
         articlesLabel.text = STRING_ARTICLE;
     }
@@ -191,7 +206,7 @@
     totalLabel.textAlignment = NSTextAlignmentRight;
     totalLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     totalLabel.textColor = UIColorFromRGB(0x666666);
-    totalLabel.text = self.checkout.cart.cartValueFormatted;
+    totalLabel.text = self.checkout.cart.cartCleanValueFormatted;
     [totalLabel sizeToFit];
     totalLabel.frame = CGRectMake(CGRectGetMaxX(articlesLabel.frame),
                                      articlesLabel.frame.origin.y,
@@ -238,6 +253,9 @@
     shippingValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     shippingValueLabel.textColor = UIColorFromRGB(0x666666);
     shippingValueLabel.text = self.checkout.cart.shippingValueFormatted;
+    if (0 == [self.checkout.cart.shippingValue integerValue]) {
+        shippingValueLabel.text = STRING_FREE;
+    }
     [shippingValueLabel sizeToFit];
     shippingValueLabel.frame = CGRectMake(CGRectGetMaxX(shippingLabel.frame),
                                           shippingLabel.frame.origin.y,
@@ -272,6 +290,34 @@
                                            subtotalContentView.frame.origin.y,
                                            subtotalContentView.frame.size.width,
                                            CGRectGetMaxY(extraCostsLabel.frame) + 10.0f);
+    
+    UILabel* finalTotalLabel = [UILabel new];
+    finalTotalLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0f];
+    finalTotalLabel.textColor = UIColorFromRGB(0x666666);
+    finalTotalLabel.text = STRING_TOTAL;
+    [finalTotalLabel sizeToFit];
+    finalTotalLabel.frame = CGRectMake(extraCostsLabel.frame.origin.x,
+                                       CGRectGetMaxY(extraCostsLabel.frame) + 5.0f,
+                                       extraCostsLabel.frame.size.width,
+                                       finalTotalLabel.frame.size.height);
+    [subtotalContentView addSubview:finalTotalLabel];
+    
+    UILabel* finalTotalValueLabel = [UILabel new];
+    finalTotalValueLabel.textAlignment = NSTextAlignmentRight;
+    finalTotalValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0f];
+    finalTotalValueLabel.textColor = UIColorFromRGB(0x666666);
+    finalTotalValueLabel.text = self.checkout.cart.cartValueFormatted;
+    [finalTotalValueLabel sizeToFit];
+    finalTotalValueLabel.frame = CGRectMake(CGRectGetMaxX(finalTotalLabel.frame),
+                                            finalTotalLabel.frame.origin.y,
+                                            totalLabel.frame.size.width,
+                                            finalTotalValueLabel.frame.size.height);
+    [subtotalContentView addSubview:finalTotalValueLabel];
+    
+    subtotalContentView.frame = CGRectMake(subtotalContentView.frame.origin.x,
+                                           subtotalContentView.frame.origin.y,
+                                           subtotalContentView.frame.size.width,
+                                           CGRectGetMaxY(finalTotalLabel.frame) + 10.0f);
     
     self.currentY += subtotalContentView.frame.size.height + 5.0f;
 }
@@ -454,7 +500,7 @@
         UILabel* couponTitleLabel = [UILabel new];
         couponTitleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
         couponTitleLabel.textColor = UIColorFromRGB(0x666666);
-        couponTitleLabel.text = self.checkout.orderSummary.paymentMethod;
+        couponTitleLabel.text = STRING_COUPON;
         couponTitleLabel.numberOfLines = 0;
         [couponTitleLabel sizeToFit];
         couponTitleLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
@@ -464,13 +510,13 @@
         [paymentContentView addSubview:couponTitleLabel];
         
         UILabel* couponCodeLabel = [UILabel new];
-        couponCodeLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+        couponCodeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
         couponCodeLabel.textColor = UIColorFromRGB(0x666666);
-        couponCodeLabel.text = self.checkout.orderSummary.paymentMethod;
+        couponCodeLabel.text = self.checkout.orderSummary.discountCouponCode;
         couponCodeLabel.numberOfLines = 0;
         [couponCodeLabel sizeToFit];
         couponCodeLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
-                                           CGRectGetMaxY(couponTitleLabel.frame) + 5.0f,
+                                           CGRectGetMaxY(couponTitleLabel.frame),
                                            paymentContentView.frame.size.width - 6.0f,
                                            couponCodeLabel.frame.size.height);
         [paymentContentView addSubview:couponCodeLabel];
@@ -478,7 +524,7 @@
         paymentContentView.frame = CGRectMake(paymentContentView.frame.origin.x,
                                               paymentContentView.frame.origin.y,
                                               paymentContentView.frame.size.width,
-                                              CGRectGetMaxY(paymentContentView.frame));
+                                              CGRectGetMaxY(couponCodeLabel.frame));
     }
     
 
@@ -494,7 +540,7 @@
 {
     self.bottomView = [[JAButtonWithBlur alloc] init];
     [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    [self.bottomView addButton:STRING_CONFIRM_ORDER target:self action:@selector(nextStepButtonPressed)];
     
     [self.view addSubview:self.bottomView];
 }
@@ -569,21 +615,7 @@
 
 -(void)nextStepButtonPressed
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueNextStep];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueNextStep];
-    }
+    [self continueNextStep];
 }
 
 - (void)continueNextStep
@@ -615,32 +647,17 @@
         }
         
         [self hideLoading];
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         
-        NSLog(@"FAILED Finishing checkout");
+        BOOL noConnection = NO;
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            noConnection = YES;
+        }
+        [self showErrorView:noConnection startingY:0.0f selector:@selector(continueNextStep) objects:nil];
+        
         [self hideLoading];
     }];
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueNextStep];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueNextStep];
-    }
 }
 
 - (void)editButtonForShippingAddress

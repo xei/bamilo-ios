@@ -37,10 +37,10 @@
 @property (nonatomic, retain) RICustomer *customer;
 
 + (NSString*)getBillingAddressWithSuccessBlock:(void (^)(id billingAddress))successBlock
-                               andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 + (NSString*)getCustomerAddressListWithSuccessBlock:(void (^)(id adressList))successBlock
-                                    andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 + (NSDictionary*)parseAddressList:(NSDictionary*)addressListJSON;
 

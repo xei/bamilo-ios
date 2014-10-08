@@ -21,7 +21,7 @@ NSLog((@"Func: %s, Line: %d, %@"), __PRETTY_FUNCTION__, __LINE__, \
 #define RIDebugLog(fmt, ...) \
 if ([RITrackingWrapper sharedInstance].debug) NSLog(@"RITrackingWrapper: %@",[NSString stringWithFormat:(fmt), ##__VA_ARGS__]);
 #else
-#define RIDebugLog(fmt, ...) return;
+#define RIDebugLog(fmt, ...)
 #endif
 
 #import <Foundation/Foundation.h>
@@ -47,7 +47,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
  *  @param millis The time spent
  *  @param reference The reference of the event
  */
-- (void)trackTimingInMillis:(NSUInteger)millis reference:(NSString*)reference;
+- (void)trackTimingInMillis:(NSNumber*)millis reference:(NSString*)reference;
 
 @end
 
@@ -76,6 +76,13 @@ typedef NS_ENUM(NSInteger, RICartState) {
  *  @param notification The notification received
  */
 - (void)applicationDidReceiveLocalNotification:(UILocalNotification *)notification;
+
+/**
+ *  Handle a push notification
+ *
+ *  @param info The push notification info.
+ */
+- (void)handlePushNotifcation:(NSDictionary *)info;
 
 @end
 
@@ -119,6 +126,9 @@ typedef NS_ENUM(NSInteger, RICartState) {
  */
 - (void)trackOpenURL:(NSURL *)url;
 
+/**
+ *  API protocol for deeplink URL tracking
+ */
 @optional
 
 /**
@@ -147,7 +157,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventShopCountryKey      @"RIEventShopCountryKey"
 #define kRIEventUserIdKey           @"RIEventUserIdKey"
 #define kRIEventSkuKey              @"RIEventSkuKey"
-#define kRIEventProductName         @"kRIEventProductName"
+#define kRIEventProductNameKey      @"RIEventProductNameKey"
 #define kRIEventCurrencyCodeKey     @"RIEventCurrencyCodeKey"
 #define kRIEventPriceKey            @"RIEventPriceKey"
 #define kRIEventGenderKey           @"RIEventGenderKey"
@@ -170,52 +180,98 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventTotalCartKey        @"RIEventTotalCartKey"
 #define kRIEventTransactionIdKey    @"RIEventTransactionIdKey"
 #define kRIEventTotalTransactionKey @"RIEventTotalTransactionKey"
+#define kRIEventUserFirstNameKey    @"RIEventUserFirstNameKey"
+#define kRIEventBrandFilterKey      @"RIEventBrandFilterKey"
+#define kRIEventColorFilterKey      @"RIEventColorFilterKey"
+#define kRIEventCategoryFilterKey   @"RIEventCategoryFilterKey"
+#define kRIEventPriceFilterKey      @"RIEventPriceFilterKey"
+#define kRIEventNumberOfProductsKey @"RIEventNumberOfProductsKey"
+#define kRIEventTopCategoryKey      @"RIEventTopCategoryKey"
+#define kRIEventLocationKey         @"RIEventLocationKey"
+#define kRIEventAccountDateKey      @"RIEventAccountDateKey"
+#define kRIEventAgeKey              @"RIEventAgeKey"
+#define kRIEventRatingKey           @"RIEventRatingKey"
+#define kRIEventRatingPriceKey      @"RIEventRatingPriceKey"
+#define kRIEventRatingAppearanceKey @"RIEventRatingAppearanceKey"
+#define kRIEventRatingQualityKey    @"RIEventRatingQualityKey"
+#define kRIEventPageNumberKey       @"RIEventPageNumberKey"
+#define kRIEventFilterTypeKey       @"RIEventFilterTypeKey"
+#define kRIEventSortTypeKey         @"RIEventSortTypeKey"
+#define kRIEventPaymentMethodKey    @"RIEventPaymentMethodKey"
+#define kRIEventScreenNameKey       @"RIEventScreenNameKey"
+#define kRIEventColorKey            @"RIEventColorKey"
 
 /**
  *  Struct to identify events
  */
 typedef NS_ENUM(NSInteger, RIEventType) {
-    RIEventAutoLogin = 0,
-    RIEventLoginSuccess = 1,
-    RIEventLoginFail = 2,
-    RIEventRegisterSuccess = 3,
-    RIEventRegisterFail = 4,
-    RIEventFacebookLoginSuccess = 5,
-    RIEventFacebookLoginFail = 6,
-    RIEventLogout = 7,
-    RIEventSideMenu = 8,
-    RIEventCategories = 9,
-    RIEventCatalog = 10,
-    RIEventFilter = 11,
-    RIEventSort = 12,
-    RIEventViewProductDetails = 13,
-    RIEventRelatedItem = 14,
-    RIEventAddToCart = 15,
-    RIEventRemoveFromCart = 16,
-    RIEventAddToWishlist = 17,
-    RIEventRemoveFromWishlist = 18,
-    RIEventRateProduct = 19,
-    RIEventSearch = 20,
-    RIEventShareFacebook = 21,
-    RIEventShareTwitter = 22,
-    RIEventShareEmail = 23,
-    RIEventShareSMS = 24,
-    RIEventShareOther = 25,
-    RIEventCheckout = 26,
-    RIEventNewsletter = 27,
-    RIEventCallToOrder = 28,
-    RIEventGuestCustomer = 29,
-    RIEventViewProduct = 30,
-    RIEventViewListing = 31,
-    RIEventViewCart = 32,
-    RIEventTransactionConfirm = 33,
-    RIEventFacebookHome = 34,
-    RIEventFacebookViewListing = 35,
-    RIEventFacebookViewProduct = 36,
-    RIEventFacebookSearch = 37,
-    RIEventFacebookViewWishlist = 38,
-    RIEventFacebookViewCart = 39,
-    RIEventFacebookViewTransaction = 50
+    RIEventAutoLoginSuccess = 0,
+    RIEventAutoLoginFail = 1,
+    RIEventLoginSuccess = 2,
+    RIEventLoginFail = 3,
+    RIEventRegisterStart = 4,
+    RIEventRegisterSuccess = 5,
+    RIEventRegisterFail = 6,
+    RIEventFacebookLoginSuccess = 7,
+    RIEventFacebookLoginFail = 8,
+    RIEventLogout = 9,
+    RIEventSideMenu = 10,
+    RIEventCategories = 11,
+    RIEventCatalog = 12,
+    RIEventFilter = 13,
+    RIEventSort = 14,
+    RIEventRelatedItem = 15,
+    RIEventAddToCart = 16,
+    RIEventRemoveFromCart = 17,
+    RIEventAddToWishlist = 18,
+    RIEventRemoveFromWishlist = 19,
+    RIEventRateProduct = 20,
+    RIEventSearch = 21,
+    RIEventShareFacebook = 22,
+    RIEventShareTwitter = 23,
+    RIEventShareEmail = 24,
+    RIEventShareSMS = 25,
+    RIEventShareOther = 26,
+    RIEventCheckoutStart = 27,
+    RIEventCheckoutAboutYou = 28,
+    RIEventCheckoutAddresses = 29,
+    RIEventCheckoutShipping = 30,
+    RIEventCheckoutPayment = 31,
+    RIEventCheckoutOrder = 32,
+    RIEventCheckoutEnd = 33,
+    RIEventCheckoutContinueShopping = 34,
+    RIEventCheckoutError = 35,
+    RIEventNewsletter = 36,
+    RIEventCallToOrder = 37,
+    RIEventGuestCustomer = 38,
+    RIEventViewProduct = 39,
+    RIEventViewListing = 40,
+    RIEventViewCart = 41,
+    RIEventTransactionConfirm = 42,
+    RIEventFacebookHome = 43,
+    RIEventFacebookViewListing = 44,
+    RIEventFacebookViewProduct = 45,
+    RIEventFacebookSearch = 46,
+    RIEventFacebookViewWishlist = 47,
+    RIEventFacebookViewCart = 48,
+    RIEventFacebookViewTransaction = 49,
+    RIEventChangeCountry = 50,
+    RIEventViewCampaign = 51,
+    RIEventTopCategory = 52,
+    RIEventAddFromWishlistToCart = 53,
+    RIEventSignupSuccess = 54,
+    RIEventSignupFail = 55,
+    RIEventIncreaseQuantity = 56,
+    RIEventDecreaseQuantity = 57,
+    RIEventRateProductGlobal = 58,
+    RIEventViewRatings = 59,
+    RIEventViewGTMListing = 60,
+    RIEventIndividualFilter = 61,
+    RIEventCheckoutAddAddressSuccess = 62,
+    RIEventCheckoutAddAddressFail = 63,
+    RIEventCheckoutPaymentSuccess = 64,
+    RIEventCheckoutPaymentFail = 65,
+    RIEventCloseApp = 66
 };
 
 /**
@@ -238,48 +294,22 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 @end
 
 /**
- *  Interface of the RITrackingProduct, that is the product used for the commerce tracking
- */
-@interface RITrackingProduct : NSObject
-
-/**
- *  Identifier of the product
- */
-@property NSString *identifier;
-/**
- *  Name of the product
- */
-@property NSString *name;
-/**
- *  Quantity of the product
- */
-@property NSNumber *quantity;
-/**
- *  Price of the product
- */
-@property NSNumber *price;
-/**
- *  Currency of the product price
- */
-@property NSString *currency;
-/**
- *  Category of the product
- */
-@property NSString *category;
-
-@end
-
-/**
  *  Protocol constants
  */
-#define kRIEcommerceTransactionIdKey @"RIEcommerceTransactionIdKey"
-#define kRIEcommerceTaxKey           @"RIEcommerceTaxKey"
-#define kRIEcommerceShippingKey      @"RIEcommerceShippingKey"
-#define kRIEcommerceCurrencyKey      @"RIEcommerceCurrencyKey"
-#define kRIEcommerceTotalValueKey    @"RIEcommerceTotalValueKey"
-#define kRIEcommerceSkusKey          @"RIEcommerceSkusValueKey"
-#define kRIEcommerceGuestKey         @"RIEcommerceGuestKey"
-#define kRIEcommerceProducts         @"kRIEcommerceProducts"
+#define kRIEcommerceTransactionIdKey        @"RIEcommerceTransactionIdKey"
+#define kRIEcommerceTaxKey                  @"RIEcommerceTaxKey"
+#define kRIEcommerceShippingKey             @"RIEcommerceShippingKey"
+#define kRIEcommerceCurrencyKey             @"RIEcommerceCurrencyKey"
+#define kRIEcommerceTotalValueKey           @"RIEcommerceTotalValueKey"
+#define kRIEcommerceConvertedTotalValueKey  @"RIEcommerceConvertedTotalValueKey"
+#define kRIEcommerceSkusKey                 @"RIEcommerceSkusValueKey"
+#define kRIEcommerceGuestKey                @"RIEcommerceGuestKey"
+#define kRIEcommerceProducts                @"RIEcommerceProducts"
+#define kRIEcommerceCouponKey               @"RIEcommerceCouponKey"
+#define kRIEcommerceCartAverageValueKey     @"RIEcommerceCartAverageValueKey"
+#define kRIEcommerceAffiliationKey          @"RIEcommerceAffiliationKey"
+#define kRIEcommercePaymentMethodKey        @"RIEcommercePaymentMethodKey"
+#define kRIEcommercePreviousPurchases       @"RIEcommercePreviousPurchases"
 
 /**
  *  This protocol implements tracking to the commerce transactions
@@ -319,10 +349,11 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  *  Protocol constants
  */
 #define kRILaunchEventInitialViewLoadedNotification @"RILaunchInitialViewLoadedNotification"
-#define kRILaunchEventKey @"LAUNCH"
-#define kRILaunchEventDurationDataKey @"duration"
-#define kRILaunchEventAppVersionDataKey @"app_version"
-#define kRILaunchEventDeviceModelDataKey @"device_model"
+#define kRILaunchEventDurationDataKey               @"RILaunchEventDurationDataKey"
+#define kRILaunchEventAppVersionDataKey             @"RILaunchEventAppVersionDataKey"
+#define kRILaunchEventDeviceModelDataKey            @"RILaunchEventDeviceModelDataKey"
+#define kRILaunchEventCampaignKey                   @"RILaunchEventCampaignKey"
+#define kRILaunchEventSourceKey                     @"RILaunchEventSourceKey"
 
 /**
  *  RITracker protocol implements the initialization of the trackers
@@ -356,9 +387,9 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 /**
  *  Track a given campaign
  *
- *  @param options The campaign data
+ *  @param options The campaign name
  */
-- (void)trackCampaingWithData:(NSDictionary *)data;
+- (void)trackCampaignWithName:(NSString *)data;
 
 @end
 

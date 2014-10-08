@@ -69,6 +69,8 @@ UIAlertViewDelegate
 {
     [super viewDidLoad];
     
+    self.screenName = @"LeftMenu";
+    
     self.title = @"";
     
     [self showLoading];
@@ -136,14 +138,11 @@ UIAlertViewDelegate
         
         [self hideLoading];
         
-    } andFailureBlock:^(NSArray *errorMessage) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
         
         [self hideLoading];
         
-        JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-        [errorView setErrorTitle:STRING_ERROR
-                        andAddTo:self];
-        
+        [self showMessage:STRING_ERROR success:NO];
     }];
 }
 
@@ -357,11 +356,13 @@ UIAlertViewDelegate
             [self.customNavBar.searchBar resignFirstResponder];
             
             RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
-            
             NSString *item = suggestion.item;
             
-            [RISearchSuggestion saveSearchSuggestionOnDB:suggestion.item
-                                          isRecentSearch:YES];
+            if(!suggestion.isRecentSearch)
+            {
+                [RISearchSuggestion saveSearchSuggestionOnDB:suggestion.item
+                                              isRecentSearch:YES];
+            }
             
             // I changed the index to 99 to know that it's to display a search result
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
@@ -384,6 +385,7 @@ UIAlertViewDelegate
                     if ([RICustomer checkIfUserIsLogged])
                     {
                         __block NSString *custumerId = [RICustomer getCustomerId];
+                        [[FBSession activeSession] closeAndClearTokenInformation];
                         
                         [RICustomer logoutCustomerWithSuccessBlock:^{
                             
@@ -400,8 +402,6 @@ UIAlertViewDelegate
                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
                                                                       data:[trackingDictionary copy]];
                             
-                            [[FBSession activeSession] closeAndClearTokenInformation];
-                            
                             NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
                             
                             for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
@@ -412,9 +412,7 @@ UIAlertViewDelegate
                             
                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
                             
-                        } andFailureBlock:^(NSArray *errorObject) {
-                            
-                            [[FBSession activeSession] closeAndClearTokenInformation];
+                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                             
                             NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
                             
@@ -423,6 +421,8 @@ UIAlertViewDelegate
                             }
                             
                             [self userDidLogout];
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
                             
                         }];
                     }
@@ -557,7 +557,7 @@ UIAlertViewDelegate
                                               [self.resultsTableView reloadSections:[NSIndexSet indexSetWithIndex:0]
                                                                    withRowAnimation:UITableViewRowAnimationFade];
                                           });
-                                      } andFailureBlock:^(NSArray *errorMessages) {
+                                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                           
                                       }];
     }
@@ -584,10 +584,7 @@ UIAlertViewDelegate
         self.resultsTableView = [[UITableView alloc] initWithFrame:resultsTableFrame
                                                              style:UITableViewStyleGrouped];
         
-        self.resultsTableView.backgroundColor = [UIColor colorWithRed:1.0f
-                                                                green:1.0f
-                                                                 blue:1.0f
-                                                                alpha:0.78f];
+        self.resultsTableView.backgroundColor = UIColorFromRGB(0xffffff);
         self.resultsTableView.delegate = self;
         self.resultsTableView.dataSource = self;
         

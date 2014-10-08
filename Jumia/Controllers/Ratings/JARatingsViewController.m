@@ -11,6 +11,7 @@
 #import "JAReviewCell.h"
 #import "JANewRatingViewController.h"
 #import "JAPriceView.h"
+#import "RIProduct.h"
 
 @interface JARatingsViewController ()
 <
@@ -45,18 +46,26 @@
 {
     [super viewDidLoad];
     
+    if(VALID_NOTEMPTY(self.product.sku, NSString))
+    {
+        self.screenName = [NSString stringWithFormat:@"RatingScreen / %@", self.product.sku];
+    }
+    else
+    {
+        self.screenName = @"RatingScreen";
+    }
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
-    self.brandLabel.text = self.productBrand;
-    self.nameLabel.text = self.productRatings.productName;
+    self.brandLabel.text = self.product.brand;
+    self.nameLabel.text = self.product.name;
     
     [self.oldPriceLabel removeFromSuperview];
     [self.labelNewPrice removeFromSuperview];
     
     self.priceView = [[JAPriceView alloc] init];
-    [self.priceView loadWithPrice:self.productOldPrice
-                     specialPrice:self.productNewPrice
+    [self.priceView loadWithPrice:self.product.priceFormatted
+                     specialPrice:self.product.specialPriceFormatted
                          fontSize:14.0f
             specialPriceOnTheLeft:NO];
     self.priceView.frame = CGRectMake(12.0f,
@@ -67,19 +76,9 @@
     
     self.reviewsNumber.text = [NSString stringWithFormat:STRING_REVIEWS, self.productRatings.commentsCount];
     
-    NSInteger media = 0;
+    [self setNumberOfStars:[self.product.avr integerValue]];
     
-    for (RIRatingComment *rating in self.productRatings.comments) {
-        media += [rating.avgRating integerValue];
-    }
-    
-    if (media > 0) {
-        media = (media / self.productRatings.comments.count);
-        
-        [self setNumberOfStars:media];
-    }
-    
-    self.resumeView.layer.cornerRadius = 4.0f;
+    self.resumeView.layer.cornerRadius = 5.0f;
     
     [self.writeReviewButton setTitle:STRING_WRITE_REVIEW
                             forState:UIControlStateNormal];
@@ -90,6 +89,20 @@
     
     self.tableViewComments.layer.cornerRadius = 4.0f;
     self.tableViewComments.allowsSelection = NO;
+
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
+    [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
+
+    NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
+    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+    
+    [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewRatings] data:trackingDictionary];
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,11 +115,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showNewRating"]) {
-        [segue.destinationViewController setRatingProductSku:self.productRatings.productSku];
-        [segue.destinationViewController setRatingProductBrand:self.productBrand];
-        [segue.destinationViewController setRatingProductNameForLabel:self.productRatings.productName];
-        [segue.destinationViewController setRatingProductNewPriceForLabel:self.productNewPrice];
-        [segue.destinationViewController setRatingProductOldPriceForLabel:self.productOldPrice];
+        [segue.destinationViewController setProduct:self.product];
     }
 }
 
@@ -221,84 +230,11 @@
 
 - (void)setNumberOfStars:(NSInteger)stars
 {
-    switch (stars) {
-        case 0: {
-            
-            self.star1.image = [self getEmptyStar];
-            self.star2.image = [self getEmptyStar];
-            self.star3.image = [self getEmptyStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 1: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getEmptyStar];
-            self.star3.image = [self getEmptyStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 2: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getFilledStar];
-            self.star3.image = [self getEmptyStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 3: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getFilledStar];
-            self.star3.image = [self getFilledStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 4: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getFilledStar];
-            self.star3.image = [self getFilledStar];
-            self.star4.image = [self getFilledStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 5: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getFilledStar];
-            self.star3.image = [self getFilledStar];
-            self.star4.image = [self getFilledStar];
-            self.star5.image = [self getFilledStar];
-            
-        }
-            break;
-            
-        default: {
-            
-            self.star1.image = [self getEmptyStar];
-            self.star2.image = [self getEmptyStar];
-            self.star3.image = [self getEmptyStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-    }
+    self.star1.image = stars < 1 ? [self getEmptyStar] : [self getFilledStar];
+    self.star2.image = stars < 2 ? [self getEmptyStar] : [self getFilledStar];
+    self.star3.image = stars < 3 ? [self getEmptyStar] : [self getFilledStar];
+    self.star4.image = stars < 4 ? [self getEmptyStar] : [self getFilledStar];
+    self.star5.image = stars < 5 ? [self getEmptyStar] : [self getFilledStar];
 }
 
 - (UIImage *)getEmptyStar

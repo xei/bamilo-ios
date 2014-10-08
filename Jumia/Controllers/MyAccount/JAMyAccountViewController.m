@@ -41,6 +41,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"CustomerAccount";
+    
     self.navBarLayout.title = STRING_MY_ACCOUNT;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -80,11 +82,16 @@
     self.notificationLabel.text = STRING_NOTIFICATIONS;
     self.notificationDetailLabel.textColor = UIColorFromRGB(0x666666);
     self.notificationDetailLabel.text = STRING_RECEIVE_EXCLUSIVE_OFFERS;
+    [self.notificationSwitch setAccessibilityLabel:STRING_NOTIFICATIONS];
     
     self.labelSound.textColor = UIColorFromRGB(0x666666);
     self.labelSound.text = STRING_SOUND;
     self.labelDetailSound.textColor = UIColorFromRGB(0x666666);
     self.labelDetailSound.text = STRING_PLAY_SOUND;
+    [self.switchSound setAccessibilityLabel:STRING_SOUND];
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)didReceiveMemoryWarning
@@ -148,16 +155,12 @@
 
 -(void)showUserDataSavedMessage
 {
-    JASuccessView *success = [JASuccessView getNewJASuccessView];
-    [success setSuccessTitle:STRING_CHANGED_PASSWORD_SUCCESS
-                    andAddTo:self];
+    [self showMessage:STRING_CHANGED_PASSWORD_SUCCESS success:YES];
 }
 
 - (void)showEmailNotificationsSavedMessage
 {
-    JASuccessView *success = [JASuccessView getNewJASuccessView];
-    [success setSuccessTitle:STRING_PREFERENCES_UPDATED
-                    andAddTo:self];
+    [self showMessage:STRING_PREFERENCES_UPDATED success:YES];
 }
 
 @end

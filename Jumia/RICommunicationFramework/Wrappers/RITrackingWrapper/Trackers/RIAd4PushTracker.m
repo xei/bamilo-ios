@@ -7,7 +7,10 @@
 //
 
 #import "RIAd4PushTracker.h"
-#import <libBMA4SSDK/BMA4SSDK.h>
+#import "BMA4SInAppNotification.h"
+#import "BMA4SNotification.h"
+#import "BMA4STracker+Analytics.h"
+#import "BMA4STracker.h"
 #import "GAIFields.h"
 #import "RIGoogleAnalyticsTracker.h"
 #import "RICategory.h"
@@ -40,6 +43,11 @@
 #define kAd4PushProfileCampaignPageViewCountKey             @"campaignPageViewCount"
 #define kAd4PushProfileMostVisitedCategoryKey               @"mostVisitedCategory"
 
+#define kAd4PushProfileStatusProspect   @"Prospect"
+#define kAd4PushProfileStatusCustomer   @"Customer"
+#define kAd4PushProfileStatusStarted    @"started"
+#define kAd4PushProfileStatusDone       @"done"
+
 @implementation RIAd4PushTracker
 
 NSString * const kRIAdd4PushUserID = @"kRIAdd4PushUserID";
@@ -48,8 +56,6 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 @synthesize queue;
 @synthesize registeredEvents;
-
-static RIAd4PushTracker *sharedInstance;
 
 - (id)init
 {
@@ -62,11 +68,21 @@ static RIAd4PushTracker *sharedInstance;
         NSMutableArray *events = [[NSMutableArray alloc] init];
         
         [events addObject:[NSNumber numberWithInt:RIEventLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventAutoLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventRegisterStart]];
         [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventAddToCart]];
         [events addObject:[NSNumber numberWithInt:RIEventAddToWishlist]];
-        
+        [events addObject:[NSNumber numberWithInt:RIEventRemoveFromWishlist]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutStart]];
+        [events addObject:[NSNumber numberWithInt:RIEventSearch]];
+        [events addObject:[NSNumber numberWithInt:RIEventChangeCountry]];
+        [events addObject:[NSNumber numberWithInt:RIEventFilter]];
+        [events addObject:[NSNumber numberWithInt:RIEventViewCampaign]];
+        [events addObject:[NSNumber numberWithInt:RIEventTopCategory]];
+        [events addObject:[NSNumber numberWithInt:RIEventAddFromWishlistToCart]];
+
         self.registeredEvents = [events copy];
     }
     return self;
@@ -106,6 +122,9 @@ static RIAd4PushTracker *sharedInstance;
     dispatch_async(dispatch_get_main_queue(), ^{
        [[BMA4SNotification sharedBMA4S] didFinishLaunchingWithOptions:options]; 
     });
+    
+    NSDictionary *deviceInfo = [NSDictionary dictionaryWithObject:@"0" forKey:kAd4PushProfileUserIdKey];
+    [BMA4STracker updateDeviceInfo:deviceInfo];
 }
 
 #pragma mark - RINotificationTracking protocol
@@ -136,8 +155,6 @@ static RIAd4PushTracker *sharedInstance;
     }
     
     [[BMA4SNotification sharedBMA4S] didReceiveRemoteNotification:userInfo];
-    
-    [self handleNotificationWithDictionary:userInfo];
 }
 
 - (void)applicationDidReceiveLocalNotification:(UILocalNotification *)notification
@@ -172,59 +189,278 @@ static RIAd4PushTracker *sharedInstance;
     [self handlePushNotificationWithOpenURL:url];
 }
 
+#pragma mark - RIPushNotificaitonTracking
+
+- (void)handlePushNotifcation:(NSDictionary *)info
+{
+    [self handleNotificationWithDictionary:info];
+}
+
 #pragma mark - RILaunchEventTracker implementation
 
 - (void)sendLaunchEventWithData:(NSDictionary *)dataDictionary;
 {
     RIDebugLog(@"Ad4Push - Launch event with data:%@", dataDictionary);
     
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-
-    //    [BMA4STracker trackEventWithType:1003 parameters:array];
+    BOOL hasAppOpended = [[[NSUserDefaults standardUserDefaults] objectForKey:@"has_app_opened"] boolValue];
+    if(!hasAppOpended)
+    {
+        NSDate *date = [NSDate date];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        
+        NSMutableArray *parameters = [[NSMutableArray alloc] initWithObjects:[NSString stringWithFormat:@"firstOpenDate=%@", [dateFormatter stringFromDate:date]], nil];
+        
+        [BMA4STracker trackEventWithType:1003 parameters:parameters];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"has_app_opened"];
+        [[NSUserDefaults standardUserDefaults] synchronize];        
+    }
 }
 
 #pragma mark - RIEventTracking
 - (void)trackEvent:(NSNumber *)eventType data:(NSDictionary *)data
 {
     RIDebugLog(@"Ad4Push - Tracking event = %@, data %@", eventType, data);
+
     if([self.registeredEvents containsObject:eventType])
     {
+        NSString *articleId = @"";
+        NSString *name = @"";
+        NSString *categoryId = @"";
+        NSString *price = @"";
+        NSString *currency = @"";
+        NSNumber *numberOfProductsInWishlist = nil;
+        NSInteger numberOfProductsInWishlistValue = 0;
+        NSNumber *campaignNumber = nil;
+        NSInteger campaignNumberValue = 0;
+        NSNumber *colorFilter = nil;
+        NSInteger colorFilterValue = 0;
+        NSNumber *priceFilter = nil;
+        NSInteger priceFilterValue = 0;
+        NSNumber *brandFilter = nil;
+        NSInteger brandFilterValue = 0;
+        NSNumber *categoryFilter = nil;
+        NSInteger categoryFilterValue = 0;
+        
+        NSDate *date = [NSDate date];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        
+        NSString *currentDate = [dateFormatter stringFromDate:date];
+        
+        NSString *userStatus = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileStatusInAppKey];
+        if(!VALID_NOTEMPTY(userStatus, NSString))
+        {
+            userStatus = kAd4PushProfileStatusProspect;
+            [[NSUserDefaults standardUserDefaults] setObject:userStatus forKey:kAd4PushProfileStatusInAppKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+
+        NSMutableDictionary *deviceInfo = [[NSMutableDictionary alloc] init];
+        NSMutableArray *parameters = [[NSMutableArray alloc] init];
         NSInteger event = [eventType integerValue];
         switch (event) {
             case RIEventLoginSuccess:
-//                [BMA4STracker trackEventWithType:1001 parameters:array];
-
+            case RIEventAutoLoginSuccess:
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
+                {
+                    [parameters addObject:[NSString stringWithFormat:@"loginUserID=%@", [data objectForKey:kRIEventUserIdKey]]];
+                    [deviceInfo setObject:[data objectForKey:kRIEventUserIdKey] forKey:kAd4PushProfileUserIdKey];
+                }
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserFirstNameKey], NSString))
+                {
+                    [deviceInfo setObject:[data objectForKey:kRIEventUserFirstNameKey] forKey:kAd4PushProfileFirstNameKey];
+                }
+                
+                [deviceInfo setObject:userStatus forKey:kAd4PushProfileStatusInAppKey];
+                
+                [BMA4STracker trackEventWithType:1001 parameters:parameters];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
+                break;
+            case RIEventRegisterStart:
+                [deviceInfo setObject:kAd4PushProfileStatusStarted forKey:kAd4PushProfileRegistrationStatusKey];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventRegisterSuccess:
-//                [BMA4STracker trackLeadWithLabel:<#(NSString *)#> value:<#(NSString *)#>]
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
+                {
+                    [BMA4STracker trackLeadWithLabel:@"customerID" value:[data objectForKey:kRIEventUserIdKey]];
+                    [deviceInfo setObject:[data objectForKey:kRIEventUserIdKey] forKey:kAd4PushProfileUserIdKey];
+                }
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventGenderKey], NSString))
+                {
+                    [deviceInfo setObject:[data objectForKey:kRIEventGenderKey] forKey:kAd4PushProfileUserGenderKey];
+                }
+                
+                [deviceInfo setObject:kAd4PushProfileStatusDone forKey:kAd4PushProfileRegistrationStatusKey];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventFacebookLoginSuccess:
-//                [BMA4STracker trackEventWithType:1002 parameters:array];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
+                {
+                    [parameters addObject:[NSString stringWithFormat:@"loginUserID=%@", [data objectForKey:kRIEventUserIdKey]]];
+                }
+                [BMA4STracker trackEventWithType:1002 parameters:parameters];
                 break;
             case RIEventAddToCart:
-//                    [BMA4STracker trackCartWithId:<#(NSString *)#> forArticleWithId:<#(NSString *)#> andLabel:<#(NSString *)#> category:<#(NSString *)#> price:<#(double)#> currency:<#(NSString *)#> quantity:<#(long)#>]
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString))
+                {
+                    articleId = [data objectForKey:kRIEventSkuKey];
+                }
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventProductNameKey], NSString))
+                {
+                    name = [data objectForKey:kRIEventProductNameKey];
+                }
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryIdKey], NSString))
+                {
+                    categoryId = [data objectForKey:kRIEventCategoryIdKey];
+                }
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSString))
+                {
+                    price = [data objectForKey:kRIEventPriceKey];
+                }
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCurrencyCodeKey], NSString))
+                {
+                    currency = [data objectForKey:kRIEventCurrencyCodeKey];
+                }
+                [BMA4STracker trackCartWithId:@"1" forArticleWithId:articleId andLabel:name category:categoryId price:[price doubleValue] currency:currency quantity:1];
                 break;
             case RIEventAddToWishlist:
-//                [BMA4STracker trackEventWithType:1005 parameters:array];
+                numberOfProductsInWishlist = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileWishlistStatusKey];
+                if(VALID_NOTEMPTY(numberOfProductsInWishlist, NSNumber))
+                {
+                    numberOfProductsInWishlistValue = [numberOfProductsInWishlist integerValue];
+                }
+                numberOfProductsInWishlistValue++;
+                numberOfProductsInWishlist = [NSNumber numberWithInt:numberOfProductsInWishlistValue];
+                [[NSUserDefaults standardUserDefaults] setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [deviceInfo setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
+                [deviceInfo setObject:currentDate forKey:kAd4PushProfileLastFavouritesProductKey];
+                [deviceInfo setObject:[data objectForKey:kRIEventSkuKey] forKey:kAd4PushProfileLastFavouritesProductDateKey];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
+                
+                [BMA4STracker trackEventWithType:1005 parameters:parameters];
+                break;
+            case RIEventRemoveFromWishlist:
+                numberOfProductsInWishlist = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileWishlistStatusKey];
+                if(VALID_NOTEMPTY(numberOfProductsInWishlist, NSNumber))
+                {
+                    numberOfProductsInWishlistValue = [numberOfProductsInWishlist integerValue];
+                }
+                numberOfProductsInWishlistValue--;
+                numberOfProductsInWishlist = [NSNumber numberWithInt:numberOfProductsInWishlistValue];
+                [[NSUserDefaults standardUserDefaults] setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [deviceInfo setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
+                break;
+            case RIEventCheckoutStart:
+                [deviceInfo setObject:kAd4PushProfileStatusStarted forKey:kAd4PushProfileOrderStatusKey];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
+                break;
+            case RIEventSearch:
+                [deviceInfo setObject:currentDate forKey:kAd4PushProfileLastSearchDateKey];
+                [deviceInfo setObject:[data objectForKey:kRIEventKeywordsKey] forKey:kAd4PushProfileLastSearchKey];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
+                break;
+            case RIEventChangeCountry:
+                [deviceInfo setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kAd4PushProfileShopCountryKey];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
+                break;
+            case RIEventFilter:
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandFilterKey], NSString))
+                {
+                    brandFilter = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileFilterBrandKey];
+                    if(VALID_NOTEMPTY(brandFilter, NSNumber))
+                    {
+                        brandFilterValue = [brandFilter integerValue];
+                    }
+                    brandFilterValue++;
+                    brandFilter = [NSNumber numberWithInt:brandFilterValue];
+                    [[NSUserDefaults standardUserDefaults] setObject:brandFilter forKey:kAd4PushProfileFilterBrandKey];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    [deviceInfo setObject:brandFilter forKey:kAd4PushProfileFilterBrandKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventColorFilterKey], NSString))
+                {
+                    colorFilter = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileFilterColorKey];
+                    if(VALID_NOTEMPTY(colorFilter, NSNumber))
+                    {
+                        colorFilterValue = [colorFilter integerValue];
+                    }
+                    colorFilterValue++;
+                    colorFilter = [NSNumber numberWithInt:colorFilterValue];
+                    [[NSUserDefaults standardUserDefaults] setObject:colorFilter forKey:kAd4PushProfileFilterColorKey];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    [deviceInfo setObject:colorFilter forKey:kAd4PushProfileFilterColorKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryFilterKey], NSString))
+                {
+                    categoryFilter = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileFilterCategoryKey];
+                    if(VALID_NOTEMPTY(categoryFilter, NSNumber))
+                    {
+                        categoryFilterValue = [categoryFilter integerValue];
+                    }
+                    categoryFilterValue++;
+                    categoryFilter = [NSNumber numberWithInt:categoryFilterValue];
+                    [[NSUserDefaults standardUserDefaults] setObject:categoryFilter forKey:kAd4PushProfileFilterCategoryKey];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    [deviceInfo setObject:categoryFilter forKey:kAd4PushProfileFilterCategoryKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceFilterKey], NSString))
+                {
+                    priceFilter = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileFilterPriceKey];
+                    if(VALID_NOTEMPTY(priceFilter, NSNumber))
+                    {
+                        priceFilterValue = [priceFilter integerValue];
+                    }
+                    priceFilterValue++;
+                    priceFilter = [NSNumber numberWithInt:priceFilterValue];
+                    [[NSUserDefaults standardUserDefaults] setObject:priceFilter forKey:kAd4PushProfileFilterPriceKey];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    [deviceInfo setObject:priceFilter forKey:kAd4PushProfileFilterPriceKey];
+                }
+                [BMA4STracker updateDeviceInfo:deviceInfo];
+                break;
+            case RIEventTopCategory:
+                [deviceInfo setObject:[data objectForKey:kRIEventTopCategoryKey] forKey:kAd4PushProfileMostVisitedCategoryKey];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
+                break;
+            case RIEventViewCampaign:
+                campaignNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileCampaignPageViewCountKey];
+                if(VALID_NOTEMPTY(campaignNumber, NSNumber))
+                {
+                    campaignNumberValue = [campaignNumber integerValue];
+                }
+                campaignNumberValue++;
+                campaignNumber = [NSNumber numberWithInt:campaignNumberValue];
+                [[NSUserDefaults standardUserDefaults] setObject:campaignNumber forKey:kAd4PushProfileCampaignPageViewCountKey];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [deviceInfo setObject:campaignNumber forKey:kAd4PushProfileCampaignPageViewCountKey];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
+                break;
+            case RIEventAddFromWishlistToCart:
+                [deviceInfo setObject:[data objectForKey:kRIEventNumberOfProductsKey] forKey:kAd4PushProfileLastMovedFromFavtoCartKey];
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             default:
-//                [BMA4STracker trackEventWithType:1001 parameters:array];
                 break;
         }
-        
-//        NSDictionary *parameters = [self createParameters:data];
-//        [[BMA4SNotification sharedBMA4S] synchroniseProfile:parameters];
-        
-//        NSArray* array = [NSArray arrayWithObject:@"ApplicationStart=successful;userId=000"];
-//        [BMA4STracker trackEventWithType:1001 parameters:array];
     }
-}
-
-- (NSDictionary*)createParameters:(NSDictionary*)data
-{
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    
-    return [parameters copy];
 }
 
 #pragma mark - RIEcommerceEventTracking
@@ -240,9 +476,65 @@ static RIAd4PushTracker *sharedInstance;
         return;
     }
     
-    NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
-    NSString *currency = [data objectForKey:kRIEcommerceTransactionIdKey];
+    NSMutableDictionary *deviceInfo = [[NSMutableDictionary alloc] init];
+    [deviceInfo setObject:kAd4PushProfileStatusDone forKey:kAd4PushProfileOrderStatusKey];
+    
+    NSDate *date = [NSDate date];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [deviceInfo setObject:[dateFormatter stringFromDate:date] forKey:kAd4PushProfileLastOrderDateKey];
+    
+    NSString *userStatus = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfileStatusInAppKey];
+    if(!VALID_NOTEMPTY(userStatus, NSString) || ![userStatus isEqualToString:kAd4PushProfileStatusCustomer])
+    {
+        userStatus = kAd4PushProfileStatusCustomer;
+        [[NSUserDefaults standardUserDefaults] setObject:userStatus forKey:kAd4PushProfileStatusInAppKey];
+    }
+    [deviceInfo setObject:userStatus forKey:kAd4PushProfileStatusInAppKey];
+
+    NSNumber *numberOfPurchases = [NSNumber numberWithInt:0];
+    if(VALID_NOTEMPTY([data objectForKey:kRIEventAmountTransactions], NSNumber))
+    {
+        numberOfPurchases = [data objectForKey:kRIEventAmountTransactions];
+    }
+    [deviceInfo setObject:numberOfPurchases forKey:kAd4PushProfileAggregatedNumberOfPurchaseKey];
+    
     NSNumber *total = [data objectForKey:kRIEcommerceTotalValueKey];
+    [deviceInfo setObject:total forKey:kAd4PushProfileCartValueKey];
+
+    CGFloat grandTotalValue = 0.0f;
+    NSNumber *grandTotal = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfilePurchaseGrandTotalKey];
+    if(VALID_NOTEMPTY(grandTotal, NSNumber))
+    {
+        grandTotalValue = [grandTotal floatValue];
+    }
+    grandTotalValue += [total floatValue];
+    grandTotal = [NSNumber numberWithFloat:grandTotalValue];
+    [[NSUserDefaults standardUserDefaults] setObject:grandTotal forKey:kAd4PushProfilePurchaseGrandTotalKey];
+    [deviceInfo setObject:grandTotal forKey:kAd4PushProfilePurchaseGrandTotalKey];
+    
+    NSInteger numberOfProducts = 0;
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceSkusKey], NSArray))
+    {
+        numberOfProducts = [[data objectForKey:kRIEcommerceSkusKey] count];
+    }
+    [deviceInfo setObject:[NSNumber numberWithInt:numberOfProducts] forKey:kAd4PushProfileCartStatusKey];
+    
+    NSString *couponCode = @"";
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceCouponKey], NSString))
+    {
+        couponCode = [data objectForKey:kRIEcommerceCouponKey];
+    }
+    [deviceInfo setValue:couponCode forKey:kAd4PushProfileCouponStatusKey];
+    [deviceInfo setObject:[data objectForKey:kRIEcommerceCartAverageValueKey] forKey:kAd4PushProfileAvgCartValueKey];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    [BMA4STracker updateDeviceInfo:deviceInfo];
+    
+    NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
+    NSString *currency = [data objectForKey:kRIEcommerceCurrencyKey];
     
     [BMA4STracker trackPurchaseWithId:transactionId
                              currency:currency
@@ -253,133 +545,124 @@ static RIAd4PushTracker *sharedInstance;
 
 - (void)handleNotificationWithDictionary:(NSDictionary *)notification
 {
-    if (notification != nil && [notification objectForKey:@"UTM"] != nil && [[notification objectForKey:@"UTM"] length] > 0)
+    if(VALID_NOTEMPTY(notification, NSDictionary))
     {
-        NSString *campaignName = [NSString stringWithFormat:@"%@",[notification objectForKey:@"UTM"]];
-        
-        NSDictionary *campaignData = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      @"push", kGAICampaignSource,
-                                      @"referrer",kGAICampaignMedium,
-                                      campaignName, kGAICampaignName,
-                                      @"ad_variation1",kGAICampaignContent,
-                                      @"keyword",kGAICampaignKeyword,
-                                      @"1",kGAICampaignId, nil];
-        
-        [[RITrackingWrapper sharedInstance] trackCampaingWithData:campaignData];
-    }
-    
-    if (notification != nil && [notification objectForKey:@"u"] != nil)
-    {
-        NSString *urlString = [notification objectForKey:@"u"];
-        
-        
-        NSString *forthLetter = @"";
-        NSString *cartPositionString = @"";
-        
-        if ([urlString length] >= 7)
+        if(VALID_NOTEMPTY([notification objectForKey:@"UTM"], NSString))
         {
-            cartPositionString = [urlString substringWithRange:NSMakeRange(3, 4)];
+            [[RITrackingWrapper sharedInstance] trackCampaignWithName:[notification objectForKey:@"UTM"]];
         }
         
-        if ([cartPositionString isEqualToString:@"cart"])
+        if(VALID_NOTEMPTY([notification objectForKey:@"u"], NSString))
         {
-            [self pushCartViewController];
-        }
-        else
-        {
-            if ([urlString length] >= 4)
+            NSString *urlString = [notification objectForKey:@"u"];
+            
+            
+            NSString *forthLetter = @"";
+            NSString *cartPositionString = @"";
+            
+            if ([urlString length] >= 7)
             {
-                forthLetter = [urlString substringWithRange:NSMakeRange(3, 1)];
+                cartPositionString = [urlString substringWithRange:NSMakeRange(3, 4)];
             }
             
-            if ([forthLetter isEqualToString:@""])
+            if ([cartPositionString isEqualToString:@"cart"])
             {
-                // Home
-                [self pushHomeViewController];
-            }
-            else if ([forthLetter isEqualToString:@"c"])
-            {
-                // Catalog view - category name
-                NSString *categoryName = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                
-                [self pushCatalogViewControllerWithCategoryId:nil
-                                                 categoryName:categoryName
-                                                   searchTerm:nil];
-            }
-            else if ([forthLetter isEqualToString:@"n"])
-            {
-                // Catalog view - category id
-                NSString *categoryId = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                
-                [self pushCatalogViewControllerWithCategoryId:categoryId
-                                                 categoryName:nil
-                                                   searchTerm:nil];
-            }
-            else if ([forthLetter isEqualToString:@"s"])
-            {
-                // Catalog view - search term
-                NSString *searchTerm = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                
-                [self pushCatalogViewControllerWithCategoryId:nil
-                                                 categoryName:nil
-                                                   searchTerm:searchTerm];
-            }
-            else if ([forthLetter isEqualToString:@"d"])
-            {
-                // PDV
-                // Example: jumia://ng/d/BL683ELACCDPNGAMZ?size=1
-                
-                // Check if there is field size
-                
-                NSRange range = [[urlString lowercaseString] rangeOfString:@"?size="];
-                if(NSNotFound != range.location)
-                {
-                    NSString *size = [urlString substringWithRange:NSMakeRange(range.length + range.location, urlString.length - (range.length + range.location))];
-                    
-                    NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, range.location - 5)];
-                    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, pdvSku];
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                                        object:nil
-                                                                      userInfo:@{ @"url" : finalUrl,
-                                                                                  @"size": size,
-                                                                                  @"show_back_button" : [NSNumber numberWithBool:NO]}];
-                }
-                else
-                {
-                    NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, pdvSku];
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                                        object:nil
-                                                                      userInfo:@{ @"url" : finalUrl ,
-                                                                                  @"show_back_button" : [NSNumber numberWithBool:NO]}];
-                }
-            }
-            else if ([forthLetter isEqualToString:@"cart"])
-            {
-                // Cart
                 [self pushCartViewController];
             }
-            else if ([forthLetter isEqualToString:@"w"])
+            else
             {
-                // Wishlist
-                [self pushWishList];
-            }
-            else if ([forthLetter isEqualToString:@"o"])
-            {
-                // Order overview
-                [self pushOrderOverView];
-            }
-            else if ([forthLetter isEqualToString:@"l"])
-            {
-                // Login
-                [self pushLoginViewController];
-            }
-            else if ([forthLetter isEqualToString:@"r"])
-            {
-                // Register
-                [self pushLoginViewController];
+                if ([urlString length] >= 4)
+                {
+                    forthLetter = [urlString substringWithRange:NSMakeRange(3, 1)];
+                }
+                
+                if ([forthLetter isEqualToString:@""])
+                {
+                    // Home
+                    [self pushHomeViewController];
+                }
+                else if ([forthLetter isEqualToString:@"c"])
+                {
+                    // Catalog view - category name
+                    NSString *categoryName = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    
+                    [self pushCatalogViewControllerWithCategoryId:nil
+                                                     categoryName:categoryName
+                                                       searchTerm:nil];
+                }
+                else if ([forthLetter isEqualToString:@"n"])
+                {
+                    // Catalog view - category id
+                    NSString *categoryId = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    
+                    [self pushCatalogViewControllerWithCategoryId:categoryId
+                                                     categoryName:nil
+                                                       searchTerm:nil];
+                }
+                else if ([forthLetter isEqualToString:@"s"])
+                {
+                    // Catalog view - search term
+                    NSString *searchTerm = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                    
+                    [self pushCatalogViewControllerWithCategoryId:nil
+                                                     categoryName:nil
+                                                       searchTerm:searchTerm];
+                }
+                else if ([forthLetter isEqualToString:@"d"])
+                {
+                    // PDV
+                    // Example: jumia://ng/d/BL683ELACCDPNGAMZ?size=1
+                    
+                    // Check if there is field size
+                    
+                    NSRange range = [[urlString lowercaseString] rangeOfString:@"?size="];
+                    if(NSNotFound != range.location)
+                    {
+                        NSString *size = [urlString substringWithRange:NSMakeRange(range.length + range.location, urlString.length - (range.length + range.location))];
+                        
+                        NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, range.location - 5)];
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                            object:nil
+                                                                          userInfo:@{ @"sku" : pdvSku,
+                                                                                      @"size": size,
+                                                                                      @"show_back_button" : [NSNumber numberWithBool:NO]}];
+                    }
+                    else
+                    {
+                        NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                            object:nil
+                                                                          userInfo:@{ @"sku" : pdvSku ,
+                                                                                      @"show_back_button" : [NSNumber numberWithBool:NO]}];
+                    }
+                }
+                else if ([forthLetter isEqualToString:@"cart"])
+                {
+                    // Cart
+                    [self pushCartViewController];
+                }
+                else if ([forthLetter isEqualToString:@"w"])
+                {
+                    // Wishlist
+                    [self pushWishList];
+                }
+                else if ([forthLetter isEqualToString:@"o"])
+                {
+                    // Order overview
+                    [self pushOrderOverView];
+                }
+                else if ([forthLetter isEqualToString:@"l"])
+                {
+                    // Login
+                    [self pushLoginViewController];
+                }
+                else if ([forthLetter isEqualToString:@"r"])
+                {
+                    // Register
+                    [self pushRegisterViewController];
+                }
             }
         }
     }
@@ -411,15 +694,20 @@ static RIAd4PushTracker *sharedInstance;
         NSString *urlHost = [NSString stringWithString:url.host];
         NSString *urlQuery = nil;
         
-        if (url.query != nil) {
-            if ([url.query length] >= 5) {
-                if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"]) {
+        if (url.query != nil)
+        {
+            if ([url.query length] >= 5)
+            {
+                if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"])
+                {
                     NSRange range = [url.query rangeOfString:@"?ADXID"];
-                    if (range.location != NSNotFound) {
+                    if (range.location != NSNotFound)
+                    {
                         NSString *paramsWithoutAdXData = [url.query substringToIndex:range.location];
                         urlQuery = [NSString stringWithFormat:@"?%@",paramsWithoutAdXData];
                         path = [url.path stringByAppendingString:urlQuery];
-                    } else {
+                    } else
+                    {
                         urlQuery = [NSString stringWithFormat:@"?%@",url.query];
                         path = [url.path stringByAppendingString:urlQuery];
                     }
@@ -465,43 +753,15 @@ static RIAd4PushTracker *sharedInstance;
                                    categoryName:(NSString *)categoryName
                                      searchTerm:(NSString *)searchTerm
 {
-    if (categoryId.length > 0)
+    if(VALID_NOTEMPTY(categoryId, NSString))
     {
-        [RICategory getCategoriesWithSuccessBlock:^(id categories) {
-            
-            for (RICategory *category in categories)
-            {
-                if ([category.uid isEqualToString:categoryId])
-                {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
-                                                                        object:@{@"category":category}];
-                    
-                    break;
-                }
-            }
-        } andFailureBlock:^(NSArray *errorMessage) {
-            [self pushHomeViewController];
-        }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_id":categoryId}];
     }
-    else if (categoryName.length > 0)
+    else if(VALID_NOTEMPTY(categoryName, NSString))
     {
-        [RICategory getCategoriesWithSuccessBlock:^(id categories) {
-            
-            for (RICategory *category in categories)
-            {
-                if ([category.urlKey isEqualToString:categoryName])
-                {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
-                                                                        object:@{@"category":category}];
-                    
-                    break;
-                }
-            }
-        } andFailureBlock:^(NSArray *errorMessage) {
-            [self pushHomeViewController];
-        }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":categoryName}];
     }
-    else if (searchTerm.length > 0)
+    else if(VALID_NOTEMPTY(searchTerm, NSString))
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                             object:@{@"index": @(99),
@@ -518,24 +778,26 @@ static RIAd4PushTracker *sharedInstance;
 
 - (void)pushWishList
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(90),
-                                                                 @"name": STRING_MY_FAVOURITES }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowFavoritesScreenNotification
+                                                        object:nil];
 }
 
 - (void)pushOrderOverView
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(90),
-                                                                 @"name": STRING_TRACK_MY_ORDER }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowTrackOrderScreenNotification
+                                                        object:nil];
 }
 
 - (void)pushLoginViewController
 {
-    // The index 90 is to know it's from deeplink
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(90),
-                                                                 @"name": STRING_LOGIN }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
+                                                        object:nil];
+}
+
+- (void)pushRegisterViewController
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification
+                                                        object:nil];
 }
 
 #pragma mark - Auxiliar methods

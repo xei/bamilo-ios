@@ -166,7 +166,7 @@
     
     RITeaserText* teaserText = [teaser.teaserTexts firstObject];
     
-    [self teaserPressedWithTeaserTextForCampaigns:teaserText];
+    [self teaserPressedWithTitle:teaserText.name inCampaignTeasers:[self.teasers array]];
 }
 
 @end

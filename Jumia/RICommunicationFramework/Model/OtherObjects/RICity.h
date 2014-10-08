@@ -17,6 +17,6 @@
 + (NSString *)getCitiesForUrl:(NSString*)url
                        region:(NSString*)regionId
                  successBlock:(void (^)(NSArray *cities))successBlock
-              andFailureBlock:(void (^)(NSArray *error))failureBlock;
+              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 @end

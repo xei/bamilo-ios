@@ -13,8 +13,7 @@
 
 @interface JAUserDataViewController ()
 <
-    JADynamicFormDelegate,
-    JANoConnectionViewDelegate
+    JADynamicFormDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
@@ -42,6 +41,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"CustomerData";
+    
     self.numberOfFields = 0;
     
     self.navBarLayout.showBackButton = YES;
@@ -66,6 +67,11 @@
     
     self.formHeight = 30.0f;
     
+    [self getForm];
+}
+
+- (void)getForm
+{
     [RIForm getForm:@"changepassword"
        successBlock:^(RIForm *form) {
            
@@ -85,28 +91,59 @@
                
                self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", ((RICustomer *)customer).firstName, ((RICustomer *)customer).lastName];
                self.emailLabel.text = ((RICustomer *)customer).email;
+
+               self.changePasswordHeight.constant = self.formHeight + 20;
+               [self.view updateConstraints];
+               
+               [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+               [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
+               [self.saveButton addTarget:self action:@selector(saveNewPassword) forControlEvents:UIControlEventTouchUpInside];
+               
+               if(self.firstLoading)
+               {
+                   NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                   [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                   self.firstLoading = NO;
+               }
                
                [self hideLoading];
                
-           } andFailureBlock:^(NSArray *errorMessages) {
+           } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+               
+               if(self.firstLoading)
+               {
+                   NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                   [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                   self.firstLoading = NO;
+               }
+               
+               BOOL noConnection = NO;
+               if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+               {
+                   noConnection = YES;
+               }
+               [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
                
                [self hideLoading];
            }];
+
+       } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
            
-           self.changePasswordHeight.constant = self.formHeight + 20;
-           [self.view updateConstraints];
-           
-           [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
-           [self.saveButton addTarget:self action:@selector(saveNewPassword) forControlEvents:UIControlEventTouchUpInside];
-           
-       } failureBlock:^(NSArray *errorMessage) {
+           if(self.firstLoading)
+           {
+               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+               self.firstLoading = NO;
+           }
+
+           BOOL noConnection = NO;
+           if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+           {
+               noConnection = YES;
+           }
+           [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
            
            [self hideLoading];
-           
-           JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-           [errorView setErrorTitle:STRING_EDIT_ADDRESS
-                           andAddTo:self];
-
        }];
 }
 
@@ -142,21 +179,7 @@
 
 - (void)saveNewPassword
 {
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueSavingPassword];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueSavingPassword];
-    }
+    [self continueSavingPassword];
 }
 
 - (void)continueSavingPassword
@@ -176,56 +199,33 @@
          [[NSNotificationCenter defaultCenter] postNotificationName:kDidSaveUserDataNotification object:nil];
          [self.navigationController popViewControllerAnimated:YES];
          
-     } andFailureBlock:^(id errorObject)
+     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          [self hideLoading];
          
-         if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         if(RIApiResponseNoInternetConnection == apiResponse)
+         {
+             [self showMessage:STRING_NO_NEWTORK success:NO];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.changePasswordForm validateFields:errorObject];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR_INVALID_FIELDS
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.changePasswordForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:[errorObject componentsJoinedByString:@","]
-                             andAddTo:self];
+             [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
          }
          else
          {
              [self.changePasswordForm checkErrors];
              
-             JAErrorView *errorView = [JAErrorView getNewJAErrorView];
-             [errorView setErrorTitle:STRING_ERROR
-                             andAddTo:self];
+             [self showMessage:STRING_ERROR success:NO];
          }
      }];
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueSavingPassword];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueSavingPassword];
-    }
 }
 
 @end

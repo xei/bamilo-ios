@@ -102,10 +102,6 @@
                                                     <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sNW-IA-Cp7">
-                                                    <rect key="frame" x="0.0" y="43" width="320" height="1"/>
-                                                    <color key="backgroundColor" red="0.85509200507614214" green="0.85509200507614214" blue="0.85509200507614214" alpha="1" colorSpace="calibratedRGB"/>
-                                                </view>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -441,6 +437,7 @@
                         <outlet property="teaserCategoryScrollView" destination="MEv-bE-tYZ" id="7gC-g8-f4J"/>
                         <outlet property="teaserPagesScrollView" destination="bVK-fb-QVJ" id="hVZ-Y8-hXn"/>
                         <segue destination="lMd-fG-L2Y" kind="push" id="zNt-qO-beb"/>
+                        <segue destination="HxC-4Z-hee" kind="push" id="E3F-yU-gPU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -456,6 +453,40 @@
                 </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1128" y="-589"/>
+        </scene>
+        <!--Campaigns View Controller-->
+        <scene sceneID="JnK-HZ-uUo">
+            <objects>
+                <viewController storyboardIdentifier="campaignsViewController" id="HxC-4Z-hee" customClass="JACampaignsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eXn-DM-Zlx"/>
+                        <viewControllerLayoutGuide type="bottom" id="eDc-CR-OUq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wqz-wx-n6c">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="vpD-du-0cK" appends="YES" id="jtp-Z7-q66"/>
+                            <outletCollection property="gestureRecognizers" destination="rLg-cQ-Rog" appends="YES" id="dIj-pE-10z"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="hMV-Lk-pLb"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h2h-bh-I2J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="vpD-du-0cK">
+                    <connections>
+                        <action selector="swipeLeft:" destination="HxC-4Z-hee" id="ccK-CR-qXy"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="rLg-cQ-Rog">
+                    <connections>
+                        <action selector="swipeRight:" destination="HxC-4Z-hee" id="OeL-Jh-Lnn"/>
+                    </connections>
+                </swipeGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1543" y="-589"/>
         </scene>
         <!--Categories View Controller-->
         <scene sceneID="1D2-QG-8TZ">
@@ -475,7 +506,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vA9-VB-bkS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1530" y="-589"/>
+            <point key="canvasLocation" x="1543" y="-1205"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="euH-wI-leh">
@@ -2671,14 +2702,14 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3a-SQ-tRU">
-                                        <rect key="frame" x="8" y="285" width="292" height="35"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3a-SQ-tRU">
+                                        <rect key="frame" x="48" y="281" width="212" height="45"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IrD-XV-ayF">
-                                        <rect key="frame" x="8" y="184" width="292" height="35"/>
+                                        <rect key="frame" x="48" y="184" width="212" height="35"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -2791,7 +2822,7 @@
         <!--Main Filters View Controller-->
         <scene sceneID="Ml2-Ct-a79">
             <objects>
-                <viewController storyboardIdentifier="mainFiltersViewController" id="hCe-bF-wIA" customClass="JAMainFiltersViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainFiltersViewController" automaticallyAdjustsScrollViewInsets="NO" id="hCe-bF-wIA" customClass="JAMainFiltersViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Hzq-Ua-ts3"/>
                         <viewControllerLayoutGuide type="bottom" id="QmG-2d-Ova"/>
@@ -2893,7 +2924,7 @@
         <!--Category Filter View Controller-->
         <scene sceneID="mzf-5X-wch">
             <objects>
-                <viewController storyboardIdentifier="categoryFilterViewController" id="Abd-uI-ZfH" customClass="JACategoryFilterViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="categoryFilterViewController" automaticallyAdjustsScrollViewInsets="NO" id="Abd-uI-ZfH" customClass="JACategoryFilterViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Vz7-Na-ebd"/>
                         <viewControllerLayoutGuide type="bottom" id="xAH-Il-LW1"/>
@@ -2902,12 +2933,18 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="yZ4-K7-3Oq">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="yZ4-K7-3Oq">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="yZ4-K7-3Oq" firstAttribute="top" secondItem="Vz7-Na-ebd" secondAttribute="bottom" id="BZB-fy-0CS"/>
+                            <constraint firstAttribute="trailing" secondItem="yZ4-K7-3Oq" secondAttribute="trailing" id="Er9-3h-SLE"/>
+                            <constraint firstItem="yZ4-K7-3Oq" firstAttribute="leading" secondItem="IGa-B5-5yv" secondAttribute="leading" id="Ik6-xM-A7c"/>
+                            <constraint firstItem="xAH-Il-LW1" firstAttribute="top" secondItem="yZ4-K7-3Oq" secondAttribute="bottom" id="oei-S1-Y47"/>
+                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="4Qz-gt-nZd"/>
@@ -2922,7 +2959,7 @@
         <!--Generic Filter View Controller-->
         <scene sceneID="Dh0-Fl-HFr">
             <objects>
-                <viewController storyboardIdentifier="genericFilterViewController" id="5q6-Aq-jzg" customClass="JAGenericFilterViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="genericFilterViewController" automaticallyAdjustsScrollViewInsets="NO" id="5q6-Aq-jzg" customClass="JAGenericFilterViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bKa-dh-BqQ"/>
                         <viewControllerLayoutGuide type="bottom" id="WVk-mM-N3h"/>
@@ -2931,12 +2968,18 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5ET-St-Piy">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5ET-St-Piy">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5ET-St-Piy" firstAttribute="top" secondItem="bKa-dh-BqQ" secondAttribute="bottom" id="FuL-xG-FHc"/>
+                            <constraint firstItem="WVk-mM-N3h" firstAttribute="top" secondItem="5ET-St-Piy" secondAttribute="bottom" id="XJD-SW-qB1"/>
+                            <constraint firstAttribute="trailing" secondItem="5ET-St-Piy" secondAttribute="trailing" id="l0O-QZ-bgV"/>
+                            <constraint firstItem="5ET-St-Piy" firstAttribute="leading" secondItem="yC5-c6-pBh" secondAttribute="leading" id="n4Z-zx-hm8"/>
+                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="rrx-y6-fMa"/>

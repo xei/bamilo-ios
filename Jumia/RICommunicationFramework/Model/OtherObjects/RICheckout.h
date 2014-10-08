@@ -35,7 +35,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString*)getBillingAddressFormWithSuccessBlock:(void (^)(RICheckout *checkout))successBlock
-                                   andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  * Method to set the billing address needed for checkout process
@@ -49,7 +49,7 @@
 + (NSString*)setBillingAddress:(RIForm*)form
                     parameters:(NSDictionary*)parameters
                   successBlock:(void (^)(RICheckout *checkout))successBlock
-               andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  * Method to get the shipping address form needed for checkout process
@@ -59,7 +59,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString*)getShippingAddressFormWithSuccessBlock:(void (^)(RICheckout *checkout))successBlock
-                                    andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  * Method to set the shipping address needed for checkout process
@@ -73,7 +73,7 @@
 + (NSString*)setShippingAddress:(RIForm*)form
                     parameters:(NSDictionary*)parameters
                    successBlock:(void (^)(RICheckout *checkout))successBlock
-                andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 
 /**
@@ -84,7 +84,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString*)getShippingMethodFormWithSuccessBlock:(void (^)(RICheckout *checkout))successBlock
-                                   andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  * Method to set the shipping method needed for checkout process
@@ -98,7 +98,7 @@
 + (NSString*)setShippingMethod:(RIShippingMethodForm*)form
                     parameters:(NSDictionary*)parameters
                   successBlock:(void (^)(RICheckout *checkout))successBlock
-               andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  * Method to get the payment method form needed for checkout process
@@ -108,7 +108,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString*)getPaymentMethodFormWithSuccessBlock:(void (^)(RICheckout *checkout))successBlock
-                                  andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  * Method to set the payment method needed for checkout process
@@ -122,7 +122,7 @@
 + (NSString*)setPaymentMethod:(RIPaymentMethodForm *)form
                    parameters:(NSDictionary*)parameters
                  successBlock:(void (^)(RICheckout *checkout))successBlock
-              andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  * Method to end the checkout proccess
@@ -132,7 +132,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString*)finishCheckoutWithSuccessBlock:(void (^)(RICheckout *checkout))successBlock
-                            andFailureBlock:(void (^)(NSArray *errorMessages))failureBlock;
+                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  * Method to get the conversion rate between the current currency code and EUR

@@ -32,8 +32,10 @@ void(^retryBock)(BOOL dismiss);
                                                  owner:nil
                                                options:nil];
     
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JANoConnectionView class]]) {
+    for (NSObject *obj in xib)
+    {
+        if ([obj isKindOfClass:[JANoConnectionView class]])
+        {
             return (JANoConnectionView *)obj;
         }
     }
@@ -43,21 +45,19 @@ void(^retryBock)(BOOL dismiss);
 
 - (void)setupNoConnectionViewForNoInternetConnection:(BOOL)internetConnection
 {
-    [self.retryButton setTitleColor:UIColorFromRGB(0x4e4e4e)
-                           forState:UIControlStateNormal];
-    
-    [self.retryButton setTitle:@"Try Again"
-                      forState:UIControlStateNormal];
-    
     self.backgroundColor = UIColorFromRGB(0xc8c8c8);
-    self.noNetworkView.layer.cornerRadius = 4.0f;
+    self.noNetworkView.layer.cornerRadius = 5.0f;
+
+    [self.retryButton setTitle:STRING_TRY_AGAIN forState:UIControlStateNormal];
+    [self.retryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    
     self.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.genericErrorLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.genericDetailLabel.textColor = UIColorFromRGB(0x4e4e4e);
     
     if (internetConnection)
     {
-        self.textLabel.text = @"No Network";
+        self.textLabel.text = STRING_NO_NEWTORK;
         
         self.noInternetImageView.hidden = NO;
         self.textLabel.hidden = NO;
@@ -73,21 +73,18 @@ void(^retryBock)(BOOL dismiss);
         self.genericErrorLabel.hidden = NO;
         self.genericDetailLabel.hidden = NO;
         
-        self.genericErrorLabel.text = @"Oops!";
-        self.genericDetailLabel.text = @"Something seems broken. Please try again.";
+        self.genericErrorLabel.text = STRING_OOPS;
+        self.genericDetailLabel.text = STRING_SOMETHING_BROKEN;
     }
 }
 
 - (IBAction)retryConnectionButtonTapped:(id)sender
 {
-    if (retryBock) {
+    if (retryBock)
+    {
         retryBock(YES);
     }
-    
-    if ([self.delegate respondsToSelector:@selector(retryConnection)]) {
-        [self.delegate retryConnection];
-    }
-    
+        
     [self removeFromSuperview];
 }
 

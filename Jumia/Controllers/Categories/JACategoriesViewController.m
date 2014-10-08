@@ -22,6 +22,7 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"ShopCategories";
     self.A4SViewControllerAlias = @"CATEGORY";
     
     self.view.backgroundColor = JABackgroundGrey;
@@ -42,21 +43,7 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueLoading];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueLoading];
-    }
+    [self continueLoading];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -73,7 +60,22 @@
     } else {
         [RICategory getCategoriesWithSuccessBlock:^(id categories) {
             [self categoryLoadingFinished:categories];
-        } andFailureBlock:^(NSArray *errorMessage) {
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+            
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
+            
+            BOOL noConnection = NO;
+            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+            {
+                noConnection = YES;
+            }
+            [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
+            
             [self hideLoading];
         }];
     }
@@ -102,27 +104,13 @@
                                           self.contentView.frame.size.width,
                                           contentHeight)];
     [self.tableView setFrame:self.contentView.bounds];
-}
-
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    
+    if(self.firstLoading)
     {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self continueLoading];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self continueLoading];
-    }
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }    
 }
 
 #pragma mark - UITableView

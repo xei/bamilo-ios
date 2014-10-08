@@ -16,8 +16,7 @@
 @interface JAChooseCountryViewController ()
 <
     UITableViewDelegate,
-    UITableViewDataSource,
-    JANoConnectionViewDelegate
+    UITableViewDataSource
 >
 
 @property (strong, nonatomic) NSArray *countriesArray;
@@ -35,6 +34,8 @@
 {
     [super viewDidLoad];
     
+    self.screenName = @"ChooseCountry";
+    
     self.navBarLayout.title = STRING_CHOOSE_COUNTRY;
     self.navBarLayout.doneButtonTitle = STRING_APPLY;
     
@@ -45,21 +46,7 @@
     
     self.tableViewContries.layer.cornerRadius = 5.0f;
     
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self loadData];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self loadData];
-    }
+    [self loadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,32 +64,13 @@
     [self hideLoading];
 }
 
-#pragma mark - No connection delegate
-
-- (void)retryConnection
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
-        JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-        [lostConnection setupNoConnectionViewForNoInternetConnection:YES];
-        lostConnection.delegate = self;
-        [lostConnection setRetryBlock:^(BOOL dismiss) {
-            [self loadData];
-        }];
-        
-        [self.view addSubview:lostConnection];
-    }
-    else
-    {
-        [self loadData];
-    }
-}
-
 #pragma mark - Load data
 
 - (void)loadData
 {
     [self showLoading];
+    
+    NSString *countryUrl = [RIApi getCountryUrlInUse];
     
     self.requestId = [RICountry getCountriesWithSuccessBlock:^(id countries) {
         
@@ -112,11 +80,10 @@
         
         [self.tableViewContries reloadData];
         
-        NSString *countryUrl = [RIApi getCountryUrlInUse];
-        
         NSIndexPath *tempIndex;
         
-        if (0 != countryUrl.length) {
+        if (VALID_NOTEMPTY(countryUrl, NSString))
+        {
             NSInteger index = 0;
             
             for (RICountry *country in countries) {
@@ -127,13 +94,37 @@
                 }
                 index++;
             }
+            
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
         }
         
         if (VALID_NOTEMPTY(tempIndex, NSIndexPath)) {
             [self tableView:self.tableViewContries didSelectRowAtIndexPath:tempIndex];
         }
         
-    } andFailureBlock:^(NSArray *errorMessages) {
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+        
+        if (VALID_NOTEMPTY(countryUrl, NSString))
+        {
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
+        }
+
+        BOOL noConnection = NO;
+        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        {
+            noConnection = YES;
+        }
+        [self showErrorView:noConnection startingY:0.0f selector:@selector(loadData) objects:nil];
         
         [self hideLoading];
         
