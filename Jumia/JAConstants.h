@@ -10,6 +10,7 @@
 
 //************ app action notifications
 #define kSelectedCountryNotification @"NOTIFICATION_SELECTED_COUNTRY"
+#define kUpdateCountryNotification @"NOTIFICATION_UPDATE_COUNTRY"
 #define kUpdateCartNotification @"NOTIFICATION_UPDATE_CART"
 #define kUpdateCartNotificationValue @"NOTIFICATION_UPDATE_CART_VALUE"
 #define kUserLoggedInNotification @"NOTIFICATION_USER_LOGGED_IN"
@@ -33,13 +34,21 @@
 #define kMenuDidSelectOptionNotification @"NOTIFICATION_SELECTED_ITEM_MENU"
 #define kOpenCatalogFromUndefinedSearch @"NOTIFICATION_OPEN_CATALOG_FROM_UNDEF_SEARCH"
 #define kMenuDidSelectLeafCategoryNotification @"NOTIFICATION_SELECTED_LEAF_CATEGORY"
-#define kShowHomeScreenNotification @"NOTIFICATION_HOME_SCREEN"
 #define kSelectedRecentSearchNotification @"NOTIFICATION_SELECTED_RECENT_SEARCH"
 #define kOpenCartNotification @"NOTIFICATION_OPEN_CART"
-#define kShowSignUpScreenNotification @"NOTIFICATION_SHOW_SIGN_UP_SCREEN"
+
+//************ side menu navigation controller notifications
+#define kShowChooseCountryScreenNotification @"NOTIFICATION_CHOOSE_COUNTRY_SCREEN"
+#define kShowHomeScreenNotification @"NOTIFICATION_HOME_SCREEN"
 #define kShowSignInScreenNotification @"NOTIFICATION_SHOW_SIGN_IN_SCREEN"
+#define kShowSignUpScreenNotification @"NOTIFICATION_SHOW_SIGN_UP_SCREEN"
 #define kShowForgotPasswordScreenNotification @"NOTIFICATION_SHOW_FORGOT_PASSWORD_SCREEN"
 #define kShowFavoritesScreenNotification @"NOTIFICATION_SHOW_FAVORITES_SCREEN"
+#define kShowRecentSearchesScreenNotification @"NOTIFICATION_SHOW_RECENT_SEARCHES_SCREEN"
+#define kShowRecentlyViewedScreenNotification @"NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN"
+#define kShowMyAccountScreenNotification @"NOTIFICATION_SHOW_MY_ACCOUNT_SCREEN"
+#define kShowUserDataScreenNotification @"NOTIFICATION_SHOW_USER_DATA_SCREEN"
+#define kShowEmailNotificationsScreenNotification @"NOTIFICATION_SHOW_EMAIL_NOTIFICAITONS_SCREEN"
 
 // Checkout
 #define kShowCheckoutForgotPasswordScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_FORGOT_PASSWORD_SCREEN"
