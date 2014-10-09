@@ -164,7 +164,7 @@ Then /^I wait to see the product added message$/ do
 end
 
 Then /^I wait to see the cart screen$/ do
-    wait_for_elements_exist("view marked:'"+@cart+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@cart+"'", :timeout => @wait_timeout_extra)
 end
 
 Then /^I wait to see the error change password empty fields$/ do
