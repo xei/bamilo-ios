@@ -24,12 +24,8 @@ Scenario: Related Items Overview
 * I scroll down
 * I should see the related items
 
-#TODO
+@related_items_np
 Scenario: Navigate throw the products
-#scroll("UIScrollView index:2", :right)
-
-#TODO
-Scenario: Related items from search product
-
-#TODO
-Scenario: Related items from home product
+* I scroll down
+* I should see the related items
+* I swipe the related items

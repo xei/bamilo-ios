@@ -1,6 +1,5 @@
 @all @registration
 Feature: Registration
-#TODO: one button instead of two, newsletter
 
 Background:
 * I call the variables
@@ -35,10 +34,6 @@ Scenario: Registration Different Password
 * I enter the registration data with different password
 * I touch the Register button
 * I wait to see the error please check your input fields
-
-#TODO
-@registration_tc
-Scenario: Registration Terms and Conditions
 
 @registration_nc
 Scenario: Registration Newletter Checkbox

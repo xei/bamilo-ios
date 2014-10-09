@@ -53,5 +53,7 @@ Scenario: Track Valid and Valid
 * I touch the track order button
 * I wait to see the valid order information
 
-#TODO
-#Scenario: Track Order empty
+@track_order_oe
+Scenario: Track Order empty
+* I touch the track order button
+* I wait to see the error track order field empty

@@ -54,12 +54,13 @@ def initvars
     @email_notifications = "Email Notifications"
     @notifications = "Notifications"
     @sound = "Sound"
+    @error_empty_fields_cp = "There were errors on the data submited, please check your input fields."
     
     #user data
     @your_personal_data = "Your Personal Data"
     @retype_password = "Re-type password"
     @save = "Save"
-    @error_empty_fields = "Empty Fields"
+    @error_empty_fields = "Form Validation Failed."
     @error_min_characters = "Min 6 characters"
     @error_password_not_match = "Passwords did not match"
     @password_min_6 = "12345"
@@ -143,6 +144,7 @@ def initvars
     @proceed_to_chechout = "Proceed to Checkout"
     @cart = "Cart"
     @change_quantity_1 = "Quantity: 1"
+    @call_to_order = "Call to Order"
 
     #my favourites
     @no_favourites_message = "You have no favourite items at the moment"
@@ -171,5 +173,14 @@ def initvars
     
     #filters
     @filters = "Filters"
+    
+    #native checkout
+    @next = "Next"
+    @default_shipping_address = "Default Shipping Address"
+    @shipping = "Shipping"
+    @payment = "Payment"
+    @my_order = "My Order"
+    @confirm_order = "Confirm Order"
+    @thank_you = "Thank You!"
 
 end

@@ -51,19 +51,24 @@ Scenario: Share
 * I wait to see the mail option
 * I touch cancel option
 
-#TODO
 @pdv_fs
 Scenario: Full screen image
+* I touch the product detail image
+* I touch done button
 
-#TODO
 @pdv_zo
 Scenario: Zoom in and out
+* I touch the product detail image
 * I pinch to zoom in
 * I pinch to zoom out
+* I touch done button
 
-#TODO
 @pdv_do
 Scenario: Done in product zoom page
+* I touch the product detail image
+* I pinch to zoom in
+* I pinch to zoom out
+* I touch done button
 
 @pdv_fa
 Scenario: Favourites

@@ -8,6 +8,7 @@ Background:
 * I wait to see the side menu
 * I touch login option on side menu
 * I wait to see the login screen
+* I wait for 1 seconds
 
 @login_ef
 Scenario: Login Empty Fields
