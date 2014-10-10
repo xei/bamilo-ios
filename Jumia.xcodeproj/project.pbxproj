@@ -471,6 +471,7 @@
 		BB4FB8D619E7FAC5006FEFF6 /* JACampaignSingleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90419DBF50800D8C51B /* JACampaignSingleView.m */; };
 		BB4FB8D719E7FAC5006FEFF6 /* JAPercentageBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90719DBF50800D8C51B /* JAPercentageBarView.m */; };
 		BB4FB8D819E7FAC5006FEFF6 /* JACampaignsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF8FF19DBF4FB00D8C51B /* JACampaignsViewController.m */; };
+		BB4FB8D919E7FC4E006FEFF6 /* RICampaign.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90D19DBF68400D8C51B /* RICampaign.m */; };
 		BBA145AA19DC56BF003F0CA7 /* 01_login.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459519DC56BF003F0CA7 /* 01_login.feature */; };
 		BBA145AB19DC56BF003F0CA7 /* 02_logout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459619DC56BF003F0CA7 /* 02_logout.feature */; };
 		BBA145AD19DC56BF003F0CA7 /* 04_my_account.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459819DC56BF003F0CA7 /* 04_my_account.feature */; };
@@ -3304,6 +3305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB4FB8D919E7FC4E006FEFF6 /* RICampaign.m in Sources */,
 				BB4FB8D619E7FAC5006FEFF6 /* JACampaignSingleView.m in Sources */,
 				BB4FB8D719E7FAC5006FEFF6 /* JAPercentageBarView.m in Sources */,
 				BB4FB8D819E7FAC5006FEFF6 /* JACampaignsViewController.m in Sources */,
