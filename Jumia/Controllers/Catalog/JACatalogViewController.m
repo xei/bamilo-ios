@@ -119,7 +119,7 @@
 {
     [self showLoading];
     
-    [RICategory getCategoriesWithSuccessBlock:^(id categories)
+    [RICategory getAllCategoriesWithSuccessBlock:^(id categories)
      {
          for (RICategory *category in categories)
          {
@@ -147,6 +147,12 @@
              
              NSArray* sortList = [NSArray arrayWithObjects:STRING_BEST_RATING, STRING_POPULARITY, STRING_NEW_IN, STRING_PRICE_UP, STRING_PRICE_DOWN, STRING_NAME, STRING_BRAND, nil];
              
+             if(VALID_NOTEMPTY(self.sorting, NSNumber))
+             {
+                 self.sortingScrollView.startingIndex = [self.sorting integerValue];
+                 self.sorting = nil;
+             }
+             
              //this will trigger load methods
              [self.sortingScrollView setOptions:sortList];
          }
@@ -158,6 +164,7 @@
                  noConnection = YES;
              }
              [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(getCategories) objects:nil];
+             
          }
          
          [self hideLoading];
@@ -169,6 +176,8 @@
              noConnection = YES;
          }
          [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(getCategories) objects:nil];
+         
+         [self hideLoading];
      }];
 }
 
@@ -371,6 +380,8 @@
                                                 page:[pageNumber integerValue]
                                             maxItems:JACatalogViewControllerMaxProducts
                                              filters:self.filtersArray
+                                          filterType:self.filterType
+                                         filterValue:self.filterValue
                                         successBlock:^(NSArray* products, NSString* productCount, NSArray* filters, NSString *categoryId, NSArray* categories) {
                                             
                                             self.navBarLayout.subTitle = productCount;
