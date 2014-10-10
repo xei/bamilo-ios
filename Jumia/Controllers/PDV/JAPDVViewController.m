@@ -39,7 +39,7 @@ JAPDVGalleryViewDelegate,
 JAActivityViewControllerDelegate
 >
 
-@property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
+@property (strong, nonatomic) UIScrollView *mainScrollView;
 @property (strong, nonatomic) RIProductRatings *productRatings;
 @property (strong, nonatomic) JAPDVImageSection *imageSection;
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
@@ -48,7 +48,7 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) JAPDVPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (strong, nonatomic) JAPDVGalleryView *gallery;
-@property (weak, nonatomic) IBOutlet UIView *ctaView;
+@property (strong, nonatomic) JAButtonWithBlur *ctaView;
 @property (assign, nonatomic) NSInteger commentsCount;
 @property (assign, nonatomic) BOOL openPickerFromCart;
 @property (strong, nonatomic) RIProductSimple *currentSimple;
@@ -81,6 +81,12 @@ JAActivityViewControllerDelegate
     {
         self.navBarLayout.backButtonTitle = self.previousCategory;
     }
+    
+    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                         0.0f,
+                                                                         self.view.frame.size.width,
+                                                                         self.view.frame.size.height - 64.0f)];
+    [self.view addSubview:self.mainScrollView];
     
     // Always load the product details when entering PDV
     if (VALID_NOTEMPTY(self.productUrl, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
@@ -280,8 +286,6 @@ JAActivityViewControllerDelegate
     
     self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
     
-    self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
-    
     [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
                                          
@@ -323,13 +327,13 @@ JAActivityViewControllerDelegate
 
 - (void)fillTheViews
 {
-    float startingElement = 6.0;
+    float startingElement = 6.0f;
     
     /*******
      Image Section
      *******/
     
-    self.imageSection.frame = CGRectMake(6,
+    self.imageSection.frame = CGRectMake(6.0f,
                                          startingElement,
                                          self.imageSection.frame.size.width,
                                          self.imageSection.frame.size.height);
@@ -349,9 +353,11 @@ JAActivityViewControllerDelegate
     self.imageSection.productNameLabel.text = self.product.brand;
     self.imageSection.productDescriptionLabel.text = self.product.name;
     
-    if (self.product.maxSavingPercentage.length > 0) {
+    if (VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
+    {
         self.imageSection.discountLabel.text = [NSString stringWithFormat:@"-%@%%", self.product.maxSavingPercentage];
-    } else {
+    } else
+    {
         self.imageSection.discountLabel.hidden = YES;
     }
     
@@ -362,7 +368,7 @@ JAActivityViewControllerDelegate
     UIImage *img = [UIImage imageNamed:@"img_badge_discount"];
     CGSize imgSize = self.imageSection.discountLabel.frame.size;
     
-    UIGraphicsBeginImageContext( imgSize );
+    UIGraphicsBeginImageContext(imgSize);
     [img drawInRect:CGRectMake(0,0,imgSize.width,imgSize.height)];
     UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -372,15 +378,15 @@ JAActivityViewControllerDelegate
     
     [self.mainScrollView addSubview:self.imageSection];
     
-    startingElement += (4 + self.imageSection.frame.size.height);
+    startingElement += (4.0f + self.imageSection.frame.size.height);
     
     /*******
      Colors / Variation
      *******/
     
-    if (self.product.variations.count > 0) {
-        
-        self.variationsSection.frame = CGRectMake(6,
+    if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
+    {
+        self.variationsSection.frame = CGRectMake(6.0f,
                                                   startingElement,
                                                   self.variationsSection.frame.size.width,
                                                   self.variationsSection.frame.size.height);
@@ -391,7 +397,8 @@ JAActivityViewControllerDelegate
         
         float start = 0.0;
         
-        for (int i = 0; i < [self.product.variations count]; i++) {
+        for (int i = 0; i < [self.product.variations count]; i++)
+        {
             RIVariation *variation = [self.product.variations objectAtIndex:i];
             
             UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake(start, 0.0f, 30.0f, 30.0f)];
@@ -454,11 +461,11 @@ JAActivityViewControllerDelegate
      if there are more than one size, open the picker
      
      */
-    if (self.product.productSimples.count == 0)
+    if (ISEMPTY(self.product.productSimples))
     {
         [self.productInfoSection removeSizeOptions];
     }
-    else if (self.product.productSimples.count == 1)
+    else if (1 == self.product.productSimples.count)
     {
         [self.productInfoSection.sizeButton setEnabled:NO];
         self.currentSimple = self.product.productSimples[0];
@@ -474,7 +481,7 @@ JAActivityViewControllerDelegate
             [self.productInfoSection layoutSubviews];
         }
     }
-    else if (self.product.productSimples.count > 1)
+    else if (1 < self.product.productSimples.count)
     {
         [self.productInfoSection.sizeButton setEnabled:YES];
         [self.productInfoSection.sizeButton setTitle:STRING_SIZE
@@ -484,7 +491,7 @@ JAActivityViewControllerDelegate
                                                action:@selector(showSizePicker)
                                      forControlEvents:UIControlEventTouchUpInside];
         
-        if (self.preSelectedSize.length > 0)
+        if (VALID_NOTEMPTY(self.preSelectedSize, NSString))
         {
             for (RIProductSimple *simple in self.product.productSimples)
             {
@@ -505,73 +512,69 @@ JAActivityViewControllerDelegate
     
     [self.mainScrollView addSubview:self.productInfoSection];
     
-    startingElement += (4 + self.productInfoSection.frame.size.height);
+    startingElement += (4.0f + self.productInfoSection.frame.size.height);
     
     /*******
      Related Items
      *******/
     
-    if (self.fromCatalogue)
+    [self.relatedItems removeFromSuperview];
+
+    if (self.fromCatalogue && VALID_NOTEMPTY(self.arrayWithRelatedItems, NSArray) && 1 < self.arrayWithRelatedItems.count)
     {
-        if (VALID_NOTEMPTY(self.arrayWithRelatedItems, NSArray) && self.arrayWithRelatedItems.count > 1)
+        self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
+        self.relatedItems.topLabel.text = STRING_RELATED_ITEMS;
+        self.relatedItems.frame = CGRectMake(6.0f,
+                                             CGRectGetMaxY(self.productInfoSection.frame) + 4.0f,
+                                             self.relatedItems.frame.size.width,
+                                             self.relatedItems.frame.size.height);
+        
+        self.relatedItems.layer.cornerRadius = 4.0f;
+        
+        [self.mainScrollView addSubview:self.relatedItems];
+        
+        startingElement += (4.0f + self.relatedItems.frame.size.height);
+        
+        float relatedItemStart = 5.0f;
+        
+        for (RIProduct *product in self.arrayWithRelatedItems)
         {
-            self.relatedItems.topLabel.text = STRING_RELATED_ITEMS;
-            
-            self.relatedItems.frame = CGRectMake(6,
-                                                 startingElement,
-                                                 self.relatedItems.frame.size.width,
-                                                 self.relatedItems.frame.size.height);
-            
-            self.relatedItems.layer.cornerRadius = 4.0f;
-            
-            [self.mainScrollView addSubview:self.relatedItems];
-            
-            startingElement += (4 + self.relatedItems.frame.size.height);
-            
-            float relatedItemStart = 5.0f;
-            
-            for (RIProduct *product in self.arrayWithRelatedItems)
+            if (![product.sku isEqualToString:self.product.sku])
             {
-                if (![product.sku isEqualToString:self.product.sku])
+                if (product.images.count > 0)
                 {
-                    if (product.images.count > 0)
+                    JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
+                    
+                    CGRect tempFrame = singleItem.frame;
+                    tempFrame.origin.x = relatedItemStart;
+                    singleItem.frame = tempFrame;
+                    
+                    if (VALID_NOTEMPTY(product.images, NSOrderedSet))
                     {
-                        JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
+                        RIImage *imageTemp = [product.images firstObject];
                         
-                        CGRect tempFrame = singleItem.frame;
-                        tempFrame.origin.x = relatedItemStart;
-                        singleItem.frame = tempFrame;
-                        
-                        if (product.images.count > 0) {
-                            RIImage *imageTemp = [product.images firstObject];
-                            
-                            [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
-                                                     placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
-                        }
-                        
-                        singleItem.labelBrand.text = product.brand;
-                        singleItem.labelName.text = product.name;
-                        singleItem.labelPrice.text = product.priceFormatted;
-                        singleItem.product = product;
-                        
-                        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                              action:@selector(selectedRelatedItem:)];
-                        singleItem.userInteractionEnabled = YES;
-                        [singleItem addGestureRecognizer:tap];
-                        
-                        [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
-                        
-                        relatedItemStart += 110.0f;
+                        [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
+                                                 placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
                     }
+                    
+                    singleItem.labelBrand.text = product.brand;
+                    singleItem.labelName.text = product.name;
+                    singleItem.labelPrice.text = product.priceFormatted;
+                    singleItem.product = product;
+                    
+                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                          action:@selector(selectedRelatedItem:)];
+                    singleItem.userInteractionEnabled = YES;
+                    [singleItem addGestureRecognizer:tap];
+                    
+                    [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
+                    
+                    relatedItemStart += 110.0f;
                 }
             }
-            
-            [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height)];
         }
-        else
-        {
-            [self.relatedItems removeFromSuperview];
-        }
+        
+        [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height)];
     }
     
     /*******
@@ -582,28 +585,28 @@ JAActivityViewControllerDelegate
     
     NSString *model = device.model;
     
-    JAButtonWithBlur *ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
+    self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
     
-    [ctaView setFrame:CGRectMake(0,
-                                 self.view.frame.size.height - 56,
-                                 self.view.frame.size.width,
-                                 60)];
+    [self.ctaView setFrame:CGRectMake(0,
+                                      self.view.frame.size.height - 56,
+                                      self.view.frame.size.width,
+                                      60)];
     
     if ([model isEqualToString:@"iPhone"])
     {
-        [ctaView addButton:STRING_CALL_TO_ORDER
-                    target:self
-                    action:@selector(callToOrder)];
+        [self.ctaView addButton:STRING_CALL_TO_ORDER
+                         target:self
+                         action:@selector(callToOrder)];
     }
     
     
-    [ctaView addButton:STRING_ADD_TO_SHOPPING_CART
-                target:self
-                action:@selector(addToCart)];
+    [self.ctaView addButton:STRING_ADD_TO_SHOPPING_CART
+                     target:self
+                     action:@selector(addToCart)];
     
-    [self.view addSubview:ctaView];
+    [self.view addSubview:self.ctaView];
     
-    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + ctaView.frame.size.height);
+    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, (CGRectGetMaxY(self.relatedItems.frame) + 4.0f) + self.ctaView.frame.size.height);
 }
 
 
