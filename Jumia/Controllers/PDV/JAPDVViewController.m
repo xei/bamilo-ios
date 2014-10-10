@@ -533,8 +533,6 @@ JAActivityViewControllerDelegate
         
         [self.mainScrollView addSubview:self.relatedItems];
         
-        startingElement += (4.0f + self.relatedItems.frame.size.height);
-        
         float relatedItemStart = 5.0f;
         
         for (RIProduct *product in self.arrayWithRelatedItems)
@@ -575,6 +573,8 @@ JAActivityViewControllerDelegate
         }
         
         [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height)];
+                
+        startingElement += (4.0f + self.relatedItems.frame.size.height);
     }
     
     /*******
@@ -606,7 +606,7 @@ JAActivityViewControllerDelegate
     
     [self.view addSubview:self.ctaView];
     
-    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, (CGRectGetMaxY(self.relatedItems.frame) + 4.0f) + self.ctaView.frame.size.height);
+    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + self.ctaView.frame.size.height);
 }
 
 

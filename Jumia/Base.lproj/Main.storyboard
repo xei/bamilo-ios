@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
@@ -1532,10 +1532,10 @@
             </objects>
             <point key="canvasLocation" x="2512" y="1619"/>
         </scene>
-        <!--View Controller-->
+        <!--PDV View Controller-->
         <scene sceneID="PB4-GR-7g5">
             <objects>
-                <viewController storyboardIdentifier="pdvViewController" id="fgT-Jv-tdb" customClass="JAPDVViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="pdvViewController" automaticallyAdjustsScrollViewInsets="NO" id="fgT-Jv-tdb" userLabel="PDV View Controller" customClass="JAPDVViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DR6-1s-BTG"/>
                         <viewControllerLayoutGuide type="bottom" id="0ot-Ab-3Ot"/>
@@ -1543,35 +1543,11 @@
                     <view key="view" contentMode="scaleToFill" id="jhw-lm-hpC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QGi-gP-I1t">
-                                <rect key="frame" x="0.0" y="448" width="320" height="56"/>
-                                <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="he8-18-FMy"/>
-                                </constraints>
-                            </view>
-                            <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RiA-6S-1Mu">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                                <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                            </scrollView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="QGi-gP-I1t" secondAttribute="trailing" id="9p9-XF-mu5"/>
-                            <constraint firstItem="RiA-6S-1Mu" firstAttribute="leading" secondItem="jhw-lm-hpC" secondAttribute="leading" id="HPK-fj-dFH"/>
-                            <constraint firstItem="0ot-Ab-3Ot" firstAttribute="top" secondItem="QGi-gP-I1t" secondAttribute="bottom" id="TgJ-aK-Q2Z"/>
-                            <constraint firstAttribute="trailing" secondItem="RiA-6S-1Mu" secondAttribute="trailing" id="aEF-6R-u9q"/>
-                            <constraint firstItem="RiA-6S-1Mu" firstAttribute="top" secondItem="DR6-1s-BTG" secondAttribute="bottom" id="frb-QA-pAY"/>
-                            <constraint firstItem="QGi-gP-I1t" firstAttribute="top" secondItem="RiA-6S-1Mu" secondAttribute="bottom" constant="-56" id="jMy-IK-5Xi"/>
-                            <constraint firstItem="QGi-gP-I1t" firstAttribute="leading" secondItem="jhw-lm-hpC" secondAttribute="leading" id="q48-xK-bmY"/>
-                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="nFe-QH-wMv"/>
                     <connections>
-                        <outlet property="ctaView" destination="QGi-gP-I1t" id="Ujr-Hx-0cA"/>
-                        <outlet property="mainScrollView" destination="RiA-6S-1Mu" id="BGi-DP-jgc"/>
                         <segue destination="3I2-43-heI" kind="push" identifier="showRatingsMain" id="ZSV-ew-age"/>
                         <segue destination="4DA-Wb-YGP" kind="push" identifier="segueToDetails" id="gWB-U5-lpy"/>
                         <segue destination="kkN-0R-T6h" kind="push" identifier="segueNewReview" id="BOh-Tr-8Lm"/>
