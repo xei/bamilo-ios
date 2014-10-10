@@ -46,6 +46,18 @@
                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 /**
+ *  Method to load all categories. It checks if they are stored in the core data, and case they aren't
+ *  requests them to the server
+ *
+ *  @param the success block containing the obtained categories
+ *  @param the failure block containing the error message
+ *
+ *  @return a string with the operationID that can be used to cancel the operation
+ */
++ (void)getAllCategoriesWithSuccessBlock:(void (^)(id categories))successBlock
+                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
+
+/**
  *  Method to cancel the request
  *
  *  @param the operationID
