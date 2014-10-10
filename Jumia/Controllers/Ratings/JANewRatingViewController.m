@@ -31,11 +31,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *labelNewPrice;
-@property (weak, nonatomic) IBOutlet UILabel *labelFixed;
-@property (weak, nonatomic) IBOutlet UIButton *sendReview;
-@property (weak, nonatomic) IBOutlet UIView *centerView;
+
+@property (assign, nonatomic) CGRect scrollViewInitialRect;
+@property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) UIView *centerView;
+@property (strong, nonatomic) UILabel *fixedLabel;
+@property (strong, nonatomic) UIButton *sendReviewButton;
+
 @property (strong, nonatomic) JADynamicForm *ratingDynamicForm;
-@property (assign, nonatomic) CGRect originalFrame;
 @property (strong, nonatomic) NSMutableArray *ratingStarsArray;
 @property (nonatomic, strong) JAPriceView *priceView;
 @property (assign, nonatomic) NSInteger numberOfFields;
@@ -50,6 +53,16 @@
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:@"UIKeyboardWillShowNotification"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:@"UIKeyboardWillHideNotification"
+                                               object:nil];
+    
     if(VALID_NOTEMPTY(self.product.sku, NSString))
     {
         self.screenName = [NSString stringWithFormat:@"WriteRatingScreen / %@", self.product.sku];
@@ -62,7 +75,12 @@
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
-    self.originalFrame = self.centerView.frame;
+    self.scrollViewInitialRect = CGRectMake(self.view.bounds.origin.x,
+                                            CGRectGetMaxY(self.topView.frame),
+                                            self.view.bounds.size.width,
+                                            self.view.bounds.size.height - CGRectGetMaxY(self.topView.frame) - 64.0f);
+    self.scrollView = [[UIScrollView alloc] initWithFrame:self.scrollViewInitialRect];
+    [self.view addSubview:self.scrollView];
     
     self.brandLabel.text = self.product.brand;
     self.nameLabel.text = self.product.name;
@@ -81,19 +99,48 @@
                                       self.priceView.frame.size.height);
     [self.view addSubview:self.priceView];
     
-    self.labelFixed.text = STRING_RATE_PRODUCT;
+    self.centerView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
+                                                               6.0f,
+                                                               308.0f,
+                                                               312.0f)];
+    self.centerView.backgroundColor = [UIColor whiteColor];
+    self.centerView.layer.cornerRadius = 5.0f;
+    [self.scrollView addSubview:self.centerView];
     
-    [self.sendReview setTitle:STRING_SEND_REVIEW
-                     forState:UIControlStateNormal];
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
+                                             self.centerView.frame.size.height + 2*self.centerView.frame.origin.y);
     
-    [self.sendReview setTitleColor:UIColorFromRGB(0x4e4e4e)
-                          forState:UIControlStateNormal];
+    self.fixedLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+                                                                6.0f,
+                                                                296.0f,
+                                                                16.0f)];
+    self.fixedLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11.0f];
+    self.fixedLabel.text = STRING_RATE_PRODUCT;
+    [self.centerView addSubview:self.fixedLabel];
     
-    self.centerView.layer.cornerRadius = 4.0f;
+    
+    UIImage* buttonImageNormal = [UIImage imageNamed:@"orangeMedium_normal"];
+    UIImage* buttonImageHighlighted = [UIImage imageNamed:@"orangeMedium_highlighted"];
+    UIImage* buttonImageDisabled = [UIImage imageNamed:@"orangeMedium_disabled"];
+    self.sendReviewButton = [[UIButton alloc] initWithFrame:CGRectMake(6.0f,
+                                                                       262.0f,
+                                                                       buttonImageNormal.size.width,
+                                                                       buttonImageNormal.size.height)];
+    [self.sendReviewButton setTitle:STRING_SEND_REVIEW
+                           forState:UIControlStateNormal];
+    [self.sendReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
+                                forState:UIControlStateNormal];
+    self.sendReviewButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
+    [self.sendReviewButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
+    [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateHighlighted];
+    [self.sendReviewButton setBackgroundImage:buttonImageDisabled forState:UIControlStateDisabled];
+    [self.sendReviewButton addTarget:self action:@selector(sendReview:) forControlEvents:UIControlEventTouchUpInside];
+    [self.centerView addSubview:self.sendReviewButton];
+    
 
     [self showLoading];
     
-    __block float startingY = self.labelFixed.frame.origin.y + 22;
+    __block float currentY = self.fixedLabel.frame.origin.y + 22;
     
     [RIRatings getRatingsWithSuccessBlock:^(id ratings) {
         
@@ -110,12 +157,12 @@
             stars.idRatingType = option.idRatingType;
             
             CGRect frame = stars.frame;
-            frame.origin.y = startingY;
+            frame.origin.y = currentY;
             
             stars.frame = frame;
             
             [self.centerView addSubview:stars];
-            startingY += stars.frame.size.height + 6;
+            currentY += stars.frame.size.height + 6;
             
             [self.ratingStarsArray addObject:stars];
             
@@ -127,7 +174,7 @@
                
                self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:form
                                                                    delegate:self
-                                                           startingPosition:startingY-10];
+                                                           startingPosition:currentY-10];
                
                NSInteger count = 0;
                
@@ -178,6 +225,11 @@
     }];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -187,41 +239,41 @@
 
 - (void)changedFocus:(UIView *)view
 {
-    __block CGRect frame = self.originalFrame;
-    __block CGRect tempFrame = self.view.frame;
-    
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         
-                         if (self.numberOfFields == 1) {
-                             if (tempFrame.size.height > 417) {
-                                 frame.origin.y -= (44 * view.tag);
-                             } else {
-                                 frame.origin.y -= (44 * (view.tag + 1));
-                             }
-                         } else {
-                             if (tempFrame.size.height > 417) {
-                                 frame.origin.y -= (44 * (view.tag + 1));
-                             } else {
-                                 frame.origin.y -= (44 * (view.tag + 3));
-                             }
-                         }
-                         
-                         self.centerView.frame = frame;
-                     }];
+//    __block CGRect frame = self.originalFrame;
+//    __block CGRect tempFrame = self.view.frame;
+//    
+//    [UIView animateWithDuration:0.5f
+//                     animations:^{
+//                         
+//                         if (self.numberOfFields == 1) {
+//                             if (tempFrame.size.height > 417) {
+//                                 frame.origin.y -= (44 * view.tag);
+//                             } else {
+//                                 frame.origin.y -= (44 * (view.tag + 1));
+//                             }
+//                         } else {
+//                             if (tempFrame.size.height > 417) {
+//                                 frame.origin.y -= (44 * (view.tag + 1));
+//                             } else {
+//                                 frame.origin.y -= (44 * (view.tag + 3));
+//                             }
+//                         }
+//                         
+//                         self.centerView.frame = frame;
+//                     }];
 }
 
 - (void)lostFocus
 {
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         self.centerView.frame = self.originalFrame;
-                     }];
+//    [UIView animateWithDuration:0.5f
+//                     animations:^{
+//                         self.centerView.frame = self.originalFrame;
+//                     }];
 }
 
 #pragma mark - Send review
 
-- (IBAction)sendReview:(id)sender
+- (void)sendReview:(id)sender
 {
     [self continueSendingReview];
 }
@@ -340,5 +392,28 @@
                                                         object:nil
                                                       userInfo:nil];
 }
+
+#pragma mark - Keyboard notifications
+
+- (void) keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.scrollView setFrame:CGRectMake(self.scrollViewInitialRect.origin.x,
+                                             self.scrollViewInitialRect.origin.y,
+                                             self.scrollViewInitialRect.size.width,
+                                             self.scrollViewInitialRect.size.height - kbSize.height)];
+    }];
+}
+
+- (void) keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.scrollView setFrame:self.scrollViewInitialRect];
+    }];
+}
+
 
 @end

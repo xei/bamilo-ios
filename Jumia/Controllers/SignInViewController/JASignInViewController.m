@@ -19,19 +19,17 @@ JADynamicFormDelegate,
 FBLoginViewDelegate
 >
 
+@property (nonatomic, strong) UIScrollView *scrollView;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
-@property (weak, nonatomic) IBOutlet UIView *loginView;
-@property (weak, nonatomic) IBOutlet UILabel *loginLabel;
-@property (weak, nonatomic) IBOutlet UIView *loginSeparator;
+@property (nonatomic, strong) UIView *loginView;
+@property (nonatomic, strong) UILabel *loginLabel;
+@property (nonatomic, strong) UIView *loginSeparator;
 @property (weak, nonatomic) UIButton *loginButton;
 @property (weak, nonatomic) UIButton *signUpButton;
 @property (weak, nonatomic) UIButton *forgotPasswordButton;
-@property (weak, nonatomic) IBOutlet UIButton *facebookLoginButton;
 @property (strong, nonatomic) FBLoginView *facebookLoginView;
 @property (strong, nonatomic) UILabel *facebookLoginLabel;
 @property (assign, nonatomic) CGFloat loginViewCurrentY;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginViewHeightConstrain;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginViewBottomConstrain;
 
 @end
 
@@ -43,25 +41,59 @@ FBLoginViewDelegate
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:@"UIKeyboardWillShowNotification"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:@"UIKeyboardWillHideNotification"
+                                               object:nil];
+    
     self.screenName = @"Login";
     
     self.A4SViewControllerAlias = @"ACCOUNT";
     
     self.navBarLayout.title = STRING_LOGIN;
     
+    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    self.scrollView.clipsToBounds = YES;
+    [self.view addSubview:self.scrollView];
+    
     [self showLoading];
     
+    self.loginView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
+                                                              6.0f,
+                                                              308.0f,
+                                                              340.0f)];
     self.loginView.layer.cornerRadius = 5.0f;
+    self.loginView.backgroundColor = [UIColor whiteColor];
+    [self.scrollView addSubview:self.loginView];
     
+    self.loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+                                                                2.0f,
+                                                                296.0f,
+                                                                21.0f)];
+    self.loginLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
     [self.loginLabel setText:STRING_CREDENTIALS];
     [self.loginLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+    [self.loginView addSubview:self.loginLabel];
     
+    self.loginSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                   26.0f,
+                                                                   308.0f,
+                                                                   1.0f)];
     [self.loginSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.loginView addSubview:self.loginSeparator];
     
     self.facebookLoginView = [[FBLoginView alloc] init];
     self.facebookLoginView.delegate = self;
     self.facebookLoginView.readPermissions = @[@"public_profile", @"email", @"user_birthday"];
-    [self.facebookLoginView setFrame:self.facebookLoginButton.frame];
+    [self.facebookLoginView setFrame:CGRectMake(6.0f,
+                                                42.0f,
+                                                296.0f,
+                                                44.0f)];
     
     for (id obj in self.facebookLoginView.subviews)
     {
@@ -87,11 +119,14 @@ FBLoginViewDelegate
     [self.facebookLoginView addSubview:self.facebookLoginLabel];
     [self.loginView addSubview:self.facebookLoginView];
     
-    [self.facebookLoginButton removeFromSuperview];
-    
     self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginView.frame) + 6.0f;
 
     [self getLoginForm];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)getLoginForm
@@ -167,8 +202,12 @@ FBLoginViewDelegate
     [self.signUpButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.loginView addSubview:self.signUpButton];
     
-    self.loginViewHeightConstrain.constant = CGRectGetMaxY(self.signUpButton.frame) + 10.0f;
-    self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) + 10.0f) - 200.0f;
+    [self.loginView setFrame:CGRectMake(self.loginView.frame.origin.x,
+                                        self.loginView.frame.origin.y,
+                                        self.loginView.frame.size.width,
+                                        CGRectGetMaxY(self.signUpButton.frame) + 10.0f)];
+    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width,
+                                               self.loginView.frame.size.height + 2*6.0f)];
     
     [self hideLoading];
     
@@ -474,16 +513,34 @@ FBLoginViewDelegate
 - (void)changedFocus:(UIView *)view
 {
     [UIView animateWithDuration:0.5f animations:^{
-        self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) - view.frame.origin.y);
-        [self.loginView layoutIfNeeded];
     }];
 }
 
 - (void) lostFocus
 {
     [UIView animateWithDuration:0.5f animations:^{
-        self.loginViewBottomConstrain.constant = self.view.frame.size.height - (6.0f + CGRectGetMaxY(self.signUpButton.frame) + 10.0f);
-        [self.loginView layoutIfNeeded];
+    }];
+}
+
+#pragma mark - Keyboard notifications
+
+- (void) keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.scrollView setFrame:CGRectMake(self.view.bounds.origin.x,
+                                             self.view.bounds.origin.y,
+                                             self.view.bounds.size.width,
+                                             self.view.bounds.size.height - kbSize.height)];
+    }];
+}
+
+- (void) keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.scrollView setFrame:self.view.bounds];
     }];
 }
 
