@@ -1003,46 +1003,14 @@
                                     <constraint firstItem="mRg-1V-ubO" firstAttribute="leading" secondItem="Ayo-bR-pWr" secondAttribute="trailing" constant="8" id="x8E-m4-BTg"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NCL-T2-1Cg">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NCL-T2-1Cg">
                                 <rect key="frame" x="0.0" y="92" width="320" height="412"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uIF-9j-DSv">
-                                        <rect key="frame" x="6" y="6" width="308" height="312"/>
-                                        <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eM2-cX-Li8">
-                                                <rect key="frame" x="6" y="6" width="296" height="16"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
-                                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="49n-qd-7OV">
-                                                <rect key="frame" x="6" y="262" width="296" height="44"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                                                <state key="normal" title="Send Review" backgroundImage="orangeMedium_normal">
-                                                    <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="disabled" backgroundImage="orangeMedium_disabled"/>
-                                                <state key="selected" backgroundImage="orangeMedium_highlight"/>
-                                                <state key="highlighted" backgroundImage="orangeMedium_highlight"/>
-                                                <connections>
-                                                    <action selector="sendReview:" destination="kkN-0R-T6h" eventType="touchUpInside" id="ebg-yl-tHr"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                </subviews>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="NCL-T2-1Cg" firstAttribute="top" secondItem="ggt-LD-yOF" secondAttribute="bottom" id="1Be-H7-sUe"/>
                             <constraint firstItem="ggt-LD-yOF" firstAttribute="leading" secondItem="C3c-l1-21f" secondAttribute="leading" id="3Xw-B0-3BL"/>
                             <constraint firstAttribute="trailing" secondItem="ggt-LD-yOF" secondAttribute="trailing" id="DBn-tp-8Ra"/>
-                            <constraint firstItem="vvT-Br-bbz" firstAttribute="top" secondItem="NCL-T2-1Cg" secondAttribute="bottom" id="SGk-Lg-McJ"/>
-                            <constraint firstAttribute="trailing" secondItem="NCL-T2-1Cg" secondAttribute="trailing" id="Zox-3B-UbP"/>
-                            <constraint firstItem="NCL-T2-1Cg" firstAttribute="leading" secondItem="C3c-l1-21f" secondAttribute="leading" id="abl-39-NEk"/>
                             <constraint firstItem="ggt-LD-yOF" firstAttribute="top" secondItem="lqg-Hg-WXw" secondAttribute="bottom" id="xse-f9-LBQ"/>
                         </constraints>
                     </view>
@@ -1050,12 +1018,9 @@
                     <navigationItem key="navigationItem" id="FH0-v8-X8q"/>
                     <connections>
                         <outlet property="brandLabel" destination="Sht-MY-WHj" id="8fx-FN-Siy"/>
-                        <outlet property="centerView" destination="uIF-9j-DSv" id="8W1-z1-luv"/>
-                        <outlet property="labelFixed" destination="eM2-cX-Li8" id="Z1n-iu-zVi"/>
                         <outlet property="labelNewPrice" destination="Ayo-bR-pWr" id="3zb-Wc-Tmc"/>
                         <outlet property="nameLabel" destination="E64-AF-WBh" id="Dk7-Y0-mBZ"/>
                         <outlet property="oldPriceLabel" destination="mRg-1V-ubO" id="fT8-WR-UTb"/>
-                        <outlet property="sendReview" destination="49n-qd-7OV" id="QF9-VC-RGv"/>
                         <outlet property="topView" destination="ggt-LD-yOF" id="RRE-op-Yei"/>
                     </connections>
                 </viewController>
@@ -3057,9 +3022,6 @@
         <image name="orangeBig_disabled" width="308" height="44"/>
         <image name="orangeBig_highlighted" width="308" height="44"/>
         <image name="orangeBig_normal" width="308" height="44"/>
-        <image name="orangeMedium_disabled" width="296" height="44"/>
-        <image name="orangeMedium_highlight" width="296" height="44"/>
-        <image name="orangeMedium_normal" width="296" height="44"/>
         <image name="successIcon" width="95" height="95"/>
         <image name="tick_selected" width="14" height="14"/>
         <image name="trackNumberBox" width="148" height="30"/>
