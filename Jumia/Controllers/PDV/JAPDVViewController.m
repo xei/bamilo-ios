@@ -280,7 +280,8 @@ JAActivityViewControllerDelegate
                                forControlEvents:UIControlEventTouchUpInside];
     self.imageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
     
-    if (self.product.variations.count > 0) {
+    if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
+    {
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
     }
     
@@ -415,6 +416,8 @@ JAActivityViewControllerDelegate
             
             start += 40.0;
         }
+        [self.variationsSection.variationsScrollView setContentSize:CGSizeMake(start,
+                                                                               self.variationsSection.variationsScrollView.frame.size.height)];
         
         [self.mainScrollView addSubview:self.variationsSection];
         
@@ -539,41 +542,38 @@ JAActivityViewControllerDelegate
         {
             if (![product.sku isEqualToString:self.product.sku])
             {
-                if (product.images.count > 0)
+                JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
+                
+                CGRect tempFrame = singleItem.frame;
+                tempFrame.origin.x = relatedItemStart;
+                singleItem.frame = tempFrame;
+                
+                if (VALID_NOTEMPTY(product.images, NSOrderedSet))
                 {
-                    JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
+                    RIImage *imageTemp = [product.images firstObject];
                     
-                    CGRect tempFrame = singleItem.frame;
-                    tempFrame.origin.x = relatedItemStart;
-                    singleItem.frame = tempFrame;
-                    
-                    if (VALID_NOTEMPTY(product.images, NSOrderedSet))
-                    {
-                        RIImage *imageTemp = [product.images firstObject];
-                        
-                        [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
-                                                 placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
-                    }
-                    
-                    singleItem.labelBrand.text = product.brand;
-                    singleItem.labelName.text = product.name;
-                    singleItem.labelPrice.text = product.priceFormatted;
-                    singleItem.product = product;
-                    
-                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                          action:@selector(selectedRelatedItem:)];
-                    singleItem.userInteractionEnabled = YES;
-                    [singleItem addGestureRecognizer:tap];
-                    
-                    [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
-                    
-                    relatedItemStart += 110.0f;
+                    [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
+                                             placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
                 }
+                
+                singleItem.labelBrand.text = product.brand;
+                singleItem.labelName.text = product.name;
+                singleItem.labelPrice.text = product.priceFormatted;
+                singleItem.product = product;
+                
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                      action:@selector(selectedRelatedItem:)];
+                singleItem.userInteractionEnabled = YES;
+                [singleItem addGestureRecognizer:tap];
+                
+                [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
+                
+                relatedItemStart += singleItem.frame.size.width;
             }
         }
         
         [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height)];
-                
+        
         startingElement += (4.0f + self.relatedItems.frame.size.height);
     }
     
