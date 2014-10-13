@@ -103,7 +103,7 @@ UITextFieldDelegate>
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
          BOOL noConnection = NO;
-         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         if (RIApiResponseNoInternetConnection == apiResponse)
          {
              noConnection = YES;
          }
@@ -343,7 +343,7 @@ UITextFieldDelegate>
                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
                                                                   data:[trackingDictionary copy]];
                         
-                        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                        if (RIApiResponseNoInternetConnection == apiResponse)
                         {
                             [self showMessage:STRING_NO_NEWTORK success:NO];
                         }

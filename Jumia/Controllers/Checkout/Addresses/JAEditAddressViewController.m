@@ -244,7 +244,7 @@ UIPickerViewDelegate>
              [self.dynamicForm checkErrors];
          }
          
-         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         if (RIApiResponseNoInternetConnection == apiResponse)
          {
              [self showMessage:STRING_NO_NEWTORK success:NO];
          } else {

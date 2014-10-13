@@ -204,7 +204,7 @@
         }
         
         BOOL noConnection = NO;
-        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        if (RIApiResponseNoInternetConnection == apiResponse)
         {
             noConnection = YES;
         }
@@ -700,7 +700,7 @@
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                       
                       NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
-                      if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                      if (RIApiResponseNoInternetConnection == apiResponse)
                       {
                           addToCartError = STRING_NO_NEWTORK;
                       }

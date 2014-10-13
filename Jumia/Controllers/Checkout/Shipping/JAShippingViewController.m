@@ -105,7 +105,7 @@ UIPickerViewDelegate
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
          BOOL noConnection = NO;
-         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         if (RIApiResponseNoInternetConnection == apiResponse)
          {
              noConnection = YES;
          }
@@ -420,7 +420,7 @@ UIPickerViewDelegate
                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                  [self hideLoading];
                                  
-                                 if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                                 if (RIApiResponseNoInternetConnection == apiResponse)
                                  {
                                      [self showMessage:STRING_NO_NEWTORK success:NO];
                                  }

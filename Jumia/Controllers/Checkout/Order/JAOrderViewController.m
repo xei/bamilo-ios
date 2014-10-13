@@ -650,7 +650,7 @@
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         
         BOOL noConnection = NO;
-        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        if (RIApiResponseNoInternetConnection == apiResponse)
         {
             noConnection = YES;
         }

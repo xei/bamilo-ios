@@ -118,7 +118,7 @@
                }
                
                BOOL noConnection = NO;
-               if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+               if (RIApiResponseNoInternetConnection == apiResponse)
                {
                    noConnection = YES;
                }
@@ -137,7 +137,7 @@
            }
 
            BOOL noConnection = NO;
-           if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+           if (RIApiResponseNoInternetConnection == apiResponse)
            {
                noConnection = YES;
            }
