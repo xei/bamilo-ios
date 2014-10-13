@@ -281,9 +281,19 @@
         [operation.request setValue:RI_MOBAPI_VERSION_HEADER_TOKEN_VALUE forHTTPHeaderField:RI_MOBAPI_VERSION_HEADER_TOKEN_NAME];
     }
     
+    // Set the PHPSESSID cookie in user defaults so we can re-use it when installing the application.
+    for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+    {
+        if([[cookie name] rangeOfString:@"PHPSESSID"].location != NSNotFound)
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:[cookie properties] forKey:kPHPSESSIDCookie];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            break;
+        }
+    }
+    
     return operation.request;
 }
-
 
 
 - (NSString *) getParametersString:(NSDictionary *)parameters {
@@ -321,6 +331,34 @@
         }
     }
     return output;
+}
+
++ (void)deleteSessionCookie
+{
+    for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+    {
+        if([[cookie name] rangeOfString:@"PHPSESSID"].location != NSNotFound)
+        {
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+            break;
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kPHPSESSIDCookie];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (BOOL)setSessionCookie
+{
+    BOOL sessionCookieSetted = NO;
+    NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:kPHPSESSIDCookie];
+    if(VALID_NOTEMPTY(cookieProperties, NSDictionary))
+    {
+        NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+        sessionCookieSetted = YES;
+    }
+    return sessionCookieSetted;
 }
 
 - (void)cancelRequest:(NSString*)requestID;
