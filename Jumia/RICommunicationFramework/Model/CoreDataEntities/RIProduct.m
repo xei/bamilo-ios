@@ -104,27 +104,39 @@
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
+                             filterType:(NSString*)filterType
+                            filterValue:(NSString*)filterValue
                            successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    BOOL discountMode = NO;
-    for (RIFilter* filter in filters) {
-        for (RIFilterOption* filterOption in filter.options) {
-            if (filterOption.discountOnly) {
-                discountMode = YES;
-                break;
+    NSString* fullUrl = @"";
+    NSString *filtersString = @"";
+
+    if(VALID_NOTEMPTY(filterType, NSString) && VALID_NOTEMPTY(filterValue, NSString))
+    {
+        filtersString = [NSString stringWithFormat:@"%@=%@", filterType, filterValue];
+    }
+    else
+    {
+        BOOL discountMode = NO;
+        for (RIFilter* filter in filters) {
+            for (RIFilterOption* filterOption in filter.options) {
+                if (filterOption.discountOnly) {
+                    discountMode = YES;
+                    break;
+                }
             }
         }
-    }
-    if (discountMode) {
-        NSString* countryUrl = [RIApi getCountryUrlInUse];
-        NSString* endingUrl = [url stringByReplacingOccurrencesOfString:countryUrl withString:@""];
-        endingUrl = [endingUrl stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
-        url = [NSString stringWithFormat:@"%@%@special-price/%@", countryUrl, RI_API_VERSION, endingUrl];
+        if (discountMode) {
+            NSString* countryUrl = [RIApi getCountryUrlInUse];
+            NSString* endingUrl = [url stringByReplacingOccurrencesOfString:countryUrl withString:@""];
+            endingUrl = [endingUrl stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
+            url = [NSString stringWithFormat:@"%@%@special-price/%@", countryUrl, RI_API_VERSION, endingUrl];
+        }
+        
+        filtersString = [RIFilter urlWithFiltersArray:filters];
     }
     
-    NSString* fullUrl = @"";
-    NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
         fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];

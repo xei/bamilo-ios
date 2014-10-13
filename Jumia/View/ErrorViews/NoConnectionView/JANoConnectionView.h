@@ -8,17 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-//@protocol JANoConnectionViewDelegate <NSObject>
-//
-//@required
-//
-//- (void)retryConnection;
-//
-//@end
-
 @interface JANoConnectionView : UIView
-
-//@property (weak, nonatomic) id<JANoConnectionViewDelegate> delegate;
 
 + (JANoConnectionView *)getNewJANoConnectionView;
 

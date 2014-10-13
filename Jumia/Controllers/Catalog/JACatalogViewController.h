@@ -27,7 +27,10 @@
 @property (nonatomic, strong)NSString* categoryId;
 @property (nonatomic, strong)NSString* categoryName;
 @property (nonatomic, strong)NSString* catalogUrl;
-@property (nonatomic, strong) NSString *searchString;
-@property (assign, nonatomic) BOOL forceShowBackButton;
+@property (nonatomic, strong)NSString* searchString;
+@property (nonatomic, strong)NSNumber* sorting;
+@property (nonatomic, strong)NSString* filterType;
+@property (nonatomic, strong)NSString* filterValue;
+@property (assign, nonatomic)BOOL forceShowBackButton;
 
 @end

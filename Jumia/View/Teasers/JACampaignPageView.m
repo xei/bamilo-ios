@@ -20,7 +20,7 @@
 
 @implementation JACampaignPageView
 
-- (void)loadWithCampaignUrl:(NSString*)campaignUrl;
+- (void)loadWithCampaignUrl:(NSString*)campaignUrl
 {
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
     [self addSubview:self.scrollView];
@@ -32,6 +32,32 @@
                 [self loadBanner];
             }
             self.campaigns = campaigns;
+            [self loadCampaignViews];
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(loadFailedWithResponse:)]) {
+                [self.delegate loadFailedWithResponse:apiResponse];
+            }
+        }];
+    }
+}
+
+- (void)loadWithCampaignId:(NSString*)campaignId
+{
+    self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+    [self addSubview:self.scrollView];
+    
+    if (VALID_NOTEMPTY(campaignId, NSString)) {
+        [RICampaign getCampaignsWitId:campaignId successBlock:^(NSString *name, NSArray *campaigns, NSString* bannerImageUrl) {
+            if (VALID_NOTEMPTY(bannerImageUrl, NSString)) {
+                self.bannerImageUrl = bannerImageUrl;
+                [self loadBanner];
+            }
+            self.campaigns = campaigns;
+            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(loadSuccessWithName:)]) {
+                [self.delegate loadSuccessWithName:name];
+            }
+            
             [self loadCampaignViews];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(loadFailedWithResponse:)]) {

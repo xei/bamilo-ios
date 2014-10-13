@@ -16,10 +16,22 @@
 
 @property (assign, nonatomic) BOOL isPopupOpened;
 @property (assign, nonatomic) NSInteger requestCount;
+@property (assign, nonatomic) NSInteger configurationRequestCount;
+@property (strong, nonatomic) RICustomer *customer;
 
 @end
 
 @implementation JALoadCountryViewController
+
+@synthesize configurationRequestCount = _configurationRequestCount;
+-(void)setConfigurationRequestCount:(NSInteger)configurationRequestCount
+{
+    _configurationRequestCount = configurationRequestCount;
+    if(0 == configurationRequestCount)
+    {
+        [self initCountry];
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -96,6 +108,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
     
+    if(VALID_NOTEMPTY(self.selectedCountry, RICountry))
+    {
+        [RICommunicationWrapper deleteSessionCookie];
+    }
+    
     [RIApi startApiWithCountry:self.selectedCountry
                   successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory)
      {
@@ -121,7 +138,7 @@
          {
              if (0 >= self.requestCount)
              {
-                 [self procedeToFirstAppScreen];
+                 [self getConfigurations];
              }
          }
      }
@@ -149,80 +166,104 @@
     
     if (0 >= self.requestCount)
     {
-        [self procedeToFirstAppScreen];
+        [self getConfigurations];
     }
 }
 
-- (void)procedeToFirstAppScreen
+- (void)getConfigurations
 {
     if(!self.isPopupOpened)
     {
-        [RICustomer autoLogin:^(BOOL success, RICustomer *customer){
+        self.configurationRequestCount = 1;
+        
+        if([RICommunicationWrapper setSessionCookie])
+        {
+            self.configurationRequestCount = 2;
             
-            [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration)
+            [RICart getCartWithSuccessBlock:^(RICart *cartData)
              {
-                 [RIGoogleAnalyticsTracker initGATrackerWithId:configuration.gaId];
-                 
-                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                 [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-                 
-                 NSNumber *event = [NSNumber numberWithInt:RIEventAutoLoginFail];
-                 [trackingDictionary setValue:@"AutoLoginFailed" forKey:kRIEventActionKey];
-                 if(success)
-                 {
-                     event = [NSNumber numberWithInt:RIEventAutoLoginSuccess];
-                     [trackingDictionary setValue:@"AutoLoginSuccess" forKey:kRIEventActionKey];
-                     
-                     if(VALID_NOTEMPTY(customer, RICustomer))
-                     {
-                         [trackingDictionary setValue:customer.idCustomer forKey:kRIEventLabelKey];
-                         [trackingDictionary setValue:customer.idCustomer forKey:kRIEventUserIdKey];
-                         [trackingDictionary setValue:customer.gender forKey:kRIEventGenderKey];
-                         [trackingDictionary setValue:customer.createdAt forKey:kRIEventAccountDateKey];
-                         
-                         NSDate* now = [NSDate date];
-                         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-                         NSDate *dateOfBirth = [dateFormatter dateFromString:customer.birthday];
-                         NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
-                         [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
-                     }
-                 }
-                 
-                 CGFloat duration = fabs([self.startLoadingTime timeIntervalSinceNow] * 1000);
-                 
-                 NSMutableDictionary *launchData = [[NSMutableDictionary alloc] init];
-                 [launchData setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
-                 
-                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                 [launchData setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                 
-                 [launchData setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                 [launchData setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                 [launchData setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                 [launchData setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-                 
-                 [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
-                 
-                 [[RITrackingWrapper sharedInstance] trackEvent:event
-                                                           data:[trackingDictionary copy]];
-                 
-                 trackingDictionary = [[NSMutableDictionary alloc] init];
-                 [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                 
-                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventChangeCountry]
-                                                           data:[trackingDictionary copy]];
+                 NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cartData forKey:kUpdateCartNotificationValue];
+                 [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
 
-                 [self hideLoading];
+                 self.configurationRequestCount--;
                  
-                 [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCountryNotification object:nil userInfo:self.pushNotification];
-                 
-             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+             } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages)
              {
-                 
+                 self.configurationRequestCount--;
              }];
-        }];
+        }
+        
+        [RICustomer autoLogin:^(BOOL success, RICustomer *customer)
+         {
+             self.customer = customer;
+             [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration)
+              {
+                  [RIGoogleAnalyticsTracker initGATrackerWithId:configuration.gaId];
+                  
+                  self.configurationRequestCount--;
+              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+              {
+                  self.configurationRequestCount--;
+              }];
+         }];
     }
+}
+
+- (void)initCountry
+{
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+    
+    NSNumber *event = [NSNumber numberWithInt:RIEventAutoLoginFail];
+    [trackingDictionary setValue:@"AutoLoginFailed" forKey:kRIEventActionKey];
+    if(VALID_NOTEMPTY(self.customer, RICustomer))
+    {
+        event = [NSNumber numberWithInt:RIEventAutoLoginSuccess];
+        [trackingDictionary setValue:@"AutoLoginSuccess" forKey:kRIEventActionKey];
+        
+        if(VALID_NOTEMPTY(self.customer, RICustomer))
+        {
+            [trackingDictionary setValue:self.customer.idCustomer forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:self.customer.idCustomer forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:self.customer.gender forKey:kRIEventGenderKey];
+            [trackingDictionary setValue:self.customer.createdAt forKey:kRIEventAccountDateKey];
+            
+            NSDate* now = [NSDate date];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+            NSDate *dateOfBirth = [dateFormatter dateFromString:self.customer.birthday];
+            NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+            [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+        }
+    }
+    
+    CGFloat duration = fabs([self.startLoadingTime timeIntervalSinceNow] * 1000);
+    
+    NSMutableDictionary *launchData = [[NSMutableDictionary alloc] init];
+    [launchData setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
+    
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    [launchData setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+    
+    [launchData setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+    [launchData setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+    [launchData setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    [launchData setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    
+    [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:event
+                                              data:[trackingDictionary copy]];
+    
+    trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventChangeCountry]
+                                              data:[trackingDictionary copy]];
+    
+    [self hideLoading];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCountryNotification object:nil userInfo:self.pushNotification];
 }
 
 #pragma mark UIAlertView
@@ -235,13 +276,13 @@
         if(0 == buttonIndex)
         {
             if (0 >= self.requestCount) {
-                [self procedeToFirstAppScreen];
+                [self getConfigurations];
             }
         }
         else if(1 == buttonIndex)
         {
             if (0 >= self.requestCount) {
-                [self procedeToFirstAppScreen];
+                [self getConfigurations];
             }
             
             NSURL  *url = [NSURL URLWithString:kAppStoreUrl];

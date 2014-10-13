@@ -328,7 +328,7 @@
                       [self hideLoading];
                       
                       NSString *errorAddToCart = STRING_ERROR_ADDING_TO_CART;
-                      if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                      if (RIApiResponseNoInternetConnection == apiResponse)
                       {
                           errorAddToCart = STRING_NO_NEWTORK;
                       }

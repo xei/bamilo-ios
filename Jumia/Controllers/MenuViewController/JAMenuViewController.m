@@ -365,8 +365,8 @@ UIAlertViewDelegate
                         __block NSString *custumerId = [RICustomer getCustomerId];
                         [[FBSession activeSession] closeAndClearTokenInformation];
                         
-                        [RICustomer logoutCustomerWithSuccessBlock:^{
-                            
+                        [RICustomer logoutCustomerWithSuccessBlock:^
+                         {
                             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                             [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
                             [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
@@ -380,24 +380,12 @@ UIAlertViewDelegate
                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
                                                                       data:[trackingDictionary copy]];
                             
-                            NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-                            
-                            for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
-                                [cookies deleteCookie:cookie];
-                            }
-                            
                             [self userDidLogout];
                             
                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
                             
-                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
-                            
-                            NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-                            
-                            for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
-                                [cookies deleteCookie:cookie];
-                            }
-                            
+                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject)
+                        {
                             [self userDidLogout];
                             
                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
@@ -663,6 +651,10 @@ UIAlertViewDelegate
 
 - (void)userDidLogout
 {
+    [RICommunicationWrapper deleteSessionCookie];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
+    
     NSDictionary *dic = @{ @"name": STRING_LOGIN,
                            @"image": @"ico_sign",
                            @"selected": @"ico_signpressed" };

@@ -466,6 +466,12 @@
 		BB4F1BD119E2B15400E89C3F /* JAPromotionPopUp.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF91119DD5D6700D8C51B /* JAPromotionPopUp.m */; };
 		BB4F1BD219E2B16600E89C3F /* RIPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF91919DD8BC400D8C51B /* RIPromotion.m */; };
 		BB4F1BD419E2D4D600E89C3F /* navigation.rb in Resources */ = {isa = PBXBuildFile; fileRef = BB4F1BD319E2D4D600E89C3F /* navigation.rb */; };
+		BB4FB8D419E7FA73006FEFF6 /* JALoadCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B55BFB9419E6A83E0098467E /* JALoadCountryViewController.m */; };
+		BB4FB8D519E7FA8A006FEFF6 /* JACampaignPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90219DBF50800D8C51B /* JACampaignPageView.m */; };
+		BB4FB8D619E7FAC5006FEFF6 /* JACampaignSingleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90419DBF50800D8C51B /* JACampaignSingleView.m */; };
+		BB4FB8D719E7FAC5006FEFF6 /* JAPercentageBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90719DBF50800D8C51B /* JAPercentageBarView.m */; };
+		BB4FB8D819E7FAC5006FEFF6 /* JACampaignsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF8FF19DBF4FB00D8C51B /* JACampaignsViewController.m */; };
+		BB4FB8D919E7FC4E006FEFF6 /* RICampaign.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90D19DBF68400D8C51B /* RICampaign.m */; };
 		BBA145AA19DC56BF003F0CA7 /* 01_login.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459519DC56BF003F0CA7 /* 01_login.feature */; };
 		BBA145AB19DC56BF003F0CA7 /* 02_logout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459619DC56BF003F0CA7 /* 02_logout.feature */; };
 		BBA145AD19DC56BF003F0CA7 /* 04_my_account.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459819DC56BF003F0CA7 /* 04_my_account.feature */; };
@@ -3304,6 +3310,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB4FB8D919E7FC4E006FEFF6 /* RICampaign.m in Sources */,
+				BB4FB8D619E7FAC5006FEFF6 /* JACampaignSingleView.m in Sources */,
+				BB4FB8D719E7FAC5006FEFF6 /* JAPercentageBarView.m in Sources */,
+				BB4FB8D819E7FAC5006FEFF6 /* JACampaignsViewController.m in Sources */,
+				BB4FB8D519E7FA8A006FEFF6 /* JACampaignPageView.m in Sources */,
+				BB4FB8D419E7FA73006FEFF6 /* JALoadCountryViewController.m in Sources */,
 				BB4F1BD219E2B16600E89C3F /* RIPromotion.m in Sources */,
 				BB4F1BD119E2B15400E89C3F /* JAPromotionPopUp.m in Sources */,
 				4c2fef288bf2196e345a6ca6 /* RIProductSimple.m in Sources */,
@@ -4260,6 +4272,7 @@
 		fa50d405be7c2e7bfb830627 /* Hockey */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
@@ -4291,6 +4304,7 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";

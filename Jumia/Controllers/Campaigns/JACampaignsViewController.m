@@ -90,16 +90,35 @@
     NSInteger startingIndex = 0;
     self.campaignPages = [NSMutableArray new];
     NSMutableArray* optionList = [NSMutableArray new];
-    if (VALID_NOTEMPTY(self.campaignTeasers, NSArray)) {
-        for (int i = 0; i < self.campaignTeasers.count; i++) {
+    
+    if(VALID_NOTEMPTY(self.campaignId, NSString))
+    {
+        [optionList addObject:@""];
+        JACampaignPageView* campaignPage = [[JACampaignPageView alloc] initWithFrame:CGRectMake(currentX,
+                                                                                                self.scrollView.bounds.origin.y,
+                                                                                                self.scrollView.bounds.size.width,
+                                                                                                self.scrollView.bounds.size.height)];
+        campaignPage.singleViewDelegate = self;
+        campaignPage.delegate = self;
+        [self.campaignPages addObject:campaignPage];
+        [self.scrollView addSubview:campaignPage];
+        [campaignPage loadWithCampaignId:self.campaignId];
+        currentX += campaignPage.frame.size.width;
+    }
+    else if (VALID_NOTEMPTY(self.campaignTeasers, NSArray))
+    {
+        for (int i = 0; i < self.campaignTeasers.count; i++)
+        {
             RITeaser* teaser = [self.campaignTeasers objectAtIndex:i];
             if (VALID_NOTEMPTY(teaser.teaserTexts, NSOrderedSet)) {
                 RITeaserText* teaserText = [teaser.teaserTexts firstObject];
-                if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
+                if (VALID_NOTEMPTY(teaserText, RITeaserText))
+                {
                     
                     [optionList addObject:teaserText.name];
                     
-                    if ([teaserText.name isEqualToString:self.startingTitle]) {
+                    if ([teaserText.name isEqualToString:self.startingTitle])
+                    {
                         startingIndex = i;
                     }
                     
@@ -114,12 +133,16 @@
                     [campaignPage loadWithCampaignUrl:teaserText.url];
                     currentX += campaignPage.frame.size.width;
                 }
-            } else if (VALID_NOTEMPTY(teaser.teaserImages, NSOrderedSet)) {
+            }
+            else if (VALID_NOTEMPTY(teaser.teaserImages, NSOrderedSet))
+            {
                 RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
-                if (VALID_NOTEMPTY(teaserImage, RITeaserImage)) {
+                if (VALID_NOTEMPTY(teaserImage, RITeaserImage))
+                {
                     [optionList addObject:teaserImage.teaserDescription];
                     
-                    if ([teaserImage.teaserDescription isEqualToString:self.startingTitle]) {
+                    if ([teaserImage.teaserDescription isEqualToString:self.startingTitle])
+                    {
                         startingIndex = i;
                     }
                     
@@ -179,11 +202,17 @@
 }
 
 #pragma mark - JACampaignPageViewDelegate
+- (void)loadSuccessWithName:(NSString*)name
+{
+    NSArray *optionList = [NSArray arrayWithObject:name];
+    //this will trigger load methods
+    [self.pickerScrollView setOptions:optionList];
+}
 
 - (void)loadFailedWithResponse:(RIApiResponse)apiResponse
 {
     BOOL noConnection = NO;
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+    if (RIApiResponseNoInternetConnection == apiResponse)
     {
         noConnection = YES;
     }
