@@ -7,6 +7,7 @@
 //
 
 #import "JAPopularBrandsTeaserView.h"
+#import "JAClickableView.h"
 
 #define JAPopularBrandsTeaserViewHorizontalMargin 6.0f
 #define JAPopularBrandsTeaserViewContentY 4.0f
@@ -62,20 +63,22 @@
         
         for (RITeaserText* teaserText in teaser.teaserTexts) {
             
-            UILabel* teaserLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x + JAPopularBrandsTeaserViewCellMargin,
-                                                                             currentY,
-                                                                             contentView.bounds.size.width - JAPopularBrandsTeaserViewCellMargin*2,
-                                                                             JAPopularBrandsTeaserViewCellHeight)];
+            JAClickableView* listClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x,
+                                                                                                   currentY,
+                                                                                                   contentView.bounds.size.width,
+                                                                                                   JAPopularBrandsTeaserViewCellHeight)];
+            [listClickableView addTarget:self action:@selector(teaserTextPressed:) forControlEvents:UIControlEventTouchUpInside];
+            listClickableView.tag = i;
+            [contentView addSubview:listClickableView];
+            
+            UILabel* teaserLabel = [[UILabel alloc] initWithFrame:CGRectMake(listClickableView.bounds.origin.x + JAPopularBrandsTeaserViewCellMargin,
+                                                                             listClickableView.bounds.origin.y,
+                                                                             listClickableView.bounds.size.width - JAPopularBrandsTeaserViewCellMargin*2,
+                                                                             listClickableView.bounds.size.height)];
             teaserLabel.text = teaserText.name;
             teaserLabel.font = JAPopularBrandsTeaserViewCellFont;
             teaserLabel.textColor = JAPopularBrandsTeaserViewCellColor;
-            [contentView addSubview:teaserLabel];
-            
-            UIControl* control = [UIControl new];
-            [control setFrame:teaserLabel.frame];
-            [contentView addSubview:control];
-            control.tag = i;
-            [control addTarget:self action:@selector(teaserTextPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [listClickableView addSubview:teaserLabel];
             
             currentY += teaserLabel.frame.size.height;
         }
