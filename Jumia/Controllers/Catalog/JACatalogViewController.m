@@ -171,7 +171,7 @@
          
      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
          BOOL noConnection = NO;
-         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         if (RIApiResponseNoInternetConnection == apiResponse)
          {
              noConnection = YES;
          }
@@ -328,7 +328,7 @@
                                            if(VALID_NOTEMPTY(productsArray, NSArray))
                                            {
                                                NSString *erroMessasge = STRING_ERROR;
-                                               if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                                               if (RIApiResponseNoInternetConnection == apiResponse)
                                                {
                                                    erroMessasge = STRING_NO_NEWTORK;
                                                }
@@ -347,7 +347,7 @@
                                                } else
                                                {
                                                    BOOL noConnection = NO;
-                                                   if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                                                   if (RIApiResponseNoInternetConnection == apiResponse)
                                                    {
                                                        noConnection = YES;
                                                    }
@@ -493,7 +493,7 @@
                                             if(VALID_NOTEMPTY(productsArray, NSArray))
                                             {
                                                 NSString *erroMessasge = STRING_ERROR;
-                                                if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                                                if (RIApiResponseNoInternetConnection == apiResponse)
                                                 {
                                                     erroMessasge = STRING_NO_NEWTORK;
                                                 }
@@ -503,7 +503,7 @@
                                             else
                                             {
                                                 BOOL noConnection = NO;
-                                                if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                                                if (RIApiResponseNoInternetConnection == apiResponse)
                                                 {
                                                     noConnection = YES;
                                                 }

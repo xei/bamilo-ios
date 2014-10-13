@@ -148,7 +148,7 @@ FBLoginViewDelegate
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
            
            BOOL noConnection = NO;
-           if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+           if (RIApiResponseNoInternetConnection == apiResponse)
            {
                noConnection = YES;
            }
@@ -350,7 +350,7 @@ FBLoginViewDelegate
          
          [self hideLoading];
          
-         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         if (RIApiResponseNoInternetConnection == apiResponse)
          {
              [self showMessage:STRING_NO_NEWTORK success:NO];
          }

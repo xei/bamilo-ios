@@ -197,7 +197,7 @@
 
                [self hideLoading];
                
-               if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+               if (RIApiResponseNoInternetConnection == apiResponse)
                {
                    [self showMessage:STRING_NO_NEWTORK success:NO];
                }
@@ -214,7 +214,7 @@
         
         [self hideLoading];
         
-        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        if (RIApiResponseNoInternetConnection == apiResponse)
         {
             [self showMessage:STRING_NO_NEWTORK success:NO];
         }
@@ -359,7 +359,7 @@
             
             [self hideLoading];
             
-            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+            if (RIApiResponseNoInternetConnection == apiResponse)
             {
                 [self showMessage:STRING_NO_NEWTORK success:NO];
             }

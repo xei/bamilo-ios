@@ -125,7 +125,7 @@ UIPickerViewDelegate>
      {
          [self finishedFormLoading];
          
-         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         if (RIApiResponseNoInternetConnection == apiResponse)
          {
              [self showMessage:STRING_NO_NEWTORK success:NO];
          }
@@ -467,7 +467,7 @@ UIPickerViewDelegate>
          self.hasErrors = YES;
          self.numberOfRequests--;
         
-         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         if (RIApiResponseNoInternetConnection == apiResponse)
          {
              [self showMessage:STRING_NO_NEWTORK success:NO];
          }
