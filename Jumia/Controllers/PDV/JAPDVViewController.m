@@ -396,27 +396,34 @@ JAActivityViewControllerDelegate
         
         self.variationsSection.titleLabel.text = STRING_VARIATIONS;
         
-        float start = 0.0;
+        CGFloat currentX = 0.0;
         
         for (int i = 0; i < [self.product.variations count]; i++)
         {
             RIVariation *variation = [self.product.variations objectAtIndex:i];
             
-            UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake(start, 0.0f, 30.0f, 30.0f)];
+            JAClickableView* variationClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
+                                                                                                        0.0f,
+                                                                                                        40.0f,
+                                                                                                        50.0f)];
+            variationClickableView.tag = i;
+            [variationClickableView addTarget:self
+                                       action:@selector(openVariation:)
+                             forControlEvents:UIControlEventTouchUpInside];
+            [self.variationsSection.variationsScrollView addSubview:variationClickableView];
+            
+            UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake((variationClickableView.bounds.size.width - 30.0f) / 2,
+                                                                                      (variationClickableView.bounds.size.height - 30.0f) / 2,
+                                                                                      30.0f,
+                                                                                      30.0f)];
             [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
                          placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
             [newImageView changeImageSize:30.0f andWidth:0.0f];
-            [newImageView setTag:i];
+            [variationClickableView addSubview:newImageView];
             
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                  action:@selector(openVariation:)];
-            [newImageView addGestureRecognizer:tap];
-            [newImageView setUserInteractionEnabled:YES];
-            [self.variationsSection.variationsScrollView addSubview:newImageView];
-            
-            start += 40.0;
+            currentX += variationClickableView.frame.size.width;
         }
-        [self.variationsSection.variationsScrollView setContentSize:CGSizeMake(start,
+        [self.variationsSection.variationsScrollView setContentSize:CGSizeMake(currentX,
                                                                                self.variationsSection.variationsScrollView.frame.size.height)];
         
         [self.mainScrollView addSubview:self.variationsSection];
@@ -436,8 +443,6 @@ JAActivityViewControllerDelegate
     [self.productInfoSection setPriceWithNewValue:self.product.specialPriceFormatted
                                       andOldValue:self.product.priceFormatted];
     
-    self.productInfoSection.sizeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    
     [self.productInfoSection setNumberOfStars:[self.product.avr integerValue]];
     
     if (self.commentsCount > 0)
@@ -449,9 +454,9 @@ JAActivityViewControllerDelegate
         self.productInfoSection.numberOfReviewsLabel.text = STRING_RATE_NOW;
     }
     
-    [self.productInfoSection.goToReviewsButton addTarget:self
-                                                  action:@selector(goToRatinsMainScreen)
-                                        forControlEvents:UIControlEventTouchUpInside];
+    [self.productInfoSection.reviewsClickableView addTarget:self
+                                                     action:@selector(goToRatinsMainScreen)
+                                           forControlEvents:UIControlEventTouchUpInside];
     
     self.productInfoSection.specificationsLabel.text = STRING_SPECIFICATIONS;
     
@@ -470,13 +475,12 @@ JAActivityViewControllerDelegate
     }
     else if (1 == self.product.productSimples.count)
     {
-        [self.productInfoSection.sizeButton setEnabled:NO];
+        [self.productInfoSection.sizeClickableView setEnabled:NO];
         self.currentSimple = self.product.productSimples[0];
         
         if (VALID_NOTEMPTY(self.currentSimple.attributeSize, NSString))
         {
-            [self.productInfoSection.sizeButton setTitle:self.currentSimple.attributeSize
-                                                forState:UIControlStateNormal];
+            [self.productInfoSection.sizeLabel setText:self.currentSimple.attributeSize];
         }
         else
         {
@@ -486,13 +490,12 @@ JAActivityViewControllerDelegate
     }
     else if (1 < self.product.productSimples.count)
     {
-        [self.productInfoSection.sizeButton setEnabled:YES];
-        [self.productInfoSection.sizeButton setTitle:STRING_SIZE
-                                            forState:UIControlStateNormal];
+        [self.productInfoSection.sizeClickableView setEnabled:YES];
+        [self.productInfoSection.sizeLabel setText:STRING_SIZE];
         
-        [self.productInfoSection.sizeButton addTarget:self
-                                               action:@selector(showSizePicker)
-                                     forControlEvents:UIControlEventTouchUpInside];
+        [self.productInfoSection.sizeClickableView addTarget:self
+                                                      action:@selector(showSizePicker)
+                                            forControlEvents:UIControlEventTouchUpInside];
         
         if (VALID_NOTEMPTY(self.preSelectedSize, NSString))
         {
@@ -500,8 +503,7 @@ JAActivityViewControllerDelegate
             {
                 if ([simple.attributeSize isEqualToString:self.preSelectedSize])
                 {
-                    [self.productInfoSection.sizeButton setTitle:simple.attributeSize
-                                                        forState:UIControlStateNormal];
+                    [self.productInfoSection.sizeLabel setText:simple.attributeSize];
                     break;
                 }
             }
@@ -509,9 +511,9 @@ JAActivityViewControllerDelegate
     }
     
     
-    [self.productInfoSection.goToSpecificationsButton addTarget:self
-                                                         action:@selector(gotoDetails)
-                                               forControlEvents:UIControlEventTouchUpInside];
+    [self.productInfoSection.specificationsClickableView addTarget:self
+                                                            action:@selector(gotoDetails)
+                                                  forControlEvents:UIControlEventTouchUpInside];
     
     [self.mainScrollView addSubview:self.productInfoSection];
     
@@ -536,13 +538,17 @@ JAActivityViewControllerDelegate
         
         [self.mainScrollView addSubview:self.relatedItems];
         
-        float relatedItemStart = 5.0f;
+        CGFloat relatedItemStart = 5.0f;
         
-        for (RIProduct *product in self.arrayWithRelatedItems)
-        {
+        for (int i = 0; i < self.arrayWithRelatedItems.count; i++) {
+            RIProduct* product = [self.arrayWithRelatedItems objectAtIndex:i];
             if (![product.sku isEqualToString:self.product.sku])
             {
                 JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
+                singleItem.tag = i;
+                [singleItem addTarget:self
+                               action:@selector(selectedRelatedItem:)
+                     forControlEvents:UIControlEventTouchUpInside];
                 
                 CGRect tempFrame = singleItem.frame;
                 tempFrame.origin.x = relatedItemStart;
@@ -560,12 +566,7 @@ JAActivityViewControllerDelegate
                 singleItem.labelName.text = product.name;
                 singleItem.labelPrice.text = product.priceFormatted;
                 singleItem.product = product;
-                
-                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                      action:@selector(selectedRelatedItem:)];
-                singleItem.userInteractionEnabled = YES;
-                [singleItem addGestureRecognizer:tap];
-                
+                                
                 [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
                 
                 relatedItemStart += singleItem.frame.size.width;
@@ -612,12 +613,9 @@ JAActivityViewControllerDelegate
 
 #pragma mark - Actions
 
-- (void) openVariation:(UITapGestureRecognizer *)gr {
-    
-    UIImageView *variationImageView = (UIImageView *)gr.view;
-    NSInteger tag = variationImageView.tag;
-    
-    RIVariation *variation = [self.product.variations objectAtIndex:tag];
+- (void) openVariation:(UIControl*)sender
+{
+    RIVariation *variation = [self.product.variations objectAtIndex:sender.tag];
     self.productUrl = variation.link;
     
     [self showLoading];
@@ -630,11 +628,9 @@ JAActivityViewControllerDelegate
     }];
 }
 
-- (void)selectedRelatedItem:(UITapGestureRecognizer *)tap
+- (void)selectedRelatedItem:(UIControl*)sender
 {
-    JAPDVSingleRelatedItem *view = (JAPDVSingleRelatedItem *)tap.view;
-    
-    RIProduct *tempProduct = view.product;
+    RIProduct *tempProduct = [self.arrayWithRelatedItems objectAtIndex:sender.tag];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
@@ -733,7 +729,7 @@ JAActivityViewControllerDelegate
 
 - (void)addToCart
 {
-    if ([self.productInfoSection.sizeButton.titleLabel.text isEqualToString:STRING_SIZE])
+    if ([self.productInfoSection.sizeLabel.text isEqualToString:STRING_SIZE])
     {
         self.openPickerFromCart = YES;
         [self showSizePicker];
@@ -851,7 +847,7 @@ JAActivityViewControllerDelegate
     }
     
     [self.picker setDataSourceArray:[self.pickerDataSource copy]
-                       previousText:self.productInfoSection.sizeButton.titleLabel.text];
+                       previousText:self.productInfoSection.sizeLabel.text];
     
     [self.picker.doneButton addTarget:self
                                action:@selector(didSelectedValueInPicker)
@@ -875,8 +871,7 @@ JAActivityViewControllerDelegate
     NSUInteger selectedRow = [self.picker.picker selectedRowInComponent:0];
     self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
     
-    [self.productInfoSection.sizeButton setTitle:self.currentSimple.attributeSize
-                                        forState:UIControlStateNormal];
+    [self.productInfoSection.sizeLabel setText:self.currentSimple.attributeSize];
     
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;

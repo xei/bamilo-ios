@@ -7,6 +7,7 @@
 //
 
 #import "JATopCategoriesTeaserView.h"
+#import "JAClickableView.h"
 
 #define JATopCategoriesTeaserViewHorizontalMargin 6.0f
 #define JATopCategoriesTeaserViewContentY 4.0f
@@ -61,20 +62,23 @@
         RITeaser* teaser = [self.teasers objectAtIndex:i];
         
         for (RITeaserText* teaserText in teaser.teaserTexts) {
-            UILabel* teaserLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x + JATopCategoriesTeaserViewCellMargin,
-                                                                             currentY,
-                                                                             contentView.bounds.size.width - JATopCategoriesTeaserViewCellMargin*2,
-                                                                             JATopCategoriesTeaserViewCellHeight)];
+            
+            JAClickableView* listClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                                   currentY,
+                                                                                                   contentView.bounds.size.width,
+                                                                                                   JATopCategoriesTeaserViewCellHeight)];
+            listClickableView.tag = i;
+            [listClickableView addTarget:self action:@selector(teaserTextPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [contentView addSubview:listClickableView];
+            
+            UILabel* teaserLabel = [[UILabel alloc] initWithFrame:CGRectMake(listClickableView.bounds.origin.x + JATopCategoriesTeaserViewCellMargin,
+                                                                             listClickableView.bounds.origin.y,
+                                                                             listClickableView.bounds.size.width - JATopCategoriesTeaserViewCellMargin*2,
+                                                                             listClickableView.bounds.size.height)];
             teaserLabel.text = teaserText.name;
             teaserLabel.font = JATopCategoriesTeaserViewCellFont;
             teaserLabel.textColor = JATopCategoriesTeaserViewCellColor;
-            [contentView addSubview:teaserLabel];
-            
-            UIControl* control = [UIControl new];
-            [control setFrame:teaserLabel.frame];
-            [contentView addSubview:control];
-            control.tag = i;
-            [control addTarget:self action:@selector(teaserTextPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [listClickableView addSubview:teaserLabel];
             
             currentY += teaserLabel.frame.size.height;
         }
@@ -82,19 +86,21 @@
     
     //all categories cell
     
-    UILabel* allCategoriesLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x + JATopCategoriesTeaserViewHorizontalMargin,
-                                                                             currentY,
-                                                                             contentView.bounds.size.width - JATopCategoriesTeaserViewHorizontalMargin*2,
-                                                                             JATopCategoriesTeaserViewCellHeight)];
+    JAClickableView* allCategoriesClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x,
+                                                                                                    currentY,
+                                                                                                    contentView.bounds.size.width,
+                                                                                                    JATopCategoriesTeaserViewCellHeight)];
+    [allCategoriesClickableView addTarget:self action:@selector(teaserAllCategoriesPressed) forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:allCategoriesClickableView];
+    
+    UILabel* allCategoriesLabel = [[UILabel alloc] initWithFrame:CGRectMake(allCategoriesClickableView.bounds.origin.x + JATopCategoriesTeaserViewHorizontalMargin,
+                                                                            allCategoriesClickableView.bounds.origin.y,
+                                                                            allCategoriesClickableView.bounds.size.width - JATopCategoriesTeaserViewHorizontalMargin*2,
+                                                                            allCategoriesClickableView.bounds.size.height)];
     allCategoriesLabel.text = self.groupTitle;
     allCategoriesLabel.font = JATopCategoriesTeaserViewAllCategoriesCellFont;
     allCategoriesLabel.textColor = JATopCategoriesTeaserViewCellColor;
-    [contentView addSubview:allCategoriesLabel];
-    
-    UIControl* control = [UIControl new];
-    [control setFrame:allCategoriesLabel.frame];
-    [contentView addSubview:control];
-    [control addTarget:self action:@selector(teaserAllCategoriesPressed) forControlEvents:UIControlEventTouchUpInside];
+    [allCategoriesClickableView addSubview:allCategoriesLabel];
     
     currentY += allCategoriesLabel.frame.size.height;
     

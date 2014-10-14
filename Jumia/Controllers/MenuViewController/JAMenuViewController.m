@@ -225,34 +225,12 @@ UIAlertViewDelegate
     return 44.f;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.resultsTableView == tableView)
-    {
-        for (UIView *view in cell.viewForBaselineLayout.subviews)
-        {
-            if ([view isKindOfClass:[UIImageView class]])
-            {
-                [view removeFromSuperview];
-            }
-        }
-    }
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     if (self.resultsTableView == tableView)
     {
-        for (UIView *view in cell.viewForBaselineLayout.subviews)
-        {
-            if ([view isKindOfClass:[UIImageView class]])
-            {
-                    [view removeFromSuperview];
-            }
-        }
-        
         RISearchSuggestion *sugestion = [self.resultsArray objectAtIndex:indexPath.row];
         
         NSString *text = sugestion.item;

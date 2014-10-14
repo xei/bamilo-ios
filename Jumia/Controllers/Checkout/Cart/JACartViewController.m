@@ -1012,6 +1012,10 @@
         [cell.deleteButton addTarget:self
                               action:@selector(removeFromCartPressed:)
                     forControlEvents:UIControlEventTouchUpInside];
+        cell.feedbackView.tag = indexPath.row;
+        [cell.feedbackView addTarget:self
+                              action:@selector(clickableViewPressedInCell:)
+                    forControlEvents:UIControlEventTouchUpInside];
         
         [cell.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
         
@@ -1022,6 +1026,11 @@
     }
     
     return cell;
+}
+
+- (void)clickableViewPressedInCell:(UIControl*)sender
+{
+    [self collectionView:self.productCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
