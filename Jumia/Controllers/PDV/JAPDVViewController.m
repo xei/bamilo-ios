@@ -396,27 +396,34 @@ JAActivityViewControllerDelegate
         
         self.variationsSection.titleLabel.text = STRING_VARIATIONS;
         
-        float start = 0.0;
+        CGFloat currentX = 0.0;
         
         for (int i = 0; i < [self.product.variations count]; i++)
         {
             RIVariation *variation = [self.product.variations objectAtIndex:i];
             
-            UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake(start, 0.0f, 30.0f, 30.0f)];
+            JAClickableView* variationClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
+                                                                                                        0.0f,
+                                                                                                        40.0f,
+                                                                                                        50.0f)];
+            variationClickableView.tag = i;
+            [variationClickableView addTarget:self
+                                       action:@selector(openVariation:)
+                             forControlEvents:UIControlEventTouchUpInside];
+            [self.variationsSection.variationsScrollView addSubview:variationClickableView];
+            
+            UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake((variationClickableView.bounds.size.width - 30.0f) / 2,
+                                                                                      (variationClickableView.bounds.size.height - 30.0f) / 2,
+                                                                                      30.0f,
+                                                                                      30.0f)];
             [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
                          placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
             [newImageView changeImageSize:30.0f andWidth:0.0f];
-            [newImageView setTag:i];
+            [variationClickableView addSubview:newImageView];
             
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                  action:@selector(openVariation:)];
-            [newImageView addGestureRecognizer:tap];
-            [newImageView setUserInteractionEnabled:YES];
-            [self.variationsSection.variationsScrollView addSubview:newImageView];
-            
-            start += 40.0;
+            currentX += variationClickableView.frame.size.width;
         }
-        [self.variationsSection.variationsScrollView setContentSize:CGSizeMake(start,
+        [self.variationsSection.variationsScrollView setContentSize:CGSizeMake(currentX,
                                                                                self.variationsSection.variationsScrollView.frame.size.height)];
         
         [self.mainScrollView addSubview:self.variationsSection];
@@ -607,12 +614,9 @@ JAActivityViewControllerDelegate
 
 #pragma mark - Actions
 
-- (void) openVariation:(UITapGestureRecognizer *)gr {
-    
-    UIImageView *variationImageView = (UIImageView *)gr.view;
-    NSInteger tag = variationImageView.tag;
-    
-    RIVariation *variation = [self.product.variations objectAtIndex:tag];
+- (void) openVariation:(UIControl*)sender
+{
+    RIVariation *variation = [self.product.variations objectAtIndex:sender.tag];
     self.productUrl = variation.link;
     
     [self showLoading];
