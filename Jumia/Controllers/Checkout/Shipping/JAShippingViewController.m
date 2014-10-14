@@ -104,13 +104,20 @@ UIPickerViewDelegate
          [self finishedLoadingShippingMethods];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
-         BOOL noConnection = NO;
-         if (RIApiResponseNoInternetConnection == apiResponse)
+         if(RIApiResponseMaintenancePage == apiResponse)
          {
-             noConnection = YES;
+             [self showMaintenancePage:@selector(continueLoading) objects:nil];
          }
-         
-         [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
+         else
+         {
+             BOOL noConnection = NO;
+             if (RIApiResponseNoInternetConnection == apiResponse)
+             {
+                 noConnection = YES;
+             }
+             
+             [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
+         }
      }];
 }
 

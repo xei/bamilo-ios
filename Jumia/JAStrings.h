@@ -222,4 +222,11 @@
 #define STRING_ERROR_SETTING_PAYMENT_METHOD RILocalizedString(@"string_error_setting_payment_method", nil)
 #define STRING_ERROR_SETTING_SHIPPING_METHOD RILocalizedString(@"string_error_setting_shipping_method", nil)
 
+#define STRING_MAINTENANCE RILocalizedString(@"fallback_maintenance", nil)
+#define STRING_CURRENTLY_IN_MAINTENANCE RILocalizedString(@"fallback_maintenance_text", nil)
+#define STRING_TRY_TO_BE_BRIEF RILocalizedString(@"fallback_maintenance_text_bottom", nil)
+#define STRING_BEST_SHOPPING_EXPERIENCE RILocalizedString(@"fallback_best", nil)
+#define STRING_WIDEST_CHOICE RILocalizedString(@"fallback_choice", nil)
+#define STRING_AT_YOUR_DOORSTEP RILocalizedString(@"fallback_doorstep", nil)
+
 #endif

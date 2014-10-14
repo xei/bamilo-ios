@@ -218,3 +218,10 @@
 
 "string_error_setting_payment_method" = "Erreur dans la sélection du moyen de paiement";
 "string_error_setting_shipping_method" = "Erreur dans la sélection du moyen de livraison";
+
+"fallback_maintenance" = "MAINTENANCE";
+"fallback_maintenance_text" = "iest actuellement en maintenance.";
+"fallback_maintenance_text_bottom" = "Nous allons essayer d\'être bref, réessayer dans quelques secondes";
+"fallback_best" = "Première boutique de vente en ligne";
+"fallback_choice" = "LE PLUS GRAND CHOIX";
+"fallback_doorstep" = "À VOTRE PORTE";

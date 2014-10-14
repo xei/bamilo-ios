@@ -52,5 +52,15 @@
  */
 - (void)removeErrorView;
 
+/**
+ * Method to show maintenance page
+ */
+- (void)showMaintenancePage:(SEL)selector objects:(NSArray*)objects;
+
+/**
+ * Method to remove maintenance page
+ */
+- (void)removeMaintenancePage;
+
 @end
 

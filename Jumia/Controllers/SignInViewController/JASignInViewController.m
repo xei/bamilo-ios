@@ -147,12 +147,19 @@ FBLoginViewDelegate
            
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
            
-           BOOL noConnection = NO;
-           if (RIApiResponseNoInternetConnection == apiResponse)
+           if(RIApiResponseMaintenancePage == apiResponse)
            {
-               noConnection = YES;
+               [self showMaintenancePage:@selector(getLoginForm) objects:nil];
            }
-           [self showErrorView:noConnection startingY:0.0f selector:@selector(getLoginForm) objects:nil];
+           else
+           {
+               BOOL noConnection = NO;
+               if (RIApiResponseNoInternetConnection == apiResponse)
+               {
+                   noConnection = YES;
+               }
+               [self showErrorView:noConnection startingY:0.0f selector:@selector(getLoginForm) objects:nil];
+           }
            
            [self hideLoading];
        }];

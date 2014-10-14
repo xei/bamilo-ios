@@ -117,12 +117,19 @@
                    self.firstLoading = NO;
                }
                
-               BOOL noConnection = NO;
-               if (RIApiResponseNoInternetConnection == apiResponse)
+               if(RIApiResponseMaintenancePage == apiResponse)
                {
-                   noConnection = YES;
+                   [self showMaintenancePage:@selector(getForm) objects:nil];
                }
-               [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
+               else
+               {
+                   BOOL noConnection = NO;
+                   if (RIApiResponseNoInternetConnection == apiResponse)
+                   {
+                       noConnection = YES;
+                   }
+                   [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
+               }
                
                [self hideLoading];
            }];
@@ -136,12 +143,19 @@
                self.firstLoading = NO;
            }
 
-           BOOL noConnection = NO;
-           if (RIApiResponseNoInternetConnection == apiResponse)
+           if(RIApiResponseMaintenancePage == apiResponse)
            {
-               noConnection = YES;
+               [self showMaintenancePage:@selector(getForm) objects:nil];
            }
-           [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
+           else
+           {
+               BOOL noConnection = NO;
+               if (RIApiResponseNoInternetConnection == apiResponse)
+               {
+                   noConnection = YES;
+               }
+               [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
+           }
            
            [self hideLoading];
        }];

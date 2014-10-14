@@ -82,7 +82,6 @@
 #define A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR @"A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR"
 
 //************
-
 //my account notifications
 #define kDidSaveUserDataNotification @"DID_SAVE_USER_DATA_NOTIFICATION"
 #define kDidSaveEmailNotificationsNotification @"DID_SAVE_EMAIL_NOTIFICATIONS_NOTIFICATION"
