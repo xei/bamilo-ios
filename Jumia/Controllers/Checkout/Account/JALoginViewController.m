@@ -66,7 +66,7 @@ FBLoginViewDelegate
 @property (strong, nonatomic) UILabel *facebookSingupLabel;
 
 @property (assign, nonatomic) BOOL loadFailed;
-@property (assign, nonatomic) BOOL hasNoConnection;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
@@ -92,8 +92,6 @@ FBLoginViewDelegate
     
     self.navBarLayout.showCartButton = NO;
     
-    self.hasNoConnection = NO;
-
     [self setupViews];
     
     [self showLoading];
@@ -124,9 +122,9 @@ FBLoginViewDelegate
            self.numberOfFormsToLoad--;
            
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-           if(RIApiResponseNoInternetConnection == apiResponse)
+           if(!self.loadFailed)
            {
-               self.hasNoConnection = YES;
+               self.apiResponse = apiResponse;
            }
            
            self.loadFailed = YES;
@@ -151,9 +149,9 @@ FBLoginViewDelegate
            self.numberOfFormsToLoad--;
            
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-           if(RIApiResponseNoInternetConnection == apiResponse)
+           if(!self.loadFailed)
            {
-               self.hasNoConnection = YES;
+               self.apiResponse = apiResponse;
            }
            
            self.loadFailed = YES;
@@ -221,7 +219,19 @@ FBLoginViewDelegate
     }
     else
     {
-        [self showErrorView:self.hasNoConnection startingY:0.0f selector:@selector(getForms) objects:nil];
+        if(RIApiResponseMaintenancePage == self.apiResponse)
+        {
+            [self showMaintenancePage:@selector(getForms) objects:nil];
+        }
+        else
+        {
+            BOOL hasNoConnection = NO;
+            if(RIApiResponseNoInternetConnection == self.apiResponse)
+            {
+                hasNoConnection = YES;
+            }
+            [self showErrorView:hasNoConnection startingY:0.0f selector:@selector(getForms) objects:nil];
+        }
     }
     
     [self hideLoading];

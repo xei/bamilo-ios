@@ -115,7 +115,7 @@
     
     [RIApi startApiWithCountry:self.selectedCountry
                   successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory)
-     {
+     {         
          if(hasUpdate)
          {
              self.isPopupOpened = YES;
@@ -144,13 +144,20 @@
      }
                andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage)
      {
-         BOOL noInternet = NO;
-         if(RIApiResponseNoInternetConnection == apiResponse)
+         if(RIApiResponseMaintenancePage == apiResponse)
          {
-             noInternet = YES;
+             [self showMaintenancePage:@selector(continueProcessing) objects:nil];
          }
-         
-         [self showErrorView:noInternet startingY:0.0f selector:@selector(continueProcessing) objects:nil];
+         else
+         {
+             BOOL noInternet = NO;
+             if(RIApiResponseNoInternetConnection == apiResponse)
+             {
+                 noInternet = YES;
+             }
+             
+             [self showErrorView:noInternet startingY:0.0f selector:@selector(continueProcessing) objects:nil];
+         }
          [self hideLoading];
      }];
 }

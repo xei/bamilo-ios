@@ -218,3 +218,10 @@
 
 "string_error_setting_payment_method" = "Error setting payment method";
 "string_error_setting_shipping_method" = "Error setting shipping method";
+
+"fallback_maintenance" = "MAINTENANCE";
+"fallback_maintenance_text" = "is currently in maintenance.";
+"fallback_maintenance_text_bottom" = "We will try to be brief, you can try again later";
+"fallback_best" = "best online shopping experience";
+"fallback_choice" = "THE WIDEST CHOICE";
+"fallback_doorstep" = "AT YOUR DOORSTEP";

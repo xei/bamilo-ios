@@ -72,7 +72,20 @@
         // Retry
         self.connection = [[NSURLConnection alloc] initWithRequest:self.request
                                                           delegate:self];
-    } else
+    }
+    else if(error.code == NSURLErrorTimedOut)
+    {
+        NSLog(@"Connection failed with error: %@", error);
+        self.failureBlock(RIApiResponseTimeOut, nil, error);
+        [self clearRequestData];
+    }
+    else if(error.code == 503)
+    {
+        NSLog(@"Connection failed with error: %@", error);
+        self.failureBlock(RIApiResponseMaintenancePage, nil, error);
+        [self clearRequestData];
+    }
+    else
     {
         NSLog(@"Connection failed with error: %@", error);
         self.failureBlock(RIApiResponseUnknownError, nil, error);
@@ -90,7 +103,7 @@
     if(nil != error || (nil != [responseJSON objectForKey:@"success"] && ![[responseJSON objectForKey:@"success"] boolValue])) {
         [[RIURLCacheWrapper sharedInstance] removeRequestFromLocalCache:[connection originalRequest]
                                                               cacheType:self.cacheType];
-        self.failureBlock(RIApiResponseAPIError, responseJSON, nil);
+        self.failureBlock(RIApiResponseMaintenancePage, responseJSON, nil);
     } else {
         self.successBlock(RIApiResponseSuccess, responseJSON);
     }

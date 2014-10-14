@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
@@ -27,6 +27,7 @@
     <entity name="RIApi" representedClassName="RIApi" syncable="YES">
         <attribute name="actionName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="countryIso" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="countryUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="curVersion" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="minVersion" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
@@ -258,7 +259,7 @@
     </entity>
     <elements>
         <element name="RIAddress" positionX="90" positionY="666" width="128" height="375"/>
-        <element name="RIApi" positionX="-308" positionY="227" width="128" height="135"/>
+        <element name="RIApi" positionX="-308" positionY="227" width="128" height="150"/>
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="150"/>
         <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="195"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="208"/>

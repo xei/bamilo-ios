@@ -203,13 +203,20 @@
             self.firstLoading = NO;
         }
         
-        BOOL noConnection = NO;
-        if (RIApiResponseNoInternetConnection == apiResponse)
+        if(RIApiResponseMaintenancePage == apiResponse)
         {
-            noConnection = YES;
+            [self showMaintenancePage:@selector(getFavorites) objects:nil];
         }
-        [self showErrorView:noConnection startingY:0.0f selector:@selector(getFavorites) objects:nil];
-
+        else
+        {
+            BOOL noConnection = NO;
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                noConnection = YES;
+            }
+            [self showErrorView:noConnection startingY:0.0f selector:@selector(getFavorites) objects:nil];
+        }
+        
         [self hideLoading];
     }];
 }

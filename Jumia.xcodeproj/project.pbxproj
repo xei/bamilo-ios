@@ -300,6 +300,8 @@
 		B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E171989308300C18F1E /* RIPaymentMethodForm.m */; };
 		B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E191989308300C18F1E /* RIPaymentInformation.m */; };
 		B5225E30198950C500C18F1E /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
+		B524311F19EC1163001E532C /* JAMaintenancePage.m in Sources */ = {isa = PBXBuildFile; fileRef = B524311E19EC1163001E532C /* JAMaintenancePage.m */; };
+		B524312119EC117F001E532C /* JAMaintenancePage.xib in Resources */ = {isa = PBXBuildFile; fileRef = B524312019EC117F001E532C /* JAMaintenancePage.xib */; };
 		B530D57119C1998B0052FEDA /* JACheckoutForms.m in Sources */ = {isa = PBXBuildFile; fileRef = B530D57019C1998B0052FEDA /* JACheckoutForms.m */; };
 		B542546B19AE9F7500C792FF /* JACartListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B542546919AE9F7500C792FF /* JACartListHeaderView.m */; };
 		B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
@@ -391,6 +393,8 @@
 		B5A302F819811F1A00F71726 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F719811F1A00F71726 /* Foundation.framework */; };
 		B5A302FA19811F1E00F71726 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
 		B5A30303198121A400F71726 /* JABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A30301198121A400F71726 /* JABaseViewController.m */; };
+		B5B21B4719ED943C00099E25 /* JAMaintenancePage.m in Sources */ = {isa = PBXBuildFile; fileRef = B524311E19EC1163001E532C /* JAMaintenancePage.m */; };
+		B5B21B4819ED944900099E25 /* JAMaintenancePage.xib in Resources */ = {isa = PBXBuildFile; fileRef = B524312019EC117F001E532C /* JAMaintenancePage.xib */; };
 		B5B5FDA519D95B6D008B8059 /* RINewsletterCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FDA419D95B6D008B8059 /* RINewsletterCategory.m */; };
 		B5B5FDA819D95D8E008B8059 /* RICustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FDA719D95D8E008B8059 /* RICustomer.m */; };
 		B5B5FDDE19D99D06008B8059 /* BMA4SViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FDAC19D99D05008B8059 /* BMA4SViewController.m */; };
@@ -859,6 +863,9 @@
 		B5225E1A1989308300C18F1E /* RIPaymentInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPaymentInformation.h; sourceTree = "<group>"; };
 		B5225E2E198950C500C18F1E /* JACartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACartViewController.h; sourceTree = "<group>"; };
 		B5225E2F198950C500C18F1E /* JACartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACartViewController.m; sourceTree = "<group>"; };
+		B524311D19EC1163001E532C /* JAMaintenancePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAMaintenancePage.h; path = MaintenancePage/JAMaintenancePage.h; sourceTree = "<group>"; };
+		B524311E19EC1163001E532C /* JAMaintenancePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAMaintenancePage.m; path = MaintenancePage/JAMaintenancePage.m; sourceTree = "<group>"; };
+		B524312019EC117F001E532C /* JAMaintenancePage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAMaintenancePage.xib; path = MaintenancePage/JAMaintenancePage.xib; sourceTree = "<group>"; };
 		B530D56F19C1998B0052FEDA /* JACheckoutForms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACheckoutForms.h; path = CheckoutForms/JACheckoutForms.h; sourceTree = "<group>"; };
 		B530D57019C1998B0052FEDA /* JACheckoutForms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACheckoutForms.m; path = CheckoutForms/JACheckoutForms.m; sourceTree = "<group>"; };
 		B542546819AE9F7500C792FF /* JACartListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartListHeaderView.h; path = Jumia/View/Headers/JACartListHeaderView.h; sourceTree = SOURCE_ROOT; };
@@ -1690,6 +1697,7 @@
 		8C38E17F19CF164A0007F6F9 /* ErrorViews */ = {
 			isa = PBXGroup;
 			children = (
+				B524311C19EC1151001E532C /* MaintenancePage */,
 				4A19C51619D01AAD0070D194 /* NoConnectionView */,
 				8C38E18519CF16F50007F6F9 /* JAMessageView.h */,
 				8C38E18619CF16F50007F6F9 /* JAMessageView.m */,
@@ -1832,6 +1840,16 @@
 				B50B03A5198A544A002046DF /* JAShippingViewController.m */,
 			);
 			path = Shipping;
+			sourceTree = "<group>";
+		};
+		B524311C19EC1151001E532C /* MaintenancePage */ = {
+			isa = PBXGroup;
+			children = (
+				B524311D19EC1163001E532C /* JAMaintenancePage.h */,
+				B524311E19EC1163001E532C /* JAMaintenancePage.m */,
+				B524312019EC117F001E532C /* JAMaintenancePage.xib */,
+			);
+			name = MaintenancePage;
 			sourceTree = "<group>";
 		};
 		B530D56E19C199690052FEDA /* CheckoutForms */ = {
@@ -3043,6 +3061,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5B21B4819ED944900099E25 /* JAMaintenancePage.xib in Resources */,
 				d7a6db2cb10440d1bc0b39d3 /* JAFavoriteListCell.xib in Resources */,
 				d4d033bbf2ace93ceba9031e /* JAPickupStationInfoCell.xib in Resources */,
 				BBB7F57719E532FA00E898E3 /* 21_native_checkout.feature in Resources */,
@@ -3166,6 +3185,7 @@
 				BBA145B219DC56BF003F0CA7 /* init.rb in Resources */,
 				BBBA4CCD19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
 				CEC3F71219A5FBF800DE12F6 /* JAFavoriteListCell.xib in Resources */,
+				B524312119EC117F001E532C /* JAMaintenancePage.xib in Resources */,
 				BBA145B319DC56BF003F0CA7 /* keyboard.rb in Resources */,
 				B501E88E19BEF7DE00BE51DD /* JAPickupStationInfoCell.xib in Resources */,
 				4A19C51B19D01B4D0070D194 /* JANoConnectionView.xib in Resources */,
@@ -3311,6 +3331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5B21B4719ED943C00099E25 /* JAMaintenancePage.m in Sources */,
 				BB746F4019ED8D5A00341B33 /* JAClickableView.m in Sources */,
 				BB4FB8D919E7FC4E006FEFF6 /* RICampaign.m in Sources */,
 				BB4FB8D619E7FAC5006FEFF6 /* JACampaignSingleView.m in Sources */,
@@ -3695,6 +3716,7 @@
 				B5A302C719811E9200F71726 /* RILanguage.m in Sources */,
 				B5A302E219811E9200F71726 /* RIAd4PushTracker.m in Sources */,
 				B5A302E419811E9200F71726 /* RIBugSenseTracker.m in Sources */,
+				B524311F19EC1163001E532C /* JAMaintenancePage.m in Sources */,
 				B5A302DF19811E9200F71726 /* RIOpenURLHandler.m in Sources */,
 				B5FBD57919CAF22F00BD9510 /* Adjust.m in Sources */,
 				B517FDFC198265AD00F65253 /* RICartItem.m in Sources */,

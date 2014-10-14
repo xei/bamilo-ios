@@ -170,12 +170,19 @@
          [self hideLoading];
          
      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
-         BOOL noConnection = NO;
-         if (RIApiResponseNoInternetConnection == apiResponse)
+         if(RIApiResponseMaintenancePage == apiResponse)
          {
-             noConnection = YES;
+             [self showMaintenancePage:@selector(getCategories) objects:nil];
          }
-         [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(getCategories) objects:nil];
+         else
+         {
+             BOOL noConnection = NO;
+             if (RIApiResponseNoInternetConnection == apiResponse)
+             {
+                 noConnection = YES;
+             }
+             [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(getCategories) objects:nil];
+         }
          
          [self hideLoading];
      }];
@@ -346,12 +353,19 @@
                                                    [self addUndefinedSearchView:undefSearchTerm];
                                                } else
                                                {
-                                                   BOOL noConnection = NO;
-                                                   if (RIApiResponseNoInternetConnection == apiResponse)
+                                                   if(RIApiResponseMaintenancePage == apiResponse)
                                                    {
-                                                       noConnection = YES;
+                                                       [self showMaintenancePage:@selector(loadMoreProducts) objects:nil];
                                                    }
-                                                   [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+                                                   else
+                                                   {
+                                                       BOOL noConnection = NO;
+                                                       if (RIApiResponseNoInternetConnection == apiResponse)
+                                                       {
+                                                           noConnection = YES;
+                                                       }
+                                                       [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+                                                   }
                                                }
                                            }
                                            
@@ -502,13 +516,19 @@
                                             }
                                             else
                                             {
-                                                BOOL noConnection = NO;
-                                                if (RIApiResponseNoInternetConnection == apiResponse)
+                                                if(RIApiResponseMaintenancePage == apiResponse)
                                                 {
-                                                    noConnection = YES;
+                                                    [self showMaintenancePage:@selector(loadMoreProducts) objects:nil];
                                                 }
-                                                [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
-                                                
+                                                else
+                                                {
+                                                    BOOL noConnection = NO;
+                                                    if (RIApiResponseNoInternetConnection == apiResponse)
+                                                    {
+                                                        noConnection = YES;
+                                                    }
+                                                    [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+                                                }
                                             }
                                             
                                             self.isLoadingMoreProducts = NO;
