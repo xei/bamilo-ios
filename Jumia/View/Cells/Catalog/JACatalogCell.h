@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JAPriceView.h"
+#import "JAClickableView.h"
 
 #define JACatalogCellContentCornerRadius 3.0f
 #define JACatalogCellNormalFont [UIFont fontWithName:@"HelveticaNeue" size:10.0f]
@@ -33,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *discountLabel;
 @property (weak, nonatomic) IBOutlet UIButton *sizeButton;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (weak, nonatomic) IBOutlet JAClickableView *feedbackView;
 @property (strong, nonatomic)JAPriceView *priceView;
 
 - (void)loadWithProduct:(RIProduct*)product;

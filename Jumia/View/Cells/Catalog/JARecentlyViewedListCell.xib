@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
@@ -49,6 +50,10 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SHJ-fA-M23" userLabel="feedbackView" customClass="JAClickableView">
+                                <rect key="frame" x="0.0" y="-1" width="308" height="97"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iXO-Vv-Snl">
                                 <rect key="frame" x="232" y="59" width="70" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
@@ -86,6 +91,7 @@
                 <outlet property="brandLabel" destination="VMc-We-MqW" id="cgS-Lp-gWX"/>
                 <outlet property="discountImageView" destination="RfY-6n-ore" id="T74-v8-A1x"/>
                 <outlet property="discountLabel" destination="U7R-eh-NTP" id="qlZ-uh-Tlh"/>
+                <outlet property="feedbackView" destination="SHJ-fA-M23" id="g1D-YI-gVl"/>
                 <outlet property="nameLabel" destination="eSv-Js-mNr" id="b8o-X1-32b"/>
                 <outlet property="productImageView" destination="HBK-bc-RQM" id="CHF-QZ-SY8"/>
                 <outlet property="recentProductImageView" destination="5Nc-HJ-nHi" id="8cw-Y7-LYn"/>

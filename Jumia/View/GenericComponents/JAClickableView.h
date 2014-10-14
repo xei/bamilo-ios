@@ -10,6 +10,8 @@
 
 @interface JAClickableView : UIView
 
+@property (nonatomic, assign)BOOL selected;
+
 - (void)addTarget:(id)target
            action:(SEL)action
  forControlEvents:(UIControlEvents)controlEvents;

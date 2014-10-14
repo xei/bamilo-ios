@@ -643,11 +643,20 @@
     [cell.favoriteButton addTarget:self
                             action:@selector(addToFavoritesPressed:)
                   forControlEvents:UIControlEventTouchUpInside];
+    cell.feedbackView.tag = indexPath.row;
+    [cell.feedbackView addTarget:self
+                          action:@selector(clickableViewPressedInCell:)
+                forControlEvents:UIControlEventTouchUpInside];
     
     [cell loadWithProduct:product];
     
     return cell;
     
+}
+
+- (void)clickableViewPressedInCell:(UIControl*)sender
+{
+    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath

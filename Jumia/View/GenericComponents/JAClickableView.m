@@ -17,6 +17,16 @@
 
 @implementation JAClickableView
 
+- (void)setSelected:(BOOL)selected
+{
+    self.overlayButton.selected = selected;
+}
+- (BOOL)selected
+{
+    return self.overlayButton.selected;
+}
+
+
 - (void)setTag:(NSInteger)tag
 {
     self.overlayButton.tag = tag;
@@ -24,6 +34,16 @@
 - (NSInteger)tag
 {
     return self.overlayButton.tag;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.contentMode = UIViewContentModeScaleAspectFill;
+        [self initializeOverlayButton];
+    }
+    return self;
 }
 
 - (instancetype)init
@@ -50,7 +70,8 @@
 - (void)initializeOverlayButton
 {
     self.overlayButton = [UIButton new];
-//    UIImage* backgroundImageNormal = [JAUtils imageWithColor:[UIColor colorWithWhite:0.0f alpha:0.0f]];
+    [self.overlayButton setFrame:self.bounds];
+//    UIImage* backgroundImageNormal = [JAUtils imageWithColor:[UIColor colorWithWhite:0.0f alpha:1.0f]];
 //    [self.overlayButton setBackgroundImage:backgroundImageNormal forState:UIControlStateNormal];
     UIImage* backgroundImageSelected = [JAUtils imageWithColor:[UIColor colorWithWhite:0.0f alpha:0.06f]];
     [self.overlayButton setBackgroundImage:backgroundImageSelected forState:UIControlStateSelected];

@@ -306,9 +306,18 @@
         [cell.sizeButton addTarget:self
                             action:@selector(sizeButtonPressed:)
                   forControlEvents:UIControlEventTouchUpInside];
+        cell.feedbackView.tag = indexPath.row;
+        [cell.feedbackView addTarget:self
+                              action:@selector(clickableViewPressedInCell:)
+                    forControlEvents:UIControlEventTouchUpInside];
         
         return cell;
     }
+}
+
+- (void)clickableViewPressedInCell:(UIControl*)sender
+{
+    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
