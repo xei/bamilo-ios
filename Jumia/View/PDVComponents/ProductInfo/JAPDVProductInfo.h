@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAClickableView.h"
 
 @interface JAPDVProductInfo : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
-@property (weak, nonatomic) IBOutlet UIButton *sizeButton;
-@property (weak, nonatomic) IBOutlet UIView *sizeView;
-@property (weak, nonatomic) IBOutlet UIView *reviewsView;
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (weak, nonatomic) IBOutlet JAClickableView *sizeClickableView;
+@property (weak, nonatomic) IBOutlet JAClickableView *reviewsClickableView;
+@property (weak, nonatomic) IBOutlet JAClickableView* specificationsClickableView;
 @property (weak, nonatomic) IBOutlet UIImageView *star1;
 @property (weak, nonatomic) IBOutlet UIImageView *star2;
 @property (weak, nonatomic) IBOutlet UIImageView *star3;
@@ -23,8 +25,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *goToReviewsImageView;
 @property (weak, nonatomic) IBOutlet UILabel *specificationsLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *goToSpecificationsImageView;
-@property (weak, nonatomic) IBOutlet UIButton *goToReviewsButton;
-@property (weak, nonatomic) IBOutlet UIButton *goToSpecificationsButton;
 @property (weak, nonatomic) IBOutlet UIImageView *sizeImageViewSeparator;
 
 + (JAPDVProductInfo *)getNewPDVProductInfoSection;

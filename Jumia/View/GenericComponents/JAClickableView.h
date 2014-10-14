@@ -11,6 +11,7 @@
 @interface JAClickableView : UIView
 
 @property (nonatomic, assign)BOOL selected;
+@property (nonatomic, assign)BOOL enabled;
 
 - (void)addTarget:(id)target
            action:(SEL)action

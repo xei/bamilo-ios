@@ -26,6 +26,14 @@
     return self.overlayButton.selected;
 }
 
+- (void)setEnabled:(BOOL)enabled
+{
+    self.overlayButton.enabled = enabled;
+}
+- (BOOL)enabled
+{
+    return self.overlayButton.enabled;
+}
 
 - (void)setTag:(NSInteger)tag
 {

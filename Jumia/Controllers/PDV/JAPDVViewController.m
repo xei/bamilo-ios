@@ -436,8 +436,6 @@ JAActivityViewControllerDelegate
     [self.productInfoSection setPriceWithNewValue:self.product.specialPriceFormatted
                                       andOldValue:self.product.priceFormatted];
     
-    self.productInfoSection.sizeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    
     [self.productInfoSection setNumberOfStars:[self.product.avr integerValue]];
     
     if (self.commentsCount > 0)
@@ -449,9 +447,9 @@ JAActivityViewControllerDelegate
         self.productInfoSection.numberOfReviewsLabel.text = STRING_RATE_NOW;
     }
     
-    [self.productInfoSection.goToReviewsButton addTarget:self
-                                                  action:@selector(goToRatinsMainScreen)
-                                        forControlEvents:UIControlEventTouchUpInside];
+    [self.productInfoSection.reviewsClickableView addTarget:self
+                                                     action:@selector(goToRatinsMainScreen)
+                                           forControlEvents:UIControlEventTouchUpInside];
     
     self.productInfoSection.specificationsLabel.text = STRING_SPECIFICATIONS;
     
@@ -470,13 +468,12 @@ JAActivityViewControllerDelegate
     }
     else if (1 == self.product.productSimples.count)
     {
-        [self.productInfoSection.sizeButton setEnabled:NO];
+        [self.productInfoSection.sizeClickableView setEnabled:NO];
         self.currentSimple = self.product.productSimples[0];
         
         if (VALID_NOTEMPTY(self.currentSimple.attributeSize, NSString))
         {
-            [self.productInfoSection.sizeButton setTitle:self.currentSimple.attributeSize
-                                                forState:UIControlStateNormal];
+            [self.productInfoSection.sizeLabel setText:self.currentSimple.attributeSize];
         }
         else
         {
@@ -486,13 +483,12 @@ JAActivityViewControllerDelegate
     }
     else if (1 < self.product.productSimples.count)
     {
-        [self.productInfoSection.sizeButton setEnabled:YES];
-        [self.productInfoSection.sizeButton setTitle:STRING_SIZE
-                                            forState:UIControlStateNormal];
+        [self.productInfoSection.sizeClickableView setEnabled:YES];
+        [self.productInfoSection.sizeLabel setText:STRING_SIZE];
         
-        [self.productInfoSection.sizeButton addTarget:self
-                                               action:@selector(showSizePicker)
-                                     forControlEvents:UIControlEventTouchUpInside];
+        [self.productInfoSection.sizeClickableView addTarget:self
+                                                      action:@selector(showSizePicker)
+                                            forControlEvents:UIControlEventTouchUpInside];
         
         if (VALID_NOTEMPTY(self.preSelectedSize, NSString))
         {
@@ -500,8 +496,7 @@ JAActivityViewControllerDelegate
             {
                 if ([simple.attributeSize isEqualToString:self.preSelectedSize])
                 {
-                    [self.productInfoSection.sizeButton setTitle:simple.attributeSize
-                                                        forState:UIControlStateNormal];
+                    [self.productInfoSection.sizeLabel setText:simple.attributeSize];
                     break;
                 }
             }
@@ -509,9 +504,9 @@ JAActivityViewControllerDelegate
     }
     
     
-    [self.productInfoSection.goToSpecificationsButton addTarget:self
-                                                         action:@selector(gotoDetails)
-                                               forControlEvents:UIControlEventTouchUpInside];
+    [self.productInfoSection.specificationsClickableView addTarget:self
+                                                            action:@selector(gotoDetails)
+                                                  forControlEvents:UIControlEventTouchUpInside];
     
     [self.mainScrollView addSubview:self.productInfoSection];
     
@@ -733,7 +728,7 @@ JAActivityViewControllerDelegate
 
 - (void)addToCart
 {
-    if ([self.productInfoSection.sizeButton.titleLabel.text isEqualToString:STRING_SIZE])
+    if ([self.productInfoSection.sizeLabel.text isEqualToString:STRING_SIZE])
     {
         self.openPickerFromCart = YES;
         [self showSizePicker];
@@ -851,7 +846,7 @@ JAActivityViewControllerDelegate
     }
     
     [self.picker setDataSourceArray:[self.pickerDataSource copy]
-                       previousText:self.productInfoSection.sizeButton.titleLabel.text];
+                       previousText:self.productInfoSection.sizeLabel.text];
     
     [self.picker.doneButton addTarget:self
                                action:@selector(didSelectedValueInPicker)
@@ -875,8 +870,7 @@ JAActivityViewControllerDelegate
     NSUInteger selectedRow = [self.picker.picker selectedRowInComponent:0];
     self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
     
-    [self.productInfoSection.sizeButton setTitle:self.currentSimple.attributeSize
-                                        forState:UIControlStateNormal];
+    [self.productInfoSection.sizeLabel setText:self.currentSimple.attributeSize];
     
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
