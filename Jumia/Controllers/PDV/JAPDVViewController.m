@@ -538,13 +538,17 @@ JAActivityViewControllerDelegate
         
         [self.mainScrollView addSubview:self.relatedItems];
         
-        float relatedItemStart = 5.0f;
+        CGFloat relatedItemStart = 5.0f;
         
-        for (RIProduct *product in self.arrayWithRelatedItems)
-        {
+        for (int i = 0; i < self.arrayWithRelatedItems.count; i++) {
+            RIProduct* product = [self.arrayWithRelatedItems objectAtIndex:i];
             if (![product.sku isEqualToString:self.product.sku])
             {
                 JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
+                singleItem.tag = i;
+                [singleItem addTarget:self
+                               action:@selector(selectedRelatedItem:)
+                     forControlEvents:UIControlEventTouchUpInside];
                 
                 CGRect tempFrame = singleItem.frame;
                 tempFrame.origin.x = relatedItemStart;
@@ -562,12 +566,7 @@ JAActivityViewControllerDelegate
                 singleItem.labelName.text = product.name;
                 singleItem.labelPrice.text = product.priceFormatted;
                 singleItem.product = product;
-                
-                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                      action:@selector(selectedRelatedItem:)];
-                singleItem.userInteractionEnabled = YES;
-                [singleItem addGestureRecognizer:tap];
-                
+                                
                 [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
                 
                 relatedItemStart += singleItem.frame.size.width;
@@ -629,11 +628,9 @@ JAActivityViewControllerDelegate
     }];
 }
 
-- (void)selectedRelatedItem:(UITapGestureRecognizer *)tap
+- (void)selectedRelatedItem:(UIControl*)sender
 {
-    JAPDVSingleRelatedItem *view = (JAPDVSingleRelatedItem *)tap.view;
-    
-    RIProduct *tempProduct = view.product;
+    RIProduct *tempProduct = [self.arrayWithRelatedItems objectAtIndex:sender.tag];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
