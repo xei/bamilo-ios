@@ -209,3 +209,11 @@ end
 Then /^I touch the confirm order button$/ do
     touch("view marked:'"+@confirm_order+"'")
 end
+
+Then /^I touch the Nigeria Country$/ do
+    touch("view marked:'Nigeria'")
+end
+
+Then /^I touch the apply button$/ do
+    touch("view marked:'Apply'")
+end
