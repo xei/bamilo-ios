@@ -198,3 +198,7 @@ end
 Then /^I wait to see the thank you screen$/ do
     wait_for_elements_exist("view marked:'"+@thank_you+"'", :timeout => @wait_timeout_extra)
 end
+
+Then /^I wait to see the countries$/ do
+    wait_for_elements_exist("view marked:'Nigeria'", :timeout => @wait_timeout)
+end

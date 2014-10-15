@@ -493,6 +493,8 @@
 		BBA145BA19DC56BF003F0CA7 /* 01_launch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A719DC56BF003F0CA7 /* 01_launch.rb */; };
 		BBA145BB19DC56BF003F0CA7 /* 02_pre_stop_hooks.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */; };
 		BBA145BC19DC56BF003F0CA7 /* env.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A919DC56BF003F0CA7 /* env.rb */; };
+		BBA707B819EEB93C0094C565 /* 00_choose_country.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA707B719EEB93C0094C565 /* 00_choose_country.feature */; };
+		BBA707B919EEB9450094C565 /* 00_choose_country.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA707B719EEB93C0094C565 /* 00_choose_country.feature */; };
 		BBB12A9419DD485400656529 /* 07_forgot_password.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9319DD485400656529 /* 07_forgot_password.feature */; };
 		BBB12A9519DD485400656529 /* 07_forgot_password.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9319DD485400656529 /* 07_forgot_password.feature */; };
 		BBB12A9819DD874D00656529 /* 08_registration.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9719DD874D00656529 /* 08_registration.feature */; };
@@ -1175,6 +1177,7 @@
 		BBA145A719DC56BF003F0CA7 /* 01_launch.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = 01_launch.rb; sourceTree = "<group>"; };
 		BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = 02_pre_stop_hooks.rb; sourceTree = "<group>"; };
 		BBA145A919DC56BF003F0CA7 /* env.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = env.rb; sourceTree = "<group>"; };
+		BBA707B719EEB93C0094C565 /* 00_choose_country.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 00_choose_country.feature; sourceTree = "<group>"; };
 		BBB12A9319DD485400656529 /* 07_forgot_password.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 07_forgot_password.feature; sourceTree = "<group>"; };
 		BBB12A9719DD874D00656529 /* 08_registration.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 08_registration.feature; sourceTree = "<group>"; };
 		BBB12A9B19DDA01E00656529 /* 09_home.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 09_home.feature; sourceTree = "<group>"; };
@@ -2675,6 +2678,7 @@
 		BBA262C519DB1F7600374CA3 /* features */ = {
 			isa = PBXGroup;
 			children = (
+				BBA707B619EEB9280094C565 /* choose country */,
 				BBA145BD19DC56F5003F0CA7 /* login */,
 				BBA145BE19DC5724003F0CA7 /* my account */,
 				BBB12A9619DD872600656529 /* registration */,
@@ -2693,6 +2697,14 @@
 				BBA145A619DC56BF003F0CA7 /* support */,
 			);
 			path = features;
+			sourceTree = "<group>";
+		};
+		BBA707B619EEB9280094C565 /* choose country */ = {
+			isa = PBXGroup;
+			children = (
+				BBA707B719EEB93C0094C565 /* 00_choose_country.feature */,
+			);
+			name = "choose country";
 			sourceTree = "<group>";
 		};
 		BBB12A9619DD872600656529 /* registration */ = {
@@ -3131,6 +3143,7 @@
 				2da4b3c8c2024a70f4aa68b3 /* slider-metal-handle-highlighted.png in Resources */,
 				a2b0dc6d9bc2f3b3589ff3a4 /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */,
 				fd3f76b9df6b0e66b3f3fa9c /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */,
+				BBA707B919EEB9450094C565 /* 00_choose_country.feature in Resources */,
 				3f21597c4c4882316f373e33 /* JAPDVProductInfo.xib in Resources */,
 				bc226a46ffc7b0880f9f8ab4 /* RITrackingDebug.plist in Resources */,
 				e8cdf19ae478212bba2a64b2 /* JAOrangeButtonCell.xib in Resources */,
@@ -3181,6 +3194,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBA707B819EEB93C0094C565 /* 00_choose_country.feature in Resources */,
 				BBBA4CBD19E3F764004271B2 /* 13_related_items.feature in Resources */,
 				BBA145B219DC56BF003F0CA7 /* init.rb in Resources */,
 				BBBA4CCD19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
