@@ -161,7 +161,7 @@
         }
     }
     //add the new clickable view
-    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:cell.bounds];
+    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
     clickView.tag = indexPath.row;
     [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     [cell addSubview:clickView];
