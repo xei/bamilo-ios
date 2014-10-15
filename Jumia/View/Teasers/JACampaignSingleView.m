@@ -11,6 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "JAPriceView.h"
 #import "JAPercentageBarView.h"
+#import "JAClickableView.h"
 
 @interface JACampaignSingleView()
 
@@ -27,6 +28,7 @@
 @property (nonatomic, strong)UILabel* endLabel;
 @property (nonatomic, strong)UILabel* timeLabel;
 
+@property (weak, nonatomic) IBOutlet JAClickableView *imageClickableView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @property (weak, nonatomic) IBOutlet UIView *bottomContentView;
@@ -40,7 +42,7 @@
 @property (nonatomic, strong)UIView* offerEndedContent;
 @property (nonatomic, strong)UILabel* offerEndedLabel;
 
-@property (nonatomic, strong)UIControl* sizeControl;
+@property (nonatomic, strong)JAClickableView* sizeClickableView;
 @property (nonatomic, strong)UILabel* sizeLabel;
 
 @end
@@ -91,18 +93,12 @@
     self.titleLabel.text = campaign.name;
 
     //IMAGE AREA
+    [self.imageClickableView addTarget:self
+                                action:@selector(backViewPressed)
+                      forControlEvents:UIControlEventTouchUpInside];
+    
     [self.imageView setImageWithURL:[NSURL URLWithString:[campaign.imagesUrls firstObject]]
                  placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
-    
-    UIControl* backClickArea = [[UIControl alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x,
-                                                                           self.imageView.frame.origin.y,
-                                                                           self.contentView.bounds.size.width,
-                                                                           self.imageView.frame.size.height)];
-    [self.contentView addSubview:backClickArea];
-    [self.contentView sendSubviewToBack:self.contentView];
-    [backClickArea addTarget:self
-                      action:@selector(backViewPressed)
-            forControlEvents:UIControlEventTouchUpInside];
     
     //OFFER ENDED
     self.offerEndedLabel = [UILabel new];
@@ -227,33 +223,33 @@
     [self.buyButton addTarget:self action:@selector(buyButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     if (campaign.productSimples.count > 1) {
-        self.sizeControl = [[UIControl alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x,
-                                                                       self.bottomContentView.frame.origin.y + 10.0f - 44.0f,
-                                                                       self.contentView.bounds.size.width,
-                                                                       44.0f)];
-        self.sizeControl.backgroundColor = [UIColor whiteColor];
-        [self.contentView addSubview:self.sizeControl];
+        self.sizeClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x,
+                                                                                   self.bottomContentView.frame.origin.y + 10.0f - 44.0f,
+                                                                                   self.contentView.bounds.size.width,
+                                                                                   44.0f)];
+        [self.sizeClickableView addTarget:self
+                                   action:@selector(sizeButtonPressed)
+                         forControlEvents:UIControlEventTouchUpInside];
+        self.sizeClickableView.backgroundColor = [UIColor whiteColor];
+        [self.contentView addSubview:self.sizeClickableView];
         
-        [self.sizeControl addTarget:self
-                             action:@selector(sizeButtonPressed)
-                   forControlEvents:UIControlEventTouchUpInside];
-        
-        UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.sizeControl.bounds.origin.x,
-                                                                         self.sizeControl.bounds.origin.y,
-                                                                         self.sizeControl.bounds.size.width,
+
+        UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.sizeClickableView.bounds.origin.x,
+                                                                         self.sizeClickableView.bounds.origin.y,
+                                                                         self.sizeClickableView.bounds.size.width,
                                                                          1.0f)];
         separatorView.backgroundColor = JABackgroundGrey;
-        [self.sizeControl addSubview:separatorView];
+        [self.sizeClickableView addSubview:separatorView];
         
         self.sizeLabel = [[UILabel alloc] init];
         self.sizeLabel.text = STRING_SIZE;
         self.sizeLabel.textColor = UIColorFromRGB(0x55a1ff);
         self.sizeLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
-        [self.sizeLabel setFrame:CGRectMake(self.sizeControl.bounds.origin.x + 10.0f,
-                                            self.sizeControl.bounds.origin.y,
-                                            self.sizeControl.bounds.size.width - 10.0f * 2,
-                                            self.sizeControl.bounds.size.height)];
-        [self.sizeControl addSubview:self.sizeLabel];
+        [self.sizeLabel setFrame:CGRectMake(self.sizeClickableView.bounds.origin.x + 10.0f,
+                                            self.sizeClickableView.bounds.origin.y,
+                                            self.sizeClickableView.bounds.size.width - 10.0f * 2,
+                                            self.sizeClickableView.bounds.size.height)];
+        [self.sizeClickableView addSubview:self.sizeLabel];
     }
 }
 

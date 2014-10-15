@@ -9,6 +9,7 @@
 #import "JASubCategoriesViewController.h"
 #import "RICategory.h"
 #import "RICustomer.h"
+#import "JAClickableView.h"
 
 @interface JASubCategoriesViewController ()
 <
@@ -106,14 +107,30 @@ UITableViewDelegate
         [cell addSubview:separator];
     }
     
+    //remove the clickable view
+    for (UIView* view in cell.subviews) {
+        if ([view isKindOfClass:[JAClickableView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    //add the new clickable view
+    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+    clickView.tag = indexPath.row;
+    [cell addSubview:clickView];
+    [clickView addTarget:self
+                  action:@selector(cellWasPressed:)
+        forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)cellWasPressed:(UIControl*)sender
 {
-    [tableView deselectRowAtIndexPath:indexPath
-                             animated:YES];
-    
+    [self tableView:self.tableViewCategories didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{    
     if (0 == indexPath.row) {
         
         if (VALID_NOTEMPTY(self.parentCategory, RICategory)) {

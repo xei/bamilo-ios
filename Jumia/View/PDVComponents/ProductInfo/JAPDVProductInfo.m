@@ -80,14 +80,6 @@
     buttonFrame.origin.y -= 44.0f;
     self.specificationsClickableView.frame = buttonFrame;
     
-    CGRect labelFrame = self.specificationsLabel.frame;
-    labelFrame.origin.y -= 44.0f;
-    self.specificationsLabel.frame = labelFrame;
-    
-    CGRect imageFrame = self.goToSpecificationsImageView.frame;
-    imageFrame.origin.y -= 44.0f;
-    self.goToSpecificationsImageView.frame = imageFrame;
-    
     CGRect frame = self.frame;
     frame.size.height -= 44.0f;
     
