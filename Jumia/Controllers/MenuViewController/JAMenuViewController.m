@@ -17,6 +17,7 @@
 #import <FacebookSDK/FBSession.h>
 #import "RISearchSuggestion.h"
 #import "RICart.h"
+#import "JAClickableView.h"
 
 typedef NS_ENUM(NSUInteger, JAMenuViewControllerAction) {
     JAMenuViewControllerOpenSearchBar = 0,
@@ -229,6 +230,18 @@ UIAlertViewDelegate
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
+    //remove the clickable view
+    for (UIView* view in cell.subviews) {
+        if ([view isKindOfClass:[JAClickableView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    //add the new clickable view
+    CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, cellHeight)];
+    clickView.tag = indexPath.row;
+    [cell addSubview:clickView];
+    
     if (self.resultsTableView == tableView)
     {
         RISearchSuggestion *sugestion = [self.resultsArray objectAtIndex:indexPath.row];
@@ -286,8 +299,12 @@ UIAlertViewDelegate
         line2.backgroundColor = UIColorFromRGB(0xcccccc);
         [cell.viewForBaselineLayout addSubview:line2];
         
+        [clickView addTarget:self action:@selector(resultCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+        
     } else
     {
+        [clickView addTarget:self action:@selector(menuCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
         cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
         
         cell.imageView.image = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"image"]];
@@ -302,6 +319,16 @@ UIAlertViewDelegate
     return cell;
 }
 
+- (void)resultCellWasPressed:(UIControl*)sender
+{
+    [self tableView:self.resultsTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+}
+
+- (void)menuCellWasPressed:(UIControl*)sender
+{
+    [self tableView:self.tableViewMenu didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     return [[UIView alloc] initWithFrame:CGRectZero];
@@ -310,10 +337,7 @@ UIAlertViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.view endEditing:YES];
-    
-    [tableView deselectRowAtIndexPath:indexPath
-                             animated:YES];
-    
+
     [self.customNavBar resignFirstResponder];
     
     self.nextAction = JAMenuViewControllerOpenSideMenuItem;

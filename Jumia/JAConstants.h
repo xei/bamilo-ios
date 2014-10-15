@@ -107,6 +107,7 @@
 // Colors - Buttons
 #define JAButtonOrange UIColorFromRGB(0xfaa41a)
 #define JAButtonTextOrange UIColorFromRGB(0x4e4e4e)
+#define JAFeedbackGrey UIColorFromRGB(0xf0f0f0)
 
 // Colors - Text
 #define JALabelGrey UIColorFromRGB(0xcccccc)
