@@ -48,6 +48,16 @@ UIPickerViewDelegate
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:@"UIKeyboardWillShowNotification"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:@"UIKeyboardWillHideNotification"
+                                               object:nil];
+    
     self.screenName = @"Register";
     
     self.A4SViewControllerAlias = @"ACCOUNT";
@@ -87,6 +97,11 @@ UIPickerViewDelegate
     [self showLoading];
 
     [self getRegisterForm];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)getRegisterForm
@@ -357,17 +372,17 @@ UIPickerViewDelegate
 
 - (void)changedFocus:(UIView *)view
 {
-    CGPoint scrollPoint = CGPointMake(0.0, view.frame.origin.y);
-    [self.contentScrollView setContentOffset:scrollPoint
-                                    animated:YES];
+//    CGPoint scrollPoint = CGPointMake(0.0, view.frame.origin.y);
+//    [self.contentScrollView setContentOffset:scrollPoint
+//                                    animated:YES];
 }
 
 - (void) lostFocus
 {
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         self.contentScrollView.frame = self.originalFrame;
-                     }];
+//    [UIView animateWithDuration:0.5f
+//                     animations:^{
+//                         self.contentScrollView.frame = self.originalFrame;
+//                     }];
 }
 
 - (void)openDatePicker:(JABirthDateComponent *)birthdayComponent
@@ -514,6 +529,28 @@ UIPickerViewDelegate
         titleForRow = [[self.radioComponent dataset] objectAtIndex:row];
     }
     return  titleForRow;
+}
+
+#pragma mark - Keyboard notifications
+
+- (void) keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.contentScrollView setFrame:CGRectMake(self.view.bounds.origin.x,
+                                                    self.view.bounds.origin.y,
+                                                    self.view.bounds.size.width,
+                                                    self.view.bounds.size.height - kbSize.height)];
+    }];
+}
+
+- (void) keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.contentScrollView setFrame:self.view.bounds];
+    }];
 }
 
 @end
