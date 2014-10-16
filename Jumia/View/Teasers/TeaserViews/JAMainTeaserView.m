@@ -7,7 +7,7 @@
 //
 
 #import "JAMainTeaserView.h"
-#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 #import "JAClickableView.h"
 
 #define JAMainTeaserViewHeight 173.0f
@@ -58,10 +58,12 @@
                                                                                            self.scrollView.bounds.origin.y,
                                                                                            self.scrollView.bounds.size.width,
                                                                                            self.scrollView.bounds.size.height)];
-        UIImageView* imageView = [[UIImageView alloc] initWithFrame:clickableView.bounds];
-        [imageView setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
-        [clickableView addSubview:imageView];
-        [clickableView addSubview:imageView];
+        UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setFrame:clickableView.bounds];
+        [button setEnabled:NO];
+        [button setBackgroundColor:UIColorFromRGB(0xffffff)];
+        [button setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+        [clickableView addSubview:button];
         [clickableView addTarget:self action:@selector(teaserImagePressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:clickableView];
         
