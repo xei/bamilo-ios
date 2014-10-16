@@ -14,10 +14,6 @@
 
 - (void)setupMaintenancePage:(CGRect)frame;
 
-- (IBAction)retryConnectionButtonTapped:(id)sender;
-
 - (void)setRetryBlock:(void(^)(BOOL dismiss))completion;
-
-- (IBAction)changeCountryButtonTapped:(id)sender;
 
 @end
