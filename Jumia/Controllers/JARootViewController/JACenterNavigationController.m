@@ -319,6 +319,15 @@
         
         [self pushViewController:loadCountry animated:NO];
     }
+    else
+    {
+        JALoadCountryViewController *loadCountry = (JALoadCountryViewController*) topViewController;
+        
+        loadCountry.selectedCountry = notification.object;
+        loadCountry.pushNotification = notification.userInfo;
+        
+        [loadCountry continueProcessing];
+    }
 }
 
 #pragma mark - Left Menu Actions

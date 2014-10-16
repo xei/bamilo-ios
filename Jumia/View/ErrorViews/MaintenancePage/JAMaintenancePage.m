@@ -35,7 +35,11 @@ void(^retryBock)(BOOL dismiss);
     [self setFrame:frame];
     
     RIApi *apiInformation = [RIApi getApiInformation];
-    NSString *countryName = apiInformation.countryName;
+    NSString *countryName = @"";
+    if(VALID_NOTEMPTY(apiInformation, RIApi) && VALID_NOTEMPTY(apiInformation.countryName, NSString))
+    {
+        countryName = apiInformation.countryName;
+    }
     
     UILabel *maintenanceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [maintenanceLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:18.0f]];
