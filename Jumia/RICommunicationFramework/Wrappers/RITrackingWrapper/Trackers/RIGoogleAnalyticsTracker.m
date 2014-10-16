@@ -128,14 +128,16 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
-    if (!tracker) {
-        RIRaiseError(@"Missing default Google Analytics tracker");
-        return;
-    }
-    
-    if(VALID_NOTEMPTY(campaignName, NSString))
+    if (!ISEMPTY(tracker))
     {
-        self.campaignData = [NSString stringWithFormat:@"http://www.google.com?utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
+        if(VALID_NOTEMPTY(campaignName, NSString))
+        {
+            self.campaignData = [NSString stringWithFormat:@"http://www.google.com?utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
+        }
+    }
+    else
+    {
+        RIDebugLog(@"Missing default Google Analytics tracker");
     }
 }
 
@@ -147,15 +149,17 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
-    if (!tracker) {
-        RIRaiseError(@"Missing default Google Analytics tracker");
-        return;
+    if (!ISEMPTY(tracker))
+    {
+        NSDictionary *dict = [[GAIDictionaryBuilder createExceptionWithDescription:name
+                                                                         withFatal:NO] build];
+        
+        [tracker send:dict];
     }
-    
-    NSDictionary *dict = [[GAIDictionaryBuilder createExceptionWithDescription:name
-                                                                     withFatal:NO] build];
-    
-    [tracker send:dict];
+    else
+    {
+        RIDebugLog(@"Missing default Google Analytics tracker");
+    }
 }
 
 #pragma mark - RIScreenTracking
@@ -166,13 +170,15 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
-    if (!tracker) {
-        RIRaiseError(@"Missing default Google Analytics tracker");
-        return;
+    if (!ISEMPTY(tracker))
+    {
+        [tracker set:kGAIScreenName value:name];
+        [tracker send:[[[GAIDictionaryBuilder createAppView] setCampaignParametersFromUrl:self.campaignData] build]];
     }
-    
-    [tracker set:kGAIScreenName value:name];
-    [tracker send:[[[GAIDictionaryBuilder createAppView] setCampaignParametersFromUrl:self.campaignData] build]];
+    else
+    {
+        RIDebugLog(@"Missing default Google Analytics tracker");
+    }
 }
 
 #pragma mark - RIEventTracking
@@ -185,28 +191,30 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     {
         id tracker = [[GAI sharedInstance] defaultTracker];
         
-        if (!tracker) {
-            RIRaiseError(@"Missing default Google Analytics tracker");
-            return;
-        }
-        
-        if(ISEMPTY(data))
+        if (!ISEMPTY(tracker))
         {
-            RIRaiseError(@"Missing event data");
-            return;
+            if(ISEMPTY(data))
+            {
+                RIRaiseError(@"Missing event data");
+                return;
+            }
+            
+            NSString *category = [data objectForKey:kRIEventCategoryKey];
+            NSString *action = [data objectForKey:kRIEventActionKey];
+            NSString *label = [data objectForKey:kRIEventLabelKey];
+            NSNumber *value = [data objectForKey:kRIEventValueKey];
+            
+            NSDictionary *dict = [[[GAIDictionaryBuilder createEventWithCategory:category
+                                                                          action:action
+                                                                           label:label
+                                                                           value:value]
+                                   setCampaignParametersFromUrl:self.campaignData] build];
+            [tracker send:dict];
         }
-        
-        NSString *category = [data objectForKey:kRIEventCategoryKey];
-        NSString *action = [data objectForKey:kRIEventActionKey];
-        NSString *label = [data objectForKey:kRIEventLabelKey];
-        NSNumber *value = [data objectForKey:kRIEventValueKey];
-        
-        NSDictionary *dict = [[[GAIDictionaryBuilder createEventWithCategory:category
-                                                                      action:action
-                                                                       label:label
-                                                                       value:value]
-                               setCampaignParametersFromUrl:self.campaignData] build];
-        [tracker send:dict];
+        else
+        {
+            RIDebugLog(@"Missing default Google Analytics tracker");
+        }
     }
 }
 
@@ -218,40 +226,42 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
-    if (!tracker) {
-        RIRaiseError(@"Missing default Google Analytics tracker");
-        return;
-    }
-    
-    NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
-    NSNumber *tax = [data objectForKey:kRIEcommerceTaxKey];
-    NSNumber *shipping = [data objectForKey:kRIEcommerceShippingKey];
-    NSString *currency = [data objectForKey:kRIEcommerceCurrencyKey];
-    NSNumber *revenue = [data objectForKey:kRIEcommerceTotalValueKey];    
-    
-    GAIDictionaryBuilder *dict = [GAIDictionaryBuilder createTransactionWithId:transactionId
-                                                                   affiliation:@"In-App Store"
-                                                                       revenue:revenue
-                                                                           tax:tax
-                                                                      shipping:shipping
-                                                                  currencyCode:currency];
-    [tracker send:[[dict setCampaignParametersFromUrl:self.campaignData] build]];
-
-    if ([data objectForKey:kRIEcommerceProducts])
+    if (!ISEMPTY(tracker))
     {
-        NSArray *tempArray = [data objectForKey:kRIEcommerceProducts];
+        NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
+        NSNumber *tax = [data objectForKey:kRIEcommerceTaxKey];
+        NSNumber *shipping = [data objectForKey:kRIEcommerceShippingKey];
+        NSString *currency = [data objectForKey:kRIEcommerceCurrencyKey];
+        NSNumber *revenue = [data objectForKey:kRIEcommerceTotalValueKey];
         
-        for (NSDictionary *tempProduct in tempArray)
+        GAIDictionaryBuilder *dict = [GAIDictionaryBuilder createTransactionWithId:transactionId
+                                                                       affiliation:@"In-App Store"
+                                                                           revenue:revenue
+                                                                               tax:tax
+                                                                          shipping:shipping
+                                                                      currencyCode:currency];
+        [tracker send:[[dict setCampaignParametersFromUrl:self.campaignData] build]];
+        
+        if ([data objectForKey:kRIEcommerceProducts])
         {
-            GAIDictionaryBuilder *productDict = [GAIDictionaryBuilder createItemWithTransactionId:[data objectForKey:kRIEcommerceTransactionIdKey]
-                                                                                             name:[tempProduct objectForKey:kRIEventProductNameKey]
-                                                                                              sku:[tempProduct objectForKey:kRIEventSkuKey]
-                                                                                         category:nil
-                                                                                            price:[tempProduct objectForKey:kRIEventPriceKey]
-                                                                                         quantity:[tempProduct objectForKey:kRIEventQuantityKey]
-                                                                                     currencyCode:[tempProduct objectForKey:kRIEventCurrencyCodeKey]];
-            [tracker send:[[productDict setCampaignParametersFromUrl:self.campaignData] build]];
+            NSArray *tempArray = [data objectForKey:kRIEcommerceProducts];
+            
+            for (NSDictionary *tempProduct in tempArray)
+            {
+                GAIDictionaryBuilder *productDict = [GAIDictionaryBuilder createItemWithTransactionId:[data objectForKey:kRIEcommerceTransactionIdKey]
+                                                                                                 name:[tempProduct objectForKey:kRIEventProductNameKey]
+                                                                                                  sku:[tempProduct objectForKey:kRIEventSkuKey]
+                                                                                             category:nil
+                                                                                                price:[tempProduct objectForKey:kRIEventPriceKey]
+                                                                                             quantity:[tempProduct objectForKey:kRIEventQuantityKey]
+                                                                                         currencyCode:[tempProduct objectForKey:kRIEventCurrencyCodeKey]];
+                [tracker send:[[productDict setCampaignParametersFromUrl:self.campaignData] build]];
+            }
         }
+    }
+    else
+    {
+        RIDebugLog(@"Missing default Google Analytics tracker");
     }
 }
 
@@ -263,18 +273,20 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
-    if (!tracker) {
-        RIRaiseError(@"Missing default Google Analytics tracker");
-        return;
+    if (!ISEMPTY(tracker))
+    {
+        NSDictionary *dict = [[[GAIDictionaryBuilder createTimingWithCategory:reference
+                                                                     interval:millis
+                                                                         name:nil
+                                                                        label:nil]
+                               setCampaignParametersFromUrl:self.campaignData] build];
+        
+        [tracker send:dict];
     }
-    
-    NSDictionary *dict = [[[GAIDictionaryBuilder createTimingWithCategory:reference
-                                                                 interval:millis
-                                                                     name:nil
-                                                                    label:nil]
-                           setCampaignParametersFromUrl:self.campaignData] build];
-    
-    [tracker send:dict];
+    else
+    {
+        RIDebugLog(@"Missing default Google Analytics tracker");
+    }
 }
 
 //#pragma mark - RILaunchEventTracker implementation

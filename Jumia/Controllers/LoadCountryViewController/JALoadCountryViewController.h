@@ -13,4 +13,6 @@
 @property (nonatomic, strong) RICountry *selectedCountry;
 @property (nonatomic, strong) NSDictionary *pushNotification;
 
+- (void)continueProcessing;
+
 @end
