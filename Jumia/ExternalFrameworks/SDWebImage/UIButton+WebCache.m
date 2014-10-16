@@ -31,7 +31,7 @@
     [self setImage:placeholder forState:UIControlStateNormal];
     [self setImage:placeholder forState:UIControlStateSelected];
     [self setImage:placeholder forState:UIControlStateHighlighted];
-
+    [self setImage:placeholder forState:UIControlStateDisabled];
 
     if (url)
     {
@@ -60,6 +60,7 @@
     [self setImage:placeholder forState:UIControlStateNormal];
     [self setImage:placeholder forState:UIControlStateSelected];
     [self setImage:placeholder forState:UIControlStateHighlighted];
+    [self setImage:placeholder forState:UIControlStateDisabled];
 
     if (url)
     {
@@ -88,6 +89,7 @@
     [self setBackgroundImage:placeholder forState:UIControlStateNormal];
     [self setBackgroundImage:placeholder forState:UIControlStateSelected];
     [self setBackgroundImage:placeholder forState:UIControlStateHighlighted];
+    [self setBackgroundImage:placeholder forState:UIControlStateDisabled];
 
     if (url)
     {
@@ -117,6 +119,7 @@
     [self setBackgroundImage:placeholder forState:UIControlStateNormal];
     [self setBackgroundImage:placeholder forState:UIControlStateSelected];
     [self setBackgroundImage:placeholder forState:UIControlStateHighlighted];
+    [self setBackgroundImage:placeholder forState:UIControlStateDisabled];
 
     if (url)
     {
@@ -142,12 +145,14 @@
         [self setBackgroundImage:image forState:UIControlStateNormal];
         [self setBackgroundImage:image forState:UIControlStateSelected];
         [self setBackgroundImage:image forState:UIControlStateHighlighted];
+        [self setBackgroundImage:image forState:UIControlStateDisabled];
     }
     else
     {
         [self setImage:image forState:UIControlStateNormal];
         [self setImage:image forState:UIControlStateSelected];
         [self setImage:image forState:UIControlStateHighlighted];
+        [self setImage:image forState:UIControlStateDisabled];
     }
 }
 
@@ -159,12 +164,14 @@
         [self setBackgroundImage:image forState:UIControlStateNormal];
         [self setBackgroundImage:image forState:UIControlStateSelected];
         [self setBackgroundImage:image forState:UIControlStateHighlighted];
+        [self setBackgroundImage:image forState:UIControlStateDisabled];
     }
     else
     {
         [self setImage:image forState:UIControlStateNormal];
         [self setImage:image forState:UIControlStateSelected];
         [self setImage:image forState:UIControlStateHighlighted];
+        [self setImage:image forState:UIControlStateDisabled];
     }
 }
 
