@@ -194,16 +194,16 @@
     }
 }
 
-+ (NSString *)getCountryName
++ (RIApi *)getApiInformation
 {
     NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
     
-    if (0 == apiArray.count) {
-        return @"";
-    } else {
-        RIApi *api = [apiArray firstObject];
-        return api.countryName;
+    RIApi *apiInformation = nil;
+    if(VALID_NOTEMPTY(apiArray, NSArray))
+    {
+        apiInformation = [apiArray firstObject];
     }
+    return apiInformation;
 }
 
 #pragma mark - Parser

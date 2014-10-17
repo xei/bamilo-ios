@@ -62,7 +62,7 @@
     self.descriptionLabel.numberOfLines = -1;
     [self formatStringInLabel:self.descriptionLabel
                          text:promotion.descriptionMessage
-                     fontName:@"HelveticaNeue-Med"
+                     fontName:@"HelveticaNeue-Medium"
                      fontSize:17.0f];
     [self.descriptionLabel setFrame:CGRectMake(genericRect.origin.x,
                                                currentY,
