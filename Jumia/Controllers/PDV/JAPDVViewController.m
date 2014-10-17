@@ -32,6 +32,7 @@
 #import "JAButtonWithBlur.h"
 #import "JAUtils.h"
 #import "RICustomer.h"
+#import "JAPDVWizardView.h"
 
 @interface JAPDVViewController ()
 <
@@ -52,6 +53,8 @@ JAActivityViewControllerDelegate
 @property (assign, nonatomic) NSInteger commentsCount;
 @property (assign, nonatomic) BOOL openPickerFromCart;
 @property (strong, nonatomic) RIProductSimple *currentSimple;
+
+@property (nonatomic, strong) JAPDVWizardView* wizardView;
 
 @end
 
@@ -101,6 +104,19 @@ JAActivityViewControllerDelegate
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
             self.firstLoading = NO;
         }
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    BOOL alreadyShowedWizardPDV = [[NSUserDefaults standardUserDefaults] boolForKey:kJAPDVWizardUserDefaultsKey];
+    if(alreadyShowedWizardPDV == NO)
+    {
+        self.wizardView = [[JAPDVWizardView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:self.wizardView];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
     }
 }
 
@@ -622,6 +638,9 @@ JAActivityViewControllerDelegate
     [self.view addSubview:self.ctaView];
     
     self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + self.ctaView.frame.size.height);
+    
+    //make sure wizard is in front
+    [self.view bringSubviewToFront:self.wizardView];
 }
 
 

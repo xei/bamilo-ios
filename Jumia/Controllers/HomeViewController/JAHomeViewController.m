@@ -14,6 +14,7 @@
 #import "RICustomer.h"
 #import "JAPromotionPopUp.h"
 #import "JAAppDelegate.h"
+#import "JAHomeWizardView.h"
 
 @interface JAHomeViewController ()
 
@@ -82,6 +83,15 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
+    
+    BOOL alreadyShowedWizardHome = [[NSUserDefaults standardUserDefaults] boolForKey:kJAHomeWizardUserDefaultsKey];
+    if(alreadyShowedWizardHome == NO)
+    {
+        JAHomeWizardView* wizardView = [[JAHomeWizardView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:wizardView];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAHomeWizardUserDefaultsKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated

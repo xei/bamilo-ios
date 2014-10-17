@@ -554,6 +554,10 @@
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
 		CE97D2EE19AE1ED50090D01C /* JANavigationBarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */; };
 		CEC376D319EBCA5800558B98 /* JAClickableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376D219EBCA5800558B98 /* JAClickableView.m */; };
+		CEC376DD19EFC1E800558B98 /* JAWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376DC19EFC1E800558B98 /* JAWizardView.m */; };
+		CEC376E319F0050F00558B98 /* JAHomeWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E219F0050F00558B98 /* JAHomeWizardView.m */; };
+		CEC376E619F015C600558B98 /* JACatalogWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E519F015C600558B98 /* JACatalogWizardView.m */; };
+		CEC376E919F023CA00558B98 /* JAPDVWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E819F023CA00558B98 /* JAPDVWizardView.m */; };
 		CEC3F71219A5FBF800DE12F6 /* JAFavoriteListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71119A5FBF800DE12F6 /* JAFavoriteListCell.xib */; };
 		CEC3F71C19A5FDDA00DE12F6 /* JAButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC3F71919A5FDDA00DE12F6 /* JAButtonCell.m */; };
 		CEC3F71D19A5FDDA00DE12F6 /* JAGrayButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71A19A5FDDA00DE12F6 /* JAGrayButtonCell.xib */; };
@@ -1256,6 +1260,14 @@
 		CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANavigationBarLayout.m; sourceTree = "<group>"; };
 		CEC376D119EBCA5700558B98 /* JAClickableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAClickableView.h; sourceTree = "<group>"; };
 		CEC376D219EBCA5800558B98 /* JAClickableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAClickableView.m; sourceTree = "<group>"; };
+		CEC376DB19EFC1E800558B98 /* JAWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAWizardView.h; path = Wizard/JAWizardView.h; sourceTree = "<group>"; };
+		CEC376DC19EFC1E800558B98 /* JAWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAWizardView.m; path = Wizard/JAWizardView.m; sourceTree = "<group>"; };
+		CEC376E119F0050F00558B98 /* JAHomeWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAHomeWizardView.h; path = Wizard/JAHomeWizardView.h; sourceTree = "<group>"; };
+		CEC376E219F0050F00558B98 /* JAHomeWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAHomeWizardView.m; path = Wizard/JAHomeWizardView.m; sourceTree = "<group>"; };
+		CEC376E419F015C600558B98 /* JACatalogWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACatalogWizardView.h; path = Wizard/JACatalogWizardView.h; sourceTree = "<group>"; };
+		CEC376E519F015C600558B98 /* JACatalogWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACatalogWizardView.m; path = Wizard/JACatalogWizardView.m; sourceTree = "<group>"; };
+		CEC376E719F023CA00558B98 /* JAPDVWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPDVWizardView.h; path = Wizard/JAPDVWizardView.h; sourceTree = "<group>"; };
+		CEC376E819F023CA00558B98 /* JAPDVWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPDVWizardView.m; path = Wizard/JAPDVWizardView.m; sourceTree = "<group>"; };
 		CEC3F71119A5FBF800DE12F6 /* JAFavoriteListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFavoriteListCell.xib; sourceTree = "<group>"; };
 		CEC3F71819A5FDDA00DE12F6 /* JAButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAButtonCell.h; sourceTree = "<group>"; };
 		CEC3F71919A5FDDA00DE12F6 /* JAButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAButtonCell.m; sourceTree = "<group>"; };
@@ -1556,6 +1568,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CEC376DA19EFC1D500558B98 /* Wizard */,
 				CE3AF90F19DD5D4B00D8C51B /* PromotionPopUp */,
 				8C38E17F19CF164A0007F6F9 /* ErrorViews */,
 				B530D56E19C199690052FEDA /* CheckoutForms */,
@@ -2903,6 +2916,21 @@
 			path = Teasers;
 			sourceTree = "<group>";
 		};
+		CEC376DA19EFC1D500558B98 /* Wizard */ = {
+			isa = PBXGroup;
+			children = (
+				CEC376DB19EFC1E800558B98 /* JAWizardView.h */,
+				CEC376DC19EFC1E800558B98 /* JAWizardView.m */,
+				CEC376E119F0050F00558B98 /* JAHomeWizardView.h */,
+				CEC376E219F0050F00558B98 /* JAHomeWizardView.m */,
+				CEC376E419F015C600558B98 /* JACatalogWizardView.h */,
+				CEC376E519F015C600558B98 /* JACatalogWizardView.m */,
+				CEC376E719F023CA00558B98 /* JAPDVWizardView.h */,
+				CEC376E819F023CA00558B98 /* JAPDVWizardView.m */,
+			);
+			name = Wizard;
+			sourceTree = "<group>";
+		};
 		CEC3F71719A5FDDA00DE12F6 /* ButtonCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -3569,6 +3597,7 @@
 				CEDEB983199A51E30022BAB5 /* RIFilter.m in Sources */,
 				CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */,
 				B5A302C519811E9200F71726 /* RIImage.m in Sources */,
+				CEC376E919F023CA00558B98 /* JAPDVWizardView.m in Sources */,
 				B501E88D19BEF7DE00BE51DD /* JAPickupStationInfoCell.m in Sources */,
 				B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */,
 				B5FBD58D19CAF2F400BD9510 /* RIAdjustTracker.m in Sources */,
@@ -3605,6 +3634,7 @@
 				B5A302CE19811E9200F71726 /* RITeaserGroup.m in Sources */,
 				B5225E30198950C500C18F1E /* JACartViewController.m in Sources */,
 				4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */,
+				CEC376E319F0050F00558B98 /* JAHomeWizardView.m in Sources */,
 				B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */,
 				CE3AF90B19DBF50800D8C51B /* JAPercentageBarView.m in Sources */,
 				B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */,
@@ -3645,6 +3675,7 @@
 				4A944FF8199290F200C02734 /* JARatingsViewController.m in Sources */,
 				CE3AF90019DBF4FB00D8C51B /* JACampaignsViewController.m in Sources */,
 				4AE865BD19C9D7C400406159 /* JAUserDataViewController.m in Sources */,
+				CEC376E619F015C600558B98 /* JACatalogWizardView.m in Sources */,
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
 				B59D196319C333CF004843C3 /* JAExternalPaymentsViewController.m in Sources */,
 				4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */,
@@ -3735,6 +3766,7 @@
 				B5FBD57919CAF22F00BD9510 /* Adjust.m in Sources */,
 				B517FDFC198265AD00F65253 /* RICartItem.m in Sources */,
 				4A480C2C19951E9700E054B8 /* JAProductDetailsViewController.m in Sources */,
+				CEC376DD19EFC1E800558B98 /* JAWizardView.m in Sources */,
 				B5FBD58019CAF22F00BD9510 /* UIDevice+AIAdditions.m in Sources */,
 				B5A3025819811E8A00F71726 /* SDImageCache.m in Sources */,
 				B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */,
