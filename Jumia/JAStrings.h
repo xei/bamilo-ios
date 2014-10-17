@@ -229,4 +229,12 @@
 #define STRING_WIDEST_CHOICE RILocalizedString(@"fallback_choice", nil)
 #define STRING_AT_YOUR_DOORSTEP RILocalizedString(@"fallback_doorstep", nil)
 
+#define STRING_GOT_IT RILocalizedString(@"got_it", nil)
+#define STRING_WIZARD_HOME RILocalizedString(@"home_tip_text", nil)
+#define STRING_WIZARD_CATALOG_SWIPE RILocalizedString(@"products_tip_swipe_text", nil)
+#define STRING_WIZARD_CATALOG_FAVORITE RILocalizedString(@"tip_favourite_text", nil)
+#define STRING_WIZARD_PDV_SHARE RILocalizedString(@"tip_share_text", nil)
+#define STRING_WIZARD_PDV_SWIPE RILocalizedString(@"tip_swipe_text", nil)
+#define STRING_WIZARD_PDV_TAP RILocalizedString(@"tip_tap_text", nil)
+
 #endif

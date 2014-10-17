@@ -14,6 +14,7 @@
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
 #import "RIFilter.h"
+#import "JACatalogWizardView.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
@@ -199,6 +200,14 @@
     {
         [self.undefinedView removeFromSuperview];
         [self addUndefinedSearchView:self.undefinedBackup];
+    }
+    
+    BOOL alreadyShowedWizardCatalog = [[NSUserDefaults standardUserDefaults] boolForKey:kJACatalogWizardUserDefaultsKey];
+    if(alreadyShowedWizardCatalog == NO)
+    {
+        JACatalogWizardView* wizardView = [[JACatalogWizardView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:wizardView];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJACatalogWizardUserDefaultsKey];
     }
 }
 

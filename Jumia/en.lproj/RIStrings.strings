@@ -225,3 +225,12 @@
 "fallback_best" = "best online shopping experience";
 "fallback_choice" = "THE WIDEST CHOICE";
 "fallback_doorstep" = "AT YOUR DOORSTEP";
+
+"got_it" = "Got it";
+"home_tip_text" = "Swipe left or right to change the category";
+"products_tip_swipe_text" = "Swipe left or right to change the Sort type";
+"tip_favourite_text" = "Click to favourite this product and view the full list  in My Profile!";
+"tip_share_text" = "Click to share this product!";
+"tip_swipe_text" = "Swipe left or right to\nview different images";
+"tip_tap_text" = "Tap to open the product gallery";
+
