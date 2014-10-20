@@ -481,6 +481,25 @@
 		BB9546A019F51F4800AC7D05 /* JAHomeWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E219F0050F00558B98 /* JAHomeWizardView.m */; };
 		BB9546A119F51F5700AC7D05 /* JAPDVWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E819F023CA00558B98 /* JAPDVWizardView.m */; };
 		BB9546A219F51FE400AC7D05 /* JAWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376DC19EFC1E800558B98 /* JAWizardView.m */; };
+		BB9546A319F5510D00AC7D05 /* multi_step.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A019DC56BF003F0CA7 /* multi_step.rb */; };
+		BB9546A419F5511200AC7D05 /* my_first_steps.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A119DC56BF003F0CA7 /* my_first_steps.rb */; };
+		BB9546A519F5511500AC7D05 /* env.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A919DC56BF003F0CA7 /* env.rb */; };
+		BB9546A619F5511900AC7D05 /* 02_pre_stop_hooks.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */; };
+		BB9546A719F5511C00AC7D05 /* 01_launch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A719DC56BF003F0CA7 /* 01_launch.rb */; };
+		BB9546A819F5512000AC7D05 /* navigation.rb in Resources */ = {isa = PBXBuildFile; fileRef = BB4F1BD319E2D4D600E89C3F /* navigation.rb */; };
+		BB9546A919F5512300AC7D05 /* wait.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A519DC56BF003F0CA7 /* wait.rb */; };
+		BB9546AA19F5512600AC7D05 /* touch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A319DC56BF003F0CA7 /* touch.rb */; };
+		BB9546AB19F5512E00AC7D05 /* keyboard.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459F19DC56BF003F0CA7 /* keyboard.rb */; };
+		BB9546AC19F5513600AC7D05 /* init.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459E19DC56BF003F0CA7 /* init.rb */; };
+		BB9546AD19F5513900AC7D05 /* assert.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459C19DC56BF003F0CA7 /* assert.rb */; };
+		BB9546AE19F5513C00AC7D05 /* calabash_steps.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459D19DC56BF003F0CA7 /* calabash_steps.rb */; };
+		BB9546AF19F5515900AC7D05 /* 12_product_details.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128EA619E30B650033514F /* 12_product_details.feature */; };
+		BB9546B019F5515F00AC7D05 /* 11_catalog.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128EA219E2FA410033514F /* 11_catalog.feature */; };
+		BB9546B119F5516700AC7D05 /* 06_email_notifications.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459A19DC56BF003F0CA7 /* 06_email_notifications.feature */; };
+		BB9546B219F5516C00AC7D05 /* 05_user_data.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */; };
+		BB9546B319F5517200AC7D05 /* 04_my_account.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459819DC56BF003F0CA7 /* 04_my_account.feature */; };
+		BB9546B419F5522B00AC7D05 /* 02_logout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459619DC56BF003F0CA7 /* 02_logout.feature */; };
+		BB9546B519F5522E00AC7D05 /* 01_login.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459519DC56BF003F0CA7 /* 01_login.feature */; };
 		BBA145AA19DC56BF003F0CA7 /* 01_login.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459519DC56BF003F0CA7 /* 01_login.feature */; };
 		BBA145AB19DC56BF003F0CA7 /* 02_logout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459619DC56BF003F0CA7 /* 02_logout.feature */; };
 		BBA145AD19DC56BF003F0CA7 /* 04_my_account.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459819DC56BF003F0CA7 /* 04_my_account.feature */; };
@@ -3118,6 +3137,8 @@
 				BBBA4CCE19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
 				BBBA4CC619E41F83004271B2 /* 15_my_favourites.feature in Resources */,
 				BBBA4CD219E43993004271B2 /* 18_track_order.feature in Resources */,
+				BB9546AA19F5512600AC7D05 /* touch.rb in Resources */,
+				BB9546A519F5511500AC7D05 /* env.rb in Resources */,
 				b365a00e2177f670dc255f4f /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib in Resources */,
 				69c7ac2a38a28dc5589a97ca /* JANavigationBarView.xib in Resources */,
 				94febd202fcef8b0aaefb6e4 /* RIStrings.strings in Resources */,
@@ -3125,13 +3146,16 @@
 				2eb6a67a027c66cc430443ee /* slider-metal-handle@2x.png in Resources */,
 				f3c773007f5219bb357baa4a /* JAStarsComponent.xib in Resources */,
 				c59c6a3e586330701722adde /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib in Resources */,
+				BB9546B219F5516C00AC7D05 /* 05_user_data.feature in Resources */,
 				8c80e586175eb9be57e6032b /* slider-default-handle-highlighted.png in Resources */,
+				BB9546AB19F5512E00AC7D05 /* keyboard.rb in Resources */,
 				BBB12A9519DD485400656529 /* 07_forgot_password.feature in Resources */,
 				56ef6f66787f1a1da2850bbd /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
 				650d04388e9ebf7643d08171 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
 				3d53d0ff180f7f9853dba337 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
 				dec4bb2dfe9e99286e5eec07 /* slider-default-trackBackground.png in Resources */,
 				279ac29e585d8633d4726208 /* JAPDVGalleryView.xib in Resources */,
+				BB9546A319F5510D00AC7D05 /* multi_step.rb in Resources */,
 				3c0ad639becc3ca29c25bcd2 /* JARadioComponent.xib in Resources */,
 				2a68cbeb778041d497796638 /* slider-default-handle@2x.png in Resources */,
 				9542b3bdd30fbe4bec186675 /* JAPDVSingleRelatedItem.xib in Resources */,
@@ -3139,6 +3163,7 @@
 				9fe40da6008fc103a0ca8cbb /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
 				9b90f481e8f399f6ca0356b9 /* JACheckBoxWithOptionsComponent.xib in Resources */,
 				0ae503a9046dc0361e776798 /* RITracking.plist in Resources */,
+				BB9546A619F5511900AC7D05 /* 02_pre_stop_hooks.rb in Resources */,
 				BBB12A9919DD874D00656529 /* 08_registration.feature in Resources */,
 				3683c8aeaaa69a884e004685 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
 				7b4b2932f0f6a2cb69aabbfc /* slider-metal-trackBackground.png in Resources */,
@@ -3155,8 +3180,11 @@
 				5cc300705aaa52eea15f030b /* slider-default-trackCrossedOver@2x.png in Resources */,
 				8d80dd9d7ee5aa27da772182 /* JAPaymentCell.xib in Resources */,
 				0ca0a735f32b59ed13f144a5 /* BMA4SiPhoneWebViewNotifView.xib in Resources */,
+				BB9546AD19F5513900AC7D05 /* assert.rb in Resources */,
+				BB9546A719F5511C00AC7D05 /* 01_launch.rb in Resources */,
 				bc498f82bcc9b32f500887de /* JACatalogGridCell.xib in Resources */,
 				3adbf3574d3dc5f8b2adb76f /* JATextFieldComponent.xib in Resources */,
+				BB9546B519F5522E00AC7D05 /* 01_login.feature in Resources */,
 				bf03e69fd5cb89aada2968fc /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */,
 				287b907897ac71738f12ec84 /* JASwitchCell.xib in Resources */,
 				8ef5430a40f35557c9e3eb94 /* JAUndefinedSearchView.xib in Resources */,
@@ -3170,8 +3198,10 @@
 				20fbc265756ff2fdb1b602dd /* slider-metal-track.png in Resources */,
 				81a5014f8866dce530164a99 /* JACheckBoxComponent.xib in Resources */,
 				4f946a6031dc658465b500d8 /* slider-default7-trackCrossedOver.png in Resources */,
+				BB9546B019F5515F00AC7D05 /* 11_catalog.feature in Resources */,
 				5fabf66fb80ebc6b30c67313 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				BBBA4CD519E44CDC004271B2 /* 19_filters.feature in Resources */,
+				BB9546A919F5512300AC7D05 /* wait.rb in Resources */,
 				2da4b3c8c2024a70f4aa68b3 /* slider-metal-handle-highlighted.png in Resources */,
 				a2b0dc6d9bc2f3b3589ff3a4 /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */,
 				fd3f76b9df6b0e66b3f3fa9c /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */,
@@ -3193,16 +3223,24 @@
 				ba137566e9c10c0927dfa9e5 /* JAMessageView.xib in Resources */,
 				ed6763c8490700c234cadbce /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */,
 				e1efb53ffcfdeb1283bc7d74 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
+				BB9546B419F5522B00AC7D05 /* 02_logout.feature in Resources */,
 				e68d4a8d58f0f15e0cdc4a34 /* slider-default7-track.png in Resources */,
 				BBBA4CCA19E42E9A004271B2 /* 16_recent_searches.feature in Resources */,
 				30c5e0f2e56744fd766c5c8c /* JARatingsView.xib in Resources */,
 				c420445e7d66919ded442ee4 /* JARecentlyViewedListCell.xib in Resources */,
 				ecded10b920d22a200c85616 /* JAAddressCell.xib in Resources */,
+				BB9546B119F5516700AC7D05 /* 06_email_notifications.feature in Resources */,
+				BB9546A419F5511200AC7D05 /* my_first_steps.rb in Resources */,
+				BB9546AF19F5515900AC7D05 /* 12_product_details.feature in Resources */,
 				61cfabf0628c374f78080c28 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
 				cc25950211e1df6cf12e953f /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
 				e5c2612fb2a7b831d10cc411 /* JACartListCell.xib in Resources */,
 				BBB12A9D19DDA01E00656529 /* 09_home.feature in Resources */,
+				BB9546AC19F5513600AC7D05 /* init.rb in Resources */,
 				BBBA4CBE19E3F764004271B2 /* 13_related_items.feature in Resources */,
+				BB9546AE19F5513C00AC7D05 /* calabash_steps.rb in Resources */,
+				BB9546A819F5512000AC7D05 /* navigation.rb in Resources */,
+				BB9546B319F5517200AC7D05 /* 04_my_account.feature in Resources */,
 				56f15b6e253bc2f40528064b /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
 				08ef99ddc54e22a84eeb2426 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
 				5b96210c79cb1f13300a1f62 /* Images.xcassets in Resources */,

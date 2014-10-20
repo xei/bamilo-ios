@@ -4,6 +4,7 @@ Feature: Catalog
 Background:
 * I call the variables
 * I wait for 5 seconds
+* I wait to see if the choose country screen shows
 * I verify if a promotion is showing
 * I wait to see the home
 * I wait for 1 seconds

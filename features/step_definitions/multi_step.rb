@@ -34,3 +34,15 @@ Then /^I make sure I am logged in$/ do
         #OK
     end
 end
+
+Then /^I wait to see if the choose country screen shows$/ do
+    #res = wait_for(:timeout => 5) { element_exists("view marked:'"+@choose_country+"'") }
+    res = query("view marked:'"+@choose_country+"'")
+    if res.to_s == "[]"
+        puts "not found"
+    else
+        puts "found"
+        touch("view marked:'Nigeria'")
+        touch("view marked:'"+@apply+"'")
+    end
+end
