@@ -237,4 +237,14 @@
 #define STRING_WIZARD_PDV_SWIPE RILocalizedString(@"tip_swipe_text", nil)
 #define STRING_WIZARD_PDV_TAP RILocalizedString(@"tip_tap_text", nil)
 
+#define STRING_FALLBACK_AUDIO RILocalizedString(@"fallback_audio_ios", nil)
+#define STRING_FALLBACK_BOOKS RILocalizedString(@"fallback_books", nil)
+#define STRING_FALLBACK_BOTTOM_1 RILocalizedString(@"fallback_bottom_text", nil)
+#define STRING_FALLBACK_BOTTOM_2 RILocalizedString(@"fallback_bottom_text2", nil)
+#define STRING_FALLBACK_FASHION RILocalizedString(@"fallback_fashion", nil)
+#define STRING_FALLBACK_HEALTH RILocalizedString(@"fallback_health_ios", nil)
+#define STRING_FALLBACK_HOME_OFFICE RILocalizedString(@"fallback_home_office_ios", nil)
+#define STRING_FALLBACK_MOBILE RILocalizedString(@"fallback_mobile", nil)
+#define STRING_FALLBACK_WELCOME RILocalizedString(@"fallback_welcome", nil)
+
 #endif
