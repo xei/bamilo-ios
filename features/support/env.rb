@@ -13,6 +13,10 @@ def initvars
     @wait_timeout = 5
     @wait_timeout_extra = 20
     
+    #choose country
+    @choose_country = "Choose Country"
+    @apply = "Apply"
+    
     #home
     @fashion = "Fashion"
     @popular_categories = "PopularCategories"
