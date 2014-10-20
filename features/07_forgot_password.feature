@@ -3,6 +3,8 @@ Feature: Login - Forgot Password
 
 Background:
 * I call the variables
+* I wait for 5 seconds
+* I wait to see if the choose country screen shows
 * I wait to see the home
 * I touch the hamburger
 * I wait to see the side menu
