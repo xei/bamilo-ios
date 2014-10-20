@@ -480,6 +480,7 @@
 		BB95469F19F51F2200AC7D05 /* JACatalogWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E519F015C600558B98 /* JACatalogWizardView.m */; };
 		BB9546A019F51F4800AC7D05 /* JAHomeWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E219F0050F00558B98 /* JAHomeWizardView.m */; };
 		BB9546A119F51F5700AC7D05 /* JAPDVWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E819F023CA00558B98 /* JAPDVWizardView.m */; };
+		BB9546A219F51FE400AC7D05 /* JAWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376DC19EFC1E800558B98 /* JAWizardView.m */; };
 		BBA145AA19DC56BF003F0CA7 /* 01_login.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459519DC56BF003F0CA7 /* 01_login.feature */; };
 		BBA145AB19DC56BF003F0CA7 /* 02_logout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459619DC56BF003F0CA7 /* 02_logout.feature */; };
 		BBA145AD19DC56BF003F0CA7 /* 04_my_account.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459819DC56BF003F0CA7 /* 04_my_account.feature */; };
@@ -3376,6 +3377,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB9546A219F51FE400AC7D05 /* JAWizardView.m in Sources */,
 				BB9546A119F51F5700AC7D05 /* JAPDVWizardView.m in Sources */,
 				BB9546A019F51F4800AC7D05 /* JAHomeWizardView.m in Sources */,
 				BB95469F19F51F2200AC7D05 /* JACatalogWizardView.m in Sources */,
