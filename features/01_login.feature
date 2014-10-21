@@ -12,6 +12,11 @@ Background:
 * I wait to see the login screen
 * I wait for 1 seconds
 
+Scenario: Logout
+* I touch the hamburger
+* I wait to see the side menu
+* I make sure I am logged out
+
 @login_ef
 Scenario: Login Empty Fields
 * I touch the Login button
