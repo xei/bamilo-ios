@@ -604,6 +604,8 @@
                                                                           26.0f)];
         [editButton setTitle:@"Edit" forState:UIControlStateNormal];
         [editButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+        [editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+        [editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];
         [editButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f]];
         [editButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
         [contentView addSubview:editButton];

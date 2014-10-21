@@ -120,7 +120,7 @@
     
     
     UIImage* buttonImageNormal = [UIImage imageNamed:@"orangeMedium_normal"];
-    UIImage* buttonImageHighlighted = [UIImage imageNamed:@"orangeMedium_highlighted"];
+    UIImage* buttonImageHighlighted = [UIImage imageNamed:@"orangeMedium_highlight"];
     UIImage* buttonImageDisabled = [UIImage imageNamed:@"orangeMedium_disabled"];
     self.sendReviewButton = [[UIButton alloc] initWithFrame:CGRectMake(6.0f,
                                                                        262.0f,
@@ -133,6 +133,7 @@
     self.sendReviewButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
     [self.sendReviewButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
     [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateHighlighted];
+    [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateSelected];
     [self.sendReviewButton setBackgroundImage:buttonImageDisabled forState:UIControlStateDisabled];
     [self.sendReviewButton addTarget:self action:@selector(sendReview:) forControlEvents:UIControlEventTouchUpInside];
     [self.centerView addSubview:self.sendReviewButton];

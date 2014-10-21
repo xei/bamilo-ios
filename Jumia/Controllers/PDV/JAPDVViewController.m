@@ -374,12 +374,9 @@ JAActivityViewControllerDelegate
     RIImage *image = [self.product.images firstObject];
     [self.imageSection.mainImage setImageWithURL:[NSURL URLWithString:image.url]
                                 placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(presentGallery)];
-    
-    self.imageSection.mainImage.userInteractionEnabled = YES;
-    [self.imageSection.mainImage addGestureRecognizer:tap];
+    [self.imageSection.imageClickableView addTarget:self
+                                             action:@selector(presentGallery)
+                                   forControlEvents:UIControlEventTouchUpInside];
     
     self.imageSection.productNameLabel.text = self.product.brand;
     self.imageSection.productDescriptionLabel.text = self.product.name;
