@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAClickableView.h"
 
 @interface JAAddNewAddressCell : UICollectionViewCell
+
+@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
 
 -(void)loadWithText:(NSString*)text;
 
