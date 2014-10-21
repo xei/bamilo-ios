@@ -28,7 +28,7 @@
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                         object:nil
-                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserImage.url,teaserImage.teaserDescription] forKeys:@[@"url",@"title"]]];
+                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserImage.url,teaserImage.teaserDescription,STRING_HOME] forKeys:@[@"url",@"title",@"show_back_button_title"]]];
 }
 
 - (void)teaserPressedWithTeaserText:(RITeaserText*)teaserText
