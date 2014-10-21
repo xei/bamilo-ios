@@ -58,7 +58,7 @@
                                               data:[trackingDictionary copy]];
     
     self.teaserCategoryScrollView.delegate = self;
-    self.teaserCategoryScrollView.startingIndex = 1;
+    self.teaserCategoryScrollView.startingIndex = 0;
     self.teaserPagesScrollView.pagingEnabled = YES;
     self.teaserPagesScrollView.scrollEnabled = NO;
     self.teaserPagesScrollView.delegate = self;
