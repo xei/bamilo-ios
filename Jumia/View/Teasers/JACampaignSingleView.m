@@ -255,32 +255,38 @@
 
 - (void)updateTimeLabelText:(NSInteger)elapsedTimeInSeconds
 {
-    NSInteger remainingSeconds = [self.campaign.remainingTime integerValue];
-    remainingSeconds -= elapsedTimeInSeconds;
-    
-    if (0 > remainingSeconds) {
-        remainingSeconds = 0;
+    if (ISEMPTY(self.campaign.remainingTime)) {
+        self.clockImageView.hidden = YES;
+        self.endLabel.hidden = YES;
+        self.timeLabel.hidden = YES;
+    } else {
+        NSInteger remainingSeconds = [self.campaign.remainingTime integerValue];
+        remainingSeconds -= elapsedTimeInSeconds;
         
-        self.offerEndedContent.hidden = NO;
-        self.buyButton.enabled = NO;
-        self.imageView.alpha = 0.6f;
+        if (0 > remainingSeconds) {
+            remainingSeconds = 0;
+            
+            self.offerEndedContent.hidden = NO;
+            self.buyButton.enabled = NO;
+            self.imageView.alpha = 0.6f;
+        }
+        
+        NSInteger days = remainingSeconds / (24 * 3600);
+        remainingSeconds = remainingSeconds % (24 * 3600); //keep the remainder
+        NSInteger hours = remainingSeconds / 3600;
+        remainingSeconds = remainingSeconds % 3600; //keep the remainder
+        NSInteger minutes = remainingSeconds / 60;
+        remainingSeconds = remainingSeconds % 60; //keep the remainder
+        
+        NSString* timeString = [NSString stringWithFormat:@"%02d:%02d:%02d",hours,minutes,remainingSeconds];
+        
+        if (days > 0) {
+            timeString = [NSString stringWithFormat:@"%02d:%@",days,timeString];
+        }
+        
+        self.timeLabel.text = timeString;
+        [self.timeLabel sizeToFit];
     }
-    
-    NSInteger days = remainingSeconds / (24 * 3600);
-    remainingSeconds = remainingSeconds % (24 * 3600); //keep the remainder
-    NSInteger hours = remainingSeconds / 3600;
-    remainingSeconds = remainingSeconds % 3600; //keep the remainder
-    NSInteger minutes = remainingSeconds / 60;
-    remainingSeconds = remainingSeconds % 60; //keep the remainder
-    
-    NSString* timeString = [NSString stringWithFormat:@"%02d:%02d:%02d",hours,minutes,remainingSeconds];
-    
-    if (days > 0) {
-        timeString = [NSString stringWithFormat:@"%02d:%@",days,timeString];
-    }
-
-    self.timeLabel.text = timeString;
-    [self.timeLabel sizeToFit];
 }
 
 - (void)buyButtonPressed
