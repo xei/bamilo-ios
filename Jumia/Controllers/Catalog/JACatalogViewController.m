@@ -15,14 +15,17 @@
 #import "RICustomer.h"
 #import "RIFilter.h"
 #import "JACatalogWizardView.h"
+#import "JAClickableView.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
 
 @interface JACatalogViewController ()
 
-@property (weak, nonatomic) IBOutlet UIButton *filterButton;
-@property (weak, nonatomic) IBOutlet UIButton *viewToggleButton;
+@property (weak, nonatomic) IBOutlet JAClickableView *filterButton;
+@property (weak, nonatomic) IBOutlet JAClickableView *viewToggleButton;
+@property (nonatomic, strong)UIImageView* viewToggleButtonIcon;
+@property (nonatomic, assign)BOOL gridSelected;
 @property (weak, nonatomic) IBOutlet JAPickerScrollView *sortingScrollView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *catalogTopButton;
@@ -69,6 +72,26 @@
             self.screenName = @"Catalog";
         }
     }
+    
+    UIImage* filterIcon = [UIImage imageNamed:@"filterIcon"];
+    UIImageView* filterIconView = [[UIImageView alloc] initWithImage:filterIcon];
+    [filterIconView setFrame:CGRectMake((self.filterButton.bounds.size.width - filterIcon.size.width) / 2,
+                                        (self.filterButton.bounds.size.height - filterIcon.size.height) / 2,
+                                        filterIcon.size.width,
+                                        filterIcon.size.height)];
+    filterIconView.center = self.filterButton.center;
+    [self.filterButton addSubview:filterIconView];
+    [self.filterButton addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImage* gridIcon = [UIImage imageNamed:@"gridIcon"];
+    self.viewToggleButtonIcon = [[UIImageView alloc] initWithImage:gridIcon];
+    [self.viewToggleButtonIcon setFrame:CGRectMake((self.viewToggleButton.bounds.size.width - gridIcon.size.width) / 2,
+                                                   (self.viewToggleButton.bounds.size.height - gridIcon.size.height) / 2,
+                                                   gridIcon.size.width,
+                                                   gridIcon.size.height)];
+    [self.viewToggleButton addSubview:self.viewToggleButtonIcon];
+    [self.viewToggleButton addTarget:self action:@selector(viewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.gridSelected = NO;
 
     [self setupViews];
     
@@ -646,8 +669,8 @@
         self.catalogTopButton.hidden = YES;
     }
     
-    if ((YES == self.viewToggleButton.selected && 7 <= indexPath.row) ||
-        (NO == self.viewToggleButton.selected && 5 <= indexPath.row)) {
+    if ((YES == self.gridSelected && 7 <= indexPath.row) ||
+        (NO == self.gridSelected && 5 <= indexPath.row)) {
         self.catalogTopButton.hidden = NO;
     }
     
@@ -661,7 +684,7 @@
     RIProduct *product = [productsArray objectAtIndex:indexPath.row];
     
     NSString *cellIdentifier;
-    if (self.viewToggleButton.selected) {
+    if (self.gridSelected) {
         cellIdentifier = @"gridCell";
     }else{
         cellIdentifier = @"listCell";
@@ -867,13 +890,17 @@
 - (IBAction)viewButtonPressed:(id)sender
 {
     //reverse selection
-    self.viewToggleButton.selected = !self.viewToggleButton.selected;
+    self.gridSelected = !self.gridSelected;
     
-    if (self.viewToggleButton.selected) {
+    UIImage* image;
+    if (self.gridSelected) {
+        image = [UIImage imageNamed:@"listIcon"];
         [self changeToGrid];
     } else {
+        image = [UIImage imageNamed:@"gridIcon"];
         [self changeToList];
     }
+    [self.viewToggleButtonIcon setImage:image];
 }
 
 - (IBAction)catalogTopButtonPressed:(id)sender
