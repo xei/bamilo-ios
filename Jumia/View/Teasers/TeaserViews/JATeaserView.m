@@ -42,7 +42,7 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushPDVWithUrl
                                                         object:nil
-                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserProduct.url] forKeys:@[@"url"]]];
+                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserProduct.url, STRING_HOME] forKeys:@[@"url", @"show_back_button_title"]]];
 }
 
 - (void)teaserPressedWithTitle:(NSString*)title
