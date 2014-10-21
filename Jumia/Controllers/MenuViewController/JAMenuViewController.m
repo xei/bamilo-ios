@@ -53,7 +53,7 @@ UIAlertViewDelegate
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelTotalCost;
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelDetails;
 @property (weak, nonatomic) IBOutlet UILabel *cartItensNumber;
-@property (weak, nonatomic) IBOutlet UIView *cartView;
+@property (weak, nonatomic) IBOutlet JAClickableView *cartView;
 @property (nonatomic, assign) CGFloat yOffset;
 
 // Handle external payment actions
@@ -110,9 +110,9 @@ UIAlertViewDelegate
                                                  name:kUpdateSideMenuCartNotification
                                                object:nil];
     
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cartViewPressed:)];
-    tapRecognizer.numberOfTapsRequired = 1;
-    [self.cartView addGestureRecognizer:tapRecognizer];
+    [self.cartView addTarget:self
+                      action:@selector(cartViewPressed:)
+            forControlEvents:UIControlEventTouchUpInside];
     self.cartLabelTitle.text = STRING_SHOPPING_CART;
     
     if(!VALID_NOTEMPTY(self.cart, RICart) || 0 == [[self.cart cartCount] integerValue])
