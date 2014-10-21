@@ -39,9 +39,9 @@ Then /^I wait to see if the choose country screen shows$/ do
     #res = wait_for(:timeout => 5) { element_exists("view marked:'"+@choose_country+"'") }
     res = query("view marked:'"+@choose_country+"'")
     if res.to_s == "[]"
-        puts "not found"
+        #puts "not found"
     else
-        puts "found"
+        #puts "found"
         touch("view marked:'Nigeria'")
         touch("view marked:'"+@apply+"'")
     end
