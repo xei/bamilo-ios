@@ -83,6 +83,13 @@
 + (NSString *)getCountryIsoInUse;
 
 /**
+ *  get the current country name
+ *
+ *  @return the country name
+ */
++ (NSString *)getCountryNameInUse;
+
+/**
  *  get the current country api information
  *
  *  @return the country api information

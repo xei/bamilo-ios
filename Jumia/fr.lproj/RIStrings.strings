@@ -233,3 +233,14 @@
 "tip_share_text" = "Cliquez pour Partager ce Produit!";
 "tip_swipe_text" = "Balayez vers la gauche ou la droite pour observer les différentes images";
 "tip_tap_text" = "Cliquez pour voir l\'ensemble \ndes images produit";
+
+"fallback_audio_ios" = "Son & Image";
+"fallback_books" = "Livres";
+"fallback_bottom_text" = "partout et à tout moment";
+"fallback_bottom_text2" = "Et beaucoup plus pour naviguer ou fair des achats";
+"fallback_fashion" = "Mode";
+"fallback_health_ios" = "Beauté & Santé";
+"fallback_home_office_ios" = "Maison & Jardin";
+"fallback_mobile" = "Téléphonie";
+"fallback_welcome" = "BIENVENUE";
+

@@ -575,6 +575,8 @@
 		CE55A4E71993672600EE75DE /* JARatingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55A4E61993672600EE75DE /* JARatingsView.m */; };
 		CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE55A4E819936B6300EE75DE /* JARatingsView.xib */; };
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
+		CE9193BD19F503FB00F89840 /* JAFallbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9193BC19F503FB00F89840 /* JAFallbackView.m */; };
+		CE9193BF19F5040E00F89840 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
 		CE97D2EE19AE1ED50090D01C /* JANavigationBarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */; };
 		CEC376D319EBCA5800558B98 /* JAClickableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376D219EBCA5800558B98 /* JAClickableView.m */; };
 		CEC376DD19EFC1E800558B98 /* JAWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376DC19EFC1E800558B98 /* JAWizardView.m */; };
@@ -1279,6 +1281,9 @@
 		CE55A4E819936B6300EE75DE /* JARatingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARatingsView.xib; sourceTree = "<group>"; };
 		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.1.xcdatamodel; sourceTree = "<group>"; };
+		CE9193BB19F503FB00F89840 /* JAFallbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFallbackView.h; sourceTree = "<group>"; };
+		CE9193BC19F503FB00F89840 /* JAFallbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAFallbackView.m; sourceTree = "<group>"; };
+		CE9193BE19F5040E00F89840 /* JAFallbackView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFallbackView.xib; sourceTree = "<group>"; };
 		CE97D2EC19AE1ED50090D01C /* JANavigationBarLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANavigationBarLayout.h; sourceTree = "<group>"; };
 		CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANavigationBarLayout.m; sourceTree = "<group>"; };
 		CEC376D119EBCA5700558B98 /* JAClickableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAClickableView.h; sourceTree = "<group>"; };
@@ -1736,6 +1741,7 @@
 		8C38E17F19CF164A0007F6F9 /* ErrorViews */ = {
 			isa = PBXGroup;
 			children = (
+				CE9193BA19F503FB00F89840 /* FallbackView */,
 				B524311C19EC1151001E532C /* MaintenancePage */,
 				4A19C51619D01AAD0070D194 /* NoConnectionView */,
 				8C38E18519CF16F50007F6F9 /* JAMessageView.h */,
@@ -2939,6 +2945,16 @@
 			path = Teasers;
 			sourceTree = "<group>";
 		};
+		CE9193BA19F503FB00F89840 /* FallbackView */ = {
+			isa = PBXGroup;
+			children = (
+				CE9193BB19F503FB00F89840 /* JAFallbackView.h */,
+				CE9193BC19F503FB00F89840 /* JAFallbackView.m */,
+				CE9193BE19F5040E00F89840 /* JAFallbackView.xib */,
+			);
+			path = FallbackView;
+			sourceTree = "<group>";
+		};
 		CEC376DA19EFC1D500558B98 /* Wizard */ = {
 			isa = PBXGroup;
 			children = (
@@ -3302,6 +3318,7 @@
 				B510B01619AE466B00A9754A /* JARadioComponent.xib in Resources */,
 				CEDEB9B2199BA8FA0022BAB5 /* slider-default-handle@2x.png in Resources */,
 				BBBA4CD819E45799004271B2 /* 20_cart.feature in Resources */,
+				CE9193BF19F5040E00F89840 /* JAFallbackView.xib in Resources */,
 				4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */,
 				BBA145AE19DC56BF003F0CA7 /* 05_user_data.feature in Resources */,
 				B59DCA7F19B88DDB00DE7960 /* JAAddNewAddressCell.xib in Resources */,
@@ -3712,6 +3729,7 @@
 				4AE730BE198F8ADF000CA1DD /* JAPDVRelatedItem.m in Sources */,
 				B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */,
 				B59DCA6119B710B100DE7960 /* RIRegion.m in Sources */,
+				CE9193BD19F503FB00F89840 /* JAFallbackView.m in Sources */,
 				B5A302D819811E9200F71726 /* RIProductReview.m in Sources */,
 				B5FBD57B19CAF22F00BD9510 /* AIActivityKind.m in Sources */,
 				CE44587C198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m in Sources */,

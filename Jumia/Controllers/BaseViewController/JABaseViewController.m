@@ -10,6 +10,7 @@
 #import "JAAppDelegate.h"
 #import "JANoConnectionView.h"
 #import "JAMaintenancePage.h"
+#import "JAFallbackView.h"
 
 @interface JABaseViewController ()
 

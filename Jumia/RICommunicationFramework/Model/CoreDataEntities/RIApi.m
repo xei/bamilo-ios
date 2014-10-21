@@ -194,6 +194,18 @@
     }
 }
 
++ (NSString *)getCountryNameInUse;
+{
+    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+    
+    if (0 == apiArray.count) {
+        return @"";
+    } else {
+        RIApi *api = [apiArray firstObject];
+        return api.countryName;
+    }
+}
+
 + (RIApi *)getApiInformation
 {
     NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
@@ -287,6 +299,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray* errorMessages) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             failureBlock(apiResponse, errorMessages);
         }];
     } else if ([section.name isEqualToString:@"forms"]) {
@@ -295,6 +308,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             failureBlock(apiResponse, errorMessage);
         }];
     }
@@ -305,6 +319,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             failureBlock(apiResponse, errorMessage);
         }];
     }
@@ -314,7 +329,7 @@
         [RIImageResolution loadImageResolutionsIntoDatabaseForCountry:url withSuccessBlock:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         }];
     }
     else if ([section.name isEqualToString:@"countryconfs"])
@@ -323,7 +338,7 @@
         [RICountry loadCountryConfigurationForCountry:url withSuccessBlock:^(RICountryConfiguration *configuration) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         }];
     }
     else if ([section.name isEqualToString:@"static_blocks"])
@@ -332,7 +347,7 @@
         [RIStaticBlockIndex loadStaticBlockIndexesIntoDatabaseForCountry:url withSuccessBlock:^(id staticBlockIndexes) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         }];
     }
 }
