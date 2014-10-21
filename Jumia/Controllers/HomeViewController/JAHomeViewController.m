@@ -15,6 +15,7 @@
 #import "JAPromotionPopUp.h"
 #import "JAAppDelegate.h"
 #import "JAHomeWizardView.h"
+#import "JAFallbackView.h"
 
 @interface JAHomeViewController ()
 
@@ -194,12 +195,14 @@
         }
         else
         {
-            BOOL noConnection = NO;
             if (RIApiResponseNoInternetConnection == apiResponse)
             {
-                noConnection = YES;
+                [self showErrorView:YES startingY:0.0f selector:@selector(completeTeasersLoading) objects:nil];
+            } else {
+                JAFallbackView* fallbackView = [JAFallbackView getNewJAFallbackView];
+                [fallbackView setupFallbackView:self.view.bounds];
+                [self.view addSubview:fallbackView];
             }
-            [self showErrorView:noConnection startingY:0.0f selector:@selector(completeTeasersLoading) objects:nil];
         }
     }];
 }
