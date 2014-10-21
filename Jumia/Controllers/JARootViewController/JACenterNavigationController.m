@@ -930,6 +930,12 @@
             pdv.showBackButton = [[notification.userInfo objectForKey:@"show_back_button"] boolValue];
         }
         
+        if([notification.userInfo objectForKey:@"show_back_button_title"])
+        {
+            pdv.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
+            pdv.showBackButton = YES;
+        }
+        
         [self pushViewController:pdv animated:YES];
     }
 }

@@ -118,7 +118,7 @@
             [productTeaserView addSubview:nameLabel];
             
             UILabel* priceLabel = [[UILabel alloc] init];
-            if (VALID_NOTEMPTY(teaserProduct.specialPrice, NSString)) {
+            if (VALID_NOTEMPTY(teaserProduct.specialPrice, NSNumber)) {
                 priceLabel.text = teaserProduct.specialPriceFormatted;
             } else {
                 priceLabel.text = teaserProduct.priceFormatted;

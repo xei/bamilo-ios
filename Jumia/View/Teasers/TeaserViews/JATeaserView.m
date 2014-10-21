@@ -28,7 +28,7 @@
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                         object:nil
-                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserImage.url,teaserImage.teaserDescription] forKeys:@[@"url",@"title"]]];
+                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserImage.url,teaserImage.teaserDescription,STRING_HOME] forKeys:@[@"url",@"title",@"show_back_button_title"]]];
 }
 
 - (void)teaserPressedWithTeaserText:(RITeaserText*)teaserText
@@ -42,7 +42,7 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushPDVWithUrl
                                                         object:nil
-                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserProduct.url] forKeys:@[@"url"]]];
+                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserProduct.url, STRING_HOME] forKeys:@[@"url", @"show_back_button_title"]]];
 }
 
 - (void)teaserPressedWithTitle:(NSString*)title

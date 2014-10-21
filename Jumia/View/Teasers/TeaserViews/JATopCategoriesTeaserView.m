@@ -97,7 +97,7 @@
                                                                             allCategoriesClickableView.bounds.origin.y,
                                                                             allCategoriesClickableView.bounds.size.width - JATopCategoriesTeaserViewHorizontalMargin*2,
                                                                             allCategoriesClickableView.bounds.size.height)];
-    allCategoriesLabel.text = self.groupTitle;
+    allCategoriesLabel.text = STRING_ALL_CATEGORIES;
     allCategoriesLabel.font = JATopCategoriesTeaserViewAllCategoriesCellFont;
     allCategoriesLabel.textColor = JATopCategoriesTeaserViewCellColor;
     [allCategoriesClickableView addSubview:allCategoriesLabel];

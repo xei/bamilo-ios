@@ -283,6 +283,8 @@
 {
     [self showLoading];
     
+    [self.ratingDynamicForm resignResponder];
+    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.ratingDynamicForm getValues]];
     
     for (JAStarsComponent *component in self.ratingStarsArray)

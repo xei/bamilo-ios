@@ -51,7 +51,6 @@
                     }
                 }
                 
-                //THIS IS THE ONLY CASE IN WHICH TARGET TYPE MATTERS.
                 //It will tell us what type of link the image has
                 if ([attributes objectForKey:@"target_type"]) {
                     NSString* targetTypeString = [attributes objectForKey:@"target_type"];
@@ -85,6 +84,13 @@
                         
                         [teaser addTeaserImagesObject:image];
                     }
+                }
+                
+                if ([attributes objectForKey:@"target_type"]) {
+                    NSString* targetTypeString = [attributes objectForKey:@"target_type"];
+                    NSNumberFormatter * f = [NSNumberFormatter new];
+                    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+                    teaser.targetType = [f numberFromString:targetTypeString];
                 }
             }
         }
@@ -131,6 +137,13 @@
                         image.teaser = teaser;
                         [teaser addTeaserImagesObject:image];
                     }
+                }
+                
+                if ([attributes objectForKey:@"target_type"]) {
+                    NSString* targetTypeString = [attributes objectForKey:@"target_type"];
+                    NSNumberFormatter * f = [NSNumberFormatter new];
+                    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+                    teaser.targetType = [f numberFromString:targetTypeString];
                 }
             }
             
