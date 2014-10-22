@@ -246,13 +246,10 @@ UIPickerViewDelegate
         
         [self hideLoading];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                            object:@{@"index": @(0),
-                                                                     @"name": STRING_HOME}];
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

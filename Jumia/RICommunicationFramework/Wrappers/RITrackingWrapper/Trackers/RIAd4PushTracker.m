@@ -866,9 +866,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 - (void)pushHomeViewController
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(0),
-                                                                 @"name": STRING_HOME }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
 #pragma mark - Auxiliar methods

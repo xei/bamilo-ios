@@ -141,16 +141,14 @@
 
 - (IBAction)pushUserData:(id)sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(50),
-                                                                 @"name": STRING_USER_DATA }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowUserDataScreenNotification
+                                                        object:@{@"animated":[NSNumber numberWithBool:YES]}];
 }
 
 - (IBAction)pushEmailNotifications:(id)sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(50),
-                                                                 @"name": STRING_USER_EMAIL_NOTIFICATIONS }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowEmailNotificationsScreenNotification
+                                                        object:@{@"animated":[NSNumber numberWithBool:YES]}];
 }
 
 -(void)showUserDataSavedMessage
