@@ -17,7 +17,7 @@ Background:
 * I wait for 1 seconds
 * I touch list item number 1
 * I wait to see the catalog
-* I touch collection view item number 1
+* I touch collection view item number 2
 * I wait for 2 seconds
 * I wait to see the product detail screen
 * I touch add to cart button

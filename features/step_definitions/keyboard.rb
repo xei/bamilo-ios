@@ -75,6 +75,7 @@ Then /^I enter the registration data with an already registred email$/ do
     keyboard_enter_text @valid_password
     done
     keyboard_enter_text @valid_password
+    done
     touch("view marked:'"+@newsletter+"'")
 end
 
@@ -95,6 +96,7 @@ Then /^I enter the registration data with different password$/ do
     keyboard_enter_text @valid_password
     done
     keyboard_enter_text @invalid_password
+    done
     touch("view marked:'"+@newsletter+"'")
 end
 

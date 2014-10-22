@@ -19,6 +19,7 @@ Scenario: Add to cart
 * I wait for 1 seconds
 * I touch list item number 1
 * I wait to see the catalog
+* I wait for 1 seconds
 * I touch collection view item number 1
 * I wait for 2 seconds
 * I wait to see the product detail screen
@@ -30,19 +31,6 @@ Scenario: Add to cart
 
 @cart_change
 Scenario: Change quantity
-* I touch the hamburger
-* I wait to see the side menu
-* I touch the catagories option
-* I wait for 1 seconds
-* I touch list item number 3
-* I wait for 1 seconds
-* I touch list item number 1
-* I wait to see the catalog
-* I touch collection view item number 1
-* I wait for 2 seconds
-* I wait to see the product detail screen
-* I touch add to cart button
-* I wait to see the product added message
 * I touch the cart button
 * I wait to see the cart screen
 * I wait to see the cart screen not empty
@@ -53,22 +41,11 @@ Scenario: Change quantity
 
 @cart_remove
 Scenario: Remove form Cart
-* I touch the hamburger
-* I wait to see the side menu
-* I touch the catagories option
-* I wait for 1 seconds
-* I touch list item number 3
-* I wait for 1 seconds
-* I touch list item number 1
-* I wait to see the catalog
-* I touch collection view item number 1
 * I wait for 2 seconds
-* I wait to see the product detail screen
-* I touch add to cart button
-* I wait to see the product added message
 * I touch the cart button
 * I wait to see the cart screen
 * I wait to see the cart screen not empty
+* I wait for 1 seconds
 * I touch the remove from cart button
 * I wait to see the shopping cart
 

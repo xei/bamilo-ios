@@ -29,7 +29,7 @@ Scenario: Registration Empty Fields
 Scenario: Registration Same Email
 * I enter the registration data with an already registred email
 * I touch the Register button
-* I wait to see the error please check your input fields
+* I wait to see the error
 
 @registration_dp
 Scenario: Registration Different Password
