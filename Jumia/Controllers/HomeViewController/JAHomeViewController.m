@@ -148,17 +148,20 @@
         CGFloat currentPageX = self.teaserPagesScrollView.bounds.origin.x;
         
         for (RITeaserCategory* teaserCategory in teaserCategories) {
-            [titles addObject:teaserCategory.homePageTitle];
-            
-            JATeaserPageView* teaserPageView = [[JATeaserPageView alloc] initWithFrame:CGRectMake(currentPageX,
-                                                                                                  self.teaserPagesScrollView.bounds.origin.y,
-                                                                                                  self.teaserPagesScrollView.bounds.size.width,
-                                                                                                  self.teaserPagesScrollView.bounds.size.height)];
-            teaserPageView.teaserCategory = teaserCategory;
-            [self.teaserPagesScrollView addSubview:teaserPageView];
-            [self.teaserPageViews addObject:teaserPageView];
-            
-            currentPageX += teaserPageView.frame.size.width;
+            if(VALID_NOTEMPTY(teaserCategory.homePageTitle, NSString))
+            {
+                [titles addObject:teaserCategory.homePageTitle];
+                
+                JATeaserPageView* teaserPageView = [[JATeaserPageView alloc] initWithFrame:CGRectMake(currentPageX,
+                                                                                                      self.teaserPagesScrollView.bounds.origin.y,
+                                                                                                      self.teaserPagesScrollView.bounds.size.width,
+                                                                                                      self.teaserPagesScrollView.bounds.size.height)];
+                teaserPageView.teaserCategory = teaserCategory;
+                [self.teaserPagesScrollView addSubview:teaserPageView];
+                [self.teaserPageViews addObject:teaserPageView];
+                
+                currentPageX += teaserPageView.frame.size.width;
+            }
         }
         
         [self.teaserCategoryScrollView setOptions:titles];
