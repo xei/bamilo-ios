@@ -138,13 +138,14 @@
                         [teaser addTeaserImagesObject:image];
                     }
                 }
-                
-                if ([attributes objectForKey:@"target_type"]) {
-                    NSString* targetTypeString = [attributes objectForKey:@"target_type"];
-                    NSNumberFormatter * f = [NSNumberFormatter new];
-                    [f setNumberStyle:NSNumberFormatterDecimalStyle];
-                    teaser.targetType = [f numberFromString:targetTypeString];
-                }
+
+                //DO NOT READ TARGET TYPE!!! It usually comes as 1 from API which means it should open a PDV but the link is for a catalog.
+//                if ([attributes objectForKey:@"target_type"]) {
+//                    NSString* targetTypeString = [attributes objectForKey:@"target_type"];
+//                    NSNumberFormatter * f = [NSNumberFormatter new];
+//                    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+//                    teaser.targetType = [f numberFromString:targetTypeString];
+//                }
             }
             
         }
