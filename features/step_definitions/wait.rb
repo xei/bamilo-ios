@@ -1,5 +1,5 @@
 Then /^I wait to see the home$/ do
-    wait_for_elements_exist("view marked:'"+@fashion+"'", :timeout => @wait_timeout_extra)
+    wait_for_elements_exist("view marked:'"+@fashion+"'", :timeout => @wait_timeout_a_lot)
 end
 
 Then /^I wait to see the side menu$/ do
@@ -111,7 +111,7 @@ Then /^I wait to see the categories$/ do
 end
 
 Then /^I wait to see the choose country screen$/ do
-    wait_for_elements_exist("view marked:'"+@change_country+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@choose_country+"'", :timeout => @wait_timeout)
 end
 
 Then /^I wait to see the my favourites screen$/ do

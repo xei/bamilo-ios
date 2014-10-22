@@ -83,3 +83,6 @@ Then /^I should see call to order button$/ do
     check_element_exists("view marked:'"+@call_to_order+"'")
 end
 
+Then /^I say the country$/ do
+    puts $country
+end

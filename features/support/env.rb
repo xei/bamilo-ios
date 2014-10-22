@@ -7,11 +7,23 @@ require 'calabash-cucumber/cucumber'
 # require 'calabash-cucumber/operations'
 # World(Calabash::Cucumber::Operations)
 
+$country = ENV['country']
+##FR - EG,CI,MA | EN - CM,GH,KE,NG,UG
+
 def initvars
     
     #init
     @wait_timeout = 5
     @wait_timeout_extra = 20
+    @wait_timeout_a_lot = 50
+    @country_cm = "Cameroun"
+    @country_eg = "Egypt"
+    @country_ci = "Côte d'ivoire"
+    @country_gh = "Ghana"
+    @country_ke = "Kenya"
+    @country_ma = "Maroc"
+    @country_ng = "Nigeria"
+    @country_ug = "Uganda"
     
     #choose country
     @choose_country = "Choose Country"
