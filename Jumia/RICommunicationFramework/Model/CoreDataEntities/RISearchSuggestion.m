@@ -183,7 +183,7 @@
                      successBlock:(void (^)(NSArray *results, NSArray *filters, NSNumber *productCount))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
-    query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    query = [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     BOOL discountMode = NO;
     for (RIFilter* filter in filters)
