@@ -75,8 +75,8 @@ Then /^I should see all the side menu options$/ do
     check_element_exists("view marked:'"+@recently_viewed+"'")
     check_element_exists("view marked:'"+@my_account+"'")
     check_element_exists("view marked:'"+@track_my_order+"'")
-    check_element_exists("view marked:'"+@change_country+"'")
-    check_element_exists("view marked:'"+@login+"'")
+    check_element_exists("view marked:'"+@choose_country+"'")
+    #check_element_exists("view marked:'"+@login+"'")
 end
 
 Then /^I should see call to order button$/ do

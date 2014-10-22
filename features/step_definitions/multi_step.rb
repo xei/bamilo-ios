@@ -28,7 +28,7 @@ Then /^I make sure I am logged in$/ do
         step "I enter the right email and password"
         step "I touch the Login button"
         step "I wait to see the home"
-        setp "I touch the hamburger"
+        step "I touch the hamburger"
     else
         #puts "Logout"
         #OK

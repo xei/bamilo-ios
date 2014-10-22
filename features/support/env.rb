@@ -95,6 +95,7 @@ def initvars
     @retype_password_2 = "Retype password"
     @newsletter = "Newsletter"
     @register = "Register"
+    @error = "Error"
     
     #new user data
     @first_name_text = "Tester"
