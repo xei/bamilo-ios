@@ -8,6 +8,7 @@
 
 #import "JAAppDelegate.h"
 #import "JARootViewController.h"
+#import "JAUtils.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <HockeySDK/HockeySDK.h>
 
@@ -15,12 +16,16 @@
 
 @interface JAAppDelegate ()
 
+@property (nonatomic, strong)NSDate *startLoadingTime;
+
 @end
 
 @implementation JAAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.startLoadingTime = [NSDate date];
+    
 #if defined(DEBUG) && DEBUG
     
 #if defined(STAGING) && STAGING
@@ -140,7 +145,22 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    self.startLoadingTime = [NSDate date];
+    
     [self checkSession];
+    
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    
+    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];    
+    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+
+    CGFloat duration = fabs([self.startLoadingTime timeIntervalSinceNow] * 1000);
+    
+    [trackingDictionary setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventOpenApp]
+                                              data:[trackingDictionary copy]];
 }
 
 #pragma mark - Push notification
