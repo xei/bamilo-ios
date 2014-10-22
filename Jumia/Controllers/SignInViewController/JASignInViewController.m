@@ -332,10 +332,7 @@ FBLoginViewDelegate
          }
          else
          {
-             
-             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                                 object:@{@"index": @(0),
-                                                                          @"name": STRING_HOME}];
+             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
          }
          
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
@@ -446,9 +443,19 @@ FBLoginViewDelegate
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                                                      object:nil];
                                                  
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                                                                     object:@{@"index": @(0),
-                                                                                                              @"name": STRING_HOME}];
+                                                 if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
+                                                 {
+                                                     [self.navigationController popViewControllerAnimated:NO];
+                                                     
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:self.nextNotification.name
+                                                                                                         object:self.nextNotification.object
+                                                                                                       userInfo:self.nextNotification.userInfo];
+                                                 }
+                                                 else
+                                                 {
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                                                 }
+                                                 
                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                  
                                                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
