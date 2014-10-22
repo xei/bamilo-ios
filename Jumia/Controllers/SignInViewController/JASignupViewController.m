@@ -249,7 +249,19 @@ UIPickerViewDelegate
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+        if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
+        {
+            [self.navigationController popViewControllerAnimated:NO];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:self.nextNotification.name
+                                                                object:self.nextNotification.object
+                                                              userInfo:self.nextNotification.userInfo];
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+        }
+        
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -297,8 +309,6 @@ UIPickerViewDelegate
 - (void)loginButtonPressed:(id)sender
 {
     [self.dynamicForm resignResponder];
-    
-    [self.navigationController popViewControllerAnimated:NO];
     
     NSMutableDictionary *userInfo = nil;
     
