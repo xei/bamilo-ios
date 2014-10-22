@@ -95,7 +95,7 @@ Then /^I wait to see the product detail screen$/ do
 end
 
 Then /^I wait to see the message review sent$/ do
-    wait_for_elements_exist("view marked:'"+@review_sent+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@review_sent+"'", :timeout => @wait_timeout_extra)
 end
 
 Then /^I wait to see the mail option$/ do
@@ -201,4 +201,8 @@ end
 
 Then /^I wait to see the countries$/ do
     wait_for_elements_exist("view marked:'Nigeria'", :timeout => @wait_timeout)
+end
+
+Then /^I wait to see the error$/ do
+    wait_for_elements_exist("view marked:'"+@error+"'")
 end

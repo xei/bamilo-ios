@@ -32,19 +32,26 @@ Scenario: Favorites
 @catalog_sort
 Scenario: Sorting
 * I swipe right
+* I wait for 1 seconds
 * I should see the filter best rating
 * I swipe left
 * I swipe left
+* I wait for 1 seconds
 * I should see the filter popularity
 * I swipe left
+* I wait for 1 seconds
 * I should see the filter new in
 * I swipe left
+* I wait for 1 seconds
 * I should see the filter price up
 * I swipe left
+* I wait for 1 seconds
 * I should see the filter price down
 * I swipe left
+* I wait for 1 seconds
 * I should see the filter name
 * I swipe left
+* I wait for 1 seconds
 * I should see the filter brand
 
 @catalog_up

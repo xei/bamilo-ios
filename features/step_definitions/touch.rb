@@ -110,7 +110,7 @@ Then /^I touch the categories$/ do
 end
 
 Then /^I touch the choose country option$/ do
-    touch("view marked:'"+@change_country+"'")
+    touch("view marked:'"+@choose_country+"'")
 end
 
 Then /^I touch the my favourites option$/ do
@@ -180,6 +180,7 @@ end
 
 Then /^I touch add to cart button$/ do
     touch("view marked:'"+@add_to_cart+"'")
+    sleep(1)
     res = element_exists("view marked:'"+@done+"'")
     if res == true
         touch("view marked:'"+@done+"'")
