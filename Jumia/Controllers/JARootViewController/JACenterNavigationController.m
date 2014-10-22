@@ -551,9 +551,15 @@
     {
         if (![topViewController isKindOfClass:[JAUserDataViewController class]])
         {
+            BOOL animated = NO;
+            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
+            {
+                animated = [[notification.object objectForKey:@"animated"] boolValue];
+            }
+        
             JAUserDataViewController *userData = [self.storyboard instantiateViewControllerWithIdentifier:@"userDataViewController"];
             
-            [self pushViewController:userData animated:NO];
+            [self pushViewController:userData animated:animated];
         }
     }
     else
@@ -578,9 +584,15 @@
     {
         if (![topViewController isKindOfClass:[JAEmailNotificationsViewController class]])
         {
+            BOOL animated = NO;
+            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
+            {
+                animated = [[notification.object objectForKey:@"animated"] boolValue];
+            }
+            
             JAEmailNotificationsViewController *email = [self.storyboard instantiateViewControllerWithIdentifier:@"emailNotificationsViewController"];
             
-            [self pushViewController:email animated:NO];
+            [self pushViewController:email animated:animated];
         }
     }
     else
