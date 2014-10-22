@@ -147,17 +147,19 @@
         newCategory.md5 = [json objectForKey:@"md5"];
     }
     
-    if ([json objectForKey:@"data"]) {
-        
+    if (VALID_NOTEMPTY([json objectForKey:@"data"], NSArray))
+    {
         NSArray *dataElements = [json objectForKey:@"data"];
         
-        for (NSDictionary *dic in dataElements) {
-            
-            RITeaserGroup *group = [RITeaserGroup parseTeaserGroup:dic countryConfiguration:countryConfiguration];
-            group.teaserCategory = newCategory;
-            
-            [newCategory addTeaserGroupsObject:group];
-            
+        for (NSDictionary *dic in dataElements)
+        {
+            if(VALID_NOTEMPTY(dic, NSDictionary))
+            {
+                RITeaserGroup *group = [RITeaserGroup parseTeaserGroup:dic countryConfiguration:countryConfiguration];
+                group.teaserCategory = newCategory;
+                
+                [newCategory addTeaserGroupsObject:group];
+            }
         }
     }
     
