@@ -26,9 +26,6 @@
 {
     [super viewDidLoad];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kDidFirstBuyKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
     self.shouldResizeLeftPanel = YES;
 
     //we need to allow panning for all view controllers

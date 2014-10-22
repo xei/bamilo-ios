@@ -85,6 +85,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [events addObject:[NSNumber numberWithInt:RIEventFacebookViewWishlist]];
         [events addObject:[NSNumber numberWithInt:RIEventFacebookViewCart]];
         [events addObject:[NSNumber numberWithInt:RIEventFacebookViewTransaction]];
+        [events addObject:[NSNumber numberWithInt:RIEventOpenApp]];
         
         self.registeredEvents = [events copy];
     }
@@ -125,8 +126,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     RIDebugLog(@"Adjust - Tracking event = %@, data %@", eventType, data);
     if([self.registeredEvents containsObject:eventType])
     {
-        NSDictionary *parameters = [self createParameters:data];
-        
+        BOOL amountOfTransactions = YES;
         NSString *eventKey = @"";
         NSInteger eventTypeInt = [eventType integerValue];
         switch (eventTypeInt) {
@@ -211,21 +211,43 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             case RIEventFacebookViewTransaction:
                 eventKey = @"29kvfe";
                 break;
+            case RIEventOpenApp:
+                eventKey = @"2x9nt2";
+                amountOfTransactions = NO;
+                break;
             default:
                 break;
         }
+        
+        NSDictionary *parameters = [self createParameters:data withAmountOfTransactions:amountOfTransactions];
         
         [Adjust trackEvent:eventKey withParameters:parameters];
     }
 }
 
-- (NSDictionary*)createParameters:(NSDictionary*)data
+- (NSDictionary*)createParameters:(NSDictionary*)data withAmountOfTransactions:(BOOL)amountOfTransactions
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters setObject:[data objectForKey:kRILaunchEventAppVersionDataKey] forKey:kAdjustEventAppVersionDataKey];
-    [parameters setObject:[data objectForKey:kRILaunchEventDeviceModelDataKey] forKey:kAdjustEventDeviceModelDataKey];
-    [parameters setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kAdjustEventShopCountryKey];
+    if(VALID_NOTEMPTY([data objectForKey:kRILaunchEventAppVersionDataKey], NSString))
+    {
+        [parameters setObject:[data objectForKey:kRILaunchEventAppVersionDataKey] forKey:kAdjustEventAppVersionDataKey];
+    }
     
+    if(VALID_NOTEMPTY([data objectForKey:kRILaunchEventDeviceModelDataKey], NSString))
+    {
+        [parameters setObject:[data objectForKey:kRILaunchEventDeviceModelDataKey] forKey:kAdjustEventDeviceModelDataKey];
+    }
+    
+    if(VALID_NOTEMPTY([data objectForKey:kRILaunchEventDurationDataKey], NSString))
+    {
+        [parameters setObject:[data objectForKey:kRILaunchEventDurationDataKey] forKey:kAdjustEventDurationDataKey];
+    }
+    
+    if(VALID_NOTEMPTY([data objectForKey:kRIEventShopCountryKey], NSString))
+    {
+        [parameters setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kAdjustEventShopCountryKey];
+    }
+        
     NSString *userId = [data objectForKey:kRIEventUserIdKey];
     if(VALID_NOTEMPTY(userId, NSString) && ![@"0" isEqualToString:userId])
     {
@@ -256,12 +278,15 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [parameters setObject:numberOfSessions forKey:kAdjustAmountSessionsKey];
     }
     
-    NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
-    if(!VALID_NOTEMPTY(numberOfPurchases, NSNumber))
+    if(amountOfTransactions)
     {
-        numberOfPurchases = [NSNumber numberWithInt:0];
+        NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
+        if(!VALID_NOTEMPTY(numberOfPurchases, NSNumber))
+        {
+            numberOfPurchases = [NSNumber numberWithInt:0];
+        }
+        [parameters setObject:[numberOfPurchases stringValue] forKey:kAdjustAmountTransactionsKey];
     }
-    [parameters setObject:[numberOfPurchases stringValue] forKey:kAdjustAmountTransactionsKey];
     
     NSString *gender = [data objectForKey:kRIEventGenderKey];
     if(VALID_NOTEMPTY(gender, NSString))
