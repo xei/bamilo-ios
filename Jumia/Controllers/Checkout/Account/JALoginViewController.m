@@ -663,6 +663,9 @@ FBLoginViewDelegate
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user
 {
+    if (loginView != self.facebookLoginView) {
+        return;
+    }
     if (![RICustomer checkIfUserIsLogged])
     {
         [self showLoading];
@@ -718,6 +721,9 @@ FBLoginViewDelegate
                                                  
                                                  [self hideLoading];
                                                  
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                                                                     object:nil];
+                                                 
                                                  if([RICustomer checkIfUserHasAddresses])
                                                  {
                                                      [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
@@ -726,9 +732,6 @@ FBLoginViewDelegate
                                                  }
                                                  else
                                                  {
-                                                     [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                                         object:nil];
-                                                     
                                                      NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
                                                      
                                                      [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification

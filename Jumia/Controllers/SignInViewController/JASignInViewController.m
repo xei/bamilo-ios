@@ -384,6 +384,9 @@ FBLoginViewDelegate
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user
 {
+    if (loginView != self.facebookLoginView) {
+        return;
+    }
     if (![RICustomer checkIfUserIsLogged])
     {
         [self showLoading];
