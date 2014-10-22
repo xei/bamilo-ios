@@ -24,6 +24,7 @@ Scenario: Dummy Search
 
 @recent_searches_rs
 Scenario: Touch a recent search
+* I wait for 1 seconds
 * I touch the table list item number 0
 * I wait to see the catalog
 
