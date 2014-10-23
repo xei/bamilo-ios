@@ -68,6 +68,21 @@ UITableViewDelegate
         cell.backgroundColor = UIColorFromRGB(0xf2f2f2);
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
         cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        //remove the clickable view
+        for (UIView* view in cell.subviews) {
+            if ([view isKindOfClass:[JAClickableView class]]) {
+                [view removeFromSuperview];
+            }
+        }
+        //add the new clickable view
+        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+        clickView.tag = indexPath.row;
+        [cell addSubview:clickView];
+        [clickView addTarget:self
+                      action:@selector(cellWasPressed:)
+            forControlEvents:UIControlEventTouchUpInside];
         
         if (VALID_NOTEMPTY(self.parentCategory, RICategory)) {
             
@@ -77,6 +92,7 @@ UITableViewDelegate
             
             cell.textLabel.text = [STRING_CATEGORIES uppercaseString];
             cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
+            clickView.enabled = NO;
         }
     } else {
         
@@ -105,21 +121,21 @@ UITableViewDelegate
         separator.tag = 69;
         separator.backgroundColor = JALabelGrey;
         [cell addSubview:separator];
-    }
-    
-    //remove the clickable view
-    for (UIView* view in cell.subviews) {
-        if ([view isKindOfClass:[JAClickableView class]]) {
-            [view removeFromSuperview];
+        
+        //remove the clickable view
+        for (UIView* view in cell.subviews) {
+            if ([view isKindOfClass:[JAClickableView class]]) {
+                [view removeFromSuperview];
+            }
         }
+        //add the new clickable view
+        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+        clickView.tag = indexPath.row;
+        [cell addSubview:clickView];
+        [clickView addTarget:self
+                      action:@selector(cellWasPressed:)
+            forControlEvents:UIControlEventTouchUpInside];
     }
-    //add the new clickable view
-    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-    clickView.tag = indexPath.row;
-    [cell addSubview:clickView];
-    [clickView addTarget:self
-                  action:@selector(cellWasPressed:)
-        forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
