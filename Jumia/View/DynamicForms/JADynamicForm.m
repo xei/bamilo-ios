@@ -70,6 +70,11 @@
     for (int i = 0; i < [fields count]; i++)
     {
         RIField *field = [fields objectAtIndex:i];
+        NSInteger tag = [self.formViews count];
+        if(-1 != birthdayFieldPosition)
+        {
+            tag++;
+        }
         
         if ([@"string" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
@@ -90,7 +95,6 @@
                 textField.frame = frame;
                 startingY += textField.frame.size.height;
                 
-                NSInteger tag = [self.formViews count];
                 [textField.textField setTag:tag];
                 [textField setTag:tag];
                 
@@ -111,7 +115,6 @@
             textField.frame = frame;
             startingY += textField.frame.size.height;
             
-            NSInteger tag = [self.formViews count];
             [textField.textField setTag:tag];
             [textField setTag:tag];
             
@@ -159,8 +162,7 @@
                 frame.origin.y = startingY;
                 textField.frame = frame;
                 startingY += textField.frame.size.height;
-                
-                NSInteger tag = [self.formViews count];
+  
                 [textField.textField setTag:tag];
                 [textField setTag:tag];
                 
@@ -182,7 +184,7 @@
                 radioComponent.frame = frame;
                 startingY += radioComponent.frame.size.height;
                 
-                NSInteger tag = [self.formViews count];
+
                 [radioComponent.textField setTag:tag];
                 [radioComponent setTag:tag];
                 
@@ -211,7 +213,6 @@
                 check.frame = frame;
                 startingY += check.frame.size.height;
                 
-                NSInteger tag = [self.formViews count];
                 [check setTag:tag];
                 [self.formViews addObject:check];
             }
@@ -227,7 +228,6 @@
                     checkWithOptions.frame = frame;
                     startingY += checkWithOptions.frame.size.height;
                     
-                    NSInteger tag = [self.formViews count];
                     [checkWithOptions setTag:tag];
                     [self.formViews addObject:checkWithOptions];
                 }
@@ -242,8 +242,7 @@
                     startingY += check.frame.size.height;
                     
                     check.labelText.text = field.label;
-                    
-                    NSInteger tag = [self.formViews count];
+
                     [check setTag:tag];
                     [self.formViews addObject:check];
                 }
