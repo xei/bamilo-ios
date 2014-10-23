@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAClickableView.h"
 
 @class RIShippingMethodPickupStationOption;
 
 @interface JAPickupStationInfoCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
 @property (strong, nonatomic) UIView *separator;
 @property (strong, nonatomic) UIView *lastSeparator;
 

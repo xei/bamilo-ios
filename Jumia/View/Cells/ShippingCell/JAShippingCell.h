@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAClickableView.h"
 
 @interface JAShippingCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIView *separator;
+@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
 
 -(void)loadWithShippingMethod:(NSString *)shippingMethod;
 
