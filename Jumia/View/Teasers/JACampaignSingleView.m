@@ -20,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 
 @property (weak, nonatomic) IBOutlet UILabel *discountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *offLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
@@ -85,9 +84,7 @@
     
     //TOP STUFF
     self.discountLabel.textColor = [UIColor whiteColor];
-    self.discountLabel.text = [NSString stringWithFormat:@"%d%%", [campaign.maxSavingPercentage integerValue]];
-    self.offLabel.textColor = [UIColor whiteColor];
-    self.offLabel.text = STRING_OFF;
+    self.discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF, [campaign.maxSavingPercentage integerValue]];
     
     self.titleLabel.textColor = UIColorFromRGB(0x666666);
     self.titleLabel.text = campaign.name;

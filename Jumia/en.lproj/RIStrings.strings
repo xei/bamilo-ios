@@ -200,7 +200,7 @@
 "campaign_save" = "You Save";
 "campaing_offer_ended" = "Offer Ended!";
 "campaing_timer_end" = "Ends in:";
-"off_label" = "OFF";
+"string_format_off_label" = "%d%% OFF";
 "campaigns_label" = "Campaigns";
 
 "product_specifications" = "Specification";
