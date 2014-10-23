@@ -36,7 +36,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
-                                       successBlock:(void (^)(id customer))successBlock
+                                       successBlock:(void (^)(RICustomer* customer, NSString* nextStep))successBlock
                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 /**
