@@ -540,6 +540,11 @@
     {
         JATrackMyOrderViewController *myOrderVC = [self.storyboard instantiateViewControllerWithIdentifier:@"jaTrackOrderViewController"];
         
+        NSString* orderNumber = notification.object;
+        if (VALID_NOTEMPTY(orderNumber, NSString)) {
+            myOrderVC.startingTrackOrderNumber = orderNumber;
+        }
+        
         [self popToRootViewControllerAnimated:NO];
         [self pushViewController:myOrderVC animated:NO];
     }
