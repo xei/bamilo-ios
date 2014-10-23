@@ -901,7 +901,14 @@ JAActivityViewControllerDelegate
     NSUInteger selectedRow = [self.picker.picker selectedRowInComponent:0];
     self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
     
-    [self.productInfoSection.sizeLabel setText:self.currentSimple.attributeSize];
+    NSString* option = self.currentSimple.attributeSize;
+    if (ISEMPTY(option)) {
+        option = self.currentSimple.color;
+        if (ISEMPTY(option)) {
+            option = self.currentSimple.variation;
+        }
+    }
+    [self.productInfoSection.sizeLabel setText:option];
     
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
