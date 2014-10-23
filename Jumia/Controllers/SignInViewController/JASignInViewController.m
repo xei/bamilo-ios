@@ -406,24 +406,22 @@ FBLoginViewDelegate
                                       @"gender": gender };
         
         [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                             successBlock:^(id customer) {
-                                                 
-                                                 RICustomer *customerObject = ((RICustomer *)customer);
+                                             successBlock:^(RICustomer* customer, NSString* nextStep) {
                                                  
                                                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                                                 [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
+                                                 [trackingDictionary setValue:customer.idCustomer forKey:kRIEventLabelKey];
                                                  [trackingDictionary setValue:@"FacebookLoginSuccess" forKey:kRIEventActionKey];
                                                  [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-                                                 [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
+                                                 [trackingDictionary setValue:customer.idCustomer forKey:kRIEventUserIdKey];
                                                  [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
                                                  [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                                                 [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
-                                                 [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+                                                 [trackingDictionary setValue:customer.gender forKey:kRIEventGenderKey];
+                                                 [trackingDictionary setValue:customer.createdAt forKey:kRIEventAccountDateKey];
                                                  
                                                  NSDate* now = [NSDate date];
                                                  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                                                  [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-                                                 NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+                                                 NSDate *dateOfBirth = [dateFormatter dateFromString:customer.birthday];
                                                  NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
                                                  [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
                                                  

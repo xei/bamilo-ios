@@ -53,7 +53,7 @@
                                           @"gender": customerObject.gender };
             
             [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                                 successBlock:^(id customer) {
+                                                 successBlock:^(RICustomer* customer, NSString* nextStep) {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
                                                          returnBlock(YES, customer);
                                                      });
@@ -153,9 +153,9 @@
 
 #pragma mark - Facebook Login
 
-+ (NSString*)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
-                                      successBlock:(void (^)(id customer))successBlock
-                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
++ (NSString *)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
+                                       successBlock:(void (^)(RICustomer* customer, NSString* nextStep))successBlock
+                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_FACEBOOK_LOGIN_CUSTOMER]]
                                                             parameters:parameters
@@ -169,7 +169,16 @@
                                                                   NSDictionary* userObject = [metadata objectForKey:@"user"];
                                                                   if (VALID_NOTEMPTY(userObject, NSDictionary))
                                                                   {
-                                                                      successBlock([self parseCustomerWithJson:userObject plainPassword:nil loginMethod:@"facebook"]);
+                                                                      NSString* nextStep = @"";
+                                                                      NSDictionary* nextStepJSON = [metadata objectForKey:@"native_checkout"];
+                                                                      if (VALID_NOTEMPTY(nextStepJSON, NSDictionary)) {
+                                                                          NSString* nextStepValue = [nextStepJSON objectForKey:@"next_step"];
+                                                                          if (VALID_NOTEMPTY(nextStepValue, NSString)) {
+                                                                              nextStep = nextStepValue;
+                                                                          }
+                                                                      }
+                                                                      
+                                                                      successBlock([self parseCustomerWithJson:userObject plainPassword:nil loginMethod:@"facebook"], nextStep);
                                                                   } else
                                                                   {
                                                                       failureBlock(apiResponse, nil);
