@@ -100,10 +100,18 @@
                                                                  options:kNilOptions
                                                                    error:&error];
     
-    if(nil != error || (nil != [responseJSON objectForKey:@"success"] && ![[responseJSON objectForKey:@"success"] boolValue])) {
+    if(VALID_NOTEMPTY(error, NSError) || ISEMPTY(responseJSON) || ISEMPTY([responseJSON objectForKey:@"success"]) || ![[responseJSON objectForKey:@"success"] boolValue]) {
         [[RIURLCacheWrapper sharedInstance] removeRequestFromLocalCache:[connection originalRequest]
                                                               cacheType:self.cacheType];
-        self.failureBlock(RIApiResponseMaintenancePage, responseJSON, nil);
+        
+        if(VALID_NOTEMPTY(responseJSON, NSDictionary) &&  (!ISEMPTY([responseJSON objectForKey:@"success"]) && ![[responseJSON objectForKey:@"success"] boolValue]))
+        {
+            self.failureBlock(RIApiResponseAPIError, responseJSON, nil);            
+        }
+        else
+        {
+            self.failureBlock(RIApiResponseMaintenancePage, responseJSON, nil);
+        }
     } else {
         self.successBlock(RIApiResponseSuccess, responseJSON);
     }
