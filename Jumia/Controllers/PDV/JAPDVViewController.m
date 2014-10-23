@@ -929,6 +929,8 @@ JAActivityViewControllerDelegate
 
 - (void)presentGallery
 {
+    [self.imageSection.imageClickableView setEnabled:NO];
+    
     self.gallery = [JAPDVGalleryView getNewJAPDVGalleryView];
     [self.gallery layoutSubviews];
     self.gallery.delegate = self;
@@ -951,6 +953,8 @@ JAActivityViewControllerDelegate
 
 - (void)dismissGallery
 {
+    [self.imageSection.imageClickableView setEnabled:YES];
+    
     CGRect tempFrame = self.gallery.frame;
     tempFrame.origin.y = [[[UIApplication sharedApplication] delegate] window].rootViewController.view.frame.size.height;
     
