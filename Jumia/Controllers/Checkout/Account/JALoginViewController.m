@@ -64,6 +64,7 @@ FBLoginViewDelegate
 @property (strong, nonatomic) UIView *facebookSignupSeparatorRightView;
 @property (strong, nonatomic) FBLoginView *facebookSingupView;
 @property (strong, nonatomic) UILabel *facebookSingupLabel;
+@property (nonatomic, assign) BOOL facebookAlreadyLogged;
 
 @property (assign, nonatomic) BOOL loadFailed;
 @property (assign, nonatomic) RIApiResponse apiResponse;
@@ -91,6 +92,8 @@ FBLoginViewDelegate
     self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;
+    
+    self.facebookAlreadyLogged = NO;
     
     [self setupViews];
     
@@ -663,9 +666,10 @@ FBLoginViewDelegate
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user
 {
-    if (loginView != self.facebookLoginView) {
+    if (loginView != self.facebookLoginView || YES == self.facebookAlreadyLogged) {
         return;
     }
+    self.facebookAlreadyLogged = YES;
     if (![RICustomer checkIfUserIsLogged])
     {
         [self showLoading];

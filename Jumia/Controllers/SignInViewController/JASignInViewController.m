@@ -30,6 +30,7 @@ FBLoginViewDelegate
 @property (strong, nonatomic) FBLoginView *facebookLoginView;
 @property (strong, nonatomic) UILabel *facebookLoginLabel;
 @property (assign, nonatomic) CGFloat loginViewCurrentY;
+@property (nonatomic, assign) BOOL facebookAlreadyLogged;
 
 @end
 
@@ -118,6 +119,8 @@ FBLoginViewDelegate
     [self.facebookLoginLabel setTextAlignment:NSTextAlignmentCenter];
     [self.facebookLoginView addSubview:self.facebookLoginLabel];
     [self.loginView addSubview:self.facebookLoginView];
+    
+    self.facebookAlreadyLogged = NO;
     
     self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginView.frame) + 6.0f;
 
@@ -382,9 +385,10 @@ FBLoginViewDelegate
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user
 {
-    if (loginView != self.facebookLoginView) {
+    if (loginView != self.facebookLoginView || YES == self.facebookAlreadyLogged) {
         return;
     }
+    self.facebookAlreadyLogged = YES;
     if (![RICustomer checkIfUserIsLogged])
     {
         [self showLoading];
