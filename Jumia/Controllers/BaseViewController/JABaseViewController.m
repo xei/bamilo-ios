@@ -215,10 +215,7 @@
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     
     JAMaintenancePage *maintenancePage = [JAMaintenancePage getNewJAMaintenancePage];
-    [maintenancePage setupMaintenancePage:CGRectMake(self.view.frame.origin.x,
-                                                     0.0f,
-                                                     self.view.frame.size.width,
-                                                     self.view.frame.size.height)];
+    [maintenancePage setupMaintenancePage:window.frame];
     [maintenancePage setRetryBlock:^(BOOL dismiss)
      {
          if([self respondsToSelector:selector])

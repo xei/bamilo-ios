@@ -235,8 +235,6 @@ void(^retryBock)(BOOL dismiss);
                                                    currentlyMaintenanceLabelRect.size.height + 2.0f)];
     [self addSubview:currentlyMaintenanceLabel];
     
-    
-#warning need to be replaced by RICountry map images; they should be saved in RIApi
     UIImage *mapImage = [UIImage imageNamed:@"jumiaMap"];
     UIImageView *mapImageview = [[UIImageView alloc] initWithImage:mapImage];
     
