@@ -37,10 +37,15 @@
         wizardLabel1.font = kJAWizardFont;
         wizardLabel1.textColor = kJAWizardFontColor;
         wizardLabel1.text = STRING_WIZARD_CATALOG_SWIPE;
-        [wizardLabel1 setFrame:CGRectMake(wizardPage1.bounds.origin.x + kJAWizardViewTextMargin,
-                                          CGRectGetMaxY(imageView1.frame) + kJAWizardViewTextMargin,
-                                          wizardPage1.bounds.size.width - kJAWizardViewTextMargin*2,
-                                          100.0f)];
+        
+        CGRect wizardLabe1Rect = [STRING_WIZARD_CATALOG_SWIPE boundingRectWithSize:CGSizeMake(wizardPage1.bounds.size.width - kJAWizardCatalog1TextHorizontalMargin*2, 1000.0f)
+                                                                           options:NSStringDrawingUsesLineFragmentOrigin
+                                                                        attributes:@{NSFontAttributeName:kJAWizardFont} context:nil];
+        
+        [wizardLabel1 setFrame:CGRectMake(wizardPage1.bounds.origin.x + kJAWizardCatalog1TextHorizontalMargin,
+                                          CGRectGetMaxY(imageView1.frame) + kJAWizardCatalog1ViewTextVerticalMargin,
+                                          wizardPage1.bounds.size.width - kJAWizardCatalog1TextHorizontalMargin*2,
+                                          wizardLabe1Rect.size.height)];
         [wizardPage1 addSubview:wizardLabel1];
         
         currentX += wizardPage1.frame.size.width;
@@ -54,7 +59,7 @@
         UIImage* image2 = [UIImage imageNamed:@"wizard_fav"];
         UIImageView* imageView2 = [[UIImageView alloc] initWithImage:image2];
         [imageView2 setFrame:CGRectMake(wizardPage2.bounds.size.width - image2.size.width - 15.0f,
-                                        kJAWizardViewImageGenericTopMargin,
+                                        kJAWizardViewImageGenericSmallTopMargin,
                                         imageView2.frame.size.width,
                                         imageView2.frame.size.height)];
         [wizardPage2 addSubview:imageView2];
@@ -65,10 +70,15 @@
         wizardLabel2.font = kJAWizardFont;
         wizardLabel2.textColor = kJAWizardFontColor;
         wizardLabel2.text = STRING_WIZARD_CATALOG_FAVORITE;
-        [wizardLabel2 setFrame:CGRectMake(wizardPage2.bounds.origin.x + kJAWizardViewTextMargin,
-                                          CGRectGetMaxY(imageView2.frame) + kJAWizardViewTextMargin,
-                                          wizardPage2.bounds.size.width - kJAWizardViewTextMargin*2,
-                                          100.0f)];
+        
+        CGRect wizardLabe2ect = [STRING_WIZARD_CATALOG_FAVORITE boundingRectWithSize:CGSizeMake(wizardPage1.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2, 1000.0f)
+                                                                             options:NSStringDrawingUsesLineFragmentOrigin
+                                                                          attributes:@{NSFontAttributeName:kJAWizardFont} context:nil];
+        
+        [wizardLabel2 setFrame:CGRectMake(wizardPage2.bounds.origin.x + kJAWizardCatalog2TextHorizontalMargin,
+                                          CGRectGetMaxY(imageView2.frame) + kJAWizardCatalog2ViewTextVerticalMargin,
+                                          wizardPage2.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2,
+                                          wizardLabe2ect.size.height)];
         [wizardPage2 addSubview:wizardLabel2];
         
         currentX += wizardPage2.frame.size.width;

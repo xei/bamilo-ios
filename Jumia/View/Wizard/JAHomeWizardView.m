@@ -28,14 +28,21 @@
         
         UILabel* wizardLabel = [[UILabel alloc] init];
         wizardLabel.textAlignment = NSTextAlignmentCenter;
-        wizardLabel.numberOfLines = -1;
+        wizardLabel.numberOfLines = 0;
         wizardLabel.font = kJAWizardFont;
         wizardLabel.textColor = kJAWizardFontColor;
         wizardLabel.text = STRING_WIZARD_HOME;
-        [wizardLabel setFrame:CGRectMake(wizardPage.bounds.origin.x + kJAWizardViewTextMargin,
-                                         CGRectGetMaxY(imageView.frame) + kJAWizardViewTextMargin,
-                                         wizardPage.bounds.size.width - kJAWizardViewTextMargin*2,
-                                         100.0f)];
+        [wizardLabel sizeToFit];
+        
+        CGRect wizardLabelRect = [STRING_WIZARD_HOME boundingRectWithSize:CGSizeMake( wizardPage.bounds.size.width - kJAWizardHomeTextHorizontalMargin*2, 1000.0f)
+                                                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                                               attributes:@{NSFontAttributeName:kJAWizardFont} context:nil];
+        
+        [wizardLabel setFrame:CGRectMake(wizardPage.bounds.origin.x + kJAWizardHomeTextHorizontalMargin,
+                                         CGRectGetMaxY(imageView.frame) + kJAWizardHomeViewTextVerticalMargin,
+                                         wizardPage.bounds.size.width - kJAWizardHomeTextHorizontalMargin*2,
+                                         wizardLabelRect.size.height)];
+        
         [wizardPage addSubview:wizardLabel];
     }
     return self;
