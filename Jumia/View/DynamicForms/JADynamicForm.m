@@ -615,8 +615,6 @@
 {
     BOOL textFieldShouldBeginEditing = YES;
     
-    self.currentTextField = textField;
-    
     UIView *view = [self viewWithTag:textField.tag];
     if([view respondsToSelector:@selector(cleanError)])
     {
@@ -631,6 +629,8 @@
     }
     else if([view isKindOfClass:[JABirthDateComponent class]])
     {
+        [self resignResponder];
+        
         textFieldShouldBeginEditing = NO;
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(openDatePicker:)]) {
@@ -639,12 +639,16 @@
     }
     else if([view isKindOfClass:[JARadioComponent class]])
     {
+        [self resignResponder];
+        
         textFieldShouldBeginEditing = NO;
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(openPicker:)]) {
             [self.delegate performSelector:@selector(openPicker:) withObject:[self viewWithTag:textField.tag]];
         }
     }
+    
+    self.currentTextField = textField;
     
     return textFieldShouldBeginEditing;
 }
