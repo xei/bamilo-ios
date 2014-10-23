@@ -63,6 +63,9 @@
                                         self.frame.size.height - 1.0f,
                                         self.frame.size.width,
                                         1.0f)];
+    
+    [self.clickableView setFrame:self.bounds];
+    self.clickableView.enabled = NO;
 }
 
 -(void)deselectPaymentMethod
@@ -79,6 +82,9 @@
                                         self.frame.size.height - 1.0f,
                                         self.frame.size.width,
                                         1.0f)];
+    
+    [self.clickableView setFrame:self.bounds];
+    self.clickableView.enabled = YES;
 }
 
 

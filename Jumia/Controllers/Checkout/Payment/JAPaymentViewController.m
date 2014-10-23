@@ -430,6 +430,9 @@ UITextFieldDelegate>
             JAPaymentCell *paymentListCell = (JAPaymentCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
             [paymentListCell loadWithPaymentMethod:paymentMethod paymentMethodView:[self.checkoutFormForPaymentMethod getPaymentMethodView:paymentMethod]];
             
+            paymentListCell.clickableView.tag = indexPath.row;
+            [paymentListCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
+            
             [paymentListCell deselectPaymentMethod];
             if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath) && indexPath.row == self.collectionViewIndexSelected.row)
             {
@@ -446,6 +449,11 @@ UITextFieldDelegate>
     }
     
     return cell;
+}
+
+- (void)clickViewSelected:(UIControl*)sender
+{
+    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
