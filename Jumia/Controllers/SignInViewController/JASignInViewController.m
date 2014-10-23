@@ -239,8 +239,6 @@ FBLoginViewDelegate
 {
     [self.dynamicForm resignResponder];
     
-    [self.navigationController popViewControllerAnimated:NO];
-    
     NSMutableDictionary *userInfo = nil;
     
     if(VALID_NOTEMPTY(self.nextNotification, NSNotification))

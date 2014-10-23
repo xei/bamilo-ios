@@ -83,7 +83,11 @@
     
     [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
     
-    BOOL userDidFirstBuy = [[[NSUserDefaults standardUserDefaults] objectForKey:kDidFirstBuyKey] boolValue];
+    BOOL userDidFirstBuy = NO;
+    if(VALID_NOTEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kDidFirstBuyKey], NSNumber))
+    {
+        userDidFirstBuy = [[[NSUserDefaults standardUserDefaults] objectForKey:kDidFirstBuyKey] boolValue];
+    }
 
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
@@ -195,7 +199,7 @@
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTransactionConfirm]
                                               data:[trackingDictionary copy]];
     
-    if([RICustomer wasSignup] && !userDidFirstBuy)
+    if(!userDidFirstBuy)
     {
         // Send customer event
         NSMutableDictionary *customerDictionary = [[NSMutableDictionary alloc] init];
@@ -268,17 +272,17 @@
         [ecommerceDictionary setValue:grandTotal forKey:kRIEcommerceTotalValueKey];
         [ecommerceDictionary setValue:convertedGrandTotal forKey:kRIEcommerceConvertedTotalValueKey];
         
-        if([RICustomer wasSignup] && !userDidFirstBuy)
+        if([RICustomer wasSignup])
         {
             [ecommerceDictionary setValue:[NSNumber numberWithBool:[RICustomer wasSignup]] forKey:kRIEcommerceGuestKey];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kDidFirstBuyKey];
-            [[NSUserDefaults standardUserDefaults] synchronize];
         }
         
         [ecommerceDictionary setValue:[ecommerceProductsArray copy] forKey:kRIEcommerceProducts];
 
-        [[RITrackingWrapper sharedInstance] trackCheckout:ecommerceDictionary];
+        [[RITrackingWrapper sharedInstance] trackCheckout:ecommerceDictionary];        
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kDidFirstBuyKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }];
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];

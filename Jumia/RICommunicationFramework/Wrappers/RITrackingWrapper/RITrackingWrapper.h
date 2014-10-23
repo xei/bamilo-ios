@@ -271,7 +271,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventCheckoutAddAddressFail = 63,
     RIEventCheckoutPaymentSuccess = 64,
     RIEventCheckoutPaymentFail = 65,
-    RIEventCloseApp = 66
+    RIEventCloseApp = 66,
+    RIEventOpenApp = 67
 };
 
 /**

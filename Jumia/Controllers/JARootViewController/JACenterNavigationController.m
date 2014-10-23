@@ -452,17 +452,18 @@
     {
         JASignInViewController *signInVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signInViewController"];
         
-        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSDictionary))
+        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
         {
             signInVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
             signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+            [self popViewControllerAnimated:NO];
         }
         else
         {
             signInVC.fromSideMenu = YES;
+            [self popToRootViewControllerAnimated:NO];
         }
         
-        [self popToRootViewControllerAnimated:NO];
         [self pushViewController:signInVC animated:NO];
     }
 }
@@ -475,17 +476,18 @@
     {
         JASignupViewController *signUpVC = [self.storyboard instantiateViewControllerWithIdentifier:@"signUpViewController"];
         
-        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSDictionary))
+        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
         {
             signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
             signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+            [self popViewControllerAnimated:NO];
         }
         else
         {
             signUpVC.fromSideMenu = YES;
+            [self popToRootViewControllerAnimated:NO];
         }
         
-        [self popToRootViewControllerAnimated:NO];
         [self pushViewController:signUpVC animated:NO];
     }
 }
