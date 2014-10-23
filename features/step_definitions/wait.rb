@@ -35,15 +35,15 @@ Then /^I wait to see the error empty fields$/ do
 end
 
 Then /^I wait to see the error password did not match$/ do
-    wait_for_elements_exist("view marked:'"+@error_password_not_match+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@error_password_not_match+"'", :timeout => @wait_timeout_extra)
 end
 
 Then /^I wait to see the error min 6 characters$/ do
-    wait_for_elements_exist("view marked:'"+@error_min_characters+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@error_min_characters+"'", :timeout => @wait_timeout_extra)
 end
 
 Then /^I wait to see the message password changed with success$/ do
-    wait_for_elements_exist("view marked:'"+@password_changed_success+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@password_changed_success+"'", :timeout => @wait_timeout_extra)
 end
 
 Then /^I wait to see the email notifications section$/ do
@@ -168,7 +168,7 @@ Then /^I wait to see the cart screen$/ do
 end
 
 Then /^I wait to see the error change password empty fields$/ do
-    wait_for_elements_exist("view marked:'"+@error_empty_fields_cp+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@error_empty_fields_cp+"'", :timeout => @wait_timeout_extra)
 end
 
 Then /^I wait see the error empty fields on forgot password$/ do

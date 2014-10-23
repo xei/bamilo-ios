@@ -62,5 +62,6 @@ Scenario: Add all items to cart
 * I make sure the size is selected
 * I touch the add all items to cart screen
 * I wait to see the empty favourites screen
+* I wait for 1 seconds
 * I touch the cart button
 * I wait to see the cart screen not empty

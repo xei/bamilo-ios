@@ -15,10 +15,10 @@ Scenario: Home section
 
 @home_pc
 Scenario: Popular Categories and Top Brands
-* I should see the popular categories
 * I swipe down inside home
 * I wait for 1 seconds
-* I should see the top brands
+* I should see the popular categories
+#* I should see the top brands
 
 @home_sb
 Scenario: Side Bar
