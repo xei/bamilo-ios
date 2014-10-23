@@ -31,7 +31,7 @@ def initvars
     
     #home
     @fashion = "Fashion"
-    @popular_categories = "PopularCategories"
+    @popular_categories = "Popular Categories"
     @top_brands = "Top Brands"
     @shop_now = "Shop Now"
     @cart_button = "btn cart"

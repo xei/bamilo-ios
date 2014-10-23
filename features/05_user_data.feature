@@ -9,6 +9,7 @@ Background:
 * I touch the hamburger
 * I wait to see the side menu
 * I make sure I am logged in
+* I wait for 1 seconds I wait to see the error change password empty fields
 * I touch my account option on side menu
 * I wait to see the my account screen
 * I wait for 1 seconds
