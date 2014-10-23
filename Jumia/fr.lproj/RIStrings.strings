@@ -200,7 +200,7 @@
 "campaign_save" = "Vous économisez";
 "campaing_offer_ended" = "Promo Expirée!";
 "campaing_timer_end" = "Se termine le:";
-"off_label" = "-";
+"string_format_off_label" = "-%d%%";
 "campaigns_label" = "Campaigns";
 
 "product_specifications" = "Caractéristiques";

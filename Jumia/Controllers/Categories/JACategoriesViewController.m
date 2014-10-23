@@ -202,6 +202,7 @@
             cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
             cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
             cell.accessoryType = UITableViewCellAccessoryNone;
+            clickView.enabled = NO;
             return cell;
         }
     }
