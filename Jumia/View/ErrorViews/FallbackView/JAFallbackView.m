@@ -141,7 +141,7 @@
                                                  self.secondSloganLabel2.frame.size.height)];
     [self addSubview:self.secondSloganLabel2];
     
-    UIImage* mapImage = [UIImage imageNamed:@"mapJumia"];
+    UIImage* mapImage = [UIImage imageNamed:@"jumiaMap"];
     self.mapImageView = [[UIImageView alloc] initWithImage:mapImage];
     self.mapImageView.center = self.center;
     [self addSubview:self.mapImageView];
