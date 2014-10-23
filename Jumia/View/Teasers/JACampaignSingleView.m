@@ -264,6 +264,7 @@
             remainingSeconds = 0;
             
             self.offerEndedContent.hidden = NO;
+            self.imageClickableView.enabled = NO;
             self.buyButton.enabled = NO;
             self.imageView.alpha = 0.6f;
         }
