@@ -267,7 +267,7 @@
         [ecommerceDictionary setValue:self.checkout.orderSummary.taxAmount forKey:kRIEcommerceTaxKey];
         
         NSNumber *grandTotal = self.checkout.orderSummary.grandTotal;
-        NSNumber *convertedGrandTotal = [NSNumber numberWithFloat:([grandTotal floatValue] * rate)];
+        NSNumber *convertedGrandTotal = [NSNumber numberWithFloat:([grandTotal floatValue] * 100 * rate)];
         
         [ecommerceDictionary setValue:grandTotal forKey:kRIEcommerceTotalValueKey];
         [ecommerceDictionary setValue:convertedGrandTotal forKey:kRIEcommerceConvertedTotalValueKey];
