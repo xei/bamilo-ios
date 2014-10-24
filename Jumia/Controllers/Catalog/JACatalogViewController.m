@@ -242,12 +242,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
     
-    if (self.undefinedView)
-    {
-        [self.undefinedView removeFromSuperview];
-        [self addUndefinedSearchView:self.undefinedBackup];
-    }
-    
     BOOL alreadyShowedWizardCatalog = [[NSUserDefaults standardUserDefaults] boolForKey:kJACatalogWizardUserDefaultsKey];
     if(alreadyShowedWizardCatalog == NO)
     {
@@ -1059,13 +1053,8 @@
 
 - (void)addUndefinedSearchView:(RIUndefinedSearchTerm *)undefSearch
 {
-    self.undefinedView = [JAUndefinedSearchView getNewJAUndefinedSearchView];
+    self.undefinedView = [[JAUndefinedSearchView alloc] initWithFrame:self.backupFrame];
     self.undefinedView.delegate = self;
-    CGRect frame = self.backupFrame;
-    frame.origin.y += 6;
-    frame.size.height -= 12;
-    
-    [self.undefinedView setFrame:frame];
     
     // Remove the existent components
     self.filterButton.userInteractionEnabled = NO;
@@ -1088,6 +1077,7 @@
     JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
     pdv.productUrl = productUrl;
     pdv.fromCatalogue = NO;
+    pdv.showBackButton = YES;
     pdv.previousCategory = self.category.name;
     pdv.delegate = self;
     pdv.category = self.category;
