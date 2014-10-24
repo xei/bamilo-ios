@@ -91,6 +91,9 @@
         option = simple.color;
         if (ISEMPTY(option)) {
             option = simple.variation;
+            if (ISEMPTY(option)) {
+                option = @"";
+            }
         }
     }
     
