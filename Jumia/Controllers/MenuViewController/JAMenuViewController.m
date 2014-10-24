@@ -388,6 +388,7 @@ UIAlertViewDelegate
                     {
                         __block NSString *custumerId = [RICustomer getCustomerId];
                         [[FBSession activeSession] closeAndClearTokenInformation];
+                        [FBSession setActiveSession:nil];
                         
                         [RICustomer logoutCustomerWithSuccessBlock:^
                          {
