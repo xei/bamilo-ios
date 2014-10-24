@@ -17,5 +17,3 @@ Scenario:
 * I wait for 5 seconds
 * I wait to see if the choose country screen shows and choose one
 * I wait to see the home
-
-

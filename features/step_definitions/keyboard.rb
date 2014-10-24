@@ -24,6 +24,7 @@ Then /^I enter the right email and wrong password$/ do
 end
 
 Then /^I enter passwords not matching$/ do
+    sleep(1)
     touch("view marked:'"+@password+"'")
     keyboard_enter_text @valid_password
     done
@@ -32,6 +33,7 @@ Then /^I enter passwords not matching$/ do
 end
 
 Then /^I enter passwords smaller than 6 characters$/ do
+    sleep(1)
     touch("view marked:'"+@password+"'")
     keyboard_enter_text @password_min_6
     done
@@ -40,6 +42,7 @@ Then /^I enter passwords smaller than 6 characters$/ do
 end
 
 Then /^I enter passwords matching$/ do
+    sleep(1)
     touch("view marked:'"+@password+"'")
     keyboard_enter_text @valid_password
     done

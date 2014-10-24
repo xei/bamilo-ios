@@ -495,41 +495,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     {
         eventKey = @"m1il3s";
     }
-
-    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceProducts], NSArray))
-    {
-        for(int i = 0; i < [[data objectForKey:kRIEcommerceProducts] count]; i++)
-        {
-            NSDictionary *product = [[data objectForKey:kRIEcommerceProducts] objectAtIndex:i];
-            if(VALID_NOTEMPTY(product, NSDictionary))
-            {
-                NSMutableDictionary *productDictionary = [[NSMutableDictionary alloc] init];
-                
-                if(VALID_NOTEMPTY([product objectForKey:kRIEventSkuKey], NSString))
-                {
-                    [productDictionary setObject:[product objectForKey:kRIEventSkuKey] forKey:kAdjustEventSkuKey];
-                }
-                
-                if(VALID_NOTEMPTY([product objectForKey:kRIEventPriceKey], NSString))
-                {
-                    [productDictionary setObject:[product objectForKey:kRIEventPriceKey] forKey:kAdjustEventPriceKey];
-                }
-                
-                if(VALID_NOTEMPTY([product objectForKey:kRIEventCurrencyCodeKey], NSString))
-                {
-                    [productDictionary setObject:[product objectForKey:kRIEventCurrencyCodeKey] forKey:kAdjustEventCurrencyKey];
-                }
-                
-                if(VALID_NOTEMPTY([product objectForKey:kRIEventQuantityKey], NSNumber))
-                {
-                    [productDictionary setObject:[product objectForKey:kRIEventQuantityKey] forKey:kAdjustEventQuantityKey];
-                }
-                
-                [parameters setObject:[productDictionary description] forKey:[NSString stringWithFormat:@"%@%d", kAdjustEventProductKey, (i+1)]];
-            }
-        }
-    }
-
+    
     [Adjust trackRevenue:[transactionValue floatValue] forEvent:eventKey withParameters:parameters];
 }
 

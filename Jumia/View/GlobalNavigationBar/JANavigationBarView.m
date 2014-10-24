@@ -229,7 +229,7 @@
     CGSize titleLabelTextSize = [titleLabelText sizeWithAttributes:titleLabelAttributes];
     if (titleLabelTextSize.width > titleLabelWidth)
     {
-        titleLabelWidth = self.frame.size.width - leftItemFrame.size.width - rightItemFrame.size.width - 6.0f;
+        titleLabelWidth = self.frame.size.width - leftItemFrame.size.width - rightItemFrame.size.width - 24.0f;
         titleLabelLeftMargin = (self.frame.size.width - titleLabelWidth) / 2 + 12.0;
     }
 

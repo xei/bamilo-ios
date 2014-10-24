@@ -106,11 +106,11 @@
     self.firstSloganLabel.numberOfLines = -1;
     self.firstSloganLabel.textAlignment = NSTextAlignmentCenter;
     self.firstSloganLabel.textColor = [UIColor blackColor];
-    self.firstSloganLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+    self.firstSloganLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
     self.firstSloganLabel.text = [NSString stringWithFormat:@"%@ %@", [RIApi getCountryNameInUse], STRING_BEST_SHOPPING_EXPERIENCE];
     [self.firstSloganLabel sizeToFit];
     [self.firstSloganLabel setFrame:CGRectMake(10.0f,
-                                               CGRectGetMaxY(self.logoImageView.frame) + 10.0f,
+                                               CGRectGetMaxY(self.logoImageView.frame) + 4.0f,
                                                self.bounds.size.width - 10.0f*2,
                                                self.firstSloganLabel.frame.size.height)];
     [self addSubview:self.firstSloganLabel];
@@ -131,7 +131,7 @@
     CGFloat startingSecondSloganX = (self.bounds.size.width - totalSecondSloganWidth) / 2;
     
     [self.secondSloganLabel1 setFrame:CGRectMake(startingSecondSloganX,
-                                                 CGRectGetMaxY(self.firstSloganLabel.frame) + 10.0f,
+                                                 CGRectGetMaxY(self.firstSloganLabel.frame) + 4.0f,
                                                  self.secondSloganLabel1.frame.size.width,
                                                  self.secondSloganLabel1.frame.size.height)];
     [self addSubview:self.secondSloganLabel1];

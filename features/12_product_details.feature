@@ -30,21 +30,21 @@ Scenario: Product Specifications
 * I should see the product features
 * I should see the product desctiption
 
-@pdv_ro
-Scenario: Review Overview
-* I scroll down
-* I touch the rate button
-* I should see the rating screen
+#@pdv_ro
+#Scenario: Review Overview
+#* I scroll down
+#* I touch the rate button
+#* I should see the rating screen
 
-@pdv_wr
-Scenario: Write Review
-* I scroll down
-* I touch the rate button
-* I should see the rating screen
-* I enter a review
-* I wait for 1 seconds
-* I touch send review button
-* I wait to see the message review sent
+#@pdv_wr
+#Scenario: Write Review
+#* I scroll down
+#* I touch the rate button
+#* I should see the rating screen
+#* I enter a review
+#* I wait for 1 seconds
+#* I touch send review button
+#* I wait to see the message review sent
 
 @pdv_sh
 Scenario: Share
