@@ -103,8 +103,7 @@
     NSString *cellIdentifier = @"filterCell";
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if ([self.filter.uid isEqualToString:@"color_family"]) {
+    if ([@"color_family" isEqualToString:self.filter.uid]) {
 
         if (ISEMPTY(cell)) {
             cell = [[JAColorFilterCell alloc] initWithReuseIdentifier:cellIdentifier];
