@@ -15,7 +15,10 @@
                  successBlock:(void (^)(NSArray *cities))successBlock
               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    url = [url stringByReplacingOccurrencesOfString:@"fk_customer_address_region" withString:regionId];
+    if(VALID_NOTEMPTY(regionId, NSString))
+    {
+        url = [url stringByReplacingOccurrencesOfString:@"fk_customer_address_region" withString:regionId];
+    }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
