@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="5ON-fF-LLy" customClass="JAPDVImageSection">
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="5ON-fF-LLy" customClass="JAPDVImageSection">
             <rect key="frame" x="0.0" y="0.0" width="308" height="251"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
