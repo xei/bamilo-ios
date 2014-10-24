@@ -266,7 +266,12 @@
     [ecommerceDictionary setValue:self.checkout.orderSummary.taxAmount forKey:kRIEcommerceTaxKey];
     
     NSNumber *grandTotal = self.cart.cartValue;
-    NSNumber *convertedGrandTotal = [NSNumber numberWithFloat:[self.cart.cartValueEuroConverted floatValue] * 100];
+
+    NSNumber *convertedGrandTotal = [NSNumber numberWithFloat:0.0f];
+    if(VALID_NOTEMPTY(self.cart.cartValueEuroConverted, NSNumber))
+    {
+        convertedGrandTotal = self.cart.cartValueEuroConverted;
+    }
     
     [ecommerceDictionary setValue:grandTotal forKey:kRIEcommerceTotalValueKey];
     [ecommerceDictionary setValue:convertedGrandTotal forKey:kRIEcommerceConvertedTotalValueKey];
