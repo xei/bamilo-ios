@@ -119,7 +119,7 @@ Then /^I wait to see the my favourites screen$/ do
 end
 
 Then /^I wait to see the empty favourites screen$/ do
-    wait_for_elements_exist("view marked:'"+@no_favourites_message+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@no_favourites_message+"'", :timeout => @wait_timeout_extra)
 end
 
 Then /^I wait to see the cart screen not empty$/ do
@@ -160,11 +160,11 @@ Then /^I wait to see the filters screen$/ do
 end
 
 Then /^I wait to see the product added message$/ do
-    wait_for_elements_exist("view marked:'"+@item_added_to_cart_message+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@item_added_to_cart_message+"'", :timeout => @wait_timeout_extra)
 end
 
 Then /^I wait to see the cart screen$/ do
-    wait_for_elements_exist("view marked:'"+@cart+"'", :timeout => @wait_timeout_extra)
+    wait_for_elements_exist("view marked:'"+@cart+"'", :timeout => @wait_timeout_a_lot)
 end
 
 Then /^I wait to see the error change password empty fields$/ do

@@ -74,3 +74,12 @@ Scenario: Call to Order
 * I touch the cart button
 * I wait to see the cart screen
 * I should see call to order button
+
+Scenario: Remove form Cart
+* I wait for 2 seconds
+* I touch the cart button
+* I wait to see the cart screen
+* I wait to see the cart screen not empty
+* I wait for 1 seconds
+* I touch the remove from cart button
+* I wait to see the shopping cart

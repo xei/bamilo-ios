@@ -65,3 +65,12 @@ Scenario: Add all items to cart
 * I wait for 1 seconds
 * I touch the cart button
 * I wait to see the cart screen not empty
+
+Scenario: Remove form Cart
+* I wait for 2 seconds
+* I touch the cart button
+* I wait to see the cart screen
+* I wait to see the cart screen not empty
+* I wait for 1 seconds
+* I touch the remove from cart button
+* I wait to see the shopping cart

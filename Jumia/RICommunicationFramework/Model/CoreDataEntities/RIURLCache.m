@@ -41,7 +41,10 @@
 }
 
 + (void)deleteCachedResponseForUrl:(NSString *)url {
-    [[RIDataBaseWrapper sharedInstance] deleteObject:[RIURLCache loadCachedResponseForUrl:url]];
+    if(VALID_NOTEMPTY(url, NSString) && VALID_NOTEMPTY([RIURLCache loadCachedResponseForUrl:url], RIURLCache))
+    {
+        [[RIDataBaseWrapper sharedInstance] deleteObject:[RIURLCache loadCachedResponseForUrl:url]];
+    }
 }
 
 #pragma mark - private method to create RIURLCache object

@@ -11,6 +11,7 @@ Background:
 * I touch the hamburger
 * I wait to see the side menu
 * I make sure I am logged in
+* I wait for 1 seconds
 * I touch the catagories option
 * I wait for 1 seconds
 * I touch list item number 3
