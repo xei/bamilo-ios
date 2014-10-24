@@ -35,7 +35,9 @@
  *
  *  @return the parsed RIProductSimple
  */
-+ (RIProductSimple *)parseProductSimple:(NSDictionary *)productSimpleJSON country:(RICountryConfiguration*)country;
++ (RIProductSimple *)parseProductSimple:(NSDictionary*)productSimpleJSON
+                                country:(RICountryConfiguration*)country
+                           variationKey:(NSString*)variationKey;
 
 /**
  *  Method to save an RIProductSimple in coredata

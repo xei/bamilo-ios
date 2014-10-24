@@ -17,7 +17,7 @@
 {
     NSString *countryListURL = RI_COUNTRIES_URL;
 #if defined(STAGING) && STAGING
-    countryListURL = [NSString stringWithFormat:@"%@/staging", RI_COUNTRIES_URL];
+//    countryListURL = [NSString stringWithFormat:@"%@/staging", RI_COUNTRIES_URL];
 #endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
