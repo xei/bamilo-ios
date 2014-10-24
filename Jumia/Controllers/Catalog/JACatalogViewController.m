@@ -22,6 +22,8 @@
 
 @interface JACatalogViewController ()
 
+@property (nonatomic, strong)JACatalogWizardView* wizardView;
+
 @property (weak, nonatomic) IBOutlet JAClickableView *filterButton;
 @property (weak, nonatomic) IBOutlet JAClickableView *viewToggleButton;
 @property (nonatomic, strong)UIImageView* viewToggleButtonIcon;
@@ -38,7 +40,6 @@
 @property (nonatomic, assign) RICatalogSorting sortingMethod;
 @property (nonatomic, strong) JAUndefinedSearchView *undefinedView;
 @property (nonatomic, strong) RIUndefinedSearchTerm *undefinedBackup;
-@property (assign, nonatomic) CGRect backupFrame;
 @property (assign, nonatomic) BOOL isFirstLoadTracking;
 @property (assign, nonatomic) BOOL isLoadingMoreProducts;
 @property (nonatomic, strong) NSString *searchSuggestionOperationID;
@@ -245,8 +246,8 @@
     BOOL alreadyShowedWizardCatalog = [[NSUserDefaults standardUserDefaults] boolForKey:kJACatalogWizardUserDefaultsKey];
     if(alreadyShowedWizardCatalog == NO)
     {
-        JACatalogWizardView* wizardView = [[JACatalogWizardView alloc] initWithFrame:self.view.bounds];
-        [self.view addSubview:wizardView];
+        self.wizardView = [[JACatalogWizardView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJACatalogWizardUserDefaultsKey];
     }
 }
@@ -400,8 +401,7 @@
                                                                                       self.navBarLayout.subTitle = @"0";
                                                                                       [self reloadNavBar];
                                                                                       self.undefinedBackup = undefSearchTerm;
-                                                                                      self.backupFrame = self.collectionView.frame;
-                                                                                      [self addUndefinedSearchView:undefSearchTerm];
+                                                                                      [self addUndefinedSearchView:undefSearchTerm frame:self.collectionView.frame];
                                                                                   } else
                                                                                   {
                                                                                       if(RIApiResponseMaintenancePage == apiResponse)
@@ -1052,8 +1052,9 @@
 #pragma mark - Add the undefined search view
 
 - (void)addUndefinedSearchView:(RIUndefinedSearchTerm *)undefSearch
+                         frame:(CGRect)frame
 {
-    self.undefinedView = [[JAUndefinedSearchView alloc] initWithFrame:self.backupFrame];
+    self.undefinedView = [[JAUndefinedSearchView alloc] initWithFrame:frame];
     self.undefinedView.delegate = self;
     
     // Remove the existent components
@@ -1068,6 +1069,8 @@
     
     [self.undefinedView setupWithUndefinedSearchResult:undefSearch
                                             searchText:self.searchString];
+    
+    [self.view bringSubviewToFront:self.wizardView];
 }
 
 #pragma mark - Undefined view delegate
