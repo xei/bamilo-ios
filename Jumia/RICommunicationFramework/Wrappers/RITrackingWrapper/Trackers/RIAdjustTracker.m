@@ -487,8 +487,10 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     }
     [parameters setObject:[numberOfPurchases stringValue]  forKey:kAdjustAmountTransactionsKey];
     
-    NSNumber *transactionValue = [data objectForKey:kRIEcommerceConvertedTotalValueKey];
-
+    NSNumber *convertedTransactionValue = [data objectForKey:kRIEcommerceConvertedTotalValueKey];
+    // IMPORTANT NOTE: Revenue values must be tracked in cent precision. Decimal separator is a dot ., not a comma! This means, that 1.0 represents 1 cent of revenue
+    CGFloat convertedTransactionValueFloat = [convertedTransactionValue floatValue] * 100.0f;
+    
     NSString *eventKey = @"jk6lja";
     NSNumber *guest = [data objectForKey:kRIEcommerceGuestKey];
     if(VALID_NOTEMPTY(guest, NSNumber) && [guest boolValue])
@@ -496,7 +498,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         eventKey = @"m1il3s";
     }
     
-    [Adjust trackRevenue:[transactionValue floatValue] forEvent:eventKey withParameters:parameters];
+    [Adjust trackRevenue:convertedTransactionValueFloat forEvent:eventKey withParameters:parameters];
 }
 
 #pragma mark AdjustDelegate
