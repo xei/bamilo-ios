@@ -59,12 +59,20 @@
         cartItem.priceFormatted = [RICountryConfiguration formatPrice:cartItem.price country:country];
     }
     
+    if (VALID_NOTEMPTY([info objectForKey:@"unit_price_euroConverted"], NSNumber)) {
+        cartItem.priceEuroConverted = [info objectForKey:@"unit_price_euroConverted"];
+    }
+    
     if (VALID_NOTEMPTY([info objectForKey:@"specialPrice"], NSNumber)) {
         cartItem.specialPrice = [info objectForKey:@"specialPrice"];
         cartItem.specialPriceFormatted = [RICountryConfiguration formatPrice:cartItem.specialPrice country:country];
         
         // If there is special price, we have a saving percentage
         cartItem.savingPercentage = [NSNumber numberWithDouble:(100 - ([cartItem.specialPrice doubleValue] / [cartItem.price doubleValue]) * 100)];
+    }
+    
+    if (VALID_NOTEMPTY([info objectForKey:@"specialPrice_euroConverted"], NSNumber)) {
+        cartItem.specialPriceEuroConverted = [info objectForKey:@"specialPrice_euroConverted"];
     }
     
     if (VALID_NOTEMPTY([info objectForKey:@"tax_amount"], NSNumber)) {

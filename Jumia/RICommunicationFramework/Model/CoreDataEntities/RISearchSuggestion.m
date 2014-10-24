@@ -493,6 +493,10 @@
                             product.maxPrice = [productDic objectForKey:@"max_price"];
                         }
                         
+                        if ([productDic objectForKey:@"max_price_euroConverted"]) {
+                            product.maxPriceEuroConverted = [productDic objectForKey:@"max_price_euroConverted"];
+                        }
+                        
                         if ([productDic objectForKey:@"max_savings_percentage"]) {
                             product.maxPercentageSaving = [productDic objectForKey:@"max_savings_percentage"];
                         }
@@ -501,6 +505,10 @@
                             product.price = [productDic objectForKey:@"price"];
                             product.priceFormatted = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
                                                                                  country:[RICountryConfiguration getCurrentConfiguration]];
+                        }
+                                                
+                        if ([productDic objectForKey:@"price_euroConverted"]) {
+                            product.priceEuroConverted = [productDic objectForKey:@"price_euroConverted"];
                         }
                         
                         if ([productDic objectForKey:@"brand"]) {

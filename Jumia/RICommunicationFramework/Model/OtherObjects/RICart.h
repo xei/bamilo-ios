@@ -14,20 +14,28 @@
 @property (strong, nonatomic) NSNumber *cartCount;
 @property (strong, nonatomic) NSNumber *cartValue;
 @property (strong, nonatomic) NSString *cartValueFormatted;
+@property (strong, nonatomic) NSNumber *cartValueEuroConverted;
 @property (strong, nonatomic) NSNumber *cartUnreducedValue;
 @property (strong, nonatomic) NSString *cartUnreducedValueFormatted;
 @property (strong, nonatomic) NSNumber *cartCleanValue;
 @property (strong, nonatomic) NSString *cartCleanValueFormatted;
+@property (strong, nonatomic) NSNumber *cartCleanValueEuroConverted;
 @property (strong, nonatomic) NSNumber *couponMoneyValue;
 @property (strong, nonatomic) NSString *couponMoneyValueFormatted;
+@property (strong, nonatomic) NSNumber *couponMoneyValueEuroConverted;
 @property (strong, nonatomic) NSNumber *extraCosts;
 @property (strong, nonatomic) NSString *extraCostsFormatted;
+@property (strong, nonatomic) NSNumber *extraCostsEuroConverted;
 @property (strong, nonatomic) NSNumber *shippingValue;
 @property (strong, nonatomic) NSString *shippingValueFormatted;
+@property (strong, nonatomic) NSNumber *shippingValueEuroConverted;
 @property (strong, nonatomic) NSNumber *vatValue;
 @property (strong, nonatomic) NSString *vatValueFormatted;
+@property (strong, nonatomic) NSNumber *vatValueEuroConverted;
 @property (strong, nonatomic) NSNumber *sumCosts;
+@property (strong, nonatomic) NSNumber *sumCostsEuroConverted;
 @property (strong, nonatomic) NSNumber *sumCostsValue;
+@property (strong, nonatomic) NSNumber *sumCostsValueEuroConverted;
 @property (strong, nonatomic) NSDictionary *priceRules;
 
 /**
