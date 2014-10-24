@@ -19,10 +19,12 @@
 @dynamic minDeliveryTime;
 @dynamic price;
 @dynamic priceFormatted;
+@dynamic priceEuroConverted;
 @dynamic quantity;
 @dynamic sku;
 @dynamic specialPrice;
 @dynamic specialPriceFormatted;
+@dynamic specialPriceEuroConverted;
 @dynamic stock;
 @dynamic product;
 
@@ -40,10 +42,20 @@
             newProductSimple.price = [NSNumber numberWithFloat:[[meta objectForKey:@"price"] floatValue]];
             newProductSimple.priceFormatted = [RICountryConfiguration formatPrice:newProductSimple.price country:country];
         }
+        
+        if ([meta objectForKey:@"price_euroConverted"]) {
+            newProductSimple.priceEuroConverted = [NSNumber numberWithFloat:[[meta objectForKey:@"price_euroConverted"] floatValue]];
+        }
+        
         if ([meta objectForKey:@"special_price"]) {
             newProductSimple.specialPrice = [NSNumber numberWithFloat:[[meta objectForKey:@"special_price"] floatValue]];
             newProductSimple.specialPriceFormatted = [RICountryConfiguration formatPrice:newProductSimple.specialPrice country:country];
         }
+        
+        if ([meta objectForKey:@"special_price_euroConverted"]) {
+            newProductSimple.specialPriceEuroConverted = [NSNumber numberWithFloat:[[meta objectForKey:@"special_price_euroConverted"] floatValue]];
+        }
+        
         if ([meta objectForKey:@"quantity"]) {
             newProductSimple.quantity = [meta objectForKey:@"quantity"];
         }

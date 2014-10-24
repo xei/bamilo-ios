@@ -28,15 +28,19 @@
 @dynamic idCatalogConfig;
 @dynamic maxPrice;
 @dynamic maxPriceFormatted;
+@dynamic maxPriceEuroConverted;
 @dynamic maxSavingPercentage;
 @dynamic maxSpecialPrice;
 @dynamic maxSpecialPriceFormatted;
+@dynamic maxSpecialPriceEuroConverted;
 @dynamic name;
 @dynamic price;
 @dynamic priceFormatted;
+@dynamic priceEuroConverted;
 @dynamic sku;
 @dynamic specialPrice;
 @dynamic specialPriceFormatted;
+@dynamic specialPriceEuroConverted;
 @dynamic sum;
 @dynamic url;
 @dynamic isNew;
@@ -262,18 +266,38 @@
             newProduct.maxPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price"] floatValue]];
             newProduct.maxPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
         }
+        
+        if ([dataDic objectForKey:@"max_price_euroConverted"]) {
+            newProduct.maxPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price_euroConverted"] floatValue]];
+        }
+        
         if ([dataDic objectForKey:@"price"]) {
             newProduct.price = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price"] floatValue]];
             newProduct.priceFormatted = [RICountryConfiguration formatPrice:newProduct.price country:country];
         }
+
+        if ([dataDic objectForKey:@"price_euroConverted"]) {
+            newProduct.priceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price_euroConverted"] floatValue]];
+        }
+
         if ([dataDic objectForKey:@"special_price"]) {
             newProduct.specialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price"] floatValue]];
             newProduct.specialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.specialPrice country:country];
         }
+        
+        if ([dataDic objectForKey:@"special_price_euroConverted"]) {
+            newProduct.specialPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price_euroConverted"] floatValue]];
+        }
+        
         if ([dataDic objectForKey:@"max_special_price"]) {
             newProduct.maxSpecialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price"] floatValue]];
             newProduct.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxSpecialPrice country:country];
         }
+        
+        if ([dataDic objectForKey:@"max_special_price_euroConverted"]) {
+            newProduct.maxSpecialPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price_euroConverted"] floatValue]];
+        }
+        
         if ([dataDic objectForKey:@"max_saving_percentage"]) {
             newProduct.maxSavingPercentage = [dataDic objectForKey:@"max_saving_percentage"];
         }

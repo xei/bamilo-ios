@@ -351,10 +351,22 @@
         }
     }
     
+    if ([json objectForKey:@"cartValue_euroConverted"]) {
+        if (![[json objectForKey:@"cartValue_euroConverted"] isKindOfClass:[NSNull class]]) {
+            cart.cartValueEuroConverted = [json objectForKey:@"cartValue_euroConverted"];
+        }
+    }
+    
     if ([json objectForKey:@"cartCleanValue"]) {
         if (![[json objectForKey:@"cartCleanValue"] isKindOfClass:[NSNull class]]) {
             cart.cartCleanValue = [json objectForKey:@"cartCleanValue"];
             cart.cartCleanValueFormatted = [RICountryConfiguration formatPrice:cart.cartCleanValue country:country];
+        }
+    }
+    
+    if ([json objectForKey:@"cartCleanValue_euroConverted"]) {
+        if (![[json objectForKey:@"cartCleanValue_euroConverted"] isKindOfClass:[NSNull class]]) {
+            cart.cartCleanValueEuroConverted = [json objectForKey:@"cartCleanValue_euroConverted"];
         }
     }
     
@@ -365,10 +377,22 @@
         }
     }
     
+    if ([json objectForKey:@"couponMoneyValue_euroConverted"]) {
+        if (![[json objectForKey:@"couponMoneyValue_euroConverted"] isKindOfClass:[NSNull class]]) {
+            cart.couponMoneyValueEuroConverted = [json objectForKey:@"couponMoneyValue_euroConverted"];
+        }
+    }
+    
     if ([json objectForKey:@"extra_costs"]) {
         if (![[json objectForKey:@"extra_costs"] isKindOfClass:[NSNull class]]) {
             cart.extraCosts = [json objectForKey:@"extra_costs"];
             cart.extraCostsFormatted = [RICountryConfiguration formatPrice:cart.extraCosts country:country];
+        }
+    }
+    
+    if ([json objectForKey:@"extra_costs_euroConverted"]) {
+        if (![[json objectForKey:@"extra_costs_euroConverted"] isKindOfClass:[NSNull class]]) {
+            cart.extraCostsEuroConverted = [json objectForKey:@"extra_costs_euroConverted"];
         }
     }
     
@@ -379,10 +403,22 @@
         }
     }
     
+    if ([json objectForKey:@"shipping_value_euroConverted"]) {
+        if (![[json objectForKey:@"shipping_value_euroConverted"] isKindOfClass:[NSNull class]]) {
+            cart.shippingValueEuroConverted = [json objectForKey:@"shipping_value_euroConverted"];
+        }
+    }
+    
     if ([json objectForKey:@"vat_value"]) {
         if (![[json objectForKey:@"vat_value"] isKindOfClass:[NSNull class]]) {
             cart.vatValue = [json objectForKey:@"vat_value"];
             cart.vatValueFormatted = [RICountryConfiguration formatPrice:cart.vatValue country:country];
+        }
+    }
+    
+    if ([json objectForKey:@"vat_value_euroConverted"]) {
+        if (![[json objectForKey:@"vat_value_euroConverted"] isKindOfClass:[NSNull class]]) {
+            cart.vatValueEuroConverted = [json objectForKey:@"vat_value_euroConverted"];
         }
     }
     
@@ -392,9 +428,21 @@
         }
     }
     
+    if ([json objectForKey:@"sum_costs_euroConverted"]) {
+        if (![[json objectForKey:@"sum_costs_euroConverted"] isKindOfClass:[NSNull class]]) {
+            cart.sumCostsEuroConverted = [json objectForKey:@"sum_costs_euroConverted"];
+        }
+    }
+
     if ([json objectForKey:@"sum_costs_value"]) {
         if (![[json objectForKey:@"sum_costs_value"] isKindOfClass:[NSNull class]]) {
             cart.sumCostsValue = [json objectForKey:@"sum_costs_value"];
+        }
+    }
+    
+    if ([json objectForKey:@"sum_costs_value_euroConverted"]) {
+        if (![[json objectForKey:@"sum_costs_value_euroConverted"] isKindOfClass:[NSNull class]]) {
+            cart.sumCostsValueEuroConverted = [json objectForKey:@"sum_costs_value_euroConverted"];
         }
     }
     

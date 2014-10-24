@@ -762,6 +762,7 @@
         
         JAThanksViewController *thanksVC = [self.storyboard instantiateViewControllerWithIdentifier:@"thanksViewController"];
         
+        thanksVC.cart = self.cart;
         thanksVC.checkout = [notification.userInfo objectForKey:@"checkout"];
         thanksVC.orderNumber = [notification.userInfo objectForKey:@"order_number"];
         
