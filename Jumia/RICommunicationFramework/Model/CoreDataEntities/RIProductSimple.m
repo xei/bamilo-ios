@@ -28,7 +28,7 @@
 @dynamic stock;
 @dynamic product;
 
-+ (RIProductSimple *)parseProductSimple:(NSDictionary*)productSimpleJSON country:(RICountryConfiguration*)country
++ (RIProductSimple *)parseProductSimple:(NSDictionary*)productSimpleJSON country:(RICountryConfiguration*)country variationKey:(NSString*)variationKey
 {
     RIProductSimple* newProductSimple = (RIProductSimple*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIProductSimple class])];
     
@@ -74,6 +74,12 @@
         if ([meta objectForKey:@"variation"]) {
             newProductSimple.variation = [meta objectForKey:@"variation"];
         }
+        if (VALID_NOTEMPTY(variationKey, NSString)) {
+            if ([meta objectForKey:variationKey]) {
+                newProductSimple.variation = [meta objectForKey:variationKey];
+            }
+        }
+        
         if ([meta objectForKey:@"color"]) {
             newProductSimple.color = [meta objectForKey:@"color"];
         }

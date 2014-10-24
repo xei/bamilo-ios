@@ -347,12 +347,25 @@
             newProduct.categoryIds = [NSOrderedSet orderedSetWithArray:[dataDic objectForKey:@"categories"]];
         }
         
+        __block NSString* variationKey = @"";
+            NSDictionary* uniques = [dataDic objectForKey:@"uniques"];
+            if (VALID_NOTEMPTY(uniques, NSDictionary)) {
+                NSDictionary *attributes = [uniques objectForKey:@"attributes"];
+                if (VALID_NOTEMPTY(attributes, NSDictionary)) {
+                    [attributes enumerateKeysAndObjectsUsingBlock:^(id key, NSString* obj, BOOL *stop) {
+                        if (VALID_NOTEMPTY(obj, NSString)) {
+                            variationKey = obj;
+                        }
+                    }];
+                }
+            }
+        
         if ([dataDic objectForKey:@"simples"]) {
             NSArray* productSimplesJSON = [dataDic objectForKey:@"simples"];
             for (NSDictionary* simpleJSON in productSimplesJSON) {
                 if (VALID_NOTEMPTY(simpleJSON, NSDictionary)) {
                     
-                    RIProductSimple* productSimple = [RIProductSimple parseProductSimple:simpleJSON country:country];
+                    RIProductSimple* productSimple = [RIProductSimple parseProductSimple:simpleJSON country:country variationKey:variationKey];
                     productSimple.product = newProduct;
                     [newProduct addProductSimplesObject:productSimple];
                 }
