@@ -21,6 +21,7 @@ Scenario: User Data Section
 
 @user_data_ef
 Scenario: Change Password Empty Fields
+* I wait for 1 seconds
 * I touch the Save button
 * I wait to see the error change password empty fields
 
