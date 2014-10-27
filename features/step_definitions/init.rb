@@ -2,11 +2,11 @@ Then /^I call the variables$/ do
     ##FR - EG,CI,MA | EN - CM,GH,KE,NG,UG
     puts $country
     case $country
-        when "EG","CI","MA"
+        when "CI","MA","CM"
             puts "FR"
-        when "CM","GH","KE","NG","UG"
+            initvars_fr
+        when "EG","GH","KE","NG","UG"
             puts "EN"
+            initvars
     end
-    
-    initvars
 end

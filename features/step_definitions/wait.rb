@@ -168,7 +168,7 @@ Then /^I wait to see the cart screen$/ do
 end
 
 Then /^I wait to see the error change password empty fields$/ do
-    wait_for_elements_exist("view marked:'"+@error_empty_fields_cp+"'", :timeout => @wait_timeout_extra)
+    wait_for_elements_exist("view marked:'"+@error_empty_fields_cp+"'", :timeout => @wait_timeout_a_lot)
 end
 
 Then /^I wait see the error empty fields on forgot password$/ do
