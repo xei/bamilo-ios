@@ -12,9 +12,7 @@
 @implementation RIProductSimple
 
 @dynamic attributePackageType;
-@dynamic attributeSize;
 @dynamic variation;
-@dynamic color;
 @dynamic maxDeliveryTime;
 @dynamic minDeliveryTime;
 @dynamic price;
@@ -71,17 +69,32 @@
         if ([meta objectForKey:@"min_delivery_time"]) {
             newProductSimple.minDeliveryTime = [meta objectForKey:@"min_delivery_time"];
         }
-        if ([meta objectForKey:@"variation"]) {
-            newProductSimple.variation = [meta objectForKey:@"variation"];
-        }
+ 
         if (VALID_NOTEMPTY(variationKey, NSString)) {
             if ([meta objectForKey:variationKey]) {
                 newProductSimple.variation = [meta objectForKey:variationKey];
             }
-        }
-        
-        if ([meta objectForKey:@"color"]) {
-            newProductSimple.color = [meta objectForKey:@"color"];
+            else if(VALID_NOTEMPTY([productSimpleJSON objectForKey:@"attributes"], NSDictionary) &&
+                    VALID_NOTEMPTY([[productSimpleJSON objectForKey:@"attributes"] objectForKey:@"size"], NSString))
+            {
+                newProductSimple.variation = [[productSimpleJSON objectForKey:@"attributes"] objectForKey:@"size"];
+            }
+            else if ([meta objectForKey:@"color"]) {
+                newProductSimple.variation = [meta objectForKey:@"color"];
+            }
+            else if ([meta objectForKey:@"variation"]) {
+                newProductSimple.variation = [meta objectForKey:@"variation"];
+            }
+            
+            NSString *variationString = [newProductSimple.variation lowercaseString];
+            if ([@"1" isEqualToString:variationString] ||
+                [@"," isEqualToString:variationString] ||
+                [@"..." isEqualToString:variationString] ||
+                [@"." isEqualToString:variationString] ||
+                [@"\u2026" isEqualToString:variationString] )
+            {
+                newProductSimple.variation = @"";
+            }
         }
     }
     
@@ -90,9 +103,6 @@
         
         if ([attributes objectForKey:@"package_type"]) {
             newProductSimple.attributePackageType = [attributes objectForKey:@"package_type"];
-        }
-        if ([attributes objectForKey:@"size"]) {
-            newProductSimple.attributeSize = [attributes objectForKey:@"size"];
         }
     }
     

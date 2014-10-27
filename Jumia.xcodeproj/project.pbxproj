@@ -882,6 +882,7 @@
 		B517FDF81982517300F65253 /* RICart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICart.m; sourceTree = "<group>"; };
 		B517FDFA198265AD00F65253 /* RICartItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICartItem.h; sourceTree = "<group>"; };
 		B517FDFB198265AD00F65253 /* RICartItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICartItem.m; sourceTree = "<group>"; };
+		B5181F4D19FE9C98006C5EC0 /* Model_1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.2.xcdatamodel; sourceTree = "<group>"; };
 		B5210E8719C4863400FDB0D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		B5210E8919C4863D00FDB0D1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		B5210E8A19C48F1700FDB0D1 /* JAStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAStrings.h; sourceTree = "<group>"; };
@@ -4508,10 +4509,11 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				B5181F4D19FE9C98006C5EC0 /* Model_1.2.xcdatamodel */,
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */;
+			currentVersion = B5181F4D19FE9C98006C5EC0 /* Model_1.2.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
