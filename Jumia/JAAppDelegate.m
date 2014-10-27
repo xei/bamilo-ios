@@ -42,16 +42,17 @@
 #endif
     
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug" ofType:@"plist"];
+    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
+                                                                       launchOptions:launchOptions];
 #else
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"dc297f584830db92a1047ba154dadb9e"];
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
     
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];
-#endif
-    
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
                                                                        launchOptions:launchOptions];
+#endif
     
     [FBLoginView class];
     
