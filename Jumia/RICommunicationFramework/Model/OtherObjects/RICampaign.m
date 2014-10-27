@@ -47,7 +47,7 @@
 @implementation RICampaign
 
 + (NSString *)getCampaignsWithUrl:(NSString*)url
-                     successBlock:(void (^)(NSArray* campaigns, NSString* bannerImageUrl))successBlock
+                     successBlock:(void (^)(NSString *name, NSArray* campaigns, NSString* bannerImageUrl))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
@@ -72,12 +72,13 @@
                                                                   }
                                                                   
                                                                   NSDictionary* campaign = [data objectForKey:@"campaign"];
+                                                                  NSString* name = [campaign objectForKey:@"name"];
                                                                   NSArray* campaignData = [campaign objectForKey:@"data"];
                                                                   
                                                                   if (VALID_NOTEMPTY(campaignData, NSArray)) {
                                                                       NSArray* campaignsArray = [RICampaign parseCampaigns:campaignData country:configuration];
                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                          successBlock(campaignsArray, bannerImageUrl);
+                                                                          successBlock(name, campaignsArray, bannerImageUrl);
                                                                       });
                                                                   }
                                                                   

@@ -26,12 +26,17 @@
     [self addSubview:self.scrollView];
     
     if (VALID_NOTEMPTY(campaignUrl, NSString)) {
-        [RICampaign getCampaignsWithUrl:campaignUrl successBlock:^(NSArray *campaigns, NSString* bannerImageUrl) {
+        [RICampaign getCampaignsWithUrl:campaignUrl successBlock:^(NSString* name, NSArray *campaigns, NSString* bannerImageUrl) {
             if (VALID_NOTEMPTY(bannerImageUrl, NSString)) {
                 self.bannerImageUrl = bannerImageUrl;
                 [self loadBanner];
             }
             self.campaigns = campaigns;
+            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(loadSuccessWithName:)]) {
+                [self.delegate loadSuccessWithName:name];
+            }
+            
             [self loadCampaignViews];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(loadFailedWithResponse:)]) {
