@@ -60,7 +60,7 @@
     for (int i = 0 ; i < dataSource.count ; i++) {
         RIProductSimple *simple = [dataSource objectAtIndex:i];
         
-        if ([simple.attributeSize isEqualToString:previousText]) {
+        if ([simple.variation isEqualToString:previousText]) {
             [self.picker selectRow:i
                        inComponent:0
                           animated:YES];
@@ -86,21 +86,15 @@
     RIProductSimple *simple = [self.dataSource objectAtIndex:row];
     UIColor *color = UIColorFromRGB(0x4e4e4e);
     
-    NSString* option = simple.attributeSize;
+    NSString* option = simple.variation;
     if (ISEMPTY(option)) {
-        option = simple.color;
-        if (ISEMPTY(option)) {
-            option = simple.variation;
-            if (ISEMPTY(option)) {
-                option = @"";
-            }
-        }
+        option = @"";
     }
     
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:option
                                                                                   attributes:@{NSForegroundColorAttributeName:color}];
     
-    NSInteger lenght = simple.attributeSize.length;
+    NSInteger lenght = simple.variation.length;
     
     UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light"
                                    size:22.0];

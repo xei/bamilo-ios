@@ -96,6 +96,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     NSError *error;
+    
     NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:self.mutableData
                                                                  options:kNilOptions
                                                                    error:&error];
