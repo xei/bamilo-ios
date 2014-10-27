@@ -9,6 +9,7 @@
 #import "JAGenericFilterViewController.h"
 #import "JAColorView.h"
 #import "JAColorFilterCell.h"
+#import "JAClickableView.h"
 
 @interface JAGenericFilterViewController ()
 
@@ -102,8 +103,7 @@
     NSString *cellIdentifier = @"filterCell";
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if ([self.filter.uid isEqualToString:@"color_family"]) {
+    if ([@"color_family" isEqualToString:self.filter.uid]) {
 
         if (ISEMPTY(cell)) {
             cell = [[JAColorFilterCell alloc] initWithReuseIdentifier:cellIdentifier];
@@ -142,9 +142,26 @@
     
     NSNumber* selected = [self.selectedIndexes objectAtIndex:indexPath.row];
     cell.accessoryView.hidden = ![selected boolValue];
+    
+    //remove the clickable view
+    for (UIView* view in cell.subviews) {
+        if ([view isKindOfClass:[JAClickableView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    //add the new clickable view
+    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+    clickView.tag = indexPath.row;
+    [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [cell addSubview:clickView];
 
     return cell;
 
+}
+
+- (void)cellWasPressed:(UIControl*)sender
+{
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

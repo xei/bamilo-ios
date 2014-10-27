@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -46,13 +47,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GNO-gj-m3T">
-                                <rect key="frame" x="278" y="10" width="24" height="24"/>
-                                <state key="normal" image="FavButton">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="selected" image="FavButtonPressed"/>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="img_badge_discount" translatesAutoresizingMaskIntoConstraints="NO" id="tRD-e6-mz8">
                                 <rect key="frame" x="272" y="71" width="26" height="14"/>
                             </imageView>
@@ -62,6 +56,17 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F7C-7V-oqg" userLabel="feedbackView" customClass="JAClickableView">
+                                <rect key="frame" x="0.0" y="-2" width="308" height="97"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GNO-gj-m3T">
+                                <rect key="frame" x="278" y="10" width="24" height="24"/>
+                                <state key="normal" image="FavButton">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="FavButtonPressed"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -82,6 +87,7 @@
                 <outlet property="discountImageView" destination="tRD-e6-mz8" id="Fps-NF-9fI"/>
                 <outlet property="discountLabel" destination="l2j-oQ-qLc" id="aWf-WN-Z5M"/>
                 <outlet property="favoriteButton" destination="GNO-gj-m3T" id="FQZ-M7-JPh"/>
+                <outlet property="feedbackView" destination="F7C-7V-oqg" id="VlQ-d7-Fqb"/>
                 <outlet property="nameLabel" destination="59B-cJ-eZ5" id="Lkn-Nb-JpH"/>
                 <outlet property="numberOfReviewsLabel" destination="Pym-ic-lum" id="OXz-Ah-utL"/>
                 <outlet property="productImageView" destination="Ies-sK-r7n" id="jnY-ak-tHR"/>
@@ -96,4 +102,9 @@
         <image name="ProductBadgeNew" width="48" height="48"/>
         <image name="img_badge_discount" width="26" height="14"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

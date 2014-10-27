@@ -205,7 +205,7 @@
 #define STRING_CAMPAIGN_SAVE RILocalizedString(@"campaign_save", nil)
 #define STRING_CAMPAIGN_OFFER_ENDED RILocalizedString(@"campaing_offer_ended", nil)
 #define STRING_CAMPAIGN_TIMER_END RILocalizedString(@"campaing_timer_end", nil)
-#define STRING_OFF RILocalizedString(@"off_label", nil)
+#define STRING_FORMAT_OFF RILocalizedString(@"string_format_off_label", nil)
 #define STRING_CAMPAIGNS RILocalizedString(@"campaigns_label", nil)
 
 #define STRING_GO_SHOP RILocalizedString(@"go_shop_text", nil)
@@ -221,5 +221,30 @@
 
 #define STRING_ERROR_SETTING_PAYMENT_METHOD RILocalizedString(@"string_error_setting_payment_method", nil)
 #define STRING_ERROR_SETTING_SHIPPING_METHOD RILocalizedString(@"string_error_setting_shipping_method", nil)
+
+#define STRING_MAINTENANCE RILocalizedString(@"fallback_maintenance", nil)
+#define STRING_CURRENTLY_IN_MAINTENANCE RILocalizedString(@"fallback_maintenance_text", nil)
+#define STRING_TRY_TO_BE_BRIEF RILocalizedString(@"fallback_maintenance_text_bottom", nil)
+#define STRING_BEST_SHOPPING_EXPERIENCE RILocalizedString(@"fallback_best", nil)
+#define STRING_WIDEST_CHOICE RILocalizedString(@"fallback_choice", nil)
+#define STRING_AT_YOUR_DOORSTEP RILocalizedString(@"fallback_doorstep", nil)
+
+#define STRING_GOT_IT RILocalizedString(@"got_it", nil)
+#define STRING_WIZARD_HOME RILocalizedString(@"home_tip_text", nil)
+#define STRING_WIZARD_CATALOG_SWIPE RILocalizedString(@"products_tip_swipe_text", nil)
+#define STRING_WIZARD_CATALOG_FAVORITE RILocalizedString(@"tip_favourite_text", nil)
+#define STRING_WIZARD_PDV_SHARE RILocalizedString(@"tip_share_text", nil)
+#define STRING_WIZARD_PDV_SWIPE RILocalizedString(@"tip_swipe_text", nil)
+#define STRING_WIZARD_PDV_TAP RILocalizedString(@"tip_tap_text", nil)
+
+#define STRING_FALLBACK_AUDIO RILocalizedString(@"fallback_audio_ios", nil)
+#define STRING_FALLBACK_BOOKS RILocalizedString(@"fallback_books", nil)
+#define STRING_FALLBACK_BOTTOM_1 RILocalizedString(@"fallback_bottom_text", nil)
+#define STRING_FALLBACK_BOTTOM_2 RILocalizedString(@"fallback_bottom_text2", nil)
+#define STRING_FALLBACK_FASHION RILocalizedString(@"fallback_fashion", nil)
+#define STRING_FALLBACK_HEALTH RILocalizedString(@"fallback_health_ios", nil)
+#define STRING_FALLBACK_HOME_OFFICE RILocalizedString(@"fallback_home_office_ios", nil)
+#define STRING_FALLBACK_MOBILE RILocalizedString(@"fallback_mobile", nil)
+#define STRING_FALLBACK_WELCOME RILocalizedString(@"fallback_welcome", nil)
 
 #endif

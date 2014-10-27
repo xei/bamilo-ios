@@ -28,19 +28,23 @@
 @dynamic idCatalogConfig;
 @dynamic maxPrice;
 @dynamic maxPriceFormatted;
+@dynamic maxPriceEuroConverted;
 @dynamic maxSavingPercentage;
 @dynamic maxSpecialPrice;
 @dynamic maxSpecialPriceFormatted;
+@dynamic maxSpecialPriceEuroConverted;
 @dynamic name;
 @dynamic price;
 @dynamic priceFormatted;
+@dynamic priceEuroConverted;
 @dynamic sku;
 @dynamic specialPrice;
 @dynamic specialPriceFormatted;
+@dynamic specialPriceEuroConverted;
 @dynamic sum;
 @dynamic url;
 @dynamic isNew;
-@dynamic isFavorite;
+@dynamic favoriteAddDate;
 @dynamic recentlyViewedDate;
 @dynamic images;
 @dynamic productSimples;
@@ -104,27 +108,39 @@
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
+                             filterType:(NSString*)filterType
+                            filterValue:(NSString*)filterValue
                            successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    BOOL discountMode = NO;
-    for (RIFilter* filter in filters) {
-        for (RIFilterOption* filterOption in filter.options) {
-            if (filterOption.discountOnly) {
-                discountMode = YES;
-                break;
+    NSString* fullUrl = @"";
+    NSString *filtersString = @"";
+
+    if(VALID_NOTEMPTY(filterType, NSString) && VALID_NOTEMPTY(filterValue, NSString))
+    {
+        filtersString = [NSString stringWithFormat:@"%@=%@", filterType, filterValue];
+    }
+    else
+    {
+        BOOL discountMode = NO;
+        for (RIFilter* filter in filters) {
+            for (RIFilterOption* filterOption in filter.options) {
+                if (filterOption.discountOnly) {
+                    discountMode = YES;
+                    break;
+                }
             }
         }
-    }
-    if (discountMode) {
-        NSString* countryUrl = [RIApi getCountryUrlInUse];
-        NSString* endingUrl = [url stringByReplacingOccurrencesOfString:countryUrl withString:@""];
-        endingUrl = [endingUrl stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
-        url = [NSString stringWithFormat:@"%@%@special-price/%@", countryUrl, RI_API_VERSION, endingUrl];
+        if (discountMode) {
+            NSString* countryUrl = [RIApi getCountryUrlInUse];
+            NSString* endingUrl = [url stringByReplacingOccurrencesOfString:countryUrl withString:@""];
+            endingUrl = [endingUrl stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
+            url = [NSString stringWithFormat:@"%@%@special-price/%@", countryUrl, RI_API_VERSION, endingUrl];
+        }
+        
+        filtersString = [RIFilter urlWithFiltersArray:filters];
     }
     
-    NSString* fullUrl = @"";
-    NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
         fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
@@ -250,18 +266,38 @@
             newProduct.maxPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price"] floatValue]];
             newProduct.maxPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
         }
+        
+        if ([dataDic objectForKey:@"max_price_euroConverted"]) {
+            newProduct.maxPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price_euroConverted"] floatValue]];
+        }
+        
         if ([dataDic objectForKey:@"price"]) {
             newProduct.price = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price"] floatValue]];
             newProduct.priceFormatted = [RICountryConfiguration formatPrice:newProduct.price country:country];
         }
+
+        if ([dataDic objectForKey:@"price_euroConverted"]) {
+            newProduct.priceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price_euroConverted"] floatValue]];
+        }
+
         if ([dataDic objectForKey:@"special_price"]) {
             newProduct.specialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price"] floatValue]];
             newProduct.specialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.specialPrice country:country];
         }
+        
+        if ([dataDic objectForKey:@"special_price_euroConverted"]) {
+            newProduct.specialPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price_euroConverted"] floatValue]];
+        }
+        
         if ([dataDic objectForKey:@"max_special_price"]) {
             newProduct.maxSpecialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price"] floatValue]];
             newProduct.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxSpecialPrice country:country];
         }
+        
+        if ([dataDic objectForKey:@"max_special_price_euroConverted"]) {
+            newProduct.maxSpecialPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price_euroConverted"] floatValue]];
+        }
+        
         if ([dataDic objectForKey:@"max_saving_percentage"]) {
             newProduct.maxSavingPercentage = [dataDic objectForKey:@"max_saving_percentage"];
         }
@@ -311,12 +347,25 @@
             newProduct.categoryIds = [NSOrderedSet orderedSetWithArray:[dataDic objectForKey:@"categories"]];
         }
         
+        __block NSString* variationKey = @"";
+            NSDictionary* uniques = [dataDic objectForKey:@"uniques"];
+            if (VALID_NOTEMPTY(uniques, NSDictionary)) {
+                NSDictionary *attributes = [uniques objectForKey:@"attributes"];
+                if (VALID_NOTEMPTY(attributes, NSDictionary)) {
+                    [attributes enumerateKeysAndObjectsUsingBlock:^(id key, NSString* obj, BOOL *stop) {
+                        if (VALID_NOTEMPTY(obj, NSString)) {
+                            variationKey = obj;
+                        }
+                    }];
+                }
+            }
+        
         if ([dataDic objectForKey:@"simples"]) {
             NSArray* productSimplesJSON = [dataDic objectForKey:@"simples"];
             for (NSDictionary* simpleJSON in productSimplesJSON) {
                 if (VALID_NOTEMPTY(simpleJSON, NSDictionary)) {
                     
-                    RIProductSimple* productSimple = [RIProductSimple parseProductSimple:simpleJSON country:country];
+                    RIProductSimple* productSimple = [RIProductSimple parseProductSimple:simpleJSON country:country variationKey:variationKey];
                     productSimple.product = newProduct;
                     [newProduct addProductSimplesObject:productSimple];
                 }
@@ -367,7 +416,7 @@
         }
     }
     
-    newProduct.isFavorite = [NSNumber numberWithBool:[RIProduct productIsFavoriteInDatabase:newProduct]];
+    newProduct.favoriteAddDate = [RIProduct productIsFavoriteInDatabase:newProduct];
     
     return newProduct;
 }
@@ -465,7 +514,7 @@
             
             //found it, so just change the product by deleting the previous entry
             product.recentlyViewedDate = [NSDate date];
-            product.isFavorite = currentProduct.isFavorite;
+            product.favoriteAddDate = currentProduct.favoriteAddDate;
             [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
             [RIProduct saveProduct:product];
             productExists = YES;
@@ -528,7 +577,7 @@
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
         for (RIProduct* productToDelete in recentlyViewedProducts) {
-            if (VALID_NOTEMPTY(productToDelete.isFavorite, NSNumber) && YES == [productToDelete.isFavorite boolValue]) {
+            if (VALID_NOTEMPTY(productToDelete.favoriteAddDate, NSDate)) {
                 //has date, don't delete, just remove recentlyViewedDate
                 productToDelete.recentlyViewedDate = nil;
             } else {
@@ -558,8 +607,8 @@
         for (RIProduct* currentProduct in recentlyViewedProducts) {
             if ([currentProduct.sku isEqualToString:product.sku]) {
                 //found it
-                
-                if (VALID_NOTEMPTY(currentProduct.isFavorite, NSNumber) && YES == [currentProduct.isFavorite boolValue]) {
+
+                if (VALID_NOTEMPTY(currentProduct.favoriteAddDate, NSDate)) {
                     currentProduct.recentlyViewedDate = nil;
                 } else {
                     [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
@@ -583,23 +632,18 @@
 + (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
                             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
-    NSArray* productsWithVariable = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"isFavorite"];
+    NSArray* productsWithVariable = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"favoriteAddDate"];
     NSMutableArray* favoriteProducts = [NSMutableArray new];
     for (RIProduct* product in productsWithVariable) {
-        if (VALID_NOTEMPTY(product.isFavorite, NSNumber) && YES == [product.isFavorite boolValue]) {
+        if (VALID_NOTEMPTY(product.favoriteAddDate, NSDate)) {
             [favoriteProducts addObject:product];
         }
     }
     
     if (VALID(favoriteProducts, NSArray) && successBlock) {
-        
-        //reverse array
-        NSMutableArray *reversedArray = [NSMutableArray arrayWithCapacity:favoriteProducts.count];
-        NSEnumerator *enumerator = [favoriteProducts reverseObjectEnumerator];
-        for (id element in enumerator) {
-            [reversedArray addObject:element];
-        }
-        successBlock(reversedArray);
+        NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"favoriteAddDate" ascending:NO];
+        NSArray *sorted = [favoriteProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
+        successBlock(sorted);
     } else if (failureBlock) {
         failureBlock(RIApiResponseUnknownError, nil);
     }
@@ -616,7 +660,7 @@
         if ([currentProduct.sku isEqualToString:product.sku]) {
             
             //found it
-            currentProduct.isFavorite = [NSNumber numberWithBool:YES];
+            currentProduct.favoriteAddDate = [NSDate date];
             [[RIDataBaseWrapper sharedInstance] saveContext];
             productExists = YES;
             break;
@@ -624,7 +668,7 @@
     }
     
     if (NO == productExists) {
-        product.isFavorite = [NSNumber numberWithBool:YES];
+        product.favoriteAddDate = [NSDate date];
         [RIProduct saveProduct:product];
     }
     
@@ -645,7 +689,7 @@
                 
                 if (VALID_NOTEMPTY(currentProduct.recentlyViewedDate, NSDate)) {
                     //do not delete, just remove favorite variable
-                    currentProduct.isFavorite = nil;
+                    currentProduct.favoriteAddDate = nil;
                 } else {
                     [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
                 }
@@ -662,17 +706,17 @@
     }];
 }
 
-+ (BOOL)productIsFavoriteInDatabase:(RIProduct*)product
++ (NSDate*)productIsFavoriteInDatabase:(RIProduct*)product
 {
     NSArray* productsWithVariable = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"sku" andPropertyValue:product.sku];
     
     for (RIProduct* possibleProduct in productsWithVariable) {
-        if (YES == [possibleProduct.isFavorite boolValue]) {
-            return YES;
+        if (VALID_NOTEMPTY(possibleProduct.favoriteAddDate, NSDate)) {
+            return possibleProduct.favoriteAddDate;
         }
     }
     
-    return NO;
+    return nil;
 }
 
 #pragma mark - Save method

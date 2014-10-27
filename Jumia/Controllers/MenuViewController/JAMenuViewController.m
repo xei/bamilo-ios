@@ -17,6 +17,7 @@
 #import <FacebookSDK/FBSession.h>
 #import "RISearchSuggestion.h"
 #import "RICart.h"
+#import "JAClickableView.h"
 
 typedef NS_ENUM(NSUInteger, JAMenuViewControllerAction) {
     JAMenuViewControllerOpenSearchBar = 0,
@@ -52,7 +53,7 @@ UIAlertViewDelegate
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelTotalCost;
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelDetails;
 @property (weak, nonatomic) IBOutlet UILabel *cartItensNumber;
-@property (weak, nonatomic) IBOutlet UIView *cartView;
+@property (weak, nonatomic) IBOutlet JAClickableView *cartView;
 @property (nonatomic, assign) CGFloat yOffset;
 
 // Handle external payment actions
@@ -109,9 +110,9 @@ UIAlertViewDelegate
                                                  name:kUpdateSideMenuCartNotification
                                                object:nil];
     
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cartViewPressed:)];
-    tapRecognizer.numberOfTapsRequired = 1;
-    [self.cartView addGestureRecognizer:tapRecognizer];
+    [self.cartView addTarget:self
+                      action:@selector(cartViewPressed:)
+            forControlEvents:UIControlEventTouchUpInside];
     self.cartLabelTitle.text = STRING_SHOPPING_CART;
     
     if(!VALID_NOTEMPTY(self.cart, RICart) || 0 == [[self.cart cartCount] integerValue])
@@ -225,34 +226,24 @@ UIAlertViewDelegate
     return 44.f;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.resultsTableView == tableView)
-    {
-        for (UIView *view in cell.viewForBaselineLayout.subviews)
-        {
-            if ([view isKindOfClass:[UIImageView class]])
-            {
-                [view removeFromSuperview];
-            }
-        }
-    }
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
+    //remove the clickable view
+    for (UIView* view in cell.subviews) {
+        if ([view isKindOfClass:[JAClickableView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    //add the new clickable view
+    CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, cellHeight)];
+    clickView.tag = indexPath.row;
+    [cell addSubview:clickView];
+    
     if (self.resultsTableView == tableView)
     {
-        for (UIView *view in cell.viewForBaselineLayout.subviews)
-        {
-            if ([view isKindOfClass:[UIImageView class]])
-            {
-                    [view removeFromSuperview];
-            }
-        }
-        
         RISearchSuggestion *sugestion = [self.resultsArray objectAtIndex:indexPath.row];
         
         NSString *text = sugestion.item;
@@ -308,8 +299,12 @@ UIAlertViewDelegate
         line2.backgroundColor = UIColorFromRGB(0xcccccc);
         [cell.viewForBaselineLayout addSubview:line2];
         
+        [clickView addTarget:self action:@selector(resultCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+        
     } else
     {
+        [clickView addTarget:self action:@selector(menuCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
         cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
         
         cell.imageView.image = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"image"]];
@@ -324,6 +319,16 @@ UIAlertViewDelegate
     return cell;
 }
 
+- (void)resultCellWasPressed:(UIControl*)sender
+{
+    [self tableView:self.resultsTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+}
+
+- (void)menuCellWasPressed:(UIControl*)sender
+{
+    [self tableView:self.tableViewMenu didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     return [[UIView alloc] initWithFrame:CGRectZero];
@@ -332,10 +337,7 @@ UIAlertViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.view endEditing:YES];
-    
-    [tableView deselectRowAtIndexPath:indexPath
-                             animated:YES];
-    
+
     [self.customNavBar resignFirstResponder];
     
     self.nextAction = JAMenuViewControllerOpenSideMenuItem;
@@ -386,9 +388,10 @@ UIAlertViewDelegate
                     {
                         __block NSString *custumerId = [RICustomer getCustomerId];
                         [[FBSession activeSession] closeAndClearTokenInformation];
+                        [FBSession setActiveSession:nil];
                         
-                        [RICustomer logoutCustomerWithSuccessBlock:^{
-                            
+                        [RICustomer logoutCustomerWithSuccessBlock:^
+                         {
                             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                             [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
                             [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
@@ -402,24 +405,12 @@ UIAlertViewDelegate
                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
                                                                       data:[trackingDictionary copy]];
                             
-                            NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-                            
-                            for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
-                                [cookies deleteCookie:cookie];
-                            }
-                            
                             [self userDidLogout];
                             
                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
                             
-                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
-                            
-                            NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-                            
-                            for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
-                                [cookies deleteCookie:cookie];
-                            }
-                            
+                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject)
+                        {
                             [self userDidLogout];
                             
                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
@@ -685,6 +676,10 @@ UIAlertViewDelegate
 
 - (void)userDidLogout
 {
+    [RICommunicationWrapper deleteSessionCookie];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
+    
     NSDictionary *dic = @{ @"name": STRING_LOGIN,
                            @"image": @"ico_sign",
                            @"selected": @"ico_signpressed" };

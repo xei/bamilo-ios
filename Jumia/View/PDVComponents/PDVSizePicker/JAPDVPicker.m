@@ -86,7 +86,18 @@
     RIProductSimple *simple = [self.dataSource objectAtIndex:row];
     UIColor *color = UIColorFromRGB(0x4e4e4e);
     
-    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:simple.attributeSize
+    NSString* option = simple.attributeSize;
+    if (ISEMPTY(option)) {
+        option = simple.color;
+        if (ISEMPTY(option)) {
+            option = simple.variation;
+            if (ISEMPTY(option)) {
+                option = @"";
+            }
+        }
+    }
+    
+    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:option
                                                                                   attributes:@{NSForegroundColorAttributeName:color}];
     
     NSInteger lenght = simple.attributeSize.length;

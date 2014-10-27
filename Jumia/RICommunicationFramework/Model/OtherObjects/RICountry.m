@@ -17,7 +17,7 @@
 {
     NSString *countryListURL = RI_COUNTRIES_URL;
 #if defined(STAGING) && STAGING
-    countryListURL = [NSString stringWithFormat:@"%@/staging", RI_COUNTRIES_URL];
+//    countryListURL = [NSString stringWithFormat:@"%@/staging", RI_COUNTRIES_URL];
 #endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
@@ -157,14 +157,13 @@
         country.flag = [jsonObject objectForKey:@"flag"];
     }
     
-    if ([jsonObject objectForKey:@"map_images"]) {
-        NSDictionary *mapImagesObject =[jsonObject objectForKey:@"map_images"];
+    if ([jsonObject objectForKey:@"map_files"]) {
+        NSDictionary *mapImagesObject =[jsonObject objectForKey:@"map_files"];
         NSMutableDictionary *mapImagesDictionary = [[NSMutableDictionary alloc] init];
         if(VALID_NOTEMPTY(mapImagesObject, NSDictionary)) {
             NSArray *mapImagesObjectKeys = [mapImagesObject allKeys];
             for(NSString *mapImageKey in mapImagesObjectKeys) {
-                // TODO: Add filter to only sho iOS retina and non-retina images; check image keys
-                // if(([@"retina" caseInsensitiveCompare:mapImageKey] == NSOrderedSame) || ([@"non-retina" caseInsensitiveCompare:mapImageKey] == NSOrderedSame))
+    #warning we only need iOS images; parse them when API returns the correct images for iOS
                 [mapImagesDictionary setValue:[mapImagesObject objectForKey:mapImageKey] forKey:mapImageKey];
             }
         }

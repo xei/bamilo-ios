@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAClickableView.h"
 
 @class RIPaymentMethodFormOption;
 
 @interface JAPaymentCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
 @property (strong, nonatomic) UIView *separator;
 
 -(void)loadWithPaymentMethod:(RIPaymentMethodFormOption *)paymentMethod paymentMethodView:(UIView*)paymentMethodView;

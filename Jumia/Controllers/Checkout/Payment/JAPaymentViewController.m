@@ -102,13 +102,20 @@ UITextFieldDelegate>
          [self finishedLoadingPaymentMethods];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
-         BOOL noConnection = NO;
-         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         if(RIApiResponseMaintenancePage == apiResponse)
          {
-             noConnection = YES;
+             [self showMaintenancePage:@selector(continueLoading) objects:nil];
          }
-         
-         [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
+         else
+         {
+             BOOL noConnection = NO;
+             if (RIApiResponseNoInternetConnection == apiResponse)
+             {
+                 noConnection = YES;
+             }
+             
+             [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
+         }
      }];
 }
 
@@ -343,7 +350,7 @@ UITextFieldDelegate>
                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
                                                                   data:[trackingDictionary copy]];
                         
-                        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                        if (RIApiResponseNoInternetConnection == apiResponse)
                         {
                             [self showMessage:STRING_NO_NEWTORK success:NO];
                         }
@@ -423,6 +430,9 @@ UITextFieldDelegate>
             JAPaymentCell *paymentListCell = (JAPaymentCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
             [paymentListCell loadWithPaymentMethod:paymentMethod paymentMethodView:[self.checkoutFormForPaymentMethod getPaymentMethodView:paymentMethod]];
             
+            paymentListCell.clickableView.tag = indexPath.row;
+            [paymentListCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
+            
             [paymentListCell deselectPaymentMethod];
             if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath) && indexPath.row == self.collectionViewIndexSelected.row)
             {
@@ -439,6 +449,11 @@ UITextFieldDelegate>
     }
     
     return cell;
+}
+
+- (void)clickViewSelected:(UIControl*)sender
+{
+    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath

@@ -11,6 +11,11 @@
 
 @class RIImage, RIProductSimple, RIVariation;
 
+/*
+ * IMPORTANT NOTICE
+ * If the order of the catalog sorting changes,
+ * we've to change it in the push notifications as well
+ */
 typedef NS_ENUM(NSInteger, RICatalogSorting) {
     RICatalogSortingRating = 0,
     RICatalogSortingPopularity,
@@ -36,19 +41,23 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString * idCatalogConfig;
 @property (nonatomic, retain) NSNumber * maxPrice;
 @property (nonatomic, retain) NSString * maxPriceFormatted;
+@property (nonatomic, retain) NSNumber * maxPriceEuroConverted;
 @property (nonatomic, retain) NSString * maxSavingPercentage;
 @property (nonatomic, retain) NSNumber * maxSpecialPrice;
 @property (nonatomic, retain) NSString * maxSpecialPriceFormatted;
+@property (nonatomic, retain) NSNumber * maxSpecialPriceEuroConverted;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * price;
 @property (nonatomic, retain) NSString * priceFormatted;
+@property (nonatomic, retain) NSNumber * priceEuroConverted;
 @property (nonatomic, retain) NSString * sku;
 @property (nonatomic, retain) NSNumber * specialPrice;
 @property (nonatomic, retain) NSString * specialPriceFormatted;
+@property (nonatomic, retain) NSNumber * specialPriceEuroConverted;
 @property (nonatomic, retain) NSNumber * sum;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSNumber * isNew;
-@property (nonatomic, retain) NSNumber * isFavorite;
+@property (nonatomic, retain) NSDate * favoriteAddDate;
 @property (nonatomic, retain) NSDate * recentlyViewedDate;
 @property (nonatomic, retain) NSOrderedSet *images;
 @property (nonatomic, retain) NSOrderedSet *productSimples;
@@ -92,6 +101,8 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @param the page that is being requested
  *  @param the max number of products per page
  *  @param the filters array
+ *  @param the filter type (used for push notifications)
+ *  @param the filter value (used for push notifications)
  *  @param the success block containing the obtained products, productCount, filters and related categories
  *  @param the failure block containing the error message
  *
@@ -102,6 +113,8 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
+                             filterType:(NSString*)filterType
+                            filterValue:(NSString*)filterValue
                            successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 

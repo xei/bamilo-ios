@@ -44,4 +44,8 @@
                      successBlock:(void (^)(NSArray* campaigns, NSString* bannerImageUrl))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
++ (NSString *)getCampaignsWitId:(NSString*)campaignId
+                   successBlock:(void (^)(NSString *name, NSArray* campaigns, NSString* bannerImageUrl))successBlock
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+
 @end

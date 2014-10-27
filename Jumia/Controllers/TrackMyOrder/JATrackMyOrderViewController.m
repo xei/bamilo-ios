@@ -92,14 +92,19 @@
                               self.firstLoading = NO;
                           }
                           
-                          if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                          if(RIApiResponseMaintenancePage == apiResponse)
+                          {
+                              [self showMaintenancePage:@selector(loadOrderDetails) objects:nil];
+                          }
+                          else if (RIApiResponseNoInternetConnection == apiResponse)
                           {
                               [self showErrorView:YES startingY:0.0f selector:@selector(loadOrderDetails) objects:nil];
                           }
                           else
-                          {                              
+                          {
                               [self builContentForNoResult];
                           }
+                              
 
                           [self hideLoading];
                       }];

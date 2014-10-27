@@ -104,13 +104,20 @@ UIPickerViewDelegate
          [self finishedLoadingShippingMethods];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
-         BOOL noConnection = NO;
-         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         if(RIApiResponseMaintenancePage == apiResponse)
          {
-             noConnection = YES;
+             [self showMaintenancePage:@selector(continueLoading) objects:nil];
          }
-         
-         [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
+         else
+         {
+             BOOL noConnection = NO;
+             if (RIApiResponseNoInternetConnection == apiResponse)
+             {
+                 noConnection = YES;
+             }
+             
+             [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
+         }
      }];
 }
 
@@ -420,7 +427,7 @@ UIPickerViewDelegate
                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                  [self hideLoading];
                                  
-                                 if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+                                 if (RIApiResponseNoInternetConnection == apiResponse)
                                  {
                                      [self showMessage:STRING_NO_NEWTORK success:NO];
                                  }
@@ -539,9 +546,19 @@ UIPickerViewDelegate
                     [shippingCell selectShippingMethod];
                 }
                 
-                if(([self.shippingMethods count] - 1) == index || self.collectionViewIndexSelected.row == index)
+                shippingCell.clickableView.tag = indexPath.row;
+                [shippingCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
+                
+                if (([self.shippingMethods count] - 1) == index) {
+                    [shippingCell.separator setHidden:YES];
+                }
+                
+                if(self.collectionViewIndexSelected.row == index)
                 {
                     [shippingCell.separator setHidden:YES];
+                    shippingCell.clickableView.enabled = NO;
+                } else {
+                    shippingCell.clickableView.enabled = YES;
                 }
                 
                 cell = shippingCell;
@@ -622,6 +639,9 @@ UIPickerViewDelegate
                     }
                 }
                 
+                pickupStationInfoCell.clickableView.tag = indexPath.row;
+                [pickupStationInfoCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
+                
                 [pickupStationInfoCell deselectPickupStation];
                 if(indexPath.row == self.selectedPickupStationIndexPath.row)
                 {
@@ -654,6 +674,11 @@ UIPickerViewDelegate
 }
 
 #pragma mark UICollectionViewDelegate
+
+- (void)clickViewSelected:(UIControl*)sender
+{
+    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+}
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {

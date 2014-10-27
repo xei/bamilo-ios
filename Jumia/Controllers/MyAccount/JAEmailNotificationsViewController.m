@@ -86,13 +86,20 @@
                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
                self.firstLoading = NO;
            }
-
-           BOOL noConnection = NO;
-           if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+           
+           if(RIApiResponseMaintenancePage == apiResponse)
            {
-               noConnection = YES;
+               [self showMaintenancePage:@selector(getForm) objects:nil];
            }
-           [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
+           else
+           {
+               BOOL noConnection = NO;
+               if (RIApiResponseNoInternetConnection == apiResponse)
+               {
+                   noConnection = YES;
+               }
+               [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
+           }
            
            [self hideLoading];
        }];
@@ -163,7 +170,7 @@
      {
          [self hideLoading];
          
-         if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+         if (RIApiResponseNoInternetConnection == apiResponse)
          {
              [self showMessage:STRING_NO_NEWTORK success:NO];
          }

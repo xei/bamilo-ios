@@ -100,6 +100,67 @@
 
 }
 
++ (NSString *)getCampaignsWitId:(NSString*)campaignId
+                   successBlock:(void (^)(NSString *name, NSArray* campaigns, NSString* bannerImageUrl))successBlock
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+{
+    NSString *campaignUrl = [NSString stringWithFormat:RI_GET_CAMPAIGN, campaignId];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, campaignUrl]];
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
+                                                            parameters:nil
+                                                        httpMethodPost:NO
+                                                             cacheType:RIURLCacheDBCache
+                                                             cacheTime:RIURLCacheDefaultTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  
+                                                                  NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                                  NSDictionary* data = [metadata objectForKey:@"data"];
+                                                                  
+                                                                  NSString* bannerImageUrl;
+                                                                  
+                                                                  NSDictionary* cms = [data objectForKey:@"cms"];
+                                                                  if (VALID_NOTEMPTY(cms, NSDictionary)) {
+                                                                      NSArray* bannerArray = [cms objectForKey:@"mobile_banner"];
+                                                                      if (VALID_NOTEMPTY(bannerArray, NSArray)) {
+                                                                          bannerImageUrl = [bannerArray firstObject];
+                                                                      }
+                                                                  }
+                                                                  
+                                                                  NSDictionary* campaign = [data objectForKey:@"campaign"];
+                                                                  if(VALID_NOTEMPTY(campaign, NSDictionary))
+                                                                  {
+                                                                      NSString* name = [campaign objectForKey:@"name"];
+                                                                      NSArray* campaignData = [campaign objectForKey:@"data"];
+                                                                      
+                                                                      if (VALID_NOTEMPTY(campaignData, NSArray)) {
+                                                                          NSArray* campaignsArray = [RICampaign parseCampaigns:campaignData country:configuration];
+                                                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                                                              successBlock(name, campaignsArray, bannerImageUrl);
+                                                                          });
+                                                                      }
+                                                                  }
+                                                                  
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }];
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+    
+}
+
 + (NSArray*)parseCampaigns:(NSArray*)campaignsJSON
                    country:(RICountryConfiguration*)country
 {

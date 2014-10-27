@@ -18,6 +18,7 @@
 #import "RIField.h"
 #import "JAButtonWithBlur.h"
 #import "RICustomer.h"
+#import "JAClickableView.h"
 
 @interface JAAddressesViewController ()
 <UICollectionViewDataSource,
@@ -498,6 +499,8 @@ UICollectionViewDelegateFlowLayout>
                 [addressCell loadWithAddress:address];
                 [addressCell.editAddressButton setTag:indexPath.row];
                 [addressCell.editAddressButton addTarget:self action:@selector(editAddressButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                addressCell.clickableView.tag = indexPath.row;
+                [addressCell.clickableView addTarget:self action:@selector(firstAddressCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
                 
                 if(VALID_NOTEMPTY(self.firstCollectionViewIndexSelected, NSIndexPath) && self.firstCollectionViewIndexSelected.row == indexPath.row)
                 {
@@ -535,7 +538,9 @@ UICollectionViewDelegateFlowLayout>
                 NSString *cellIdentifier = @"addAddressListCell";
                 JAAddNewAddressCell *addAddressCell = (JAAddNewAddressCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
                 [addAddressCell loadWithText:STRING_ADD_NEW_ADDRESS];
-                
+                addAddressCell.clickableView.tag = indexPath.row;
+                [addAddressCell.clickableView addTarget:self action:@selector(firstAddressCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+
                 cell = addAddressCell;
             }
         }
@@ -551,6 +556,8 @@ UICollectionViewDelegateFlowLayout>
             [addressCell loadWithAddress:address];
             [addressCell.editAddressButton setTag:indexPath.row];
             [addressCell.editAddressButton addTarget:self action:@selector(editAddressButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            addressCell.clickableView.tag = indexPath.row;
+            [addressCell.clickableView addTarget:self action:@selector(secondAddressCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
             
             if(VALID_NOTEMPTY(self.secondCollectionViewIndexSelected, NSIndexPath) && self.secondCollectionViewIndexSelected.row == indexPath.row)
             {
@@ -569,10 +576,11 @@ UICollectionViewDelegateFlowLayout>
             NSString *cellIdentifier = @"addAddressListCell";
             JAAddNewAddressCell *addAddressCell = (JAAddNewAddressCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
             [addAddressCell loadWithText:STRING_ADD_NEW_ADDRESS];
+            addAddressCell.clickableView.tag = indexPath.row;
+            [addAddressCell.clickableView addTarget:self action:@selector(secondAddressCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
             
             cell = addAddressCell;
         }
-        
     }
     
     return cell;
@@ -615,6 +623,18 @@ UICollectionViewDelegateFlowLayout>
 }
 
 #pragma mark UICollectionViewDelegate
+
+- (void)firstAddressCellWasPressed:(UIControl*)sender
+{
+    [self collectionView:self.firstAddressesCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+}
+
+- (void)secondAddressCellWasPressed:(UIControl*)sender
+{
+    [self collectionView:self.secondAddressesCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+}
+
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if(collectionView == self.firstAddressesCollectionView)

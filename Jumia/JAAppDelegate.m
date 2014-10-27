@@ -8,6 +8,7 @@
 
 #import "JAAppDelegate.h"
 #import "JARootViewController.h"
+#import "JAUtils.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <HockeySDK/HockeySDK.h>
 
@@ -15,12 +16,15 @@
 
 @interface JAAppDelegate ()
 
+@property (nonatomic, strong)NSDate *startLoadingTime;
+
 @end
 
 @implementation JAAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.startLoadingTime = [NSDate date];
     
 #if defined(DEBUG) && DEBUG
     
@@ -38,16 +42,17 @@
 #endif
     
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug" ofType:@"plist"];
+    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
+                                                                       launchOptions:launchOptions];
 #else
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"dc297f584830db92a1047ba154dadb9e"];
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
     
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];
-#endif
-    
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
                                                                        launchOptions:launchOptions];
+#endif
     
     [FBLoginView class];
     
@@ -65,15 +70,26 @@
                              [UIColor orangeColor], NSForegroundColorAttributeName,
                              [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
     
+    NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:kPHPSESSIDCookie];
+    if(VALID_NOTEMPTY(cookieProperties, NSDictionary))
+    {
+        NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    }
+    
     // Push Notifications Activation
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
                                                                             UIRemoteNotificationTypeSound |
                                                                             UIRemoteNotificationTypeAlert )];
     
-    self.notificationChangedCountry = NO;
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil)
     {
-        self.initialUserInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
+        JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
+        if(VALID_NOTEMPTY(mainController, JARootViewController))
+        {
+            mainController.notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        }
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
     }
     
@@ -107,7 +123,8 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    JARootViewController* mainController = (JARootViewController*)  self.window.rootViewController;
+    UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
+    JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
     if(VALID_NOTEMPTY(mainController, JARootViewController))
     {
         UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
@@ -129,7 +146,22 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    self.startLoadingTime = [NSDate date];
+    
     [self checkSession];
+    
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    
+    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];    
+    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+
+    CGFloat duration = fabs([self.startLoadingTime timeIntervalSinceNow] * 1000);
+    
+    [trackingDictionary setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventOpenApp]
+                                              data:[trackingDictionary copy]];
 }
 
 #pragma mark - Push notification
@@ -145,45 +177,9 @@
     {
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
         
-        if (VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"u"], NSString))
-        {
-            NSString *urlString = [userInfo objectForKey:@"u"];
-            
-            // Check if the country is the same
-            NSString *currentCountry = [RIApi getCountryIsoInUse];
-            NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
-            
-            if([currentCountry isEqualToString:countryFromUrl])
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:nil userInfo:userInfo];
-            }
-            else
-            {
-                // Change country
-                [RICountry getCountriesWithSuccessBlock:^(id countries)
-                 {
-                     for (RICountry *country in countries)
-                     {
-                         if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
-                         {
-                             [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:country userInfo:userInfo];
-                             break;
-                         }
-                     }
-                     
-                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-                 {
-                     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-                 }];
-            }
-        }
-        else
-        {
-            if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"UTM"], NSString))
-            {
-                [[RITrackingWrapper sharedInstance] trackCampaignWithName:[userInfo objectForKey:@"UTM"]];
-            }
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
+                                                            object:nil
+                                                          userInfo:userInfo];
     }
 }
 
@@ -203,7 +199,7 @@
                                       NSLog(@"Unhandled deep link: %@", url);
                                   }];
     
-    if (url)
+    if (VALID_NOTEMPTY(url, NSURL))
     {
         [[RITrackingWrapper sharedInstance] trackOpenURL:url];
     }

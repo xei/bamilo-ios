@@ -200,7 +200,7 @@
 "campaign_save" = "You Save";
 "campaing_offer_ended" = "Offer Ended!";
 "campaing_timer_end" = "Ends in:";
-"off_label" = "OFF";
+"string_format_off_label" = "%d%% OFF";
 "campaigns_label" = "Campaigns";
 
 "product_specifications" = "Specification";
@@ -218,3 +218,29 @@
 
 "string_error_setting_payment_method" = "Error setting payment method";
 "string_error_setting_shipping_method" = "Error setting shipping method";
+
+"fallback_maintenance" = "MAINTENANCE";
+"fallback_maintenance_text" = "is currently in maintenance.";
+"fallback_maintenance_text_bottom" = "We will try to be brief, you can try again later";
+"fallback_best" = "best online shopping experience";
+"fallback_choice" = "THE WIDEST CHOICE";
+"fallback_doorstep" = "AT YOUR DOORSTEP";
+
+"got_it" = "Got it";
+"home_tip_text" = "Swipe left or right to change the category";
+"products_tip_swipe_text" = "Swipe left or right to change the sort type";
+"tip_favourite_text" = "Click to favourite this product and view the full list in My Profile";
+"tip_share_text" = "Click to share this product";
+"tip_swipe_text" = "Swipe left or right to\nview different images";
+"tip_tap_text" = "Tap to open the product gallery";
+
+"fallback_audio_ios" = "Audio & Video";
+"fallback_books" = "Books";
+"fallback_bottom_text" = "from anywhere, anytime";
+"fallback_bottom_text2" = "And much more for you to browse or shop";
+"fallback_fashion" = "Fashion";
+"fallback_health_ios" = "Health & Beauty";
+"fallback_home_office_ios" = "Home & Office";
+"fallback_mobile" = "Mobile Phones";
+"fallback_welcome" = "WELCOME TO";
+

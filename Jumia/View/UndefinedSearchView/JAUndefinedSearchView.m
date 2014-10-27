@@ -18,54 +18,79 @@
 
 @interface JAUndefinedSearchView ()
 
-@property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
-@property (weak, nonatomic) IBOutlet UIView *topView;
-@property (weak, nonatomic) IBOutlet UILabel *labelNoResults;
-@property (weak, nonatomic) IBOutlet UIImageView *lineImageView;
-@property (weak, nonatomic) IBOutlet UILabel *labelSearchTipsTitle;
-@property (weak, nonatomic) IBOutlet UILabel *labelSearchTipsText;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *spaceLabelConstraint;
-@property (weak, nonatomic) IBOutlet UIView *topSellersView;
-@property (weak, nonatomic) IBOutlet UILabel *topSellersLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *lineSellersImageView;
-@property (weak, nonatomic) IBOutlet UIScrollView *topSellersScrollView;
-@property (weak, nonatomic) IBOutlet UIView *topBrandsView;
-@property (weak, nonatomic) IBOutlet UILabel *topBrandsLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *lineBrandsImageView;
-@property (weak, nonatomic) IBOutlet UIScrollView *topBrandsScrollView;
-@property (weak, nonatomic) IBOutlet UIView *noticeView;
-@property (weak, nonatomic) IBOutlet UILabel *noticeLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *noticeConstraintHeight;
-@property (assign, nonatomic) CGSize contentSize;
+@property (nonatomic, strong) RIUndefinedSearchTerm* searchResult;
+@property (nonatomic, strong) UIScrollView *scrollView;
+
+@property (nonatomic, strong) UIView* topView;
+@property (nonatomic, strong) UIImageView* searchIconImageView;
+@property (nonatomic, strong) UILabel *labelNoResults;
+@property (nonatomic, strong) UIView *separatorView;
+@property (nonatomic, strong) UILabel *searchTipsTitleLabel;
+@property (nonatomic, strong) UILabel *searchTipsTextLabel;
+
+@property (nonatomic, strong) UIView* topSellersView;
+@property (nonatomic, strong) UIView* topBrandsView;
+@property (nonatomic, strong) UIView* noticeView;
+
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *spaceLabelConstraint;
+
+//@property (weak, nonatomic) IBOutlet UIView *topSellersView;
+//@property (weak, nonatomic) IBOutlet UILabel *topSellersLabel;
+//@property (weak, nonatomic) IBOutlet UIImageView *lineSellersImageView;
+//@property (weak, nonatomic) IBOutlet UIScrollView *topSellersScrollView;
+//@property (weak, nonatomic) IBOutlet UIView *topBrandsView;
+//@property (weak, nonatomic) IBOutlet UILabel *topBrandsLabel;
+//@property (weak, nonatomic) IBOutlet UIImageView *lineBrandsImageView;
+//@property (weak, nonatomic) IBOutlet UIScrollView *topBrandsScrollView;
+//@property (weak, nonatomic) IBOutlet UIView *noticeView;
+//@property (weak, nonatomic) IBOutlet UILabel *noticeLabel;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *noticeConstraintHeight;
+//@property (assign, nonatomic) CGSize contentSize;
 
 @end
 
 @implementation JAUndefinedSearchView
 
-+ (JAUndefinedSearchView *)getNewJAUndefinedSearchView
-{
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAUndefinedSearchView"
-                                                 owner:nil
-                                               options:nil];
-    
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JAUndefinedSearchView class]]) {
-            return (JAUndefinedSearchView *)obj;
-        }
-    }
-    
-    return nil;
-}
-
-- (void)setupWithUndefinedSearchResult:(RIUndefinedSearchTerm *)searchTerm
+- (void)setupWithUndefinedSearchResult:(RIUndefinedSearchTerm *)searchResult
                             searchText:(NSString *)searchText
 {
-    self.contentScrollView.backgroundColor = [UIColor clearColor];
-    self.topView.layer.cornerRadius = 4.0f;
+    self.searchResult = searchResult;
+    
+    self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+    self.scrollView.backgroundColor = [UIColor clearColor];
+    [self addSubview:self.scrollView];
+    
+    CGFloat scrollViewY = 6.0f;
+    
+    /////// TOP VIEW ///////
+    
+    self.topView = [[UIView alloc] initWithFrame:CGRectMake(0.0, //horizontal margin is already included in this whole view
+                                                            scrollViewY,
+                                                            self.scrollView.frame.size.width,
+                                                            10.0f)]; //starting height, will be recalculated
+    self.topView.backgroundColor = [UIColor whiteColor];
+    self.topView.layer.cornerRadius = 5.0f;
+    [self.scrollView addSubview:self.topView];
+    
+    UIImage* searchIcon = [UIImage imageNamed:@"img_nosearchresults"];
+    self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
+    [self.searchIconImageView setFrame:CGRectMake((self.topView.frame.size.width - searchIcon.size.width) / 2,
+                                                  20.0f,
+                                                  searchIcon.size.width,
+                                                  searchIcon.size.height)];
+    [self.topView addSubview:self.searchIconImageView];
+    
+    self.labelNoResults = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+                                                                    CGRectGetMaxY(self.searchIconImageView.frame) + 20.0f,
+                                                                    self.topView.bounds.size.width - 6.0f*2,
+                                                                    10.0f)];
+    self.labelNoResults.textAlignment = NSTextAlignmentCenter;
+    self.labelNoResults.numberOfLines = -1;
+    self.labelNoResults.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
     self.labelNoResults.textColor = UIColorFromRGB(0x666666);
     
-    NSString *text = searchTerm.errorMessage;
+    NSString *text = searchResult.errorMessage;
     
     NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:text];
     NSInteger stringTextLenght = text.length;
@@ -91,47 +116,102 @@
     
     self.labelNoResults.attributedText = stringText;
     [self.labelNoResults sizeToFit];
+    [self.labelNoResults setFrame:CGRectMake(6.0f,
+                                             CGRectGetMaxY(self.searchIconImageView.frame) + 20.0f,
+                                             self.topView.bounds.size.width - 6.0f*2,
+                                             self.labelNoResults.frame.size.height)];
     
-    self.lineImageView.backgroundColor = UIColorFromRGB(0xcccccc);
+    [self.topView addSubview:self.labelNoResults];
     
-    self.labelSearchTipsTitle.textColor = UIColorFromRGB(0x666666);
-    self.labelSearchTipsText.textColor = UIColorFromRGB(0x666666);
-    
-    RISearchType *searchType = searchTerm.searchType;
+    self.separatorView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                  CGRectGetMaxY(self.labelNoResults.frame) + 10.0f,
+                                                                  self.topView.frame.size.width,
+                                                                  1)];
+    self.separatorView.backgroundColor = UIColorFromRGB(0xcccccc);
+    [self.topView addSubview:self.separatorView];
 
+    CGFloat labelY = CGRectGetMaxY(self.separatorView.frame) + 15.0f;
+    
+    RISearchType *searchType = searchResult.searchType;
     if (searchType.title.length > 0) {
-        self.labelSearchTipsTitle.text = searchType.title;
-    } else {
-        [self.labelSearchTipsTitle removeFromSuperview];
-        self.spaceLabelConstraint.constant = 15.0f;
+        self.searchTipsTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+                                                                              labelY,
+                                                                              self.topView.frame.size.width - 6.0f*2,
+                                                                              10.0f)];
+        self.searchTipsTitleLabel.numberOfLines = -1;
+        self.searchTipsTitleLabel.textColor = UIColorFromRGB(0x666666);
+        self.searchTipsTitleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+        self.searchTipsTitleLabel.text = searchType.title;
+        [self.searchTipsTitleLabel sizeToFit];
+        
+        [self.topView addSubview:self.searchTipsTitleLabel];
+        labelY = CGRectGetMaxY(self.searchTipsTitleLabel.frame);
     }
     
-    self.labelSearchTipsText.text = searchType.text;
-    [self.labelSearchTipsText sizeToFit];
+    self.searchTipsTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+                                                                         labelY,
+                                                                         self.topView.frame.size.width - 6.0f*2,
+                                                                         10.0f)];
+    self.searchTipsTextLabel.numberOfLines = -1;
+    self.searchTipsTextLabel.textColor = UIColorFromRGB(0x666666);
+    self.searchTipsTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    self.searchTipsTextLabel.text = searchType.text;
+    [self.searchTipsTextLabel sizeToFit];
     
-    float newTopViewHeightValue = self.labelNoResults.frame.size.height + self.labelSearchTipsText.frame.size.height + 110;
-    self.topViewHeightConstraint.constant = newTopViewHeightValue;
+    [self.topView addSubview:self.searchTipsTextLabel];
+    [self.topView setFrame:CGRectMake(self.topView.frame.origin.x,
+                                      self.topView.frame.origin.y,
+                                      self.topView.frame.size.width,
+                                      CGRectGetMaxY(self.searchTipsTextLabel.frame) + 15.0f)];
     
-    [self.topView needsUpdateConstraints];
     
-    // Top sellers
-    self.topSellersView.layer.cornerRadius = 4.0f;
+    scrollViewY += self.topView.frame.size.height + 6.0f;
     
-    RIFeaturedBox *featuredBox = searchTerm.featuredBox;
+    /////// TOP SELLERS ///////
     
-    self.topSellersLabel.textColor = UIColorFromRGB(0x666666);
-    self.topSellersLabel.text = featuredBox.title;
+    self.topSellersView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                   scrollViewY,
+                                                                   self.scrollView.frame.size.width,
+                                                                   137.f)];
+    self.topSellersView.layer.cornerRadius = 5.0f;
+    self.topSellersView.backgroundColor = [UIColor whiteColor];
+    self.topSellersView.clipsToBounds = YES;
+    [self.scrollView addSubview:self.topSellersView];
     
-    float relatedItemStart = 5.0f;
+    UILabel* topSellersTitle = [[UILabel alloc] initWithFrame:CGRectMake(self.topSellersView.bounds.origin.x + 6.0f,
+                                                                    self.topSellersView.bounds.origin.y,
+                                                                    self.topSellersView.bounds.size.width - 6.0f*2,
+                                                                    26.0f)];
+    topSellersTitle.text = STRING_TOP_SELLERS;
+    topSellersTitle.font = [UIFont fontWithName:@"HelveticaNeue" size:11.0f];
+    topSellersTitle.textColor = UIColorFromRGB(0x4e4e4e);
+    [self.topSellersView addSubview:topSellersTitle];
     
-    for (RISearchTypeProduct *product in featuredBox.products)
-    {
+    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(self.topSellersView.bounds.origin.x,
+                                                                CGRectGetMaxY(topSellersTitle.frame),
+                                                                self.topSellersView.bounds.size.width,
+                                                                1.0f)];
+    lineView.backgroundColor = UIColorFromRGB(0xfaa41a);
+    [self.topSellersView addSubview:lineView];
+    
+    UIScrollView* productScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.topSellersView.bounds.origin.x,
+                                                                                     CGRectGetMaxY(lineView.frame),
+                                                                                     self.topSellersView.bounds.size.width,
+                                                                                     self.topSellersView.bounds.size.height - lineView.frame.size.height - topSellersTitle.frame.size.height)];
+    productScrollView.showsHorizontalScrollIndicator = NO;
+    [self.topSellersView addSubview:productScrollView];
+    
+    CGFloat currentX = productScrollView.bounds.origin.x;
+    
+    RIFeaturedBox *featuredBox = searchResult.featuredBox;
+    for (int i = 0; i < featuredBox.products.count; i++) {
+        RISearchTypeProduct* product = [featuredBox.products objectAtIndex:i];
         if (product.imagesArray.count > 0)
         {
             JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
             
             CGRect tempFrame = singleItem.frame;
-            tempFrame.origin.x = relatedItemStart;
+            tempFrame.origin.x = currentX;
             singleItem.frame = tempFrame;
             
             if (product.imagesArray.count > 0) {
@@ -147,36 +227,66 @@
             singleItem.productUrl = product.url;
             singleItem.labelPrice.text = product.priceFormatted;
             
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                  action:@selector(productSelected:)];
-            singleItem.userInteractionEnabled = YES;
-            [singleItem addGestureRecognizer:tap];
+            singleItem.tag = i;
+            [singleItem addTarget:self
+                           action:@selector(productSelected:)
+                 forControlEvents:UIControlEventTouchUpInside];
             
-            [self.topSellersScrollView addSubview:singleItem];
+            [productScrollView addSubview:singleItem];
             
-            relatedItemStart += 110.0f;
+            currentX += 110.0f;
         }
     }
     
-    [self.topSellersScrollView setContentSize:CGSizeMake(relatedItemStart, 110)];
+    [productScrollView setContentSize:CGSizeMake(currentX,
+                                                 productScrollView.frame.size.height)];
+
+    scrollViewY += self.topSellersView.frame.size.height + 6.0f;
     
-    [self.topSellersView needsUpdateConstraints];
     
-    // Brands view
-    self.topBrandsView.layer.cornerRadius = 4.0f;
     
-    RIFeaturedBrandBox *featuredBrandBox = searchTerm.featuredBrandBox;
+    /////// TOP BRANDS ///////
     
-    self.topBrandsLabel.textColor = UIColorFromRGB(0x666666);
-    self.topBrandsLabel.text = featuredBrandBox.title;
+    self.topBrandsView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                  scrollViewY,
+                                                                  self.scrollView.frame.size.width,
+                                                                  137.f)];
+    self.topBrandsView.layer.cornerRadius = 5.0f;
+    self.topBrandsView.backgroundColor = [UIColor whiteColor];
+    self.topBrandsView.clipsToBounds = YES;
+    [self.scrollView addSubview:self.topBrandsView];
     
-    float brandItemStart = 0.0f;
+    UILabel* topBrandsTitle = [[UILabel alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x + 6.0f,
+                                                                         self.topBrandsView.bounds.origin.y,
+                                                                         self.topBrandsView.bounds.size.width - 6.0f*2,
+                                                                         26.0f)];
+    topBrandsTitle.text = STRING_TOP_BRANDS;
+    topBrandsTitle.font = [UIFont fontWithName:@"HelveticaNeue" size:11.0f];
+    topBrandsTitle.textColor = UIColorFromRGB(0x4e4e4e);
+    [self.topBrandsView addSubview:topBrandsTitle];
     
-    for (RIBrand *brand in featuredBrandBox.brands)
-    {
+    UIView* brandsLineView = [[UIView alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x,
+                                                                CGRectGetMaxY(topBrandsTitle.frame),
+                                                                self.topBrandsView.bounds.size.width,
+                                                                1.0f)];
+    brandsLineView.backgroundColor = UIColorFromRGB(0xfaa41a);
+    [self.topBrandsView addSubview:brandsLineView];
+    
+    UIScrollView* brandsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x,
+                                                                                     CGRectGetMaxY(brandsLineView.frame),
+                                                                                     self.topBrandsView.bounds.size.width,
+                                                                                     self.topBrandsView.bounds.size.height - brandsLineView.frame.size.height - topBrandsTitle.frame.size.height)];
+    brandsScrollView.showsHorizontalScrollIndicator = NO;
+    [self.topBrandsView addSubview:brandsScrollView];
+    
+    CGFloat brandsCurrentX = brandsScrollView.bounds.origin.x;
+    
+    RIFeaturedBrandBox *featuredBrandBox = searchResult.featuredBrandBox;
+    for (int i = 0; i < featuredBrandBox.brands.count; i++) {
+        RIBrand* brand = [featuredBrandBox.brands objectAtIndex:i];
         if (brand.image.length > 0)
         {
-            JABrandView *brandView = [[JABrandView alloc] initWithFrame:CGRectMake(brandItemStart, 0, 110, 100)];
+            JABrandView *brandView = [[JABrandView alloc] initWithFrame:CGRectMake(brandsCurrentX, 0, 110, 110)];
             brandView.backgroundColor = [UIColor clearColor];
             brandView.brandUrl = brand.url;
             brandView.brandName = brand.name;
@@ -201,68 +311,79 @@
             
             [brandView addSubview:brandLabel];
             
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                  action:@selector(brandSelected:)];
-            brandView.userInteractionEnabled = YES;
-            [brandView addGestureRecognizer:tap];
+            brandView.tag = i;
+            [brandView addTarget:self
+                          action:@selector(brandSelected:)
+                forControlEvents:UIControlEventTouchUpInside];
             
-            [self.topBrandsScrollView addSubview:brandView];
-            brandItemStart += 110.0f;
+            [brandsScrollView addSubview:brandView];
+            brandsCurrentX += 110.0f;
         }
     }
     
-    [self.topBrandsScrollView setContentSize:CGSizeMake(brandItemStart, 110)];
+    [brandsScrollView setContentSize:CGSizeMake(brandsCurrentX,
+                                                brandsScrollView.frame.size.height)];
     
-    [self.topBrandsView needsUpdateConstraints];
+    scrollViewY += self.topBrandsView.frame.size.height + 6.0f;
+
     
-    // notice view
-    self.noticeView.layer.cornerRadius = 4.0f;
-    self.noticeLabel.textColor = UIColorFromRGB(0x666666);
-    self.noticeLabel.text = searchTerm.noticeMessage;
-    [self.noticeLabel sizeToFit];
+    /////// NOTICE VIEW ///////
     
-    self.noticeConstraintHeight.constant = self.noticeLabel.frame.size.height + 35;
+    self.noticeView = [[UIView alloc] initWithFrame:CGRectMake(0.0, //horizontal margin is already included in this whole view
+                                                               scrollViewY,
+                                                               self.scrollView.frame.size.width,
+                                                               10.0f)]; //starting height, will be recalculated
+    self.noticeView.backgroundColor = [UIColor whiteColor];
+    self.noticeView.layer.cornerRadius = 5.0f;
+    [self.scrollView addSubview:self.noticeView];
     
-    [self.noticeView needsUpdateConstraints];
+    UILabel* noticeLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+                                                                     15.0f,
+                                                                     self.noticeView.bounds.size.width - 6.0f*2,
+                                                                     10.0f)];
+    noticeLabel.numberOfLines = -1;
+    noticeLabel.textColor = UIColorFromRGB(0x666666);
+    noticeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    noticeLabel.text = searchResult.noticeMessage;
+    [noticeLabel sizeToFit];
+    [self.noticeView addSubview:noticeLabel];
     
-    [self needsUpdateConstraints];
-    [self layoutSubviews];
+    [self.noticeView setFrame:CGRectMake(self.noticeView.frame.origin.x,
+                                         self.noticeView.frame.origin.y,
+                                         self.noticeView.frame.size.width,
+                                         CGRectGetMaxY(noticeLabel.frame) + 15.0f)];
+
+    scrollViewY += self.noticeView.frame.size.height + 6.0f;
     
-    float contentHeight = self.noticeConstraintHeight.constant + self.topViewHeightConstraint.constant + 320;
     
-    self.contentScrollView.contentSize = CGSizeMake(self.contentScrollView.frame.size.width, contentHeight);
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
+                                               scrollViewY)];
     
-    self.contentSize = self.contentScrollView.contentSize;
 }
 
 #pragma mark - Delegate methods
 
-- (void)productSelected:(UITapGestureRecognizer *)tap
+- (void)productSelected:(UIControl *)sender
 {
-    JAPDVSingleRelatedItem *item = (JAPDVSingleRelatedItem *)tap.view;
+    RIFeaturedBox *featuredBox = self.searchResult.featuredBox;
+    RISearchTypeProduct *item = [featuredBox.products objectAtIndex:sender.tag];
     
     if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectProduct:)])
     {
-        [self.delegate didSelectProduct:item.productUrl];
+        [self.delegate didSelectProduct:item.url];
     }
 }
 
-- (void)brandSelected:(UITapGestureRecognizer *)tap
+- (void)brandSelected:(UIControl *)sender
 {
-    JABrandView *item = (JABrandView *)tap.view;
+    RIFeaturedBrandBox *featuredBrandBox = self.searchResult.featuredBrandBox;
+    RIBrand* brand = [featuredBrandBox.brands objectAtIndex:sender.tag];
     
     if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectBrand:brandName:)])
     {
-        [self.delegate didSelectBrand:item.brandUrl
-                            brandName:item.brandName];
+        [self.delegate didSelectBrand:brand.url
+                            brandName:brand.name];
     }
-}
-
-#pragma mark - Refresh content size
-
-- (void)refreshContentSize
-{
-    self.contentScrollView.contentSize = self.contentSize;
 }
 
 @end

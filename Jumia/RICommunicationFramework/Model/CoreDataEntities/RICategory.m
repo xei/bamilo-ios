@@ -80,6 +80,29 @@
     }
 }
 
++ (void)getAllCategoriesWithSuccessBlock:(void (^)(id categores))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
+{
+    NSArray* databaseCategories = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICategory class])];
+    if(NOTEMPTY(databaseCategories))
+    {
+        if (VALID_NOTEMPTY(databaseCategories, NSArray)) {
+            successBlock(databaseCategories);
+        } else {
+            failureBlock(RIApiResponseUnknownError, nil);
+        }
+    } else {
+        [RICategory loadCategoriesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] withSuccessBlock:^(id categories) {
+            
+            NSArray* databaseCategories = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICategory class])];
+            if (VALID_NOTEMPTY(databaseCategories, NSArray)) {
+                successBlock(databaseCategories);
+            } else {
+                failureBlock(RIApiResponseUnknownError, nil);
+            }
+        } andFailureBlock:failureBlock];
+    }
+}
+
 #pragma mark - Cancel requests
 
 + (void)cancelRequest:(NSString *)operationID

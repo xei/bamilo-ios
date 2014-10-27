@@ -43,5 +43,4 @@
 
     #import "JAMessageView.h"
     #import "Reachability.h"
-    #import "JANoConnectionView.h"
 #endif

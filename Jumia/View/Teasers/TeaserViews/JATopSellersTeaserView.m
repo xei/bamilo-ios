@@ -9,6 +9,7 @@
 #import "JATopSellersTeaserView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIImageView+WebCache.h"
+#import "JAClickableView.h"
 
 #define JATopSellersTeaserViewHeight 144.0f
 #define JATopSellersTeaserViewHorizontalMargin 6.0f
@@ -75,10 +76,12 @@
         
         for (RITeaserProduct* teaserProduct in teaser.teaserProducts) {
             
-            UIView* productTeaserView = [[UIView alloc] initWithFrame:CGRectMake(currentX,
-                                                                                 productScrollView.bounds.origin.y,
-                                                                                 JATopSellersTeaserViewProductTeaserWidth,
-                                                                                 productScrollView.bounds.size.height)];
+            JAClickableView* productTeaserView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
+                                                                                                   productScrollView.bounds.origin.y,
+                                                                                                   JATopSellersTeaserViewProductTeaserWidth,
+                                                                                                   productScrollView.bounds.size.height)];
+            productTeaserView.tag = i;
+            [productTeaserView addTarget:self action:@selector(teaserProductPressed:) forControlEvents:UIControlEventTouchUpInside];
             [productScrollView addSubview:productTeaserView];
             currentX += productTeaserView.frame.size.width;
             
@@ -115,7 +118,7 @@
             [productTeaserView addSubview:nameLabel];
             
             UILabel* priceLabel = [[UILabel alloc] init];
-            if (VALID_NOTEMPTY(teaserProduct.specialPrice, NSString)) {
+            if (VALID_NOTEMPTY(teaserProduct.specialPriceFormatted, NSString)) {
                 priceLabel.text = teaserProduct.specialPriceFormatted;
             } else {
                 priceLabel.text = teaserProduct.priceFormatted;
@@ -129,12 +132,6 @@
                                             productTeaserView.bounds.size.width - JATopSellersTeaserViewHorizontalMargin*2,
                                             priceLabel.frame.size.height)];
             [productTeaserView addSubview:priceLabel];
-            
-            UIControl* control = [UIControl new];
-            [control setFrame:productTeaserView.frame];
-            [productScrollView addSubview:control];
-            control.tag = i;
-            [control addTarget:self action:@selector(teaserProductPressed:) forControlEvents:UIControlEventTouchUpInside];
         }
     }
     

@@ -3,6 +3,8 @@ Feature: Login - Forgot Password
 
 Background:
 * I call the variables
+* I wait for 5 seconds
+* I wait to see if the choose country screen shows
 * I wait to see the home
 * I touch the hamburger
 * I wait to see the side menu
@@ -10,7 +12,6 @@ Background:
 Scenario: Logout
 * I make sure I am logged out
 
-#TODO
 @password_recovery_ef
 Scenario: Password Recovery Empty Fields
 * I touch login option on side menu
@@ -19,7 +20,7 @@ Scenario: Password Recovery Empty Fields
 * I touch the forgot password option
 * I wait to see the forgot password section
 * I touch the Submit button
-* I wait see the error please fill in the email
+* I wait see the error empty fields on forgot password
 
 @password_recovery_nr
 Scenario: Password Recovery Non Registred Email

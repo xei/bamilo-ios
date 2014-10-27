@@ -47,8 +47,7 @@
 
 - (void)setup
 {
-    [self.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-    [self.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [self.sizeLabel setTextColor:UIColorFromRGB(0x55a1ff)];
 }
 
 - (void)setPriceWithNewValue:(NSString *)newValue
@@ -71,26 +70,18 @@
 
 - (void)removeSizeOptions
 {
-    [self.sizeView removeFromSuperview];
+    [self.sizeClickableView removeFromSuperview];
     
-    CGRect reviewFrame = self.reviewsView.frame;
-    reviewFrame.origin.y -= 45.0f;
-    self.reviewsView.frame = reviewFrame;
+    CGRect reviewFrame = self.reviewsClickableView.frame;
+    reviewFrame.origin.y -= 44.0f;
+    self.reviewsClickableView.frame = reviewFrame;
     
-    CGRect buttonFrame = self.goToSpecificationsButton.frame;
-    buttonFrame.origin.y -= 45.0f;
-    self.goToSpecificationsButton.frame = buttonFrame;
-    
-    CGRect labelFrame = self.specificationsLabel.frame;
-    labelFrame.origin.y -= 45.0f;
-    self.specificationsLabel.frame = labelFrame;
-    
-    CGRect imageFrame = self.goToSpecificationsImageView.frame;
-    imageFrame.origin.y -= 45.0f;
-    self.goToSpecificationsImageView.frame = imageFrame;
+    CGRect buttonFrame = self.specificationsClickableView.frame;
+    buttonFrame.origin.y -= 44.0f;
+    self.specificationsClickableView.frame = buttonFrame;
     
     CGRect frame = self.frame;
-    frame.size.height -= 45.0f;
+    frame.size.height -= 44.0f;
     
     self.frame = frame;
 }

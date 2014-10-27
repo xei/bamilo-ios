@@ -1,4 +1,4 @@
-//
+    //
 //  JARootViewController.m
 //  Jumia
 //
@@ -9,8 +9,12 @@
 #import "JARootViewController.h"
 #import "JACenterNavigationController.h"
 #import "JAMenuViewController.h"
+#import "RICustomer.h"
 
 @interface JARootViewController ()
+
+@property (assign, nonatomic) NSInteger requestCount;
+@property (strong, nonatomic) RICountry *selectedCountry;
 
 @end
 
@@ -39,8 +43,6 @@
                                                  name:kTurnOnLeftSwipePanelNotification
                                                object:nil];
     
-    
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(openMainMenu:)
                                                  name:kOpenMenuNotification
@@ -51,10 +53,29 @@
                                                  name:kOpenCenterPanelNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateCountry:)
+                                                 name:kUpdateCountryNotification
+                                               object:nil];
+    
     if(VALID_NOTEMPTY(self.notification, NSDictionary))
     {
-        [[RITrackingWrapper sharedInstance] handlePushNotifcation:[self.notification copy]];
-        self.notification = nil;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
+                                                            object:self.selectedCountry
+                                                          userInfo:self.notification];
+    }
+    else
+    {
+        if(VALID_NOTEMPTY(self.selectedCountry, RICountry) || [RIApi checkIfHaveCountrySelected])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
+                                                                object:self.selectedCountry];
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification
+                                                                object:nil];
+        }
     }
 }
 
@@ -72,8 +93,18 @@
 {
     [self setLeftPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
     [self setCenterPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"rootNavigationController"]];
+}
+
+- (void)updateCountry:(NSNotification*)notification
+{
+    [self setLeftPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
     
-    [(JACenterNavigationController *)self.centerPanel pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"homeViewController"] animated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"first_screen"]];
+
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary))
+    {
+        [[RITrackingWrapper sharedInstance] handlePushNotifcation:[notification.userInfo copy]];
+    }
 }
 
 - (void)turnOffLeftSwipe

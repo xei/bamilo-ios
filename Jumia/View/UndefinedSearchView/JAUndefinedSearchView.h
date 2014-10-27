@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "RISearchSuggestion.h"
+#import "JAClickableView.h"
 
-@interface JABrandView : UIView
+@interface JABrandView : JAClickableView
 
 @property (strong, nonatomic) NSString *brandUrl;
 @property (strong, nonatomic) NSString *brandName;
@@ -30,11 +31,7 @@
 
 @property (weak, nonatomic) id<JAUndefinedSearchViewDelegate>delegate;
 
-+ (JAUndefinedSearchView *)getNewJAUndefinedSearchView;
-
-- (void)setupWithUndefinedSearchResult:(RIUndefinedSearchTerm *)searchTerm
+- (void)setupWithUndefinedSearchResult:(RIUndefinedSearchTerm *)searchResult
                             searchText:(NSString *)searchText;
-
-- (void)refreshContentSize;
 
 @end

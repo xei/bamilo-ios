@@ -20,6 +20,7 @@
 @property (nonatomic, retain) NSString * countryUrl;
 @property (nonatomic, retain) NSString * actionName;
 @property (nonatomic, retain) NSString * countryIso;
+@property (nonatomic, retain) NSString * countryName;
 @property (nonatomic, retain) NSNumber * curVersion;
 @property (nonatomic, retain) NSNumber * minVersion;
 @property (nonatomic, retain) NSOrderedSet *sections;
@@ -50,7 +51,8 @@
  *  @return the parsed RIApi
  */
 + (RIApi *)parseApi:(NSDictionary *)api
-         countryIso:(NSString *)countryIso;
+         countryIso:(NSString *)countryIso
+        countryName:(NSString *)countryName;
 
 /**
  *  Save in the core data a given RIApi
@@ -74,11 +76,25 @@
 + (NSString *)getCountryUrlInUse;
 
 /**
- *  get the current country iso in use
+ *  get the current country iso
  *
  *  @return the country iso
  */
 + (NSString *)getCountryIsoInUse;
+
+/**
+ *  get the current country name
+ *
+ *  @return the country name
+ */
++ (NSString *)getCountryNameInUse;
+
+/**
+ *  get the current country api information
+ *
+ *  @return the country api information
+ */
++ (RIApi *)getApiInformation;
 
 @end
 

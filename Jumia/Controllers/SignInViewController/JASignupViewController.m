@@ -48,6 +48,16 @@ UIPickerViewDelegate
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:@"UIKeyboardWillShowNotification"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:@"UIKeyboardWillHideNotification"
+                                               object:nil];
+    
     self.screenName = @"Register";
     
     self.A4SViewControllerAlias = @"ACCOUNT";
@@ -89,6 +99,11 @@ UIPickerViewDelegate
     [self getRegisterForm];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)getRegisterForm
 {
     [RIForm getForm:@"register"
@@ -108,12 +123,19 @@ UIPickerViewDelegate
            
        } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
            
-           BOOL noConnection = NO;
-           if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+           if(RIApiResponseMaintenancePage == apiResponse)
            {
-               noConnection = YES;
+               [self showMaintenancePage:@selector(getRegisterForm) objects:nil];
            }
-           [self showErrorView:noConnection startingY:0.0f selector:@selector(getRegisterForm) objects:nil];
+           else
+           {
+               BOOL noConnection = NO;
+               if (RIApiResponseNoInternetConnection == apiResponse)
+               {
+                   noConnection = YES;
+               }
+               [self showErrorView:noConnection startingY:0.0f selector:@selector(getRegisterForm) objects:nil];
+           }
            
            [self hideLoading];
        }];
@@ -224,12 +246,21 @@ UIPickerViewDelegate
         
         [self hideLoading];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                            object:@{@"index": @(0),
-                                                                     @"name": STRING_HOME}];
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
+        
+        if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
+        {
+            [self.navigationController popViewControllerAnimated:NO];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:self.nextNotification.name
+                                                                object:self.nextNotification.object
+                                                              userInfo:self.nextNotification.userInfo];
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+        }
         
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         
@@ -250,7 +281,7 @@ UIPickerViewDelegate
         
         [self hideLoading];
         
-        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        if (RIApiResponseNoInternetConnection == apiResponse)
         {
             [self showMessage:STRING_NO_NEWTORK success:NO];
         }
@@ -278,8 +309,6 @@ UIPickerViewDelegate
 - (void)loginButtonPressed:(id)sender
 {
     [self.dynamicForm resignResponder];
-    
-    [self.navigationController popViewControllerAnimated:NO];
     
     NSMutableDictionary *userInfo = nil;
     
@@ -350,17 +379,17 @@ UIPickerViewDelegate
 
 - (void)changedFocus:(UIView *)view
 {
-    CGPoint scrollPoint = CGPointMake(0.0, view.frame.origin.y);
-    [self.contentScrollView setContentOffset:scrollPoint
-                                    animated:YES];
+//    CGPoint scrollPoint = CGPointMake(0.0, view.frame.origin.y);
+//    [self.contentScrollView setContentOffset:scrollPoint
+//                                    animated:YES];
 }
 
 - (void) lostFocus
 {
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         self.contentScrollView.frame = self.originalFrame;
-                     }];
+//    [UIView animateWithDuration:0.5f
+//                     animations:^{
+//                         self.contentScrollView.frame = self.originalFrame;
+//                     }];
 }
 
 - (void)openDatePicker:(JABirthDateComponent *)birthdayComponent
@@ -507,6 +536,28 @@ UIPickerViewDelegate
         titleForRow = [[self.radioComponent dataset] objectAtIndex:row];
     }
     return  titleForRow;
+}
+
+#pragma mark - Keyboard notifications
+
+- (void) keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.contentScrollView setFrame:CGRectMake(self.view.bounds.origin.x,
+                                                    self.view.bounds.origin.y,
+                                                    self.view.bounds.size.width,
+                                                    self.view.bounds.size.height - kbSize.height)];
+    }];
+}
+
+- (void) keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.contentScrollView setFrame:self.view.bounds];
+    }];
 }
 
 @end

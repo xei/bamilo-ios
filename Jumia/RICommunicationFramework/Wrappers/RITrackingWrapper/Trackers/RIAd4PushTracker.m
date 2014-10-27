@@ -555,114 +555,236 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         if(VALID_NOTEMPTY([notification objectForKey:@"u"], NSString))
         {
             NSString *urlString = [notification objectForKey:@"u"];
+            NSArray *urlComponents = [urlString componentsSeparatedByString:@"/"];
             
-            
-            NSString *forthLetter = @"";
-            NSString *cartPositionString = @"";
-            
-            if ([urlString length] >= 7)
+            NSString *key = @"";
+            NSString *arguments = @"";
+            NSString *parameterKey = @"";
+            NSString *parameterValue = @"";
+            if(VALID_NOTEMPTY(urlComponents, NSArray) && 1 < [urlComponents count])
             {
-                cartPositionString = [urlString substringWithRange:NSMakeRange(3, 4)];
-            }
-            
-            if ([cartPositionString isEqualToString:@"cart"])
-            {
-                [self pushCartViewController];
-            }
-            else
-            {
-                if ([urlString length] >= 4)
+                key = [urlComponents objectAtIndex:1];
+                if(2 < [urlComponents count] && VALID_NOTEMPTY([urlComponents objectAtIndex:2], NSString))
                 {
-                    forthLetter = [urlString substringWithRange:NSMakeRange(3, 1)];
+                    arguments = [urlComponents objectAtIndex:2];
+                    NSArray *argumentsComponents = [arguments componentsSeparatedByString:@"?"];
+                    if(VALID_NOTEMPTY(argumentsComponents, NSArray) && 1 < [argumentsComponents count])
+                    {
+                        arguments = [argumentsComponents objectAtIndex:0];
+                        NSString *parameter = [argumentsComponents objectAtIndex:1];
+                        if(VALID_NOTEMPTY(parameter, NSString))
+                        {
+                            NSArray *parameterComponents = [parameter componentsSeparatedByString:@"="];
+                            if(VALID_NOTEMPTY(parameterComponents, NSArray) && 1 < [parameterComponents count])
+                            {
+                                parameterKey = [parameterComponents objectAtIndex:0];
+                                parameterValue = [parameterComponents objectAtIndex:1];
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if ([key isEqualToString:@""])
+            {
+                // Home
+                [self pushHomeViewController];
+            }
+            else if ([key isEqualToString:@"c"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view - category name
+                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                
+                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                {
+                    [userInfo setObject:parameterKey forKey:@"filter_type"];
+                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                }
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+            }
+            else if ([key isEqualToString:@"cbr"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by best rating - category name
+                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                [userInfo setObject:[NSNumber numberWithInteger:0] forKey:@"sorting"];
+                
+                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                {
+                    [userInfo setObject:parameterKey forKey:@"filter_type"];
+                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                }
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+            }
+            else if ([key isEqualToString:@"cp"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by popularity - category name
+                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                [userInfo setObject:[NSNumber numberWithInteger:1] forKey:@"sorting"];
+                
+                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                {
+                    [userInfo setObject:parameterKey forKey:@"filter_type"];
+                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                }
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+            }
+            else if ([key isEqualToString:@"cin"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by new in - category name
+                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                [userInfo setObject:[NSNumber numberWithInteger:2] forKey:@"sorting"];
+                
+                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                {
+                    [userInfo setObject:parameterKey forKey:@"filter_type"];
+                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                }
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+            }
+            else if ([key isEqualToString:@"cpu"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by price up - category name
+                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                [userInfo setObject:[NSNumber numberWithInteger:3] forKey:@"sorting"];
+                
+                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                {
+                    [userInfo setObject:parameterKey forKey:@"filter_type"];
+                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                }
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+            }
+            else if ([key isEqualToString:@"cpd"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by price down - category name
+                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                [userInfo setObject:[NSNumber numberWithInteger:4] forKey:@"sorting"];
+                
+                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                {
+                    [userInfo setObject:parameterKey forKey:@"filter_type"];
+                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                }
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+            }
+            else if ([key isEqualToString:@"cb"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by brand - category name
+                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                [userInfo setObject:[NSNumber numberWithInteger:6] forKey:@"sorting"];
+                
+                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                {
+                    [userInfo setObject:parameterKey forKey:@"filter_type"];
+                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                }
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+            }
+            else if ([key isEqualToString:@"cn"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by name - category name
+                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                [userInfo setObject:[NSNumber numberWithInteger:5] forKey:@"sorting"];
+                
+                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                {
+                    [userInfo setObject:parameterKey forKey:@"filter_type"];
+                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                }
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+            }
+            else if ([key isEqualToString:@"n"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view - category id
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_id":arguments}];
+            }
+            else if ([key isEqualToString:@"s"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view - search term
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                    object:@{@"index": @(99),
+                                                                             @"name": STRING_SEARCH,
+                                                                             @"text": arguments }];
+            }
+            else if ([key isEqualToString:@"d"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // PDV - jumia://ng/d/BL683ELACCDPNGAMZ?size=1
+                
+                // Check if there is field size
+                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                [userInfo setObject:arguments forKey:@"sku"];
+                [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"show_back_button"];
+                
+                if(VALID_NOTEMPTY(parameterKey, NSString) && [@"size" isEqualToString:[parameterKey lowercaseString]] && VALID_NOTEMPTY(parameterValue, NSString))
+                {
+                    [userInfo setObject:parameterValue forKey:@"size"];
                 }
                 
-                if ([forthLetter isEqualToString:@""])
-                {
-                    // Home
-                    [self pushHomeViewController];
-                }
-                else if ([forthLetter isEqualToString:@"c"])
-                {
-                    // Catalog view - category name
-                    NSString *categoryName = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                    
-                    [self pushCatalogViewControllerWithCategoryId:nil
-                                                     categoryName:categoryName
-                                                       searchTerm:nil];
-                }
-                else if ([forthLetter isEqualToString:@"n"])
-                {
-                    // Catalog view - category id
-                    NSString *categoryId = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                    
-                    [self pushCatalogViewControllerWithCategoryId:categoryId
-                                                     categoryName:nil
-                                                       searchTerm:nil];
-                }
-                else if ([forthLetter isEqualToString:@"s"])
-                {
-                    // Catalog view - search term
-                    NSString *searchTerm = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                    
-                    [self pushCatalogViewControllerWithCategoryId:nil
-                                                     categoryName:nil
-                                                       searchTerm:searchTerm];
-                }
-                else if ([forthLetter isEqualToString:@"d"])
-                {
-                    // PDV
-                    // Example: jumia://ng/d/BL683ELACCDPNGAMZ?size=1
-                    
-                    // Check if there is field size
-                    
-                    NSRange range = [[urlString lowercaseString] rangeOfString:@"?size="];
-                    if(NSNotFound != range.location)
-                    {
-                        NSString *size = [urlString substringWithRange:NSMakeRange(range.length + range.location, urlString.length - (range.length + range.location))];
-                        
-                        NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, range.location - 5)];
-                        
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                                            object:nil
-                                                                          userInfo:@{ @"sku" : pdvSku,
-                                                                                      @"size": size,
-                                                                                      @"show_back_button" : [NSNumber numberWithBool:NO]}];
-                    }
-                    else
-                    {
-                        NSString *pdvSku = [urlString substringWithRange:NSMakeRange(5, urlString.length - 5)];
-                        
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                                            object:nil
-                                                                          userInfo:@{ @"sku" : pdvSku ,
-                                                                                      @"show_back_button" : [NSNumber numberWithBool:NO]}];
-                    }
-                }
-                else if ([forthLetter isEqualToString:@"cart"])
-                {
-                    // Cart
-                    [self pushCartViewController];
-                }
-                else if ([forthLetter isEqualToString:@"w"])
-                {
-                    // Wishlist
-                    [self pushWishList];
-                }
-                else if ([forthLetter isEqualToString:@"o"])
-                {
-                    // Order overview
-                    [self pushOrderOverView];
-                }
-                else if ([forthLetter isEqualToString:@"l"])
-                {
-                    // Login
-                    [self pushLoginViewController];
-                }
-                else if ([forthLetter isEqualToString:@"r"])
-                {
-                    // Register
-                    [self pushRegisterViewController];
-                }
+                [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                    object:nil
+                                                                  userInfo:userInfo];
+            }
+            else if ([key isEqualToString:@"cart"])
+            {
+                // Cart
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification
+                                                                    object:nil];
+            }
+            else if ([key isEqualToString:@"w"])
+            {
+                // Wishlist
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowFavoritesScreenNotification
+                                                                    object:nil];
+            }
+            else if ([key isEqualToString:@"o"])
+            {
+                // Order overview
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowTrackOrderScreenNotification
+                                                                    object:nil];
+            }
+            else if ([key isEqualToString:@"l"])
+            {
+                // Login
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
+                                                                    object:nil];
+            }
+            else if ([key isEqualToString:@"r"])
+            {
+                // Register
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification
+                                                                    object:nil];
+            }
+            else if ([key isEqualToString:@"rv"])
+            {
+                // Recently viewed
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowRecentlyViewedScreenNotification
+                                                                    object:nil];
+            }
+            else if ([key isEqualToString:@"rc"])
+            {
+                // Recent Searches
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowRecentSearchesScreenNotification
+                                                                    object:nil];
+            }
+            else if ([key isEqualToString:@"news"])
+            {
+                // Email notifications
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowEmailNotificationsScreenNotification
+                                                                    object:nil];
+            }
+            else if ([key isEqualToString:@"camp"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCampaignNofication
+                                                                    object:nil
+                                                                  userInfo:@{@"campaign_id":arguments}];
             }
         }
     }
@@ -744,60 +866,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 - (void)pushHomeViewController
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(0),
-                                                                 @"name": STRING_HOME }];
-}
-
-- (void)pushCatalogViewControllerWithCategoryId:(NSString *)categoryId
-                                   categoryName:(NSString *)categoryName
-                                     searchTerm:(NSString *)searchTerm
-{
-    if(VALID_NOTEMPTY(categoryId, NSString))
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_id":categoryId}];
-    }
-    else if(VALID_NOTEMPTY(categoryName, NSString))
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":categoryName}];
-    }
-    else if(VALID_NOTEMPTY(searchTerm, NSString))
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                            object:@{@"index": @(99),
-                                                                     @"name": STRING_SEARCH,
-                                                                     @"text": searchTerm }];
-    }
-}
-
-- (void)pushCartViewController
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification
-                                                        object:nil];
-}
-
-- (void)pushWishList
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowFavoritesScreenNotification
-                                                        object:nil];
-}
-
-- (void)pushOrderOverView
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowTrackOrderScreenNotification
-                                                        object:nil];
-}
-
-- (void)pushLoginViewController
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
-                                                        object:nil];
-}
-
-- (void)pushRegisterViewController
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification
-                                                        object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
 #pragma mark - Auxiliar methods

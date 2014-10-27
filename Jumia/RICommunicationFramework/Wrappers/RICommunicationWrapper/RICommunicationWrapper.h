@@ -11,6 +11,8 @@
 #import "RIError.h"
 #import "RIOperation.h"
 
+#define kPHPSESSIDCookie @"PHPSESSIDCookieProperties"
+
 /**
  *
  * Interface of RICommunicationWrapper
@@ -128,6 +130,16 @@
                       cacheTime:(RIURLCacheTime)cacheTime
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
                    failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock;
+
+/**
+ * Method to delete session cookie
+ */
++ (void)deleteSessionCookie;
+
+/**
+ * Method to set session cookie
+ */
++ (BOOL)setSessionCookie;
 
 /**
  *  Cancel the current request

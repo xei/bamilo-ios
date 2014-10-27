@@ -39,7 +39,7 @@
 "navigation_cart_empty" = "Votre panier est vide";
 "string_vat_shipping_included" = "TVA et frais de port inclus";
 
-"teaser_campaign_button_first_line" = "A SAISIR";
+"teaser_campaign_button_first_line" = "HOT";
 "teaser_campaign_button_second_line" = "OFFRES";
 "string_top_brands" = "Meilleures marques";
 "string_top_categories" = "Meilleures catégories";
@@ -200,7 +200,7 @@
 "campaign_save" = "Vous économisez";
 "campaing_offer_ended" = "Promo Expirée!";
 "campaing_timer_end" = "Se termine le:";
-"off_label" = "-";
+"string_format_off_label" = "-%d%%";
 "campaigns_label" = "Campaigns";
 
 "product_specifications" = "Caractéristiques";
@@ -218,3 +218,29 @@
 
 "string_error_setting_payment_method" = "Erreur dans la sélection du moyen de paiement";
 "string_error_setting_shipping_method" = "Erreur dans la sélection du moyen de livraison";
+
+"fallback_maintenance" = "MAINTENANCE";
+"fallback_maintenance_text" = "iest actuellement en maintenance.";
+"fallback_maintenance_text_bottom" = "Nous allons essayer d\'être bref, réessayer dans quelques secondes";
+"fallback_best" = "Première boutique de vente en ligne";
+"fallback_choice" = "LE PLUS GRAND CHOIX";
+"fallback_doorstep" = "À VOTRE PORTE";
+
+"got_it" = "J\'ai Compris";
+"home_tip_text" = "Faites défiler vers la gauche ou la droite pour changer de catégorie";
+"products_tip_swipe_text" = "Balayer à la gauche ou droite pour changer de classement";
+"tip_favourite_text" = "Cliquez pour ajouter ce produit aux Favoris, et voir la liste complète dans Mon Profil";
+"tip_share_text" = "Cliquez pour Partager ce Produit";
+"tip_swipe_text" = "Balayez vers la gauche ou la droite pour observer les différentes images";
+"tip_tap_text" = "Cliquez pour voir l\'ensemble \ndes images produit";
+
+"fallback_audio_ios" = "Son & Image";
+"fallback_books" = "Livres";
+"fallback_bottom_text" = "partout et à tout moment";
+"fallback_bottom_text2" = "Et beaucoup plus pour naviguer ou fair des achats";
+"fallback_fashion" = "Mode";
+"fallback_health_ios" = "Beauté & Santé";
+"fallback_home_office_ios" = "Maison & Jardin";
+"fallback_mobile" = "Téléphonie";
+"fallback_welcome" = "BIENVENUE";
+

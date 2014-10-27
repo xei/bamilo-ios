@@ -1,5 +1,5 @@
 //
-//  JAAppDelegate.h
+//  JAAppDelegate.h 
 //  Jumia
 //
 //  Created by Pedro Lopes on 24/07/14.
@@ -11,8 +11,6 @@
 @interface JAAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (assign, nonatomic) BOOL notificationChangedCountry;
-@property (strong, nonatomic) NSDictionary *initialUserInfo;
 
 @end
 

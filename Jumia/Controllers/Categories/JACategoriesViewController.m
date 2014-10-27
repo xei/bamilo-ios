@@ -7,6 +7,7 @@
 //
 
 #import "JACategoriesViewController.h"
+#import "JAClickableView.h"
 
 @interface JACategoriesViewController ()
 
@@ -69,12 +70,19 @@
                 self.firstLoading = NO;
             }
             
-            BOOL noConnection = NO;
-            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+            if(RIApiResponseMaintenancePage == apiResponse)
             {
-                noConnection = YES;
+                [self showMaintenancePage:@selector(continueLoading) objects:nil];
             }
-            [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
+            else
+            {
+                BOOL noConnection = NO;
+                if (RIApiResponseNoInternetConnection == apiResponse)
+                {
+                    noConnection = YES;
+                }
+                [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
+            }
             
             [self hideLoading];
         }];
@@ -143,7 +151,20 @@
                                                                      1)];
         separator.backgroundColor = JALabelGrey;
         [cell addSubview:separator];
+
     }
+    
+    //remove the clickable view
+    for (UIView* view in cell.subviews) {
+        if ([view isKindOfClass:[JAClickableView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    //add the new clickable view
+    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+    clickView.tag = indexPath.row;
+    [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [cell addSubview:clickView];
     
     NSInteger realIndex = indexPath.row;
     
@@ -181,6 +202,7 @@
             cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
             cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
             cell.accessoryType = UITableViewCellAccessoryNone;
+            clickView.enabled = NO;
             return cell;
         }
     }
@@ -199,6 +221,11 @@
     }
     
     return cell;
+}
+
+- (void)cellWasPressed:(UIControl*)sender
+{
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

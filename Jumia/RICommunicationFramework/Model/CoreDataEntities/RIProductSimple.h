@@ -21,10 +21,12 @@
 @property (nonatomic, retain) NSString * minDeliveryTime;
 @property (nonatomic, retain) NSNumber * price;
 @property (nonatomic, retain) NSString * priceFormatted;
+@property (nonatomic, retain) NSNumber * priceEuroConverted;
 @property (nonatomic, retain) NSString * quantity;
 @property (nonatomic, retain) NSString * sku;
 @property (nonatomic, retain) NSNumber * specialPrice;
 @property (nonatomic, retain) NSString * specialPriceFormatted;
+@property (nonatomic, retain) NSNumber * specialPriceEuroConverted;
 @property (nonatomic, retain) NSNumber * stock;
 @property (nonatomic, retain) RIProduct *product;
 
@@ -33,7 +35,9 @@
  *
  *  @return the parsed RIProductSimple
  */
-+ (RIProductSimple *)parseProductSimple:(NSDictionary *)productSimpleJSON country:(RICountryConfiguration*)country;
++ (RIProductSimple *)parseProductSimple:(NSDictionary*)productSimpleJSON
+                                country:(RICountryConfiguration*)country
+                           variationKey:(NSString*)variationKey;
 
 /**
  *  Method to save an RIProductSimple in coredata

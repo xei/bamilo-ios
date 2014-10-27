@@ -21,6 +21,7 @@
 @dynamic countryUrl;
 @dynamic actionName;
 @dynamic countryIso;
+@dynamic countryName;
 @dynamic curVersion;
 @dynamic minVersion;
 @dynamic sections;
@@ -31,6 +32,7 @@
 {
     NSString *url;
     NSString *countryIso;
+    NSString *name;
     
     if (ISEMPTY(country))
     {
@@ -40,12 +42,15 @@
             RIApi* api = [apiArrayFromCoreData firstObject];
             url = api.countryUrl;
             countryIso = api.countryIso;
+            name = api.countryName;
         }
-    } else
+    }
+    else
     {
         [[RIDataBaseWrapper sharedInstance] resetApplicationModel];
         url = country.url;
         countryIso = country.countryIso;
+        name = country.name;
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", url, RI_API_VERSION, RI_API_INFO]]
@@ -62,7 +67,8 @@
                                                                   [metadata addEntriesFromDictionary:@{ @"countryUrl" : url }];
                                                                   
                                                                   RIApi* newApi = [RIApi parseApi:metadata
-                                                                                       countryIso:countryIso];
+                                                                                       countryIso:countryIso
+                                                                                      countryName:name];
                                                                   
                                                                   BOOL hasUpdate = NO;
                                                                   BOOL isUpdateMandatory = NO;
@@ -188,22 +194,55 @@
     }
 }
 
++ (NSString *)getCountryNameInUse;
+{
+    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+    
+    if (0 == apiArray.count) {
+        return @"";
+    } else {
+        RIApi *api = [apiArray firstObject];
+        return api.countryName;
+    }
+}
+
++ (RIApi *)getApiInformation
+{
+    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+    
+    RIApi *apiInformation = nil;
+    if(VALID_NOTEMPTY(apiArray, NSArray))
+    {
+        apiInformation = [apiArray firstObject];
+    }
+    return apiInformation;
+}
+
 #pragma mark - Parser
 
 + (RIApi *)parseApi:(NSDictionary*)api
-         countryIso:(NSString *)countryIso;
+         countryIso:(NSString *)countryIso
+        countryName:(NSString *)countryName
 {
     RIApi* newApi = (RIApi*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIApi class])];
     
-    if ([api objectForKey:@"action_name"]) {
+    if ([api objectForKey:@"action_name"])
+    {
         newApi.actionName = [api objectForKey:@"action_name"];
     }
     
-    if (countryIso.length > 0) {
+    if (VALID_NOTEMPTY(countryIso, NSString))
+    {
         newApi.countryIso = countryIso;
     }
     
-    if ([api objectForKey:@"countryUrl"]) {
+    if (VALID_NOTEMPTY(countryName, NSString))
+    {
+        newApi.countryName = countryName;
+    }
+
+    if ([api objectForKey:@"countryUrl"])
+    {
         newApi.countryUrl = [api objectForKey:@"countryUrl"];
     }
     
@@ -222,15 +261,14 @@
     
     NSArray* data = [api objectForKey:@"data"];
     
-    if (VALID_NOTEMPTY(data, NSArray)) {
-        
-        for (NSDictionary* sectionJSON in data) {
-            
-            if (VALID_NOTEMPTY(sectionJSON, NSDictionary)) {
-                
+    if (VALID_NOTEMPTY(data, NSArray))
+    {
+        for (NSDictionary* sectionJSON in data)
+        {
+            if (VALID_NOTEMPTY(sectionJSON, NSDictionary))
+            {
                 RISection* section = [RISection parseSection:sectionJSON];
                 section.api = newApi;
-                
                 [newApi addSectionsObject:section];
             }
         }
@@ -261,6 +299,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray* errorMessages) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             failureBlock(apiResponse, errorMessages);
         }];
     } else if ([section.name isEqualToString:@"forms"]) {
@@ -269,6 +308,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             failureBlock(apiResponse, errorMessage);
         }];
     }
@@ -279,6 +319,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             failureBlock(apiResponse, errorMessage);
         }];
     }
@@ -288,7 +329,7 @@
         [RIImageResolution loadImageResolutionsIntoDatabaseForCountry:url withSuccessBlock:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         }];
     }
     else if ([section.name isEqualToString:@"countryconfs"])
@@ -297,7 +338,7 @@
         [RICountry loadCountryConfigurationForCountry:url withSuccessBlock:^(RICountryConfiguration *configuration) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         }];
     }
     else if ([section.name isEqualToString:@"static_blocks"])
@@ -306,7 +347,7 @@
         [RIStaticBlockIndex loadStaticBlockIndexesIntoDatabaseForCountry:url withSuccessBlock:^(id staticBlockIndexes) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         }];
     }
 }

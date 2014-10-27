@@ -1,9 +1,10 @@
 @all @registration
 Feature: Registration
-#TODO: one button instead of two, newsletter
 
 Background:
 * I call the variables
+* I wait for 5 seconds
+* I wait to see if the choose country screen shows
 * I wait to see the home
 * I touch the hamburger
 * I wait to see the side menu
@@ -28,17 +29,13 @@ Scenario: Registration Empty Fields
 Scenario: Registration Same Email
 * I enter the registration data with an already registred email
 * I touch the Register button
-* I wait to see the error please check your input fields
+* I wait to see the error
 
 @registration_dp
 Scenario: Registration Different Password
 * I enter the registration data with different password
 * I touch the Register button
 * I wait to see the error please check your input fields
-
-#TODO
-@registration_tc
-Scenario: Registration Terms and Conditions
 
 @registration_nc
 Scenario: Registration Newletter Checkbox

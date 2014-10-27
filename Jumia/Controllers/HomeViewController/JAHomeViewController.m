@@ -14,6 +14,8 @@
 #import "RICustomer.h"
 #import "JAPromotionPopUp.h"
 #import "JAAppDelegate.h"
+#import "JAHomeWizardView.h"
+#import "JAFallbackView.h"
 
 @interface JAHomeViewController ()
 
@@ -31,13 +33,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSDictionary* initialUserInfo = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).initialUserInfo;
-    if (VALID_NOTEMPTY(initialUserInfo, NSDictionary))
-    {
-        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]) application:nil didReceiveRemoteNotification:[initialUserInfo copy]];
-        ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).initialUserInfo = nil;
-    }
     
     self.screenName = @"ShopMain";
     self.A4SViewControllerAlias = @"HOME";
@@ -63,7 +58,7 @@
                                               data:[trackingDictionary copy]];
     
     self.teaserCategoryScrollView.delegate = self;
-    self.teaserCategoryScrollView.startingIndex = 1;
+    self.teaserCategoryScrollView.startingIndex = 0;
     self.teaserPagesScrollView.pagingEnabled = YES;
     self.teaserPagesScrollView.scrollEnabled = NO;
     self.teaserPagesScrollView.delegate = self;
@@ -89,6 +84,15 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
+    
+    BOOL alreadyShowedWizardHome = [[NSUserDefaults standardUserDefaults] boolForKey:kJAHomeWizardUserDefaultsKey];
+    if(alreadyShowedWizardHome == NO)
+    {
+        JAHomeWizardView* wizardView = [[JAHomeWizardView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:wizardView];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAHomeWizardUserDefaultsKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -144,17 +148,20 @@
         CGFloat currentPageX = self.teaserPagesScrollView.bounds.origin.x;
         
         for (RITeaserCategory* teaserCategory in teaserCategories) {
-            [titles addObject:teaserCategory.homePageTitle];
-            
-            JATeaserPageView* teaserPageView = [[JATeaserPageView alloc] initWithFrame:CGRectMake(currentPageX,
-                                                                                                  self.teaserPagesScrollView.bounds.origin.y,
-                                                                                                  self.teaserPagesScrollView.bounds.size.width,
-                                                                                                  self.teaserPagesScrollView.bounds.size.height)];
-            teaserPageView.teaserCategory = teaserCategory;
-            [self.teaserPagesScrollView addSubview:teaserPageView];
-            [self.teaserPageViews addObject:teaserPageView];
-            
-            currentPageX += teaserPageView.frame.size.width;
+            if(VALID_NOTEMPTY(teaserCategory.homePageTitle, NSString))
+            {
+                [titles addObject:teaserCategory.homePageTitle];
+                
+                JATeaserPageView* teaserPageView = [[JATeaserPageView alloc] initWithFrame:CGRectMake(currentPageX,
+                                                                                                      self.teaserPagesScrollView.bounds.origin.y,
+                                                                                                      self.teaserPagesScrollView.bounds.size.width,
+                                                                                                      self.teaserPagesScrollView.bounds.size.height)];
+                teaserPageView.teaserCategory = teaserCategory;
+                [self.teaserPagesScrollView addSubview:teaserPageView];
+                [self.teaserPageViews addObject:teaserPageView];
+                
+                currentPageX += teaserPageView.frame.size.width;
+            }
         }
         
         [self.teaserCategoryScrollView setOptions:titles];
@@ -185,12 +192,21 @@
             self.firstLoading = NO;
         }
         
-        BOOL noConnection = NO;
-        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        if(RIApiResponseMaintenancePage == apiResponse)
         {
-            noConnection = YES;
+            [self showMaintenancePage:@selector(completeTeasersLoading) objects:nil];
         }
-        [self showErrorView:noConnection startingY:0.0f selector:@selector(completeTeasersLoading) objects:nil];
+        else
+        {
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                [self showErrorView:YES startingY:0.0f selector:@selector(completeTeasersLoading) objects:nil];
+            } else {
+                JAFallbackView* fallbackView = [JAFallbackView getNewJAFallbackView];
+                [fallbackView setupFallbackView:self.view.bounds];
+                [self.view addSubview:fallbackView];
+            }
+        }
     }];
 }
 

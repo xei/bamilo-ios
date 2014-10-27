@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAClickableView.h"
 #import "RIProduct.h"
 
-@interface JAPDVSingleRelatedItem : UIView
+@interface JAPDVSingleRelatedItem : JAClickableView
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewItem;
 @property (weak, nonatomic) IBOutlet UILabel *labelBrand;

@@ -43,7 +43,14 @@
                                                                       NSArray *data = [metadata objectForKey:@"data"];
                                                                       if(VALID_NOTEMPTY(data, NSArray))
                                                                       {
-                                                                          successBlock([RITeaserCategory parseTeaserCategories:data countryConfiguration:configuration]);
+                                                                          NSArray* teaserCategoriesArray = [RITeaserCategory parseTeaserCategories:data countryConfiguration:configuration];
+                                                                          if (VALID_NOTEMPTY(teaserCategoriesArray, NSArray)) {
+                                                                              successBlock(teaserCategoriesArray);
+                                                                          } else {
+                                                                              failureBlock(apiResponse, nil);
+                                                                          }
+                                                                      } else {
+                                                                          failureBlock(apiResponse, nil);
                                                                       }
                                                                   }
                                                                   else
@@ -114,9 +121,11 @@
     for (NSDictionary *dic in teaserCategories) {
         RITeaserCategory *teaserCategory = [RITeaserCategory parseTeaserCategory:dic countryConfiguration:countryConfiguration];
         
-        [RITeaserCategory saveTeaserCategory:teaserCategory];
-        
-        [returnArray addObject:teaserCategory];
+        if (VALID_NOTEMPTY(teaserCategory, RITeaserCategory)) {
+            [RITeaserCategory saveTeaserCategory:teaserCategory];
+            
+            [returnArray addObject:teaserCategory];
+        }
     }
     
     return [returnArray copy];
@@ -126,6 +135,25 @@
                      countryConfiguration:(RICountryConfiguration*)countryConfiguration
 {
     RITeaserCategory *newCategory = (RITeaserCategory*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaserCategory class])];
+    
+    if (VALID_NOTEMPTY([json objectForKey:@"data"], NSArray))
+    {
+        NSArray *dataElements = [json objectForKey:@"data"];
+        
+        for (NSDictionary *dic in dataElements)
+        {
+            if(VALID_NOTEMPTY(dic, NSDictionary))
+            {
+                RITeaserGroup *group = [RITeaserGroup parseTeaserGroup:dic countryConfiguration:countryConfiguration];
+                group.teaserCategory = newCategory;
+                
+                [newCategory addTeaserGroupsObject:group];
+            }
+        }
+    } else {
+        //if this fails, there is no block, for all intents and purposes. don't argue with me, i'm just the mobile dev :(
+        return nil;
+    }
     
     if ([json objectForKey:@"homepage_id"]) {
         newCategory.homePageId = [NSNumber numberWithInt:[[json objectForKey:@"homepage_id"] integerValue]];
@@ -145,20 +173,6 @@
     
     if ([json objectForKey:@"md5"]) {
         newCategory.md5 = [json objectForKey:@"md5"];
-    }
-    
-    if ([json objectForKey:@"data"]) {
-        
-        NSArray *dataElements = [json objectForKey:@"data"];
-        
-        for (NSDictionary *dic in dataElements) {
-            
-            RITeaserGroup *group = [RITeaserGroup parseTeaserGroup:dic countryConfiguration:countryConfiguration];
-            group.teaserCategory = newCategory;
-            
-            [newCategory addTeaserGroupsObject:group];
-            
-        }
     }
     
     return newCategory;

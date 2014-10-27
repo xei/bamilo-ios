@@ -18,4 +18,6 @@
 
 + (NSString *)getDeviceModel;
 
++ (UIImage *)imageWithColor:(UIColor *)color;
+
 @end

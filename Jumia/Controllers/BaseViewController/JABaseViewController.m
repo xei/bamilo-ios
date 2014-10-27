@@ -8,6 +8,9 @@
 
 #import "JABaseViewController.h"
 #import "JAAppDelegate.h"
+#import "JANoConnectionView.h"
+#import "JAMaintenancePage.h"
+#import "JAFallbackView.h"
 
 @interface JABaseViewController ()
 
@@ -155,7 +158,6 @@
     }
 }
 
-
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
 {
     JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
@@ -201,6 +203,56 @@
     for(UIView *view in self.view.subviews)
     {
         if([view isKindOfClass:[JANoConnectionView class]])
+        {
+            [view removeFromSuperview];
+            break;
+        }
+    }
+}
+
+- (void)showMaintenancePage:(SEL)selector objects:(NSArray*)objects
+{
+    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+    
+    JAMaintenancePage *maintenancePage = [JAMaintenancePage getNewJAMaintenancePage];
+    [maintenancePage setupMaintenancePage:window.frame];
+    [maintenancePage setRetryBlock:^(BOOL dismiss)
+     {
+         if([self respondsToSelector:selector])
+         {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+             if(ISEMPTY(objects))
+             {
+                 [self performSelector:selector];
+             }
+             else if(1 == [objects count])
+             {
+                 [self performSelector:selector withObject:[objects objectAtIndex:0]];
+             }
+             else if(2 == [objects count])
+             {
+                 [self performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+             }
+#pragma clang diagnostic pop
+         }
+     }];
+    
+    for (UIView* view in window.rootViewController.view.subviews) {
+        if ([view isKindOfClass:[JAMaintenancePage class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    
+    [window.rootViewController.view addSubview:maintenancePage];
+}
+
+- (void)removeMaintenancePage
+{
+    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+    for(UIView *view in window.rootViewController.view.subviews)
+    {
+        if([view isKindOfClass:[JAMaintenancePage class]])
         {
             [view removeFromSuperview];
             break;

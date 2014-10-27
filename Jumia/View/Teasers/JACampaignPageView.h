@@ -13,6 +13,10 @@
 
 - (void)loadFailedWithResponse:(RIApiResponse)apiResponse;
 
+@optional
+
+- (void)loadSuccessWithName:(NSString*)name;
+
 @end
 
 @interface JACampaignPageView : UIView
@@ -21,6 +25,7 @@
 @property (nonatomic, assign)id<JACampaignSingleViewDelegate>singleViewDelegate;
 
 - (void)loadWithCampaignUrl:(NSString*)campaignUrl;
+- (void)loadWithCampaignId:(NSString*)campaignId;
 - (void)updateTimerOnAllCampaigns:(NSInteger)elapsedTimeInSeconds;
 
 @end

@@ -85,6 +85,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [events addObject:[NSNumber numberWithInt:RIEventFacebookViewWishlist]];
         [events addObject:[NSNumber numberWithInt:RIEventFacebookViewCart]];
         [events addObject:[NSNumber numberWithInt:RIEventFacebookViewTransaction]];
+        [events addObject:[NSNumber numberWithInt:RIEventOpenApp]];
         
         self.registeredEvents = [events copy];
     }
@@ -125,8 +126,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     RIDebugLog(@"Adjust - Tracking event = %@, data %@", eventType, data);
     if([self.registeredEvents containsObject:eventType])
     {
-        NSDictionary *parameters = [self createParameters:data];
-        
+        BOOL amountOfTransactions = YES;
         NSString *eventKey = @"";
         NSInteger eventTypeInt = [eventType integerValue];
         switch (eventTypeInt) {
@@ -211,21 +211,43 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             case RIEventFacebookViewTransaction:
                 eventKey = @"29kvfe";
                 break;
+            case RIEventOpenApp:
+                eventKey = @"2x9nt2";
+                amountOfTransactions = NO;
+                break;
             default:
                 break;
         }
+        
+        NSDictionary *parameters = [self createParameters:data withAmountOfTransactions:amountOfTransactions];
         
         [Adjust trackEvent:eventKey withParameters:parameters];
     }
 }
 
-- (NSDictionary*)createParameters:(NSDictionary*)data
+- (NSDictionary*)createParameters:(NSDictionary*)data withAmountOfTransactions:(BOOL)amountOfTransactions
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters setObject:[data objectForKey:kRILaunchEventAppVersionDataKey] forKey:kAdjustEventAppVersionDataKey];
-    [parameters setObject:[data objectForKey:kRILaunchEventDeviceModelDataKey] forKey:kAdjustEventDeviceModelDataKey];
-    [parameters setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kAdjustEventShopCountryKey];
+    if(VALID_NOTEMPTY([data objectForKey:kRILaunchEventAppVersionDataKey], NSString))
+    {
+        [parameters setObject:[data objectForKey:kRILaunchEventAppVersionDataKey] forKey:kAdjustEventAppVersionDataKey];
+    }
     
+    if(VALID_NOTEMPTY([data objectForKey:kRILaunchEventDeviceModelDataKey], NSString))
+    {
+        [parameters setObject:[data objectForKey:kRILaunchEventDeviceModelDataKey] forKey:kAdjustEventDeviceModelDataKey];
+    }
+    
+    if(VALID_NOTEMPTY([data objectForKey:kRILaunchEventDurationDataKey], NSString))
+    {
+        [parameters setObject:[data objectForKey:kRILaunchEventDurationDataKey] forKey:kAdjustEventDurationDataKey];
+    }
+    
+    if(VALID_NOTEMPTY([data objectForKey:kRIEventShopCountryKey], NSString))
+    {
+        [parameters setObject:[data objectForKey:kRIEventShopCountryKey] forKey:kAdjustEventShopCountryKey];
+    }
+        
     NSString *userId = [data objectForKey:kRIEventUserIdKey];
     if(VALID_NOTEMPTY(userId, NSString) && ![@"0" isEqualToString:userId])
     {
@@ -256,12 +278,15 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [parameters setObject:numberOfSessions forKey:kAdjustAmountSessionsKey];
     }
     
-    NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
-    if(!VALID_NOTEMPTY(numberOfPurchases, NSNumber))
+    if(amountOfTransactions)
     {
-        numberOfPurchases = [NSNumber numberWithInt:0];
+        NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
+        if(!VALID_NOTEMPTY(numberOfPurchases, NSNumber))
+        {
+            numberOfPurchases = [NSNumber numberWithInt:0];
+        }
+        [parameters setObject:[numberOfPurchases stringValue] forKey:kAdjustAmountTransactionsKey];
     }
-    [parameters setObject:[numberOfPurchases stringValue] forKey:kAdjustAmountTransactionsKey];
     
     NSString *gender = [data objectForKey:kRIEventGenderKey];
     if(VALID_NOTEMPTY(gender, NSString))
@@ -462,50 +487,18 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     }
     [parameters setObject:[numberOfPurchases stringValue]  forKey:kAdjustAmountTransactionsKey];
     
-    NSNumber *transactionValue = [data objectForKey:kRIEcommerceConvertedTotalValueKey];
-
+    NSNumber *convertedTransactionValue = [data objectForKey:kRIEcommerceConvertedTotalValueKey];
+    // IMPORTANT NOTE: Revenue values must be tracked in cent precision. Decimal separator is a dot ., not a comma! This means, that 1.0 represents 1 cent of revenue
+    CGFloat convertedTransactionValueFloat = [convertedTransactionValue floatValue] * 100.0f;
+    
     NSString *eventKey = @"jk6lja";
     NSNumber *guest = [data objectForKey:kRIEcommerceGuestKey];
     if(VALID_NOTEMPTY(guest, NSNumber) && [guest boolValue])
     {
         eventKey = @"m1il3s";
     }
-
-    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceProducts], NSArray))
-    {
-        for(int i = 0; i < [[data objectForKey:kRIEcommerceProducts] count]; i++)
-        {
-            NSDictionary *product = [[data objectForKey:kRIEcommerceProducts] objectAtIndex:i];
-            if(VALID_NOTEMPTY(product, NSDictionary))
-            {
-                NSMutableDictionary *productDictionary = [[NSMutableDictionary alloc] init];
-                
-                if(VALID_NOTEMPTY([product objectForKey:kRIEventSkuKey], NSString))
-                {
-                    [productDictionary setObject:[product objectForKey:kRIEventSkuKey] forKey:kAdjustEventSkuKey];
-                }
-                
-                if(VALID_NOTEMPTY([product objectForKey:kRIEventPriceKey], NSString))
-                {
-                    [productDictionary setObject:[product objectForKey:kRIEventPriceKey] forKey:kAdjustEventPriceKey];
-                }
-                
-                if(VALID_NOTEMPTY([product objectForKey:kRIEventCurrencyCodeKey], NSString))
-                {
-                    [productDictionary setObject:[product objectForKey:kRIEventCurrencyCodeKey] forKey:kAdjustEventCurrencyKey];
-                }
-                
-                if(VALID_NOTEMPTY([product objectForKey:kRIEventQuantityKey], NSNumber))
-                {
-                    [productDictionary setObject:[product objectForKey:kRIEventQuantityKey] forKey:kAdjustEventQuantityKey];
-                }
-                
-                [parameters setObject:[productDictionary description] forKey:[NSString stringWithFormat:@"%@%d", kAdjustEventProductKey, (i+1)]];
-            }
-        }
-    }
-
-    [Adjust trackRevenue:[transactionValue floatValue] forEvent:eventKey withParameters:parameters];
+    
+    [Adjust trackRevenue:convertedTransactionValueFloat forEvent:eventKey withParameters:parameters];
 }
 
 #pragma mark AdjustDelegate

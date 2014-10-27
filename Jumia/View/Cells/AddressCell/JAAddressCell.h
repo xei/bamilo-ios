@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAClickableView.h"
 
 @class RIAddress;
 
 @interface JAAddressCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIButton *editAddressButton;
+@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
 
 -(void)loadWithAddress:(RIAddress*)address;
 

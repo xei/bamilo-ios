@@ -181,14 +181,21 @@
             self.firstLoading = NO;
         }
         
-        BOOL noConnection = NO;
-        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        if(RIApiResponseMaintenancePage == apiResponse)
         {
-            noConnection = YES;
+            [self showMaintenancePage:@selector(continueLoading) objects:nil];
         }
-       
-        [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
-
+        else
+        {
+            BOOL noConnection = NO;
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                noConnection = YES;
+            }
+            
+            [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
+        }
+        
         [self hideLoading];
     }];
 }
@@ -1012,6 +1019,10 @@
         [cell.deleteButton addTarget:self
                               action:@selector(removeFromCartPressed:)
                     forControlEvents:UIControlEventTouchUpInside];
+        cell.feedbackView.tag = indexPath.row;
+        [cell.feedbackView addTarget:self
+                              action:@selector(clickableViewPressedInCell:)
+                    forControlEvents:UIControlEventTouchUpInside];
         
         [cell.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
         
@@ -1022,6 +1033,11 @@
     }
     
     return cell;
+}
+
+- (void)clickableViewPressedInCell:(UIControl*)sender
+{
+    [self collectionView:self.productCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath

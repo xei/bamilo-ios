@@ -209,10 +209,67 @@
     totalLabel.text = self.checkout.cart.cartCleanValueFormatted;
     [totalLabel sizeToFit];
     totalLabel.frame = CGRectMake(CGRectGetMaxX(articlesLabel.frame),
-                                     articlesLabel.frame.origin.y,
-                                     (subtotalContentView.frame.size.width / 2) - 6.0f,
-                                     totalLabel.frame.size.height);
+                                  articlesLabel.frame.origin.y,
+                                  (subtotalContentView.frame.size.width / 2) - 6.0f,
+                                  totalLabel.frame.size.height);
     [subtotalContentView addSubview:totalLabel];
+    
+    NSString *priceRuleKeysString = @"";
+    NSString *priceRuleValuesString = @"";
+    if(VALID_NOTEMPTY( self.checkout.cart.priceRules, NSDictionary))
+    {
+        NSArray *priceRuleKeys = [self.checkout.cart.priceRules allKeys];
+        
+        for (NSString *priceRuleKey in priceRuleKeys)
+        {
+            if(ISEMPTY(priceRuleKeysString))
+            {
+                priceRuleKeysString = priceRuleKey;
+                priceRuleValuesString = [self.checkout.cart.priceRules objectForKey:priceRuleKey];
+            }
+            else
+            {
+                priceRuleKeysString = [NSString stringWithFormat:@"%@\n%@", priceRuleKeysString, priceRuleKey];
+                priceRuleValuesString = [NSString stringWithFormat:@"%@\n%@", priceRuleValuesString, [self.checkout.cart.priceRules objectForKey:priceRuleKey]];
+            }
+        }
+    }
+    
+    CGFloat vatPositionY = CGRectGetMaxY(articlesLabel.frame);
+    if(VALID_NOTEMPTY(priceRuleKeysString, NSString) && VALID_NOTEMPTY(priceRuleValuesString, NSString))
+    {
+        UILabel *priceRulesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [priceRulesLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]];
+        [priceRulesLabel setTextColor:UIColorFromRGB(0x666666)];
+        [priceRulesLabel setText:priceRuleKeysString];
+        [priceRulesLabel setNumberOfLines:0];
+        [priceRulesLabel setBackgroundColor:[UIColor clearColor]];
+        [priceRulesLabel sizeToFit];
+        [priceRulesLabel setFrame:CGRectMake(articlesLabel.frame.origin.x,
+                                             CGRectGetMaxY(articlesLabel.frame),
+                                             articlesLabel.frame.size.width,
+                                             priceRulesLabel.frame.size.height)];
+        
+        [subtotalContentView addSubview:priceRulesLabel];
+        
+        
+        UILabel *priceRulesValue = [[UILabel alloc] initWithFrame:CGRectZero];
+        [priceRulesValue setTextAlignment:NSTextAlignmentRight];
+        [priceRulesValue setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]];
+        [priceRulesValue setTextColor:UIColorFromRGB(0x666666)];
+        [priceRulesValue setText:priceRuleValuesString];
+        [priceRulesValue setNumberOfLines:0];
+        [priceRulesValue setBackgroundColor:[UIColor clearColor]];
+        [priceRulesValue sizeToFit];
+        [priceRulesValue setFrame:CGRectMake(CGRectGetMaxX(priceRulesLabel.frame),
+                                             CGRectGetMaxY(articlesLabel.frame),
+                                             totalLabel.frame.size.width,
+                                             priceRulesValue.frame.size.height)];
+        
+        [subtotalContentView addSubview:priceRulesValue];
+        
+        vatPositionY = CGRectGetMaxY(priceRulesLabel.frame);
+    }
     
     UILabel* vatLabel = [UILabel new];
     vatLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
@@ -220,7 +277,7 @@
     vatLabel.text = STRING_VAT;
     [vatLabel sizeToFit];
     vatLabel.frame = CGRectMake(articlesLabel.frame.origin.x,
-                                CGRectGetMaxY(articlesLabel.frame),
+                                vatPositionY,
                                 articlesLabel.frame.size.width,
                                 vatLabel.frame.size.height);
     [subtotalContentView addSubview:vatLabel];
@@ -604,6 +661,8 @@
                                                                           26.0f)];
         [editButton setTitle:@"Edit" forState:UIControlStateNormal];
         [editButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+        [editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+        [editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];
         [editButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f]];
         [editButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
         [contentView addSubview:editButton];
@@ -649,12 +708,19 @@
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         
-        BOOL noConnection = NO;
-        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        if(RIApiResponseMaintenancePage == apiResponse)
         {
-            noConnection = YES;
+            [self showMaintenancePage:@selector(continueNextStep) objects:nil];
         }
-        [self showErrorView:noConnection startingY:0.0f selector:@selector(continueNextStep) objects:nil];
+        else
+        {
+            BOOL noConnection = NO;
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                noConnection = YES;
+            }
+            [self showErrorView:noConnection startingY:0.0f selector:@selector(continueNextStep) objects:nil];
+        }
         
         [self hideLoading];
     }];

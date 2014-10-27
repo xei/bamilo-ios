@@ -119,12 +119,19 @@
             }
         }
 
-        BOOL noConnection = NO;
-        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
+        if(RIApiResponseMaintenancePage == apiResponse)
         {
-            noConnection = YES;
+            [self showMaintenancePage:@selector(loadData) objects:nil];
         }
-        [self showErrorView:noConnection startingY:0.0f selector:@selector(loadData) objects:nil];
+        else
+        {
+            BOOL noConnection = NO;
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                noConnection = YES;
+            }
+            [self showErrorView:noConnection startingY:0.0f selector:@selector(loadData) objects:nil];
+        }
         
         [self hideLoading];
         
@@ -197,17 +204,11 @@
         self.selectedIndex = indexPath;
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kEditShouldChangeStateNotification object:nil userInfo:@{@"enabled":[NSNumber numberWithBool:YES]}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDoneShouldChangeStateNotification object:nil userInfo:@{@"enabled":[NSNumber numberWithBool:YES]}];
     
     [tableView deselectRowAtIndexPath:indexPath
                              animated:YES];
 }
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    
-}
 
 @end

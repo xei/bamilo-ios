@@ -70,6 +70,11 @@
     for (int i = 0; i < [fields count]; i++)
     {
         RIField *field = [fields objectAtIndex:i];
+        NSInteger tag = [self.formViews count];
+        if(-1 != birthdayFieldPosition)
+        {
+            tag++;
+        }
         
         if ([@"string" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
@@ -90,8 +95,8 @@
                 textField.frame = frame;
                 startingY += textField.frame.size.height;
                 
-                [textField.textField setTag:i];
-                [textField setTag:i];
+                [textField.textField setTag:tag];
+                [textField setTag:tag];
                 
                 lastTextFieldIndex = [self.formViews count];
                 [self.formViews addObject:textField];
@@ -110,8 +115,8 @@
             textField.frame = frame;
             startingY += textField.frame.size.height;
             
-            [textField.textField setTag:i];
-            [textField setTag:i];
+            [textField.textField setTag:tag];
+            [textField setTag:tag];
             
             lastTextFieldIndex = [self.formViews count];
             [self.formViews addObject:textField];
@@ -134,7 +139,7 @@
                 }
                 if(-1 == birthdayFieldPosition)
                 {
-                    birthdayFieldPosition = i;
+                    birthdayFieldPosition = [self.formViews count];
                     
                     CGRect frame = birthDateComponent.frame;
                     frame.origin.y = startingY;
@@ -150,16 +155,16 @@
                 JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
                 [textField setupWithField:field];
                 [textField.textField setDelegate:self];
+                [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
                 [textField.textField setReturnKeyType:UIReturnKeyNext];
-                [textField.textField setKeyboardType:UIKeyboardTypeNumberPad];
                 
                 CGRect frame = textField.frame;
                 frame.origin.y = startingY;
                 textField.frame = frame;
                 startingY += textField.frame.size.height;
-                
-                [textField.textField setTag:i];
-                [textField setTag:i];
+  
+                [textField.textField setTag:tag];
+                [textField setTag:tag];
                 
                 lastTextFieldIndex = [self.formViews count];
                 [self.formViews addObject:textField];
@@ -179,8 +184,9 @@
                 radioComponent.frame = frame;
                 startingY += radioComponent.frame.size.height;
                 
-                [radioComponent.textField setTag:i];
-                [radioComponent setTag:i];
+
+                [radioComponent.textField setTag:tag];
+                [radioComponent setTag:tag];
                 
                 lastTextFieldIndex = [self.formViews count];
                 [self.formViews addObject:radioComponent];
@@ -207,7 +213,7 @@
                 check.frame = frame;
                 startingY += check.frame.size.height;
                 
-                [check setTag:i];
+                [check setTag:tag];
                 [self.formViews addObject:check];
             }
             else
@@ -222,7 +228,7 @@
                     checkWithOptions.frame = frame;
                     startingY += checkWithOptions.frame.size.height;
                     
-                    [checkWithOptions setTag:i];
+                    [checkWithOptions setTag:tag];
                     [self.formViews addObject:checkWithOptions];
                 }
                 else
@@ -236,8 +242,8 @@
                     startingY += check.frame.size.height;
                     
                     check.labelText.text = field.label;
-                    
-                    [check setTag:i];
+
+                    [check setTag:tag];
                     [self.formViews addObject:check];
                 }
             }
@@ -608,8 +614,6 @@
 {
     BOOL textFieldShouldBeginEditing = YES;
     
-    self.currentTextField = textField;
-    
     UIView *view = [self viewWithTag:textField.tag];
     if([view respondsToSelector:@selector(cleanError)])
     {
@@ -624,6 +628,8 @@
     }
     else if([view isKindOfClass:[JABirthDateComponent class]])
     {
+        [self resignResponder];
+        
         textFieldShouldBeginEditing = NO;
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(openDatePicker:)]) {
@@ -632,12 +638,16 @@
     }
     else if([view isKindOfClass:[JARadioComponent class]])
     {
+        [self resignResponder];
+        
         textFieldShouldBeginEditing = NO;
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(openPicker:)]) {
             [self.delegate performSelector:@selector(openPicker:) withObject:[self viewWithTag:textField.tag]];
         }
     }
+    
+    self.currentTextField = textField;
     
     return textFieldShouldBeginEditing;
 }
