@@ -11,7 +11,7 @@ $country = ENV['country']
 ##FR - EG,CI,MA | EN - CM,GH,KE,NG,UG
 
 def initvars
-    
+    puts "initvars EN"
     #init
     @wait_timeout = 5
     @wait_timeout_extra = 20
@@ -193,7 +193,7 @@ def initvars
     
     #native checkout
     @next = "Next"
-    @default_shipping_address = "Default Shipping Address"
+    @default_shipping_address = "2. Address"
     @shipping = "Shipping"
     @payment = "Payment"
     @my_order = "My Order"
@@ -201,3 +201,198 @@ def initvars
     @thank_you = "Thank You!"
 
 end
+
+def initvars_fr
+    puts "initvars FR"
+    
+    #init
+    @wait_timeout = 5
+    @wait_timeout_extra = 20
+    @wait_timeout_a_lot = 50
+    @country_cm = "Cameroun"
+    @country_eg = "Egypt"
+    @country_ci = "Côte d'ivoire"
+    @country_gh = "Ghana"
+    @country_ke = "Kenya"
+    @country_ma = "Maroc"
+    @country_ng = "Nigeria"
+    @country_ug = "Uganda"
+    
+    #choose country
+    @choose_country = "Choisir le pays"
+    @apply = "Appliquer"
+    
+    #home
+    @fashion = "Accueil"
+    @popular_categories = "Nos Meilleures Catégories"
+    @top_brands = "Vos Marques Préférées"
+    ##
+    @shop_now = "Shop Now"
+    @cart_button = "btn cart"
+    
+    #side bar
+    @hamburger_btn = "btn menu"
+    @shopping_cart = "Panier d'achat"
+    @login = "Connectez-vous"
+    @logout = "Se déconnecter"
+    @my_account = "Mon compte"
+    @categories = "Catégories"
+    @my_favorites = "Mes Favoris"
+    @recent_searches = "Recherches Récentes"
+    @recently_viewed = "Derniers Produits Vus"
+    @track_my_order = "Suivi de commande"
+    @change_country = "Choisir le pays"
+    @home = "Accueil"
+    @back_button = "btn back"
+    
+    #login
+    @credentials = "Identifiants"
+    @error_form_validation = "Formulaire de validation a échoué."
+    @error_check_username = "Vérifiez votre nom d'utilisateur ou mot de passe."
+    @e_mail = "E-Mail"
+    @password = "Mot de passe"
+    @invalid_email = "Email@invalido.com"
+    @invalid_password = "umapasswordqualquer"
+    @valid_email = "testcalabash@mailinator.com"
+    @valid_password = "password1"
+    @forgot_password = "Mot de passe oublié?"
+    
+    #my account
+    @account_settings = "Paramètres du compte"
+    @notification_settings = "Paramètres de notification"
+    @user_data = "Données de l'utilisateur"
+    @email_notifications = "Préférence eMails"
+    @notifications = "Notifications"
+    @sound = "Son"
+    @error_empty_fields_cp = "Il y a des erreurs dans les données communiquées, vérifiez les différents champs renseignés"
+    
+    #user data
+    @your_personal_data = "Vous données personnelles"
+    @retype_password = "Retaper le mot de passe"
+    @save = "Enregistrer"
+    @error_empty_fields = "Il y a des erreurs dans les données communiquées, vérifiez les différents champs renseignés"
+    @error_min_characters = "Min 6 caractères"
+    @error_password_not_match = "Les mots de passe ne correspondent pas"
+    @password_min_6 = "12345"
+    @password_changed_success = "Changement de mot de passe effectué"
+    
+    #email notifications
+    @newsletters_subscribed = "Inscrit aux Newsletters"
+    @newsletter_male = "Newsletter Homme"
+    @newsletter_female = "Newsletter Femme"
+    @preferences_updated = "Préférences mises à jour"
+    
+    #forgot password
+    @please_type_email = "Veillez entrer votre e-mail."
+    @submit = "Soumettre"
+    @error_empty_fields_fp = "Il y a des erreurs dans les données communiquées, vérifiez les différents champs renseignés"
+    @error_please_check_input = "L'adresse électronique fournie n'est pas correct."
+    @email_sent = "Email envoyé"
+    
+    #create account
+    @crate_account = "Créer um compte"
+    @account_data = "Donnés du compte"
+    @birthday = "Birthday"
+    @done = "Valider"
+    @gender = "Civilité"
+    @receive_newsletter = "Recevoir la newsletter?"
+    @first_name = "Prénom"
+    @last_name = "Nom"
+    @retype_password_2 = "Retaper le mot de passe"
+    @newsletter = "Je m'inscris à la newsletter !"
+    @register = "Enregistrer"
+    @error = "Error"
+    
+    #new user data
+    @first_name_text = "Tester"
+    @last_name_text = "Test"
+    @random = Time.now.to_i
+    @new_email = "testjumia+brunoqa"+@random.to_s+"@gmail.com"
+    
+    #search
+    @search = "Rechercher"
+    @valid_search = "Sandal"
+    @invalid_search = "dsofijsdijfoigjsodijfsodijfgsodijf"
+    @message_no_search_found = "Malheureusement, il n'y a pas de résultat pour « "+@invalid_search+" », essayez s'il vous plaît à nouveau"
+    
+    #catalog
+    @popularity = "Popularité"
+    @filter_icon = "filterIcon"
+    @grid_icon = "gridIcon"
+    @fav_button = "FavButton"
+    @catalog_top_button = "catalogTopButton"
+    @message_item_add_favourites = "Produit ajouté aux Favoris"
+    @message_item_removed_favourites = "Produit supprimé de Mes Favoris"
+    @best_rating = "Mieux Notés"
+    @new_in = "Nouveautés"
+    @price_up = "Prix croissant"
+    @price_down = "Prix décroissant"
+    @name = "Non"
+    @brand = "Marque"
+    
+    #product details
+    @share_button = "btn share"
+    @rate_button = "Evaluez Maintenant"
+    @specification = "Caractéristiques"
+    @add_to_cart = "Ajouter au panier"
+    @related_items = "Produits Similaires"
+    @product_features = "Spécifités du produit"
+    @product_description = "Description du produit"
+    @rate_message = "Avez-vous acheté / utilisé ce produit? Notez le!"
+    @item_added_to_cart_message = "Le produit a été ajouté au panier"
+    
+    #review
+    @review_name = "Nom"
+    @review_title = "Titre"
+    @review_comment = "Avis"
+    @send_review = "Envoyer votre avis"
+    @review_sent = "Avis envoyé"
+    @mail = "Mail"
+    @cancel = "Cancel"
+    
+    #cart
+    @no_items_message = "Vous n'avez pas d'articles dans le panier"
+    @proceed_to_chechout = "Valider la commande"
+    @cart = "Panier"
+    @change_quantity_1 = "Quantité 1"
+    @call_to_order = "Appeler pour commander"
+    
+    #my favourites
+    @no_favourites_message = "Vous n'avez pas de favoris pour le moment"
+    @favorite_remove_button = "btn removeitem"
+    @add_all_items_to_cart = "Tout ajouter au Panier"
+    @size = "Taille"
+    
+    #recent searches
+    @clear_recent_searches_button = "Effacer les Recherches Récentes"
+    @no_recent_searches_message = "Aucune Recherche Récente"
+    
+    #recently viewed
+    @clear_recently = "Effacer les Derniers Produits Vus"
+    @no_recent_viewed_message = "Aucun Dernier Produit Vu"
+    
+    #track order
+    @order_status = "Statut de la commande"
+    @order_id = "Numéro de commande"
+    @track_order = "Suivre la commande"
+    @empty_order_id_message = "Veuillez entrer le numéro de commande"
+    @no_results_track_order_message = "Aucun résultat pour le numéro de commande recherché...."
+    @track_order_id_valid = "300799592"
+    @track_order_id_invalid = "000"
+    @creation_date = "Date de création:"
+    @keyboard_delete_key = "Apagar"
+    
+    #filters
+    @filters = "Filtres"
+    
+    #native checkout
+    @next = "Suivant"
+    @default_shipping_address = "Adresse de libraison par défaut"
+    @shipping = "Livraison Standard"
+    @payment = "Paiement"
+    @my_order = "Ma commande"
+    @confirm_order = "Confirmer la commande"
+    @thank_you = "Merci!"
+    
+end
+
