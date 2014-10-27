@@ -9,6 +9,7 @@ Then /^I make sure I am logged out$/ do
         #puts "Logout"
         #Need Logout
         touch("view marked:'"+@logout+"'")
+        sleep(1)
         wait_for_elements_exist("view marked:'"+@login+"'", :timeout => 5)
     end
 end
