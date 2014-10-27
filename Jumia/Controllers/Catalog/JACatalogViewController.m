@@ -262,6 +262,8 @@
 
 - (void)addProdutsToMap:(NSArray*)products
 {
+    [self removeErrorView];
+    
     NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
     NSMutableArray *productsArray = [self.productsMap objectForKey:key];
     
