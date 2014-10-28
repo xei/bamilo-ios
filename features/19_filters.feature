@@ -13,7 +13,7 @@ Background:
 * I touch the catagories option
 * I wait for 1 seconds
 * I touch list item number 3
-* I wait for 1 seconds
+* I wait for 5 seconds
 * I touch list item number 1
 * I wait to see the catalog
 * I touch the filter button
