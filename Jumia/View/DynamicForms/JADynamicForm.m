@@ -220,7 +220,7 @@
             {
                 if(VALID_NOTEMPTY(field.options, NSOrderedSet))
                 {
-                    JACheckBoxWithOptionsComponent *checkWithOptions = [JACheckBoxWithOptionsComponent getNewJACheckBoxWithOptionsComponent];
+                    JACheckBoxWithOptionsComponent *checkWithOptions = [[JACheckBoxWithOptionsComponent alloc] initWithFrame:CGRectMake(0.0f, startingY, 308.0f, 0.0f)];
                     [checkWithOptions setupWithField:field];
                     
                     CGRect frame = checkWithOptions.frame;

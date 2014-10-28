@@ -2,12 +2,11 @@
 //  JANewsletterComponent.m
 //  Jumia
 //
-//  Created by Miguel Chaves on 18/Sep/14.
+//  Created by Pedro Lopes on 25/08/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
 #import "JANewsletterComponent.h"
-#import "RIField.h"
 
 @interface JANewsletterComponent ()
 
@@ -33,15 +32,15 @@
     return nil;
 }
 
-- (void)setup
+-(void)setup
 {
-    [self.textLabel setTextColor:UIColorFromRGB(0x666666)];
-    self.lineImageView.backgroundColor = UIColorFromRGB(0xcccccc);
+    [self.labelText setTextColor:UIColorFromRGB(0x666666)];
+    self.separator.backgroundColor = UIColorFromRGB(0xcccccc);
     
     self.storedValue = @"";
 }
 
-- (void)setupWithField:(RIField *)field
+-(void)setupWithField:(RIField*)field
 {
     [self setup];
     
@@ -49,35 +48,32 @@
     
     if(VALID_NOTEMPTY(field.label, NSString))
     {
-        [self.textLabel setText:field.label];
+        [self.labelText setText:field.label];
     }
     
-    [self.optionSwitch addTarget:self
-                          action:@selector(changedState:)
-                forControlEvents:UIControlEventValueChanged];
-    [self.optionSwitch setAccessibilityLabel:field.label];
+    [self.switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
+    [self.switchComponent setAccessibilityLabel:field.label];
     
     if(VALID_NOTEMPTY([self.field value], NSString))
     {
         self.storedValue = @"1";
-        [self.optionSwitch setOn:YES
-                        animated:NO];
+        [self.switchComponent setOn:YES animated:NO];
     }
 }
 
-- (BOOL)isComponentWithKey:(NSString *)key
+-(BOOL)isComponentWithKey:(NSString*)key
 {
     return ([key isEqualToString:self.field.key]);
 }
 
-- (void)changedState:(id)sender
+-(void)changedState:(id)sender
 {
     BOOL state = [sender isOn];
     
     [self setStateValue:state];
 }
 
-- (void)setStateValue:(BOOL)state
+-(void)setStateValue:(BOOL)state
 {
     if(state)
     {
@@ -89,45 +85,41 @@
     }
 }
 
-- (void)resetValue
+-(void)resetValue
 {
     if(VALID_NOTEMPTY([self.field value], NSString))
     {
         self.storedValue = @"1";
-        [self.optionSwitch setOn:YES
-                        animated:NO];
+        [self.switchComponent setOn:YES animated:NO];
     }
     else
     {
         self.storedValue = @"";
-        [self.optionSwitch setOn:NO
-                        animated:NO];
+        [self.switchComponent setOn:NO animated:NO];
     }
 }
 
-- (NSDictionary *)getValues
+-(NSDictionary*)getValues
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    
     if(VALID_NOTEMPTY(self.storedValue, NSString) || [[self.field required] boolValue])
     {
         [parameters setValue:self.storedValue forKey:self.field.name];
     }
-    
     return parameters;
 }
 
-- (void)setValue:(NSString *)value
+-(void)setValue:(NSString*)value
 {
     self.storedValue = value;
 }
 
-- (BOOL)isCheckBoxOn
+-(BOOL)isCheckBoxOn
 {
-    return self.optionSwitch.on;
+    return self.switchComponent.on;
 }
 
-- (NSArray *)getOptions
+-(NSArray*)getOptions
 {
     return [[self.field options] array];
 }
