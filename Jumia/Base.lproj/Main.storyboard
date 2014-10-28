@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -1339,7 +1340,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BpS-NE-G12">
-                                <rect key="frame" x="6" y="6" width="308" height="118"/>
+                                <rect key="frame" x="6" y="6" width="308" height="115"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCT-1H-uAb">
                                         <rect key="frame" x="6" y="4" width="294" height="18"/>
@@ -1404,8 +1405,8 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8sj-vD-h0X">
-                                <rect key="frame" x="6" y="129" width="308" height="123"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8sj-vD-h0X">
+                                <rect key="frame" x="6" y="127" width="308" height="115"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWL-jx-w6H">
                                         <rect key="frame" x="6" y="2" width="294" height="18"/>
@@ -1417,7 +1418,7 @@
                                         <rect key="frame" x="0.0" y="26" width="308" height="1"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8I9-Ic-7zX">
-                                        <rect key="frame" x="0.0" y="73" width="308" height="1"/>
+                                        <rect key="frame" x="0.0" y="71" width="308" height="1"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFM-5d-X7W">
                                         <rect key="frame" x="17" y="33" width="218" height="19"/>
@@ -1425,38 +1426,41 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CA2-6X-zpG">
-                                        <rect key="frame" x="245" y="33" width="51" height="31"/>
-                                        <connections>
-                                            <action selector="changeNotification:" destination="79x-mL-1sG" eventType="valueChanged" id="qmW-C1-GSF"/>
-                                        </connections>
-                                    </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ql5-v7-C7X">
-                                        <rect key="frame" x="17" y="54" width="233" height="20"/>
+                                        <rect key="frame" x="17" y="52" width="233" height="16"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CA2-6X-zpG">
+                                        <rect key="frame" x="245" y="32" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="changeNotification:" destination="79x-mL-1sG" eventType="valueChanged" id="qmW-C1-GSF"/>
+                                        </connections>
+                                    </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXG-xW-txL">
-                                        <rect key="frame" x="17" y="82" width="218" height="19"/>
+                                        <rect key="frame" x="17" y="78" width="218" height="19"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ul7-GU-9gS">
-                                        <rect key="frame" x="17" y="101" width="218" height="20"/>
+                                        <rect key="frame" x="17" y="97" width="218" height="16"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W4f-ce-zKZ">
-                                        <rect key="frame" x="245" y="82" width="51" height="31"/>
+                                        <rect key="frame" x="245" y="77" width="51" height="31"/>
                                         <connections>
                                             <action selector="changeSound:" destination="79x-mL-1sG" eventType="valueChanged" id="LvT-Hb-a0w"/>
                                         </connections>
                                     </switch>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="115" id="6cm-GH-gfl"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1478,6 +1482,7 @@
                         <outlet property="notificationTitleLabel" destination="eWL-jx-w6H" id="Nf6-Q4-1gO"/>
                         <outlet property="notificationTitleLine" destination="kAS-Rz-gAO" id="cRh-U8-kxR"/>
                         <outlet property="notificationView" destination="8sj-vD-h0X" id="saA-xu-BZP"/>
+                        <outlet property="notificationViewHeightConstrain" destination="6cm-GH-gfl" id="VMn-EF-CuK"/>
                         <outlet property="switchSound" destination="W4f-ce-zKZ" id="mNv-Y0-Gek"/>
                         <outlet property="userDataDetailLabel" destination="p9U-IR-CL5" id="k6M-BU-qx7"/>
                         <outlet property="userDataLabel" destination="j6w-ix-cRd" id="SYG-V3-Be6"/>
