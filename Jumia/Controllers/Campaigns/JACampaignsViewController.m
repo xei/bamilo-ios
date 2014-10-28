@@ -35,6 +35,8 @@
 
 @property (nonatomic, assign)BOOL shouldPerformButtonActions;
 
+@property (nonatomic, assign)BOOL pickerNamesAlreadySet;
+
 @end
 
 @implementation JACampaignsViewController
@@ -44,6 +46,8 @@
     
     self.navBarLayout.title = STRING_CAMPAIGNS;
     self.navBarLayout.backButtonTitle = STRING_HOME;
+    
+    self.pickerNamesAlreadySet = NO;
     
     self.pickerScrollView = [[JAPickerScrollView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
                                                                                  self.view.bounds.origin.y,
@@ -102,6 +106,7 @@
         campaignPage.delegate = self;
         [self.campaignPages addObject:campaignPage];
         [self.scrollView addSubview:campaignPage];
+        [self showLoading];
         [campaignPage loadWithCampaignId:self.campaignId];
         currentX += campaignPage.frame.size.width;
     }
@@ -130,6 +135,7 @@
                     campaignPage.delegate = self;
                     [self.campaignPages addObject:campaignPage];
                     [self.scrollView addSubview:campaignPage];
+                    [self showLoading];
                     [campaignPage loadWithCampaignUrl:teaserText.url];
                     currentX += campaignPage.frame.size.width;
                 }
@@ -154,17 +160,17 @@
                     campaignPage.delegate = self;
                     [self.campaignPages addObject:campaignPage];
                     [self.scrollView addSubview:campaignPage];
+                    [self showLoading];
                     [campaignPage loadWithCampaignUrl:teaserImage.url];
                     currentX += campaignPage.frame.size.width;
                 }
             }
         }
+        //this will trigger load methods
+        [self.pickerScrollView setOptions:optionList];
+        self.pickerNamesAlreadySet = YES;
+        self.pickerScrollView.startingIndex = startingIndex;
     }
-    
-    self.pickerScrollView.startingIndex = startingIndex;
-    
-    //this will trigger load methods
-    [self.pickerScrollView setOptions:optionList];
     
     [self.scrollView setContentSize:CGSizeMake(currentX, self.scrollView.frame.size.height)];
 
@@ -204,9 +210,12 @@
 #pragma mark - JACampaignPageViewDelegate
 - (void)loadSuccessWithName:(NSString*)name
 {
-    NSArray *optionList = [NSArray arrayWithObject:name];
-    //this will trigger load methods
-    [self.pickerScrollView setOptions:optionList];
+    if (NO == self.pickerNamesAlreadySet) {
+        NSArray *optionList = [NSArray arrayWithObject:name];
+        //this will trigger load methods
+        [self.pickerScrollView setOptions:optionList];
+    }
+    [self hideLoading];
 }
 
 - (void)loadFailedWithResponse:(RIApiResponse)apiResponse

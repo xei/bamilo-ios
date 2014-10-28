@@ -97,10 +97,8 @@
         NSMutableDictionary *trackingDictionary = nil;
         NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
         
-        NSArray *cartItemsKeys = [[self.cart cartItems] allKeys];
-        for (NSString *cartItemKey in cartItemsKeys)
-        {
-            RICartItem *cartItem = [[self.cart cartItems] objectForKey:cartItemKey];
+        for (int i = 0; i < self.cart.cartItems.count; i++) {
+            RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
             
             trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
@@ -252,8 +250,7 @@
     
     [self.cartScrollView setHidden:NO];
     
-    NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
-    [self.productCollectionView setFrame:CGRectMake(6.0f, 6.0f, 308.0f, ([cartItemsKeys count] * 90.0f) + 26.0f)];
+    [self.productCollectionView setFrame:CGRectMake(6.0f, 6.0f, 308.0f, ([self.cart.cartItems count] * 90.0f) + 26.0f)];
     [self.productCollectionView reloadData];
     
     // coupon
@@ -664,11 +661,9 @@
 
 - (void)removeFromCartPressed:(UIButton*)button
 {
-    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSDictionary))
+    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSArray))
     {
-        NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
-        NSString *key = [cartItemsKeys objectAtIndex:button.tag];
-        RICartItem *product = [self.cart.cartItems objectForKey:key];
+        RICartItem *product = [self.cart.cartItems objectAtIndex:button.tag];
         NSNumber *cartValue = self.cart.cartValue;
         [self showLoading];
         [RICart removeProductWithQuantity:[product.quantity stringValue]
@@ -709,11 +704,9 @@
 
 - (void)quantityPressed:(UIButton*)button
 {
-    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSDictionary))
+    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSArray))
     {
-        NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
-        NSString *key = [cartItemsKeys objectAtIndex:button.tag];
-        self.currentItem = [self.cart.cartItems objectForKey:key];
+        self.currentItem = [self.cart.cartItems objectAtIndex:button.tag];
         
         [self setupPickerView];
     }
@@ -813,11 +806,9 @@
         
         
         NSMutableDictionary *quantitiesToChange = [[NSMutableDictionary alloc] init];
-        NSArray *cartItemsKeys = [[self.cart cartItems] allKeys];
-        for (NSString *cartItemKey in cartItemsKeys)
-        {
-            RICartItem *cartItem = [[self.cart cartItems] objectForKey:cartItemKey];
-            [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", [[cartItem quantity] integerValue]] forKey:[NSString stringWithFormat:@"qty_%@", cartItemKey]];
+        for (int i = 0; i < self.cart.cartItems.count; i++) {
+            RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
+            [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", [[cartItem quantity] integerValue]] forKey:[NSString stringWithFormat:@"qty_%@", cartItem.simpleSku]];
         }
         
         [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", newQuantity] forKey:[NSString stringWithFormat:@"qty_%@", [self.currentItem simpleSku]]];
@@ -989,7 +980,7 @@
     NSInteger numberOfItemsInSection = 0;
     if(VALID_NOTEMPTY(self.cart, RICart))
     {
-        numberOfItemsInSection = [self.cart.cartItems allKeys].count;
+        numberOfItemsInSection = self.cart.cartItems.count;
     }
     
     return numberOfItemsInSection;
@@ -998,11 +989,9 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JACatalogListCell *cell = nil;
-    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSDictionary) && indexPath.row < [self.cart.cartCount integerValue])
+    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSArray) && indexPath.row < [self.cart.cartCount integerValue])
     {
-        NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
-        NSString *key = [cartItemsKeys objectAtIndex:indexPath.row];
-        RICartItem *product = [self.cart.cartItems objectForKey:key];
+        RICartItem *product = [self.cart.cartItems objectAtIndex:indexPath.row];
         
         NSString *cellIdentifier = @"cartListCell";
         
@@ -1058,11 +1047,9 @@
 #pragma mark UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSDictionary) && indexPath.row < [self.cart.cartCount integerValue])
+    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSArray) && indexPath.row < [self.cart.cartCount integerValue])
     {
-        NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
-        NSString *key = [cartItemsKeys objectAtIndex:indexPath.row];
-        RICartItem *product = [self.cart.cartItems objectForKey:key];
+        RICartItem *product = [self.cart.cartItems objectAtIndex:indexPath.row];
         
         JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
         pdv.productUrl = product.productUrl;

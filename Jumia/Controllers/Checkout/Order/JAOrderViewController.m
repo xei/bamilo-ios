@@ -80,17 +80,13 @@
 {
     UIView* orderContentView = [self placeContentViewWithTitle:STRING_MY_ORDER_LABEL atYPosition:self.currentY];
     
-    __block BOOL firstIteration = YES;
-    [self.checkout.cart.cartItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        if (VALID_NOTEMPTY(obj, RICartItem)) {
-            if (firstIteration) {
-                firstIteration = NO;
-            } else {
-                [self placeGreySeparatorInContentView:orderContentView];
-            }
-            [self placeCartItemCell:obj inContentView:orderContentView];
+    for (int i = 0; i < self.checkout.cart.cartItems.count; i++) {
+        RICartItem* cartItem = [self.checkout.cart.cartItems objectAtIndex:i];
+        if (0 != i) {
+            [self placeGreySeparatorInContentView:orderContentView];
         }
-    }];
+        [self placeCartItemCell:cartItem inContentView:orderContentView];
+    }
     
     self.currentY += orderContentView.frame.size.height + 5.0f;
 }

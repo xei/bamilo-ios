@@ -41,7 +41,7 @@
 @property (nonatomic, strong) NSNumber* remainingTime;
 
 + (NSString *)getCampaignsWithUrl:(NSString*)url
-                     successBlock:(void (^)(NSArray* campaigns, NSString* bannerImageUrl))successBlock
+                     successBlock:(void (^)(NSString *name, NSArray* campaigns, NSString* bannerImageUrl))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 + (NSString *)getCampaignsWitId:(NSString*)campaignId

@@ -120,21 +120,18 @@
     
     NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
     
-    NSArray *cartItemsKeys = [self.checkout.cart.cartItems allKeys];
-    
     NSMutableDictionary *productDic = [NSMutableDictionary new];
     NSMutableArray *productsArray = [NSMutableArray new];
     
-    for (NSString *cartItemKey in cartItemsKeys)
-    {
+    for (int i = 0; i < self.checkout.cart.cartItems.count; i++) {
         trackingDictionary = [[NSMutableDictionary alloc] init];
-
-        RICartItem *cartItem = [self.checkout.cart.cartItems objectForKey:cartItemKey];
+        
+        RICartItem *cartItem = [self.checkout.cart.cartItems objectAtIndex:i];
         
         [productDic setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
         [productDic setValue:cartItem.name forKey:kRIEventProductNameKey];
         [productDic setValue:cartItem.sku forKey:kRIEventSkuKey];
-
+        
         NSString *discount = @"false";
         NSString *price = [cartItem.price stringValue];
         if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber))
@@ -222,17 +219,16 @@
     [ecommerceDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
     [ecommerceDictionary setValue:self.checkout.orderSummary.paymentMethod forKey:kRIEcommercePaymentMethodKey];
     
-    NSDictionary *products = self.checkout.cart.cartItems;
+    NSArray *products = self.checkout.cart.cartItems;
     
-    NSMutableArray *ecommerceProductsArray = [[NSMutableArray alloc] init];
+    NSMutableArray *ecommerceSkusArray = [NSMutableArray new];
+    NSMutableArray *ecommerceProductsArray = [NSMutableArray new];
     CGFloat averageValue = 0.0f;
-    if(VALID_NOTEMPTY(products, NSDictionary))
+    if(VALID_NOTEMPTY(products, NSArray))
     {
-        [ecommerceDictionary setValue:[products allKeys] forKey:kRIEcommerceSkusKey];
-        NSArray *productsArray = [products allKeys];
-        for(NSString *productKey in productsArray)
-        {
-            RICartItem *product = [products objectForKey:productKey];
+        for (RICartItem* product in products) {
+            [ecommerceSkusArray addObject:product.simpleSku];
+            
             NSMutableDictionary *productDictionary = [[NSMutableDictionary alloc] init];
             [productDictionary setObject:product.sku forKey:kRIEventSkuKey];
             [productDictionary setObject:product.name forKey:kRIEventProductNameKey];
@@ -255,6 +251,7 @@
         
         averageValue = averageValue / [products count];
     }
+    [ecommerceDictionary setValue:[ecommerceSkusArray copy] forKey:kRIEcommerceSkusKey];
     [ecommerceDictionary setValue:[NSNumber numberWithFloat:averageValue] forKey:kRIEcommerceCartAverageValueKey];
     
     if(VALID_NOTEMPTY(self.checkout.orderSummary.discountCouponCode, NSString))
