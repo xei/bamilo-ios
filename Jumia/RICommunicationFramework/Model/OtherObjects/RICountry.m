@@ -163,7 +163,6 @@
         if(VALID_NOTEMPTY(mapImagesObject, NSDictionary)) {
             NSArray *mapImagesObjectKeys = [mapImagesObject allKeys];
             for(NSString *mapImageKey in mapImagesObjectKeys) {
-    #warning we only need iOS images; parse them when API returns the correct images for iOS
                 [mapImagesDictionary setValue:[mapImagesObject objectForKey:mapImageKey] forKey:mapImageKey];
             }
         }

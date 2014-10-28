@@ -10,7 +10,7 @@
 
 @interface RICart : NSObject
 
-@property (strong, nonatomic) NSDictionary *cartItems; //!< Dictionary with simple sku : product information
+@property (strong, nonatomic) NSArray *cartItems;
 @property (strong, nonatomic) NSNumber *cartCount;
 @property (strong, nonatomic) NSNumber *cartValue;
 @property (strong, nonatomic) NSString *cartValueFormatted;
