@@ -10,17 +10,15 @@
 #import "RIForm.h"
 #import "JAButtonWithBlur.h"
 #import "RICustomer.h"
-#import "JANewsletterComponent.h"
 
 @interface JAEmailNotificationsViewController ()
 <
     JADynamicFormDelegate
 >
 
+@property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) UIView *notificationsView;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
-@property (strong, nonatomic) IBOutlet UIView *topView;
-@property (assign, nonatomic) float formHeight;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *height;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 
 @end
@@ -39,11 +37,19 @@
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_USER_EMAIL_NOTIFICATIONS;
     
-    self.topView.layer.cornerRadius = 4.0f;
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x,
+                                                                     self.view.frame.origin.y,
+                                                                     self.view.frame.size.width,
+                                                                     self.view.frame.size.height - 64.0f)];
+    
+    self.notificationsView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.notificationsView.layer.cornerRadius = 5.0f;
+    [self.notificationsView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    
+    [self.scrollView addSubview:self.notificationsView];
+    [self.view addSubview:self.scrollView];
     
     [self showLoading];
-    
-    self.formHeight = 0.0f;
     
     [self getForm];
 }
@@ -55,19 +61,30 @@
            
            self.dynamicForm = [[JADynamicForm alloc] initWithForm:form
                                                                 delegate:self
-                                                            startingPosition:self.formHeight];
+                                                            startingPosition:0.0f];
            
+           CGFloat formHeight = 0.0f;
            for(UIView *view in self.dynamicForm.formViews)
            {
-               [self.topView addSubview:view];
-               self.formHeight = CGRectGetMaxY(view.frame);
+               [self.notificationsView addSubview:view];
+               formHeight = CGRectGetMaxY(view.frame);
            }
            
-           self.height.constant = self.formHeight + 6.0f;
+           [self.notificationsView setFrame:CGRectMake(6.0f, 6.0f, 308.0f, formHeight + 6.0f)];
            
-           [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+           self.saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+           [self.saveButton setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.notificationsView.frame) + 6.0f, 308.0f, 44.0f)];
+           [self.saveButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_normal"] forState:UIControlStateNormal];
+           [self.saveButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
+           [self.saveButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
+           [self.saveButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
            [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
+           [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
            [self.saveButton addTarget:self action:@selector(continueUpdatePreferences) forControlEvents:UIControlEventTouchUpInside];
+           [self.saveButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+           [self.scrollView addSubview:self.saveButton];
+           
+           [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.saveButton.frame) + 6.0f)];
            
            if(self.firstLoading)
            {
