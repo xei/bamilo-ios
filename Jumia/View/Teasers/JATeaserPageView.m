@@ -103,10 +103,8 @@
         //top sellers
         for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
             
-            if (2 == [teaserGroup.type integerValue]) {
-                
+            if (2 == [teaserGroup.type integerValue] && VALID_NOTEMPTY(teaserGroup.teasers, NSOrderedSet)) {                
                 //found it
-                
                 JATopSellersTeaserView* topSellersTeaserView = [[JATopSellersTeaserView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                                                                         self.currentY,
                                                                                                                         self.bounds.size.width,
@@ -117,7 +115,6 @@
                 [topSellersTeaserView load];
                 
                 self.currentY += topSellersTeaserView.frame.size.height;
-                
                 break;
             }
         }
