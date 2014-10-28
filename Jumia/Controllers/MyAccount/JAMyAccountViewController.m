@@ -7,8 +7,6 @@
 //
 
 #import "JAMyAccountViewController.h"
-#import "RIForm.h"
-#import "RICustomer.h"
 
 @interface JAMyAccountViewController ()
 
@@ -30,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelSound;
 @property (weak, nonatomic) IBOutlet UILabel *labelDetailSound;
 @property (weak, nonatomic) IBOutlet UISwitch *switchSound;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *notificationViewHeightConstrain;
 
 @end
 
@@ -54,7 +53,7 @@
                                                  name:kDidSaveEmailNotificationsNotification
                                                object:nil];
     
-    self.accountView.layer.cornerRadius = 4.0f;
+    self.accountView.layer.cornerRadius = 5.0f;
     self.accountTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.accountTitleLabel.text = STRING_ACCOUNT_SETTINGS;
     
@@ -71,7 +70,7 @@
     self.emailLabelDetail.textColor = UIColorFromRGB(0x666666);
     self.emailLabelDetail.text = STRING_SUBSCRIVE_UNSUBSCRIVE;
     
-    self.notificationView.layer.cornerRadius = 4.0f;
+    self.notificationView.layer.cornerRadius = 5.0f;
     self.notificationTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.notificationTitleLabel.text = STRING_NOTIFICATIONS_SETTINGS;
     
@@ -110,15 +109,23 @@
 {
     if (self.notificationSwitch.on)
     {
-        self.switchSound.on = YES;
+        self.notificationViewHeightConstrain.constant = 115.0f;
         
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                                UIRemoteNotificationTypeSound |
-                                                                                UIRemoteNotificationTypeAlert )];
+        self.lineUnderNotificationLabel.hidden = NO;
+        self.labelSound.hidden = NO;
+        self.labelDetailSound.hidden = NO;
+        self.switchSound.hidden = NO;
+        
+        [self changeSound:nil];
     }
     else
     {
-        self.switchSound.on = NO;
+        self.lineUnderNotificationLabel.hidden = YES;
+        self.labelSound.hidden = YES;
+        self.labelDetailSound.hidden = YES;
+        self.switchSound.hidden = YES;
+
+        self.notificationViewHeightConstrain.constant = 69.0f;
         
         [[UIApplication sharedApplication] unregisterForRemoteNotifications];
     }
