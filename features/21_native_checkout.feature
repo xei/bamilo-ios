@@ -30,8 +30,10 @@ Background:
 
 @native_checkout_nc
 Scenario: Native Checkout
+* I wait for 5 seconds
 * I wait for the shippping address screen
 * I touch the next button
+* I wait for 5 seconds
 * I wait for the shipping method screen
 * I touch the next button
 * I wait to see the payment screen
