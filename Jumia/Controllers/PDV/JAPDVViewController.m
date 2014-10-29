@@ -7,7 +7,6 @@
 //
 
 #import "JAPDVViewController.h"
-#import "JAPDVImageSection.h"
 #import "JAPDVVariations.h"
 #import "JAPDVProductInfo.h"
 #import "JAPDVRelatedItem.h"
@@ -305,6 +304,7 @@ JAActivityViewControllerDelegate
 - (void)productLoaded
 {
     self.imageSection = [JAPDVImageSection getNewPDVImageSection];
+    self.imageSection.delegate = self;
     [self.imageSection.wishListButton addTarget:self
                                          action:@selector(addToFavoritesPressed:)
                                forControlEvents:UIControlEventTouchUpInside];
@@ -371,12 +371,7 @@ JAActivityViewControllerDelegate
     
     self.imageSection.layer.cornerRadius = 4.0f;
     
-    RIImage *image = [self.product.images firstObject];
-    [self.imageSection.mainImage setImageWithURL:[NSURL URLWithString:image.url]
-                                placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
-    [self.imageSection.imageClickableView addTarget:self
-                                             action:@selector(presentGallery)
-                                   forControlEvents:UIControlEventTouchUpInside];
+    [self.imageSection loadWithImages:[self.product.images array]];
     
     self.imageSection.productNameLabel.text = self.product.brand;
     self.imageSection.productDescriptionLabel.text = self.product.name;
@@ -402,7 +397,6 @@ JAActivityViewControllerDelegate
     UIGraphicsEndImageContext();
     
     self.imageSection.discountLabel.backgroundColor = [UIColor colorWithPatternImage:newImage];
-    [self.imageSection.mainImage setAccessibilityLabel:@"pdv_main_image"];
     
     [self.mainScrollView addSubview:self.imageSection];
     
@@ -916,15 +910,21 @@ JAActivityViewControllerDelegate
                      }];
 }
 
-- (void)presentGallery
+#pragma mark JAPDVImageSectionDelegate
+
+- (void)imageClickedAtIndex:(NSInteger)index
 {
-    [self.imageSection.imageClickableView setEnabled:NO];
-    
+    [self presentGalleryAtIndex:index];
+}
+
+- (void)presentGalleryAtIndex:(NSInteger)index;
+{
     self.gallery = [JAPDVGalleryView getNewJAPDVGalleryView];
     [self.gallery layoutSubviews];
     self.gallery.delegate = self;
     
-    [self.gallery loadGalleryWithArray:[self.product.images array]];
+    [self.gallery loadGalleryWithArray:[self.product.images array]
+                               atIndex:index];
     
     CGRect tempFrame = self.gallery.frame;
     tempFrame.origin.y = [[[UIApplication sharedApplication] delegate] window].rootViewController.view.frame.size.height;
@@ -942,8 +942,6 @@ JAActivityViewControllerDelegate
 
 - (void)dismissGallery
 {
-    [self.imageSection.imageClickableView setEnabled:YES];
-    
     CGRect tempFrame = self.gallery.frame;
     tempFrame.origin.y = [[[UIApplication sharedApplication] delegate] window].rootViewController.view.frame.size.height;
     
