@@ -170,9 +170,9 @@
             if (VALID_NOTEMPTY(product.productSimples, NSArray) && 1 == product.productSimples.count)
             {
                 RIProductSimple *tempProduct = product.productSimples[0];
-                if (VALID_NOTEMPTY(tempProduct.attributeSize, NSString))
+                if (VALID_NOTEMPTY(tempProduct.variation, NSString))
                 {
-                    [trackingDictionary setValue:tempProduct.attributeSize forKey:kRIEventSizeKey];
+                    [trackingDictionary setValue:tempProduct.variation forKey:kRIEventSizeKey];
                 }
             }
             
@@ -417,9 +417,7 @@
             productSimple = [product.productSimples firstObject];
         }
         for (RIProductSimple* simple in product.productSimples) {
-            if ([simpleName isEqualToString:simple.attributeSize] ||
-                [simpleName isEqualToString:simple.variation] ||
-                [simpleName isEqualToString:simple.color]) {
+            if ([simpleName isEqualToString:simple.variation]) {
                 //found it
                 productSimple = simple;
                 break;
@@ -622,9 +620,7 @@
             return;
         } else {
             for (RIProductSimple* simple in product.productSimples) {
-                if ([simple.attributeSize isEqualToString:simpleName] ||
-                    [simple.variation isEqualToString:simpleName] ||
-                    [simple.color isEqualToString:simpleName]) {
+                if ([simple.variation isEqualToString:simpleName]) {
                     //found it
                     productSimple = simple;
                 }
@@ -782,9 +778,7 @@
     NSInteger simpleIndex = 0;
     for (int i = 0; i < product.productSimples.count; i++) {
         RIProductSimple* simple = [product.productSimples objectAtIndex:i];
-        if ([simple.attributeSize isEqualToString:simpleName] ||
-            [simple.variation isEqualToString:simpleName] ||
-            [simple.color isEqualToString:simpleName]) {
+        if ([simple.variation isEqualToString:simpleName]) {
             //found it
             simpleIndex = i;
         }
@@ -803,12 +797,8 @@
     
     RIProductSimple* selectedSimple = [product.productSimples objectAtIndex:selectedIndex];
     NSString* simpleName = @"";
-    if (VALID_NOTEMPTY(selectedSimple.attributeSize, NSString)) {
-        simpleName = selectedSimple.attributeSize;
-    } else if (VALID_NOTEMPTY(selectedSimple.variation, NSString)) {
+    if (VALID_NOTEMPTY(selectedSimple.variation, NSString)) {
         simpleName = selectedSimple.variation;
-    } else if (VALID_NOTEMPTY(selectedSimple.color, NSString)) {
-        simpleName = selectedSimple.color;
     }
     
     [self.chosenSimpleNames replaceObjectAtIndex:button.tag withObject:simpleName];
@@ -856,13 +846,10 @@
     RIProduct* product = [self.productsArray objectAtIndex:pickerView.tag];
     RIProductSimple* simple = [product.productSimples objectAtIndex:row];
     NSString* simpleName = @"";
-    if (VALID_NOTEMPTY(simple.attributeSize, NSString)) {
-        simpleName = simple.attributeSize;
-    } else if (VALID_NOTEMPTY(simple.variation, NSString)) {
+    if (VALID_NOTEMPTY(simple.variation, NSString)) {
         simpleName = simple.variation;
-    } else if (VALID_NOTEMPTY(simple.color, NSString)) {
-        simpleName = simple.color;
     }
+    
     NSString *title = [NSString stringWithFormat:@"%@", simpleName];
     return title;
 }

@@ -52,6 +52,7 @@ end
 
 Then /^I enter a invalid email$/ do
     touch("view marked:'"+@e_mail+"'")
+    sleep(1)
     keyboard_enter_text @invalid_email
     done
 end

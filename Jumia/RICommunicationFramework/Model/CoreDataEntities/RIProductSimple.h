@@ -14,9 +14,7 @@
 @interface RIProductSimple : NSManagedObject
 
 @property (nonatomic, retain) NSString * attributePackageType;
-@property (nonatomic, retain) NSString * attributeSize;
 @property (nonatomic, retain) NSString * variation;
-@property (nonatomic, retain) NSString * color;
 @property (nonatomic, retain) NSString * maxDeliveryTime;
 @property (nonatomic, retain) NSString * minDeliveryTime;
 @property (nonatomic, retain) NSNumber * price;

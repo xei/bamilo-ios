@@ -2,34 +2,35 @@
 //  JANewsletterComponent.h
 //  Jumia
 //
-//  Created by Miguel Chaves on 18/Sep/14.
+//  Created by Pedro Lopes on 25/08/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "RIField.h"
 
 @interface JANewsletterComponent : UIView
 
-@property (weak, nonatomic) IBOutlet UILabel *textLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *optionSwitch;
-@property (weak, nonatomic) IBOutlet UIImageView *lineImageView;
+@property (weak, nonatomic) IBOutlet UILabel *labelText;
+@property (weak, nonatomic) IBOutlet UISwitch *switchComponent;
+@property (weak, nonatomic) IBOutlet UIView *separator;
 
 + (JANewsletterComponent *)getNewJANewsletterComponent;
 
-- (void)setup;
+-(void)setup;
 
-- (void)setupWithField:(RIField *)field;
+-(void)setupWithField:(RIField*)field;
 
-- (BOOL)isComponentWithKey:(NSString *)key;
+-(BOOL)isComponentWithKey:(NSString*)key;
 
-- (void)resetValue;
+-(void)resetValue;
 
-- (NSDictionary *)getValues;
+-(NSDictionary*)getValues;
 
-- (void)setValue:(NSString *)value;
+-(void)setValue:(NSString*)value;
 
-- (BOOL)isCheckBoxOn;
+-(BOOL)isCheckBoxOn;
 
-- (NSArray *)getOptions;
+-(NSArray*)getOptions;
 
 @end

@@ -10,15 +10,12 @@
 
 @interface JACheckBoxWithOptionsComponent : UIView
 
-@property (weak, nonatomic) IBOutlet UILabel *title;
-@property (weak, nonatomic) IBOutlet UIView *separator;
+@property (strong, nonatomic) UILabel *title;
+@property (strong, nonatomic) UIView *separator;
 
 @property (strong, nonatomic) RIField *field;
 @property (strong, nonatomic) NSMutableDictionary *values;
 
-+ (JACheckBoxWithOptionsComponent *)getNewJACheckBoxWithOptionsComponent;
-
 -(void)setupWithField:(RIField*)field;
-
 
 @end

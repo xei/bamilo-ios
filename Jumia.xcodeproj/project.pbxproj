@@ -161,8 +161,6 @@
 		4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AE730C8198F8C8B000CA1DD /* JAPDVImageSection.xib */; };
 		4AE865BD19C9D7C400406159 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */; };
 		4AE865C019C9D7F100406159 /* JAEmailNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */; };
-		4AE999FE19CAE38D00F28A7D /* JANewsletterComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE999FD19CAE38D00F28A7D /* JANewsletterComponent.m */; };
-		4AE99A0219CAE3B300F28A7D /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AE99A0119CAE3B300F28A7D /* JANewsletterComponent.xib */; };
 		4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */; };
 		4AFC7F94199BC124007D67F4 /* JASignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F93199BC124007D67F4 /* JASignupViewController.m */; };
 		4b5ae89debacca2cb1f16964 /* RIForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3026E19811E9200F71726 /* RIForm.m */; };
@@ -172,7 +170,6 @@
 		4cb4b2ab5d8c54bfab405dc7 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A3021C19811E8A00F71726 /* libAdIdAccess.a */; };
 		4da991f80db2e035397322c9 /* RIRatings.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029B19811E9200F71726 /* RIRatings.m */; };
 		4e6c662ba5a46bb8730e617e /* RITeaserImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028619811E9200F71726 /* RITeaserImage.m */; };
-		4f39a332f6bd1400b3e84be7 /* JANewsletterComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE999FD19CAE38D00F28A7D /* JANewsletterComponent.m */; };
 		4f946a6031dc658465b500d8 /* slider-default7-trackCrossedOver.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A2199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png */; };
 		5037ac35e4d71a246fd9ed5a /* JAGenericFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */; };
 		507ba71a40fd000b7faa7bcc /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
@@ -265,7 +262,6 @@
 		99064e0e1729a0012aaba9d6 /* JAHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E41986570500E37C90 /* JAHomeViewController.m */; };
 		99d8372eb3bbfbda5f45a1f7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
 		9a39dc0f3a939d6e0ce2df01 /* RITrackingConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B019811E9200F71726 /* RITrackingConfiguration.m */; };
-		9b90f481e8f399f6ca0356b9 /* JACheckBoxWithOptionsComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C61BC419B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib */; };
 		9cbdf4e3cedc6bf19d69072d /* RICommunicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029F19811E9200F71726 /* RICommunicationWrapper.m */; };
 		9cd5e1568d3e8d595420bc7f /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */; };
 		9d4acb59c322e3e1745bb01c /* slider-default7-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A0199BA8FA0022BAB5 /* slider-default7-trackBackground.png */; };
@@ -429,10 +425,11 @@
 		B5B5FDFB19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDDB19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */; };
 		B5B5FDFC19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDDC19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape.xib */; };
 		B5B5FDFD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDDD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib */; };
+		B5BDD98B19FFAAF000C2C2CC /* JANewsletterComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */; };
+		B5BDD98C19FFAAF000C2C2CC /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */; };
 		B5C1E33719BA1E73009C422C /* UIImageView+JA.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1E33619BA1E73009C422C /* UIImageView+JA.m */; };
 		B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */; };
 		B5C61BC319B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BC219B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m */; };
-		B5C61BC519B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C61BC419B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib */; };
 		B5C682F81986C41D0094C92C /* RIShippingMethodPickupStationOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */; };
 		B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F01986C41D0094C92C /* RIShippingMethodFormField.m */; };
 		B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */; };
@@ -517,6 +514,7 @@
 		BBA145BA19DC56BF003F0CA7 /* 01_launch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A719DC56BF003F0CA7 /* 01_launch.rb */; };
 		BBA145BB19DC56BF003F0CA7 /* 02_pre_stop_hooks.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */; };
 		BBA145BC19DC56BF003F0CA7 /* env.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A919DC56BF003F0CA7 /* env.rb */; };
+		BBA14E2219FFCB550026315A /* JANewsletterComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */; };
 		BBA707B819EEB93C0094C565 /* 00_choose_country.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA707B719EEB93C0094C565 /* 00_choose_country.feature */; };
 		BBA707B919EEB9450094C565 /* 00_choose_country.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA707B719EEB93C0094C565 /* 00_choose_country.feature */; };
 		BBB12A9419DD485400656529 /* 07_forgot_password.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9319DD485400656529 /* 07_forgot_password.feature */; };
@@ -677,7 +675,6 @@
 		dec4bb2dfe9e99286e5eec07 /* slider-default-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB997199BA8FA0022BAB5 /* slider-default-trackBackground.png */; };
 		df135d936bd63706b4e3db54 /* JAMainFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB985199A6F430022BAB5 /* JAMainFiltersViewController.m */; };
 		df5a29254b4e39fe8a0a7d40 /* RITeaserGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028419811E9200F71726 /* RITeaserGroup.m */; };
-		df802e974e3a30b417f4fdfb /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AE99A0119CAE3B300F28A7D /* JANewsletterComponent.xib */; };
 		df8c4f5769b8468c440e00e1 /* RICountryConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3026A19811E9200F71726 /* RICountryConfiguration.m */; };
 		df9ac75b2b86dba7a92360ac /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3023219811E8A00F71726 /* UIImageView+WebCache.m */; };
 		dff8783bfc2786b09d981442 /* RIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027219811E9200F71726 /* RIImage.m */; };
@@ -834,9 +831,6 @@
 		4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUserDataViewController.m; sourceTree = "<group>"; };
 		4AE865BE19C9D7F100406159 /* JAEmailNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAEmailNotificationsViewController.h; sourceTree = "<group>"; };
 		4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAEmailNotificationsViewController.m; sourceTree = "<group>"; };
-		4AE999FC19CAE38D00F28A7D /* JANewsletterComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterComponent.h; sourceTree = "<group>"; };
-		4AE999FD19CAE38D00F28A7D /* JANewsletterComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewsletterComponent.m; sourceTree = "<group>"; };
-		4AE99A0119CAE3B300F28A7D /* JANewsletterComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewsletterComponent.xib; sourceTree = "<group>"; };
 		4AFC7F8F199BC0BE007D67F4 /* JASignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignInViewController.h; sourceTree = "<group>"; };
 		4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignInViewController.m; sourceTree = "<group>"; };
 		4AFC7F92199BC124007D67F4 /* JASignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignupViewController.h; sourceTree = "<group>"; };
@@ -882,6 +876,7 @@
 		B517FDF81982517300F65253 /* RICart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICart.m; sourceTree = "<group>"; };
 		B517FDFA198265AD00F65253 /* RICartItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICartItem.h; sourceTree = "<group>"; };
 		B517FDFB198265AD00F65253 /* RICartItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICartItem.m; sourceTree = "<group>"; };
+		B5181F4D19FE9C98006C5EC0 /* Model_1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.2.xcdatamodel; sourceTree = "<group>"; };
 		B5210E8719C4863400FDB0D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		B5210E8919C4863D00FDB0D1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		B5210E8A19C48F1700FDB0D1 /* JAStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAStrings.h; sourceTree = "<group>"; };
@@ -1127,13 +1122,15 @@
 		B5B5FDDB19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
 		B5B5FDDC19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape.xib"; sourceTree = "<group>"; };
 		B5B5FDDD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneWebViewNotifView.xib; sourceTree = "<group>"; };
+		B5BDD98819FFAAF000C2C2CC /* JANewsletterComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterComponent.h; sourceTree = "<group>"; };
+		B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewsletterComponent.m; sourceTree = "<group>"; };
+		B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewsletterComponent.xib; sourceTree = "<group>"; };
 		B5C1E33519BA1E73009C422C /* UIImageView+JA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+JA.h"; path = "Categories/UIImageView+JA.h"; sourceTree = "<group>"; };
 		B5C1E33619BA1E73009C422C /* UIImageView+JA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+JA.m"; path = "Categories/UIImageView+JA.m"; sourceTree = "<group>"; };
 		B5C61BBE19B0BB7F00840E93 /* RIFieldOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldOption.h; sourceTree = "<group>"; };
 		B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIFieldOption.m; sourceTree = "<group>"; };
 		B5C61BC119B0DAD600840E93 /* JACheckBoxWithOptionsComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACheckBoxWithOptionsComponent.h; sourceTree = "<group>"; };
 		B5C61BC219B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACheckBoxWithOptionsComponent.m; sourceTree = "<group>"; };
-		B5C61BC419B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACheckBoxWithOptionsComponent.xib; sourceTree = "<group>"; };
 		B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIShippingMethodPickupStationOption.m; sourceTree = "<group>"; };
 		B5C682EF1986C41D0094C92C /* RIShippingMethodPickupStationOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIShippingMethodPickupStationOption.h; sourceTree = "<group>"; };
 		B5C682F01986C41D0094C92C /* RIShippingMethodFormField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIShippingMethodFormField.m; sourceTree = "<group>"; };
@@ -1801,13 +1798,12 @@
 				B510B00F19AE466B00A9754A /* JATextFieldComponent.xib */,
 				B5C61BC119B0DAD600840E93 /* JACheckBoxWithOptionsComponent.h */,
 				B5C61BC219B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m */,
-				B5C61BC419B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib */,
 				4A85AEE919B9D410000019CE /* JAStarsComponent.h */,
 				4A85AEEA19B9D410000019CE /* JAStarsComponent.m */,
 				4A85AEEC19B9D4A0000019CE /* JAStarsComponent.xib */,
-				4AE999FC19CAE38D00F28A7D /* JANewsletterComponent.h */,
-				4AE999FD19CAE38D00F28A7D /* JANewsletterComponent.m */,
-				4AE99A0119CAE3B300F28A7D /* JANewsletterComponent.xib */,
+				B5BDD98819FFAAF000C2C2CC /* JANewsletterComponent.h */,
+				B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */,
+				B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */,
 			);
 			path = DynamicForms;
 			sourceTree = "<group>";
@@ -3178,13 +3174,11 @@
 				9542b3bdd30fbe4bec186675 /* JAPDVSingleRelatedItem.xib in Resources */,
 				37a7d0b54c205bb3a0c500c0 /* JAAddNewAddressCell.xib in Resources */,
 				9fe40da6008fc103a0ca8cbb /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
-				9b90f481e8f399f6ca0356b9 /* JACheckBoxWithOptionsComponent.xib in Resources */,
 				0ae503a9046dc0361e776798 /* RITracking.plist in Resources */,
 				BB9546A619F5511900AC7D05 /* 02_pre_stop_hooks.rb in Resources */,
 				BBB12A9919DD874D00656529 /* 08_registration.feature in Resources */,
 				3683c8aeaaa69a884e004685 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
 				7b4b2932f0f6a2cb69aabbfc /* slider-metal-trackBackground.png in Resources */,
-				df802e974e3a30b417f4fdfb /* JANewsletterComponent.xib in Resources */,
 				ed3e1db94221143eef46fba7 /* slider-metal-trackBackground@2x.png in Resources */,
 				cfbd53adb71df70dd5af6a40 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */,
 				0a8469b275aace8e79dc2c98 /* BMA4SiPhoneTextNotifView.xib in Resources */,
@@ -3316,6 +3310,7 @@
 				B5B5FDED19D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
 				CEDEB9B5199BA8FA0022BAB5 /* slider-default-trackBackground.png in Resources */,
 				4A01EE63199259D1005F5AD1 /* JAPDVGalleryView.xib in Resources */,
+				B5BDD98C19FFAAF000C2C2CC /* JANewsletterComponent.xib in Resources */,
 				B510B01619AE466B00A9754A /* JARadioComponent.xib in Resources */,
 				CEDEB9B2199BA8FA0022BAB5 /* slider-default-handle@2x.png in Resources */,
 				BBBA4CD819E45799004271B2 /* 20_cart.feature in Resources */,
@@ -3324,7 +3319,6 @@
 				BBA145AE19DC56BF003F0CA7 /* 05_user_data.feature in Resources */,
 				B59DCA7F19B88DDB00DE7960 /* JAAddNewAddressCell.xib in Resources */,
 				B5B5FDE319D99D06008B8059 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
-				B5C61BC519B0DB0400840E93 /* JACheckBoxWithOptionsComponent.xib in Resources */,
 				B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */,
 				BBBA4CC919E42E9A004271B2 /* 16_recent_searches.feature in Resources */,
 				B5B5FDEA19D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
@@ -3332,7 +3326,6 @@
 				CEDEB9C7199BA8FA0022BAB5 /* slider-metal-trackBackground.png in Resources */,
 				BBA145B419DC56BF003F0CA7 /* multi_step.rb in Resources */,
 				BBA145AB19DC56BF003F0CA7 /* 02_logout.feature in Resources */,
-				4AE99A0219CAE3B300F28A7D /* JANewsletterComponent.xib in Resources */,
 				CEDEB9C8199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png in Resources */,
 				BBB7F57619E532FA00E898E3 /* 21_native_checkout.feature in Resources */,
 				B5B5FDFB19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */,
@@ -3433,6 +3426,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBA14E2219FFCB550026315A /* JANewsletterComponent.m in Sources */,
 				BB995B7D19F67A970090E081 /* JAFallbackView.m in Sources */,
 				BB9546A219F51FE400AC7D05 /* JAWizardView.m in Sources */,
 				BB9546A119F51F5700AC7D05 /* JAPDVWizardView.m in Sources */,
@@ -3510,7 +3504,6 @@
 				24f9ed0833a68d3bcdd58ad1 /* RIApi.m in Sources */,
 				73a2376ce1e1395d429b0dff /* RIFieldOption.m in Sources */,
 				fe12819671b95b14243da09e /* RITeaserText.m in Sources */,
-				4f39a332f6bd1400b3e84be7 /* JANewsletterComponent.m in Sources */,
 				bc2215ef52ef8f4c62accebd /* RIShippingMethodFormField.m in Sources */,
 				0d76562f22d9837dfe85f86d /* RIPaymentMethodFormOption.m in Sources */,
 				e0fb00e4e065d7ff7ce585bc /* JAPDVImageSection.m in Sources */,
@@ -3708,7 +3701,6 @@
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
 				B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */,
 				B5A302D119811E9200F71726 /* RITeaserText.m in Sources */,
-				4AE999FE19CAE38D00F28A7D /* JANewsletterComponent.m in Sources */,
 				B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */,
 				B5225E1B1989308300C18F1E /* RIPaymentMethodFormOption.m in Sources */,
 				4AE730B8198F8ACA000CA1DD /* JAPDVImageSection.m in Sources */,
@@ -3797,6 +3789,7 @@
 				B5A302CB19811E9200F71726 /* RISection.m in Sources */,
 				B5C61BC319B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m in Sources */,
 				B517FDF91982517300F65253 /* RICart.m in Sources */,
+				B5BDD98B19FFAAF000C2C2CC /* JANewsletterComponent.m in Sources */,
 				B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */,
 				B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */,
 				B510B01419AE466B00A9754A /* JADynamicForm.m in Sources */,
@@ -4508,10 +4501,11 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				B5181F4D19FE9C98006C5EC0 /* Model_1.2.xcdatamodel */,
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */;
+			currentVersion = B5181F4D19FE9C98006C5EC0 /* Model_1.2.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

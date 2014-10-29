@@ -233,9 +233,9 @@ JAActivityViewControllerDelegate
     if (VALID_NOTEMPTY(self.product.productSimples, NSArray) && 1 == self.product.productSimples.count)
     {
         RIProductSimple *tempProduct = self.product.productSimples[0];
-        if (VALID_NOTEMPTY(tempProduct.attributeSize, NSString))
+        if (VALID_NOTEMPTY(tempProduct.variation, NSString))
         {
-            [trackingDictionary setValue:tempProduct.attributeSize forKey:kRIEventSizeKey];
+            [trackingDictionary setValue:tempProduct.variation forKey:kRIEventSizeKey];
         }
     }
     
@@ -499,9 +499,9 @@ JAActivityViewControllerDelegate
         [self.productInfoSection.sizeClickableView setEnabled:NO];
         self.currentSimple = self.product.productSimples[0];
         
-        if (VALID_NOTEMPTY(self.currentSimple.attributeSize, NSString))
+        if (VALID_NOTEMPTY(self.currentSimple.variation, NSString))
         {
-            [self.productInfoSection.sizeLabel setText:self.currentSimple.attributeSize];
+            [self.productInfoSection.sizeLabel setText:self.currentSimple.variation];
         }
         else
         {
@@ -522,9 +522,9 @@ JAActivityViewControllerDelegate
         {
             for (RIProductSimple *simple in self.product.productSimples)
             {
-                if ([simple.attributeSize isEqualToString:self.preSelectedSize])
+                if ([simple.variation isEqualToString:self.preSelectedSize])
                 {
-                    [self.productInfoSection.sizeLabel setText:simple.attributeSize];
+                    [self.productInfoSection.sizeLabel setText:simple.variation];
                     break;
                 }
             }
@@ -641,15 +641,7 @@ JAActivityViewControllerDelegate
 {
     RIVariation *variation = [self.product.variations objectAtIndex:sender.tag];
     self.productUrl = variation.link;
-    
-    [self showLoading];
-    [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
-        [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
-        self.product = product;
-        [self productLoaded];
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        [self hideLoading];
-    }];
+    [self loadCompleteProduct];
 }
 
 - (void)selectedRelatedItem:(UIControl*)sender
@@ -895,12 +887,9 @@ JAActivityViewControllerDelegate
     NSUInteger selectedRow = [self.picker.picker selectedRowInComponent:0];
     self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
     
-    NSString* option = self.currentSimple.attributeSize;
+    NSString* option = self.currentSimple.variation;
     if (ISEMPTY(option)) {
-        option = self.currentSimple.color;
-        if (ISEMPTY(option)) {
-            option = self.currentSimple.variation;
-        }
+        option = @"";
     }
     [self.productInfoSection.sizeLabel setText:option];
     
