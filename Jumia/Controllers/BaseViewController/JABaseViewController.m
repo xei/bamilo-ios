@@ -86,6 +86,16 @@
                                                         object:nil];
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    NSUInteger supportedInterfaceOrientations = UIInterfaceOrientationMaskPortrait;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        supportedInterfaceOrientations = UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
+    }
+    return supportedInterfaceOrientations;
+}
+
 - (void)reloadNavBar
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification

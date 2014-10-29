@@ -881,7 +881,6 @@
 }
 
 #pragma mark - JAPDVViewControllerDelegate
-
 - (void)changedFavoriteStateOfProduct:(RIProduct*)product;
 {
     NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
@@ -901,13 +900,25 @@
 
 - (IBAction)filterButtonPressed:(id)sender
 {
-    JAMainFiltersViewController *mainFiltersViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"mainFiltersViewController"];
-    mainFiltersViewController.filtersArray = self.filtersArray;
-    mainFiltersViewController.categoriesArray = self.categoriesArray;
-    mainFiltersViewController.selectedCategory = self.filterCategory;
-    mainFiltersViewController.delegate = self;
-    [self.navigationController pushViewController:mainFiltersViewController
-                                         animated:YES];
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:self forKey:@"delegate"];
+
+    if(VALID(self.filtersArray, NSArray))
+    {
+        [userInfo setObject:self.filtersArray forKey:@"filtersArray"];
+    }
+    if(VALID(self.categoriesArray, NSArray))
+    {
+        [userInfo setObject:self.categoriesArray forKey:@"categoriesArray"];
+    }
+    if(VALID(self.filterCategory, RICategory))
+    {
+        [userInfo setObject:self.filterCategory forKey:@"selectedCategory"];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowFiltersScreenNotification
+                                                        object:nil
+                                                      userInfo:userInfo];
 }
 
 - (IBAction)viewButtonPressed:(id)sender
@@ -1079,16 +1090,26 @@
 
 - (void)didSelectProduct:(NSString *)productUrl
 {
-    JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
-    pdv.productUrl = productUrl;
-    pdv.fromCatalogue = NO;
-    pdv.showBackButton = YES;
-    pdv.previousCategory = self.category.name;
-    pdv.delegate = self;
-    pdv.category = self.category;
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
+    [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"fromCatalog"];
+    [userInfo setObject:self forKey:@"delegate"];
+    if(VALID_NOTEMPTY(productUrl, NSString))
+    {
+        [userInfo setObject:productUrl forKey:@"url"];
+    }
+    if(VALID_NOTEMPTY(self.category, RICategory))
+    {
+        [userInfo setObject:self.category forKey:@"category"];
+        if(VALID_NOTEMPTY(self.category.name, NSString))
+        {
+            [userInfo setObject:self.category.name forKey:@"previousCategory"];
+        }
+    }
     
-    [self.navigationController pushViewController:pdv
-                                         animated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                        object:nil
+                                                      userInfo:userInfo];
 }
 
 - (void)didSelectBrand:(NSString *)brandUrl

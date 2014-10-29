@@ -435,6 +435,7 @@
 		B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */; };
 		B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F41986C41D0094C92C /* RIOrder.m */; };
 		B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F61986C41D0094C92C /* RICheckout.m */; };
+		B5CDC7541A00E50C00DA8ADB /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */; };
 		B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759B19814EF000005B13 /* FacebookSDK.framework */; };
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
 		B5FBD57919CAF22F00BD9510 /* Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD55919CAF22F00BD9510 /* Adjust.m */; };
@@ -1141,6 +1142,7 @@
 		B5C682F51986C41D0094C92C /* RIOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOrder.h; sourceTree = "<group>"; };
 		B5C682F61986C41D0094C92C /* RICheckout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICheckout.m; sourceTree = "<group>"; };
 		B5C682F71986C41D0094C92C /* RICheckout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICheckout.h; sourceTree = "<group>"; };
+		B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
 		B5EF759B19814EF000005B13 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		B5FBD55819CAF22F00BD9510 /* Adjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Adjust.h; sourceTree = "<group>"; };
@@ -1608,7 +1610,6 @@
 				4A4ABF08198B902600342D92 /* Cells */,
 				4A39213B198921A100B70A9C /* GlobalNavigationBar */,
 				CE69B58D19868B7A005CC699 /* Teasers */,
-				4AE242DC198655D900E37C90 /* Storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1617,8 +1618,10 @@
 			isa = PBXGroup;
 			children = (
 				CE69B585198662E6005CC699 /* Main.storyboard */,
+				B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */,
 			);
-			path = Storyboard;
+			name = Storyboard;
+			path = View/Storyboard;
 			sourceTree = "<group>";
 		};
 		4AE242DD1986567800E37C90 /* JARootViewController */ = {
@@ -2022,6 +2025,7 @@
 		B5A301AA19811D0700F71726 /* Jumia */ = {
 			isa = PBXGroup;
 			children = (
+				4AE242DC198655D900E37C90 /* Storyboard */,
 				B5C1E33419BA1E3D009C422C /* Categories */,
 				B50B03A8198A883D002046DF /* Utils */,
 				4AE242DB198655D900E37C90 /* View */,
@@ -3395,6 +3399,7 @@
 				BB128E9F19E2F4260033514F /* 10_search.feature in Resources */,
 				B5A301BC19811D0700F71726 /* Images.xcassets in Resources */,
 				B5B5FDF319D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
+				B5CDC7541A00E50C00DA8ADB /* Main_iPad.storyboard in Resources */,
 				CEDEB9B6199BA8FA0022BAB5 /* slider-default-trackCrossedOver.png in Resources */,
 				CEDEB9BE199BA8FA0022BAB5 /* slider-default7-trackBackground@2x.png in Resources */,
 				BBBA4CD419E44CDC004271B2 /* 19_filters.feature in Resources */,
@@ -3971,7 +3976,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -3993,9 +3998,9 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f97a1ce-529f-442a-8e6b-e7a1750af7bb";
+				PROVISIONING_PROFILE = "e706c938-6a07-4c27-810c-69b1b677fd1e";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Hockey;
@@ -4074,7 +4079,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -4096,9 +4101,9 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f97a1ce-529f-442a-8e6b-e7a1750af7bb";
+				PROVISIONING_PROFILE = "e706c938-6a07-4c27-810c-69b1b677fd1e";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = HockeyLive;
@@ -4259,7 +4264,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -4281,9 +4286,9 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f97a1ce-529f-442a-8e6b-e7a1750af7bb";
+				PROVISIONING_PROFILE = "e706c938-6a07-4c27-810c-69b1b677fd1e";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Debug;
@@ -4294,7 +4299,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -4316,8 +4321,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f97a1ce-529f-442a-8e6b-e7a1750af7bb";
-				TARGETED_DEVICE_FAMILY = 1;
+				PROVISIONING_PROFILE = "e706c938-6a07-4c27-810c-69b1b677fd1e";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Release;

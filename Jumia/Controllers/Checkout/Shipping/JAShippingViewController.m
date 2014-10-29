@@ -422,7 +422,7 @@ UIPickerViewDelegate
                                  
                                  [self hideLoading];
                                  
-                                 [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
+                                 [JAUtils goToCheckout:self.checkout];
                                  
                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                  [self hideLoading];

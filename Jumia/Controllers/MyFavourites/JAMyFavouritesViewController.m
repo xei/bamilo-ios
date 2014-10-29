@@ -9,7 +9,6 @@
 #import "JAMyFavouritesViewController.h"
 #import "JACatalogListCell.h"
 #import "JAButtonCell.h"
-#import "JAPDVViewController.h"
 #import "JAUtils.h"
 #import "RIProduct.h"
 #import "RIProductSimple.h"
@@ -344,14 +343,13 @@
             [tempArray addObject:[self.productsArray objectAtIndex:i]];
         }
         
-        JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
-        pdv.productUrl = product.url;
-        pdv.fromCatalogue = YES;
-        pdv.previousCategory = STRING_MY_FAVOURITES;
-        pdv.arrayWithRelatedItems = [tempArray copy];
-        
-        [self.navigationController pushViewController:pdv
-                                             animated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                            object:nil
+                                                          userInfo:@{ @"url" : product.url,
+                                                                      @"previousCategory" : STRING_MY_FAVOURITES,
+                                                                      @"show_back_button" : [NSNumber numberWithBool:NO],
+                                                                      @"fromCatalog" : [NSNumber numberWithBool:YES],
+                                                                      @"relatedItems" : [tempArray copy]}];
     }
 }
 
