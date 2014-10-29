@@ -220,32 +220,46 @@
         filterIndex--;
     }
     
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+
     if (-1 == filterIndex) {
-        JACategoryFilterViewController* categoryFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"categoryFilterViewController"];
+        [userInfo setObject:self forKey:@"delegate"];
         
-        categoryFilterViewController.categoriesArray = self.categoriesArray;
-        categoryFilterViewController.selectedCategory = self.selectedCategory;
-        categoryFilterViewController.delegate = self;
-        
-        [self.navigationController pushViewController:categoryFilterViewController
-                                             animated:YES];
+        if(VALID_NOTEMPTY(self.selectedCategory, RICategory))
+        {
+            [userInfo setObject:self.selectedCategory forKey:@"selectedCategory"];
+        }
+        if(VALID_NOTEMPTY(self.categoriesArray, NSArray))
+        {
+            [userInfo setObject:self.categoriesArray forKey:@"categoriesArray"];
+        }
+       
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCategoryFiltersScreenNotification
+                                                            object:nil
+                                                          userInfo:userInfo];
     } else {
         RIFilter* filter = [self.filtersArray objectAtIndex:filterIndex];
         
         if ([filter.uid isEqualToString:@"price"]) {
-            JAPriceFilterViewController* priceFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"priceFilterViewController"];
             
-            priceFilterViewController.priceFilterOption = [filter.options firstObject];
-            
-            [self.navigationController pushViewController:priceFilterViewController
-                                                 animated:YES];
+            if(VALID_NOTEMPTY(filter.options, NSArray))
+            {
+                [userInfo setObject:[filter.options firstObject] forKey:@"priceFilterOption"];
+            }
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowPriceFiltersScreenNotification
+                                                                object:nil
+                                                              userInfo:userInfo];
         } else {
-            JAGenericFilterViewController* genericFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"genericFilterViewController"];
             
-            genericFilterViewController.filter = filter;
+            if(VALID_NOTEMPTY(filter, RIFilter))
+            {
+                [userInfo setObject:filter forKey:@"filter"];
+            }
             
-            [self.navigationController pushViewController:genericFilterViewController
-                                                 animated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowGenericFiltersScreenNotification
+                                                                object:nil
+                                                              userInfo:userInfo];
         }
     }
 }

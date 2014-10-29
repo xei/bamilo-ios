@@ -207,4 +207,36 @@
     return urlWasHandled;
 }
 
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    NSUInteger supportedInterfaceOrientationsForWindow = -1;
+    
+    UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
+    JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
+    if(VALID_NOTEMPTY(mainController, JARootViewController))
+    {
+        UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
+        if(VALID_NOTEMPTY(centerPanel, UINavigationController))
+        {
+            NSArray *viewControllers = centerPanel.viewControllers;
+            if(VALID_NOTEMPTY(viewControllers, NSArray))
+            {
+                JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
+                supportedInterfaceOrientationsForWindow = [rootViewController supportedInterfaceOrientations];
+            }
+        }
+    }
+
+    // This should not happen.
+    if(-1 == supportedInterfaceOrientationsForWindow)
+    {
+        supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskPortrait;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+        {
+            supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
+        }
+    }
+    return supportedInterfaceOrientationsForWindow;
+}
+
 @end

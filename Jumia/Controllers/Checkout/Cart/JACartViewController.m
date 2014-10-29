@@ -10,7 +10,6 @@
 #import "JALoginViewController.h"
 #import "JAAddressesViewController.h"
 #import "JACatalogListCell.h"
-#import "JAPDVViewController.h"
 #import "JAConstants.h"
 #import "JACartListHeaderView.h"
 #import "JAPriceView.h"
@@ -1051,13 +1050,11 @@
     {
         RICartItem *product = [self.cart.cartItems objectAtIndex:indexPath.row];
         
-        JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
-        pdv.productUrl = product.productUrl;
-        pdv.fromCatalogue = NO;
-        pdv.previousCategory = STRING_CART;
-        
-        [self.navigationController pushViewController:pdv
-                                             animated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                            object:nil
+                                                          userInfo:@{ @"url" : product.productUrl,
+                                                                      @"previousCategory" : STRING_CART,
+                                                                      @"show_back_button" : [NSNumber numberWithBool:NO]}];
     }
 }
 
