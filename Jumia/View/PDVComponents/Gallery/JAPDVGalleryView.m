@@ -53,6 +53,7 @@
 }
 
 - (void)loadGalleryWithArray:(NSArray *)source
+                     atIndex:(NSInteger)index
 {
     self.imageViewsArray = [NSMutableArray new];
     
@@ -129,7 +130,13 @@
             [self.scrollViewImages addSubview:scrollForImage];
         }
         
-        [self.scrollViewImages scrollRectToVisible:CGRectMake(320, 0, 320, self.scrollViewImages.frame.size.height)
+        if (index >= source.count) {
+            index = 0;
+        }
+        [self.scrollViewImages scrollRectToVisible:CGRectMake(320 + 320*index,
+                                                              0,
+                                                              320,
+                                                              self.scrollViewImages.frame.size.height)
                                           animated:NO];
     }
 }

@@ -9,17 +9,26 @@
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
 
+@protocol JAPDVImageSectionDelegate <NSObject>
+
+- (void)imageClickedAtIndex:(NSInteger)index;
+
+@end
+
 @interface JAPDVImageSection : UIView
 
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *wishListButton;
-@property (weak, nonatomic) IBOutlet JAClickableView *imageClickableView;
-@property (weak, nonatomic) IBOutlet UIImageView *mainImage;
+@property (weak, nonatomic) IBOutlet UIScrollView *imageScrollView;
 @property (weak, nonatomic) IBOutlet UILabel *discountLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *separatorImageView;
 @property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productDescriptionLabel;
 
+@property (nonatomic, assign) id<JAPDVImageSectionDelegate> delegate;
+
 + (JAPDVImageSection *)getNewPDVImageSection;
+
+- (void)loadWithImages:(NSArray*)imagesArray;
 
 @end

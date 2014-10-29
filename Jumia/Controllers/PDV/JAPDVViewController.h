@@ -10,8 +10,9 @@
 #import <Social/Social.h>
 #import "RIProduct.h"
 #import "RICategory.h"
+#import "JAPDVImageSection.h"
 
-@protocol JAPDVViewControllerDelegate <NSObject>
+@protocol JAPDVViewControllerDelegate <NSObject, JAPDVImageSectionDelegate>
 
 - (void)changedFavoriteStateOfProduct:(RIProduct*)product;
 
