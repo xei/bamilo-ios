@@ -55,6 +55,7 @@ UIAlertViewDelegate
 @property (weak, nonatomic) IBOutlet UILabel *cartItensNumber;
 @property (weak, nonatomic) IBOutlet JAClickableView *cartView;
 @property (nonatomic, assign) CGFloat yOffset;
+@property (nonatomic, strong) UIStoryboard *mainStoryboard;
 
 // Handle external payment actions
 @property (assign, nonatomic) JAMenuViewControllerAction nextAction;
@@ -73,6 +74,12 @@ UIAlertViewDelegate
     self.screenName = @"LeftMenu";
     
     self.title = @"";
+    
+    self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+    {
+        self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+    }
     
     [self showLoading];
     
@@ -199,15 +206,6 @@ UIAlertViewDelegate
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"showSubCategories"]) {
-        [segue.destinationViewController setSourceCategoriesArray:self.categories];
-    }
 }
 
 #pragma mark - Tableview datasource and delegate
@@ -377,8 +375,15 @@ UIAlertViewDelegate
             if (1 == indexPath.row)
             {
                 [self.customNavBar addBackButtonToNavBar];
-                [self performSegueWithIdentifier:@"showSubCategories"
-                                          sender:nil];
+                
+                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                
+                if(VALID_NOTEMPTY(self.categories, NSArray))
+                {
+                    [userInfo setObject:self.categories forKey:@"categories"];
+                }
+                
+                [self showSubCategory];
             }
             else
             {
@@ -435,6 +440,15 @@ UIAlertViewDelegate
     }
 }
 
+- (void)showSubCategory
+{
+    JASubCategoriesViewController* subCategoriesViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"subCategoriesViewController"];
+    
+    subCategoriesViewController.sourceCategoriesArray = self.categories;
+    
+    [self.navigationController pushViewController:subCategoriesViewController animated:YES];
+    
+}
 #pragma mark - Navigation bar custom delegate
 
 - (void)didPressedBackButton
