@@ -12,13 +12,13 @@
 #import "RICategory.h"
 #import "JAPDVImageSection.h"
 
-@protocol JAPDVViewControllerDelegate <NSObject, JAPDVImageSectionDelegate>
+@protocol JAPDVViewControllerDelegate <NSObject>
 
 - (void)changedFavoriteStateOfProduct:(RIProduct*)product;
 
 @end
 
-@interface JAPDVViewController : JABaseViewController
+@interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate>
 
 @property (strong, nonatomic) RIProduct *product;
 @property (strong, nonatomic) NSString* productUrl;

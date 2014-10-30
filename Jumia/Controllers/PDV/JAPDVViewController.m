@@ -335,25 +335,6 @@ JAActivityViewControllerDelegate
                                      }];
 }
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"showRatingsMain"])
-    {
-        [segue.destinationViewController setProductRatings:self.productRatings];
-        [segue.destinationViewController setProduct:self.product];
-    }
-    else if ([segue.identifier isEqualToString:@"segueToDetails"])
-    {
-        [segue.destinationViewController setProduct:self.product];
-    }
-    else if ([segue.identifier isEqualToString:@"segueNewReview"])
-    {
-        [segue.destinationViewController setProduct:self.product];
-    }
-}
-
 #pragma mark - Fill the views
 
 - (void)fillTheViews
@@ -666,18 +647,35 @@ JAActivityViewControllerDelegate
 
 - (void)gotoDetails
 {
-    [self performSegueWithIdentifier:@"segueToDetails"
-                              sender:nil];
+    NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+    if(VALID_NOTEMPTY(self.product, RIProduct))
+    {
+        [userInfo setObject:self.product forKey:@"product"];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowProductSpecificationScreenNotification object:nil userInfo:userInfo];
 }
 
 - (void)goToRatinsMainScreen
 {
     if (0 == self.commentsCount) {
-        [self performSegueWithIdentifier:@"segueNewReview"
-                                  sender:nil];
+        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+        if(VALID_NOTEMPTY(self.product, RIProduct))
+        {
+            [userInfo setObject:self.product forKey:@"product"];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
     } else {
-        [self performSegueWithIdentifier:@"showRatingsMain"
-                                  sender:nil];
+        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+        if(VALID_NOTEMPTY(self.product, RIProduct))
+        {
+            [userInfo setObject:self.product forKey:@"product"];
+        }
+        if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+        {
+            [userInfo setObject:self.productRatings forKey:@"productRatings"];
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
     }
 }
 
