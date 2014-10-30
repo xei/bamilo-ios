@@ -69,6 +69,11 @@
 #define kShowPriceFiltersScreenNotification @"NOTIFICATION_SHOW_CATEGORY_FILTERS_SCREEN"
 #define kShowGenericFiltersScreenNotification @"NOTIFICATION_SHOW_GENERIC_FILTERS_SCREEN"
 
+// Product
+#define kShowProductSpecificationScreenNotification @"NOTIFICATION_SHOW_PRODUCT_SPECIFICATION_SCREEN"
+#define kShowRatingsScreenNotification @"NOTIFICATION_SHOW_RATINGS_SCREEN"
+#define kShowNewRatingScreenNotification @"NOTIFICATION_SHOW_NEW_RATING_SCREEN"
+
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"
 #define kDidSelectTeaserWithPDVUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_PDV_URL"

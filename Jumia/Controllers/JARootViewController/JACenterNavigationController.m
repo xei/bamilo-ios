@@ -53,6 +53,10 @@
 #import "JACampaignsViewController.h"
 #import "JAPriceFilterViewController.h"
 #import "JAGenericFilterViewController.h"
+#import "JAProductDetailsViewController.h"
+#import "JARatingsViewController.h"
+#import "JANewRatingViewController.h"
+#import "JASubCategoriesViewController.h"
 #import "RICart.h"
 
 @interface JACenterNavigationController ()
@@ -289,6 +293,21 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showGenericFiltersScreen:)
                                                  name:kShowGenericFiltersScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showProductSpecificationScreen:)
+                                                 name:kShowProductSpecificationScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showRatingsScreen:)
+                                                 name:kShowRatingsScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showNewRatingScreen:)
+                                                 name:kShowNewRatingScreenNotification
                                                object:nil];
 }
 
@@ -941,6 +960,55 @@
         }
         
         [self pushViewController:genericFilterViewController animated:YES];
+    }
+}
+
+- (void)showProductSpecificationScreen:(NSNotification*)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
+    {
+        JAProductDetailsViewController* productDetailsViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"productDetailViewController"];
+        
+        if ([notification.userInfo objectForKey:@"product"]) {
+            productDetailsViewController.product = [notification.userInfo objectForKey:@"product"];
+        }
+        
+        [self pushViewController:productDetailsViewController animated:YES];
+    }
+}
+
+- (void)showRatingsScreen:(NSNotification*)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JARatingsViewController class]])
+    {
+        JARatingsViewController* ratingsViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"ratingsViewController"];
+        
+        if ([notification.userInfo objectForKey:@"product"]) {
+            ratingsViewController.product = [notification.userInfo objectForKey:@"product"];
+        }
+        
+        if ([notification.userInfo objectForKey:@"productRatings"]) {
+            ratingsViewController.productRatings = [notification.userInfo objectForKey:@"productRatings"];
+        }
+        
+        [self pushViewController:ratingsViewController animated:YES];
+    }
+}
+
+- (void)showNewRatingScreen:(NSNotification*)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JANewRatingViewController class]])
+    {
+        JANewRatingViewController* newRatingViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"newRatingViewController"];
+        
+        if ([notification.userInfo objectForKey:@"product"]) {
+            newRatingViewController.product = [notification.userInfo objectForKey:@"product"];
+        }
+        
+        [self pushViewController:newRatingViewController animated:YES];
     }
 }
 

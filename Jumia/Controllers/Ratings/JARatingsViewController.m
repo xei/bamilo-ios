@@ -110,21 +110,16 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"showNewRating"]) {
-        [segue.destinationViewController setProduct:self.product];
-    }
-}
-
 #pragma mark - Action
 
 - (IBAction)goToNewReviews:(id)sender
 {
-    [self performSegueWithIdentifier:@"showNewRating"
-                              sender:nil];
+    NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+    if(VALID_NOTEMPTY(self.product, RIProduct))
+    {
+        [userInfo setObject:self.product forKey:@"product"];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
 }
 
 #pragma mark - Tableview methods
