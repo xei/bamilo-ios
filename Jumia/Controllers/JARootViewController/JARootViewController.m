@@ -15,6 +15,7 @@
 
 @property (assign, nonatomic) NSInteger requestCount;
 @property (strong, nonatomic) RICountry *selectedCountry;
+@property (strong, nonatomic) UIStoryboard *mainStoryboard;
 
 @end
 
@@ -22,9 +23,31 @@
 
 #pragma mark - View lifecycle
 
+- (instancetype)init
+{
+    self = [super init];
+    if(self)
+    {
+        self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+        {
+            self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+        }
+    }
+    return self;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if(ISEMPTY(self.mainStoryboard))
+    {
+        self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+        {
+            self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+        }
+    }
     
     self.shouldResizeLeftPanel = YES;
 
@@ -91,8 +114,14 @@
 
 - (void)awakeFromNib
 {
-    [self setLeftPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
-    [self setCenterPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"rootNavigationController"]];
+    self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+    {
+        self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+    }
+    
+    [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    [self setCenterPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"rootNavigationController"]];
 }
 
 - (void)updateCountry:(NSNotification*)notification

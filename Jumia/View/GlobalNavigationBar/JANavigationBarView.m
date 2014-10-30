@@ -7,6 +7,7 @@
 //
 
 #import "JANavigationBarView.h"
+#import "JAAppDelegate.h"
 
 @interface JANavigationBarView ()
 
@@ -37,6 +38,12 @@
 
 - (void)initialSetup;
 {
+    CGFloat initialWidth = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size.width;
+    [self setFrame:CGRectMake(self.frame.origin.x,
+                              self.frame.origin.y,
+                              initialWidth,
+                              self.frame.size.height)];
+    
     self.backgroundColor = JANavBarBackgroundGrey;
     [self.editButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
@@ -46,6 +53,16 @@
     
     [self.backButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.backButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orientationChanged:)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
+}
+
+- (void)orientationChanged:(NSNotification *)notification
+{
+    [self adjustTitleFrame];
 }
 
 - (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout;

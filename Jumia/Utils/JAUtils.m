@@ -13,8 +13,7 @@
 @implementation JAUtils
 
 + (void) goToCheckout:(RICheckout*)checkout
-         inStoryboard:(UIStoryboard*)storyboard
-{
+{       
     if([@"createAddress" isEqualToString:checkout.nextStep])
     {
     }

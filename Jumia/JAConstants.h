@@ -63,6 +63,12 @@
 #define kShowCheckoutThanksScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_THANKS_SCREEN"
 #define kShowTrackOrderScreenNotification @"NOTIFICATION_SHOW_TRACK_ORDER_SCREEN"
 
+// Filters
+#define kShowFiltersScreenNotification @"NOTIFICATION_SHOW_FILTERS_SCREEN"
+#define kShowCategoryFiltersScreenNotification @"NOTIFICATION_SHOW_PRICE_FILTERS_SCREEN"
+#define kShowPriceFiltersScreenNotification @"NOTIFICATION_SHOW_CATEGORY_FILTERS_SCREEN"
+#define kShowGenericFiltersScreenNotification @"NOTIFICATION_SHOW_GENERIC_FILTERS_SCREEN"
+
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"
 #define kDidSelectTeaserWithPDVUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_PDV_URL"

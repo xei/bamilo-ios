@@ -339,7 +339,7 @@ UITextFieldDelegate>
                                                                   data:[trackingDictionary copy]];
                         
                         
-                        [JAUtils goToCheckout:checkout inStoryboard:self.storyboard];
+                        [JAUtils goToCheckout:checkout];
                         
                         [self hideLoading];
                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
