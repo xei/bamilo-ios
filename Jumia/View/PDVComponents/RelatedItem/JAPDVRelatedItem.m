@@ -36,4 +36,19 @@
     return nil;
 }
 
+- (void)setupWithFrame:(CGRect)frame
+{
+    CGFloat width = frame.size.width - 12.0f;
+    
+    [self setFrame:CGRectMake(self.frame.origin.x,
+                              self.frame.origin.y,
+                              width,
+                              self.frame.size.height)];
+    
+    [self.relatedItemsScrollView setFrame:CGRectMake(self.relatedItemsScrollView.frame.origin.x,
+                                                     self.relatedItemsScrollView.frame.origin.y,
+                                                     width,
+                                                     self.relatedItemsScrollView.frame.size.height)];
+}
+
 @end

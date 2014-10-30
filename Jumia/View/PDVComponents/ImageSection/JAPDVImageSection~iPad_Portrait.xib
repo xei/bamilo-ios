@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clipsSubviews="YES" contentMode="scaleToFill" id="5ON-fF-LLy" customClass="JAPDVImageSection">
-            <rect key="frame" x="0.0" y="0.0" width="308" height="251"/>
+            <rect key="frame" x="0.0" y="0.0" width="308" height="350"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aHG-N7-bwQ">
-                    <rect key="frame" x="0.0" y="0.0" width="308" height="192"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="308" id="9O7-Gn-1mY"/>
-                        <constraint firstAttribute="height" constant="192" id="D8n-oP-OLd"/>
-                    </constraints>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aHG-N7-bwQ">
+                    <rect key="frame" x="0.0" y="0.0" width="308" height="280"/>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="To2-Xa-KXK">
                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -28,15 +25,15 @@
                     </state>
                     <state key="highlighted" image="btn_share_pressed"/>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aj0-2L-1o6">
-                    <rect key="frame" x="0.0" y="191" width="308" height="1"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aj0-2L-1o6">
+                    <rect key="frame" x="0.0" y="280" width="308" height="1"/>
                     <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="di1-PX-Y32"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE TITLE TITLE TITLE TITLE TITLE TITLE " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJ3-Sg-ObF">
-                    <rect key="frame" x="6" y="194" width="294" height="20"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="TITLE TITLE TITLE TITLE TITLE TITLE TITLE " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJ3-Sg-ObF">
+                    <rect key="frame" x="6" y="293" width="294" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="Ima-7z-hdJ"/>
                     </constraints>
@@ -45,7 +42,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name - Product Name - Product Name - Product Name - Product Name - " lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="293" translatesAutoresizingMaskIntoConstraints="NO" id="2I3-dP-D9f">
-                    <rect key="frame" x="6" y="213" width="293" height="33"/>
+                    <rect key="frame" x="6" y="312" width="293" height="33"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="33" id="Ovu-1G-n5B"/>
                     </constraints>
@@ -65,8 +62,8 @@
                     <state key="selected" image="FavButtonPressed"/>
                     <state key="highlighted" image="FavButtonPressed"/>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="-20%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A3y-q3-3f1">
-                    <rect key="frame" x="262" y="156" width="38" height="22"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="-20%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A3y-q3-3f1">
+                    <rect key="frame" x="262" y="255" width="38" height="22"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="WxO-sx-IBd"/>
@@ -80,8 +77,10 @@
             <constraints>
                 <constraint firstItem="2I3-dP-D9f" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" constant="6" id="13Y-Yz-Tt7"/>
                 <constraint firstItem="A3y-q3-3f1" firstAttribute="trailing" secondItem="dJ3-Sg-ObF" secondAttribute="trailing" id="2CT-kG-c76"/>
+                <constraint firstItem="aHG-N7-bwQ" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" id="5z0-Ue-CcM"/>
                 <constraint firstItem="aj0-2L-1o6" firstAttribute="top" secondItem="A3y-q3-3f1" secondAttribute="bottom" constant="13" id="8qR-Yf-hFU"/>
                 <constraint firstItem="To2-Xa-KXK" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" id="9D7-RM-p6N"/>
+                <constraint firstAttribute="trailing" secondItem="aHG-N7-bwQ" secondAttribute="trailing" id="DFJ-Jg-P1I"/>
                 <constraint firstAttribute="bottom" secondItem="2I3-dP-D9f" secondAttribute="bottom" constant="5" id="EeB-Ua-BbX"/>
                 <constraint firstItem="dJ3-Sg-ObF" firstAttribute="top" secondItem="aj0-2L-1o6" secondAttribute="bottom" constant="2" id="EuV-2p-79b"/>
                 <constraint firstAttribute="trailing" secondItem="aj0-2L-1o6" secondAttribute="trailing" id="Fdh-6z-fgN"/>
@@ -119,9 +118,4 @@
         <image name="btn_share" width="21" height="21"/>
         <image name="btn_share_pressed" width="21" height="21"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

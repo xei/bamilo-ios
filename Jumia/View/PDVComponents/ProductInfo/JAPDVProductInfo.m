@@ -37,7 +37,6 @@
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JAPDVProductInfo class]]) {
             JAPDVProductInfo *object = (JAPDVProductInfo *)obj;
-            [object setup];
             return object;
         }
     }
@@ -45,9 +44,64 @@
     return nil;
 }
 
-- (void)setup
+- (void)setupWithFrame:(CGRect)frame
 {
     [self.sizeLabel setTextColor:UIColorFromRGB(0x55a1ff)];
+    
+    CGFloat width = frame.size.width - 12.0f;
+    
+    [self setFrame:CGRectMake(self.frame.origin.x,
+                              self.frame.origin.y,
+                              width,
+                              self.frame.size.height)];
+    
+    [self.priceSeparator setFrame:CGRectMake(self.priceSeparator.frame.origin.x,
+                                             self.priceSeparator.frame.origin.y,
+                                             width,
+                                             self.priceSeparator.frame.size.height)];
+    
+    [self.sizeClickableView setFrame:CGRectMake(self.sizeClickableView.frame.origin.x,
+                                                self.sizeClickableView.frame.origin.y,
+                                                width,
+                                                self.sizeClickableView.frame.size.height)];
+    
+    [self.sizeImageViewSeparator setFrame:CGRectMake(self.sizeImageViewSeparator.frame.origin.x,
+                                                     self.sizeImageViewSeparator.frame.origin.y,
+                                                     width,
+                                                     self.sizeImageViewSeparator.frame.size.height)];
+    
+    [self.reviewsClickableView setFrame:CGRectMake(self.reviewsClickableView.frame.origin.x,
+                                                   self.reviewsClickableView.frame.origin.y,
+                                                   width,
+                                                   self.reviewsClickableView.frame.size.height)];
+    
+    [self.goToReviewsImageView setFrame:CGRectMake(self.reviewsClickableView.frame.size.width - self.reviewsClickableView.frame.origin.x - self.goToReviewsImageView.frame.size.width - 9.0f,
+                                                   self.goToReviewsImageView.frame.origin.y,
+                                                   self.goToReviewsImageView.frame.size.width,
+                                                   self.goToReviewsImageView.frame.size.height)];
+    
+    [self.ratingsSeparator setFrame:CGRectMake(self.ratingsSeparator.frame.origin.x,
+                                               self.ratingsSeparator.frame.origin.y,
+                                               width,
+                                               self.ratingsSeparator.frame.size.height)];
+    
+    [self.specificationsClickableView setFrame:CGRectMake(self.specificationsClickableView.frame.origin.x,
+                                                          self.specificationsClickableView.frame.origin.y,
+                                                          width,
+                                                          self.specificationsClickableView.frame.size.height)];
+    
+    [self.goToSpecificationsImageView setFrame:CGRectMake(self.sizeClickableView.frame.size.width - self.specificationsClickableView.frame.origin.x - self.goToSpecificationsImageView.frame.size.width - 9.0f,
+                                                          self.goToSpecificationsImageView.frame.origin.y,
+                                                          self.goToSpecificationsImageView.frame.size.width,
+                                                          self.goToSpecificationsImageView.frame.size.height)];
+    
+    for(UIView *subView in self.subviews)
+    {
+        [subView setFrame:CGRectMake(subView.frame.origin.x,
+                                     subView.frame.origin.y,
+                                     width,
+                                     subView.frame.size.height)];
+    }
 }
 
 - (void)setPriceWithNewValue:(NSString *)newValue
