@@ -36,4 +36,14 @@
     return nil;
 }
 
+- (void)setupWithFrame:(CGRect)frame
+{
+    CGFloat width = frame.size.width - 12.0f;
+    
+    [self setFrame:CGRectMake(self.frame.origin.x,
+                              self.frame.origin.y,
+                              width,
+                              self.frame.size.height)];
+}
+
 @end

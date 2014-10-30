@@ -25,11 +25,13 @@
 @property (weak, nonatomic) IBOutlet UIImageView *goToReviewsImageView;
 @property (weak, nonatomic) IBOutlet UILabel *specificationsLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *goToSpecificationsImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *priceSeparator;
 @property (weak, nonatomic) IBOutlet UIImageView *sizeImageViewSeparator;
+@property (weak, nonatomic) IBOutlet UIImageView *ratingsSeparator;
 
 + (JAPDVProductInfo *)getNewPDVProductInfoSection;
 
-- (void)setup;
+- (void)setupWithFrame:(CGRect)frame;
 
 - (void)setNumberOfStars:(NSInteger)stars;
 

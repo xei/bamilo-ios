@@ -29,6 +29,8 @@
 
 + (JAPDVImageSection *)getNewPDVImageSection;
 
+- (void)setupWithFrame:(CGRect)frame;
+
 - (void)loadWithImages:(NSArray*)imagesArray;
 
 @end

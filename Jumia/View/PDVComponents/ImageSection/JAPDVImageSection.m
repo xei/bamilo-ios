@@ -10,6 +10,10 @@
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 
+@interface JAPDVImageSection ()
+
+@end
+
 @implementation JAPDVImageSection
 
 + (JAPDVImageSection *)getNewPDVImageSection
@@ -17,6 +21,21 @@
     NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVImageSection"
                                                  owner:nil
                                                options:nil];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVImageSection~iPad_Portrait"
+                                            owner:nil
+                                          options:nil];
+        
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+        {
+            xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVImageSection~iPad_Landscape"
+                                                owner:nil
+                                              options:nil];
+        }
+    }
     
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JAPDVImageSection class]]) {
@@ -36,6 +55,21 @@
     }
     
     return self;
+}
+
+- (void)setupWithFrame:(CGRect)frame
+{
+    CGFloat width = frame.size.width - 12.0f;
+
+    [self setFrame:CGRectMake(self.frame.origin.x,
+                              self.frame.origin.y,
+                              width,
+                              self.frame.size.height)];
+    
+    [self.imageScrollView setFrame:CGRectMake(self.imageScrollView.frame.origin.x,
+                                              self.imageScrollView.frame.origin.y,
+                                              width,
+                                              self.imageScrollView.frame.size.height)];
 }
 
 - (void)loadWithImages:(NSArray*)imagesArray

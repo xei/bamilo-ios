@@ -15,4 +15,6 @@
 
 + (JAPDVVariations *)getNewPDVVariationsSection;
 
+- (void)setupWithFrame:(CGRect)frame;
+
 @end

@@ -130,6 +130,26 @@ JAActivityViewControllerDelegate
     [super didReceiveMemoryWarning];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self showLoading];
+    
+    for(UIView *subView in self.mainScrollView.subviews)
+    {
+        [subView removeFromSuperview];
+    }
+    
+    if(VALID_NOTEMPTY(self.ctaView, JAButtonWithBlur))
+    {
+        [self.ctaView removeFromSuperview];
+    }
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self productLoaded];
+}
+
 - (void)loadCompleteProduct
 {
     [self showLoading];
@@ -303,7 +323,13 @@ JAActivityViewControllerDelegate
 
 - (void)productLoaded
 {
+    [self.mainScrollView setFrame:CGRectMake(0.0f,
+                                            0.0f,
+                                            self.view.frame.size.width,
+                                            self.view.frame.size.height - 64.0f)];
+    
     self.imageSection = [JAPDVImageSection getNewPDVImageSection];
+    [self.imageSection setupWithFrame:self.view.frame];
     self.imageSection.delegate = self;
     [self.imageSection.wishListButton addTarget:self
                                          action:@selector(addToFavoritesPressed:)
@@ -313,9 +339,11 @@ JAActivityViewControllerDelegate
     if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
     {
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
+        [self.variationsSection setupWithFrame:self.view.frame];
     }
     
     self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
+    [self.productInfoSection setupWithFrame:self.view.frame];
     
     [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
@@ -530,6 +558,7 @@ JAActivityViewControllerDelegate
     if (self.fromCatalogue && VALID_NOTEMPTY(self.arrayWithRelatedItems, NSArray) && 1 < self.arrayWithRelatedItems.count)
     {
         self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
+        [self.relatedItems setupWithFrame:self.view.frame];
         self.relatedItems.topLabel.text = STRING_RELATED_ITEMS;
         self.relatedItems.frame = CGRectMake(6.0f,
                                              CGRectGetMaxY(self.productInfoSection.frame) + 4.0f,
@@ -580,6 +609,8 @@ JAActivityViewControllerDelegate
         startingElement += (4.0f + self.relatedItems.frame.size.height);
     }
     
+    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + self.ctaView.frame.size.height);
+    
     /*******
      CTA Buttons
      *******/
@@ -608,8 +639,6 @@ JAActivityViewControllerDelegate
                      action:@selector(addToCart)];
     
     [self.view addSubview:self.ctaView];
-    
-    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + self.ctaView.frame.size.height);
     
     //make sure wizard is in front
     [self.view bringSubviewToFront:self.wizardView];
