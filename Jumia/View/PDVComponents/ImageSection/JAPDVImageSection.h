@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
 
+@class RIProduct;
+
 @protocol JAPDVImageSectionDelegate <NSObject>
 
 - (void)imageClickedAtIndex:(NSInteger)index;
@@ -29,7 +31,7 @@
 
 + (JAPDVImageSection *)getNewPDVImageSection;
 
-- (void)setupWithFrame:(CGRect)frame;
+- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product;
 
 - (void)loadWithImages:(NSArray*)imagesArray;
 
