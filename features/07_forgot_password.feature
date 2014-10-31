@@ -29,6 +29,7 @@ Scenario: Password Recovery Non Registred Email
 * I wait for 1 seconds
 * I touch the forgot password option
 * I wait to see the forgot password section
+* I wait for 5 seconds
 * I enter a invalid email
 * I touch the Submit button
 * I wait to see the error please check your input fields

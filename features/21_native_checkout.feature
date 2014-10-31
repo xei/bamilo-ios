@@ -1,4 +1,4 @@
-@all @native_checkout
+@native_checkout
 Feature: Native Checkout
 
 Background:
