@@ -335,8 +335,6 @@ UIAlertViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.view endEditing:YES];
-
-    [self.customNavBar resignFirstResponder];
     
     self.nextAction = JAMenuViewControllerOpenSideMenuItem;
     self.nextActionIndexPath = indexPath;
@@ -352,9 +350,7 @@ UIAlertViewDelegate
     else
     {
         if (self.resultsTableView == tableView)
-        {
-            [self.customNavBar.searchBar resignFirstResponder];
-            
+        {            
             RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
             NSString *item = suggestion.item;
             
@@ -521,7 +517,6 @@ UIAlertViewDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [searchBar resignFirstResponder];
     
     [RISearchSuggestion saveSearchSuggestionOnDB:searchBar.text
                                   isRecentSearch:YES];
