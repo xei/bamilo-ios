@@ -7,6 +7,7 @@
 //
 
 #import "JAPDVImageSection.h"
+#import "RIProduct.h"
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 
@@ -51,16 +52,18 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-       
+        
     }
     
     return self;
 }
 
-- (void)setupWithFrame:(CGRect)frame
+- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product
 {
+    self.layer.cornerRadius = 5.0f;
+    
     CGFloat width = frame.size.width - 12.0f;
-
+    
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               width,
@@ -70,6 +73,51 @@
                                               self.imageScrollView.frame.origin.y,
                                               width,
                                               self.imageScrollView.frame.size.height)];
+    
+    /*******
+     Image Section
+     *******/
+    
+    [self loadWithImages:[product.images array]];
+    
+    self.productNameLabel.text = product.brand;
+    [self.productNameLabel sizeToFit];
+    
+    self.productDescriptionLabel.text = product.name;
+    [self.productDescriptionLabel sizeToFit];
+    
+    CGRect productDescriptionLabelRect = [self.productDescriptionLabel.text boundingRectWithSize:CGSizeMake(width, 1000.0f)
+                                                                                         options:NSStringDrawingUsesLineFragmentOrigin
+                                                                                      attributes:@{NSFontAttributeName:self.productDescriptionLabel.font} context:nil];
+    
+    [self.productDescriptionLabel setFrame:CGRectMake(self.productDescriptionLabel.frame.origin.x,
+                                                      CGRectGetMaxY(self.productNameLabel.frame),
+                                                      width,
+                                                      productDescriptionLabelRect.size.height)];
+    
+    
+    if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
+    {
+        self.discountLabel.text = [NSString stringWithFormat:@"-%@%%", product.maxSavingPercentage];
+    } else
+    {
+        self.discountLabel.hidden = YES;
+    }
+    
+    UIImage *img = [UIImage imageNamed:@"img_badge_discount"];
+    CGSize imgSize = self.discountLabel.frame.size;
+    
+    UIGraphicsBeginImageContext(imgSize);
+    [img drawInRect:CGRectMake(0,0,imgSize.width,imgSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    self.discountLabel.backgroundColor = [UIColor colorWithPatternImage:newImage];
+    
+    [self setFrame:CGRectMake(self.frame.origin.x,
+                              self.frame.origin.y,
+                              self.frame.size.width,
+                              CGRectGetMaxY(self.productDescriptionLabel.frame) + 6.0f)];
 }
 
 - (void)loadWithImages:(NSArray*)imagesArray
@@ -96,7 +144,7 @@
                                                                                    imageHeight)];
             [clickableView addSubview:imageView];
             [imageView setImageWithURL:[NSURL URLWithString:image.url]
-                         placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                      placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
             
             currentX += clickableView.frame.size.width;
         }

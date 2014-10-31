@@ -220,7 +220,7 @@ JAActivityViewControllerDelegate
     [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
     self.product = product;
     NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
-
+    
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
     
@@ -275,7 +275,7 @@ JAActivityViewControllerDelegate
     trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"ViewProductDetails" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];    
+    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     [trackingDictionary setValue:price forKey:kRIEventValueKey];
     
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
@@ -292,7 +292,7 @@ JAActivityViewControllerDelegate
     {
         discountPercentage = self.product.maxSavingPercentage;
     }
-
+    
     [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
     [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
@@ -324,26 +324,9 @@ JAActivityViewControllerDelegate
 - (void)productLoaded
 {
     [self.mainScrollView setFrame:CGRectMake(0.0f,
-                                            0.0f,
-                                            self.view.frame.size.width,
-                                            self.view.frame.size.height - 64.0f)];
-    
-    self.imageSection = [JAPDVImageSection getNewPDVImageSection];
-    [self.imageSection setupWithFrame:self.view.frame];
-    self.imageSection.delegate = self;
-    [self.imageSection.wishListButton addTarget:self
-                                         action:@selector(addToFavoritesPressed:)
-                               forControlEvents:UIControlEventTouchUpInside];
-    self.imageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
-    
-    if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
-    {
-        self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
-        [self.variationsSection setupWithFrame:self.view.frame];
-    }
-    
-    self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
-    [self.productInfoSection setupWithFrame:self.view.frame];
+                                             0.0f,
+                                             self.view.frame.size.width,
+                                             self.view.frame.size.height - 64.0f)];
     
     [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
@@ -369,45 +352,34 @@ JAActivityViewControllerDelegate
 {
     float startingElement = 6.0f;
     
-    /*******
-     Image Section
-     *******/
-    
+    self.imageSection = [JAPDVImageSection getNewPDVImageSection];
+    [self.imageSection setupWithFrame:self.view.frame product:self.product];
+    self.imageSection.delegate = self;
+    [self.imageSection.wishListButton addTarget:self
+                                         action:@selector(addToFavoritesPressed:)
+                               forControlEvents:UIControlEventTouchUpInside];
+    self.imageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
     self.imageSection.frame = CGRectMake(6.0f,
                                          startingElement,
                                          self.imageSection.frame.size.width,
                                          self.imageSection.frame.size.height);
     
-    self.imageSection.layer.cornerRadius = 4.0f;
-    
-    [self.imageSection loadWithImages:[self.product.images array]];
-    
-    self.imageSection.productNameLabel.text = self.product.brand;
-    self.imageSection.productDescriptionLabel.text = self.product.name;
-    
-    if (VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
-    {
-        self.imageSection.discountLabel.text = [NSString stringWithFormat:@"-%@%%", self.product.maxSavingPercentage];
-    } else
-    {
-        self.imageSection.discountLabel.hidden = YES;
-    }
-    
     [self.imageSection.shareButton addTarget:self
                                       action:@selector(shareProduct)
                             forControlEvents:UIControlEventTouchUpInside];
     
-    UIImage *img = [UIImage imageNamed:@"img_badge_discount"];
-    CGSize imgSize = self.imageSection.discountLabel.frame.size;
-    
-    UIGraphicsBeginImageContext(imgSize);
-    [img drawInRect:CGRectMake(0,0,imgSize.width,imgSize.height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    self.imageSection.discountLabel.backgroundColor = [UIColor colorWithPatternImage:newImage];
-    
     [self.mainScrollView addSubview:self.imageSection];
+    
+    
+    if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
+    {
+        self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
+        [self.variationsSection setupWithFrame:self.view.frame];
+    }
+    
+    self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
+    [self.productInfoSection setupWithFrame:self.view.frame];
+    
     
     startingElement += (4.0f + self.imageSection.frame.size.height);
     
@@ -554,7 +526,7 @@ JAActivityViewControllerDelegate
      *******/
     
     [self.relatedItems removeFromSuperview];
-
+    
     if (self.fromCatalogue && VALID_NOTEMPTY(self.arrayWithRelatedItems, NSArray) && 1 < self.arrayWithRelatedItems.count)
     {
         self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
@@ -597,7 +569,7 @@ JAActivityViewControllerDelegate
                 singleItem.labelName.text = product.name;
                 singleItem.labelPrice.text = product.priceFormatted;
                 singleItem.product = product;
-                                
+                
                 [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
                 
                 relatedItemStart += singleItem.frame.size.width;
@@ -846,7 +818,7 @@ JAActivityViewControllerDelegate
                           {
                               addToCartError = STRING_NO_NEWTORK;
                           }
-
+                          
                           [self showMessage:addToCartError success:NO];
                       }];
     }
@@ -1002,7 +974,7 @@ JAActivityViewControllerDelegate
             
             NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
             [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
-
+            
             [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
             [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
             [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
@@ -1048,7 +1020,7 @@ JAActivityViewControllerDelegate
             [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
             [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-
+            
             NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
             [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
             
