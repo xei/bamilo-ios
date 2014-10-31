@@ -103,7 +103,7 @@ Then /^I wait to see the mail option$/ do
 end
 
 Then /^I wait to see the shopping cart$/ do
-    wait_for_elements_exist("view marked:'"+@no_items_message+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@no_items_message+"'", :timeout => @wait_timeout_a_lot)
 end
 
 Then /^I wait to see the categories$/ do
