@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
 
+@class RIProduct;
+
 @protocol JAPDVImageSectionDelegate <NSObject>
 
 - (void)imageClickedAtIndex:(NSInteger)index;
@@ -24,11 +26,15 @@
 @property (weak, nonatomic) IBOutlet UIImageView *separatorImageView;
 @property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productDescriptionLabel;
+@property (weak, nonatomic) IBOutlet JAClickableView *sizeClickableView;
+@property (weak, nonatomic) IBOutlet UIView *sizeImageViewSeparator;
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *separatorImageViewYConstrain;
 
 @property (nonatomic, assign) id<JAPDVImageSectionDelegate> delegate;
 
 + (JAPDVImageSection *)getNewPDVImageSection;
 
-- (void)loadWithImages:(NSArray*)imagesArray;
+- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize;
 
 @end

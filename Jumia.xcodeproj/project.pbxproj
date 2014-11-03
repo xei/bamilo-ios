@@ -391,6 +391,12 @@
 		B5A30303198121A400F71726 /* JABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A30301198121A400F71726 /* JABaseViewController.m */; };
 		B5B21B4719ED943C00099E25 /* JAMaintenancePage.m in Sources */ = {isa = PBXBuildFile; fileRef = B524311E19EC1163001E532C /* JAMaintenancePage.m */; };
 		B5B21B4819ED944900099E25 /* JAMaintenancePage.xib in Resources */ = {isa = PBXBuildFile; fileRef = B524312019EC117F001E532C /* JAMaintenancePage.xib */; };
+		B5B3AB501A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */; };
+		B5B3AB511A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */; };
+		B5B3AB521A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */; };
+		B5B3AB531A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */; };
+		B5B3AB561A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */; };
+		B5B3AB571A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */; };
 		B5B5FDA519D95B6D008B8059 /* RINewsletterCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FDA419D95B6D008B8059 /* RINewsletterCategory.m */; };
 		B5B5FDA819D95D8E008B8059 /* RICustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FDA719D95D8E008B8059 /* RICustomer.m */; };
 		B5B5FDDE19D99D06008B8059 /* BMA4SViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FDAC19D99D05008B8059 /* BMA4SViewController.m */; };
@@ -427,6 +433,10 @@
 		B5B5FDFD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDDD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib */; };
 		B5BDD98B19FFAAF000C2C2CC /* JANewsletterComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */; };
 		B5BDD98C19FFAAF000C2C2CC /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */; };
+		B5C0085D1A038F55000BBC52 /* JAPDVImageSection~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C0085B1A038F55000BBC52 /* JAPDVImageSection~iPad_Landscape.xib */; };
+		B5C0085E1A038F55000BBC52 /* JAPDVImageSection~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C0085C1A038F55000BBC52 /* JAPDVImageSection~iPad_Portrait.xib */; };
+		B5C0085F1A038F61000BBC52 /* JAPDVImageSection~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C0085B1A038F55000BBC52 /* JAPDVImageSection~iPad_Landscape.xib */; };
+		B5C008601A038F63000BBC52 /* JAPDVImageSection~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C0085C1A038F55000BBC52 /* JAPDVImageSection~iPad_Portrait.xib */; };
 		B5C1E33719BA1E73009C422C /* UIImageView+JA.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1E33619BA1E73009C422C /* UIImageView+JA.m */; };
 		B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */; };
 		B5C61BC319B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BC219B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m */; };
@@ -1080,6 +1090,9 @@
 		B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jumia-Prefix.pch"; sourceTree = "<group>"; };
 		B5A30301198121A400F71726 /* JABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABaseViewController.m; sourceTree = "<group>"; };
 		B5A30302198121A400F71726 /* JABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABaseViewController.h; sourceTree = "<group>"; };
+		B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVProductInfo~iPad_Landscape.xib"; sourceTree = "<group>"; };
+		B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVProductInfo~iPad_Portrait.xib"; sourceTree = "<group>"; };
+		B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVVariations~iPad.xib"; sourceTree = "<group>"; };
 		B5B5FDA319D95B6D008B8059 /* RINewsletterCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RINewsletterCategory.h; sourceTree = "<group>"; };
 		B5B5FDA419D95B6D008B8059 /* RINewsletterCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RINewsletterCategory.m; sourceTree = "<group>"; };
 		B5B5FDA619D95D8E008B8059 /* RICustomer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICustomer.h; sourceTree = "<group>"; };
@@ -1130,6 +1143,8 @@
 		B5BDD98819FFAAF000C2C2CC /* JANewsletterComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterComponent.h; sourceTree = "<group>"; };
 		B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewsletterComponent.m; sourceTree = "<group>"; };
 		B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewsletterComponent.xib; sourceTree = "<group>"; };
+		B5C0085B1A038F55000BBC52 /* JAPDVImageSection~iPad_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVImageSection~iPad_Landscape.xib"; sourceTree = "<group>"; };
+		B5C0085C1A038F55000BBC52 /* JAPDVImageSection~iPad_Portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVImageSection~iPad_Portrait.xib"; sourceTree = "<group>"; };
 		B5C1E33519BA1E73009C422C /* UIImageView+JA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+JA.h"; path = "Categories/UIImageView+JA.h"; sourceTree = "<group>"; };
 		B5C1E33619BA1E73009C422C /* UIImageView+JA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+JA.m"; path = "Categories/UIImageView+JA.m"; sourceTree = "<group>"; };
 		B5C61BBE19B0BB7F00840E93 /* RIFieldOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldOption.h; sourceTree = "<group>"; };
@@ -1697,6 +1712,8 @@
 				4AE730B6198F8ACA000CA1DD /* JAPDVImageSection.h */,
 				4AE730B7198F8ACA000CA1DD /* JAPDVImageSection.m */,
 				4AE730C8198F8C8B000CA1DD /* JAPDVImageSection.xib */,
+				B5C0085C1A038F55000BBC52 /* JAPDVImageSection~iPad_Portrait.xib */,
+				B5C0085B1A038F55000BBC52 /* JAPDVImageSection~iPad_Landscape.xib */,
 			);
 			path = ImageSection;
 			sourceTree = "<group>";
@@ -1707,6 +1724,8 @@
 				4A2FD83F199119D900C65C1D /* JAPDVProductInfo.h */,
 				4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */,
 				4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */,
+				B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */,
+				B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */,
 			);
 			path = ProductInfo;
 			sourceTree = "<group>";
@@ -1730,6 +1749,7 @@
 				4AE730B9198F8AD6000CA1DD /* JAPDVVariations.h */,
 				4AE730BA198F8AD6000CA1DD /* JAPDVVariations.m */,
 				4A862226198FA00D007FD76A /* JAPDVVariations.xib */,
+				B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */,
 			);
 			path = Variations;
 			sourceTree = "<group>";
@@ -3165,6 +3185,7 @@
 				f00ce9fe15cb6e122385dd86 /* JAPDVVariations.xib in Resources */,
 				BBBA4CCE19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
 				BBBA4CC619E41F83004271B2 /* 15_my_favourites.feature in Resources */,
+				B5B3AB511A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				BBBA4CD219E43993004271B2 /* 18_track_order.feature in Resources */,
 				BB9546AA19F5512600AC7D05 /* touch.rb in Resources */,
 				BB9546A519F5511500AC7D05 /* env.rb in Resources */,
@@ -3199,6 +3220,7 @@
 				cfbd53adb71df70dd5af6a40 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */,
 				0a8469b275aace8e79dc2c98 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				3e28a2119641d996522a1874 /* slider-default-handle-highlighted@2x.png in Resources */,
+				B5B3AB531A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
 				327bb46fcacc03cc77a0a8c3 /* slider-metal-handle-highlighted@2x.png in Resources */,
 				a7574c4a13ff4d48c84304ab /* slider-default7-handle.png in Resources */,
 				dc520e1f7f48fb626d002fd9 /* JAGrayButtonCell.xib in Resources */,
@@ -3217,6 +3239,7 @@
 				8ef5430a40f35557c9e3eb94 /* JAUndefinedSearchView.xib in Resources */,
 				3d947baae146c98dbd50bedf /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
 				507ba71a40fd000b7faa7bcc /* JACartListHeaderView.xib in Resources */,
+				B5C0085F1A038F61000BBC52 /* JAPDVImageSection~iPad_Landscape.xib in Resources */,
 				73e27fe926d9b8bfdf5533aa /* HockeySDKResources.bundle in Resources */,
 				ff66c78cdee50a4002746a01 /* JAPDVRelatedItem.xib in Resources */,
 				9cd5e1568d3e8d595420bc7f /* HockeySDK.xcconfig in Resources */,
@@ -3228,6 +3251,7 @@
 				BB9546B019F5515F00AC7D05 /* 11_catalog.feature in Resources */,
 				5fabf66fb80ebc6b30c67313 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				BBBA4CD519E44CDC004271B2 /* 19_filters.feature in Resources */,
+				B5C008601A038F63000BBC52 /* JAPDVImageSection~iPad_Portrait.xib in Resources */,
 				BB9546A919F5512300AC7D05 /* wait.rb in Resources */,
 				2da4b3c8c2024a70f4aa68b3 /* slider-metal-handle-highlighted.png in Resources */,
 				a2b0dc6d9bc2f3b3589ff3a4 /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */,
@@ -3259,6 +3283,7 @@
 				BB9546B119F5516700AC7D05 /* 06_email_notifications.feature in Resources */,
 				BB9546A419F5511200AC7D05 /* my_first_steps.rb in Resources */,
 				BB9546AF19F5515900AC7D05 /* 12_product_details.feature in Resources */,
+				B5B3AB571A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */,
 				61cfabf0628c374f78080c28 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
 				cc25950211e1df6cf12e953f /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
 				e5c2612fb2a7b831d10cc411 /* JACartListCell.xib in Resources */,
@@ -3291,6 +3316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5B3AB501A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				BBA707B819EEB93C0094C565 /* 00_choose_country.feature in Resources */,
 				BBBA4CBD19E3F764004271B2 /* 13_related_items.feature in Resources */,
 				BBA145B219DC56BF003F0CA7 /* init.rb in Resources */,
@@ -3307,6 +3333,7 @@
 				B501E88919BE20C100BE51DD /* JAPickupRegionsCell.xib in Resources */,
 				4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */,
 				B5B5FDEC19D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView-ret4.xib in Resources */,
+				B5C0085D1A038F55000BBC52 /* JAPDVImageSection~iPad_Landscape.xib in Resources */,
 				4A392143198925E300B70A9C /* JANavigationBarView.xib in Resources */,
 				B5210E8619C4863400FDB0D1 /* RIStrings.strings in Resources */,
 				CE2C6B711A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib in Resources */,
@@ -3377,6 +3404,7 @@
 				CEDEB9C5199BA8FA0022BAB5 /* slider-metal-track.png in Resources */,
 				B510B01319AE466B00A9754A /* JACheckBoxComponent.xib in Resources */,
 				CEDEB9BF199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png in Resources */,
+				B5B3AB561A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */,
 				B5B5FDF719D99D06008B8059 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				CEDEB9C1199BA8FA0022BAB5 /* slider-metal-handle-highlighted.png in Resources */,
 				BBA145B119DC56BF003F0CA7 /* calabash_steps.rb in Resources */,
@@ -3394,6 +3422,8 @@
 				BBB12A9C19DDA01E00656529 /* 09_home.feature in Resources */,
 				B5B5FDF419D99D06008B8059 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
 				CE2F577019913B6D000A9E09 /* JACatalogListCell.xib in Resources */,
+				B5C0085E1A038F55000BBC52 /* JAPDVImageSection~iPad_Portrait.xib in Resources */,
+				B5B3AB521A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
 				4A01EE4B19922736005F5AD1 /* JAPDVPicker.xib in Resources */,
 				BBA145AA19DC56BF003F0CA7 /* 01_login.feature in Resources */,
 				B5B5FDEE19D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */,
@@ -3992,7 +4022,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -4014,7 +4044,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e706c938-6a07-4c27-810c-69b1b677fd1e";
+				PROVISIONING_PROFILE = "8f97a1ce-529f-442a-8e6b-e7a1750af7bb";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
@@ -4095,7 +4125,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -4117,7 +4147,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e706c938-6a07-4c27-810c-69b1b677fd1e";
+				PROVISIONING_PROFILE = "8f97a1ce-529f-442a-8e6b-e7a1750af7bb";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
@@ -4280,7 +4310,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -4302,7 +4332,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e706c938-6a07-4c27-810c-69b1b677fd1e";
+				PROVISIONING_PROFILE = "8f97a1ce-529f-442a-8e6b-e7a1750af7bb";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
@@ -4315,7 +4345,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -4337,7 +4367,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e706c938-6a07-4c27-810c-69b1b677fd1e";
+				PROVISIONING_PROFILE = "8f97a1ce-529f-442a-8e6b-e7a1750af7bb";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 			};

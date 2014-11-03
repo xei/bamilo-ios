@@ -43,13 +43,13 @@
     
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
-                              320.0f,
-                              60.0f)];
+                              self.frame.size.width,
+                              56.0f)];
 }
 
 - (void) addButton:(NSString*)name target:(id)target action:(SEL)action
 {
-    CGFloat buttonWidth = 308.0f;
+    CGFloat buttonWidth = self.frame.size.width - 12.0f;
     CGFloat buttonSpace = 4.0f;
     if(VALID_NOTEMPTY(self.buttons, NSMutableArray))
     {
