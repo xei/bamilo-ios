@@ -20,6 +20,7 @@
     self.backgroundColor = [UIColor clearColor];
     
     self.backgroundContentView.layer.cornerRadius = JACatalogCellContentCornerRadius;
+    self.backgroundContentView.clipsToBounds = YES;
     
     RIImage* firstImage = [product.images firstObject];
     
