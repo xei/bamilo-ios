@@ -8,6 +8,12 @@
 
 #import "JAPDVRelatedItem.h"
 
+@interface JAPDVRelatedItem ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *separator;
+
+@end
+
 @implementation JAPDVRelatedItem
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -39,6 +45,11 @@
 - (void)setupWithFrame:(CGRect)frame
 {
     CGFloat width = frame.size.width - 12.0f;
+    
+    self.layer.cornerRadius = 5.0f;
+    
+    [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.topLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,

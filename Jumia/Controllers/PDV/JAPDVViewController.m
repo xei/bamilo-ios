@@ -40,6 +40,7 @@ JAActivityViewControllerDelegate
 >
 
 @property (strong, nonatomic) UIScrollView *mainScrollView;
+@property (strong, nonatomic) UIScrollView *landscapeScrollView;
 @property (strong, nonatomic) RIProductRatings *productRatings;
 @property (strong, nonatomic) JAPDVImageSection *imageSection;
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
@@ -137,6 +138,14 @@ JAActivityViewControllerDelegate
     for(UIView *subView in self.mainScrollView.subviews)
     {
         [subView removeFromSuperview];
+    }
+    
+    if(VALID_NOTEMPTY(self.landscapeScrollView, UIScrollView))
+    {
+        for(UIView *subView in self.landscapeScrollView.subviews)
+        {
+            [subView removeFromSuperview];
+        }
     }
     
     if(VALID_NOTEMPTY(self.ctaView, JAButtonWithBlur))
@@ -326,7 +335,34 @@ JAActivityViewControllerDelegate
     [self.mainScrollView setFrame:CGRectMake(0.0f,
                                              0.0f,
                                              self.view.frame.size.width,
-                                             self.view.frame.size.height - 64.0f)];
+                                             self.view.frame.size.height)];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+        {
+            CGFloat scrollViewsWidth = (self.view.frame.size.width / 2);
+            [self.mainScrollView setFrame:CGRectMake(0.0f,
+                                                     0.0f,
+                                                     scrollViewsWidth,
+                                                     self.view.frame.size.height)];
+            
+            self.landscapeScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(scrollViewsWidth,
+                                                                                      0.0f,
+                                                                                      scrollViewsWidth,
+                                                                                      self.view.frame.size.height)];
+            [self.view addSubview:self.landscapeScrollView];
+        }
+        else
+        {
+            [self.landscapeScrollView removeFromSuperview];
+        }
+    }
+    else
+    {
+        [self.landscapeScrollView removeFromSuperview];
+    }
     
     [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
@@ -350,17 +386,84 @@ JAActivityViewControllerDelegate
 
 - (void)fillTheViews
 {
-    float startingElement = 6.0f;
+    CGFloat mainScrollViewY = 6.0f;
+    CGFloat landscapeScrollViewY = 0.0f;
+    
+    BOOL isiPadInLandscape = NO;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+        {
+            isiPadInLandscape = YES;
+        }
+    }
+    
+    /*******
+     CTA Buttons
+     *******/
+    
+    UIDevice *device = [UIDevice currentDevice];
+    
+    NSString *model = device.model;
+    
+    self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
+    
+    if(isiPadInLandscape)
+    {
+        [self.ctaView setFrame:CGRectMake(self.mainScrollView.frame.size.width,
+                                          0.0f,
+                                          self.landscapeScrollView.frame.size.width,
+                                          self.ctaView.frame.size.height)];
+        [self.view addSubview:self.ctaView];
+        
+        // The JAButton
+        [self.landscapeScrollView setFrame:CGRectMake(self.mainScrollView.frame.size.width,
+                                                      self.ctaView.frame.size.height,
+                                                      self.landscapeScrollView.frame.size.width,
+                                                      self.view.frame.size.height - self.ctaView.frame.size.height)];
+        
+    }
+    else
+    {
+        [self.ctaView setFrame:CGRectMake(0.0f,
+                                          self.view.frame.size.height - self.ctaView.frame.size.height,
+                                          self.mainScrollView.frame.size.width,
+                                          self.ctaView.frame.size.height)];
+        [self.view addSubview:self.ctaView];
+        
+        [self.mainScrollView setFrame:CGRectMake(self.mainScrollView.frame.origin.x,
+                                                 self.mainScrollView.frame.origin.y,
+                                                 self.mainScrollView.frame.size.width,
+                                                 self.mainScrollView.frame.size.height - self.ctaView.frame.size.height)];
+    }
+    
+    if ([model isEqualToString:@"iPhone"])
+    {
+        [self.ctaView addButton:STRING_CALL_TO_ORDER
+                         target:self
+                         action:@selector(callToOrder)];
+    }
+    
+    
+    [self.ctaView addButton:STRING_ADD_TO_SHOPPING_CART
+                     target:self
+                     action:@selector(addToCart)];
+    
+    
+    /*******
+     Image Section
+     *******/
     
     self.imageSection = [JAPDVImageSection getNewPDVImageSection];
-    [self.imageSection setupWithFrame:self.view.frame product:self.product];
+    [self.imageSection setupWithFrame:self.mainScrollView.frame product:self.product preSelectedSize:self.preSelectedSize];
     self.imageSection.delegate = self;
     [self.imageSection.wishListButton addTarget:self
                                          action:@selector(addToFavoritesPressed:)
                                forControlEvents:UIControlEventTouchUpInside];
     self.imageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
     self.imageSection.frame = CGRectMake(6.0f,
-                                         startingElement,
+                                         mainScrollViewY,
                                          self.imageSection.frame.size.width,
                                          self.imageSection.frame.size.height);
     
@@ -368,20 +471,22 @@ JAActivityViewControllerDelegate
                                       action:@selector(shareProduct)
                             forControlEvents:UIControlEventTouchUpInside];
     
+    if(isiPadInLandscape)
+    {
+        [self.imageSection.sizeClickableView addTarget:self
+                                                action:@selector(showSizePicker)
+                                      forControlEvents:UIControlEventTouchUpInside];
+    }
     [self.mainScrollView addSubview:self.imageSection];
     
     
     if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
     {
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
-        [self.variationsSection setupWithFrame:self.view.frame];
+        [self.variationsSection setupWithFrame:self.mainScrollView.frame];
     }
     
-    self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
-    [self.productInfoSection setupWithFrame:self.view.frame];
-    
-    
-    startingElement += (4.0f + self.imageSection.frame.size.height);
+    mainScrollViewY += (6.0f + self.imageSection.frame.size.height);
     
     /*******
      Colors / Variation
@@ -390,15 +495,20 @@ JAActivityViewControllerDelegate
     if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
     {
         self.variationsSection.frame = CGRectMake(6.0f,
-                                                  startingElement,
+                                                  mainScrollViewY,
                                                   self.variationsSection.frame.size.width,
                                                   self.variationsSection.frame.size.height);
-        
-        self.variationsSection.layer.cornerRadius = 4.0f;
         
         self.variationsSection.titleLabel.text = STRING_VARIATIONS;
         
         CGFloat currentX = 0.0;
+        
+        CGFloat viewHeight = self.variationsSection.variationsScrollView.frame.size.height;
+        CGFloat imageHeight = 30.0f;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            imageHeight = 71.0f;
+        }
         
         for (int i = 0; i < [self.product.variations count]; i++)
         {
@@ -406,120 +516,84 @@ JAActivityViewControllerDelegate
             
             JAClickableView* variationClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
                                                                                                         0.0f,
-                                                                                                        40.0f,
-                                                                                                        50.0f)];
+                                                                                                        viewHeight,
+                                                                                                        viewHeight)];
             variationClickableView.tag = i;
             [variationClickableView addTarget:self
                                        action:@selector(openVariation:)
                              forControlEvents:UIControlEventTouchUpInside];
             [self.variationsSection.variationsScrollView addSubview:variationClickableView];
             
-            UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake((variationClickableView.bounds.size.width - 30.0f) / 2,
-                                                                                      (variationClickableView.bounds.size.height - 30.0f) / 2,
-                                                                                      30.0f,
-                                                                                      30.0f)];
+            UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake((variationClickableView.bounds.size.width - imageHeight) / 2,
+                                                                                      (variationClickableView.bounds.size.height - imageHeight) / 2,
+                                                                                      imageHeight,
+                                                                                      imageHeight)];
             [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
                          placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
-            [newImageView changeImageSize:30.0f andWidth:0.0f];
+            [newImageView changeImageSize:imageHeight andWidth:0.0f];
             [variationClickableView addSubview:newImageView];
             
             currentX += variationClickableView.frame.size.width;
         }
+        
         [self.variationsSection.variationsScrollView setContentSize:CGSizeMake(currentX,
-                                                                               self.variationsSection.variationsScrollView.frame.size.height)];
+                                                                               viewHeight
+                                                                               )];
         
         [self.mainScrollView addSubview:self.variationsSection];
         
-        startingElement += (4 + self.variationsSection.frame.size.height);
+        mainScrollViewY += (6.0f + self.variationsSection.frame.size.height);
     }
     
     /*******
      Product Info Section
      *******/
     
-    self.productInfoSection.frame = CGRectMake(6,
-                                               startingElement,
-                                               self.productInfoSection.frame.size.width,
-                                               self.productInfoSection.frame.size.height);
+    self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
+    [self.productInfoSection setupWithFrame:self.mainScrollView.frame product:self.product preSelectedSize:self.preSelectedSize numberOfRatings:[self.productRatings.commentsCount stringValue]];
     
-    [self.productInfoSection setPriceWithNewValue:self.product.specialPriceFormatted
-                                      andOldValue:self.product.priceFormatted];
-    
-    [self.productInfoSection setNumberOfStars:[self.product.avr integerValue]];
-    
-    if (self.commentsCount > 0)
+    if (isiPadInLandscape)
     {
-        self.productInfoSection.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, self.productRatings.commentsCount];
+        [self.productInfoSection.productFeaturesMore addTarget:self
+                                                        action:@selector(gotoDetails)
+                                              forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.productInfoSection.productDescriptionMore addTarget:self
+                                                           action:@selector(gotoDetails)
+                                                 forControlEvents:UIControlEventTouchUpInside];
+        
+        self.productInfoSection.frame = CGRectMake(6,
+                                                   landscapeScrollViewY,
+                                                   self.productInfoSection.frame.size.width,
+                                                   self.productInfoSection.frame.size.height);
+        
+        [self.landscapeScrollView addSubview:self.productInfoSection];
+        
+        landscapeScrollViewY += (6.0f + self.productInfoSection.frame.size.height);
     }
     else
     {
-        self.productInfoSection.numberOfReviewsLabel.text = STRING_RATE_NOW;
-    }
-    
-    [self.productInfoSection.reviewsClickableView addTarget:self
-                                                     action:@selector(goToRatinsMainScreen)
-                                           forControlEvents:UIControlEventTouchUpInside];
-    
-    self.productInfoSection.specificationsLabel.text = STRING_SPECIFICATIONS;
-    
-    self.productInfoSection.layer.cornerRadius = 4.0f;
-    
-    /*
-     Check if there is size
-     
-     if there is only one size: put that size and remove the action
-     if there are more than one size, open the picker
-     
-     */
-    if (ISEMPTY(self.product.productSimples))
-    {
-        [self.productInfoSection removeSizeOptions];
-    }
-    else if (1 == self.product.productSimples.count)
-    {
-        [self.productInfoSection.sizeClickableView setEnabled:NO];
-        self.currentSimple = self.product.productSimples[0];
+        [self.productInfoSection.specificationsClickableView addTarget:self
+                                                                action:@selector(gotoDetails)
+                                                      forControlEvents:UIControlEventTouchUpInside];
         
-        if (VALID_NOTEMPTY(self.currentSimple.variation, NSString))
-        {
-            [self.productInfoSection.sizeLabel setText:self.currentSimple.variation];
-        }
-        else
-        {
-            [self.productInfoSection removeSizeOptions];
-            [self.productInfoSection layoutSubviews];
-        }
-    }
-    else if (1 < self.product.productSimples.count)
-    {
-        [self.productInfoSection.sizeClickableView setEnabled:YES];
-        [self.productInfoSection.sizeLabel setText:STRING_SIZE];
+        self.productInfoSection.frame = CGRectMake(6,
+                                                   mainScrollViewY,
+                                                   self.productInfoSection.frame.size.width,
+                                                   self.productInfoSection.frame.size.height);
+        
+        [self.mainScrollView addSubview:self.productInfoSection];
+        
+        [self.productInfoSection.reviewsClickableView addTarget:self
+                                                         action:@selector(goToRatinsMainScreen)
+                                               forControlEvents:UIControlEventTouchUpInside];
         
         [self.productInfoSection.sizeClickableView addTarget:self
                                                       action:@selector(showSizePicker)
                                             forControlEvents:UIControlEventTouchUpInside];
         
-        if (VALID_NOTEMPTY(self.preSelectedSize, NSString))
-        {
-            for (RIProductSimple *simple in self.product.productSimples)
-            {
-                if ([simple.variation isEqualToString:self.preSelectedSize])
-                {
-                    [self.productInfoSection.sizeLabel setText:simple.variation];
-                    break;
-                }
-            }
-        }
+        mainScrollViewY += (6.0f + self.productInfoSection.frame.size.height);
     }
-    
-    
-    [self.productInfoSection.specificationsClickableView addTarget:self
-                                                            action:@selector(gotoDetails)
-                                                  forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.mainScrollView addSubview:self.productInfoSection];
-    
-    startingElement += (4.0f + self.productInfoSection.frame.size.height);
     
     /*******
      Related Items
@@ -530,16 +604,8 @@ JAActivityViewControllerDelegate
     if (self.fromCatalogue && VALID_NOTEMPTY(self.arrayWithRelatedItems, NSArray) && 1 < self.arrayWithRelatedItems.count)
     {
         self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
-        [self.relatedItems setupWithFrame:self.view.frame];
+        [self.relatedItems setupWithFrame:self.mainScrollView.frame];
         self.relatedItems.topLabel.text = STRING_RELATED_ITEMS;
-        self.relatedItems.frame = CGRectMake(6.0f,
-                                             CGRectGetMaxY(self.productInfoSection.frame) + 4.0f,
-                                             self.relatedItems.frame.size.width,
-                                             self.relatedItems.frame.size.height);
-        
-        self.relatedItems.layer.cornerRadius = 4.0f;
-        
-        [self.mainScrollView addSubview:self.relatedItems];
         
         CGFloat relatedItemStart = 5.0f;
         
@@ -578,39 +644,37 @@ JAActivityViewControllerDelegate
         
         [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height)];
         
-        startingElement += (4.0f + self.relatedItems.frame.size.height);
+        if(isiPadInLandscape)
+        {
+            self.relatedItems.frame = CGRectMake(6.0f,
+                                                 landscapeScrollViewY,
+                                                 self.relatedItems.frame.size.width,
+                                                 self.relatedItems.frame.size.height);
+            [self.landscapeScrollView addSubview:self.relatedItems];
+            
+            landscapeScrollViewY += (6.0f + self.relatedItems.frame.size.height);
+        }
+        else
+        {
+            self.relatedItems.frame = CGRectMake(6.0f,
+                                                 mainScrollViewY,
+                                                 self.relatedItems.frame.size.width,
+                                                 self.relatedItems.frame.size.height);
+            [self.mainScrollView addSubview:self.relatedItems];
+            
+            mainScrollViewY += (6.0f + self.relatedItems.frame.size.height);
+        }
     }
     
-    self.mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, startingElement + self.ctaView.frame.size.height);
-    
-    /*******
-     CTA Buttons
-     *******/
-    
-    UIDevice *device = [UIDevice currentDevice];
-    
-    NSString *model = device.model;
-    
-    self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
-    
-    [self.ctaView setFrame:CGRectMake(0,
-                                      self.view.frame.size.height - 56,
-                                      self.view.frame.size.width,
-                                      60)];
-    
-    if ([model isEqualToString:@"iPhone"])
+    if(isiPadInLandscape)
     {
-        [self.ctaView addButton:STRING_CALL_TO_ORDER
-                         target:self
-                         action:@selector(callToOrder)];
+        self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width, mainScrollViewY);
+        self.landscapeScrollView.contentSize = CGSizeMake(self.landscapeScrollView.frame.size.width, landscapeScrollViewY);
     }
-    
-    
-    [self.ctaView addButton:STRING_ADD_TO_SHOPPING_CART
-                     target:self
-                     action:@selector(addToCart)];
-    
-    [self.view addSubview:self.ctaView];
+    else
+    {
+        self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width, mainScrollViewY);
+    }
     
     //make sure wizard is in front
     [self.view bringSubviewToFront:self.wizardView];
@@ -890,7 +954,23 @@ JAActivityViewControllerDelegate
     if (ISEMPTY(option)) {
         option = @"";
     }
-    [self.productInfoSection.sizeLabel setText:option];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+        {
+            [self.imageSection.sizeLabel setText:option];
+        }
+        else
+        {
+            [self.productInfoSection.sizeLabel setText:option];
+        }
+    }
+    else
+    {
+        [self.productInfoSection.sizeLabel setText:option];
+    }
     
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
