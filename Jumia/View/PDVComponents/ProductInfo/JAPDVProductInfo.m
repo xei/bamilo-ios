@@ -8,10 +8,24 @@
 
 #import "JAPDVProductInfo.h"
 #import "JAPriceView.h"
+#import "RIProduct.h"
+#import "RIProductSimple.h"
 
 @interface JAPDVProductInfo()
 
 @property (nonatomic, strong)JAPriceView* priceView;
+
+@property (weak, nonatomic) IBOutlet JAClickableView *reviewsView;
+@property (weak, nonatomic) IBOutlet UILabel *reviewsLabel;
+@property (weak, nonatomic) IBOutlet UIView *reviewsSeparator;
+@property (weak, nonatomic) IBOutlet UIView *productFeaturesView;
+@property (weak, nonatomic) IBOutlet UILabel *productFeaturesLabel;
+@property (weak, nonatomic) IBOutlet UIView *productFeaturesSeparator;
+@property (weak, nonatomic) IBOutlet UILabel *productFeaturesText;
+@property (weak, nonatomic) IBOutlet UIView *productDescriptionView;
+@property (weak, nonatomic) IBOutlet UILabel *productDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UIView *productDescriptionSeparator;
+@property (weak, nonatomic) IBOutlet UILabel *productDescriptionText;
 
 @end
 
@@ -34,6 +48,21 @@
                                                  owner:nil
                                                options:nil];
     
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVProductInfo~iPad_Portrait"
+                                            owner:nil
+                                          options:nil];
+        
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+        {
+            xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVProductInfo~iPad_Landscape"
+                                                owner:nil
+                                              options:nil];
+        }
+    }
+    
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JAPDVProductInfo class]]) {
             JAPDVProductInfo *object = (JAPDVProductInfo *)obj;
@@ -44,8 +73,30 @@
     return nil;
 }
 
-- (void)setupWithFrame:(CGRect)frame
+- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize numberOfRatings:(NSString*)numberOfRatings
 {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+        {
+            [self setupForLandscape:frame product:product numberOfRatings:numberOfRatings];
+        }
+        else
+        {
+            [self setupForPortrait:frame product:product preSelectedSize:preSelectedSize numberOfRatings:numberOfRatings];
+        }
+    }
+    else
+    {
+        [self setupForPortrait:frame product:product preSelectedSize:preSelectedSize numberOfRatings:numberOfRatings];
+    }
+}
+
+- (void)setupForPortrait:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize numberOfRatings:(NSString*)numberOfRatings
+{
+    self.layer.cornerRadius = 5.0f;
+    
     [self.sizeLabel setTextColor:UIColorFromRGB(0x55a1ff)];
     
     CGFloat width = frame.size.width - 12.0f;
@@ -94,6 +145,132 @@
                                                           self.goToSpecificationsImageView.frame.origin.y,
                                                           self.goToSpecificationsImageView.frame.size.width,
                                                           self.goToSpecificationsImageView.frame.size.height)];
+    
+    for(UIView *subView in self.subviews)
+    {
+        [subView setFrame:CGRectMake(subView.frame.origin.x,
+                                     subView.frame.origin.y,
+                                     width,
+                                     subView.frame.size.height)];
+    }
+    
+    [self setPriceWithNewValue:product.specialPriceFormatted
+                   andOldValue:product.priceFormatted];
+    
+    [self setNumberOfStars:[product.avr integerValue]];
+    
+    if (VALID_NOTEMPTY(numberOfRatings, NSString) && [numberOfRatings integerValue] > 0)
+    {
+        self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, numberOfRatings];
+    }
+    else
+    {
+        self.numberOfReviewsLabel.text = STRING_RATE_NOW;
+    }
+
+    self.specificationsLabel.text = STRING_SPECIFICATIONS;
+    [self.specificationsLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+    
+    /*
+     Check if there is size
+     
+     if there is only one size: put that size and remove the action
+     if there are more than one size, open the picker
+     
+     */
+    if (ISEMPTY(product.productSimples))
+    {
+        [self removeSizeOptions];
+    }
+    else if (1 == product.productSimples.count)
+    {
+        [self.sizeClickableView setEnabled:NO];
+        RIProductSimple *currentSimple = product.productSimples[0];
+        
+        if (VALID_NOTEMPTY(currentSimple.variation, NSString))
+        {
+            [self.sizeLabel setText:currentSimple.variation];
+        }
+        else
+        {
+            [self removeSizeOptions];
+            [self layoutSubviews];
+        }
+    }
+    else if (1 < product.productSimples.count)
+    {
+        [self.sizeClickableView setEnabled:YES];
+        [self.sizeLabel setText:STRING_SIZE];
+        
+        if (VALID_NOTEMPTY(preSelectedSize, NSString))
+        {
+            for (RIProductSimple *simple in product.productSimples)
+            {
+                if ([simple.variation isEqualToString:preSelectedSize])
+                {
+                    [self.sizeLabel setText:simple.variation];
+                    break;
+                }
+            }
+        }
+    }
+}
+
+- (void)setupForLandscape:(CGRect)frame product:(RIProduct*)product numberOfRatings:(NSString*)numberOfRatings
+{
+    CGFloat width = frame.size.width - 12.0f;
+    
+    self.reviewsView.layer.cornerRadius = 5.0f;
+    [self.reviewsLabel setText:STRING_REVIEWS_LABEL];
+    [self.reviewsSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self setNumberOfStars:[product.avr integerValue]];
+    
+    if (VALID_NOTEMPTY(numberOfRatings, NSString) && [numberOfRatings integerValue] > 0)
+    {
+        self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, numberOfRatings];
+    }
+    else
+    {
+        self.numberOfReviewsLabel.text = STRING_RATE_NOW;
+    }
+    
+    [self.reviewsClickableView setFrame:CGRectMake(self.reviewsClickableView.frame.origin.x,
+                                                   self.reviewsClickableView.frame.origin.y,
+                                                   width,
+                                                   self.reviewsClickableView.frame.size.height)];
+    
+    [self.goToReviewsImageView setFrame:CGRectMake(self.reviewsClickableView.frame.size.width - self.reviewsClickableView.frame.origin.x - self.goToReviewsImageView.frame.size.width - 9.0f,
+                                                   self.goToReviewsImageView.frame.origin.y,
+                                                   self.goToReviewsImageView.frame.size.width,
+                                                   self.goToReviewsImageView.frame.size.height)];
+    
+    self.productFeaturesView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.productFeaturesView.layer.cornerRadius = 5.0f;
+    [self.productFeaturesLabel setText:STRING_PRODUCT_FEATURES];
+    [self.productFeaturesLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+    [self.productFeaturesSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.productFeaturesText setText:product.attributeShortDescription];
+    [self.productFeaturesMore setTitle:STRING_MORE forState:UIControlStateNormal];
+    [self.productFeaturesMore setBackgroundColor:[UIColor clearColor]];
+    [self.productFeaturesMore setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+    [self.productFeaturesMore setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    
+    self.productDescriptionView.translatesAutoresizingMaskIntoConstraints = YES;    
+    self.productDescriptionView.layer.cornerRadius = 5.0f;
+    [self.productDescriptionLabel setText:STRING_PRODUCT_DESCRIPTION];
+    [self.productDescriptionLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+    [self.productDescriptionSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];    
+    [self.productDescriptionText setText:product.descriptionString];
+    [self.productDescriptionMore setTitle:STRING_MORE forState:UIControlStateNormal];
+    [self.productDescriptionMore setBackgroundColor:[UIColor clearColor]];
+    [self.productDescriptionMore setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+    [self.productDescriptionMore setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    
+    [self setFrame:CGRectMake(self.frame.origin.x,
+                              self.frame.origin.y,
+                              width,
+                              self.frame.size.height)];
+    
     
     for(UIView *subView in self.subviews)
     {

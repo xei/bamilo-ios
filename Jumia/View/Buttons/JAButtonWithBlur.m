@@ -44,7 +44,7 @@
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
-                              60.0f)];
+                              56.0f)];
 }
 
 - (void) addButton:(NSString*)name target:(id)target action:(SEL)action

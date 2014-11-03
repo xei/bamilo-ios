@@ -391,6 +391,12 @@
 		B5A30303198121A400F71726 /* JABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A30301198121A400F71726 /* JABaseViewController.m */; };
 		B5B21B4719ED943C00099E25 /* JAMaintenancePage.m in Sources */ = {isa = PBXBuildFile; fileRef = B524311E19EC1163001E532C /* JAMaintenancePage.m */; };
 		B5B21B4819ED944900099E25 /* JAMaintenancePage.xib in Resources */ = {isa = PBXBuildFile; fileRef = B524312019EC117F001E532C /* JAMaintenancePage.xib */; };
+		B5B3AB501A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */; };
+		B5B3AB511A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */; };
+		B5B3AB521A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */; };
+		B5B3AB531A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */; };
+		B5B3AB561A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */; };
+		B5B3AB571A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */; };
 		B5B5FDA519D95B6D008B8059 /* RINewsletterCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FDA419D95B6D008B8059 /* RINewsletterCategory.m */; };
 		B5B5FDA819D95D8E008B8059 /* RICustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FDA719D95D8E008B8059 /* RICustomer.m */; };
 		B5B5FDDE19D99D06008B8059 /* BMA4SViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FDAC19D99D05008B8059 /* BMA4SViewController.m */; };
@@ -1080,6 +1086,9 @@
 		B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jumia-Prefix.pch"; sourceTree = "<group>"; };
 		B5A30301198121A400F71726 /* JABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABaseViewController.m; sourceTree = "<group>"; };
 		B5A30302198121A400F71726 /* JABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABaseViewController.h; sourceTree = "<group>"; };
+		B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVProductInfo~iPad_Landscape.xib"; sourceTree = "<group>"; };
+		B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVProductInfo~iPad_Portrait.xib"; sourceTree = "<group>"; };
+		B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVVariations~iPad.xib"; sourceTree = "<group>"; };
 		B5B5FDA319D95B6D008B8059 /* RINewsletterCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RINewsletterCategory.h; sourceTree = "<group>"; };
 		B5B5FDA419D95B6D008B8059 /* RINewsletterCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RINewsletterCategory.m; sourceTree = "<group>"; };
 		B5B5FDA619D95D8E008B8059 /* RICustomer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICustomer.h; sourceTree = "<group>"; };
@@ -1707,6 +1716,8 @@
 				4A2FD83F199119D900C65C1D /* JAPDVProductInfo.h */,
 				4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */,
 				4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */,
+				B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */,
+				B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */,
 			);
 			path = ProductInfo;
 			sourceTree = "<group>";
@@ -1730,6 +1741,7 @@
 				4AE730B9198F8AD6000CA1DD /* JAPDVVariations.h */,
 				4AE730BA198F8AD6000CA1DD /* JAPDVVariations.m */,
 				4A862226198FA00D007FD76A /* JAPDVVariations.xib */,
+				B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */,
 			);
 			path = Variations;
 			sourceTree = "<group>";
@@ -3161,6 +3173,7 @@
 				f00ce9fe15cb6e122385dd86 /* JAPDVVariations.xib in Resources */,
 				BBBA4CCE19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
 				BBBA4CC619E41F83004271B2 /* 15_my_favourites.feature in Resources */,
+				B5B3AB511A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				BBBA4CD219E43993004271B2 /* 18_track_order.feature in Resources */,
 				BB9546AA19F5512600AC7D05 /* touch.rb in Resources */,
 				BB9546A519F5511500AC7D05 /* env.rb in Resources */,
@@ -3195,6 +3208,7 @@
 				cfbd53adb71df70dd5af6a40 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */,
 				0a8469b275aace8e79dc2c98 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				3e28a2119641d996522a1874 /* slider-default-handle-highlighted@2x.png in Resources */,
+				B5B3AB531A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
 				327bb46fcacc03cc77a0a8c3 /* slider-metal-handle-highlighted@2x.png in Resources */,
 				a7574c4a13ff4d48c84304ab /* slider-default7-handle.png in Resources */,
 				dc520e1f7f48fb626d002fd9 /* JAGrayButtonCell.xib in Resources */,
@@ -3257,6 +3271,7 @@
 				BB9546B119F5516700AC7D05 /* 06_email_notifications.feature in Resources */,
 				BB9546A419F5511200AC7D05 /* my_first_steps.rb in Resources */,
 				BB9546AF19F5515900AC7D05 /* 12_product_details.feature in Resources */,
+				B5B3AB571A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */,
 				61cfabf0628c374f78080c28 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
 				cc25950211e1df6cf12e953f /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
 				e5c2612fb2a7b831d10cc411 /* JACartListCell.xib in Resources */,
@@ -3289,6 +3304,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5B3AB501A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				BBA707B819EEB93C0094C565 /* 00_choose_country.feature in Resources */,
 				BBBA4CBD19E3F764004271B2 /* 13_related_items.feature in Resources */,
 				BBA145B219DC56BF003F0CA7 /* init.rb in Resources */,
@@ -3374,6 +3390,7 @@
 				CEDEB9C5199BA8FA0022BAB5 /* slider-metal-track.png in Resources */,
 				B510B01319AE466B00A9754A /* JACheckBoxComponent.xib in Resources */,
 				CEDEB9BF199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png in Resources */,
+				B5B3AB561A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */,
 				B5B5FDF719D99D06008B8059 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				CEDEB9C1199BA8FA0022BAB5 /* slider-metal-handle-highlighted.png in Resources */,
 				BBA145B119DC56BF003F0CA7 /* calabash_steps.rb in Resources */,
@@ -3391,6 +3408,7 @@
 				B5B5FDF419D99D06008B8059 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
 				CE2F577019913B6D000A9E09 /* JACatalogListCell.xib in Resources */,
 				B5C0085E1A038F55000BBC52 /* JAPDVImageSection~iPad_Portrait.xib in Resources */,
+				B5B3AB521A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
 				4A01EE4B19922736005F5AD1 /* JAPDVPicker.xib in Resources */,
 				BBA145AA19DC56BF003F0CA7 /* 01_login.feature in Resources */,
 				B5B5FDEE19D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */,

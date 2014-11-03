@@ -247,4 +247,7 @@
 #define STRING_FALLBACK_MOBILE RILocalizedString(@"fallback_mobile", nil)
 #define STRING_FALLBACK_WELCOME RILocalizedString(@"fallback_welcome", nil)
 
+#define STRING_REVIEWS_LABEL RILocalizedString(@"reviews", nil)
+#define STRING_MORE RILocalizedString(@"more", nil)
+
 #endif
