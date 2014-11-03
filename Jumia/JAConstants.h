@@ -88,9 +88,13 @@
 #define kDidPressDoneNotification @"DID_PRESS_DONE_NOTIFICATION"
 #define kDidPressEditNotification @"DID_PRESS_EDIT_NOTIFICATION"
 
+
 // Ad4Push Notifications
 #define A4S_INAPP_NOTIF_VIEW_DID_APPEAR @"A4S_INAPP_NOTIF_VIEW_DID_APPEAR"
 #define A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR @"A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR"
+
+
+
 
 //************
 //my account notifications
@@ -108,6 +112,8 @@
 #define kDidFirstBuyKey @"did_first_buy"
 #define kNumberOfSessions @"amount_sessions"
 #define kSessionDate @"session_date"
+#define kChangeNotificationsOptions @"change_notifications_option"
+#define kChangeSoundOptions @"change_sound_option"
 
 // Colors
 

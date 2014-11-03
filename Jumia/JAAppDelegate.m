@@ -78,9 +78,26 @@
     }
     
     // Push Notifications Activation
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                            UIRemoteNotificationTypeSound |
-                                                                            UIRemoteNotificationTypeAlert )];
+    
+    BOOL checkNotificationsSwitch = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeNotificationsOptions];
+    BOOL checkSoundSwitch = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeSoundOptions];
+    
+    if ((checkNotificationsSwitch == YES) && (checkSoundSwitch == YES)) {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                                UIRemoteNotificationTypeSound |
+                                                                                UIRemoteNotificationTypeAlert )];
+    }else{
+        if((checkNotificationsSwitch == YES) && (checkNotificationsSwitch == NO)){
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                                    UIRemoteNotificationTypeAlert )];
+        
+        }else{
+            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+        }
+        
+    
+    }
+    
     
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil)
     {
@@ -167,8 +184,9 @@
 #pragma mark - Push notification
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
+{    
     [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+    
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
