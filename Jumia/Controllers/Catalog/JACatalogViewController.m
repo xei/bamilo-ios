@@ -47,6 +47,8 @@
 
 @property (strong, nonatomic) UIButton *backupButton; // for the retry
 
+@property (nonatomic, strong) NSString* cellIdentifier;
+
 @end
 
 @implementation JACatalogViewController
@@ -94,7 +96,6 @@
                                                    gridIcon.size.height)];
     [self.viewToggleButton addSubview:self.viewToggleButtonIcon];
     [self.viewToggleButton addTarget:self action:@selector(viewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    self.gridSelected = NO;
     
     [self setupViews];
     
@@ -132,6 +133,11 @@
     }
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self changeViewToInterfaceOrientation:toInterfaceOrientation];
+}
+
 - (void)setupViews
 {
     self.productsMap = [NSMutableDictionary new];
@@ -147,10 +153,12 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
-    UINib *gridCellNib = [UINib nibWithNibName:@"JACatalogGridCell" bundle:nil];
-    [self.collectionView registerNib:gridCellNib forCellWithReuseIdentifier:@"gridCell"];
-    UINib *listCellNib = [UINib nibWithNibName:@"JACatalogListCell" bundle:nil];
-    [self.collectionView registerNib:listCellNib forCellWithReuseIdentifier:@"listCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell" bundle:nil] forCellWithReuseIdentifier:@"gridCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"gridCell_ipad_portrait"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"gridCell_ipad_landscape"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogListCell" bundle:nil] forCellWithReuseIdentifier:@"listCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogListCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"listCell_ipad_portrait"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogListCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"listCell_ipad_landscape"];
     
     self.flowLayout = [[UICollectionViewFlowLayout alloc] init];
     self.flowLayout.minimumLineSpacing = 0;
@@ -158,7 +166,8 @@
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
-    [self changeToList];
+    self.gridSelected = NO;
+    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
     
     self.sortingMethod = NSIntegerMax;
 }
@@ -618,50 +627,103 @@
     [self.sortingScrollView scrollLeftAnimated:YES];
 }
 
-- (void)changeToList
+- (CGSize)getLayoutItemSizeForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    [UIView transitionWithView:self.collectionView
-                      duration:.3
-                       options:UIViewAnimationOptionTransitionCrossDissolve|UIViewAnimationOptionCurveEaseIn
-                    animations:^{
-                        
-                        //use view instead of collection view, the list cell has the insets inside itself;
-                        self.flowLayout.itemSize = CGSizeMake(self.view.frame.size.width, JACatalogViewControllerListCellHeight);
-                        self.flowLayout.minimumInteritemSpacing = 0.0f;
-                        
-                    } completion:^(BOOL finished) {
-                        
-                    }];
-    [self.collectionView reloadData];
+    CGFloat width = 0.0f;
+    CGFloat height = 0.0f;
     
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"List" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCatalog]
-                                              data:[trackingDictionary copy]];
+        if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+
+            if (self.gridSelected) {
+                width = 248.0f;
+                height = JACatalogViewControllerGridCellHeight_ipad;
+            } else {
+                width = 375.0f;
+                height = JACatalogViewControllerListCellHeight_ipad;
+            }
+        } else {
+            if (self.gridSelected) {
+                width = 196.0f;
+                height = JACatalogViewControllerGridCellHeight_ipad;
+            } else {
+                width = 333.0f;
+                height = JACatalogViewControllerListCellHeight_ipad;
+            }
+        }
+    } else {
+        if (self.gridSelected) {
+            width = (self.collectionView.frame.size.width / 2) - 2;
+            height = JACatalogViewControllerGridCellHeight;
+        } else {
+            //use view instead of collection view, the list cell has the insets inside itself;
+            width = self.view.frame.size.width;
+            height = JACatalogViewControllerListCellHeight;
+        }
+    }
+
+    return CGSizeMake(width, height);
 }
 
-- (void)changeToGrid
+- (CGFloat)getLayoutMinimumSpacingForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    [UIView transitionWithView:self.collectionView
-                      duration:.3
-                       options:UIViewAnimationOptionTransitionCrossDissolve|UIViewAnimationOptionCurveEaseIn
-                    animations:^{
-                        
-                        self.flowLayout.itemSize = CGSizeMake((self.collectionView.frame.size.width / 2) - 2, JACatalogViewControllerGridCellHeight);
-                        self.flowLayout.minimumInteritemSpacing = 3.0f;
-                        
-                    } completion:^(BOOL finished) {
-                        
-                    }];
+    NSInteger spacing = 0.0f;
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+            
+        } else if(UIInterfaceOrientationIsLandscape(interfaceOrientation)){
+            
+        }
+    } else {
+        if (self.gridSelected) {
+            
+        } else {
+            spacing = 3.0f;
+        }
+    }
+    
+    return spacing;
+}
+
+- (void)changeViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if (self.gridSelected) {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
+                self.cellIdentifier = @"gridCell_ipad_portrait";
+            } else {
+                self.cellIdentifier = @"gridCell_ipad_landscape";
+            }
+        } else {
+            self.cellIdentifier = @"gridCell";
+        }
+    } else {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
+                self.cellIdentifier = @"listCell_ipad_portrait";
+            } else {
+                self.cellIdentifier = @"listCell_ipad_landscape";
+            }
+        } else {
+            self.cellIdentifier = @"listCell";
+        }
+    }
+    
+    self.flowLayout.itemSize = [self getLayoutItemSizeForInterfaceOrientation:interfaceOrientation];
+    self.flowLayout.minimumInteritemSpacing = [self getLayoutMinimumSpacingForInterfaceOrientation:interfaceOrientation];
     [self.collectionView reloadData];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"Grid" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+    if (self.gridSelected) {
+        [trackingDictionary setValue:@"Grid" forKey:kRIEventActionKey];
+    } else {
+        [trackingDictionary setValue:@"List" forKey:kRIEventActionKey];
+    }
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCatalog]
                                               data:[trackingDictionary copy]];
@@ -706,14 +768,7 @@
     
     RIProduct *product = [productsArray objectAtIndex:indexPath.row];
     
-    NSString *cellIdentifier;
-    if (self.gridSelected) {
-        cellIdentifier = @"gridCell";
-    }else{
-        cellIdentifier = @"listCell";
-    }
-    
-    JACatalogCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    JACatalogCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
     cell.favoriteButton.tag = indexPath.row;
     [cell.favoriteButton addTarget:self
                             action:@selector(addToFavoritesPressed:)
@@ -929,12 +984,12 @@
     UIImage* image;
     if (self.gridSelected) {
         image = [UIImage imageNamed:@"listIcon"];
-        [self changeToGrid];
     } else {
         image = [UIImage imageNamed:@"gridIcon"];
-        [self changeToList];
     }
     [self.viewToggleButtonIcon setImage:image];
+    
+    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (IBAction)catalogTopButtonPressed:(id)sender
