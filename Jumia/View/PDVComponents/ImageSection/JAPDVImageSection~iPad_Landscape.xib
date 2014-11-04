@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
@@ -61,8 +60,8 @@
                     <state key="selected" image="FavButtonPressed"/>
                     <state key="highlighted" image="FavButtonPressed"/>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="-20%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A3y-q3-3f1">
-                    <rect key="frame" x="262" y="299" width="38" height="22"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-20%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A3y-q3-3f1">
+                    <rect key="frame" x="257" y="299" width="38" height="22"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="38" id="ild-5A-eHA"/>
@@ -98,19 +97,19 @@
                 <constraint firstAttribute="trailing" secondItem="aHG-N7-bwQ" secondAttribute="trailing" id="3NI-Nr-7VK"/>
                 <constraint firstItem="l6e-xd-MQL" firstAttribute="top" secondItem="aHG-N7-bwQ" secondAttribute="bottom" id="5L2-zL-w9e"/>
                 <constraint firstItem="aj0-2L-1o6" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" id="7nP-ij-3fP"/>
-                <constraint firstAttribute="trailing" secondItem="A3y-q3-3f1" secondAttribute="trailing" constant="13" id="BJM-AG-5hs"/>
                 <constraint firstItem="To2-Xa-KXK" firstAttribute="top" secondItem="aj0-2L-1o6" secondAttribute="bottom" id="FQT-ld-rxu"/>
+                <constraint firstItem="A3y-q3-3f1" firstAttribute="top" secondItem="bsw-2t-Blk" secondAttribute="bottom" constant="204" id="Iaa-Ek-LfT"/>
                 <constraint firstItem="aj0-2L-1o6" firstAttribute="top" secondItem="5ON-fF-LLy" secondAttribute="top" constant="44" id="X0I-8d-3Kl"/>
                 <constraint firstItem="l6e-xd-MQL" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" id="aGy-Gh-sbQ"/>
                 <constraint firstItem="aHG-N7-bwQ" firstAttribute="top" secondItem="aj0-2L-1o6" secondAttribute="bottom" id="aqJ-tl-4xy"/>
                 <constraint firstAttribute="trailing" secondItem="aj0-2L-1o6" secondAttribute="trailing" id="bgN-W3-yTL"/>
                 <constraint firstItem="8RX-6P-YY2" firstAttribute="top" secondItem="l6e-xd-MQL" secondAttribute="bottom" id="fAn-eE-3vN"/>
                 <constraint firstAttribute="trailing" secondItem="l6e-xd-MQL" secondAttribute="trailing" id="fZp-Yg-P7a"/>
+                <constraint firstAttribute="trailing" secondItem="A3y-q3-3f1" secondAttribute="trailing" constant="13" id="ffb-Hr-uIF"/>
                 <constraint firstItem="bsw-2t-Blk" firstAttribute="top" secondItem="aj0-2L-1o6" secondAttribute="bottom" id="iQj-BE-Dmf"/>
                 <constraint firstItem="aHG-N7-bwQ" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" id="kyN-YG-Cgr"/>
                 <constraint firstAttribute="trailing" secondItem="bsw-2t-Blk" secondAttribute="trailing" constant="-3" id="mth-1f-7ch"/>
                 <constraint firstItem="To2-Xa-KXK" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" id="peI-5x-d8R"/>
-                <constraint firstItem="l6e-xd-MQL" firstAttribute="top" secondItem="A3y-q3-3f1" secondAttribute="bottom" constant="14" id="tgt-5t-SFa"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

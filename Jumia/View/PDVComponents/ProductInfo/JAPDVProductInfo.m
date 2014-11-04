@@ -167,7 +167,7 @@
     {
         self.numberOfReviewsLabel.text = STRING_RATE_NOW;
     }
-
+    
     self.specificationsLabel.text = STRING_SPECIFICATIONS;
     [self.specificationsLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     
@@ -222,6 +222,7 @@
     
     self.reviewsView.layer.cornerRadius = 5.0f;
     [self.reviewsLabel setText:STRING_REVIEWS_LABEL];
+    [self.reviewsLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.reviewsSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self setNumberOfStars:[product.avr integerValue]];
     
@@ -249,27 +250,91 @@
     [self.productFeaturesLabel setText:STRING_PRODUCT_FEATURES];
     [self.productFeaturesLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.productFeaturesSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
-    [self.productFeaturesText setText:product.attributeShortDescription];
-    [self.productFeaturesMore setTitle:STRING_MORE forState:UIControlStateNormal];
-    [self.productFeaturesMore setBackgroundColor:[UIColor clearColor]];
-    [self.productFeaturesMore setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-    [self.productFeaturesMore setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     
-    self.productDescriptionView.translatesAutoresizingMaskIntoConstraints = YES;    
+    self.productFeaturesText.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.productFeaturesText setText:product.attributeShortDescription];
+
+    [self.productFeaturesText setTextColor:UIColorFromRGB(0x666666)];
+    [self.productFeaturesText setFrame:CGRectMake(self.productFeaturesText.frame.origin.x,
+                                                  self.productFeaturesText.frame.origin.y,
+                                                  width - (self.productFeaturesText.frame.origin.x * 2),
+                                                  self.productFeaturesText.frame.size.height)];
+    
+    CGRect productFeaturesTextRect = [self.productFeaturesText.text boundingRectWithSize:CGSizeMake(self.productFeaturesText.frame.size.width, 1000.0f)
+                                                                                 options:NSStringDrawingUsesLineFragmentOrigin
+                                                                              attributes:@{NSFontAttributeName:self.productFeaturesText.font} context:nil];
+    if(productFeaturesTextRect.size.height > self.productFeaturesText.frame.size.height)
+    {
+        [self.productFeaturesMore setTitle:STRING_MORE forState:UIControlStateNormal];
+        [self.productFeaturesMore setBackgroundColor:[UIColor clearColor]];
+        [self.productFeaturesMore setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+        [self.productFeaturesMore setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    }
+    else
+    {
+        [self.productFeaturesMore removeFromSuperview];
+        
+        [self.productFeaturesText setFrame:CGRectMake(self.productFeaturesText.frame.origin.x,
+                                                      self.productFeaturesText.frame.origin.y,
+                                                      self.productFeaturesText.frame.size.width,
+                                                      productFeaturesTextRect.size.height)];
+        
+        [self.productFeaturesView setFrame:CGRectMake(self.productFeaturesView.frame.origin.x,
+                                                      self.productFeaturesView.frame.origin.y,
+                                                      self.productFeaturesView.frame.size.width,
+                                                      self.productFeaturesText.frame.origin.y +  productFeaturesTextRect.size.height + 6.0f)];
+    }
+    
+    self.productDescriptionView.translatesAutoresizingMaskIntoConstraints = YES;
     self.productDescriptionView.layer.cornerRadius = 5.0f;
+    
+    [self.productDescriptionView setFrame:CGRectMake(self.productDescriptionView.frame.origin.x,
+                                                     CGRectGetMaxY(self.productFeaturesView.frame) + 6.0f,
+                                                     self.productDescriptionView.frame.size.width,
+                                                     self.productDescriptionView.frame.size.height)];
+    
     [self.productDescriptionLabel setText:STRING_PRODUCT_DESCRIPTION];
     [self.productDescriptionLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.productDescriptionSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];    
+    [self.productDescriptionSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    
+    self.productDescriptionText.translatesAutoresizingMaskIntoConstraints = YES;
     [self.productDescriptionText setText:product.descriptionString];
-    [self.productDescriptionMore setTitle:STRING_MORE forState:UIControlStateNormal];
-    [self.productDescriptionMore setBackgroundColor:[UIColor clearColor]];
-    [self.productDescriptionMore setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-    [self.productDescriptionMore setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [self.productDescriptionText setTextColor:UIColorFromRGB(0x666666)];
+    
+    [self.productDescriptionText setFrame:CGRectMake(self.productDescriptionText.frame.origin.x,
+                                                     self.productDescriptionText.frame.origin.y,
+                                                     width - (self.productDescriptionText.frame.origin.x * 2),
+                                                     self.productDescriptionText.frame.size.height)];
+    
+    CGRect productDescriptionTextRect = [self.productDescriptionText.text boundingRectWithSize:CGSizeMake(self.productDescriptionText.frame.size.width, 1000.0f)
+                                                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                                                    attributes:@{NSFontAttributeName:self.productDescriptionText.font} context:nil];
+    if(productDescriptionTextRect.size.height > self.productDescriptionText.frame.size.height)
+    {
+        [self.productDescriptionMore setTitle:STRING_MORE forState:UIControlStateNormal];
+        [self.productDescriptionMore setBackgroundColor:[UIColor clearColor]];
+        [self.productDescriptionMore setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+        [self.productDescriptionMore setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    }
+    else
+    {
+        [self.productDescriptionMore removeFromSuperview];
+        
+        [self.productDescriptionText setFrame:CGRectMake(self.productDescriptionText.frame.origin.x,
+                                                         self.productDescriptionText.frame.origin.y,
+                                                         self.productDescriptionText.frame.size.width,
+                                                         productDescriptionTextRect.size.height)];
+        
+        [self.productDescriptionView setFrame:CGRectMake(self.productDescriptionView.frame.origin.x,
+                                                         self.productDescriptionView.frame.origin.y,
+                                                         self.productDescriptionView.frame.size.width,
+                                                         self.productDescriptionText.frame.origin.y +  productDescriptionTextRect.size.height + 6.0f)];
+    }
     
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               width,
-                              self.frame.size.height)];
+                              CGRectGetMaxY(self.productDescriptionView.frame))];
     
     
     for(UIView *subView in self.subviews)

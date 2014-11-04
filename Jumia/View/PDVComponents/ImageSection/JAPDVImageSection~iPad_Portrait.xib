@@ -53,9 +53,13 @@
                     <state key="selected" image="FavButtonPressed"/>
                     <state key="highlighted" image="FavButtonPressed"/>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="-20%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A3y-q3-3f1">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="-20%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A3y-q3-3f1">
                     <rect key="frame" x="262" y="255" width="38" height="22"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="38" id="pkP-Bu-nbc"/>
+                        <constraint firstAttribute="height" constant="22" id="prh-tA-rcV"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="12"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
@@ -64,21 +68,20 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="2I3-dP-D9f" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" constant="6" id="13Y-Yz-Tt7"/>
-                <constraint firstItem="A3y-q3-3f1" firstAttribute="trailing" secondItem="dJ3-Sg-ObF" secondAttribute="trailing" id="2CT-kG-c76"/>
                 <constraint firstItem="2I3-dP-D9f" firstAttribute="top" secondItem="dJ3-Sg-ObF" secondAttribute="bottom" constant="2" id="4qt-i5-5sb">
                     <string key="userLabel">Vertical Space - (2) - Product Name - Product Name - Product Name - Product Name - Product Name -  - TITLE TITLE TITLE TITLE TITLE TITLE TITLE</string>
                 </constraint>
                 <constraint firstItem="aHG-N7-bwQ" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" id="5z0-Ue-CcM"/>
-                <constraint firstItem="aj0-2L-1o6" firstAttribute="top" secondItem="A3y-q3-3f1" secondAttribute="bottom" constant="13" id="8qR-Yf-hFU"/>
                 <constraint firstItem="To2-Xa-KXK" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" id="9D7-RM-p6N"/>
                 <constraint firstAttribute="trailing" secondItem="aHG-N7-bwQ" secondAttribute="trailing" id="DFJ-Jg-P1I"/>
                 <constraint firstAttribute="trailing" secondItem="aj0-2L-1o6" secondAttribute="trailing" id="Fdh-6z-fgN"/>
                 <constraint firstItem="dJ3-Sg-ObF" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" constant="6" id="Hf2-PL-jwK"/>
-                <constraint firstAttribute="trailing" secondItem="A3y-q3-3f1" secondAttribute="trailing" constant="8" id="QLC-XN-Jvq"/>
+                <constraint firstAttribute="trailing" secondItem="A3y-q3-3f1" secondAttribute="trailing" constant="13" id="QoR-Qu-A4b"/>
                 <constraint firstAttribute="trailing" secondItem="bsw-2t-Blk" secondAttribute="trailing" constant="-3" id="S9k-cp-QjA"/>
                 <constraint firstItem="aHG-N7-bwQ" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" id="TFX-7v-kM4"/>
                 <constraint firstItem="bsw-2t-Blk" firstAttribute="top" secondItem="5ON-fF-LLy" secondAttribute="top" id="b5U-3Q-q0v"/>
                 <constraint firstAttribute="trailing" secondItem="aHG-N7-bwQ" secondAttribute="trailing" id="fQE-k0-Eu4"/>
+                <constraint firstItem="A3y-q3-3f1" firstAttribute="top" secondItem="bsw-2t-Blk" secondAttribute="bottom" constant="205" id="fV5-Xu-6CC"/>
                 <constraint firstItem="aHG-N7-bwQ" firstAttribute="top" secondItem="5ON-fF-LLy" secondAttribute="top" id="fys-tq-Uds"/>
                 <constraint firstAttribute="trailing" secondItem="dJ3-Sg-ObF" secondAttribute="trailing" constant="8" id="ht0-oo-mDU"/>
                 <constraint firstItem="To2-Xa-KXK" firstAttribute="top" secondItem="5ON-fF-LLy" secondAttribute="top" id="rm8-Oj-NRh"/>

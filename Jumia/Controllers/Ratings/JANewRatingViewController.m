@@ -120,7 +120,7 @@
     
     
     UIImage* buttonImageNormal = [UIImage imageNamed:@"orangeMedium_normal"];
-    UIImage* buttonImageHighlighted = [UIImage imageNamed:@"orangeMedium_highlight"];
+    UIImage* buttonImageHighlighted = [UIImage imageNamed:@"orangeMedium_highlighted"];
     UIImage* buttonImageDisabled = [UIImage imageNamed:@"orangeMedium_disabled"];
     self.sendReviewButton = [[UIButton alloc] initWithFrame:CGRectMake(6.0f,
                                                                        262.0f,
