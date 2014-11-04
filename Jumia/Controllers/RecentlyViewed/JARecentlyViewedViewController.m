@@ -202,25 +202,12 @@
     if (indexPath.row < self.productsArray.count) {
         RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
         
-        NSInteger count = self.productsArray.count;
-        
-        if (count > 20) {
-            count = 20;
-        }
-        
-        NSMutableArray *tempArray = [NSMutableArray new];
-        
-        for (int i = 0 ; i < count ; i ++) {
-            [tempArray addObject:[self.productsArray objectAtIndex:i]];
-        }
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
                                                           userInfo:@{ @"url" : product.url,
                                                                       @"previousCategory" : STRING_RECENTLY_VIEWED,
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO],
-                                                                      @"fromCatalog" : [NSNumber numberWithBool:YES],
-                                                                      @"relatedItems" : [tempArray copy]}];
+                                                                      @"fromCatalog" : [NSNumber numberWithBool:YES]}];
     }
 }
 
