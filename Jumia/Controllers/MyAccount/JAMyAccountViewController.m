@@ -89,6 +89,44 @@
     self.labelDetailSound.text = STRING_PLAY_SOUND;
     [self.switchSound setAccessibilityLabel:STRING_SOUND];
     
+    BOOL isNotiActive = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeNotificationsOptions];
+    BOOL isSoundActive = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeSoundOptions];
+    
+    if((isNotiActive ==YES) &&(isSoundActive == YES)){
+        self.notificationSwitch.on = YES;
+        self.switchSound.on = YES;
+        
+    }else{
+        if ((isNotiActive == YES) && (isSoundActive == NO)){
+            self.notificationSwitch.on = YES;
+            self.switchSound.on = NO;
+        }else{
+            if((isNotiActive == NO)&& (isSoundActive == YES)){
+                
+                self.notificationSwitch.on = NO;
+                self.switchSound.on = YES;
+                self.notificationViewHeightConstrain.constant = 69.0f;
+                //self.lineUnderNotificationLabel.hidden = YES;
+                self.labelSound.hidden = YES;
+                self.labelDetailSound.hidden = YES;
+                self.switchSound.hidden = YES;
+                
+                
+                }else{
+            
+                    self.notificationSwitch.on = NO;
+                    self.notificationViewHeightConstrain.constant = 69.0f;
+                    self.switchSound.on = NO;
+                    self.lineUnderNotificationLabel.hidden = YES;
+                    self.labelSound.hidden = YES;
+                    self.labelDetailSound.hidden = YES;
+                    self.switchSound.hidden = YES;
+        
+                }
+            }
+        }
+    
+    
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
@@ -117,6 +155,8 @@
         self.switchSound.hidden = NO;
         
         [self changeSound:nil];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey: kChangeNotificationsOptions];
+        
     }
     else
     {
@@ -128,6 +168,8 @@
         self.notificationViewHeightConstrain.constant = 69.0f;
         
         [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kChangeNotificationsOptions];
     }
 }
 
@@ -138,11 +180,15 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
                                                                                 UIRemoteNotificationTypeSound |
                                                                                 UIRemoteNotificationTypeAlert )];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey: kChangeSoundOptions];
+        
     }
     else
     {
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
                                                                                 UIRemoteNotificationTypeAlert )];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kChangeSoundOptions];
+        
     }
 }
 
