@@ -53,8 +53,9 @@ JAActivityViewControllerDelegate
 @property (assign, nonatomic) NSInteger commentsCount;
 @property (assign, nonatomic) BOOL openPickerFromCart;
 @property (strong, nonatomic) RIProductSimple *currentSimple;
-
 @property (nonatomic, strong) JAPDVWizardView* wizardView;
+
+@property (nonatomic, assign) BOOL hasLoaddedProduct;
 
 @end
 
@@ -118,6 +119,15 @@ JAActivityViewControllerDelegate
         [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
     }
+
+    if(self.hasLoaddedProduct)
+    {
+        [self showLoading];
+
+        [self removeSuperviews];
+        
+        [self productLoaded];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -135,6 +145,16 @@ JAActivityViewControllerDelegate
 {
     [self showLoading];
     
+    [self removeSuperviews];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self productLoaded];
+}
+
+- (void) removeSuperviews
+{
     for(UIView *subView in self.mainScrollView.subviews)
     {
         [subView removeFromSuperview];
@@ -154,14 +174,11 @@ JAActivityViewControllerDelegate
     }
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [self productLoaded];
-}
-
 - (void)loadCompleteProduct
 {
     [self showLoading];
+    
+    self.hasLoaddedProduct = NO;
     
     if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
@@ -332,6 +349,8 @@ JAActivityViewControllerDelegate
 
 - (void)productLoaded
 {
+    self.hasLoaddedProduct = YES;
+    
     [self.mainScrollView setFrame:CGRectMake(0.0f,
                                              0.0f,
                                              self.view.frame.size.width,
@@ -407,7 +426,7 @@ JAActivityViewControllerDelegate
     
     NSString *model = device.model;
     
-    self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
+    self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:self.interfaceOrientation];
     
     if(isiPadInLandscape)
     {

@@ -75,7 +75,7 @@ UIPickerViewDelegate>
        successBlock:^(RIForm *form)
      {
          self.dynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self values:[self getAddressValues] startingPosition:self.addressViewCurrentY];
-
+         
          for(UIView *view in self.dynamicForm.formViews)
          {
              [self.contentView addSubview:view];
@@ -121,10 +121,14 @@ UIPickerViewDelegate>
     
     [self setupAddressView];
     
-    [self.view addSubview:self.contentScrollView];    
+    [self.view addSubview:self.contentScrollView];
     
-    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero];
-    [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
+    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectMake(0.0f,
+                                                                         self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
+                                                                         self.bottomView.frame.size.width,
+                                                                         self.bottomView.frame.size.height)
+                                                  orientation:self.interfaceOrientation];
+    
     [self.bottomView addButton:STRING_CANCEL target:self action:@selector(cancelButtonPressed)];
     [self.bottomView addButton:STRING_SAVE_CHANGES target:self action:@selector(saveChangesButtonPressed)];
     
@@ -491,7 +495,7 @@ UIPickerViewDelegate>
                      [RICity getCitiesForUrl:[citiesComponent getApiCallUrl] region:[self.selectedRegion uid] successBlock:^(NSArray *cities) {
                          self.citiesDataset = [cities copy];
                          
-                          NSString *selectedValue = [self.editAddress customerAddressCityId];
+                         NSString *selectedValue = [self.editAddress customerAddressCityId];
                          if(VALID_NOTEMPTY(cities, NSArray))
                          {
                              if(VALID_NOTEMPTY(selectedValue, NSString))

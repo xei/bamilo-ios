@@ -91,7 +91,7 @@
     [self.separatorImageView setFrame:CGRectMake(self.separatorImageView.frame.origin.x,
                                                  self.separatorImageView.frame.origin.y,
                                                  width,
-                                                 self.separatorImageView.frame.size.height)];
+                                                 self.separatorImageView.frame.size.height)];    
     
     [self loadWithImages:[product.images array]];
     

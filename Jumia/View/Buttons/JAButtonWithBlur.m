@@ -25,7 +25,10 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation
+{
+    self.orienation = orientation;
+    
     self = [super initWithFrame:frame];
     if (self) {
         [self setup];
@@ -61,14 +64,29 @@
         buttonWidth = ((buttonWidth - (buttonSpace * [self.buttons count])) / ([self.buttons count] + 1));
     }
     
+    NSString *greyButtonName = @"greyHalfWithBackground_%@";
+    NSString *orangeButtonName = @"orangeBig_%@";
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        if((UIInterfaceOrientationLandscapeLeft == self.orienation || UIInterfaceOrientationLandscapeLeft == self.orienation))
+        {
+            greyButtonName = @"greyQuarterLandscape_%@";
+        }
+        else
+        {
+            greyButtonName = @"greyHalfPortrait_%@";
+        }
+    }
+    
     CGFloat originX = 6.0f;
     for(UIButton *button in self.buttons)
     {
-        UIImage *buttonImageNormal = [UIImage imageNamed:@"greyHalfWithBackground_normal"];
+        UIImage *buttonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"normal"]];
         [button setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"greyHalfWithBackground_highlighted"] forState:UIControlStateHighlighted];
-        [button setBackgroundImage:[UIImage imageNamed:@"greyHalfWithBackground_highlighted"] forState:UIControlStateSelected];
-        [button setBackgroundImage:[UIImage imageNamed:@"greyHalfWithBackground_disabled"] forState:UIControlStateDisabled];
+        [button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
+        [button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]] forState:UIControlStateSelected];
+        [button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"disabled"]] forState:UIControlStateDisabled];
         [button setFrame:CGRectMake(originX, 6.0f, buttonWidth, button.frame.size.height)];
         originX += (buttonWidth + buttonSpace);
     }
@@ -79,24 +97,40 @@
     [newButton setTitle:name forState:UIControlStateNormal];
     [newButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     
-    if(0 == [self.buttons count])
+    if(0 < [self.buttons count])
     {
-        UIImage *buttonImageNormal = [UIImage imageNamed:@"orangeBig_normal"];
-        [newButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
-        [newButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
-        [newButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
-        [newButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
-        [newButton setFrame:CGRectMake(originX, 6.0f, buttonWidth, buttonImageNormal.size.height)];
+        orangeButtonName = @"orangeHalf_%@";
+        
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+        {
+            if((UIInterfaceOrientationLandscapeLeft == self.orienation || UIInterfaceOrientationLandscapeLeft == self.orienation))
+            {
+                orangeButtonName = @"orangeQuarterLandscape_%@";
+            }
+            else
+            {
+                orangeButtonName = @"orangeHalfPortrait_%@";
+            }
+        }
     }
     else
     {
-        UIImage *buttonImageNormal = [UIImage imageNamed:@"orangeHalf_normal"];
-        [newButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
-        [newButton setBackgroundImage:[UIImage imageNamed:@"orangeHalf_highlight"] forState:UIControlStateHighlighted];
-        [newButton setBackgroundImage:[UIImage imageNamed:@"orangeHalf_highlight"] forState:UIControlStateSelected];
-        [newButton setBackgroundImage:[UIImage imageNamed:@"orangeHalf_disabled"] forState:UIControlStateDisabled];
-        [newButton setFrame:CGRectMake(originX, 6.0f, buttonWidth, buttonImageNormal.size.height)];
+        if((UIInterfaceOrientationLandscapeLeft == self.orienation || UIInterfaceOrientationLandscapeLeft == self.orienation))
+        {
+            orangeButtonName = @"orangeHalfLandscape_%@";
+        }
+        else
+        {
+            orangeButtonName = @"orangeFullPortrait_%@";
+        }
     }
+    
+    UIImage *buttonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]];
+    [newButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
+    [newButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
+    [newButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateSelected];
+    [newButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"disabled"]] forState:UIControlStateDisabled];
+    [newButton setFrame:CGRectMake(originX, 6.0f, buttonWidth, buttonImageNormal.size.height)];
     
     [self addSubview:newButton];
     [self.buttons addObject:newButton];

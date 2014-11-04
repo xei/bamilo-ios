@@ -24,7 +24,7 @@
         self.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.85f];
         
         UIImage* buttonImageNormal = [UIImage imageNamed:@"orangeHalf_normal"];
-        UIImage* buttonImageHightlight = [UIImage imageNamed:@"orangeHalf_highlight"];
+        UIImage* buttonImageHightlight = [UIImage imageNamed:@"orangeHalf_highlighted"];
         UIImage* buttonImageDisabled = [UIImage imageNamed:@"orangeHalf_disabled"];
         self.dismissButton = [[UIButton alloc] initWithFrame:CGRectMake((self.frame.size.width - buttonImageNormal.size.width) / 2,
                                                                         self.frame.size.height - 10.0f - buttonImageNormal.size.height,

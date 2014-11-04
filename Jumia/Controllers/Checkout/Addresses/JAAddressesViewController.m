@@ -125,7 +125,7 @@ UICollectionViewDelegateFlowLayout>
                                                   data:[trackingDictionary copy]];
         
         [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
-
+        
         [self hideLoading];
         [self finishedLoadingAddresses];
     }];
@@ -204,8 +204,12 @@ UICollectionViewDelegateFlowLayout>
     
     [self.view addSubview:self.contentScrollView];
     
-    self.bottomView = [[JAButtonWithBlur alloc] init];
-    [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
+    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectMake(0.0f,
+                                                                         self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
+                                                                         self.bottomView.frame.size.width,
+                                                                         self.bottomView.frame.size.height)
+                                                  orientation:self.interfaceOrientation];
+    
     [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
     
     [self.view addSubview:self.bottomView];
@@ -247,13 +251,13 @@ UICollectionViewDelegateFlowLayout>
     {
         NSMutableArray *addresses = [[NSMutableArray alloc] init];
         [addresses addObject:self.shippingAddress];
-            
+        
         if(VALID_NOTEMPTY(self.billingAddress, RIAddress) && ![self checkIfAddressIsAdded:self.billingAddress addresses:addresses])
         {
             billingAddressIndex = 1;
             [addresses addObject:self.billingAddress];
         }
-      
+        
         RIAddress *addressToAdd = [self.addresses objectForKey:@"shipping"];
         if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![self checkIfAddressIsAdded:addressToAdd addresses:addresses])
         {
@@ -540,7 +544,7 @@ UICollectionViewDelegateFlowLayout>
                 [addAddressCell loadWithText:STRING_ADD_NEW_ADDRESS];
                 addAddressCell.clickableView.tag = indexPath.row;
                 [addAddressCell.clickableView addTarget:self action:@selector(firstAddressCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-
+                
                 cell = addAddressCell;
             }
         }
@@ -779,7 +783,7 @@ UICollectionViewDelegateFlowLayout>
             [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
         }];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-
+        
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
