@@ -23,9 +23,8 @@
 @property (nonatomic, assign)NSInteger elapsedTimeInSeconds;
 
 // size picker view
-@property (strong, nonatomic) UIView *sizePickerBackgroundView;
-@property (strong, nonatomic) UIToolbar *sizePickerToolbar;
-@property (strong, nonatomic) UIPickerView *sizePicker;
+@property (strong, nonatomic) JAPicker *picker;
+@property (strong, nonatomic) NSMutableArray *pickerDataSource;
 
 // for the retry connection, is necessary to store this stuff
 @property (nonatomic, strong)RICampaign* backupCampaign;
@@ -62,7 +61,7 @@
     self.scrollView.pagingEnabled = YES;
     self.scrollView.scrollEnabled = NO;
     self.scrollView.delegate = self;
-
+    
     
     [self loadCampaignPages];
     
@@ -173,7 +172,7 @@
     }
     
     [self.scrollView setContentSize:CGSizeMake(currentX, self.scrollView.frame.size.height)];
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -272,65 +271,49 @@
 {
     self.lastPressedCampaignSingleView = campaignSingleView;
     
-    self.sizePickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                             0.0f,
-                                                                             self.view.frame.size.width,
-                                                                             self.view.frame.size.height)];
-    [self.sizePickerBackgroundView setBackgroundColor:[UIColor clearColor]];
+    if(VALID(self.picker, JAPicker))
+    {
+        [self.picker removeFromSuperview];
+    }
     
-    UITapGestureRecognizer *removePickerViewTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(removePickerView)];
-    [self.sizePickerBackgroundView addGestureRecognizer:removePickerViewTap];
+    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    [self.picker setDelegate:self];
+    self.pickerDataSource = [NSMutableArray new];
+    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
     
-    self.sizePicker = [[UIPickerView alloc] init];
-    [self.sizePicker setFrame:CGRectMake(self.sizePickerBackgroundView.frame.origin.x,
-                                         CGRectGetMaxY(self.sizePickerBackgroundView.frame) - self.sizePicker.frame.size.height,
-                                         self.sizePicker.frame.size.width,
-                                         self.sizePicker.frame.size.height)];
-    [self.sizePicker setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.sizePicker setAlpha:0.9];
-    [self.sizePicker setShowsSelectionIndicator:YES];
-    [self.sizePicker setDataSource:self];
-    [self.sizePicker setDelegate:self];
-    
-    self.sizePickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [self.sizePickerToolbar setTranslucent:NO];
-    [self.sizePickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.sizePickerToolbar setAlpha:0.9];
-    [self.sizePickerToolbar setFrame:CGRectMake(0.0f,
-                                                CGRectGetMinY(self.sizePicker.frame) - self.sizePickerToolbar.frame.size.height,
-                                                self.sizePickerToolbar.frame.size.width,
-                                                self.sizePickerToolbar.frame.size.height)];
-    
-    UIButton *tmpbutton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [tmpbutton setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
-    [tmpbutton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-    [tmpbutton setTitle:STRING_DONE forState:UIControlStateNormal];
-    [tmpbutton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [tmpbutton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-    [tmpbutton addTarget:self action:@selector(selectSize:) forControlEvents:UIControlEventTouchUpInside];
-    [tmpbutton sizeToFit];
-    
-    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:tmpbutton];
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    [self.sizePickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
-    
-    //simple index
-    NSInteger simpleIndex = 0;
-    for (int i = 0; i < campaignSingleView.campaign.productSimples.count; i++) {
-        RICampaignProductSimple* simple = [campaignSingleView.campaign.productSimples objectAtIndex:i];
-        if ([simple.size isEqualToString:campaignSingleView.chosenSize]) {
-            //found it
-            simpleIndex = i;
+    NSString *simpleSize = @"";
+    if(VALID_NOTEMPTY(campaignSingleView.campaign.productSimples, NSArray))
+    {
+        for (int i = 0; i < campaignSingleView.campaign.productSimples.count; i++)
+        {
+            RICampaignProductSimple* simple = [campaignSingleView.campaign.productSimples objectAtIndex:i];
+            [dataSource addObject:simple.size];
+            if ([simple.size isEqualToString:campaignSingleView.chosenSize])
+            {
+                //found it
+                simpleSize = simple.size;
+            }
         }
     }
     
-    [self.sizePicker selectRow:simpleIndex inComponent:0 animated:NO];
-    [self.sizePickerBackgroundView addSubview:self.sizePicker];
-    [self.sizePickerBackgroundView addSubview:self.sizePickerToolbar];
-    [self.view addSubview:self.sizePickerBackgroundView];
+    [self.picker setDataSourceArray:[dataSource copy]
+                       previousText:simpleSize];
+    
+    CGFloat pickerViewHeight = self.view.frame.size.height;
+    CGFloat pickerViewWidth = self.view.frame.size.width;
+    [self.picker setFrame:CGRectMake(0.0f,
+                                     pickerViewHeight,
+                                     pickerViewWidth,
+                                     pickerViewHeight)];
+    [self.view addSubview:self.picker];
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         [self.picker setFrame:CGRectMake(0.0f,
+                                                          0.0f,
+                                                          pickerViewWidth,
+                                                          pickerViewHeight)];
+                     }];
 }
 
 - (void)finishAddToCart
@@ -376,42 +359,6 @@
                   }];
 }
 
-- (void)selectSize:(UIButton*)button
-{
-    NSInteger selectedIndex = [self.sizePicker selectedRowInComponent:0];
-    
-    RICampaignProductSimple* selectedSimple = [self.lastPressedCampaignSingleView.campaign.productSimples objectAtIndex:selectedIndex];
-    self.lastPressedCampaignSingleView.chosenSize = selectedSimple.size;
-    
-    [self removePickerView];
-}
-
-- (void)removePickerView
-{
-    [self.sizePicker removeFromSuperview];
-    self.sizePicker = nil;
-    
-    [self.sizePickerBackgroundView removeFromSuperview];
-    self.sizePickerBackgroundView = nil;
-}
-
-#pragma mark - UIPickerView
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return self.lastPressedCampaignSingleView.campaign.productSimples.count;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    RICampaignProductSimple* productSimple = [self.lastPressedCampaignSingleView.campaign.productSimples objectAtIndex:row];
-    return productSimple.size;
-}
-
 #pragma mark - UIScrollViewDelegate
 
 //this depends on animation existing. if in the future there is a case where no animation
@@ -419,6 +366,38 @@
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     self.shouldPerformButtonActions = YES;
+}
+
+#pragma mark JAPickerDelegate
+- (void)selectedRow:(NSInteger)selectedRow
+{
+    RICampaignProductSimple* selectedSimple = [self.lastPressedCampaignSingleView.campaign.productSimples objectAtIndex:selectedRow];
+    self.lastPressedCampaignSingleView.chosenSize = selectedSimple.size;
+    
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [self.picker removeFromSuperview];
+                         self.picker = nil;
+                     }];
+}
+
+- (void)closePicker
+{
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [self.picker removeFromSuperview];
+                         self.picker = nil;
+                     }];
 }
 
 @end
