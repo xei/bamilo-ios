@@ -177,7 +177,7 @@ UIPickerViewDelegate>
     [self.view addSubview:self.contentScrollView];
     
     self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:self.interfaceOrientation];
-    [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
+    [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.view.frame.size.width, self.bottomView.frame.size.height)];
     [self.bottomView addButton:STRING_NEXT target:self action:@selector(createAddressButtonPressed)];
     
     [self.view addSubview:self.bottomView];
