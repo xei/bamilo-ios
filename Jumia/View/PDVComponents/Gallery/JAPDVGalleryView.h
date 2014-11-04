@@ -21,6 +21,7 @@
 + (JAPDVGalleryView *)getNewJAPDVGalleryView;
 
 - (void)loadGalleryWithArray:(NSArray *)source
+                       frame:(CGRect)frame
                      atIndex:(NSInteger)index;
 
 @end

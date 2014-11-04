@@ -47,8 +47,18 @@
 
 -(void)setup
 {
+    UITapGestureRecognizer *removePickerViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(removePickerView)];
+    [self.img1 addGestureRecognizer:removePickerViewTap];
+    
     [self.doneButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.doneButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+}
+
+- (void)removePickerView
+{
+    [self removeFromSuperview];
 }
 
 - (void)setDataSourceArray:(NSArray *)dataSource

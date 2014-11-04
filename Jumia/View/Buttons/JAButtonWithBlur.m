@@ -115,13 +115,16 @@
     }
     else
     {
-        if((UIInterfaceOrientationLandscapeLeft == self.orienation || UIInterfaceOrientationLandscapeLeft == self.orienation))
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
         {
-            orangeButtonName = @"orangeHalfLandscape_%@";
-        }
-        else
-        {
-            orangeButtonName = @"orangeFullPortrait_%@";
+            if((UIInterfaceOrientationLandscapeLeft == self.orienation || UIInterfaceOrientationLandscapeLeft == self.orienation))
+            {
+                orangeButtonName = @"orangeHalfLandscape_%@";
+            }
+            else
+            {
+                orangeButtonName = @"orangeFullPortrait_%@";
+            }
         }
     }
     
