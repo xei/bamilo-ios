@@ -175,6 +175,11 @@ JAActivityViewControllerDelegate
     {
         [self.ctaView removeFromSuperview];
     }
+    
+    if(VALID_NOTEMPTY(self.picker, JAPicker))
+    {
+        [self.picker removeFromSuperview];
+    }
 }
 
 - (void)loadCompleteProduct
@@ -700,7 +705,7 @@ JAActivityViewControllerDelegate
     
     if(VALID(self.picker, JAPicker))
     {
-        [self.view bringSubviewToFront:self.picker];
+        [self showSizePicker];
     }
 
     //make sure wizard is in front
