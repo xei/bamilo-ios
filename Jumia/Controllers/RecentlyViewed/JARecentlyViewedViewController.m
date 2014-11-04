@@ -24,9 +24,8 @@
 @property (assign, nonatomic) BOOL selectedSizeAndAddToCart;
 
 // size picker view
-@property (strong, nonatomic) UIView *sizePickerBackgroundView;
-@property (strong, nonatomic) UIToolbar *sizePickerToolbar;
-@property (strong, nonatomic) UIPickerView *sizePicker;
+@property (strong, nonatomic) JAPicker *picker;
+@property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (nonatomic, strong) NSMutableArray* chosenSimpleNames;
 
 @property (strong, nonatomic) UIButton *backupButton; // for the retry connection, is necessary to store the button
@@ -101,7 +100,7 @@
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
             self.firstLoading = NO;
         }
-
+        
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         
         if(self.firstLoading)
@@ -110,7 +109,7 @@
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
             self.firstLoading = NO;
         }
-
+        
         [self hideLoading];
     }];
 }
@@ -171,7 +170,7 @@
         [cell.addToCartButton addTarget:self
                                  action:@selector(addToCartPressed:)
                        forControlEvents:UIControlEventTouchUpInside];
-
+        
         NSString* chosenSimpleName = [self.chosenSimpleNames objectAtIndex:indexPath.row];
         if ([chosenSimpleName isEqualToString:@""]) {
             [cell.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
@@ -216,7 +215,7 @@
 - (void)addToCartPressed:(UIButton*)button;
 {
     self.backupButton = button;
-
+    
     [self finishAddToCartWithButton:button];
 }
 
@@ -278,7 +277,7 @@
                       [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                       NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                       [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-
+                      
                       NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice : product.price;
                       [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
                       
@@ -324,7 +323,7 @@
                       {
                           errorAddToCart = STRING_NO_NEWTORK;
                       }
-
+                      
                       [self showMessage:errorAddToCart success:NO];
                   }];
 }
@@ -342,102 +341,89 @@
 
 - (void)sizeButtonPressed:(UIButton*)button
 {
+    self.backupButton = button;
+    
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
-
-    self.sizePickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                                 0.0f,
-                                                                                 self.view.frame.size.width,
-                                                                                 self.view.frame.size.height)];
-    [self.sizePickerBackgroundView setBackgroundColor:[UIColor clearColor]];
     
-    UITapGestureRecognizer *removePickerViewTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(removePickerView)];
-    [self.sizePickerBackgroundView addGestureRecognizer:removePickerViewTap];
-    
-    self.sizePicker = [[UIPickerView alloc] init];
-    [self.sizePicker setFrame:CGRectMake(self.sizePickerBackgroundView.frame.origin.x,
-                                             CGRectGetMaxY(self.sizePickerBackgroundView.frame) - self.sizePicker.frame.size.height,
-                                             self.sizePicker.frame.size.width,
-                                             self.sizePicker.frame.size.height)];
-    [self.sizePicker setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.sizePicker setAlpha:0.9];
-    [self.sizePicker setShowsSelectionIndicator:YES];
-    [self.sizePicker setDataSource:self];
-    [self.sizePicker setDelegate:self];
-    self.sizePicker.tag = button.tag;
-    
-    self.sizePickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [self.sizePickerToolbar setTranslucent:NO];
-    [self.sizePickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.sizePickerToolbar setAlpha:0.9];
-    [self.sizePickerToolbar setFrame:CGRectMake(0.0f,
-                                                    CGRectGetMinY(self.sizePicker.frame) - self.sizePickerToolbar.frame.size.height,
-                                                    self.sizePickerToolbar.frame.size.width,
-                                                    self.sizePickerToolbar.frame.size.height)];
-    
-    UIButton *tmpbutton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [tmpbutton setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
-    [tmpbutton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-    [tmpbutton setTitle:STRING_DONE forState:UIControlStateNormal];
-    [tmpbutton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [tmpbutton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-    [tmpbutton addTarget:self action:@selector(selectSize:) forControlEvents:UIControlEventTouchUpInside];
-    [tmpbutton sizeToFit];
-    tmpbutton.tag = button.tag;
-    
-    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:tmpbutton];
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    [self.sizePickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
-    
-    //simple index
-    NSInteger simpleIndex = 0;
-    for (int i = 0; i < product.productSimples.count; i++) {
-        RIProductSimple* simple = [product.productSimples objectAtIndex:i];
-        if ([simple.variation isEqualToString:simpleName]) {
-            //found it
-            simpleIndex = i;
-        }
+    if(VALID(self.picker, JAPicker))
+    {
+        [self.picker removeFromSuperview];
     }
     
-    [self.sizePicker selectRow:simpleIndex inComponent:0 animated:NO];
-    [self.sizePickerBackgroundView addSubview:self.sizePicker];
-    [self.sizePickerBackgroundView addSubview:self.sizePickerToolbar];
-    [self.view addSubview:self.sizePickerBackgroundView];
+    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    [self.picker setTag:button.tag];
+    [self.picker setDelegate:self];
+    
+    self.pickerDataSource = [NSMutableArray new];
+    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
+    
+    NSString *simpleSize = @"";
+    for (int i = 0; i < product.productSimples.count; i++)
+    {
+        RIProductSimple* simple = [product.productSimples objectAtIndex:i];
+        [self.pickerDataSource addObject:simple];
+        [dataSource addObject:simple.variation];
+        if ([simple.variation isEqualToString:simpleName]) {
+            //found it
+            simpleSize = simple.variation;
+        }
+    }
+    [self.picker setDataSourceArray:[dataSource copy]
+                       previousText:simpleSize];
+    
+    CGFloat pickerViewHeight = self.view.frame.size.height;
+    CGFloat pickerViewWidth = self.view.frame.size.width;
+    [self.picker setFrame:CGRectMake(0.0f,
+                                     pickerViewHeight,
+                                     pickerViewWidth,
+                                     pickerViewHeight)];
+    [self.view addSubview:self.picker];
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         [self.picker setFrame:CGRectMake(0.0f,
+                                                          0.0f,
+                                                          pickerViewWidth,
+                                                          pickerViewHeight)];
+                     }];
 }
 
-- (void)selectSize:(UIButton*)button
+#pragma mark JAPickerDelegate
+-(void)selectedRow:(NSInteger)selectedRow
 {
-    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
-    NSInteger selectedIndex = [self.sizePicker selectedRowInComponent:0];
+    RIProduct* product = [self.productsArray objectAtIndex:self.picker.tag];
     
-    RIProductSimple* selectedSimple = [product.productSimples objectAtIndex:selectedIndex];
+    RIProductSimple* selectedSimple = [product.productSimples objectAtIndex:selectedRow];
     NSString* simpleName = @"";
     if (VALID_NOTEMPTY(selectedSimple.variation, NSString)) {
         simpleName = selectedSimple.variation;
     }
     
-    [self.chosenSimpleNames replaceObjectAtIndex:button.tag withObject:simpleName];
+    [self.chosenSimpleNames replaceObjectAtIndex:self.picker.tag withObject:simpleName];
     
-    [self removePickerView];
+    [self closePicker];
     [self.collectionView reloadData];
     
     if (self.selectedSizeAndAddToCart) {
         self.selectedSizeAndAddToCart = NO;
         
-        [self addToCartPressed:button];
+        [self addToCartPressed:self.backupButton];
     }
 }
 
-- (void)removePickerView
+- (void)closePicker
 {
-    [self.sizePicker removeFromSuperview];
-    self.sizePicker = nil;
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
     
-    [self.sizePickerBackgroundView removeFromSuperview];
-    self.sizePickerBackgroundView = nil;
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [self.picker removeFromSuperview];
+                         self.picker = nil;
+                     }];
 }
 
 #pragma mark - UIPickerView

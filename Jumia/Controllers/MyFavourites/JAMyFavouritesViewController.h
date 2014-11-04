@@ -7,13 +7,13 @@
 //
 
 #import "JABaseViewController.h"
+#import "JAPicker.h"
 
 @interface JAMyFavouritesViewController : JABaseViewController
 <
 UICollectionViewDataSource,
 UICollectionViewDelegate,
-UIPickerViewDataSource,
-UIPickerViewDelegate
+JAPickerDelegate
 >
 
 @property (nonatomic, retain) NSString* A4SViewControllerAlias;

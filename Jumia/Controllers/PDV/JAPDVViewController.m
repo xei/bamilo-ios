@@ -18,7 +18,7 @@
 #import "RIProductReview.h"
 #import "RICart.h"
 #import "RIProductSimple.h"
-#import "JAPDVPicker.h"
+#import "JAPicker.h"
 #import "JAPDVGalleryView.h"
 #import "RIProductRatings.h"
 #import "JARatingsViewController.h"
@@ -36,6 +36,7 @@
 @interface JAPDVViewController ()
 <
 JAPDVGalleryViewDelegate,
+JAPickerDelegate,
 JAActivityViewControllerDelegate
 >
 
@@ -46,7 +47,7 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
 @property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
 @property (strong, nonatomic) JAPDVRelatedItem *relatedItems;
-@property (strong, nonatomic) JAPDVPicker *picker;
+@property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (strong, nonatomic) JAPDVGalleryView *gallery;
 @property (strong, nonatomic) JAButtonWithBlur *ctaView;
@@ -697,7 +698,7 @@ JAActivityViewControllerDelegate
         self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width, mainScrollViewY);
     }
     
-    if(VALID(self.picker, JAPDVPicker))
+    if(VALID(self.picker, JAPicker))
     {
         [self.view bringSubviewToFront:self.picker];
     }
@@ -827,6 +828,7 @@ JAActivityViewControllerDelegate
                                                   data:[trackingDictionary copy]];
     };
     
+#ifdef __IPHONE_8_0
     if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
     {
         CGRect sharePopoverRect = CGRectMake(self.imageSection.shareButton.frame.size.width,
@@ -836,6 +838,7 @@ JAActivityViewControllerDelegate
         activityController.popoverPresentationController.sourceView = self.imageSection.shareButton;
         activityController.popoverPresentationController.sourceRect = sharePopoverRect;
     }
+#endif
     
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypePostToTwitter];
     
@@ -949,14 +952,17 @@ JAActivityViewControllerDelegate
 
 - (void)showSizePicker
 {
-    if(VALID(self.picker, JAPDVPicker))
+    if(VALID(self.picker, JAPicker))
     {
         [self.picker removeFromSuperview];
     }
 
-    self.picker = [JAPDVPicker getNewJAPDVPicker];
+    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    [self.picker setDelegate:self];
+
     self.pickerDataSource = [NSMutableArray new];
-    
+    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
+
     if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet))
     {
         for (RIProductSimple *simple in self.product.productSimples)
@@ -964,16 +970,13 @@ JAActivityViewControllerDelegate
             if ([simple.quantity integerValue] > 0)
             {
                 [self.pickerDataSource addObject:simple];
+                [dataSource addObject:simple.variation];
             }
         }
     }
     
-    [self.picker setDataSourceArray:[self.pickerDataSource copy]
+    [self.picker setDataSourceArray:[dataSource copy]
                        previousText:self.productInfoSection.sizeLabel.text];
-    
-    [self.picker.doneButton addTarget:self
-                               action:@selector(didSelectedValueInPicker)
-                     forControlEvents:UIControlEventTouchUpInside];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
@@ -992,9 +995,9 @@ JAActivityViewControllerDelegate
                      }];
 }
 
-- (void)didSelectedValueInPicker
+#pragma mark JAPickerDelegate
+- (void)selectedRow:(NSInteger)selectedRow
 {
-    NSUInteger selectedRow = [self.picker.picker selectedRowInComponent:0];
     self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
     
     NSString* option = self.currentSimple.variation;
@@ -1019,6 +1022,26 @@ JAActivityViewControllerDelegate
         [self.productInfoSection.sizeLabel setText:option];
     }
     
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [self.picker removeFromSuperview];
+                         self.picker = nil;
+                         
+                         if (self.openPickerFromCart)
+                         {
+                             self.openPickerFromCart = NO;
+                             [self addToCart];
+                         }
+                     }];
+}
+
+- (void)closePicker
+{
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
     

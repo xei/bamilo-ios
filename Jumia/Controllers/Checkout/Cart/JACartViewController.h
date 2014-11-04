@@ -7,6 +7,7 @@
 //
 
 #import "JABaseViewController.h"
+#import "JAPicker.h"
 
 @class JAPriceView;
 @class RICart;
@@ -17,8 +18,7 @@
 UICollectionViewDataSource,
 UICollectionViewDelegate,
 UITextFieldDelegate,
-UIPickerViewDataSource,
-UIPickerViewDelegate
+JAPickerDelegate
 >
 
 @property (strong, nonatomic) RICart *cart;
@@ -64,11 +64,6 @@ UIPickerViewDelegate
 
 @property (strong, nonatomic) UIButton *checkoutButton;
 @property (strong, nonatomic) UIButton *callToOrderButton;
-
-// quantity picker view
-@property (strong, nonatomic) UIView *quantityPickerBackgroundView;
-@property (strong, nonatomic) UIToolbar *quantityPickerToolbar;
-@property (strong, nonatomic) UIPickerView *quantityPicker;
 
 @property (nonatomic, retain) NSString* A4SViewControllerAlias;
 
