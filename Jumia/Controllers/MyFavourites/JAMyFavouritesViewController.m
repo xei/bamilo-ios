@@ -337,19 +337,12 @@
             count = 20;
         }
         
-        NSMutableArray *tempArray = [NSMutableArray new];
-        
-        for (int i = 0 ; i < count ; i ++) {
-            [tempArray addObject:[self.productsArray objectAtIndex:i]];
-        }
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
                                                           userInfo:@{ @"url" : product.url,
                                                                       @"previousCategory" : STRING_MY_FAVOURITES,
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO],
-                                                                      @"fromCatalog" : [NSNumber numberWithBool:YES],
-                                                                      @"relatedItems" : [tempArray copy]}];
+                                                                      @"fromCatalog" : [NSNumber numberWithBool:YES]}];
     }
 }
 
