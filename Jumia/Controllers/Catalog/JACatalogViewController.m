@@ -19,6 +19,7 @@
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
+#define JACatalogViewControllerMaxProducts_ipad 46
 
 @interface JACatalogViewController ()
 
@@ -48,6 +49,8 @@
 @property (strong, nonatomic) UIButton *backupButton; // for the retry
 
 @property (nonatomic, strong) NSString* cellIdentifier;
+@property (nonatomic, assign) NSInteger numberOfCellsInScreen;
+@property (nonatomic, assign) NSInteger maxProducts;
 
 @end
 
@@ -76,6 +79,12 @@
         {
             self.screenName = @"Catalog";
         }
+    }
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        self.maxProducts = JACatalogViewControllerMaxProducts_ipad;
+    } else {
+        self.maxProducts = JACatalogViewControllerMaxProducts;
     }
     
     UIImage* filterIcon = [UIImage imageNamed:@"filterIcon"];
@@ -167,7 +176,6 @@
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
     self.gridSelected = NO;
-    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
     
     self.sortingMethod = NSIntegerMax;
 }
@@ -259,6 +267,8 @@
         [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJACatalogWizardUserDefaultsKey];
     }
+    
+    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void)resetCatalog
@@ -312,7 +322,7 @@
             
             self.searchSuggestionOperationID = [RISearchSuggestion getResultsForSearch:self.searchString
                                                                                   page:[pageNumber stringValue]
-                                                                              maxItems:[NSString stringWithFormat:@"%d",JACatalogViewControllerMaxProducts]
+                                                                              maxItems:[NSString stringWithFormat:@"%d",self.maxProducts]
                                                                          sortingMethod:self.sortingMethod
                                                                                filters:self.filtersArray
                                                                           successBlock:^(NSArray *results, NSArray *filters, NSNumber *productCount) {
@@ -382,7 +392,7 @@
                                                                               
                                                                               NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
                                                                               NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-                                                                              if (0 == results.count || results.count < JACatalogViewControllerMaxProducts || [productCount integerValue] == productsArray.count)
+                                                                              if (0 == results.count || results.count < self.maxProducts || [productCount integerValue] == productsArray.count)
                                                                               {
                                                                                   self.loadedEverything = YES;
                                                                               }
@@ -454,7 +464,7 @@
                 self.getProductsOperationID = [RIProduct getProductsWithCatalogUrl:urlToUse
                                                                      sortingMethod:self.sortingMethod
                                                                               page:[pageNumber integerValue]
-                                                                          maxItems:JACatalogViewControllerMaxProducts
+                                                                          maxItems:self.maxProducts
                                                                            filters:self.filtersArray
                                                                         filterType:self.filterType
                                                                        filterValue:self.filterValue
@@ -478,7 +488,7 @@
                                                                           NSInteger productCountValue = [productCount intValue];
                                                                           NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
                                                                           NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-                                                                          if (0 == products.count || products.count < JACatalogViewControllerMaxProducts || productCountValue == productsArray.count)
+                                                                          if (0 == products.count || products.count < self.maxProducts || productCountValue == productsArray.count)
                                                                           {
                                                                               self.loadedEverything = YES;
                                                                           }
@@ -610,7 +620,7 @@
     NSMutableArray *productsArray = [self.productsMap objectForKey:key];
     if (VALID_NOTEMPTY(productsArray, NSMutableArray))
     {
-        currentPage = productsArray.count / JACatalogViewControllerMaxProducts;
+        currentPage = productsArray.count / self.maxProducts;
     }
     return currentPage;
 }
@@ -712,6 +722,8 @@
         }
     }
     
+    self.numberOfCellsInScreen = [self getNumberOfCellsInScreenForInterfaceOrientation:interfaceOrientation];
+    
     self.flowLayout.itemSize = [self getLayoutItemSizeForInterfaceOrientation:interfaceOrientation];
     self.flowLayout.minimumInteritemSpacing = [self getLayoutMinimumSpacingForInterfaceOrientation:interfaceOrientation];
     [self.collectionView reloadData];
@@ -727,6 +739,32 @@
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCatalog]
                                               data:[trackingDictionary copy]];
+}
+
+
+- (NSInteger)getNumberOfCellsInScreenForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if (self.gridSelected) {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
+                return 15;
+            } else {
+                return 20;
+            }
+        }else{
+            return 7;
+        }
+    } else {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
+                return 18;
+            } else {
+                return 21;
+            }
+        }else{
+            return 5;
+        }
+    }
 }
 
 #pragma mark - UICollectionView
@@ -754,14 +792,13 @@
         self.catalogTopButton.hidden = YES;
     }
     
-    if ((YES == self.gridSelected && 7 <= indexPath.row) ||
-        (NO == self.gridSelected && 5 <= indexPath.row)) {
+    if (self.numberOfCellsInScreen <= indexPath.row) {
         self.catalogTopButton.hidden = NO;
     }
     
     NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
     NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-    if (!self.loadedEverything && productsArray.count - 5 <= indexPath.row)
+    if (!self.loadedEverything && productsArray.count - self.numberOfCellsInScreen <= indexPath.row)
     {
         [self loadMoreProducts];
     }
