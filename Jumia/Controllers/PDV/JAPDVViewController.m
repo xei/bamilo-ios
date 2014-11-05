@@ -18,7 +18,7 @@
 #import "RIProductReview.h"
 #import "RICart.h"
 #import "RIProductSimple.h"
-#import "JAPDVPicker.h"
+#import "JAPicker.h"
 #import "JAPDVGalleryView.h"
 #import "RIProductRatings.h"
 #import "JARatingsViewController.h"
@@ -36,6 +36,7 @@
 @interface JAPDVViewController ()
 <
 JAPDVGalleryViewDelegate,
+JAPickerDelegate,
 JAActivityViewControllerDelegate
 >
 
@@ -46,7 +47,7 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
 @property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
 @property (strong, nonatomic) JAPDVRelatedItem *relatedItems;
-@property (strong, nonatomic) JAPDVPicker *picker;
+@property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (strong, nonatomic) JAPDVGalleryView *gallery;
 @property (strong, nonatomic) JAButtonWithBlur *ctaView;
@@ -143,6 +144,8 @@ JAActivityViewControllerDelegate
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    [self dismissViewControllerAnimated:NO completion:nil];
+
     [self showLoading];
     
     [self removeSuperviews];
@@ -171,6 +174,11 @@ JAActivityViewControllerDelegate
     if(VALID_NOTEMPTY(self.ctaView, JAButtonWithBlur))
     {
         [self.ctaView removeFromSuperview];
+    }
+    
+    if(VALID_NOTEMPTY(self.picker, JAPicker))
+    {
+        [self.picker removeFromSuperview];
     }
 }
 
@@ -571,6 +579,10 @@ JAActivityViewControllerDelegate
     self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
     [self.productInfoSection setupWithFrame:self.mainScrollView.frame product:self.product preSelectedSize:self.preSelectedSize numberOfRatings:[self.productRatings.commentsCount stringValue]];
     
+    [self.productInfoSection.reviewsClickableView addTarget:self
+                                                     action:@selector(goToRatinsMainScreen)
+                                           forControlEvents:UIControlEventTouchUpInside];
+    
     if (isiPadInLandscape)
     {
         [self.productInfoSection.productFeaturesMore addTarget:self
@@ -602,10 +614,6 @@ JAActivityViewControllerDelegate
                                                    self.productInfoSection.frame.size.height);
         
         [self.mainScrollView addSubview:self.productInfoSection];
-        
-        [self.productInfoSection.reviewsClickableView addTarget:self
-                                                         action:@selector(goToRatinsMainScreen)
-                                               forControlEvents:UIControlEventTouchUpInside];
         
         [self.productInfoSection.sizeClickableView addTarget:self
                                                       action:@selector(showSizePicker)
@@ -695,6 +703,11 @@ JAActivityViewControllerDelegate
         self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width, mainScrollViewY);
     }
     
+    if(VALID(self.picker, JAPicker))
+    {
+        [self showSizePicker];
+    }
+
     //make sure wizard is in front
     [self.view bringSubviewToFront:self.wizardView];
 }
@@ -741,14 +754,21 @@ JAActivityViewControllerDelegate
 
 - (void)goToRatinsMainScreen
 {
-    if (0 == self.commentsCount) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || 0 == self.commentsCount)
+    {
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         if(VALID_NOTEMPTY(self.product, RIProduct))
         {
             [userInfo setObject:self.product forKey:@"product"];
         }
+        if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+        {
+            [userInfo setObject:self.productRatings forKey:@"productRatings"];
+        }
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
-    } else {
+    }
+    else
+    {
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         if(VALID_NOTEMPTY(self.product, RIProduct))
         {
@@ -819,6 +839,18 @@ JAActivityViewControllerDelegate
         [[RITrackingWrapper sharedInstance] trackEvent:eventType
                                                   data:[trackingDictionary copy]];
     };
+    
+#ifdef __IPHONE_8_0
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+    {
+        CGRect sharePopoverRect = CGRectMake(self.imageSection.shareButton.frame.size.width,
+                                             self.imageSection.shareButton.frame.size.height / 2,
+                                             0.0f,
+                                             0.0f);
+        activityController.popoverPresentationController.sourceView = self.imageSection.shareButton;
+        activityController.popoverPresentationController.sourceRect = sharePopoverRect;
+    }
+#endif
     
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypePostToTwitter];
     
@@ -932,41 +964,52 @@ JAActivityViewControllerDelegate
 
 - (void)showSizePicker
 {
-    self.picker = [JAPDVPicker getNewJAPDVPicker];
-    
+    if(VALID(self.picker, JAPicker))
+    {
+        [self.picker removeFromSuperview];
+    }
+
+    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    [self.picker setDelegate:self];
+
     self.pickerDataSource = [NSMutableArray new];
-    
-    if (self.product.productSimples.count > 0) {
-        for (RIProductSimple *simple in self.product.productSimples) {
-            if ([simple.quantity integerValue] > 0) {
+    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
+
+    if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet))
+    {
+        for (RIProductSimple *simple in self.product.productSimples)
+        {
+            if ([simple.quantity integerValue] > 0)
+            {
                 [self.pickerDataSource addObject:simple];
+                [dataSource addObject:simple.variation];
             }
         }
     }
     
-    [self.picker setDataSourceArray:[self.pickerDataSource copy]
+    [self.picker setDataSourceArray:[dataSource copy]
                        previousText:self.productInfoSection.sizeLabel.text];
     
-    [self.picker.doneButton addTarget:self
-                               action:@selector(didSelectedValueInPicker)
-                     forControlEvents:UIControlEventTouchUpInside];
-    
-    CGRect frame = self.picker.frame;
-    frame.origin.y = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size.height;
-    frame.size.height = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size.height;
-    self.picker.frame = frame;
-    [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.picker];
-    frame.origin.y = 0.0f;
+    CGFloat pickerViewHeight = self.view.frame.size.height;
+    CGFloat pickerViewWidth = self.view.frame.size.width;
+    [self.picker setFrame:CGRectMake(0.0f,
+                                     pickerViewHeight,
+                                     pickerViewWidth,
+                                     pickerViewHeight)];
+    [self.view addSubview:self.picker];
     
     [UIView animateWithDuration:0.4f
                      animations:^{
-                         self.picker.frame = frame;
+                         [self.picker setFrame:CGRectMake(0.0f,
+                                                          0.0f,
+                                                          pickerViewWidth,
+                                                          pickerViewHeight)];
                      }];
 }
 
-- (void)didSelectedValueInPicker
+#pragma mark JAPickerDelegate
+- (void)selectedRow:(NSInteger)selectedRow
 {
-    NSUInteger selectedRow = [self.picker.picker selectedRowInComponent:0];
     self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
     
     NSString* option = self.currentSimple.variation;
@@ -999,6 +1042,27 @@ JAActivityViewControllerDelegate
                          self.picker.frame = frame;
                      } completion:^(BOOL finished) {
                          [self.picker removeFromSuperview];
+                         self.picker = nil;
+                         
+                         if (self.openPickerFromCart)
+                         {
+                             self.openPickerFromCart = NO;
+                             [self addToCart];
+                         }
+                     }];
+}
+
+- (void)closePicker
+{
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [self.picker removeFromSuperview];
+                         self.picker = nil;
                          
                          if (self.openPickerFromCart)
                          {
@@ -1017,37 +1081,43 @@ JAActivityViewControllerDelegate
 
 - (void)presentGalleryAtIndex:(NSInteger)index;
 {
+    if(VALID(self.gallery, JAPDVGalleryView))
+    {
+        [self.gallery removeFromSuperview];
+    }
+    
     self.gallery = [JAPDVGalleryView getNewJAPDVGalleryView];
-    [self.gallery layoutSubviews];
     self.gallery.delegate = self;
     
+    UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
+    
     [self.gallery loadGalleryWithArray:[self.product.images array]
+                                 frame:gallerySuperView.frame
                                atIndex:index];
     
-    CGRect tempFrame = self.gallery.frame;
-    tempFrame.origin.y = [[[UIApplication sharedApplication] delegate] window].rootViewController.view.frame.size.height;
-    self.gallery.frame = tempFrame;
-    
-    [[[[UIApplication sharedApplication] delegate] window].rootViewController.view addSubview:self.gallery];
-    
-    tempFrame.origin.y = 0;
+    CGRect oldFrame = self.gallery.frame;
+    CGRect newFrame = oldFrame;
+    newFrame.origin.y = self.gallery.frame.size.height;
+    self.gallery.frame = newFrame;
+    [gallerySuperView addSubview:self.gallery];
     
     [UIView animateWithDuration:0.4f
                      animations:^{
-                         self.gallery.frame = tempFrame;
+                         self.gallery.frame = oldFrame;
                      }];
 }
 
 - (void)dismissGallery
 {
-    CGRect tempFrame = self.gallery.frame;
-    tempFrame.origin.y = [[[UIApplication sharedApplication] delegate] window].rootViewController.view.frame.size.height;
+    CGRect newFrame = self.gallery.frame;
+    newFrame.origin.y = self.gallery.frame.size.height;
     
     [UIView animateWithDuration:0.4f
                      animations:^{
-                         self.gallery.frame = tempFrame;
+                         self.gallery.frame = newFrame;
                      } completion:^(BOOL finished) {
                          [self.gallery removeFromSuperview];
+                         self.gallery = nil;
                      }];
 }
 

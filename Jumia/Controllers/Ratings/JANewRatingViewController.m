@@ -21,19 +21,23 @@
 
 @interface JANewRatingViewController ()
 <
-    UITextFieldDelegate,
-    JADynamicFormDelegate,
-    UIAlertViewDelegate
+UITextFieldDelegate,
+UIAlertViewDelegate
 >
 
+// Common layouts
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UILabel *brandLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *labelNewPrice;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
+// iPad layouts only
+@property (weak, nonatomic) IBOutlet UIScrollView *reviewsScrollView;
+@property (weak, nonatomic) IBOutlet UIView *emptyReviewsView;
+@property (weak, nonatomic) IBOutlet UIImageView *emptyReviewsImageView;
+@property (weak, nonatomic) IBOutlet UILabel *emptyReviewsLabel;
 
 @property (assign, nonatomic) CGRect scrollViewInitialRect;
-@property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UIView *centerView;
 @property (strong, nonatomic) UILabel *fixedLabel;
 @property (strong, nonatomic) UIButton *sendReviewButton;
@@ -79,25 +83,58 @@
                                             CGRectGetMaxY(self.topView.frame),
                                             self.view.bounds.size.width,
                                             self.view.bounds.size.height - CGRectGetMaxY(self.topView.frame) - 64.0f);
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.scrollViewInitialRect];
-    [self.view addSubview:self.scrollView];
+    
+    self.topView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     self.brandLabel.text = self.product.brand;
     self.nameLabel.text = self.product.name;
+    [self.nameLabel sizeToFit];
     
-    [self.oldPriceLabel removeFromSuperview];
-    [self.labelNewPrice removeFromSuperview];
+    if(VALID(self.priceView, JAPriceView))
+    {
+        [self.priceView removeFromSuperview];
+    }
     
     self.priceView = [[JAPriceView alloc] init];
     [self.priceView loadWithPrice:self.product.priceFormatted
                      specialPrice:self.product.specialPriceFormatted
                          fontSize:14.0f
             specialPriceOnTheLeft:NO];
+    
     self.priceView.frame = CGRectMake(12.0f,
-                                      68.0f,
+                                      CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
     [self.view addSubview:self.priceView];
+    
+    [self setupViews];
+}
+
+-(void)setupViews
+{
+    CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
+    if(topViewMinHeight < 38.0f)
+    {
+        topViewMinHeight = 38.0f;
+    }
+    topViewMinHeight += 6.0f;
+    
+    [self.topView setFrame:CGRectMake(0.0f,
+                                      0.0f,
+                                      self.view.frame.size.width,
+                                      topViewMinHeight)];
+    
+    [self.scrollView setFrame:CGRectMake(0.0f,
+                                         topViewMinHeight,
+                                         self.view.frame.size.width,
+                                         self.view.frame.size.height - topViewMinHeight - CGRectGetMinY(self.topView.frame))];
     
     self.centerView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
                                                                6.0f,
@@ -138,7 +175,7 @@
     [self.sendReviewButton addTarget:self action:@selector(sendReview:) forControlEvents:UIControlEventTouchUpInside];
     [self.centerView addSubview:self.sendReviewButton];
     
-
+    
     [self showLoading];
     
     __block float currentY = self.fixedLabel.frame.origin.y + 22;
@@ -174,7 +211,7 @@
            successBlock:^(RIForm *form) {
                
                self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:form
-                                                                   delegate:self
+                                                                   delegate:nil
                                                            startingPosition:currentY-10];
                
                NSInteger count = 0;
@@ -188,14 +225,14 @@
                
                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-
+               
                [self hideLoading];
                
            } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
                
                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-
+               
                [self hideLoading];
                
                if (RIApiResponseNoInternetConnection == apiResponse)
@@ -234,42 +271,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-#pragma mark JADynamicFormDelegate
-
-- (void)changedFocus:(UIView *)view
-{
-//    __block CGRect frame = self.originalFrame;
-//    __block CGRect tempFrame = self.view.frame;
-//    
-//    [UIView animateWithDuration:0.5f
-//                     animations:^{
-//                         
-//                         if (self.numberOfFields == 1) {
-//                             if (tempFrame.size.height > 417) {
-//                                 frame.origin.y -= (44 * view.tag);
-//                             } else {
-//                                 frame.origin.y -= (44 * (view.tag + 1));
-//                             }
-//                         } else {
-//                             if (tempFrame.size.height > 417) {
-//                                 frame.origin.y -= (44 * (view.tag + 1));
-//                             } else {
-//                                 frame.origin.y -= (44 * (view.tag + 3));
-//                             }
-//                         }
-//                         
-//                         self.centerView.frame = frame;
-//                     }];
-}
-
-- (void)lostFocus
-{
-//    [UIView animateWithDuration:0.5f
-//                     animations:^{
-//                         self.centerView.frame = self.originalFrame;
-//                     }];
 }
 
 #pragma mark - Send review
@@ -347,17 +348,17 @@
                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProduct]
                                                           data:[trackingDictionary copy]];
             }
-
+            
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProductGlobal]
                                                       data:[globalRateDictionary copy]];
-
+            
             [self hideLoading];
             
             [self showMessage:STRING_REVIEW_SENT success:YES];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
                                                                 object:nil
-                                                              userInfo:nil];            
+                                                              userInfo:nil];
         } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {
             
             [self hideLoading];

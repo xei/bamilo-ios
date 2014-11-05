@@ -1008,6 +1008,10 @@
             newRatingViewController.product = [notification.userInfo objectForKey:@"product"];
         }
         
+        if ([notification.userInfo objectForKey:@"productRatings"]) {
+            newRatingViewController.productRatings = [notification.userInfo objectForKey:@"productRatings"];
+        }
+        
         [self pushViewController:newRatingViewController animated:YES];
     }
 }

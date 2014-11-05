@@ -123,11 +123,13 @@ UIPickerViewDelegate>
     
     [self.view addSubview:self.contentScrollView];
     
-    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectMake(0.0f,
-                                                                         self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
-                                                                         self.bottomView.frame.size.width,
-                                                                         self.bottomView.frame.size.height)
+    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero
                                                   orientation:self.interfaceOrientation];
+    
+    [self.bottomView setFrame:CGRectMake(0.0f,
+                                         self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
+                                         self.view.frame.size.width,
+                                         self.bottomView.frame.size.height)];
     
     [self.bottomView addButton:STRING_CANCEL target:self action:@selector(cancelButtonPressed)];
     [self.bottomView addButton:STRING_SAVE_CHANGES target:self action:@selector(saveChangesButtonPressed)];

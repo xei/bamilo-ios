@@ -138,7 +138,8 @@
 
     if(VALID_NOTEMPTY(self.collectionView, UICollectionView))
     {
-        [self.collectionView setContentOffset:CGPointZero];
+        CGPoint contentOffset = self.collectionView.contentOffset;
+        [self.collectionView setContentOffset:contentOffset];
     }
 }
 

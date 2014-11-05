@@ -16,8 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UILabel *labelName;
 @property (weak, nonatomic) IBOutlet UILabel *labelBrand;
-@property (weak, nonatomic) IBOutlet UILabel *labelNewPrice;
-@property (weak, nonatomic) IBOutlet UILabel *labelOldPrice;
 @property (weak, nonatomic) IBOutlet UIScrollView *contenteScrollView;
 @property (strong, nonatomic) UIView *featuresView;
 @property (strong, nonatomic) UILabel *featuresTitleLabel;
