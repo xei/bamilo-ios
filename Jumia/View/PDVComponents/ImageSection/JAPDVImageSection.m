@@ -16,6 +16,7 @@
 @interface JAPDVImageSection ()
 
 @property (nonatomic, strong)JAPriceView* priceView;
+@property (nonatomic, assign)NSInteger numberOfImages;
 
 @end
 
@@ -257,13 +258,21 @@
 
 - (void)loadWithImages:(NSArray*)imagesArray
 {
+    //add the last item to the begining and the first item to the end in order to simulate infinite scroll
+    NSMutableArray* modifiedArray = [imagesArray mutableCopy];
+    [modifiedArray insertObject:[imagesArray lastObject]
+                             atIndex:0];
+    [modifiedArray addObject:[imagesArray firstObject]];
+    self.numberOfImages = [modifiedArray count];
+    
     self.imageScrollView.pagingEnabled = YES;
     self.imageScrollView.showsHorizontalScrollIndicator = NO;
+    self.imageScrollView.delegate = self;
     CGFloat currentX = 0.0f;
     CGFloat imageWidth = 146.0f;
     CGFloat imageHeight = 183.0f;
-    for (int i = 0; i < imagesArray.count; i++) {
-        RIImage* image = [imagesArray objectAtIndex:i];
+    for (int i = 0; i < modifiedArray.count; i++) {
+        RIImage* image = [modifiedArray objectAtIndex:i];
         if (VALID_NOTEMPTY(image, RIImage)) {
             JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
                                                                                                0.0f,
@@ -287,12 +296,46 @@
     
     [self.imageScrollView setContentSize:CGSizeMake(currentX,
                                                     self.imageScrollView.frame.size.height)];
+    
+    //starting index should be 1 because 0 is the last image, replicated in order to simulate infinite scroll
+    [self.imageScrollView scrollRectToVisible:CGRectMake(self.imageScrollView.frame.size.width,
+                                                         0,
+                                                         self.imageScrollView.frame.size.width,
+                                                         self.imageScrollView.frame.size.height)
+                                     animated:NO];
 }
 
 - (void)imageViewPressed:(UIControl*)sender
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(imageClickedAtIndex:)]) {
         [self.delegate imageClickedAtIndex:sender.tag];
+    }
+}
+
+#pragma mark - UIScrollView
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (scrollView == self.imageScrollView && self.numberOfImages > 1)
+    {
+        float contentOffsetWhenFullyScrolledRight = self.imageScrollView.frame.size.width * (self.numberOfImages - 1);
+        
+        if (scrollView.contentOffset.x == contentOffsetWhenFullyScrolledRight) {
+            
+            [self.imageScrollView scrollRectToVisible:CGRectMake(self.imageScrollView.frame.size.width,
+                                                                 0,
+                                                                 self.imageScrollView.frame.size.width,
+                                                                 self.imageScrollView.frame.size.height)
+                                              animated:NO];
+            
+        } else if (scrollView.contentOffset.x == 0)  {
+            
+            [self.imageScrollView scrollRectToVisible:CGRectMake(self.imageScrollView.contentSize.width - self.imageScrollView.frame.size.width*2,
+                                                                 0,
+                                                                 self.imageScrollView.frame.size.width,
+                                                                 self.imageScrollView.frame.size.height)
+                                             animated:NO];
+        }
     }
 }
 
