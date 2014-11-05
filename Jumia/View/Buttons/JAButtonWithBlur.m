@@ -69,7 +69,7 @@
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
-        if((UIInterfaceOrientationLandscapeLeft == self.orienation || UIInterfaceOrientationLandscapeLeft == self.orienation))
+        if((UIInterfaceOrientationLandscapeRight == self.orienation || UIInterfaceOrientationLandscapeLeft == self.orienation))
         {
             greyButtonName = @"greyQuarterLandscape_%@";
         }
@@ -103,7 +103,7 @@
         
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
         {
-            if((UIInterfaceOrientationLandscapeLeft == self.orienation || UIInterfaceOrientationLandscapeLeft == self.orienation))
+            if((UIInterfaceOrientationLandscapeLeft == self.orienation || UIInterfaceOrientationLandscapeRight == self.orienation))
             {
                 orangeButtonName = @"orangeQuarterLandscape_%@";
             }
@@ -117,7 +117,7 @@
     {
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
         {
-            if((UIInterfaceOrientationLandscapeLeft == self.orienation || UIInterfaceOrientationLandscapeLeft == self.orienation))
+            if((UIInterfaceOrientationLandscapeLeft == self.orienation || UIInterfaceOrientationLandscapeRight == self.orienation))
             {
                 orangeButtonName = @"orangeHalfLandscape_%@";
             }
