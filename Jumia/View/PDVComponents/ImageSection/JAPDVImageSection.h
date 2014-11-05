@@ -17,7 +17,7 @@
 
 @end
 
-@interface JAPDVImageSection : UIView
+@interface JAPDVImageSection : UIView <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *wishListButton;
