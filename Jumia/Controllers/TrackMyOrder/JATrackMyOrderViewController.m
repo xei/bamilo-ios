@@ -42,6 +42,23 @@
     [self initViewElements];
 }
 
+- (void) viewWillAppear:(BOOL)animated{
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                          selector:@selector(hideKeyboard)
+                                          name:kOpenMenuNotification
+                                          object:nil];
+}
+
+- (void) viewWillDisappear:(BOOL)animated{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void) hideKeyboard{
+    [self.orderTextField resignFirstResponder];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
