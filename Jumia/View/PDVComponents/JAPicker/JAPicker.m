@@ -62,7 +62,7 @@ UIPickerViewDelegate
     [self.pickerView setDelegate:self];
     [self.pickerView setFrame:CGRectMake(0.0f,
                                          (self.backgroundView.frame.size.height - self.pickerView.frame.size.height),
-                                         self.pickerView.frame.size.width,
+                                         self.frame.size.width,
                                          self.pickerView.frame.size.height)];
     [self addSubview:self.pickerView];
     

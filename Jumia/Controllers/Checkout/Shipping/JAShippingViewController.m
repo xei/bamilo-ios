@@ -23,9 +23,7 @@
 <
 UICollectionViewDataSource,
 UICollectionViewDelegate,
-UICollectionViewDelegateFlowLayout,
-UIPickerViewDataSource,
-UIPickerViewDelegate
+UICollectionViewDelegateFlowLayout
 >
 
 // Steps
@@ -43,9 +41,8 @@ UIPickerViewDelegate
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
 // Picker view
-@property (strong, nonatomic) UIView *pickerBackgroundView;
-@property (strong, nonatomic) UIToolbar *pickerToolbar;
-@property (strong, nonatomic) UIPickerView *pickerView;
+@property (strong, nonatomic) JAPicker *picker;
+@property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (strong, nonatomic) NSIndexPath *pickerIndexPath;
 
 @property (strong, nonatomic) RICheckout *checkout;
@@ -175,8 +172,13 @@ UIPickerViewDelegate
     [self.scrollView addSubview:self.collectionView];
     [self.view addSubview:self.scrollView];
     
-    self.bottomView = [[JAButtonWithBlur alloc] init];
-    [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
+    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:self.interfaceOrientation];
+    
+    [self.bottomView setFrame:CGRectMake(0.0f,
+                                         self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
+                                         self.view.frame.size.width,
+                                         self.bottomView.frame.size.height)];
+    
     [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
     
     [self.view addSubview:self.bottomView];
@@ -269,53 +271,18 @@ UIPickerViewDelegate
 
 - (void)openPicker
 {
-    [self removePickerView];
+    if(VALID(self.picker, JAPicker))
+    {
+        [self.picker removeFromSuperview];
+    }
     
-    self.pickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
-    UITapGestureRecognizer *removePickerViewTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(removePickerView)];
-    [self.pickerBackgroundView addGestureRecognizer:removePickerViewTap];
+    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    [self.picker setDelegate:self];
     
-    self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
-    [self.pickerView setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.pickerView setAlpha:0.9];
-    [self.pickerView setDataSource:self];
-    [self.pickerView setDelegate:self];
-    [self.pickerView setFrame:CGRectMake(0.0f,
-                                         (self.pickerBackgroundView.frame.size.height - self.pickerView.frame.size.height),
-                                         self.pickerView.frame.size.width,
-                                         self.pickerView.frame.size.height)];
+    self.pickerDataSource = [NSMutableArray new];
+    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
     
-    self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
-    [self.pickerToolbar setTranslucent:NO];
-    [self.pickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.pickerToolbar setAlpha:0.9];
-    [self.pickerToolbar setFrame:CGRectMake(0.0f,
-                                            CGRectGetMinY(self.pickerView.frame) - 44.0f,
-                                            320.0f,
-                                            44.0f)];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
-    [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-    [button setTitle:STRING_DONE forState:UIControlStateNormal];
-    [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-    [button addTarget:self action:@selector(regionSelected:) forControlEvents:UIControlEventTouchUpInside];
-    [button sizeToFit];
-    
-    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    [self.pickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
-    [self.pickerBackgroundView addSubview:self.pickerToolbar];
-    
-    [self.pickerBackgroundView addSubview:self.pickerView];
-    [self.view addSubview:self.pickerBackgroundView];
-    
-    NSInteger selectedRow = 0;
-    if(VALID_NOTEMPTY(self.pickupStationRegions, NSDictionary) && VALID_NOTEMPTY(self.pickerIndexPath, NSIndexPath))
+    if(VALID_NOTEMPTY(self.pickupStationRegions, NSDictionary))
     {
         NSArray *allKeys = [self.pickupStationRegions allKeys];
         if(VALID_NOTEMPTY(allKeys, NSArray))
@@ -323,71 +290,36 @@ UIPickerViewDelegate
             for (int i = 0; i < [allKeys count]; i++)
             {
                 NSString *key = [allKeys objectAtIndex:i];
-                if([self.selectedRegion isEqualToString:[self.pickupStationRegions objectForKey:key]])
-                {
-                    selectedRow = i;
-                    break;
-                }
+                [self.pickerDataSource addObject:key];
+                [dataSource addObject:[self.pickupStationRegions objectForKey:key]];
             }
         }
     }
     
-    [self.pickerView selectRow:selectedRow inComponent:0 animated:NO];
-}
-
--(void)removePickerView
-{
-    if(VALID_NOTEMPTY(self.pickerToolbar, UIToolbar))
+    NSString *previousRegion = @"";
+    if(VALID_NOTEMPTY(self.pickerIndexPath, NSIndexPath))
     {
-        [self.pickerToolbar removeFromSuperview];
+        previousRegion = self.selectedRegion;
     }
     
-    if(VALID_NOTEMPTY(self.pickerView, UIPickerView))
-    {
-        [self.pickerView removeFromSuperview];
-    }
+    [self.picker setDataSourceArray:[dataSource copy]
+                       previousText:previousRegion];
     
-    if(VALID_NOTEMPTY(self.pickerBackgroundView, UIView))
-    {
-        [self.pickerBackgroundView removeFromSuperview];
-    }
+    CGFloat pickerViewHeight = self.view.frame.size.height;
+    CGFloat pickerViewWidth = self.view.frame.size.width;
+    [self.picker setFrame:CGRectMake(0.0f,
+                                     pickerViewHeight,
+                                     pickerViewWidth,
+                                     pickerViewHeight)];
+    [self.view addSubview:self.picker];
     
-    self.pickerView = nil;
-    self.pickerBackgroundView = nil;
-}
-
--(void)regionSelected:(id)sender
-{
-    NSInteger selectedRow = [self.pickerView selectedRowInComponent:0];
-    if(VALID_NOTEMPTY(self.pickupStationRegions, NSDictionary) && VALID_NOTEMPTY(self.pickerIndexPath, NSIndexPath))
-    {
-        NSArray *allKeys = [self.pickupStationRegions allKeys];
-        if(VALID_NOTEMPTY(allKeys, NSArray) && selectedRow < [self.pickupStationRegions count])
-        {
-            self.selectedRegionId = [allKeys objectAtIndex:selectedRow];
-            self.selectedRegion = [self.pickupStationRegions objectForKey:self.selectedRegionId];
-            
-            self.pickupStationsForRegion = [[NSMutableArray alloc] initWithArray:[RIShippingMethodForm getPickupStationsForRegion:self.selectedRegionId shippingMethod:self.selectedShippingMethod inForm:self.shippingMethodForm]];
-            self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
-            for(RIShippingMethodPickupStationOption *pickupStation in self.pickupStationsForRegion)
-            {
-                CGFloat size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation];
-                
-                if(size < 120.0f)
-                {
-                    size = 120.0f;
-                }
-                
-                [self.pickupStationHeightsForRegion addObject:[NSNumber numberWithFloat:size]];
-            }
-            
-            self.selectedPickupStationIndexPath = [NSIndexPath indexPathForItem:(self.pickerIndexPath.item + 1) inSection:self.pickerIndexPath.section];
-        }
-    }
-    
-    [self removePickerView];
-    
-    [self reloadCollectionView];
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         [self.picker setFrame:CGRectMake(0.0f,
+                                                          0.0f,
+                                                          pickerViewWidth,
+                                                          pickerViewHeight)];
+                     }];
 }
 
 -(void)nextStepButtonPressed
@@ -442,6 +374,53 @@ UIPickerViewDelegate
             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         }
     }
+}
+                                                          
+#pragma mark JAPickerDelegate
+- (void)selectedRow:(NSInteger)selectedRow
+{
+    if(VALID_NOTEMPTY(self.pickupStationRegions, NSDictionary) && VALID_NOTEMPTY(self.pickerIndexPath, NSIndexPath))
+    {
+        if(VALID_NOTEMPTY(self.pickerDataSource, NSMutableArray) && selectedRow < [self.pickupStationRegions count])
+        {
+            self.selectedRegionId = [self.pickerDataSource objectAtIndex:selectedRow];
+            self.selectedRegion = [self.pickupStationRegions objectForKey:self.selectedRegionId];
+            
+            self.pickupStationsForRegion = [[NSMutableArray alloc] initWithArray:[RIShippingMethodForm getPickupStationsForRegion:self.selectedRegionId shippingMethod:self.selectedShippingMethod inForm:self.shippingMethodForm]];
+            self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
+            for(RIShippingMethodPickupStationOption *pickupStation in self.pickupStationsForRegion)
+            {
+                CGFloat size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation];
+                
+                if(size < 120.0f)
+                {
+                    size = 120.0f;
+                }
+                
+                [self.pickupStationHeightsForRegion addObject:[NSNumber numberWithFloat:size]];
+            }
+            
+            self.selectedPickupStationIndexPath = [NSIndexPath indexPathForItem:(self.pickerIndexPath.item + 1) inSection:self.pickerIndexPath.section];
+        }
+    }
+    
+    [self closePicker];
+    
+    [self reloadCollectionView];
+}
+
+- (void)closePicker
+{
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [self.picker removeFromSuperview];
+                         self.picker = nil;
+                     }];
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
@@ -739,40 +718,6 @@ UIPickerViewDelegate
             self.selectedPickupStationIndexPath = indexPath;
         }
     }
-}
-
-#pragma mark UIPickerViewDataSource
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    NSInteger numberOfRowsInComponent = 0;
-    if(VALID_NOTEMPTY(self.pickupStationRegions , NSDictionary))
-    {
-        numberOfRowsInComponent = [self.pickupStationRegions count];
-    }
-    return numberOfRowsInComponent;
-}
-
-#pragma mark UIPickerViewDelegate
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    NSString *titleForRow = @"";
-    if(VALID_NOTEMPTY(self.pickupStationRegions, NSDictionary))
-    {
-        NSArray *allKeys = [self.pickupStationRegions allKeys];
-        if(VALID_NOTEMPTY(allKeys, NSArray) && row < [allKeys count])
-        {
-            NSString *key = [allKeys objectAtIndex:row];
-            titleForRow = [self.pickupStationRegions objectForKey:key];
-        }
-    }
-    return  titleForRow;
 }
 
 @end

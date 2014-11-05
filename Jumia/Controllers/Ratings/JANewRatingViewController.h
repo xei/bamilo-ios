@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class RIProduct;
+@class RIProductRatings;
 
 @interface JANewRatingViewController : JABaseViewController
 
 @property (strong, nonatomic) RIProduct *product;
+@property (strong, nonatomic) RIProductRatings *productRatings;
 
 @end

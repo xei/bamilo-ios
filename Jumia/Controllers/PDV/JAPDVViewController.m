@@ -175,6 +175,11 @@ JAActivityViewControllerDelegate
     {
         [self.ctaView removeFromSuperview];
     }
+    
+    if(VALID_NOTEMPTY(self.picker, JAPicker))
+    {
+        [self.picker removeFromSuperview];
+    }
 }
 
 - (void)loadCompleteProduct
@@ -700,7 +705,7 @@ JAActivityViewControllerDelegate
     
     if(VALID(self.picker, JAPicker))
     {
-        [self.view bringSubviewToFront:self.picker];
+        [self showSizePicker];
     }
 
     //make sure wizard is in front
@@ -749,14 +754,21 @@ JAActivityViewControllerDelegate
 
 - (void)goToRatinsMainScreen
 {
-    if (0 == self.commentsCount) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || 0 == self.commentsCount)
+    {
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         if(VALID_NOTEMPTY(self.product, RIProduct))
         {
             [userInfo setObject:self.product forKey:@"product"];
         }
+        if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+        {
+            [userInfo setObject:self.productRatings forKey:@"productRatings"];
+        }
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
-    } else {
+    }
+    else
+    {
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         if(VALID_NOTEMPTY(self.product, RIProduct))
         {
