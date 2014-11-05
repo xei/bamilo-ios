@@ -104,6 +104,21 @@ FBLoginViewDelegate
     [self getLoginForm];
 }
 
+- (void) viewWillAppear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                          selector:@selector(hideKeyboard)
+                                          name:kOpenMenuNotification
+                                          object:nil];
+}
+
+- (void) viewWillDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void) hideKeyboard{
+    [self.dynamicForm resignResponder];
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
