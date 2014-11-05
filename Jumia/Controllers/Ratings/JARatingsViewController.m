@@ -15,15 +15,13 @@
 
 @interface JARatingsViewController ()
 <
-    UITableViewDelegate,
-    UITableViewDataSource
+UITableViewDelegate,
+UITableViewDataSource
 >
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UILabel *brandLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *labelNewPrice;
 @property (weak, nonatomic) IBOutlet UIView *resumeView;
 @property (weak, nonatomic) IBOutlet UIImageView *star1;
 @property (weak, nonatomic) IBOutlet UIImageView *star2;
@@ -57,28 +55,73 @@
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
+    self.topView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.resumeView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.tableViewComments.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
+    [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
+    
+    NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
+    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+    
+    [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewRatings] data:trackingDictionary];
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     self.brandLabel.text = self.product.brand;
     self.nameLabel.text = self.product.name;
+    [self.nameLabel sizeToFit];
     
-    [self.oldPriceLabel removeFromSuperview];
-    [self.labelNewPrice removeFromSuperview];
+    if(VALID(self.priceView, JAPriceView))
+    {
+        [self.priceView removeFromSuperview];
+    }
     
     self.priceView = [[JAPriceView alloc] init];
     [self.priceView loadWithPrice:self.product.priceFormatted
                      specialPrice:self.product.specialPriceFormatted
                          fontSize:14.0f
             specialPriceOnTheLeft:NO];
+    
     self.priceView.frame = CGRectMake(12.0f,
-                                      68.0f,
+                                      CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
     [self.view addSubview:self.priceView];
     
-    self.reviewsNumber.text = [NSString stringWithFormat:STRING_REVIEWS, self.productRatings.commentsCount];
+    CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
+    if(topViewMinHeight < 38.0f)
+    {
+        topViewMinHeight = 38.0f;
+    }
+    topViewMinHeight += 6.0f;
     
-    [self setNumberOfStars:[self.product.avr integerValue]];
+    [self.topView setFrame:CGRectMake(0.0f,
+                                      0.0f,
+                                      self.view.frame.size.width,
+                                      topViewMinHeight)];
     
     self.resumeView.layer.cornerRadius = 5.0f;
+    [self.resumeView setFrame:CGRectMake(6.0f,
+                                         CGRectGetMaxY(self.topView.frame) + 6.0f,
+                                         self.view.frame.size.width - 12.0f,
+                                         self.resumeView.frame.size.height)];
+    
+    [self.reviewsNumber setText:[NSString stringWithFormat:STRING_REVIEWS, self.productRatings.commentsCount]];
+    
+    [self setNumberOfStars:[self.product.avr integerValue]];
     
     [self.writeReviewButton setTitle:STRING_WRITE_REVIEW
                             forState:UIControlStateNormal];
@@ -87,22 +130,12 @@
     
     self.labelUsedProduct.text = STRING_RATE_PRODUCT;
     
-    self.tableViewComments.layer.cornerRadius = 4.0f;
+    self.tableViewComments.layer.cornerRadius = 5.0f;
     self.tableViewComments.allowsSelection = NO;
-
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
-    [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
-
-    NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
-    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
-    
-    [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
-
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewRatings] data:trackingDictionary];
-    
-    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+    [self.tableViewComments setFrame:CGRectMake(6.0f,
+                                                CGRectGetMaxY(self.resumeView.frame) + 6.0f,
+                                                self.view.frame.size.width - 12.0f,
+                                                self.view.frame.size.height - CGRectGetMaxY(self.resumeView.frame) - 12.0f)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -170,7 +203,7 @@
     
     cell.labelTitle.text = comment.title;
     cell.labelDescription.text = comment.detail;
-
+    
     NSInteger count = comment.options.count;
     
     if (count == 1) {
