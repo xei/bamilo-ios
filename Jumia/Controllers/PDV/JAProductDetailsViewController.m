@@ -54,16 +54,38 @@
     
     self.contenteScrollView.backgroundColor = UIColorFromRGB(0xc8c8c8);
     self.contenteScrollView.translatesAutoresizingMaskIntoConstraints = YES;
-
+    
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.labelBrand.translatesAutoresizingMaskIntoConstraints = YES;
+    self.labelBrand.text = self.product.brand;
+    
+    self.labelName.translatesAutoresizingMaskIntoConstraints = YES;
+    self.labelName.text = self.product.name;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    self.labelBrand.text = self.product.brand;
-    self.labelName.text = self.product.name;
+    [self setupViews];
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+}
+
+- (void) setupViews
+{
+    [self.labelBrand setFrame:CGRectMake(12.0f,
+                                         6.0f,
+                                         self.view.frame.size.width - 24.0f,
+                                         self.labelBrand.frame.size.height)];
+    [self.labelBrand sizeToFit];
+    
+    [self.labelName setFrame:CGRectMake(12.0f,
+                                        CGRectGetMaxY(self.labelBrand.frame) + 4.0f,
+                                        self.view.frame.size.width - 24.0f,
+                                        self.labelName.frame.size.height)];
     [self.labelName sizeToFit];
     
     if(VALID(self.priceView, JAPriceView))
@@ -83,20 +105,13 @@
                                       self.priceView.frame.size.height);
     [self.view addSubview:self.priceView];
     
-    [self setupViews];
-    
-    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-}
-
-- (void) setupViews
-{
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
     if(topViewMinHeight < 38.0f)
     {
         topViewMinHeight = 38.0f;
     }
     topViewMinHeight += 6.0f;
+    
     
     [self.topView setFrame:CGRectMake(0.0f,
                                       0.0f,
@@ -125,7 +140,7 @@
         }
         [self.descriptionView removeFromSuperview];
     }
-
+    
     self.featuresView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
                                                                  6.0f,
                                                                  self.contenteScrollView.frame.size.width - 12.0f,
