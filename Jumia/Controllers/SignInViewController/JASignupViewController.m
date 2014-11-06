@@ -58,6 +58,11 @@ UIPickerViewDelegate
                                                  name:@"UIKeyboardWillHideNotification"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
     self.screenName = @"Register";
     
     self.A4SViewControllerAlias = @"ACCOUNT";
@@ -99,18 +104,8 @@ UIPickerViewDelegate
     [self getRegisterForm];
 }
 
-- (void) viewWillAppear:(BOOL)animated{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(hideKeyboard)
-                                                 name:kOpenMenuNotification
-                                               object:nil];
-}
-
-- (void) viewWillDisappear:(BOOL)animated{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void) hideKeyboard{
+- (void) hideKeyboard
+{
     [self.dynamicForm resignResponder];
 }
 
