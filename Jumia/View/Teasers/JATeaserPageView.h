@@ -9,10 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "RITeaserCategory.h"
 
-@interface JATeaserPageView : UIScrollView
+@interface JATeaserPageView : UIView
 
 @property (nonatomic, strong)RITeaserCategory* teaserCategory;
-@property (nonatomic, assign)BOOL isLoaded;
 
 - (void)loadTeasers;
 

@@ -21,7 +21,7 @@
 
 @property (nonatomic, strong) NSArray* teaserCategories;
 @property (weak, nonatomic) IBOutlet JAPickerScrollView *teaserCategoryScrollView;
-@property (weak, nonatomic) IBOutlet UIScrollView *teaserPagesScrollView;
+@property (strong, nonatomic) UIScrollView *teaserPagesScrollView;
 @property (nonatomic, strong) NSMutableArray* teaserPageViews;
 
 @end
@@ -59,14 +59,15 @@
     
     self.teaserCategoryScrollView.delegate = self;
     self.teaserCategoryScrollView.startingIndex = 0;
+    
+    self.teaserPagesScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
+                                                                                CGRectGetMaxY(self.teaserCategoryScrollView.frame),
+                                                                                self.view.bounds.size.width,
+                                                                                self.view.frame.size.height - self.teaserCategoryScrollView.frame.size.height - 64.0f)];
     self.teaserPagesScrollView.pagingEnabled = YES;
     self.teaserPagesScrollView.scrollEnabled = NO;
     self.teaserPagesScrollView.delegate = self;
-    
-    self.teaserPagesScrollView.frame = CGRectMake(self.teaserPagesScrollView.frame.origin.x,
-                                                  CGRectGetMaxY(self.teaserCategoryScrollView.frame),
-                                                  self.teaserPagesScrollView.frame.size.width,
-                                                  self.view.frame.size.height - self.teaserCategoryScrollView.frame.size.height - 64.0f);
+    [self.view addSubview:self.teaserPagesScrollView];
     
     [self completeTeasersLoading];
 }
@@ -157,6 +158,7 @@
                                                                                                       self.teaserPagesScrollView.bounds.size.width,
                                                                                                       self.teaserPagesScrollView.bounds.size.height)];
                 teaserPageView.teaserCategory = teaserCategory;
+                [teaserPageView loadTeasers];
                 [self.teaserPagesScrollView addSubview:teaserPageView];
                 [self.teaserPageViews addObject:teaserPageView];
                 
@@ -224,20 +226,7 @@
     //check if teaser page at said index is loaded
     
     JATeaserPageView* teaserPageView = [self.teaserPageViews objectAtIndex:index];
-    
-    if (NO ==  teaserPageView.isLoaded) {
-        [teaserPageView loadTeasers];
-    }
-    
-    if (index + 1 < self.teaserPageViews.count) {
         
-        JATeaserPageView* nextTeaserPageView = [self.teaserPageViews objectAtIndex:index + 1];
-        
-        if (NO ==  nextTeaserPageView.isLoaded) {
-            [nextTeaserPageView loadTeasers];
-        }
-    }
-    
     [self.teaserPagesScrollView scrollRectToVisible:teaserPageView.frame animated:YES];
 }
 
