@@ -51,6 +51,11 @@ FBLoginViewDelegate
                                                  name:@"UIKeyboardWillHideNotification"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
     self.screenName = @"Login";
     
     self.A4SViewControllerAlias = @"ACCOUNT";
@@ -104,18 +109,8 @@ FBLoginViewDelegate
     [self getLoginForm];
 }
 
-- (void) viewWillAppear:(BOOL)animated{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                          selector:@selector(hideKeyboard)
-                                          name:kOpenMenuNotification
-                                          object:nil];
-}
-
-- (void) viewWillDisappear:(BOOL)animated{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void) hideKeyboard{
+- (void) hideKeyboard
+{
     [self.dynamicForm resignResponder];
 }
 
