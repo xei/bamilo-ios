@@ -174,6 +174,7 @@
     } else {
         self.teaserPagesScrollView.frame = self.teaserPageScrollPortraitRect;
     }
+    [self.teaserPagesScrollView removeFromSuperview];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -194,6 +195,7 @@
     [self.teaserPagesScrollView setContentSize:CGSizeMake(currentPageX,
                                                           self.teaserPagesScrollView.frame.size.height)];
     [self selectedIndex:0];
+    [self.view addSubview:self.teaserPagesScrollView];
 }
 
 - (void)completeTeasersLoading
