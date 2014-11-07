@@ -37,9 +37,17 @@
         } else {
             for (RITeaserImage* possibleTeaserImage in teaser.teaserImages) {
                 
-                if ([possibleTeaserImage.deviceType isEqualToString:@"phone"]) {
+                NSString* deviceType;
+                if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                    deviceType = @"tablet";
+                } else {
+                    deviceType = @"phone";
+                }
+                
+                if ([possibleTeaserImage.deviceType isEqualToString:deviceType]) {
                     
                     teaserImage = possibleTeaserImage;
+                    break;
                 }
             }
         }

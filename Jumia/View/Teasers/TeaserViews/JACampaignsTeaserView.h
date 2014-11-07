@@ -10,4 +10,6 @@
 
 @interface JACampaignsTeaserView : JATeaserView
 
+@property (nonatomic, assign)BOOL isLandscape;
+
 @end

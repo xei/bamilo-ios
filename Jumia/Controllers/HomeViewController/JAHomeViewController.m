@@ -24,6 +24,9 @@
 @property (strong, nonatomic) UIScrollView *teaserPagesScrollView;
 @property (nonatomic, strong) NSMutableArray* teaserPageViews;
 
+@property (nonatomic, assign)CGRect teaserPageScrollPortraitRect;
+@property (nonatomic, assign)CGRect teaserPageScrollLandscapeRect;
+
 @end
 
 @implementation JAHomeViewController
@@ -60,10 +63,30 @@
     self.teaserCategoryScrollView.delegate = self;
     self.teaserCategoryScrollView.startingIndex = 0;
     
-    self.teaserPagesScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
-                                                                                CGRectGetMaxY(self.teaserCategoryScrollView.frame),
-                                                                                self.view.bounds.size.width,
-                                                                                self.view.frame.size.height - self.teaserCategoryScrollView.frame.size.height - 64.0f)];
+    CGRect rectToStart;
+    if (UIInterfaceOrientationLandscapeRight == self.interfaceOrientation || UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation) {
+        self.teaserPageScrollLandscapeRect = CGRectMake(self.view.bounds.origin.x,
+                                                        CGRectGetMaxY(self.teaserCategoryScrollView.frame),
+                                                        self.view.bounds.size.width,
+                                                        self.view.bounds.size.height - self.teaserCategoryScrollView.frame.size.height - 64.0f);
+        self.teaserPageScrollPortraitRect = CGRectMake(self.teaserPageScrollLandscapeRect.origin.x,
+                                                       self.teaserPageScrollLandscapeRect.origin.y,
+                                                       self.view.bounds.size.height,
+                                                       self.view.bounds.size.width - self.teaserCategoryScrollView.frame.size.height - 64.0f);
+        rectToStart = self.teaserPageScrollLandscapeRect;
+    } else {
+        self.teaserPageScrollPortraitRect = CGRectMake(self.view.bounds.origin.x,
+                                                       CGRectGetMaxY(self.teaserCategoryScrollView.frame),
+                                                       self.view.bounds.size.width,
+                                                       self.view.bounds.size.height - self.teaserCategoryScrollView.frame.size.height - 64.0f);
+        self.teaserPageScrollLandscapeRect = CGRectMake(self.teaserPageScrollPortraitRect.origin.x,
+                                                        self.teaserPageScrollPortraitRect.origin.y,
+                                                        self.view.bounds.size.height,
+                                                        self.view.bounds.size.width - self.teaserCategoryScrollView.frame.size.height - 64.0f);
+
+        rectToStart = self.teaserPageScrollPortraitRect;
+    }
+    self.teaserPagesScrollView = [[UIScrollView alloc] initWithFrame:rectToStart];
     self.teaserPagesScrollView.pagingEnabled = YES;
     self.teaserPagesScrollView.scrollEnabled = NO;
     self.teaserPagesScrollView.delegate = self;
@@ -93,6 +116,11 @@
         [self.view addSubview:wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAHomeWizardUserDefaultsKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:NSTimeIntervalSince1970];
+        [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
     }
 }
 
@@ -137,6 +165,37 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self showLoading];
+    if (UIInterfaceOrientationLandscapeLeft == toInterfaceOrientation || UIInterfaceOrientationLandscapeRight == toInterfaceOrientation) {
+        self.teaserPagesScrollView.frame = self.teaserPageScrollLandscapeRect;
+    } else {
+        self.teaserPagesScrollView.frame = self.teaserPageScrollPortraitRect;
+    }
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [self hideLoading];
+    CGFloat currentPageX = 0.0f;
+    CGFloat currentPageY = 0.0f;
+    for (JATeaserPageView* teaserPageView in self.teaserPageViews) {
+        [teaserPageView loadTeasersForFrame:CGRectMake(currentPageX,
+                                                       currentPageY,
+                                                       self.teaserPagesScrollView.bounds.size.width,
+                                                       self.teaserPagesScrollView.bounds.size.height)];
+        [self.teaserPagesScrollView addSubview:teaserPageView];
+        
+        currentPageX += teaserPageView.frame.size.width;
+    }
+    [self.teaserPagesScrollView setContentSize:CGSizeMake(currentPageX,
+                                                          self.teaserPagesScrollView.frame.size.height)];
+    [self selectedIndex:0];
+}
+
 - (void)completeTeasersLoading
 {
     [RITeaserCategory getTeaserCategoriesWithSuccessBlock:^(id teaserCategories) {
@@ -153,12 +212,13 @@
             {
                 [titles addObject:teaserCategory.homePageTitle];
                 
-                JATeaserPageView* teaserPageView = [[JATeaserPageView alloc] initWithFrame:CGRectMake(currentPageX,
-                                                                                                      self.teaserPagesScrollView.bounds.origin.y,
-                                                                                                      self.teaserPagesScrollView.bounds.size.width,
-                                                                                                      self.teaserPagesScrollView.bounds.size.height)];
+                JATeaserPageView* teaserPageView = [[JATeaserPageView alloc] init];
                 teaserPageView.teaserCategory = teaserCategory;
-                [teaserPageView loadTeasers];
+                NSLog(@"%@", NSStringFromCGRect(self.teaserPagesScrollView.frame));
+                [teaserPageView loadTeasersForFrame:CGRectMake(currentPageX,
+                                                               self.teaserPagesScrollView.bounds.origin.y,
+                                                               self.teaserPagesScrollView.bounds.size.width,
+                                                               self.teaserPagesScrollView.bounds.size.height)];
                 [self.teaserPagesScrollView addSubview:teaserPageView];
                 [self.teaserPageViews addObject:teaserPageView];
                 

@@ -13,6 +13,6 @@
 
 @property (nonatomic, strong)RITeaserCategory* teaserCategory;
 
-- (void)loadTeasers;
+- (void)loadTeasersForFrame:(CGRect)frame;
 
 @end
