@@ -623,6 +623,7 @@ UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JAReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reviewCell"];
+    [cell setupCell:self.view.frame];
     
     cell.labelPrice.text = STRING_PRICE;
     cell.labelAppearance.text = STRING_APPEARENCE;

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JARatingsView.h"
 
 @interface JAReviewCell : UITableViewCell
 
@@ -16,24 +17,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelPrice;
 @property (weak, nonatomic) IBOutlet UILabel *labelAppearance;
 @property (weak, nonatomic) IBOutlet UILabel *labelQuality;
-@property (weak, nonatomic) IBOutlet UIImageView *priceStar1;
-@property (weak, nonatomic) IBOutlet UIImageView *priceStar2;
-@property (weak, nonatomic) IBOutlet UIImageView *priceStar3;
-@property (weak, nonatomic) IBOutlet UIImageView *priceStar4;
-@property (weak, nonatomic) IBOutlet UIImageView *priceStar5;
-@property (weak, nonatomic) IBOutlet UIImageView *appearanceStar1;
-@property (weak, nonatomic) IBOutlet UIImageView *appearanceStar2;
-@property (weak, nonatomic) IBOutlet UIImageView *appearanceStar3;
-@property (weak, nonatomic) IBOutlet UIImageView *appearanceStar4;
-@property (weak, nonatomic) IBOutlet UIImageView *appearanceStar5;
-@property (weak, nonatomic) IBOutlet UIImageView *qualityStar1;
-@property (weak, nonatomic) IBOutlet UIImageView *qualityStar2;
-@property (weak, nonatomic) IBOutlet UIImageView *qualityStar3;
-@property (weak, nonatomic) IBOutlet UIImageView *qualityStar4;
-@property (weak, nonatomic) IBOutlet UIImageView *qualityStar5;
+@property (weak, nonatomic) JARatingsView *priceRatingsView;;
+@property (weak, nonatomic) JARatingsView *appearanceRatingsView;
+@property (weak, nonatomic) JARatingsView *qualityRatingsView;;
 @property (weak, nonatomic) IBOutlet UILabel *labelTitle;
 @property (weak, nonatomic) IBOutlet UILabel *labelDescription;
 @property (weak, nonatomic) IBOutlet UILabel *labelAuthorDate;
+@property (weak, nonatomic) IBOutlet UIView *separator;
+
+- (void)setupCell:(CGRect)frame;
 
 - (void)setPriceRating:(NSInteger)stars;
 
