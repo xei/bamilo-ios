@@ -75,6 +75,22 @@
     self.loadingAnimation.center = self.loadingView.center;
     
     self.loadingView.alpha = 0.0f;
+
+}
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    CGSize frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size;
+    CGFloat screenWidth = frame.width;
+    CGFloat screenHeight = frame.height;
+    
+     if(!((UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) && (UIInterfaceOrientationIsLandscape(toInterfaceOrientation))) &&
+        !((UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) && (UIInterfaceOrientationIsPortrait(toInterfaceOrientation))) ){
+         
+         self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
+         self.loadingAnimation.center = self.loadingView.center;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

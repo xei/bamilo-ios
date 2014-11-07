@@ -384,84 +384,11 @@
 
 - (void)setNumberOfStars:(NSInteger)stars
 {
-    switch (stars) {
-        case 0: {
-            
-            self.star1.image = [self getEmptyStar];
-            self.star2.image = [self getEmptyStar];
-            self.star3.image = [self getEmptyStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 1: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getEmptyStar];
-            self.star3.image = [self getEmptyStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 2: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getFilledStar];
-            self.star3.image = [self getEmptyStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 3: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getFilledStar];
-            self.star3.image = [self getFilledStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 4: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getFilledStar];
-            self.star3.image = [self getFilledStar];
-            self.star4.image = [self getFilledStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 5: {
-            
-            self.star1.image = [self getFilledStar];
-            self.star2.image = [self getFilledStar];
-            self.star3.image = [self getFilledStar];
-            self.star4.image = [self getFilledStar];
-            self.star5.image = [self getFilledStar];
-            
-        }
-            break;
-            
-        default: {
-            
-            self.star1.image = [self getEmptyStar];
-            self.star2.image = [self getEmptyStar];
-            self.star3.image = [self getEmptyStar];
-            self.star4.image = [self getEmptyStar];
-            self.star5.image = [self getEmptyStar];
-            
-        }
-            break;
-    }
+    self.star1.image = stars < 1 ? [self getEmptyStar] : [self getFilledStar];
+    self.star2.image = stars < 2 ? [self getEmptyStar] : [self getFilledStar];
+    self.star3.image = stars < 3 ? [self getEmptyStar] : [self getFilledStar];
+    self.star4.image = stars < 4 ? [self getEmptyStar] : [self getFilledStar];
+    self.star5.image = stars < 5 ? [self getEmptyStar] : [self getFilledStar];
 }
 
 - (UIImage *)getEmptyStar

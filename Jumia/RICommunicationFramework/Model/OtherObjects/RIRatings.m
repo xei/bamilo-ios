@@ -23,7 +23,7 @@
 
 @implementation RIRatings
 
-+ (NSString*)getRatingsWithSuccessBlock:(void (^)(id ratings))successBlock
++ (NSString*)getRatingsWithSuccessBlock:(void (^)(NSArray *ratings))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_RATING_OPTIONS]]
