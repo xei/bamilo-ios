@@ -15,5 +15,6 @@
 
 @property (strong, nonatomic) RIProduct *product;
 @property (strong, nonatomic) RIProductRatings *productRatings;
+@property (assign, nonatomic) BOOL goToNewRatingButtonPressed;
 
 @end

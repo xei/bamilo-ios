@@ -120,11 +120,11 @@ JAActivityViewControllerDelegate
         [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
     }
-
+    
     if(self.hasLoaddedProduct)
     {
         [self showLoading];
-
+        
         [self removeSuperviews];
         
         [self productLoaded];
@@ -147,7 +147,7 @@ JAActivityViewControllerDelegate
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
     [self dismissViewControllerAnimated:NO completion:nil];
-
+    
     [self showLoading];
     
     [self removeSuperviews];
@@ -709,7 +709,7 @@ JAActivityViewControllerDelegate
     {
         [self showSizePicker];
     }
-
+    
     //make sure wizard is in front
     [self.view bringSubviewToFront:self.wizardView];
 }
@@ -756,7 +756,7 @@ JAActivityViewControllerDelegate
 
 - (void)goToRatinsMainScreen
 {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || 0 == self.commentsCount)
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation))
     {
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         if(VALID_NOTEMPTY(self.product, RIProduct))
@@ -767,21 +767,38 @@ JAActivityViewControllerDelegate
         {
             [userInfo setObject:self.productRatings forKey:@"productRatings"];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
     }
     else
     {
-        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-        if(VALID_NOTEMPTY(self.product, RIProduct))
+        if (0 == self.commentsCount)
         {
-            [userInfo setObject:self.product forKey:@"product"];
+            
+            NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+            if(VALID_NOTEMPTY(self.product, RIProduct))
+            {
+                [userInfo setObject:self.product forKey:@"product"];
+            }
+            if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+            {
+                [userInfo setObject:self.productRatings forKey:@"productRatings"];
+            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
         }
-        if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+        else
         {
-            [userInfo setObject:self.productRatings forKey:@"productRatings"];
+            NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+            if(VALID_NOTEMPTY(self.product, RIProduct))
+            {
+                [userInfo setObject:self.product forKey:@"product"];
+            }
+            if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+            {
+                [userInfo setObject:self.productRatings forKey:@"productRatings"];
+            }
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
         }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
     }
 }
 
@@ -970,13 +987,13 @@ JAActivityViewControllerDelegate
     {
         [self.picker removeFromSuperview];
     }
-
+    
     self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
     [self.picker setDelegate:self];
-
+    
     self.pickerDataSource = [NSMutableArray new];
     NSMutableArray *dataSource = [[NSMutableArray alloc] init];
-
+    
     if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet))
     {
         for (RIProductSimple *simple in self.product.productSimples)

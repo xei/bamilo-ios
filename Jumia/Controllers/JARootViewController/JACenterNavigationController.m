@@ -261,7 +261,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(closeCurrentScreenNotificaion)
+                                             selector:@selector(closeCurrentScreenNotificaion:)
                                                  name:kCloseCurrentScreenNotification
                                                object:nil];
     
@@ -993,7 +993,22 @@
             ratingsViewController.productRatings = [notification.userInfo objectForKey:@"productRatings"];
         }
         
-        [self pushViewController:ratingsViewController animated:YES];
+        if ([notification.userInfo objectForKey:@"goToNewRatingButtonPressed"]) {
+            ratingsViewController.goToNewRatingButtonPressed = [[notification.userInfo objectForKey:@"goToNewRatingButtonPressed"] boolValue];
+        }
+        
+        if([notification.userInfo objectForKey:@"popLastViewController"] && [[notification.userInfo objectForKey:@"popLastViewController"] boolValue])
+        {
+            [self popViewControllerAnimated:NO];
+        }
+        
+        BOOL animated = YES;
+        if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
+        {
+            animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
+        }
+
+        [self pushViewController:ratingsViewController animated:animated];
     }
 }
 
@@ -1011,8 +1026,23 @@
         if ([notification.userInfo objectForKey:@"productRatings"]) {
             newRatingViewController.productRatings = [notification.userInfo objectForKey:@"productRatings"];
         }
+       
+        if ([notification.userInfo objectForKey:@"goToNewRatingButtonPressed"]) {
+            newRatingViewController.goToNewRatingButtonPressed = [[notification.userInfo objectForKey:@"goToNewRatingButtonPressed"] boolValue];
+        }
+                
+        if([notification.userInfo objectForKey:@"popLastViewController"] && [[notification.userInfo objectForKey:@"popLastViewController"] boolValue])
+        {
+            [self popViewControllerAnimated:NO];
+        }
+
+        BOOL animated = YES;
+        if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
+        {
+            animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
+        }
         
-        [self pushViewController:newRatingViewController animated:YES];
+        [self pushViewController:newRatingViewController animated:animated];
     }
 }
 
@@ -1182,9 +1212,14 @@
     }
 }
 
-- (void) closeCurrentScreenNotificaion
+- (void) closeCurrentScreenNotificaion:(NSNotification*)notification
 {
-    [self popViewControllerAnimated:YES];
+    BOOL animated = YES;
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber))
+    {
+        animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
+    }
+    [self popViewControllerAnimated:animated];
 }
 
 #pragma mark - Recent Search
