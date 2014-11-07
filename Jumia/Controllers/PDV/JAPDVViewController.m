@@ -144,6 +144,8 @@ JAActivityViewControllerDelegate
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
     [self dismissViewControllerAnimated:NO completion:nil];
 
     [self showLoading];
