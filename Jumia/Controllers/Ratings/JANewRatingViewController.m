@@ -13,7 +13,7 @@
 #import "RIProductRatings.h"
 #import "RIRatings.h"
 #import "JADynamicForm.h"
-#import "JAStarsComponent.h"
+#import "JAAddRatingView.h"
 #import "RICustomer.h"
 #import "JAPriceView.h"
 #import "JAUtils.h"
@@ -25,34 +25,40 @@ UITextFieldDelegate,
 UIAlertViewDelegate
 >
 
-// Common layouts
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UILabel *brandLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-
-// iPad layouts only
-@property (weak, nonatomic) IBOutlet UIScrollView *reviewsScrollView;
-@property (weak, nonatomic) IBOutlet UIView *emptyReviewsView;
-@property (weak, nonatomic) IBOutlet UIImageView *emptyReviewsImageView;
-@property (weak, nonatomic) IBOutlet UILabel *emptyReviewsLabel;
 
 @property (assign, nonatomic) CGRect scrollViewInitialRect;
 @property (strong, nonatomic) UIView *centerView;
 @property (strong, nonatomic) UILabel *fixedLabel;
 @property (strong, nonatomic) UIButton *sendReviewButton;
 
+@property (strong, nonatomic) RIForm *form;
 @property (strong, nonatomic) JADynamicForm *ratingDynamicForm;
+@property (strong, nonatomic) NSArray *ratings;
 @property (strong, nonatomic) NSMutableArray *ratingStarsArray;
 @property (nonatomic, strong) JAPriceView *priceView;
 @property (assign, nonatomic) NSInteger numberOfFields;
+
+@property (assign, nonatomic) NSInteger numberOfRequests;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
 @implementation JANewRatingViewController
 
-#pragma mark - View lifecycle
+@synthesize numberOfRequests=_numberOfRequests;
+-(void)setNumberOfRequests:(NSInteger)numberOfRequests
+{
+    _numberOfRequests=numberOfRequests;
+    if (0 == numberOfRequests) {
+        [self finishedRequests];
+    }
+}
 
+#pragma mark - View lifecycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -87,14 +93,74 @@ UIAlertViewDelegate
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.brandLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.brandLabel.text = self.product.brand;
+    
+    self.nameLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.nameLabel.text = self.product.name;
+    
+    self.numberOfRequests = 2;
+    self.apiResponse = RIApiResponseSuccess;
+    
+    [self setupTopView];
+    
+    [self showLoading];
+    
+    [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
+     {
+         self.ratings = ratings;
+         self.numberOfRequests--;
+     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+     {
+         self.apiResponse = apiResponse;
+         self.numberOfRequests--;
+     }];
+    
+    [RIForm getForm:@"rating"
+       successBlock:^(RIForm *form)
+     {
+         self.form = form;
+         self.numberOfRequests--;
+     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+         self.apiResponse = apiResponse;
+         self.numberOfRequests--;
+     }];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+-(void)finishedRequests
 {
-    [super viewWillAppear:animated];
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
     
-    self.brandLabel.text = self.product.brand;
-    self.nameLabel.text = self.product.name;
+    if(RIApiResponseSuccess == self.apiResponse)
+    {
+        [self setupViews];
+    }
+    else if (RIApiResponseNoInternetConnection == self.apiResponse)
+    {
+        [self showMessage:STRING_NO_NEWTORK success:NO];
+    }
+    else
+    {
+        [self showMessage:STRING_ERROR success:NO];
+    }
+    
+    [self hideLoading];
+}
+
+-(void)setupTopView
+{
+    [self.brandLabel setFrame:CGRectMake(12.0f,
+                                         6.0f,
+                                         self.view.frame.size.width - 24.0f,
+                                         self.brandLabel.frame.size.height)];
+    [self.brandLabel sizeToFit];
+    
+    [self.nameLabel setFrame:CGRectMake(12.0f,
+                                        CGRectGetMaxY(self.brandLabel.frame) + 4.0f,
+                                        self.view.frame.size.width - 24.0f,
+                                        self.nameLabel.frame.size.height)];
     [self.nameLabel sizeToFit];
     
     if(VALID(self.priceView, JAPriceView))
@@ -114,11 +180,6 @@ UIAlertViewDelegate
                                       self.priceView.frame.size.height);
     [self.view addSubview:self.priceView];
     
-    [self setupViews];
-}
-
--(void)setupViews
-{
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
     if(topViewMinHeight < 38.0f)
     {
@@ -130,37 +191,157 @@ UIAlertViewDelegate
                                       0.0f,
                                       self.view.frame.size.width,
                                       topViewMinHeight)];
+}
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
+    [self showLoading];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    [self hideLoading];
+    
+    if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
+    {
+        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
+        
+        if(VALID_NOTEMPTY(self.productRatings, RIProductRatings) && VALID_NOTEMPTY(self.productRatings.comments, NSArray))
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil userInfo:userInfo];
+        }
+        else
+        {
+            if(VALID_NOTEMPTY(self.product, RIProduct))
+            {
+                [userInfo setObject:self.product forKey:@"product"];
+            }
+            
+            [userInfo setObject:[NSNumber numberWithBool:self.goToNewRatingButtonPressed] forKey:@"goToNewRatingButtonPressed"];
+            
+            [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"popLastViewController"];
+            [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
+        }
+    }
+}
+
+-(void)setupViews
+{
+    CGFloat verticalMargin = 6.0f;
+    CGFloat horizontalMargin = 6.0f;
+    
+    BOOL isiPad = NO;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        isiPad = YES;
+    }
+    CGFloat scrollViewWidth = self.view.frame.size.width;
+
     [self.scrollView setFrame:CGRectMake(0.0f,
-                                         topViewMinHeight,
-                                         self.view.frame.size.width,
-                                         self.view.frame.size.height - topViewMinHeight - CGRectGetMinY(self.topView.frame))];
-    
-    self.centerView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
-                                                               6.0f,
-                                                               308.0f,
-                                                               312.0f)];
+                                         CGRectGetMaxY(self.topView.frame),
+                                         scrollViewWidth,
+                                         self.view.frame.size.height - CGRectGetMaxY(self.topView.frame))];
+
+    if(VALID(self.centerView, UIView))
+    {
+        [self.centerView removeFromSuperview];
+    }
+    self.centerView = [[UIView alloc] init];
     self.centerView.backgroundColor = [UIColor whiteColor];
     self.centerView.layer.cornerRadius = 5.0f;
-    [self.scrollView addSubview:self.centerView];
+
+    CGFloat centerViewWidth = scrollViewWidth - (2 * horizontalMargin);
+    CGFloat dynamicFormHorizontalMargin = 6.0f;
+    if(isiPad)
+    {
+        dynamicFormHorizontalMargin = 60.0f;
+    }
     
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
-                                             self.centerView.frame.size.height + 2*self.centerView.frame.origin.y);
+    if(VALID_NOTEMPTY(self.fixedLabel, UILabel))
+    {
+        [self.fixedLabel removeFromSuperview];
+    }
     
-    self.fixedLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
-                                                                6.0f,
-                                                                296.0f,
+    self.fixedLabel = [[UILabel alloc] initWithFrame:CGRectMake(dynamicFormHorizontalMargin,
+                                                                verticalMargin,
+                                                                centerViewWidth - (2 * dynamicFormHorizontalMargin),
                                                                 16.0f)];
-    self.fixedLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11.0f];
+    self.fixedLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
     self.fixedLabel.text = STRING_RATE_PRODUCT;
+    self.fixedLabel.textColor = UIColorFromRGB(0x666666);
+    
     [self.centerView addSubview:self.fixedLabel];
     
+    self.numberOfFields = 0;
+    self.ratingStarsArray = [NSMutableArray new];
     
-    UIImage* buttonImageNormal = [UIImage imageNamed:@"orangeMedium_normal"];
-    UIImage* buttonImageHighlighted = [UIImage imageNamed:@"orangeMedium_highlighted"];
-    UIImage* buttonImageDisabled = [UIImage imageNamed:@"orangeMedium_disabled"];
+    CGFloat currentY = CGRectGetMaxY(self.fixedLabel.frame) + 12.0f;
+    for (RIRatingsDetails *option in self.ratings)
+    {
+        JAAddRatingView *stars = [JAAddRatingView getNewJAAddRatingView];
+        [stars setupWithOption:option];
+        
+        CGRect frame = stars.frame;
+        frame.origin.y = currentY;
+        frame.origin.x = dynamicFormHorizontalMargin;
+        frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+        [stars setFrame:frame];
+        
+        [self.centerView addSubview:stars];
+        currentY += stars.frame.size.height;
+        
+        [self.ratingStarsArray addObject:stars];
+        
+        self.numberOfFields++;
+    }
+    
+    self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:self.form
+                                                        delegate:nil
+                                                startingPosition:currentY];
+    
+    CGFloat spaceBetweenFormFields = 6.0f;
+    NSInteger count = 0;
+    for (UIView *view in self.ratingDynamicForm.formViews)
+    {
+        view.tag = count;
+        
+        CGRect frame = view.frame;
+        if(isiPad)
+        {
+            frame.origin.x = dynamicFormHorizontalMargin;
+            frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+        }
+        else
+        {
+            frame.size.width = centerViewWidth;
+        }
+        view.frame = frame;
+        
+        [self.centerView addSubview:view];
+        currentY += view.frame.size.height + spaceBetweenFormFields;
+        count++;
+    }
+  
+    // Add space between last form field and send review button
+    currentY += 38.0f;
+    
+    NSString *imageNameFormat = @"orangeMedium_%@";
+    if(isiPad)
+    {
+        imageNameFormat = @"orangeMediumPortrait_%@";
+    }
+    UIImage* buttonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, @"normal"]];
+    UIImage* buttonImageHighlighted = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, @"highlighted"]];
+    UIImage* buttonImageDisabled = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, @"disabled"]];
     self.sendReviewButton = [[UIButton alloc] initWithFrame:CGRectMake(6.0f,
-                                                                       262.0f,
+                                                                       currentY,
                                                                        buttonImageNormal.size.width,
                                                                        buttonImageNormal.size.height)];
     [self.sendReviewButton setTitle:STRING_SEND_REVIEW
@@ -175,92 +356,14 @@ UIAlertViewDelegate
     [self.sendReviewButton addTarget:self action:@selector(sendReview:) forControlEvents:UIControlEventTouchUpInside];
     [self.centerView addSubview:self.sendReviewButton];
     
+    [self.centerView setFrame:CGRectMake(horizontalMargin,
+                                         verticalMargin,
+                                         centerViewWidth,
+                                         CGRectGetMaxY(self.sendReviewButton.frame) + verticalMargin)];
+    [self.scrollView addSubview:self.centerView];
     
-    [self showLoading];
-    
-    __block float currentY = self.fixedLabel.frame.origin.y + 22;
-    
-    [RIRatings getRatingsWithSuccessBlock:^(id ratings) {
-        
-        self.ratingStarsArray = [NSMutableArray new];
-        
-        self.numberOfFields = 0;
-        
-        for (RIRatingsDetails *option in ratings) {
-            
-            JAStarsComponent *stars = [JAStarsComponent getNewJAStarsComponent];
-            stars.title.text = option.title;
-            stars.ratingOptions = option.options;
-            stars.starValue = 1;
-            stars.idRatingType = option.idRatingType;
-            
-            CGRect frame = stars.frame;
-            frame.origin.y = currentY;
-            
-            stars.frame = frame;
-            
-            [self.centerView addSubview:stars];
-            currentY += stars.frame.size.height + 6;
-            
-            [self.ratingStarsArray addObject:stars];
-            
-            self.numberOfFields++;
-        }
-        
-        [RIForm getForm:@"rating"
-           successBlock:^(RIForm *form) {
-               
-               self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:form
-                                                                   delegate:nil
-                                                           startingPosition:currentY-10];
-               
-               NSInteger count = 0;
-               
-               for (UIView *view in self.ratingDynamicForm.formViews)
-               {
-                   view.tag = count;
-                   [self.centerView addSubview:view];
-                   count++;
-               }
-               
-               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-               
-               [self hideLoading];
-               
-           } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-               
-               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-               
-               [self hideLoading];
-               
-               if (RIApiResponseNoInternetConnection == apiResponse)
-               {
-                   [self showMessage:STRING_NO_NEWTORK success:NO];
-               }
-               else
-               {
-                   [self showMessage:STRING_ERROR success:NO];
-               }
-           }];
-        
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        
-        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-        
-        [self hideLoading];
-        
-        if (RIApiResponseNoInternetConnection == apiResponse)
-        {
-            [self showMessage:STRING_NO_NEWTORK success:NO];
-        }
-        else
-        {
-            [self showMessage:STRING_ERROR success:NO];
-        }
-    }];
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
+                                             self.centerView.frame.size.height + self.centerView.frame.origin.y);
 }
 
 - (void)dealloc
@@ -288,9 +391,9 @@ UIAlertViewDelegate
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.ratingDynamicForm getValues]];
     
-    for (JAStarsComponent *component in self.ratingStarsArray)
+    for (JAAddRatingView *component in self.ratingStarsArray)
     {
-        RIRatingsOptions *option = [component.ratingOptions objectAtIndex:(component.starValue - 1)];
+        RIRatingsOptions *option = [component.ratingOptions objectAtIndex:(component.rating - 1)];
         NSString *key = [NSString stringWithFormat:@"rating-option--%@", option.fkRatingType];
         
         [parameters addEntriesFromDictionary:@{key: option.value}];
@@ -309,32 +412,32 @@ UIAlertViewDelegate
             NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
             [globalRateDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
             
-            for (JAStarsComponent *component in self.ratingStarsArray)
+            for (JAAddRatingView *component in self.ratingStarsArray)
             {
                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                 [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
                 [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-                [trackingDictionary setValue:@(component.starValue) forKey:kRIEventValueKey];
+                [trackingDictionary setValue:@(component.rating) forKey:kRIEventValueKey];
                 
                 if ([component.idRatingType isEqualToString:@"1"])
                 {
-                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.starValue] forKey:kRIEventRatingPriceKey];
+                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingPriceKey];
                     [trackingDictionary setValue:@"RateProductPrice" forKey:kRIEventActionKey];
                 }
                 else if ([component.idRatingType isEqualToString:@"2"])
                 {
-                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.starValue] forKey:kRIEventRatingAppearanceKey];
+                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingAppearanceKey];
                     [trackingDictionary setValue:@"RateProductAppearance" forKey:kRIEventActionKey];
                 }
                 else if ([component.idRatingType isEqualToString:@"3"])
                 {
-                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.starValue] forKey:kRIEventRatingQualityKey];
+                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingQualityKey];
                     [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
                 }
                 else
                 {
                     // There is no indication about the default tracking for rating
-                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.starValue] forKey:kRIEventRatingKey];
+                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingKey];
                     [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
                 }
                 

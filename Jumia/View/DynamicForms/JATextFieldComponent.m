@@ -34,6 +34,8 @@
 
 - (void)setupWithField:(RIField*)field
 {
+    self.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.storedValue = @"";
     self.hasError = NO;
     self.field = field;
@@ -144,7 +146,7 @@
         }
         
         if([self.field.required boolValue] || VALID_NOTEMPTY(self.textField.text, NSString))
-        {        
+        {
             if(VALID_NOTEMPTY(self.field.min, NSNumber) && [self.field.min intValue] > [self.textField.text length])
             {
                 [self.textField setTextColor:UIColorFromRGB(0xcc0000)];

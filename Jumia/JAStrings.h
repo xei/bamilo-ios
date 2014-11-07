@@ -249,5 +249,6 @@
 
 #define STRING_REVIEWS_LABEL RILocalizedString(@"reviews", nil)
 #define STRING_MORE RILocalizedString(@"more", nil)
+#define STRING_REVIEWS_EMPTY RILocalizedString(@"reviews_empty", nil)
 
 #endif
