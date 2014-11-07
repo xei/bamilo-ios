@@ -24,8 +24,10 @@
     
     if ([json objectForKey:@"image_url"]) {
         newImage.imageUrl = [json objectForKey:@"image_url"];
+        newImage.imageUrl = [newImage.imageUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     } else if ([json objectForKey:@"path"]) {
         newImage.imageUrl = [json objectForKey:@"path"];
+        newImage.imageUrl = [newImage.imageUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     }
     
     if ([json objectForKey:@"product_url"]) {
