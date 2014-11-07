@@ -15,7 +15,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-
+        
     }
     
     return self;
@@ -23,7 +23,23 @@
 
 - (void)awakeFromNib
 {
+    self.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
+    [self.labelPrice setTextColor:UIColorFromRGB(0x666666)];
+    [self.labelAppearance setTextColor:UIColorFromRGB(0x666666)];
+    [self.labelQuality setTextColor:UIColorFromRGB(0x666666)];
+    [self.labelTitle setTextColor:UIColorFromRGB(0x666666)];
+    [self.labelDescription setTextColor:UIColorFromRGB(0x666666)];
+    [self.labelAuthorDate setTextColor:UIColorFromRGB(0x666666)];
     
+    self.priceRatingsView = [JARatingsView getNewJARatingsView];
+    [self.viewPrice addSubview:self.priceRatingsView];
+    
+    self.appearanceRatingsView = [JARatingsView getNewJARatingsView];
+    [self.viewAppearance addSubview:self.appearanceRatingsView];
+    
+    self.qualityRatingsView = [JARatingsView getNewJARatingsView];
+    [self.viewQuality addSubview:self.qualityRatingsView];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -31,260 +47,42 @@
     [super setSelected:selected animated:animated];
 }
 
+- (void)setupCell:(CGRect)frame
+{
+    [self setFrame:CGRectMake(self.frame.origin.x,
+                              self.frame.origin.y,
+                              frame.size.width,
+                              self.frame.size.height)];
+    
+    [self.priceRatingsView setFrame:CGRectMake(self.labelPrice.frame.origin.x,
+                                               CGRectGetMaxY(self.labelPrice.frame) + 2.0f,
+                                               self.priceRatingsView.frame.size.width,
+                                               self.priceRatingsView.frame.size.height)];
+    
+    [self.appearanceRatingsView setFrame:CGRectMake(self.labelAppearance.frame.origin.x,
+                                                    CGRectGetMaxY(self.labelAppearance.frame) + 2.0f,
+                                                    self.appearanceRatingsView.frame.size.width,
+                                                    self.appearanceRatingsView.frame.size.height)];
+    
+    [self.qualityRatingsView setFrame:CGRectMake(self.labelQuality.frame.origin.x,
+                                                 CGRectGetMaxY(self.labelQuality.frame),
+                                                 self.qualityRatingsView.frame.size.width + 2.0f,
+                                                 self.qualityRatingsView.frame.size.height)];
+}
+
 - (void)setPriceRating:(NSInteger)stars
 {
-    switch (stars) {
-        case 0: {
-            
-            self.priceStar1.image = [self getEmptyStar];
-            self.priceStar2.image = [self getEmptyStar];
-            self.priceStar3.image = [self getEmptyStar];
-            self.priceStar4.image = [self getEmptyStar];
-            self.priceStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 1: {
-            
-            self.priceStar1.image = [self getFilledStar];
-            self.priceStar2.image = [self getEmptyStar];
-            self.priceStar3.image = [self getEmptyStar];
-            self.priceStar4.image = [self getEmptyStar];
-            self.priceStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 2: {
-            
-            self.priceStar1.image = [self getFilledStar];
-            self.priceStar2.image = [self getFilledStar];
-            self.priceStar3.image = [self getEmptyStar];
-            self.priceStar4.image = [self getEmptyStar];
-            self.priceStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 3: {
-            
-            self.priceStar1.image = [self getFilledStar];
-            self.priceStar2.image = [self getFilledStar];
-            self.priceStar3.image = [self getFilledStar];
-            self.priceStar4.image = [self getEmptyStar];
-            self.priceStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 4: {
-            
-            self.priceStar1.image = [self getFilledStar];
-            self.priceStar2.image = [self getFilledStar];
-            self.priceStar3.image = [self getFilledStar];
-            self.priceStar4.image = [self getFilledStar];
-            self.priceStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 5: {
-            
-            self.priceStar1.image = [self getFilledStar];
-            self.priceStar2.image = [self getFilledStar];
-            self.priceStar3.image = [self getFilledStar];
-            self.priceStar4.image = [self getFilledStar];
-            self.priceStar5.image = [self getFilledStar];
-            
-        }
-            break;
-            
-        default: {
-            
-            self.priceStar1.image = [self getEmptyStar];
-            self.priceStar2.image = [self getEmptyStar];
-            self.priceStar3.image = [self getEmptyStar];
-            self.priceStar4.image = [self getEmptyStar];
-            self.priceStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-    }
+    [self.priceRatingsView setRating:stars];
 }
 
 - (void)setAppearanceRating:(NSInteger)stars
 {
-    switch (stars) {
-        case 0: {
-            
-            self.appearanceStar1.image = [self getEmptyStar];
-            self.appearanceStar2.image = [self getEmptyStar];
-            self.appearanceStar3.image = [self getEmptyStar];
-            self.appearanceStar4.image = [self getEmptyStar];
-            self.appearanceStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 1: {
-            
-            self.appearanceStar1.image = [self getFilledStar];
-            self.appearanceStar2.image = [self getEmptyStar];
-            self.appearanceStar3.image = [self getEmptyStar];
-            self.appearanceStar4.image = [self getEmptyStar];
-            self.appearanceStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 2: {
-            
-            self.appearanceStar1.image = [self getFilledStar];
-            self.appearanceStar2.image = [self getFilledStar];
-            self.appearanceStar3.image = [self getEmptyStar];
-            self.appearanceStar4.image = [self getEmptyStar];
-            self.appearanceStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 3: {
-            
-            self.appearanceStar1.image = [self getFilledStar];
-            self.appearanceStar2.image = [self getFilledStar];
-            self.appearanceStar3.image = [self getFilledStar];
-            self.appearanceStar4.image = [self getEmptyStar];
-            self.appearanceStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 4: {
-            
-            self.appearanceStar1.image = [self getFilledStar];
-            self.appearanceStar2.image = [self getFilledStar];
-            self.appearanceStar3.image = [self getFilledStar];
-            self.appearanceStar4.image = [self getFilledStar];
-            self.appearanceStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 5: {
-            
-            self.appearanceStar1.image = [self getFilledStar];
-            self.appearanceStar2.image = [self getFilledStar];
-            self.appearanceStar3.image = [self getFilledStar];
-            self.appearanceStar4.image = [self getFilledStar];
-            self.appearanceStar5.image = [self getFilledStar];
-            
-        }
-            break;
-            
-        default: {
-            
-            self.appearanceStar1.image = [self getEmptyStar];
-            self.appearanceStar2.image = [self getEmptyStar];
-            self.appearanceStar3.image = [self getEmptyStar];
-            self.appearanceStar4.image = [self getEmptyStar];
-            self.appearanceStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-    }
+    [self.appearanceRatingsView setRating:stars];
 }
 
 - (void)setQualityRating:(NSInteger)stars
 {
-    switch (stars) {
-        case 0: {
-            
-            self.qualityStar1.image = [self getEmptyStar];
-            self.qualityStar2.image = [self getEmptyStar];
-            self.qualityStar3.image = [self getEmptyStar];
-            self.qualityStar4.image = [self getEmptyStar];
-            self.qualityStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 1: {
-            
-            self.qualityStar1.image = [self getFilledStar];
-            self.qualityStar2.image = [self getEmptyStar];
-            self.qualityStar3.image = [self getEmptyStar];
-            self.qualityStar4.image = [self getEmptyStar];
-            self.qualityStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 2: {
-            
-            self.qualityStar1.image = [self getFilledStar];
-            self.qualityStar2.image = [self getFilledStar];
-            self.qualityStar3.image = [self getEmptyStar];
-            self.qualityStar4.image = [self getEmptyStar];
-            self.qualityStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 3: {
-            
-            self.qualityStar1.image = [self getFilledStar];
-            self.qualityStar2.image = [self getFilledStar];
-            self.qualityStar3.image = [self getFilledStar];
-            self.qualityStar4.image = [self getEmptyStar];
-            self.qualityStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 4: {
-            
-            self.qualityStar1.image = [self getFilledStar];
-            self.qualityStar2.image = [self getFilledStar];
-            self.qualityStar3.image = [self getFilledStar];
-            self.qualityStar4.image = [self getFilledStar];
-            self.qualityStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-            
-        case 5: {
-            
-            self.qualityStar1.image = [self getFilledStar];
-            self.qualityStar2.image = [self getFilledStar];
-            self.qualityStar3.image = [self getFilledStar];
-            self.qualityStar4.image = [self getFilledStar];
-            self.qualityStar5.image = [self getFilledStar];
-            
-        }
-            break;
-            
-        default: {
-            
-            self.qualityStar1.image = [self getEmptyStar];
-            self.qualityStar2.image = [self getEmptyStar];
-            self.qualityStar3.image = [self getEmptyStar];
-            self.qualityStar4.image = [self getEmptyStar];
-            self.qualityStar5.image = [self getEmptyStar];
-            
-        }
-            break;
-    }
-}
-
-- (UIImage *)getEmptyStar
-{
-    return [UIImage imageNamed:@"img_rating_star_big_empty"];
-}
-
-- (UIImage *)getFilledStar
-{
-    return [UIImage imageNamed:@"img_rating_star_big_full"];
+    [self.qualityRatingsView setRating:stars];
 }
 
 @end
