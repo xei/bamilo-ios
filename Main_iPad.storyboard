@@ -672,8 +672,8 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="disabled" backgroundImage="greyHalf_disabled"/>
-                                        <state key="selected" backgroundImage="greyHalf_highlight"/>
-                                        <state key="highlighted" backgroundImage="greyHalf_highlight"/>
+                                        <state key="selected" backgroundImage="greyHalf_highlighted"/>
+                                        <state key="highlighted" backgroundImage="greyHalf_highlighted"/>
                                         <connections>
                                             <action selector="goToNewReviews:" destination="mCC-Lg-ePi" eventType="touchUpInside" id="9j2-yB-pLf"/>
                                         </connections>
@@ -916,7 +916,7 @@
         <image name="catalogTopButton" width="35" height="35"/>
         <image name="catalogTopButtonPressed" width="35" height="35"/>
         <image name="greyHalf_disabled" width="152" height="44"/>
-        <image name="greyHalf_highlight" width="27" height="27"/>
+        <image name="greyHalf_highlighted" width="152" height="44"/>
         <image name="greyHalf_normal" width="152" height="44"/>
         <image name="img_noreviews" width="27" height="27"/>
         <image name="img_rating_star_big_empty" width="27" height="27"/>

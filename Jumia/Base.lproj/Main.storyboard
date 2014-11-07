@@ -609,8 +609,8 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="disabled" backgroundImage="greyHalf_disabled"/>
-                                        <state key="selected" backgroundImage="greyHalf_highlight"/>
-                                        <state key="highlighted" backgroundImage="greyHalf_highlight"/>
+                                        <state key="selected" backgroundImage="greyHalf_highlighted"/>
+                                        <state key="highlighted" backgroundImage="greyHalf_highlighted"/>
                                         <connections>
                                             <action selector="goToNewReviews:" destination="3I2-43-heI" eventType="touchUpInside" id="lSo-CI-4PN"/>
                                         </connections>
@@ -2661,7 +2661,7 @@
         <image name="emptyFavoritesIcon" width="98" height="98"/>
         <image name="emptyRecentlyViewedIcon" width="98" height="98"/>
         <image name="greyHalf_disabled" width="152" height="44"/>
-        <image name="greyHalf_highlight" width="152" height="44"/>
+        <image name="greyHalf_highlighted" width="152" height="44"/>
         <image name="greyHalf_normal" width="152" height="44"/>
         <image name="headerCheckoutStep1" width="320" height="21"/>
         <image name="headerCheckoutStep1Icon" width="9" height="12"/>
