@@ -442,6 +442,10 @@
 		B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */; };
 		B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F41986C41D0094C92C /* RIOrder.m */; };
 		B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F61986C41D0094C92C /* RICheckout.m */; };
+		B5CBFF661A10B33D0050C553 /* JARatingsViewMedium.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CBFF641A10B33D0050C553 /* JARatingsViewMedium.m */; };
+		B5CBFF671A10B33D0050C553 /* JARatingsViewMedium.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CBFF641A10B33D0050C553 /* JARatingsViewMedium.m */; };
+		B5CBFF681A10B33D0050C553 /* JARatingsViewMedium.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */; };
+		B5CBFF691A10B33D0050C553 /* JARatingsViewMedium.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */; };
 		B5CDC7541A00E50C00DA8ADB /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */; };
 		B5CFE99A1A0CE3BC004CE545 /* JAAddRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */; };
 		B5CFE99C1A0CE475004CE545 /* JAAddRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */; };
@@ -1155,6 +1159,9 @@
 		B5C682F51986C41D0094C92C /* RIOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOrder.h; sourceTree = "<group>"; };
 		B5C682F61986C41D0094C92C /* RICheckout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICheckout.m; sourceTree = "<group>"; };
 		B5C682F71986C41D0094C92C /* RICheckout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICheckout.h; sourceTree = "<group>"; };
+		B5CBFF631A10B33D0050C553 /* JARatingsViewMedium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARatingsViewMedium.h; sourceTree = "<group>"; };
+		B5CBFF641A10B33D0050C553 /* JARatingsViewMedium.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingsViewMedium.m; sourceTree = "<group>"; };
+		B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARatingsViewMedium.xib; sourceTree = "<group>"; };
 		B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
 		B5CFE9981A0CE3BC004CE545 /* JAAddRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAddRatingView.h; sourceTree = "<group>"; };
 		B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAddRatingView.m; sourceTree = "<group>"; };
@@ -2900,6 +2907,9 @@
 				CE55A4E51993672600EE75DE /* JARatingsView.h */,
 				CE55A4E61993672600EE75DE /* JARatingsView.m */,
 				CE55A4E819936B6300EE75DE /* JARatingsView.xib */,
+				B5CBFF631A10B33D0050C553 /* JARatingsViewMedium.h */,
+				B5CBFF641A10B33D0050C553 /* JARatingsViewMedium.m */,
+				B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */,
 				CE3FC5A51990E209003B4A27 /* JAPickerScrollView.h */,
 				CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */,
 				CED30C25199CBF0E00C67F4B /* JAColorView.h */,
@@ -3230,6 +3240,7 @@
 				bc498f82bcc9b32f500887de /* JACatalogGridCell.xib in Resources */,
 				3adbf3574d3dc5f8b2adb76f /* JATextFieldComponent.xib in Resources */,
 				BB9546B519F5522E00AC7D05 /* 01_login.feature in Resources */,
+				B5CBFF691A10B33D0050C553 /* JARatingsViewMedium.xib in Resources */,
 				bf03e69fd5cb89aada2968fc /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */,
 				287b907897ac71738f12ec84 /* JASwitchCell.xib in Resources */,
 				8ef5430a40f35557c9e3eb94 /* JAUndefinedSearchView.xib in Resources */,
@@ -3428,6 +3439,7 @@
 				CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */,
 				CE13789519A4DC4E00CA0751 /* JARecentlyViewedListCell.xib in Resources */,
 				B59DCA7019B8712500DE7960 /* JAAddressCell.xib in Resources */,
+				B5CBFF681A10B33D0050C553 /* JARatingsViewMedium.xib in Resources */,
 				B5B5FDE619D99D06008B8059 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
 				BBA145B019DC56BF003F0CA7 /* assert.rb in Resources */,
 				B5B5FDEF19D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
@@ -3632,6 +3644,7 @@
 				560ac91adb9d3b1dec49fa39 /* RICart.m in Sources */,
 				9a39dc0f3a939d6e0ce2df01 /* RITrackingConfiguration.m in Sources */,
 				185e4d8d406a3ebd18ee19ec /* RIFormIndex.m in Sources */,
+				B5CBFF671A10B33D0050C553 /* JARatingsViewMedium.m in Sources */,
 				3c19ddaf1c0aad1ad6bfad03 /* JADynamicForm.m in Sources */,
 				7eb64a1c587a08b5852171a0 /* main.m in Sources */,
 				3193bc811c58a8831f67c283 /* UIButton+WebCache.m in Sources */,
@@ -3840,6 +3853,7 @@
 				B510B01419AE466B00A9754A /* JADynamicForm.m in Sources */,
 				B5A301AE19811D0700F71726 /* main.m in Sources */,
 				B5A3025D19811E8A00F71726 /* UIButton+WebCache.m in Sources */,
+				B5CBFF661A10B33D0050C553 /* JARatingsViewMedium.m in Sources */,
 				B5A3025C19811E8A00F71726 /* SDWebImagePrefetcher.m in Sources */,
 				CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */,
 				4A39212D19891F6D00B70A9C /* JARecentSearchesViewController.m in Sources */,
