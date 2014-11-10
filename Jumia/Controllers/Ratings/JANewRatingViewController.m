@@ -65,12 +65,12 @@ UIAlertViewDelegate
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
-                                                 name:@"UIKeyboardWillShowNotification"
+                                                 name:UIKeyboardWillShowNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:)
-                                                 name:@"UIKeyboardWillHideNotification"
+                                                 name:UIKeyboardWillHideNotification
                                                object:nil];
     
     if(VALID_NOTEMPTY(self.product.sku, NSString))
@@ -85,7 +85,6 @@ UIAlertViewDelegate
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
-    [self.topView setHidden:YES];
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -99,6 +98,7 @@ UIAlertViewDelegate
     self.numberOfRequests = 2;
     self.apiResponse = RIApiResponseSuccess;
     
+    [self hideViews];
     [self showLoading];
     
     [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
@@ -120,6 +120,12 @@ UIAlertViewDelegate
          self.apiResponse = apiResponse;
          self.numberOfRequests--;
      }];
+}
+
+- (void)hideViews
+{
+    [self.topView setHidden:YES];
+    [self.scrollView setHidden:YES];
 }
 
 -(void)finishedRequests
@@ -172,7 +178,7 @@ UIAlertViewDelegate
                                       CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
-    [self.view addSubview:self.priceView];
+    [self.topView addSubview:self.priceView];
     
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
     if(topViewMinHeight < 38.0f)
@@ -186,16 +192,13 @@ UIAlertViewDelegate
                                       self.view.frame.size.width,
                                       topViewMinHeight)];
     [self.topView setHidden:NO];
-    
-    self.scrollViewInitialRect = CGRectMake(self.view.bounds.origin.x,
-                                            CGRectGetMaxY(self.topView.frame),
-                                            self.view.bounds.size.width,
-                                            self.view.bounds.size.height - CGRectGetMaxY(self.topView.frame) - 64.0f);
 }
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [self hideViews];
     
     [self showLoading];
 }
@@ -250,6 +253,7 @@ UIAlertViewDelegate
                                          CGRectGetMaxY(self.topView.frame),
                                          scrollViewWidth,
                                          self.view.frame.size.height - CGRectGetMaxY(self.topView.frame))];
+    self.scrollViewInitialRect = self.scrollView.frame;
     
     if(VALID(self.centerView, UIView))
     {
@@ -366,6 +370,8 @@ UIAlertViewDelegate
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
                                              self.centerView.frame.size.height + self.centerView.frame.origin.y);
+    
+    [self.scrollView setHidden:NO];
 }
 
 - (void)dealloc

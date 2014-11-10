@@ -41,6 +41,7 @@ UITableViewDataSource
 @property (weak, nonatomic) IBOutlet UIImageView *emptyReviewsImageView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyReviewsLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *writeReviewScrollView;
+@property (assign, nonatomic) CGRect writeReviewScrollViewInitialRect;
 
 @property (strong, nonatomic) UIView *centerView;
 @property (strong, nonatomic) UILabel *fixedLabel;
@@ -82,6 +83,17 @@ UITableViewDataSource
     {
         self.screenName = @"RatingScreen";
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
@@ -279,15 +291,12 @@ UITableViewDataSource
         [self setupResumeView:viewsWidth];
     }
     
+    CGFloat originY = CGRectGetMaxY(self.resumeView.frame) + verticalMargin;
     self.tableViewComments.layer.cornerRadius = 5.0f;
     self.tableViewComments.allowsSelection = NO;
-    [self.tableViewComments setFrame:CGRectMake(verticalMargin,
-                                                CGRectGetMaxY(self.resumeView.frame) + verticalMargin,
-                                                viewsWidth,
-                                                self.view.frame.size.height - CGRectGetMaxY(self.resumeView.frame) - (2 * verticalMargin))];
+    
     if(isiPad)
     {
-        CGFloat originY = CGRectGetMaxY(self.resumeView.frame) + 6.0f;
         if(isInLandscape)
         {
             [self.resumeView setHidden:YES];
@@ -325,6 +334,10 @@ UITableViewDataSource
             if(hasComments)
             {
                 [self.writeReviewScrollView setHidden:YES];
+                [self.tableViewComments setFrame:CGRectMake(verticalMargin,
+                                                            originY,
+                                                            viewsWidth,
+                                                            self.view.frame.size.height - originY - verticalMargin)];
                 [self.tableViewComments setHidden:NO];
             }
             else
@@ -337,6 +350,11 @@ UITableViewDataSource
     else
     {
         [self.resumeView setHidden:NO];
+        
+        [self.tableViewComments setFrame:CGRectMake(verticalMargin,
+                                                    originY,
+                                                    viewsWidth,
+                                                    self.view.frame.size.height - originY - verticalMargin)];
         [self.tableViewComments setHidden:NO];
     }
 }
@@ -373,7 +391,7 @@ UITableViewDataSource
     [self.topView addSubview:self.priceView];
     
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
-
+    
     if(VALID_NOTEMPTY(self.stars, JARatingsViewMedium))
     {
         [self.stars removeFromSuperview];
@@ -451,7 +469,7 @@ UITableViewDataSource
                                                     originY,
                                                     width,
                                                     self.view.frame.size.height - originY)];
-    
+    self.writeReviewScrollViewInitialRect = self.writeReviewScrollView.frame;
     if(VALID(self.centerView, UIView))
     {
         [self.centerView removeFromSuperview];
@@ -840,5 +858,26 @@ UITableViewDataSource
         }];
 }
 
+#pragma mark - Keyboard notifications
+
+- (void) keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.writeReviewScrollView setFrame:CGRectMake(self.writeReviewScrollViewInitialRect.origin.x,
+                                                        self.writeReviewScrollViewInitialRect.origin.y,
+                                                        self.writeReviewScrollViewInitialRect.size.width,
+                                                        self.writeReviewScrollViewInitialRect.size.height - kbSize.height)];
+    }];
+}
+
+- (void) keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.writeReviewScrollView setFrame:self.writeReviewScrollViewInitialRect];
+    }];
+}
 
 @end
