@@ -89,12 +89,6 @@ UIAlertViewDelegate
     
     self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.brandLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.brandLabel.text = self.product.brand;
-    
-    self.nameLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.nameLabel.text = self.product.name;
-    
     self.numberOfRequests = 2;
     self.apiResponse = RIApiResponseSuccess;
     
@@ -151,17 +145,23 @@ UIAlertViewDelegate
 
 -(void)setupTopView
 {
+    self.brandLabel.text = self.product.brand;
+    CGRect brandLabelRect = [self.brandLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - 24.0f, self.view.frame.size.height)
+                                                               options:NSStringDrawingUsesLineFragmentOrigin
+                                                            attributes:@{NSFontAttributeName:self.brandLabel.font} context:nil];
     [self.brandLabel setFrame:CGRectMake(12.0f,
                                          6.0f,
-                                         self.view.frame.size.width - 24.0f,
-                                         self.brandLabel.frame.size.height)];
-    [self.brandLabel sizeToFit];
+                                         brandLabelRect.size.width,
+                                         brandLabelRect.size.height)];
     
+    self.nameLabel.text = self.product.name;
+    CGRect nameLabelRect = [self.nameLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - 24.0f, self.view.frame.size.height)
+                                                             options:NSStringDrawingUsesLineFragmentOrigin
+                                                          attributes:@{NSFontAttributeName:self.nameLabel.font} context:nil];
     [self.nameLabel setFrame:CGRectMake(12.0f,
-                                        CGRectGetMaxY(self.brandLabel.frame) + 4.0f,
-                                        self.view.frame.size.width - 24.0f,
-                                        self.nameLabel.frame.size.height)];
-    [self.nameLabel sizeToFit];
+                                        CGRectGetMaxY(self.brandLabel.frame) + 6.0f,
+                                        nameLabelRect.size.width,
+                                        nameLabelRect.size.height)];
     
     if(VALID(self.priceView, JAPriceView))
     {
