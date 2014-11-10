@@ -85,11 +85,7 @@ UIAlertViewDelegate
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
-    self.scrollViewInitialRect = CGRectMake(self.view.bounds.origin.x,
-                                            CGRectGetMaxY(self.topView.frame),
-                                            self.view.bounds.size.width,
-                                            self.view.bounds.size.height - CGRectGetMaxY(self.topView.frame) - 64.0f);
-    
+    [self.topView setHidden:YES];
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -102,8 +98,6 @@ UIAlertViewDelegate
     
     self.numberOfRequests = 2;
     self.apiResponse = RIApiResponseSuccess;
-    
-    [self setupTopView];
     
     [self showLoading];
     
@@ -191,6 +185,12 @@ UIAlertViewDelegate
                                       0.0f,
                                       self.view.frame.size.width,
                                       topViewMinHeight)];
+    [self.topView setHidden:NO];
+    
+    self.scrollViewInitialRect = CGRectMake(self.view.bounds.origin.x,
+                                            CGRectGetMaxY(self.topView.frame),
+                                            self.view.bounds.size.width,
+                                            self.view.bounds.size.height - CGRectGetMaxY(self.topView.frame) - 64.0f);
 }
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -234,6 +234,8 @@ UIAlertViewDelegate
 
 -(void)setupViews
 {
+    [self setupTopView];
+    
     CGFloat verticalMargin = 6.0f;
     CGFloat horizontalMargin = 6.0f;
     
@@ -243,12 +245,12 @@ UIAlertViewDelegate
         isiPad = YES;
     }
     CGFloat scrollViewWidth = self.view.frame.size.width;
-
+    
     [self.scrollView setFrame:CGRectMake(0.0f,
                                          CGRectGetMaxY(self.topView.frame),
                                          scrollViewWidth,
                                          self.view.frame.size.height - CGRectGetMaxY(self.topView.frame))];
-
+    
     if(VALID(self.centerView, UIView))
     {
         [self.centerView removeFromSuperview];
@@ -256,7 +258,7 @@ UIAlertViewDelegate
     self.centerView = [[UIView alloc] init];
     self.centerView.backgroundColor = [UIColor whiteColor];
     self.centerView.layer.cornerRadius = 5.0f;
-
+    
     CGFloat centerViewWidth = scrollViewWidth - (2 * horizontalMargin);
     CGFloat dynamicFormHorizontalMargin = 6.0f;
     if(isiPad)
@@ -328,7 +330,7 @@ UIAlertViewDelegate
         currentY += view.frame.size.height + spaceBetweenFormFields;
         count++;
     }
-  
+    
     // Add space between last form field and send review button
     currentY += 38.0f;
     
