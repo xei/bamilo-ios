@@ -26,6 +26,7 @@
 
 @property (nonatomic, assign)CGRect teaserPageScrollPortraitRect;
 @property (nonatomic, assign)CGRect teaserPageScrollLandscapeRect;
+@property (nonatomic, assign)NSInteger lastIndex;
 
 @end
 
@@ -175,6 +176,8 @@
         self.teaserPagesScrollView.frame = self.teaserPageScrollPortraitRect;
     }
     [self.teaserPagesScrollView removeFromSuperview];
+    
+    self.lastIndex = self.teaserCategoryScrollView.selectedIndex;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -194,7 +197,9 @@
     }
     [self.teaserPagesScrollView setContentSize:CGSizeMake(currentPageX,
                                                           self.teaserPagesScrollView.frame.size.height)];
-    [self selectedIndex:0];
+    [self selectedIndex:self.lastIndex];
+    self.teaserCategoryScrollView.startingIndex = self.lastIndex;
+    [self.teaserCategoryScrollView setNeedsLayout];
     [self.view addSubview:self.teaserPagesScrollView];
 }
 
