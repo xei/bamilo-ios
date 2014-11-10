@@ -86,6 +86,8 @@ UIAlertViewDelegate
     self.navBarLayout.showLogo = NO;
     
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.brandLabel.text = self.product.brand;
+    self.nameLabel.text = self.product.name;
     
     self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
     
@@ -145,7 +147,6 @@ UIAlertViewDelegate
 
 -(void)setupTopView
 {
-    self.brandLabel.text = self.product.brand;
     CGRect brandLabelRect = [self.brandLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - 24.0f, self.view.frame.size.height)
                                                                options:NSStringDrawingUsesLineFragmentOrigin
                                                             attributes:@{NSFontAttributeName:self.brandLabel.font} context:nil];
@@ -154,7 +155,6 @@ UIAlertViewDelegate
                                          brandLabelRect.size.width,
                                          brandLabelRect.size.height)];
     
-    self.nameLabel.text = self.product.name;
     CGRect nameLabelRect = [self.nameLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - 24.0f, self.view.frame.size.height)
                                                              options:NSStringDrawingUsesLineFragmentOrigin
                                                           attributes:@{NSFontAttributeName:self.nameLabel.font} context:nil];

@@ -98,6 +98,9 @@ UITableViewDataSource
     self.navBarLayout.showLogo = NO;
     
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.brandLabel.text = self.product.brand;    
+    self.nameLabel.text = self.product.name;
+    
     self.resumeView.translatesAutoresizingMaskIntoConstraints = YES;
     self.tableViewComments.translatesAutoresizingMaskIntoConstraints = YES;
     
@@ -355,7 +358,6 @@ UITableViewDataSource
 
 - (void)setupTopView:(BOOL)addNumberOfReviewsInTopView
 {
-    self.brandLabel.text = self.product.brand;
     CGRect brandLabelRect = [self.brandLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - 24.0f, self.view.frame.size.height)
                                                                options:NSStringDrawingUsesLineFragmentOrigin
                                                             attributes:@{NSFontAttributeName:self.brandLabel.font} context:nil];
@@ -364,7 +366,6 @@ UITableViewDataSource
                                          brandLabelRect.size.width,
                                          brandLabelRect.size.height)];
     
-    self.nameLabel.text = self.product.name;
     CGRect nameLabelRect = [self.nameLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - 24.0f, self.view.frame.size.height)
                                                              options:NSStringDrawingUsesLineFragmentOrigin
                                                           attributes:@{NSFontAttributeName:self.nameLabel.font} context:nil];
@@ -469,7 +470,10 @@ UITableViewDataSource
                                                     originY,
                                                     width,
                                                     self.view.frame.size.height - originY)];
-    self.writeReviewScrollViewInitialRect = self.writeReviewScrollView.frame;
+    self.writeReviewScrollViewInitialRect = CGRectMake(width + horizontalMargin,
+                                                       originY,
+                                                       width,
+                                                       self.view.frame.size.height - originY);
     if(VALID(self.centerView, UIView))
     {
         [self.centerView removeFromSuperview];
@@ -865,11 +869,12 @@ UITableViewDataSource
     NSDictionary *userInfo = [notification userInfo];
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
+    // This happens only in landscape so we need to remove keyboard width.
     [UIView animateWithDuration:0.3 animations:^{
         [self.writeReviewScrollView setFrame:CGRectMake(self.writeReviewScrollViewInitialRect.origin.x,
                                                         self.writeReviewScrollViewInitialRect.origin.y,
                                                         self.writeReviewScrollViewInitialRect.size.width,
-                                                        self.writeReviewScrollViewInitialRect.size.height - kbSize.height)];
+                                                        self.writeReviewScrollViewInitialRect.size.height - kbSize.width)];
     }];
 }
 
