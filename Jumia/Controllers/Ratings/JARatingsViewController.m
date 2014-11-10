@@ -13,6 +13,7 @@
 #import "JAPriceView.h"
 #import "JADynamicForm.h"
 #import "JAAddRatingView.h"
+#import "JARatingsViewMedium.h"
 #import "RIProduct.h"
 #import "RIForm.h"
 #import "RIRatings.h"
@@ -29,12 +30,7 @@ UITableViewDataSource
 @property (weak, nonatomic) IBOutlet UILabel *brandLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIView *resumeView;
-@property (weak, nonatomic) IBOutlet UIImageView *star1;
-@property (weak, nonatomic) IBOutlet UIImageView *star2;
-@property (weak, nonatomic) IBOutlet UIImageView *star3;
-@property (weak, nonatomic) IBOutlet UIImageView *star4;
-@property (weak, nonatomic) IBOutlet UIImageView *star5;
-@property (weak, nonatomic) IBOutlet UILabel *reviewsNumber;
+@property (weak, nonatomic) JARatingsViewMedium *stars;
 @property (weak, nonatomic) IBOutlet UILabel *labelUsedProduct;
 @property (weak, nonatomic) IBOutlet UIButton *writeReviewButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewComments;
@@ -253,8 +249,6 @@ UITableViewDataSource
 
 - (void)setupViews
 {
-    [self setupTopView];
-    
     CGFloat horizontalMargin = 6.0f;
     CGFloat verticalMargin = 6.0f;
     
@@ -275,9 +269,15 @@ UITableViewDataSource
         hasComments = YES;
     }
     
+    BOOL addNumberOfReviewsInTopView = (isiPad && isInLandscape && hasComments);
+    [self setupTopView:addNumberOfReviewsInTopView];
+    
     CGFloat viewsWidth = self.view.frame.size.width - (2 * horizontalMargin);
     
-    [self setupResumeView:viewsWidth];
+    if(!isiPad || !isInLandscape)
+    {
+        [self setupResumeView:viewsWidth];
+    }
     
     self.tableViewComments.layer.cornerRadius = 5.0f;
     self.tableViewComments.allowsSelection = NO;
@@ -341,7 +341,7 @@ UITableViewDataSource
     }
 }
 
-- (void)setupTopView
+- (void)setupTopView:(BOOL)addNumberOfReviewsInTopView
 {
     [self.brandLabel setFrame:CGRectMake(12.0f,
                                          6.0f,
@@ -373,6 +373,26 @@ UITableViewDataSource
     [self.topView addSubview:self.priceView];
     
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
+
+    if(VALID_NOTEMPTY(self.stars, JARatingsViewMedium))
+    {
+        [self.stars removeFromSuperview];
+    }
+    
+    if(addNumberOfReviewsInTopView)
+    {
+        topViewMinHeight += 6.0f;
+        self.stars = [JARatingsViewMedium getNewJARatingsViewMedium];
+        [self.stars setFrame:CGRectMake(12.0f,
+                                        topViewMinHeight,
+                                        self.stars.frame.size.width,
+                                        self.stars.frame.size.height)];
+        [self.topView addSubview:self.stars];
+        [self.stars setRating:[self.product.avr integerValue]];
+        [self.stars setNumberOfReviews:self.productRatings.commentsCount];
+        topViewMinHeight += self.stars.frame.size.height;
+    }
+    
     if(topViewMinHeight < 38.0f)
     {
         topViewMinHeight = 38.0f;
@@ -394,16 +414,31 @@ UITableViewDataSource
                                          width,
                                          self.resumeView.frame.size.height)];
     
-    [self.reviewsNumber setText:[NSString stringWithFormat:STRING_REVIEWS, self.productRatings.commentsCount]];
-    
-    [self setNumberOfStars:[self.product.avr integerValue]];
-    
-    [self.writeReviewButton setTitle:STRING_WRITE_REVIEW
-                            forState:UIControlStateNormal];
-    [self.writeReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
-                                 forState:UIControlStateNormal];
+    if(VALID_NOTEMPTY(self.stars, JARatingsViewMedium))
+    {
+        [self.stars removeFromSuperview];
+    }
+    self.stars = [JARatingsViewMedium getNewJARatingsViewMedium];
+    [self.stars setFrame:CGRectMake(6.0f,
+                                    10.0f,
+                                    self.stars.frame.size.width,
+                                    self.stars.frame.size.height)];
+    [self.resumeView addSubview:self.stars];
+    [self.stars setRating:[self.product.avr integerValue]];
+    [self.stars setNumberOfReviews:self.productRatings.commentsCount];
     
     self.labelUsedProduct.text = STRING_RATE_PRODUCT;
+    [self.labelUsedProduct setTextColor:UIColorFromRGB(0x666666)];
+    self.labelUsedProduct.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.labelUsedProduct setFrame:CGRectMake(self.labelUsedProduct.frame.origin.x,
+                                               CGRectGetMaxY(self.stars.frame) + 5.0f,
+                                               self.labelUsedProduct.frame.size.width,
+                                               self.labelUsedProduct.frame.size.height)];
+    [self.writeReviewButton setTitle:STRING_WRITE_REVIEW
+                            forState:UIControlStateNormal];
+    [self.writeReviewButton sizeToFit];
+    [self.writeReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
+                                 forState:UIControlStateNormal];
 }
 
 - (void)setupSendReviewView:(CGFloat)width originY:(CGFloat)originY
@@ -674,6 +709,12 @@ UITableViewDataSource
     
     cell.labelAuthorDate.text = string;
     
+    [cell.separator setHidden:NO];
+    if(indexPath.row == ([self.productRatings.comments count] - 1))
+    {
+        [cell.separator setHidden:YES];
+    }
+    
     [cell layoutSubviews];
     
     return cell;
@@ -682,26 +723,6 @@ UITableViewDataSource
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     return [[UIView alloc] initWithFrame:CGRectZero];
-}
-
-#pragma mark - Number of stars
-- (void)setNumberOfStars:(NSInteger)stars
-{
-    self.star1.image = stars < 1 ? [self getEmptyStar] : [self getFilledStar];
-    self.star2.image = stars < 2 ? [self getEmptyStar] : [self getFilledStar];
-    self.star3.image = stars < 3 ? [self getEmptyStar] : [self getFilledStar];
-    self.star4.image = stars < 4 ? [self getEmptyStar] : [self getFilledStar];
-    self.star5.image = stars < 5 ? [self getEmptyStar] : [self getFilledStar];
-}
-
-- (UIImage *)getEmptyStar
-{
-    return [UIImage imageNamed:@"img_rating_star_big_empty"];
-}
-
-- (UIImage *)getFilledStar
-{
-    return [UIImage imageNamed:@"img_rating_star_big_full"];
 }
 
 #pragma mark - Send review
