@@ -21,6 +21,7 @@
 @property (nonatomic, assign) BOOL disableDelagation; // used in undefined search therm
 
 @property (nonatomic, assign)NSInteger startingIndex;
+@property (nonatomic, readonly)NSInteger selectedIndex;
 
 - (void)setOptions:(NSArray*)options;
 
