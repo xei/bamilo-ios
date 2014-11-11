@@ -154,21 +154,16 @@ UIAlertViewDelegate
 
 -(void)setupTopView
 {
-    CGRect brandLabelRect = [self.brandLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - 24.0f, self.view.frame.size.height)
-                                                               options:NSStringDrawingUsesLineFragmentOrigin
-                                                            attributes:@{NSFontAttributeName:self.brandLabel.font} context:nil];
     [self.brandLabel setFrame:CGRectMake(12.0f,
                                          6.0f,
-                                         brandLabelRect.size.width + 1.0f,
-                                         brandLabelRect.size.height + 1.0f)];
-    
-    CGRect nameLabelRect = [self.nameLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - 24.0f, self.view.frame.size.height)
-                                                             options:NSStringDrawingUsesLineFragmentOrigin
-                                                          attributes:@{NSFontAttributeName:self.nameLabel.font} context:nil];
+                                         self.view.frame.size.width - 24.0f,
+                                         self.view.frame.size.height)];
+    [self.brandLabel sizeToFit];
     [self.nameLabel setFrame:CGRectMake(12.0f,
                                         CGRectGetMaxY(self.brandLabel.frame) + 6.0f,
-                                        nameLabelRect.size.width + 1.0f,
-                                        nameLabelRect.size.height + 1.0f)];
+                                        self.view.frame.size.width - 24.0f,
+                                        self.view.frame.size.height)];
+    [self.nameLabel sizeToFit];
     
     if(VALID(self.priceView, JAPriceView))
     {

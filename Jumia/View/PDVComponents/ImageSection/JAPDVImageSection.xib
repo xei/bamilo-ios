@@ -29,13 +29,13 @@
                     <rect key="frame" x="0.0" y="191" width="308" height="1"/>
                     <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                 </imageView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="TITLE TITLE TITLE TITLE TITLE TITLE TITLE " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJ3-Sg-ObF">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TITLE TITLE TITLE TITLE TITLE TITLE TITLE " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJ3-Sg-ObF">
                     <rect key="frame" x="6" y="194" width="294" height="20"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Product Name - Product Name - Product Name - Product Name - Product Name - " lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2I3-dP-D9f">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Product Name - Product Name - Product Name - Product Name - Product Name - " lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2I3-dP-D9f">
                     <rect key="frame" x="6" y="214" width="293" height="17"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -67,10 +67,8 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="2I3-dP-D9f" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" constant="6" id="13Y-Yz-Tt7"/>
                 <constraint firstItem="To2-Xa-KXK" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" id="9D7-RM-p6N"/>
                 <constraint firstAttribute="trailing" secondItem="aj0-2L-1o6" secondAttribute="trailing" id="Fdh-6z-fgN"/>
-                <constraint firstItem="dJ3-Sg-ObF" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" constant="6" id="Hf2-PL-jwK"/>
                 <constraint firstAttribute="trailing" secondItem="bsw-2t-Blk" secondAttribute="trailing" constant="-3" id="S9k-cp-QjA"/>
                 <constraint firstItem="aHG-N7-bwQ" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" id="TFX-7v-kM4"/>
                 <constraint firstAttribute="trailing" secondItem="A3y-q3-3f1" secondAttribute="trailing" constant="13" id="X8m-9e-Arn"/>
@@ -78,11 +76,7 @@
                 <constraint firstAttribute="trailing" secondItem="aHG-N7-bwQ" secondAttribute="trailing" id="fQE-k0-Eu4"/>
                 <constraint firstItem="aHG-N7-bwQ" firstAttribute="top" secondItem="5ON-fF-LLy" secondAttribute="top" id="fys-tq-Uds"/>
                 <constraint firstItem="A3y-q3-3f1" firstAttribute="top" secondItem="bsw-2t-Blk" secondAttribute="bottom" constant="106" id="h4g-sB-deQ"/>
-                <constraint firstAttribute="trailing" secondItem="dJ3-Sg-ObF" secondAttribute="trailing" constant="8" id="ht0-oo-mDU"/>
                 <constraint firstItem="To2-Xa-KXK" firstAttribute="top" secondItem="5ON-fF-LLy" secondAttribute="top" id="rm8-Oj-NRh"/>
-                <constraint firstItem="2I3-dP-D9f" firstAttribute="top" secondItem="dJ3-Sg-ObF" secondAttribute="bottom" id="tVx-1w-34N"/>
-                <constraint firstAttribute="trailing" secondItem="2I3-dP-D9f" secondAttribute="trailing" constant="9" id="vv7-Rn-StP"/>
-                <constraint firstItem="dJ3-Sg-ObF" firstAttribute="top" secondItem="aHG-N7-bwQ" secondAttribute="bottom" constant="2" id="yjH-k8-OpD"/>
                 <constraint firstItem="aj0-2L-1o6" firstAttribute="leading" secondItem="5ON-fF-LLy" secondAttribute="leading" id="zzy-lz-21J"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
