@@ -17,6 +17,7 @@
 @property (assign, nonatomic) int requestNumber;
 @property (strong, nonatomic) UIView *loadingView;
 @property (nonatomic, strong) UIImageView *loadingAnimation;
+@property (strong, nonatomic) JANoConnectionView *noConnectionView;
 
 @end
 
@@ -90,6 +91,21 @@
          
          self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
          self.loadingAnimation.center = self.loadingView.center;
+    }
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    CGRect viewFrame = self.view.frame;
+    CGFloat screenWidth = viewFrame.size.width;
+    CGFloat screenHeight = viewFrame.size.height;
+    
+    if(VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView))
+    {
+        self.noConnectionView.frame =  CGRectMake(0, 0, screenWidth, screenHeight);
+        [self.view bringSubviewToFront:self.noConnectionView];
     }
 }
 
@@ -186,42 +202,41 @@
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
 {
-    JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-    [lostConnection setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
-    lostConnection.frame = CGRectMake(self.view.frame.origin.x,
-                                      startingY,
-                                      self.view.frame.size.width,
-                                      self.view.frame.size.height);
-    
-    [lostConnection setRetryBlock:^(BOOL dismiss)
-     {
-         if([self respondsToSelector:selector])
-         {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-             if(ISEMPTY(objects))
-             {
-                 [self performSelector:selector];
-             }
-             else if(1 == [objects count])
-             {
-                 [self performSelector:selector withObject:[objects objectAtIndex:0]];
-             }
-             else if(2 == [objects count])
-             {
-                 [self performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
-             }
-#pragma clang diagnostic pop
-         }
-     }];
-    
-    for (UIView* view in self.view.subviews) {
-        if ([view isKindOfClass:[JANoConnectionView class]]) {
-            [view removeFromSuperview];
-        }
+    if(VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView))
+    {
+        [self.noConnectionView removeFromSuperview];
     }
     
-    [self.view addSubview:lostConnection];
+    self.noConnectionView = [JANoConnectionView getNewJANoConnectionView];
+    [self.noConnectionView setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
+    self.noConnectionView.frame = CGRectMake(self.view.frame.origin.x,
+                                             startingY,
+                                             self.view.frame.size.width,
+                                             self.view.frame.size.height);
+    
+//    [self.noConnectionView setRetryBlock:^(BOOL dismiss)
+//     {
+//         if([self respondsToSelector:selector])
+//         {
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+//             if(ISEMPTY(objects))
+//             {
+//                 [self performSelector:selector];
+//             }
+//             else if(1 == [objects count])
+//             {
+//                 [self performSelector:selector withObject:[objects objectAtIndex:0]];
+//             }
+//             else if(2 == [objects count])
+//             {
+//                 [self performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+//             }
+//#pragma clang diagnostic pop
+//         }
+//     }];
+    
+    [self.view addSubview:self.noConnectionView];
 }
 
 - (void)removeErrorView

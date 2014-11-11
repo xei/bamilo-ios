@@ -256,6 +256,7 @@
     [self setupViews];
     
     [self hideLoading];
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning
