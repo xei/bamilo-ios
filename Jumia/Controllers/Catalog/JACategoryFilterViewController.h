@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JACategoryFiltersView.h"
 
 @class RICategory;
 
@@ -16,7 +17,7 @@
 
 @end
 
-@interface JACategoryFilterViewController : JABaseViewController <UITableViewDelegate, UITableViewDataSource>
+@interface JACategoryFilterViewController : JABaseViewController <JACategoryFiltersViewDelegate>
 
 @property (nonatomic, strong)NSArray* categoriesArray;
 @property (nonatomic, strong)RICategory* selectedCategory;

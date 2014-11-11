@@ -9,7 +9,7 @@
 #import "JABaseViewController.h"
 #import "RIFilter.h"
 
-@interface JAGenericFilterViewController : JABaseViewController <UITableViewDelegate, UITableViewDataSource>
+@interface JAGenericFilterViewController : JABaseViewController
 
 @property (nonatomic, strong)RIFilter* filter;
 
