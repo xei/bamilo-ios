@@ -57,10 +57,7 @@
     
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.labelBrand.translatesAutoresizingMaskIntoConstraints = YES;
     self.labelBrand.text = self.product.brand;
-    
-    self.labelName.translatesAutoresizingMaskIntoConstraints = YES;
     self.labelName.text = self.product.name;
 }
 
@@ -103,7 +100,7 @@
                                       CGRectGetMaxY(self.labelName.frame) + 4.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
-    [self.view addSubview:self.priceView];
+    [self.topView addSubview:self.priceView];
     
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
     if(topViewMinHeight < 38.0f)
@@ -251,11 +248,10 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
     [self setupViews];
     
     [self hideLoading];
+
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 

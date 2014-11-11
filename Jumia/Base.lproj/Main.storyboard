@@ -1430,16 +1430,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hex-qc-hx0">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hex-qc-hx0">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="92"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ou-Ho-oX1">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ou-Ho-oX1">
                                         <rect key="frame" x="12" y="8" width="296" height="17"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="296" translatesAutoresizingMaskIntoConstraints="NO" id="OX5-pJ-b6R">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="296" translatesAutoresizingMaskIntoConstraints="NO" id="OX5-pJ-b6R">
                                         <rect key="frame" x="12" y="29" width="296" height="17"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1447,26 +1447,11 @@
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="0Ou-Ho-oX1" firstAttribute="top" secondItem="hex-qc-hx0" secondAttribute="top" constant="8" id="2Wu-l3-6A0"/>
-                                    <constraint firstAttribute="width" constant="320" id="4L8-Wf-qGj"/>
-                                    <constraint firstAttribute="trailing" secondItem="0Ou-Ho-oX1" secondAttribute="trailing" constant="12" id="4cj-SJ-vWM"/>
-                                    <constraint firstAttribute="height" constant="92" id="Haf-J3-v8x"/>
-                                    <constraint firstItem="OX5-pJ-b6R" firstAttribute="leading" secondItem="hex-qc-hx0" secondAttribute="leading" constant="12" id="J43-gN-x8T"/>
-                                    <constraint firstItem="OX5-pJ-b6R" firstAttribute="top" secondItem="0Ou-Ho-oX1" secondAttribute="bottom" constant="4" id="fOm-0F-DNW"/>
-                                    <constraint firstItem="0Ou-Ho-oX1" firstAttribute="leading" secondItem="hex-qc-hx0" secondAttribute="leading" constant="12" id="kys-Q2-DRT"/>
-                                    <constraint firstAttribute="trailing" secondItem="OX5-pJ-b6R" secondAttribute="trailing" constant="12" id="pJL-Ae-pF2"/>
-                                </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fmt-yo-59t">
                                 <rect key="frame" x="0.0" y="92" width="320" height="412"/>
                             </scrollView>
                         </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="hex-qc-hx0" secondAttribute="trailing" id="6Zy-ar-cZb"/>
-                            <constraint firstItem="hex-qc-hx0" firstAttribute="leading" secondItem="Ngo-JV-gZI" secondAttribute="leading" id="AKA-CM-oDx"/>
-                            <constraint firstItem="hex-qc-hx0" firstAttribute="top" secondItem="BA6-ET-S6M" secondAttribute="bottom" id="djQ-iS-XEw"/>
-                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="Lff-Xd-XGy"/>
