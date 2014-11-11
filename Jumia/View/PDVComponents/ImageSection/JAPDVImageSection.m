@@ -79,6 +79,12 @@
         }
     }
     
+    self.productNameLabel.text = product.brand;
+    self.productNameLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.productDescriptionLabel.text = product.name;
+    self.productDescriptionLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               width,
@@ -95,30 +101,6 @@
                                                  self.separatorImageView.frame.size.height)];
     
     [self loadWithImages:[product.images array]];
-    
-    self.productNameLabel.text = product.brand;
-    self.productNameLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    CGRect productNameLabelRect = [self.productDescriptionLabel.text boundingRectWithSize:CGSizeMake(self.imageScrollView.frame.size.width - 12.0f, 1000.0f)
-                                                                                  options:NSStringDrawingUsesLineFragmentOrigin
-                                                                               attributes:@{NSFontAttributeName:self.productNameLabel.font} context:nil];
-    
-    [self.productNameLabel setFrame:CGRectMake(self.productNameLabel.frame.origin.x,
-                                               self.productNameLabel.frame.origin.y,
-                                               productNameLabelRect.size.width,
-                                               productNameLabelRect.size.height)];
-    
-    self.productDescriptionLabel.text = product.name;
-    self.productDescriptionLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    CGRect productDescriptionLabelRect = [self.productDescriptionLabel.text boundingRectWithSize:CGSizeMake(self.imageScrollView.frame.size.width - 12.0f, 1000.0f)
-                                                                                         options:NSStringDrawingUsesLineFragmentOrigin
-                                                                                      attributes:@{NSFontAttributeName:self.productDescriptionLabel.font} context:nil];
-    
-    [self.productDescriptionLabel setFrame:CGRectMake(self.productDescriptionLabel.frame.origin.x,
-                                                      CGRectGetMaxY(self.productNameLabel.frame),
-                                                      self.imageScrollView.frame.size.width + 1.0f,
-                                                      productDescriptionLabelRect.size.height + 1.0f)];
-    
     
     if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
     {
@@ -158,6 +140,18 @@
 
 - (void)setupForPortrait:(CGRect)frame product:(RIProduct*)product
 {
+    [self.productNameLabel setFrame:CGRectMake(6.0f,
+                                               CGRectGetMaxY(self.separatorImageView.frame) + 6.0f,
+                                               self.imageScrollView.frame.size.width - 12.0f,
+                                               1000.0f)];
+    [self.productNameLabel sizeToFit];
+    
+    [self.productDescriptionLabel setFrame:CGRectMake(6.0f,
+                                                      CGRectGetMaxY(self.productNameLabel.frame) + 2.0f,
+                                                      self.imageScrollView.frame.size.width - 12.0f,
+                                                      1000.0f)];
+    [self.productDescriptionLabel sizeToFit];
+    
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
@@ -168,6 +162,18 @@
 
 {
     CGFloat width = frame.size.width - 6.0f;
+    
+    [self.productNameLabel setFrame:CGRectMake(6.0f,
+                                               6.0f,
+                                               self.imageScrollView.frame.size.width - 12.0f,
+                                               1000.0f)];
+    [self.productNameLabel sizeToFit];
+    
+    [self.productDescriptionLabel setFrame:CGRectMake(6.0f,
+                                                      CGRectGetMaxY(self.productNameLabel.frame) + 2.0f,
+                                                      self.imageScrollView.frame.size.width - 12.0f,
+                                                      1000.0f)];
+    [self.productDescriptionLabel sizeToFit];
     
     [self setPriceWithNewValue:product.specialPriceFormatted
                    andOldValue:product.priceFormatted];
