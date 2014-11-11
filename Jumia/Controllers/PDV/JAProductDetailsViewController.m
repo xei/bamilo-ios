@@ -57,11 +57,11 @@
     
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.labelBrand.translatesAutoresizingMaskIntoConstraints = YES;
     self.labelBrand.text = self.product.brand;
+    self.labelBrand.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.labelName.translatesAutoresizingMaskIntoConstraints = YES;
     self.labelName.text = self.product.name;
+    self.labelName.translatesAutoresizingMaskIntoConstraints = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -79,13 +79,13 @@
     [self.labelBrand setFrame:CGRectMake(12.0f,
                                          6.0f,
                                          self.view.frame.size.width - 24.0f,
-                                         self.labelBrand.frame.size.height)];
+                                         self.view.frame.size.height)];
     [self.labelBrand sizeToFit];
     
     [self.labelName setFrame:CGRectMake(12.0f,
                                         CGRectGetMaxY(self.labelBrand.frame) + 4.0f,
                                         self.view.frame.size.width - 24.0f,
-                                        self.labelName.frame.size.height)];
+                                        self.view.frame.size.height)];
     [self.labelName sizeToFit];
     
     if(VALID(self.priceView, JAPriceView))
@@ -103,7 +103,7 @@
                                       CGRectGetMaxY(self.labelName.frame) + 4.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
-    [self.view addSubview:self.priceView];
+    [self.topView addSubview:self.priceView];
     
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
     if(topViewMinHeight < 38.0f)
@@ -251,11 +251,10 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
     [self setupViews];
     
     [self hideLoading];
+
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 

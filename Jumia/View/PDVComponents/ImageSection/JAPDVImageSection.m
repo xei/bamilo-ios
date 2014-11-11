@@ -79,6 +79,12 @@
         }
     }
     
+    self.productNameLabel.text = product.brand;
+    self.productNameLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.productDescriptionLabel.text = product.name;
+    self.productDescriptionLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               width,
@@ -92,25 +98,9 @@
     [self.separatorImageView setFrame:CGRectMake(self.separatorImageView.frame.origin.x,
                                                  self.separatorImageView.frame.origin.y,
                                                  width,
-                                                 self.separatorImageView.frame.size.height)];    
+                                                 self.separatorImageView.frame.size.height)];
     
     [self loadWithImages:[product.images array]];
-    
-    self.productNameLabel.text = product.brand;
-    [self.productNameLabel sizeToFit];
-    
-    self.productDescriptionLabel.text = product.name;
-    [self.productDescriptionLabel sizeToFit];
-    
-    CGRect productDescriptionLabelRect = [self.productDescriptionLabel.text boundingRectWithSize:CGSizeMake(self.imageScrollView.frame.size.width, 1000.0f)
-                                                                                         options:NSStringDrawingUsesLineFragmentOrigin
-                                                                                      attributes:@{NSFontAttributeName:self.productDescriptionLabel.font} context:nil];
-    
-    [self.productDescriptionLabel setFrame:CGRectMake(self.productDescriptionLabel.frame.origin.x,
-                                                      CGRectGetMaxY(self.productNameLabel.frame),
-                                                      self.imageScrollView.frame.size.width,
-                                                      productDescriptionLabelRect.size.height)];
-    
     
     if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
     {
@@ -150,6 +140,18 @@
 
 - (void)setupForPortrait:(CGRect)frame product:(RIProduct*)product
 {
+    [self.productNameLabel setFrame:CGRectMake(6.0f,
+                                               CGRectGetMaxY(self.separatorImageView.frame) + 6.0f,
+                                               self.imageScrollView.frame.size.width - 12.0f,
+                                               1000.0f)];
+    [self.productNameLabel sizeToFit];
+    
+    [self.productDescriptionLabel setFrame:CGRectMake(6.0f,
+                                                      CGRectGetMaxY(self.productNameLabel.frame) + 2.0f,
+                                                      self.imageScrollView.frame.size.width - 12.0f,
+                                                      1000.0f)];
+    [self.productDescriptionLabel sizeToFit];
+    
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
@@ -160,6 +162,18 @@
 
 {
     CGFloat width = frame.size.width - 6.0f;
+    
+    [self.productNameLabel setFrame:CGRectMake(6.0f,
+                                               6.0f,
+                                               self.imageScrollView.frame.size.width - 12.0f,
+                                               1000.0f)];
+    [self.productNameLabel sizeToFit];
+    
+    [self.productDescriptionLabel setFrame:CGRectMake(6.0f,
+                                                      CGRectGetMaxY(self.productNameLabel.frame) + 2.0f,
+                                                      self.imageScrollView.frame.size.width - 12.0f,
+                                                      1000.0f)];
+    [self.productDescriptionLabel sizeToFit];
     
     [self setPriceWithNewValue:product.specialPriceFormatted
                    andOldValue:product.priceFormatted];
@@ -261,7 +275,7 @@
     //add the last item to the begining and the first item to the end in order to simulate infinite scroll
     NSMutableArray* modifiedArray = [imagesArray mutableCopy];
     [modifiedArray insertObject:[imagesArray lastObject]
-                             atIndex:0];
+                        atIndex:0];
     [modifiedArray addObject:[imagesArray firstObject]];
     self.numberOfImages = [modifiedArray count];
     
@@ -326,7 +340,7 @@
                                                                  0,
                                                                  self.imageScrollView.frame.size.width,
                                                                  self.imageScrollView.frame.size.height)
-                                              animated:NO];
+                                             animated:NO];
             
         } else if (scrollView.contentOffset.x == 0)  {
             
