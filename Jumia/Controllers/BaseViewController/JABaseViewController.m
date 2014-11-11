@@ -77,21 +77,24 @@
     
     self.loadingView.alpha = 0.0f;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadingRotation:)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
 }
 
-- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void) loadingRotation: (NSNotification *) notification
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     CGSize frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size;
     CGFloat screenWidth = frame.width;
     CGFloat screenHeight = frame.height;
     
-    if(!((UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) && (UIInterfaceOrientationIsLandscape(toInterfaceOrientation))) &&
-       !((UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) && (UIInterfaceOrientationIsPortrait(toInterfaceOrientation))) ){
-        
-        self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
+        self.loadingView.frame  = CGRectMake(0, 0, screenWidth , screenHeight);
         self.loadingAnimation.center = self.loadingView.center;
-    }
+}
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
