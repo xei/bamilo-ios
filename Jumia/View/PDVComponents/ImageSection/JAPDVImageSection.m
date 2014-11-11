@@ -92,24 +92,32 @@
     [self.separatorImageView setFrame:CGRectMake(self.separatorImageView.frame.origin.x,
                                                  self.separatorImageView.frame.origin.y,
                                                  width,
-                                                 self.separatorImageView.frame.size.height)];    
+                                                 self.separatorImageView.frame.size.height)];
     
     [self loadWithImages:[product.images array]];
     
     self.productNameLabel.text = product.brand;
-    [self.productNameLabel sizeToFit];
+    self.productNameLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    CGRect productNameLabelRect = [self.productDescriptionLabel.text boundingRectWithSize:CGSizeMake(self.imageScrollView.frame.size.width - 12.0f, 1000.0f)
+                                                                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                                                               attributes:@{NSFontAttributeName:self.productNameLabel.font} context:nil];
+    
+    [self.productNameLabel setFrame:CGRectMake(self.productNameLabel.frame.origin.x,
+                                               self.productNameLabel.frame.origin.y,
+                                               productNameLabelRect.size.width,
+                                               productNameLabelRect.size.height)];
     
     self.productDescriptionLabel.text = product.name;
-    [self.productDescriptionLabel sizeToFit];
+    self.productDescriptionLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
-    CGRect productDescriptionLabelRect = [self.productDescriptionLabel.text boundingRectWithSize:CGSizeMake(self.imageScrollView.frame.size.width, 1000.0f)
+    CGRect productDescriptionLabelRect = [self.productDescriptionLabel.text boundingRectWithSize:CGSizeMake(self.imageScrollView.frame.size.width - 12.0f, 1000.0f)
                                                                                          options:NSStringDrawingUsesLineFragmentOrigin
                                                                                       attributes:@{NSFontAttributeName:self.productDescriptionLabel.font} context:nil];
     
     [self.productDescriptionLabel setFrame:CGRectMake(self.productDescriptionLabel.frame.origin.x,
                                                       CGRectGetMaxY(self.productNameLabel.frame),
-                                                      self.imageScrollView.frame.size.width,
-                                                      productDescriptionLabelRect.size.height)];
+                                                      self.imageScrollView.frame.size.width + 1.0f,
+                                                      productDescriptionLabelRect.size.height + 1.0f)];
     
     
     if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
@@ -261,7 +269,7 @@
     //add the last item to the begining and the first item to the end in order to simulate infinite scroll
     NSMutableArray* modifiedArray = [imagesArray mutableCopy];
     [modifiedArray insertObject:[imagesArray lastObject]
-                             atIndex:0];
+                        atIndex:0];
     [modifiedArray addObject:[imagesArray firstObject]];
     self.numberOfImages = [modifiedArray count];
     
@@ -326,7 +334,7 @@
                                                                  0,
                                                                  self.imageScrollView.frame.size.width,
                                                                  self.imageScrollView.frame.size.height)
-                                              animated:NO];
+                                             animated:NO];
             
         } else if (scrollView.contentOffset.x == 0)  {
             

@@ -98,8 +98,11 @@ UITableViewDataSource
     self.navBarLayout.showLogo = NO;
     
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.brandLabel.text = self.product.brand;    
+    self.brandLabel.text = self.product.brand;
+    self.brandLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.nameLabel.text = self.product.name;
+    self.nameLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.resumeView.translatesAutoresizingMaskIntoConstraints = YES;
     self.tableViewComments.translatesAutoresizingMaskIntoConstraints = YES;
@@ -120,38 +123,6 @@ UITableViewDataSource
     }
     
     [self hideViews];
-    
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
-        self.numberOfRequests = 2;
-        self.apiResponse = RIApiResponseSuccess;
-        
-        [self showLoading];
-        
-        [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
-         {
-             self.ratings = ratings;
-             self.numberOfRequests--;
-         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-         {
-             self.apiResponse = apiResponse;
-             self.numberOfRequests--;
-         }];
-        
-        [RIForm getForm:@"rating"
-           successBlock:^(RIForm *form)
-         {
-             self.form = form;
-             self.numberOfRequests--;
-         } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-             self.apiResponse = apiResponse;
-             self.numberOfRequests--;
-         }];
-    }
-    else
-    {
-        self.numberOfRequests = 0;
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -159,6 +130,40 @@ UITableViewDataSource
     if(self.requestsDone)
     {
         [self setupViews];
+    }
+    else
+    {
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+        {
+            self.numberOfRequests = 2;
+            self.apiResponse = RIApiResponseSuccess;
+            
+            [self showLoading];
+            
+            [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
+             {
+                 self.ratings = ratings;
+                 self.numberOfRequests--;
+             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+             {
+                 self.apiResponse = apiResponse;
+                 self.numberOfRequests--;
+             }];
+            
+            [RIForm getForm:@"rating"
+               successBlock:^(RIForm *form)
+             {
+                 self.form = form;
+                 self.numberOfRequests--;
+             } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+                 self.apiResponse = apiResponse;
+                 self.numberOfRequests--;
+             }];
+        }
+        else
+        {
+            self.numberOfRequests = 0;
+        }
     }
 }
 
@@ -363,16 +368,16 @@ UITableViewDataSource
                                                             attributes:@{NSFontAttributeName:self.brandLabel.font} context:nil];
     [self.brandLabel setFrame:CGRectMake(12.0f,
                                          6.0f,
-                                         brandLabelRect.size.width,
-                                         brandLabelRect.size.height)];
+                                         brandLabelRect.size.width + 1.0f,
+                                         brandLabelRect.size.height + 1.0f)];
     
     CGRect nameLabelRect = [self.nameLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - 24.0f, self.view.frame.size.height)
                                                              options:NSStringDrawingUsesLineFragmentOrigin
                                                           attributes:@{NSFontAttributeName:self.nameLabel.font} context:nil];
     [self.nameLabel setFrame:CGRectMake(12.0f,
                                         CGRectGetMaxY(self.brandLabel.frame) + 6.0f,
-                                        nameLabelRect.size.width,
-                                        nameLabelRect.size.height)];
+                                        nameLabelRect.size.width + 1.0f,
+                                        nameLabelRect.size.height + 1.0f)];
     
     if(VALID(self.priceView, JAPriceView))
     {
