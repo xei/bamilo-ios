@@ -76,7 +76,7 @@
     self.loadingAnimation.center = self.loadingView.center;
     
     self.loadingView.alpha = 0.0f;
-
+    
 }
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -86,11 +86,11 @@
     CGFloat screenWidth = frame.width;
     CGFloat screenHeight = frame.height;
     
-     if(!((UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) && (UIInterfaceOrientationIsLandscape(toInterfaceOrientation))) &&
-        !((UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) && (UIInterfaceOrientationIsPortrait(toInterfaceOrientation))) ){
-         
-         self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
-         self.loadingAnimation.center = self.loadingView.center;
+    if(!((UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) && (UIInterfaceOrientationIsLandscape(toInterfaceOrientation))) &&
+       !((UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) && (UIInterfaceOrientationIsPortrait(toInterfaceOrientation))) ){
+        
+        self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
+        self.loadingAnimation.center = self.loadingView.center;
     }
 }
 
@@ -214,27 +214,29 @@
                                              self.view.frame.size.width,
                                              self.view.frame.size.height);
     
-//    [self.noConnectionView setRetryBlock:^(BOOL dismiss)
-//     {
-//         if([self respondsToSelector:selector])
-//         {
-//#pragma clang diagnostic push
-//#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-//             if(ISEMPTY(objects))
-//             {
-//                 [self performSelector:selector];
-//             }
-//             else if(1 == [objects count])
-//             {
-//                 [self performSelector:selector withObject:[objects objectAtIndex:0]];
-//             }
-//             else if(2 == [objects count])
-//             {
-//                 [self performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
-//             }
-//#pragma clang diagnostic pop
-//         }
-//     }];
+    // This is to avoid a retain cycle  
+    __block JABaseViewController *viewController = self;
+    [self.noConnectionView setRetryBlock:^(BOOL dismiss)
+     {
+         if([viewController respondsToSelector:selector])
+         {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+             if(ISEMPTY(objects))
+             {
+                 [viewController performSelector:selector];
+             }
+             else if(1 == [objects count])
+             {
+                 [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
+             }
+             else if(2 == [objects count])
+             {
+                 [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+             }
+#pragma clang diagnostic pop
+         }
+     }];
     
     [self.view addSubview:self.noConnectionView];
 }
