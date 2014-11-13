@@ -14,12 +14,18 @@
     // Initialization code
 }
 
-- (void) loadHeaderWithText:(NSString*)text
+- (void) loadHeaderWithText:(NSString*)text width:(CGFloat)width
 {
+    [self setFrame:CGRectMake(0.0f,
+                              0.0f,
+                              width,
+                              26.0f)];
+    
     [self setBackgroundColor:UIColorFromRGB(0xffffff)];
     
     [self.title setText:text];
     [self.title setTextColor:UIColorFromRGB(0x4e4e4e)];
+    
     [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
 }
 

@@ -13,6 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIView *separator;
 @property (weak, nonatomic) IBOutlet UILabel *title;
 
-- (void) loadHeaderWithText:(NSString*)text;
+- (void) loadHeaderWithText:(NSString*)text width:(CGFloat)width;
 
 @end

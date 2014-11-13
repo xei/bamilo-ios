@@ -603,22 +603,22 @@ UICollectionViewDelegateFlowLayout>
         {
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [headerView loadHeaderWithText:STRING_DEFAULT_SHIPPING_ADDRESSES];
+                [headerView loadHeaderWithText:STRING_DEFAULT_SHIPPING_ADDRESSES width:self.view.frame.size.width];
             }
             else
             {
-                [headerView loadHeaderWithText:STRING_SHIPPING_ADDRESSES];
+                [headerView loadHeaderWithText:STRING_SHIPPING_ADDRESSES width:self.view.frame.size.width];
             }
         }
         else if(collectionView == self.secondAddressesCollectionView)
         {
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [headerView loadHeaderWithText:STRING_OTHER_ADDRESSES];
+                [headerView loadHeaderWithText:STRING_OTHER_ADDRESSES width:self.view.frame.size.width];
             }
             else
             {
-                [headerView loadHeaderWithText:STRING_BILLING_ADDRESSES];
+                [headerView loadHeaderWithText:STRING_BILLING_ADDRESSES width:self.view.frame.size.width];
             }
         }
         
