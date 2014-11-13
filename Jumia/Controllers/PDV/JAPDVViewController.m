@@ -287,12 +287,12 @@ JAActivityViewControllerDelegate
     }
     [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
     
-    if (VALID_NOTEMPTY(self.product.productSimples, NSArray) && 1 == self.product.productSimples.count)
+    if (VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet) && 1 == self.product.productSimples.count)
     {
-        RIProductSimple *tempProduct = self.product.productSimples[0];
-        if (VALID_NOTEMPTY(tempProduct.variation, NSString))
+        self.currentSimple = self.product.productSimples[0];
+        if (VALID_NOTEMPTY(self.currentSimple.variation, NSString))
         {
-            [trackingDictionary setValue:tempProduct.variation forKey:kRIEventSizeKey];
+            [trackingDictionary setValue:self.currentSimple.variation forKey:kRIEventSizeKey];
         }
     }
     
