@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -44,13 +44,13 @@
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XBP-2c-RqZ">
                     <rect key="frame" x="6" y="214" width="308" height="44"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                    <state key="normal" title="Button" backgroundImage="grayBig_normal">
+                    <state key="normal" title="Button" backgroundImage="greyBig_normal">
                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <state key="disabled" backgroundImage="grayBig_disabled"/>
-                    <state key="selected" backgroundImage="grayBig_highlighted"/>
-                    <state key="highlighted" backgroundImage="grayBig_highlighted"/>
+                    <state key="disabled" backgroundImage="greyBig_disabled"/>
+                    <state key="selected" backgroundImage="greyBig_highlighted"/>
+                    <state key="highlighted" backgroundImage="greyBig_highlighted"/>
                     <connections>
                         <action selector="retryConnectionButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="dTu-7T-0EE"/>
                     </connections>
@@ -72,9 +72,9 @@
         </view>
     </objects>
     <resources>
-        <image name="grayBig_disabled" width="308" height="44"/>
-        <image name="grayBig_highlighted" width="308" height="44"/>
-        <image name="grayBig_normal" width="308" height="44"/>
+        <image name="greyBig_disabled" width="308" height="44"/>
+        <image name="greyBig_highlighted" width="308" height="44"/>
+        <image name="greyBig_normal" width="308" height="44"/>
         <image name="img_errorscreen" width="120" height="96"/>
         <image name="img_nonetwork" width="135" height="96"/>
     </resources>

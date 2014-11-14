@@ -166,10 +166,10 @@ void(^retryBock)(BOOL dismiss);
     
     UIButton *changeCountryButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [changeCountryButton setFrame:CGRectMake(6.0f, self.frame.size.height - 44.0f - 15.0f, 308.0f, 44.0f)];
-    [changeCountryButton setBackgroundImage:[UIImage imageNamed:@"grayBig_normal"] forState:UIControlStateNormal];
-    [changeCountryButton setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"] forState:UIControlStateHighlighted];
-    [changeCountryButton setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"] forState:UIControlStateSelected];
-    [changeCountryButton setBackgroundImage:[UIImage imageNamed:@"grayBig_disabled"] forState:UIControlStateDisabled];
+    [changeCountryButton setBackgroundImage:[UIImage imageNamed:@"greyBig_normal"] forState:UIControlStateNormal];
+    [changeCountryButton setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"] forState:UIControlStateHighlighted];
+    [changeCountryButton setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"] forState:UIControlStateSelected];
+    [changeCountryButton setBackgroundImage:[UIImage imageNamed:@"greyBig_disabled"] forState:UIControlStateDisabled];
     [changeCountryButton setTitle:STRING_CHOOSE_COUNTRY forState:UIControlStateNormal];
     [changeCountryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [changeCountryButton addTarget:self action:@selector(changeCountryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
