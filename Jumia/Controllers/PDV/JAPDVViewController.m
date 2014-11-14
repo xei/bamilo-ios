@@ -271,7 +271,10 @@ JAActivityViewControllerDelegate
     
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-    [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    if(VALID_NOTEMPTY([RICustomer getCustomerGender], NSString))
+    {
+        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    }
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
     
@@ -319,7 +322,10 @@ JAActivityViewControllerDelegate
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-    [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    if(VALID_NOTEMPTY([RICustomer getCustomerGender], NSString))
+    {
+        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    }
     [trackingDictionary setValue:self.product.sku forKey:kRIEventProductKey];
     [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
     [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
@@ -332,7 +338,12 @@ JAActivityViewControllerDelegate
     
     [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
-    [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+    
+    if(VALID_NOTEMPTY(self.product.avr, NSNumber))
+    {
+        [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+    }
+    
     if(VALID_NOTEMPTY(self.category, RICategory))
     {
         [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
@@ -677,7 +688,7 @@ JAActivityViewControllerDelegate
                 
                 [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
                 
-                relatedItemStart += singleItem.frame.size.width;
+                relatedItemStart += singleItem.frame.size.width + 5.0f;
             }
         }
         
