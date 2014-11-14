@@ -52,6 +52,8 @@
         
         filterOption.selected = [selectionNumber boolValue];
     }
+    
+    [super saveOptions];
 }
 
 #pragma mark - UITableView
@@ -159,6 +161,9 @@
     }
     
     [tableView reloadData];
+    if (YES == self.shouldAutosave) {
+        [self saveOptions];
+    }
 }
 
 

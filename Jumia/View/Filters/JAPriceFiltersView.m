@@ -52,11 +52,16 @@
     self.priceFilterOption.lowerValue = self.priceRangeSlider.lowerValue;
     self.priceFilterOption.upperValue = self.priceRangeSlider.upperValue;
     self.priceFilterOption.discountOnly = self.discountSwitch.on;
+    
+    [super saveOptions];
 }
 
 - (IBAction)sliderMoved:(id)sender
 {
     self.priceRangeLabel.text = [NSString stringWithFormat:@"%d - %d", (int)self.priceRangeSlider.lowerValue, (int)self.priceRangeSlider.upperValue];
+    if (YES == self.shouldAutosave) {
+        [self saveOptions];
+    }
 }
 
 @end

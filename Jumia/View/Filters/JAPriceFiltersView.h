@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAFiltersView.h"
 #import "RIFilter.h"
 
-@interface JAPriceFiltersView : UIView
+@interface JAPriceFiltersView : JAFiltersView
 
 - (void)initializeWithPriceFilterOption:(RIFilterOption*)priceFilterOption;
 - (void)saveOptions;

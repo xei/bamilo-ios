@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAFiltersView.h"
 #import "RICategory.h"
 
 @protocol JACategoryFiltersViewDelegate <NSObject>
@@ -15,7 +16,7 @@
 
 @end
 
-@interface JACategoryFiltersView : UIView <UITableViewDelegate, UITableViewDataSource>
+@interface JACategoryFiltersView : JAFiltersView <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, assign)id<JACategoryFiltersViewDelegate>delegate;
 

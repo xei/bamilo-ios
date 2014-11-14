@@ -7,7 +7,8 @@
 //
 
 #import "JABaseViewController.h"
-#import "JACategoryFilterViewController.h"
+#import "JACategoryFiltersView.h"
+#import "JASubFiltersViewController.h"
 
 @protocol JAMainFiltersViewControllerDelegate <NSObject>
 
@@ -17,7 +18,7 @@
 
 @end
 
-@interface JAMainFiltersViewController : JABaseViewController <UITableViewDataSource, UITableViewDelegate, JACategoryFilterViewControllerDelegate>
+@interface JAMainFiltersViewController : JABaseViewController <UITableViewDataSource, UITableViewDelegate, JACategoryFiltersViewDelegate, JASubFiltersViewControllerDelegate, JAFiltersViewDelegate>
 
 @property (nonatomic, strong)NSArray* filtersArray;
 @property (nonatomic, strong)NSArray* categoriesArray;

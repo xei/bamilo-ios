@@ -57,6 +57,8 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(selectedCategory:)]) {
         [self.delegate selectedCategory:self.selectedCategory];
     }
+    
+    [super saveOptions];
 }
 
 #pragma mark - UITableView
@@ -129,6 +131,9 @@
     }
     
     [tableView reloadData];
+    if (YES == self.shouldAutosave) {
+        [self saveOptions];
+    }
 }
 
 @end

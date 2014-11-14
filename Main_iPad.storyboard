@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -234,6 +235,78 @@
                 </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1299" y="-1239"/>
+        </scene>
+        <!--Main Filters View Controller-->
+        <scene sceneID="z14-J7-XZy">
+            <objects>
+                <viewController storyboardIdentifier="mainFiltersViewController" id="Ljw-sE-wvd" customClass="JAMainFiltersViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8si-ir-t6z"/>
+                        <viewControllerLayoutGuide type="bottom" id="g9h-2r-env"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6gV-q9-H6l">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Q1-XA-OFA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1328" y="-2635"/>
+        </scene>
+        <!--Generic Filter View Controller-->
+        <scene sceneID="x93-Cj-hDY">
+            <objects>
+                <viewController storyboardIdentifier="genericFilterViewController" id="zOK-z1-b8u" customClass="JAGenericFilterViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RS1-WO-X93"/>
+                        <viewControllerLayoutGuide type="bottom" id="Co6-tR-Ee2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ln7-Nj-xds">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vQo-rn-Ot7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1994" y="-2635"/>
+        </scene>
+        <!--Price Filter View Controller-->
+        <scene sceneID="Oqa-tI-YLZ">
+            <objects>
+                <viewController storyboardIdentifier="priceFilterViewController" id="6EZ-2e-hcw" customClass="JAPriceFilterViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Z0n-ty-ggo"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vqt-ls-9m9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UuN-u6-ZF1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tgL-sw-lId" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1994" y="-2491"/>
+        </scene>
+        <!--Category Filter View Controller-->
+        <scene sceneID="WlU-df-Zdv">
+            <objects>
+                <viewController storyboardIdentifier="categoryFilterViewController" id="kVx-st-hKh" customClass="JACategoryFilterViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fkz-Zf-7rr"/>
+                        <viewControllerLayoutGuide type="bottom" id="av2-Wz-07i"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="l77-iQ-mlr">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="emR-sD-WZb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1994" y="-2343"/>
         </scene>
         <!--Catalog View Controller-->
         <scene sceneID="3aw-DZ-RCi">

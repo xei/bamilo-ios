@@ -29,7 +29,7 @@
     self.categoryFiltersView = [[[NSBundle mainBundle] loadNibNamed:@"JACategoryFiltersView" owner:self options:nil] objectAtIndex:0];
     [self.categoryFiltersView setFrame:self.view.bounds];
     [self.view addSubview:self.categoryFiltersView];
-    self.categoryFiltersView.delegate = self;
+    self.categoryFiltersView.delegate = self.categoryFiltersViewDelegate;
     [self.categoryFiltersView initializeWithCategories:self.categoriesArray
                                       selectedCategory:self.selectedCategory];
     
@@ -37,40 +37,13 @@
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
-                                                        object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doneButtonPressed)
-                                                 name:kDidPressDoneNotification
-                                               object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 #pragma mark - Button Actions
 
 - (void)doneButtonPressed
 {
     [self.categoryFiltersView saveOptions];
-}
-
-#pragma mark - JACategoryFiltersViewDelegate
-
-- (void)selectedCategory:(RICategory*)category;
-{
-    self.selectedCategory = category;
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(categoriesFilterSelectedCategory:)]) {
-        [self.delegate categoriesFilterSelectedCategory:category];
-    }
+    [super doneButtonPressed];
 }
 
 @end

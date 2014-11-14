@@ -590,6 +590,10 @@
 		CE445879198BF15B00CE7E8D /* JACampaignsTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445878198BF15B00CE7E8D /* JACampaignsTeaserView.m */; };
 		CE44587C198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44587B198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m */; };
 		CE445880198C03D100CE7E8D /* JAPopularBrandsTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44587F198C03D100CE7E8D /* JAPopularBrandsTeaserView.m */; };
+		CE4848941A1502C4003C3D53 /* JASubFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4848931A1502C4003C3D53 /* JASubFiltersViewController.m */; };
+		CE4848971A161979003C3D53 /* JAFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4848961A161979003C3D53 /* JAFiltersView.m */; };
+		CE4848981A162803003C3D53 /* JAFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4848961A161979003C3D53 /* JAFiltersView.m */; };
+		CE4848991A162807003C3D53 /* JASubFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4848931A1502C4003C3D53 /* JASubFiltersViewController.m */; };
 		CE55A4E41992873300EE75DE /* RIProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55A4E31992873300EE75DE /* RIProduct.m */; };
 		CE55A4E71993672600EE75DE /* JARatingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55A4E61993672600EE75DE /* JARatingsView.m */; };
 		CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE55A4E819936B6300EE75DE /* JARatingsView.xib */; };
@@ -1310,6 +1314,10 @@
 		CE44587B198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATopCategoriesTeaserView.m; sourceTree = "<group>"; };
 		CE44587E198C03D100CE7E8D /* JAPopularBrandsTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPopularBrandsTeaserView.h; sourceTree = "<group>"; };
 		CE44587F198C03D100CE7E8D /* JAPopularBrandsTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPopularBrandsTeaserView.m; sourceTree = "<group>"; };
+		CE4848921A1502C4003C3D53 /* JASubFiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASubFiltersViewController.h; sourceTree = "<group>"; };
+		CE4848931A1502C4003C3D53 /* JASubFiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASubFiltersViewController.m; sourceTree = "<group>"; };
+		CE4848951A161979003C3D53 /* JAFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAFiltersView.h; path = Filters/JAFiltersView.h; sourceTree = "<group>"; };
+		CE4848961A161979003C3D53 /* JAFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAFiltersView.m; path = Filters/JAFiltersView.m; sourceTree = "<group>"; };
 		CE55A4E21992873300EE75DE /* RIProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIProduct.h; sourceTree = "<group>"; };
 		CE55A4E31992873300EE75DE /* RIProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIProduct.m; sourceTree = "<group>"; };
 		CE55A4E51993672600EE75DE /* JARatingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARatingsView.h; sourceTree = "<group>"; };
@@ -2953,6 +2961,8 @@
 				CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */,
 				CEDEB984199A6F430022BAB5 /* JAMainFiltersViewController.h */,
 				CEDEB985199A6F430022BAB5 /* JAMainFiltersViewController.m */,
+				CE4848921A1502C4003C3D53 /* JASubFiltersViewController.h */,
+				CE4848931A1502C4003C3D53 /* JASubFiltersViewController.m */,
 				CEDEB98C199BA4140022BAB5 /* JAPriceFilterViewController.h */,
 				CEDEB98D199BA4140022BAB5 /* JAPriceFilterViewController.m */,
 				CED30C22199CAA5C00C67F4B /* JAGenericFilterViewController.h */,
@@ -3025,6 +3035,8 @@
 				CEABEEC21A12327D000D0CF8 /* JACategoryFiltersView.xib */,
 				CEABEEC41A1255F5000D0CF8 /* JACategoryFiltersView.h */,
 				CEABEEC51A1255F5000D0CF8 /* JACategoryFiltersView.m */,
+				CE4848951A161979003C3D53 /* JAFiltersView.h */,
+				CE4848961A161979003C3D53 /* JAFiltersView.m */,
 			);
 			name = Filters;
 			sourceTree = "<group>";
@@ -3679,6 +3691,7 @@
 				98f2c1c10bfdddd3c20a7666 /* RIGTMTracker.m in Sources */,
 				17d0609e5e70be279c8ec4c4 /* JABaseViewController.m in Sources */,
 				077c3ad308e5a8bac062e6b5 /* JATextField.m in Sources */,
+				CE4848991A162807003C3D53 /* JASubFiltersViewController.m in Sources */,
 				CEABEEC91A126652000D0CF8 /* JACategoryFiltersView.m in Sources */,
 				171502ed39676ad6e9d765b4 /* RISection.m in Sources */,
 				2bbb2d86eb24453bcfd24a98 /* JACheckBoxWithOptionsComponent.m in Sources */,
@@ -3712,6 +3725,7 @@
 				e5bebaafc3af5de4288199c7 /* JAAddressCell.m in Sources */,
 				6be80f134e67002eecb79292 /* RILanguage.m in Sources */,
 				74c288d3007d11abbcd827d3 /* RIAd4PushTracker.m in Sources */,
+				CE4848981A162803003C3D53 /* JAFiltersView.m in Sources */,
 				460503d31c163545ffffa862 /* RIBugSenseTracker.m in Sources */,
 				1fab3dec6fadd712d6a2a8c0 /* RIOpenURLHandler.m in Sources */,
 				0940c52a2bb7f9dc6fc3c98e /* Adjust.m in Sources */,
@@ -3787,6 +3801,7 @@
 				CE13787819A357B400CA0751 /* JACategoriesViewController.m in Sources */,
 				B5A302D019811E9200F71726 /* RITeaserProduct.m in Sources */,
 				B58767FE19BB62B3001651D6 /* JAShippingCell.m in Sources */,
+				CE4848971A161979003C3D53 /* JAFiltersView.m in Sources */,
 				CE44586C198BD20A00CE7E8D /* JATopBrandsTeaserView.m in Sources */,
 				B5A302CE19811E9200F71726 /* RITeaserGroup.m in Sources */,
 				B5225E30198950C500C18F1E /* JACartViewController.m in Sources */,
@@ -3855,6 +3870,7 @@
 				CE44586D198BD20A00CE7E8D /* JATopSellersTeaserView.m in Sources */,
 				4A392141198925D000B70A9C /* JANavigationBarView.m in Sources */,
 				CE445870198BD21A00CE7E8D /* JATeaserView.m in Sources */,
+				CE4848941A1502C4003C3D53 /* JASubFiltersViewController.m in Sources */,
 				B50B03AB198A8861002046DF /* JAUtils.m in Sources */,
 				4AE730C7198F8B05000CA1DD /* JAPDVViewController.m in Sources */,
 				CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */,

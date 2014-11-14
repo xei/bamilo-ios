@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAFiltersView.h"
 #import "RIFilter.h"
 
-@interface JAGenericFiltersView : UIView <UITableViewDelegate, UITableViewDataSource>
+@interface JAGenericFiltersView : JAFiltersView <UITableViewDelegate, UITableViewDataSource>
 
 - (void)initializeWithFilter:(RIFilter*)filter;
 - (void)saveOptions;
