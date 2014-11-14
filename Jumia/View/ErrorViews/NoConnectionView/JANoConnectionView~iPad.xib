@@ -17,11 +17,11 @@
                         <constraint firstAttribute="height" constant="44" id="mZg-dx-WQ4"/>
                         <constraint firstAttribute="width" constant="756" id="yyg-Y5-W9F"/>
                     </constraints>
-                    <state key="normal" title="Button" backgroundImage="greyFull_normal">
+                    <state key="normal" title="Button" backgroundImage="greyFull_disabled">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <state key="disabled" backgroundImage="grayFull_disabled"/>
+                    <state key="disabled" backgroundImage="greyFull_disabled"/>
                     <state key="selected" backgroundImage="greyFull_highlighted"/>
                     <state key="highlighted" backgroundImage="greyFull_highlighted"/>
                     <connections>
@@ -153,9 +153,8 @@
         </view>
     </objects>
     <resources>
-        <image name="grayFull_disabled" width="22" height="19"/>
+        <image name="greyFull_disabled" width="15" height="15"/>
         <image name="greyFull_highlighted" width="22" height="19"/>
-        <image name="greyFull_normal" width="15" height="15"/>
         <image name="img_errorscreen" width="120" height="96"/>
         <image name="img_nonetwork" width="135" height="96"/>
     </resources>

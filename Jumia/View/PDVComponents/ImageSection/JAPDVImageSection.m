@@ -85,6 +85,12 @@
     self.productDescriptionLabel.text = product.name;
     self.productDescriptionLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.sizeClickableView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.separatorImageView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.imageScrollView.translatesAutoresizingMaskIntoConstraints = YES;
+    
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               width,
@@ -178,19 +184,23 @@
     [self setPriceWithNewValue:product.specialPriceFormatted
                    andOldValue:product.priceFormatted];
     
+    [self.imageScrollView setFrame:CGRectMake(self.imageScrollView.frame.origin.x,
+                                              CGRectGetMaxY(self.separatorImageView.frame),
+                                              width,
+                                              self.imageScrollView.frame.size.height)];
+    
     [self.sizeImageViewSeparator setBackgroundColor:UIColorFromRGB(0xcccccc)];
     [self.sizeLabel setTextColor:UIColorFromRGB(0x55a1ff)];
     
-    [self.sizeClickableView setFrame:CGRectMake(self.sizeClickableView.frame.origin.x,
-                                                self.sizeClickableView.frame.origin.y,
-                                                width,
-                                                self.sizeClickableView.frame.size.height)];
-    
     [self.sizeImageViewSeparator setFrame:CGRectMake(self.sizeImageViewSeparator.frame.origin.x,
-                                                     self.sizeImageViewSeparator.frame.origin.y,
+                                                     CGRectGetMaxY(self.imageScrollView.frame),
                                                      width,
                                                      self.sizeImageViewSeparator.frame.size.height)];
     
+    [self.sizeClickableView setFrame:CGRectMake(self.sizeClickableView.frame.origin.x,
+                                                CGRectGetMaxY(self.sizeImageViewSeparator.frame),
+                                                width,
+                                                self.sizeClickableView.frame.size.height)];
     if (ISEMPTY(product.productSimples))
     {
         [self.sizeClickableView removeFromSuperview];
@@ -265,58 +275,79 @@
                                       self.priceView.frame.size.height);
     [self addSubview:self.priceView];
     
-    self.separatorImageViewYConstrain.constant = CGRectGetMaxY(self.priceView.frame) + 6.0f;
-    
-    [self layoutIfNeeded];
+    [self.separatorImageView setFrame:CGRectMake(self.separatorImageView.frame.origin.x,
+                                                 CGRectGetMaxY(self.priceView.frame) + 6.0f,
+                                                 self.separatorImageView.frame.size.width,
+                                                 self.separatorImageView.frame.size.height)];
 }
 
 - (void)loadWithImages:(NSArray*)imagesArray
 {
-    //add the last item to the begining and the first item to the end in order to simulate infinite scroll
-    NSMutableArray* modifiedArray = [imagesArray mutableCopy];
-    [modifiedArray insertObject:[imagesArray lastObject]
-                        atIndex:0];
-    [modifiedArray addObject:[imagesArray firstObject]];
-    self.numberOfImages = [modifiedArray count];
-    
-    self.imageScrollView.pagingEnabled = YES;
-    self.imageScrollView.showsHorizontalScrollIndicator = NO;
-    self.imageScrollView.delegate = self;
-    CGFloat currentX = 0.0f;
-    CGFloat imageWidth = 146.0f;
-    CGFloat imageHeight = 183.0f;
-    for (int i = 0; i < modifiedArray.count; i++) {
-        RIImage* image = [modifiedArray objectAtIndex:i];
-        if (VALID_NOTEMPTY(image, RIImage)) {
-            JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
-                                                                                               0.0f,
-                                                                                               self.imageScrollView.frame.size.width,
-                                                                                               self.imageScrollView.frame.size.height)];
-            [clickableView addTarget:self action:@selector(imageViewPressed:) forControlEvents:UIControlEventTouchUpInside];
-            clickableView.tag = i;
-            [self.imageScrollView addSubview:clickableView];
-            
-            UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake((clickableView.bounds.size.width - imageWidth) / 2,
-                                                                                   (clickableView.bounds.size.height - imageHeight) / 2,
-                                                                                   imageWidth,
-                                                                                   imageHeight)];
-            [clickableView addSubview:imageView];
-            [imageView setImageWithURL:[NSURL URLWithString:image.url]
-                      placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
-            
-            currentX += clickableView.frame.size.width;
+    if(VALID_NOTEMPTY(imagesArray, NSArray))
+    {
+        //add the last item to the begining and the first item to the end in order to simulate infinite scroll
+        NSMutableArray* modifiedArray = [imagesArray mutableCopy];
+        [modifiedArray insertObject:[imagesArray lastObject]
+                            atIndex:0];
+        [modifiedArray addObject:[imagesArray firstObject]];
+        self.numberOfImages = [modifiedArray count];
+        
+        self.imageScrollView.pagingEnabled = YES;
+        self.imageScrollView.showsHorizontalScrollIndicator = NO;
+        self.imageScrollView.delegate = self;
+        CGFloat currentX = 0.0f;
+        CGFloat imageWidth = 146.0f;
+        CGFloat imageHeight = 183.0f;
+        for (int i = 0; i < modifiedArray.count; i++) {
+            RIImage* image = [modifiedArray objectAtIndex:i];
+            if (VALID_NOTEMPTY(image, RIImage)) {
+                JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
+                                                                                                   0.0f,
+                                                                                                   self.imageScrollView.frame.size.width,
+                                                                                                   self.imageScrollView.frame.size.height)];
+                [clickableView addTarget:self action:@selector(imageViewPressed:) forControlEvents:UIControlEventTouchUpInside];
+                clickableView.tag = i;
+                [self.imageScrollView addSubview:clickableView];
+                
+                UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake((clickableView.bounds.size.width - imageWidth) / 2,
+                                                                                       (clickableView.bounds.size.height - imageHeight) / 2,
+                                                                                       imageWidth,
+                                                                                       imageHeight)];
+                [clickableView addSubview:imageView];
+                [imageView setImageWithURL:[NSURL URLWithString:image.url]
+                          placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+                
+                currentX += clickableView.frame.size.width;
+            }
         }
+        
+        [self.imageScrollView setContentSize:CGSizeMake(currentX,
+                                                        self.imageScrollView.frame.size.height)];
+        
+        //starting index should be 1 because 0 is the last image, replicated in order to simulate infinite scroll
+        [self.imageScrollView scrollRectToVisible:CGRectMake(self.imageScrollView.frame.size.width,
+                                                             0,
+                                                             self.imageScrollView.frame.size.width,
+                                                             self.imageScrollView.frame.size.height)
+                                         animated:NO];
     }
-    
-    [self.imageScrollView setContentSize:CGSizeMake(currentX,
-                                                    self.imageScrollView.frame.size.height)];
-    
-    //starting index should be 1 because 0 is the last image, replicated in order to simulate infinite scroll
-    [self.imageScrollView scrollRectToVisible:CGRectMake(self.imageScrollView.frame.size.width,
-                                                         0,
-                                                         self.imageScrollView.frame.size.width,
-                                                         self.imageScrollView.frame.size.height)
-                                     animated:NO];
+    else
+    {
+        self.numberOfImages = 0;
+        self.imageScrollView.pagingEnabled = NO;
+        self.imageScrollView.showsHorizontalScrollIndicator = NO;
+        
+        CGFloat imageWidth = 146.0f;
+        CGFloat imageHeight = 183.0f;
+        
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake((self.imageScrollView.frame.size.width - imageWidth) / 2,
+                                                                               (self.imageScrollView.frame.size.height - imageHeight) / 2,
+                                                                               imageWidth,
+                                                                               imageHeight)];
+        [self.imageScrollView addSubview:imageView];
+        [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"]];
+        
+    }
 }
 
 - (void)imageViewPressed:(UIControl*)sender

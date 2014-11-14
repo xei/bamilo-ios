@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -16,12 +16,12 @@
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bgz-65-QPY">
                         <rect key="frame" x="6" y="10" width="308" height="44"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                        <state key="normal" title="Button" backgroundImage="grayBig_normal">
+                        <state key="normal" title="Button" backgroundImage="greyBig_normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
-                        <state key="disabled" backgroundImage="grayBig_disabled"/>
-                        <state key="selected" backgroundImage="grayBig_highlighted"/>
-                        <state key="highlighted" backgroundImage="grayBig_highlighted"/>
+                        <state key="disabled" backgroundImage="greyBig_disabled"/>
+                        <state key="selected" backgroundImage="greyBig_highlighted"/>
+                        <state key="highlighted" backgroundImage="greyBig_highlighted"/>
                     </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -35,8 +35,13 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="grayBig_disabled" width="308" height="44"/>
-        <image name="grayBig_highlighted" width="308" height="44"/>
-        <image name="grayBig_normal" width="308" height="44"/>
+        <image name="greyBig_disabled" width="308" height="44"/>
+        <image name="greyBig_highlighted" width="308" height="44"/>
+        <image name="greyBig_normal" width="308" height="44"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>
