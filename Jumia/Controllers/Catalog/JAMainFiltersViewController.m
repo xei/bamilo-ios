@@ -18,6 +18,7 @@
 @interface JAMainFiltersViewController ()
 
 @property (nonatomic, strong)UITableView *tableView;
+@property (nonatomic, strong)UIControl* lastSelectedClickView;
 @property (nonatomic, strong)UIView* verticalSeparatorView;
 @property (nonatomic, strong)UIView* landscapeContentView;
 @property (nonatomic, assign)CGRect tableRectPortrait;
@@ -300,6 +301,13 @@
 
 - (void)cellWasPressed:(UIControl*)sender
 {
+    if (VALID_NOTEMPTY(self.lastSelectedClickView, UIControl) && sender != self.lastSelectedClickView) {
+        self.lastSelectedClickView.selected = NO;
+    }
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        sender.selected = YES;
+        self.lastSelectedClickView = sender;
+    }
     [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
