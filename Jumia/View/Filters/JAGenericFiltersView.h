@@ -12,7 +12,8 @@
 
 @interface JAGenericFiltersView : JAFiltersView <UITableViewDelegate, UITableViewDataSource>
 
-- (void)initializeWithFilter:(RIFilter*)filter;
+- (void)initializeWithFilter:(RIFilter*)filter
+                 isLandscape:(BOOL)isLandscape;
 - (void)saveOptions;
 
 @end

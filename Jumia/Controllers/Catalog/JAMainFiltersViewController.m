@@ -208,6 +208,13 @@
         
         cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
         cell.detailTextLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        cell.indentationLevel = 30.0f;
+    }
+    
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        cell.indentationLevel = 1;
+    } else {
+        cell.indentationLevel = 0;
     }
     
     for (UIView* subview in cell.subviews) {
@@ -317,7 +324,7 @@
         
         filtersView = [[[NSBundle mainBundle] loadNibNamed:@"JACategoryFiltersView" owner:self options:nil] objectAtIndex:0];
         [filtersView setFrame:self.landscapeContentView.bounds];
-        [(JACategoryFiltersView*)filtersView initializeWithCategories:self.categoriesArray selectedCategory:self.selectedCategory];
+        [(JACategoryFiltersView*)filtersView initializeWithCategories:self.categoriesArray selectedCategory:self.selectedCategory isLandscape:YES];
         
         [userInfo setObject:self forKey:@"categoryFiltersViewDelegate"];
         
@@ -349,7 +356,7 @@
             
             filtersView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];
             [filtersView setFrame:self.landscapeContentView.bounds];
-            [(JAGenericFiltersView*)filtersView initializeWithFilter:filter];
+            [(JAGenericFiltersView*)filtersView initializeWithFilter:filter isLandscape:YES];
 
             
             if(VALID_NOTEMPTY(filter, RIFilter))

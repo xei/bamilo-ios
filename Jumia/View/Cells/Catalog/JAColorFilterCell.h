@@ -14,6 +14,7 @@
 @property (strong, nonatomic) JAColorView *colorView;
 @property (strong, nonatomic) UILabel *colorTitleLabel;
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
+- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
+                            isLandscape:(BOOL)isLandscape;
 
 @end

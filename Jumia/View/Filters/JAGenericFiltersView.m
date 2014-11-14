@@ -16,15 +16,18 @@
 @property (nonatomic, strong)NSMutableArray* selectedIndexes;
 
 @property (nonatomic, strong)RIFilter* filter;
+@property (nonatomic, assign)BOOL isLandscape;
 
 @end
 
 @implementation JAGenericFiltersView
 
 
-- (void)initializeWithFilter:(RIFilter*)filter;
+- (void)initializeWithFilter:(RIFilter*)filter
+                 isLandscape:(BOOL)isLandscape;
 {
     self.filter = filter;
+    self.isLandscape = isLandscape;
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -76,7 +79,7 @@
     if ([@"color_family" isEqualToString:self.filter.uid]) {
         
         if (ISEMPTY(cell)) {
-            cell = [[JAColorFilterCell alloc] initWithReuseIdentifier:cellIdentifier];
+            cell = [[JAColorFilterCell alloc] initWithReuseIdentifier:cellIdentifier isLandscape:self.isLandscape];
         }
         
         for (UIView* subview in cell.subviews) {
@@ -84,7 +87,11 @@
                 [subview removeFromSuperview];
             }
         }
-        UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(50.0f, 43.0f, self.tableView.frame.size.width - 50.0f, 1.0f)];
+        CGFloat separatorX = 50.0f;
+        if (self.isLandscape) {
+            separatorX += 20.0f;
+        }
+        UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(separatorX, 43.0f, self.tableView.frame.size.width - 50.0f, 1.0f)];
         separator.tag = -1;
         separator.backgroundColor = UIColorFromRGB(0xcccccc);
         [cell addSubview:separator];
@@ -105,6 +112,13 @@
             
             cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
             cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+            cell.indentationWidth = 20.0f;
+        }
+        
+        if (self.isLandscape) {
+            cell.indentationLevel = 1;
+        } else {
+            cell.indentationLevel = 0;
         }
         
         for (UIView* subview in cell.subviews) {

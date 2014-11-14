@@ -21,7 +21,8 @@
 @property (nonatomic, assign)id<JACategoryFiltersViewDelegate>delegate;
 
 - (void)initializeWithCategories:(NSArray*)categories
-                selectedCategory:(RICategory*)selectedCategory;
+                selectedCategory:(RICategory*)selectedCategory
+                     isLandscape:(BOOL)isLandscape;
 - (void)saveOptions;
 
 @end

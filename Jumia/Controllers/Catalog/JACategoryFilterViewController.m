@@ -31,7 +31,8 @@
     [self.view addSubview:self.categoryFiltersView];
     self.categoryFiltersView.delegate = self.categoryFiltersViewDelegate;
     [self.categoryFiltersView initializeWithCategories:self.categoriesArray
-                                      selectedCategory:self.selectedCategory];
+                                      selectedCategory:self.selectedCategory
+                                           isLandscape:NO];
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];

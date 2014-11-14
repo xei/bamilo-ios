@@ -34,7 +34,7 @@
     self.genericFiltersView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];
     [self.genericFiltersView setFrame:self.view.bounds];
     [self.view addSubview:self.genericFiltersView];
-    [self.genericFiltersView initializeWithFilter:self.filter];
+    [self.genericFiltersView initializeWithFilter:self.filter isLandscape:NO];
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];

@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong)NSArray* categoriesArray;
 @property (nonatomic, strong)RICategory* selectedCategory;
+@property (nonatomic, assign)BOOL isLandscape;
 
 @end
 
@@ -24,9 +25,11 @@
 
 - (void)initializeWithCategories:(NSArray*)categories
                 selectedCategory:(RICategory*)selectedCategory
+                     isLandscape:(BOOL)isLandscape
 {
     self.selectedCategory = selectedCategory;
     self.categoriesArray = categories;
+    self.isLandscape = isLandscape;
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -86,6 +89,13 @@
         
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
         cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        cell.indentationWidth = 20.0f;
+    }
+    
+    if (self.isLandscape) {
+        cell.indentationLevel = 1;
+    } else {
+        cell.indentationLevel = 0;
     }
     
     for (UIView* subview in cell.subviews) {

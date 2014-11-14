@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
@@ -10,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IvZ-Aj-wuM">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IvZ-Aj-wuM">
                     <rect key="frame" x="0.0" y="154" width="320" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="UgF-c2-Auo"/>
@@ -19,8 +20,8 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cAD-L9-feZ" customClass="NMRangeSlider">
-                    <rect key="frame" x="50" y="200" width="220" height="30"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cAD-L9-feZ" customClass="NMRangeSlider">
+                    <rect key="frame" x="50" y="200" width="220" height="40"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="220" id="fkc-m0-Mky"/>
@@ -30,14 +31,14 @@
                         <action selector="sliderMoved:" destination="yiC-iY-0zx" eventType="valueChanged" id="C2A-Ae-Nlq"/>
                     </connections>
                 </view>
-                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0cL-Fq-iPb">
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0cL-Fq-iPb">
                     <rect key="frame" x="50" y="305" width="51" height="31"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="49" id="8O5-fr-fQL"/>
                         <constraint firstAttribute="height" constant="31" id="Odd-Nm-eAH"/>
                     </constraints>
                 </switch>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="def-mB-haH">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="def-mB-haH">
                     <rect key="frame" x="116" y="305" width="154" height="31"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="31" id="E9r-UM-v9o"/>
@@ -50,9 +51,14 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="def-mB-haH" firstAttribute="top" secondItem="cAD-L9-feZ" secondAttribute="bottom" constant="75" id="CJJ-de-Jdt"/>
-                <constraint firstItem="0cL-Fq-iPb" firstAttribute="top" secondItem="cAD-L9-feZ" secondAttribute="bottom" constant="75" id="CzY-zP-lAf"/>
-                <constraint firstItem="cAD-L9-feZ" firstAttribute="top" secondItem="IvZ-Aj-wuM" secondAttribute="bottom" constant="25" id="WHT-EB-E6u"/>
+                <constraint firstItem="def-mB-haH" firstAttribute="top" secondItem="cAD-L9-feZ" secondAttribute="bottom" constant="65" id="0nW-4H-LpU"/>
+                <constraint firstAttribute="centerX" secondItem="IvZ-Aj-wuM" secondAttribute="centerX" id="13e-wL-6EA"/>
+                <constraint firstAttribute="centerX" secondItem="def-mB-haH" secondAttribute="centerX" constant="-33" id="5g4-Uk-g7D"/>
+                <constraint firstItem="cAD-L9-feZ" firstAttribute="top" secondItem="IvZ-Aj-wuM" secondAttribute="bottom" constant="25" id="7HC-wZ-Yat"/>
+                <constraint firstAttribute="centerX" secondItem="cAD-L9-feZ" secondAttribute="centerX" id="B9U-Gs-Mvw"/>
+                <constraint firstItem="def-mB-haH" firstAttribute="leading" secondItem="0cL-Fq-iPb" secondAttribute="trailing" constant="17" id="M2O-54-FeP"/>
+                <constraint firstItem="IvZ-Aj-wuM" firstAttribute="top" secondItem="yiC-iY-0zx" secondAttribute="top" constant="154" id="PbM-Ds-2WJ"/>
+                <constraint firstItem="0cL-Fq-iPb" firstAttribute="top" secondItem="cAD-L9-feZ" secondAttribute="bottom" constant="65" id="y79-i1-JdL"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <connections>
