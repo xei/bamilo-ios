@@ -644,7 +644,7 @@ UICollectionViewDelegateFlowLayout
         
         if(collectionView == self.collectionView)
         {
-            [headerView loadHeaderWithText:STRING_SHIPPING];
+            [headerView loadHeaderWithText:STRING_SHIPPING width:self.view.frame.size.width];
         }
         reusableview = headerView;
     }

@@ -69,7 +69,7 @@
 }
 
 - (void)loadWithCartItem:(RICartItem*)cartItem
-{
+{    
     [self.productImageView setImageWithURL:[NSURL URLWithString:cartItem.imageUrl]
                           placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     
@@ -77,6 +77,7 @@
     self.recentProductLabel.hidden = YES;
     
     self.nameLabel.text = cartItem.name;
+    self.nameLabel.textColor = UIColorFromRGB(0x666666);
     
     [self.priceView removeFromSuperview];
     self.priceView = [[JAPriceView alloc] init];

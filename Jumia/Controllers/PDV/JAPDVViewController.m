@@ -156,6 +156,7 @@ JAActivityViewControllerDelegate
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self productLoaded];
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void) removeSuperviews
@@ -270,7 +271,10 @@ JAActivityViewControllerDelegate
     
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-    [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    if(VALID_NOTEMPTY([RICustomer getCustomerGender], NSString))
+    {
+        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    }
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
     
@@ -286,12 +290,12 @@ JAActivityViewControllerDelegate
     }
     [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
     
-    if (VALID_NOTEMPTY(self.product.productSimples, NSArray) && 1 == self.product.productSimples.count)
+    if (VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet) && 1 == self.product.productSimples.count)
     {
-        RIProductSimple *tempProduct = self.product.productSimples[0];
-        if (VALID_NOTEMPTY(tempProduct.variation, NSString))
+        self.currentSimple = self.product.productSimples[0];
+        if (VALID_NOTEMPTY(self.currentSimple.variation, NSString))
         {
-            [trackingDictionary setValue:tempProduct.variation forKey:kRIEventSizeKey];
+            [trackingDictionary setValue:self.currentSimple.variation forKey:kRIEventSizeKey];
         }
     }
     
@@ -318,7 +322,10 @@ JAActivityViewControllerDelegate
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-    [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    if(VALID_NOTEMPTY([RICustomer getCustomerGender], NSString))
+    {
+        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    }
     [trackingDictionary setValue:self.product.sku forKey:kRIEventProductKey];
     [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
     [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
@@ -331,7 +338,12 @@ JAActivityViewControllerDelegate
     
     [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
-    [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+    
+    if(VALID_NOTEMPTY(self.product.avr, NSNumber))
+    {
+        [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+    }
+    
     if(VALID_NOTEMPTY(self.category, RICategory))
     {
         [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
@@ -393,30 +405,15 @@ JAActivityViewControllerDelegate
         [self.landscapeScrollView removeFromSuperview];
     }
     
-    [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
-                                     successBlock:^(RIProductRatings *ratings) {
-                                         
-                                         self.commentsCount = [ratings.commentsCount integerValue];
-                                         
-                                         self.productRatings = ratings;
-                                         
-                                         [self fillTheViews];
-                                         
-                                         [self hideLoading];
-                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                                         
-                                         [self fillTheViews];
-                                         
-                                         [self hideLoading];
-                                     }];
-}
-
-#pragma mark - Fill the views
-
-- (void)fillTheViews
-{
-    CGFloat mainScrollViewY = 6.0f;
-    CGFloat landscapeScrollViewY = 0.0f;
+    /*******
+     CTA Buttons
+     *******/
+    
+    UIDevice *device = [UIDevice currentDevice];
+    
+    NSString *model = device.model;
+    
+    self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:self.interfaceOrientation];
     
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -427,16 +424,6 @@ JAActivityViewControllerDelegate
             isiPadInLandscape = YES;
         }
     }
-    
-    /*******
-     CTA Buttons
-     *******/
-    
-    UIDevice *device = [UIDevice currentDevice];
-    
-    NSString *model = device.model;
-    
-    self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:self.interfaceOrientation];
     
     if(isiPadInLandscape)
     {
@@ -479,6 +466,40 @@ JAActivityViewControllerDelegate
                      target:self
                      action:@selector(addToCart)];
     
+    [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
+                                     successBlock:^(RIProductRatings *ratings) {
+                                         
+                                         self.commentsCount = [ratings.commentsCount integerValue];
+                                         
+                                         self.productRatings = ratings;
+                                         
+                                         [self fillTheViews];
+                                         
+                                         [self hideLoading];
+                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                         
+                                         [self fillTheViews];
+                                         
+                                         [self hideLoading];
+                                     }];
+}
+
+#pragma mark - Fill the views
+
+- (void)fillTheViews
+{
+    CGFloat mainScrollViewY = 6.0f;
+    CGFloat landscapeScrollViewY = 0.0f;
+    
+    BOOL isiPadInLandscape = NO;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+        {
+            isiPadInLandscape = YES;
+        }
+    }
     
     /*******
      Image Section
@@ -667,7 +688,7 @@ JAActivityViewControllerDelegate
                 
                 [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
                 
-                relatedItemStart += singleItem.frame.size.width;
+                relatedItemStart += singleItem.frame.size.width + 5.0f;
             }
         }
         

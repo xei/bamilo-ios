@@ -57,11 +57,11 @@
     
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.labelBrand.translatesAutoresizingMaskIntoConstraints = YES;
     self.labelBrand.text = self.product.brand;
+    self.labelBrand.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.labelName.translatesAutoresizingMaskIntoConstraints = YES;
     self.labelName.text = self.product.name;
+    self.labelName.translatesAutoresizingMaskIntoConstraints = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -79,13 +79,13 @@
     [self.labelBrand setFrame:CGRectMake(12.0f,
                                          6.0f,
                                          self.view.frame.size.width - 24.0f,
-                                         self.labelBrand.frame.size.height)];
+                                         self.view.frame.size.height)];
     [self.labelBrand sizeToFit];
     
     [self.labelName setFrame:CGRectMake(12.0f,
                                         CGRectGetMaxY(self.labelBrand.frame) + 4.0f,
                                         self.view.frame.size.width - 24.0f,
-                                        self.labelName.frame.size.height)];
+                                        self.view.frame.size.height)];
     [self.labelName sizeToFit];
     
     if(VALID(self.priceView, JAPriceView))
@@ -103,7 +103,7 @@
                                       CGRectGetMaxY(self.labelName.frame) + 4.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
-    [self.view addSubview:self.priceView];
+    [self.topView addSubview:self.priceView];
     
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
     if(topViewMinHeight < 38.0f)
@@ -149,9 +149,15 @@
     self.featuresView.layer.cornerRadius = 5.0f;
     [self.contenteScrollView addSubview:self.featuresView];
     
-    self.featuresTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+    CGFloat horizontalMargin = 6.0f;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        horizontalMargin = 10.0f;
+    }
+    
+    self.featuresTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin,
                                                                         2.0f,
-                                                                        self.featuresView.frame.size.width - 6.0f,
+                                                                        self.featuresView.frame.size.width - (2 * horizontalMargin),
                                                                         21.0f)];
     [self.featuresTitleLabel setNumberOfLines:1];
     [self.featuresTitleLabel setText:STRING_PRODUCT_FEATURES];
@@ -166,9 +172,9 @@
     [self.featuresSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.featuresView addSubview:self.featuresSeparator];
     
-    self.featuresTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+    self.featuresTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin,
                                                                        33.0f,
-                                                                       self.featuresView.frame.size.width - 6.0f,
+                                                                       self.featuresView.frame.size.width - (2 * horizontalMargin),
                                                                        0.0f)];
     [self.featuresTextLabel setNumberOfLines:0];
     [self.featuresTextLabel setTextColor:UIColorFromRGB(0x666666)];
@@ -192,9 +198,9 @@
         self.descriptionView.layer.cornerRadius = 5.0f;
         [self.contenteScrollView addSubview:self.descriptionView];
         
-        self.descriptionTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+        self.descriptionTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin,
                                                                                2.0f,
-                                                                               self.descriptionView.frame.size.width - 6.0f,
+                                                                               self.descriptionView.frame.size.width - (2 * horizontalMargin),
                                                                                21.0f)];
         [self.descriptionTitleLabel setNumberOfLines:1];
         [self.descriptionTitleLabel setText:STRING_PRODUCT_DESCRIPTION];
@@ -209,9 +215,9 @@
         [self.descriptionSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
         [self.descriptionView addSubview:self.descriptionSeparator];
         
-        self.descriptionTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+        self.descriptionTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin,
                                                                               33.0f,
-                                                                              self.descriptionView.frame.size.width - 6.0f,
+                                                                              self.descriptionView.frame.size.width - (2 * horizontalMargin),
                                                                               0.0f)];
         [self.descriptionTextLabel setTextColor:UIColorFromRGB(0x666666)];
         [self.descriptionTextLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
@@ -251,11 +257,11 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
     [self setupViews];
     
     [self hideLoading];
+
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning

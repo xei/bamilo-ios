@@ -181,10 +181,42 @@
                                               data:[trackingDictionary copy]];
 }
 
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    NSUInteger supportedInterfaceOrientationsForWindow = -1;
+    
+    UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
+    JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
+    if(VALID_NOTEMPTY(mainController, JARootViewController))
+    {
+        UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
+        if(VALID_NOTEMPTY(centerPanel, UINavigationController))
+        {
+            NSArray *viewControllers = centerPanel.viewControllers;
+            if(VALID_NOTEMPTY(viewControllers, NSArray))
+            {
+                JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
+                supportedInterfaceOrientationsForWindow = [rootViewController supportedInterfaceOrientations];
+            }
+        }
+    }
+
+    // This should not happen.
+    if(-1 == supportedInterfaceOrientationsForWindow)
+    {
+        supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskPortrait;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+        {
+            supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
+        }
+    }
+    return supportedInterfaceOrientationsForWindow;
+}
+
 #pragma mark - Push notification
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{    
+{
     [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
     
 }
@@ -220,41 +252,109 @@
     if (VALID_NOTEMPTY(url, NSURL))
     {
         [[RITrackingWrapper sharedInstance] trackOpenURL:url];
+            
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self handlePushNotificationURL:url];
+        });
     }
     
     return urlWasHandled;
 }
 
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+- (void)handlePushNotificationURL:(NSURL *)url
 {
-    NSUInteger supportedInterfaceOrientationsForWindow = -1;
+    NSString *urlScheme = [url scheme];
     
-    UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
-    JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
-    if(VALID_NOTEMPTY(mainController, JARootViewController))
+    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *faceAppId = [infoDict objectForKey:@"FacebookAppID"];
+    NSString *facebookSchema = @"";
+    
+    if (faceAppId.length > 0)
     {
-        UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
-        if(VALID_NOTEMPTY(centerPanel, UINavigationController))
+        facebookSchema = [NSString stringWithFormat:@"fb%@", faceAppId];
+    }
+    
+    if ((urlScheme != nil && [urlScheme isEqualToString:@"jumia"]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme]))
+    {
+        NSMutableDictionary *pushNotification = [NSMutableDictionary dictionaryWithObject:@"" forKey:@"u"];
+        
+        if ([facebookSchema isEqualToString:urlScheme])
         {
-            NSArray *viewControllers = centerPanel.viewControllers;
-            if(VALID_NOTEMPTY(viewControllers, NSArray))
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
+                                                                object:nil
+                                                              userInfo:pushNotification];
+        }
+        else
+        {
+            NSString *path = [NSString stringWithString:url.path];
+            NSString *urlHost = [NSString stringWithString:url.host];
+            NSString *urlQuery = nil;
+            
+            if (url.query != nil)
             {
-                JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
-                supportedInterfaceOrientationsForWindow = [rootViewController supportedInterfaceOrientations];
+                if ([url.query length] >= 5)
+                {
+                    if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"])
+                    {
+                        NSRange range = [url.query rangeOfString:@"?ADXID"];
+                        if (range.location != NSNotFound)
+                        {
+                            NSString *paramsWithoutAdXData = [url.query substringToIndex:range.location];
+                            urlQuery = [NSString stringWithFormat:@"?%@",paramsWithoutAdXData];
+                            path = [url.path stringByAppendingString:urlQuery];
+                        } else
+                        {
+                            urlQuery = [NSString stringWithFormat:@"?%@",url.query];
+                            path = [url.path stringByAppendingString:urlQuery];
+                        }
+                    }
+                }
             }
-        }
-    }
+            
+            NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+            if (![urlHost isEqualToString:bundleIdentifier])
+            {
+                path = [urlHost stringByAppendingString:path];
+            }
+            else
+            {
+                path = [path substringFromIndex:1];
+            }
+            
+            NSDictionary *dict = [self parseQueryString:[url query]];
+            
+            pushNotification = [NSMutableDictionary dictionaryWithObject:path forKey:@"u"];
+            
+            NSString *temp = [dict objectForKey:@"UTM"];
+            
+            if (temp)
+            {
+                [pushNotification addEntriesFromDictionary:dict];
+            }
 
-    // This should not happen.
-    if(-1 == supportedInterfaceOrientationsForWindow)
-    {
-        supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskPortrait;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-        {
-            supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
+                                                                object:nil
+                                                              userInfo:pushNotification];
         }
     }
-    return supportedInterfaceOrientationsForWindow;
+}
+
+- (NSDictionary *)parseQueryString:(NSString *)query
+{
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:16];
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    
+    for (NSString *pair in pairs)
+    {
+        NSArray *elements = [pair componentsSeparatedByString:@"="];
+        
+        NSString *key = [elements[0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *val = [elements[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        [dict setObject:val forKey:key];
+    }
+    
+    return dict;
 }
 
 @end

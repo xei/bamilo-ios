@@ -17,6 +17,7 @@
 @property (assign, nonatomic) int requestNumber;
 @property (strong, nonatomic) UIView *loadingView;
 @property (nonatomic, strong) UIImageView *loadingAnimation;
+@property (strong, nonatomic) JANoConnectionView *noConnectionView;
 
 @end
 
@@ -75,21 +76,39 @@
     self.loadingAnimation.center = self.loadingView.center;
     
     self.loadingView.alpha = 0.0f;
-
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadingRotation:)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
 }
 
-- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)loadingRotation:(NSNotification *)notification
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     CGSize frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size;
     CGFloat screenWidth = frame.width;
     CGFloat screenHeight = frame.height;
     
-     if(!((UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) && (UIInterfaceOrientationIsLandscape(toInterfaceOrientation))) &&
-        !((UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) && (UIInterfaceOrientationIsPortrait(toInterfaceOrientation))) ){
-         
-         self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
-         self.loadingAnimation.center = self.loadingView.center;
+    self.loadingView.frame  = CGRectMake(0, 0, screenWidth , screenHeight);
+    self.loadingAnimation.center = self.loadingView.center;
+}
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    CGRect viewFrame = self.view.frame;
+    CGFloat screenWidth = viewFrame.size.width;
+    CGFloat screenHeight = viewFrame.size.height;
+    
+    if(VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView))
+    {
+        self.noConnectionView.frame =  CGRectMake(0, 0, screenWidth, screenHeight);
+        [self.view bringSubviewToFront:self.noConnectionView];
     }
 }
 
@@ -107,7 +126,7 @@
     NSUInteger supportedInterfaceOrientations = UIInterfaceOrientationMaskPortrait;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
-        supportedInterfaceOrientations = UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
+        supportedInterfaceOrientations = UIInterfaceOrientationMaskAll;
     }
     return supportedInterfaceOrientations;
 }
@@ -186,42 +205,43 @@
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
 {
-    JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-    [lostConnection setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
-    lostConnection.frame = CGRectMake(self.view.frame.origin.x,
-                                      startingY,
-                                      self.view.frame.size.width,
-                                      self.view.frame.size.height);
+    if(VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView))
+    {
+        [self.noConnectionView removeFromSuperview];
+    }
     
-    [lostConnection setRetryBlock:^(BOOL dismiss)
+    self.noConnectionView = [JANoConnectionView getNewJANoConnectionView];
+    [self.noConnectionView setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
+    self.noConnectionView.frame = CGRectMake(self.view.frame.origin.x,
+                                             startingY,
+                                             self.view.frame.size.width,
+                                             self.view.frame.size.height);
+    
+    // This is to avoid a retain cycle  
+    __block JABaseViewController *viewController = self;
+    [self.noConnectionView setRetryBlock:^(BOOL dismiss)
      {
-         if([self respondsToSelector:selector])
+         if([viewController respondsToSelector:selector])
          {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
              if(ISEMPTY(objects))
              {
-                 [self performSelector:selector];
+                 [viewController performSelector:selector];
              }
              else if(1 == [objects count])
              {
-                 [self performSelector:selector withObject:[objects objectAtIndex:0]];
+                 [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
              }
              else if(2 == [objects count])
              {
-                 [self performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+                 [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
              }
 #pragma clang diagnostic pop
          }
      }];
     
-    for (UIView* view in self.view.subviews) {
-        if ([view isKindOfClass:[JANoConnectionView class]]) {
-            [view removeFromSuperview];
-        }
-    }
-    
-    [self.view addSubview:lostConnection];
+    [self.view addSubview:self.noConnectionView];
 }
 
 - (void)removeErrorView

@@ -27,6 +27,8 @@
 @property (nonatomic, assign) CGRect keyboardFrame;
 @property (nonatomic, assign) BOOL firstLoading;
 @property (nonatomic, strong) JAPicker *picker;
+@property (nonatomic, assign) BOOL requestDone;
+@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 
 @end
 
@@ -49,27 +51,24 @@
     
     [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
     
-    [self.emptyCartView setHidden:YES];
-    [self.emptyCartLabel setHidden:YES];
-    [self.continueShoppingButton setHidden:YES];
+    self.requestDone = NO;
     
-    self.cartScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height - 64.0f)];
+    self.cartScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.cartScrollView setBackgroundColor:JABackgroundGrey];
-    [self.cartScrollView setHidden:YES];
     [self.view addSubview:self.cartScrollView];
     
-    UICollectionViewFlowLayout* flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.minimumLineSpacing = 0;
-    flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    flowLayout.itemSize = CGSizeMake(self.view.frame.size.width, 90.0f);
-    [flowLayout setHeaderReferenceSize:CGSizeMake(308.0f, 26.0f)];
+    self.productsScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    [self.productsScrollView setBackgroundColor:JABackgroundGrey];
     
-    self.productCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(6.0f,
-                                                                                    6.0f,
-                                                                                    308.0f,
-                                                                                    0.0f) collectionViewLayout:flowLayout];
+    self.flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    self.flowLayout.minimumLineSpacing = 0;
+    self.flowLayout.minimumInteritemSpacing = 0;
+    self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    self.flowLayout.itemSize = CGSizeMake(self.view.frame.size.width, 90.0f);
+    [self.flowLayout setHeaderReferenceSize:CGSizeMake(self.view.frame.size.width - 12.0f, 26.0f)];
     
+    self.productCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
+    [self.productCollectionView setBackgroundColor:JABackgroundGrey];
     self.productCollectionView.layer.cornerRadius = 5.0f;
     
     UINib *cartListCellNib = [UINib nibWithNibName:@"JACartListCell" bundle:nil];
@@ -81,15 +80,64 @@
     [self.productCollectionView setDataSource:self];
     [self.productCollectionView setDelegate:self];
     
-    [self.cartScrollView addSubview:self.productCollectionView];
+    [self hideAllViews];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     [self continueLoading];
 }
 
+- (void)setEmptyCartViewHidden:(BOOL)hidden
+{
+    [self.emptyCartView setHidden:hidden];
+    [self.emptyCartLabel setHidden:hidden];
+    [self.continueShoppingButton setHidden:hidden];
+}
+
+- (void)setCartViewHidden:(BOOL)hidden
+{
+    [self.cartScrollView setHidden:hidden];
+    [self.productCollectionView setHidden:hidden];
+    [self.productsScrollView setHidden:hidden];
+}
+
+- (void)hideAllViews
+{
+    [self setEmptyCartViewHidden:YES];
+    [self setCartViewHidden:YES];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [self showLoading];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    if(self.requestDone)
+    {
+        [self loadCartInfo];
+    }
+    
+    [self hideLoading];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
 - (void)continueLoading
 {
+    self.requestDone = NO;
+    
     [self showLoading];
+    
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
+        self.requestDone = YES;
+        
         self.cart = cartData;
         
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
@@ -172,6 +220,8 @@
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         
+        self.requestDone = YES;
+        
         if(self.firstLoading)
         {
             NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -208,11 +258,15 @@
 {
     if(0 == [[self.cart cartCount] integerValue])
     {
+        [self setCartViewHidden:YES];
         [self setupEmptyCart];
+        [self setEmptyCartViewHidden:NO];
     }
     else
     {
+        [self setEmptyCartViewHidden:YES];
         [self setupCart];
+        [self setCartViewHidden:NO];
     }
 }
 
@@ -221,12 +275,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
     
     self.screenName = @"CartEmpty";
-    
-    [self.emptyCartView setHidden:NO];
-    [self.emptyCartLabel setHidden:NO];
-    [self.continueShoppingButton setHidden:NO];
-    
-    [self.cartScrollView setHidden:YES];
     
     self.emptyCartView.layer.cornerRadius = 5.0f;
     [self.emptyCartLabel setText:STRING_NO_ITEMS_IN_CART];
@@ -242,16 +290,68 @@
 
 -(void)setupCart
 {
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat verticalMargin = 6.0f;
+    CGFloat headerSize = 26.0f;
+    CGFloat itemSize = 90.0f;
+    
     self.screenName = @"CartWithItems";
     
-    [self.emptyCartView setHidden:YES];
-    [self.emptyCartLabel setHidden:YES];
-    [self.continueShoppingButton setHidden:YES];
+    CGFloat viewsWidth = self.view.frame.size.width - (2 * horizontalMargin);
+    CGFloat originY = 6.0f;
+    
+    [self.productCollectionView removeFromSuperview];
+    [self.productsScrollView removeFromSuperview];
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        viewsWidth = (self.view.frame.size.width - (3 * horizontalMargin)) / 2;
+        
+        self.flowLayout.itemSize = CGSizeMake(viewsWidth, itemSize);
+        [self.flowLayout setHeaderReferenceSize:CGSizeMake(viewsWidth, headerSize)];
+        
+        [self.productsScrollView setFrame:CGRectMake(horizontalMargin,
+                                                     0.0f,
+                                                     viewsWidth,
+                                                     self.view.frame.size.height)];
+        [self.view addSubview:self.productsScrollView];
+        
+        [self.cartScrollView setFrame:CGRectMake(CGRectGetMaxX(self.productsScrollView.frame) + 6.0f,
+                                                 0.0f,
+                                                 viewsWidth,
+                                                 self.view.frame.size.height)];
+        
+        [self.productsScrollView addSubview:self.productCollectionView];
+        [self.productCollectionView setFrame:CGRectMake(0.0f,
+                                                        verticalMargin,
+                                                        self.productsScrollView.frame.size.width,
+                                                        ([self.cart.cartItems count] * itemSize) + headerSize)];
+        [self.productCollectionView reloadData];
+        [self.productsScrollView setContentSize:CGSizeMake(self.productsScrollView.frame.size.width,
+                                                           self.productCollectionView.frame.size.height + (2 * verticalMargin))];
+        
+    }
+    else
+    {
+        self.flowLayout.itemSize = CGSizeMake(viewsWidth, itemSize);
+        [self.flowLayout setHeaderReferenceSize:CGSizeMake(viewsWidth, headerSize)];
+        
+        [self.cartScrollView setFrame:CGRectMake(6.0f,
+                                                 0.0f,
+                                                 viewsWidth,
+                                                 self.view.frame.size.height)];
+        
+        [self.cartScrollView addSubview:self.productCollectionView];
+        [self.productCollectionView setFrame:CGRectMake(0.0f,
+                                                        6.0f,
+                                                        self.cartScrollView.frame.size.width,
+                                                        ([self.cart.cartItems count] * itemSize) + headerSize)];
+        [self.productCollectionView reloadData];
+        
+        originY = CGRectGetMaxY(self.productCollectionView.frame) + 3.0f;
+    }
     
     [self.cartScrollView setHidden:NO];
-    
-    [self.productCollectionView setFrame:CGRectMake(6.0f, 6.0f, 308.0f, ([self.cart.cartItems count] * 90.0f) + 26.0f)];
-    [self.productCollectionView reloadData];
     
     // coupon
     if(VALID_NOTEMPTY(self.couponView, UIView))
@@ -259,28 +359,23 @@
         [self.couponView removeFromSuperview];
     }
     
-    self.couponView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, CGRectGetMaxY(self.productCollectionView.frame) + 3.0f, 308.0f, 86.0f)];
+    self.couponView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                               originY,
+                                                               self.cartScrollView.frame.size.width,
+                                                               86.0f)];
     [self.couponView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.couponView.layer.cornerRadius = 5.0f;
     
-    self.couponTitle = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, 280.0f, 25.0f)];
+    self.couponTitle = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 25.0f)];
     [self.couponTitle setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.couponTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.couponTitle setText:STRING_COUPON];
     [self.couponTitle setBackgroundColor:[UIColor clearColor]];
     [self.couponView addSubview:self.couponTitle];
     
-    self.couponTitleSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.couponTitle.frame), 308.0f, 1.0f)];
+    self.couponTitleSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.couponTitle.frame), self.cartScrollView.frame.size.width, 1.0f)];
     [self.couponTitleSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.couponView addSubview:self.couponTitleSeparator];
-    
-    self.couponTextField = [[UITextField alloc] initWithFrame:CGRectMake(6.0f, CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f, 240.0f, 30.0f)];
-    [self.couponTextField setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
-    [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-    [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
-    [self.couponTextField setDelegate:self];
-    [self.couponView addSubview:self.couponTextField];
     
     self.useCouponButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *useCouponImageNormal = [UIImage imageNamed:@"useCoupon_normal"];
@@ -291,8 +386,26 @@
     [self.useCouponButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
     [self.useCouponButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.useCouponButton addTarget:self action:@selector(useCouponButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.useCouponButton setFrame:CGRectMake(CGRectGetMaxX(self.couponTextField.frame) + 5.0f, CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f, useCouponImageNormal.size.width, useCouponImageNormal.size.height)];
+    [self.useCouponButton setFrame:CGRectMake(self.couponView.frame.size.width - useCouponImageNormal.size.width - 6.0f,
+                                              CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
+                                              useCouponImageNormal.size.width,
+                                              useCouponImageNormal.size.height)];
     [self.couponView addSubview:self.useCouponButton];
+    
+    // To the left margin of the coupon button we need to remove the left margin of the textfield (6.0f)
+    // and the margin between the text field and the button (6.0f)
+    CGFloat textFieldWidth = CGRectGetMinX(self.useCouponButton.frame) - 12.0f;
+    self.couponTextField = [[UITextField alloc] initWithFrame:CGRectMake(6.0f,
+                                                                         CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
+                                                                         textFieldWidth,
+                                                                         30.0f)];
+    [self.couponTextField setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
+    [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
+    [self.couponTextField setDelegate:self];
+    [self.couponView addSubview:self.couponTextField];
+    
     
     [self.cartScrollView addSubview:self.couponView];
     
@@ -318,19 +431,24 @@
     {
         [self.subtotalView removeFromSuperview];
     }
+    
+    // Remove left and right margins, plus extra 12.0f so that we have a margin between the fields.
+    // The division by 2 is because we have 2 fields in each line.
+    CGFloat subTotalFieldsWidth = (self.cartScrollView.frame.size.width - (2 * horizontalMargin) - 12.0f) / 2;
+    
     // subtotal
-    self.subtotalView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, CGRectGetMaxY(self.couponView.frame) + 3.0f, 308.0f, 0.0f)];
+    self.subtotalView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.couponView.frame) + 3.0f, self.cartScrollView.frame.size.width, 0.0f)];
     [self.subtotalView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.subtotalView.layer.cornerRadius = 5.0f;
     
-    self.subtotalTitle = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, 280.0f, 25.0f)];
+    self.subtotalTitle = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 25.0f)];
     [self.subtotalTitle setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.subtotalTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.subtotalTitle setText:STRING_SUBTOTAL];
     [self.subtotalTitle setBackgroundColor:[UIColor clearColor]];
     [self.subtotalView addSubview:self.subtotalTitle];
     
-    self.subtotalTitleSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.subtotalTitle.frame), 308.0f, 1.0f)];
+    self.subtotalTitleSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.subtotalTitle.frame), self.cartScrollView.frame.size.width, 1.0f)];
     [self.subtotalTitleSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.subtotalView addSubview:self.subtotalTitleSeparator];
     
@@ -348,7 +466,7 @@
         [self.articlesCount setText:[NSString stringWithFormat:STRING_ARTICLES, cartCount]];
     }
     [self.articlesCount sizeToFit];
-    [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, 140.0f, self.articlesCount.frame.size.height)];
+    [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, subTotalFieldsWidth, self.articlesCount.frame.size.height)];
     [self.subtotalView addSubview:self.articlesCount];
     
     self.totalPriceView = [[JAPriceView alloc] init];
@@ -606,24 +724,47 @@
     [self.subtotalView addSubview:self.totalLabel];
     [self.subtotalView addSubview:self.totalValue];
     
-    [self.subtotalView setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.couponView.frame) + 3.0f, 308.0f, CGRectGetMaxY(self.totalValue.frame) + 10.0f)];
+    [self.subtotalView setFrame:CGRectMake(0.0f,
+                                           CGRectGetMaxY(self.couponView.frame) + 3.0f,
+                                           self.cartScrollView.frame.size.width,
+                                           CGRectGetMaxY(self.totalValue.frame) + 10.0f)];
     [self.cartScrollView addSubview:self.subtotalView];
     
     if(VALID_NOTEMPTY(self.checkoutButton, UIButton))
     {
         [self.checkoutButton removeFromSuperview];
     }
+    
+    NSString *greyButtonName = @"greyBig_%@";
+    NSString *orangeButtonName = @"orangeBig_%@";
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        {
+            orangeButtonName = @"orangeHalfLandscape_%@";
+            greyButtonName = @"greyHalfLandscape_%@";
+        }
+        else
+        {
+            orangeButtonName = @"orangeFullPortrait_%@";
+            greyButtonName = @"greyFullPortrait_%@";
+        }
+    }
+    
     self.checkoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *checkoutButtonImageNormal = [UIImage imageNamed:@"orangeBig_normal"];
+    UIImage *checkoutButtonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]];
     [self.checkoutButton setBackgroundImage:checkoutButtonImageNormal forState:UIControlStateNormal];
-    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
-    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
-    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
+    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
+    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateSelected];
+    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"disabled"]] forState:UIControlStateDisabled];
     [self.checkoutButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.checkoutButton setTitle:STRING_PROCEED_TO_CHECKOUT forState:UIControlStateNormal];
     [self.checkoutButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.checkoutButton addTarget:self action:@selector(checkoutButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.checkoutButton setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalView.frame) + 6.0f, checkoutButtonImageNormal.size.width, checkoutButtonImageNormal.size.height)];
+    [self.checkoutButton setFrame:CGRectMake(0.0f,
+                                             CGRectGetMaxY(self.subtotalView.frame) + 6.0f,
+                                             checkoutButtonImageNormal.size.width,
+                                             checkoutButtonImageNormal.size.height)];
     [self.cartScrollView addSubview:self.checkoutButton];
     
     if(VALID_NOTEMPTY(self.callToOrderButton, UIButton))
@@ -631,19 +772,23 @@
         [self.callToOrderButton removeFromSuperview];
     }
     self.callToOrderButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *callToOrderButtonImageNormal = [UIImage imageNamed:@"grayBig_normal"];
+    UIImage *callToOrderButtonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"normal"]];
     [self.callToOrderButton setBackgroundImage:callToOrderButtonImageNormal forState:UIControlStateNormal];
-    [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"] forState:UIControlStateHighlighted];
-    [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"] forState:UIControlStateSelected];
-    [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:@"grayBig_disabled"] forState:UIControlStateDisabled];
+    [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
+    [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]] forState:UIControlStateSelected];
+    [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"disabled"]] forState:UIControlStateDisabled];
     [self.callToOrderButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.callToOrderButton setTitle:STRING_CALL_TO_ORDER forState:UIControlStateNormal];
     [self.callToOrderButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.callToOrderButton addTarget:self action:@selector(callToOrderButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.callToOrderButton setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.checkoutButton.frame) + 6.0f, callToOrderButtonImageNormal.size.width, callToOrderButtonImageNormal.size.height)];
+    [self.callToOrderButton setFrame:CGRectMake(0.0f,
+                                                CGRectGetMaxY(self.checkoutButton.frame) + 6.0f,
+                                                callToOrderButtonImageNormal.size.width,
+                                                callToOrderButtonImageNormal.size.height)];
     [self.cartScrollView addSubview:self.callToOrderButton];
     
-    [self.cartScrollView setContentSize:CGSizeMake(308.0f, self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.callToOrderButton.frame) + 6.0f)];
+    [self.cartScrollView setContentSize:CGSizeMake(self.cartScrollView.frame.size.width,
+                                                   self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.callToOrderButton.frame) + 6.0f)];
 }
 
 -(void)goToHomeScreen
@@ -945,7 +1090,7 @@
     if (kind == UICollectionElementKindSectionHeader) {
         JACartListHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader" forIndexPath:indexPath];
         
-        [headerView loadHeaderWithText:@"Items"];
+        [headerView loadHeaderWithText:@"Items" width:self.productCollectionView.frame.size.width];
         
         reusableview = headerView;
     }

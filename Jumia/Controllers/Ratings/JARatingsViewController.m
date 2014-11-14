@@ -41,6 +41,7 @@ UITableViewDataSource
 @property (weak, nonatomic) IBOutlet UIImageView *emptyReviewsImageView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyReviewsLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *writeReviewScrollView;
+@property (assign, nonatomic) CGRect writeReviewScrollViewInitialRect;
 
 @property (strong, nonatomic) UIView *centerView;
 @property (strong, nonatomic) UILabel *fixedLabel;
@@ -82,18 +83,29 @@ UITableViewDataSource
     {
         self.screenName = @"RatingScreen";
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.brandLabel.text = self.product.brand;
+    self.brandLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.nameLabel.text = self.product.name;
+    self.nameLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.resumeView.translatesAutoresizingMaskIntoConstraints = YES;
     self.tableViewComments.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.brandLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.brandLabel.text = self.product.brand;
-    
-    self.nameLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.nameLabel.text = self.product.name;
     
     self.tableViewComments.translatesAutoresizingMaskIntoConstraints = YES;
     
@@ -111,38 +123,6 @@ UITableViewDataSource
     }
     
     [self hideViews];
-    
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
-        self.numberOfRequests = 2;
-        self.apiResponse = RIApiResponseSuccess;
-        
-        [self showLoading];
-        
-        [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
-         {
-             self.ratings = ratings;
-             self.numberOfRequests--;
-         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-         {
-             self.apiResponse = apiResponse;
-             self.numberOfRequests--;
-         }];
-        
-        [RIForm getForm:@"rating"
-           successBlock:^(RIForm *form)
-         {
-             self.form = form;
-             self.numberOfRequests--;
-         } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-             self.apiResponse = apiResponse;
-             self.numberOfRequests--;
-         }];
-    }
-    else
-    {
-        self.numberOfRequests = 0;
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -150,6 +130,40 @@ UITableViewDataSource
     if(self.requestsDone)
     {
         [self setupViews];
+    }
+    else
+    {
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+        {
+            self.numberOfRequests = 2;
+            self.apiResponse = RIApiResponseSuccess;
+            
+            [self showLoading];
+            
+            [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
+             {
+                 self.ratings = ratings;
+                 self.numberOfRequests--;
+             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+             {
+                 self.apiResponse = apiResponse;
+                 self.numberOfRequests--;
+             }];
+            
+            [RIForm getForm:@"rating"
+               successBlock:^(RIForm *form)
+             {
+                 self.form = form;
+                 self.numberOfRequests--;
+             } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+                 self.apiResponse = apiResponse;
+                 self.numberOfRequests--;
+             }];
+        }
+        else
+        {
+            self.numberOfRequests = 0;
+        }
     }
 }
 
@@ -279,15 +293,12 @@ UITableViewDataSource
         [self setupResumeView:viewsWidth];
     }
     
+    CGFloat originY = CGRectGetMaxY(self.resumeView.frame) + verticalMargin;
     self.tableViewComments.layer.cornerRadius = 5.0f;
     self.tableViewComments.allowsSelection = NO;
-    [self.tableViewComments setFrame:CGRectMake(verticalMargin,
-                                                CGRectGetMaxY(self.resumeView.frame) + verticalMargin,
-                                                viewsWidth,
-                                                self.view.frame.size.height - CGRectGetMaxY(self.resumeView.frame) - (2 * verticalMargin))];
+    
     if(isiPad)
     {
-        CGFloat originY = CGRectGetMaxY(self.resumeView.frame) + 6.0f;
         if(isInLandscape)
         {
             [self.resumeView setHidden:YES];
@@ -325,6 +336,10 @@ UITableViewDataSource
             if(hasComments)
             {
                 [self.writeReviewScrollView setHidden:YES];
+                [self.tableViewComments setFrame:CGRectMake(verticalMargin,
+                                                            originY,
+                                                            viewsWidth,
+                                                            self.view.frame.size.height - originY - verticalMargin)];
                 [self.tableViewComments setHidden:NO];
             }
             else
@@ -337,6 +352,11 @@ UITableViewDataSource
     else
     {
         [self.resumeView setHidden:NO];
+        
+        [self.tableViewComments setFrame:CGRectMake(verticalMargin,
+                                                    originY,
+                                                    viewsWidth,
+                                                    self.view.frame.size.height - originY - verticalMargin)];
         [self.tableViewComments setHidden:NO];
     }
 }
@@ -346,13 +366,13 @@ UITableViewDataSource
     [self.brandLabel setFrame:CGRectMake(12.0f,
                                          6.0f,
                                          self.view.frame.size.width - 24.0f,
-                                         self.brandLabel.frame.size.height)];
+                                         self.view.frame.size.height)];
     [self.brandLabel sizeToFit];
     
     [self.nameLabel setFrame:CGRectMake(12.0f,
-                                        CGRectGetMaxY(self.brandLabel.frame) + 4.0f,
+                                        CGRectGetMaxY(self.brandLabel.frame) + 6.0f,
                                         self.view.frame.size.width - 24.0f,
-                                        self.nameLabel.frame.size.height)];
+                                        self.view.frame.size.height)];
     [self.nameLabel sizeToFit];
     
     if(VALID(self.priceView, JAPriceView))
@@ -373,7 +393,7 @@ UITableViewDataSource
     [self.topView addSubview:self.priceView];
     
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
-
+    
     if(VALID_NOTEMPTY(self.stars, JARatingsViewMedium))
     {
         [self.stars removeFromSuperview];
@@ -451,7 +471,10 @@ UITableViewDataSource
                                                     originY,
                                                     width,
                                                     self.view.frame.size.height - originY)];
-    
+    self.writeReviewScrollViewInitialRect = CGRectMake(width + horizontalMargin,
+                                                       originY,
+                                                       width,
+                                                       self.view.frame.size.height - originY);
     if(VALID(self.centerView, UIView))
     {
         [self.centerView removeFromSuperview];
@@ -840,5 +863,27 @@ UITableViewDataSource
         }];
 }
 
+#pragma mark - Keyboard notifications
+
+- (void) keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    // This happens only in landscape so we need to remove keyboard width.
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.writeReviewScrollView setFrame:CGRectMake(self.writeReviewScrollViewInitialRect.origin.x,
+                                                        self.writeReviewScrollViewInitialRect.origin.y,
+                                                        self.writeReviewScrollViewInitialRect.size.width,
+                                                        self.writeReviewScrollViewInitialRect.size.height - kbSize.width)];
+    }];
+}
+
+- (void) keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.writeReviewScrollView setFrame:self.writeReviewScrollViewInitialRect];
+    }];
+}
 
 @end

@@ -68,16 +68,16 @@
         [self.button setTitleColor:UIColorFromRGB(0x4e4e4e)
                           forState:UIControlStateNormal];
 
-        [self.button setBackgroundImage:[UIImage imageNamed:@"grayBig_normal"]
+        [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_normal"]
                                forState:UIControlStateNormal];
         
-        [self.button setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"]
+        [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"]
                                forState:UIControlStateSelected];
         
-        [self.button setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"]
+        [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"]
                                forState:UIControlStateHighlighted];
         
-        [self.button setBackgroundImage:[UIImage imageNamed:@"grayBig_disabled"]
+        [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_disabled"]
                                forState:UIControlStateDisabled];
         
         [self.button setTitle:STRING_CLEAR_RECENT_SEARCHES
