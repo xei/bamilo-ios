@@ -12,7 +12,7 @@
 
 @interface JAForgotPasswordViewController ()
 <
-    JADynamicFormDelegate
+JADynamicFormDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
@@ -23,7 +23,9 @@
 @property (strong, nonatomic) UIButton *forgotPasswordButton;
 @property (assign, nonatomic) CGFloat forgotPasswordViewCurrentY;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *forgotPasswordViewHeightConstrain;
-
+@property (assign, nonatomic) CGFloat widthVariable;
+@property (assign, nonatomic) CGFloat firstLabelPosition;
+@property (assign, nonatomic) CGFloat dynamicFormPosition;
 @end
 
 @implementation JAForgotPasswordViewController
@@ -33,6 +35,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    if(UI_USER_INTERFACE_IDIOM()== UIUserInterfaceIdiomPad){
+        
+        self.widthVariable = 256.0f;
+        self.firstLabelPosition = 30.0f;
+        self.dynamicFormPosition = 101.0f;
+        
+    }else{
+        self.widthVariable = 12.0f;
+        self.firstLabelPosition = 15.0f;
+        self.dynamicFormPosition = 74.0f;
+        
+    }
     
     self.screenName = @"ForgotPassword";
     
@@ -45,6 +61,10 @@
     
     self.forgotPasswordViewCurrentY = CGRectGetMaxY(self.secondLabel.frame) + 1.0f;
     
+    self.contentView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.firstLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.secondLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
     [self showLoading];
     
     [RIForm getForm:@"forgotpassword"
@@ -52,15 +72,8 @@
      {
          self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.forgotPasswordViewCurrentY];
          [self.dynamicForm setDelegate:self];
-         self.fieldsArray = [self.dynamicForm.formViews copy];
          
-         for(UIView *view in self.dynamicForm.formViews)
-         {
-             [self.contentView addSubview:view];
-             self.forgotPasswordViewCurrentY = CGRectGetMaxY(view.frame);
-         }
-         
-         [self finishedFormLoading];
+         [self setupView];
          
          [self hideLoading];
          
@@ -78,15 +91,24 @@
 }
 
 -(void)finishedFormLoading
-{
-    self.forgotPasswordViewCurrentY += 30.f;
-    
+{    
     self.forgotPasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.forgotPasswordButton setFrame:CGRectMake(6.0f, self.forgotPasswordViewCurrentY, 296.0f, 44.0f)];
-    [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_normal"] forState:UIControlStateNormal];
-    [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
-    [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
-    [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
+    [self.forgotPasswordButton setFrame:CGRectMake(self.widthVariable/2, self.contentView.frame.size.height - 56.0f, self.contentView.frame.size.width - self.widthVariable, 44.0f)];
+    
+    NSString *orangeButtonName = @"orangeBig_%@";
+    
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
+        if((UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)||(UIInterfaceOrientationLandscapeLeft == self.self.interfaceOrientation)){
+                orangeButtonName = @"orangeFullPortrait_%@";
+        }else{
+                orangeButtonName = @"orangeMediumPortrait_%@";
+        }
+    }
+    
+    [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]]forState:UIControlStateNormal];
+    [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]]forState:UIControlStateHighlighted];
+    [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]]forState:UIControlStateSelected];
+    [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"disabled"]]forState:UIControlStateDisabled];
     [self.forgotPasswordButton setTitle:STRING_SUBMIT forState:UIControlStateNormal];
     [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.forgotPasswordButton addTarget:self action:@selector(forgotPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -124,7 +146,7 @@
          [self.dynamicForm resetValues];
          [self hideLoading];
          
-         [self showMessage:STRING_EMAIL_SENT success:YES];         
+         [self showMessage:STRING_EMAIL_SENT success:YES];
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          [self hideLoading];
@@ -154,4 +176,54 @@
      }];
 }
 
+-(void)setupView
+{
+    [self.contentView setFrame:CGRectMake(6.0f, 6.0f, self.view.frame.size.width - 12.0f, self.contentView.frame.size.height)];
+    [self.firstLabel setFrame:CGRectMake(self.widthVariable/2,  self.firstLabelPosition, self.view.frame.size.width - self.widthVariable, self.firstLabel.frame.size.height)];
+    [self.secondLabel setFrame:CGRectMake(self.widthVariable/2, CGRectGetMaxY(self.firstLabel.frame) + 1.0f, self.secondLabel.frame.size.width, self.secondLabel.frame.size.height)];
+    
+    self.fieldsArray = [self.dynamicForm.formViews copy];
+    
+    for(UIView *view in self.dynamicForm.formViews)
+    {
+        [view setTag:1];
+        [self.contentView addSubview:view];
+        self.forgotPasswordViewCurrentY = CGRectGetMaxY(view.frame);
+        [view setFrame:CGRectMake(self.widthVariable/2, self.dynamicFormPosition, self.contentView.frame.size.width - self.widthVariable, view.frame.size.height)];
+    }
+    
+    [self finishedFormLoading];
+}
+
+- (void)removeViews
+{
+    [self.forgotPasswordButton removeFromSuperview];
+  
+    NSArray *subViews = self.contentView.subviews;
+    for(UIView *view in subViews)
+    {
+        if(1 == view.tag)
+        {
+            [view removeFromSuperview];
+        }
+    }
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [self removeViews];
+    
+    [self showLoading];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    [self setupView];
+    
+    [self hideLoading];
+}
 @end
