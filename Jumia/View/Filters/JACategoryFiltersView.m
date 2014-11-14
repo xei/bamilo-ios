@@ -86,11 +86,17 @@
         
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
         cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
-        
-        UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 43.0f, 320.0f, 1.0f)];
-        separator.backgroundColor = UIColorFromRGB(0xcccccc);
-        [cell addSubview:separator];
     }
+    
+    for (UIView* subview in cell.subviews) {
+        if (subview.tag == -1) {
+            [subview removeFromSuperview];
+        }
+    }
+    UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 43.0f, self.tableView.frame.size.width, 1.0f)];
+    separator.tag = -1;
+    separator.backgroundColor = UIColorFromRGB(0xcccccc);
+    [cell addSubview:separator];
     
     RICategory* category = [self.categoriesArray objectAtIndex:indexPath.row];
     cell.textLabel.text = category.name;

@@ -18,6 +18,7 @@
 @interface JAMainFiltersViewController ()
 
 @property (nonatomic, strong)UITableView *tableView;
+@property (nonatomic, strong)UIView* verticalSeparatorView;
 @property (nonatomic, strong)UIView* landscapeContentView;
 @property (nonatomic, assign)CGRect tableRectPortrait;
 @property (nonatomic, assign)CGRect tableRectLandscape;
@@ -44,8 +45,11 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
+    self.verticalSeparatorView = [UIView new];
+    self.verticalSeparatorView.backgroundColor = UIColorFromRGB(0xcccccc);
+    [self.view addSubview:self.verticalSeparatorView];
+    
     self.landscapeContentView = [UIView new];
-    self.landscapeContentView.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.landscapeContentView];
     
     if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
@@ -58,6 +62,10 @@
                                              self.view.frame.size.width / 2,
                                              self.view.frame.size.height);
         [self.tableView setFrame:self.tableRectLandscape];
+        [self.verticalSeparatorView setFrame:CGRectMake(CGRectGetMaxX(self.tableRectLandscape) - 1,
+                                                        0.0f,
+                                                        1.0f,
+                                                        self.tableRectLandscape.size.height)];
         [self.landscapeContentView setFrame:CGRectMake(CGRectGetMaxX(self.tableRectLandscape),
                                                        0.0f,
                                                        self.tableRectLandscape.size.width,
@@ -124,12 +132,17 @@
     
     if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
         [self.tableView setFrame:self.tableRectLandscape];
+        [self.verticalSeparatorView setFrame:CGRectMake(CGRectGetMaxX(self.tableRectLandscape) - 1,
+                                                        0.0f,
+                                                        1.0f,
+                                                        self.tableRectLandscape.size.height)];
         [self.landscapeContentView setFrame:CGRectMake(CGRectGetMaxX(self.tableRectLandscape),
                                                        0.0f,
                                                        self.tableRectLandscape.size.width,
                                                        self.tableRectLandscape.size.height)];
     } else {
         [self.tableView setFrame:self.tableRectPortrait];
+        [self.verticalSeparatorView setFrame:CGRectZero];
         [self.landscapeContentView setFrame:CGRectZero];
         [self isClosing:nil];
 //        if (self.currentOpenFilterNotification) {
