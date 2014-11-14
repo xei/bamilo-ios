@@ -6,10 +6,11 @@
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
-#import "JABaseViewController.h"
+#import "JASubFiltersViewController.h"
 #import "RIFilter.h"
 
-@interface JAPriceFilterViewController : JABaseViewController
+
+@interface JAPriceFilterViewController : JASubFiltersViewController
 
 @property (nonatomic, strong)RIFilterOption* priceFilterOption;
 

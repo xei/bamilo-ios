@@ -7,14 +7,11 @@
 //
 
 #import "JAPriceFilterViewController.h"
-#import "NMRangeSlider.h"
+#import "JAPriceFiltersView.h"
 
-@interface JAPriceFilterViewController ()
+@interface JAPriceFilterViewController()
 
-@property (weak, nonatomic) IBOutlet UILabel *priceRangeLabel;
-@property (weak, nonatomic) IBOutlet NMRangeSlider *priceRangeSlider;
-@property (weak, nonatomic) IBOutlet UISwitch *discountSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *discountLabel;
+@property (nonatomic, strong)JAPriceFiltersView* priceFiltersView;
 
 @end
 
@@ -30,61 +27,24 @@
     self.navBarLayout.backButtonTitle = STRING_FILTERS;
     self.navBarLayout.showDoneButton = YES;
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.priceRangeLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.discountLabel.textColor = UIColorFromRGB(0x4e4e4e);
-
-    self.priceRangeSlider.stepValue = self.priceFilterOption.interval;
-
-    self.priceRangeSlider.maximumValue = self.priceFilterOption.max;
-    self.priceRangeSlider.minimumValue = self.priceFilterOption.min;
-    
-    //found out the hard way that self.priceRangeSlider.upperValue has to be set before self.priceRangeSlider.lowerValue
-    self.priceRangeSlider.upperValue = self.priceFilterOption.upperValue;
-    self.priceRangeSlider.lowerValue = self.priceFilterOption.lowerValue;
-    
-    [self sliderMoved:nil];
-    
-    self.discountLabel.text = STRING_WITH_DISCOUNT_ONLY;
-    self.discountSwitch.on = self.priceFilterOption.discountOnly;
-    [self.discountSwitch setAccessibilityLabel:STRING_WITH_DISCOUNT_ONLY];
+    self.priceFiltersView = [[[NSBundle mainBundle] loadNibNamed:@"JAPriceFiltersView" owner:self options:nil] objectAtIndex:0];
+    [self.priceFiltersView setFrame:self.view.bounds];
+    [self.view addSubview:self.priceFiltersView];
+    [self.priceFiltersView initializeWithPriceFilterOption:self.priceFilterOption];
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
-                                                        object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doneButtonPressed)
-                                                 name:kDidPressDoneNotification
-                                               object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Button Actions
 
 - (void)doneButtonPressed
 {
-    //save selection in filter
+    [self.priceFiltersView saveOptions];
     
-    self.priceFilterOption.lowerValue = self.priceRangeSlider.lowerValue;
-    self.priceFilterOption.upperValue = self.priceRangeSlider.upperValue;
-    self.priceFilterOption.discountOnly = self.discountSwitch.on;
+    [super doneButtonPressed];
 }
 
-- (IBAction)sliderMoved:(id)sender
-{
-    self.priceRangeLabel.text = [NSString stringWithFormat:@"%d - %d", (int)self.priceRangeSlider.lowerValue, (int)self.priceRangeSlider.upperValue];
-}
+
 
 @end

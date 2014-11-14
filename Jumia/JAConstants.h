@@ -85,6 +85,7 @@
 #define kChangeNavigationBarNotification @"NOTIFICATION_CHANGE_NAVIGATION_BAR"
 #define kEditShouldChangeStateNotification @"EDIT_SHOULD_CHANGE_NOTIFICATION"
 #define kDoneShouldChangeStateNotification @"DONE_SHOULD_CHANGE_NOTIFICATION"
+#define kDidPressBackNotification @"DID_PRESS_BACK_NOTIFICATION"
 #define kDidPressDoneNotification @"DID_PRESS_DONE_NOTIFICATION"
 #define kDidPressEditNotification @"DID_PRESS_EDIT_NOTIFICATION"
 
