@@ -83,14 +83,14 @@
                                                object:nil];
 }
 
-- (void) loadingRotation: (NSNotification *) notification
+- (void)loadingRotation:(NSNotification *)notification
 {
     CGSize frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size;
     CGFloat screenWidth = frame.width;
     CGFloat screenHeight = frame.height;
     
-        self.loadingView.frame  = CGRectMake(0, 0, screenWidth , screenHeight);
-        self.loadingAnimation.center = self.loadingView.center;
+    self.loadingView.frame  = CGRectMake(0, 0, screenWidth , screenHeight);
+    self.loadingAnimation.center = self.loadingView.center;
 }
 -(void)dealloc
 {
@@ -126,7 +126,7 @@
     NSUInteger supportedInterfaceOrientations = UIInterfaceOrientationMaskPortrait;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
-        supportedInterfaceOrientations = UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
+        supportedInterfaceOrientations = UIInterfaceOrientationMaskAll;
     }
     return supportedInterfaceOrientations;
 }

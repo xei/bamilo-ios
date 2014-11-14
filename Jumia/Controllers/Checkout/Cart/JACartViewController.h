@@ -31,6 +31,7 @@ JAPickerDelegate
 
 // Cart views
 @property (strong, nonatomic) UIScrollView *cartScrollView;
+@property (strong, nonatomic) UIScrollView *productsScrollView;
 
 // Products
 @property (strong, nonatomic) UICollectionView *productCollectionView;

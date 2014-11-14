@@ -91,7 +91,7 @@ JADynamicFormDelegate
 }
 
 -(void)finishedFormLoading
-{    
+{
     self.forgotPasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.forgotPasswordButton setFrame:CGRectMake(self.widthVariable/2, self.contentView.frame.size.height - 56.0f, self.contentView.frame.size.width - self.widthVariable, 44.0f)];
     
