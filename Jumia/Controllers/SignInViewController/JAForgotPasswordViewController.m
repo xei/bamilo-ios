@@ -10,6 +10,8 @@
 #import "RIForm.h"
 #import "RICustomer.h"
 
+#define kDynamicFormFieldsTag 1
+
 @interface JAForgotPasswordViewController ()
 <
 JADynamicFormDelegate
@@ -23,9 +25,6 @@ JADynamicFormDelegate
 @property (strong, nonatomic) UIButton *forgotPasswordButton;
 @property (assign, nonatomic) CGFloat forgotPasswordViewCurrentY;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *forgotPasswordViewHeightConstrain;
-@property (assign, nonatomic) CGFloat widthVariable;
-@property (assign, nonatomic) CGFloat firstLabelPosition;
-@property (assign, nonatomic) CGFloat dynamicFormPosition;
 @end
 
 @implementation JAForgotPasswordViewController
@@ -36,20 +35,6 @@ JADynamicFormDelegate
 {
     [super viewDidLoad];
     
-    
-    if(UI_USER_INTERFACE_IDIOM()== UIUserInterfaceIdiomPad){
-        
-        self.widthVariable = 256.0f;
-        self.firstLabelPosition = 30.0f;
-        self.dynamicFormPosition = 101.0f;
-        
-    }else{
-        self.widthVariable = 12.0f;
-        self.firstLabelPosition = 15.0f;
-        self.dynamicFormPosition = 74.0f;
-        
-    }
-    
     self.screenName = @"ForgotPassword";
     
     self.navBarLayout.showLogo = NO;
@@ -58,8 +43,6 @@ JADynamicFormDelegate
     
     self.firstLabel.text = STRING_TYPE_YOUR_EMAIL;
     self.secondLabel.text = STRING_WE_WILL_SEND_PASSWORD;
-    
-    self.forgotPasswordViewCurrentY = CGRectGetMaxY(self.secondLabel.frame) + 1.0f;
     
     self.contentView.translatesAutoresizingMaskIntoConstraints = YES;
     self.firstLabel.translatesAutoresizingMaskIntoConstraints = YES;
@@ -92,16 +75,25 @@ JADynamicFormDelegate
 
 -(void)finishedFormLoading
 {
+    CGFloat widthVariable = 12.0f;
+    if(UI_USER_INTERFACE_IDIOM()== UIUserInterfaceIdiomPad)
+    {
+        widthVariable = 256.0f;
+    }
+    
     self.forgotPasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.forgotPasswordButton setFrame:CGRectMake(self.widthVariable/2, self.contentView.frame.size.height - 56.0f, self.contentView.frame.size.width - self.widthVariable, 44.0f)];
+    [self.forgotPasswordButton setFrame:CGRectMake(widthVariable/2,
+                                                   self.forgotPasswordViewCurrentY + 30.0f,
+                                                   self.contentView.frame.size.width - widthVariable,
+                                                   44.0f)];
     
     NSString *orangeButtonName = @"orangeBig_%@";
     
     if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
         if((UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)||(UIInterfaceOrientationLandscapeLeft == self.self.interfaceOrientation)){
-                orangeButtonName = @"orangeFullPortrait_%@";
+            orangeButtonName = @"orangeFullPortrait_%@";
         }else{
-                orangeButtonName = @"orangeMediumPortrait_%@";
+            orangeButtonName = @"orangeMediumPortrait_%@";
         }
     }
     
@@ -114,10 +106,15 @@ JADynamicFormDelegate
     [self.forgotPasswordButton addTarget:self action:@selector(forgotPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.forgotPasswordButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.contentView addSubview:self.forgotPasswordButton];
+    
     self.forgotPasswordViewCurrentY = CGRectGetMaxY(self.forgotPasswordButton.frame) + 6.0f;
     
     self.forgotPasswordViewHeightConstrain.constant = self.forgotPasswordViewCurrentY;
     
+    [self.contentView setFrame:CGRectMake(self.contentView.frame.origin.x,
+                                          self.contentView.frame.origin.y,
+                                          self.contentView.frame.size.width,
+                                          CGRectGetMaxY(self.forgotPasswordButton.frame) + 6.0f)];
     if(self.firstLoading)
     {
         NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -178,18 +175,38 @@ JADynamicFormDelegate
 
 -(void)setupView
 {
-    [self.contentView setFrame:CGRectMake(6.0f, 6.0f, self.view.frame.size.width - 12.0f, self.contentView.frame.size.height)];
-    [self.firstLabel setFrame:CGRectMake(self.widthVariable/2,  self.firstLabelPosition, self.view.frame.size.width - self.widthVariable, self.firstLabel.frame.size.height)];
-    [self.secondLabel setFrame:CGRectMake(self.widthVariable/2, CGRectGetMaxY(self.firstLabel.frame) + 1.0f, self.secondLabel.frame.size.width, self.secondLabel.frame.size.height)];
+    self.forgotPasswordViewCurrentY = CGRectGetMaxY(self.secondLabel.frame) + 1.0f;
+    
+    CGFloat widthVariable = 12.0f;
+    CGFloat firstLabelPosition = 15.0f;
+    CGFloat dynamicFormPosition = 74.0f;
+    
+    if(UI_USER_INTERFACE_IDIOM()== UIUserInterfaceIdiomPad)
+    {
+        widthVariable = 256.0f;
+        firstLabelPosition = 30.0f;
+        dynamicFormPosition = 101.0f;
+    }
+    
+    [self.firstLabel setFrame:CGRectMake(widthVariable/2,  self.firstLabel.frame.origin.y, self.view.frame.size.width - widthVariable, self.firstLabel.frame.size.height)];
+    [self.secondLabel setFrame:CGRectMake(widthVariable/2, self.secondLabel.frame.origin.y, self.secondLabel.frame.size.width, self.secondLabel.frame.size.height)];
     
     self.fieldsArray = [self.dynamicForm.formViews copy];
     
+    [self.contentView setFrame:CGRectMake(self.contentView.frame.origin.x,
+                                          self.contentView.frame.origin.y,
+                                          self.view.frame.size.width - 12.0f,
+                                          self.contentView.frame.size.height)];
+    
     for(UIView *view in self.dynamicForm.formViews)
     {
-        [view setTag:1];
+        [view setTag:kDynamicFormFieldsTag];
         [self.contentView addSubview:view];
-        self.forgotPasswordViewCurrentY = CGRectGetMaxY(view.frame);
-        [view setFrame:CGRectMake(self.widthVariable/2, self.dynamicFormPosition, self.contentView.frame.size.width - self.widthVariable, view.frame.size.height)];
+        [view setFrame:CGRectMake(widthVariable / 2,
+                                  self.forgotPasswordViewCurrentY,
+                                  self.contentView.frame.size.width - widthVariable,
+                                  view.frame.size.height)];
+        self.forgotPasswordViewCurrentY += view.frame.size.height;
     }
     
     [self finishedFormLoading];
@@ -198,11 +215,11 @@ JADynamicFormDelegate
 - (void)removeViews
 {
     [self.forgotPasswordButton removeFromSuperview];
-  
+    
     NSArray *subViews = self.contentView.subviews;
     for(UIView *view in subViews)
     {
-        if(1 == view.tag)
+        if(kDynamicFormFieldsTag == view.tag)
         {
             [view removeFromSuperview];
         }
