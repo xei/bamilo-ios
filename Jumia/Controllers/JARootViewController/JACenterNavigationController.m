@@ -57,6 +57,7 @@
 #import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"
 #import "JASubCategoriesViewController.h"
+#import "JACategoryFilterViewController.h"
 #import "RICart.h"
 
 @interface JACenterNavigationController ()
@@ -915,6 +916,9 @@
         if ([notification.userInfo objectForKey:@"delegate"]) {
             categoryFilterViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
         }
+        if ([notification.userInfo objectForKey:@"categoryFiltersViewDelegate"]) {
+            categoryFilterViewController.categoryFiltersViewDelegate = [notification.userInfo objectForKey:@"categoryFiltersViewDelegate"];
+        }
         
         [self pushViewController:categoryFilterViewController animated:YES];
     }
@@ -930,6 +934,9 @@
         if ([notification.userInfo objectForKey:@"priceFilterOption"]) {
             priceFilterViewController.priceFilterOption = [notification.userInfo objectForKey:@"priceFilterOption"];
         }
+        if ([notification.userInfo objectForKey:@"delegate"]) {
+            priceFilterViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
+        }
         
         [self pushViewController:priceFilterViewController animated:YES];
     }
@@ -944,6 +951,9 @@
         
         if ([notification.userInfo objectForKey:@"filter"]) {
             genericFilterViewController.filter = [notification.userInfo objectForKey:@"filter"];
+        }
+        if ([notification.userInfo objectForKey:@"delegate"]) {
+            genericFilterViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
         }
         
         [self pushViewController:genericFilterViewController animated:YES];
@@ -1315,6 +1325,9 @@
 - (void)back
 {
     [self popViewControllerAnimated:YES];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressBackNotification
+                                                        object:nil];
 }
 
 - (void)done
