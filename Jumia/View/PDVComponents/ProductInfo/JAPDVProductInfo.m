@@ -98,7 +98,9 @@
     self.layer.cornerRadius = 5.0f;
     
     [self.sizeLabel setTextColor:UIColorFromRGB(0x55a1ff)];
-    
+    [self.numberOfReviewsLabel setTextColor:UIColorFromRGB(0xcccccc)];
+    [self.specificationsLabel setTextColor:UIColorFromRGB(0x666666)];
+   
     CGFloat width = frame.size.width - 12.0f;
     
     [self setFrame:CGRectMake(self.frame.origin.x,
@@ -169,7 +171,6 @@
     }
     
     self.specificationsLabel.text = STRING_SPECIFICATIONS;
-    [self.specificationsLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     
     /*
      Check if there is size
@@ -285,12 +286,12 @@
         [self.productFeaturesText setFrame:CGRectMake(self.productFeaturesText.frame.origin.x,
                                                       self.productFeaturesText.frame.origin.y,
                                                       self.productFeaturesText.frame.size.width,
-                                                      productFeaturesTextRect.size.height)];
+                                                      ceilf(productFeaturesTextRect.size.height))];
         
         [self.productFeaturesView setFrame:CGRectMake(self.productFeaturesView.frame.origin.x,
                                                       self.productFeaturesView.frame.origin.y,
                                                       self.productFeaturesView.frame.size.width,
-                                                      self.productFeaturesText.frame.origin.y +  productFeaturesTextRect.size.height + 6.0f)];
+                                                      self.productFeaturesText.frame.origin.y +  ceilf(productFeaturesTextRect.size.height) + 6.0f)];
     }
     
     CGFloat frameHeight = CGRectGetMaxY(self.productFeaturesView.frame);
@@ -335,12 +336,12 @@
             [self.productDescriptionText setFrame:CGRectMake(self.productDescriptionText.frame.origin.x,
                                                              self.productDescriptionText.frame.origin.y,
                                                              self.productDescriptionText.frame.size.width,
-                                                             productDescriptionTextRect.size.height)];
+                                                             ceilf(productDescriptionTextRect.size.height))];
             
             [self.productDescriptionView setFrame:CGRectMake(self.productDescriptionView.frame.origin.x,
                                                              self.productDescriptionView.frame.origin.y,
                                                              self.productDescriptionView.frame.size.width,
-                                                             self.productDescriptionText.frame.origin.y +  productDescriptionTextRect.size.height + 6.0f)];
+                                                             self.productDescriptionText.frame.origin.y +  ceilf(productDescriptionTextRect.size.height) + 6.0f)];
         }
         
         frameHeight = CGRectGetMaxY(self.productDescriptionView.frame);
