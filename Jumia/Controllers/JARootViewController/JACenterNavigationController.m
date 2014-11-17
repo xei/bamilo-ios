@@ -36,13 +36,6 @@
 #import "JACartViewController.h"
 #import "JAForgotPasswordViewController.h"
 #import "JALoginViewController.h"
-#import "JAAddressesViewController.h"
-#import "JASignInViewController.h"
-#import "JAAddNewAddressViewController.h"
-#import "JAEditAddressViewController.h"
-#import "JAShippingViewController.h"
-#import "JAPaymentViewController.h"
-#import "JAOrderViewController.h"
 #import "JAExternalPaymentsViewController.h"
 #import "JAThanksViewController.h"
 #import "RIProduct.h"
@@ -488,6 +481,7 @@
         
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
         {
+            signInVC.navBarLayout.showBackButton = ![[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
             signInVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
             signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
             [self popViewControllerAnimated:NO];
@@ -512,6 +506,7 @@
         
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
         {
+            signUpVC.navBarLayout.showBackButton = ![[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
             signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
             signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
             [self popViewControllerAnimated:NO];
@@ -597,7 +592,7 @@
             {
                 animated = [[notification.object objectForKey:@"animated"] boolValue];
             }
-        
+            
             JAUserDataViewController *userData = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"userDataViewController"];
             
             [self pushViewController:userData animated:animated];
@@ -609,6 +604,7 @@
         {
             JASignInViewController *signInViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signInViewController"];
             
+            signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
             signInViewController.nextNotification = notification;
             
@@ -642,6 +638,7 @@
         {
             JASignInViewController *signInViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signInViewController"];
             
+            signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
             signInViewController.nextNotification = notification;
             
@@ -1004,7 +1001,7 @@
         {
             animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
         }
-
+        
         [self pushViewController:ratingsViewController animated:animated];
     }
 }
@@ -1023,16 +1020,16 @@
         if ([notification.userInfo objectForKey:@"productRatings"]) {
             newRatingViewController.productRatings = [notification.userInfo objectForKey:@"productRatings"];
         }
-       
+        
         if ([notification.userInfo objectForKey:@"goToNewRatingButtonPressed"]) {
             newRatingViewController.goToNewRatingButtonPressed = [[notification.userInfo objectForKey:@"goToNewRatingButtonPressed"] boolValue];
         }
-                
+        
         if([notification.userInfo objectForKey:@"popLastViewController"] && [[notification.userInfo objectForKey:@"popLastViewController"] boolValue])
         {
             [self popViewControllerAnimated:NO];
         }
-
+        
         BOOL animated = YES;
         if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
         {
@@ -1085,7 +1082,7 @@
     else if (VALID_NOTEMPTY(campaignId, NSString))
     {
         JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
-
+        
         campaignsVC.campaignId = campaignId;
         
         [self pushViewController:campaignsVC animated:YES];

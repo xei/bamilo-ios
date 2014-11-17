@@ -98,7 +98,9 @@
     self.layer.cornerRadius = 5.0f;
     
     [self.sizeLabel setTextColor:UIColorFromRGB(0x55a1ff)];
-    
+    [self.numberOfReviewsLabel setTextColor:UIColorFromRGB(0xcccccc)];
+    [self.specificationsLabel setTextColor:UIColorFromRGB(0x666666)];
+   
     CGFloat width = frame.size.width - 12.0f;
     
     [self setFrame:CGRectMake(self.frame.origin.x,
@@ -169,7 +171,6 @@
     }
     
     self.specificationsLabel.text = STRING_SPECIFICATIONS;
-    [self.specificationsLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     
     /*
      Check if there is size
