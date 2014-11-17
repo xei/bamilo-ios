@@ -53,36 +53,6 @@
     self.landscapeContentView = [UIView new];
     [self.view addSubview:self.landscapeContentView];
     
-    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
-        self.tableRectPortrait = CGRectMake(0.0f,
-                                            0.0f,
-                                            self.view.frame.size.height,
-                                            self.view.frame.size.width);
-        self.tableRectLandscape = CGRectMake(0.0f,
-                                             0.0f,
-                                             self.view.frame.size.width / 2,
-                                             self.view.frame.size.height);
-        [self.tableView setFrame:self.tableRectLandscape];
-        [self.verticalSeparatorView setFrame:CGRectMake(CGRectGetMaxX(self.tableRectLandscape) - 1,
-                                                        0.0f,
-                                                        1.0f,
-                                                        self.tableRectLandscape.size.height)];
-        [self.landscapeContentView setFrame:CGRectMake(CGRectGetMaxX(self.tableRectLandscape),
-                                                       0.0f,
-                                                       self.tableRectLandscape.size.width,
-                                                       self.tableRectLandscape.size.height)];
-    } else {
-        self.tableRectPortrait = CGRectMake(0.0f,
-                                            0.0f,
-                                            self.view.frame.size.width,
-                                            self.view.frame.size.height);
-        self.tableRectLandscape = CGRectMake(0.0f,
-                                             0.0f,
-                                             self.view.frame.size.height / 2,
-                                             self.view.frame.size.width);
-        [self.tableView setFrame:self.tableRectPortrait];
-    }
-    
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
@@ -103,7 +73,36 @@
                                name:kDidPressDoneNotification
                              object:nil];
     
-    [self updatedValues];
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        self.tableRectPortrait = CGRectMake(0.0f,
+                                            0.0f,
+                                            self.view.frame.size.height + 64.0f,
+                                            self.view.frame.size.width - 64.0f);
+        self.tableRectLandscape = CGRectMake(0.0f,
+                                             0.0f,
+                                             self.view.frame.size.width / 2,
+                                             self.view.frame.size.height);
+        [self.tableView setFrame:self.tableRectLandscape];
+        [self.verticalSeparatorView setFrame:CGRectMake(CGRectGetMaxX(self.tableRectLandscape) - 1,
+                                                        0.0f,
+                                                        1.0f,
+                                                        self.tableRectLandscape.size.height)];
+        [self.landscapeContentView setFrame:CGRectMake(CGRectGetMaxX(self.tableRectLandscape),
+                                                       0.0f,
+                                                       self.tableRectLandscape.size.width,
+                                                       self.tableRectLandscape.size.height)];
+    } else {
+        self.tableRectPortrait = CGRectMake(0.0f,
+                                            0.0f,
+                                            self.view.frame.size.width,
+                                            self.view.frame.size.height);
+        self.tableRectLandscape = CGRectMake(0.0f,
+                                             0.0f,
+                                             (self.view.frame.size.height + 64.0f) / 2,
+                                             self.view.frame.size.width - 64.0f);
+        [self.tableView setFrame:self.tableRectPortrait];
+    }
+    
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0f];
 }
 
@@ -150,6 +149,8 @@
 //            [[NSNotificationCenter defaultCenter] postNotification:self.currentOpenFilterNotification];
 //        }
     }
+    
+    [self updatedValues];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -471,6 +472,9 @@
 
 - (void)updatedValues;
 {
+    if (VALID_NOTEMPTY(self.lastSelectedClickView, UIControl)) {
+        self.lastSelectedClickView.selected = NO;
+    }
     [self.tableView reloadData];
     [self checkEditButtonState];
 }
