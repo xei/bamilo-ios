@@ -21,39 +21,45 @@
 #define JAPopularBrandsTeaserViewCellFont [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]
 #define JAPopularBrandsTeaserViewCellColor UIColorFromRGB(0x4e4e4e)
 
+@interface JAPopularBrandsTeaserView()
+
+@property (nonatomic, strong)UIView* contentView;
+
+@end
+
 @implementation JAPopularBrandsTeaserView
 
 - (void)load;
 {
     [super load];
     
-    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(JAPopularBrandsTeaserViewHorizontalMargin,
-                                                                   JAPopularBrandsTeaserViewContentY,
-                                                                   self.bounds.size.width - JAPopularBrandsTeaserViewHorizontalMargin*2,
-                                                                   1)];
-    contentView.backgroundColor = [UIColor whiteColor];
-    contentView.layer.cornerRadius = JAPopularBrandsTeaserViewContentCornerRadius;
-    [self addSubview:contentView];
+    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(JAPopularBrandsTeaserViewHorizontalMargin,
+                                                                JAPopularBrandsTeaserViewContentY,
+                                                                self.bounds.size.width - JAPopularBrandsTeaserViewHorizontalMargin*2,
+                                                                1)];
+    self.contentView.backgroundColor = [UIColor whiteColor];
+    self.contentView.layer.cornerRadius = JAPopularBrandsTeaserViewContentCornerRadius;
+    [self addSubview:self.contentView];
     
-    CGFloat currentY = contentView.bounds.origin.y;
+    CGFloat currentY = self.contentView.bounds.origin.y;
     
-    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x + JAPopularBrandsTeaserViewHorizontalMargin,
+    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x + JAPopularBrandsTeaserViewHorizontalMargin,
                                                                     currentY,
-                                                                    contentView.bounds.size.width - JAPopularBrandsTeaserViewHorizontalMargin*2,
+                                                                    self.contentView.bounds.size.width - JAPopularBrandsTeaserViewHorizontalMargin*2,
                                                                     JAPopularBrandsTeaserViewTitleHeight)];
     titleLabel.text = self.groupTitle;
     titleLabel.font = JAPopularBrandsTeaserViewTitleFont
     titleLabel.textColor = JAPopularBrandsTeaserViewTitleColor;
-    [contentView addSubview:titleLabel];
+    [self.contentView addSubview:titleLabel];
     
     currentY += titleLabel.frame.size.height;
     
-    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x,
-                                                                contentView.bounds.origin.y + JAPopularBrandsTeaserViewTitleHeight,
-                                                                contentView.bounds.size.width,
+    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x,
+                                                                self.contentView.bounds.origin.y + JAPopularBrandsTeaserViewTitleHeight,
+                                                                self.contentView.bounds.size.width,
                                                                 1.0f)];
     lineView.backgroundColor = JAPopularBrandsTeaserViewLineColor;
-    [contentView addSubview:lineView];
+    [self.contentView addSubview:lineView];
     
     currentY += lineView.frame.size.height;
     
@@ -63,13 +69,13 @@
         
         for (RITeaserText* teaserText in teaser.teaserTexts) {
             
-            JAClickableView* listClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x,
+            JAClickableView* listClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x,
                                                                                                    currentY,
-                                                                                                   contentView.bounds.size.width,
+                                                                                                   self.contentView.bounds.size.width,
                                                                                                    JAPopularBrandsTeaserViewCellHeight)];
             [listClickableView addTarget:self action:@selector(teaserTextPressed:) forControlEvents:UIControlEventTouchUpInside];
             listClickableView.tag = i;
-            [contentView addSubview:listClickableView];
+            [self.contentView addSubview:listClickableView];
             
             UILabel* teaserLabel = [[UILabel alloc] initWithFrame:CGRectMake(listClickableView.bounds.origin.x + JAPopularBrandsTeaserViewCellMargin,
                                                                              listClickableView.bounds.origin.y,
@@ -84,10 +90,10 @@
         }
     }
     
-    [contentView setFrame:CGRectMake(contentView.frame.origin.x,
-                                     contentView.frame.origin.y,
-                                     contentView.frame.size.width,
-                                     currentY)];
+    [self.contentView setFrame:CGRectMake(self.contentView.frame.origin.x,
+                                          self.contentView.frame.origin.y,
+                                          self.contentView.frame.size.width,
+                                          currentY)];
     
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
@@ -104,6 +110,18 @@
     RITeaserText* teaserText = [teaser.teaserTexts firstObject];
     
     [self teaserPressedWithTeaserText:teaserText];
+}
+
+- (void)adjustHeight:(CGFloat)height
+{
+    self.frame = CGRectMake(self.frame.origin.x,
+                            self.frame.origin.y,
+                            self.frame.size.width,
+                            height);
+    self.contentView.frame = CGRectMake(self.contentView.frame.origin.x,
+                                        self.contentView.frame.origin.y,
+                                        self.contentView.frame.size.width,
+                                        height - JAPopularBrandsTeaserViewHorizontalMargin);
 }
 
 @end

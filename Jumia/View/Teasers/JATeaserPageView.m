@@ -353,6 +353,10 @@
         [popularBrandsTeaserView setTeasers:popularBrandsTeaserGroup.teasers];
         [popularBrandsTeaserView load];
     }
+
+    CGFloat maxHeight = MAX(topCategoriesTeaserView.frame.size.height, popularBrandsTeaserView.frame.size.height);
+    [topCategoriesTeaserView adjustHeight:maxHeight];
+    [popularBrandsTeaserView adjustHeight:maxHeight];
     
     yPosition += MAX(topCategoriesTeaserView.frame.size.height, popularBrandsTeaserView.frame.size.height);
     
