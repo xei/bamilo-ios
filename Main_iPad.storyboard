@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -395,6 +394,10 @@
                             <constraint firstItem="LOb-ud-3nh" firstAttribute="top" secondItem="Kpg-FM-fBt" secondAttribute="bottom" id="zfq-y9-Sed"/>
                             <constraint firstItem="cBE-tR-q0p" firstAttribute="top" secondItem="eyr-vl-osI" secondAttribute="bottom" constant="20" id="zsZ-0K-UXl"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ja1-nl-UGL" appends="YES" id="b0c-gh-vEg"/>
+                            <outletCollection property="gestureRecognizers" destination="yC9-pE-Wil" appends="YES" id="mJ9-yz-NWc"/>
+                        </connections>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="b7U-xG-y9h"/>
@@ -406,6 +409,16 @@
                         <outlet property="viewToggleButton" destination="bk3-aa-7H8" id="3Oj-tB-dyI"/>
                     </connections>
                 </viewController>
+                <swipeGestureRecognizer direction="right" id="ja1-nl-UGL">
+                    <connections>
+                        <action selector="swipeRight:" destination="c8w-bj-Pqm" id="0HN-hu-46O"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="yC9-pE-Wil">
+                    <connections>
+                        <action selector="swipeLeft:" destination="c8w-bj-Pqm" id="ZTw-ta-8Z2"/>
+                    </connections>
+                </swipeGestureRecognizer>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37k-Xc-XjB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1316" y="-1929"/>
