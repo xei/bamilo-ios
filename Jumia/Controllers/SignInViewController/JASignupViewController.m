@@ -69,13 +69,11 @@ UIPickerViewDelegate
     
     self.navBarLayout.title = STRING_CREATE_ACCOUNT;
     
-    self.registerViewCurrentY = 0.0f;
-    
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height - 64.0f)];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
     
-    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
+    self.contentView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.contentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.contentView.layer.cornerRadius = 5.0f;
     
@@ -84,24 +82,29 @@ UIPickerViewDelegate
     [self.headerLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.headerLabel setText:STRING_ACCOUNT_DATA];
     [self.headerLabel setBackgroundColor:[UIColor clearColor]];
-    [self.contentView addSubview:self.headerLabel];
-    self.registerViewCurrentY = CGRectGetMaxY(self.headerLabel.frame);
-    
+
     self.headerSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.registerViewCurrentY, self.contentView.frame.size.width, 1.0f)];
     [self.headerSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
-    [self.contentView addSubview:self.headerSeparator];
-    self.registerViewCurrentY = CGRectGetMaxY(self.headerSeparator.frame) + 6.0f;
-    
-    [self.contentScrollView addSubview:self.contentView];
-    [self.view addSubview:self.contentScrollView];
-    
-    self.originalFrame = self.contentScrollView.frame;
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventRegisterStart] data:nil];
     
     [self showLoading];
-
+    
     [self getRegisterForm];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [self removeViews];
+    
+    [self showLoading];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self setupViews];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void) hideKeyboard
@@ -123,15 +126,11 @@ UIPickerViewDelegate
            self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.registerViewCurrentY];
            [self.dynamicForm setDelegate:self];
            
-           for(UIView *view in self.dynamicForm.formViews)
-           {
-               [self.contentView addSubview:view];
-               self.registerViewCurrentY = CGRectGetMaxY(view.frame);
-           }
-           
-           [self finishedFormLoading];
+           [self setupViews];
            
        } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+           
+           [self setupViews];
            
            if(RIApiResponseMaintenancePage == apiResponse)
            {
@@ -151,24 +150,82 @@ UIPickerViewDelegate
        }];
 }
 
-- (void)finishedFormLoading
+- (void)removeViews
 {
+    for(UIView *subview in self.contentView.subviews)
+    {
+        [subview removeFromSuperview];
+    }
+    [self.contentView removeFromSuperview];
+    
+    for(UIView *subview in self.contentScrollView.subviews)
+    {
+        [subview removeFromSuperview];
+    }
+    [self.contentScrollView removeFromSuperview];
+}
+
+- (void)setupViews
+{
+    [self.contentScrollView setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height - 64.0f)];
+    [self.view addSubview:self.contentScrollView];
+    self.originalFrame = self.contentScrollView.frame;
+    
+    [self.contentView setFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
+    [self.contentScrollView addSubview:self.contentView];
+    
+    self.registerViewCurrentY = 0.0f;
+    
+    [self.headerLabel setFrame:CGRectMake(6.0f, self.registerViewCurrentY, self.contentView.frame.size.width - 12.0f, 25.0f)];
+    [self.contentView addSubview:self.headerLabel];
+    self.registerViewCurrentY = CGRectGetMaxY(self.headerLabel.frame);
+    
+    [self.headerSeparator setFrame:CGRectMake(0.0f, self.registerViewCurrentY, self.contentView.frame.size.width, 1.0f)];
+    [self.contentView addSubview:self.headerSeparator];
+    self.registerViewCurrentY = CGRectGetMaxY(self.headerSeparator.frame) + 6.0f;
+    
+    NSString *signupImageNameFormatter = @"orangeMedium_%@";
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        signupImageNameFormatter = @"orangeMediumPortrait_%@";
+        
+        if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        {
+            signupImageNameFormatter = @"orangeFullPortrait_%@";
+        }
+    }
+    
+    UIImage *signupNormalImage = [UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"normal"]];
+    
+    for(UIView *view in self.dynamicForm.formViews)
+    {
+        CGRect dynamicFormFieldViewFrame = view.frame;
+        dynamicFormFieldViewFrame.origin.x = (self.contentView.frame.size.width - signupNormalImage.size.width) / 2;
+        dynamicFormFieldViewFrame.origin.y = self.registerViewCurrentY;
+        dynamicFormFieldViewFrame.size.width = signupNormalImage.size.width;
+        view.frame = dynamicFormFieldViewFrame;
+        [self.contentView addSubview:view];
+        self.registerViewCurrentY = CGRectGetMaxY(view.frame);
+    }
+    
     self.registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.registerButton setFrame:CGRectMake(6.0f, self.registerViewCurrentY, 296.0f, 44.0f)];
-    [self.registerButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_normal"] forState:UIControlStateNormal];
-    [self.registerButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
-    [self.registerButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
-    [self.registerButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
+    [self.registerButton setBackgroundImage:signupNormalImage forState:UIControlStateNormal];
+    [self.registerButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"highlighted"]] forState:UIControlStateHighlighted];
+    [self.registerButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"highlighted"]] forState:UIControlStateSelected];
+    [self.registerButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"disabled"]] forState:UIControlStateDisabled];
     [self.registerButton setTitle:STRING_REGISTER forState:UIControlStateNormal];
     [self.registerButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.registerButton addTarget:self action:@selector(registerButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.registerButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.registerButton setFrame:CGRectMake((self.contentView.frame.size.width - signupNormalImage.size.width) / 2,
+                                             self.registerViewCurrentY,
+                                             signupNormalImage.size.width,
+                                             signupNormalImage.size.height)];
     [self.contentView addSubview:self.registerButton];
     
     self.registerViewCurrentY = CGRectGetMaxY(self.registerButton.frame) + 5.0f;
     // Forgot Password
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.loginButton setFrame:CGRectMake(6.0f, self.registerViewCurrentY, 296.0f, 30.0f)];
     [self.loginButton setBackgroundColor:[UIColor clearColor]];
     [self.loginButton setTitle:STRING_LOGIN forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
@@ -176,6 +233,10 @@ UIPickerViewDelegate
     [self.loginButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];
     [self.loginButton addTarget:self action:@selector(loginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.loginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.loginButton setFrame:CGRectMake(self.registerButton.frame.origin.x,
+                                          self.registerViewCurrentY,
+                                          self.registerButton.frame.size.width,
+                                          30.0f)];
     [self.contentView addSubview:self.loginButton];
     self.registerViewCurrentY = CGRectGetMaxY(self.loginButton.frame) + 3.0f;
     
@@ -183,7 +244,14 @@ UIPickerViewDelegate
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.contentView.frame.origin.y + self.contentView.frame.size.height + 6.0f)];
     
     [self hideLoading];
-    
+ 
+    [self finishedFormLoading];
+}
+
+- (void)finishedFormLoading
+{
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventRegisterStart] data:nil];
+
     if(self.firstLoading)
     {
         NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];

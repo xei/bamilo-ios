@@ -37,6 +37,8 @@
 
 -(void)setupWithField:(RIField*)field
 {
+    self.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.storedValue = @"";
     self.hasError = NO;
     self.field = field;

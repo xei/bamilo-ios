@@ -38,6 +38,8 @@
 
 -(void)setupWithLabel:(NSString*)label day:(RIField*)day month:(RIField*)month year:(RIField*)year
 {
+    self.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.hasError = NO;
     
     self.dayField = day;
