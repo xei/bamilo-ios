@@ -160,6 +160,8 @@
             [scrollView addSubview:topSellersTeaserView];
             topSellersTeaserView.groupTitle = teaserGroup.title;
             [topSellersTeaserView setTeasers:teaserGroup.teasers];
+            BOOL isLandscape = self.frame.size.width>self.frame.size.height?YES:NO;
+            topSellersTeaserView.isLandscape = isLandscape;
             [topSellersTeaserView load];
             
             yPosition += topSellersTeaserView.frame.size.height;

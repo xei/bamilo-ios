@@ -20,6 +20,7 @@
 #define JATopSellersTeaserViewTitleColor UIColorFromRGB(0x4e4e4e)
 #define JATopSellersTeaserViewLineColor UIColorFromRGB(0xfaa41a)
 #define JATopSellersTeaserViewProductTeaserWidth 110.0f
+#define JATopSellersTeaserViewProductTeaserWidthLandscape 140.0f
 #define JATopSellersTeaserViewProductImageWidth 57.0f
 #define JATopSellersTeaserViewProductImageHeight 71.0f
 #define JATopSellersTeaserViewProductFont [UIFont fontWithName:@"HelveticaNeue" size:9.0f]
@@ -76,9 +77,14 @@
         
         for (RITeaserProduct* teaserProduct in teaser.teaserProducts) {
             
+            CGFloat clickableViewWidth = JATopSellersTeaserViewProductTeaserWidth;
+            if (self.isLandscape) {
+                clickableViewWidth = JATopSellersTeaserViewProductTeaserWidthLandscape;
+            }
+            
             JAClickableView* productTeaserView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
                                                                                                    productScrollView.bounds.origin.y,
-                                                                                                   JATopSellersTeaserViewProductTeaserWidth,
+                                                                                                   clickableViewWidth,
                                                                                                    productScrollView.bounds.size.height)];
             productTeaserView.tag = i;
             [productTeaserView addTarget:self action:@selector(teaserProductPressed:) forControlEvents:UIControlEventTouchUpInside];
