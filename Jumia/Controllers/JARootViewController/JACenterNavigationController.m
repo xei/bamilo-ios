@@ -356,25 +356,12 @@
 
 - (void)showLoadCountryScreen:(NSNotification*)notification
 {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JALoadCountryViewController class]])
-    {
-        JALoadCountryViewController *loadCountry = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"loadCountryViewController"];
-        
-        loadCountry.selectedCountry = notification.object;
-        loadCountry.pushNotification = notification.userInfo;
-        
-        [self pushViewController:loadCountry animated:NO];
-    }
-    else
-    {
-        JALoadCountryViewController *loadCountry = (JALoadCountryViewController*) topViewController;
-        
-        loadCountry.selectedCountry = notification.object;
-        loadCountry.pushNotification = notification.userInfo;
-        
-        [loadCountry continueProcessing];
-    }
+    JALoadCountryViewController *loadCountry = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"loadCountryViewController"];
+    
+    loadCountry.selectedCountry = notification.object;
+    loadCountry.pushNotification = notification.userInfo;
+    
+    [self setViewControllers:@[loadCountry]];
 }
 
 #pragma mark - Left Menu Actions
