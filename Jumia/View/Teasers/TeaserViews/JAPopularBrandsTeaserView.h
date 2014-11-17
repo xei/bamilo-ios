@@ -10,4 +10,6 @@
 
 @interface JAPopularBrandsTeaserView : JATeaserView
 
+- (void)adjustHeight:(CGFloat)height;
+
 @end

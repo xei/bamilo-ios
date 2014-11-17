@@ -160,6 +160,8 @@
             [scrollView addSubview:topSellersTeaserView];
             topSellersTeaserView.groupTitle = teaserGroup.title;
             [topSellersTeaserView setTeasers:teaserGroup.teasers];
+            BOOL isLandscape = self.frame.size.width>self.frame.size.height?YES:NO;
+            topSellersTeaserView.isLandscape = isLandscape;
             [topSellersTeaserView load];
             
             yPosition += topSellersTeaserView.frame.size.height;
@@ -353,6 +355,10 @@
         [popularBrandsTeaserView setTeasers:popularBrandsTeaserGroup.teasers];
         [popularBrandsTeaserView load];
     }
+
+    CGFloat maxHeight = MAX(topCategoriesTeaserView.frame.size.height, popularBrandsTeaserView.frame.size.height);
+    [topCategoriesTeaserView adjustHeight:maxHeight];
+    [popularBrandsTeaserView adjustHeight:maxHeight];
     
     yPosition += MAX(topCategoriesTeaserView.frame.size.height, popularBrandsTeaserView.frame.size.height);
     
