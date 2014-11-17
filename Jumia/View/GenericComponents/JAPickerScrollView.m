@@ -9,6 +9,7 @@
 #import "JAPickerScrollView.h"
 
 #define JAPickerScrollViewCenterWidth 100.0f
+#define JAPickerScrollViewCenterWidthLandscape 110.0f
 #define JAPickerScrollViewBackgroundColor UIColorFromRGB(0xe3e3e3);
 #define JAPickerScrollViewTextColor UIColorFromRGB(0x4e4e4e);
 #define JAPickerScrollViewTextSize 13.0f
@@ -43,9 +44,14 @@
     
     self.backgroundColor = JAPickerScrollViewBackgroundColor;
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((self.bounds.size.width - JAPickerScrollViewCenterWidth) / 2,
+    CGFloat centerWidth = JAPickerScrollViewCenterWidth;
+    if (self.superview.frame.size.width > self.superview.frame.size.height) {
+        centerWidth = JAPickerScrollViewCenterWidthLandscape;
+    }
+    
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((self.bounds.size.width - centerWidth) / 2,
                                                                      self.bounds.origin.y,
-                                                                     JAPickerScrollViewCenterWidth,
+                                                                     centerWidth,
                                                                      self.bounds.size.height)];
     self.scrollView.delegate = self;
     self.scrollView.pagingEnabled = YES;
