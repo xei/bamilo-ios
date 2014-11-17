@@ -52,6 +52,8 @@
 @property (nonatomic, assign) NSInteger numberOfCellsInScreen;
 @property (nonatomic, assign) NSInteger maxProducts;
 
+@property (nonatomic, assign)NSInteger lastIndex;
+
 @end
 
 @implementation JACatalogViewController
@@ -146,8 +148,15 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
+    self.lastIndex = self.sortingScrollView.selectedIndex;
     
     [self changeViewToInterfaceOrientation:toInterfaceOrientation];
+    
+    [self selectedIndex:self.lastIndex];
+    self.sortingScrollView.startingIndex = self.lastIndex;
+    [self.sortingScrollView setNeedsLayout];
+
 }
 
 - (void)setupViews
