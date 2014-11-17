@@ -9,6 +9,7 @@
 #import "JAProductDetailsViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "JAPriceView.h"
+#import "JAAppDelegate.h"
 #import "RIProduct.h"
 
 @interface JAProductDetailsViewController ()
@@ -68,24 +69,24 @@
 {
     [super viewWillAppear:animated];
     
-    [self setupViews];
+    [self setupViews:self.view.frame.size.width height:self.view.frame.size.height];
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
-- (void) setupViews
+- (void) setupViews:(CGFloat)width height:(CGFloat)height
 {
     [self.labelBrand setFrame:CGRectMake(12.0f,
                                          6.0f,
-                                         self.view.frame.size.width - 24.0f,
-                                         self.view.frame.size.height)];
+                                         width - 24.0f,
+                                         height)];
     [self.labelBrand sizeToFit];
     
     [self.labelName setFrame:CGRectMake(12.0f,
                                         CGRectGetMaxY(self.labelBrand.frame) + 4.0f,
-                                        self.view.frame.size.width - 24.0f,
-                                        self.view.frame.size.height)];
+                                        width - 24.0f,
+                                        height)];
     [self.labelName sizeToFit];
     
     if(VALID(self.priceView, JAPriceView))
@@ -115,13 +116,13 @@
     
     [self.topView setFrame:CGRectMake(0.0f,
                                       0.0f,
-                                      self.view.frame.size.width,
+                                      width,
                                       topViewMinHeight)];
     
     [self.contenteScrollView setFrame:CGRectMake(0.0f,
                                                  topViewMinHeight,
-                                                 self.view.frame.size.width,
-                                                 self.view.frame.size.height - topViewMinHeight - CGRectGetMinY(self.topView.frame))];
+                                                 width,
+                                                 height - topViewMinHeight - CGRectGetMinY(self.topView.frame))];
     
     if(VALID(self.featuresView, UIView))
     {
@@ -231,7 +232,7 @@
                                                   self.contenteScrollView.frame.size.width - 12.0f,
                                                   CGRectGetMaxY(self.descriptionTextLabel.frame) + 6.0f)];
         
-        [self.contenteScrollView setContentSize:CGSizeMake(self.view.frame.size.width,
+        [self.contenteScrollView setContentSize:CGSizeMake(width,
                                                            CGRectGetMaxY(self.descriptionView.frame) + 6.0f)];
     }
     else
@@ -243,7 +244,7 @@
                                                self.contenteScrollView.frame.size.width - 12.0f,
                                                CGRectGetMaxY(self.featuresTextLabel.frame) + 6.0f)];
         
-        [self.contenteScrollView setContentSize:CGSizeMake(self.view.frame.size.width,
+        [self.contenteScrollView setContentSize:CGSizeMake(width,
                                                            CGRectGetMaxY(self.featuresView.frame) + 6.0f)];
     }
 }
@@ -253,12 +254,14 @@
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
     [self showLoading];
+    
+    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    CGFloat newHeight = self.view.frame.size.width - self.view.frame.origin.y;
+    [self setupViews:newWidth height:newHeight];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self setupViews];
-    
     [self hideLoading];
 
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];

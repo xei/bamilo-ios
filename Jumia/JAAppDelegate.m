@@ -205,9 +205,9 @@
     if(-1 == supportedInterfaceOrientationsForWindow)
     {
         supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskPortrait;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
+            supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskAll;
         }
     }
     return supportedInterfaceOrientationsForWindow;
