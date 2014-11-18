@@ -76,7 +76,7 @@
             tag++;
         }
         
-        if ([@"string" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
+        if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
             if(!([@"address-form" isEqualToString:[self.form uid]] && [@"city" isEqualToString:field.key]))
             {
