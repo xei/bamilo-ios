@@ -117,6 +117,16 @@ UIAlertViewDelegate
                                                  name:kUpdateSideMenuCartNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(openMenu:)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(closeMenu:)
+                                                 name:kCloseMenuNotification
+                                               object:nil];
+    
     [self.cartView addTarget:self
                       action:@selector(cartViewPressed:)
             forControlEvents:UIControlEventTouchUpInside];
@@ -157,7 +167,7 @@ UIAlertViewDelegate
 -(void)updateCart:(NSNotification*)notification
 {
     self.cart = nil;
-
+    
     if(VALID_NOTEMPTY(notification, NSNotification))
     {
         NSDictionary *userInfo = notification.userInfo;
@@ -339,6 +349,9 @@ UIAlertViewDelegate
     self.nextAction = JAMenuViewControllerOpenSideMenuItem;
     self.nextActionIndexPath = indexPath;
     
+    [self.customNavBar resignFirstResponder];
+    [self.customNavBar.searchBar resignFirstResponder];
+    
     if(self.needsExternalPaymentMethod)
     {
         [[[UIAlertView alloc] initWithTitle:STRING_LOOSING_ORDER_TITLE
@@ -350,7 +363,9 @@ UIAlertViewDelegate
     else
     {
         if (self.resultsTableView == tableView)
-        {            
+        {
+            [self.customNavBar.searchBar resignFirstResponder];
+            
             RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
             NSString *item = suggestion.item;
             
@@ -393,30 +408,30 @@ UIAlertViewDelegate
                         
                         [RICustomer logoutCustomerWithSuccessBlock:^
                          {
-                            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                            [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
-                            [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
-                            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-                            [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
-                            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                            
-                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
-                                                                      data:[trackingDictionary copy]];
-                            
-                            [self userDidLogout];
-                            
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-                            
-                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject)
-                        {
-                            [self userDidLogout];
-                            
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-                            
-                        }];
+                             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                             [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
+                             [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
+                             [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                             [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
+                             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                             [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                             [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                             
+                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
+                                                                       data:[trackingDictionary copy]];
+                             
+                             [self userDidLogout];
+                             
+                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                             
+                         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject)
+                         {
+                             [self userDidLogout];
+                             
+                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                             
+                         }];
                     }
                     else
                     {
@@ -445,6 +460,21 @@ UIAlertViewDelegate
     [self.navigationController pushViewController:subCategoriesViewController animated:YES];
     
 }
+
+-(void)openMenu:(NSNotification*)notification
+{
+    if(VALID_NOTEMPTY(self.resultsTableView, UITableView))
+    {
+        [self.customNavBar.searchBar becomeFirstResponder];
+    }
+}
+
+-(void)closeMenu:(NSNotification*)notification
+{
+    [self.customNavBar.searchBar resignFirstResponder];
+    [self.customNavBar resignFirstResponder];
+}
+
 #pragma mark - Navigation bar custom delegate
 
 - (void)didPressedBackButton
@@ -517,6 +547,7 @@ UIAlertViewDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    [searchBar resignFirstResponder];
     
     [RISearchSuggestion saveSearchSuggestionOnDB:searchBar.text
                                   isRecentSearch:YES];
@@ -730,6 +761,7 @@ UIAlertViewDelegate
         switch (self.nextAction) {
             case JAMenuViewControllerOpenSearchBar:
                 [self.customNavBar resignFirstResponder];
+                [self.customNavBar.searchBar resignFirstResponder];
                 break;
             default:
                 break;
