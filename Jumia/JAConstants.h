@@ -24,6 +24,7 @@
 
 //************ root view controller notifications
 #define kOpenMenuNotification @"NOTIFICATION_OPEN_MENU"
+#define kCloseMenuNotification @"NOTIFICATION_OPEN_COLSE"
 #define kOpenCenterPanelNotification @"NOTIFICATION_OPEN_CENTER_PANEL"
 #define kTurnOffLeftSwipePanelNotification @"NOTIFICATION_TURN_OFF_LEFT_SWIPE_PANEL"
 #define kTurnOnLeftSwipePanelNotification @"NOTIFICATION_TURN_ON_LEFT_SWIPE_PANEL"
