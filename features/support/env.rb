@@ -355,7 +355,7 @@ def initvars_fr
     @proceed_to_chechout = "Valider la commande"
     @cart = "Panier"
     @change_quantity_1 = "Quantité 1"
-    @call_to_order = "Appeler pour commander"
+    @call_to_order = "Appeler"
     
     #my favourites
     @no_favourites_message = "Vous n'avez pas de favoris pour le moment"
