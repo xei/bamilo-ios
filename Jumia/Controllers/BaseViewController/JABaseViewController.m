@@ -78,20 +78,35 @@
     self.loadingView.alpha = 0.0f;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(loadingRotation:)
+                                             selector:@selector(changeLoadingFrame:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
 }
 
-- (void)loadingRotation:(NSNotification *)notification
+- (void)changeLoadingFrame:(NSNotification *)notification
 {
-    CGSize frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size;
-    CGFloat screenWidth = frame.width;
-    CGFloat screenHeight = frame.height;
+    CGSize size = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size;
+    CGFloat screenWidth = size.width;
+    CGFloat screenHeight = size.height;
     
-    self.loadingView.frame  = CGRectMake(0, 0, screenWidth , screenHeight);
+    if(VALID_NOTEMPTY(notification, NSNotification))
+    {
+        UIDevice *device = notification.object;
+        
+        // if the orientation is in portrati means that the device was just rotate to landscape.
+        if(UIInterfaceOrientationIsPortrait(device.orientation))
+        {
+            self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
+        }
+        else
+        {
+            self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
+        }
+    }
+    
     self.loadingAnimation.center = self.loadingView.center;
 }
+
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -117,6 +132,22 @@
     [super viewWillAppear:animated];
     
     [self reloadNavBar];
+    
+    CGSize size = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size;
+    CGFloat screenWidth = size.width;
+    CGFloat screenHeight = size.height;
+    
+    if(UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
+    {
+        self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
+    }
+    else
+    {
+        self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
+    }
+    
+    self.loadingAnimation.center = self.loadingView.center;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
                                                         object:nil];
 }
@@ -217,7 +248,7 @@
                                              self.view.frame.size.width,
                                              self.view.frame.size.height);
     
-    // This is to avoid a retain cycle  
+    // This is to avoid a retain cycle
     __block JABaseViewController *viewController = self;
     [self.noConnectionView setRetryBlock:^(BOOL dismiss)
      {

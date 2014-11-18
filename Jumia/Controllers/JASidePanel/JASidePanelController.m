@@ -895,6 +895,9 @@ static char ja_kvoContext;
 
 - (void)_showLeftPanel:(BOOL)animated bounce:(BOOL)shouldBounce {
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
+                                                        object:nil];
+    
     self.state = JASidePanelLeftVisible;
     [self _loadLeftPanel];
     
@@ -954,6 +957,10 @@ static char ja_kvoContext;
 }
 
 - (void)_showCenterPanel:(BOOL)animated bounce:(BOOL)shouldBounce {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCloseMenuNotification
+                                                        object:nil];
+    
     //remove shadow
     for (UIView* view in [self.centerPanel.view subviews]) {
         if (-1 == view.tag) {

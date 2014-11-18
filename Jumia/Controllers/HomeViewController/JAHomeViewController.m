@@ -141,6 +141,10 @@
     //we do this to make sure no notification is added more than once
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changeLoadingFrame:)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(pushCatalogWithUrl:)
                                                  name:kTeaserNotificationPushCatalogWithUrl
                                                object:nil];

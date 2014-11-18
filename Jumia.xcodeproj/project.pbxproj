@@ -444,6 +444,8 @@
 		B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */; };
 		B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F41986C41D0094C92C /* RIOrder.m */; };
 		B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F61986C41D0094C92C /* RICheckout.m */; };
+		B5C9C7041A1A5E6F0065AFD4 /* JADatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C9C7031A1A5E6F0065AFD4 /* JADatePicker.m */; };
+		B5C9C7051A1A6CB30065AFD4 /* JADatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C9C7031A1A5E6F0065AFD4 /* JADatePicker.m */; };
 		B5CBFF661A10B33D0050C553 /* JARatingsViewMedium.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CBFF641A10B33D0050C553 /* JARatingsViewMedium.m */; };
 		B5CBFF671A10B33D0050C553 /* JARatingsViewMedium.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CBFF641A10B33D0050C553 /* JARatingsViewMedium.m */; };
 		B5CBFF681A10B33D0050C553 /* JARatingsViewMedium.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */; };
@@ -1175,6 +1177,8 @@
 		B5C682F51986C41D0094C92C /* RIOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOrder.h; sourceTree = "<group>"; };
 		B5C682F61986C41D0094C92C /* RICheckout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICheckout.m; sourceTree = "<group>"; };
 		B5C682F71986C41D0094C92C /* RICheckout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICheckout.h; sourceTree = "<group>"; };
+		B5C9C7021A1A5E6F0065AFD4 /* JADatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JADatePicker.h; path = JADatePicker/JADatePicker.h; sourceTree = "<group>"; };
+		B5C9C7031A1A5E6F0065AFD4 /* JADatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JADatePicker.m; path = JADatePicker/JADatePicker.m; sourceTree = "<group>"; };
 		B5CBFF631A10B33D0050C553 /* JARatingsViewMedium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARatingsViewMedium.h; sourceTree = "<group>"; };
 		B5CBFF641A10B33D0050C553 /* JARatingsViewMedium.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingsViewMedium.m; sourceTree = "<group>"; };
 		B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARatingsViewMedium.xib; sourceTree = "<group>"; };
@@ -1721,6 +1725,7 @@
 		4AE730B0198F8A74000CA1DD /* PDVComponents */ = {
 			isa = PBXGroup;
 			children = (
+				B5C9C7011A1A5E540065AFD4 /* JADatePicker */,
 				B5C2B0651A0911AB00B4872D /* JAPicker */,
 				4A01EE5E199259B6005F5AD1 /* Gallery */,
 				4AE730B2198F8AAB000CA1DD /* ImageSection */,
@@ -2656,6 +2661,15 @@
 				B5C2B0671A0911AB00B4872D /* JAPicker.m */,
 			);
 			path = JAPicker;
+			sourceTree = "<group>";
+		};
+		B5C9C7011A1A5E540065AFD4 /* JADatePicker */ = {
+			isa = PBXGroup;
+			children = (
+				B5C9C7021A1A5E6F0065AFD4 /* JADatePicker.h */,
+				B5C9C7031A1A5E6F0065AFD4 /* JADatePicker.m */,
+			);
+			name = JADatePicker;
 			sourceTree = "<group>";
 		};
 		B5FBD55719CAF22F00BD9510 /* Adjust */ = {
@@ -3667,6 +3681,7 @@
 				a8f78471bcd05366bede322a /* JAAddNewAddressCell.m in Sources */,
 				53b549479f2554a136611eca /* JATopSellersTeaserView.m in Sources */,
 				0ce264e75b75a76450279300 /* JANavigationBarView.m in Sources */,
+				B5C9C7051A1A6CB30065AFD4 /* JADatePicker.m in Sources */,
 				e50648146d628861d4e0bc0f /* JATeaserView.m in Sources */,
 				24395e3fd684124d0dc59179 /* JAUtils.m in Sources */,
 				CEABEEC71A126652000D0CF8 /* JAPriceFiltersView.m in Sources */,
@@ -3881,6 +3896,7 @@
 				4AE730C7198F8B05000CA1DD /* JAPDVViewController.m in Sources */,
 				CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */,
 				B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */,
+				B5C9C7041A1A5E6F0065AFD4 /* JADatePicker.m in Sources */,
 				B530D57119C1998B0052FEDA /* JACheckoutForms.m in Sources */,
 				8C38E18719CF16F50007F6F9 /* JAMessageView.m in Sources */,
 				B510B01519AE466B00A9754A /* JARadioComponent.m in Sources */,

@@ -62,5 +62,7 @@
  */
 - (void)removeMaintenancePage;
 
+- (void)changeLoadingFrame:(NSNotification *)notification;
+
 @end
 

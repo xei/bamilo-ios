@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
@@ -10,10 +11,10 @@
             <rect key="frame" x="0.0" y="0.0" width="308" height="51"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="or4-7n-9RV">
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="or4-7n-9RV">
                     <rect key="frame" x="18" y="10" width="51" height="31"/>
                 </switch>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="06D-re-hHb">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="06D-re-hHb">
                     <rect key="frame" x="83" y="15" width="210" height="21"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -21,6 +22,14 @@
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="06D-re-hHb" firstAttribute="leading" secondItem="or4-7n-9RV" secondAttribute="trailing" constant="16" id="6nP-gH-VZB"/>
+                <constraint firstItem="or4-7n-9RV" firstAttribute="leading" secondItem="xSd-NR-Bjy" secondAttribute="leading" constant="18" id="CWC-qk-ssJ"/>
+                <constraint firstItem="06D-re-hHb" firstAttribute="top" secondItem="xSd-NR-Bjy" secondAttribute="top" constant="15" id="IT2-Nt-nId"/>
+                <constraint firstAttribute="trailing" secondItem="06D-re-hHb" secondAttribute="trailing" constant="15" id="Xot-Rj-7X5"/>
+                <constraint firstAttribute="bottom" secondItem="or4-7n-9RV" secondAttribute="bottom" constant="10" id="m7r-ZI-6Wu"/>
+                <constraint firstAttribute="bottom" secondItem="06D-re-hHb" secondAttribute="bottom" constant="15" id="rVx-Yf-YfG"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>

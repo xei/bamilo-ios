@@ -34,6 +34,8 @@
 
 -(void)setup
 {
+    self.translatesAutoresizingMaskIntoConstraints = YES;
+    
     [self.labelText setTextColor:UIColorFromRGB(0x666666)];
     
     self.storedValue = @"";
