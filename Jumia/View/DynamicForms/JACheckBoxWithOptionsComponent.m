@@ -50,6 +50,7 @@
         [check.labelText setText:option.label];
         [check.switchComponent setTag:i];
         [check.switchComponent setAccessibilityLabel:option.label];
+        [check setFrame:CGRectMake(0, 0, self.frame.size.width, check.frame.size.height)];        
         
         NSArray *newsletterOption = [RINewsletterCategory getNewsletter];
         

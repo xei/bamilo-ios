@@ -526,7 +526,8 @@ UITableViewDataSource
     
     self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                         delegate:nil
-                                                startingPosition:currentY];
+                                                startingPosition:currentY
+                                                    widthSize:width];
     
     CGFloat spaceBetweenFormFields = 6.0f;
     NSInteger count = 0;
