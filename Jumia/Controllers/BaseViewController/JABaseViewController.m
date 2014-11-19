@@ -78,23 +78,42 @@
     self.loadingView.alpha = 0.0f;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(changeLoadingFrame:)
+                                             selector:@selector(deviceOrientationDidChange:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
 }
 
-- (void)changeLoadingFrame:(NSNotification *)notification
+- (void)deviceOrientationDidChange:(NSNotification *)notification
 {
-    CGSize size = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size;
-    CGFloat screenWidth = size.width;
-    CGFloat screenHeight = size.height;
-    
+    CGRect frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame;
+
     if(VALID_NOTEMPTY(notification, NSNotification))
     {
         UIDevice *device = notification.object;
-        
-        // if the orientation is in portrati means that the device was just rotate to landscape.
-        if(UIInterfaceOrientationIsPortrait(device.orientation))
+        [self changeLoadingFrame:frame orientation:device.orientation];
+    }
+}
+
+- (void)changeLoadingFrame:(CGRect)frame orientation:(UIDeviceOrientation)orientation
+{
+    CGFloat screenWidth = frame.size.width;
+    CGFloat screenHeight = frame.size.height;
+    
+    // if the orientation is in portrait means that the device was just rotate to portrait.
+    if(UIInterfaceOrientationIsPortrait(orientation))
+    {
+        if(screenWidth > screenHeight)
+        {
+            self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
+        }
+        else
+        {
+            self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
+        }
+    }
+    else
+    {
+        if(screenWidth > screenHeight)
         {
             self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
         }
@@ -133,21 +152,10 @@
     
     [self reloadNavBar];
     
-    CGSize size = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size;
-    CGFloat screenWidth = size.width;
-    CGFloat screenHeight = size.height;
-    
-    if(UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
-    {
-        self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
-    }
-    else
-    {
-        self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
-    }
-    
-    self.loadingAnimation.center = self.loadingView.center;
-    
+    CGRect frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame;
+
+    [self changeLoadingFrame:frame orientation:[[UIDevice currentDevice] orientation]];
+
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
                                                         object:nil];
 }
