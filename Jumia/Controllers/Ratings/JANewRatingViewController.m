@@ -312,7 +312,8 @@ UIAlertViewDelegate
     
     self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                         delegate:nil
-                                                startingPosition:currentY];
+                                                startingPosition:currentY
+                                                    widthSize:centerViewWidth];
     
     CGFloat spaceBetweenFormFields = 6.0f;
     NSInteger count = 0;

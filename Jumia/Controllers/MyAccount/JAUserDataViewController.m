@@ -76,7 +76,8 @@
            
            self.changePasswordForm = [[JADynamicForm alloc] initWithForm:form
                                                                 delegate:self
-                                                        startingPosition:self.formHeight];
+                                                        startingPosition:self.formHeight
+                                                               widthSize:self.changePasswordView.frame.size.width];
            
            for(UIView *view in self.changePasswordForm.formViews)
            {

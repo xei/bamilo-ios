@@ -103,7 +103,7 @@ UIPickerViewDelegate>
     [RIForm getForm:@"addresscreate"
        successBlock:^(RIForm *form)
      {
-         self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.shippingAddressViewCurrentY];
+         self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.shippingAddressViewCurrentY widthSize:self.shippingContentView.frame.size.width];
          
          for(UIView *view in self.shippingDynamicForm.formViews)
          {
@@ -111,7 +111,7 @@ UIPickerViewDelegate>
              self.shippingAddressViewCurrentY = CGRectGetMaxY(view.frame);
          }
          
-         self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY];
+         self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY widthSize:308.0f];
          
          for(UIView *view in self.billingDynamicForm.formViews)
          {

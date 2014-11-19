@@ -199,6 +199,7 @@
 		69c7ac2a38a28dc5589a97ca /* JANavigationBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A392142198925E300B70A9C /* JANavigationBarView.xib */; };
 		6C094E191A0CCF4100CDAB59 /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C094E181A0CCF4100CDAB59 /* JANoConnectionView~iPad.xib */; };
 		6C094E1A1A0CF4C100CDAB59 /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C094E181A0CCF4100CDAB59 /* JANoConnectionView~iPad.xib */; };
+		6C18BDAC1A1B4CA300626706 /* JANewsletterComponent~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */; };
 		6ad0a1988b1e51c37142c75b /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
 		6be80f134e67002eecb79292 /* RILanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027619811E9200F71726 /* RILanguage.m */; };
 		6e0b7de87382100c6d8b4606 /* JAOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D195E19C33122004843C3 /* JAOrderViewController.m */; };
@@ -864,6 +865,7 @@
 		4AFC7F92199BC124007D67F4 /* JASignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignupViewController.h; sourceTree = "<group>"; };
 		4AFC7F93199BC124007D67F4 /* JASignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignupViewController.m; sourceTree = "<group>"; };
 		6C094E181A0CCF4100CDAB59 /* JANoConnectionView~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANoConnectionView~iPad.xib"; sourceTree = "<group>"; };
+		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
 		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
 		8C38E18519CF16F50007F6F9 /* JAMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMessageView.h; sourceTree = "<group>"; };
 		8C38E18619CF16F50007F6F9 /* JAMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMessageView.m; sourceTree = "<group>"; };
@@ -1862,6 +1864,7 @@
 				B5BDD98819FFAAF000C2C2CC /* JANewsletterComponent.h */,
 				B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */,
 				B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */,
+				6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */,
 			);
 			path = DynamicForms;
 			sourceTree = "<group>";
@@ -3390,6 +3393,7 @@
 			files = (
 				B5B3AB501A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				BBA707B819EEB93C0094C565 /* 00_choose_country.feature in Resources */,
+				6C18BDAC1A1B4CA300626706 /* JANewsletterComponent~iPad.xib in Resources */,
 				BBBA4CBD19E3F764004271B2 /* 13_related_items.feature in Resources */,
 				BBA145B219DC56BF003F0CA7 /* init.rb in Resources */,
 				BBBA4CCD19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
