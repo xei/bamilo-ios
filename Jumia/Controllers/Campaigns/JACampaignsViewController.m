@@ -324,19 +324,30 @@
                             simple:self.backupSimpleSku
                   withSuccessBlock:^(RICart *cart) {
                       
+                      NSNumber *price = self.backupCampaign.priceEuroConverted;
+                      if(VALID_NOTEMPTY(self.backupCampaign.specialPriceEuroConverted, NSNumber) && [self.backupCampaign.specialPriceEuroConverted floatValue] > 0.0f)
+                      {
+                          price = self.backupCampaign.specialPriceEuroConverted;
+                      }
+
                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                       [trackingDictionary setValue:self.backupCampaign.sku forKey:kRIEventLabelKey];
                       [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
                       [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-                      [trackingDictionary setValue:self.backupCampaign.price forKey:kRIEventValueKey];
+                      [trackingDictionary setValue:price forKey:kRIEventValueKey];
+
+                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+
+                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
                       [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
                       [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
                       [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                      [trackingDictionary setValue:[self.backupCampaign.price stringValue] forKey:kRIEventPriceKey];
+
+                      // Since we're sending the converted price, we have to send the currency as EUR.
+                      // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
+                      [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                      [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                       [trackingDictionary setValue:self.backupCampaign.sku forKey:kRIEventSkuKey];
-                      [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];

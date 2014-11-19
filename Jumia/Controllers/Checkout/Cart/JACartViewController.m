@@ -147,8 +147,33 @@
         
         for (int i = 0; i < self.cart.cartItems.count; i++) {
             RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
-            
+
             trackingDictionary = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
+
+            NSString *discount = @"false";
+            NSString *price = [cartItem.priceEuroConverted stringValue];
+            if (VALID_NOTEMPTY(cartItem.specialPriceEuroConverted, NSNumber) && [cartItem.specialPriceEuroConverted floatValue] > 0.0f)
+            {
+                discount = @"true";
+                price = [cartItem.specialPriceEuroConverted stringValue];
+            }
+            
+            // Since we're sending the converted price, we have to send the currency as EUR.
+            // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
+            [viewCartTrackingProduct setValue:price forKey:kRIEventPriceKey];
+            [viewCartTrackingProduct setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
+            [viewCartTrackingProduct setValue:cartItem.sku forKey:kRIEventSkuKey];
+            [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
+
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
+            [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
+            [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
+            [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
+            
+            [viewCartTrackingProducts addObject:viewCartTrackingProduct];
+            
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
             NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
             if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
@@ -159,32 +184,11 @@
             [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
             [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-            [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
-            [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-            
-            NSString *discount = @"false";
-            NSString *price = [cartItem.price stringValue];
-            if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber))
-            {
-                discount = @"true";
-                price = [cartItem.specialPrice stringValue];
-            }
-            
-            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-            [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
-            [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
             [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
             [trackingDictionary setValue:[cartData.cartValue stringValue] forKey:kRIEventTotalCartKey];
-            
+
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
                                                       data:[trackingDictionary copy]];
-            
-            NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
-            [viewCartTrackingProduct setValue:cartItem.sku forKey:kRIEventSkuKey];
-            [viewCartTrackingProduct setValue:price forKey:kRIEventPriceKey];
-            [viewCartTrackingProduct setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-            [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
-            [viewCartTrackingProducts addObject:viewCartTrackingProduct];
         }
         
         trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -823,14 +827,15 @@
                              NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                              [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
                              
-                             NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber)  && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice : product.price;
+                             // Since we're sending the converted price, we have to send the currency as EUR.
+                             // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
+                             NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
                              [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                             [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                              
                              [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
-                             [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                              [trackingDictionary setValue:[product.quantity stringValue] forKey:kRIEventQuantityKey];
                              [trackingDictionary setValue:cartValue forKey:kRIEventTotalCartKey];
-                             
                              
                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
                                                                        data:[trackingDictionary copy]];
@@ -1146,11 +1151,13 @@
         NSNumber *event = [NSNumber numberWithInt:RIEventDecreaseQuantity];
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         
-        NSNumber *price = VALID_NOTEMPTY(self.currentItem.specialPrice, NSNumber) ? self.currentItem.specialPrice : self.currentItem.price;
+        // Since we're sending the converted price, we have to send the currency as EUR.
+        // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
+        NSNumber *price = (VALID_NOTEMPTY(self.currentItem.specialPriceEuroConverted, NSNumber) && [self.currentItem.specialPriceEuroConverted floatValue] > 0.0f) ? self.currentItem.specialPriceEuroConverted : self.currentItem.priceEuroConverted;
         [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+        [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
         
         [trackingDictionary setValue:self.currentItem.sku forKey:kRIEventSkuKey];
-        [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
         NSString *discountPercentage = @"0";
         if(VALID_NOTEMPTY(self.currentItem.savingPercentage, NSNumber))
         {
