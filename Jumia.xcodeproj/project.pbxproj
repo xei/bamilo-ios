@@ -2912,6 +2912,8 @@
 				CE2F576C19913B33000A9E09 /* JACatalogListCell.h */,
 				CE2F576D19913B33000A9E09 /* JACatalogListCell.m */,
 				CE2F576F19913B6D000A9E09 /* JACatalogListCell.xib */,
+				CE38E0E61A07AA1000B1738B /* JACatalogListCell_ipad_portrait.xib */,
+				CE38E0E41A07A8C600B1738B /* JACatalogListCell_ipad_landscape.xib */,
 				CE13789419A4DC4E00CA0751 /* JARecentlyViewedListCell.xib */,
 				CEC3F71119A5FBF800DE12F6 /* JAFavoriteListCell.xib */,
 				B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */,
@@ -2922,8 +2924,6 @@
 				CE2C6B701A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib */,
 				CED30C28199CC8F200C67F4B /* JAColorFilterCell.h */,
 				CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */,
-				CE38E0E61A07AA1000B1738B /* JACatalogListCell_ipad_portrait.xib */,
-				CE38E0E41A07A8C600B1738B /* JACatalogListCell_ipad_landscape.xib */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
