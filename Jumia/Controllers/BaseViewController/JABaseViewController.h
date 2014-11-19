@@ -62,7 +62,7 @@
  */
 - (void)removeMaintenancePage;
 
-- (void)changeLoadingFrame:(NSNotification *)notification;
+- (void)deviceOrientationDidChange:(NSNotification *)notification;
 
 @end
 
