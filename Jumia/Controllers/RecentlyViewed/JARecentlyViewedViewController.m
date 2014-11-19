@@ -252,35 +252,24 @@
                             simple:productSimple.sku
                   withSuccessBlock:^(RICart *cart) {
                       
-                      [RIProduct removeFromRecentlyViewed:product];
-                      
-                      [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
-                          
-                          self.productsArray = recentlyViewedProducts;
-                          self.chosenSimpleNames = [NSMutableArray new];
-                          for (int i = 0; i < self.productsArray.count; i++) {
-                              [self.chosenSimpleNames addObject:@""];
-                          }
-                          [self.collectionView reloadData];
-                          
-                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-                          
-                      }];
-                      
+                      NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
+
                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                       [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
                       [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
                       [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-                      [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+                      [trackingDictionary setValue:price forKey:kRIEventValueKey];
                       [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
                       [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
                       [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                       NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                       [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
                       
-                      NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice : product.price;
+                      // Since we're sending the converted price, we have to send the currency as EUR.
+                      // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
                       [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
-                      
+                      [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
+
                       [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                       [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
                       
@@ -289,8 +278,6 @@
                           NSArray *categoryIds = [product.categoryIds array];
                           [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
                       }
-                      
-                      [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                       
                       [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
                       
@@ -306,6 +293,21 @@
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
+                      
+                      [RIProduct removeFromRecentlyViewed:product];
+                      
+                      [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
+                          
+                          self.productsArray = recentlyViewedProducts;
+                          self.chosenSimpleNames = [NSMutableArray new];
+                          for (int i = 0; i < self.productsArray.count; i++) {
+                              [self.chosenSimpleNames addObject:@""];
+                          }
+                          [self.collectionView reloadData];
+                          
+                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                          
+                      }];
                       
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
