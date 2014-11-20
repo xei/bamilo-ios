@@ -99,13 +99,13 @@ JADynamicFormDelegate
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
     [self showLoading];
     
     CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     
     [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation

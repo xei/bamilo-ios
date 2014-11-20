@@ -76,29 +76,19 @@
     self.loadingAnimation.center = self.loadingView.center;
     
     self.loadingView.alpha = 0.0f;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(deviceOrientationDidChange:)
-                                                 name:UIDeviceOrientationDidChangeNotification
-                                               object:nil];
 }
 
-- (void)deviceOrientationDidChange:(NSNotification *)notification
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    if(VALID_NOTEMPTY(notification, NSNotification))
-    {
-        UIDevice *device = notification.object;
-        [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:device.orientation];
-    }
+    [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:toInterfaceOrientation];
 }
 
-- (void)changeLoadingFrame:(CGRect)frame orientation:(UIDeviceOrientation)orientation
+- (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation
 {
     CGFloat screenWidth = frame.size.width;
     CGFloat screenHeight = frame.size.height;
     
-    // if the orientation is in portrait means that the device was just rotate to portrait.
-    if(UIDeviceOrientationIsPortrait(orientation))
+    if(UIInterfaceOrientationIsPortrait(orientation))
     {
         if(screenWidth > screenHeight)
         {
@@ -148,7 +138,7 @@
 {
     [super viewWillAppear:animated];
     
-    [self reloadNavBar];    
+    [self reloadNavBar];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
                                                         object:nil];
@@ -174,7 +164,7 @@
 {
     self.requestNumber++;
     
-    [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:[UIDevice currentDevice].orientation];
+    [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:self.interfaceOrientation];
     
     if(1 == self.requestNumber) {
         [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingView];

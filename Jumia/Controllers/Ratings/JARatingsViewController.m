@@ -171,17 +171,15 @@ UITableViewDataSource
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
     [self showLoading];
     
     [self hideViews];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
     [self hideLoading];
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
@@ -221,6 +219,8 @@ UITableViewDataSource
     {
         [self setupViews];
     }
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)finishedRequests

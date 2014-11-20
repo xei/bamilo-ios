@@ -122,9 +122,9 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
     [self changeViewToInterfaceOrientation:toInterfaceOrientation];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)changeViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
