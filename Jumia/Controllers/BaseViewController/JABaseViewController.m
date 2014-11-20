@@ -150,11 +150,7 @@
 {
     [super viewWillAppear:animated];
     
-    [self reloadNavBar];
-    
-    CGRect frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame;
-
-    [self changeLoadingFrame:frame orientation:[[UIDevice currentDevice] orientation]];
+    [self reloadNavBar];    
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
                                                         object:nil];
@@ -179,6 +175,10 @@
 - (void) showLoading
 {
     self.requestNumber++;
+    
+    CGRect frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame;
+    
+    [self changeLoadingFrame:frame orientation:[[UIDevice currentDevice] orientation]];
     
     if(1 == self.requestNumber) {
         [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingView];
