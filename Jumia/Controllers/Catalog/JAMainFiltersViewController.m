@@ -429,6 +429,11 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (VALID_NOTEMPTY(self.lastSelectedClickView, UIControl) && indexPath.row == self.lastSelectedClickView.tag) {
+        self.lastSelectedClickView.selected = NO;
+        [self isClosing:nil];
+    }
+    
     NSInteger filterIndex = indexPath.row;
     if (VALID_NOTEMPTY(self.categoriesArray, NSArray)) {
         filterIndex--;
