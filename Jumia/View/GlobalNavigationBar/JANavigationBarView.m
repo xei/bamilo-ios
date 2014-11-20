@@ -1,4 +1,4 @@
-    //
+//
 //  JANavigationBarView.m
 //  Jumia
 //
@@ -106,7 +106,7 @@
     self.leftButton.hidden = YES;
     self.editButton.hidden = YES;
     
-    [self adjustTitleFrame];    
+    [self adjustTitleFrame];
 }
 - (void)showEditButton;
 {
@@ -161,7 +161,7 @@
     } else {
         finalTitleString = [[NSMutableAttributedString alloc] initWithString:title attributes:attributes];
     }
-
+    
     [self.titleLabel setAttributedText:finalTitleString];
     self.logoImageView.hidden = YES;
     self.titleLabel.hidden = NO;
@@ -171,6 +171,24 @@
 
 -(void)adjustTitleFrame
 {
+    CGRect frame = [[UIScreen mainScreen] bounds];
+    CGFloat width = frame.size.width;
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    if(UIDeviceOrientationUnknown != orientation && UIDeviceOrientationIsPortrait(orientation))
+    {
+        if(frame.size.width > frame.size.height)
+        {
+            width = frame.size.height;
+        }
+    }
+    else if(UIDeviceOrientationUnknown != orientation && UIDeviceOrientationIsLandscape(orientation))
+    {
+        if(frame.size.width < frame.size.height)
+        {
+            width = frame.size.height;
+        }
+    }
+    
     CGRect rightItemFrame = CGRectZero;
     if(!self.doneButton.hidden)
     {
@@ -209,11 +227,11 @@
             }
             else
             {
-                backButtonMaxWidth = self.frame.size.width - rightItemFrame.size.width - 12.0f;
+                backButtonMaxWidth = width - rightItemFrame.size.width - 12.0f;
                 frame.size.width = 6.0f + backButtonMaxWidth + 11.0f;
             }
         }
-            
+        
         self.backButton.frame = frame;
         self.backButtonWidth.constant = frame.size.width;
         leftItemFrame = frame;
@@ -239,17 +257,17 @@
     {
         titleLabelLeftMargin = rightItemFrame.size.width + 3.0f;
     }
-    titleLabelWidth = self.frame.size.width - (2 * titleLabelLeftMargin);
+    titleLabelWidth = width - (2 * titleLabelLeftMargin);
     
     NSString *titleLabelText = self.titleLabel.text;
     NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
     CGSize titleLabelTextSize = [titleLabelText sizeWithAttributes:titleLabelAttributes];
     if (titleLabelTextSize.width > titleLabelWidth)
     {
-        titleLabelWidth = self.frame.size.width - leftItemFrame.size.width - rightItemFrame.size.width - 24.0f;
-        titleLabelLeftMargin = (self.frame.size.width - titleLabelWidth) / 2 + 12.0;
+        titleLabelWidth = width - leftItemFrame.size.width - rightItemFrame.size.width - 24.0f;
+        titleLabelLeftMargin = (width - titleLabelWidth) / 2 + 12.0;
     }
-
+    
     self.titleLabelLeftMargin.constant = titleLabelLeftMargin;
     self.titleLabelWidth.constant = titleLabelWidth;
 }
