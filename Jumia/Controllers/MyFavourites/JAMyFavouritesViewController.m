@@ -20,6 +20,9 @@
 @property (weak, nonatomic) IBOutlet UIView *emptyFavoritesView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyFavoritesLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, strong) NSString* cellIdentifier;
+@property (nonatomic, strong) NSString* buttonCellIdentifier;
+@property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSArray* productsArray;
 @property (assign, nonatomic) BOOL selectedSizeAndAddToCart;
 @property (assign, nonatomic) BOOL finishedAddingAllToCart;
@@ -92,17 +95,18 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
-    UINib *listCellNib = [UINib nibWithNibName:@"JAFavoriteListCell" bundle:nil];
-    [self.collectionView registerNib:listCellNib forCellWithReuseIdentifier:@"favoriteListCell"];
-    UINib *buttonCellNib = [UINib nibWithNibName:@"JAOrangeButtonCell" bundle:nil];
-    [self.collectionView registerNib:buttonCellNib forCellWithReuseIdentifier:@"buttonCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JAFavoriteListCell" bundle:nil] forCellWithReuseIdentifier:@"favoriteListCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JAFavoriteListCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"favoriteListCell_ipad_portrait"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JAFavoriteListCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"favoriteListCell_ipad_landscape"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JAOrangeButtonCell" bundle:nil] forCellWithReuseIdentifier:@"buttonCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JAOrangeButtonCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"buttonCell_ipad_portrait"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JAOrangeButtonCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"buttonCell_ipad_landscape"];
     
-    UICollectionViewFlowLayout* flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.minimumLineSpacing = 0;
-    flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    flowLayout.itemSize = CGSizeMake(self.view.frame.size.width, JACatalogViewControllerListCellHeight);
-    [self.collectionView setCollectionViewLayout:flowLayout];
+    self.flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    self.flowLayout.minimumLineSpacing = 0;
+    self.flowLayout.minimumInteritemSpacing = 0;
+    self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    [self.collectionView setCollectionViewLayout:self.flowLayout];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -110,6 +114,33 @@
     [super viewWillAppear:animated];
     
     [self getFavorites];
+    
+    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0f];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [self changeViewToInterfaceOrientation:toInterfaceOrientation];
+}
+
+- (void)changeViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
+            self.cellIdentifier = @"favoriteListCell_ipad_landscape";
+            self.buttonCellIdentifier = @"buttonCell_ipad_landscape";
+        } else {
+            self.cellIdentifier = @"favoriteListCell_ipad_portrait";
+            self.buttonCellIdentifier = @"buttonCell_ipad_portrait";
+        }
+    } else {
+        self.cellIdentifier = @"favoriteListCell";
+        self.buttonCellIdentifier = @"buttonCell";
+    }
+    
+    [self.collectionView reloadData];
 }
 
 - (void)getFavorites
@@ -246,29 +277,61 @@
     return self.productsArray.count + 1;
 }
 
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(3, 0, 0, 0);
-}
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.productsArray.count == indexPath.row) {
-        return CGSizeMake(self.view.frame.size.width,
-                          55.0f);
+        return [self getButtonLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
     } else {
-        return CGSizeMake(self.view.frame.size.width,
-                          98.0f);
+        return [self getLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
     }
+}
+
+- (CGSize)getLayoutItemSizeForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    CGFloat width = 0.0f;
+    CGFloat height = 0.0f;
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+            width = 375.0f;
+            height = JACatalogViewControllerListCellHeight_ipad;
+        } else {
+            width = 333.0f;
+            height = JACatalogViewControllerListCellHeight_ipad;
+        }
+    } else {
+        width = self.view.frame.size.width;
+        height = JACatalogViewControllerListCellHeight;
+    }
+    
+    return CGSizeMake(width, height);
+}
+
+- (CGSize)getButtonLayoutItemSizeForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    CGFloat width = 0.0f;
+    CGFloat height = 55.0f;
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+            width = 756.0f;
+        } else {
+            width = 1012.0f;
+        }
+    } else {
+        width = self.view.frame.size.width;
+    }
+    
+    return CGSizeMake(width, height);
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == self.productsArray.count) {
         
-        NSString *cellIdentifier = @"buttonCell";
-        
-        JAButtonCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+        JAButtonCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.buttonCellIdentifier forIndexPath:indexPath];
         
         [cell loadWithButtonName:STRING_ADD_ALL_TO_CART];
         
@@ -281,9 +344,7 @@
     } else {
         RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
         
-        NSString *cellIdentifier = @"favoriteListCell";
-        
-        JACatalogListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+        JACatalogListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
         
         [cell loadWithProduct:product];
         cell.addToCartButton.tag = indexPath.row;

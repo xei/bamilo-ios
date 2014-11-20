@@ -662,7 +662,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8Dn-Ov-IUc">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="6" y="64" width="588" height="536"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jA2-dm-iwE">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -684,12 +684,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="8Dn-Ov-IUc" firstAttribute="leading" secondItem="eto-ME-y0Y" secondAttribute="leading" id="2Ob-cg-f6N"/>
+                            <constraint firstAttribute="trailing" secondItem="8Dn-Ov-IUc" secondAttribute="trailing" constant="6" id="Jpx-gb-ge2"/>
                             <constraint firstItem="0r3-rz-vgS" firstAttribute="top" secondItem="eVI-MM-MkL" secondAttribute="bottom" constant="6" id="Ksz-pX-QwH"/>
                             <constraint firstItem="0r3-rz-vgS" firstAttribute="leading" secondItem="eto-ME-y0Y" secondAttribute="leading" constant="6" id="b2H-8H-i32"/>
-                            <constraint firstAttribute="trailing" secondItem="8Dn-Ov-IUc" secondAttribute="trailing" id="dgF-iZ-UKz"/>
                             <constraint firstAttribute="trailing" secondItem="0r3-rz-vgS" secondAttribute="trailing" constant="6" id="ieH-EO-nGt"/>
                             <constraint firstItem="1qF-Za-xCy" firstAttribute="top" secondItem="8Dn-Ov-IUc" secondAttribute="bottom" id="k5z-5P-DF9"/>
+                            <constraint firstItem="8Dn-Ov-IUc" firstAttribute="leading" secondItem="eto-ME-y0Y" secondAttribute="leading" constant="6" id="sb5-Lk-Z6V"/>
                             <constraint firstItem="8Dn-Ov-IUc" firstAttribute="top" secondItem="eVI-MM-MkL" secondAttribute="bottom" id="zka-vL-us8"/>
                         </constraints>
                     </view>
