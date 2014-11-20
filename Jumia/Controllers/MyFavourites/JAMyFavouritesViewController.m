@@ -14,6 +14,7 @@
 #import "RIProductSimple.h"
 #import "RICart.h"
 #import "RICustomer.h"
+#import "JAProductListFlowLayout.h"
 
 @interface JAMyFavouritesViewController ()
 
@@ -22,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSString* cellIdentifier;
 @property (nonatomic, strong) NSString* buttonCellIdentifier;
-@property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
+@property (nonatomic, strong) JAProductListFlowLayout* flowLayout;
 @property (nonatomic, strong) NSArray* productsArray;
 @property (assign, nonatomic) BOOL selectedSizeAndAddToCart;
 @property (assign, nonatomic) BOOL finishedAddingAllToCart;
@@ -102,7 +103,8 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"JAOrangeButtonCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"buttonCell_ipad_portrait"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"JAOrangeButtonCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"buttonCell_ipad_landscape"];
     
-    self.flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    self.flowLayout = [[JAProductListFlowLayout alloc] init];
+    self.flowLayout.manualCellSpacing = 6.0f;
     self.flowLayout.minimumLineSpacing = 0;
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;

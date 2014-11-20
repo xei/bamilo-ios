@@ -610,6 +610,8 @@
 		CE88F7A61A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7A31A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_landscape.xib */; };
 		CE88F7A71A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7A41A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_portrait.xib */; };
 		CE88F7A81A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7A41A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_portrait.xib */; };
+		CE88F7AC1A1E33F000A3A586 /* JAProductListFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88F7AB1A1E33F000A3A586 /* JAProductListFlowLayout.m */; };
+		CE88F7AD1A1E33F000A3A586 /* JAProductListFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88F7AB1A1E33F000A3A586 /* JAProductListFlowLayout.m */; };
 		CE9193BD19F503FB00F89840 /* JAFallbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9193BC19F503FB00F89840 /* JAFallbackView.m */; };
 		CE9193BF19F5040E00F89840 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
 		CE97D2EE19AE1ED50090D01C /* JANavigationBarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */; };
@@ -1344,6 +1346,8 @@
 		CE88F79E1A1CF64900A3A586 /* JAFavoriteListCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFavoriteListCell_ipad_portrait.xib; sourceTree = "<group>"; };
 		CE88F7A31A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAOrangeButtonCell_ipad_landscape.xib; sourceTree = "<group>"; };
 		CE88F7A41A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAOrangeButtonCell_ipad_portrait.xib; sourceTree = "<group>"; };
+		CE88F7AA1A1E33F000A3A586 /* JAProductListFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductListFlowLayout.h; path = CollectionViewLayouts/JAProductListFlowLayout.h; sourceTree = "<group>"; };
+		CE88F7AB1A1E33F000A3A586 /* JAProductListFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductListFlowLayout.m; path = CollectionViewLayouts/JAProductListFlowLayout.m; sourceTree = "<group>"; };
 		CE9193BB19F503FB00F89840 /* JAFallbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFallbackView.h; sourceTree = "<group>"; };
 		CE9193BC19F503FB00F89840 /* JAFallbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAFallbackView.m; sourceTree = "<group>"; };
 		CE9193BE19F5040E00F89840 /* JAFallbackView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFallbackView.xib; sourceTree = "<group>"; };
@@ -1659,6 +1663,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CE88F7A91A1E339F00A3A586 /* CollectionViewLayouts */,
 				CEABEEB71A11186F000D0CF8 /* Filters */,
 				CEC376DA19EFC1D500558B98 /* Wizard */,
 				CE3AF90F19DD5D4B00D8C51B /* PromotionPopUp */,
@@ -3045,6 +3050,15 @@
 			path = Teasers;
 			sourceTree = "<group>";
 		};
+		CE88F7A91A1E339F00A3A586 /* CollectionViewLayouts */ = {
+			isa = PBXGroup;
+			children = (
+				CE88F7AA1A1E33F000A3A586 /* JAProductListFlowLayout.h */,
+				CE88F7AB1A1E33F000A3A586 /* JAProductListFlowLayout.m */,
+			);
+			name = CollectionViewLayouts;
+			sourceTree = "<group>";
+		};
 		CE9193BA19F503FB00F89840 /* FallbackView */ = {
 			isa = PBXGroup;
 			children = (
@@ -3730,6 +3744,7 @@
 				132783da23c3a550a0c52064 /* RIGoogleAnalyticsTracker.m in Sources */,
 				c9e480b3a6b434d9b5f027fc /* JAPriceView.m in Sources */,
 				f04eec4c7b7e2267a985c4f2 /* AIActivityHandler.m in Sources */,
+				CE88F7AD1A1E33F000A3A586 /* JAProductListFlowLayout.m in Sources */,
 				952aecdd0bf3e87bd38f9e12 /* RITrackingWrapper.m in Sources */,
 				3b2e034618cfeae11e103642 /* RIVariation.m in Sources */,
 				df135d936bd63706b4e3db54 /* JAMainFiltersViewController.m in Sources */,
@@ -3945,6 +3960,7 @@
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
 				B5A302D319811E9200F71726 /* RIVariation.m in Sources */,
 				CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */,
+				CE88F7AC1A1E33F000A3A586 /* JAProductListFlowLayout.m in Sources */,
 				CE3AF91219DD5D6700D8C51B /* JAPromotionPopUp.m in Sources */,
 				B5A0059019D5A1EE0069C0A9 /* RIGTMTracker.m in Sources */,
 				B5A30303198121A400F71726 /* JABaseViewController.m in Sources */,
