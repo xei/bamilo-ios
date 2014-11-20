@@ -52,12 +52,12 @@ JADatePickerDelegate
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
-                                                 name:@"UIKeyboardWillShowNotification"
+                                                 name:UIKeyboardWillShowNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:)
-                                                 name:@"UIKeyboardWillHideNotification"
+                                                 name:UIKeyboardWillHideNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -594,11 +594,17 @@ JADatePickerDelegate
     NSDictionary *userInfo = [notification userInfo];
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
+    CGFloat height = kbSize.height;
+    if(self.view.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
+    
     [UIView animateWithDuration:0.3 animations:^{
         [self.contentScrollView setFrame:CGRectMake(self.view.bounds.origin.x,
                                                     self.view.bounds.origin.y,
                                                     self.view.bounds.size.width,
-                                                    self.view.bounds.size.height - kbSize.height)];
+                                                    self.view.bounds.size.height - height)];
     }];
 }
 

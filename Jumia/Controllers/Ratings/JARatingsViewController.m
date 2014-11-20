@@ -873,12 +873,17 @@ UITableViewDataSource
     NSDictionary *userInfo = [notification userInfo];
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
+    CGFloat height = kbSize.height;
+    if(self.view.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
     // This happens only in landscape so we need to remove keyboard width.
     [UIView animateWithDuration:0.3 animations:^{
         [self.writeReviewScrollView setFrame:CGRectMake(self.writeReviewScrollViewInitialRect.origin.x,
                                                         self.writeReviewScrollViewInitialRect.origin.y,
                                                         self.writeReviewScrollViewInitialRect.size.width,
-                                                        self.writeReviewScrollViewInitialRect.size.height - kbSize.width)];
+                                                        self.writeReviewScrollViewInitialRect.size.height - height)];
     }];
 }
 
