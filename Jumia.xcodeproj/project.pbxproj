@@ -533,6 +533,7 @@
 		BBA145BB19DC56BF003F0CA7 /* 02_pre_stop_hooks.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */; };
 		BBA145BC19DC56BF003F0CA7 /* env.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A919DC56BF003F0CA7 /* env.rb */; };
 		BBA14E2219FFCB550026315A /* JANewsletterComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */; };
+		BBA525431A0D225D00A41C92 /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */; };
 		BBA707B819EEB93C0094C565 /* 00_choose_country.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA707B719EEB93C0094C565 /* 00_choose_country.feature */; };
 		BBA707B919EEB9450094C565 /* 00_choose_country.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA707B719EEB93C0094C565 /* 00_choose_country.feature */; };
 		BBB12A9419DD485400656529 /* 07_forgot_password.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9319DD485400656529 /* 07_forgot_password.feature */; };
@@ -3183,6 +3184,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBA525431A0D225D00A41C92 /* JANewsletterComponent.xib in Resources */,
 				B5B21B4819ED944900099E25 /* JAMaintenancePage.xib in Resources */,
 				d7a6db2cb10440d1bc0b39d3 /* JAFavoriteListCell.xib in Resources */,
 				d4d033bbf2ace93ceba9031e /* JAPickupStationInfoCell.xib in Resources */,

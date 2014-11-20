@@ -25,7 +25,7 @@ Scenario: Search Invalid
 @search_ss
 Scenario: Search Suggestions
 * I enter a valid search without press search
-* I wait for 1 seconds
+* I wait for 2 seconds
 * I touch the table list item number 0
 * I wait to see the catalog
 
@@ -37,4 +37,5 @@ Scenario: Related items from search product
 * I wait for 2 seconds
 * I wait to see the product detail screen
 * I scroll down
+* I wait for 2 seconds
 * I should see the related items

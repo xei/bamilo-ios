@@ -1,5 +1,5 @@
 Then /^I enter the wrong email and password$/ do
-    touch("view marked:'"+@e_mail+"'")
+    touch("view marked:'"+@email+"'")
     keyboard_enter_text @invalid_email
     done
     touch("view marked:'"+@password+"'")
@@ -7,7 +7,7 @@ Then /^I enter the wrong email and password$/ do
 end
 
 Then /^I enter the right email and password$/ do
-    touch("view marked:'"+@e_mail+"'")
+    touch("view marked:'"+@email+"'")
     wait_for_keyboard
     keyboard_enter_text @valid_email
     done
@@ -16,7 +16,7 @@ Then /^I enter the right email and password$/ do
 end
 
 Then /^I enter the right email and wrong password$/ do
-    touch("view marked:'"+@e_mail+"'")
+    touch("view marked:'"+@email+"'")
     keyboard_enter_text @valid_email
     done
     touch("view marked:'"+@password+"'")
@@ -51,14 +51,14 @@ Then /^I enter passwords matching$/ do
 end
 
 Then /^I enter a invalid email$/ do
-    touch("view marked:'"+@e_mail+"'")
+    touch("view marked:'"+@email+"'")
     sleep(1)
     keyboard_enter_text @invalid_email
     done
 end
 
 Then /^I enter a valid email$/ do
-    touch("view marked:'"+@e_mail+"'")
+    touch("view marked:'"+@email+"'")
     sleep(2)
     keyboard_enter_text @valid_email
     done
@@ -70,7 +70,7 @@ Then /^I enter the registration data with an already registred email$/ do
     touch("view marked:'"+@gender+"'")
     touch("view marked:'"+@done+"'")
     touch("UISwitch marked:'"+@receive_newsletter+"'")
-    touch("view marked:'"+@e_mail+"'")
+    touch("view marked:'"+@email+"'")
     keyboard_enter_text @valid_email
     done
     keyboard_enter_text @first_name_text
@@ -90,7 +90,7 @@ Then /^I enter the registration data with different password$/ do
     touch("view marked:'"+@gender+"'")
     touch("view marked:'"+@done+"'")
     touch("UISwitch marked:'"+@receive_newsletter+"'")
-    touch("view marked:'"+@e_mail+"'")
+    touch("view marked:'"+@email+"'")
     keyboard_enter_text @new_email
     puts @new_email
     done
@@ -112,7 +112,7 @@ Then /^I enter the registration data$/ do
     touch("view marked:'"+@gender+"'")
     touch("view marked:'"+@done+"'")
     touch("UISwitch marked:'"+@receive_newsletter+"'")
-    touch("view marked:'"+@e_mail+"'")
+    touch("view marked:'"+@email+"'")
     keyboard_enter_text @new_email
     puts @new_email
     done
@@ -165,6 +165,7 @@ Then /^I enter a (valid|invalid) order$/ do |option|
             wait_for_keyboard
             #touch("view marked:'"+@keyboard_delete_key+"'")
             #TODO
+            #keyboard_enter_char 'Delete'
             set_text("textField index:0", "")
             #keyboard_enter_text('Delete')
         else
@@ -172,6 +173,8 @@ Then /^I enter a (valid|invalid) order$/ do |option|
             wait_for_keyboard
             #touch("view marked:'"+@keyboard_delete_key+"'")
             #TODO
+            #touch("button marked:'Select All'")
+            #keyboard_enter_char 'Delete'
             set_text("textField index:0", "")
             #keyboard_enter_text('Delete')
         end

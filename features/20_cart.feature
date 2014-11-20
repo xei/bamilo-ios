@@ -8,6 +8,15 @@ Background:
 * I verify if a promotion is showing
 * I wait to see the home
 * I wait for 1 seconds
+#* I touch the hamburger
+#* I wait to see the side menu
+#* I make sure I am logged out
+#* I touch login option on side menu
+#* I wait for 2 seconds
+#* I wait to see the login screen
+#* I enter the right email and password
+#* I touch the Login button
+#* I wait to see the home
 
 @cart_add
 Scenario: Add to cart

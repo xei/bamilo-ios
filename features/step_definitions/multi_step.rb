@@ -1,3 +1,20 @@
+Then /^I scroll to cell with "([^\"]*)" label$/ do |name|
+    wait_poll(:until_exists => "label text:'#{name}'", :timeout => @wait_timeout) do
+        step "I scroll down"
+        #scroll("tableView", :down)
+    end
+end
+
+Then /^I make sure I have no favourites$/ do
+    res = query("view marked:'"+@add_all_items_to_cart+"'")
+    while res.to_s != "[]" do
+        puts res.to_s
+        step "I touch the delete favourite button"
+        sleep(5)
+        #wait_for_elements_not_exist("view marked:'"+@add_all_items_to_cart+"'", :timeout => @wait_timeout)
+    end
+end
+
 Then /^I make sure I am logged out$/ do
     res = query("view marked:'"+@logout+"'")
     #res_string = "..." + res.to_s + "..."
@@ -10,7 +27,7 @@ Then /^I make sure I am logged out$/ do
         #Need Logout
         touch("view marked:'"+@logout+"'")
         sleep(1)
-        wait_for_elements_exist("view marked:'"+@login+"'", :timeout => 5)
+        wait_for_elements_exist("view marked:'"+@login+"'", :timeout => @wait_timeout)
     end
 end
 
