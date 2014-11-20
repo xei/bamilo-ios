@@ -38,6 +38,8 @@ JADatePickerDelegate
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) JADatePicker *datePicker;
 
+@property (nonatomic, assign)BOOL isOpeningPicker;
+
 @end
 
 @implementation JASignupViewController
@@ -65,6 +67,8 @@ JADatePickerDelegate
     
     self.screenName = @"Register";
     
+    self.isOpeningPicker = NO;
+    
     self.A4SViewControllerAlias = @"ACCOUNT";
     
     self.navBarLayout.title = STRING_CREATE_ACCOUNT;
@@ -82,7 +86,7 @@ JADatePickerDelegate
     [self.headerLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.headerLabel setText:STRING_ACCOUNT_DATA];
     [self.headerLabel setBackgroundColor:[UIColor clearColor]];
-
+    
     self.headerSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.registerViewCurrentY, self.contentView.frame.size.width, 1.0f)];
     [self.headerSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     
@@ -256,21 +260,21 @@ JADatePickerDelegate
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.contentView.frame.origin.y + self.contentView.frame.size.height + 6.0f)];
     
     [self hideLoading];
- 
+    
     [self finishedFormLoading];
 }
 
 - (void)finishedFormLoading
 {
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventRegisterStart] data:nil];
-
+    
     if(self.firstLoading)
     {
         NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
         [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
         self.firstLoading = NO;
     }
-
+    
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
 }
@@ -281,7 +285,7 @@ JADatePickerDelegate
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
-#pragma mark - Actions  
+#pragma mark - Actions
 
 - (void)registerButtonPressed:(id)sender
 {
@@ -408,7 +412,7 @@ JADatePickerDelegate
         [userInfo setObject:self.nextNotification forKey:@"notification"];
         [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
     }
-
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
                                                         object:nil
                                                       userInfo:userInfo];
@@ -418,92 +422,118 @@ JADatePickerDelegate
 
 - (void)changedFocus:(UIView *)view
 {
-//    CGPoint scrollPoint = CGPointMake(0.0, view.frame.origin.y);
-//    [self.contentScrollView setContentOffset:scrollPoint
-//                                    animated:YES];
+    //    CGPoint scrollPoint = CGPointMake(0.0, view.frame.origin.y);
+    //    [self.contentScrollView setContentOffset:scrollPoint
+    //                                    animated:YES];
 }
 
 - (void) lostFocus
 {
-//    [UIView animateWithDuration:0.5f
-//                     animations:^{
-//                         self.contentScrollView.frame = self.originalFrame;
-//                     }];
+    //    [UIView animateWithDuration:0.5f
+    //                     animations:^{
+    //                         self.contentScrollView.frame = self.originalFrame;
+    //                     }];
 }
 
 - (void)openDatePicker:(JABirthDateComponent *)birthdayComponent
 {
-    if(VALID_NOTEMPTY(self.datePicker, JADatePicker))
+    if(!self.isOpeningPicker)
     {
-        [self.datePicker removeFromSuperview];
-        self.datePicker = nil;
+        self.isOpeningPicker = YES;
+        
+        if(VALID_NOTEMPTY(self.datePicker, JADatePicker))
+        {
+            [self.datePicker removeFromSuperview];
+            self.datePicker = nil;
+        }
+        
+        if(VALID_NOTEMPTY(self.picker, JAPicker))
+        {
+            [self.picker removeFromSuperview];
+            self.picker = nil;
+        }
+        
+        self.birthdayComponent = birthdayComponent;
+        
+        self.datePicker = [[JADatePicker alloc] initWithFrame:self.view.frame];
+        [self.datePicker setDelegate:self];
+        
+        [self.datePicker setDate:VALID_NOTEMPTY([birthdayComponent getDate], NSDate) ? [birthdayComponent getDate] : [NSDate date]];
+        
+        
+        CGFloat pickerViewHeight = self.view.frame.size.height;
+        CGFloat pickerViewWidth = self.view.frame.size.width;
+        [self.datePicker setFrame:CGRectMake(0.0f,
+                                             pickerViewHeight,
+                                             pickerViewWidth,
+                                             pickerViewHeight)];
+        [self.view addSubview:self.datePicker];
+        
+        [UIView animateWithDuration:0.4f
+                         animations:^{
+                             [self.datePicker setFrame:CGRectMake(0.0f,
+                                                                  0.0f,
+                                                                  pickerViewWidth,
+                                                                  pickerViewHeight)];
+                         } completion:^(BOOL finished) {
+                             self.isOpeningPicker = NO;
+                         }];
     }
-    
-    self.birthdayComponent = birthdayComponent;
-    
-    self.datePicker = [[JADatePicker alloc] initWithFrame:self.view.frame];
-    [self.datePicker setDelegate:self];
-
-    [self.datePicker setDate:VALID_NOTEMPTY([birthdayComponent getDate], NSDate) ? [birthdayComponent getDate] : [NSDate date]];
-
-    
-    CGFloat pickerViewHeight = self.view.frame.size.height;
-    CGFloat pickerViewWidth = self.view.frame.size.width;
-    [self.datePicker setFrame:CGRectMake(0.0f,
-                                     pickerViewHeight,
-                                     pickerViewWidth,
-                                     pickerViewHeight)];
-    [self.view addSubview:self.datePicker];
-    
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         [self.datePicker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
-                                                          pickerViewWidth,
-                                                          pickerViewHeight)];
-                     }];
 }
 
 - (void)openPicker:(JARadioComponent *)radioComponent
 {
-    if(VALID_NOTEMPTY(self.picker, JAPicker))
+    if(!self.isOpeningPicker)
     {
-        [self.picker removeFromSuperview];
-        self.picker = nil;
+        self.isOpeningPicker = YES;
+        if(VALID_NOTEMPTY(self.picker, JAPicker))
+        {
+            [self.picker removeFromSuperview];
+            self.picker = nil;
+        }
+        
+        if(VALID_NOTEMPTY(self.datePicker, JADatePicker))
+        {
+            [self.datePicker removeFromSuperview];
+            self.datePicker = nil;
+        }
+        
+        self.radioComponent = radioComponent;
+        
+        self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+        [self.picker setDelegate:self];
+        
+        NSMutableArray *dataSource = [[NSMutableArray alloc] init];
+        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray))
+        {
+            dataSource = [[self.radioComponent dataset] copy];
+        }
+        
+        NSString *selectedValue = [radioComponent getSelectedValue];
+        
+        [self.picker setDataSourceArray:[dataSource copy]
+                           previousText:selectedValue];
+        
+        CGFloat pickerViewHeight = self.view.frame.size.height;
+        CGFloat pickerViewWidth = self.view.frame.size.width;
+        [self.picker setFrame:CGRectMake(0.0f,
+                                         pickerViewHeight,
+                                         pickerViewWidth,
+                                         pickerViewHeight)];
+        [self.view addSubview:self.picker];
+        
+        [UIView animateWithDuration:0.4f
+                         animations:^{
+                             [self.picker setFrame:CGRectMake(0.0f,
+                                                              0.0f,
+                                                              pickerViewWidth,
+                                                              pickerViewHeight)];
+                         } completion:^(BOOL finished) {
+                             self.isOpeningPicker = NO;
+                         }];
     }
-    
-    self.radioComponent = radioComponent;
-    
-    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
-    [self.picker setDelegate:self];
-    
-    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
-    if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray))
-    {
-        dataSource = [[self.radioComponent dataset] copy];
-    }
-    
-    NSString *selectedValue = [radioComponent getSelectedValue];
-    
-    [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:selectedValue];
-    
-    CGFloat pickerViewHeight = self.view.frame.size.height;
-    CGFloat pickerViewWidth = self.view.frame.size.width;
-    [self.picker setFrame:CGRectMake(0.0f,
-                                     pickerViewHeight,
-                                     pickerViewWidth,
-                                     pickerViewHeight)];
-    [self.view addSubview:self.picker];
-    
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         [self.picker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
-                                                          pickerViewWidth,
-                                                          pickerViewHeight)];
-                     }];
 }
+
 
 #pragma mark JAPickerDelegate
 -(void)selectedRow:(NSInteger)selectedRow
@@ -515,7 +545,7 @@ JADatePickerDelegate
             [self.radioComponent setValue:[[self.radioComponent dataset] objectAtIndex:selectedRow]];
         }
     }
-
+    
     [self closePicker];
 }
 
