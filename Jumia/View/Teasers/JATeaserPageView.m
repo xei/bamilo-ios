@@ -121,12 +121,14 @@
 - (CGFloat)loadBrandTeasersInScrollView:(UIScrollView*)scrollView
                               yPosition:(CGFloat)yPosition
 {
+    BOOL foundTeaser = NO;
     //brand teasers
     for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
         
         if (4 == [teaserGroup.type integerValue]) {
             
             //found it
+            foundTeaser = YES;
             
             JATopBrandsTeaserView* topSellersTeaserView = [[JATopBrandsTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
                                                                                                                   yPosition,
@@ -142,6 +144,12 @@
             break;
         }
     }
+    
+    BOOL isLandscape = self.frame.size.width>self.frame.size.height?YES:NO;
+    if (NO == foundTeaser && isLandscape) {
+        yPosition += 6.0f;
+    }
+    
     return yPosition;
 }
 
