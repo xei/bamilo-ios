@@ -85,12 +85,10 @@
 
 - (void)deviceOrientationDidChange:(NSNotification *)notification
 {
-    CGRect frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame;
-
     if(VALID_NOTEMPTY(notification, NSNotification))
     {
         UIDevice *device = notification.object;
-        [self changeLoadingFrame:frame orientation:device.orientation];
+        [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:device.orientation];
     }
 }
 
@@ -100,7 +98,7 @@
     CGFloat screenHeight = frame.size.height;
     
     // if the orientation is in portrait means that the device was just rotate to portrait.
-    if(UIInterfaceOrientationIsPortrait(orientation))
+    if(UIDeviceOrientationIsPortrait(orientation))
     {
         if(screenWidth > screenHeight)
         {
@@ -176,9 +174,7 @@
 {
     self.requestNumber++;
     
-    CGRect frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame;
-    
-    [self changeLoadingFrame:frame orientation:[[UIDevice currentDevice] orientation]];
+    [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:[UIDevice currentDevice].orientation];
     
     if(1 == self.requestNumber) {
         [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingView];
