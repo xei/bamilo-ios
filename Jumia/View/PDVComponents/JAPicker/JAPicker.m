@@ -43,7 +43,10 @@ UIPickerViewDelegate
         [self.backgroundView removeFromSuperview];
     }
     
-    self.backgroundView = [[UIView alloc] initWithFrame:self.frame];
+    self.backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                   0.0f,
+                                                                   self.frame.size.width,
+                                                                   self.frame.size.height)];
     UITapGestureRecognizer *removePickerViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(removePickerView)];
@@ -62,7 +65,7 @@ UIPickerViewDelegate
     [self.pickerView setDelegate:self];
     [self.pickerView setFrame:CGRectMake(0.0f,
                                          (self.backgroundView.frame.size.height - self.pickerView.frame.size.height),
-                                         self.frame.size.width,
+                                         self.backgroundView.frame.size.width,
                                          self.pickerView.frame.size.height)];
     [self addSubview:self.pickerView];
     
@@ -71,12 +74,12 @@ UIPickerViewDelegate
     [self.buttonBackgroundView setAlpha:0.9];
     [self.buttonBackgroundView setFrame:CGRectMake(0.0f,
                                                    CGRectGetMinY(self.pickerView.frame) - 44.0f,
-                                                   self.frame.size.width,
+                                                   self.backgroundView.frame.size.width,
                                                    44.0f)];
     
     CGFloat doneButtonWidth = 62.0f;
     self.doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.doneButton setFrame:CGRectMake(self.frame.size.width - doneButtonWidth,
+    [self.doneButton setFrame:CGRectMake(self.backgroundView.frame.size.width - doneButtonWidth,
                                          0.0f,
                                          doneButtonWidth,
                                          44.0f)];

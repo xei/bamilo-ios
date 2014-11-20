@@ -519,11 +519,17 @@ UIAlertViewDelegate
     NSDictionary *userInfo = [notification userInfo];
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
+    CGFloat height = kbSize.height;
+    if(self.view.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
+    
     [UIView animateWithDuration:0.3 animations:^{
         [self.scrollView setFrame:CGRectMake(self.scrollViewInitialRect.origin.x,
                                              self.scrollViewInitialRect.origin.y,
                                              self.scrollViewInitialRect.size.width,
-                                             self.scrollViewInitialRect.size.height - kbSize.height)];
+                                             self.scrollViewInitialRect.size.height - height)];
     }];
 }
 

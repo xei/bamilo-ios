@@ -39,7 +39,10 @@
         [self.backgroundView removeFromSuperview];
     }
     
-    self.backgroundView = [[UIView alloc] initWithFrame:self.frame];
+    self.backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                   0.0f,
+                                                                   self.frame.size.width,
+                                                                   self.frame.size.height)];
     UITapGestureRecognizer *removePickerViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(removePickerView)];
@@ -50,14 +53,14 @@
     {
         [self.doneButton removeFromSuperview];
     }
-
+    
     self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectZero];
     [self.datePicker setDatePickerMode:UIDatePickerModeDate];
     [self.datePicker setBackgroundColor:UIColorFromRGB(0xffffff)];
     [self.datePicker setAlpha:0.9];
     [self.datePicker setFrame:CGRectMake(0.0f,
                                          (self.backgroundView.frame.size.height - self.datePicker.frame.size.height),
-                                         self.frame.size.width,
+                                         self.backgroundView.frame.size.width,
                                          self.datePicker.frame.size.height)];
     [self addSubview:self.datePicker];
     
@@ -66,12 +69,12 @@
     [self.buttonBackgroundView setAlpha:0.9];
     [self.buttonBackgroundView setFrame:CGRectMake(0.0f,
                                                    CGRectGetMinY(self.datePicker.frame) - 44.0f,
-                                                   self.frame.size.width,
+                                                   self.backgroundView.frame.size.width,
                                                    44.0f)];
     
     CGFloat doneButtonWidth = 62.0f;
     self.doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.doneButton setFrame:CGRectMake(self.frame.size.width - doneButtonWidth,
+    [self.doneButton setFrame:CGRectMake(self.backgroundView.frame.size.width - doneButtonWidth,
                                          0.0f,
                                          doneButtonWidth,
                                          44.0f)];
