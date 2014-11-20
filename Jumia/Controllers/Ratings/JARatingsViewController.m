@@ -234,11 +234,10 @@ UITableViewDataSource
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
     [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
-    
-    NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
-    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
-    
     [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+    
+    NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
+    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewRatings] data:trackingDictionary];
     
@@ -526,7 +525,8 @@ UITableViewDataSource
     
     self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                         delegate:nil
-                                                startingPosition:currentY];
+                                                startingPosition:currentY
+                                                    widthSize:width];
     
     CGFloat spaceBetweenFormFields = 6.0f;
     NSInteger count = 0;
@@ -780,10 +780,11 @@ UITableViewDataSource
           parameters:parameters
         successBlock:^(id object) {
             
+            NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
+
             NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
-            NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
             [globalRateDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
             
             for (JAAddRatingView *component in self.ratingStarsArray)

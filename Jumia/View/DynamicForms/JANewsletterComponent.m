@@ -23,6 +23,12 @@
                                                  owner:nil
                                                options:nil];
     
+    if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)))
+    {
+            xib = [[NSBundle mainBundle] loadNibNamed:@"JANewsletterComponent~iPad"
+                                                     owner:nil
+                                              options:nil];
+    }
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JANewsletterComponent class]]) {
             return (JANewsletterComponent *)obj;
@@ -34,6 +40,8 @@
 
 -(void)setup
 {
+    self.translatesAutoresizingMaskIntoConstraints = YES;
+    
     [self.labelText setTextColor:UIColorFromRGB(0x666666)];
     self.separator.backgroundColor = UIColorFromRGB(0xcccccc);
     

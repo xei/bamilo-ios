@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
         <!--Load Country View Controller-->
@@ -1123,118 +1123,112 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BpS-NE-G12">
-                                <rect key="frame" x="6" y="6" width="308" height="115"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BpS-NE-G12" userLabel="Account Settings">
+                                <rect key="frame" x="6" y="6" width="308" height="116"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCT-1H-uAb">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCT-1H-uAb" userLabel="Account Settings Title">
                                         <rect key="frame" x="6" y="4" width="294" height="18"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bot-zJ-e8D">
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u03-Nf-fkf" userLabel="Account Separator">
                                         <rect key="frame" x="0.0" y="26" width="308" height="1"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vbE-rB-1ro">
-                                        <rect key="frame" x="0.0" y="71" width="308" height="1"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j6w-ix-cRd">
+                                        <color key="backgroundColor" red="0.7843137255" green="0.088048448599999996" blue="0.056397232249999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yHX-fc-mAZ" userLabel="User Data Clickable View" customClass="JAClickableView">
+                                        <rect key="frame" x="0.0" y="27" width="308" height="44"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j6w-ix-cRd" userLabel="User Data Title">
                                         <rect key="frame" x="17" y="33" width="246" height="19"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p9U-IR-CL5">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p9U-IR-CL5" userLabel="User Data Subtitle">
                                         <rect key="frame" x="17" y="52" width="246" height="16"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xvf-Zb-vVB">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrow_gotoarea" translatesAutoresizingMaskIntoConstraints="NO" id="VMe-gO-FFw" userLabel="User Data Arrow">
+                                        <rect key="frame" x="283" y="41" width="8" height="14"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pjl-Tw-sw3" userLabel="Separator">
+                                        <rect key="frame" x="0.0" y="71" width="308" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X8u-J7-HKs" userLabel="Email Clickable View" customClass="JAClickableView">
+                                        <rect key="frame" x="0.0" y="72" width="308" height="44"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xvf-Zb-vVB" userLabel="Email Title">
                                         <rect key="frame" x="17" y="78" width="246" height="19"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EQv-gh-8Eh">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EQv-gh-8Eh" userLabel="Email Subtitle">
                                         <rect key="frame" x="17" y="97" width="246" height="16"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCx-hp-f8d">
-                                        <rect key="frame" x="0.0" y="34" width="307" height="30"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-274" maxY="0.0"/>
-                                        <state key="normal" image="arrow_gotoarea">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="selected" image="arrowOrangeClosed"/>
-                                        <state key="highlighted" image="arrowOrangeClosed"/>
-                                        <connections>
-                                            <action selector="pushUserData:" destination="79x-mL-1sG" eventType="touchUpInside" id="6BS-mH-cc8"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lpQ-Cv-wM6">
-                                        <rect key="frame" x="-1" y="80" width="308" height="33"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-276" maxY="0.0"/>
-                                        <state key="normal" image="arrow_gotoarea">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="selected" image="arrowOrangeClosed"/>
-                                        <state key="highlighted" image="arrowOrangeClosed"/>
-                                        <connections>
-                                            <action selector="pushEmailNotifications:" destination="79x-mL-1sG" eventType="touchUpInside" id="JIp-31-aSS"/>
-                                        </connections>
-                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrow_gotoarea" translatesAutoresizingMaskIntoConstraints="NO" id="rnp-LX-2zN" userLabel="Email Arrow">
+                                        <rect key="frame" x="283" y="85" width="8" height="14"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8sj-vD-h0X">
-                                <rect key="frame" x="6" y="127" width="308" height="115"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8sj-vD-h0X" userLabel="Notification Settings">
+                                <rect key="frame" x="6" y="128" width="308" height="116"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWL-jx-w6H">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWL-jx-w6H" userLabel="Notification Settings Title">
                                         <rect key="frame" x="6" y="2" width="294" height="18"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kAS-Rz-gAO">
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Wp-eu-ag2" userLabel="Notification Separator">
                                         <rect key="frame" x="0.0" y="26" width="308" height="1"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8I9-Ic-7zX">
-                                        <rect key="frame" x="0.0" y="71" width="308" height="1"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFM-5d-X7W">
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFM-5d-X7W" userLabel="Notification Title">
                                         <rect key="frame" x="17" y="33" width="218" height="19"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ql5-v7-C7X">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ql5-v7-C7X" userLabel="Notification Subtitle">
                                         <rect key="frame" x="17" y="52" width="233" height="16"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CA2-6X-zpG">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CA2-6X-zpG" userLabel="Notification Switch">
                                         <rect key="frame" x="245" y="32" width="51" height="31"/>
                                         <connections>
                                             <action selector="changeNotification:" destination="79x-mL-1sG" eventType="valueChanged" id="qmW-C1-GSF"/>
                                         </connections>
                                     </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXG-xW-txL">
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EfM-OT-i3f" userLabel="Separator">
+                                        <rect key="frame" x="0.0" y="71" width="308" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXG-xW-txL" userLabel="Sound Title">
                                         <rect key="frame" x="17" y="78" width="218" height="19"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ul7-GU-9gS">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ul7-GU-9gS" userLabel="Sound Subtitle">
                                         <rect key="frame" x="17" y="97" width="218" height="16"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W4f-ce-zKZ">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W4f-ce-zKZ" userLabel="Sound Switch">
                                         <rect key="frame" x="245" y="77" width="51" height="31"/>
                                         <connections>
                                             <action selector="changeSound:" destination="79x-mL-1sG" eventType="valueChanged" id="LvT-Hb-a0w"/>
@@ -1242,9 +1236,6 @@
                                     </switch>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="115" id="6cm-GH-gfl"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1252,25 +1243,28 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="HMH-7d-BjS"/>
                     <connections>
-                        <outlet property="accountLine" destination="vbE-rB-1ro" id="Rhr-Qg-jQ3"/>
-                        <outlet property="accountTitleLabel" destination="tCT-1H-uAb" id="IjT-5E-6Ld"/>
-                        <outlet property="accountView" destination="BpS-NE-G12" id="o7c-cm-LdI"/>
-                        <outlet property="emailLabel" destination="Xvf-Zb-vVB" id="d6M-ds-41t"/>
-                        <outlet property="emailLabelDetail" destination="EQv-gh-8Eh" id="qcO-Xv-jjZ"/>
-                        <outlet property="labelDetailSound" destination="Ul7-GU-9gS" id="QVA-7f-jdJ"/>
-                        <outlet property="labelSound" destination="uXG-xW-txL" id="OJe-4t-4Wx"/>
-                        <outlet property="lineUnderNotificationLabel" destination="8I9-Ic-7zX" id="bzV-pT-mwt"/>
-                        <outlet property="notificationDetailLabel" destination="Ql5-v7-C7X" id="Odt-wP-qKH"/>
-                        <outlet property="notificationLabel" destination="JFM-5d-X7W" id="Ijg-Zm-Tpi"/>
-                        <outlet property="notificationSwitch" destination="CA2-6X-zpG" id="F9I-cj-zFp"/>
-                        <outlet property="notificationTitleLabel" destination="eWL-jx-w6H" id="Nf6-Q4-1gO"/>
-                        <outlet property="notificationTitleLine" destination="kAS-Rz-gAO" id="cRh-U8-kxR"/>
-                        <outlet property="notificationView" destination="8sj-vD-h0X" id="saA-xu-BZP"/>
-                        <outlet property="notificationViewHeightConstrain" destination="6cm-GH-gfl" id="VMn-EF-CuK"/>
-                        <outlet property="switchSound" destination="W4f-ce-zKZ" id="mNv-Y0-Gek"/>
-                        <outlet property="userDataDetailLabel" destination="p9U-IR-CL5" id="k6M-BU-qx7"/>
-                        <outlet property="userDataLabel" destination="j6w-ix-cRd" id="SYG-V3-Be6"/>
-                        <outlet property="userLineImageView" destination="bot-zJ-e8D" id="Aon-SU-iPv"/>
+                        <outlet property="accountAndEmailSeparator" destination="Pjl-Tw-sw3" id="qp5-JV-b2p"/>
+                        <outlet property="accountSettingsTitleLabel" destination="tCT-1H-uAb" id="0ey-zc-ZDe"/>
+                        <outlet property="accountView" destination="BpS-NE-G12" id="oQg-dG-93Y"/>
+                        <outlet property="accountViewTopSeparator" destination="u03-Nf-fkf" id="9CB-fm-zFJ"/>
+                        <outlet property="emailArrow" destination="rnp-LX-2zN" id="cpv-hA-gsf"/>
+                        <outlet property="emailClickableView" destination="X8u-J7-HKs" id="efM-rq-vzj"/>
+                        <outlet property="emailSubtitleLabel" destination="EQv-gh-8Eh" id="Ar9-oB-vJY"/>
+                        <outlet property="emailTitleLabel" destination="Xvf-Zb-vVB" id="ccT-mu-mYd"/>
+                        <outlet property="notificationAndSoundSeparator" destination="EfM-OT-i3f" id="H4g-v9-3Om"/>
+                        <outlet property="notificationSettingsTitleLabel" destination="eWL-jx-w6H" id="o6s-nP-jGu"/>
+                        <outlet property="notificationSubtitleLabel" destination="Ql5-v7-C7X" id="NvA-1U-oiY"/>
+                        <outlet property="notificationSwitch" destination="CA2-6X-zpG" id="9Ra-8X-ig1"/>
+                        <outlet property="notificationTitleLabel" destination="JFM-5d-X7W" id="Cm2-Gd-t6i"/>
+                        <outlet property="notificationView" destination="8sj-vD-h0X" id="Fqe-q0-4p6"/>
+                        <outlet property="notificationViewTopSeparator" destination="0Wp-eu-ag2" id="tu1-eo-hIB"/>
+                        <outlet property="soundSubtitleLabel" destination="Ul7-GU-9gS" id="cyA-12-bzM"/>
+                        <outlet property="soundSwitch" destination="W4f-ce-zKZ" id="UHX-S6-hzf"/>
+                        <outlet property="soundTitleLabel" destination="uXG-xW-txL" id="1Rb-ay-bIS"/>
+                        <outlet property="userDataArrow" destination="VMe-gO-FFw" id="BqW-mo-zBP"/>
+                        <outlet property="userDataClickableView" destination="yHX-fc-mAZ" id="aCH-ht-mbS"/>
+                        <outlet property="userDataSubtitleLabel" destination="p9U-IR-CL5" id="jcI-S6-w5r"/>
+                        <outlet property="userDataTitleLabel" destination="j6w-ix-cRd" id="LAi-90-iuX"/>
                         <segue destination="i5M-I5-UC6" kind="push" id="Gqf-yy-XCc"/>
                         <segue destination="9Ha-gc-bt5" kind="push" id="YCi-1t-Q3H"/>
                     </connections>
@@ -2464,6 +2458,23 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sMK-ij-F4G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2436" y="-259"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ge2-DJ-V8d">
+            <objects>
+                <viewController id="y8s-TO-5QB" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="USE-Xu-VC0"/>
+                        <viewControllerLayoutGuide type="bottom" id="ENF-Og-zr2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uax-2C-bkI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HiF-Ss-fqX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <resources>

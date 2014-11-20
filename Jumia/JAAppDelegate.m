@@ -79,26 +79,46 @@
     
     // Push Notifications Activation
     
-    BOOL checkNotificationsSwitch = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeNotificationsOptions];
-    BOOL checkSoundSwitch = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeSoundOptions];
+    BOOL checkNotificationsSwitch = YES;
+    BOOL checkSoundSwitch = YES;
+
+    if(!ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kChangeNotificationsOptions]))
+    {
+        checkNotificationsSwitch = [[NSUserDefaults standardUserDefaults] boolForKey:kChangeNotificationsOptions];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kChangeNotificationsOptions];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     
-    if ((checkNotificationsSwitch == YES) && (checkSoundSwitch == YES)) {
+    if(!ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kChangeSoundOptions]))
+    {
+        checkSoundSwitch = [[NSUserDefaults standardUserDefaults] boolForKey:kChangeSoundOptions];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kChangeSoundOptions];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    if (checkNotificationsSwitch && checkSoundSwitch)
+    {
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
                                                                                 UIRemoteNotificationTypeSound |
                                                                                 UIRemoteNotificationTypeAlert )];
-    }else{
-        if((checkNotificationsSwitch == YES) && (checkNotificationsSwitch == NO)){
-            [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                                    UIRemoteNotificationTypeAlert )];
-        
-        }else{
-            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
-        }
-        
-    
     }
-    
-    
+    else if(checkNotificationsSwitch && !checkNotificationsSwitch)
+    {
+        
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                                UIRemoteNotificationTypeAlert )];
+    }
+    else{
+        [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+    }
+
+
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil)
     {
         UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;

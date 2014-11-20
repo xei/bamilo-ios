@@ -1074,22 +1074,25 @@
                                 successBlock:^(id completeProduct) {
                                     [RIProduct addToFavorites:completeProduct successBlock:^{
                                         
+                                        NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
+                                        
                                         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                                         [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
                                         [trackingDictionary setValue:@"AddtoWishlist" forKey:kRIEventActionKey];
                                         [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-                                        [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+                                        [trackingDictionary setValue:price forKey:kRIEventValueKey];
                                         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
                                         [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
                                         [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                                         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                                         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                                        NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber)  && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice : product.price;
+                                        
+                                        // Since we're sending the converted price, we have to send the currency as EUR.
+                                        // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
                                         [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                                        [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                                         
                                         [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
-                                        [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-                                        
                                         [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
                                         
                                         NSString *discountPercentage = @"0";
@@ -1133,22 +1136,26 @@
     } else {
         [RIProduct removeFromFavorites:product successBlock:^(void) {
             
+            NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
+
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
             [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-            [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+            [trackingDictionary setValue:price forKey:kRIEventValueKey];
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
             [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
             [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
             
-            NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber)  && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice : product.price;
+            // Since we're sending the converted price, we have to send the currency as EUR.
+            // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
             [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
+            
             [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
             [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
-            [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                       data:[trackingDictionary copy]];

@@ -98,7 +98,7 @@
                                                                   failureBlock(apiResponse, nil);
                                                               }
                                                           }];
-
+    
 }
 
 + (NSString *)getCampaignsWitId:(NSString*)campaignId
@@ -190,10 +190,20 @@
                 campaign.savePriceFormatted = [RICountryConfiguration formatPrice:campaign.savePrice country:country];
             }
         }
+        if ([campaignJSON objectForKey:@"save_price_euroConverted"]) {
+            if (![[campaignJSON objectForKey:@"save_price_euroConverted"] isKindOfClass:[NSNull class]]) {
+                campaign.savePriceEuroConverted = [campaignJSON objectForKey:@"save_price_euroConverted"];
+            }
+        }
         if ([campaignJSON objectForKey:@"special_price"]) {
             if (![[campaignJSON objectForKey:@"special_price"] isKindOfClass:[NSNull class]]) {
                 campaign.specialPrice = [campaignJSON objectForKey:@"special_price"];
                 campaign.specialPriceFormatted = [RICountryConfiguration formatPrice:campaign.specialPrice country:country];
+            }
+        }
+        if ([campaignJSON objectForKey:@"special_price_euroConverted"]) {
+            if (![[campaignJSON objectForKey:@"special_price_euroConverted"] isKindOfClass:[NSNull class]]) {
+                campaign.specialPriceEuroConverted = [campaignJSON objectForKey:@"special_price_euroConverted"];
             }
         }
         if ([campaignJSON objectForKey:@"max_special_price"]) {
@@ -202,16 +212,31 @@
                 campaign.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:campaign.maxSpecialPrice country:country];
             }
         }
+        if ([campaignJSON objectForKey:@"max_special_price_euroConverted"]) {
+            if (![[campaignJSON objectForKey:@"max_special_price_euroConverted"] isKindOfClass:[NSNull class]]) {
+                campaign.maxSpecialPriceEuroConverted = [campaignJSON objectForKey:@"max_special_price_euroConverted"];
+            }
+        }
         if ([campaignJSON objectForKey:@"price"]) {
             if (![[campaignJSON objectForKey:@"price"] isKindOfClass:[NSNull class]]) {
                 campaign.price = [campaignJSON objectForKey:@"price"];
                 campaign.priceFormatted = [RICountryConfiguration formatPrice:campaign.price country:country];
             }
         }
+        if ([campaignJSON objectForKey:@"price_euroConverted"]) {
+            if (![[campaignJSON objectForKey:@"price_euroConverted"] isKindOfClass:[NSNull class]]) {
+                campaign.priceEuroConverted = [campaignJSON objectForKey:@"price_euroConverted"];
+            }
+        }
         if ([campaignJSON objectForKey:@"max_price"]) {
             if (![[campaignJSON objectForKey:@"max_price"] isKindOfClass:[NSNull class]]) {
                 campaign.maxPrice = [campaignJSON objectForKey:@"max_price"];
                 campaign.maxPriceFormatted = [RICountryConfiguration formatPrice:campaign.maxPrice country:country];
+            }
+        }
+        if ([campaignJSON objectForKey:@"max_price_euroConverted"]) {
+            if (![[campaignJSON objectForKey:@"max_price_euroConverted"] isKindOfClass:[NSNull class]]) {
+                campaign.maxPriceEuroConverted = [campaignJSON objectForKey:@"max_price_euroConverted"];
             }
         }
         if ([campaignJSON objectForKey:@"sku"]) {

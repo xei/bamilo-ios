@@ -312,7 +312,8 @@ UIAlertViewDelegate
     
     self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                         delegate:nil
-                                                startingPosition:currentY];
+                                                startingPosition:currentY
+                                                    widthSize:centerViewWidth];
     
     CGFloat spaceBetweenFormFields = 6.0f;
     NSInteger count = 0;
@@ -416,10 +417,11 @@ UIAlertViewDelegate
           parameters:parameters
         successBlock:^(id object) {
             
+            NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
+
             NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
-            NSNumber *price = VALID_NOTEMPTY(self.product.specialPrice, NSNumber) ? self.product.specialPrice : self.product.price;
             [globalRateDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
             
             for (JAAddRatingView *component in self.ratingStarsArray)

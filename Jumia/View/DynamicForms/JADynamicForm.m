@@ -26,19 +26,20 @@
     if(self)
     {
         self.form = form;
-        [self generateForm:[[[form fields] array] copy] values:nil startingY:startingY];
+        [self generateForm:[[[form fields] array] copy] values:nil startingY:startingY widthSize:1204.0f];
+        
     }
     return self;
 }
 
--(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate startingPosition:(CGFloat)startingY;
+-(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate startingPosition:(CGFloat)startingY widthSize:(CGFloat)widthComponent;
 {
     self = [super init];
     if(self)
     {
         self.form = form;
         self.delegate = delegate;
-        [self generateForm:[[[form fields] array] copy] values:nil startingY:startingY];
+        [self generateForm:[[[form fields] array] copy] values:nil startingY:startingY widthSize:widthComponent];
     }
     return self;
 }
@@ -50,12 +51,12 @@
     {
         self.form = form;
         self.delegate = delegate;
-        [self generateForm:[[[form fields] array] copy] values:values startingY:startingY];
+        [self generateForm:[[[form fields] array] copy] values:values startingY:startingY widthSize:308.0f];
     }
     return self;
 }
 
-- (void)generateForm:(NSArray*)fields values:(NSDictionary*)values startingY:(CGFloat)startingY
+- (void)generateForm:(NSArray*)fields values:(NSDictionary*)values startingY:(CGFloat)startingY widthSize:(CGFloat)widthComponent
 {
     RIField *dayField = nil;
     RIField *monthField = nil;
@@ -76,7 +77,7 @@
             tag++;
         }
         
-        if ([@"string" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
+        if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
             if(!([@"address-form" isEqualToString:[self.form uid]] && [@"city" isEqualToString:field.key]))
             {
@@ -220,7 +221,8 @@
             {
                 if(VALID_NOTEMPTY(field.options, NSOrderedSet))
                 {
-                    JACheckBoxWithOptionsComponent *checkWithOptions = [[JACheckBoxWithOptionsComponent alloc] initWithFrame:CGRectMake(0.0f, startingY, 308.0f, 0.0f)];
+                    
+                    JACheckBoxWithOptionsComponent *checkWithOptions = [[JACheckBoxWithOptionsComponent alloc] initWithFrame:CGRectMake(0.0f, startingY, widthComponent, 0.0f)];
                     [checkWithOptions setupWithField:field];
                     
                     CGRect frame = checkWithOptions.frame;
@@ -230,6 +232,7 @@
                     
                     [checkWithOptions setTag:tag];
                     [self.formViews addObject:checkWithOptions];
+                    
                 }
                 else
                 {

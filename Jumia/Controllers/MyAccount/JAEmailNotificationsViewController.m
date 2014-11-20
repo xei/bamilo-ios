@@ -11,15 +11,18 @@
 #import "JAButtonWithBlur.h"
 #import "RICustomer.h"
 
+#define kDynamicFormFieldsTag 1
+
 @interface JAEmailNotificationsViewController ()
 <
-    JADynamicFormDelegate
+JADynamicFormDelegate
 >
 
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UIView *notificationsView;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property (strong, nonatomic) RIForm *form;
 
 @end
 
@@ -37,9 +40,11 @@
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_USER_EMAIL_NOTIFICATIONS;
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x,
-                                                                     self.view.frame.origin.y,
-                                                                     self.view.frame.size.width,
+    [self showLoading];
+    
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(6.0f,
+                                                                     6.0f,
+                                                                     self.view.frame.size.width - 12.0f,
                                                                      self.view.frame.size.height - 64.0f)];
     
     self.notificationsView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -48,9 +53,6 @@
     
     [self.scrollView addSubview:self.notificationsView];
     [self.view addSubview:self.scrollView];
-    
-    [self showLoading];
-    
     [self getForm];
 }
 
@@ -59,32 +61,7 @@
     [RIForm getForm:@"managenewsletters"
        successBlock:^(RIForm *form) {
            
-           self.dynamicForm = [[JADynamicForm alloc] initWithForm:form
-                                                                delegate:self
-                                                            startingPosition:0.0f];
-           
-           CGFloat formHeight = 0.0f;
-           for(UIView *view in self.dynamicForm.formViews)
-           {
-               [self.notificationsView addSubview:view];
-               formHeight = CGRectGetMaxY(view.frame);
-           }
-           
-           [self.notificationsView setFrame:CGRectMake(6.0f, 6.0f, 308.0f, formHeight + 6.0f)];
-           
-           self.saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-           [self.saveButton setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.notificationsView.frame) + 6.0f, 308.0f, 44.0f)];
-           [self.saveButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_normal"] forState:UIControlStateNormal];
-           [self.saveButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
-           [self.saveButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
-           [self.saveButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
-           [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
-           [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-           [self.saveButton addTarget:self action:@selector(continueUpdatePreferences) forControlEvents:UIControlEventTouchUpInside];
-           [self.saveButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
-           [self.scrollView addSubview:self.saveButton];
-           
-           [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.saveButton.frame) + 6.0f)];
+           self.form = form;
            
            if(self.firstLoading)
            {
@@ -92,7 +69,9 @@
                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
                self.firstLoading = NO;
            }
-
+           
+           [self setupView];
+           
            [self hideLoading];
            
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
@@ -137,6 +116,7 @@
           parameters:[self.dynamicForm getValues]
         successBlock:^(id object)
      {
+         
          BOOL notSelectedNewsletter = YES;
          
          for (UIView *view in self.dynamicForm.formViews) {
@@ -172,7 +152,7 @@
          {
              [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
          }
-
+         
          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
                                                    data:[trackingDictionary copy]];
          
@@ -210,6 +190,99 @@
              [self showMessage:STRING_ERROR success:NO];
          }
      }];
+}
+
+-(void)setupView
+{
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(6.0f,
+                                                                     6.0f,
+                                                                     self.view.frame.size.width - 12.0f,
+                                                                     self.view.frame.size.height - 64.0f)];
+    self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.form
+                                                  delegate:self
+                                          startingPosition:0.0f
+                                                 widthSize:self.scrollView.frame.size.width];
+    
+    self.notificationsView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.notificationsView.layer.cornerRadius = 5.0f;
+    [self.notificationsView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    
+    [self.scrollView addSubview:self.notificationsView];
+    [self.view addSubview:self.scrollView];
+    
+    CGFloat formHeight = 0.0f;
+    for(UIView *view in self.dynamicForm.formViews)
+    {
+        [view setTag:kDynamicFormFieldsTag];
+        [self.notificationsView addSubview:view];
+        [view setFrame:CGRectMake(0.0f,
+                                  formHeight,
+                                  self.scrollView.frame.size.width,
+                                  view.frame.size.height)];
+        formHeight += CGRectGetMaxY(view.frame);
+    }
+    
+    [self.notificationsView setFrame:CGRectMake(0.0f,
+                                                0.0f,
+                                                self.scrollView.frame.size.width,
+                                                formHeight + 6.0f)];
+    NSString *orangeButtonName = @"orangeBig_%@";
+    
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
+        if((UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)||(UIInterfaceOrientationLandscapeLeft == self.self.interfaceOrientation)){
+            orangeButtonName = @"orangeFullPortrait_%@";
+        }else{
+            orangeButtonName = @"orangeMediumPortrait_%@";
+        }
+    }
+    
+    self.saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.saveButton setFrame:CGRectMake(0.0f, CGRectGetMaxY(self.notificationsView.frame) + 6.0f, self.scrollView.frame.size.width, 44.0f)];
+    [self.saveButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]]forState:UIControlStateNormal];
+    [self.saveButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]]forState:UIControlStateHighlighted];
+    [self.saveButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]]forState:UIControlStateSelected];
+    [self.saveButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"disabled"]]forState:UIControlStateDisabled];
+    [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
+    [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.saveButton addTarget:self action:@selector(continueUpdatePreferences) forControlEvents:UIControlEventTouchUpInside];
+    [self.saveButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.scrollView addSubview:self.saveButton];
+    
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.saveButton.frame) + 6.0f)];
+}
+
+-(void) removeView
+{
+    [self.scrollView removeFromSuperview];
+    
+    [self.saveButton removeFromSuperview];
+    
+    NSArray *subViews = self.notificationsView.subviews;
+    for(UIView *view in subViews)
+    {
+        if(kDynamicFormFieldsTag == view.tag)
+        {
+            [view removeFromSuperview];
+        }
+    }
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [self removeView];
+    
+    [self showLoading];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    [self setupView];
+    
+    [self hideLoading];
 }
 
 @end
