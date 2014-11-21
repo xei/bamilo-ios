@@ -269,7 +269,7 @@
                                       NSLog(@"Unhandled deep link: %@", url);
                                   }];
     
-    if (VALID_NOTEMPTY(url, NSURL))
+    if (!urlWasHandled && VALID_NOTEMPTY(url, NSURL))
     {
         [[RITrackingWrapper sharedInstance] trackOpenURL:url];
             

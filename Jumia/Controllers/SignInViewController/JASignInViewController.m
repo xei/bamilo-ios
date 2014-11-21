@@ -78,7 +78,9 @@ FBLoginViewDelegate
     
     if(self.requestDone)
     {
-        [self setupViews];
+        [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+        
+        [self hideLoading];
     }
 }
 
@@ -98,33 +100,34 @@ FBLoginViewDelegate
     
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form)
-    {
-           self.requestDone = YES;
-     
-           self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:0.0f];
-           [self.dynamicForm setDelegate:self];
-           
-           [self setupViews];
-           
-       } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
-    {
-           self.requestDone = YES;
-           if(RIApiResponseMaintenancePage == apiResponse)
-           {
-               [self showMaintenancePage:@selector(getLoginForm) objects:nil];
-           }
-           else
-           {
-               BOOL noConnection = NO;
-               if (RIApiResponseNoInternetConnection == apiResponse)
-               {
-                   noConnection = YES;
-               }
-               [self showErrorView:noConnection startingY:0.0f selector:@selector(getLoginForm) objects:nil];
-           }
-           
-           [self hideLoading];
-       }];
+     {
+         self.requestDone = YES;
+         
+         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:0.0f];
+         [self.dynamicForm setDelegate:self];
+         
+         [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+         
+         [self hideLoading];
+     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
+     {
+         self.requestDone = YES;
+         if(RIApiResponseMaintenancePage == apiResponse)
+         {
+             [self showMaintenancePage:@selector(getLoginForm) objects:nil];
+         }
+         else
+         {
+             BOOL noConnection = NO;
+             if (RIApiResponseNoInternetConnection == apiResponse)
+             {
+                 noConnection = YES;
+             }
+             [self showErrorView:noConnection startingY:0.0f selector:@selector(getLoginForm) objects:nil];
+         }
+         
+         [self hideLoading];
+     }];
 }
 
 #pragma mark - Action
@@ -136,14 +139,17 @@ FBLoginViewDelegate
     }
 }
 
-- (void)setupViews
+- (void)setupViews:(CGFloat)width height:(CGFloat)height toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     [self removeViews];
     
     CGFloat horizontalMargin = 6.0f;
     CGFloat verticalMargin = 6.0f;
     
-    [self.scrollView setFrame:self.view.bounds];
+    [self.scrollView setFrame:CGRectMake(0.0f,
+                                         0.0f,
+                                         width,
+                                         height)];
     
     self.loginView = [[UIView alloc] initWithFrame:CGRectMake(horizontalMargin,
                                                               verticalMargin,
@@ -177,8 +183,8 @@ FBLoginViewDelegate
         facebookImageNameFormatter = @"facebookMediumPortrait_%@";
         loginImageNameFormatter = @"orangeMediumPortrait_%@";
         signupImageNameFormatter = @"greyMediumPortrait_%@";
-
-        if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        
+        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
         {
             facebookImageNameFormatter = @"facebookFullPortrait_%@";
             loginImageNameFormatter = @"orangeFullPortrait_%@";
@@ -276,8 +282,6 @@ FBLoginViewDelegate
     [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width,
                                                self.loginView.frame.size.height + (2 * verticalMargin))];
     
-    [self hideLoading];
-    
     if(self.firstLoading)
     {
         NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -299,22 +303,29 @@ FBLoginViewDelegate
 {
     [self showLoading];
     
+    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    CGFloat newHeight = self.view.frame.size.width + self.view.frame.origin.x;
+    
+    [self setupViews:newWidth height:newHeight toInterfaceOrientation:toInterfaceOrientation];
+    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self setupViews];
+    [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)facebookLoginButtonPressed:(id)sender
 {
+    [self.dynamicForm resignResponder];
+    
     FBSession *session = [[FBSession alloc] initWithPermissions:@[@"public_profile", @"email", @"user_birthday"]];
     [FBSession setActiveSession:session];
     
-    [[FBSession activeSession] openWithBehavior:FBSessionLoginBehaviorForcingWebView completionHandler:^(FBSession *session, FBSessionState status, NSError *error)
+    [[FBSession activeSession] openWithBehavior:FBSessionLoginBehaviorForcingSafari completionHandler:^(FBSession *session, FBSessionState status, NSError *error)
      {
          if(FBSessionStateOpen == status)
          {
@@ -636,7 +647,7 @@ FBLoginViewDelegate
     NSDictionary *userInfo = [notification userInfo];
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     CGFloat height = kbSize.height;
-  
+    
     if(self.view.frame.size.width == kbSize.height)
     {
         height = kbSize.width;
