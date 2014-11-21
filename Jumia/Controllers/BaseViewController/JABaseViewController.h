@@ -62,7 +62,5 @@
  */
 - (void)removeMaintenancePage;
 
-- (void)deviceOrientationDidChange:(NSNotification *)notification;
-
 @end
 

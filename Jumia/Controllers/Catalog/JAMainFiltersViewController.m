@@ -155,8 +155,8 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self.tableView reloadData];
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 #pragma mark - Button Actions

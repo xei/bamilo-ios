@@ -140,10 +140,7 @@
 {
     //we do this to make sure no notification is added more than once
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(deviceOrientationDidChange:)
-                                                 name:UIDeviceOrientationDidChangeNotification
-                                               object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(pushCatalogWithUrl:)
                                                  name:kTeaserNotificationPushCatalogWithUrl
@@ -170,8 +167,10 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self showLoading];
+
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
     if (UIInterfaceOrientationLandscapeLeft == toInterfaceOrientation || UIInterfaceOrientationLandscapeRight == toInterfaceOrientation) {
         self.teaserPagesScrollView.frame = self.teaserPageScrollLandscapeRect;
     } else {
@@ -184,7 +183,6 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self hideLoading];
     CGFloat currentPageX = 0.0f;
     CGFloat currentPageY = 0.0f;
@@ -203,6 +201,8 @@
     self.teaserCategoryScrollView.startingIndex = self.lastIndex;
     [self.teaserCategoryScrollView setNeedsLayout];
     [self.view addSubview:self.teaserPagesScrollView];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)completeTeasersLoading

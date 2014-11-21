@@ -198,17 +198,15 @@ UIAlertViewDelegate
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
     [self hideViews];
     
     [self showLoading];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
     [self hideLoading];
     
     if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
@@ -235,6 +233,8 @@ UIAlertViewDelegate
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
         }
     }
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 -(void)setupViews

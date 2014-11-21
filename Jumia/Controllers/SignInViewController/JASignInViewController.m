@@ -44,12 +44,12 @@ FBLoginViewDelegate
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
-                                                 name:@"UIKeyboardWillShowNotification"
+                                                 name:UIKeyboardWillShowNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:)
-                                                 name:@"UIKeyboardWillHideNotification"
+                                                 name:UIKeyboardWillHideNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -297,9 +297,9 @@ FBLoginViewDelegate
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
     [self showLoading];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -634,13 +634,19 @@ FBLoginViewDelegate
 - (void) keyboardWillShow:(NSNotification *)notification
 {
     NSDictionary *userInfo = [notification userInfo];
-    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGFloat height = kbSize.height;
+  
+    if(self.view.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.scrollView setFrame:CGRectMake(self.view.bounds.origin.x,
                                              self.view.bounds.origin.y,
                                              self.view.bounds.size.width,
-                                             self.view.bounds.size.height - kbSize.height)];
+                                             self.view.bounds.size.height - height)];
     }];
 }
 

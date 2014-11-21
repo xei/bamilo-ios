@@ -269,20 +269,20 @@ JADynamicFormDelegate
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
     [self removeView];
     
     [self showLoading];
+
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
     [self setupView];
     
     [self hideLoading];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];    
 }
 
 @end
