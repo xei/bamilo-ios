@@ -87,11 +87,13 @@ JAActivityViewControllerDelegate
         self.navBarLayout.backButtonTitle = self.previousCategory;
     }
     
-    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                         0.0f,
-                                                                         self.view.frame.size.width,
-                                                                         self.view.frame.size.height - 64.0f)];
+    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    [self.mainScrollView setHidden:YES];
     [self.view addSubview:self.mainScrollView];
+    
+    self.landscapeScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    [self.landscapeScrollView setHidden:YES];
+    [self.view addSubview:self.landscapeScrollView];
     
     // Always load the product details when entering PDV
     if (VALID_NOTEMPTY(self.productUrl, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
@@ -148,7 +150,9 @@ JAActivityViewControllerDelegate
     
     [self showLoading];
     
-    [self removeSuperviews];
+    [self.mainScrollView setHidden:YES];
+    [self.landscapeScrollView setHidden:YES];
+    [self.ctaView setHidden:YES];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -162,6 +166,9 @@ JAActivityViewControllerDelegate
 
 - (void) removeSuperviews
 {
+    [self.mainScrollView setHidden:YES];
+    [self.landscapeScrollView setHidden:YES];
+    
     for(UIView *subView in self.mainScrollView.subviews)
     {
         [subView removeFromSuperview];
@@ -174,7 +181,7 @@ JAActivityViewControllerDelegate
             [subView removeFromSuperview];
         }
     }
-    
+
     if(VALID_NOTEMPTY(self.ctaView, JAButtonWithBlur))
     {
         [self.ctaView removeFromSuperview];
@@ -377,6 +384,8 @@ JAActivityViewControllerDelegate
 
 - (void)productLoaded
 {
+    [self removeSuperviews];
+    
     self.hasLoaddedProduct = YES;
     
     [self.mainScrollView setFrame:CGRectMake(0.0f,
@@ -394,21 +403,24 @@ JAActivityViewControllerDelegate
                                                      0.0f,
                                                      scrollViewsWidth,
                                                      self.view.frame.size.height)];
+            [self.mainScrollView setHidden:NO];
             
-            self.landscapeScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(scrollViewsWidth,
-                                                                                      0.0f,
-                                                                                      scrollViewsWidth,
-                                                                                      self.view.frame.size.height)];
-            [self.view addSubview:self.landscapeScrollView];
+            [self.landscapeScrollView setFrame:CGRectMake(scrollViewsWidth,
+                                                          0.0f,
+                                                          scrollViewsWidth,
+                                                          self.view.frame.size.height)];
+            [self.landscapeScrollView setHidden:NO];
         }
         else
         {
-            [self.landscapeScrollView removeFromSuperview];
+            [self.mainScrollView setHidden:NO];
+            [self.landscapeScrollView setHidden:YES];
         }
     }
     else
     {
-        [self.landscapeScrollView removeFromSuperview];
+        [self.mainScrollView setHidden:NO];
+        [self.landscapeScrollView setHidden:YES];
     }
     
     /*******
