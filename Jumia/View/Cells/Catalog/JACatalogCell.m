@@ -45,8 +45,12 @@
                      specialPrice:product.specialPriceFormatted
                          fontSize:10.0f
             specialPriceOnTheLeft:NO];
-    self.priceView.frame = CGRectMake(85.0f,
-                                      43.0f,
+    CGFloat priceXOffset = JACatalogCellPriceLabelOffsetX;
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        priceXOffset = JACatalogCellPriceLabelOffsetX_ipad;
+    }
+    self.priceView.frame = CGRectMake(self.nameLabel.frame.origin.x + priceXOffset,
+                                      CGRectGetMaxY(self.nameLabel.frame) + JACatalogCellPriceLabelOffsetY,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
     [self.contentView addSubview:self.priceView];
