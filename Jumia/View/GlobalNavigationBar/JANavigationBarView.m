@@ -173,17 +173,32 @@
 {
     CGRect frame = [[UIScreen mainScreen] bounds];
     CGFloat width = frame.size.width;
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    if(UIDeviceOrientationUnknown != orientation && UIDeviceOrientationIsPortrait(orientation))
+    UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if(UIDeviceOrientationUnknown != deviceOrientation && UIDeviceOrientationIsPortrait(deviceOrientation))
     {
         if(frame.size.width > frame.size.height)
         {
             width = frame.size.height;
         }
     }
-    else if(UIDeviceOrientationUnknown != orientation && UIDeviceOrientationIsLandscape(orientation))
+    else if(UIDeviceOrientationUnknown != deviceOrientation && UIDeviceOrientationIsLandscape(deviceOrientation))
     {
-        if(frame.size.width < frame.size.height)
+        if(frame.size.height > frame.size.width)
+        {
+            width = frame.size.height;
+        }
+    }
+    else if(UIInterfaceOrientationIsPortrait(interfaceOrientation))
+    {
+        if(frame.size.width > frame.size.height)
+        {
+            width = frame.size.height;
+        }
+    }
+    else if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
+    {
+        if(frame.size.height > frame.size.width)
         {
             width = frame.size.height;
         }
