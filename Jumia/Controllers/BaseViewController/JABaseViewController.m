@@ -18,6 +18,7 @@
 @property (strong, nonatomic) UIView *loadingView;
 @property (nonatomic, strong) UIImageView *loadingAnimation;
 @property (strong, nonatomic) JANoConnectionView *noConnectionView;
+@property (strong, nonatomic) JAMessageView *messageView;
 
 @end
 
@@ -129,7 +130,7 @@
     
     if(VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView))
     {
-        self.noConnectionView.frame =  CGRectMake(0, 0, screenWidth, screenHeight);
+        self.noConnectionView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
         [self.view bringSubviewToFront:self.noConnectionView];
     }
 }
@@ -139,7 +140,7 @@
     [super viewWillAppear:animated];
     
     [self reloadNavBar];
-
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
                                                         object:nil];
 }
@@ -208,24 +209,27 @@
 {
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     
-    JAMessageView *messageView = [JAMessageView getNewJAMessageView];
-    [messageView setTitle:message success:success addTo:window.rootViewController];
+    if(!VALID_NOTEMPTY(self.messageView, JAMessageView))
+    {
+        self.messageView = [JAMessageView getNewJAMessageView];
+        [self.messageView setupView];
+    }
+    
+    if(!VALID_NOTEMPTY([self.messageView superview], UIView))
+    {
+        [self.messageView setFrame:CGRectMake(self.messageView.frame.origin.x,
+                                              self.messageView.frame.origin.y,
+                                              window.rootViewController.view.frame.size.width,
+                                              self.messageView.frame.size.height)];
+        [window.rootViewController.view addSubview:self.messageView];
+    }
+    
+    [self.messageView setTitle:message success:success];
 }
 
 - (void)removeMessageView
 {
-    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
-    if(VALID_NOTEMPTY(window.rootViewController, UIViewController) && VALID_NOTEMPTY(window.rootViewController.view, UIView))
-    {
-        for(UIView *view in window.rootViewController.view.subviews)
-        {
-            if([view isKindOfClass:[JAMessageView class]])
-            {
-                [view removeFromSuperview];
-                break;
-            }
-        }
-    }
+    [self.messageView removeFromSuperview];
 }
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
@@ -271,14 +275,7 @@
 
 - (void)removeErrorView
 {
-    for(UIView *view in self.view.subviews)
-    {
-        if([view isKindOfClass:[JANoConnectionView class]])
-        {
-            [view removeFromSuperview];
-            break;
-        }
-    }
+    [self.noConnectionView removeFromSuperview];
 }
 
 - (void)showMaintenancePage:(SEL)selector objects:(NSArray*)objects
