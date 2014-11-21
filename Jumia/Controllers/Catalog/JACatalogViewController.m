@@ -641,7 +641,7 @@
 
 - (IBAction)swipeRight:(id)sender
 {
-    [self.sortingScrollView scrollRight];
+    [self.sortingScrollView scrollRightAnimated:YES];
 }
 
 - (IBAction)swipeLeft:(id)sender

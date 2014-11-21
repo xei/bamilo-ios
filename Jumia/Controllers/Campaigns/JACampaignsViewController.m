@@ -203,7 +203,7 @@
 - (IBAction)swipeRight:(id)sender
 {
     self.shouldPerformButtonActions = NO;
-    [self.pickerScrollView scrollRight];
+    [self.pickerScrollView scrollRightAnimated:YES];
 }
 
 #pragma mark - JACampaignPageViewDelegate
