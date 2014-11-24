@@ -27,11 +27,13 @@ Before do |scenario|
     @calabash_launcher.relaunch
     @calabash_launcher.calabash_notify(self)
   end
-  result1 = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocapitalization -bool NO')
-  result2 = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocorrection -bool NO')
-  result3 = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardCheckSpelling -bool NO')
-  result4 = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardPrediction -bool NO')
-  puts "#{result1}, #{result2}, #{result3}, #{result4}"
+  system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocorrection -bool NO')
+  resultC = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardCheckSpelling -bool NO')
+  #resultA = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocapitalization -bool NO')
+  #resultB = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocorrection -bool NO')
+  #resultC = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardCheckSpelling -bool NO')
+  #resultD = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardPrediction -bool NO')
+  #puts "#{resultA}, #{resultB}, #{resultC}, #{resultD}"
 end
 
 After do |scenario|
