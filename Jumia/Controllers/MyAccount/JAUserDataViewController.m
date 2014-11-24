@@ -110,6 +110,8 @@ JADynamicFormDelegate
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];    
+    
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];

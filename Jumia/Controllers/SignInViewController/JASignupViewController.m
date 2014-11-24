@@ -137,6 +137,8 @@ JADatePickerDelegate
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+    
     [self hideLoading];
     
     [self hideKeyboard];
