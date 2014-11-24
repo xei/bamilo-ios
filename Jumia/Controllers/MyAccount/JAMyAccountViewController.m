@@ -152,6 +152,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
 }
 
@@ -178,6 +180,8 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
+    
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
