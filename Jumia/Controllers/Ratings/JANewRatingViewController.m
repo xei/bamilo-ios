@@ -233,6 +233,11 @@ UIAlertViewDelegate
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
         }
     }
+    else
+    {
+        [self.topView setHidden:NO];
+        [self.scrollView setHidden:NO];
+    }
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }

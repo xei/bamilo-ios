@@ -262,6 +262,8 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    [self setupViews:self.view.frame.size.width height:self.view.frame.size.height];
+    
     [self hideLoading];
 
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
