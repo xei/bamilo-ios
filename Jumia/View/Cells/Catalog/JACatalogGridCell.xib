@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="152" height="196"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OHb-gZ-UsD" userLabel="ContentView">
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OHb-gZ-UsD" userLabel="ContentView">
                         <rect key="frame" x="0.0" y="3" width="152" height="193"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lxr-pU-FDh">
@@ -23,12 +23,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ProductBadgeNew" translatesAutoresizingMaskIntoConstraints="NO" id="zn6-GA-Xv7">
                                 <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJQ-WO-yLm">
-                                <rect key="frame" x="-2" y="11" width="48" height="14"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="8"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="63c-wT-5Ql">
                                 <rect key="frame" x="2" y="148" width="148" height="15"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
@@ -64,20 +58,11 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="152" id="kyQ-Yz-3MY"/>
-                        </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="OHb-gZ-UsD" firstAttribute="top" secondItem="IEb-EH-YYf" secondAttribute="top" constant="3" id="8UH-Ci-C4H"/>
-                <constraint firstAttribute="trailing" secondItem="OHb-gZ-UsD" secondAttribute="trailing" id="Dv9-WZ-ecH"/>
-                <constraint firstItem="OHb-gZ-UsD" firstAttribute="leading" secondItem="IEb-EH-YYf" secondAttribute="leading" id="G7a-JS-4Xr"/>
-                <constraint firstAttribute="bottom" secondItem="OHb-gZ-UsD" secondAttribute="bottom" id="aHU-mm-FVd"/>
-            </constraints>
             <size key="customSize" width="158" height="196"/>
             <connections>
                 <outlet property="backgroundContentView" destination="OHb-gZ-UsD" id="rOB-wx-zXu"/>
@@ -89,7 +74,6 @@
                 <outlet property="nameLabel" destination="7WG-Xo-Qtm" id="ARO-Gm-Gir"/>
                 <outlet property="productImageView" destination="Lxr-pU-FDh" id="OAr-gK-8l3"/>
                 <outlet property="recentProductImageView" destination="zn6-GA-Xv7" id="6pi-JK-db8"/>
-                <outlet property="recentProductLabel" destination="BJQ-WO-yLm" id="u0Y-u7-gC1"/>
             </connections>
         </collectionViewCell>
     </objects>

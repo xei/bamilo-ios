@@ -30,9 +30,16 @@
     [self.backgroundContentView sendSubviewToBack:self.productImageView];
     
     self.recentProductImageView.hidden = ![product.isNew boolValue];
-    self.recentProductLabel.hidden = ![product.isNew boolValue];
-    self.recentProductLabel.text = STRING_NEW;
-    self.recentProductLabel.transform = CGAffineTransformMakeRotation (-M_PI/4);
+
+    [self.recentLabel removeFromSuperview];
+    self.recentLabel = [[UILabel alloc] initWithFrame:CGRectMake(-2.0f, 14.0f, 48.0f, 14.0f)];
+    self.recentLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:8.0f];
+    self.recentLabel.text = STRING_NEW;
+    self.recentLabel.textAlignment = NSTextAlignmentCenter;
+    self.recentLabel.textColor = [UIColor whiteColor];
+    self.recentLabel.transform = CGAffineTransformMakeRotation (-M_PI/4);
+    [self addSubview:self.recentLabel];
+    self.recentLabel.hidden = ![product.isNew boolValue];
     
     self.brandLabel.text = product.brand;
     self.brandLabel.textColor = UIColorFromRGB(0x666666);
@@ -45,8 +52,12 @@
                      specialPrice:product.specialPriceFormatted
                          fontSize:10.0f
             specialPriceOnTheLeft:NO];
-    self.priceView.frame = CGRectMake(85.0f,
-                                      43.0f,
+    CGFloat priceXOffset = JACatalogCellPriceLabelOffsetX;
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        priceXOffset = JACatalogCellPriceLabelOffsetX_ipad;
+    }
+    self.priceView.frame = CGRectMake(self.nameLabel.frame.origin.x + priceXOffset,
+                                      CGRectGetMaxY(self.nameLabel.frame) + JACatalogCellPriceLabelOffsetY,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
     [self.contentView addSubview:self.priceView];
@@ -74,7 +85,6 @@
                           placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     
     self.recentProductImageView.hidden = YES;
-    self.recentProductLabel.hidden = YES;
     
     self.nameLabel.text = cartItem.name;
     self.nameLabel.textColor = UIColorFromRGB(0x666666);

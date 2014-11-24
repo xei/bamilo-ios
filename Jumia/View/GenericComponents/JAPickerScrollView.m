@@ -119,15 +119,23 @@
 {
     CGPoint point = [tap locationInView:self];
     
+
     if (point.x < self.scrollView.frame.origin.x)
     {
-        [self scrollRight];
+        CGFloat distanceFromPointToCenterView = self.scrollView.frame.origin.x - point.x;
+        NSInteger relativeIndex = (distanceFromPointToCenterView / self.scrollView.frame.size.width) + 1;
+        while (relativeIndex > 0) {
+            [self scrollRightAnimated:NO];
+            relativeIndex--;
+        }
     }
-    else
+    else if (point.x > (self.scrollView.frame.origin.x + self.scrollView.frame.size.width))
     {
-        if (point.x > (self.scrollView.frame.origin.x + self.scrollView.frame.size.width))
-        {
-            [self scrollLeftAnimated:YES];
+        CGFloat distanceFromPointToCenterView = point.x - self.scrollView.frame.origin.x - self.scrollView.frame.size.width;
+        NSInteger relativeIndex = (distanceFromPointToCenterView / self.scrollView.frame.size.width) + 1;
+        while (relativeIndex > 0) {
+            [self scrollLeftAnimated:NO];
+            relativeIndex--;
         }
     }
 }
@@ -168,7 +176,7 @@
     }
 }
 
-- (void)scrollRight
+- (void)scrollRightAnimated:(BOOL)animated;
 {
     CGFloat newIndex = self.selectedIndex - 1;
     
@@ -176,7 +184,7 @@
         [self.scrollView scrollRectToVisible:CGRectMake(newIndex * self.scrollView.bounds.size.width,
                                                         self.scrollView.bounds.origin.y,
                                                         self.scrollView.bounds.size.width,
-                                                        self.scrollView.bounds.size.height) animated:YES];
+                                                        self.scrollView.bounds.size.height) animated:animated];
         [self selectLabelAtIndex:newIndex];
     }
 }

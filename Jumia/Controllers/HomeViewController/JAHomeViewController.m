@@ -307,7 +307,7 @@
 - (IBAction)swipeRight:(id)sender
 {
     [self removeNotifications];
-    [self.teaserCategoryScrollView scrollRight];
+    [self.teaserCategoryScrollView scrollRightAnimated:YES];
 }
 
 - (IBAction)swipeLeft:(id)sender
