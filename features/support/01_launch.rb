@@ -27,10 +27,6 @@ Before do |scenario|
     @calabash_launcher.relaunch
     @calabash_launcher.calabash_notify(self)
   end
-  system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocorrection -bool NO')
-  system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardCheckSpelling -bool NO')
-  system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocapitalization -bool NO')
-  system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardPrediction -bool NO')
   #resultA = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocapitalization -bool NO')
   #resultB = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocorrection -bool NO')
   #resultC = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardCheckSpelling -bool NO')

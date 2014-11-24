@@ -12,6 +12,10 @@ $country = ENV['country']
 
 def initvars
     puts "initvars EN"
+    system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocorrection -bool NO')
+    system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardCheckSpelling -bool NO')
+    system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocapitalization -bool NO')
+    system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardPrediction -bool NO')
     #init
     @wait_timeout = 5
     @wait_timeout_extra = 20
