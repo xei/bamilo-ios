@@ -31,7 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *brandLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *recentProductImageView;
-@property (weak, nonatomic) IBOutlet UILabel *recentProductLabel;
+@property (strong, nonatomic)UILabel* recentLabel;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *discountImageView;
 @property (weak, nonatomic) IBOutlet UILabel *discountLabel;
