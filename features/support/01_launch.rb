@@ -27,7 +27,7 @@ Before do |scenario|
   result2 = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocorrection -bool NO')
   result3 = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardCheckSpelling -bool NO')
   result4 = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardPrediction -bool NO')
-  puts result1, result2, result3, result4
+  puts "#{result1}, #{result2}, #{result3}, #{result4}"
   unless @calabash_launcher.calabash_no_launch?
     @calabash_launcher.relaunch
     @calabash_launcher.calabash_notify(self)
