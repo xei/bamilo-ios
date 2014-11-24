@@ -35,12 +35,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ProductBadgeNew" translatesAutoresizingMaskIntoConstraints="NO" id="5Nc-HJ-nHi">
                                 <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YBV-2P-Jvq">
-                                <rect key="frame" x="-2" y="11" width="48" height="14"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="8"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="img_badge_discount" translatesAutoresizingMaskIntoConstraints="NO" id="RfY-6n-ore">
                                 <rect key="frame" x="48" y="70" width="26" height="14"/>
                             </imageView>
@@ -89,7 +83,6 @@
                 <outlet property="nameLabel" destination="eSv-Js-mNr" id="b8o-X1-32b"/>
                 <outlet property="productImageView" destination="HBK-bc-RQM" id="CHF-QZ-SY8"/>
                 <outlet property="recentProductImageView" destination="5Nc-HJ-nHi" id="8cw-Y7-LYn"/>
-                <outlet property="recentProductLabel" destination="YBV-2P-Jvq" id="Rbw-BC-yjf"/>
                 <outlet property="sizeButton" destination="kB5-Af-Txx" id="Q5z-2y-cii"/>
             </connections>
             <point key="canvasLocation" x="139.5" y="153.5"/>

@@ -45,12 +45,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ProductBadgeNew" translatesAutoresizingMaskIntoConstraints="NO" id="5Nc-HJ-nHi" userLabel="New Badge">
                                 <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YBV-2P-Jvq" userLabel="New Label">
-                                <rect key="frame" x="-2" y="11" width="48" height="14"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="8"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_badge_discount" translatesAutoresizingMaskIntoConstraints="NO" id="RfY-6n-ore" userLabel="Discount Background">
                                 <rect key="frame" x="54" y="65" width="26" height="14"/>
                                 <constraints>
@@ -151,7 +145,6 @@
                 <outlet property="productImageView" destination="HBK-bc-RQM" id="CHF-QZ-SY8"/>
                 <outlet property="quantityButton" destination="iXO-Vv-Snl" id="JkR-Xl-ONa"/>
                 <outlet property="recentProductImageView" destination="5Nc-HJ-nHi" id="8cw-Y7-LYn"/>
-                <outlet property="recentProductLabel" destination="YBV-2P-Jvq" id="Rbw-BC-yjf"/>
                 <outlet property="separator" destination="o6D-Zv-TFb" id="7oY-wv-7uu"/>
                 <outlet property="sizeLabel" destination="bXT-VL-sPI" id="V5n-oD-uvA"/>
             </connections>

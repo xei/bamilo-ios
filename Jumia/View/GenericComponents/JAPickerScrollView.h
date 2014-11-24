@@ -26,6 +26,6 @@
 - (void)setOptions:(NSArray*)options;
 
 - (void)scrollLeftAnimated:(BOOL)animated;
-- (void)scrollRight;
+- (void)scrollRightAnimated:(BOOL)animated;
 
 @end
