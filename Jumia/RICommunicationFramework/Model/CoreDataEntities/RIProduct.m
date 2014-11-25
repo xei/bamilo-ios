@@ -210,6 +210,10 @@
                                                                               successBlock(products, productCount, filtersArray, categoryId, categoriesArray);
                                                                           });
                                                                       }
+                                                                      else
+                                                                      {
+                                                                          failureBlock(RIApiResponseAPIError, nil);
+                                                                      }
                                                                   }
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                                                   failureBlock(apiResponse, nil);
