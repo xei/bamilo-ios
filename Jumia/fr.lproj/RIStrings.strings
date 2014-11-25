@@ -247,3 +247,5 @@
 "reviews" = "Avis";
 "more" = "Plus";
 "reviews_empty" = "Ce produit n'a pas de avis!";
+
+"order_summary_label" = "Résumé de la commande";

@@ -683,6 +683,8 @@
     {
         JAAddressesViewController *addressesVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
         
+        addressesVC.cart = self.cart;
+        
         [self popToRootViewControllerAnimated:NO];
         [self pushViewController:addressesVC animated:NO];
     }
@@ -703,6 +705,7 @@
         addAddressVC.isBillingAddress = [isBillingAddress boolValue];
         addAddressVC.isShippingAddress = [isShippingAddress boolValue];
         addAddressVC.showBackButton = [showBackButton boolValue];
+        addAddressVC.cart = self.cart;
         
         [self pushViewController:addAddressVC animated:YES];
     }
@@ -718,6 +721,7 @@
         
         RIAddress* editAddress = [notification.userInfo objectForKey:@"address_to_edit"];
         editAddressVC.editAddress = editAddress;
+        editAddressVC.cart = self.cart;
         
         [self pushViewController:editAddressVC animated:YES];
     }
