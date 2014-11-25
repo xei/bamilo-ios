@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
         <!--Load Country View Controller-->
@@ -1746,29 +1746,20 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="mxV-EE-O8u">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
                             </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IAW-kV-hxG">
-                                <rect key="frame" x="80" y="3" width="104" height="15"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IAW-kV-hxG">
+                                <rect key="frame" x="73" y="3" width="122" height="15"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="lN0-4f-CH6">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="lN0-4f-CH6">
                                         <rect key="frame" x="14" y="1" width="9" height="12"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFv-qn-kgz">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFv-qn-kgz">
                                         <rect key="frame" x="29" y="1" width="42" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="42" id="DuD-u5-7cg"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="lN0-4f-CH6" firstAttribute="leading" secondItem="IAW-kV-hxG" secondAttribute="leading" constant="14" id="ay1-61-e8W"/>
-                                    <constraint firstAttribute="centerY" secondItem="AFv-qn-kgz" secondAttribute="centerY" id="dxH-hb-bB9"/>
-                                    <constraint firstAttribute="centerY" secondItem="lN0-4f-CH6" secondAttribute="centerY" id="f9L-TP-TsO"/>
-                                    <constraint firstItem="AFv-qn-kgz" firstAttribute="leading" secondItem="lN0-4f-CH6" secondAttribute="trailing" constant="6" id="fRH-Ek-cED"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1776,10 +1767,9 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="h9V-mw-vY4"/>
                     <connections>
+                        <outlet property="stepBackground" destination="mxV-EE-O8u" id="bdy-DY-h3A"/>
                         <outlet property="stepIcon" destination="lN0-4f-CH6" id="wdQ-uB-wnm"/>
-                        <outlet property="stepIconLeftConstrain" destination="ay1-61-e8W" id="Ehm-Up-3Np"/>
                         <outlet property="stepLabel" destination="AFv-qn-kgz" id="n1Y-rD-kse"/>
-                        <outlet property="stepLabelWidthConstrain" destination="DuD-u5-7cg" id="xa7-gA-sI6"/>
                         <outlet property="stepView" destination="IAW-kV-hxG" id="akF-nO-Lz9"/>
                     </connections>
                 </viewController>
@@ -1937,29 +1927,20 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="lYq-XR-Aoj">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
                             </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="far-Sa-Edc">
-                                <rect key="frame" x="80" y="3" width="104" height="15"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="far-Sa-Edc">
+                                <rect key="frame" x="73" y="3" width="122" height="15"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="wmS-Dw-SzE">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="wmS-Dw-SzE">
                                         <rect key="frame" x="14" y="1" width="9" height="12"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISk-Oo-DKH">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISk-Oo-DKH">
                                         <rect key="frame" x="29" y="1" width="42" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="42" id="lV8-zD-HlM"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="centerY" secondItem="ISk-Oo-DKH" secondAttribute="centerY" id="5Ge-AO-HIt"/>
-                                    <constraint firstItem="ISk-Oo-DKH" firstAttribute="leading" secondItem="wmS-Dw-SzE" secondAttribute="trailing" constant="6" id="5UP-5y-yh8"/>
-                                    <constraint firstAttribute="centerY" secondItem="wmS-Dw-SzE" secondAttribute="centerY" id="tww-4K-A2S"/>
-                                    <constraint firstItem="wmS-Dw-SzE" firstAttribute="leading" secondItem="far-Sa-Edc" secondAttribute="leading" constant="14" id="vpc-Vs-Wim"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1967,10 +1948,9 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="x14-RD-kHn"/>
                     <connections>
+                        <outlet property="stepBackground" destination="lYq-XR-Aoj" id="f8A-JT-8Fi"/>
                         <outlet property="stepIcon" destination="wmS-Dw-SzE" id="4eT-8v-pPL"/>
-                        <outlet property="stepIconLeftConstrain" destination="vpc-Vs-Wim" id="Bs7-hT-aYY"/>
                         <outlet property="stepLabel" destination="ISk-Oo-DKH" id="NaN-Ju-avi"/>
-                        <outlet property="stepLabelWidthConstrain" destination="lV8-zD-HlM" id="6OM-yk-qNm"/>
                         <outlet property="stepView" destination="far-Sa-Edc" id="iMr-xv-IRu"/>
                     </connections>
                 </viewController>
@@ -1993,29 +1973,20 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="LxP-DF-eGQ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
                             </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ms2-bD-mVV">
-                                <rect key="frame" x="80" y="3" width="104" height="15"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ms2-bD-mVV">
+                                <rect key="frame" x="73" y="3" width="122" height="15"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="hbx-ay-Dyp">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="hbx-ay-Dyp">
                                         <rect key="frame" x="14" y="1" width="9" height="12"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ktl-mZ-gHd">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ktl-mZ-gHd">
                                         <rect key="frame" x="29" y="1" width="42" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="42" id="MZL-Nx-wX7"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="hbx-ay-Dyp" firstAttribute="leading" secondItem="ms2-bD-mVV" secondAttribute="leading" constant="14" id="5VT-yK-SD5"/>
-                                    <constraint firstAttribute="centerY" secondItem="Ktl-mZ-gHd" secondAttribute="centerY" id="EcR-6T-gXI"/>
-                                    <constraint firstItem="Ktl-mZ-gHd" firstAttribute="leading" secondItem="hbx-ay-Dyp" secondAttribute="trailing" constant="6" id="dPV-BM-s3M"/>
-                                    <constraint firstAttribute="centerY" secondItem="hbx-ay-Dyp" secondAttribute="centerY" id="koL-Te-3Ou"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2025,10 +1996,9 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
+                        <outlet property="stepBackground" destination="LxP-DF-eGQ" id="vol-EJ-Io9"/>
                         <outlet property="stepIcon" destination="hbx-ay-Dyp" id="yh8-0o-3Ri"/>
-                        <outlet property="stepIconLeftConstrain" destination="5VT-yK-SD5" id="ski-f6-VOW"/>
                         <outlet property="stepLabel" destination="Ktl-mZ-gHd" id="AXC-7w-68b"/>
-                        <outlet property="stepLabelWidthConstrain" destination="MZL-Nx-wX7" id="72z-BR-Pwo"/>
                         <outlet property="stepView" destination="ms2-bD-mVV" id="QMO-n4-uDw"/>
                     </connections>
                 </viewController>

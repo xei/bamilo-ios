@@ -26,11 +26,10 @@ UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout>
 
 // Steps
+@property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
 @property (weak, nonatomic) IBOutlet UIView *stepView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepIconLeftConstrain;
 @property (weak, nonatomic) IBOutlet UIImageView *stepIcon;
 @property (weak, nonatomic) IBOutlet UILabel *stepLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepLabelWidthConstrain;
 
 // Addresses
 @property (strong, nonatomic) UIScrollView *contentScrollView;
@@ -75,7 +74,66 @@ UICollectionViewDelegateFlowLayout>
     
     self.useSameAddressAsBillingAndShipping = YES;
     
-    [self setupViews];
+    self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
+    
+    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
+    
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
+    [self.contentScrollView setShowsVerticalScrollIndicator:NO];
+    
+    UICollectionViewFlowLayout* firstAddressesCollectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [firstAddressesCollectionViewFlowLayout setMinimumLineSpacing:0.0f];
+    [firstAddressesCollectionViewFlowLayout setMinimumInteritemSpacing:0.0f];
+    [firstAddressesCollectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    [firstAddressesCollectionViewFlowLayout setItemSize:CGSizeZero];
+    [firstAddressesCollectionViewFlowLayout setHeaderReferenceSize:CGSizeZero];
+    
+    UINib *addressListHeaderNib = [UINib nibWithNibName:@"JACartListHeaderView" bundle:nil];
+    UINib *addressListCellNib = [UINib nibWithNibName:@"JAAddressCell" bundle:nil];
+    UINib *addAddressListCellNib = [UINib nibWithNibName:@"JAAddNewAddressCell" bundle:nil];
+    UINib *switchListCellNib = [UINib nibWithNibName:@"JASwitchCell" bundle:nil];
+    
+    self.firstAddressesCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:firstAddressesCollectionViewFlowLayout];
+    [self.firstAddressesCollectionView registerNib:addressListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
+    [self.firstAddressesCollectionView registerNib:addressListCellNib forCellWithReuseIdentifier:@"addressListCell"];
+    [self.firstAddressesCollectionView registerNib:addAddressListCellNib forCellWithReuseIdentifier:@"addAddressListCell"];
+    [self.firstAddressesCollectionView registerNib:switchListCellNib forCellWithReuseIdentifier:@"switchListCell"];
+    [self.firstAddressesCollectionView setScrollEnabled:NO];
+    self.firstAddressesCollectionView.layer.cornerRadius = 5.0f;
+    [self.firstAddressesCollectionView setDataSource:self];
+    [self.firstAddressesCollectionView setDelegate:self];
+    [self.contentScrollView addSubview:self.firstAddressesCollectionView];
+    
+    UICollectionViewFlowLayout* secondAddressesCollectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [secondAddressesCollectionViewFlowLayout setMinimumLineSpacing:0.0f];
+    [secondAddressesCollectionViewFlowLayout setMinimumInteritemSpacing:0.0f];
+    [secondAddressesCollectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    [secondAddressesCollectionViewFlowLayout setItemSize:CGSizeZero];
+    [secondAddressesCollectionViewFlowLayout setHeaderReferenceSize:CGSizeZero];
+    
+    self.secondAddressesCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:secondAddressesCollectionViewFlowLayout];
+    [self.secondAddressesCollectionView setScrollEnabled:NO];
+    self.secondAddressesCollectionView.layer.cornerRadius = 5.0f;
+    [self.secondAddressesCollectionView registerNib:addressListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
+    [self.secondAddressesCollectionView registerNib:addressListCellNib forCellWithReuseIdentifier:@"addressListCell"];
+    [self.secondAddressesCollectionView registerNib:addAddressListCellNib forCellWithReuseIdentifier:@"addAddressListCell"];
+    [self.secondAddressesCollectionView setDataSource:self];
+    [self.secondAddressesCollectionView setDelegate:self];
+    [self.contentScrollView addSubview:self.secondAddressesCollectionView];
+    [self.view addSubview:self.contentScrollView];
+    
+    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectMake(0.0f,
+                                                                         self.view.frame.size.height - self.bottomView.frame.size.height,
+                                                                         self.view.frame.size.width,
+                                                                         self.bottomView.frame.size.height)
+                                                  orientation:UIInterfaceOrientationPortrait];
+    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    [self.view addSubview:self.bottomView];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -131,90 +189,159 @@ UICollectionViewDelegateFlowLayout>
     }];
 }
 
-- (void) setupViews
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    CGFloat availableWidth = self.stepView.frame.size.width;
+    [self showLoading];
     
-    [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
+    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+    {
+        newWidth = self.view.frame.size.width;
+    }
+    
+    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    CGFloat newWidth = self.view.frame.size.width;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    }
+    
+    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    
+    [self.firstAddressesCollectionView reloadData];
+    [self.secondAddressesCollectionView reloadData];
+    
+    [self hideLoading];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+- (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    CGFloat stepViewLeftMargin = 73.0f;
+    NSString *stepBackgroundImageName = @"headerCheckoutStep2";
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+        {
+            stepViewLeftMargin =  389.0f;
+            stepBackgroundImageName = @"headerCheckoutStep2Landscape";
+        }
+        else
+        {
+            stepViewLeftMargin = 261.0f;
+            stepBackgroundImageName = @"headerCheckoutStep2Portrait";
+        }
+    }
+    UIImage *stepBackgroundImage = [UIImage imageNamed:stepBackgroundImageName];
+    
+    [self.stepBackground setImage:stepBackgroundImage];
+    [self.stepBackground setFrame:CGRectMake(self.stepBackground.frame.origin.x,
+                                             self.stepBackground.frame.origin.y,
+                                             stepBackgroundImage.size.width,
+                                             stepBackgroundImage.size.height)];
+    
+    [self.stepView setFrame:CGRectMake(stepViewLeftMargin,
+                                       self.stepView.frame.origin.y,
+                                       self.stepView.frame.size.width,
+                                       self.stepView.frame.size.height)];
     [self.stepLabel sizeToFit];
     
-    CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat marginBetweenIconAndLabel = 5.0f;
+    CGFloat realWidth = self.stepIcon.frame.size.width + marginBetweenIconAndLabel + self.stepLabel.frame.size.width - (2 * horizontalMargin);
     
-    if(availableWidth >= realWidth)
+    if(self.stepView.frame.size.width >= realWidth)
     {
-        CGFloat xStepIconValue = (availableWidth - realWidth) / 2;
-        self.stepIconLeftConstrain.constant = xStepIconValue;
-        self.stepLabelWidthConstrain.constant = self.stepLabel.frame.size.width;
+        CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
+        [self.stepIcon setFrame:CGRectMake(xStepIconValue,
+                                           self.stepIcon.frame.origin.y,
+                                           self.stepIcon.frame.size.width,
+                                           self.stepIcon.frame.size.height)];
+        
+        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
+                                            0.0f,
+                                            self.stepLabel.frame.size.width,
+                                            self.stepView.frame.size.height)];
     }
     else
     {
-        self.stepLabelWidthConstrain.constant = (availableWidth - self.stepIcon.frame.size.width - 6.0f);
-        self.stepIconLeftConstrain.constant = 0.0f;
+        [self.stepIcon setFrame:CGRectMake(horizontalMargin,
+                                           self.stepIcon.frame.origin.y,
+                                           self.stepIcon.frame.size.width,
+                                           self.stepIcon.frame.size.height)];
+        
+        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
+                                            0.0f,
+                                            (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
+                                            self.stepView.frame.size.height)];
+    }
+}
+
+- (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
+    
+    [self.contentScrollView setFrame:CGRectMake(0.0f,
+                                                self.stepBackground.frame.size.height,
+                                                width,
+                                                self.view.frame.size.height - self.stepBackground.frame.size.height)];
+    
+    [self.firstAddressesCollectionView setFrame:CGRectMake(6.0f,
+                                                           6.0f,
+                                                           self.contentScrollView.frame.size.width - 12.0f,
+                                                           self.firstAddressesCollectionView.frame.size.height)];
+    
+    [self.secondAddressesCollectionView setFrame:CGRectMake(6.0f,
+                                                            CGRectGetMaxY(self.firstAddressesCollectionView.frame) + 5.0f,
+                                                            self.contentScrollView.frame.size.width - 12.0f,
+                                                            self.secondAddressesCollectionView.frame.size.height)];
+    
+    if(VALID_NOTEMPTY(self.firstCollectionViewAddresses, NSArray))
+    {
+        if(self.useSameAddressAsBillingAndShipping)
+        {
+            [self.firstAddressesCollectionView setFrame:CGRectMake(self.firstAddressesCollectionView.frame.origin.x,
+                                                                   self.firstAddressesCollectionView.frame.origin.y,
+                                                                   self.firstAddressesCollectionView.frame.size.width,
+                                                                   26.0f + ([self.firstCollectionViewAddresses count] * 100.0f) + 51.0f)];
+        }
+        else
+        {
+            [self.firstAddressesCollectionView setFrame:CGRectMake(self.firstAddressesCollectionView.frame.origin.x,
+                                                                   self.firstAddressesCollectionView.frame.origin.y,
+                                                                   self.firstAddressesCollectionView.frame.size.width,
+                                                                   26.0f + ([self.firstCollectionViewAddresses count] * 100.0f) + 95.0f)];
+        }
     }
     
-    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 21.0f, self.view.frame.size.width, self.view.frame.size.height - 64.0f - 21.0f)];
-    [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
-    [self.contentScrollView setShowsVerticalScrollIndicator:NO];
+    if(VALID_NOTEMPTY(self.secondCollectionViewAddresses, NSArray))
+    {
+        [self.secondAddressesCollectionView setFrame:CGRectMake(self.secondAddressesCollectionView.frame.origin.x,
+                                                                CGRectGetMaxY(self.firstAddressesCollectionView.frame) + 5.0f,
+                                                                self.secondAddressesCollectionView.frame.size.width,
+                                                                26.0f + ([self.secondCollectionViewAddresses count] * 100.0f) + 44.0f)];
+    }
+    else
+    {
+        [self.secondAddressesCollectionView setFrame:CGRectMake(self.secondAddressesCollectionView.frame.origin.x,
+                                                                CGRectGetMaxY(self.firstAddressesCollectionView.frame) + 5.0f,
+                                                                self.secondAddressesCollectionView.frame.size.width,
+                                                                70.0f)];
+    }
     
-    UICollectionViewFlowLayout* firstAddressesCollectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [firstAddressesCollectionViewFlowLayout setMinimumLineSpacing:0.0f];
-    [firstAddressesCollectionViewFlowLayout setMinimumInteritemSpacing:0.0f];
-    [firstAddressesCollectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [firstAddressesCollectionViewFlowLayout setItemSize:CGSizeZero];
-    [firstAddressesCollectionViewFlowLayout setHeaderReferenceSize:CGSizeZero];
-    
-    UINib *addressListHeaderNib = [UINib nibWithNibName:@"JACartListHeaderView" bundle:nil];
-    UINib *addressListCellNib = [UINib nibWithNibName:@"JAAddressCell" bundle:nil];
-    UINib *addAddressListCellNib = [UINib nibWithNibName:@"JAAddNewAddressCell" bundle:nil];
-    UINib *switchListCellNib = [UINib nibWithNibName:@"JASwitchCell" bundle:nil];
-    
-    self.firstAddressesCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(6.0f,
-                                                                                           6.0f,
-                                                                                           self.contentScrollView.frame.size.width - 12.0f,
-                                                                                           26.0f) collectionViewLayout:firstAddressesCollectionViewFlowLayout];
-    [self.firstAddressesCollectionView setScrollEnabled:NO];
-    self.firstAddressesCollectionView.layer.cornerRadius = 5.0f;
-    [self.firstAddressesCollectionView registerNib:addressListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
-    [self.firstAddressesCollectionView registerNib:addressListCellNib forCellWithReuseIdentifier:@"addressListCell"];
-    [self.firstAddressesCollectionView registerNib:addAddressListCellNib forCellWithReuseIdentifier:@"addAddressListCell"];
-    [self.firstAddressesCollectionView registerNib:switchListCellNib forCellWithReuseIdentifier:@"switchListCell"];
-    [self.firstAddressesCollectionView setDataSource:self];
-    [self.firstAddressesCollectionView setDelegate:self];
-    [self.contentScrollView addSubview:self.firstAddressesCollectionView];
-    
-    UICollectionViewFlowLayout* secondAddressesCollectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [secondAddressesCollectionViewFlowLayout setMinimumLineSpacing:0.0f];
-    [secondAddressesCollectionViewFlowLayout setMinimumInteritemSpacing:0.0f];
-    [secondAddressesCollectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [secondAddressesCollectionViewFlowLayout setItemSize:CGSizeZero];
-    [secondAddressesCollectionViewFlowLayout setHeaderReferenceSize:CGSizeZero];
-    
-    self.secondAddressesCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(6.0f,
-                                                                                            CGRectGetMaxY(self.firstAddressesCollectionView.frame) + 5.0f,
-                                                                                            self.contentScrollView.frame.size.width - 12.0f,
-                                                                                            26.0f) collectionViewLayout:secondAddressesCollectionViewFlowLayout];
-    [self.secondAddressesCollectionView setScrollEnabled:NO];
-    self.secondAddressesCollectionView.layer.cornerRadius = 5.0f;
-    [self.secondAddressesCollectionView registerNib:addressListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
-    [self.secondAddressesCollectionView registerNib:addressListCellNib forCellWithReuseIdentifier:@"addressListCell"];
-    [self.secondAddressesCollectionView registerNib:addAddressListCellNib forCellWithReuseIdentifier:@"addAddressListCell"];
-    [self.secondAddressesCollectionView setDataSource:self];
-    [self.secondAddressesCollectionView setDelegate:self];
-    [self.contentScrollView addSubview:self.secondAddressesCollectionView];
-    
-    [self.view addSubview:self.contentScrollView];
-    
-    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero
-                                                  orientation:self.interfaceOrientation];
+    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
     
     [self.bottomView setFrame:CGRectMake(0.0f,
-                                        self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
-                                        self.view.frame.size.width,
+                                         self.view.frame.size.height - self.bottomView.frame.size.height,
+                                         width,
                                          self.bottomView.frame.size.height)];
-    
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
-    
-    [self.view addSubview:self.bottomView];
 }
 
 -(void)finishedLoadingAddresses
@@ -293,42 +420,16 @@ UICollectionViewDelegateFlowLayout>
         self.secondCollectionViewIndexSelected = [NSIndexPath indexPathForItem:billingAddressIndex inSection:0];
     }
     
-    if(VALID_NOTEMPTY(self.firstCollectionViewAddresses, NSArray))
+    CGFloat newWidth = self.view.frame.size.width;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
-        if(self.useSameAddressAsBillingAndShipping)
-        {
-            [self.firstAddressesCollectionView setFrame:CGRectMake(self.firstAddressesCollectionView.frame.origin.x,
-                                                                   self.firstAddressesCollectionView.frame.origin.y,
-                                                                   self.firstAddressesCollectionView.frame.size.width,
-                                                                   26.0f + ([self.firstCollectionViewAddresses count] * 100.0f) + 51.0f)];
-        }
-        else
-        {
-            [self.firstAddressesCollectionView setFrame:CGRectMake(self.firstAddressesCollectionView.frame.origin.x,
-                                                                   self.firstAddressesCollectionView.frame.origin.y,
-                                                                   self.firstAddressesCollectionView.frame.size.width,
-                                                                   26.0f + ([self.firstCollectionViewAddresses count] * 100.0f) + 95.0f)];
-        }
+        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
+    
+    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    
     [self.firstAddressesCollectionView reloadData];
-    
-    if(VALID_NOTEMPTY(self.secondCollectionViewAddresses, NSArray))
-    {
-        [self.secondAddressesCollectionView setFrame:CGRectMake(self.secondAddressesCollectionView.frame.origin.x,
-                                                                CGRectGetMaxY(self.firstAddressesCollectionView.frame) + 5.0f,
-                                                                self.secondAddressesCollectionView.frame.size.width,
-                                                                26.0f + ([self.secondCollectionViewAddresses count] * 100.0f) + 44.0f)];
-    }
-    else
-    {
-        [self.secondAddressesCollectionView setFrame:CGRectMake(self.secondAddressesCollectionView.frame.origin.x,
-                                                                CGRectGetMaxY(self.firstAddressesCollectionView.frame) + 5.0f,
-                                                                self.secondAddressesCollectionView.frame.size.width,
-                                                                70.0f)];
-    }
     [self.secondAddressesCollectionView reloadData];
-    
-    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
     
     if(self.firstLoading)
     {
@@ -603,22 +704,22 @@ UICollectionViewDelegateFlowLayout>
         {
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [headerView loadHeaderWithText:STRING_DEFAULT_SHIPPING_ADDRESSES width:self.view.frame.size.width];
+                [headerView loadHeaderWithText:STRING_DEFAULT_SHIPPING_ADDRESSES width:self.contentScrollView.frame.size.width];
             }
             else
             {
-                [headerView loadHeaderWithText:STRING_SHIPPING_ADDRESSES width:self.view.frame.size.width];
+                [headerView loadHeaderWithText:STRING_SHIPPING_ADDRESSES width:self.contentScrollView.frame.size.width];
             }
         }
         else if(collectionView == self.secondAddressesCollectionView)
         {
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [headerView loadHeaderWithText:STRING_OTHER_ADDRESSES width:self.view.frame.size.width];
+                [headerView loadHeaderWithText:STRING_OTHER_ADDRESSES width:self.contentScrollView.frame.size.width];
             }
             else
             {
-                [headerView loadHeaderWithText:STRING_BILLING_ADDRESSES width:self.view.frame.size.width];
+                [headerView loadHeaderWithText:STRING_BILLING_ADDRESSES width:self.contentScrollView.frame.size.width];
             }
         }
         

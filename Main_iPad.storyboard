@@ -1850,32 +1850,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="LUW-LA-j9s">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Portrait" translatesAutoresizingMaskIntoConstraints="NO" id="LUW-LA-j9s">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="21"/>
                             </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cyf-J2-hE0">
-                                <rect key="frame" x="80" y="3" width="104" height="15"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cyf-J2-hE0">
+                                <rect key="frame" x="256" y="3" width="160" height="15"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Qjw-yB-IQf">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Qjw-yB-IQf">
                                         <rect key="frame" x="14" y="1" width="9" height="12"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ycW-mX-p6Y">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ycW-mX-p6Y">
                                         <rect key="frame" x="29" y="1" width="42" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="42" id="rN6-ej-F4S"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="ycW-mX-p6Y" firstAttribute="leading" secondItem="Qjw-yB-IQf" secondAttribute="trailing" constant="6" id="cLg-uK-WN7"/>
-                                    <constraint firstAttribute="centerY" secondItem="Qjw-yB-IQf" secondAttribute="centerY" id="fcf-Kp-ZEF"/>
-                                    <constraint firstItem="Qjw-yB-IQf" firstAttribute="leading" secondItem="Cyf-J2-hE0" secondAttribute="leading" constant="14" id="qb0-Ko-aWS"/>
-                                    <constraint firstAttribute="centerY" secondItem="ycW-mX-p6Y" secondAttribute="centerY" id="tLC-WI-z3z"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1885,10 +1876,9 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="768" height="600"/>
                     <connections>
+                        <outlet property="stepBackground" destination="LUW-LA-j9s" id="4Lo-GF-3O2"/>
                         <outlet property="stepIcon" destination="Qjw-yB-IQf" id="xZi-Nt-Wfm"/>
-                        <outlet property="stepIconLeftConstrain" destination="qb0-Ko-aWS" id="mTc-ls-tfD"/>
                         <outlet property="stepLabel" destination="ycW-mX-p6Y" id="kXb-iV-sK3"/>
-                        <outlet property="stepLabelWidthConstrain" destination="rN6-ej-F4S" id="CYA-eE-cNX"/>
                         <outlet property="stepView" destination="Cyf-J2-hE0" id="U5E-yd-TtQ"/>
                     </connections>
                 </viewController>
@@ -1908,32 +1898,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="mN3-X9-zJp">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Portrait" translatesAutoresizingMaskIntoConstraints="NO" id="mN3-X9-zJp">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="21"/>
                             </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AhN-Xi-w9e">
-                                <rect key="frame" x="80" y="3" width="104" height="15"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AhN-Xi-w9e">
+                                <rect key="frame" x="256" y="3" width="160" height="15"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="9xb-AA-9V8">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="9xb-AA-9V8">
                                         <rect key="frame" x="14" y="1" width="9" height="12"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="har-1L-o6r">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="har-1L-o6r">
                                         <rect key="frame" x="29" y="1" width="42" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="42" id="FMk-2L-U8N"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="har-1L-o6r" firstAttribute="leading" secondItem="9xb-AA-9V8" secondAttribute="trailing" constant="6" id="OAt-5r-y5c"/>
-                                    <constraint firstAttribute="centerY" secondItem="9xb-AA-9V8" secondAttribute="centerY" id="bbT-8c-9hq"/>
-                                    <constraint firstAttribute="centerY" secondItem="har-1L-o6r" secondAttribute="centerY" id="fdD-qS-Zv5"/>
-                                    <constraint firstItem="9xb-AA-9V8" firstAttribute="leading" secondItem="AhN-Xi-w9e" secondAttribute="leading" constant="14" id="yrw-ep-rpU"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1943,10 +1924,9 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="768" height="600"/>
                     <connections>
+                        <outlet property="stepBackground" destination="mN3-X9-zJp" id="gGF-SK-42V"/>
                         <outlet property="stepIcon" destination="9xb-AA-9V8" id="9kk-lJ-FfJ"/>
-                        <outlet property="stepIconLeftConstrain" destination="yrw-ep-rpU" id="A5M-ZL-s0R"/>
                         <outlet property="stepLabel" destination="har-1L-o6r" id="KiF-Py-NDj"/>
-                        <outlet property="stepLabelWidthConstrain" destination="FMk-2L-U8N" id="gx1-RP-PIo"/>
                         <outlet property="stepView" destination="AhN-Xi-w9e" id="S12-Ac-44v"/>
                     </connections>
                 </viewController>
@@ -1966,32 +1946,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="p6T-Io-7vs">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Portrait" translatesAutoresizingMaskIntoConstraints="NO" id="p6T-Io-7vs">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="21"/>
                             </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GoD-2H-ZrQ">
-                                <rect key="frame" x="80" y="3" width="104" height="15"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GoD-2H-ZrQ">
+                                <rect key="frame" x="256" y="3" width="160" height="15"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="79C-WZ-eIj">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="79C-WZ-eIj">
                                         <rect key="frame" x="14" y="1" width="9" height="12"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JOS-1D-nNz">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JOS-1D-nNz">
                                         <rect key="frame" x="29" y="1" width="42" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="42" id="WK2-TP-X5N"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="JOS-1D-nNz" firstAttribute="leading" secondItem="79C-WZ-eIj" secondAttribute="trailing" constant="6" id="DxQ-EA-33B"/>
-                                    <constraint firstAttribute="centerY" secondItem="79C-WZ-eIj" secondAttribute="centerY" id="U3X-KE-nBi"/>
-                                    <constraint firstAttribute="centerY" secondItem="JOS-1D-nNz" secondAttribute="centerY" id="W8C-D4-MfT"/>
-                                    <constraint firstItem="79C-WZ-eIj" firstAttribute="leading" secondItem="GoD-2H-ZrQ" secondAttribute="leading" constant="14" id="kmp-9o-kfS"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2001,10 +1972,9 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="768" height="600"/>
                     <connections>
+                        <outlet property="stepBackground" destination="p6T-Io-7vs" id="fFZ-Vp-pPK"/>
                         <outlet property="stepIcon" destination="79C-WZ-eIj" id="7jO-Tg-XsT"/>
-                        <outlet property="stepIconLeftConstrain" destination="kmp-9o-kfS" id="JIG-pS-wzP"/>
                         <outlet property="stepLabel" destination="JOS-1D-nNz" id="FMr-El-EOc"/>
-                        <outlet property="stepLabelWidthConstrain" destination="WK2-TP-X5N" id="FS2-nJ-Hph"/>
                         <outlet property="stepView" destination="GoD-2H-ZrQ" id="diw-8f-6jy"/>
                     </connections>
                 </viewController>
@@ -2025,8 +1995,8 @@
         <image name="greyHalf_normal" width="152" height="44"/>
         <image name="headerCheckoutStep1" width="320" height="21"/>
         <image name="headerCheckoutStep1Icon" width="9" height="12"/>
-        <image name="headerCheckoutStep2" width="320" height="21"/>
         <image name="headerCheckoutStep2Icon" width="8" height="13"/>
+        <image name="headerCheckoutStep2Portrait" width="14" height="14"/>
         <image name="img_emptyCart" width="98" height="98"/>
         <image name="img_noreviews" width="27" height="27"/>
         <image name="orangeBig_disabled" width="308" height="44"/>
