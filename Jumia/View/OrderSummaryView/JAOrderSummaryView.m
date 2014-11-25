@@ -23,115 +23,27 @@
 {
     if (VALID_NOTEMPTY(cart, RICart) && VALID_NOTEMPTY(cart.cartItems, NSArray)) {
         
-        CGFloat currentY = [self generalLoad];
+        CGFloat currentY = [self headerLoad];
         
         for (RICartItem* cartItem in cart.cartItems) {
             if (VALID_NOTEMPTY(cartItem, RICartItem)) {
                 
-                UILabel* nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                               currentY,
-                                                                               self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                               1.0f)];
-                nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
-                nameLabel.textColor = UIColorFromRGB(0x4e4e4e);
-                nameLabel.text = cartItem.name;
-                nameLabel.numberOfLines = -1;
-                [nameLabel sizeToFit];
-                [self.scrollView addSubview:nameLabel];
-
-                currentY += nameLabel.frame.size.height;
-                
-                UILabel* quantityLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                                   currentY,
-                                                                                   self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                                   1.0f)];
-                quantityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
-                quantityLabel.textColor = UIColorFromRGB(0x4e4e4e);
-                quantityLabel.numberOfLines = -1;
                 NSString* priceString = cartItem.priceFormatted;
                 if (VALID_NOTEMPTY(cartItem.specialPriceFormatted, NSString)) {
                     priceString = cartItem.specialPriceFormatted;
                 }
-                quantityLabel.text = [NSString stringWithFormat:@"%d x %@", [cartItem.quantity integerValue], priceString];
-                [quantityLabel sizeToFit];
-                [self.scrollView addSubview:quantityLabel];
                 
-                currentY += quantityLabel.frame.size.height;
+                currentY = [self loadProductLabelInPositionY:currentY
+                                                        name:cartItem.name
+                                                    quantity:[cartItem.quantity integerValue]
+                                                       price:priceString];
             }
         }
         
-        currentY += 15.0f;
-        
-        UILabel* VATLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                      currentY,
-                                                                      self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                      1.0f)];
-        VATLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
-        VATLabel.textColor = UIColorFromRGB(0x4e4e4e);
-        VATLabel.text = STRING_VAT;
-        [VATLabel sizeToFit];
-        [self.scrollView addSubview:VATLabel];
-        
-        UILabel* VATValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                           currentY,
-                                                                           self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                           VATLabel.frame.size.height)];
-        VATValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
-        VATValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
-        VATValueLabel.text = cart.vatValueFormatted;
-        VATValueLabel.textAlignment = NSTextAlignmentRight;
-        [self.scrollView addSubview:VATValueLabel];
-        
-        currentY += VATLabel.frame.size.height + 7.0f;
-        
-        
-        
-        UILabel* subtotalLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                           currentY,
-                                                                           self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                           1.0f)];
-        subtotalLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
-        subtotalLabel.textColor = UIColorFromRGB(0x4e4e4e);
-        subtotalLabel.text = STRING_SUBTOTAL;
-        [subtotalLabel sizeToFit];
-        [self.scrollView addSubview:subtotalLabel];
-        
-        UILabel* subtotalValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                                currentY,
-                                                                                self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                                subtotalLabel.frame.size.height)];
-        subtotalValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
-        subtotalValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
-        subtotalValueLabel.text = cart.cartValueFormatted;
-        subtotalValueLabel.textAlignment = NSTextAlignmentRight;
-        [self.scrollView addSubview:subtotalValueLabel];
-        
-        currentY += subtotalLabel.frame.size.height + 7.0f;
-        
-        
-        
-        UILabel* extraLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                        currentY,
-                                                                        self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                        1.0f)];
-        extraLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
-        extraLabel.textColor = UIColorFromRGB(0x4e4e4e);
-        extraLabel.text = STRING_EXTRA_COSTS;
-        [extraLabel sizeToFit];
-        [self.scrollView addSubview:extraLabel];
-        
-        UILabel* extraValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                             currentY,
-                                                                             self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                             extraLabel.frame.size.height)];
-        extraValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
-        extraValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
-        extraValueLabel.text = cart.extraCostsFormatted;
-        extraValueLabel.textAlignment = NSTextAlignmentRight;
-        [self.scrollView addSubview:extraValueLabel];
-        
-        currentY += extraLabel.frame.size.height + 10.0f;
-        
+        currentY = [self loadTotalSectionInPositionY:currentY
+                                                 vat:cart.vatValueFormatted
+                                            subtotal:cart.cartValueFormatted
+                                               extra:cart.extraCostsFormatted];
         
         self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
                                                  currentY);
@@ -145,7 +57,7 @@
     }
 }
 
-- (CGFloat)generalLoad
+- (CGFloat)headerLoad
 {
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = 5.0f;
@@ -185,6 +97,120 @@
     [self.scrollView addSubview:productsTitleLabel];
     
     currentY += productsTitleLabel.frame.size.height + 10.0f;
+    
+    return currentY;
+}
+
+- (CGFloat)loadProductLabelInPositionY:(CGFloat)currentY
+                                  name:(NSString*)name
+                           quantity:(NSInteger)quantity
+                              price:(NSString*)price
+{
+    UILabel* nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                   currentY,
+                                                                   self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                   1.0f)];
+    nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    nameLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    nameLabel.text = name;
+    nameLabel.numberOfLines = -1;
+    [nameLabel sizeToFit];
+    [self.scrollView addSubview:nameLabel];
+    
+    currentY += nameLabel.frame.size.height;
+    
+    UILabel* quantityLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                       currentY,
+                                                                       self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                       1.0f)];
+    quantityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    quantityLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    quantityLabel.numberOfLines = -1;
+    quantityLabel.text = [NSString stringWithFormat:@"%d x %@", quantity, price];
+    [quantityLabel sizeToFit];
+    [self.scrollView addSubview:quantityLabel];
+    
+    currentY += quantityLabel.frame.size.height;
+
+    return currentY;
+}
+
+- (CGFloat)loadTotalSectionInPositionY:(CGFloat)currentY
+                                   vat:(NSString*)vat
+                              subtotal:(NSString*)subtotal
+                                 extra:(NSString*)extra
+{
+    currentY += 15.0f;
+    
+    UILabel* VATLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                  currentY,
+                                                                  self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                  1.0f)];
+    VATLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    VATLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    VATLabel.text = STRING_VAT;
+    [VATLabel sizeToFit];
+    [self.scrollView addSubview:VATLabel];
+    
+    UILabel* VATValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                       currentY,
+                                                                       self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                       VATLabel.frame.size.height)];
+    VATValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    VATValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    VATValueLabel.text = vat;
+    VATValueLabel.textAlignment = NSTextAlignmentRight;
+    [self.scrollView addSubview:VATValueLabel];
+    
+    currentY += VATLabel.frame.size.height + 7.0f;
+    
+    
+    
+    UILabel* subtotalLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                       currentY,
+                                                                       self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                       1.0f)];
+    subtotalLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    subtotalLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    subtotalLabel.text = STRING_SUBTOTAL;
+    [subtotalLabel sizeToFit];
+    [self.scrollView addSubview:subtotalLabel];
+    
+    UILabel* subtotalValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                            currentY,
+                                                                            self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                            subtotalLabel.frame.size.height)];
+    subtotalValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    subtotalValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    subtotalValueLabel.text = subtotal;
+    subtotalValueLabel.textAlignment = NSTextAlignmentRight;
+    [self.scrollView addSubview:subtotalValueLabel];
+    
+    currentY += subtotalLabel.frame.size.height + 7.0f;
+    
+    
+    
+    UILabel* extraLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                    currentY,
+                                                                    self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                    1.0f)];
+    extraLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    extraLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    extraLabel.text = STRING_EXTRA_COSTS;
+    [extraLabel sizeToFit];
+    [self.scrollView addSubview:extraLabel];
+    
+    UILabel* extraValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                         currentY,
+                                                                         self.scrollView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                         extraLabel.frame.size.height)];
+    extraValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    extraValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    extraValueLabel.text = extra;
+    extraValueLabel.textAlignment = NSTextAlignmentRight;
+    [self.scrollView addSubview:extraValueLabel];
+    
+    currentY += extraLabel.frame.size.height + 10.0f;
     
     return currentY;
 }
