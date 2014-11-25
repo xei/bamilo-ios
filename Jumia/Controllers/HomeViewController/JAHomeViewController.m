@@ -28,6 +28,8 @@
 @property (nonatomic, assign)CGRect teaserPageScrollLandscapeRect;
 @property (nonatomic, assign)NSInteger lastIndex;
 
+@property (nonatomic, strong)JAHomeWizardView *wizardView;
+
 @end
 
 @implementation JAHomeViewController
@@ -64,7 +66,7 @@
     self.teaserCategoryScrollView.delegate = self;
     self.teaserCategoryScrollView.startingIndex = 0;
     
-
+    
     self.teaserPagesScrollView = [[UIScrollView alloc] init];
     self.teaserPagesScrollView.pagingEnabled = YES;
     self.teaserPagesScrollView.scrollEnabled = NO;
@@ -116,8 +118,8 @@
     BOOL alreadyShowedWizardHome = [[NSUserDefaults standardUserDefaults] boolForKey:kJAHomeWizardUserDefaultsKey];
     if(alreadyShowedWizardHome == NO)
     {
-        JAHomeWizardView* wizardView = [[JAHomeWizardView alloc] initWithFrame:self.view.bounds];
-        [self.view addSubview:wizardView];
+        self.wizardView = [[JAHomeWizardView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAHomeWizardUserDefaultsKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
@@ -140,7 +142,7 @@
 {
     //we do this to make sure no notification is added more than once
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(pushCatalogWithUrl:)
                                                  name:kTeaserNotificationPushCatalogWithUrl
@@ -168,9 +170,18 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self showLoading];
-
+    
+    if(VALID_NOTEMPTY(self.wizardView, JAHomeWizardView))
+    {
+        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
+                                     self.wizardView.frame.origin.y,
+                                     self.view.frame.size.height + self.view.frame.origin.y,
+                                     self.view.frame.size.width - self.view.frame.origin.y);
+        [self.wizardView reloadForFrame:newFrame];
+    }
+    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
+    
     if (UIInterfaceOrientationLandscapeLeft == toInterfaceOrientation || UIInterfaceOrientationLandscapeRight == toInterfaceOrientation) {
         self.teaserPagesScrollView.frame = self.teaserPageScrollLandscapeRect;
     } else {
@@ -201,6 +212,12 @@
     self.teaserCategoryScrollView.startingIndex = self.lastIndex;
     [self.teaserCategoryScrollView setNeedsLayout];
     [self.view addSubview:self.teaserPagesScrollView];
+    
+    if(VALID_NOTEMPTY(self.wizardView, JAHomeWizardView))
+    {
+        [self.wizardView reloadForFrame:self.view.bounds];
+        [self.view bringSubviewToFront:self.wizardView];
+    }
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
@@ -246,7 +263,7 @@
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
             self.firstLoading = NO;
         }
-
+        
         // notify the InAppNotification SDK that this the active view controller
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         
@@ -295,7 +312,7 @@
     //check if teaser page at said index is loaded
     
     JATeaserPageView* teaserPageView = [self.teaserPageViews objectAtIndex:index];
-        
+    
     [self.teaserPagesScrollView scrollRectToVisible:teaserPageView.frame animated:YES];
 }
 

@@ -12,4 +12,6 @@
 
 @interface JAPDVWizardView : JAWizardView
 
+- (void)reloadForFrame:(CGRect)frame;
+
 @end

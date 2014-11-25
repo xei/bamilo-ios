@@ -12,4 +12,6 @@
 
 @interface JACatalogWizardView : JAWizardView
 
+- (void)reloadForFrame:(CGRect)frame;
+
 @end

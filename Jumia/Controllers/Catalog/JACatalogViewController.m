@@ -1222,6 +1222,15 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    if(VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
+    {
+        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
+                                     self.wizardView.frame.origin.y,
+                                     self.view.frame.size.height + self.view.frame.origin.y,
+                                     self.view.frame.size.width - self.view.frame.origin.y);
+        [self.wizardView reloadForFrame:newFrame];
+    }
+    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
     self.lastIndex = self.sortingScrollView.selectedIndex;
@@ -1238,4 +1247,15 @@
                                             self.view.frame.size.width - self.view.frame.origin.y - CGRectGetMaxY(self.sortingScrollView.frame))];
     [self.undefinedView willRotate];
 }
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    if(VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
+    {
+        [self.wizardView reloadForFrame:self.view.bounds];
+    }
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
 @end

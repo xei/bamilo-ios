@@ -63,6 +63,28 @@
     [self removeFromSuperview];
 }
 
+- (void)reloadForFrame:(CGRect)frame
+{
+    [self setFrame:frame];
+    
+    UIImage* buttonImageNormal = [UIImage imageNamed:@"orangeHalf_normal"];
+    [self.dismissButton setFrame:CGRectMake((self.frame.size.width - buttonImageNormal.size.width) / 2,
+                                            self.frame.size.height - 10.0f - buttonImageNormal.size.height,
+                                            buttonImageNormal.size.width,
+                                            buttonImageNormal.size.height)];
+    
+    [self.pageControl setFrame:CGRectMake(self.bounds.origin.x,
+                                         self.dismissButton.frame.origin.y - 10.0f - 10.0f,
+                                         self.bounds.size.width,
+                                          10.0f)];
+    
+    [self.scrollView setFrame:CGRectMake(self.bounds.origin.x,
+                                         self.bounds.origin.y,
+                                         self.bounds.size.width,
+                                         self.pageControl.frame.origin.y)];
+
+}
+
 #pragma mark UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
