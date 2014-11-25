@@ -9,7 +9,10 @@ end
 Then /^I enter the right email and password$/ do
     touch("view marked:'"+@email+"'")
     wait_for_keyboard
-    keyboard_enter_text @valid_email
+    #keyboard_enter_text @valid_email
+    keyboard_enter_text "testcalabash"
+    keyboard_enter_char "@"
+    keyboard_enter_text "mailinator.com"
     done
     touch("view marked:'"+@password+"'")
     keyboard_enter_text @valid_password
@@ -17,7 +20,10 @@ end
 
 Then /^I enter the right email and wrong password$/ do
     touch("view marked:'"+@email+"'")
-    keyboard_enter_text @valid_email
+    #keyboard_enter_text @valid_email
+    keyboard_enter_text "testcalabash"
+    keyboard_enter_char "@"
+    keyboard_enter_text "mailinator.com"
     done
     touch("view marked:'"+@password+"'")
     keyboard_enter_text @invalid_password
