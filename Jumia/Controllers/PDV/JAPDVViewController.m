@@ -154,12 +154,26 @@ JAActivityViewControllerDelegate
     [self.landscapeScrollView setHidden:YES];
     [self.ctaView setHidden:YES];
     
+    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
+    {
+        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
+                                     self.wizardView.frame.origin.y,
+                                     self.view.frame.size.height + self.view.frame.origin.y,
+                                     self.view.frame.size.width - self.view.frame.origin.y);
+        [self.wizardView reloadForFrame:newFrame];
+    }
+    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self productLoaded];
+    
+    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
+    {
+        [self.wizardView reloadForFrame:self.view.bounds];
+    }
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }

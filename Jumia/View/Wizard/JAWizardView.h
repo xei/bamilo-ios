@@ -34,4 +34,6 @@
 @property (nonatomic, strong)UIScrollView* scrollView;
 @property (nonatomic, retain)UIPageControl* pageControl;
 
+- (void)reloadForFrame:(CGRect)frame;
+
 @end
