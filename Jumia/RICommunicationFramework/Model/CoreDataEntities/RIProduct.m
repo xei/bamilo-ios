@@ -215,6 +215,10 @@
                                                                           failureBlock(RIApiResponseAPIError, nil);
                                                                       }
                                                                   }
+                                                                  else
+                                                                  {
+                                                                      failureBlock(RIApiResponseAPIError, nil);
+                                                                  }
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                                                   failureBlock(apiResponse, nil);
                                                               }];
