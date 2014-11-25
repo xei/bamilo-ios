@@ -1,0 +1,18 @@
+{
+  "images" : [
+    {
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "filename" : "header_checkout_step4_portrait~ipad.png"
+    },
+    {
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "filename" : "header_checkout_step4_portrait@2x~ipad.png"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}
