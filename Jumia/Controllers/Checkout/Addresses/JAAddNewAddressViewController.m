@@ -22,11 +22,10 @@ UIPickerViewDataSource,
 UIPickerViewDelegate>
 
 // Steps
+@property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
 @property (weak, nonatomic) IBOutlet UIView *stepView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepIconLeftConstrain;
 @property (weak, nonatomic) IBOutlet UIImageView *stepIcon;
 @property (weak, nonatomic) IBOutlet UILabel *stepLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepLabelWidthConstrain;
 
 // Add Address
 @property (strong, nonatomic) UIScrollView *contentScrollView;
@@ -69,6 +68,8 @@ UIPickerViewDelegate>
 @property (strong, nonatomic) NSString *nextStep;
 @property (strong, nonatomic) RICheckout *checkout;
 
+@property (strong, nonatomic) JACheckBoxComponent *checkBoxComponent;
+
 @end
 
 @implementation JAAddNewAddressViewController
@@ -98,7 +99,17 @@ UIPickerViewDelegate>
         self.navBarLayout.showLogo = NO;
     }
     
-    [self setupViews];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    [self initViews];
     
     [RIForm getForm:@"addresscreate"
        successBlock:^(RIForm *form)
@@ -108,15 +119,13 @@ UIPickerViewDelegate>
          for(UIView *view in self.shippingDynamicForm.formViews)
          {
              [self.shippingContentView addSubview:view];
-             self.shippingAddressViewCurrentY = CGRectGetMaxY(view.frame);
          }
          
-         self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY widthSize:308.0f];
+         self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width];
          
          for(UIView *view in self.billingDynamicForm.formViews)
          {
              [self.billingContentView addSubview:view];
-             self.billingAddressViewCurrentY = CGRectGetMaxY(view.frame);
          }
          
          [self finishedFormLoading];
@@ -144,112 +153,226 @@ UIPickerViewDelegate>
                                               data:[trackingDictionary copy]];
 }
 
--(void)setupViews
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    CGFloat availableWidth = self.stepView.frame.size.width;
+    [self showLoading];
     
+    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+    {
+        newWidth = self.view.frame.size.width;
+    }
+    
+    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    CGFloat newWidth = self.view.frame.size.width;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    }
+    
+    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    
+    [self.shippingDynamicForm resignResponder];
+    [self.billingDynamicForm resignResponder];
+    
+    [self hideLoading];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+-(void)initViews
+{
+    self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
     [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
-    [self.stepLabel sizeToFit];
     
-    CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;
+    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     
-    if(availableWidth >= realWidth)
-    {
-        CGFloat xStepIconValue = (availableWidth - realWidth) / 2;
-        self.stepIconLeftConstrain.constant = xStepIconValue;
-        self.stepLabelWidthConstrain.constant = self.stepLabel.frame.size.width;
-    }
-    else
-    {
-        self.stepLabelWidthConstrain.constant = (availableWidth - self.stepIcon.frame.size.width - 6.0f);
-        self.stepIconLeftConstrain.constant = 0.0f;
-    }
-    
-    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 21.0f, self.view.frame.size.width, self.view.frame.size.height - 64.0f - 21.0f)];
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                            self.stepBackground.frame.size.height,
+                                                                            self.view.frame.size.width,
+                                                                            self.view.frame.size.height - 64.0f - self.stepBackground.frame.size.height)];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
     
-    self.originalFrame = self.contentScrollView.frame;
-    
-    [self setupShippingAddressView];
-    [self setupBillingAddressView];
+    [self initShippingAddressView];
+    [self initBillingAddressView];
     
     [self.view addSubview:self.contentScrollView];
     
-    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:self.interfaceOrientation];
+    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:UIInterfaceOrientationPortrait];
     [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.view.frame.size.width, self.bottomView.frame.size.height)];
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(createAddressButtonPressed)];
-    
     [self.view addSubview:self.bottomView];
 }
 
--(void)setupShippingAddressView
+-(void)initShippingAddressView
 {
-    self.shippingAddressViewCurrentY = 0.0f;
-    
     self.shippingContentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
     [self.shippingContentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.shippingContentView.layer.cornerRadius = 5.0f;
     
-    self.shippingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, self.shippingAddressViewCurrentY, self.shippingContentView.frame.size.width - 12.0f, 25.0f)];
+    self.shippingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.shippingContentView.frame.size.width - 12.0f, 25.0f)];
     [self.shippingHeaderLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.shippingHeaderLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.shippingHeaderLabel setText:STRING_ADD_NEW_ADDRESS];
     [self.shippingHeaderLabel setBackgroundColor:[UIColor clearColor]];
     [self.shippingContentView addSubview:self.shippingHeaderLabel];
-    self.shippingAddressViewCurrentY = CGRectGetMaxY(self.shippingHeaderLabel.frame);
     
-    self.shippingHeaderSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.shippingAddressViewCurrentY, self.shippingContentView.frame.size.width, 1.0f)];
+    self.shippingHeaderSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.shippingHeaderLabel.frame), self.shippingContentView.frame.size.width, 1.0f)];
     [self.shippingHeaderSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.shippingContentView addSubview:self.shippingHeaderSeparator];
-    self.shippingAddressViewCurrentY = CGRectGetMaxY(self.shippingHeaderSeparator.frame) + 6.0f;
     
     [self.contentScrollView addSubview:self.shippingContentView];
+    self.shippingAddressViewCurrentY = CGRectGetMaxY(self.shippingHeaderSeparator.frame) + 6.0f;
 }
 
--(void)setupBillingAddressView
+-(void)initBillingAddressView
 {
-    self.billingAddressViewCurrentY = 0.0f;
-    
     self.billingContentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
     [self.billingContentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.billingContentView.layer.cornerRadius = 5.0f;
     [self.billingContentView setHidden:YES];
     
-    self.billingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, self.billingAddressViewCurrentY, self.billingContentView.frame.size.width - 12.0f, 25.0f)];
+    self.billingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.billingContentView.frame.size.width - 12.0f, 25.0f)];
     [self.billingHeaderLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.billingHeaderLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.billingHeaderLabel setText:STRING_BILLING_ADDRESSES];
     [self.billingHeaderLabel setBackgroundColor:[UIColor clearColor]];
     [self.billingContentView addSubview:self.billingHeaderLabel];
-    self.billingAddressViewCurrentY = CGRectGetMaxY(self.billingHeaderLabel.frame);
     
-    self.billingHeaderSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.billingAddressViewCurrentY, self.billingContentView.frame.size.width, 1.0f)];
+    self.billingHeaderSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.billingHeaderLabel.frame), self.billingContentView.frame.size.width, 1.0f)];
     [self.billingHeaderSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.billingContentView addSubview:self.billingHeaderSeparator];
-    self.billingAddressViewCurrentY = CGRectGetMaxY(self.billingHeaderSeparator.frame) + 6.0f;
     
     [self.contentScrollView addSubview:self.billingContentView];
+    self.billingAddressViewCurrentY = CGRectGetMaxY(self.billingHeaderSeparator.frame) + 6.0f;
 }
 
 -(void)finishedFormLoading
 {
+    CGFloat newWidth = self.view.frame.size.width;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    }
+    
     if(self.isBillingAddress && self.isShippingAddress)
     {
-        JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
-        [check setup];
-        [check.labelText setText:STRING_BILLING_SAME_ADDRESSES];
-        [check.switchComponent setOn:YES];
-        [check.switchComponent addTarget:self action:@selector(changedAddressState:) forControlEvents:UIControlEventValueChanged];
-        [check.switchComponent setAccessibilityLabel:STRING_BILLING_SAME_ADDRESSES];
-        
-        CGRect frame = check.frame;
-        frame.origin.y = self.shippingAddressViewCurrentY;
-        check.frame = frame;
-        
-        self.shippingAddressViewCurrentY = CGRectGetMaxY(check.frame);
-        [self.shippingContentView addSubview:check];
+        self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
+        [self.checkBoxComponent setup];
+        [self.checkBoxComponent.labelText setText:STRING_BILLING_SAME_ADDRESSES];
+        [self.checkBoxComponent.switchComponent setOn:YES];
+        [self.checkBoxComponent.switchComponent addTarget:self action:@selector(changedAddressState:) forControlEvents:UIControlEventValueChanged];
+        [self.checkBoxComponent.switchComponent setAccessibilityLabel:STRING_BILLING_SAME_ADDRESSES];
+        [self.shippingContentView addSubview:self.checkBoxComponent];
     }
+    
+    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        self.firstLoading = NO;
+    }
+}
+
+- (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    CGFloat stepViewLeftMargin = 73.0f;
+    NSString *stepBackgroundImageName = @"headerCheckoutStep2";
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+        {
+            stepViewLeftMargin =  389.0f;
+            stepBackgroundImageName = @"headerCheckoutStep2Landscape";
+        }
+        else
+        {
+            stepViewLeftMargin = 261.0f;
+            stepBackgroundImageName = @"headerCheckoutStep2Portrait";
+        }
+    }
+    UIImage *stepBackgroundImage = [UIImage imageNamed:stepBackgroundImageName];
+    
+    [self.stepBackground setImage:stepBackgroundImage];
+    [self.stepBackground setFrame:CGRectMake(self.stepBackground.frame.origin.x,
+                                             self.stepBackground.frame.origin.y,
+                                             stepBackgroundImage.size.width,
+                                             stepBackgroundImage.size.height)];
+    
+    [self.stepView setFrame:CGRectMake(stepViewLeftMargin,
+                                       self.stepView.frame.origin.y,
+                                       self.stepView.frame.size.width,
+                                       self.stepView.frame.size.height)];
+    [self.stepLabel sizeToFit];
+    
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat marginBetweenIconAndLabel = 5.0f;
+    CGFloat realWidth = self.stepIcon.frame.size.width + marginBetweenIconAndLabel + self.stepLabel.frame.size.width - (2 * horizontalMargin);
+    
+    if(self.stepView.frame.size.width >= realWidth)
+    {
+        CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
+        [self.stepIcon setFrame:CGRectMake(xStepIconValue,
+                                           self.stepIcon.frame.origin.y,
+                                           self.stepIcon.frame.size.width,
+                                           self.stepIcon.frame.size.height)];
+        
+        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
+                                            0.0f,
+                                            self.stepLabel.frame.size.width,
+                                            self.stepView.frame.size.height)];
+    }
+    else
+    {
+        [self.stepIcon setFrame:CGRectMake(horizontalMargin,
+                                           self.stepIcon.frame.origin.y,
+                                           self.stepIcon.frame.size.width,
+                                           self.stepIcon.frame.size.height)];
+        
+        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
+                                            0.0f,
+                                            (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
+                                            self.stepView.frame.size.height)];
+    }
+}
+
+- (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
+    
+    self.shippingAddressViewCurrentY = CGRectGetMaxY(self.shippingHeaderSeparator.frame) + 6.0f;
+    
+    [self.contentScrollView setFrame:CGRectMake(0.0f,
+                                                self.stepBackground.frame.size.height,
+                                                width,
+                                                self.view.frame.size.height - self.stepBackground.frame.size.height)];
+    
+    for(UIView *view in self.shippingDynamicForm.formViews)
+    {
+        [view setFrame:CGRectMake(view.frame.origin.x,
+                                  self.shippingAddressViewCurrentY,
+                                  self.contentScrollView.frame.size.width - 12.0f,
+                                  view.frame.size.height)];
+        self.shippingAddressViewCurrentY += view.frame.size.height;
+    }
+    
+    [self.checkBoxComponent setFrame:CGRectMake(self.checkBoxComponent.frame.origin.x,
+                                                self.shippingAddressViewCurrentY,
+                                                self.contentScrollView.frame.size.width - 12.0f,
+                                                self.checkBoxComponent.frame.size.height)];
+    
+    self.shippingAddressViewCurrentY += self.checkBoxComponent.frame.size.height;
     
     if(!self.isBillingAddress || !self.isShippingAddress)
     {
@@ -260,14 +383,42 @@ UIPickerViewDelegate>
         self.shippingAddressViewCurrentY += 6.0f;
     }
     
-    [self.shippingContentView setFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.shippingAddressViewCurrentY)];
-    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.bottomView.frame.size.height)];
+    [self.shippingContentView setFrame:CGRectMake(6.0f,
+                                                  6.0f,
+                                                  self.contentScrollView.frame.size.width - 12.0f,
+                                                  self.shippingAddressViewCurrentY)];
+    self.originalFrame = self.contentScrollView.frame;
     
-    if(self.firstLoading)
+    self.billingAddressViewCurrentY = CGRectGetMaxY(self.billingHeaderSeparator.frame) + 6.0f;
+    for(UIView *view in self.billingDynamicForm.formViews)
     {
-        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-        self.firstLoading = NO;
+        [view setFrame:CGRectMake(view.frame.origin.x,
+                                  self.billingAddressViewCurrentY,
+                                  self.contentScrollView.frame.size.width - 12.0f,
+                                  view.frame.size.height)];
+        self.billingAddressViewCurrentY += view.frame.size.height;
+    }
+    
+    [self.billingContentView setFrame:CGRectMake(6.0f,
+                                                 CGRectGetMaxY(self.shippingContentView.frame) + 6.0f,
+                                                 self.contentScrollView.frame.size.width - 12.0f,
+                                                 self.billingAddressViewCurrentY + 12.0f)];
+    
+    [self.bottomView reloadFrame:CGRectMake(0.0f,
+                                            self.view.frame.size.height - self.bottomView.frame.size.height,
+                                            self.view.frame.size.width,
+                                            self.bottomView.frame.size.height)];
+    [self.bottomView addButton:STRING_NEXT target:self action:@selector(createAddressButtonPressed)];
+    
+    if(VALID_NOTEMPTY(self.checkBoxComponent, JACheckBoxComponent) && [self.checkBoxComponent isCheckBoxOn])
+    {
+        [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
+                                                          self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.bottomView.frame.size.height)];
+    }
+    else
+    {
+        [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
+                                                          self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + 6.0f + self.billingContentView.frame.size.height + self.bottomView.frame.size.height)];
     }
 }
 
@@ -325,7 +476,7 @@ UIPickerViewDelegate>
                 else if(VALID_NOTEMPTY(selectedObject, RICity))
                 {
                     self.shippingSelectedCity = selectedObject;
-
+                    
                     [self.shippingDynamicForm setCityValue:selectedObject];
                 }
             }
@@ -336,7 +487,7 @@ UIPickerViewDelegate>
                     self.billingSelectedRegion = selectedObject;
                     self.billingSelectedCity = nil;
                     self.billingCitiesDataset = nil;
-
+                    
                     [self.billingDynamicForm setRegionValue:selectedObject];
                 }
                 else if(VALID_NOTEMPTY(selectedObject, RICity))
@@ -466,7 +617,7 @@ UIPickerViewDelegate>
      {
          self.hasErrors = YES;
          self.numberOfRequests--;
-        
+         
          if (RIApiResponseNoInternetConnection == apiResponse)
          {
              [self showMessage:STRING_NO_NEWTORK success:NO];
@@ -482,7 +633,7 @@ UIPickerViewDelegate>
          else
          {
              [self showMessage:STRING_ERROR success:NO];
-         }         
+         }
      }];
 }
 
@@ -506,23 +657,23 @@ UIPickerViewDelegate>
 
 - (void)changedFocus:(UIView *)view
 {
-    CGPoint scrollPoint = CGPointMake(0.0, view.frame.origin.y);
-    
-    if(self.billingContentView == [view superview])
-    {
-        scrollPoint = CGPointMake(0.0, 6.0f + CGRectGetMaxY(self.shippingContentView.frame) + 6.0f + view.frame.origin.y);
-    }
-    
-    [self.contentScrollView setContentOffset:scrollPoint
-                                    animated:YES];
+    //    CGPoint scrollPoint = CGPointMake(0.0, view.frame.origin.y);
+    //
+    //    if(self.billingContentView == [view superview])
+    //    {
+    //        scrollPoint = CGPointMake(0.0, 6.0f + CGRectGetMaxY(self.shippingContentView.frame) + 6.0f + view.frame.origin.y);
+    //    }
+    //
+    //    [self.contentScrollView setContentOffset:scrollPoint
+    //                                    animated:YES];
 }
 
 - (void) lostFocus
 {
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         self.contentScrollView.frame = self.originalFrame;
-                     }];
+    //    [UIView animateWithDuration:0.5f
+    //                     animations:^{
+    //                         self.contentScrollView.frame = self.originalFrame;
+    //                     }];
 }
 
 - (void)openPicker:(JARadioComponent *)radioComponent
@@ -530,7 +681,7 @@ UIPickerViewDelegate>
     [self removePickerView];
     
     self.radioComponent = radioComponent;
-
+    
     if([radioComponent isComponentWithKey:@"fk_customer_address_region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
     {
         self.radioComponentDataset = self.regionsDataset;
@@ -555,7 +706,7 @@ UIPickerViewDelegate>
                  {
                      self.shippingCitiesDataset = [regions copy];
                      self.radioComponentDataset = [regions copy];
-                    
+                     
                      [self hideLoading];
                      [self setupPickerView];
                  } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
@@ -695,7 +846,7 @@ UIPickerViewDelegate>
                          {
                              self.shippingSelectedRegion = region;
                              self.billingSelectedRegion = region;
-
+                             
                              [self.shippingDynamicForm setRegionValue:region];
                              [self.billingDynamicForm setRegionValue:region];
                              
@@ -727,7 +878,7 @@ UIPickerViewDelegate>
                              [self.shippingDynamicForm setCityValue:city];
                              [self.billingDynamicForm setCityValue:city];
                          }
-                             
+                         
                          [self hideLoading];
                          
                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -778,6 +929,34 @@ UIPickerViewDelegate>
         
     }
     return  titleForRow;
+}
+
+#pragma mark - Keyboard notifications
+
+- (void) keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGFloat height = kbSize.height;
+    
+    if(self.view.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.contentScrollView setFrame:CGRectMake(self.originalFrame.origin.x,
+                                                    self.originalFrame.origin.y,
+                                                    self.originalFrame.size.width,
+                                                    self.originalFrame.size.height - height)];
+    }];
+}
+
+- (void) keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.contentScrollView setFrame:self.originalFrame];
+    }];
 }
 
 @end
