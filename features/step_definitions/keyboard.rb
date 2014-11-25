@@ -80,7 +80,10 @@ Then /^I enter the registration data with an already registred email$/ do
     touch("view marked:'"+@done+"'")
     touch("UISwitch marked:'"+@receive_newsletter+"'")
     touch("view marked:'"+@email+"'")
-    keyboard_enter_text @valid_email
+    #keyboard_enter_text @valid_email
+    keyboard_enter_text "testcalabash"
+    keyboard_enter_char "@"
+    keyboard_enter_text "mailinator.com"
     done
     keyboard_enter_text @first_name_text
     done

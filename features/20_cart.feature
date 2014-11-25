@@ -33,37 +33,47 @@ Scenario: Add to cart
 * I wait for 2 seconds
 * I wait to see the product detail screen
 * I touch add to cart button
+* I wait for 1 seconds
 * I wait to see the product added message
 * I touch the cart button
+* I wait for 1 seconds
 * I wait to see the cart screen
+* I wait for 1 seconds
 * I wait to see the cart screen not empty
 
 @cart_change
 Scenario: Change quantity
 * I touch the cart button
+* I wait for 1 seconds
 * I wait to see the cart screen
+* I wait for 1 seconds
 * I wait to see the cart screen not empty
 * I touch the quantity button
 * I wait for 1 seconds
 * I scroll down the quantity
+* I wait for 1 seconds
 * I touch done button
 
 @cart_remove
 Scenario: Remove form Cart
 * I wait for 2 seconds
 * I touch the cart button
+* I wait for 1 seconds
 * I wait to see the cart screen
+* I wait for 1 seconds
 * I wait to see the cart screen not empty
 * I wait for 1 seconds
 * I touch the remove from cart button
+* I wait for 1 seconds
 * I wait to see the shopping cart
 
 @cart_empty
 Scenario: Empty Cart
 * I touch the cart button
+* I wait for 1 seconds
 * I wait to see the cart screen
+* I wait for 1 seconds
 * I wait to see the shopping cart
-
 
 @cart_call
 Scenario: Call to Order
@@ -81,14 +91,17 @@ Scenario: Call to Order
 * I touch add to cart button
 * I wait to see the product added message
 * I touch the cart button
+* I wait for 1 seconds
 * I wait to see the cart screen
 * I should see call to order button
 
 Scenario: Remove form Cart
 * I wait for 2 seconds
 * I touch the cart button
+* I wait for 1 seconds
 * I wait to see the cart screen
 * I wait to see the cart screen not empty
 * I wait for 1 seconds
 * I touch the remove from cart button
+* I wait for 1 seconds
 * I wait to see the shopping cart
