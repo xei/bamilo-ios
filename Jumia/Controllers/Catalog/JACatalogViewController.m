@@ -16,6 +16,7 @@
 #import "RIFilter.h"
 #import "JACatalogWizardView.h"
 #import "JAClickableView.h"
+#import "JAUndefinedSearchView.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
@@ -137,26 +138,12 @@
         [RIProduct cancelRequest:self.getProductsOperationID];
         [self hideLoading];
     }
-
+    
     if(VALID_NOTEMPTY(self.collectionView, UICollectionView))
     {
         CGPoint contentOffset = self.collectionView.contentOffset;
         [self.collectionView setContentOffset:contentOffset];
     }
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
-    self.lastIndex = self.sortingScrollView.selectedIndex;
-    
-    [self changeViewToInterfaceOrientation:toInterfaceOrientation];
-    
-    [self selectedIndex:self.lastIndex];
-    self.sortingScrollView.startingIndex = self.lastIndex;
-    [self.sortingScrollView setNeedsLayout];
-
 }
 
 - (void)setupViews
@@ -430,8 +417,7 @@
                                                                               else
                                                                               {
                                                                                   if (VALID_NOTEMPTY(undefSearchTerm, RIUndefinedSearchTerm))
-                                                                                  {
-                                                                                      self.navBarLayout.subTitle = @"0";
+                                                                                  {                                                                                       self.navBarLayout.subTitle = @"0";
                                                                                       [self reloadNavBar];
                                                                                       self.undefinedBackup = undefSearchTerm;
                                                                                       [self addUndefinedSearchView:undefSearchTerm frame:self.collectionView.frame];
@@ -655,9 +641,9 @@
     CGFloat height = 0.0f;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-    
+        
         if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-
+            
             if (self.gridSelected) {
                 width = 248.0f;
                 height = JACatalogViewControllerGridCellHeight_ipad;
@@ -684,7 +670,7 @@
             height = JACatalogViewControllerListCellHeight;
         }
     }
-
+    
     return CGSizeMake(width, height);
 }
 
@@ -1006,7 +992,7 @@
 {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
     [userInfo setObject:self forKey:@"delegate"];
-
+    
     if(VALID(self.filtersArray, NSArray))
     {
         [userInfo setObject:self.filtersArray forKey:@"filtersArray"];
@@ -1137,7 +1123,7 @@
         [RIProduct removeFromFavorites:product successBlock:^(void) {
             
             NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
-
+            
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
             [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
@@ -1193,7 +1179,6 @@
     
     [self.undefinedView setupWithUndefinedSearchResult:undefSearch
                                             searchText:self.searchString];
-    
     [self.view bringSubviewToFront:self.wizardView];
 }
 
@@ -1232,4 +1217,22 @@
                                                                  @"url": brandUrl }];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    self.lastIndex = self.sortingScrollView.selectedIndex;
+    
+    [self changeViewToInterfaceOrientation:toInterfaceOrientation];
+    
+    [self selectedIndex:self.lastIndex];
+    self.sortingScrollView.startingIndex = self.lastIndex;
+    [self.sortingScrollView setNeedsLayout];
+    
+    [self.undefinedView setFrame:CGRectMake(6.0f,
+                                            CGRectGetMaxY(self.sortingScrollView.frame),
+                                            self.view.frame.size.height + self.view.frame.origin.y - 12.0f,
+                                            self.view.frame.size.width - self.view.frame.origin.y - CGRectGetMaxY(self.sortingScrollView.frame))];
+    [self.undefinedView willRotate];
+}
 @end

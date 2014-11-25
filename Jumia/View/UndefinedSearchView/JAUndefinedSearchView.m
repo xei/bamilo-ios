@@ -19,6 +19,7 @@
 @interface JAUndefinedSearchView ()
 
 @property (nonatomic, strong) RIUndefinedSearchTerm* searchResult;
+@property (nonatomic, strong) NSString* searchText;
 @property (nonatomic, strong) UIScrollView *scrollView;
 
 @property (nonatomic, strong) UIView* topView;
@@ -31,6 +32,8 @@
 @property (nonatomic, strong) UIView* topSellersView;
 @property (nonatomic, strong) UIView* topBrandsView;
 @property (nonatomic, strong) UIView* noticeView;
+@property (assign, nonatomic) CGFloat scrollViewY;
+@property (assign, nonatomic) CGFloat LeftMargin;
 
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *spaceLabelConstraint;
@@ -55,7 +58,12 @@
 - (void)setupWithUndefinedSearchResult:(RIUndefinedSearchTerm *)searchResult
                             searchText:(NSString *)searchText
 {
+    if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)&&(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))){
+        self.leftMargin = 256.0f;
+    }
+    
     self.searchResult = searchResult;
+    self.searchText = searchText;
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
     self.scrollView.backgroundColor = [UIColor clearColor];
@@ -129,12 +137,12 @@
                                                                   1)];
     self.separatorView.backgroundColor = UIColorFromRGB(0xcccccc);
     [self.topView addSubview:self.separatorView];
-
+    
     CGFloat labelY = CGRectGetMaxY(self.separatorView.frame) + 15.0f;
     
     RISearchType *searchType = searchResult.searchType;
     if (searchType.title.length > 0) {
-        self.searchTipsTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+        self.searchTipsTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.LeftMargin,
                                                                               labelY,
                                                                               self.topView.frame.size.width - 6.0f*2,
                                                                               10.0f)];
@@ -148,7 +156,7 @@
         labelY = CGRectGetMaxY(self.searchTipsTitleLabel.frame);
     }
     
-    self.searchTipsTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+    self.searchTipsTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.LeftMargin,
                                                                          labelY,
                                                                          self.topView.frame.size.width - 6.0f*2,
                                                                          10.0f)];
@@ -179,9 +187,9 @@
     [self.scrollView addSubview:self.topSellersView];
     
     UILabel* topSellersTitle = [[UILabel alloc] initWithFrame:CGRectMake(self.topSellersView.bounds.origin.x + 6.0f,
-                                                                    self.topSellersView.bounds.origin.y,
-                                                                    self.topSellersView.bounds.size.width - 6.0f*2,
-                                                                    26.0f)];
+                                                                         self.topSellersView.bounds.origin.y,
+                                                                         self.topSellersView.bounds.size.width - 6.0f*2,
+                                                                         26.0f)];
     topSellersTitle.text = STRING_TOP_SELLERS;
     topSellersTitle.font = [UIFont fontWithName:@"HelveticaNeue" size:11.0f];
     topSellersTitle.textColor = UIColorFromRGB(0x4e4e4e);
@@ -240,7 +248,7 @@
     
     [productScrollView setContentSize:CGSizeMake(currentX,
                                                  productScrollView.frame.size.height)];
-
+    
     scrollViewY += self.topSellersView.frame.size.height + 6.0f;
     
     
@@ -257,25 +265,25 @@
     [self.scrollView addSubview:self.topBrandsView];
     
     UILabel* topBrandsTitle = [[UILabel alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x + 6.0f,
-                                                                         self.topBrandsView.bounds.origin.y,
-                                                                         self.topBrandsView.bounds.size.width - 6.0f*2,
-                                                                         26.0f)];
+                                                                        self.topBrandsView.bounds.origin.y,
+                                                                        self.topBrandsView.bounds.size.width - 6.0f*2,
+                                                                        26.0f)];
     topBrandsTitle.text = STRING_TOP_BRANDS;
     topBrandsTitle.font = [UIFont fontWithName:@"HelveticaNeue" size:11.0f];
     topBrandsTitle.textColor = UIColorFromRGB(0x4e4e4e);
     [self.topBrandsView addSubview:topBrandsTitle];
     
     UIView* brandsLineView = [[UIView alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x,
-                                                                CGRectGetMaxY(topBrandsTitle.frame),
-                                                                self.topBrandsView.bounds.size.width,
-                                                                1.0f)];
+                                                                      CGRectGetMaxY(topBrandsTitle.frame),
+                                                                      self.topBrandsView.bounds.size.width,
+                                                                      1.0f)];
     brandsLineView.backgroundColor = UIColorFromRGB(0xfaa41a);
     [self.topBrandsView addSubview:brandsLineView];
     
     UIScrollView* brandsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x,
-                                                                                     CGRectGetMaxY(brandsLineView.frame),
-                                                                                     self.topBrandsView.bounds.size.width,
-                                                                                     self.topBrandsView.bounds.size.height - brandsLineView.frame.size.height - topBrandsTitle.frame.size.height)];
+                                                                                    CGRectGetMaxY(brandsLineView.frame),
+                                                                                    self.topBrandsView.bounds.size.width,
+                                                                                    self.topBrandsView.bounds.size.height - brandsLineView.frame.size.height - topBrandsTitle.frame.size.height)];
     brandsScrollView.showsHorizontalScrollIndicator = NO;
     [self.topBrandsView addSubview:brandsScrollView];
     
@@ -325,7 +333,7 @@
                                                 brandsScrollView.frame.size.height)];
     
     scrollViewY += self.topBrandsView.frame.size.height + 6.0f;
-
+    
     
     /////// NOTICE VIEW ///////
     
@@ -337,9 +345,9 @@
     self.noticeView.layer.cornerRadius = 5.0f;
     [self.scrollView addSubview:self.noticeView];
     
-    UILabel* noticeLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+    UILabel* noticeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.LeftMargin,
                                                                      15.0f,
-                                                                     self.noticeView.bounds.size.width - 6.0f*2,
+                                                                     self.noticeView.bounds.size.width - self.LeftMargin*2,
                                                                      10.0f)];
     noticeLabel.numberOfLines = -1;
     noticeLabel.textColor = UIColorFromRGB(0x666666);
@@ -350,15 +358,27 @@
     
     [self.noticeView setFrame:CGRectMake(self.noticeView.frame.origin.x,
                                          self.noticeView.frame.origin.y,
-                                         self.noticeView.frame.size.width,
+                                         self.scrollView.frame.size.width,
                                          CGRectGetMaxY(noticeLabel.frame) + 15.0f)];
-
+    
     scrollViewY += self.noticeView.frame.size.height + 6.0f;
     
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
                                                scrollViewY)];
     
+}
+-(void)willRotate
+{
+    [self.scrollView removeFromSuperview];
+    
+    if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)&&(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))){
+        self.leftMargin = 256.0f;
+    }else{
+        self.leftMargin = 6.0f;
+    }
+    
+    [self setupWithUndefinedSearchResult:self.searchResult searchText:self.searchText];
 }
 
 #pragma mark - Delegate methods
@@ -373,7 +393,6 @@
         [self.delegate didSelectProduct:item.url];
     }
 }
-
 - (void)brandSelected:(UIControl *)sender
 {
     RIFeaturedBrandBox *featuredBrandBox = self.searchResult.featuredBrandBox;
