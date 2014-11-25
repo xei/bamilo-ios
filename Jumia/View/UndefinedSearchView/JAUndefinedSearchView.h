@@ -33,5 +33,6 @@
 
 - (void)setupWithUndefinedSearchResult:(RIUndefinedSearchTerm *)searchResult
                             searchText:(NSString *)searchText;
+-(void)willRotate;
 
 @end
