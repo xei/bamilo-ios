@@ -621,6 +621,8 @@
 		CE88F7B71A1F88FB00A3A586 /* JAGrayButtonCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7B41A1F88FB00A3A586 /* JAGrayButtonCell_ipad_landscape.xib */; };
 		CE88F7B81A1F88FB00A3A586 /* JAGrayButtonCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7B51A1F88FB00A3A586 /* JAGrayButtonCell_ipad_portrait.xib */; };
 		CE88F7B91A1F88FB00A3A586 /* JAGrayButtonCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7B51A1F88FB00A3A586 /* JAGrayButtonCell_ipad_portrait.xib */; };
+		CE88F7BD1A23886100A3A586 /* JAOrderSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88F7BC1A23886100A3A586 /* JAOrderSummaryView.m */; };
+		CE88F7BE1A23886100A3A586 /* JAOrderSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88F7BC1A23886100A3A586 /* JAOrderSummaryView.m */; };
 		CE9193BD19F503FB00F89840 /* JAFallbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9193BC19F503FB00F89840 /* JAFallbackView.m */; };
 		CE9193BF19F5040E00F89840 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
 		CE97D2EE19AE1ED50090D01C /* JANavigationBarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */; };
@@ -1362,6 +1364,8 @@
 		CE88F7AF1A1F87A300A3A586 /* JARecentlyViewedListCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARecentlyViewedListCell_ipad_portrait.xib; sourceTree = "<group>"; };
 		CE88F7B41A1F88FB00A3A586 /* JAGrayButtonCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAGrayButtonCell_ipad_landscape.xib; sourceTree = "<group>"; };
 		CE88F7B51A1F88FB00A3A586 /* JAGrayButtonCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAGrayButtonCell_ipad_portrait.xib; sourceTree = "<group>"; };
+		CE88F7BB1A23886100A3A586 /* JAOrderSummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAOrderSummaryView.h; path = OrderSummaryView/JAOrderSummaryView.h; sourceTree = "<group>"; };
+		CE88F7BC1A23886100A3A586 /* JAOrderSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAOrderSummaryView.m; path = OrderSummaryView/JAOrderSummaryView.m; sourceTree = "<group>"; };
 		CE9193BB19F503FB00F89840 /* JAFallbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFallbackView.h; sourceTree = "<group>"; };
 		CE9193BC19F503FB00F89840 /* JAFallbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAFallbackView.m; sourceTree = "<group>"; };
 		CE9193BE19F5040E00F89840 /* JAFallbackView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFallbackView.xib; sourceTree = "<group>"; };
@@ -1677,6 +1681,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CE88F7BA1A23882E00A3A586 /* OrderSummaryView */,
 				CE88F7A91A1E339F00A3A586 /* CollectionViewLayouts */,
 				CEABEEB71A11186F000D0CF8 /* Filters */,
 				CEC376DA19EFC1D500558B98 /* Wizard */,
@@ -3076,6 +3081,15 @@
 			name = CollectionViewLayouts;
 			sourceTree = "<group>";
 		};
+		CE88F7BA1A23882E00A3A586 /* OrderSummaryView */ = {
+			isa = PBXGroup;
+			children = (
+				CE88F7BB1A23886100A3A586 /* JAOrderSummaryView.h */,
+				CE88F7BC1A23886100A3A586 /* JAOrderSummaryView.m */,
+			);
+			name = OrderSummaryView;
+			sourceTree = "<group>";
+		};
 		CE9193BA19F503FB00F89840 /* FallbackView */ = {
 			isa = PBXGroup;
 			children = (
@@ -3766,6 +3780,7 @@
 				1ab3cd2be973c7bdad01987e /* JAButtonWithBlur.m in Sources */,
 				b42870fb0eb0010aae996ca1 /* JALoginViewController.m in Sources */,
 				cff7ffb08e5519934a445721 /* RICategory.m in Sources */,
+				CE88F7BE1A23886100A3A586 /* JAOrderSummaryView.m in Sources */,
 				3fc6abd339ec5b39978481ff /* RISearchSuggestion.m in Sources */,
 				c98a2364f0dc0bb39541a1e3 /* RIPaymentMethodForm.m in Sources */,
 				39d64ebd01d50db348ddca2c /* RINewRelicTracker.m in Sources */,
@@ -3982,6 +3997,7 @@
 				B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */,
 				B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */,
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
+				CE88F7BD1A23886100A3A586 /* JAOrderSummaryView.m in Sources */,
 				CE3AF90919DBF50800D8C51B /* JACampaignSingleView.m in Sources */,
 				CE33CA0119AB36FA00333B1A /* JAPriceView.m in Sources */,
 				B5FBD57A19CAF22F00BD9510 /* AIActivityHandler.m in Sources */,
