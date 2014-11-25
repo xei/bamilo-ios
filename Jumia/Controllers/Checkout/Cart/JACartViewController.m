@@ -370,7 +370,7 @@
     [self.couponView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.couponView.layer.cornerRadius = 5.0f;
     
-    self.couponTitle = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 25.0f)];
+    self.couponTitle = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 26.0f)];
     [self.couponTitle setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.couponTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.couponTitle setText:STRING_COUPON];
@@ -445,7 +445,7 @@
     [self.subtotalView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.subtotalView.layer.cornerRadius = 5.0f;
     
-    self.subtotalTitle = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 25.0f)];
+    self.subtotalTitle = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 26.0f)];
     [self.subtotalTitle setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.subtotalTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.subtotalTitle setText:STRING_SUBTOTAL];

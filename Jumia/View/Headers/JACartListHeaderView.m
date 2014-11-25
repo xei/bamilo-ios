@@ -19,7 +19,7 @@
     [self setFrame:CGRectMake(0.0f,
                               0.0f,
                               width,
-                              26.0f)];
+                              27.0f)];
     
     [self setBackgroundColor:UIColorFromRGB(0xffffff)];
     

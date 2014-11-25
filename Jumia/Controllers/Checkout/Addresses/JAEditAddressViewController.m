@@ -9,6 +9,7 @@
 #import "JAEditAddressViewController.h"
 #import "JAButtonWithBlur.h"
 #import "JAUtils.h"
+#import "JAOrderSummaryView.h"
 #import "RICheckout.h"
 #import "RIRegion.h"
 #import "RICity.h"
@@ -52,6 +53,9 @@ UIPickerViewDelegate>
 @property (assign, nonatomic) BOOL hasErrors;
 @property (strong, nonatomic) NSString *nextStep;
 @property (strong, nonatomic) RICheckout *checkout;
+
+// Order summary
+@property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
 @end
 
@@ -239,6 +243,22 @@ UIPickerViewDelegate>
     
     self.addressViewCurrentY = CGRectGetMaxY(self.headerSeparator.frame) + 6.0f;
     
+    if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
+    {
+        [self.orderSummary removeFromSuperview];
+    }
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width))
+    {
+        CGFloat orderSummaryRightMargin = 6.0f;
+        self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
+                                                                                 self.stepBackground.frame.size.height + 6.0f,
+                                                                                 self.view.frame.size.width - width - orderSummaryRightMargin,
+                                                                                 self.view.frame.size.height)];
+        [self.orderSummary loadWithCart:self.cart];
+        [self.view addSubview:self.orderSummary];
+    }
+    
     for(UIView *view in self.dynamicForm.formViews)
     {
         [view setFrame:CGRectMake(view.frame.origin.x,
@@ -254,7 +274,10 @@ UIPickerViewDelegate>
                                           6.0f,
                                           self.contentScrollView.frame.size.width - 12.0f,
                                           self.addressViewCurrentY)];
-    
+   
+    [self.headerLabel setFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width - 12.0f, 26.0f)];
+    [self.headerSeparator setFrame:CGRectMake(0.0f, CGRectGetMaxY(self.headerLabel.frame), self.contentView.frame.size.width, 1.0f)];
+        
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
                                                       self.contentView.frame.origin.y + self.contentView.frame.size.height + self.bottomView.frame.size.height)];
     
@@ -314,7 +337,7 @@ UIPickerViewDelegate>
     [self.contentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.contentView.layer.cornerRadius = 5.0f;
     
-    self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width - 12.0f, 25.0f)];
+    self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width, 26.0f)];
     [self.headerLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.headerLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.headerLabel setText:STRING_EDIT_ADDRESS];

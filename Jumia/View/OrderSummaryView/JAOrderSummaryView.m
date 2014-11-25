@@ -71,7 +71,7 @@
                                                                     currentY,
                                                                     self.scrollView.bounds.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                     26.0f)];
-    titleLabel.text = @"Order Summary";
+    titleLabel.text = STRING_ORDER_SUMMARY;
     titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
     titleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     [self.scrollView addSubview:titleLabel];

@@ -19,6 +19,7 @@
 #import "JAButtonWithBlur.h"
 #import "RICustomer.h"
 #import "JAClickableView.h"
+#import "JAOrderSummaryView.h"
 
 @interface JAAddressesViewController ()
 <UICollectionViewDataSource,
@@ -48,6 +49,9 @@ UICollectionViewDelegateFlowLayout>
 
 // Bottom view
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
+
+// Order summary
+@property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
 @property (assign, nonatomic) BOOL firstLoading;
 
@@ -287,6 +291,23 @@ UICollectionViewDelegateFlowLayout>
 {
     [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
     
+    if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
+    {
+        [self.orderSummary removeFromSuperview];
+    }
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width))
+    {
+        CGFloat orderSummaryRightMargin = 6.0f;
+        self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
+                                                                                 self.stepBackground.frame.size.height + 6.0f,
+                                                                                 self.view.frame.size.width - width - orderSummaryRightMargin,
+                                                                                 self.view.frame.size.height)];
+        [self.orderSummary loadWithCart:self.cart];
+        [self.view addSubview:self.orderSummary];
+    }
+    
+    
     [self.contentScrollView setFrame:CGRectMake(0.0f,
                                                 self.stepBackground.frame.size.height,
                                                 width,
@@ -309,14 +330,14 @@ UICollectionViewDelegateFlowLayout>
             [self.firstAddressesCollectionView setFrame:CGRectMake(self.firstAddressesCollectionView.frame.origin.x,
                                                                    self.firstAddressesCollectionView.frame.origin.y,
                                                                    self.firstAddressesCollectionView.frame.size.width,
-                                                                   26.0f + ([self.firstCollectionViewAddresses count] * 100.0f) + 51.0f)];
+                                                                   27.0f + ([self.firstCollectionViewAddresses count] * 100.0f) + 51.0f)];
         }
         else
         {
             [self.firstAddressesCollectionView setFrame:CGRectMake(self.firstAddressesCollectionView.frame.origin.x,
                                                                    self.firstAddressesCollectionView.frame.origin.y,
                                                                    self.firstAddressesCollectionView.frame.size.width,
-                                                                   26.0f + ([self.firstCollectionViewAddresses count] * 100.0f) + 95.0f)];
+                                                                   27.0f + ([self.firstCollectionViewAddresses count] * 100.0f) + 95.0f)];
         }
     }
     
@@ -325,7 +346,7 @@ UICollectionViewDelegateFlowLayout>
         [self.secondAddressesCollectionView setFrame:CGRectMake(self.secondAddressesCollectionView.frame.origin.x,
                                                                 CGRectGetMaxY(self.firstAddressesCollectionView.frame) + 5.0f,
                                                                 self.secondAddressesCollectionView.frame.size.width,
-                                                                26.0f + ([self.secondCollectionViewAddresses count] * 100.0f) + 44.0f)];
+                                                                27.0f + ([self.secondCollectionViewAddresses count] * 100.0f) + 44.0f)];
     }
     else
     {
@@ -334,7 +355,7 @@ UICollectionViewDelegateFlowLayout>
                                                                 self.secondAddressesCollectionView.frame.size.width,
                                                                 70.0f)];
     }
-    
+
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
     
     [self.bottomView reloadFrame:CGRectMake(0.0f,
@@ -547,11 +568,11 @@ UICollectionViewDelegateFlowLayout>
     CGSize referenceSizeForHeaderInSection = CGSizeZero;
     if(collectionView == self.firstAddressesCollectionView)
     {
-        referenceSizeForHeaderInSection = CGSizeMake(self.firstAddressesCollectionView.frame.size.width, 26.0f);
+        referenceSizeForHeaderInSection = CGSizeMake(self.firstAddressesCollectionView.frame.size.width, 27.0f);
     }
     else if(collectionView == self.secondAddressesCollectionView)
     {
-        referenceSizeForHeaderInSection = CGSizeMake(self.secondAddressesCollectionView.frame.size.width, 26.0f);
+        referenceSizeForHeaderInSection = CGSizeMake(self.secondAddressesCollectionView.frame.size.width, 27.0f);
     }
     
     return referenceSizeForHeaderInSection;

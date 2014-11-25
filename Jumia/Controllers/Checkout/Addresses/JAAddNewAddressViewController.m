@@ -10,6 +10,7 @@
 #import "JADynamicForm.h"
 #import "JAUtils.h"
 #import "JAButtonWithBlur.h"
+#import "JAOrderSummaryView.h"
 #import "RIForm.h"
 #import "RIRegion.h"
 #import "RICity.h"
@@ -69,6 +70,9 @@ UIPickerViewDelegate>
 @property (strong, nonatomic) RICheckout *checkout;
 
 @property (strong, nonatomic) JACheckBoxComponent *checkBoxComponent;
+
+// Order summary
+@property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
 @end
 
@@ -219,14 +223,14 @@ UIPickerViewDelegate>
     [self.shippingContentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.shippingContentView.layer.cornerRadius = 5.0f;
     
-    self.shippingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.shippingContentView.frame.size.width - 12.0f, 25.0f)];
+    self.shippingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.shippingContentView.frame.size.width, 26.0f)];
     [self.shippingHeaderLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.shippingHeaderLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.shippingHeaderLabel setText:STRING_ADD_NEW_ADDRESS];
     [self.shippingHeaderLabel setBackgroundColor:[UIColor clearColor]];
     [self.shippingContentView addSubview:self.shippingHeaderLabel];
     
-    self.shippingHeaderSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.shippingHeaderLabel.frame), self.shippingContentView.frame.size.width, 1.0f)];
+    self.shippingHeaderSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.shippingHeaderLabel.frame), self.shippingContentView.frame.size.width - 12.0f, 1.0f)];
     [self.shippingHeaderSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.shippingContentView addSubview:self.shippingHeaderSeparator];
     
@@ -236,19 +240,19 @@ UIPickerViewDelegate>
 
 -(void)initBillingAddressView
 {
-    self.billingContentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
+    self.billingContentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height)];
     [self.billingContentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.billingContentView.layer.cornerRadius = 5.0f;
     [self.billingContentView setHidden:YES];
     
-    self.billingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.billingContentView.frame.size.width - 12.0f, 25.0f)];
+    self.billingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.billingContentView.frame.size.width - 12.0f, 26.0f)];
     [self.billingHeaderLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.billingHeaderLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.billingHeaderLabel setText:STRING_BILLING_ADDRESSES];
     [self.billingHeaderLabel setBackgroundColor:[UIColor clearColor]];
     [self.billingContentView addSubview:self.billingHeaderLabel];
     
-    self.billingHeaderSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.billingHeaderLabel.frame), self.billingContentView.frame.size.width, 1.0f)];
+    self.billingHeaderSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.billingHeaderLabel.frame), self.billingContentView.frame.size.width - 12.0f, 1.0f)];
     [self.billingHeaderSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.billingContentView addSubview:self.billingHeaderSeparator];
     
@@ -353,6 +357,22 @@ UIPickerViewDelegate>
     
     self.shippingAddressViewCurrentY = CGRectGetMaxY(self.shippingHeaderSeparator.frame) + 6.0f;
     
+    if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
+    {
+        [self.orderSummary removeFromSuperview];
+    }
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && (width < self.view.frame.size.width))
+    {
+        CGFloat orderSummaryRightMargin = 6.0f;
+        self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
+                                                                                 self.stepBackground.frame.size.height + 6.0f,
+                                                                                 self.view.frame.size.width - width - orderSummaryRightMargin,
+                                                                                 self.view.frame.size.height)];
+        [self.orderSummary loadWithCart:self.cart];
+        [self.view addSubview:self.orderSummary];
+    }
+    
     [self.contentScrollView setFrame:CGRectMake(0.0f,
                                                 self.stepBackground.frame.size.height,
                                                 width,
@@ -387,6 +407,17 @@ UIPickerViewDelegate>
                                                   6.0f,
                                                   self.contentScrollView.frame.size.width - 12.0f,
                                                   self.shippingAddressViewCurrentY)];
+    
+    [self.shippingHeaderLabel setFrame:CGRectMake(6.0f,
+                                                  0.0f,
+                                                  self.shippingContentView.frame.size.width,
+                                                  26.0f)];
+    
+    [self.shippingHeaderSeparator setFrame:CGRectMake(0.0f,
+                                                      CGRectGetMaxY(self.shippingHeaderLabel.frame),
+                                                      self.shippingContentView.frame.size.width,
+                                                      1.0f)];
+    
     self.originalFrame = self.contentScrollView.frame;
     
     self.billingAddressViewCurrentY = CGRectGetMaxY(self.billingHeaderSeparator.frame) + 6.0f;
@@ -403,6 +434,16 @@ UIPickerViewDelegate>
                                                  CGRectGetMaxY(self.shippingContentView.frame) + 6.0f,
                                                  self.contentScrollView.frame.size.width - 12.0f,
                                                  self.billingAddressViewCurrentY + 12.0f)];
+    
+    [self.billingHeaderLabel setFrame:CGRectMake(6.0f,
+                                                 0.0f,
+                                                 self.billingContentView.frame.size.width,
+                                                 26.0f)];
+    
+    [self.billingHeaderSeparator setFrame:CGRectMake(0.0f,
+                                                     CGRectGetMaxY(self.billingHeaderLabel.frame),
+                                                     self.billingContentView.frame.size.width,
+                                                     1.0f)];
     
     [self.bottomView reloadFrame:CGRectMake(0.0f,
                                             self.view.frame.size.height - self.bottomView.frame.size.height,
