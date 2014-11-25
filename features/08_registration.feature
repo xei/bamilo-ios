@@ -25,8 +25,9 @@ Scenario: Logout
 
 @registration_ef
 Scenario: Registration Empty Fields
-* I touch the Register button
 * I wait for 1 seconds
+* I touch the Register button
+* I wait for 2 seconds
 * I wait to see the error please check your input fields
 
 @registration_se

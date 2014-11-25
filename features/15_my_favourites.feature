@@ -51,6 +51,7 @@ Scenario: Delete Button
 @my_favourites_ai
 Scenario: Add all items to cart
 * I touch the hamburger
+* I wait for 2 seconds
 * I wait to see the side menu
 * I touch the catagories option
 * I wait for 1 seconds
@@ -62,6 +63,7 @@ Scenario: Add all items to cart
 * I touch collection view item number 2
 * I wait for 2 seconds
 * I touch the favorites button
+* I wait for 1 seconds
 * I wait to see the message item added to favorites
 * I wait for 1 seconds
 * I touch the cart button
