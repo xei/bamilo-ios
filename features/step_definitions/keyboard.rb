@@ -60,7 +60,10 @@ end
 Then /^I enter a valid email$/ do
     touch("view marked:'"+@email+"'")
     sleep(2)
-    keyboard_enter_text @valid_email
+    #keyboard_enter_text @valid_email
+    keyboard_enter_text "testcalabash"
+    keyboard_enter_char "@"
+    keyboard_enter_text "mailinator.com"
     done
 end
 
