@@ -19,11 +19,10 @@ UIPickerViewDataSource,
 UIPickerViewDelegate>
 
 // Steps
+@property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
 @property (weak, nonatomic) IBOutlet UIView *stepView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepIconLeftConstrain;
 @property (weak, nonatomic) IBOutlet UIImageView *stepIcon;
 @property (weak, nonatomic) IBOutlet UILabel *stepLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepLabelWidthConstrain;
 
 // Add Address
 @property (strong, nonatomic) UIScrollView *contentScrollView;
@@ -69,7 +68,17 @@ UIPickerViewDelegate>
     
     self.hasErrors = NO;
     
-    [self setupViews];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    [self initViews];
     
     [RIForm getForm:@"addressedit"
        successBlock:^(RIForm *form)
@@ -79,7 +88,6 @@ UIPickerViewDelegate>
          for(UIView *view in self.dynamicForm.formViews)
          {
              [self.contentView addSubview:view];
-             self.addressViewCurrentY = CGRectGetMaxY(view.frame);
          }
          
          [self finishedFormLoading];
@@ -92,28 +100,52 @@ UIPickerViewDelegate>
      }];
 }
 
--(void)setupViews
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    CGFloat availableWidth = self.stepView.frame.size.width;
+    [self showLoading];
     
+    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+    {
+        newWidth = self.view.frame.size.width;
+    }
+    
+    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    CGFloat newWidth = self.view.frame.size.width;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    }
+    
+    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    
+    [self.dynamicForm resignResponder];
+    
+    [self hideLoading];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+-(void)initViews
+{
+    self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
     [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
-    [self.stepLabel sizeToFit];
     
-    CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;
+    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     
-    if(availableWidth >= realWidth)
-    {
-        CGFloat xStepIconValue = (availableWidth - realWidth) / 2;
-        self.stepIconLeftConstrain.constant = xStepIconValue;
-        self.stepLabelWidthConstrain.constant = self.stepLabel.frame.size.width;
-    }
-    else
-    {
-        self.stepLabelWidthConstrain.constant = (availableWidth - self.stepIcon.frame.size.width - 6.0f);
-        self.stepIconLeftConstrain.constant = 0.0f;
-    }
-    
-    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 21.0f, self.view.frame.size.width, self.view.frame.size.height - 64.0f - 21.0f)];
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                            self.stepBackground.frame.size.height,
+                                                                            self.view.frame.size.width,
+                                                                            self.view.frame.size.height - 64.0f - self.stepBackground.frame.size.height)];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
     
@@ -124,7 +156,7 @@ UIPickerViewDelegate>
     [self.view addSubview:self.contentScrollView];
     
     self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero
-                                                  orientation:self.interfaceOrientation];
+                                                  orientation:UIInterfaceOrientationPortrait];
     
     [self.bottomView setFrame:CGRectMake(0.0f,
                                          self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
@@ -135,6 +167,105 @@ UIPickerViewDelegate>
     [self.bottomView addButton:STRING_SAVE_CHANGES target:self action:@selector(saveChangesButtonPressed)];
     
     [self.view addSubview:self.bottomView];
+}
+
+- (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    CGFloat stepViewLeftMargin = 73.0f;
+    NSString *stepBackgroundImageName = @"headerCheckoutStep2";
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+        {
+            stepViewLeftMargin =  389.0f;
+            stepBackgroundImageName = @"headerCheckoutStep2Landscape";
+        }
+        else
+        {
+            stepViewLeftMargin = 261.0f;
+            stepBackgroundImageName = @"headerCheckoutStep2Portrait";
+        }
+    }
+    UIImage *stepBackgroundImage = [UIImage imageNamed:stepBackgroundImageName];
+    
+    [self.stepBackground setImage:stepBackgroundImage];
+    [self.stepBackground setFrame:CGRectMake(self.stepBackground.frame.origin.x,
+                                             self.stepBackground.frame.origin.y,
+                                             stepBackgroundImage.size.width,
+                                             stepBackgroundImage.size.height)];
+    
+    [self.stepView setFrame:CGRectMake(stepViewLeftMargin,
+                                       self.stepView.frame.origin.y,
+                                       self.stepView.frame.size.width,
+                                       self.stepView.frame.size.height)];
+    [self.stepLabel sizeToFit];
+    
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat marginBetweenIconAndLabel = 5.0f;
+    CGFloat realWidth = self.stepIcon.frame.size.width + marginBetweenIconAndLabel + self.stepLabel.frame.size.width - (2 * horizontalMargin);
+    
+    if(self.stepView.frame.size.width >= realWidth)
+    {
+        CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
+        [self.stepIcon setFrame:CGRectMake(xStepIconValue,
+                                           self.stepIcon.frame.origin.y,
+                                           self.stepIcon.frame.size.width,
+                                           self.stepIcon.frame.size.height)];
+        
+        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
+                                            0.0f,
+                                            self.stepLabel.frame.size.width,
+                                            self.stepView.frame.size.height)];
+    }
+    else
+    {
+        [self.stepIcon setFrame:CGRectMake(horizontalMargin,
+                                           self.stepIcon.frame.origin.y,
+                                           self.stepIcon.frame.size.width,
+                                           self.stepIcon.frame.size.height)];
+        
+        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
+                                            0.0f,
+                                            (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
+                                            self.stepView.frame.size.height)];
+    }
+}
+
+- (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
+    
+    [self.contentScrollView setFrame:CGRectMake(0.0f,
+                                                self.stepBackground.frame.size.height,
+                                                width,
+                                                self.view.frame.size.height - self.stepBackground.frame.size.height)];
+    self.originalFrame = self.contentScrollView.frame;
+    
+    self.addressViewCurrentY = CGRectGetMaxY(self.headerSeparator.frame) + 6.0f;
+    
+    for(UIView *view in self.dynamicForm.formViews)
+    {
+        [view setFrame:CGRectMake(view.frame.origin.x,
+                                  self.addressViewCurrentY,
+                                  self.contentScrollView.frame.size.width - 12.0f,
+                                  view.frame.size.height)];
+        self.addressViewCurrentY += view.frame.size.height;
+    }
+    
+    self.addressViewCurrentY += 6.0f;
+    
+    [self.contentView setFrame:CGRectMake(6.0f,
+                                          6.0f,
+                                          self.contentScrollView.frame.size.width - 12.0f,
+                                          self.addressViewCurrentY)];
+    
+    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
+                                                      self.contentView.frame.origin.y + self.contentView.frame.size.height + self.bottomView.frame.size.height)];
+    
+    [self.bottomView setFrame:CGRectMake(0.0f,
+                                         self.view.frame.size.height - self.bottomView.frame.size.height,
+                                         width,
+                                         self.bottomView.frame.size.height)];
 }
 
 -(NSDictionary*)getAddressValues
@@ -181,34 +312,33 @@ UIPickerViewDelegate>
 
 -(void)setupAddressView
 {
-    self.addressViewCurrentY = 0.0f;
-    
     self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
     [self.contentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.contentView.layer.cornerRadius = 5.0f;
     
-    self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, self.addressViewCurrentY, self.contentView.frame.size.width - 12.0f, 25.0f)];
+    self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width - 12.0f, 25.0f)];
     [self.headerLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.headerLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.headerLabel setText:STRING_EDIT_ADDRESS];
     [self.headerLabel setBackgroundColor:[UIColor clearColor]];
     [self.contentView addSubview:self.headerLabel];
-    self.addressViewCurrentY = CGRectGetMaxY(self.headerLabel.frame);
     
-    self.headerSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.addressViewCurrentY, self.contentView.frame.size.width, 1.0f)];
+    self.headerSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.headerLabel.frame), self.contentView.frame.size.width, 1.0f)];
     [self.headerSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.contentView addSubview:self.headerSeparator];
-    self.addressViewCurrentY = CGRectGetMaxY(self.headerSeparator.frame) + 6.0f;
     
     [self.contentScrollView addSubview:self.contentView];
 }
 
 -(void)finishedFormLoading
 {
-    self.addressViewCurrentY += 6.0f;
+    CGFloat newWidth = self.view.frame.size.width;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    }
     
-    [self.contentView setFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.addressViewCurrentY)];
-    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.contentView.frame.origin.y + self.contentView.frame.size.height + self.bottomView.frame.size.height)];
+    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
     
     if(self.firstLoading)
     {
@@ -326,17 +456,17 @@ UIPickerViewDelegate>
 
 - (void)changedFocus:(UIView *)view
 {
-    CGPoint scrollPoint = CGPointMake(0.0, view.frame.origin.y);
-    [self.contentScrollView setContentOffset:scrollPoint
-                                    animated:YES];
+    //    CGPoint scrollPoint = CGPointMake(0.0, view.frame.origin.y);
+    //    [self.contentScrollView setContentOffset:scrollPoint
+    //                                    animated:YES];
 }
 
 - (void) lostFocus
 {
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         self.contentScrollView.frame = self.originalFrame;
-                     }];
+    //    [UIView animateWithDuration:0.5f
+    //                     animations:^{
+    //                         self.contentScrollView.frame = self.originalFrame;
+    //                     }];
 }
 
 - (void)openPicker:(JARadioComponent *)radioComponent
@@ -570,6 +700,34 @@ UIPickerViewDelegate>
         
     }
     return  titleForRow;
+}
+
+#pragma mark - Keyboard notifications
+
+- (void) keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGFloat height = kbSize.height;
+    
+    if(self.view.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.contentScrollView setFrame:CGRectMake(self.originalFrame.origin.x,
+                                                    self.originalFrame.origin.y,
+                                                    self.originalFrame.size.width,
+                                                    self.originalFrame.size.height - height)];
+    }];
+}
+
+- (void) keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.contentScrollView setFrame:self.originalFrame];
+    }];
 }
 
 @end
