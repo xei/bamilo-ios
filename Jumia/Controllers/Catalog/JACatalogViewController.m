@@ -720,11 +720,14 @@
         }
     }
     
-    self.numberOfCellsInScreen = [self getNumberOfCellsInScreenForInterfaceOrientation:interfaceOrientation];
-    
-    self.flowLayout.itemSize = [self getLayoutItemSizeForInterfaceOrientation:interfaceOrientation];
-    self.flowLayout.minimumInteritemSpacing = [self getLayoutMinimumSpacingForInterfaceOrientation:interfaceOrientation];
-    [self.collectionView reloadData];
+    if(VALID_NOTEMPTY(self.collectionView.superview, UIView))
+    {
+        self.numberOfCellsInScreen = [self getNumberOfCellsInScreenForInterfaceOrientation:interfaceOrientation];
+        
+        self.flowLayout.itemSize = [self getLayoutItemSizeForInterfaceOrientation:interfaceOrientation];
+        self.flowLayout.minimumInteritemSpacing = [self getLayoutMinimumSpacingForInterfaceOrientation:interfaceOrientation];
+        [self.collectionView reloadData];
+    }
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
