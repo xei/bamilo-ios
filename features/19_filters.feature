@@ -29,6 +29,7 @@ Scenario: Apply Filter
 * I touch the table list item number 0
 * I wait for 1 seconds
 * I touch done button
+* I wait for 1 seconds
 * I touch done button
 * I wait to see the catalog
 
@@ -39,6 +40,7 @@ Scenario: Remove Filter
 * I touch the table list item number 0
 * I wait for 1 seconds
 * I touch done button
+* I wait for 1 seconds
 * I touch done button
 * I wait to see the catalog
 * I touch the filter button

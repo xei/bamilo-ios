@@ -40,4 +40,5 @@ gem 'spring',        group: :development
 
 gem 'cucumber'
 
-gem 'calabash-cucumber’, '~-> 0.11.4'
+gem 'run_loop'
+gem 'calabash-cucumber', '~> 0.11.4'

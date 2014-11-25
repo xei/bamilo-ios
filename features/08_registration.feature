@@ -16,6 +16,7 @@ Background:
 * I wait to see the create account page
 * I wait for 1 seconds
 
+@registration_logout
 Scenario: Logout
 * I touch the hamburger
 * I wait to see the side menu

@@ -12,7 +12,7 @@ $country = ENV['country']
 
 def initvars
     puts "initvars EN"
-    #/Users/rocket/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Containers/Data/Application/70B3A2E7-8276-4F46-8B2F-1CBBF4E3B35D/Library
+    
     #init
     @wait_timeout = 5
     @wait_timeout_extra = 20
@@ -114,7 +114,7 @@ def initvars
     @first_name_text = "Tester"
     @last_name_text = "Test"
     @random = Time.now.to_i
-    @new_email = "testjumia+brunoqa"+@random.to_s+"@gmail.com"
+    @new_email = "testjumia1brunoqa"+@random.to_s+"@gmail.com"
     
     #search
     @search = "Search"

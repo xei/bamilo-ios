@@ -114,7 +114,7 @@ Then /^I enter the registration data$/ do
     touch("UISwitch marked:'"+@receive_newsletter+"'")
     touch("view marked:'"+@email+"'")
     keyboard_enter_text @new_email
-    puts @new_email
+    #puts @new_email
     done
     keyboard_enter_text @first_name_text
     done

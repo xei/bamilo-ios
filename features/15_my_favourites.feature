@@ -14,6 +14,7 @@ Background:
 * I wait for 2 seconds
 * I make sure I have no favourites
 
+@my_favourites_section
 Scenario: My Favourites Section
 
 @my_favourites_db
@@ -76,13 +77,17 @@ Scenario: Add all items to cart
 * I wait to see the empty favourites screen
 * I wait for 1 seconds
 * I touch the cart button
+* I wait for 1 seconds
 * I wait to see the cart screen not empty
 
+@my_favourites_rc
 Scenario: Remove form Cart
 * I wait for 2 seconds
 * I touch the cart button
 * I wait to see the cart screen
+* I wait for 1 seconds
 * I wait to see the cart screen not empty
 * I wait for 1 seconds
 * I touch the remove from cart button
+* I wait for 1 seconds
 * I wait to see the shopping cart

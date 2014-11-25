@@ -12,12 +12,15 @@ Background:
 * I wait to see the side menu
 * I should see the search section
 
+@search_section
 Scenario: Search Section
 
+@search_val
 Scenario: Search Valid
 * I enter a valid search
 * I wait to see the catalog
 
+@search_inv
 Scenario: Search Invalid
 * I enter an invalid search
 * I wait to see the no results found screen
@@ -32,7 +35,9 @@ Scenario: Search Suggestions
 @search_sp
 Scenario: Related items from search product
 * I enter a valid search
+* I wait for 1 seconds
 * I wait to see the catalog
+* I wait for 1 seconds
 * I touch collection view item number 1
 * I wait for 2 seconds
 * I wait to see the product detail screen
