@@ -132,7 +132,6 @@ UICollectionViewDelegateFlowLayout>
                                                                          self.view.frame.size.width,
                                                                          self.bottomView.frame.size.height)
                                                   orientation:UIInterfaceOrientationPortrait];
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
     [self.view addSubview:self.bottomView];
 }
 
@@ -338,10 +337,11 @@ UICollectionViewDelegateFlowLayout>
     
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
     
-    [self.bottomView setFrame:CGRectMake(0.0f,
-                                         self.view.frame.size.height - self.bottomView.frame.size.height,
-                                         width,
-                                         self.bottomView.frame.size.height)];
+    [self.bottomView reloadFrame:CGRectMake(0.0f,
+                                            self.view.frame.size.height - self.bottomView.frame.size.height,
+                                            width,
+                                            self.bottomView.frame.size.height)];
+    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
 }
 
 -(void)finishedLoadingAddresses

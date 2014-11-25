@@ -53,6 +53,7 @@
 - (void) addButton:(NSString*)name target:(id)target action:(SEL)action
 {
     CGFloat buttonWidth = self.frame.size.width - 12.0f;
+    
     CGFloat buttonSpace = 4.0f;
     if(VALID_NOTEMPTY(self.buttons, NSMutableArray))
     {
@@ -67,15 +68,38 @@
     NSString *greyButtonName = @"greyHalfWithBackground_%@";
     NSString *orangeButtonName = @"orangeBig_%@";
     
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    if(0 < [self.buttons count])
     {
-        if((UIInterfaceOrientationLandscapeRight == self.orienation || UIInterfaceOrientationLandscapeLeft == self.orienation))
+        orangeButtonName = @"orangeHalf_%@";
+        
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
         {
-            greyButtonName = @"greyQuarterLandscape_%@";
+            if(UIInterfaceOrientationIsLandscape(self.orienation))
+            {
+                orangeButtonName = @"orangeQuarterLandscape_%@";
+                greyButtonName = @"greyQuarterLandscape_%@";
+            }
+            else
+            {
+                orangeButtonName = @"orangeHalfPortrait_%@";
+                greyButtonName = @"greyHalfPortrait_%@";
+            }
         }
-        else
+    }
+    else
+    {
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
         {
-            greyButtonName = @"greyHalfPortrait_%@";
+            if(UIInterfaceOrientationIsLandscape(self.orienation))
+            {
+                orangeButtonName = @"orangeHalfLandscape_%@";
+                greyButtonName = @"greyQuarterLandscape_%@";
+            }
+            else
+            {
+                orangeButtonName = @"orangeFullPortrait_%@";
+                greyButtonName = @"greyHalfPortrait_%@";
+            }
         }
     }
     
@@ -91,44 +115,13 @@
         originX += (buttonWidth + buttonSpace);
     }
     
+    UIImage *buttonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]];
+    
     UIButton *newButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [newButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [newButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [newButton setTitle:name forState:UIControlStateNormal];
     [newButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    
-    if(0 < [self.buttons count])
-    {
-        orangeButtonName = @"orangeHalf_%@";
-        
-        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-        {
-            if((UIInterfaceOrientationLandscapeLeft == self.orienation || UIInterfaceOrientationLandscapeRight == self.orienation))
-            {
-                orangeButtonName = @"orangeQuarterLandscape_%@";
-            }
-            else
-            {
-                orangeButtonName = @"orangeHalfPortrait_%@";
-            }
-        }
-    }
-    else
-    {
-        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-        {
-            if((UIInterfaceOrientationLandscapeLeft == self.orienation || UIInterfaceOrientationLandscapeRight == self.orienation))
-            {
-                orangeButtonName = @"orangeHalfLandscape_%@";
-            }
-            else
-            {
-                orangeButtonName = @"orangeFullPortrait_%@";
-            }
-        }
-    }
-    
-    UIImage *buttonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]];
     [newButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
     [newButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
     [newButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateSelected];
@@ -137,6 +130,21 @@
     
     [self addSubview:newButton];
     [self.buttons addObject:newButton];
+}
+
+- (void)reloadFrame:(CGRect)frame
+{
+    [self setFrame:CGRectMake(frame.origin.x,
+                              frame.origin.y,
+                              frame.size.width,
+                              56.0f)];
+    
+    for(UIButton *button in self.buttons)
+    {
+        [button removeFromSuperview];
+    }
+    
+    self.buttons = [[NSMutableArray alloc] init];
 }
 
 @end

@@ -162,10 +162,6 @@ UIPickerViewDelegate>
                                          self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
                                          self.view.frame.size.width,
                                          self.bottomView.frame.size.height)];
-    
-    [self.bottomView addButton:STRING_CANCEL target:self action:@selector(cancelButtonPressed)];
-    [self.bottomView addButton:STRING_SAVE_CHANGES target:self action:@selector(saveChangesButtonPressed)];
-    
     [self.view addSubview:self.bottomView];
 }
 
@@ -262,10 +258,12 @@ UIPickerViewDelegate>
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
                                                       self.contentView.frame.origin.y + self.contentView.frame.size.height + self.bottomView.frame.size.height)];
     
-    [self.bottomView setFrame:CGRectMake(0.0f,
-                                         self.view.frame.size.height - self.bottomView.frame.size.height,
-                                         width,
-                                         self.bottomView.frame.size.height)];
+    [self.bottomView reloadFrame:CGRectMake(0.0f,
+                                            self.view.frame.size.height - self.bottomView.frame.size.height,
+                                            width,
+                                            self.bottomView.frame.size.height)];
+    [self.bottomView addButton:STRING_CANCEL target:self action:@selector(cancelButtonPressed)];
+    [self.bottomView addButton:STRING_SAVE_CHANGES target:self action:@selector(saveChangesButtonPressed)];
 }
 
 -(NSDictionary*)getAddressValues
