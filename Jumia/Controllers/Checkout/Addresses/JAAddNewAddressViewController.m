@@ -210,8 +210,6 @@ UIPickerViewDelegate>
     
     self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:UIInterfaceOrientationPortrait];
     [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.view.frame.size.width, self.bottomView.frame.size.height)];
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(createAddressButtonPressed)];
-    
     [self.view addSubview:self.bottomView];
 }
 
@@ -406,10 +404,11 @@ UIPickerViewDelegate>
                                                  self.contentScrollView.frame.size.width - 12.0f,
                                                  self.billingAddressViewCurrentY + 12.0f)];
     
-    [self.bottomView setFrame:CGRectMake(0.0f,
-                                         self.view.frame.size.height - self.bottomView.frame.size.height,
-                                         self.view.frame.size.width,
-                                         self.bottomView.frame.size.height)];
+    [self.bottomView reloadFrame:CGRectMake(0.0f,
+                                            self.view.frame.size.height - self.bottomView.frame.size.height,
+                                            self.view.frame.size.width,
+                                            self.bottomView.frame.size.height)];
+    [self.bottomView addButton:STRING_NEXT target:self action:@selector(createAddressButtonPressed)];
     
     if(VALID_NOTEMPTY(self.checkBoxComponent, JACheckBoxComponent) && [self.checkBoxComponent isCheckBoxOn])
     {

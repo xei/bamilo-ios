@@ -15,6 +15,8 @@
 
 - (instancetype)initWithFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation;
 
+- (void)reloadFrame:(CGRect)frame;
+
 - (void) addButton:(NSString*)name target:(id)target action:(SEL)action;
 
 @end
