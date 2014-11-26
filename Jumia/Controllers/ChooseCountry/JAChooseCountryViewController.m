@@ -15,8 +15,8 @@
 
 @interface JAChooseCountryViewController ()
 <
-    UITableViewDelegate,
-    UITableViewDataSource
+UITableViewDelegate,
+UITableViewDataSource
 >
 
 @property (strong, nonatomic) NSArray *countriesArray;
@@ -45,8 +45,6 @@
                                                object:nil];
     
     self.tableViewContries.layer.cornerRadius = 5.0f;
-    
-    [self loadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,6 +55,13 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self loadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

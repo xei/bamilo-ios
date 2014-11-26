@@ -94,21 +94,6 @@ JAActivityViewControllerDelegate
     self.landscapeScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.landscapeScrollView setHidden:YES];
     [self.view addSubview:self.landscapeScrollView];
-    
-    // Always load the product details when entering PDV
-    if (VALID_NOTEMPTY(self.productUrl, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
-    {
-        [self loadCompleteProduct];
-    }
-    else
-    {
-        if(self.firstLoading)
-        {
-            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-            self.firstLoading = NO;
-        }
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -130,6 +115,22 @@ JAActivityViewControllerDelegate
         [self removeSuperviews];
         
         [self productLoaded];
+    }
+    else
+    {
+        if (VALID_NOTEMPTY(self.productUrl, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
+        {
+            [self loadCompleteProduct];
+        }
+        else
+        {
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
+        }
     }
 }
 
