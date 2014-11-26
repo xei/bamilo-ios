@@ -237,10 +237,26 @@ FBLoginViewDelegate
                                         width - margin*2,
                                         self.loginView.frame.size.height)];
     
+    for(UIView *view in self.loginDynamicForm.formViews)
+    {
+        [view setFrame:CGRectMake(view.frame.origin.x,
+                                  view.frame.origin.y,
+                                  self.loginView.frame.size.width,
+                                  view.frame.size.height)];
+    }
+    
     [self.signUpView setFrame:CGRectMake(margin,
                                          CGRectGetMaxY(self.loginView.frame) + margin,
                                          width - margin*2,
                                          self.signUpView.frame.size.height)];
+    
+    for(UIView *view in self.signupDynamicForm.formViews)
+    {
+        [view setFrame:CGRectMake(view.frame.origin.x,
+                                  view.frame.origin.y,
+                                  self.signUpView.frame.size.width,
+                                  view.frame.size.height)];
+    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -540,6 +556,8 @@ FBLoginViewDelegate
     
     [self.signUpFormView addSubview:self.facebookSingupButton];
     self.signupFormHeight += self.facebookSingupButton.frame.size.height;
+    
+    [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void) showLogin
