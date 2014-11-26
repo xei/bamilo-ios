@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString *apiRequestId;
 @property (strong, nonatomic) NSString *cartRequestId;
 @property (strong, nonatomic) NSString *customerRequestId;
+@property (assign, nonatomic) BOOL isRequestDone;
 
 @end
 
@@ -56,7 +57,6 @@
             // Check if the country is the same
             NSString *currentCountry = [RIApi getCountryIsoInUse];
             NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
-            
             if([currentCountry isEqualToString:countryFromUrl])
             {
                 [self continueProcessing];
@@ -71,7 +71,7 @@
                                                    if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
                                                    {
                                                        self.selectedCountry = country;
-
+                                                       
                                                        [self continueProcessing];
                                                    }
                                                }
@@ -89,11 +89,6 @@
                 [[RITrackingWrapper sharedInstance] trackCampaignWithName:[self.pushNotification objectForKey:@"UTM"]];
             }
         }
-        
-    }
-    else
-    {
-        [self continueProcessing];
     }
 }
 
@@ -102,6 +97,11 @@
     [super viewWillAppear:animated];
     
     self.isPopupOpened = NO;
+    
+    if(!self.isRequestDone)
+    {
+        [self continueProcessing];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -137,6 +137,8 @@
 {
     [self showLoading];
     
+    self.isRequestDone = NO;
+    
     self.requestCount = 0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
@@ -146,19 +148,18 @@
     {
         [RICommunicationWrapper deleteSessionCookie];
     }
-    
     self.apiRequestId = [RIApi startApiWithCountry:self.selectedCountry
                                       successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory)
                          {
                              if(hasUpdate)
                              {
                                  self.isPopupOpened = YES;
+                                 self.isRequestDone = YES;
                                  if(isUpdateMandatory)
                                  {
                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:STRING_UPDATE_NECESSARY_MESSAGE delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
                                      [alert setTag:kForceUpdateAlertViewTag];
                                      [alert show];
-                                     
                                      [self hideLoading];
                                  }
                                  else
@@ -180,6 +181,7 @@
                          }
                                    andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage)
                          {
+                             self.isRequestDone=YES;
                              if(RIApiResponseMaintenancePage == apiResponse)
                              {
                                  [self showMaintenancePage:@selector(continueProcessing) objects:nil];
@@ -254,6 +256,8 @@
 
 - (void)initCountry
 {
+    self.isRequestDone = YES;
+    
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
     
