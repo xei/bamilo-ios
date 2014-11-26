@@ -125,10 +125,23 @@
                 NSDictionary *attributes = [json objectForKey:@"attributes"];
                 
                 if ([attributes objectForKey:@"image_list"]) {
-                    NSArray *imageList = [attributes objectForKey:@"image_list"];
+                    id imageList = [attributes objectForKey:@"image_list"];
                     
-                    for (NSDictionary *imageDic in imageList) {
-                        RITeaserImage *image = [RITeaserImage parseTeaserImage:imageDic];
+                    if (VALID_NOTEMPTY(imageList, NSArray)) {
+                        for (NSDictionary *imageDic in imageList) {
+                            if (VALID_NOTEMPTY(imageDic, NSDictionary)) {
+                                RITeaserImage *image = [RITeaserImage parseTeaserImage:imageDic];
+                                
+                                if ([attributes objectForKey:@"description"]) {
+                                    image.teaserDescription = [attributes objectForKey:@"description"];
+                                }
+                                
+                                image.teaser = teaser;
+                                [teaser addTeaserImagesObject:image];
+                            }
+                        }
+                    } else if (VALID_NOTEMPTY(imageList, NSDictionary)) {
+                        RITeaserImage *image = [RITeaserImage parseTeaserImage:imageList];
                         
                         if ([attributes objectForKey:@"description"]) {
                             image.teaserDescription = [attributes objectForKey:@"description"];
