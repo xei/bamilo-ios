@@ -89,6 +89,7 @@ Scenario: Call to Order
 * I wait for 2 seconds
 * I wait to see the product detail screen
 * I touch add to cart button
+* I wait for 1 seconds
 * I wait to see the product added message
 * I touch the cart button
 * I wait for 1 seconds
