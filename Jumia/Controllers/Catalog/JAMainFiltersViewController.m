@@ -109,7 +109,7 @@
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0f];
 }
 
-- (void)checkEditButtonState
+- (BOOL)checkEditButtonState
 {
     NSInteger numberOfRows = [self tableView:self.tableView numberOfRowsInSection:0];
     BOOL buttonIsEnabled = NO;
@@ -121,6 +121,8 @@
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kEditShouldChangeStateNotification object:nil userInfo:@{@"enabled":[NSNumber numberWithBool:buttonIsEnabled]}];
+    
+    return buttonIsEnabled;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -456,6 +458,10 @@
     }
     
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    
+    if (NO == [self checkEditButtonState]) {
+        [self.tableView setEditing:NO animated:YES];
+    }
 }
 
 
@@ -484,6 +490,7 @@
         self.lastSelectedClickView.selected = NO;
     }
     [self.tableView reloadData];
+    [self.tableView setEditing:NO animated:YES];
     [self checkEditButtonState];
 }
 
