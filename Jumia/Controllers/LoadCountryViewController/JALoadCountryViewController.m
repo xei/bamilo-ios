@@ -44,52 +44,6 @@
     
     // Do any additional setup after loading the view.
     self.screenName = @"SplashScreen";
-    
-    if(VALID_NOTEMPTY(self.pushNotification, NSDictionary))
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                            object:nil];
-        
-        if (VALID_NOTEMPTY([self.pushNotification objectForKey:@"u"], NSString))
-        {
-            NSString *urlString = [self.pushNotification objectForKey:@"u"];
-            
-            // Check if the country is the same
-            NSString *currentCountry = [RIApi getCountryIsoInUse];
-            NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
-            if([currentCountry isEqualToString:countryFromUrl])
-            {
-                [self continueProcessing];
-            }
-            else
-            {
-                // Change country
-                self.countriesRequestId = [RICountry getCountriesWithSuccessBlock:^(id countries)
-                                           {
-                                               for (RICountry *country in countries)
-                                               {
-                                                   if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
-                                                   {
-                                                       self.selectedCountry = country;
-                                                       
-                                                       [self continueProcessing];
-                                                   }
-                                               }
-                                               
-                                           } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-                                           {
-                                               [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-                                           }];
-            }
-        }
-        else
-        {
-            if(VALID_NOTEMPTY(self.pushNotification, NSDictionary) && VALID_NOTEMPTY([self.pushNotification objectForKey:@"UTM"], NSString))
-            {
-                [[RITrackingWrapper sharedInstance] trackCampaignWithName:[self.pushNotification objectForKey:@"UTM"]];
-            }
-        }
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -100,7 +54,55 @@
     
     if(!self.isRequestDone)
     {
-        [self continueProcessing];
+        if(VALID_NOTEMPTY(self.pushNotification, NSDictionary))
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                                object:nil];
+            
+            if (VALID_NOTEMPTY([self.pushNotification objectForKey:@"u"], NSString))
+            {
+                NSString *urlString = [self.pushNotification objectForKey:@"u"];
+                
+                // Check if the country is the same
+                NSString *currentCountry = [RIApi getCountryIsoInUse];
+                NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
+                if([currentCountry isEqualToString:countryFromUrl])
+                {
+                    [self continueProcessing];
+                }
+                else
+                {
+                    // Change country
+                    self.countriesRequestId = [RICountry getCountriesWithSuccessBlock:^(id countries)
+                                               {
+                                                   for (RICountry *country in countries)
+                                                   {
+                                                       if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
+                                                       {
+                                                           self.selectedCountry = country;
+                                                           
+                                                           [self continueProcessing];
+                                                       }
+                                                   }
+                                                   
+                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+                                               {
+                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                                               }];
+                }
+            }
+            else
+            {
+                if(VALID_NOTEMPTY(self.pushNotification, NSDictionary) && VALID_NOTEMPTY([self.pushNotification objectForKey:@"UTM"], NSString))
+                {
+                    [[RITrackingWrapper sharedInstance] trackCampaignWithName:[self.pushNotification objectForKey:@"UTM"]];
+                }
+            }
+        }
+        else
+        {
+            [self continueProcessing];
+        }
     }
 }
 
