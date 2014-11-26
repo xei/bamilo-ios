@@ -84,8 +84,6 @@ UICollectionViewDelegateFlowLayout>
     self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
     [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
     
-    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
-    
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
@@ -144,6 +142,11 @@ UICollectionViewDelegateFlowLayout>
     [super viewWillAppear:animated];
     
     [self showLoading];
+    
+    [self.contentScrollView setHidden:YES];
+    [self.bottomView setHidden:YES];
+    
+    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     
     [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
         
@@ -251,9 +254,9 @@ UICollectionViewDelegateFlowLayout>
                                              stepBackgroundImage.size.height)];
     
     [self.stepView setFrame:CGRectMake(stepViewLeftMargin,
-                                       self.stepView.frame.origin.y,
+                                       (stepBackgroundImage.size.height - self.stepView.frame.size.height) / 2,
                                        self.stepView.frame.size.width,
-                                       self.stepView.frame.size.height)];
+                                       stepBackgroundImage.size.height)];
     [self.stepLabel sizeToFit];
     
     CGFloat horizontalMargin = 6.0f;
@@ -264,26 +267,26 @@ UICollectionViewDelegateFlowLayout>
     {
         CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
         [self.stepIcon setFrame:CGRectMake(xStepIconValue,
-                                           self.stepIcon.frame.origin.y,
+                                           floorf((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2),
                                            self.stepIcon.frame.size.width,
                                            self.stepIcon.frame.size.height)];
         
         [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            0.0f,
+                                            4.0f,
                                             self.stepLabel.frame.size.width,
-                                            self.stepView.frame.size.height)];
+                                            12.0f)];
     }
     else
     {
         [self.stepIcon setFrame:CGRectMake(horizontalMargin,
-                                           self.stepIcon.frame.origin.y,
+                                           floorf((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2),
                                            self.stepIcon.frame.size.width,
                                            self.stepIcon.frame.size.height)];
         
         [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            0.0f,
+                                            4.0f,
                                             (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
-                                            self.stepView.frame.size.height)];
+                                            12.0f)];
     }
 }
 
@@ -306,7 +309,6 @@ UICollectionViewDelegateFlowLayout>
         [self.orderSummary loadWithCart:self.cart];
         [self.view addSubview:self.orderSummary];
     }
-    
     
     [self.contentScrollView setFrame:CGRectMake(0.0f,
                                                 self.stepBackground.frame.size.height,
@@ -355,14 +357,17 @@ UICollectionViewDelegateFlowLayout>
                                                                 self.secondAddressesCollectionView.frame.size.width,
                                                                 70.0f)];
     }
-
-    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
     
+    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
+
+    [self.contentScrollView setHidden:NO];
+
     [self.bottomView reloadFrame:CGRectMake(0.0f,
                                             self.view.frame.size.height - self.bottomView.frame.size.height,
                                             width,
                                             self.bottomView.frame.size.height)];
     [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    [self.bottomView setHidden:NO];
 }
 
 -(void)finishedLoadingAddresses

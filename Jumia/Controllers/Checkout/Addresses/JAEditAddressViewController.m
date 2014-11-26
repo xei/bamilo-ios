@@ -81,6 +81,11 @@ UIPickerViewDelegate>
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     [self initViews];
     
@@ -146,10 +151,7 @@ UIPickerViewDelegate>
     
     [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     
-    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                            self.stepBackground.frame.size.height,
-                                                                            self.view.frame.size.width,
-                                                                            self.view.frame.size.height - 64.0f - self.stepBackground.frame.size.height)];
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
     
@@ -163,7 +165,7 @@ UIPickerViewDelegate>
                                                   orientation:UIInterfaceOrientationPortrait];
     
     [self.bottomView setFrame:CGRectMake(0.0f,
-                                         self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
+                                         self.view.frame.size.height - self.bottomView.frame.size.height,
                                          self.view.frame.size.width,
                                          self.bottomView.frame.size.height)];
     [self.view addSubview:self.bottomView];
@@ -195,9 +197,9 @@ UIPickerViewDelegate>
                                              stepBackgroundImage.size.height)];
     
     [self.stepView setFrame:CGRectMake(stepViewLeftMargin,
-                                       self.stepView.frame.origin.y,
+                                       (stepBackgroundImage.size.height - self.stepView.frame.size.height) / 2,
                                        self.stepView.frame.size.width,
-                                       self.stepView.frame.size.height)];
+                                       stepBackgroundImage.size.height)];
     [self.stepLabel sizeToFit];
     
     CGFloat horizontalMargin = 6.0f;
@@ -208,26 +210,26 @@ UIPickerViewDelegate>
     {
         CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
         [self.stepIcon setFrame:CGRectMake(xStepIconValue,
-                                           self.stepIcon.frame.origin.y,
+                                           floorf((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2),
                                            self.stepIcon.frame.size.width,
                                            self.stepIcon.frame.size.height)];
         
         [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            0.0f,
+                                            4.0f,
                                             self.stepLabel.frame.size.width,
-                                            self.stepView.frame.size.height)];
+                                            12.0f)];
     }
     else
     {
         [self.stepIcon setFrame:CGRectMake(horizontalMargin,
-                                           self.stepIcon.frame.origin.y,
+                                           floorf((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2),
                                            self.stepIcon.frame.size.width,
                                            self.stepIcon.frame.size.height)];
         
         [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            0.0f,
+                                            4.0f,
                                             (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
-                                            self.stepView.frame.size.height)];
+                                            12.0f)];
     }
 }
 
@@ -259,11 +261,16 @@ UIPickerViewDelegate>
         [self.view addSubview:self.orderSummary];
     }
     
+    [self.contentView setFrame:CGRectMake(6.0f,
+                                          6.0f,
+                                          self.contentScrollView.frame.size.width - 12.0f,
+                                          self.contentView.frame.size.height)];
+    
     for(UIView *view in self.dynamicForm.formViews)
     {
         [view setFrame:CGRectMake(view.frame.origin.x,
                                   self.addressViewCurrentY,
-                                  self.contentScrollView.frame.size.width - 12.0f,
+                                  self.contentView.frame.size.width - 12.0f,
                                   view.frame.size.height)];
         self.addressViewCurrentY += view.frame.size.height;
     }
@@ -274,10 +281,10 @@ UIPickerViewDelegate>
                                           6.0f,
                                           self.contentScrollView.frame.size.width - 12.0f,
                                           self.addressViewCurrentY)];
-   
+    
     [self.headerLabel setFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width - 12.0f, 26.0f)];
     [self.headerSeparator setFrame:CGRectMake(0.0f, CGRectGetMaxY(self.headerLabel.frame), self.contentView.frame.size.width, 1.0f)];
-        
+    
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
                                                       self.contentView.frame.origin.y + self.contentView.frame.size.height + self.bottomView.frame.size.height)];
     
