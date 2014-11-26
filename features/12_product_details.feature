@@ -89,6 +89,7 @@ Scenario: Clean Favourites
 * I touch the my favourites option
 * I wait to see the my favourites screen
 * I wait for 2 seconds
+* I scroll down
 * I make sure I have no favourites
 
 @pdv_fa
