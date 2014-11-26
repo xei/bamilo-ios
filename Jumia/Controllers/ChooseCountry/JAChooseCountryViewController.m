@@ -85,6 +85,14 @@ UITableViewDataSource
         
         [self.tableViewContries reloadData];
         
+        if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+            CGFloat finalHeight = MIN(self.tableViewContries.frame.size.height, self.tableViewContries.contentSize.height - 20.0f);
+            [self.tableViewContries setFrame:CGRectMake(self.tableViewContries.frame.origin.x,
+                                                        self.tableViewContries.frame.origin.y,
+                                                        self.tableViewContries.frame.size.width,
+                                                        finalHeight)];
+        }
+        
         NSIndexPath *tempIndex;
         
         if (VALID_NOTEMPTY(countryUrl, NSString))
@@ -141,6 +149,29 @@ UITableViewDataSource
         [self hideLoading];
         
     }];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self showLoading];
+    
+    self.tableViewContries.hidden = YES;
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    [self hideLoading];
+
+    CGFloat finalHeight = MIN(self.tableViewContries.frame.size.height, self.tableViewContries.contentSize.height - 20.0f);
+    [self.tableViewContries setFrame:CGRectMake(self.tableViewContries.frame.origin.x,
+                                                self.tableViewContries.frame.origin.y,
+                                                self.tableViewContries.frame.size.width,
+                                                finalHeight)];
+    self.tableViewContries.hidden = NO;
 }
 
 #pragma mark - Selected apply
