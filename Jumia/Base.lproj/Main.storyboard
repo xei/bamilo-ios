@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
         <!--Load Country View Controller-->
@@ -1792,29 +1792,20 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="headerCheckoutStep1" translatesAutoresizingMaskIntoConstraints="NO" id="Qaq-5V-OBs">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
                             </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pRb-k2-LiI">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pRb-k2-LiI">
                                 <rect key="frame" x="24" y="3" width="104" height="15"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep1Icon" translatesAutoresizingMaskIntoConstraints="NO" id="DmI-SK-pi2">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep1Icon" translatesAutoresizingMaskIntoConstraints="NO" id="DmI-SK-pi2">
                                         <rect key="frame" x="14" y="1" width="9" height="13"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZfW-Ci-WUF">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZfW-Ci-WUF">
                                         <rect key="frame" x="29" y="1" width="42" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="42" id="QhB-hD-hlO"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="centerY" secondItem="ZfW-Ci-WUF" secondAttribute="centerY" id="9RQ-4d-abZ"/>
-                                    <constraint firstItem="DmI-SK-pi2" firstAttribute="leading" secondItem="pRb-k2-LiI" secondAttribute="leading" constant="14" id="CXy-DN-WC2"/>
-                                    <constraint firstAttribute="centerY" secondItem="DmI-SK-pi2" secondAttribute="centerY" id="l41-PJ-uzW"/>
-                                    <constraint firstItem="ZfW-Ci-WUF" firstAttribute="leading" secondItem="DmI-SK-pi2" secondAttribute="trailing" constant="6" id="ucB-x5-JRn"/>
-                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sla-aO-av7" userLabel="Login">
                                 <rect key="frame" x="6" y="27" width="308" height="25"/>
@@ -1901,10 +1892,9 @@
                         <outlet property="signUpView" destination="7ni-7n-FVG" id="6vw-pN-9zJ"/>
                         <outlet property="signUpViewConstrains" destination="C1c-k7-GmP" id="YDL-Ju-tVm"/>
                         <outlet property="signUpViewFormConstrains" destination="IT8-wZ-JLB" id="upD-NX-fop"/>
+                        <outlet property="stepBackground" destination="Qaq-5V-OBs" id="T7G-1c-1gM"/>
                         <outlet property="stepIcon" destination="DmI-SK-pi2" id="6Ei-jf-7Bn"/>
-                        <outlet property="stepIconLeftConstrain" destination="CXy-DN-WC2" id="Pi8-tN-AGS"/>
                         <outlet property="stepLabel" destination="ZfW-Ci-WUF" id="xhK-Sc-T3V"/>
-                        <outlet property="stepLabelWidthConstrain" destination="QhB-hD-hlO" id="PEO-b0-Ur2"/>
                         <outlet property="stepView" destination="pRb-k2-LiI" id="y58-1a-Dc7"/>
                     </connections>
                 </viewController>

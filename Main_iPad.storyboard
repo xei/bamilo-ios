@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
         <!--Load Country View Controller-->
@@ -1715,46 +1715,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep1" translatesAutoresizingMaskIntoConstraints="NO" id="2Xw-HN-CHq">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="headerCheckoutStep1" translatesAutoresizingMaskIntoConstraints="NO" id="2Xw-HN-CHq">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
                             </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VlL-nx-TaP">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VlL-nx-TaP">
                                 <rect key="frame" x="24" y="3" width="104" height="15"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep1Icon" translatesAutoresizingMaskIntoConstraints="NO" id="V88-ZD-wdN">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep1Icon" translatesAutoresizingMaskIntoConstraints="NO" id="V88-ZD-wdN">
                                         <rect key="frame" x="14" y="1" width="9" height="13"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bi-Ke-6ul">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bi-Ke-6ul">
                                         <rect key="frame" x="29" y="1" width="42" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="42" id="Gv2-oD-FHi"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="centerY" secondItem="V88-ZD-wdN" secondAttribute="centerY" id="8g9-tV-0mP"/>
-                                    <constraint firstAttribute="centerY" secondItem="0bi-Ke-6ul" secondAttribute="centerY" id="VfL-gM-YA5"/>
-                                    <constraint firstItem="0bi-Ke-6ul" firstAttribute="leading" secondItem="V88-ZD-wdN" secondAttribute="trailing" constant="6" id="XWf-2c-h1C"/>
-                                    <constraint firstItem="V88-ZD-wdN" firstAttribute="leading" secondItem="VlL-nx-TaP" secondAttribute="leading" constant="14" id="dS5-YS-qoe"/>
-                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N7n-uH-X1F" userLabel="Login">
-                                <rect key="frame" x="6" y="27" width="308" height="25"/>
+                                <rect key="frame" x="6" y="27" width="756" height="25"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3A8-Di-BGJ">
-                                        <rect key="frame" x="6" y="2" width="269" height="21"/>
+                                        <rect key="frame" x="6" y="2" width="724" height="21"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrowOrangeClosed" translatesAutoresizingMaskIntoConstraints="NO" id="l9H-8F-0tR">
-                                        <rect key="frame" x="290" y="7" width="12" height="12"/>
+                                        <rect key="frame" x="738" y="7" width="12" height="12"/>
                                     </imageView>
                                     <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h6B-Rr-4rf">
-                                        <rect key="frame" x="0.0" y="25" width="308" height="1"/>
+                                        <rect key="frame" x="0.0" y="25" width="724" height="1"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DQb-We-jD4">
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1772,18 +1763,18 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gm1-Me-OrS" userLabel="Signup">
-                                <rect key="frame" x="6" y="58" width="308" height="25"/>
+                                <rect key="frame" x="6" y="58" width="756" height="25"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IWP-1m-xMr">
-                                        <rect key="frame" x="6" y="2" width="269" height="21"/>
+                                        <rect key="frame" x="6" y="2" width="724" height="21"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrowOrangeClosed" translatesAutoresizingMaskIntoConstraints="NO" id="S3h-zR-WrV">
-                                        <rect key="frame" x="290" y="7" width="12" height="12"/>
+                                        <rect key="frame" x="738" y="7" width="12" height="12"/>
                                     </imageView>
                                     <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lyZ-Zy-z8e">
-                                        <rect key="frame" x="0.0" y="25" width="308" height="1"/>
+                                        <rect key="frame" x="0.0" y="25" width="724" height="1"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7De-fm-P9n">
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1804,7 +1795,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="gm1-Me-OrS" firstAttribute="top" secondItem="N7n-uH-X1F" secondAttribute="bottom" constant="6" id="Npj-aU-DV8"/>
-                            <constraint firstItem="2Xw-HN-CHq" firstAttribute="top" secondItem="w11-f0-plb" secondAttribute="bottom" id="SNW-MN-AW4"/>
                             <constraint firstItem="N7n-uH-X1F" firstAttribute="top" secondItem="2Xw-HN-CHq" secondAttribute="bottom" constant="6" id="p5A-gd-RFc"/>
                         </constraints>
                     </view>
@@ -1827,10 +1817,9 @@
                         <outlet property="signUpView" destination="gm1-Me-OrS" id="AkU-4u-o9x"/>
                         <outlet property="signUpViewConstrains" destination="f6v-86-m1x" id="td7-dB-pwd"/>
                         <outlet property="signUpViewFormConstrains" destination="4kl-vP-9tv" id="mYd-Xe-mBa"/>
+                        <outlet property="stepBackground" destination="2Xw-HN-CHq" id="8Hb-WC-Uls"/>
                         <outlet property="stepIcon" destination="V88-ZD-wdN" id="WqI-EB-kge"/>
-                        <outlet property="stepIconLeftConstrain" destination="dS5-YS-qoe" id="umj-CO-kEz"/>
                         <outlet property="stepLabel" destination="0bi-Ke-6ul" id="bYq-3l-5Zu"/>
-                        <outlet property="stepLabelWidthConstrain" destination="Gv2-oD-FHi" id="hVJ-Dl-C7y"/>
                         <outlet property="stepView" destination="VlL-nx-TaP" id="31a-Cj-iDS"/>
                     </connections>
                 </viewController>
