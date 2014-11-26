@@ -2057,29 +2057,20 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep4" translatesAutoresizingMaskIntoConstraints="NO" id="IE2-jy-nA3">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
                             </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4vc-Qh-3NM">
-                                <rect key="frame" x="192" y="3" width="104" height="15"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4vc-Qh-3NM">
+                                <rect key="frame" x="192" y="0.0" width="122" height="21"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="headerCheckoutStep4Icon" translatesAutoresizingMaskIntoConstraints="NO" id="2hf-t3-Gpb">
-                                        <rect key="frame" x="14" y="2" width="14" height="10"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep4Icon" translatesAutoresizingMaskIntoConstraints="NO" id="2hf-t3-Gpb">
+                                        <rect key="frame" x="14" y="4" width="14" height="12"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIs-5b-mhc">
-                                        <rect key="frame" x="29" y="1" width="42" height="11"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="42" id="qVD-74-KBr"/>
-                                        </constraints>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIs-5b-mhc">
+                                        <rect key="frame" x="29" y="4" width="42" height="12"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="centerY" secondItem="XIs-5b-mhc" secondAttribute="centerY" id="GLc-oE-32f"/>
-                                    <constraint firstItem="2hf-t3-Gpb" firstAttribute="leading" secondItem="4vc-Qh-3NM" secondAttribute="leading" constant="14" id="Gtf-xd-xyA"/>
-                                    <constraint firstItem="XIs-5b-mhc" firstAttribute="leading" secondItem="2hf-t3-Gpb" secondAttribute="trailing" constant="6" id="VKH-8Y-r5U"/>
-                                    <constraint firstAttribute="centerY" secondItem="2hf-t3-Gpb" secondAttribute="centerY" id="XpQ-Un-ods"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2088,9 +2079,7 @@
                     <navigationItem key="navigationItem" id="Dhp-Gv-ecA"/>
                     <connections>
                         <outlet property="stepIcon" destination="2hf-t3-Gpb" id="LFp-Y0-AQx"/>
-                        <outlet property="stepIconLeftConstrain" destination="Gtf-xd-xyA" id="3lP-QX-Gil"/>
                         <outlet property="stepLabel" destination="XIs-5b-mhc" id="EYc-MR-HxQ"/>
-                        <outlet property="stepLabelWidthConstrain" destination="qVD-74-KBr" id="vPr-EH-6sa"/>
                         <outlet property="stepView" destination="4vc-Qh-3NM" id="Wkc-SE-mHA"/>
                     </connections>
                 </viewController>

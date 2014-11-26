@@ -2019,6 +2019,191 @@
             </objects>
             <point key="canvasLocation" x="-38.666666666666664" y="2365.4833333333336"/>
         </scene>
+        <!--Payment View Controller-->
+        <scene sceneID="9gx-SX-tW7">
+            <objects>
+                <viewController storyboardIdentifier="paymentViewController" automaticallyAdjustsScrollViewInsets="NO" id="U82-xS-Eli" customClass="JAPaymentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eFr-cH-nqQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="5a5-9y-kC7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WAF-c9-MUo">
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep4" translatesAutoresizingMaskIntoConstraints="NO" id="JxS-pz-5Tx">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pSP-K8-UIp">
+                                <rect key="frame" x="192" y="0.0" width="122" height="21"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep4Icon" translatesAutoresizingMaskIntoConstraints="NO" id="DMQ-Gu-bZB">
+                                        <rect key="frame" x="14" y="4" width="14" height="12"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q7n-ir-Bff">
+                                        <rect key="frame" x="29" y="4" width="42" height="12"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="0p0-SI-9Hf"/>
+                    <connections>
+                        <outlet property="stepIcon" destination="DMQ-Gu-bZB" id="pK2-6Q-dKk"/>
+                        <outlet property="stepLabel" destination="Q7n-ir-Bff" id="bXy-rR-SL2"/>
+                        <outlet property="stepView" destination="pSP-K8-UIp" id="Mdd-yQ-V3m"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Tk-xN-iyH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="361.33333333333331" y="2365.4833333333336"/>
+        </scene>
+        <!--Order View Controller-->
+        <scene sceneID="TVf-Pe-5kS">
+            <objects>
+                <viewController storyboardIdentifier="orderViewController" automaticallyAdjustsScrollViewInsets="NO" id="DOE-dj-5RB" customClass="JAOrderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SfM-jo-kZv"/>
+                        <viewControllerLayoutGuide type="bottom" id="bQm-3q-VPe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8z0-Sh-zdI">
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="wVJ-Gz-qsn"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P8C-6J-zp9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="361" y="3026"/>
+        </scene>
+        <!--Thanks View Controller-->
+        <scene sceneID="zW4-me-Hij">
+            <objects>
+                <viewController storyboardIdentifier="thanksViewController" automaticallyAdjustsScrollViewInsets="NO" id="EZ0-yI-NBW" customClass="JAThanksViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Vi2-Jq-ZMo"/>
+                        <viewControllerLayoutGuide type="bottom" id="laj-ec-bIo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SeJ-Gl-7SG">
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mm0-lJ-z7F">
+                                <rect key="frame" x="6" y="6" width="308" height="345"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="successIcon" translatesAutoresizingMaskIntoConstraints="NO" id="X3P-DD-gJz">
+                                        <rect key="frame" x="107" y="20" width="95" height="95"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x77-wX-P1B">
+                                        <rect key="frame" x="8" y="130" width="292" height="35"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eE-Fd-fud">
+                                        <rect key="frame" x="48" y="281" width="212" height="45"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vh6-cK-3xN">
+                                        <rect key="frame" x="48" y="184" width="212" height="35"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="000000" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ApY-ag-Vnr">
+                                        <rect key="frame" x="86" y="239" width="135" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcn-el-dl9">
+                                        <rect key="frame" x="81" y="235" width="148" height="30"/>
+                                        <state key="normal" backgroundImage="trackNumberBox">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zE6-nm-7vT" userLabel="Continue Shopping Button">
+                                <rect key="frame" x="6" y="516" width="308" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="308" id="JSY-zm-91T"/>
+                                    <constraint firstAttribute="height" constant="44" id="c1b-qO-d8K"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <state key="normal" title="Button" backgroundImage="orangeBig_normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled" title="Button" backgroundImage="orangeBig_disabled"/>
+                                <state key="selected" backgroundImage="orangeBig_highlighted"/>
+                                <state key="highlighted" backgroundImage="orangeBig_highlighted"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="zE6-nm-7vT" secondAttribute="trailing" constant="6" id="Ggv-XX-3DJ"/>
+                            <constraint firstItem="laj-ec-bIo" firstAttribute="top" secondItem="zE6-nm-7vT" secondAttribute="bottom" constant="8" id="LkV-5R-6s9"/>
+                            <constraint firstItem="zE6-nm-7vT" firstAttribute="leading" secondItem="SeJ-Gl-7SG" secondAttribute="leading" constant="6" id="vVw-nP-suJ"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="GUo-rj-9wH"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <outlet property="contentView" destination="Mm0-lJ-z7F" id="nrR-oX-yJa"/>
+                        <outlet property="continueShoppingButton" destination="zE6-nm-7vT" id="fBf-Gu-pPu"/>
+                        <outlet property="orderCopyButton" destination="Hcn-el-dl9" id="Zt1-2N-vyX"/>
+                        <outlet property="orderNumberField" destination="ApY-ag-Vnr" id="GBh-Hr-t7Q"/>
+                        <outlet property="successMessage" destination="vh6-cK-3xN" id="lOZ-uH-VBn"/>
+                        <outlet property="thankYouLabel" destination="x77-wX-P1B" id="7K2-5A-R5V"/>
+                        <outlet property="trackOrderMessage" destination="2eE-Fd-fud" id="xTT-hF-pcK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z2L-xg-Tpm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-586" y="3046"/>
+        </scene>
+        <!--External Payments View Controller-->
+        <scene sceneID="CaS-ir-ZBI">
+            <objects>
+                <viewController storyboardIdentifier="externalPaymentsViewController" automaticallyAdjustsScrollViewInsets="NO" id="1UI-GU-VlR" customClass="JAExternalPaymentsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hl2-Rb-jk2"/>
+                        <viewControllerLayoutGuide type="bottom" id="WH6-b9-i8C"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AUl-Tk-bYN">
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gRt-sH-U19">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="S1Q-hW-J8D"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <outlet property="webView" destination="gRt-sH-U19" id="kC8-Tn-iq8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xgO-hv-jNI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-39" y="3020"/>
+        </scene>
     </scenes>
     <resources>
         <image name="arrowOrangeClosed" width="12" height="12"/>
@@ -2036,12 +2221,18 @@
         <image name="headerCheckoutStep2Portrait" width="14" height="14"/>
         <image name="headerCheckoutStep3Icon" width="17" height="11"/>
         <image name="headerCheckoutStep3Portrait" width="25" height="20"/>
+        <image name="headerCheckoutStep4" width="320" height="21"/>
+        <image name="headerCheckoutStep4Icon" width="14" height="10"/>
         <image name="img_emptyCart" width="98" height="98"/>
         <image name="img_noreviews" width="27" height="27"/>
         <image name="orangeBig_disabled" width="308" height="44"/>
+        <image name="orangeBig_highlighted" width="308" height="44"/>
+        <image name="orangeBig_normal" width="308" height="44"/>
         <image name="orangeFullPortrait_disabled" width="14" height="14"/>
         <image name="orangeFullPortrait_highlighted" width="14" height="14"/>
         <image name="orangeFullPortrait_normal" width="14" height="14"/>
+        <image name="successIcon" width="95" height="95"/>
         <image name="tick_selected" width="14" height="14"/>
+        <image name="trackNumberBox" width="148" height="30"/>
     </resources>
 </document>
