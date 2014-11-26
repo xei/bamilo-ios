@@ -661,7 +661,7 @@
                                                                           contentView.bounds.origin.y,
                                                                           50.0f,
                                                                           26.0f)];
-        [editButton setTitle:@"Edit" forState:UIControlStateNormal];
+        [editButton setTitle:STRING_EDIT forState:UIControlStateNormal];
         [editButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
         [editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
         [editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];

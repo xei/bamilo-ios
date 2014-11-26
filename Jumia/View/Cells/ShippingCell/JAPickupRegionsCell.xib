@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,24 +13,44 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="308" height="50"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cgS-z4-icp">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cgS-z4-icp">
                         <rect key="frame" x="0.0" y="49" width="308" height="1"/>
                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="5Zj-dd-Whq"/>
+                        </constraints>
                     </view>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vK6-7h-ToK">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vK6-7h-ToK">
                         <rect key="frame" x="37" y="9" width="244" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="DCw-Q7-vZc"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                         <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="shk-Ha-Et8">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="shk-Ha-Et8">
                         <rect key="frame" x="27" y="35" width="264" height="1"/>
                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="nWp-BV-XOv"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="shk-Ha-Et8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="27" id="9NW-pH-t1f"/>
+                <constraint firstAttribute="trailing" secondItem="shk-Ha-Et8" secondAttribute="trailing" constant="17" id="9hL-Im-YJX"/>
+                <constraint firstAttribute="bottom" secondItem="cgS-z4-icp" secondAttribute="bottom" id="AhS-t4-tms"/>
+                <constraint firstAttribute="trailing" secondItem="vK6-7h-ToK" secondAttribute="trailing" constant="27" id="Bgp-ew-9pt"/>
+                <constraint firstItem="vK6-7h-ToK" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="37" id="Vg1-tl-e9W"/>
+                <constraint firstItem="vK6-7h-ToK" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="Vk1-MR-xzE"/>
+                <constraint firstItem="shk-Ha-Et8" firstAttribute="top" secondItem="vK6-7h-ToK" secondAttribute="bottom" constant="5" id="WdH-cY-kFm"/>
+                <constraint firstItem="cgS-z4-icp" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="iVX-eA-Azr"/>
+                <constraint firstAttribute="trailing" secondItem="cgS-z4-icp" secondAttribute="trailing" id="lkh-di-wtQ"/>
+            </constraints>
             <connections>
                 <outlet property="label" destination="vK6-7h-ToK" id="7ap-TS-aYV"/>
                 <outlet property="labelSeparator" destination="shk-Ha-Et8" id="0Cf-Vw-SM3"/>

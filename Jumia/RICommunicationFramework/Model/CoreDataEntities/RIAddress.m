@@ -132,6 +132,9 @@
     if ([addressJSON objectForKey:@"id_customer_address"]) {
         newAddress.uid = [addressJSON objectForKey:@"id_customer_address"];
     }
+    else if ([addressJSON objectForKey:@"customer_address_id"]) {
+        newAddress.uid = [addressJSON objectForKey:@"customer_address_id"];
+    }
     if ([addressJSON objectForKey:@"first_name"]) {
         newAddress.firstName = [addressJSON objectForKey:@"first_name"];
     }

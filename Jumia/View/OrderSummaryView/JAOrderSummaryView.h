@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "RICart.h"
+#import "RICheckout.h"
 
 @interface JAOrderSummaryView : UIView
 
 - (void)loadWithCart:(RICart*)cart;
+
+- (void)loadWithCheckout:(RICheckout*)checkout;
 
 @end
