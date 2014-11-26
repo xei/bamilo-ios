@@ -85,13 +85,11 @@ UITableViewDataSource
         
         [self.tableViewContries reloadData];
         
-        if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-            CGFloat finalHeight = MIN(self.tableViewContries.frame.size.height, self.tableViewContries.contentSize.height - 20.0f);
-            [self.tableViewContries setFrame:CGRectMake(self.tableViewContries.frame.origin.x,
-                                                        self.tableViewContries.frame.origin.y,
-                                                        self.tableViewContries.frame.size.width,
-                                                        finalHeight)];
-        }
+        CGFloat finalHeight = MIN(self.tableViewContries.frame.size.height, self.tableViewContries.contentSize.height - 20.0f);
+        [self.tableViewContries setFrame:CGRectMake(self.tableViewContries.frame.origin.x,
+                                                    self.tableViewContries.frame.origin.y,
+                                                    self.tableViewContries.frame.size.width,
+                                                    finalHeight)];
         
         NSIndexPath *tempIndex;
         
