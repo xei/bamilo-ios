@@ -655,6 +655,8 @@
     {
         JALoginViewController *loginVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"loginViewController"];
         
+        loginVC.cart = self.cart;
+        
         [self popToRootViewControllerAnimated:NO];
         [self pushViewController:loginVC animated:NO];
     }
