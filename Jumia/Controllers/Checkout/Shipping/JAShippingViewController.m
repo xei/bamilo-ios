@@ -311,6 +311,8 @@ UICollectionViewDelegateFlowLayout
         }
         
         [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+        
+        [self collectionView:self.collectionView didSelectItemAtIndexPath:self.collectionViewIndexSelected];
     }
     
     if(self.firstLoading)
@@ -779,7 +781,7 @@ UICollectionViewDelegateFlowLayout
         
         if(collectionView == self.collectionView)
         {
-            [headerView loadHeaderWithText:STRING_SHIPPING width:self.view.frame.size.width];
+            [headerView loadHeaderWithText:STRING_SHIPPING width:self.collectionView.frame.size.width];
         }
         reusableview = headerView;
     }
@@ -796,7 +798,7 @@ UICollectionViewDelegateFlowLayout
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(collectionView == self.collectionView && VALID_NOTEMPTY(self.shippingMethods, NSArray) && indexPath.row != self.collectionViewIndexSelected.row)
+    if(collectionView == self.collectionView && VALID_NOTEMPTY(self.shippingMethods, NSArray))
     {
         if(indexPath.row <= self.collectionViewIndexSelected.row || indexPath.row > (self.collectionViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
         {

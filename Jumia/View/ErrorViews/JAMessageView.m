@@ -75,6 +75,11 @@
                                                object:nil];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)setTitle:(NSString *)title
          success:(BOOL)success
 {

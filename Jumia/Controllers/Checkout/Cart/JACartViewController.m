@@ -7,7 +7,6 @@
 //
 
 #import "JACartViewController.h"
-#import "JALoginViewController.h"
 #import "JAAddressesViewController.h"
 #import "JACatalogListCell.h"
 #import "JAConstants.h"
