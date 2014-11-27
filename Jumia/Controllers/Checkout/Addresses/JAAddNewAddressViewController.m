@@ -205,7 +205,7 @@ UIPickerViewDelegate>
     
     [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     
-    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
     
@@ -459,7 +459,7 @@ UIPickerViewDelegate>
     
     [self.bottomView reloadFrame:CGRectMake(0.0f,
                                             self.view.frame.size.height - self.bottomView.frame.size.height,
-                                            self.view.frame.size.width,
+                                            width,
                                             self.bottomView.frame.size.height)];
     [self.bottomView addButton:STRING_NEXT target:self action:@selector(createAddressButtonPressed)];
     
