@@ -522,7 +522,7 @@ NSString * const kGTMToken = @"kGTMToken";
                     [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventProductCategoryKey];
                 }
                 
-                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductSubCategoryKey];
+                //                [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventProductSubCategoryKey];
                 break;
             case RIEventAddToCart:
             case RIEventIncreaseQuantity:
@@ -856,25 +856,21 @@ NSString * const kGTMToken = @"kGTMToken";
     NSMutableDictionary *pushedData = [NSMutableDictionary dictionary];
     [pushedData setObject:@"transaction" forKey:kGTMEventKey];
     
-    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventPaymentMethodKey];
     if(VALID_NOTEMPTY([data objectForKey:kRIEcommercePaymentMethodKey], NSString))
     {
         [pushedData setObject:[data objectForKey:kRIEcommercePaymentMethodKey] forKey:kGTMEventPaymentMethodKey];
     }
     
-    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventVoucherAmountKey];
     if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceCouponKey], NSString))
     {
         [pushedData setObject:[data objectForKey:kRIEcommerceCouponKey] forKey:kGTMEventVoucherAmountKey];
     }
     
-    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventPreviousPurchasesKey];
     if(VALID_NOTEMPTY([data objectForKey:kRIEcommercePreviousPurchases], NSNumber))
     {
         [pushedData setObject:[data objectForKey:kRIEcommercePreviousPurchases] forKey:kGTMEventPreviousPurchasesKey];
     }
     
-    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionIdKey];
     if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceTransactionIdKey], NSString))
     {
         [pushedData setObject:[data objectForKey:kRIEcommerceTransactionIdKey] forKey:kGTMEventTransactionIdKey];
@@ -882,25 +878,21 @@ NSString * const kGTMToken = @"kGTMToken";
     
     [pushedData setObject:@"In-App Store" forKey:kGTMEventTransactionAffiliationKey];
     
-    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionTotalKey];
     if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceTotalValueKey], NSNumber))
     {
         [pushedData setObject:[data objectForKey:kRIEcommerceTotalValueKey] forKey:kGTMEventTransactionTotalKey];
     }
     
-    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionShippingKey];
     if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceShippingKey], NSNumber))
     {
         [pushedData setObject:[data objectForKey:kRIEcommerceShippingKey] forKey:kGTMEventTransactionShippingKey];
     }
     
-    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionTaxKey];
     if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceTaxKey], NSNumber))
     {
         [pushedData setObject:[data objectForKey:kRIEcommerceTaxKey] forKey:kGTMEventTransactionTaxKey];
     }
     
-    [pushedData setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionCurrencyKey];
     if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceCurrencyKey], NSNumber))
     {
         [pushedData setObject:[data objectForKey:kRIEcommerceCurrencyKey] forKey:kGTMEventTransactionCurrencyKey];
@@ -915,38 +907,32 @@ NSString * const kGTMToken = @"kGTMToken";
             {
                 NSMutableDictionary *productDictionary = [[NSMutableDictionary alloc] init];
                 
-                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductNameKey];
                 if(VALID_NOTEMPTY([product objectForKey:kRIEventProductNameKey], NSString))
                 {
                     [productDictionary setObject:[product objectForKey:kRIEventProductNameKey] forKey:kGTMEventTransactionProductNameKey];
                 }
                 
-                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductSkuKey];
                 if(VALID_NOTEMPTY([product objectForKey:kRIEventSkuKey], NSString))
                 {
                     [productDictionary setObject:[product objectForKey:kRIEventSkuKey] forKey:kGTMEventTransactionProductSkuKey];
                 }
                 
-                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductCategoryKey];
+                //                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductCategoryKey];
                 
-                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductPriceKey];
                 if(VALID_NOTEMPTY([product objectForKey:kRIEventPriceKey], NSString))
                 {
                     [productDictionary setObject:[product objectForKey:kRIEventPriceKey] forKey:kGTMEventTransactionProductPriceKey];
                 }
                 
-                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductCurrencyKey];
                 if(VALID_NOTEMPTY([product objectForKey:kRIEventCurrencyCodeKey], NSNumber))
                 {
                     [productDictionary setObject:[product objectForKey:kRIEventCurrencyCodeKey] forKey:kGTMEventTransactionProductCurrencyKey];
                 }
                 
-                [productDictionary setObject:kTAGDataLayerObjectNotPresent forKey:kGTMEventTransactionProductQuantityKey];
                 if(VALID_NOTEMPTY([product objectForKey:kRIEventQuantityKey], NSNumber))
                 {
                     [productDictionary setObject:[product objectForKey:kRIEventQuantityKey] forKey:kGTMEventTransactionProductQuantityKey];
                 }
-                
                 
                 [productsArray addObject:productDictionary];
             }
