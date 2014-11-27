@@ -267,7 +267,7 @@ UICollectionViewDelegateFlowLayout>
     {
         CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
         [self.stepIcon setFrame:CGRectMake(xStepIconValue,
-                                           floorf((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2),
+                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
                                            self.stepIcon.frame.size.width,
                                            self.stepIcon.frame.size.height)];
         
@@ -279,7 +279,7 @@ UICollectionViewDelegateFlowLayout>
     else
     {
         [self.stepIcon setFrame:CGRectMake(horizontalMargin,
-                                           floorf((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2),
+                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
                                            self.stepIcon.frame.size.width,
                                            self.stepIcon.frame.size.height)];
         

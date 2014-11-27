@@ -297,12 +297,12 @@ FBLoginViewDelegate
     {
         if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
         {
-            stepViewLeftMargin =  329.0f;
+            stepViewLeftMargin =  303.0f;
             stepBackgroundImageName = @"headerCheckoutStep1Landscape";
         }
         else
         {
-            stepViewLeftMargin = 202.0f;
+            stepViewLeftMargin = 175.0f;
             stepBackgroundImageName = @"headerCheckoutStep1Portrait";
         }
     }
@@ -315,9 +315,9 @@ FBLoginViewDelegate
                                              stepBackgroundImage.size.height)];
     
     [self.stepView setFrame:CGRectMake(stepViewLeftMargin,
-                                       self.stepView.frame.origin.y,
+                                       (stepBackgroundImage.size.height - self.stepView.frame.size.height) / 2,
                                        self.stepView.frame.size.width,
-                                       self.stepView.frame.size.height)];
+                                       stepBackgroundImage.size.height)];
     [self.stepLabel sizeToFit];
     
     CGFloat horizontalMargin = 6.0f;
@@ -328,26 +328,26 @@ FBLoginViewDelegate
     {
         CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
         [self.stepIcon setFrame:CGRectMake(xStepIconValue,
-                                           self.stepIcon.frame.origin.y,
+                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
                                            self.stepIcon.frame.size.width,
                                            self.stepIcon.frame.size.height)];
         
         [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            0.0f,
+                                            4.0f,
                                             self.stepLabel.frame.size.width,
-                                            self.stepView.frame.size.height)];
+                                            12.0f)];
     }
     else
     {
         [self.stepIcon setFrame:CGRectMake(horizontalMargin,
-                                           self.stepIcon.frame.origin.y,
+                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
                                            self.stepIcon.frame.size.width,
                                            self.stepIcon.frame.size.height)];
         
         [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            0.0f,
+                                            4.0f,
                                             (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
-                                            self.stepView.frame.size.height)];
+                                            12.0f)];
     }
 }
 
