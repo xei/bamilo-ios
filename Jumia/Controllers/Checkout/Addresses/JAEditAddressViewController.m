@@ -10,14 +10,14 @@
 #import "JAButtonWithBlur.h"
 #import "JAUtils.h"
 #import "JAOrderSummaryView.h"
+#import "JAPicker.h"
 #import "RICheckout.h"
 #import "RIRegion.h"
 #import "RICity.h"
 
 @interface JAEditAddressViewController ()
 <JADynamicFormDelegate,
-UIPickerViewDataSource,
-UIPickerViewDelegate>
+JAPickerDelegate>
 
 // Steps
 @property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
@@ -42,10 +42,7 @@ UIPickerViewDelegate>
 @property (strong, nonatomic) JARadioComponent *radioComponent;
 @property (strong, nonatomic) NSArray *regionsDataset;
 @property (strong, nonatomic) NSArray *radioComponentDataset;
-@property (strong, nonatomic) UIView *pickerBackgroundView;
-@property (strong, nonatomic) UIToolbar *pickerToolbar;
-@property (strong, nonatomic) UIDatePicker *datePickerView;
-@property (strong, nonatomic) UIPickerView *pickerView;
+@property (strong, nonatomic) JAPicker *picker;
 
 // Create Address Button
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
@@ -427,55 +424,14 @@ UIPickerViewDelegate>
                                                       userInfo:nil];
 }
 
--(void)radioOptionChanged:(id)sender
-{
-    if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent))
-    {
-        NSInteger selectedRow = [self.pickerView selectedRowInComponent:0];
-        if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && selectedRow < [self.radioComponentDataset count])
-        {
-            id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
-            
-            if(VALID_NOTEMPTY(selectedObject, RIRegion) && ![[selectedObject uid] isEqualToString:[self.selectedRegion uid]])
-            {
-                self.selectedRegion = selectedObject;
-                self.selectedCity = nil;
-                self.citiesDataset = nil;
-                
-                [self.dynamicForm setRegionValue:selectedObject];
-            }
-            else if(VALID_NOTEMPTY(selectedObject, RICity))
-            {
-                self.selectedCity = selectedObject;
-                
-                [self.dynamicForm setCityValue:selectedObject];
-            }
-        }
-    }
-    
-    [self removePickerView];
-}
-
 -(void)removePickerView
 {
-    if(VALID_NOTEMPTY(self.pickerToolbar, UIToolbar))
+    if(VALID_NOTEMPTY(self.picker, JAPicker))
     {
-        [self.pickerToolbar removeFromSuperview];
+        [self.picker removeFromSuperview];
+        self.picker = nil;
     }
     
-    if(VALID_NOTEMPTY(self.pickerView, UIPickerView))
-    {
-        [self.pickerView removeFromSuperview];
-    }
-    
-    if(VALID_NOTEMPTY(self.pickerBackgroundView, UIView))
-    {
-        [self.pickerBackgroundView removeFromSuperview];
-    }
-    
-    self.pickerView = nil;
-    self.datePickerView = nil;
-    self.pickerBackgroundView = nil;
     self.radioComponent = nil;
     self.radioComponentDataset = nil;
 }
@@ -536,10 +492,10 @@ UIPickerViewDelegate>
     }
 }
 
--(NSInteger)getPickerSelectedRow
+-(NSString*)getPickerSelectedRow
 {
     NSString *selectedValue = [self.radioComponent getSelectedValue];
-    NSInteger selectedRow = 0;
+    NSString *selectedRow = @"";
     if(VALID_NOTEMPTY(selectedValue, NSString))
     {
         if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray))
@@ -551,7 +507,7 @@ UIPickerViewDelegate>
                 {
                     if([selectedValue isEqualToString:[selectedObject uid]])
                     {
-                        selectedRow = i;
+                        selectedRow = ((RIRegion*)selectedObject).name;
                         break;
                     }
                 }
@@ -559,7 +515,7 @@ UIPickerViewDelegate>
                 {
                     if([selectedValue isEqualToString:[selectedObject uid]])
                     {
-                        selectedRow = i;
+                        selectedRow = ((RICity*)selectedObject).value;
                         break;
                     }
                 }
@@ -571,51 +527,45 @@ UIPickerViewDelegate>
 
 -(void) setupPickerView
 {
-    self.pickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
-    UITapGestureRecognizer *removePickerViewTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(removePickerView)];
-    [self.pickerBackgroundView addGestureRecognizer:removePickerViewTap];
+    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    [self.picker setDelegate:self];
     
-    self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
-    [self.pickerView setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.pickerView setAlpha:0.9];
-    [self.pickerView setDataSource:self];
-    [self.pickerView setDelegate:self];
+    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
+    if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY(self.radioComponentDataset, NSArray))
+    {
+        for(id currentObject in self.radioComponentDataset)
+        {
+            NSString *title = @"";
+            if(VALID_NOTEMPTY(currentObject, RIRegion))
+            {
+                title = ((RIRegion*) currentObject).name;
+            }
+            else if(VALID_NOTEMPTY(currentObject, RICity))
+            {
+                title = ((RICity*) currentObject).value;
+            }
+            [dataSource addObject:title];
+        }
+    }
     
-    [self.pickerView selectRow:[self getPickerSelectedRow] inComponent:0 animated:NO];
+    [self.picker setDataSourceArray:[dataSource copy]
+                       previousText:[self getPickerSelectedRow]];
     
-    [self.pickerView setFrame:CGRectMake(0.0f,
-                                         (self.pickerBackgroundView.frame.size.height - self.pickerView.frame.size.height),
-                                         self.pickerView.frame.size.width,
-                                         self.pickerView.frame.size.height)];
+    CGFloat pickerViewHeight = self.view.frame.size.height;
+    CGFloat pickerViewWidth = self.view.frame.size.width;
+    [self.picker setFrame:CGRectMake(0.0f,
+                                     pickerViewHeight,
+                                     pickerViewWidth,
+                                     pickerViewHeight)];
+    [self.view addSubview:self.picker];
     
-    self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
-    [self.pickerToolbar setTranslucent:NO];
-    [self.pickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.pickerToolbar setAlpha:0.9];
-    [self.pickerToolbar setFrame:CGRectMake(0.0f,
-                                            CGRectGetMinY(self.pickerView.frame) - 44.0f,
-                                            320.0f,
-                                            44.0f)];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
-    [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-    [button setTitle:STRING_DONE forState:UIControlStateNormal];
-    [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-    [button addTarget:self action:@selector(radioOptionChanged:) forControlEvents:UIControlEventTouchUpInside];
-    [button sizeToFit];
-    
-    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    [self.pickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
-    [self.pickerBackgroundView addSubview:self.pickerToolbar];
-    
-    [self.pickerBackgroundView addSubview:self.pickerView];
-    [self.view addSubview:self.pickerBackgroundView];
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         [self.picker setFrame:CGRectMake(0.0f,
+                                                          0.0f,
+                                                          pickerViewWidth,
+                                                          pickerViewHeight)];
+                     }];
 }
 
 - (void)downloadRegions:(JARadioComponent *)regionComponent cities:(JARadioComponent*) citiesComponent
@@ -692,42 +642,33 @@ UIPickerViewDelegate>
     }
 }
 
-#pragma mark UIPickerViewDataSource
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+#pragma mark JAPickerDelegate
+- (void)selectedRow:(NSInteger)selectedRow
 {
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    NSInteger numberOfRowsInComponent = 0;
-    if(VALID_NOTEMPTY(self.radioComponentDataset , NSArray))
+    if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent))
     {
-        numberOfRowsInComponent = [self.radioComponentDataset count];
-    }
-    return numberOfRowsInComponent;
-}
-
-#pragma mark UIPickerViewDelegate
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    NSString *titleForRow = @"";
-    if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && row < [self.radioComponentDataset count])
-    {
-        id currentObject = [self.radioComponentDataset objectAtIndex:row];
-        if(VALID_NOTEMPTY(currentObject, RIRegion))
+        if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && selectedRow < [self.radioComponentDataset count])
         {
-            titleForRow = ((RIRegion*) currentObject).name;
+            id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
+            
+            if(VALID_NOTEMPTY(selectedObject, RIRegion) && ![[selectedObject uid] isEqualToString:[self.selectedRegion uid]])
+            {
+                self.selectedRegion = selectedObject;
+                self.selectedCity = nil;
+                self.citiesDataset = nil;
+                
+                [self.dynamicForm setRegionValue:selectedObject];
+            }
+            else if(VALID_NOTEMPTY(selectedObject, RICity))
+            {
+                self.selectedCity = selectedObject;
+                
+                [self.dynamicForm setCityValue:selectedObject];
+            }
         }
-        else if(VALID_NOTEMPTY(currentObject, RICity))
-        {
-            titleForRow = ((RICity*) currentObject).value;
-        }
-        
     }
-    return  titleForRow;
+    
+    [self removePickerView];
 }
 
 #pragma mark - Keyboard notifications
