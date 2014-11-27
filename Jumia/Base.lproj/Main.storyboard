@@ -1793,13 +1793,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pRb-k2-LiI">
-                                <rect key="frame" x="24" y="3" width="104" height="15"/>
+                                <rect key="frame" x="18" y="0.0" width="116" height="21"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep1Icon" translatesAutoresizingMaskIntoConstraints="NO" id="DmI-SK-pi2">
-                                        <rect key="frame" x="14" y="1" width="9" height="13"/>
+                                        <rect key="frame" x="14" y="3" width="9" height="13"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZfW-Ci-WUF">
-                                        <rect key="frame" x="29" y="1" width="42" height="12"/>
+                                        <rect key="frame" x="29" y="4" width="42" height="12"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -2015,7 +2015,7 @@
                                 <rect key="frame" x="130" y="0.0" width="122" height="21"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep3Icon" translatesAutoresizingMaskIntoConstraints="NO" id="3w6-1g-A0b">
-                                        <rect key="frame" x="14" y="4" width="17" height="12"/>
+                                        <rect key="frame" x="14" y="5" width="17" height="11"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQo-tx-n9g">
                                         <rect key="frame" x="37" y="4" width="42" height="12"/>
