@@ -13,6 +13,7 @@
 #import "JAShippingInfoCell.h"
 #import "JAPickupStationInfoCell.h"
 #import "JAUtils.h"
+#import "JAOrderSummaryView.h"
 #import "RICheckout.h"
 #import "RIShippingMethodPickupStationOption.h"
 #import "RICustomer.h"
@@ -27,11 +28,10 @@ UICollectionViewDelegateFlowLayout
 >
 
 // Steps
+@property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
 @property (weak, nonatomic) IBOutlet UIView *stepView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepIconLeftConstrain;
 @property (weak, nonatomic) IBOutlet UIImageView *stepIcon;
 @property (weak, nonatomic) IBOutlet UILabel *stepLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepLabelWidthConstrain;
 
 // Shipping methods
 @property (strong, nonatomic) UIScrollView *scrollView;
@@ -44,6 +44,9 @@ UICollectionViewDelegateFlowLayout
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (strong, nonatomic) NSIndexPath *pickerIndexPath;
+
+// Order summary
+@property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
 @property (strong, nonatomic) RICheckout *checkout;
 @property (strong, nonatomic) RIShippingMethodForm* shippingMethodForm;
@@ -77,19 +80,61 @@ UICollectionViewDelegateFlowLayout
     
     self.navBarLayout.title = STRING_CHECKOUT;
     
-    self.navBarLayout.showCartButton = NO;    
+    self.navBarLayout.showCartButton = NO;
     
     self.pickupStationsForRegion = [[NSMutableArray alloc] init];
     self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
     
-    [self setupViews];
+    self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.stepLabel setText:STRING_CHECKOUT_SHIPPING];
+    
+    [self initViews];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     [self continueLoading];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self showLoading];
+    
+    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+    {
+        newWidth = self.view.frame.size.width;
+    }
+    
+    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    CGFloat newWidth = self.view.frame.size.width;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    }
+    
+    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    
+    [self hideLoading];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)continueLoading
 {
     [self showLoading];
+    
     [RICheckout getShippingMethodFormWithSuccessBlock:^(RICheckout *checkout)
      {
          self.checkout = checkout;
@@ -118,28 +163,14 @@ UICollectionViewDelegateFlowLayout
      }];
 }
 
-- (void) setupViews
+- (void) initViews
 {
-    CGFloat availableWidth = self.stepView.frame.size.width;
+    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     
-    [self.stepLabel setText:STRING_CHECKOUT_SHIPPING];
-    [self.stepLabel sizeToFit];
-    
-    CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;
-    
-    if(availableWidth >= realWidth)
-    {
-        CGFloat xStepIconValue = (availableWidth - realWidth) / 2;
-        self.stepIconLeftConstrain.constant = xStepIconValue;
-        self.stepLabelWidthConstrain.constant = self.stepLabel.frame.size.width;
-    }
-    else
-    {
-        self.stepLabelWidthConstrain.constant = (availableWidth - self.stepIcon.frame.size.width - 6.0f);
-        self.stepIconLeftConstrain.constant = 0.0f;
-    }
-    
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 21.0f, self.view.frame.size.width, self.view.frame.size.height - 21.0f - 64.0f)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                     self.stepBackground.frame.size.height,
+                                                                     self.view.frame.size.width,
+                                                                     self.view.frame.size.height - self.stepBackground.frame.size.height)];
     
     UICollectionViewFlowLayout* collectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
     [collectionViewFlowLayout setMinimumLineSpacing:0.0f];
@@ -157,7 +188,7 @@ UICollectionViewDelegateFlowLayout
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(6.0f,
                                                                              6.0f,
                                                                              self.scrollView.frame.size.width - 12.0f,
-                                                                             26.0f) collectionViewLayout:collectionViewFlowLayout];
+                                                                             27.0f) collectionViewLayout:collectionViewFlowLayout];
     self.collectionView.layer.cornerRadius = 5.0f;
     [self.collectionView setBackgroundColor:UIColorFromRGB(0xffffff)];
     [self.collectionView registerNib:shippingListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"shippingListHeader"];
@@ -172,16 +203,75 @@ UICollectionViewDelegateFlowLayout
     [self.scrollView addSubview:self.collectionView];
     [self.view addSubview:self.scrollView];
     
-    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:self.interfaceOrientation];
+    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:UIInterfaceOrientationPortrait];
     
     [self.bottomView setFrame:CGRectMake(0.0f,
                                          self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
                                          self.view.frame.size.width,
                                          self.bottomView.frame.size.height)];
-    
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
-    
     [self.view addSubview:self.bottomView];
+}
+
+- (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    CGFloat stepViewLeftMargin = 130.0f;
+    NSString *stepBackgroundImageName = @"headerCheckoutStep3";
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+        {
+            stepViewLeftMargin =  477.0f;
+            stepBackgroundImageName = @"headerCheckoutStep3Landscape";
+        }
+        else
+        {
+            stepViewLeftMargin = 349.0f;
+            stepBackgroundImageName = @"headerCheckoutStep3Portrait";
+        }
+    }
+    UIImage *stepBackgroundImage = [UIImage imageNamed:stepBackgroundImageName];
+    
+    [self.stepBackground setImage:stepBackgroundImage];
+    [self.stepBackground setFrame:CGRectMake(self.stepBackground.frame.origin.x,
+                                             self.stepBackground.frame.origin.y,
+                                             stepBackgroundImage.size.width,
+                                             stepBackgroundImage.size.height)];
+    
+    [self.stepView setFrame:CGRectMake(stepViewLeftMargin,
+                                       (stepBackgroundImage.size.height - self.stepView.frame.size.height) / 2,
+                                       self.stepView.frame.size.width,
+                                       stepBackgroundImage.size.height)];
+    [self.stepLabel sizeToFit];
+    
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat marginBetweenIconAndLabel = 5.0f;
+    CGFloat realWidth = self.stepIcon.frame.size.width + marginBetweenIconAndLabel + self.stepLabel.frame.size.width - (2 * horizontalMargin);
+    
+    if(self.stepView.frame.size.width >= realWidth)
+    {
+        CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
+        [self.stepIcon setFrame:CGRectMake(xStepIconValue,
+                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
+                                           self.stepIcon.frame.size.width,
+                                           self.stepIcon.frame.size.height)];
+        
+        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
+                                            4.0f,
+                                            self.stepLabel.frame.size.width,
+                                            12.0f)];
+    }
+    else
+    {
+        [self.stepIcon setFrame:CGRectMake(horizontalMargin,
+                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
+                                           self.stepIcon.frame.size.width,
+                                           self.stepIcon.frame.size.height)];
+        
+        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
+                                            4.0f,
+                                            (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
+                                            12.0f)];
+    }
 }
 
 -(void)finishedLoadingShippingMethods
@@ -214,7 +304,13 @@ UICollectionViewDelegateFlowLayout
             }
         }
         
-        [self reloadCollectionView];
+        CGFloat newWidth = self.view.frame.size.width;
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        {
+            newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+        }
+        
+        [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
     }
     
     if(self.firstLoading)
@@ -223,15 +319,54 @@ UICollectionViewDelegateFlowLayout
         [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
         self.firstLoading = NO;
     }
-
+    
     [self hideLoading];
 }
 
--(void)reloadCollectionView
+- (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
+    
+    [self.scrollView setFrame:CGRectMake(0.0f,
+                                         self.stepBackground.frame.size.height,
+                                         width,
+                                         self.view.frame.size.height - self.stepBackground.frame.size.height)];
+    
+    if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
+    {
+        [self.orderSummary removeFromSuperview];
+    }
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width))
+    {
+        CGFloat orderSummaryRightMargin = 6.0f;
+        self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
+                                                                                 self.stepBackground.frame.size.height + 6.0f,
+                                                                                 self.view.frame.size.width - width - orderSummaryRightMargin,
+                                                                                 self.view.frame.size.height)];
+        [self.orderSummary loadWithCheckout:self.checkout];
+        [self.view addSubview:self.orderSummary];
+    }
+    
+    [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
+                                             self.collectionView.frame.origin.y,
+                                             self.scrollView.frame.size.width - 12.0f,
+                                             self.collectionView.frame.size.height)];
+    
+    [self.bottomView reloadFrame:CGRectMake(0.0f,
+                                            self.view.frame.size.height - self.bottomView.frame.size.height,
+                                            width,
+                                            self.bottomView.frame.size.height)];
+    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    
+    [self reloadCollectionView];
+}
+
+- (void)reloadCollectionView
 {
     if(VALID_NOTEMPTY(self.shippingMethods, NSArray))
     {
-        CGFloat collectionViewHeight = 26.0f + ([self.shippingMethods count] * 44.0f);
+        CGFloat collectionViewHeight = 27.0f + ([self.shippingMethods count] * 44.0f);
         
         if(VALID_NOTEMPTY(self.selectedShippingMethod, NSString))
         {
@@ -375,7 +510,7 @@ UICollectionViewDelegateFlowLayout
         }
     }
 }
-                                                          
+
 #pragma mark JAPickerDelegate
 - (void)selectedRow:(NSInteger)selectedRow
 {
@@ -468,7 +603,7 @@ UICollectionViewDelegateFlowLayout
     CGSize referenceSizeForHeaderInSection = CGSizeZero;
     if(collectionView == self.collectionView)
     {
-        referenceSizeForHeaderInSection = CGSizeMake(self.collectionView.frame.size.width, 26.0f);
+        referenceSizeForHeaderInSection = CGSizeMake(self.collectionView.frame.size.width, 27.0f);
     }
     
     return referenceSizeForHeaderInSection;

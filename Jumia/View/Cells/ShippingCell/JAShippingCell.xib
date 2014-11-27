@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,38 +13,68 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="308" height="44"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fXT-xf-Za2" customClass="JAClickableView">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fXT-xf-Za2" customClass="JAClickableView">
                         <rect key="frame" x="0.0" y="0.0" width="308" height="44"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cca-xh-saz">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cca-xh-saz">
                                 <rect key="frame" x="17" y="11" width="250" height="22"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tick_selected" translatesAutoresizingMaskIntoConstraints="NO" id="VWN-af-aPx">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tick_selected" translatesAutoresizingMaskIntoConstraints="NO" id="VWN-af-aPx">
                                 <rect key="frame" x="280" y="15" width="14" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="14" id="80B-Ag-e4z"/>
+                                    <constraint firstAttribute="height" constant="14" id="ttI-iT-KQ6"/>
+                                </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e9m-Ov-Jbf">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e9m-Ov-Jbf">
                                 <rect key="frame" x="0.0" y="43" width="308" height="1"/>
                                 <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="fB6-Jm-dqY"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="e9m-Ov-Jbf" secondAttribute="trailing" id="BHt-wE-7dK"/>
+                            <constraint firstAttribute="bottom" secondItem="e9m-Ov-Jbf" secondAttribute="bottom" id="EHo-6J-LO5"/>
+                            <constraint firstItem="e9m-Ov-Jbf" firstAttribute="top" secondItem="Cca-xh-saz" secondAttribute="bottom" constant="10" id="J5h-dK-8X7"/>
+                            <constraint firstAttribute="trailing" secondItem="VWN-af-aPx" secondAttribute="trailing" constant="14" id="MZg-GM-Kux"/>
+                            <constraint firstItem="e9m-Ov-Jbf" firstAttribute="leading" secondItem="fXT-xf-Za2" secondAttribute="leading" id="TP6-tW-0qE"/>
+                            <constraint firstItem="Cca-xh-saz" firstAttribute="leading" secondItem="fXT-xf-Za2" secondAttribute="leading" constant="17" id="iZl-NV-KEu"/>
+                            <constraint firstItem="Cca-xh-saz" firstAttribute="top" secondItem="fXT-xf-Za2" secondAttribute="top" constant="11" id="toV-N9-uyW"/>
+                            <constraint firstItem="VWN-af-aPx" firstAttribute="leading" secondItem="Cca-xh-saz" secondAttribute="trailing" constant="13" id="uwE-k7-TKv"/>
+                            <constraint firstItem="VWN-af-aPx" firstAttribute="top" secondItem="fXT-xf-Za2" secondAttribute="top" constant="15" id="xep-E9-W2c"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="fXT-xf-Za2" secondAttribute="bottom" id="9oR-Iv-t4H"/>
+                <constraint firstItem="fXT-xf-Za2" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="TRk-vh-AS1"/>
+                <constraint firstAttribute="trailing" secondItem="fXT-xf-Za2" secondAttribute="trailing" id="hTI-Iv-qAr"/>
+                <constraint firstItem="fXT-xf-Za2" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="hmB-pS-6AK"/>
+            </constraints>
             <connections>
                 <outlet property="checkMark" destination="VWN-af-aPx" id="Lx5-Ku-Heq"/>
                 <outlet property="clickableView" destination="fXT-xf-Za2" id="2Uc-fs-6Bj"/>
                 <outlet property="label" destination="Cca-xh-saz" id="es8-ac-Web"/>
                 <outlet property="separator" destination="e9m-Ov-Jbf" id="6Ec-Ty-ogy"/>
             </connections>
+            <point key="canvasLocation" x="205" y="722"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="tick_selected" width="14" height="14"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

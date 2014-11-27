@@ -205,7 +205,7 @@ UIPickerViewDelegate>
     
     [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     
-    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
     
@@ -330,7 +330,7 @@ UIPickerViewDelegate>
     {
         CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
         [self.stepIcon setFrame:CGRectMake(xStepIconValue,
-                                           floorf((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2),
+                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
                                            self.stepIcon.frame.size.width,
                                            self.stepIcon.frame.size.height)];
         
@@ -342,7 +342,7 @@ UIPickerViewDelegate>
     else
     {
         [self.stepIcon setFrame:CGRectMake(horizontalMargin,
-                                           floorf((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2),
+                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
                                            self.stepIcon.frame.size.width,
                                            self.stepIcon.frame.size.height)];
         
@@ -459,7 +459,7 @@ UIPickerViewDelegate>
     
     [self.bottomView reloadFrame:CGRectMake(0.0f,
                                             self.view.frame.size.height - self.bottomView.frame.size.height,
-                                            self.view.frame.size.width,
+                                            width,
                                             self.bottomView.frame.size.height)];
     [self.bottomView addButton:STRING_NEXT target:self action:@selector(createAddressButtonPressed)];
     

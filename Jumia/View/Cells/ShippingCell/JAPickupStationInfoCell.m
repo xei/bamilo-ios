@@ -51,11 +51,19 @@
         [self.infoView removeFromSuperview];
     }
     
+    CGFloat separatorWidth = 206.0f; // used to be 209.0f
+    CGFloat infoViewWidth = 180.0f;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        separatorWidth = 652.0f;
+        infoViewWidth = 624.0f;
+    }
+    
     self.infoView = [[UIView alloc] initWithFrame:CGRectZero];
     
     self.cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.infoView.frame.origin.x,
                                                                self.infoView.frame.origin.y,
-                                                               180.0f,
+                                                               infoViewWidth,
                                                                self.infoView.frame.size.height)];
     [self.cityLabel setNumberOfLines:0];
     [self.cityLabel setLineBreakMode:NSLineBreakByWordWrapping];
@@ -75,7 +83,7 @@
     
     self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.infoView.frame.origin.x,
                                                                   CGRectGetMaxY(self.cityLabel.frame),
-                                                                  180.0f,
+                                                                  infoViewWidth,
                                                                   self.infoView.frame.size.height)];
     [self.addressLabel setNumberOfLines:0];
     [self.addressLabel setLineBreakMode:NSLineBreakByWordWrapping];
@@ -95,7 +103,7 @@
     
     self.openingHours = [[UILabel alloc] initWithFrame:CGRectMake(self.infoView.frame.origin.x,
                                                                   CGRectGetMaxY(self.addressLabel.frame),
-                                                                  180.0f,
+                                                                  infoViewWidth,
                                                                   self.infoView.frame.size.height)];
     [self.openingHours setNumberOfLines:0];
     [self.openingHours setLineBreakMode:NSLineBreakByWordWrapping];
@@ -139,18 +147,18 @@
         
         [self.infoView setFrame:CGRectMake(CGRectGetMaxX(self.image.frame) + 10.0f,
                                            (self.frame.size.height - totalHeight) / 2,
-                                           180.0f,
+                                           infoViewWidth,
                                            totalHeight)];
         [self addSubview:self.infoView];
         
         [self.separator setFrame:CGRectMake(82,
                                             119.0f,
-                                            209,
+                                            separatorWidth,
                                             1.0f)];
         
         [self.lastSeparator setFrame:CGRectMake(0.0f,
                                                 119.0f,
-                                                308.0f,
+                                                self.frame.size.width,
                                                 1.0f)];
     }
     else
@@ -163,18 +171,18 @@
         
         [self.infoView setFrame:CGRectMake(CGRectGetMaxX(self.image.frame) + 10.0f,
                                            3.0f,
-                                           180.0f,
+                                           infoViewWidth,
                                            totalHeight - 3.0f)];
         [self addSubview:self.infoView];
         
         [self.separator setFrame:CGRectMake(82,
                                             totalHeight - 1.0f,
-                                            209,
+                                            separatorWidth,
                                             1.0f)];
         
         [self.lastSeparator setFrame:CGRectMake(0.0f,
                                                 totalHeight - 1.0f,
-                                                308.0f,
+                                                self.frame.size.width,
                                                 1.0f)];
     }
     
@@ -207,7 +215,13 @@
     
     CGFloat totalHeight = 6.0f;
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 180.0f, 10000.0f)];
+    CGFloat infoViewWidth = 180.0f;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        infoViewWidth = 624.0f;
+    }
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, infoViewWidth, 10000.0f)];
     [label setNumberOfLines:0];
     [label setLineBreakMode:NSLineBreakByWordWrapping];
     [label setTextColor:UIColorFromRGB(0x666666)];
@@ -230,7 +244,7 @@
     [finalAddressString setAttributes:valueAttributes
                                 range:addressRange];
 
-    [label setFrame:CGRectMake(0.0f, 0.0f, 180.0f, 10000.0f)];
+    [label setFrame:CGRectMake(0.0f, 0.0f, infoViewWidth, 10000.0f)];
     [label setAttributedText:finalAddressString];
     [label sizeToFit];
     
@@ -243,7 +257,7 @@
     [finalOpeningHoursString setAttributes:valueAttributes
                                      range:openingHoursRange];
     
-    [label setFrame:CGRectMake(0.0f, 0.0f, 180.0f, 10000.0f)];
+    [label setFrame:CGRectMake(0.0f, 0.0f, infoViewWidth, 10000.0f)];
     [label setAttributedText:finalOpeningHoursString];
     [label sizeToFit];
     

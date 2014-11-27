@@ -72,6 +72,8 @@ UIPickerViewDelegate>
     
     self.hasErrors = NO;
     
+    self.view.translatesAutoresizingMaskIntoConstraints = YES;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
@@ -151,11 +153,9 @@ UIPickerViewDelegate>
     
     [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     
-    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
-    
-    self.originalFrame = self.contentScrollView.frame;
     
     [self setupAddressView];
     
@@ -210,7 +210,7 @@ UIPickerViewDelegate>
     {
         CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
         [self.stepIcon setFrame:CGRectMake(xStepIconValue,
-                                           floorf((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2),
+                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
                                            self.stepIcon.frame.size.width,
                                            self.stepIcon.frame.size.height)];
         
@@ -222,7 +222,7 @@ UIPickerViewDelegate>
     else
     {
         [self.stepIcon setFrame:CGRectMake(horizontalMargin,
-                                           floorf((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2),
+                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
                                            self.stepIcon.frame.size.width,
                                            self.stepIcon.frame.size.height)];
         
@@ -340,7 +340,7 @@ UIPickerViewDelegate>
 
 -(void)setupAddressView
 {
-    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
+    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, 27.0f)];
     [self.contentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.contentView.layer.cornerRadius = 5.0f;
     

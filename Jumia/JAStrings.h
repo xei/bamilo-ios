@@ -252,5 +252,6 @@
 #define STRING_REVIEWS_EMPTY RILocalizedString(@"reviews_empty", nil)
 
 #define STRING_ORDER_SUMMARY RILocalizedString(@"order_summary_label", nil)
+#define STRING_EDIT RILocalizedString(@"string_edit", nil)
 
 #endif
