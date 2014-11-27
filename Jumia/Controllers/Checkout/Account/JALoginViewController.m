@@ -133,6 +133,11 @@ FBLoginViewDelegate
                                                                                  orderSummaryY,
                                                                                  orderSummaryWidth,
                                                                                  self.view.frame.size.height - orderSummaryY)];
+    if (VALID_NOTEMPTY(self.cart, RICart)) {
+        [self.orderSummaryView loadWithCart:self.cart];
+    } else {
+        [self getCart];
+    }
     [self.view addSubview:self.orderSummaryView];
     
     [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
@@ -140,8 +145,6 @@ FBLoginViewDelegate
     [self showLoading];
     
     [self getForms];
-    
-    [self getCart];
 }
 
 - (void)getForms

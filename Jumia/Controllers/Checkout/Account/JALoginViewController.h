@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "JABaseViewController.h"
 
+@class RICart;
+
 @interface JALoginViewController : JABaseViewController
+
+@property (nonatomic, strong)RICart* cart;
 
 @end
