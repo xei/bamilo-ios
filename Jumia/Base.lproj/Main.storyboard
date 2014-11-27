@@ -2061,7 +2061,7 @@
                                 <rect key="frame" x="192" y="0.0" width="122" height="21"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep4Icon" translatesAutoresizingMaskIntoConstraints="NO" id="2hf-t3-Gpb">
-                                        <rect key="frame" x="14" y="4" width="14" height="12"/>
+                                        <rect key="frame" x="14" y="5" width="14" height="10"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIs-5b-mhc">
                                         <rect key="frame" x="29" y="4" width="42" height="12"/>
@@ -2078,6 +2078,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="Dhp-Gv-ecA"/>
                     <connections>
+                        <outlet property="stepBackground" destination="IE2-jy-nA3" id="Go5-DH-k0Y"/>
                         <outlet property="stepIcon" destination="2hf-t3-Gpb" id="LFp-Y0-AQx"/>
                         <outlet property="stepLabel" destination="XIs-5b-mhc" id="EYc-MR-HxQ"/>
                         <outlet property="stepView" destination="4vc-Qh-3NM" id="Wkc-SE-mHA"/>

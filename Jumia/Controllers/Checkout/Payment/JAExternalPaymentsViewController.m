@@ -29,6 +29,7 @@
     
     self.navBarLayout.title = STRING_CHECKOUT;
     
+    self.webView.translatesAutoresizingMaskIntoConstraints = YES;
     [self.webView setDelegate:self];
     
     self.originalRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[RIApi getCountryUrlInUse]]];
@@ -39,6 +40,12 @@
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self.webView setFrame:self.view.frame];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
 
 -(void)loadPaymentMethodRequest
 {
