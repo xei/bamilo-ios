@@ -72,6 +72,11 @@
     [self adjustTitleFrame];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout
 {
     //left side
