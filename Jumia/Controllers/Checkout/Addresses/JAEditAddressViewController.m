@@ -72,6 +72,8 @@ UIPickerViewDelegate>
     
     self.hasErrors = NO;
     
+    self.view.translatesAutoresizingMaskIntoConstraints = YES;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
@@ -151,11 +153,9 @@ UIPickerViewDelegate>
     
     [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     
-    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
-    
-    self.originalFrame = self.contentScrollView.frame;
     
     [self setupAddressView];
     
@@ -340,7 +340,7 @@ UIPickerViewDelegate>
 
 -(void)setupAddressView
 {
-    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
+    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, 27.0f)];
     [self.contentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.contentView.layer.cornerRadius = 5.0f;
     
