@@ -14,6 +14,6 @@
 
 - (void)loadWithCart:(RICart*)cart;
 
-- (void)loadWithCheckout:(RICheckout*)checkout;
+- (void)loadWithCheckout:(RICheckout*)checkout shippingMethod:(BOOL)shippingMethod;
 
 @end

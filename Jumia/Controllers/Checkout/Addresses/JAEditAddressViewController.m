@@ -254,9 +254,9 @@ UIPickerViewDelegate>
     {
         CGFloat orderSummaryRightMargin = 6.0f;
         self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
-                                                                                 self.stepBackground.frame.size.height + 6.0f,
+                                                                                 self.stepBackground.frame.size.height,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
-                                                                                 self.view.frame.size.height)];
+                                                                                 self.view.frame.size.height - self.stepBackground.frame.size.height)];
         [self.orderSummary loadWithCart:self.cart];
         [self.view addSubview:self.orderSummary];
     }
