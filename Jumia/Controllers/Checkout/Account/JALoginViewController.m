@@ -103,6 +103,8 @@ FBLoginViewDelegate
     [self.stepLabel setText:STRING_CHECKOUT_ABOUT_YOU];
     self.loginView.layer.cornerRadius = 5.0f;
     
+    self.loginView.translatesAutoresizingMaskIntoConstraints = YES;
+    
     UITapGestureRecognizer *showLoginViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(showLogin)];
@@ -225,39 +227,32 @@ FBLoginViewDelegate
     self.isAnimationRunning = NO;
     
     [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
-
-    CGFloat margin = 6.0f;
     
-    if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-    {
+    if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
         self.orderSummaryView.hidden = NO;
     } else {
         self.orderSummaryView.hidden = YES;
     }
+
+    CGFloat margin = 6.0f;
+    CGFloat componentWidth;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+        componentWidth = 744.0f;
+    } else {
+        componentWidth = 296.0f;
+    }
     
-    [self.loginView setFrame:CGRectMake(margin,
-                                        margin + self.stepBackground.frame.size.height,
-                                        width - margin*2,
-                                        self.loginView.frame.size.height)];
-    
-    for(UIView *view in self.loginDynamicForm.formViews)
-    {
+    for(UIView *view in self.loginDynamicForm.formViews) {
         [view setFrame:CGRectMake(view.frame.origin.x,
                                   view.frame.origin.y,
-                                  self.loginView.frame.size.width,
+                                  componentWidth + margin*2, //form already has its own margins
                                   view.frame.size.height)];
     }
     
-    [self.signUpView setFrame:CGRectMake(margin,
-                                         CGRectGetMaxY(self.loginView.frame) + margin,
-                                         width - margin*2,
-                                         self.signUpView.frame.size.height)];
-    
-    for(UIView *view in self.signupDynamicForm.formViews)
-    {
+    for(UIView *view in self.signupDynamicForm.formViews) {
         [view setFrame:CGRectMake(view.frame.origin.x,
                                   view.frame.origin.y,
-                                  self.signUpView.frame.size.width,
+                                  componentWidth + margin*2, //form already has its own margins
                                   view.frame.size.height)];
     }
 }
