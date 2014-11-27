@@ -654,7 +654,7 @@ UITextFieldDelegate>
         
         if(collectionView == self.collectionView)
         {
-            [headerView loadHeaderWithText:STRING_PAYMENT width:self.view.frame.size.width];
+            [headerView loadHeaderWithText:STRING_PAYMENT width:self.collectionView.frame.size.width];
         }
         reusableview = headerView;
     }
