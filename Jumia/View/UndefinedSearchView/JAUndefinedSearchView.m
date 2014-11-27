@@ -33,7 +33,7 @@
 @property (nonatomic, strong) UIView* topBrandsView;
 @property (nonatomic, strong) UIView* noticeView;
 @property (assign, nonatomic) CGFloat scrollViewY;
-@property (assign, nonatomic) CGFloat LeftMargin;
+@property (assign, nonatomic) CGFloat leftMargin;
 
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *spaceLabelConstraint;
@@ -58,6 +58,8 @@
 - (void)setupWithUndefinedSearchResult:(RIUndefinedSearchTerm *)searchResult
                             searchText:(NSString *)searchText
 {
+    self.leftMargin = 6.0f;
+    self.translatesAutoresizingMaskIntoConstraints = YES;
     if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)&&(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))){
         self.leftMargin = 256.0f;
     }
@@ -142,7 +144,7 @@
     
     RISearchType *searchType = searchResult.searchType;
     if (searchType.title.length > 0) {
-        self.searchTipsTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.LeftMargin,
+        self.searchTipsTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.leftMargin,
                                                                               labelY,
                                                                               self.topView.frame.size.width - 6.0f*2,
                                                                               10.0f)];
@@ -156,7 +158,7 @@
         labelY = CGRectGetMaxY(self.searchTipsTitleLabel.frame);
     }
     
-    self.searchTipsTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.LeftMargin,
+    self.searchTipsTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.leftMargin,
                                                                          labelY,
                                                                          self.topView.frame.size.width - 6.0f*2,
                                                                          10.0f)];
@@ -345,9 +347,9 @@
     self.noticeView.layer.cornerRadius = 5.0f;
     [self.scrollView addSubview:self.noticeView];
     
-    UILabel* noticeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.LeftMargin,
+    UILabel* noticeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.leftMargin,
                                                                      15.0f,
-                                                                     self.noticeView.bounds.size.width - self.LeftMargin*2,
+                                                                     self.noticeView.bounds.size.width - self.leftMargin*2,
                                                                      10.0f)];
     noticeLabel.numberOfLines = -1;
     noticeLabel.textColor = UIColorFromRGB(0x666666);
@@ -368,7 +370,7 @@
                                                scrollViewY)];
     
 }
--(void)willRotate
+-(void)didRotate
 {
     [self.scrollView removeFromSuperview];
     
