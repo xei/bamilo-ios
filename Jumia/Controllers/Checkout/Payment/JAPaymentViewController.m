@@ -54,6 +54,7 @@ UITextFieldDelegate>
 @property (strong, nonatomic) RIPaymentMethodFormOption* selectedPaymentMethod;
 
 @property (assign, nonatomic) CGRect originalFrame;
+@property (assign, nonatomic) CGRect orderSummaryOriginalFrame;
 
 @end
 
@@ -341,17 +342,19 @@ UITextFieldDelegate>
     if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
     {
         [self.orderSummary removeFromSuperview];
+        self.orderSummary = nil;
     }
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width))
     {
         CGFloat orderSummaryRightMargin = 6.0f;
         self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
-                                                                                 self.stepBackground.frame.size.height + 6.0f,
+                                                                                 self.stepBackground.frame.size.height,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
-                                                                                 self.view.frame.size.height)];
-        [self.orderSummary loadWithCheckout:self.checkout];
+                                                                                 self.view.frame.size.height - self.stepBackground.frame.size.height)];
+        [self.orderSummary loadWithCheckout:self.checkout shippingMethod:YES];
         [self.view addSubview:self.orderSummary];
+        self.orderSummaryOriginalFrame = self.orderSummary.frame;
     }
     
     [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
@@ -718,6 +721,11 @@ UITextFieldDelegate>
                                              self.originalFrame.origin.y,
                                              self.originalFrame.size.width,
                                              self.originalFrame.size.height - height)];
+        
+        [self.orderSummary setFrame:CGRectMake(self.orderSummaryOriginalFrame.origin.x,
+                                               self.orderSummaryOriginalFrame.origin.y,
+                                               self.orderSummaryOriginalFrame.size.width,
+                                               self.orderSummaryOriginalFrame.size.height - height)];
     }];
 }
 
@@ -725,6 +733,7 @@ UITextFieldDelegate>
 {
     [UIView animateWithDuration:0.3 animations:^{
         [self.scrollView setFrame:self.originalFrame];
+        [self.orderSummary setFrame:self.orderSummaryOriginalFrame];
     }];
 }
 

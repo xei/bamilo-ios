@@ -13,35 +13,43 @@
 
 @interface JAOrderSummaryView()
 
-@property (nonatomic, assign) CGRect initialFrame;
-
 @property (nonatomic, strong)UIScrollView* scrollView;
 @property (nonatomic, strong)UIView* cartView;
 @property (nonatomic, strong)UIView* shippingAddressView;
 @property (nonatomic, strong)UIView* billingAddressView;
+@property (nonatomic, strong)UIView* shippingMethodView;
 
 @end
 
 @implementation JAOrderSummaryView
 
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    [self.scrollView setFrame:self.bounds];
+}
+
 - (void)loadWithCart:(RICart *)cart
 {
-    self.backgroundColor = JABackgroundGrey;
-    
-    self.initialFrame = self.bounds;
-    
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.initialFrame];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
     [self addSubview:self.scrollView];
+
+    CGFloat topMargin = 6.0f;
+    
+    self.backgroundColor = JABackgroundGrey;
     
     if (VALID_NOTEMPTY(cart, RICart) && VALID_NOTEMPTY(cart.cartItems, NSArray)) {
         
-        self.cartView = [[UIView alloc] initWithFrame:self.scrollView.bounds];
+        self.cartView = [[UIView alloc] initWithFrame:CGRectMake(self.scrollView.bounds.origin.x,
+                                                                 self.scrollView.bounds.origin.y + topMargin,
+                                                                 self.scrollView.bounds.size.width,
+                                                                 self.scrollView.bounds.size.height)];
         self.cartView.backgroundColor = [UIColor whiteColor];
         self.cartView.layer.cornerRadius = 5.0f;
         
         CGFloat currentY = [self headerLoad:self.cartView title:STRING_ORDER_SUMMARY selector:nil];
         
-        currentY += 9.0f;
+        currentY += 9.0f; // Margin between title and products
         
         UILabel* productsTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.cartView.bounds.origin.x + JAOrderSummaryViewTextMargin,
                                                                                 currentY,
@@ -73,47 +81,42 @@
                                                  vat:cart.vatValueFormatted
                                             subtotal:cart.cartValueFormatted
                                                extra:cart.extraCostsFormatted];
-        
+
         [self.cartView setFrame:CGRectMake(self.cartView.frame.origin.x,
                                            self.cartView.frame.origin.y,
                                            self.cartView.frame.size.width,
                                            currentY)];
         
         self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
-                                                 currentY);
-        
-        CGFloat readjustedHeight = MIN(self.scrollView.contentSize.height, self.frame.size.height);
-        [self setFrame:CGRectMake(self.frame.origin.x,
-                                  self.frame.origin.y,
-                                  self.frame.size.width,
-                                  readjustedHeight)];
-        [self.scrollView setFrame:self.bounds];
+                                                 self.cartView.frame.origin.y + currentY);
     }
 }
 
-- (void)loadWithCheckout:(RICheckout*)checkout
+- (void)loadWithCheckout:(RICheckout*)checkout shippingMethod:(BOOL)shippingMethod
 {
     if(VALID_NOTEMPTY(checkout, RICheckout))
     {
         [self loadWithCart:checkout.cart];
         
-        if(VALID_NOTEMPTY(checkout.orderSummary, RIOrder))
+        RIOrder *orderSummary = checkout.orderSummary;
+        if(VALID_NOTEMPTY(orderSummary, RIOrder))
         {
-            RIAddress *shippingAddress = checkout.orderSummary.shippingAddress;
-            RIAddress *billingAddress = checkout.orderSummary.billingAddress;
+            RIAddress *shippingAddress = orderSummary.shippingAddress;
+            RIAddress *billingAddress = orderSummary.billingAddress;
             [self loadWithShippingAddress:shippingAddress billingAddress:billingAddress];
+            
+            if(shippingMethod)
+            {
+                [self loadWithShippingMethod:orderSummary.shippingMethod];
+            }
         }
     }
 }
 
 - (void)loadWithShippingAddress:(RIAddress*)shippingAddress billingAddress:(RIAddress*)billingAddress
 {
-    CGFloat startingY = 0.0f;
+    CGFloat startingY =  self.scrollView.contentSize.height + 6.0f;
     CGFloat currentY = 0.0f;
-    if(VALID_NOTEMPTY(self.cartView, UIView) && VALID_NOTEMPTY(self.cartView.superview, UIView))
-    {
-        startingY = CGRectGetMaxY(self.cartView.frame) + 6.0f;
-    }
     
     if(VALID_NOTEMPTY(shippingAddress, RIAddress))
     {
@@ -150,7 +153,6 @@
                                                          self.billingAddressView.frame.origin.y,
                                                          self.billingAddressView.frame.size.width,
                                                          currentY)];
-            
             startingY += currentY + 6.0f;
         }
     }
@@ -175,14 +177,32 @@
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
                                              startingY);
+}
+
+- (void)loadWithShippingMethod:(NSString*)shippingMethod
+{
+    CGFloat startingY =  self.scrollView.contentSize.height;
     
-    CGFloat readjustedHeight = MIN(self.scrollView.contentSize.height, self.initialFrame.size.height);
-    [self setFrame:CGRectMake(self.frame.origin.x,
-                              self.frame.origin.y,
-                              self.frame.size.width,
-                              readjustedHeight)];
+    self.shippingMethodView = [[UIView alloc] initWithFrame:CGRectMake(self.scrollView.bounds.origin.x,
+                                                                       startingY,
+                                                                       self.scrollView.bounds.size.width,
+                                                                       0.0f)];
+    self.shippingMethodView.backgroundColor = [UIColor whiteColor];
+    self.shippingMethodView.layer.cornerRadius = 5.0f;
     
-    [self.scrollView setFrame:self.bounds];
+    CGFloat currentY = [self headerLoad:self.shippingMethodView title:STRING_SHIPPING selector:@selector(editButtonForShippingMethod)] + 15.0f;
+    
+    currentY += [self addLabelToView:self.shippingMethodView startY:currentY text:shippingMethod] + 10.0f;
+    
+    [self.shippingMethodView setFrame:CGRectMake(self.shippingMethodView.frame.origin.x,
+                                                 self.shippingMethodView.frame.origin.y,
+                                                 self.shippingMethodView.frame.size.width,
+                                                 currentY)];
+    
+    startingY += currentY + 6.0f;
+    
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
+                                             startingY);
 }
 
 - (CGFloat)headerLoad:(UIView*)view
@@ -208,12 +228,12 @@
         CGRect editButtonRect = [STRING_EDIT boundingRectWithSize:CGSizeMake(view.bounds.size.width, 1000.0f)
                                                           options:NSStringDrawingUsesLineFragmentOrigin
                                                        attributes:@{NSFontAttributeName:editFont} context:nil];
-
+        
         [editButton setFrame:CGRectMake(view.bounds.size.width - editButtonRect.size.width - 20.0f,
                                         view.bounds.origin.y,
                                         editButtonRect.size.width + 20.0f,
                                         26.0f)];
-         [view addSubview:editButton];
+        [view addSubview:editButton];
         rightMargin += editButton.frame.size.width;
     }
     
@@ -435,20 +455,25 @@
         }
     }
     
+    currentY += [self addLabelToView:view startY:currentY text:addressText] + 10.0f;
+    
+    return currentY;
+}
+
+- (CGFloat)addLabelToView:(UIView*)view startY:(CGFloat)startY text:(NSString*)text
+{
     UILabel* addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                      currentY,
+                                                                      startY,
                                                                       view.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                       0.0f)];
     addressLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     addressLabel.numberOfLines = 0;
     addressLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    addressLabel.text = addressText;
+    addressLabel.text = text;
     [addressLabel sizeToFit];
     [view addSubview:addressLabel];
     
-    currentY += addressLabel.frame.size.height + 10.0f;
-    
-    return currentY;
+    return addressLabel.frame.size.height;
 }
 
 - (void)editButtonForShippingAddress
@@ -461,6 +486,20 @@
 - (void)editButtonForBillingAddress
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                        object:nil
+                                                      userInfo:nil];
+}
+
+- (void)editButtonForShippingMethod
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification
+                                                        object:nil
+                                                      userInfo:nil];
+}
+
+- (void)editButtonForPaymentMethod
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
                                                         object:nil
                                                       userInfo:nil];
 }

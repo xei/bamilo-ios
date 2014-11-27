@@ -127,8 +127,7 @@ FBLoginViewDelegate
 {
     [super viewWillAppear:animated];
     
-    CGFloat margin = 6.0f;
-    CGFloat orderSummaryY = self.stepBackground.frame.size.height + margin;
+    CGFloat orderSummaryY = self.stepBackground.frame.size.height;
     CGFloat orderSummaryWidth = 250.0f;
     CGFloat orderSummaryX = 768.0f;
     self.orderSummaryView = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(orderSummaryX,
