@@ -14,8 +14,9 @@
 
 @interface JAOrderViewController ()
 
-@property (nonatomic, assign) NSInteger currentY;
+@property (nonatomic, assign) NSInteger scrollViewCurrentY;
 @property (nonatomic, strong) UIScrollView* scrollView;
+@property (nonatomic, strong) UIScrollView* secondScrollView;
 
 // Bottom view
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
@@ -24,7 +25,8 @@
 
 @implementation JAOrderViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.screenName = @"OrderConfirmation";
@@ -33,21 +35,37 @@
     self.navBarLayout.showCartButton = NO;
     
     self.view.backgroundColor = JABackgroundGrey;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
                                                                      self.view.bounds.origin.y,
                                                                      self.view.bounds.size.width,
-                                                                     self.view.bounds.size.height - 64.0f)];
+                                                                     self.view.bounds.size.height)];
+    [self.scrollView setHidden:YES];
     [self.view addSubview:self.scrollView];
     
-    [self setupViews];
+    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectMake(0.0f,
+                                                                         self.view.frame.size.height - self.bottomView.frame.size.height,
+                                                                         self.view.frame.size.width,
+                                                                         self.bottomView.frame.size.height)
+                                                  orientation:UIInterfaceOrientationPortrait];
+    [self.bottomView setHidden:YES];
+    [self.view addSubview:self.bottomView];
     
+    [self showLoading];
+    
+    [self setupViews];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"CheckoutMyOrder" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-
+    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutOrder]
                                               data:[trackingDictionary copy]];
     if(self.firstLoading)
@@ -58,27 +76,106 @@
     }
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self showLoading];
+    
+    [self.scrollView setHidden:YES];
+    
+    if(VALID_NOTEMPTY(self.secondScrollView, UIScrollView))
+    {
+        [self.secondScrollView setHidden:YES];
+    }
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self setupViews];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
 -(void)setupViews
 {
-    //relative to scroll
-    self.currentY = self.scrollView.bounds.origin.y + 6.0f;
-    [self setupOrderView];
-    [self setupSubtotalView];
-    [self setupShippingAddressView];
-    [self setupBillingAddressView];
-    [self setupShippingMethodView];
-    [self setupPaymentOptionsView];
+    if(VALID_NOTEMPTY(self.scrollView, UIScrollView))
+    {
+        for(UIView *view in self.scrollView.subviews)
+        {
+            [view removeFromSuperview];
+        }
+    }
     
     //not relative to scroll
     [self setupConfirmButton];
     
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat viewsWidth = self.view.frame.size.width - (2 * horizontalMargin);
+    CGFloat originY = 0.0f;
+
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        viewsWidth = (self.view.frame.size.width - (3 * horizontalMargin)) / 2;
+        self.secondScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(horizontalMargin + viewsWidth + horizontalMargin,
+                                                                               originY,
+                                                                               viewsWidth,
+                                                                               self.view.bounds.size.height)];
+        [self.view addSubview:self.secondScrollView];
+    }
+    else
+    {
+        if(VALID_NOTEMPTY(self.secondScrollView, UIScrollView))
+        {
+            for(UIView *view in self.secondScrollView.subviews)
+            {
+                [view removeFromSuperview];
+            }
+            [self.secondScrollView removeFromSuperview];
+            self.secondScrollView = nil;
+        }
+    }
+    
+    [self.scrollView setFrame:CGRectMake(horizontalMargin,
+                                         originY,
+                                         viewsWidth,
+                                         self.view.bounds.size.height)];
+    
+    //relative to scroll
+    self.scrollViewCurrentY = self.scrollView.bounds.origin.y + 6.0f;
+    self.scrollViewCurrentY += [self setupOrderView:self.scrollView atYPostion:self.scrollViewCurrentY];
+    self.scrollViewCurrentY += [self setupSubtotalView:self.scrollView atYPostion:self.scrollViewCurrentY];
+
+    // If we have a second scroll view
+    if(VALID_NOTEMPTY(self.secondScrollView, UIScrollView))
+    {
+        CGFloat secondScrollViewCurrentY = self.secondScrollView.bounds.origin.y + 6.0f;
+        secondScrollViewCurrentY += [self setupShippingAddressView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
+        secondScrollViewCurrentY += [self setupBillingAddressView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
+        secondScrollViewCurrentY += [self setupShippingMethodView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
+        secondScrollViewCurrentY += [self setupPaymentOptionsView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
+        
+        [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
+                                                   self.scrollViewCurrentY + self.bottomView.frame.size.height)];
+    }
+    else
+    {
+        self.scrollViewCurrentY += [self setupShippingAddressView:self.scrollView atYPostion:self.scrollViewCurrentY];
+        self.scrollViewCurrentY += [self setupBillingAddressView:self.scrollView atYPostion:self.scrollViewCurrentY];
+        self.scrollViewCurrentY += [self setupShippingMethodView:self.scrollView atYPostion:self.scrollViewCurrentY];
+        self.scrollViewCurrentY += [self setupPaymentOptionsView:self.scrollView atYPostion:self.scrollViewCurrentY];
+    }
+    
+    [self.scrollView setHidden:NO];
+    
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
-                                               self.currentY + self.bottomView.frame.size.height)];
+                                               self.scrollViewCurrentY + self.bottomView.frame.size.height)];
+    [self hideLoading];
 }
 
-- (void)setupOrderView
+- (CGFloat)setupOrderView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
 {
-    UIView* orderContentView = [self placeContentViewWithTitle:STRING_MY_ORDER_LABEL atYPosition:self.currentY];
+    UIView* orderContentView = [self placeContentViewWithTitle:STRING_MY_ORDER_LABEL atYPosition:yPosition scrollView:scrollView];
     
     for (int i = 0; i < self.checkout.cart.cartItems.count; i++) {
         RICartItem* cartItem = [self.checkout.cart.cartItems objectAtIndex:i];
@@ -88,7 +185,7 @@
         [self placeCartItemCell:cartItem inContentView:orderContentView];
     }
     
-    self.currentY += orderContentView.frame.size.height + 5.0f;
+    return orderContentView.frame.size.height + 5.0f;
 }
 
 - (void)placeCartItemCell:(RICartItem*)cartItem
@@ -111,7 +208,7 @@
                                                                            itemCell.bounds.origin.y + 2.0f,
                                                                            68.0f,
                                                                            85.0f)];
-
+    
     [imageView setImageWithURL:[NSURL URLWithString:cartItem.imageUrl]
               placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     [itemCell addSubview:imageView];
@@ -180,9 +277,9 @@
                                    contentView.frame.size.height + separator.frame.size.height);
 }
 
-- (void)setupSubtotalView
+- (CGFloat)setupSubtotalView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
 {
-    UIView* subtotalContentView = [self placeContentViewWithTitle:STRING_SUBTOTAL atYPosition:self.currentY];
+    UIView* subtotalContentView = [self placeContentViewWithTitle:STRING_SUBTOTAL atYPosition:yPosition scrollView:scrollView];
     
     UILabel* articlesLabel = [UILabel new];
     articlesLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
@@ -322,9 +419,9 @@
     extraCostsLabel.text = STRING_EXTRA_COSTS;
     [extraCostsLabel sizeToFit];
     extraCostsLabel.frame = CGRectMake(articlesLabel.frame.origin.x,
-                                     CGRectGetMaxY(shippingLabel.frame),
-                                     articlesLabel.frame.size.width,
-                                     extraCostsLabel.frame.size.height);
+                                       CGRectGetMaxY(shippingLabel.frame),
+                                       articlesLabel.frame.size.width,
+                                       extraCostsLabel.frame.size.height);
     [subtotalContentView addSubview:extraCostsLabel];
     
     UILabel* extraCostsValueLabel = [UILabel new];
@@ -372,30 +469,32 @@
                                            subtotalContentView.frame.size.width,
                                            CGRectGetMaxY(finalTotalLabel.frame) + 10.0f);
     
-    self.currentY += subtotalContentView.frame.size.height + 5.0f;
+    return subtotalContentView.frame.size.height + 5.0f;
 }
 
-- (void)setupShippingAddressView
+- (CGFloat)setupShippingAddressView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
 {
     NSString* shippingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.shippingAddress];
-    [self setupGenericAddressViewWithTitle:STRING_SHIPPING_ADDRESSES address:shippingAddress editButtonSelector:@selector(editButtonForShippingAddress)];
+    return [self setupGenericAddressViewWithTitle:STRING_SHIPPING_ADDRESSES address:shippingAddress editButtonSelector:@selector(editButtonForShippingAddress) scrollView:scrollView atYPostion:yPosition];
 }
 
-- (void)setupBillingAddressView
+- (CGFloat)setupBillingAddressView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
 {
     NSString* shippingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.shippingAddress];
     NSString* billingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.billingAddress];
     if ([billingAddress isEqualToString:shippingAddress]) {
         billingAddress = STRING_BILLING_SAME_ADDRESSES;
     }
-    [self setupGenericAddressViewWithTitle:STRING_BILLING_ADDRESSES address:billingAddress editButtonSelector:@selector(editButtonForBillingAddress)];
+    return [self setupGenericAddressViewWithTitle:STRING_BILLING_ADDRESSES address:billingAddress editButtonSelector:@selector(editButtonForBillingAddress) scrollView:scrollView atYPostion:yPosition];
 }
 
-- (void)setupGenericAddressViewWithTitle:(NSString*)title
-                                 address:(NSString*)address
-                      editButtonSelector:(SEL)selector
+- (CGFloat)setupGenericAddressViewWithTitle:(NSString*)title
+                                    address:(NSString*)address
+                         editButtonSelector:(SEL)selector
+                                 scrollView:(UIScrollView*)scrollView
+                                 atYPostion:(CGFloat)yPosition
 {
-    UIView* addressContentView = [self placeContentViewWithTitle:title atYPosition:self.currentY];
+    UIView* addressContentView = [self placeContentViewWithTitle:title atYPosition:yPosition scrollView:scrollView];
     
     [self addEditButtonToContentView:addressContentView withSelector:selector];
     
@@ -416,7 +515,7 @@
                                           addressContentView.frame.size.width,
                                           CGRectGetMaxY(addressLabel.frame) + 10.0f);
     
-    self.currentY += addressContentView.frame.size.height + 5.0f;
+    return addressContentView.frame.size.height + 5.0f;
 }
 
 - (NSString*)getAddressStringFromAddress:(RIAddress*)address;
@@ -499,9 +598,9 @@
     return addressText;
 }
 
-- (void)setupShippingMethodView
+- (CGFloat)setupShippingMethodView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
 {
-    UIView* shippingContentView = [self placeContentViewWithTitle:STRING_SHIPPING atYPosition:self.currentY];
+    UIView* shippingContentView = [self placeContentViewWithTitle:STRING_SHIPPING atYPosition:yPosition scrollView:scrollView];
     
     [self addEditButtonToContentView:shippingContentView withSelector:@selector(editButtonForShippingMethod)];
     
@@ -522,12 +621,12 @@
                                            shippingContentView.frame.size.width,
                                            CGRectGetMaxY(shippingMethodLabel.frame) + 10.0f);
     
-    self.currentY += shippingContentView.frame.size.height + 5.0f;
+    return shippingContentView.frame.size.height + 5.0f;
 }
 
-- (void)setupPaymentOptionsView
+- (CGFloat)setupPaymentOptionsView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
 {
-    UIView* paymentContentView = [self placeContentViewWithTitle:STRING_PAYMENT_METHOD atYPosition:self.currentY];
+    UIView* paymentContentView = [self placeContentViewWithTitle:STRING_PAYMENT_METHOD atYPosition:yPosition scrollView:scrollView];
     
     [self addEditButtonToContentView:paymentContentView withSelector:@selector(editButtonForPaymentMethod)];
     
@@ -580,42 +679,45 @@
                                               CGRectGetMaxY(couponCodeLabel.frame));
     }
     
-
+    
     paymentContentView.frame = CGRectMake(paymentContentView.frame.origin.x,
                                           paymentContentView.frame.origin.y,
                                           paymentContentView.frame.size.width,
                                           paymentContentView.frame.size.height + 10.0f);
     
-    self.currentY += paymentContentView.frame.size.height + 5.0f;
+    return paymentContentView.frame.size.height + 5.0f;
 }
 
 - (void)setupConfirmButton
 {
-    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero
-                                                  orientation:self.interfaceOrientation];
+    CGFloat newWidth = self.view.frame.size.width;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    }
     
-    [self.bottomView setFrame:CGRectMake(0.0f,
-                                         self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
-                                         self.view.frame.size.width,
-                                         self.bottomView.frame.size.height)];
+    [self.bottomView reloadFrame:CGRectMake(0.0f,
+                                            self.view.frame.size.height - self.bottomView.frame.size.height,
+                                            newWidth,
+                                            self.bottomView.frame.size.height)];
     
     [self.bottomView addButton:STRING_CONFIRM_ORDER target:self action:@selector(nextStepButtonPressed)];
-    
-    [self.view addSubview:self.bottomView];
+    [self.bottomView setHidden:NO];
 }
 
 #pragma mark - Content view auxiliary methods
 
 - (UIView*)placeContentViewWithTitle:(NSString*)title
-                         atYPosition:(CGFloat)yPosition;
+                         atYPosition:(CGFloat)yPosition
+                          scrollView:(UIScrollView*)scrollView
 {
-    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
+    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
                                                                    yPosition,
-                                                                   self.view.frame.size.width - 2*6.0f,
+                                                                   scrollView.frame.size.width,
                                                                    1)];
     contentView.backgroundColor = [UIColor whiteColor];
     contentView.layer.cornerRadius = 5.0f;
-    [self.scrollView addSubview:contentView];
+    [scrollView addSubview:contentView];
     
     [self addTitle:title toContentView:contentView];
     
@@ -657,16 +759,23 @@
                       withSelector:(SEL)selector
 {
     if (selector) {
-        UIButton* editButton = [[UIButton alloc] initWithFrame:CGRectMake(contentView.bounds.size.width - 50.0f,
-                                                                          contentView.bounds.origin.y,
-                                                                          50.0f,
-                                                                          26.0f)];
+        UIFont *editFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f];
+        UIButton* editButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [editButton setTitle:STRING_EDIT forState:UIControlStateNormal];
         [editButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
         [editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
         [editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];
-        [editButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f]];
+        [editButton.titleLabel setFont:editFont];
         [editButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
+        [editButton sizeToFit];
+        CGRect editButtonRect = [STRING_EDIT boundingRectWithSize:CGSizeMake(contentView.bounds.size.width, 1000.0f)
+                                                          options:NSStringDrawingUsesLineFragmentOrigin
+                                                       attributes:@{NSFontAttributeName:editFont} context:nil];
+        
+        [editButton setFrame:CGRectMake(contentView.bounds.size.width - editButtonRect.size.width - 20.0f,
+                                        contentView.bounds.origin.y,
+                                        editButtonRect.size.width + 20.0f,
+                                        26.0f)];
         [contentView addSubview:editButton];
     }
 }
