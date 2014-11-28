@@ -115,6 +115,8 @@ JAPickerDelegate>
 {
     [super viewWillAppear:animated];
     
+    [self showLoading];
+    
     [self initViews];
     
     [RIForm getForm:@"addresscreate"
@@ -220,6 +222,7 @@ JAPickerDelegate>
 {
     self.shippingContentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
     [self.shippingContentView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.shippingContentView setHidden:YES];
     self.shippingContentView.layer.cornerRadius = 5.0f;
     
     self.shippingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.shippingContentView.frame.size.width, 26.0f)];
@@ -279,6 +282,8 @@ JAPickerDelegate>
     }
     
     [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    
+    [self hideLoading];
     
     if(self.firstLoading)
     {
@@ -416,6 +421,7 @@ JAPickerDelegate>
                                                   6.0f,
                                                   self.contentScrollView.frame.size.width - 12.0f,
                                                   self.shippingAddressViewCurrentY)];
+    [self.shippingContentView setHidden:NO];
     
     [self.shippingHeaderLabel setFrame:CGRectMake(6.0f,
                                                   0.0f,

@@ -86,6 +86,8 @@ JAPickerDelegate>
 {
     [super viewWillAppear:animated];
     
+    [self showLoading];
+    
     [self initViews];
     
     [RIForm getForm:@"addressedit"
@@ -278,6 +280,7 @@ JAPickerDelegate>
                                           6.0f,
                                           self.contentScrollView.frame.size.width - 12.0f,
                                           self.addressViewCurrentY)];
+    [self.contentView setHidden:NO];
     
     [self.headerLabel setFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width - 12.0f, 26.0f)];
     [self.headerSeparator setFrame:CGRectMake(0.0f, CGRectGetMaxY(self.headerLabel.frame), self.contentView.frame.size.width, 1.0f)];
@@ -338,6 +341,7 @@ JAPickerDelegate>
 -(void)setupAddressView
 {
     self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, 27.0f)];
+    [self.contentView setHidden:YES];
     [self.contentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.contentView.layer.cornerRadius = 5.0f;
     
@@ -364,6 +368,8 @@ JAPickerDelegate>
     }
     
     [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    
+    [self hideLoading];
     
     if(self.firstLoading)
     {
