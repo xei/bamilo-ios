@@ -31,6 +31,7 @@ JAPickerDelegate>
 // Add Address
 @property (strong, nonatomic) UIScrollView *contentScrollView;
 @property (assign, nonatomic) CGRect originalFrame;
+@property (assign, nonatomic) CGRect orderSummaryOriginalFrame;
 
 // Shipping Address
 @property (strong, nonatomic) UIView *shippingContentView;
@@ -384,6 +385,7 @@ JAPickerDelegate>
                                                                                  self.view.frame.size.height - self.stepBackground.frame.size.height)];
         [self.orderSummary loadWithCart:self.cart];
         [self.view addSubview:self.orderSummary];
+        self.orderSummaryOriginalFrame = self.orderSummary.frame;        
     }
     
     [self.contentScrollView setFrame:CGRectMake(0.0f,
@@ -958,6 +960,11 @@ JAPickerDelegate>
                                                     self.originalFrame.origin.y,
                                                     self.originalFrame.size.width,
                                                     self.originalFrame.size.height - height)];
+        
+        [self.orderSummary setFrame:CGRectMake(self.orderSummaryOriginalFrame.origin.x,
+                                               self.orderSummaryOriginalFrame.origin.y,
+                                               self.orderSummaryOriginalFrame.size.width,
+                                               self.orderSummaryOriginalFrame.size.height - height)];
     }];
 }
 
@@ -965,6 +972,7 @@ JAPickerDelegate>
 {
     [UIView animateWithDuration:0.3 animations:^{
         [self.contentScrollView setFrame:self.originalFrame];
+        [self.orderSummary setFrame:self.orderSummaryOriginalFrame];
     }];
 }
 
