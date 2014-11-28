@@ -34,10 +34,14 @@
                                                                     self.scrollView.bounds.size.height)];
         [self.scrollView addSubview:self.wizardPage1];
         
+        CGFloat topMargin = kJAWizardViewImageGenericTopMargin;
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+            topMargin = kJAWizardViewImageGenericTopMargin_ipad;
+        }
         UIImage* image1 = [UIImage imageNamed:@"wizard_swipe"];
         self.wizardPage1ImageView = [[UIImageView alloc] initWithImage:image1];
         [self.wizardPage1ImageView setFrame:CGRectMake((self.wizardPage1.bounds.size.width - image1.size.width) / 2,
-                                                       kJAWizardViewImageGenericTopMargin,
+                                                       topMargin,
                                                        image1.size.width,
                                                        image1.size.height)];
         [self.wizardPage1 addSubview:self.wizardPage1ImageView];
@@ -69,7 +73,7 @@
         
         UIImage* image2 = [UIImage imageNamed:@"wizard_fav"];
         self.wizardPage2ImageView = [[UIImageView alloc] initWithImage:image2];
-        [self.wizardPage2ImageView setFrame:CGRectMake(self.wizardPage2.bounds.size.width - image2.size.width - 15.0f,
+        [self.wizardPage2ImageView setFrame:CGRectMake(self.wizardPage2.bounds.size.width - self.wizardPage2ImageView.frame.size.width - 15.0f,
                                                        kJAWizardViewImageGenericSmallTopMargin,
                                                        image2.size.width,
                                                        image2.size.height)];
@@ -98,6 +102,8 @@
                                                    self.scrollView.frame.size.height)];
         
         self.pageControl.numberOfPages = 2;
+        
+        [self reloadForFrame:frame];
     }
     return self;
 }
@@ -113,8 +119,12 @@
                                           self.scrollView.bounds.size.width,
                                           self.scrollView.bounds.size.height)];
     
+    CGFloat topMargin = kJAWizardViewImageGenericTopMargin;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+        topMargin = kJAWizardViewImageGenericTopMargin_ipad;
+    }
     [self.wizardPage1ImageView setFrame:CGRectMake((self.wizardPage1.bounds.size.width -  self.wizardPage1ImageView.frame.size.width) / 2,
-                                                   kJAWizardViewImageGenericTopMargin,
+                                                   topMargin,
                                                    self.wizardPage1ImageView.frame.size.width,
                                                    self.wizardPage1ImageView.frame.size.height)];
     
@@ -153,6 +163,8 @@
                                                self.scrollView.frame.size.height)];
     
     self.pageControl.numberOfPages = 2;
+    
+    [self.scrollView scrollRectToVisible:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:NO];
 }
 
 @end

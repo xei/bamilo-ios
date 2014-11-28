@@ -13,6 +13,4 @@
 
 @interface JAHomeWizardView : JAWizardView
 
-- (void)reloadForFrame:(CGRect)frame;
-
 @end
