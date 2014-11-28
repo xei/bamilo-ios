@@ -19,19 +19,19 @@
 
 @implementation JACheckoutForms
 
--(id)initWithPaymentMethodForm:(RIPaymentMethodForm*)paymentMethodForm
+-(id)initWithPaymentMethodForm:(RIPaymentMethodForm*)paymentMethodForm width:(CGFloat)width
 {
     self = [super init];
     if(self)
     {
         self.dynamicForms = [[NSMutableDictionary alloc] init];
         self.paymentMethodFormViews = [[NSMutableDictionary alloc] init];
-        [self createPaymentMethodViews:paymentMethodForm];
+        [self createPaymentMethodViews:paymentMethodForm width:width];
     }
     return self;
 }
 
--(void)createPaymentMethodViews:(RIPaymentMethodForm*)paymentMethodForm
+-(void)createPaymentMethodViews:(RIPaymentMethodForm*)paymentMethodForm width:(CGFloat)width
 {
     NSArray *paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:paymentMethodForm];
     
@@ -46,12 +46,16 @@
                 
                 if(VALID_NOTEMPTY(paymentMethod.form, RIForm))
                 {
-                    JADynamicForm *dynamicForm = [[JADynamicForm alloc] initWithForm:paymentMethod.form delegate:nil startingPosition:0.0f widthSize:308.0f];
+                    JADynamicForm *dynamicForm = [[JADynamicForm alloc] initWithForm:paymentMethod.form delegate:nil startingPosition:0.0f widthSize:width];
                     
                     [self.dynamicForms setObject:dynamicForm forKey:paymentMethod.uid];
                     
                     for (UIView *dynamicFormView in dynamicForm.formViews)
                     {
+                        [dynamicFormView setFrame:CGRectMake(dynamicFormView.frame.origin.x,
+                                                             dynamicFormView.frame.origin.y,
+                                                             width,
+                                                             dynamicFormView.frame.size.height)];
                         [paymentMethodView addSubview:dynamicFormView];
                         totalHeight = CGRectGetMaxY(dynamicFormView.frame);
                     }
@@ -63,7 +67,7 @@
                 {
                     UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(27.0f,
                                                                                           totalHeight,
-                                                                                          264.0f,
+                                                                                          width - (27.0f * 2),
                                                                                           1000.0f)];
                     [descriptionLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]];
                     [descriptionLabel setNumberOfLines:0];
@@ -77,7 +81,7 @@
                 
                 [paymentMethodView setFrame:CGRectMake(0.0f,
                                                        0.0f,
-                                                       308.0f,
+                                                       width,
                                                        totalHeight)];
                 [self.paymentMethodFormViews setValue:paymentMethodView forKey:paymentMethod.uid];
             }
@@ -88,7 +92,7 @@
 -(UIView*)getPaymentMethodView:(RIPaymentMethodFormOption*)paymentMethod
 {
     UIView *paymentMethodView = [[UIView alloc] init];
-
+    
     if(VALID_NOTEMPTY(self.paymentMethodFormViews, NSMutableDictionary))
     {
         paymentMethodView = [self.paymentMethodFormViews objectForKey:paymentMethod.uid];

@@ -148,7 +148,7 @@ UITextFieldDelegate>
          // LIST OF AVAILABLE PAYMENT METHODS
          self.paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:checkout.paymentMethodForm];
          
-         self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:checkout.paymentMethodForm];
+         self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:checkout.paymentMethodForm width:(self.view.frame.size.width - 12.0f)];
          
          [self finishedLoadingPaymentMethods];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
@@ -361,6 +361,8 @@ UITextFieldDelegate>
                                              self.collectionView.frame.origin.y,
                                              self.scrollView.frame.size.width - 12.0f,
                                              self.collectionView.frame.size.height)];
+    
+    self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.checkout.paymentMethodForm width:self.collectionView.frame.size.width];
     
     [self.couponView setFrame:CGRectMake(self.couponView.frame.origin.x,
                                          CGRectGetMaxY(self.collectionView.frame) + 6.0f,
