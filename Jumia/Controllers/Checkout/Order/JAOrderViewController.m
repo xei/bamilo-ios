@@ -87,6 +87,8 @@
         [self.secondScrollView setHidden:YES];
     }
     
+    [self.bottomView setHidden:YES];
+    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
@@ -696,7 +698,7 @@
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
     
-    [self.bottomView reloadFrame:CGRectMake(0.0f,
+    [self.bottomView reloadFrame:CGRectMake((self.view.frame.size.width - newWidth) / 2,
                                             self.view.frame.size.height - self.bottomView.frame.size.height,
                                             newWidth,
                                             self.bottomView.frame.size.height)];
