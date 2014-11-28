@@ -26,10 +26,14 @@
         self.wizardPage = [[UIView alloc] initWithFrame:self.scrollView.bounds];
         [self.scrollView addSubview:self.wizardPage];
         
+        CGFloat topMargin = kJAWizardViewImageGenericTopMargin;
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+            topMargin = kJAWizardViewImageGenericTopMargin_ipad;
+        }
         UIImage* image = [UIImage imageNamed:@"wizard_swipe"];
         self.imageView = [[UIImageView alloc] initWithImage:image];
         [self.imageView setFrame:CGRectMake((self.wizardPage.bounds.size.width - image.size.width) / 2,
-                                            kJAWizardViewImageGenericTopMargin,
+                                            topMargin,
                                             image.size.width,
                                             image.size.height)];
         [self.wizardPage addSubview:self.imageView];
@@ -52,6 +56,8 @@
                                               wizardLabelRect.size.height)];
         
         [self.wizardPage addSubview:self.wizardLabel];
+        
+        [self reloadForFrame:frame];
     }
     return self;
 }
@@ -62,8 +68,12 @@
     
     [self.wizardPage setFrame:self.scrollView.bounds];
     
+    CGFloat topMargin = kJAWizardViewImageGenericTopMargin;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+        topMargin = kJAWizardViewImageGenericTopMargin_ipad;
+    }
     [self.imageView setFrame:CGRectMake((self.wizardPage.bounds.size.width - self.imageView.frame.size.width) / 2,
-                                        kJAWizardViewImageGenericTopMargin,
+                                        topMargin,
                                         self.imageView.frame.size.width,
                                         self.imageView.frame.size.height)];
     

@@ -53,7 +53,11 @@
         self.wizardPage1Label.numberOfLines = -1;
         self.wizardPage1Label.font = kJAWizardFont;
         self.wizardPage1Label.textColor = kJAWizardFontColor;
-        self.wizardPage1Label.text = STRING_WIZARD_PDV_SWIPE;
+        NSString* label1Text = STRING_WIZARD_PDV_SWIPE;
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+            label1Text = [label1Text stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+        }
+        self.wizardPage1Label.text = label1Text;
         
         CGRect wizardLabe1Rect = [STRING_WIZARD_PDV_SWIPE boundingRectWithSize:CGSizeMake(self.wizardPage1.bounds.size.width - kJAWizardPDV1TextHorizontalMargin*2, 1000.0f)
                                                                        options:NSStringDrawingUsesLineFragmentOrigin
@@ -177,6 +181,8 @@
                                                    self.scrollView.frame.size.height)];
         
         self.pageControl.numberOfPages = 4;
+        
+        [self reloadForFrame:frame];
     }
     return self;
 }
@@ -187,13 +193,24 @@
     
     CGFloat currentX = 0.0f;
     
+    BOOL isLandscape = frame.size.width>frame.size.height?YES:NO;
+    
+    CGFloat topMargin = kJAWizardViewImageGenericTopMargin;
+    CGFloat leftMargin1 = (self.wizardPage1.bounds.size.width - self.wizardPage1ImageView.frame.size.width) / 2;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+        topMargin = kJAWizardViewImageGenericTopMargin_ipad;
+        if (isLandscape) {
+            leftMargin1 = kJAWizardViewFirstImageLeftMargin;
+        }
+    }
+    
     [self.wizardPage1 setFrame:CGRectMake(currentX,
                                           self.scrollView.bounds.origin.y,
                                           self.scrollView.bounds.size.width,
                                           self.scrollView.bounds.size.height)];
     
-    [self.wizardPage1ImageView setFrame:CGRectMake((self.wizardPage1.bounds.size.width - self.wizardPage1ImageView.frame.size.width) / 2,
-                                                   kJAWizardViewImageGenericTopMargin,
+    [self.wizardPage1ImageView setFrame:CGRectMake(leftMargin1,
+                                                   topMargin,
                                                    self.wizardPage1ImageView.frame.size.width,
                                                    self.wizardPage1ImageView.frame.size.height)];
     
@@ -208,13 +225,20 @@
     
     currentX += self.wizardPage1.frame.size.width;
     
+    
+    
+    CGFloat leftMargin2 = (self.wizardPage2.bounds.size.width - self.wizardPage2ImageView.frame.size.width) / 2 + 30.0f;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && isLandscape) {
+        leftMargin2 = kJAWizardViewFirstImageLeftMargin + 60.0f;
+    }
+    
     [self.wizardPage2 setFrame:CGRectMake(currentX,
                                           self.scrollView.bounds.origin.y,
                                           self.scrollView.bounds.size.width,
                                           self.scrollView.bounds.size.height)];
     
-    [self.wizardPage2ImageView setFrame:CGRectMake((self.wizardPage2.bounds.size.width - self.wizardPage2ImageView.frame.size.width) / 2 + 30.0f,
-                                                   kJAWizardViewImageGenericTopMargin,
+    [self.wizardPage2ImageView setFrame:CGRectMake(leftMargin2,
+                                                   topMargin,
                                                    self.wizardPage2ImageView.frame.size.width,
                                                    self.wizardPage2ImageView.frame.size.height)];
     
@@ -231,12 +255,18 @@
     currentX += self.wizardPage2.frame.size.width;
     
     
+    CGFloat topMargin3 = kJAWizardViewThirdImageTopMargin;
+    CGFloat leftMargin3 = self.wizardPage3.bounds.size.width - self.wizardPage3ImageView.frame.size.width - 15.0f;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && isLandscape) {
+        leftMargin3 = (self.wizardPage3.bounds.size.width / 2) - self.wizardPage3ImageView.frame.size.width - 15.0f ;
+        topMargin3 = kJAWizardViewThirdImageTopMargin_landscape;
+    }
     [self.wizardPage3 setFrame:CGRectMake(currentX,
                                           self.scrollView.bounds.origin.y,
                                           self.scrollView.bounds.size.width,
                                           self.scrollView.bounds.size.height)];
-    [self.wizardPage3ImageView setFrame:CGRectMake(self.wizardPage3.bounds.size.width - self.wizardPage3ImageView.frame.size.width - 15.0f,
-                                                   kJAWizardViewImageGenericSmallTopMargin,
+    [self.wizardPage3ImageView setFrame:CGRectMake(leftMargin3,
+                                                   topMargin3,
                                                    self.wizardPage3ImageView.frame.size.width,
                                                    self.wizardPage3ImageView.frame.size.height)];
     
@@ -250,13 +280,18 @@
                                                wizardLabe3Rect.size.height)];
     currentX += self.wizardPage3.frame.size.width;
     
+    
+    CGFloat topMargin4 = kJAWizardViewThirdImageTopMargin;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && isLandscape) {
+        topMargin4 = kJAWizardViewThirdImageTopMargin_landscape;
+    }
     [self.wizardPage4 setFrame:CGRectMake(currentX,
                                           self.scrollView.bounds.origin.y,
                                           self.scrollView.bounds.size.width,
                                           self.scrollView.bounds.size.height)];
     
     [self.wizardPage4ImageView setFrame:CGRectMake(kJAWizardPDV4TextHorizontalMargin,
-                                                   kJAWizardViewImageGenericSmallTopMargin,
+                                                   topMargin4,
                                                    self.wizardPage4ImageView.frame.size.width,
                                                    self.wizardPage4ImageView.frame.size.height)];
     
@@ -274,6 +309,8 @@
                                                self.scrollView.frame.size.height)];
     
     self.pageControl.numberOfPages = 4;
+    
+    [self.scrollView scrollRectToVisible:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:NO];
 }
 
 @end
