@@ -31,9 +31,14 @@
     
     self.webView.translatesAutoresizingMaskIntoConstraints = YES;
     [self.webView setDelegate:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.webView setFrame:self.view.bounds];
     
     self.originalRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[RIApi getCountryUrlInUse]]];
-
+    
     [self loadPaymentMethodRequest];
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -42,7 +47,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self.webView setFrame:self.view.frame];
+    [self.webView setFrame:self.view.bounds];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
