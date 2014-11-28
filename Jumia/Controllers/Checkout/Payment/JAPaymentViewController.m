@@ -362,6 +362,19 @@ UITextFieldDelegate>
                                              self.scrollView.frame.size.width - 12.0f,
                                              self.collectionView.frame.size.height)];
     
+    if(VALID_NOTEMPTY(self.checkoutFormForPaymentMethod, JACheckoutForms) && VALID_NOTEMPTY(self.checkoutFormForPaymentMethod.paymentMethodFormViews, NSMutableDictionary))
+    {
+        NSArray *keys = [self.checkoutFormForPaymentMethod.paymentMethodFormViews allKeys];
+        for(NSString *key in keys)
+        {
+            UIView *view = [self.checkoutFormForPaymentMethod.paymentMethodFormViews objectForKey:key];
+            if(VALID_NOTEMPTY(view, UIView))
+            {
+                [view removeFromSuperview];
+            }
+        }
+    }
+    
     self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.checkout.paymentMethodForm width:self.collectionView.frame.size.width];
     
     [self.couponView setFrame:CGRectMake(self.couponView.frame.origin.x,
