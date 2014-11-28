@@ -113,7 +113,16 @@ void(^retryBock)(BOOL dismiss);
                                   logoViewHeight)];
     [self addSubview:logoView];
     
-    NSString *bestShoppingExperienceString = [NSString stringWithFormat:@"%@'s %@", countryName, STRING_BEST_SHOPPING_EXPERIENCE];
+    NSString *bestShoppingExperienceString = @"";
+    if(VALID_NOTEMPTY(countryName, NSString))
+    {
+        bestShoppingExperienceString = [NSString stringWithFormat:@"%@'s %@", countryName, STRING_BEST_SHOPPING_EXPERIENCE];
+    }
+    else
+    {
+        bestShoppingExperienceString = [STRING_BEST_SHOPPING_EXPERIENCE capitalizedString];
+    }
+    
     UIFont *bestShoppingExperienceFont = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
     CGRect bestShoppingExperienceLabelRect = [bestShoppingExperienceString boundingRectWithSize:CGSizeMake(self.frame.size.width - 20.0f, self.frame.size.height)
                                                                                         options:NSStringDrawingUsesLineFragmentOrigin
@@ -207,7 +216,16 @@ void(^retryBock)(BOOL dismiss);
                                            tryToBeBriefLabelRect.size.height + 2.0f)];
     [self addSubview:tryToBeBriefLabel];
     
-    NSString *jumiaString = [NSString stringWithFormat:@"%@ %@", STRING_JUMIA, countryName];
+     NSString *jumiaString = @"";
+    if(VALID_NOTEMPTY(countryName, NSString))
+    {
+        jumiaString = [NSString stringWithFormat:@"%@ %@", STRING_JUMIA, countryName];
+    }
+    else
+    {
+        jumiaString = STRING_JUMIA;
+    }
+    
     NSString *currentlyMaintenanceString = [NSString stringWithFormat:@"%@ %@", jumiaString, STRING_CURRENTLY_IN_MAINTENANCE];
     
     NSMutableAttributedString *currentlyMaintenanceAttributedString = [[NSMutableAttributedString alloc] initWithString:currentlyMaintenanceString];
