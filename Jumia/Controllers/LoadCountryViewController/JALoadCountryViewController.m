@@ -18,6 +18,7 @@
 @property (assign, nonatomic) NSInteger requestCount;
 @property (assign, nonatomic) NSInteger configurationRequestCount;
 @property (strong, nonatomic) RICustomer *customer;
+@property (strong, nonatomic) NSString *loginMethod;
 @property (strong, nonatomic) NSString *countriesRequestId;
 @property (strong, nonatomic) NSString *apiRequestId;
 @property (strong, nonatomic) NSString *cartRequestId;
@@ -240,9 +241,10 @@
                                   }];
         }
         
-        self.customerRequestId = [RICustomer autoLogin:^(BOOL success, RICustomer *customer)
+        self.customerRequestId = [RICustomer autoLogin:^(BOOL success, RICustomer *customer, NSString *loginMethod)
                                   {
                                       self.customer = customer;
+                                      self.loginMethod = loginMethod;
                                       [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration)
                                        {
                                            [RIGoogleAnalyticsTracker initGATrackerWithId:configuration.gaId];
@@ -259,6 +261,12 @@
 - (void)initCountry
 {
     self.isRequestDone = YES;
+    
+    if(VALID_NOTEMPTY(self.loginMethod, NSString) && [@"signup" isEqualToString:self.loginMethod])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
+        [RICommunicationWrapper deleteSessionCookie];
+    }
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
