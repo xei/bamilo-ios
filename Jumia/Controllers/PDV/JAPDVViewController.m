@@ -932,7 +932,12 @@ JAActivityViewControllerDelegate
 
 - (void)addToCart
 {
-    if ([self.productInfoSection.sizeLabel.text isEqualToString:STRING_SIZE])
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && ([self.imageSection.sizeLabel.text isEqualToString:STRING_SIZE]))
+    {
+        self.openPickerFromCart = YES;
+        [self showSizePicker];
+    }
+    else if ([self.productInfoSection.sizeLabel.text isEqualToString:STRING_SIZE])
     {
         self.openPickerFromCart = YES;
         [self showSizePicker];
@@ -1139,12 +1144,6 @@ JAActivityViewControllerDelegate
                      } completion:^(BOOL finished) {
                          [self.picker removeFromSuperview];
                          self.picker = nil;
-                         
-                         if (self.openPickerFromCart)
-                         {
-                             self.openPickerFromCart = NO;
-                             [self addToCart];
-                         }
                      }];
 }
 
