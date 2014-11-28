@@ -515,6 +515,9 @@ JAActivityViewControllerDelegate
                                          
                                          [self hideLoading];
                                      }];
+    
+    //make sure wizard is in front
+    [self.view bringSubviewToFront:self.wizardView];
 }
 
 #pragma mark - Fill the views
