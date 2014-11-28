@@ -99,6 +99,10 @@ JAPickerDelegate>
         self.navBarLayout.backButtonTitle = STRING_CHECKOUT;
         self.navBarLayout.showLogo = NO;
     }
+    else
+    {
+        self.navBarLayout.title = STRING_CHECKOUT;
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -401,7 +405,7 @@ JAPickerDelegate>
     {
         [view setFrame:CGRectMake(view.frame.origin.x,
                                   self.shippingAddressViewCurrentY,
-                                  self.shippingContentView.frame.size.width - 12.0f,
+                                  self.shippingContentView.frame.size.width,
                                   view.frame.size.height)];
         self.shippingAddressViewCurrentY += view.frame.size.height;
     }
@@ -445,7 +449,7 @@ JAPickerDelegate>
     {
         [view setFrame:CGRectMake(view.frame.origin.x,
                                   self.billingAddressViewCurrentY,
-                                  self.billingContentView.frame.size.width - 12.0f,
+                                  self.billingContentView.frame.size.width,
                                   view.frame.size.height)];
         self.billingAddressViewCurrentY += view.frame.size.height;
     }

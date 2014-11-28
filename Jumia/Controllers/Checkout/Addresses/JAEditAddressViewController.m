@@ -274,7 +274,7 @@ JAPickerDelegate>
     {
         [view setFrame:CGRectMake(view.frame.origin.x,
                                   self.addressViewCurrentY,
-                                  self.contentView.frame.size.width - 12.0f,
+                                  self.contentView.frame.size.width,
                                   view.frame.size.height)];
         self.addressViewCurrentY += view.frame.size.height;
     }

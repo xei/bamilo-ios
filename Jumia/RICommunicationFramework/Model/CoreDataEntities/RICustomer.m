@@ -32,7 +32,7 @@
 @dynamic addresses;
 @synthesize costumerRequestID;
 
-+ (NSString*)autoLogin:(void (^)(BOOL success, RICustomer *customer))returnBlock
++ (NSString*)autoLogin:(void (^)(BOOL success, RICustomer *customer, NSString *loginMethod))returnBlock
 {
     NSString *operationID = nil;
     
@@ -55,11 +55,11 @@
             [RICustomer loginCustomerByFacebookWithParameters:parameters
                                                  successBlock:^(RICustomer* customer, NSString* nextStep) {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                         returnBlock(YES, customer);
+                                                         returnBlock(YES, customer, customerObject.loginMethod);
                                                      });
                                                  } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                         returnBlock(NO, nil);
+                                                         returnBlock(NO, nil, customerObject.loginMethod);
                                                      });
                                                  }];
         }
@@ -74,32 +74,32 @@
                             successBlock:^(id jsonObject)
                          {
                              dispatch_async(dispatch_get_main_queue(), ^{
-                                 returnBlock(YES, jsonObject);
+                                 returnBlock(YES, jsonObject, customerObject.loginMethod);
                              });
                          } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
                          {
                              dispatch_async(dispatch_get_main_queue(), ^{
-                                 returnBlock(NO, nil);
+                                 returnBlock(NO, nil, customerObject.loginMethod);
                              });
                          }];
                     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
                     {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            returnBlock(NO, nil);
+                            returnBlock(NO, nil, customerObject.loginMethod);
                         });
                     }];
         }
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                returnBlock(NO, nil);
+                returnBlock(NO, nil, customerObject.loginMethod);
             });
         }
     }
     else
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            returnBlock(NO, nil);
+            returnBlock(NO, nil, nil);
         });
     }
     
