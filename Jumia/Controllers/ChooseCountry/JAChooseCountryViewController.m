@@ -60,7 +60,13 @@ UITableViewDataSource
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
+    if(!VALID_NOTEMPTY([RIApi getCountryUrlInUse], NSString))
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+                                                            object:nil];
+    }
+
     [self loadData];
 }
 
