@@ -10,8 +10,10 @@
 
 #define kJAPDVWizardUserDefaultsKey @"pdvWizardUserDefaultsKey"
 
-@interface JAPDVWizardView : JAWizardView
+#define kJAWizardViewFirstImageLeftMargin 170.0f
+#define kJAWizardViewThirdImageTopMargin_landscape 85.0f
+#define kJAWizardViewThirdImageTopMargin 20.0f
 
-- (void)reloadForFrame:(CGRect)frame;
+@interface JAPDVWizardView : JAWizardView
 
 @end

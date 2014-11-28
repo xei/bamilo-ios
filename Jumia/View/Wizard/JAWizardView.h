@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 #define kJAWizardViewImageGenericTopMargin 60.0f
-#define kJAWizardViewImageGenericSmallTopMargin 20.0f
+#define kJAWizardViewImageGenericTopMargin_ipad 150.0f
+#define kJAWizardViewImageGenericSmallTopMargin 60.0f
 #define kJAWizardHomeTextHorizontalMargin 35.0f
 #define kJAWizardHomeViewTextVerticalMargin 32.0f
 #define kJAWizardCatalog1TextHorizontalMargin 35.0f
