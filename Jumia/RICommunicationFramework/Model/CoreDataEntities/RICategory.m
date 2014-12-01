@@ -129,12 +129,27 @@
     for (NSDictionary* categoryJSON in categories) {
         
         if (VALID_NOTEMPTY(categoryJSON, NSDictionary)) {
+        
+            NSArray* childrenArray = [categoryJSON objectForKey:@"children"];
             
-            RICategory* category = [RICategory parseCategory:categoryJSON];
-            if (persistData) {
-                [RICategory saveCategory:category];
+            if (VALID_NOTEMPTY(childrenArray, NSArray)) {
+                
+                for (NSDictionary* childDict in childrenArray) {
+                    
+                    RICategory* category = [RICategory parseCategory:childDict];
+                    if (persistData) {
+                        [RICategory saveCategory:category];
+                    }
+                    [newCategories addObject:category];
+                    
+                }
+            } else {
+                RICategory* category = [RICategory parseCategory:categoryJSON];
+                if (persistData) {
+                    [RICategory saveCategory:category];
+                }
+                [newCategories addObject:category];
             }
-            [newCategories addObject:category];
         }
     }
     
