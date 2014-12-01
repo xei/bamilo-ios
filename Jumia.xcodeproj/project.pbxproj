@@ -456,6 +456,10 @@
 		B5CFE99C1A0CE475004CE545 /* JAAddRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */; };
 		B5CFE99D1A0CF45C004CE545 /* JAAddRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */; };
 		B5CFE99E1A0CF45F004CE545 /* JAAddRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */; };
+		B5D1258E1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D1258D1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib */; };
+		B5D1258F1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D1258D1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib */; };
+		B5D125911A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */; };
+		B5D125921A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */; };
 		B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759B19814EF000005B13 /* FacebookSDK.framework */; };
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
 		B5FBD57919CAF22F00BD9510 /* Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD55919CAF22F00BD9510 /* Adjust.m */; };
@@ -1208,6 +1212,8 @@
 		B5CFE9981A0CE3BC004CE545 /* JAAddRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAddRatingView.h; sourceTree = "<group>"; };
 		B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAddRatingView.m; sourceTree = "<group>"; };
 		B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAAddRatingView.xib; sourceTree = "<group>"; };
+		B5D1258D1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JACampaignSingleView~iPad_Portrait.xib"; sourceTree = "<group>"; };
+		B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JACampaignSingleView~iPad_Landscape.xib"; sourceTree = "<group>"; };
 		B5EF759B19814EF000005B13 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		B5FBD55819CAF22F00BD9510 /* Adjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Adjust.h; sourceTree = "<group>"; };
@@ -3063,6 +3069,8 @@
 				CE3AF90319DBF50800D8C51B /* JACampaignSingleView.h */,
 				CE3AF90419DBF50800D8C51B /* JACampaignSingleView.m */,
 				CE3AF90519DBF50800D8C51B /* JACampaignSingleView.xib */,
+				B5D1258D1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib */,
+				B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */,
 				CE3AF90619DBF50800D8C51B /* JAPercentageBarView.h */,
 				CE3AF90719DBF50800D8C51B /* JAPercentageBarView.m */,
 				CEE91B9A1989065A0078DFC9 /* JATeaserPageView.h */,
@@ -3322,6 +3330,7 @@
 				BBBA4CC619E41F83004271B2 /* 15_my_favourites.feature in Resources */,
 				B5B3AB511A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				B5CFE99D1A0CF45C004CE545 /* JAAddRatingView.xib in Resources */,
+				B5D1258F1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib in Resources */,
 				BBBA4CD219E43993004271B2 /* 18_track_order.feature in Resources */,
 				BB9546AA19F5512600AC7D05 /* touch.rb in Resources */,
 				BB9546A519F5511500AC7D05 /* env.rb in Resources */,
@@ -3347,6 +3356,7 @@
 				37a7d0b54c205bb3a0c500c0 /* JAAddNewAddressCell.xib in Resources */,
 				9fe40da6008fc103a0ca8cbb /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
 				0ae503a9046dc0361e776798 /* RITracking.plist in Resources */,
+				B5D125921A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib in Resources */,
 				BB9546A619F5511900AC7D05 /* 02_pre_stop_hooks.rb in Resources */,
 				BBB12A9919DD874D00656529 /* 08_registration.feature in Resources */,
 				3683c8aeaaa69a884e004685 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
@@ -3462,6 +3472,7 @@
 				B5B3AB501A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				BBA707B819EEB93C0094C565 /* 00_choose_country.feature in Resources */,
 				6C18BDAC1A1B4CA300626706 /* JANewsletterComponent~iPad.xib in Resources */,
+				B5D1258E1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib in Resources */,
 				BBBA4CBD19E3F764004271B2 /* 13_related_items.feature in Resources */,
 				BBA145B219DC56BF003F0CA7 /* init.rb in Resources */,
 				BBBA4CCD19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
@@ -3598,6 +3609,7 @@
 				B5A301BC19811D0700F71726 /* Images.xcassets in Resources */,
 				B5B5FDF319D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				B5CDC7541A00E50C00DA8ADB /* Main_iPad.storyboard in Resources */,
+				B5D125911A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib in Resources */,
 				CEDEB9B6199BA8FA0022BAB5 /* slider-default-trackCrossedOver.png in Resources */,
 				CEDEB9BE199BA8FA0022BAB5 /* slider-default7-trackBackground@2x.png in Resources */,
 				BBBA4CD419E44CDC004271B2 /* 19_filters.feature in Resources */,

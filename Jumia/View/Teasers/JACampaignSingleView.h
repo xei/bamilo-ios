@@ -27,7 +27,7 @@
 @property (nonatomic, readonly)RICampaign* campaign;
 @property (nonatomic, strong)NSString* chosenSize;
 
-+ (JACampaignSingleView *)getNewJACampaignSingleView;
++ (JACampaignSingleView *)getNewJACampaignSingleView:(UIInterfaceOrientation)interfaceOrientation;
 
 - (void)loadWithCampaign:(RICampaign*)campaign;
 
