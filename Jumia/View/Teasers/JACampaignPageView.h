@@ -21,11 +21,13 @@
 
 @interface JACampaignPageView : UIView
 
+@property (nonatomic, assign)UIInterfaceOrientation interfaceOrientation;
 @property (nonatomic, assign)id<JACampaignPageViewDelegate>delegate;
 @property (nonatomic, assign)id<JACampaignSingleViewDelegate>singleViewDelegate;
 
 - (void)loadWithCampaignUrl:(NSString*)campaignUrl;
 - (void)loadWithCampaignId:(NSString*)campaignId;
 - (void)updateTimerOnAllCampaigns:(NSInteger)elapsedTimeInSeconds;
+- (void)reloadViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 @end
