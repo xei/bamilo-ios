@@ -28,8 +28,15 @@
                      isLandscape:(BOOL)isLandscape
 {
     self.selectedCategory = selectedCategory;
-    self.categoriesArray = categories;
     self.isLandscape = isLandscape;
+    if (1 == categories.count) {
+        RICategory* parent = [categories firstObject];
+        if (VALID_NOTEMPTY(parent.children, NSOrderedSet)) {
+            self.categoriesArray = [parent.children array];
+        }
+    } else {
+        self.categoriesArray = categories;
+    }
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
