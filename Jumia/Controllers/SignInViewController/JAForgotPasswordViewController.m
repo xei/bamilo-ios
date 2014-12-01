@@ -46,7 +46,7 @@
     [self.contentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     [self.contentView setHidden:YES];
     [self.scrollView addSubview:self.contentView];
-    
+
     self.firstLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.firstLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0f]];
     [self.firstLabel setTextColor:UIColorFromRGB(0x666666)];
@@ -83,6 +83,13 @@
     
     [self showLoading];
     
+    [self getForgotPasswordForm];
+}
+
+- (void) getForgotPasswordForm
+{
+    [self.scrollView setHidden:YES];
+ 
     [RIForm getForm:@"forgotpassword"
        successBlock:^(RIForm *form)
      {
@@ -92,20 +99,38 @@
          {
              [self.contentView addSubview:view];
          }
-            
+         
          [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
          
          [self hideLoading];
      }
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
-         [self finishedFormLoading:self.interfaceOrientation];
-         
          [self hideLoading];
          
-         [self showMessage:STRING_ERROR success:NO];
-         
-         [self.navigationController popViewControllerAnimated:YES];
+         if (RIApiResponseNoInternetConnection == apiResponse)
+         {
+             if(VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray))
+             {
+                 [self showMessage:STRING_NO_NEWTORK success:NO];
+                 [self finishedFormLoading:self.interfaceOrientation];
+             }
+             else
+             {
+                 [self showErrorView:YES startingY:0.0f selector:@selector(getForgotPasswordForm) objects:nil];
+             }
+         }
+         else
+         {                 if(VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray))
+         {
+             [self showMessage:STRING_ERROR success:NO];
+             [self finishedFormLoading:self.interfaceOrientation];
+         }
+         else
+         {
+             [self showErrorView:NO startingY:0.0f selector:@selector(getForgotPasswordForm) objects:nil];
+         }
+         }
      }];
 }
 
@@ -212,7 +237,8 @@
                                           CGRectGetMaxY(self.forgotPasswordButton.frame) + 6.0f)];
     
     [self.contentView setHidden:NO];
-    
+    [self.scrollView setHidden:NO];
+
     if(self.firstLoading)
     {
         NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
