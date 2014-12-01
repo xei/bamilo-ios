@@ -604,6 +604,7 @@ UITableViewDataSource
     self.emptyReviewsLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
     CGFloat horizontalMargin = 6.0f;
+    CGFloat totalHeight = 6.0f;
     
     self.emptyReviewsView.layer.cornerRadius = 5.0f;
     [self.emptyReviewsView setFrame:CGRectMake(horizontalMargin,
@@ -623,6 +624,14 @@ UITableViewDataSource
                                                                       options:NSStringDrawingUsesLineFragmentOrigin
                                                                    attributes:@{NSFontAttributeName:self.emptyReviewsLabel.font} context:nil];
     componentsHeight += emptyReviewsLabelRect.size.height;
+    totalHeight += componentsHeight + 6.0f;
+    if(totalHeight > self.emptyReviewsView.frame.size.height)
+    {
+        [self.emptyReviewsView setFrame:CGRectMake(horizontalMargin,
+                                                   originY,
+                                                   width,
+                                                   totalHeight)];
+    }
     
     CGFloat verticalMargin = (self.emptyReviewsView.frame.size.height - componentsHeight) / 2;
     [self.emptyReviewsImageView setFrame:CGRectMake((self.emptyReviewsView.frame.size.width - self.emptyReviewsImageView.frame.size.width) / 2,
