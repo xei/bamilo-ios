@@ -98,6 +98,13 @@ UIAlertViewDelegate
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
+    [self ratingsRequests];
+}
+
+- (void)ratingsRequests
+{
     self.numberOfRequests = 2;
     self.apiResponse = RIApiResponseSuccess;
     
@@ -142,11 +149,25 @@ UIAlertViewDelegate
     }
     else if (RIApiResponseNoInternetConnection == self.apiResponse)
     {
-        [self showMessage:STRING_NO_NEWTORK success:NO];
+        if(VALID_NOTEMPTY(self.ratingDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingDynamicForm.formViews, NSMutableArray))
+        {
+            [self showMessage:STRING_NO_NEWTORK success:NO];
+        }
+        else
+        {
+            [self showErrorView:YES startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
+        }
     }
     else
     {
-        [self showMessage:STRING_ERROR success:NO];
+        if(VALID_NOTEMPTY(self.ratingDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingDynamicForm.formViews, NSMutableArray))
+        {
+            [self showMessage:STRING_ERROR success:NO];
+        }
+        else
+        {
+            [self showErrorView:NO startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
+        }
     }
     
     [self hideLoading];

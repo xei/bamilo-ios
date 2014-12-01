@@ -112,6 +112,8 @@ UITableViewDataSource
     self.goToNewRatingButtonPressed = NO;
     self.requestsDone = NO;
     
+    self.apiResponse = RIApiResponseSuccess;
+    
     if(VALID_NOTEMPTY(self.writeReviewScrollView, UIScrollView))
     {
         self.writeReviewScrollView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -137,30 +139,7 @@ UITableViewDataSource
     {
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
         {
-            self.numberOfRequests = 2;
-            self.apiResponse = RIApiResponseSuccess;
-            
-            [self showLoading];
-            
-            [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
-             {
-                 self.ratings = ratings;
-                 self.numberOfRequests--;
-             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-             {
-                 self.apiResponse = apiResponse;
-                 self.numberOfRequests--;
-             }];
-            
-            [RIForm getForm:@"rating"
-               successBlock:^(RIForm *form)
-             {
-                 self.form = form;
-                 self.numberOfRequests--;
-             } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-                 self.apiResponse = apiResponse;
-                 self.numberOfRequests--;
-             }];
+            [self ratingsRequests];
         }
         else
         {
@@ -223,11 +202,51 @@ UITableViewDataSource
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
+- (void)ratingsRequests
+{
+    self.numberOfRequests = 2;
+    self.apiResponse = RIApiResponseSuccess;
+    
+    [self showLoading];
+    
+    [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
+     {
+         self.ratings = ratings;
+         self.numberOfRequests--;
+     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+     {
+         self.apiResponse = apiResponse;
+         self.numberOfRequests--;
+     }];
+    
+    [RIForm getForm:@"rating"
+       successBlock:^(RIForm *form)
+     {
+         self.form = form;
+         self.numberOfRequests--;
+     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+         self.apiResponse = apiResponse;
+         self.numberOfRequests--;
+     }];
+}
+
 - (void)finishedRequests
 {
     [self setupViews];
     
     [self hideLoading];
+    
+    if(RIApiResponseSuccess != self.apiResponse)
+    {
+        if (RIApiResponseNoInternetConnection == self.apiResponse)
+        {
+            [self showMessage:STRING_NO_NEWTORK success:NO];
+        }
+        else
+        {
+            [self showMessage:STRING_ERROR success:NO];
+        }
+    }
     
     self.requestsDone = YES;
     
