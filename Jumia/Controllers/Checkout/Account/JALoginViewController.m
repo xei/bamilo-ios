@@ -67,6 +67,7 @@ FBLoginViewDelegate
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
 @property (nonatomic, strong)JAOrderSummaryView* orderSummaryView;
+@property (assign, nonatomic) CGRect orderSummaryOriginalFrame;
 
 @property (nonatomic, assign)CGRect mainLandscapeRect;
 @property (nonatomic, assign)CGRect subLandscapeRect;
@@ -95,6 +96,16 @@ FBLoginViewDelegate
     self.navBarLayout.title = STRING_CHECKOUT;
     
     self.navBarLayout.showCartButton = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
     self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
     self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -134,6 +145,7 @@ FBLoginViewDelegate
                                                                                  orderSummaryY,
                                                                                  orderSummaryWidth,
                                                                                  self.view.frame.size.height - orderSummaryY)];
+    self.orderSummaryOriginalFrame = self.orderSummaryView.frame;
     if (VALID_NOTEMPTY(self.cart, RICart)) {
         [self.orderSummaryView loadWithCart:self.cart];
     } else {
@@ -923,6 +935,33 @@ FBLoginViewDelegate
             
             [self showMessage:STRING_ERROR success:NO];
         }
+    }];
+}
+
+#pragma mark Observers
+- (void) keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGFloat height = kbSize.height;
+    
+    if(self.view.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
+    
+    [UIView animateWithDuration:0.3 animations:^{        
+        [self.orderSummaryView setFrame:CGRectMake(self.orderSummaryOriginalFrame.origin.x,
+                                                   self.orderSummaryOriginalFrame.origin.y,
+                                                   self.orderSummaryOriginalFrame.size.width,
+                                                   self.orderSummaryOriginalFrame.size.height - height)];
+    }];
+}
+
+- (void) keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.orderSummaryView setFrame:self.orderSummaryOriginalFrame];
     }];
 }
 
