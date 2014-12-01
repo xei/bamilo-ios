@@ -55,6 +55,10 @@
         self.storedValue = field.value;
         [self.textField setText:field.value];
     }
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(assignFirstResponder)];
+    [self addGestureRecognizer:tap];
 }
 
 -(BOOL)isComponentWithKey:(NSString*)key
@@ -198,6 +202,11 @@
         self.storedValue = self.field.value;
         [self.textField setText:self.field.value];
     }
+}
+
+- (void)assignFirstResponder
+{
+    [self.textField becomeFirstResponder];
 }
 
 @end
