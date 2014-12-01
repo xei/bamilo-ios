@@ -163,6 +163,7 @@ FBLoginViewDelegate
          
          [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
          
+         [self.scrollView setHidden:NO];
          self.requestDone = YES;
          
          [self hideLoading];
@@ -180,6 +181,7 @@ FBLoginViewDelegate
              {
                  noConnection = YES;
              }
+             [self.scrollView setHidden:YES];
              [self showErrorView:noConnection startingY:0.0f selector:@selector(getLoginForm) objects:nil];
          }
          

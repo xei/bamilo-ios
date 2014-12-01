@@ -169,8 +169,9 @@ JADatePickerDelegate
            {
                [self.contentView addSubview:view];
            }
-           
+
          [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+         [self.contentView setHidden:NO];
            
        } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
            
@@ -185,6 +186,7 @@ JADatePickerDelegate
                {
                    noConnection = YES;
                }
+               [self.contentView setHidden:YES];
                [self showErrorView:noConnection startingY:0.0f selector:@selector(getRegisterForm) objects:nil];
            }
            
