@@ -12,6 +12,7 @@ $country = ENV['country']
 
 def initvars
     puts "initvars EN"
+    
     #init
     @wait_timeout = 5
     @wait_timeout_extra = 20
@@ -113,7 +114,7 @@ def initvars
     @first_name_text = "Tester"
     @last_name_text = "Test"
     @random = Time.now.to_i
-    @new_email = "testjumia+brunoqa"+@random.to_s+"@gmail.com"
+    @new_email = "testjumia1brunoqa"+@random.to_s+"@gmail.com"
     
     #search
     @search = "Search"

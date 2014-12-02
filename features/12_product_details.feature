@@ -70,7 +70,7 @@ Scenario: Zoom in and out
 
 @pdv_do
 Scenario: Done in product zoom page
-* I wait for 2 seconds
+* I wait for 5 seconds
 * I touch the product detail image
 * I pinch to zoom in
 * I pinch to zoom out
@@ -88,7 +88,7 @@ Scenario: Clean Favourites
 * I wait for 1 seconds
 * I touch the my favourites option
 * I wait to see the my favourites screen
-* I wait for 2 seconds
+* I wait for 5 seconds
 * I make sure I have no favourites
 
 @pdv_fa

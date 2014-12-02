@@ -226,6 +226,10 @@ Then /^I touch the Nigeria Country$/ do
     touch("view marked:'Nigeria'")
 end
 
+Then /^I touch the Maroc Country$/ do
+    touch("view marked:'Maroc'")
+end
+
 Then /^I touch the apply button$/ do
     touch("view marked:'Apply'")
 end
