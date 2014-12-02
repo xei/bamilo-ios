@@ -88,6 +88,10 @@
                                                                           successBlock(name, campaignsArray, bannerImageUrl);
                                                                       });
                                                                   }
+                                                                  else
+                                                                  {
+                                                                      failureBlock(RIApiResponseAPIError, nil);
+                                                                  }
                                                                   
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                                                   failureBlock(apiResponse, nil);

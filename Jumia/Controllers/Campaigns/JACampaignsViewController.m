@@ -306,6 +306,7 @@
         }
         [self showErrorView:noConnection startingY:0.0f selector:@selector(loadCampaignPages) objects:nil];
     }
+    [self hideLoading];
 }
 
 #pragma mark - JACampaignSingleViewDelegate
