@@ -56,10 +56,19 @@
         [self.recentSearchesTableView needsUpdateConstraints];
         
         self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.button.frame = CGRectMake(6,
-                                  newSize + 20,
-                                  self.view.frame.size.width - 12,
-                                  44);
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+            CGFloat buttonWidth = [UIImage imageNamed:@"greyFullPortrait_normal"].size.width;
+            self.button.frame = CGRectMake((self.view.frame.size.width - buttonWidth) / 2,
+                                           newSize + 20,
+                                           buttonWidth,
+                                           44);
+        } else {
+            self.button.frame = CGRectMake(6,
+                                           newSize + 20,
+                                           self.view.frame.size.width - 12,
+                                           44);
+        }
+
         
         UIFont *font = [UIFont fontWithName:@"HelveticaNeue"
                                        size:16.0];
@@ -68,17 +77,25 @@
         [self.button setTitleColor:UIColorFromRGB(0x4e4e4e)
                           forState:UIControlStateNormal];
 
-        [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_normal"]
-                               forState:UIControlStateNormal];
-        
-        [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"]
-                               forState:UIControlStateSelected];
-        
-        [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"]
-                               forState:UIControlStateHighlighted];
-        
-        [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_disabled"]
-                               forState:UIControlStateDisabled];
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_normal"]
+                                   forState:UIControlStateNormal];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_highlighted"]
+                                   forState:UIControlStateSelected];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_highlighted"]
+                                   forState:UIControlStateHighlighted];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_disabled"]
+                                   forState:UIControlStateDisabled];
+        } else {
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_normal"]
+                                   forState:UIControlStateNormal];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"]
+                                   forState:UIControlStateSelected];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"]
+                                   forState:UIControlStateHighlighted];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_disabled"]
+                                   forState:UIControlStateDisabled];
+        }
         
         [self.button setTitle:STRING_CLEAR_RECENT_SEARCHES
                      forState:UIControlStateNormal];
@@ -97,6 +114,16 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    float newSize = self.recentSearches.count * 44.0;
+    CGFloat buttonWidth = [UIImage imageNamed:@"greyFullPortrait_normal"].size.width;
+    self.button.frame = CGRectMake((self.view.frame.size.width - buttonWidth) / 2,
+                                   newSize + 20,
+                                   buttonWidth,
+                                   44);
 }
 
 #pragma mark - Action clear
