@@ -64,8 +64,15 @@
                                                                   NSString* bannerImageUrl;
                                                                   
                                                                   NSDictionary* cms = [data objectForKey:@"cms"];
-                                                                  if (VALID_NOTEMPTY(cms, NSDictionary)) {
-                                                                      NSArray* bannerArray = [cms objectForKey:@"mobile_banner"];
+                                                                  if (VALID_NOTEMPTY(cms, NSDictionary))
+                                                                  {
+                                                                      NSString *campaignsImageKey = @"mobile_banner";
+                                                                      if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                                                                      {
+                                                                          campaignsImageKey = @"desktop_banner";
+                                                                      }
+
+                                                                      NSArray* bannerArray = [cms objectForKey:campaignsImageKey];
                                                                       if (VALID_NOTEMPTY(bannerArray, NSArray)) {
                                                                           bannerImageUrl = [bannerArray firstObject];
                                                                       }
@@ -122,8 +129,15 @@
                                                                   NSString* bannerImageUrl;
                                                                   
                                                                   NSDictionary* cms = [data objectForKey:@"cms"];
-                                                                  if (VALID_NOTEMPTY(cms, NSDictionary)) {
-                                                                      NSArray* bannerArray = [cms objectForKey:@"mobile_banner"];
+                                                                  if (VALID_NOTEMPTY(cms, NSDictionary))
+                                                                  {
+                                                                      NSString *campaignsImageKey = @"mobile_banner";
+                                                                      if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                                                                      {
+                                                                          campaignsImageKey = @"desktop_banner";
+                                                                      }
+                                                                      
+                                                                      NSArray* bannerArray = [cms objectForKey:campaignsImageKey];
                                                                       if (VALID_NOTEMPTY(bannerArray, NSArray)) {
                                                                           bannerImageUrl = [bannerArray firstObject];
                                                                       }
