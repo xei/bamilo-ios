@@ -61,6 +61,35 @@
     [self addGestureRecognizer:tap];
 }
 
+-(void)setupWithLabel:(NSString*)label value:(NSString*)value mandatory:(BOOL)mandatory
+{
+    self.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.storedValue = @"";
+    self.hasError = NO;
+
+    [self.textField setPlaceholder:label];
+    
+    [self.textField setTextColor:UIColorFromRGB(0x666666)];
+    [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    
+    if(mandatory)
+    {
+        [self.requiredSymbol setHidden:NO];
+        [self.requiredSymbol setTextColor:UIColorFromRGB(0xfaa41a)];
+    }
+    
+    if(VALID_NOTEMPTY(value, NSString))
+    {
+        self.storedValue = value;
+        [self.textField setText:value];
+    }
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(assignFirstResponder)];
+    [self addGestureRecognizer:tap];
+}
+
 -(BOOL)isComponentWithKey:(NSString*)key
 {
     return ([key isEqualToString:self.field.key]);
