@@ -20,14 +20,31 @@ Background:
 Scenario: Catalog Section
 
 Scenario: List/Grid View
+* I wait for 1 seconds
 * I touch the grid button
 
-@catalog_fav
-Scenario: Favorites
-* I touch the favorites button
-* I wait to see the message item added to favorites
-* I touch the favorites button
-* I wait to see the message item removed from favorites
+#@clean_catalog_favs
+#Scenario: Clean Favourites
+#* I touch the cart button
+#* I wait for 3 seconds
+#* I touch the hamburger
+#* I wait for 1 seconds
+#* I touch the back button
+#* I wait for 1 seconds
+#* I touch the back button
+#* I wait for 1 seconds
+#* I touch the my favourites option
+#* I wait to see the my favourites screen
+#* I wait for 2 seconds
+#* I make sure I have no favourites
+
+#@catalog_fav
+#Scenario: Favorites
+#* I touch the favorites button
+#* I wait to see the message item added to favorites
+#* I wait for 5 seconds
+#* I touch the favorites button
+#* I wait to see the message item removed from favorites
 
 @catalog_sort
 Scenario: Sorting

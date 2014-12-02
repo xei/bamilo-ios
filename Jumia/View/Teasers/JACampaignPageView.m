@@ -40,7 +40,7 @@
              
              if (VALID_NOTEMPTY(bannerImageUrl, NSString))
              {
-                 self.bannerImageUrl = bannerImageUrl;
+                 self.bannerImageUrl = [bannerImageUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                  [self loadBanner];
              }
              else
@@ -71,7 +71,7 @@
              
              if (VALID_NOTEMPTY(bannerImageUrl, NSString))
              {
-                 self.bannerImageUrl = bannerImageUrl;
+                 self.bannerImageUrl = [bannerImageUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                  [self loadBanner];
              }
              else
@@ -97,8 +97,6 @@
 
 - (void)loadBanner
 {
-    self.bannerImageUrl = [self.bannerImageUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
     
     __block UIImageView *blockedImageView = imageView;

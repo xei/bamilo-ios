@@ -12,6 +12,8 @@
 #import "RICustomer.h"
 #import "UIImageView+WebCache.h"
 
+#define kScrollViewTag 9999
+
 @interface JAOrderViewController ()
 
 @property (nonatomic, assign) NSInteger scrollViewCurrentY;
@@ -47,6 +49,7 @@
                                                                      self.view.bounds.size.width,
                                                                      self.view.bounds.size.height)];
     [self.scrollView setHidden:YES];
+    [self.scrollView setShowsVerticalScrollIndicator:YES];
     [self.view addSubview:self.scrollView];
     
     self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectMake(0.0f,
@@ -105,12 +108,12 @@
     {
         for(UIView *view in self.scrollView.subviews)
         {
-            [view removeFromSuperview];
+            if(kScrollViewTag == view.tag)
+            {
+                [view removeFromSuperview];
+            }
         }
     }
-    
-    //not relative to scroll
-    [self setupConfirmButton];
     
     CGFloat horizontalMargin = 6.0f;
     CGFloat viewsWidth = self.view.frame.size.width - (2 * horizontalMargin);
@@ -123,6 +126,7 @@
                                                                                originY,
                                                                                viewsWidth,
                                                                                self.view.bounds.size.height)];
+        [self.secondScrollView setShowsVerticalScrollIndicator:YES];
         [self.view addSubview:self.secondScrollView];
     }
     else
@@ -131,7 +135,10 @@
         {
             for(UIView *view in self.secondScrollView.subviews)
             {
-                [view removeFromSuperview];
+                if(kScrollViewTag == view.tag)
+                {
+                    [view removeFromSuperview];
+                }
             }
             [self.secondScrollView removeFromSuperview];
             self.secondScrollView = nil;
@@ -142,23 +149,24 @@
                                          originY,
                                          viewsWidth,
                                          self.view.bounds.size.height)];
+    [self.scrollView setShowsVerticalScrollIndicator:YES];
     
     //relative to scroll
-    self.scrollViewCurrentY = self.scrollView.bounds.origin.y + 6.0f;
+    self.scrollViewCurrentY = self.scrollView.frame.origin.y + 6.0f;
     self.scrollViewCurrentY += [self setupOrderView:self.scrollView atYPostion:self.scrollViewCurrentY];
     self.scrollViewCurrentY += [self setupSubtotalView:self.scrollView atYPostion:self.scrollViewCurrentY];
 
     // If we have a second scroll view
     if(VALID_NOTEMPTY(self.secondScrollView, UIScrollView))
     {
-        CGFloat secondScrollViewCurrentY = self.secondScrollView.bounds.origin.y + 6.0f;
+        CGFloat secondScrollViewCurrentY = self.secondScrollView.frame.origin.y + 6.0f;
         secondScrollViewCurrentY += [self setupShippingAddressView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
         secondScrollViewCurrentY += [self setupBillingAddressView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
         secondScrollViewCurrentY += [self setupShippingMethodView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
         secondScrollViewCurrentY += [self setupPaymentOptionsView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
         
-        [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
-                                                   self.scrollViewCurrentY + self.bottomView.frame.size.height)];
+        [self.secondScrollView setContentSize:CGSizeMake(self.secondScrollView.frame.size.width,
+                                                         secondScrollViewCurrentY + self.bottomView.frame.size.height)];
     }
     else
     {
@@ -167,6 +175,9 @@
         self.scrollViewCurrentY += [self setupShippingMethodView:self.scrollView atYPostion:self.scrollViewCurrentY];
         self.scrollViewCurrentY += [self setupPaymentOptionsView:self.scrollView atYPostion:self.scrollViewCurrentY];
     }
+    
+    //not relative to scroll
+    [self setupConfirmButton];
     
     [self.scrollView setHidden:NO];
     
@@ -705,6 +716,7 @@
     
     [self.bottomView addButton:STRING_CONFIRM_ORDER target:self action:@selector(nextStepButtonPressed)];
     [self.bottomView setHidden:NO];
+    [self.view bringSubviewToFront:self.bottomView];
 }
 
 #pragma mark - Content view auxiliary methods
@@ -719,6 +731,7 @@
                                                                    1)];
     contentView.backgroundColor = [UIColor whiteColor];
     contentView.layer.cornerRadius = 5.0f;
+    [contentView setTag:kScrollViewTag];
     [scrollView addSubview:contentView];
     
     [self addTitle:title toContentView:contentView];

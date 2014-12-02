@@ -36,6 +36,8 @@
 
 @property (nonatomic, assign)BOOL pickerNamesAlreadySet;
 
+@property (nonatomic, assign)NSInteger campaignIndex;
+
 @end
 
 @implementation JACampaignsViewController
@@ -43,6 +45,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.campaignIndex = -1;
     
     self.navBarLayout.title = STRING_CAMPAIGNS;
     self.navBarLayout.backButtonTitle = STRING_HOME;
@@ -94,9 +98,12 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [self setupCampaings:self.view.frame.origin.y + self.view.frame.size.height height:self.view.frame.size.width interfaceOrientation:toInterfaceOrientation];
-    
     [self showLoading];
+    
+    [self.pickerScrollView setHidden:YES];
+    [self.scrollView setHidden:YES];
+    
+    [self setupCampaings:self.view.frame.origin.y + self.view.frame.size.height height:self.view.frame.size.width interfaceOrientation:toInterfaceOrientation];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -105,13 +112,21 @@
 {
     [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
     
-    [self hideLoading];
+    [self.pickerScrollView setHidden:NO];
+    [self.scrollView setHidden:NO];
+    
+    [self hideLoading];    
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)setupCampaings:(CGFloat)width height:(CGFloat)height interfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    if(VALID_NOTEMPTY(self.campaignPages, NSMutableArray) && 1 < [self.campaignPages count] && -1 < self.campaignIndex)
+    {
+        self.pickerScrollView.startingIndex = self.campaignIndex;
+    }
+    
     [self.pickerScrollView setFrame:CGRectMake(self.view.bounds.origin.x,
                                                self.view.bounds.origin.y,
                                                width,
@@ -248,6 +263,7 @@
 
 - (void)selectedIndex:(NSInteger)index
 {
+    self.campaignIndex = index;
     JACampaignPageView* campaignPageView = [self.campaignPages objectAtIndex:index];
     [self.scrollView scrollRectToVisible:campaignPageView.frame animated:YES];
 }
@@ -290,6 +306,7 @@
         }
         [self showErrorView:noConnection startingY:0.0f selector:@selector(loadCampaignPages) objects:nil];
     }
+    [self hideLoading];
 }
 
 #pragma mark - JACampaignSingleViewDelegate

@@ -9,7 +9,7 @@
 #import "JAPickerScrollView.h"
 
 #define JAPickerScrollViewCenterWidth 100.0f
-#define JAPickerScrollViewCenterWidthLandscape 110.0f
+#define JAPickerScrollViewCenterWidthiPad 130.0f
 #define JAPickerScrollViewBackgroundColor UIColorFromRGB(0xe3e3e3);
 #define JAPickerScrollViewTextColor UIColorFromRGB(0x4e4e4e);
 #define JAPickerScrollViewTextSize 13.0f
@@ -45,8 +45,9 @@
     self.backgroundColor = JAPickerScrollViewBackgroundColor;
     
     CGFloat centerWidth = JAPickerScrollViewCenterWidth;
-    if (self.superview.frame.size.width > self.superview.frame.size.height) {
-        centerWidth = JAPickerScrollViewCenterWidthLandscape;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        centerWidth = JAPickerScrollViewCenterWidthiPad;
     }
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((self.bounds.size.width - centerWidth) / 2,
@@ -195,7 +196,13 @@
 {
     CGPoint point = *targetContentOffset;
     
-    [self selectLabelAtIndex:(point.x/JAPickerScrollViewCenterWidth)];
+    NSInteger index = (point.x/JAPickerScrollViewCenterWidth);
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        index = (point.x/JAPickerScrollViewCenterWidthiPad);
+    }
+    
+    [self selectLabelAtIndex:index];
 }
 
 
