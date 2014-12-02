@@ -144,14 +144,14 @@
                                          self.view.bounds.size.height)];
     
     //relative to scroll
-    self.scrollViewCurrentY = self.scrollView.bounds.origin.y + 6.0f;
+    self.scrollViewCurrentY = self.scrollView.frame.origin.y + 6.0f;
     self.scrollViewCurrentY += [self setupOrderView:self.scrollView atYPostion:self.scrollViewCurrentY];
     self.scrollViewCurrentY += [self setupSubtotalView:self.scrollView atYPostion:self.scrollViewCurrentY];
 
     // If we have a second scroll view
     if(VALID_NOTEMPTY(self.secondScrollView, UIScrollView))
     {
-        CGFloat secondScrollViewCurrentY = self.secondScrollView.bounds.origin.y + 6.0f;
+        CGFloat secondScrollViewCurrentY = self.secondScrollView.frame.origin.y + 6.0f;
         secondScrollViewCurrentY += [self setupShippingAddressView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
         secondScrollViewCurrentY += [self setupBillingAddressView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
         secondScrollViewCurrentY += [self setupShippingMethodView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
