@@ -34,9 +34,8 @@ FBLoginViewDelegate
 @property (weak, nonatomic) IBOutlet UIView *loginSeparator;
 @property (weak, nonatomic) IBOutlet UILabel *loginLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *loginArrow;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginViewConstrains;
 @property (weak, nonatomic) IBOutlet UIView *loginFormView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginFormViewConstrains;
+
 @property (assign, nonatomic) CGFloat loginFormHeight;
 @property (strong, nonatomic) UIButton *loginButton;
 @property (strong, nonatomic) UIButton *forgotButton;
@@ -115,6 +114,7 @@ FBLoginViewDelegate
     self.loginView.layer.cornerRadius = 5.0f;
     
     self.loginView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.loginFormView.translatesAutoresizingMaskIntoConstraints = YES;
     
     UITapGestureRecognizer *showLoginViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -125,6 +125,10 @@ FBLoginViewDelegate
     [self.loginSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     
     self.signUpView.layer.cornerRadius = 5.0f;
+    
+    self.signUpView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.signUpFormView.translatesAutoresizingMaskIntoConstraints = YES;
+    
     UITapGestureRecognizer *showSignupViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(showSignup)];
@@ -578,17 +582,15 @@ FBLoginViewDelegate
         
         [UIView animateWithDuration:0.5 animations:^{
             
-            self.loginFormViewConstrains.constant = self.loginFormHeight;
             [self.loginFormView setFrame:CGRectMake(self.loginFormView.frame.origin.x,
                                                     self.loginFormView.frame.origin.y,
                                                     self.loginFormView.frame.size.width,
                                                     self.loginFormHeight)];
             
-            self.loginViewConstrains.constant = 26.0f + self.loginFormHeight + 6.0f;
             [self.loginView setFrame:CGRectMake(self.loginView.frame.origin.x,
                                                 27.0f,
                                                 self.loginView.frame.size.width,
-                                                26.0f + self.loginFormHeight + 6.0f)];
+                                                27.0f + self.loginFormHeight + 6.0f)];
         } completion:^(BOOL finished) {
             [self.loginArrow setImage:[UIImage imageNamed:@"arrowOrangeOpened"]];
             [self.loginFormView setHidden:NO];
@@ -601,17 +603,15 @@ FBLoginViewDelegate
 {
     [self.loginFormView setHidden:YES];
     
-    self.loginFormViewConstrains.constant = 0.0f;
     [self.loginFormView setFrame:CGRectMake(self.loginFormView.frame.origin.x,
                                             self.loginFormView.frame.origin.y,
                                             self.loginFormView.frame.size.width,
                                             0.0f)];
     
-    self.loginViewConstrains.constant = 25.0f;
     [self.loginView setFrame:CGRectMake(self.loginView.frame.origin.x,
                                         27.0f,
                                         self.loginView.frame.size.width,
-                                        25.0f)];
+                                        26.0f)];
     
     [self.loginArrow setImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
 }
@@ -632,7 +632,6 @@ FBLoginViewDelegate
                                                      self.signUpFormView.frame.size.width,
                                                      self.signupFormHeight)];
             
-            self.signUpViewConstrains.constant = 26.0f + self.signupFormHeight + 6.0f;
             [self.signUpView setFrame:CGRectMake(self.signUpView.frame.origin.x,
                                                  58.0f,
                                                  self.signUpView.frame.size.width,
@@ -655,11 +654,10 @@ FBLoginViewDelegate
                                              self.signUpFormView.frame.size.width,
                                              0.0f)];
     
-    self.signUpViewConstrains.constant = 25.0f;
     [self.signUpView setFrame:CGRectMake(self.signUpView.frame.origin.x,
-                                         53.0f + self.loginFormHeight + 12.0f,
+                                         54.0f + self.loginFormHeight + 12.0f,
                                          self.signUpView.frame.size.width,
-                                         25.0f)];
+                                         26.0f)];
     
     [self.signUpArrow setImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
 }
