@@ -68,17 +68,25 @@
         [self.button setTitleColor:UIColorFromRGB(0x4e4e4e)
                           forState:UIControlStateNormal];
 
-        [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_normal"]
-                               forState:UIControlStateNormal];
-        
-        [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"]
-                               forState:UIControlStateSelected];
-        
-        [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"]
-                               forState:UIControlStateHighlighted];
-        
-        [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_disabled"]
-                               forState:UIControlStateDisabled];
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_normal"]
+                                   forState:UIControlStateNormal];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_highlighted"]
+                                   forState:UIControlStateSelected];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_highlighted"]
+                                   forState:UIControlStateHighlighted];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_disabled"]
+                                   forState:UIControlStateDisabled];
+        } else {
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_normal"]
+                                   forState:UIControlStateNormal];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"]
+                                   forState:UIControlStateSelected];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"]
+                                   forState:UIControlStateHighlighted];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_disabled"]
+                                   forState:UIControlStateDisabled];
+        }
         
         [self.button setTitle:STRING_CLEAR_RECENT_SEARCHES
                      forState:UIControlStateNormal];
