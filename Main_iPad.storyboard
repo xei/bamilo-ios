@@ -1686,15 +1686,21 @@
                                         <rect key="frame" x="738" y="7" width="12" height="12"/>
                                     </imageView>
                                     <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h6B-Rr-4rf">
-                                        <rect key="frame" x="0.0" y="25" width="724" height="1"/>
+                                        <rect key="frame" x="0.0" y="25" width="756" height="1"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DQb-We-jD4">
+                                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DQb-We-jD4">
+                                                <rect key="frame" x="0.0" y="0.0" width="756" height="1"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="Bfr-sv-hI8"/>
+                                                </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" id="gaU-rA-giB"/>
+                                            <constraint firstItem="DQb-We-jD4" firstAttribute="leading" secondItem="h6B-Rr-4rf" secondAttribute="leading" id="MwD-DN-EJc"/>
+                                            <constraint firstAttribute="trailing" secondItem="DQb-We-jD4" secondAttribute="trailing" id="aTk-9C-pgQ"/>
+                                            <constraint firstItem="DQb-We-jD4" firstAttribute="top" secondItem="h6B-Rr-4rf" secondAttribute="top" id="wkf-tV-XNX"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -1715,15 +1721,21 @@
                                         <rect key="frame" x="738" y="7" width="12" height="12"/>
                                     </imageView>
                                     <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lyZ-Zy-z8e">
-                                        <rect key="frame" x="0.0" y="25" width="724" height="1"/>
+                                        <rect key="frame" x="0.0" y="25" width="756" height="1"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7De-fm-P9n">
+                                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7De-fm-P9n">
+                                                <rect key="frame" x="0.0" y="0.0" width="756" height="1"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="wy7-42-RSf"/>
+                                                </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" id="4kl-vP-9tv"/>
+                                            <constraint firstItem="7De-fm-P9n" firstAttribute="leading" secondItem="lyZ-Zy-z8e" secondAttribute="leading" id="78m-hc-QUe"/>
+                                            <constraint firstItem="7De-fm-P9n" firstAttribute="top" secondItem="lyZ-Zy-z8e" secondAttribute="top" id="AaO-qS-UwT"/>
+                                            <constraint firstAttribute="trailing" secondItem="7De-fm-P9n" secondAttribute="trailing" id="td1-bM-UY6"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -1746,7 +1758,6 @@
                     <connections>
                         <outlet property="loginArrow" destination="l9H-8F-0tR" id="4ib-3E-8sz"/>
                         <outlet property="loginFormView" destination="h6B-Rr-4rf" id="PFx-qV-MXg"/>
-                        <outlet property="loginFormViewConstrains" destination="gaU-rA-giB" id="RyB-kE-11g"/>
                         <outlet property="loginLabel" destination="3A8-Di-BGJ" id="Ojw-EP-FiU"/>
                         <outlet property="loginSeparator" destination="DQb-We-jD4" id="gVb-iW-D6H"/>
                         <outlet property="loginView" destination="N7n-uH-X1F" id="oy7-3O-elO"/>
@@ -1757,7 +1768,6 @@
                         <outlet property="signUpSeparator" destination="7De-fm-P9n" id="D4I-RO-qgw"/>
                         <outlet property="signUpView" destination="gm1-Me-OrS" id="AkU-4u-o9x"/>
                         <outlet property="signUpViewConstrains" destination="f6v-86-m1x" id="td7-dB-pwd"/>
-                        <outlet property="signUpViewFormConstrains" destination="4kl-vP-9tv" id="mYd-Xe-mBa"/>
                         <outlet property="stepBackground" destination="2Xw-HN-CHq" id="8Hb-WC-Uls"/>
                         <outlet property="stepIcon" destination="V88-ZD-wdN" id="WqI-EB-kge"/>
                         <outlet property="stepLabel" destination="0bi-Ke-6ul" id="bYq-3l-5Zu"/>
