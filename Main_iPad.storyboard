@@ -2341,6 +2341,34 @@
             </objects>
             <point key="canvasLocation" x="1543" y="-589"/>
         </scene>
+        <!--Track My Order View Controller-->
+        <scene sceneID="aCE-sP-eFO">
+            <objects>
+                <viewController storyboardIdentifier="jaTrackOrderViewController" id="CEu-3u-Lad" customClass="JATrackMyOrderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="c87-AO-r7a"/>
+                        <viewControllerLayoutGuide type="bottom" id="UY5-8R-1ep"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zNv-Ur-e1Q">
+                        <rect key="frame" x="0.0" y="64" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6cN-P8-hba">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="504"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="qyH-VK-CX2"/>
+                    <connections>
+                        <outlet property="contentScrollView" destination="6cN-P8-hba" id="4s2-tC-8Mf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uCu-6k-eGt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2512" y="924"/>
+        </scene>
     </scenes>
     <resources>
         <image name="arrowOrangeClosed" width="12" height="12"/>
