@@ -15,7 +15,7 @@ Then /^I wait to see the error form validation failed$/ do
 end
 
 Then /^I wait to see the error check your username and password$/ do
-    wait_for_elements_exist("view marked:'"+@error_check_username+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@error_check_username+"'", :timeout => @wait_timeout_extra)
 end
 
 Then /^I wait to see the login option$/ do
@@ -75,7 +75,7 @@ Then /^I wait to see the create account page$/ do
 end
 
 Then /^I wait to see the catalog$/ do
-    wait_for_elements_exist("view marked:'"+@popularity+"'", :timeout => @wait_timeout)
+    wait_for_elements_exist("view marked:'"+@popularity+"'", :timeout => @wait_timeout_extra)
 end
 
 Then /^I wait to see the no results found screen$/ do
@@ -204,5 +204,5 @@ Then /^I wait to see the countries$/ do
 end
 
 Then /^I wait to see the error$/ do
-    wait_for_elements_exist("view marked:'"+@error+"'")
+    wait_for_elements_exist("view marked:'"+@error+"'", :timeout => @wait_timeout)
 end

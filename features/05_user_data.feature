@@ -3,8 +3,8 @@ Feature: My Account - User Data
 
 Background:
 * I call the variables
-* I wait for 5 seconds
-* I wait to see if the choose country screen shows
+* I wait for 3 seconds
+#* I wait to see if the choose country screen shows
 * I wait to see the home
 * I touch the hamburger
 * I wait to see the side menu
@@ -29,6 +29,7 @@ Scenario: Change Password Empty Fields
 Scenario: Change Password Different Password
 * I enter passwords not matching
 * I touch the Save button
+* I wait for 1 seconds
 * I wait to see the error password did not match
 
 @user_data_lc
@@ -41,5 +42,6 @@ Scenario: Change Password Less than 6 characters
 Scenario: Change Password Successfully
 * I enter passwords matching
 * I touch the Save button
+* I wait for 1 seconds
 * I wait to see the message password changed with success
 

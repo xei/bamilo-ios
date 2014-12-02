@@ -20,6 +20,7 @@ end
 
 Then /^I change the notifications and sound settings$/ do
     touch("UISwitch marked:'"+@notifications+"'")
+    sleep(1)
     touch("UISwitch marked:'"+@sound+"'")
 end
 
@@ -65,7 +66,6 @@ Then /^I touch the grid button$/ do
 end
 
 Then /^I touch the favorites button$/ do
-    wait_for_elements_do_not_exist("view marked:'"+@message_item_add_favourites+"'", :timeout => @wait_timeout)
     touch("view marked:'"+@fav_button+"'")
 end
 
@@ -82,7 +82,13 @@ Then /^I touch the specification option$/ do
 end
 
 Then /^I touch the rate button$/ do
-    touch("view marked:'"+@rate_button+"'")
+    if (element_does_not_exist("view marked:'"+@rate_button+"'"))
+        touch(nil, :offset => {:x => 159, :y => 460})
+    else
+        touch("view marked:'"+@rate_button+"'")
+    end
+    #touch("view marked:'"+@rate_button+"'")
+    #touch(nil, :offset => {:x => 159, :y => 460})
 end
 
 Then /^I touch send review button$/ do
@@ -200,7 +206,12 @@ Then /^I touch the proceed to checkout button$/ do
 end
 
 Then /^I touch the product detail image$/ do
-    touch("UIImageView marked:'pdv_main_image'")
+    touch(nil, :offset => {:x => 159, :y => 220})
+    #touch("UIImageView marked:'pdv_main_image'")
+end
+
+Then /^I touch the write review button$/ do
+    touch("view marked:'"+@write_review+"'")
 end
 
 Then /^I touch the next button$/ do
@@ -213,6 +224,10 @@ end
 
 Then /^I touch the Nigeria Country$/ do
     touch("view marked:'Nigeria'")
+end
+
+Then /^I touch the Maroc Country$/ do
+    touch("view marked:'Maroc'")
 end
 
 Then /^I touch the apply button$/ do

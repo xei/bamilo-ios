@@ -9,6 +9,7 @@ Background:
 
 Scenario: Logout
 * I touch the hamburger
+* I wait for 2 seconds
 * I wait to see the side menu
 * I make sure I am logged out
 

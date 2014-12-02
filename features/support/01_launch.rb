@@ -15,11 +15,12 @@
 require 'calabash-cucumber/launcher'
 
 
-# APP_BUNDLE_PATH = "~/Library/Developer/Xcode/DerivedData/??/Build/Products/Calabash-iphonesimulator/??.app"
+#APP_BUNDLE_PATH = "~/Library/Developer/Xcode/DerivedData/??/Build/Products/Calabash-iphonesimulator/??.app"
 # You may uncomment the above to overwrite the APP_BUNDLE_PATH
 # However the recommended approach is to let Calabash find the app itself
 # or set the environment variable APP_BUNDLE_PATH
-
+#APP_BUNDLE_PATH = "~/Library/Developer/Xcode/DerivedData/Jumia-fluxbczdqqynwzbwkidvhxizdtgj/Build/Products/Calabash-iphonesimulator/Jumia-cal.app"
+#APP_BUNDLE_PATH = "/Users/rocket/Workspace/Jenkins/workspace/Jumia_Calabash_iOS_1.0_NG/TestBuild/Jumia-cal.app"
 
 Before do |scenario|
   @calabash_launcher = Calabash::Cucumber::Launcher.new
@@ -27,6 +28,19 @@ Before do |scenario|
     @calabash_launcher.relaunch
     @calabash_launcher.calabash_notify(self)
   end
+  #resultA = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocapitalization -bool NO')
+  #resultB = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocorrection -bool NO')
+  #resultC = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardCheckSpelling -bool NO')
+  #resultD = system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardPrediction -bool NO')
+  #puts "#{resultA}, #{resultB}, #{resultC}, #{resultD}"
+  until @calabash_launcher.active?
+      sleep(1)
+  end
+  system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocorrection -bool NO')
+  system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardCheckSpelling -bool NO')
+  system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardAutocapitalization -bool NO')
+  system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardPrediction -bool NO')
+  system('defaults write ~/Library/Developer/CoreSimulator/Devices/AB94AC36-2D5B-4C5E-A131-D17B3824516E/data/Library/Preferences/com.apple.Preferences.plist KeyboardShowPredictionBar -bool NO')
 end
 
 After do |scenario|
