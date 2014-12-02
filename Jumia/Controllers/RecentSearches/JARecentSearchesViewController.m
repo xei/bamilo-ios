@@ -59,7 +59,7 @@
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
             CGFloat buttonWidth = [UIImage imageNamed:@"greyFullPortrait_normal"].size.width;
             self.button.frame = CGRectMake((self.view.frame.size.width - buttonWidth) / 2,
-                                           newSize + 20,
+                                           newSize + 12.0f,
                                            buttonWidth,
                                            44);
         } else {
@@ -121,7 +121,7 @@
     float newSize = self.recentSearches.count * 44.0;
     CGFloat buttonWidth = [UIImage imageNamed:@"greyFullPortrait_normal"].size.width;
     self.button.frame = CGRectMake((self.view.frame.size.width - buttonWidth) / 2,
-                                   newSize + 20,
+                                   newSize + 12.0f,
                                    buttonWidth,
                                    44);
 }
