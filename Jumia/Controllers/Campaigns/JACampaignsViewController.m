@@ -78,6 +78,8 @@
     
     self.shouldPerformButtonActions = YES;
     
+    [self loadCampaignPages];
+    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
 }
 
@@ -85,7 +87,7 @@
 {
     [super viewWillAppear:animated];
     
-    [self loadCampaignPages];
+    [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
