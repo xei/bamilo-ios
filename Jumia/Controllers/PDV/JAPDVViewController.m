@@ -357,7 +357,7 @@ JAActivityViewControllerDelegate
     
     // Since we're sending the converted price, we have to send the currency as EUR.
     // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+    [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
     
     [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
@@ -416,7 +416,7 @@ JAActivityViewControllerDelegate
     
     // Since we're sending the converted price, we have to send the currency as EUR.
     // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+    [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
     
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
@@ -1034,7 +1034,7 @@ JAActivityViewControllerDelegate
                           
                           // Since we're sending the converted price, we have to send the currency as EUR.
                           // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-                          [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                          [trackingDictionary setValue:price forKey:kRIEventPriceKey];
                           [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                           
                           [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
@@ -1315,7 +1315,7 @@ JAActivityViewControllerDelegate
             
             // Since we're sending the converted price, we have to send the currency as EUR.
             // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-            [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
             [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
             
             [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
@@ -1386,7 +1386,7 @@ JAActivityViewControllerDelegate
             
             // Since we're sending the converted price, we have to send the currency as EUR.
             // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-            [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
             [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]

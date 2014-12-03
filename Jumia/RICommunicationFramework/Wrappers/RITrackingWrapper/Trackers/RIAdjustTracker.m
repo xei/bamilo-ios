@@ -266,10 +266,10 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [parameters setObject:currencyCode forKey:kAdjustEventCurrencyCodeKey];
     }
     
-    NSString *price = [data objectForKey:kRIEventPriceKey];
-    if(VALID_NOTEMPTY(price, NSString))
+    NSNumber *price = [data objectForKey:kRIEventPriceKey];
+    if(VALID_NOTEMPTY(price, NSNumber))
     {
-        [parameters setObject:price forKey:kAdjustEventPriceKey];
+        [parameters setObject:[price stringValue] forKey:kAdjustEventPriceKey];
     }
     
     NSString *numberOfSessions = [data objectForKey:kRIEventAmountSessions];
@@ -392,9 +392,9 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
                     [productDictionary setObject:[product objectForKey:kRIEventSkuKey] forKey:kAdjustEventSkuKey];
                 }
                 
-                if(VALID_NOTEMPTY([product objectForKey:kRIEventPriceKey], NSString))
+                if(VALID_NOTEMPTY([product objectForKey:kRIEventPriceKey], NSNumber))
                 {
-                    [productDictionary setObject:[product objectForKey:kRIEventPriceKey] forKey:kAdjustEventPriceKey];
+                    [productDictionary setObject:[[product objectForKey:kRIEventPriceKey] stringValue] forKey:kAdjustEventPriceKey];
                 }
                 
                 if(VALID_NOTEMPTY([product objectForKey:kRIEventCurrencyCodeKey], NSString))
