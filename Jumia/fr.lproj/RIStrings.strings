@@ -201,7 +201,7 @@
 "campaing_offer_ended" = "Promo Expirée!";
 "campaing_timer_end" = "Se termine le:";
 "string_format_off_label" = "-%d%%";
-"campaigns_label" = "Campaigns";
+"campaigns_label" = "Offres";
 
 "product_specifications" = "Caractéristiques";
 
@@ -250,3 +250,4 @@
 
 "order_summary_label" = "Résumé de la commande";
 "string_edit" = "Modifier";
+"track_your_order_tip" = "Recherche votre numéro de commande";

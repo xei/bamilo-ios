@@ -286,6 +286,7 @@
     if(VALID_NOTEMPTY(imagesArray, NSArray))
     {
         //add the last item to the begining and the first item to the end in order to simulate infinite scroll
+        NSInteger lastIndex = [imagesArray count] - 1;
         NSMutableArray* modifiedArray = [imagesArray mutableCopy];
         [modifiedArray insertObject:[imagesArray lastObject]
                             atIndex:0];
@@ -305,8 +306,16 @@
                                                                                                    0.0f,
                                                                                                    self.imageScrollView.frame.size.width,
                                                                                                    self.imageScrollView.frame.size.height)];
+                
+                if(0 == i || i > lastIndex)
+                {
+                    clickableView.tag = lastIndex;
+                }
+                else
+                {
+                    clickableView.tag = i - 1;
+                }
                 [clickableView addTarget:self action:@selector(imageViewPressed:) forControlEvents:UIControlEventTouchUpInside];
-                clickableView.tag = i;
                 [self.imageScrollView addSubview:clickableView];
                 
                 UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake((clickableView.bounds.size.width - imageWidth) / 2,

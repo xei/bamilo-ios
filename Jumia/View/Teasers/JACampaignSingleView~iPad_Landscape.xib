@@ -74,15 +74,15 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="bottomContentView" destination="iad-RG-Qni" id="YrO-LY-EbL"/>
-                <outlet property="buyButton" destination="Kac-xJ-rqw" id="7OV-6C-nWZ"/>
-                <outlet property="contentView" destination="m3M-Ft-m5g" id="eNN-7J-sF3"/>
-                <outlet property="discountLabel" destination="MFG-dl-kc8" id="4ss-yc-Vlv"/>
-                <outlet property="imageClickableView" destination="GH1-aB-wT2" id="hqa-dG-P2i"/>
-                <outlet property="imageView" destination="HZj-s9-hMu" id="HIB-tr-2h3"/>
-                <outlet property="remainingStockLabel" destination="Lcz-Nv-QT2" id="KmG-zI-hKS"/>
-                <outlet property="savingLabel" destination="K9V-xy-Twh" id="2xJ-04-vLp"/>
-                <outlet property="titleLabel" destination="pj7-aX-Lad" id="J2g-Hf-evr"/>
+                <outlet property="bottomContentView" destination="iad-RG-Qni" id="LM4-5J-m75"/>
+                <outlet property="buyButton" destination="Kac-xJ-rqw" id="T5c-Zb-05X"/>
+                <outlet property="contentView" destination="m3M-Ft-m5g" id="fNJ-qO-Qpf"/>
+                <outlet property="discountLabel" destination="MFG-dl-kc8" id="XbK-MK-euQ"/>
+                <outlet property="imageClickableView" destination="GH1-aB-wT2" id="LS7-L9-IpQ"/>
+                <outlet property="imageView" destination="HZj-s9-hMu" id="LIz-Vj-fQE"/>
+                <outlet property="remainingStockLabel" destination="Lcz-Nv-QT2" id="rby-jQ-Nyj"/>
+                <outlet property="savingLabel" destination="K9V-xy-Twh" id="8ev-m8-6em"/>
+                <outlet property="titleLabel" destination="pj7-aX-Lad" id="OPr-fb-MtQ"/>
             </connections>
             <point key="canvasLocation" x="509" y="221"/>
         </view>

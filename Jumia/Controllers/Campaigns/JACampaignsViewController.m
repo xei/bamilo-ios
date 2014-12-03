@@ -340,6 +340,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
                                                           userInfo:@{ @"sku" : sku ,
+                                                                      @"previousCategory" : STRING_CAMPAIGNS,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
     }
 }

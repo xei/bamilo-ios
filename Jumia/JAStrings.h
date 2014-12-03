@@ -253,5 +253,6 @@
 
 #define STRING_ORDER_SUMMARY RILocalizedString(@"order_summary_label", nil)
 #define STRING_EDIT RILocalizedString(@"string_edit", nil)
+#define STRING_TRACK_YOUR_ORDER_TIP RILocalizedString(@"track_your_order_tip", nil)
 
 #endif
