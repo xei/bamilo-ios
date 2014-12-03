@@ -393,20 +393,43 @@ UITextFieldDelegate
     noResultsLabel.textColor = UIColorFromRGB(0x666666);
     noResultsLabel.text = STRING_ERROR_NO_RESULTS_FOR_TRACKING_ID;
     noResultsLabel.tag = kMyOrderViewTag;
-    
-    CGFloat noResultsLeftMargin = 10.0f;
-    CGFloat noResultsWidth = self.myOrderView.frame.size.width - 20.0f;
-    [noResultsLabel setFrame:CGRectMake(noResultsLeftMargin,
-                                        CGRectGetMaxY(self.myOrderViewSeparator.frame),
-                                        noResultsWidth,
-                                        44.0f)];
-    
     [self.myOrderView addSubview:noResultsLabel];
     
-    [self.myOrderView setFrame:CGRectMake(self.myOrderView.frame.origin.x,
-                                          self.myOrderView.frame.origin.y,
-                                          self.myOrderView.frame.size.width,
-                                          CGRectGetMaxY(noResultsLabel.frame) + 6.0f)];
+    CGFloat noResultsHorizontalMargin = 10.0f;
+    CGFloat noResultsVerticalMargin = 10.0f;
+    CGFloat noResultsWidth = self.myOrderView.frame.size.width - (2 * noResultsHorizontalMargin);
+    
+    CGRect noResultsLabelRect = [noResultsLabel.text boundingRectWithSize:CGSizeMake(noResultsWidth, 1000.0f)
+                                                                          options:NSStringDrawingUsesLineFragmentOrigin
+                                                                       attributes:@{NSFontAttributeName:noResultsLabel.font} context:nil];
+    
+    if(noResultsLabelRect.size.height + (2 * noResultsVerticalMargin) > self.trackOrderView.frame.size.height)
+    {
+        [noResultsLabel setFrame:CGRectMake((self.myOrderView.frame.size.width - noResultsLabelRect.size.width) / 2,
+                                             CGRectGetMaxY(self.myOrderViewSeparator.frame) + noResultsVerticalMargin,
+                                            noResultsLabelRect.size.width,
+                                            ceilf(noResultsLabelRect.size.height))];
+        
+        [self.myOrderView setFrame:CGRectMake(self.myOrderView.frame.origin.x,
+                                              self.myOrderView.frame.origin.y,
+                                              self.myOrderView.frame.size.width,
+                                              CGRectGetMaxY(noResultsLabel.frame) + noResultsVerticalMargin)];
+    }
+    else
+    {
+        CGFloat noResultsMaxHeight = self.trackOrderView.frame.size.height - CGRectGetMaxY(self.myOrderViewSeparator.frame);
+        [noResultsLabel setFrame:CGRectMake((self.myOrderView.frame.size.width - noResultsLabelRect.size.width) / 2,
+                                            CGRectGetMaxY(self.myOrderViewSeparator.frame) + ((noResultsMaxHeight - ceilf(noResultsLabelRect.size.height)) / 2),
+                                            noResultsLabelRect.size.width,
+                                            ceilf(noResultsLabelRect.size.height))];
+        
+        
+        [self.myOrderView setFrame:CGRectMake(self.myOrderView.frame.origin.x,
+                                              self.myOrderView.frame.origin.y,
+                                              self.myOrderView.frame.size.width,
+                                              self.trackOrderView.frame.size.height)];
+    }
+    
     if(VALID_NOTEMPTY(self.landscapeScrollView, UIScrollView))
     {
         self.landscapeScrollView.contentSize = CGSizeMake(self.landscapeScrollView.frame.size.width,
