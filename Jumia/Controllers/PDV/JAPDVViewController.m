@@ -164,6 +164,33 @@ JAActivityViewControllerDelegate
         [self.wizardView reloadForFrame:newFrame];
     }
     
+    if(VALID_NOTEMPTY(self.gallery, JAPDVGalleryView))
+    {
+        UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
+        
+        CGFloat width = gallerySuperView.frame.size.height;
+        CGFloat height = gallerySuperView.frame.size.width;
+        
+        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+        {
+            if(width < height)
+            {
+                width = gallerySuperView.frame.size.width;
+                height = gallerySuperView.frame.size.height;
+            }
+        }
+        else
+        {
+            if(width > height)
+            {
+                width = gallerySuperView.frame.size.width;
+                height = gallerySuperView.frame.size.height;
+            }
+        }
+        
+        [self.gallery reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
+    }
+    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
@@ -174,6 +201,33 @@ JAActivityViewControllerDelegate
     if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
     {
         [self.wizardView reloadForFrame:self.view.bounds];
+    }
+    
+    if(VALID_NOTEMPTY(self.gallery, JAPDVGalleryView))
+    {
+        UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
+        
+        CGFloat width = gallerySuperView.frame.size.width;
+        CGFloat height = gallerySuperView.frame.size.height;
+        
+        if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        {
+            if(width < height)
+            {
+                width = gallerySuperView.frame.size.height;
+                height = gallerySuperView.frame.size.width;
+            }
+        }
+        else
+        {
+            if(width > height)
+            {
+                width = gallerySuperView.frame.size.height;
+                height = gallerySuperView.frame.size.width;
+            }
+        }
+
+        [self.gallery reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
     }
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
@@ -1169,8 +1223,28 @@ JAActivityViewControllerDelegate
     
     UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
     
+    CGFloat width = gallerySuperView.frame.size.width;
+    CGFloat height = gallerySuperView.frame.size.height;
+    
+    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        if(width < gallerySuperView.frame.size.height)
+        {
+            width = gallerySuperView.frame.size.height;
+            height = gallerySuperView.frame.size.width;
+        }
+    }
+    else
+    {
+        if(width > gallerySuperView.frame.size.height)
+        {
+            width = gallerySuperView.frame.size.height;
+            height = gallerySuperView.frame.size.width;
+        }
+    }
+    
     [self.gallery loadGalleryWithArray:[self.product.images array]
-                                 frame:gallerySuperView.frame
+                                 frame:CGRectMake(0.0f, 0.0f, width, height)
                                atIndex:index];
     
     CGRect oldFrame = self.gallery.frame;
