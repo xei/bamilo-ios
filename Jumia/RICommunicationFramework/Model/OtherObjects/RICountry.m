@@ -17,7 +17,7 @@
 {
     NSString *countryListURL = RI_COUNTRIES_URL;
 #if defined(STAGING) && STAGING
-    countryListURL = [NSString stringWithFormat:@"%@/integration-www", RI_COUNTRIES_URL];
+    countryListURL = @"http://kaymu.com/jtmobapi/";
 #endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
