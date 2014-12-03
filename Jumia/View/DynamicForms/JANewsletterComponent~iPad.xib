@@ -15,8 +15,8 @@
                     <rect key="frame" x="835" y="6" width="51" height="32"/>
                 </switch>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P9d-23-FQP">
-                    <rect key="frame" x="128" y="11" width="695" height="22"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                    <rect key="frame" x="134" y="11" width="689" height="22"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -30,7 +30,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="P9d-23-FQP" firstAttribute="leading" secondItem="Lu7-28-tUJ" secondAttribute="leading" constant="128" id="1qm-3D-Rzb"/>
+                <constraint firstItem="P9d-23-FQP" firstAttribute="leading" secondItem="Lu7-28-tUJ" secondAttribute="leading" constant="134" id="1qm-3D-Rzb"/>
                 <constraint firstAttribute="bottom" secondItem="pow-3H-DXB" secondAttribute="bottom" id="4rf-Pf-IbA"/>
                 <constraint firstItem="jf0-1P-Fmb" firstAttribute="leading" secondItem="P9d-23-FQP" secondAttribute="trailing" constant="12" id="6rb-BF-UFL"/>
                 <constraint firstItem="jf0-1P-Fmb" firstAttribute="top" secondItem="Lu7-28-tUJ" secondAttribute="top" constant="6" id="LAv-0H-OUk"/>
