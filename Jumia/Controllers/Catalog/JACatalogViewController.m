@@ -260,7 +260,7 @@
                                                         object:nil];
     
     BOOL alreadyShowedWizardCatalog = [[NSUserDefaults standardUserDefaults] boolForKey:kJACatalogWizardUserDefaultsKey];
-//    if(alreadyShowedWizardCatalog == NO)
+    if(alreadyShowedWizardCatalog == NO)
     {
         self.wizardView = [[JACatalogWizardView alloc] initWithFrame:self.view.bounds];
         [self.view addSubview:self.wizardView];

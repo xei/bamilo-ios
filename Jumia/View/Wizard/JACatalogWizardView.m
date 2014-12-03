@@ -90,8 +90,12 @@
                                                                              options:NSStringDrawingUsesLineFragmentOrigin
                                                                           attributes:@{NSFontAttributeName:kJAWizardFont} context:nil];
         
+        CGFloat labelTopMargin = kJAWizardCatalog2ViewTextVerticalMargin;
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+            labelTopMargin = kJAWizardCatalog2ViewTextVerticalMargin_ipad;
+        }
         [self.wizardPage2Label setFrame:CGRectMake(self.wizardPage2.bounds.origin.x + kJAWizardCatalog2TextHorizontalMargin,
-                                                   CGRectGetMaxY(self.wizardPage2ImageView.frame) + kJAWizardCatalog2ViewTextVerticalMargin,
+                                                   CGRectGetMaxY(self.wizardPage2ImageView.frame) + labelTopMargin,
                                                    self.wizardPage2.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2,
                                                    wizardLabe2ect.size.height)];
         [self.wizardPage2 addSubview:self.wizardPage2Label];
@@ -152,8 +156,12 @@
                                                                          options:NSStringDrawingUsesLineFragmentOrigin
                                                                       attributes:@{NSFontAttributeName:kJAWizardFont} context:nil];
     
+    CGFloat labelTopMargin = kJAWizardCatalog2ViewTextVerticalMargin;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+        labelTopMargin = kJAWizardCatalog2ViewTextVerticalMargin_ipad;
+    }
     [self.wizardPage2Label setFrame:CGRectMake(self.wizardPage2.bounds.origin.x + kJAWizardCatalog2TextHorizontalMargin,
-                                               CGRectGetMaxY(self.wizardPage2ImageView.frame) + kJAWizardCatalog2ViewTextVerticalMargin,
+                                               CGRectGetMaxY(self.wizardPage2ImageView.frame) + labelTopMargin,
                                                self.wizardPage2.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2,
                                                wizardLabe2ect.size.height)];
     

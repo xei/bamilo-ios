@@ -257,7 +257,9 @@
     
     CGFloat topMargin3 = kJAWizardViewThirdImageTopMargin;
     CGFloat leftMargin3 = self.wizardPage3.bounds.size.width - self.wizardPage3ImageView.frame.size.width - 15.0f;
+    CGFloat labelTopMargin3 = kJAWizardPDV3ViewTextVerticalMargin;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && isLandscape) {
+        labelTopMargin3 = kJAWizardPDV3ViewTextVerticalMargin_ipad;
         leftMargin3 = (self.wizardPage3.bounds.size.width / 2) - self.wizardPage3ImageView.frame.size.width - 15.0f ;
         topMargin3 = kJAWizardViewThirdImageTopMargin_landscape;
     }
@@ -275,14 +277,16 @@
                                                                        attributes:@{NSFontAttributeName:kJAWizardFont} context:nil];
     
     [self.wizardPage3Label setFrame:CGRectMake(self.wizardPage3.bounds.origin.x + kJAWizardPDV3TextHorizontalMargin,
-                                               CGRectGetMaxY(self.wizardPage3ImageView.frame) + kJAWizardPDV3ViewTextVerticalMargin,
+                                               CGRectGetMaxY(self.wizardPage3ImageView.frame) + labelTopMargin3,
                                                self.wizardPage3.bounds.size.width - kJAWizardPDV3TextHorizontalMargin*2,
                                                wizardLabe3Rect.size.height)];
     currentX += self.wizardPage3.frame.size.width;
     
     
     CGFloat topMargin4 = kJAWizardViewThirdImageTopMargin;
+    CGFloat labelTopMargin4 = kJAWizardPDV3ViewTextVerticalMargin;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && isLandscape) {
+        labelTopMargin4 = kJAWizardPDV3ViewTextVerticalMargin_ipad;
         topMargin4 = kJAWizardViewThirdImageTopMargin_landscape;
     }
     [self.wizardPage4 setFrame:CGRectMake(currentX,
@@ -300,7 +304,7 @@
                                                                 attributes:@{NSFontAttributeName:kJAWizardFont} context:nil];
     
     [self.wizardPage4Label setFrame:CGRectMake(self.wizardPage4.bounds.origin.x + kJAWizardPDV4TextHorizontalMargin,
-                                               CGRectGetMaxY(self.wizardPage4ImageView.frame) + kJAWizardPDV4ViewTextVerticalMargin,
+                                               CGRectGetMaxY(self.wizardPage4ImageView.frame) + labelTopMargin4,
                                                self.wizardPage4.bounds.size.width - kJAWizardPDV4TextHorizontalMargin*2,
                                                wizardLabe4Rect.size.height)];
     currentX += self.wizardPage4.frame.size.width;

@@ -101,7 +101,7 @@ JAActivityViewControllerDelegate
     [super viewWillAppear:animated];
     
     BOOL alreadyShowedWizardPDV = [[NSUserDefaults standardUserDefaults] boolForKey:kJAPDVWizardUserDefaultsKey];
-//    if(alreadyShowedWizardPDV == NO)
+    if(alreadyShowedWizardPDV == NO)
     {
         self.wizardView = [[JAPDVWizardView alloc] initWithFrame:self.view.bounds];
         [self.view addSubview:self.wizardView];
