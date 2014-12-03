@@ -56,19 +56,6 @@
         [self.recentSearchesTableView needsUpdateConstraints];
         
         self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-            CGFloat buttonWidth = [UIImage imageNamed:@"greyFullPortrait_normal"].size.width;
-            self.button.frame = CGRectMake((self.view.frame.size.width - buttonWidth) / 2,
-                                           newSize + 12.0f,
-                                           buttonWidth,
-                                           44);
-        } else {
-            self.button.frame = CGRectMake(6,
-                                           newSize + 20,
-                                           self.view.frame.size.width - 12,
-                                           44);
-        }
-
         
         UIFont *font = [UIFont fontWithName:@"HelveticaNeue"
                                        size:16.0];
@@ -109,6 +96,25 @@
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    float newSize = self.recentSearches.count * 44.0;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+        CGFloat buttonWidth = [UIImage imageNamed:@"greyFullPortrait_normal"].size.width;
+        self.button.frame = CGRectMake((self.view.frame.size.width - buttonWidth) / 2,
+                                       newSize + 12.0f,
+                                       buttonWidth,
+                                       44);
+    } else {
+        self.button.frame = CGRectMake(6,
+                                       newSize + 20,
+                                       self.view.frame.size.width - 12,
+                                       44);
+    }
 }
 
 - (void)didReceiveMemoryWarning

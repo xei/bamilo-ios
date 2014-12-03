@@ -28,10 +28,7 @@
     
     self.view.backgroundColor = JABackgroundGrey;
     
-    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
-                                                                6.0f,
-                                                                self.view.frame.size.width - 6.0f*2,
-                                                                1)];
+    self.contentView = [[UIView alloc] init];
     self.contentView.backgroundColor = [UIColor whiteColor];
     self.contentView.layer.cornerRadius = 5.0f;
     [self.view addSubview:self.contentView];
@@ -45,6 +42,12 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self continueLoading];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
