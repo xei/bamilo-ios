@@ -166,6 +166,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventCategoryIdKey       @"RIEventCategoryIdKey"
 #define kRIEventSkusKey             @"RIEventSkusKey"
 #define kRIEventCategoryNameKey     @"RIEventCategoryNameKey"
+#define kRIEventSubCategoryNameKey  @"RIEventSubCategoryNameKey"
 #define kRIEventTreeKey             @"RIEventTreeKey"
 #define kRIEventQueryKey            @"RIEventQueryKey"
 #define kRIEventProductKey          @"RIEventProductKey"

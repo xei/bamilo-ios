@@ -258,6 +258,20 @@ UITableViewDataSource
     NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
     [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
     
+    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+    {
+        NSArray *categoryIds = [self.product.categoryIds array];
+        if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
+        {
+            [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
+        }
+        
+        if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+        {
+            [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+        }
+    }
+    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewRatings] data:trackingDictionary];
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
