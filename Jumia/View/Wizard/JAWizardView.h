@@ -25,7 +25,7 @@
 #define kJAWizardPDV2ViewTextVerticalMargin 32.0f
 #define kJAWizardPDV3TextHorizontalMargin 25.0f
 #define kJAWizardPDV3ViewTextVerticalMargin 72.0f
-#define kJAWizardPDV3ViewTextVerticalMargin_ipad 100.0f
+#define kJAWizardPDV3ViewTextVerticalMargin_ipad 110.0f
 #define kJAWizardPDV4TextHorizontalMargin 25.0f
 #define kJAWizardPDV4ViewTextVerticalMargin 72.0f
 

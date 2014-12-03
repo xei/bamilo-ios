@@ -198,8 +198,9 @@
     CGFloat topMargin = kJAWizardViewImageGenericTopMargin;
     CGFloat leftMargin1 = (self.wizardPage1.bounds.size.width - self.wizardPage1ImageView.frame.size.width) / 2;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-        topMargin = kJAWizardViewImageGenericTopMargin_ipad;
+        topMargin = kJAWizardViewImageGenericTopMargin_ipad - 5.0f;
         if (isLandscape) {
+            topMargin = kJAWizardViewImageGenericTopMargin_ipad + 5.0f;
             leftMargin1 = kJAWizardViewFirstImageLeftMargin;
         }
     }
