@@ -112,6 +112,9 @@
     
     [self completeTeasersLoading];
     
+    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0];
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
     
