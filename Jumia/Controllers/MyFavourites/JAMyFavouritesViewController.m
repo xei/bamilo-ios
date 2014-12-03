@@ -512,6 +512,19 @@
                               [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
                           }
                           
+                          if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
+                          {
+                              NSArray *categoryIds = [product.categoryIds array];
+                              if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
+                              {
+                                  [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
+                              }
+                              
+                              if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+                              {
+                                  [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+                              }
+                          }
                           
                           [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
                           
@@ -718,6 +731,20 @@
                       {
                           NSArray *categoryIds = [product.categoryIds array];
                           [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
+                      }
+                      
+                      if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
+                      {
+                          NSArray *categoryIds = [product.categoryIds array];
+                          if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
+                          {
+                              [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
+                          }
+                          
+                          if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+                          {
+                              [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+                          }
                       }
                       
                       // Since we're sending the converted price, we have to send the currency as EUR.
