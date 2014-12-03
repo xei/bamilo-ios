@@ -323,12 +323,20 @@
 
 - (IBAction)swipeRight:(id)sender
 {
+    if(VALID_NOTEMPTY(self.wizardView, JAHomeWizardView) && VALID_NOTEMPTY(self.wizardView.superview, UIView))
+    {
+        return;
+    }
     [self removeNotifications];
     [self.teaserCategoryScrollView scrollRightAnimated:YES];
 }
 
 - (IBAction)swipeLeft:(id)sender
 {
+    if(VALID_NOTEMPTY(self.wizardView, JAHomeWizardView) && VALID_NOTEMPTY(self.wizardView.superview, UIView))
+    {
+        return;
+    }
     [self removeNotifications];
     [self.teaserCategoryScrollView scrollLeftAnimated:YES];
 }
