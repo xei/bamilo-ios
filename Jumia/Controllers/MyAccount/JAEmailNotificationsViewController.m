@@ -40,8 +40,6 @@ JADynamicFormDelegate
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_USER_EMAIL_NOTIFICATIONS;
     
-    [self showLoading];
-    
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(6.0f,
                                                                      6.0f,
                                                                      self.view.frame.size.width - 12.0f,
@@ -53,6 +51,14 @@ JADynamicFormDelegate
     
     [self.scrollView addSubview:self.notificationsView];
     [self.view addSubview:self.scrollView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self showLoading];
+    
     [self getForm];
 }
 
@@ -197,7 +203,7 @@ JADynamicFormDelegate
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(6.0f,
                                                                      6.0f,
                                                                      self.view.frame.size.width - 12.0f,
-                                                                     self.view.frame.size.height - 64.0f)];
+                                                                     self.view.frame.size.height)];
     self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                   delegate:self
                                           startingPosition:0.0f
