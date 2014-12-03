@@ -154,11 +154,11 @@
             NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
 
             NSString *discount = @"false";
-            NSString *price = [cartItem.priceEuroConverted stringValue];
+            NSNumber *price = cartItem.priceEuroConverted;
             if (VALID_NOTEMPTY(cartItem.specialPriceEuroConverted, NSNumber) && [cartItem.specialPriceEuroConverted floatValue] > 0.0f)
             {
                 discount = @"true";
-                price = [cartItem.specialPriceEuroConverted stringValue];
+                price = cartItem.specialPriceEuroConverted;
             }
             
             // Since we're sending the converted price, we have to send the currency as EUR.
@@ -839,7 +839,7 @@
                              // Since we're sending the converted price, we have to send the currency as EUR.
                              // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
                              NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
-                             [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                             [trackingDictionary setValue:price forKey:kRIEventPriceKey];
                              [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                              
                              [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
@@ -1159,7 +1159,7 @@
         // Since we're sending the converted price, we have to send the currency as EUR.
         // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
         NSNumber *price = (VALID_NOTEMPTY(self.currentItem.specialPriceEuroConverted, NSNumber) && [self.currentItem.specialPriceEuroConverted floatValue] > 0.0f) ? self.currentItem.specialPriceEuroConverted : self.currentItem.priceEuroConverted;
-        [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+        [trackingDictionary setValue:price forKey:kRIEventPriceKey];
         [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
         
         [trackingDictionary setValue:self.currentItem.sku forKey:kRIEventSkuKey];

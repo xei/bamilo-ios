@@ -1109,7 +1109,7 @@
                                         
                                         // Since we're sending the converted price, we have to send the currency as EUR.
                                         // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-                                        [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                                        [trackingDictionary setValue:price forKey:kRIEventPriceKey];
                                         [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                                         
                                         [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
@@ -1181,7 +1181,7 @@
             
             // Since we're sending the converted price, we have to send the currency as EUR.
             // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-            [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
             [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
             
             [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];

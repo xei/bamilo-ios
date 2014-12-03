@@ -256,7 +256,7 @@ UITableViewDataSource
     [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
     
     NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
-    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+    [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     
     if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
@@ -827,7 +827,7 @@ UITableViewDataSource
             NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
-            [globalRateDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+            [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
             
             for (JAAddRatingView *component in self.ratingStarsArray)
             {

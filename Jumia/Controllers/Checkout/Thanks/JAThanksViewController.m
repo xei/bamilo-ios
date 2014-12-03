@@ -134,7 +134,6 @@
         
         BOOL isConverted = YES;
         NSString *discount = @"false";
-        NSString *price = @"";
         NSNumber *priceNumber = cartItem.priceEuroConverted;
         if (VALID_NOTEMPTY(cartItem.specialPriceEuroConverted, NSNumber) && [cartItem.specialPriceEuroConverted floatValue] > 0.0f)
         {
@@ -153,10 +152,9 @@
             }
         }
         
-        price = [priceNumber stringValue];
         // Since we're sending the converted price, we have to send the currency as EUR.
         // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-        [productDic setValue:price forKey:kRIEventPriceKey];
+        [productDic setValue:priceNumber forKey:kRIEventPriceKey];
         if(isConverted)
         {
             [productDic setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
@@ -183,7 +181,7 @@
        
         // Since we're sending the converted price, we have to send the currency as EUR.
         // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-        [productDic setValue:price forKey:kRIEventPriceKey];
+        [productDic setValue:priceNumber forKey:kRIEventPriceKey];
         if(isConverted)
         {
             [productDic setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
@@ -208,7 +206,7 @@
         
         // Since we're sending the converted price, we have to send the currency as EUR.
         // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-        [productDic setValue:price forKey:kRIEventPriceKey];
+        [productDic setValue:priceNumber forKey:kRIEventPriceKey];
         if(isConverted)
         {
             [productDic setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
