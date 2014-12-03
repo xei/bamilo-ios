@@ -30,6 +30,10 @@
 #define kJAWizardFont [UIFont fontWithName:@"HelveticaNeue" size:18.0f]
 #define kJAWizardFontColor UIColorFromRGB(0xc3c3c3)
 
+#define kJAWizardButtonBottomMargin 10.0f
+#define kJAWizardButtonBottomMargin_ipad_portrait 100.0f
+#define kJAWizardButtonBottomMargin_ipad_landscape 50.0f
+
 @interface JAWizardView : UIView <UIScrollViewDelegate>
 
 @property (nonatomic, strong)UIScrollView* scrollView;

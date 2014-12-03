@@ -116,7 +116,7 @@
                                                         object:nil];
     
     BOOL alreadyShowedWizardHome = [[NSUserDefaults standardUserDefaults] boolForKey:kJAHomeWizardUserDefaultsKey];
-    if(alreadyShowedWizardHome == NO)
+//    if(alreadyShowedWizardHome == NO)
     {
         self.wizardView = [[JAHomeWizardView alloc] initWithFrame:self.view.bounds];
         [self.view addSubview:self.wizardView];

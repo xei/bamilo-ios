@@ -23,11 +23,27 @@
         
         self.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.85f];
         
-        UIImage* buttonImageNormal = [UIImage imageNamed:@"orangeHalf_normal"];
-        UIImage* buttonImageHightlight = [UIImage imageNamed:@"orangeHalf_highlighted"];
-        UIImage* buttonImageDisabled = [UIImage imageNamed:@"orangeHalf_disabled"];
+        CGFloat bottomMargin;
+        UIImage* buttonImageNormal;
+        UIImage* buttonImageHightlight;
+        UIImage* buttonImageDisabled;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            if (frame.size.height > frame.size.width) {
+                bottomMargin = kJAWizardButtonBottomMargin_ipad_portrait;
+            } else {
+                bottomMargin = kJAWizardButtonBottomMargin_ipad_landscape;
+            }
+            buttonImageNormal = [UIImage imageNamed:@"orangeQuarterLandscape_normal"];
+            buttonImageHightlight = [UIImage imageNamed:@"orangeQuarterLandscape_highlighted"];
+            buttonImageDisabled = [UIImage imageNamed:@"orangeQuarterLandscape_disabled"];
+        } else {
+            bottomMargin = kJAWizardButtonBottomMargin;
+            buttonImageNormal = [UIImage imageNamed:@"orangeHalf_normal"];
+            buttonImageHightlight = [UIImage imageNamed:@"orangeHalf_highlighted"];
+            buttonImageDisabled = [UIImage imageNamed:@"orangeHalf_disabled"];
+        }
         self.dismissButton = [[UIButton alloc] initWithFrame:CGRectMake((self.frame.size.width - buttonImageNormal.size.width) / 2,
-                                                                        self.frame.size.height - 10.0f - buttonImageNormal.size.height,
+                                                                        self.frame.size.height - bottomMargin - buttonImageNormal.size.height,
                                                                         buttonImageNormal.size.width,
                                                                         buttonImageNormal.size.height)];
         [self.dismissButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
@@ -67,9 +83,21 @@
 {
     [self setFrame:frame];
     
-    UIImage* buttonImageNormal = [UIImage imageNamed:@"orangeHalf_normal"];
+    CGFloat bottomMargin;
+    UIImage* buttonImageNormal;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if (frame.size.height > frame.size.width) {
+            bottomMargin = kJAWizardButtonBottomMargin_ipad_portrait;
+        } else {
+            bottomMargin = kJAWizardButtonBottomMargin_ipad_landscape;
+        }
+        buttonImageNormal = [UIImage imageNamed:@"orangeQuarterLandscape_normal"];
+    } else {
+        bottomMargin = kJAWizardButtonBottomMargin;
+        buttonImageNormal = [UIImage imageNamed:@"orangeHalf_normal"];
+    }
     [self.dismissButton setFrame:CGRectMake((self.frame.size.width - buttonImageNormal.size.width) / 2,
-                                            self.frame.size.height - 10.0f - buttonImageNormal.size.height,
+                                            self.frame.size.height - bottomMargin - buttonImageNormal.size.height,
                                             buttonImageNormal.size.width,
                                             buttonImageNormal.size.height)];
     
