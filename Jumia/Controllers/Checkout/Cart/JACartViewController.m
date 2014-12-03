@@ -773,28 +773,35 @@
                                              checkoutButtonImageNormal.size.height)];
     [self.cartScrollView addSubview:self.checkoutButton];
     
-    if(VALID_NOTEMPTY(self.callToOrderButton, UIButton))
-    {
-        [self.callToOrderButton removeFromSuperview];
-    }
-    self.callToOrderButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *callToOrderButtonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"normal"]];
-    [self.callToOrderButton setBackgroundImage:callToOrderButtonImageNormal forState:UIControlStateNormal];
-    [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
-    [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]] forState:UIControlStateSelected];
-    [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"disabled"]] forState:UIControlStateDisabled];
-    [self.callToOrderButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
-    [self.callToOrderButton setTitle:STRING_CALL_TO_ORDER forState:UIControlStateNormal];
-    [self.callToOrderButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.callToOrderButton addTarget:self action:@selector(callToOrderButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.callToOrderButton setFrame:CGRectMake(0.0f,
-                                                CGRectGetMaxY(self.checkoutButton.frame) + 6.0f,
-                                                callToOrderButtonImageNormal.size.width,
-                                                callToOrderButtonImageNormal.size.height)];
-    [self.cartScrollView addSubview:self.callToOrderButton];
-    
     [self.cartScrollView setContentSize:CGSizeMake(self.cartScrollView.frame.size.width,
-                                                   self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.callToOrderButton.frame) + 6.0f)];
+                                                   self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.checkoutButton.frame) + 6.0f)];
+    
+    UIDevice *device = [UIDevice currentDevice];
+    if ([@"iPhone" isEqualToString:[device model]])
+    {
+        if(VALID_NOTEMPTY(self.callToOrderButton, UIButton))
+        {
+            [self.callToOrderButton removeFromSuperview];
+        }
+        self.callToOrderButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *callToOrderButtonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"normal"]];
+        [self.callToOrderButton setBackgroundImage:callToOrderButtonImageNormal forState:UIControlStateNormal];
+        [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
+        [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]] forState:UIControlStateSelected];
+        [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"disabled"]] forState:UIControlStateDisabled];
+        [self.callToOrderButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        [self.callToOrderButton setTitle:STRING_CALL_TO_ORDER forState:UIControlStateNormal];
+        [self.callToOrderButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+        [self.callToOrderButton addTarget:self action:@selector(callToOrderButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.callToOrderButton setFrame:CGRectMake(0.0f,
+                                                    CGRectGetMaxY(self.checkoutButton.frame) + 6.0f,
+                                                    callToOrderButtonImageNormal.size.width,
+                                                    callToOrderButtonImageNormal.size.height)];
+        [self.cartScrollView addSubview:self.callToOrderButton];
+        
+        [self.cartScrollView setContentSize:CGSizeMake(self.cartScrollView.frame.size.width,
+                                                       self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.callToOrderButton.frame) + 6.0f)];
+    }
 }
 
 -(void)goToHomeScreen
@@ -1010,22 +1017,18 @@
 - (void)callToOrderButtonPressed
 {
     [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-        UIDevice *device = [UIDevice currentDevice];
-        if ([[device model] isEqualToString:@"iPhone"] )
-        {
-            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
-                                                      data:[trackingDictionary copy]];
-            
-            NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-        }
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
+                                                  data:[trackingDictionary copy]];
+        
+        NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
     }];
 }

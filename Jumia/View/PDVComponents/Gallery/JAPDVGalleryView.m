@@ -19,6 +19,9 @@ UIScrollViewDelegate
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollViewImages;
 @property (strong, nonatomic) NSMutableArray *modifiedArray;
 @property (strong, nonatomic) NSMutableArray *imageViewsArray;
+@property (strong, nonatomic) NSArray *source;
+@property (assign, nonatomic) NSInteger index;
+
 
 @end
 
@@ -56,12 +59,13 @@ UIScrollViewDelegate
                        frame:(CGRect)frame
                      atIndex:(NSInteger)index
 {
+    self.source = source;
+    
     self.translatesAutoresizingMaskIntoConstraints = YES;
     [self setFrame:CGRectMake(frame.origin.x,
                               frame.origin.y,
                               frame.size.width,
                               frame.size.height)];
-    
     self.scrollViewImages.translatesAutoresizingMaskIntoConstraints = YES;
     [self.scrollViewImages setFrame:CGRectMake(0.0f,
                                                self.scrollViewImages.frame.origin.y,
@@ -166,6 +170,35 @@ UIScrollViewDelegate
                                                               self.scrollViewImages.frame.size.height)
                                           animated:NO];
     }
+
+    self.index = index;
+}
+
+- (void)reloadFrame:(CGRect)frame
+{
+    [self setFrame:CGRectMake(frame.origin.x,
+                              frame.origin.y,
+                              frame.size.width,
+                              frame.size.height)];
+    
+    [self.scrollViewImages setFrame:CGRectMake(0.0f,
+                                               self.scrollViewImages.frame.origin.y,
+                                               self.frame.size.width,
+                                               self.frame.size.height - self.scrollViewImages.frame.origin.y)];
+    
+    self.imageViewsArray = [NSMutableArray new];
+    
+    for(UIView *view in self.scrollViewImages.subviews)
+    {
+        if([view isKindOfClass:[UIScrollView class]])
+        {
+            [view removeFromSuperview];
+        }
+    }
+    
+    [self loadGalleryWithArray:self.source
+                         frame:frame
+                       atIndex:self.index];
 }
 
 - (IBAction)dismiss:(id)sender
@@ -179,6 +212,20 @@ UIScrollViewDelegate
 {
     if (scrollView == self.scrollViewImages)
     {
+        NSInteger newIndex = scrollView.contentOffset.x / scrollView.frame.size.width;
+        if(0 == newIndex)
+        {
+            self.index = [self.source count] - 1;
+        }
+        else if(([self.modifiedArray count] - 1) == newIndex)
+        {
+            self.index =  0;
+        }
+        else
+        {
+            self.index = newIndex - 1;
+        }
+        
         CGFloat contentOffsetWhenFullyScrolledRight = self.scrollViewImages.frame.size.width * (self.modifiedArray.count - 1);
         
         if (scrollView.contentOffset.x == contentOffsetWhenFullyScrolledRight) {

@@ -24,4 +24,6 @@
                        frame:(CGRect)frame
                      atIndex:(NSInteger)index;
 
+- (void)reloadFrame:(CGRect)frame;
+
 @end

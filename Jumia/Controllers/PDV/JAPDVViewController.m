@@ -164,6 +164,33 @@ JAActivityViewControllerDelegate
         [self.wizardView reloadForFrame:newFrame];
     }
     
+    if(VALID_NOTEMPTY(self.gallery, JAPDVGalleryView))
+    {
+        UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
+        
+        CGFloat width = gallerySuperView.frame.size.height;
+        CGFloat height = gallerySuperView.frame.size.width;
+        
+        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+        {
+            if(width < height)
+            {
+                width = gallerySuperView.frame.size.width;
+                height = gallerySuperView.frame.size.height;
+            }
+        }
+        else
+        {
+            if(width > height)
+            {
+                width = gallerySuperView.frame.size.width;
+                height = gallerySuperView.frame.size.height;
+            }
+        }
+        
+        [self.gallery reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
+    }
+    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
@@ -174,6 +201,33 @@ JAActivityViewControllerDelegate
     if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
     {
         [self.wizardView reloadForFrame:self.view.bounds];
+    }
+    
+    if(VALID_NOTEMPTY(self.gallery, JAPDVGalleryView))
+    {
+        UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
+        
+        CGFloat width = gallerySuperView.frame.size.width;
+        CGFloat height = gallerySuperView.frame.size.height;
+        
+        if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        {
+            if(width < height)
+            {
+                width = gallerySuperView.frame.size.height;
+                height = gallerySuperView.frame.size.width;
+            }
+        }
+        else
+        {
+            if(width > height)
+            {
+                width = gallerySuperView.frame.size.height;
+                height = gallerySuperView.frame.size.width;
+            }
+        }
+
+        [self.gallery reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
     }
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
@@ -442,10 +496,6 @@ JAActivityViewControllerDelegate
      CTA Buttons
      *******/
     
-    UIDevice *device = [UIDevice currentDevice];
-    
-    NSString *model = device.model;
-    
     self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:self.interfaceOrientation];
     
     BOOL isiPadInLandscape = NO;
@@ -487,7 +537,8 @@ JAActivityViewControllerDelegate
                                                  self.mainScrollView.frame.size.height - self.ctaView.frame.size.height)];
     }
     
-    if ([model isEqualToString:@"iPhone"])
+    UIDevice *device = [UIDevice currentDevice];
+    if ([[device model] isEqualToString:@"iPhone"])
     {
         [self.ctaView addButton:STRING_CALL_TO_ORDER
                          target:self
@@ -1026,22 +1077,19 @@ JAActivityViewControllerDelegate
 - (void)callToOrder
 {
     [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-        UIDevice *device = [UIDevice currentDevice];
-        if ([[device model] isEqualToString:@"iPhone"] ) {
-            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
-                                                      data:[trackingDictionary copy]];
-            
-            
-            NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-        }
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
+                                                  data:[trackingDictionary copy]];
+        
+        
+        NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
     }];
 }
@@ -1169,8 +1217,28 @@ JAActivityViewControllerDelegate
     
     UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
     
+    CGFloat width = gallerySuperView.frame.size.width;
+    CGFloat height = gallerySuperView.frame.size.height;
+    
+    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        if(width < gallerySuperView.frame.size.height)
+        {
+            width = gallerySuperView.frame.size.height;
+            height = gallerySuperView.frame.size.width;
+        }
+    }
+    else
+    {
+        if(width > gallerySuperView.frame.size.height)
+        {
+            width = gallerySuperView.frame.size.height;
+            height = gallerySuperView.frame.size.width;
+        }
+    }
+    
     [self.gallery loadGalleryWithArray:[self.product.images array]
-                                 frame:gallerySuperView.frame
+                                 frame:CGRectMake(0.0f, 0.0f, width, height)
                                atIndex:index];
     
     CGRect oldFrame = self.gallery.frame;
