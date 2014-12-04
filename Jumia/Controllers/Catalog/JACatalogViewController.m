@@ -1263,6 +1263,10 @@
             [userInfo setObject:STRING_BACK forKey:@"previousCategory"];
         }
     }
+    else
+    {
+        [userInfo setObject:STRING_BACK forKey:@"previousCategory"];
+    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
