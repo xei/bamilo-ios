@@ -1327,18 +1327,16 @@
 
 - (void)back
 {
-    [self popViewControllerAnimated:YES];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressBackNotification
                                                         object:nil];
+    [self popViewControllerAnimated:YES];
 }
 
 - (void)done
 {
-    [self back];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressDoneNotification
                                                         object:nil];
+    [self back];
 }
 
 - (void)edit
