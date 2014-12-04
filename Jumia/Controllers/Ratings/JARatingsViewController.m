@@ -708,6 +708,7 @@ UITableViewDataSource
     
     RIRatingComment *comment = [self.productRatings.comments objectAtIndex:indexPath.row];
     cell.labelDescription.text = comment.detail;
+    cell.labelDescription.preferredMaxLayoutWidth = self.tableViewComments.frame.size.width - 24.0f;
     
     return [self calculateHeightForConfiguredSizingCell:cell];
 }
@@ -717,7 +718,7 @@ UITableViewDataSource
     [sizingCell setNeedsLayout];
     [sizingCell layoutSubviews];
     
-    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingExpandedSize];
     
     return size.height;
 }
@@ -725,11 +726,12 @@ UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JAReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reviewCell"];
-    [cell setupCell:self.view.frame];
+    [cell setupCell:self.tableViewComments.frame];
     
     cell.labelPrice.text = STRING_PRICE;
     cell.labelAppearance.text = STRING_APPEARENCE;
     cell.labelQuality.text = STRING_QUANTITY;
+    
     
     RIRatingComment *comment = [self.productRatings.comments objectAtIndex:indexPath.row];
     
@@ -781,8 +783,6 @@ UITableViewDataSource
     {
         [cell.separator setHidden:YES];
     }
-    
-    [cell layoutSubviews];
     
     return cell;
 }

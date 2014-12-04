@@ -279,6 +279,15 @@
     }
     
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
+    
+    if (VALID_NOTEMPTY(self.undefinedBackup, RIUndefinedSearchTerm)){
+        
+        [self.undefinedView removeFromSuperview];
+        [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
+                                                                           CGRectGetMaxY(self.sortingScrollView.frame),
+                                                                           self.view.frame.size.width - 12.0f,
+                                                                           self.view.frame.size.height - CGRectGetMaxY(self.sortingScrollView.frame) - 12.0f)];
+    }
 }
 
 - (void)resetCatalog
@@ -1262,6 +1271,10 @@
         {
             [userInfo setObject:STRING_BACK forKey:@"previousCategory"];
         }
+    }
+    else
+    {
+        [userInfo setObject:STRING_BACK forKey:@"previousCategory"];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
