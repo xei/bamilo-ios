@@ -426,9 +426,21 @@
                       
                       // Since we're sending the converted price, we have to send the currency as EUR.
                       // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-                      [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                      [trackingDictionary setValue:price forKey:kRIEventPriceKey];
                       [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
+                      
+                      [trackingDictionary setValue:@"Campaings" forKey:kRIEventLocationKey];
                       [trackingDictionary setValue:self.backupCampaign.sku forKey:kRIEventSkuKey];
+                      [trackingDictionary setValue:self.backupCampaign.brand forKey:kRIEventBrandKey];
+                      [trackingDictionary setValue:self.backupCampaign.name forKey:kRIEventProductNameKey];
+                      
+                      NSString *discountPercentage = @"0";
+                      if(VALID_NOTEMPTY(self.backupCampaign.maxSavingPercentage, NSNumber))
+                      {
+                          discountPercentage = [self.backupCampaign.maxSavingPercentage stringValue];
+                      }
+                      [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+                      [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];

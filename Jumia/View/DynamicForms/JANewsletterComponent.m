@@ -23,7 +23,7 @@
                                                  owner:nil
                                                options:nil];
     
-    if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)))
+    if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
     {
             xib = [[NSBundle mainBundle] loadNibNamed:@"JANewsletterComponent~iPad"
                                                      owner:nil

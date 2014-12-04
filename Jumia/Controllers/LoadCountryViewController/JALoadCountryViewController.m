@@ -307,6 +307,16 @@
     [launchData setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [launchData setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
     
+    NSString *source = @"Organic";
+    if(VALID_NOTEMPTY(self.pushNotification, NSDictionary))
+    {
+        source = @"Push";
+        if(VALID_NOTEMPTY([self.pushNotification objectForKey:@"UTM"], NSString))
+        {
+            [launchData setObject:[self.pushNotification objectForKey:@"UTM"] forKey:kRILaunchEventCampaignKey];
+        }
+    }
+    
     [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
     
     [[RITrackingWrapper sharedInstance] trackEvent:event

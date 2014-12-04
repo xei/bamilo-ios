@@ -40,8 +40,6 @@ JADynamicFormDelegate
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_USER_EMAIL_NOTIFICATIONS;
     
-    [self showLoading];
-    
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(6.0f,
                                                                      6.0f,
                                                                      self.view.frame.size.width - 12.0f,
@@ -53,6 +51,14 @@ JADynamicFormDelegate
     
     [self.scrollView addSubview:self.notificationsView];
     [self.view addSubview:self.scrollView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self showLoading];
+    
     [self getForm];
 }
 
@@ -197,7 +203,7 @@ JADynamicFormDelegate
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(6.0f,
                                                                      6.0f,
                                                                      self.view.frame.size.width - 12.0f,
-                                                                     self.view.frame.size.height - 64.0f)];
+                                                                     self.view.frame.size.height)];
     self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                   delegate:self
                                           startingPosition:0.0f
@@ -214,11 +220,11 @@ JADynamicFormDelegate
     for(UIView *view in self.dynamicForm.formViews)
     {
         [view setTag:kDynamicFormFieldsTag];
-        [self.notificationsView addSubview:view];
         [view setFrame:CGRectMake(0.0f,
                                   formHeight,
                                   self.scrollView.frame.size.width,
                                   view.frame.size.height)];
+        [self.notificationsView addSubview:view];
         formHeight += CGRectGetMaxY(view.frame);
     }
     
@@ -226,19 +232,17 @@ JADynamicFormDelegate
                                                 0.0f,
                                                 self.scrollView.frame.size.width,
                                                 formHeight + 6.0f)];
+
     NSString *orangeButtonName = @"orangeBig_%@";
-    
-    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
-        if((UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)||(UIInterfaceOrientationLandscapeLeft == self.self.interfaceOrientation)){
-            orangeButtonName = @"orangeFullPortrait_%@";
-        }else{
-            orangeButtonName = @"orangeMediumPortrait_%@";
-        }
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        orangeButtonName = @"orangeFullPortrait_%@";
     }
     
+    UIImage *imageName = [UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]];
     self.saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.saveButton setFrame:CGRectMake(0.0f, CGRectGetMaxY(self.notificationsView.frame) + 6.0f, self.scrollView.frame.size.width, 44.0f)];
-    [self.saveButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]]forState:UIControlStateNormal];
+    [self.saveButton setFrame:CGRectMake((self.scrollView.frame.size.width - imageName.size.width) / 2, CGRectGetMaxY(self.notificationsView.frame) + 6.0f, imageName.size.width, imageName.size.height)];
+    [self.saveButton setBackgroundImage:imageName forState:UIControlStateNormal];
     [self.saveButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]]forState:UIControlStateHighlighted];
     [self.saveButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]]forState:UIControlStateSelected];
     [self.saveButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"disabled"]]forState:UIControlStateDisabled];

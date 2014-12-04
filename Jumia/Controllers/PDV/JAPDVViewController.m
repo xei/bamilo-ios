@@ -357,7 +357,7 @@ JAActivityViewControllerDelegate
     
     // Since we're sending the converted price, we have to send the currency as EUR.
     // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+    [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
     
     [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
@@ -416,7 +416,7 @@ JAActivityViewControllerDelegate
     
     // Since we're sending the converted price, we have to send the currency as EUR.
     // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-    [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+    [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
     
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
@@ -426,9 +426,18 @@ JAActivityViewControllerDelegate
         [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
     }
     
-    if(VALID_NOTEMPTY(self.category, RICategory))
+    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
-        [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+        NSArray *categoryIds = [self.product.categoryIds array];
+        if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
+        {
+            [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
+        }
+        
+        if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+        {
+            [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+        }
     }
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewProduct]
@@ -958,9 +967,14 @@ JAActivityViewControllerDelegate
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
         [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
-        if(VALID_NOTEMPTY(self.category, RICategory))
+
+        if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
         {
-            [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+            NSArray *categoryIds = [self.product.categoryIds array];
+            if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
+            {
+                [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
+            }
         }
         
         [[RITrackingWrapper sharedInstance] trackEvent:eventType
@@ -1020,7 +1034,7 @@ JAActivityViewControllerDelegate
                           
                           // Since we're sending the converted price, we have to send the currency as EUR.
                           // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-                          [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                          [trackingDictionary setValue:price forKey:kRIEventPriceKey];
                           [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                           
                           [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
@@ -1031,7 +1045,6 @@ JAActivityViewControllerDelegate
                               NSArray *categoryIds = [self.product.categoryIds array];
                               [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
                           }
-                          
                           
                           [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
                           
@@ -1044,9 +1057,19 @@ JAActivityViewControllerDelegate
                           [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
                           [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
                           [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
-                          if(VALID_NOTEMPTY(self.category, RICategory))
+                          
+                          if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
                           {
-                              [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+                              NSArray *categoryIds = [self.product.categoryIds array];
+                              if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
+                              {
+                                  [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
+                              }
+                              
+                              if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+                              {
+                                  [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+                              }
                           }
                           
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
@@ -1292,7 +1315,7 @@ JAActivityViewControllerDelegate
             
             // Since we're sending the converted price, we have to send the currency as EUR.
             // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-            [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
             [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
             
             [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
@@ -1306,9 +1329,19 @@ JAActivityViewControllerDelegate
             [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
             [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
             [trackingDictionary setValue:@"Catalog" forKey:kRIEventLocationKey];
-            if(VALID_NOTEMPTY(self.category, RICategory))
+
+            if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
             {
-                [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+                NSArray *categoryIds = [self.product.categoryIds array];
+                if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
+                {
+                    [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
+                }
+                
+                if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+                {
+                    [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+                }
             }
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
@@ -1353,7 +1386,7 @@ JAActivityViewControllerDelegate
             
             // Since we're sending the converted price, we have to send the currency as EUR.
             // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-            [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
             [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]

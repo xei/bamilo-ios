@@ -321,9 +321,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     categoryId = [data objectForKey:kRIEventCategoryIdKey];
                 }
                 
-                if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSString))
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSNumber))
                 {
-                    price = [data objectForKey:kRIEventPriceKey];
+                    price = [[data objectForKey:kRIEventPriceKey] stringValue];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventCurrencyCodeKey], NSString))

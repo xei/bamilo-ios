@@ -448,7 +448,7 @@ UIAlertViewDelegate
             NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
-            [globalRateDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+            [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
             
             for (JAAddRatingView *component in self.ratingStarsArray)
             {

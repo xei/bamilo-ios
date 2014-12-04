@@ -207,7 +207,7 @@
          
          if(VALID_NOTEMPTY(self.category, RICategory))
          {
-             self .navBarLayout.title = self.category.name;
+             self.navBarLayout.title = self.category.name;
              
              NSArray* sortList = [NSArray arrayWithObjects:STRING_BEST_RATING, STRING_POPULARITY, STRING_NEW_IN, STRING_PRICE_UP, STRING_PRICE_DOWN, STRING_NAME, STRING_BRAND, nil];
              
@@ -383,6 +383,17 @@
                                                                                   NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
                                                                                   [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
                                                                                   
+                                                                                  trackingDictionary = [[NSMutableDictionary alloc] init];
+                                                                                  if(VALID_NOTEMPTY(self.searchString, NSString))
+                                                                                  {
+                                                                                      [trackingDictionary setValue:self.searchString forKey:kRIEventCategoryNameKey];
+                                                                                  }
+
+                                                                                  [trackingDictionary setValue:pageNumber forKey:kRIEventPageNumberKey];
+                                                                                  
+                                                                                  [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewGTMListing]
+                                                                                                                            data:[trackingDictionary copy]];
+                                                                                  
                                                                               }
                                                                               
                                                                               self.navBarLayout.subTitle = [NSString stringWithFormat:@"%d", [productCount integerValue]];
@@ -533,12 +544,12 @@
                                                                               [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
                                                                               [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                                                                               
-                                                                              if(VALID_NOTEMPTY(self.category, RICategory))
+                                                                              if(VALID_NOTEMPTY(category, RICategory))
                                                                               {
-                                                                                  [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
-                                                                                  [trackingDictionary setValue:self.category.uid forKey:kRIEventCategoryIdKey];
+                                                                                  [trackingDictionary setValue:category.name forKey:kRIEventCategoryNameKey];
+                                                                                  [trackingDictionary setValue:category.uid forKey:kRIEventCategoryIdKey];
                                                                                   
-                                                                                  [trackingDictionary setValue:[RICategory getTree:self.category.uid] forKey:kRIEventTreeKey];
+                                                                                  [trackingDictionary setValue:[RICategory getTree:category.uid] forKey:kRIEventTreeKey];
                                                                               }
                                                                               else if(VALID_NOTEMPTY(categoryId, NSString))
                                                                               {
@@ -560,8 +571,28 @@
                                                                           trackingDictionary = [[NSMutableDictionary alloc] init];
                                                                           if(VALID_NOTEMPTY(self.category, RICategory))
                                                                           {
-                                                                              [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+                                                                              if(VALID_NOTEMPTY(self.category.parent, RICategory))
+                                                                              {
+                                                                                  RICategory *parent = self.category.parent;
+                                                                                  while (VALID_NOTEMPTY(parent.parent, RICategory))
+                                                                                  {
+                                                                                      parent = parent.parent;
+                                                                                  }
+                                                                                  [trackingDictionary setValue:parent.name forKey:kRIEventCategoryNameKey];
+                                                                                  
+                                                                                  [trackingDictionary setValue:category.name forKey:kRIEventSubCategoryNameKey];
+                                                                              }
+                                                                              else
+                                                                              {
+                                                                                  [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+                                                                              }
                                                                           }
+                                                                          else if(VALID_NOTEMPTY(category, RICategory))
+                                                                          {
+                                                                              [trackingDictionary setValue:category.name forKey:kRIEventCategoryNameKey];
+                                                                          }
+
+                                                                          
                                                                           [trackingDictionary setValue:pageNumber forKey:kRIEventPageNumberKey];
                                                                           
                                                                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewGTMListing]
@@ -1079,7 +1110,7 @@
                                         
                                         // Since we're sending the converted price, we have to send the currency as EUR.
                                         // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-                                        [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                                        [trackingDictionary setValue:price forKey:kRIEventPriceKey];
                                         [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                                         
                                         [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
@@ -1093,9 +1124,19 @@
                                         [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
                                         [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
                                         [trackingDictionary setValue:@"Catalog" forKey:kRIEventLocationKey];
-                                        if(VALID_NOTEMPTY(self.category, RICategory))
+
+                                        if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
                                         {
-                                            [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
+                                            NSArray *categoryIds = [product.categoryIds array];
+                                            if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
+                                            {
+                                                [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
+                                            }
+                                            
+                                            if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+                                            {
+                                                [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+                                            }
                                         }
                                         
                                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
@@ -1141,7 +1182,7 @@
             
             // Since we're sending the converted price, we have to send the currency as EUR.
             // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-            [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
             [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
             
             [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
@@ -1204,6 +1245,10 @@
         if(VALID_NOTEMPTY(self.category.name, NSString))
         {
             [userInfo setObject:self.category.name forKey:@"previousCategory"];
+        }
+        else
+        {
+            [userInfo setObject:STRING_BACK forKey:@"previousCategory"];
         }
     }
     
