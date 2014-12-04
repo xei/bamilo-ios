@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *orderCopyButton;
 @property (weak, nonatomic) IBOutlet UIButton *continueShoppingButton;
 
+@property (nonatomic, strong)UIButton* goToTrackOrdersButton;
+
 @end
 
 @implementation JAThanksViewController
@@ -66,9 +68,9 @@
     
     self.trackOrderMessage.attributedText = finalString;
     
-    UIButton* goToTrackOrdersButton = [[UIButton alloc] initWithFrame:self.trackOrderMessage.frame];
-    [goToTrackOrdersButton addTarget:self action:@selector(goToTrackOrders) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:goToTrackOrdersButton];
+    self.goToTrackOrdersButton = [[UIButton alloc] init];
+    [self.goToTrackOrdersButton addTarget:self action:@selector(goToTrackOrders) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:self.goToTrackOrdersButton];
     
     //STRING_ORDER_TRACK_LINK
     [self.orderNumberField setText:self.orderNumber];
@@ -349,6 +351,20 @@
  
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self.goToTrackOrdersButton setFrame:self.trackOrderMessage.frame];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    [self.goToTrackOrdersButton setFrame:self.trackOrderMessage.frame];
 }
 
 - (void)copyOrderNumber

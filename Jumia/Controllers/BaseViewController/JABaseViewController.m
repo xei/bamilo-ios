@@ -19,6 +19,7 @@
 @property (nonatomic, strong) UIImageView *loadingAnimation;
 @property (strong, nonatomic) JANoConnectionView *noConnectionView;
 @property (strong, nonatomic) JAMessageView *messageView;
+@property (strong, nonatomic) JAMaintenancePage *maintenancePage;
 
 @end
 
@@ -82,8 +83,13 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:toInterfaceOrientation];
+    
+    if(VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)){
+        
+        UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+        [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.height, window.frame.size.width) orientation:toInterfaceOrientation];
+    }
 }
-
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation
 {
     CGFloat screenWidth = frame.size.width;
@@ -132,6 +138,11 @@
     {
         self.noConnectionView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
         [self.view bringSubviewToFront:self.noConnectionView];
+    }
+    if(VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)){
+        
+        UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+        [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height)orientation:self.interfaceOrientation];
     }
 }
 
@@ -299,25 +310,26 @@
 {
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     
-    JAMaintenancePage *maintenancePage = [JAMaintenancePage getNewJAMaintenancePage];
-    [maintenancePage setupMaintenancePage:window.frame];
-    [maintenancePage setRetryBlock:^(BOOL dismiss)
+    self.maintenancePage = [JAMaintenancePage getNewJAMaintenancePage];
+    [self.maintenancePage setupMaintenancePage:window.frame orientation:self.interfaceOrientation];
+    __block JABaseViewController *viewController = self;
+    [self.maintenancePage setRetryBlock:^(BOOL dismiss)
      {
-         if([self respondsToSelector:selector])
+         if([viewController respondsToSelector:selector])
          {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
              if(ISEMPTY(objects))
              {
-                 [self performSelector:selector];
+                 [viewController performSelector:selector];
              }
              else if(1 == [objects count])
              {
-                 [self performSelector:selector withObject:[objects objectAtIndex:0]];
+                 [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
              }
              else if(2 == [objects count])
              {
-                 [self performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+                 [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
              }
 #pragma clang diagnostic pop
          }
@@ -329,7 +341,7 @@
         }
     }
     
-    [window.rootViewController.view addSubview:maintenancePage];
+    [window.rootViewController.view addSubview:self.maintenancePage];
 }
 
 - (void)removeMaintenancePage
@@ -344,5 +356,4 @@
         }
     }
 }
-
 @end
