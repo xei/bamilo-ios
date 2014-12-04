@@ -33,6 +33,15 @@
 
 @implementation JACartViewController
 
+- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray *)objects
+{
+    [self setEmptyCartViewHidden:YES];
+    [self setCartViewHidden:YES];
+    self.requestDone = NO;
+    
+    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

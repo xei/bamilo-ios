@@ -136,7 +136,10 @@
     
     if(VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView))
     {
-        self.noConnectionView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+        self.noConnectionView.frame = CGRectMake(self.noConnectionView.frame.origin.x,
+                                                 self.noConnectionView.frame.origin.y,
+                                                 screenWidth,
+                                                 screenHeight);
         [self.view bringSubviewToFront:self.noConnectionView];
     }
     if(VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)){
