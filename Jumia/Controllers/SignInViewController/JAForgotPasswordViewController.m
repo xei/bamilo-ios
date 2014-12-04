@@ -27,6 +27,13 @@
 
 #pragma mark - View lifecycle
 
+- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
+{
+    [self.contentView removeFromSuperview];
+    
+    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -89,6 +96,8 @@
 - (void) getForgotPasswordForm
 {
     [self.scrollView setHidden:YES];
+    
+    [self.scrollView addSubview:self.contentView];
  
     [RIForm getForm:@"forgotpassword"
        successBlock:^(RIForm *form)
