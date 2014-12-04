@@ -209,14 +209,7 @@
         }
         [self operationEnded:operation];
     } else {
-        if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-        {
-             operation.failureBlock(RIApiResponseNoInternetConnection, nil, nil);
-        }
-        else
-        {
-            [operation startRequest];
-        }
+        [operation startRequest];
     }
 }
 

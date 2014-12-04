@@ -1010,11 +1010,7 @@
             
             [self hideLoading];
             
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
-                                                                object:nil
-                                                              userInfo:userInfo];
+            [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
         }];
     }
     else

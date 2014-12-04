@@ -59,6 +59,17 @@ UICollectionViewDelegateFlowLayout>
 
 @implementation JAAddressesViewController
 
+- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
+{
+    [self.stepBackground setHidden:YES];
+    [self.stepView setHidden:YES];
+    [self.contentScrollView setHidden:YES];
+    [self.orderSummary setHidden:YES];
+    [self.bottomView setHidden:YES];
+    
+    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -141,18 +152,29 @@ UICollectionViewDelegateFlowLayout>
 {
     [super viewWillAppear:animated];
     
-    [self showLoading];
-    
     [self.contentScrollView setHidden:YES];
     [self.bottomView setHidden:YES];
     
     [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
+    
+    [self getAddressList];
+}
+
+- (void)getAddressList
+{
+    [self showLoading];
     
     [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
         
         self.addresses = adressList;
         if(VALID_NOTEMPTY(self.addresses, NSDictionary))
         {
+            [self.stepBackground setHidden:NO];
+            [self.stepView setHidden:NO];
+            [self.contentScrollView setHidden:NO];
+            [self.orderSummary setHidden:NO];
+            [self.bottomView setHidden:NO];
+            
             [self hideLoading];
             
             self.shippingAddress = [self.addresses objectForKey:@"shipping"];
@@ -178,6 +200,7 @@ UICollectionViewDelegateFlowLayout>
                                                               userInfo:userInfo];
         }
         
+        
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -188,10 +211,9 @@ UICollectionViewDelegateFlowLayout>
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                   data:[trackingDictionary copy]];
         
-        [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
-        
+        [self showErrorView:(RIApiResponseNoInternetConnection == apiResponse) startingY:0.0f selector:@selector(getAddressList) objects:nil];
+                
         [self hideLoading];
-        [self finishedLoadingAddresses];
     }];
 }
 
@@ -359,9 +381,9 @@ UICollectionViewDelegateFlowLayout>
     }
     
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
-
+    
     [self.contentScrollView setHidden:NO];
-
+    
     [self.bottomView reloadFrame:CGRectMake(0.0f,
                                             self.view.frame.size.height - self.bottomView.frame.size.height,
                                             width,
