@@ -12,6 +12,8 @@
 
 + (JAFallbackView *)getNewJAFallbackView;
 
-- (void)setupFallbackView:(CGRect)frame;
+- (void)setupFallbackView:(CGRect)frame orientation:(UIInterfaceOrientation)orientation;
+
+- (void)reloadFallbackView:(CGRect)frame orientation:(UIInterfaceOrientation)orientation;
 
 @end
