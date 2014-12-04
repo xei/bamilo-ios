@@ -196,7 +196,7 @@
     BOOL isLandscape = frame.size.width>frame.size.height?YES:NO;
     
     CGFloat topMargin = kJAWizardViewImageGenericTopMargin;
-    CGFloat leftMargin1 = (self.wizardPage1.bounds.size.width - self.wizardPage1ImageView.frame.size.width) / 2;
+    CGFloat leftMargin1 = (self.bounds.size.width - self.wizardPage1ImageView.frame.size.width) / 2;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         topMargin = kJAWizardViewImageGenericTopMargin_ipad - 5.0f;
         if (isLandscape) {
@@ -228,7 +228,7 @@
     
     
     
-    CGFloat leftMargin2 = (self.wizardPage2.bounds.size.width - self.wizardPage2ImageView.frame.size.width) / 2 + 30.0f;
+    CGFloat leftMargin2 = (self.bounds.size.width - self.wizardPage2ImageView.frame.size.width) / 2 + 30.0f;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && isLandscape) {
         leftMargin2 = kJAWizardViewFirstImageLeftMargin + 60.0f;
     }
@@ -257,11 +257,11 @@
     
     
     CGFloat topMargin3 = kJAWizardViewThirdImageTopMargin;
-    CGFloat leftMargin3 = self.wizardPage3.bounds.size.width - self.wizardPage3ImageView.frame.size.width - 15.0f;
+    CGFloat leftMargin3 = self.bounds.size.width - self.wizardPage3ImageView.frame.size.width - 15.0f;
     CGFloat labelTopMargin3 = kJAWizardPDV3ViewTextVerticalMargin;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && isLandscape) {
         labelTopMargin3 = kJAWizardPDV3ViewTextVerticalMargin_ipad;
-        leftMargin3 = (self.wizardPage3.bounds.size.width / 2) - self.wizardPage3ImageView.frame.size.width - 15.0f ;
+        leftMargin3 = (self.bounds.size.width / 2) - self.wizardPage3ImageView.frame.size.width - 15.0f ;
         topMargin3 = kJAWizardViewThirdImageTopMargin_landscape;
     }
     [self.wizardPage3 setFrame:CGRectMake(currentX,
