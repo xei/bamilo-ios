@@ -1116,14 +1116,14 @@
             if ([notification.userInfo objectForKey:@"relatedItems"]) {
                 pdv.arrayWithRelatedItems = [notification.userInfo objectForKey:@"relatedItems"];
             }
-            
-            if ([notification.userInfo objectForKey:@"delegate"]) {
-                pdv.delegate = [notification.userInfo objectForKey:@"delegate"];
-            }
         }
         else
         {
             pdv.fromCatalogue = NO;
+        }
+        
+        if ([notification.userInfo objectForKey:@"delegate"]) {
+            pdv.delegate = [notification.userInfo objectForKey:@"delegate"];
         }
         
         if ([notification.userInfo objectForKey:@"previousCategory"])
