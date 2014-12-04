@@ -59,6 +59,17 @@
 
 @implementation JACatalogViewController
 
+- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
+{
+    if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView)) {
+        [self.wizardView removeFromSuperview];
+        //make sure we show it the next opportunity
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kJACatalogWizardUserDefaultsKey];
+    }
+    
+    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -272,8 +283,9 @@
 
 - (void)resetCatalog
 {
-    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-    [self.productsMap setObject:[NSMutableArray new] forKey:key];
+    [self.productsMap enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [self.productsMap setObject:[NSMutableArray new] forKey:key];
+    }];
     
     self.loadedEverything = NO;
 }
@@ -1222,7 +1234,8 @@
     [self.view addSubview:self.undefinedView];
     
     [self.undefinedView setupWithUndefinedSearchResult:undefSearch
-                                            searchText:self.searchString];
+                                            searchText:self.searchString
+                                           orientation:self.interfaceOrientation];
     [self.view bringSubviewToFront:self.wizardView];
 }
 
@@ -1275,7 +1288,6 @@
                                      self.view.frame.size.width - self.view.frame.origin.y);
         [self.wizardView reloadForFrame:newFrame];
     }
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
     self.lastIndex = self.sortingScrollView.selectedIndex;
     
@@ -1286,11 +1298,14 @@
     [self.sortingScrollView setNeedsLayout];
     
     [self.undefinedView removeFromSuperview];
+    
+    [self showLoading];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
     if(VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
     {
@@ -1304,6 +1319,9 @@
                                                                            self.view.frame.size.height - CGRectGetMaxY(self.sortingScrollView.frame) - 12.0f)];
         [self.undefinedView didRotate];
     }
+    [self hideLoading];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 @end
