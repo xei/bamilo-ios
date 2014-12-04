@@ -28,6 +28,7 @@
 @property (nonatomic, strong) JAPicker *picker;
 @property (nonatomic, assign) BOOL requestDone;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic, assign) CGRect cartScrollViewInitialFrame;
 
 @end
 
@@ -55,9 +56,9 @@
     self.view.backgroundColor = JABackgroundGrey;
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [center addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     
-    [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    [center addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     self.requestDone = NO;
     
@@ -367,6 +368,7 @@
     }
     
     [self.cartScrollView setHidden:NO];
+    self.cartScrollViewInitialFrame = self.cartScrollView.frame;
     
     // coupon
     if(VALID_NOTEMPTY(self.couponView, UIView))
@@ -1141,7 +1143,7 @@
     {
         [self.useCouponButton setEnabled:NO];
     }
-    else
+    else if(VALID_NOTEMPTY(textField.text, NSString))
     {
         [self.useCouponButton setEnabled:YES];
     }
@@ -1152,6 +1154,23 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.couponTextField resignFirstResponder];
+    
+    if(VALID_NOTEMPTY([self.couponTextField text], NSString))
+    {
+        [self useCouponButtonPressed];
+        [self.useCouponButton setEnabled:YES];
+    }
+    else
+    {
+        [self.useCouponButton setEnabled:NO];
+    }
+    
+    return YES;
 }
 
 #pragma mark JAPickerDelegate
@@ -1280,32 +1299,30 @@
 
 #pragma mark Observers
 
-- (void)keyboardDidShow:(NSNotification*)notification
+- (void)keyboardWillShow:(NSNotification*)notification
 {
-    NSDictionary *info = notification.userInfo;
-    NSValue *value = info[UIKeyboardFrameEndUserInfoKey];
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    CGRect rawFrame = [value CGRectValue];
-    self.keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
+    CGFloat height = kbSize.height;
+    if(self.view.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
     
-    [self.cartScrollView setFrame:CGRectMake(self.cartScrollView.frame.origin.x,
-                                             self.cartScrollView.frame.origin.y,
-                                             self.cartScrollView.frame.size.width,
-                                             self.cartScrollView.frame.size.height - self.keyboardFrame.size.height)];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.cartScrollView setFrame:CGRectMake(self.cartScrollViewInitialFrame.origin.x,
+                                                 self.cartScrollViewInitialFrame.origin.y,
+                                                 self.cartScrollViewInitialFrame.size.width,
+                                                 self.cartScrollViewInitialFrame.size.height - height)];
+    }];
 }
 
-- (void)keyboardDidHide:(NSNotification*)notification
+- (void)keyboardWillHide:(NSNotification*)notification
 {
-    NSDictionary *info = notification.userInfo;
-    NSValue *value = info[UIKeyboardFrameEndUserInfoKey];
-    
-    CGRect rawFrame = [value CGRectValue];
-    CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
-    
-    [self.cartScrollView setFrame:CGRectMake(self.cartScrollView.frame.origin.x,
-                                             self.cartScrollView.frame.origin.y,
-                                             self.cartScrollView.frame.size.width,
-                                             self.cartScrollView.frame.size.height + keyboardFrame.size.height)];;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.cartScrollView setFrame:self.cartScrollViewInitialFrame];
+    }];
 }
 
 @end
