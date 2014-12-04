@@ -12,8 +12,9 @@
 
 + (JAMaintenancePage *)getNewJAMaintenancePage;
 
-- (void)setupMaintenancePage:(CGRect)frame;
+- (void)setupMaintenancePage:(CGRect)frame orientation:(UIInterfaceOrientation)orientation;
 
 - (void)setRetryBlock:(void(^)(BOOL dismiss))completion;
 
+-(void)removeViews;
 @end
