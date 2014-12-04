@@ -212,12 +212,15 @@
 {
     RIStatus *status = [[RIStatus alloc] init];
     
-    if ([json objectForKey:@"item_status"]) {
-        status.itemStatus = [json objectForKey:@"item_status"];
-    }
-    
-    if ([json objectForKey:@"last_status_change"]) {
-        status.lastChangeStatus = [json objectForKey:@"last_status_change"];
+    if(VALID_NOTEMPTY(json, NSDictionary))
+    {
+        if ([json objectForKey:@"item_status"]) {
+            status.itemStatus = [json objectForKey:@"item_status"];
+        }
+        
+        if ([json objectForKey:@"last_status_change"]) {
+            status.lastChangeStatus = [json objectForKey:@"last_status_change"];
+        }
     }
     
     return status;
