@@ -849,7 +849,8 @@ JAActivityViewControllerDelegate
                                                         object:nil
                                                       userInfo:@{ @"url" : tempProduct.url,
                                                                   @"previousCategory" : @"",
-                                                                  @"show_back_button" : [NSNumber numberWithBool:self.showBackButton]}];
+                                                                  @"show_back_button" : [NSNumber numberWithBool:self.showBackButton],
+                                                                  @"delegate" : self.delegate}];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:tempProduct.sku forKey:kRIEventLabelKey];
