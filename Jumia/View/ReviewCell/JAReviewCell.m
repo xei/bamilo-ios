@@ -23,7 +23,6 @@
 
 - (void)awakeFromNib
 {
-    self.translatesAutoresizingMaskIntoConstraints = YES;
     [self.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
     [self.labelPrice setTextColor:UIColorFromRGB(0x666666)];
     [self.labelAppearance setTextColor:UIColorFromRGB(0x666666)];
@@ -52,8 +51,13 @@
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               frame.size.width,
-                              self.frame.size.height)];
+                              self.frame.size.height)];    
     
+    [self setFrame:CGRectMake(self.separator.frame.origin.x,
+                              self.frame.size.height - self.separator.frame.size.height,
+                              frame.size.width,
+                              self.separator.frame.size.height)];
+
     [self.priceRatingsView setFrame:CGRectMake(self.labelPrice.frame.origin.x,
                                                CGRectGetMaxY(self.labelPrice.frame) + 2.0f,
                                                self.priceRatingsView.frame.size.width,
