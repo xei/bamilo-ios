@@ -48,6 +48,16 @@
 {
     [super viewWillAppear:animated];
     [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(backButtonPressed)
+                                                 name:kDidPressBackNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -302,5 +312,11 @@
     }
 }
 
+#pragma mark - Button Actions
+
+- (void)backButtonPressed
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+}
 
 @end
