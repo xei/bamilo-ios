@@ -19,6 +19,7 @@
 @interface JAUndefinedSearchView ()
 
 @property (nonatomic, strong) RIUndefinedSearchTerm* searchResult;
+@property (nonatomic, assign) UIInterfaceOrientation myOrientation;
 @property (nonatomic, strong) NSString* searchText;
 @property (nonatomic, strong) UIScrollView *scrollView;
 
@@ -34,6 +35,7 @@
 @property (nonatomic, strong) UIView* noticeView;
 @property (assign, nonatomic) CGFloat scrollViewY;
 @property (assign, nonatomic) CGFloat leftMargin;
+
 
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *spaceLabelConstraint;
@@ -57,15 +59,22 @@
 
 - (void)setupWithUndefinedSearchResult:(RIUndefinedSearchTerm *)searchResult
                             searchText:(NSString *)searchText
+                           orientation:(UIInterfaceOrientation) myOrientation
 {
-    self.leftMargin = 6.0f;
-    self.translatesAutoresizingMaskIntoConstraints = YES;
-    if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)&&(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))){
-        self.leftMargin = 256.0f;
-    }
-    
     self.searchResult = searchResult;
     self.searchText = searchText;
+    self.myOrientation = myOrientation;
+    
+    self.leftMargin = 6.0f;
+    self.translatesAutoresizingMaskIntoConstraints = YES;
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
+        if(UIInterfaceOrientationIsLandscape(myOrientation)){
+            self.leftMargin = 256.0f;
+        }else
+        {
+            self.leftMargin = 126.0f;
+        }
+    }
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
     self.scrollView.backgroundColor = [UIColor clearColor];
@@ -160,7 +169,7 @@
     
     self.searchTipsTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.leftMargin,
                                                                          labelY,
-                                                                         self.topView.frame.size.width - 6.0f*2,
+                                                                         self.topView.frame.size.width - self.leftMargin*2,
                                                                          10.0f)];
     self.searchTipsTextLabel.numberOfLines = -1;
     self.searchTipsTextLabel.textColor = UIColorFromRGB(0x666666);
@@ -373,14 +382,16 @@
 -(void)didRotate
 {
     [self.scrollView removeFromSuperview];
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
+        if(UIInterfaceOrientationIsLandscape(self.myOrientation)){
+            self.leftMargin = 256.0f;
+        }else
+        {
+            self.leftMargin = 126.0f;
     
-    if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)&&(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))){
-        self.leftMargin = 256.0f;
-    }else{
-        self.leftMargin = 6.0f;
+        }
     }
-    
-    [self setupWithUndefinedSearchResult:self.searchResult searchText:self.searchText];
+    [self setupWithUndefinedSearchResult:self.searchResult searchText:self.searchText orientation:self.myOrientation];
 }
 
 #pragma mark - Delegate methods

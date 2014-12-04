@@ -1223,7 +1223,8 @@
     [self.view addSubview:self.undefinedView];
     
     [self.undefinedView setupWithUndefinedSearchResult:undefSearch
-                                            searchText:self.searchString];
+                                            searchText:self.searchString
+                                           orientation:self.interfaceOrientation];
     [self.view bringSubviewToFront:self.wizardView];
 }
 
@@ -1276,7 +1277,6 @@
                                      self.view.frame.size.width - self.view.frame.origin.y);
         [self.wizardView reloadForFrame:newFrame];
     }
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
     self.lastIndex = self.sortingScrollView.selectedIndex;
     
@@ -1287,11 +1287,14 @@
     [self.sortingScrollView setNeedsLayout];
     
     [self.undefinedView removeFromSuperview];
+    
+    [self showLoading];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
     if(VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
     {
@@ -1305,6 +1308,9 @@
                                                                            self.view.frame.size.height - CGRectGetMaxY(self.sortingScrollView.frame) - 12.0f)];
         [self.undefinedView didRotate];
     }
+    [self hideLoading];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 @end
