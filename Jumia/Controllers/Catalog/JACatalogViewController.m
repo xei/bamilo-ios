@@ -59,6 +59,17 @@
 
 @implementation JACatalogViewController
 
+- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
+{
+    if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView)) {
+        [self.wizardView removeFromSuperview];
+        //make sure we show it the next opportunity
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kJACatalogWizardUserDefaultsKey];
+    }
+    
+    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
