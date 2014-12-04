@@ -272,8 +272,9 @@
 
 - (void)resetCatalog
 {
-    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-    [self.productsMap setObject:[NSMutableArray new] forKey:key];
+    [self.productsMap enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [self.productsMap setObject:[NSMutableArray new] forKey:key];
+    }];
     
     self.loadedEverything = NO;
 }
