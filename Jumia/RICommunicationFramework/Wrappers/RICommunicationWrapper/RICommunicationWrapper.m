@@ -285,6 +285,16 @@
         }
     }
     
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        [operation.request addValue:RI_HTTP_USER_AGENT_HEADER_IPAD_VALUE forHTTPHeaderField:RI_HTTP_USER_AGENT_HEADER_NAME];
+    }
+    else
+    {    [operation.request addValue:RI_HTTP_USER_AGENT_HEADER_IPHONE_VALUE forHTTPHeaderField:RI_HTTP_USER_AGENT_HEADER_NAME];
+    }
+    
+    NSLog(@"%@", [operation.request allHTTPHeaderFields]);
+    
     return operation.request;
 }
 
