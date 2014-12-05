@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -10,23 +11,45 @@
             <rect key="frame" x="0.0" y="0.0" width="308" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="nH5-3J-wWW" customClass="JATextField">
-                    <rect key="frame" x="17" y="0.0" width="280" height="43"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="nH5-3J-wWW" customClass="JATextField">
+                    <rect key="frame" x="17" y="23" width="280" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="280" id="gnk-Gj-5kt"/>
+                        <constraint firstAttribute="height" constant="20" id="pKB-qb-LUK"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u9S-YA-aUT">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u9S-YA-aUT">
                     <rect key="frame" x="6" y="43" width="296" height="1"/>
                     <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="l19-zp-N8l"/>
+                    </constraints>
                 </view>
-                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="*" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngY-DJ-4mF">
+                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngY-DJ-4mF">
                     <rect key="frame" x="290" y="28" width="10" height="10"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="10" id="J6N-8Y-iK8"/>
+                        <constraint firstAttribute="height" constant="10" id="U7i-ae-0AK"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="u9S-YA-aUT" firstAttribute="leading" secondItem="inT-xr-DlP" secondAttribute="leading" constant="6" id="16N-pu-Fpd"/>
+                <constraint firstAttribute="trailing" secondItem="ngY-DJ-4mF" secondAttribute="trailing" constant="8" id="CW6-IW-yag"/>
+                <constraint firstAttribute="trailing" secondItem="u9S-YA-aUT" secondAttribute="trailing" constant="6" id="IZX-Xd-wlJ"/>
+                <constraint firstItem="ngY-DJ-4mF" firstAttribute="leading" secondItem="inT-xr-DlP" secondAttribute="leading" constant="290" id="KeY-4f-DUO"/>
+                <constraint firstItem="ngY-DJ-4mF" firstAttribute="top" secondItem="inT-xr-DlP" secondAttribute="top" constant="28" id="Oxz-ee-bWe"/>
+                <constraint firstAttribute="trailing" secondItem="nH5-3J-wWW" secondAttribute="trailing" constant="11" id="YuO-CB-bl6"/>
+                <constraint firstItem="nH5-3J-wWW" firstAttribute="leading" secondItem="inT-xr-DlP" secondAttribute="leading" constant="17" id="qji-YW-TKw"/>
+                <constraint firstAttribute="bottom" secondItem="u9S-YA-aUT" secondAttribute="bottom" id="vW1-pP-Krr"/>
+                <constraint firstItem="u9S-YA-aUT" firstAttribute="top" secondItem="nH5-3J-wWW" secondAttribute="bottom" id="wbE-y3-9je"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>

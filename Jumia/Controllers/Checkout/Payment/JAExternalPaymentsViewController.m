@@ -29,16 +29,30 @@
     
     self.navBarLayout.title = STRING_CHECKOUT;
     
+    self.webView.translatesAutoresizingMaskIntoConstraints = YES;
     [self.webView setDelegate:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.webView setFrame:self.view.bounds];
     
     self.originalRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[RIApi getCountryUrlInUse]]];
-
+    
     [self loadPaymentMethodRequest];
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self.webView setFrame:self.view.bounds];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
 
 -(void)loadPaymentMethodRequest
 {

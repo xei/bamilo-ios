@@ -9,32 +9,24 @@
 #import "JAProductDetailsViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "JAPriceView.h"
+#import "JAAppDelegate.h"
 #import "RIProduct.h"
 
 @interface JAProductDetailsViewController ()
 
-@property (strong, nonatomic) NSString *stringBrand;
-@property (strong, nonatomic) NSString *stringName;
-@property (strong, nonatomic) NSString *stringNewPrice;
-@property (strong, nonatomic) NSString *stringOldPrice;
-@property (strong, nonatomic) NSString *featuresText;
-@property (strong, nonatomic) NSString *descriptionText;
-
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UILabel *labelName;
 @property (weak, nonatomic) IBOutlet UILabel *labelBrand;
-@property (weak, nonatomic) IBOutlet UILabel *labelNewPrice;
-@property (weak, nonatomic) IBOutlet UILabel *labelOldPrice;
 @property (weak, nonatomic) IBOutlet UIScrollView *contenteScrollView;
-@property (weak, nonatomic) IBOutlet UIView *featuresView;
-@property (weak, nonatomic) IBOutlet UIView *descriptionView;
-@property (weak, nonatomic) IBOutlet UIImageView *featuresLineImage;
-@property (weak, nonatomic) IBOutlet UIImageView *descriptionLineImage;
-@property (weak, nonatomic) IBOutlet UILabel *featuresTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *featuresTextLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descriptionTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descriptionTextLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomDistance;
+@property (strong, nonatomic) UIView *featuresView;
+@property (strong, nonatomic) UILabel *featuresTitleLabel;
+@property (strong, nonatomic) UIView *featuresSeparator;
+@property (strong, nonatomic) UILabel *featuresTextLabel;
+@property (strong, nonatomic) UIView *descriptionView;
+@property (strong, nonatomic) UILabel *descriptionTitleLabel;
+@property (strong, nonatomic) UIView *descriptionSeparator;
+@property (strong, nonatomic) UILabel *descriptionTextLabel;
+
 @property (nonatomic, strong) JAPriceView *priceView;
 
 @end
@@ -56,88 +48,225 @@
         self.screenName = @"PDSSecondScreen";
     }
     
-    self.stringBrand = self.product.brand;
-    self.stringName = self.product.name;
-    self.stringNewPrice = self.product.specialPriceFormatted;
-    self.stringOldPrice = self.product.priceFormatted;
-    self.featuresText = self.product.attributeShortDescription;
-    self.descriptionText = self.product.descriptionString;
-    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
-    self.labelBrand.text = self.stringBrand;
-    self.labelName.text = self.stringName;
-    
     self.view.backgroundColor = JABackgroundGrey;
-    self.featuresTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.descriptionTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.contenteScrollView.backgroundColor = UIColorFromRGB(0xc8c8c8);
     
-    [self.labelNewPrice removeFromSuperview];
-    [self.labelOldPrice removeFromSuperview];
+    self.contenteScrollView.backgroundColor = UIColorFromRGB(0xc8c8c8);
+    self.contenteScrollView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.topView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.labelBrand.text = self.product.brand;
+    self.labelBrand.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.labelName.text = self.product.name;
+    self.labelName.translatesAutoresizingMaskIntoConstraints = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self setupViews:self.view.frame.size.width height:self.view.frame.size.height];
+    
+    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+}
+
+- (void) setupViews:(CGFloat)width height:(CGFloat)height
+{
+    [self.labelBrand setFrame:CGRectMake(12.0f,
+                                         6.0f,
+                                         width - 24.0f,
+                                         height)];
+    [self.labelBrand sizeToFit];
+    
+    [self.labelName setFrame:CGRectMake(12.0f,
+                                        CGRectGetMaxY(self.labelBrand.frame) + 4.0f,
+                                        width - 24.0f,
+                                        height)];
+    [self.labelName sizeToFit];
+    
+    if(VALID(self.priceView, JAPriceView))
+    {
+        [self.priceView removeFromSuperview];
+    }
     
     self.priceView = [[JAPriceView alloc] init];
-    [self.priceView loadWithPrice:self.stringOldPrice
-                     specialPrice:self.stringNewPrice
+    [self.priceView loadWithPrice:self.product.priceFormatted
+                     specialPrice:self.product.specialPriceFormatted
                          fontSize:14.0f
             specialPriceOnTheLeft:NO];
     
     self.priceView.frame = CGRectMake(12.0f,
-                                      68.0f,
+                                      CGRectGetMaxY(self.labelName.frame) + 4.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
-    [self.view addSubview:self.priceView];
+    [self.topView addSubview:self.priceView];
     
-    self.featuresView.layer.cornerRadius = 4.0f;
-    self.descriptionView.layer.cornerRadius = 4.0f;
-    
-    if (self.featuresText.length == 0)
+    CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
+    if(topViewMinHeight < 38.0f)
     {
+        topViewMinHeight = 38.0f;
+    }
+    topViewMinHeight += 6.0f;
+    
+    
+    [self.topView setFrame:CGRectMake(0.0f,
+                                      0.0f,
+                                      width,
+                                      topViewMinHeight)];
+    
+    [self.contenteScrollView setFrame:CGRectMake(0.0f,
+                                                 topViewMinHeight,
+                                                 width,
+                                                 height - topViewMinHeight - CGRectGetMinY(self.topView.frame))];
+    
+    if(VALID(self.featuresView, UIView))
+    {
+        for(UIView *subView in self.featuresView.subviews)
+        {
+            [subView removeFromSuperview];
+        }
+        [self.featuresView removeFromSuperview];
+    }
+    
+    if(VALID(self.descriptionView, UIView))
+    {
+        for(UIView *subView in self.descriptionView.subviews)
+        {
+            [subView removeFromSuperview];
+        }
         [self.descriptionView removeFromSuperview];
-        
-        self.featuresTitleLabel.text = STRING_PRODUCT_FEATURES;
-        
-        self.featuresTextLabel.text = self.descriptionText;
+    }
+    
+    self.featuresView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
+                                                                 6.0f,
+                                                                 self.contenteScrollView.frame.size.width - 12.0f,
+                                                                 0.0f)];
+    [self.featuresView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    self.featuresView.layer.cornerRadius = 5.0f;
+    [self.contenteScrollView addSubview:self.featuresView];
+    
+    CGFloat horizontalMargin = 6.0f;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        horizontalMargin = 10.0f;
+    }
+    
+    self.featuresTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin,
+                                                                        2.0f,
+                                                                        self.featuresView.frame.size.width - (2 * horizontalMargin),
+                                                                        21.0f)];
+    [self.featuresTitleLabel setNumberOfLines:1];
+    [self.featuresTitleLabel setText:STRING_PRODUCT_FEATURES];
+    [self.featuresTitleLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+    [self.featuresTitleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.featuresView addSubview:self.featuresTitleLabel];
+    
+    self.featuresSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                      26.0f,
+                                                                      self.featuresView.frame.size.width,
+                                                                      1.0f)];
+    [self.featuresSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.featuresView addSubview:self.featuresSeparator];
+    
+    self.featuresTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin,
+                                                                       33.0f,
+                                                                       self.featuresView.frame.size.width - (2 * horizontalMargin),
+                                                                       0.0f)];
+    [self.featuresTextLabel setNumberOfLines:0];
+    [self.featuresTextLabel setTextColor:UIColorFromRGB(0x666666)];
+    [self.featuresTextLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0f]];
+    [self.featuresView addSubview:self.featuresTextLabel];
+    
+    if (VALID_NOTEMPTY(self.product.attributeShortDescription, NSString))
+    {
+        [self.featuresTextLabel setText:self.product.attributeShortDescription];
         [self.featuresTextLabel sizeToFit];
+        [self.featuresView setFrame:CGRectMake(6.0f,
+                                               6.0f,
+                                               self.contenteScrollView.frame.size.width - 12.0f,
+                                               CGRectGetMaxY(self.featuresTextLabel.frame) + 6.0f)];
         
-        self.featuresView.frame = CGRectMake(self.featuresView.frame.origin.x,
-                                             self.featuresView.frame.origin.y,
-                                             self.featuresView.frame.size.width,
-                                             self.featuresTextLabel.frame.size.height + 70);
+        self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
+                                                                        6.0f,
+                                                                        self.contenteScrollView.frame.size.width - 12.0f,
+                                                                        0.0f)];
+        [self.descriptionView setBackgroundColor:UIColorFromRGB(0xffffff)];
+        self.descriptionView.layer.cornerRadius = 5.0f;
+        [self.contenteScrollView addSubview:self.descriptionView];
         
-        [self.contenteScrollView setContentSize:CGSizeMake(320, self.featuresView.frame.size.height - 15)];
+        self.descriptionTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin,
+                                                                               2.0f,
+                                                                               self.descriptionView.frame.size.width - (2 * horizontalMargin),
+                                                                               21.0f)];
+        [self.descriptionTitleLabel setNumberOfLines:1];
+        [self.descriptionTitleLabel setText:STRING_PRODUCT_DESCRIPTION];
+        [self.descriptionTitleLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+        [self.descriptionTitleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]];
+        [self.descriptionView addSubview:self.descriptionTitleLabel];
+        
+        self.descriptionSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                             26.0f,
+                                                                             self.descriptionView.frame.size.width,
+                                                                             1.0f)];
+        [self.descriptionSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+        [self.descriptionView addSubview:self.descriptionSeparator];
+        
+        self.descriptionTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin,
+                                                                              33.0f,
+                                                                              self.descriptionView.frame.size.width - (2 * horizontalMargin),
+                                                                              0.0f)];
+        [self.descriptionTextLabel setTextColor:UIColorFromRGB(0x666666)];
+        [self.descriptionTextLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [self.descriptionTextLabel setNumberOfLines:0];
+        [self.descriptionView addSubview:self.descriptionTextLabel];
+        
+        [self.descriptionTextLabel setText:self.product.descriptionString];
+        [self.descriptionTextLabel sizeToFit];
+        [self.descriptionView setFrame:CGRectMake(6.0f,
+                                                  CGRectGetMaxY(self.featuresView.frame) + 6.0f,
+                                                  self.contenteScrollView.frame.size.width - 12.0f,
+                                                  CGRectGetMaxY(self.descriptionTextLabel.frame) + 6.0f)];
+        
+        [self.contenteScrollView setContentSize:CGSizeMake(width,
+                                                           CGRectGetMaxY(self.descriptionView.frame) + 6.0f)];
     }
     else
     {
-        self.featuresTitleLabel.text = STRING_PRODUCT_FEATURES;
-        self.descriptionTitleLabel.text = STRING_PRODUCT_DESCRIPTION;
-
-        self.featuresTextLabel.text = self.featuresText;
+        [self.featuresTextLabel setText:self.product.descriptionString];
         [self.featuresTextLabel sizeToFit];
+        [self.featuresView setFrame:CGRectMake(6.0f,
+                                               6.0f,
+                                               self.contenteScrollView.frame.size.width - 12.0f,
+                                               CGRectGetMaxY(self.featuresTextLabel.frame) + 6.0f)];
         
-        self.featuresView.frame = CGRectMake(self.featuresView.frame.origin.x,
-                                             self.featuresView.frame.origin.y,
-                                             self.featuresView.frame.size.width,
-                                             self.featuresTextLabel.frame.size.height + 70);
-        
-        self.descriptionTextLabel.text = self.descriptionText;
-        [self.descriptionTextLabel sizeToFit];
-        
-        self.descriptionView.frame = CGRectMake(self.descriptionView.frame.origin.x,
-                                                self.descriptionView.frame.origin.y,
-                                                self.descriptionView.frame.size.width,
-                                                self.descriptionTextLabel.frame.size.height + 70);
-        
-        [self.contenteScrollView setContentSize:CGSizeMake(320, self.featuresView.frame.size.height + self.descriptionView.frame.size.height)];
+        [self.contenteScrollView setContentSize:CGSizeMake(width,
+                                                           CGRectGetMaxY(self.featuresView.frame) + 6.0f)];
     }
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{    
+    [self showLoading];
     
-    self.bottomDistance.constant = 6;
+    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    CGFloat newHeight = self.view.frame.size.width - self.view.frame.origin.y;
+    [self setupViews:newWidth height:newHeight];
     
-    [self.view updateConstraints];
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self setupViews:self.view.frame.size.width height:self.view.frame.size.height];
     
-    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+    [self hideLoading];
+
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning

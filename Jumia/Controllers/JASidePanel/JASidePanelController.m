@@ -133,7 +133,14 @@ static char ja_kvoContext;
 
 - (void)_baseInit {
     self.style = JASidePanelSingleActive;
-    self.leftGapPercentage = 0.8f;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        self.leftFixedWidth = 256.0f;
+    }
+    else
+    {
+        self.leftGapPercentage = 0.8f;
+    }
     self.rightGapPercentage = 0.8f;
     self.minimumMovePercentage = 0.15f;
     self.maximumAnimationDuration = 0.2f;
@@ -888,6 +895,9 @@ static char ja_kvoContext;
 
 - (void)_showLeftPanel:(BOOL)animated bounce:(BOOL)shouldBounce {
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
+                                                        object:nil];
+    
     self.state = JASidePanelLeftVisible;
     [self _loadLeftPanel];
     
@@ -947,6 +957,10 @@ static char ja_kvoContext;
 }
 
 - (void)_showCenterPanel:(BOOL)animated bounce:(BOOL)shouldBounce {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCloseMenuNotification
+                                                        object:nil];
+    
     //remove shadow
     for (UIView* view in [self.centerPanel.view subviews]) {
         if (-1 == view.tag) {

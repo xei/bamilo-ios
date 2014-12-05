@@ -7,15 +7,24 @@
 //
 
 #import "JAMainFiltersViewController.h"
-#import "JAPriceFilterViewController.h"
-#import "JAGenericFilterViewController.h"
 #import "RIFilter.h"
 #import "RICategory.h"
 #import "JAClickableView.h"
+#import "JAPriceFiltersView.h"
+#import "JAGenericFiltersView.h"
+#import "JACategoryFiltersView.h"
+
 
 @interface JAMainFiltersViewController ()
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong)UITableView *tableView;
+@property (nonatomic, strong)UIControl* lastSelectedClickView;
+@property (nonatomic, strong)UIView* verticalSeparatorView;
+@property (nonatomic, strong)UIView* landscapeContentView;
+@property (nonatomic, assign)CGRect tableRectPortrait;
+@property (nonatomic, assign)CGRect tableRectLandscape;
+
+//@property (nonatomic, strong)NSNotification* currentOpenFilterNotification;
 
 @end
 
@@ -31,9 +40,18 @@
     self.navBarLayout.showEditButton = YES;
     self.navBarLayout.showDoneButton = YES;
     
+    self.tableView = [[UITableView alloc] init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:self.tableView];
+    
+    self.verticalSeparatorView = [UIView new];
+    self.verticalSeparatorView.backgroundColor = UIColorFromRGB(0xcccccc);
+    [self.view addSubview:self.verticalSeparatorView];
+    
+    self.landscapeContentView = [UIView new];
+    [self.view addSubview:self.landscapeContentView];
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
@@ -45,6 +63,9 @@
     
     NSNotificationCenter* notificationCenter = [NSNotificationCenter defaultCenter];
     
+    [notificationCenter postNotificationName:kTurnOffLeftSwipePanelNotification
+                                                        object:nil];
+    
     [notificationCenter addObserver:self
                            selector:@selector(editButtonPressed)
                                name:kDidPressEditNotification
@@ -55,11 +76,40 @@
                                name:kDidPressDoneNotification
                              object:nil];
     
-    [self.tableView reloadData];
-    [self checkEditButtonState];
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        self.tableRectPortrait = CGRectMake(0.0f,
+                                            0.0f,
+                                            self.view.frame.size.height + 64.0f,
+                                            self.view.frame.size.width - 64.0f);
+        self.tableRectLandscape = CGRectMake(0.0f,
+                                             0.0f,
+                                             self.view.frame.size.width / 2,
+                                             self.view.frame.size.height);
+        [self.tableView setFrame:self.tableRectLandscape];
+        [self.verticalSeparatorView setFrame:CGRectMake(CGRectGetMaxX(self.tableRectLandscape) - 1,
+                                                        0.0f,
+                                                        1.0f,
+                                                        self.tableRectLandscape.size.height)];
+        [self.landscapeContentView setFrame:CGRectMake(CGRectGetMaxX(self.tableRectLandscape),
+                                                       0.0f,
+                                                       self.tableRectLandscape.size.width,
+                                                       self.tableRectLandscape.size.height)];
+    } else {
+        self.tableRectPortrait = CGRectMake(0.0f,
+                                            0.0f,
+                                            self.view.frame.size.width,
+                                            self.view.frame.size.height);
+        self.tableRectLandscape = CGRectMake(0.0f,
+                                             0.0f,
+                                             (self.view.frame.size.height + 64.0f) / 2,
+                                             self.view.frame.size.width - 64.0f);
+        [self.tableView setFrame:self.tableRectPortrait];
+    }
+    
+    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0f];
 }
 
-- (void)checkEditButtonState
+- (BOOL)checkEditButtonState
 {
     NSInteger numberOfRows = [self tableView:self.tableView numberOfRowsInSection:0];
     BOOL buttonIsEnabled = NO;
@@ -71,6 +121,8 @@
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kEditShouldChangeStateNotification object:nil userInfo:@{@"enabled":[NSNumber numberWithBool:buttonIsEnabled]}];
+    
+    return buttonIsEnabled;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -79,6 +131,38 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        [self.tableView setFrame:self.tableRectLandscape];
+        [self.verticalSeparatorView setFrame:CGRectMake(CGRectGetMaxX(self.tableRectLandscape) - 1,
+                                                        0.0f,
+                                                        1.0f,
+                                                        self.tableRectLandscape.size.height)];
+        [self.landscapeContentView setFrame:CGRectMake(CGRectGetMaxX(self.tableRectLandscape),
+                                                       0.0f,
+                                                       self.tableRectLandscape.size.width,
+                                                       self.tableRectLandscape.size.height)];
+    } else {
+        [self.tableView setFrame:self.tableRectPortrait];
+        [self.verticalSeparatorView setFrame:CGRectZero];
+        [self.landscapeContentView setFrame:CGRectZero];
+        [self isClosing:nil];
+//        if (self.currentOpenFilterNotification) {
+//            [[NSNotificationCenter defaultCenter] postNotification:self.currentOpenFilterNotification];
+//        }
+    }
+    
+    [self updatedValues];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self.tableView reloadData];
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
 
 #pragma mark - Button Actions
 
@@ -131,11 +215,24 @@
         
         cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
         cell.detailTextLabel.textColor = UIColorFromRGB(0x4e4e4e);
-        
-        UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 43.0f, 320.0f, 1.0f)];
-        separator.backgroundColor = UIColorFromRGB(0xcccccc);
-        [cell addSubview:separator];
+        cell.indentationLevel = 30.0f;
     }
+    
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        cell.indentationLevel = 1;
+    } else {
+        cell.indentationLevel = 0;
+    }
+    
+    for (UIView* subview in cell.subviews) {
+        if (subview.tag == -1) {
+            [subview removeFromSuperview];
+        }
+    }
+    UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 43.0f, self.tableView.frame.size.width, 1.0f)];
+    separator.tag = -1;
+    separator.backgroundColor = UIColorFromRGB(0xcccccc);
+    [cell addSubview:separator];
 
     if (-1 == filterIndex) {
         cell.textLabel.text = STRING_CATEGORIES;
@@ -153,7 +250,7 @@
         }
     }
     //add the new clickable view
-    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableView.frame.size.width, 44.0f)];
     clickView.tag = indexPath.row;
     [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     [cell addSubview:clickView];
@@ -210,6 +307,13 @@
 
 - (void)cellWasPressed:(UIControl*)sender
 {
+    if (VALID_NOTEMPTY(self.lastSelectedClickView, UIControl) && sender != self.lastSelectedClickView) {
+        self.lastSelectedClickView.selected = NO;
+    }
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        sender.selected = YES;
+        self.lastSelectedClickView = sender;
+    }
     [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
@@ -219,34 +323,70 @@
     if (VALID_NOTEMPTY(self.categoriesArray, NSArray)) {
         filterIndex--;
     }
+
+    for (UIView* subView in self.landscapeContentView.subviews) {
+        [subView removeFromSuperview];
+    }
     
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:self forKey:@"delegate"];
+    
+    NSNotification* notification;
+    JAFiltersView* filtersView;
+
     if (-1 == filterIndex) {
-        JACategoryFilterViewController* categoryFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"categoryFilterViewController"];
         
-        categoryFilterViewController.categoriesArray = self.categoriesArray;
-        categoryFilterViewController.selectedCategory = self.selectedCategory;
-        categoryFilterViewController.delegate = self;
+        filtersView = [[[NSBundle mainBundle] loadNibNamed:@"JACategoryFiltersView" owner:self options:nil] objectAtIndex:0];
+        [filtersView setFrame:self.landscapeContentView.bounds];
+        [(JACategoryFiltersView*)filtersView initializeWithCategories:self.categoriesArray selectedCategory:self.selectedCategory isLandscape:YES];
         
-        [self.navigationController pushViewController:categoryFilterViewController
-                                             animated:YES];
+        [userInfo setObject:self forKey:@"categoryFiltersViewDelegate"];
+        
+        if(VALID_NOTEMPTY(self.selectedCategory, RICategory))
+        {
+            [userInfo setObject:self.selectedCategory forKey:@"selectedCategory"];
+        }
+        if(VALID_NOTEMPTY(self.categoriesArray, NSArray))
+        {
+            [userInfo setObject:self.categoriesArray forKey:@"categoriesArray"];
+        }
+       
+        notification = [NSNotification notificationWithName:kShowCategoryFiltersScreenNotification object:nil userInfo:userInfo];
     } else {
         RIFilter* filter = [self.filtersArray objectAtIndex:filterIndex];
         
         if ([filter.uid isEqualToString:@"price"]) {
-            JAPriceFilterViewController* priceFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"priceFilterViewController"];
             
-            priceFilterViewController.priceFilterOption = [filter.options firstObject];
+            filtersView = [[[NSBundle mainBundle] loadNibNamed:@"JAPriceFiltersView" owner:self options:nil] objectAtIndex:0];
+            [filtersView setFrame:self.landscapeContentView.bounds];
+            [(JAPriceFiltersView*)filtersView initializeWithPriceFilterOption:[filter.options firstObject]];
             
-            [self.navigationController pushViewController:priceFilterViewController
-                                                 animated:YES];
+            if(VALID_NOTEMPTY(filter.options, NSArray))
+            {
+                [userInfo setObject:[filter.options firstObject] forKey:@"priceFilterOption"];
+            }
+            notification = [NSNotification notificationWithName:kShowPriceFiltersScreenNotification object:nil userInfo:userInfo];
         } else {
-            JAGenericFilterViewController* genericFilterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"genericFilterViewController"];
             
-            genericFilterViewController.filter = filter;
+            filtersView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];
+            [filtersView setFrame:self.landscapeContentView.bounds];
+            [(JAGenericFiltersView*)filtersView initializeWithFilter:filter isLandscape:YES];
+
             
-            [self.navigationController pushViewController:genericFilterViewController
-                                                 animated:YES];
+            if(VALID_NOTEMPTY(filter, RIFilter))
+            {
+                [userInfo setObject:filter forKey:@"filter"];
+            }
+            notification = [NSNotification notificationWithName:kShowGenericFiltersScreenNotification object:nil userInfo:userInfo];
         }
+    }
+    
+    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation) && VALID_NOTEMPTY(notification, NSNotification)) {
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
+    } else if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && VALID_NOTEMPTY(filtersView, JAFiltersView)) {
+        filtersView.filtersViewDelegate = self;
+        filtersView.shouldAutosave = YES;
+        [self.landscapeContentView addSubview:filtersView];
     }
 }
 
@@ -294,6 +434,11 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (VALID_NOTEMPTY(self.lastSelectedClickView, UIControl) && indexPath.row == self.lastSelectedClickView.tag) {
+        self.lastSelectedClickView.selected = NO;
+        [self isClosing:nil];
+    }
+    
     NSInteger filterIndex = indexPath.row;
     if (VALID_NOTEMPTY(self.categoriesArray, NSArray)) {
         filterIndex--;
@@ -313,14 +458,40 @@
     }
     
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    
+    if (NO == [self checkEditButtonState]) {
+        [self.tableView setEditing:NO animated:YES];
+    }
 }
 
 
-#pragma mark - JACategoryFilterViewControllerDelegate
+#pragma mark - JACategoryFiltersViewDelegate
 
-- (void)categoriesFilterSelectedCategory:(RICategory *)category
+- (void)selectedCategory:(RICategory *)category
 {
     self.selectedCategory = category;
+}
+
+#pragma mark - JASubFiltersViewControllerDelegate
+
+- (void)isClosing:(JASubFiltersViewController*)viewController;
+{
+//    self.currentOpenFilterNotification = nil;
+    for (UIView* subView in self.landscapeContentView.subviews) {
+        [subView removeFromSuperview];
+    }
+}
+
+#pragma mark - JAFiltersViewDelegate
+
+- (void)updatedValues;
+{
+    if (VALID_NOTEMPTY(self.lastSelectedClickView, UIControl)) {
+        self.lastSelectedClickView.selected = NO;
+    }
+    [self.tableView reloadData];
+    [self.tableView setEditing:NO animated:YES];
+    [self checkEditButtonState];
 }
 
 

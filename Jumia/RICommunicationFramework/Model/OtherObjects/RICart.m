@@ -311,14 +311,14 @@
         NSDictionary *cartItemObjects = [json objectForKey:@"cartItems"];
         if (VALID_NOTEMPTY(cartItemObjects, NSDictionary))
         {
-            NSArray *cartItemObjectsKeys = [cartItemObjects allKeys];
+            NSArray *cartItemObjectsKeys = [[cartItemObjects allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
             if (VALID_NOTEMPTY(cartItemObjectsKeys, NSArray))
             {
-                NSMutableDictionary *cartItems = [[NSMutableDictionary alloc] init];
+                NSMutableArray *cartItems = [[NSMutableArray alloc] init];
                 for(NSString *cartItemObjectsKey in cartItemObjectsKeys)
                 {
                     RICartItem *cartItem = [RICartItem parseCartItemWithSimpleSku:cartItemObjectsKey info:[cartItemObjects objectForKey:cartItemObjectsKey] country:country];
-                    [cartItems setValue:cartItem forKey:cartItemObjectsKey];
+                    [cartItems addObject:cartItem];
                     
                     cartUnreducedValue += ([cartItem.price floatValue] * [cartItem.quantity integerValue]);
                     if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice floatValue] && [cartItem.price floatValue] != [cartItem.specialPrice floatValue])

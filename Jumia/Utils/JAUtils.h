@@ -11,8 +11,7 @@
 
 @interface JAUtils : NSObject
 
-+ (void) goToCheckout:(RICheckout*)checkout
-         inStoryboard:(UIStoryboard*)storyboard;
++ (void) goToCheckout:(RICheckout*)checkout;
 
 + (unsigned int)intFromHexString:(NSString *) hexStr;
 

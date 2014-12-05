@@ -7,10 +7,8 @@
 //
 
 #import "JACartViewController.h"
-#import "JALoginViewController.h"
 #import "JAAddressesViewController.h"
 #import "JACatalogListCell.h"
-#import "JAPDVViewController.h"
 #import "JAConstants.h"
 #import "JACartListHeaderView.h"
 #import "JAPriceView.h"
@@ -27,10 +25,23 @@
 @property (nonatomic, strong) NSString *voucherCode;
 @property (nonatomic, assign) CGRect keyboardFrame;
 @property (nonatomic, assign) BOOL firstLoading;
+@property (nonatomic, strong) JAPicker *picker;
+@property (nonatomic, assign) BOOL requestDone;
+@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic, assign) CGRect cartScrollViewInitialFrame;
 
 @end
 
 @implementation JACartViewController
+
+- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray *)objects
+{
+    [self setEmptyCartViewHidden:YES];
+    [self setCartViewHidden:YES];
+    self.requestDone = NO;
+    
+    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
+}
 
 - (void)viewDidLoad
 {
@@ -45,31 +56,28 @@
     self.view.backgroundColor = JABackgroundGrey;
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [center addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     
-    [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    [center addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
-    [self.emptyCartView setHidden:YES];
-    [self.emptyCartLabel setHidden:YES];
-    [self.continueShoppingButton setHidden:YES];
+    self.requestDone = NO;
     
-    self.cartScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height - 64.0f)];
+    self.cartScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.cartScrollView setBackgroundColor:JABackgroundGrey];
-    [self.cartScrollView setHidden:YES];
     [self.view addSubview:self.cartScrollView];
     
-    UICollectionViewFlowLayout* flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.minimumLineSpacing = 0;
-    flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    flowLayout.itemSize = CGSizeMake(self.view.frame.size.width, 90.0f);
-    [flowLayout setHeaderReferenceSize:CGSizeMake(308.0f, 26.0f)];
+    self.productsScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    [self.productsScrollView setBackgroundColor:JABackgroundGrey];
     
-    self.productCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(6.0f,
-                                                                                    6.0f,
-                                                                                    308.0f,
-                                                                                    0.0f) collectionViewLayout:flowLayout];
+    self.flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    self.flowLayout.minimumLineSpacing = 0;
+    self.flowLayout.minimumInteritemSpacing = 0;
+    self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    self.flowLayout.itemSize = CGSizeMake(self.view.frame.size.width, 90.0f);
+    [self.flowLayout setHeaderReferenceSize:CGSizeMake(self.view.frame.size.width - 12.0f, 26.0f)];
     
+    self.productCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
+    [self.productCollectionView setBackgroundColor:JABackgroundGrey];
     self.productCollectionView.layer.cornerRadius = 5.0f;
     
     UINib *cartListCellNib = [UINib nibWithNibName:@"JACartListCell" bundle:nil];
@@ -81,28 +89,103 @@
     [self.productCollectionView setDataSource:self];
     [self.productCollectionView setDelegate:self];
     
-    [self.cartScrollView addSubview:self.productCollectionView];
+    [self hideAllViews];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     [self continueLoading];
 }
 
-- (void)continueLoading
+- (void)setEmptyCartViewHidden:(BOOL)hidden
+{
+    [self.emptyCartView setHidden:hidden];
+    [self.emptyCartLabel setHidden:hidden];
+    [self.continueShoppingButton setHidden:hidden];
+}
+
+- (void)setCartViewHidden:(BOOL)hidden
+{
+    [self.cartScrollView setHidden:hidden];
+    [self.productCollectionView setHidden:hidden];
+    [self.productsScrollView setHidden:hidden];
+}
+
+- (void)hideAllViews
+{
+    [self setEmptyCartViewHidden:YES];
+    [self setCartViewHidden:YES];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self showLoading];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    if(self.requestDone)
+    {
+        [self loadCartInfo];
+    }
+    
+    [self hideLoading];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+- (void)continueLoading
+{
+    self.requestDone = NO;
+    
+    [self showLoading];
+    
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
+        self.requestDone = YES;
+        
         self.cart = cartData;
+        
+        NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cartData forKey:kUpdateCartNotificationValue];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
         
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
         NSMutableDictionary *trackingDictionary = nil;
         NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
         
-        NSArray *cartItemsKeys = [[self.cart cartItems] allKeys];
-        for (NSString *cartItemKey in cartItemsKeys)
-        {
-            RICartItem *cartItem = [[self.cart cartItems] objectForKey:cartItemKey];
-            
+        for (int i = 0; i < self.cart.cartItems.count; i++) {
+            RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
+
             trackingDictionary = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
+
+            NSString *discount = @"false";
+            NSNumber *price = cartItem.priceEuroConverted;
+            if (VALID_NOTEMPTY(cartItem.specialPriceEuroConverted, NSNumber) && [cartItem.specialPriceEuroConverted floatValue] > 0.0f)
+            {
+                discount = @"true";
+                price = cartItem.specialPriceEuroConverted;
+            }
+            
+            // Since we're sending the converted price, we have to send the currency as EUR.
+            // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
+            [viewCartTrackingProduct setValue:price forKey:kRIEventPriceKey];
+            [viewCartTrackingProduct setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
+            [viewCartTrackingProduct setValue:cartItem.sku forKey:kRIEventSkuKey];
+            [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
+
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
+            [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
+            [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
+            [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
+            
+            [viewCartTrackingProducts addObject:viewCartTrackingProduct];
+            
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
             NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
             if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
@@ -113,32 +196,11 @@
             [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
             [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-            [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
-            [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-            
-            NSString *discount = @"false";
-            NSString *price = [cartItem.price stringValue];
-            if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber))
-            {
-                discount = @"true";
-                price = [cartItem.specialPrice stringValue];
-            }
-            
-            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-            [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
-            [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
             [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
             [trackingDictionary setValue:[cartData.cartValue stringValue] forKey:kRIEventTotalCartKey];
-            
+
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
                                                       data:[trackingDictionary copy]];
-            
-            NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
-            [viewCartTrackingProduct setValue:cartItem.sku forKey:kRIEventSkuKey];
-            [viewCartTrackingProduct setValue:price forKey:kRIEventPriceKey];
-            [viewCartTrackingProduct setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-            [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
-            [viewCartTrackingProducts addObject:viewCartTrackingProduct];
         }
         
         trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -168,11 +230,13 @@
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
             self.firstLoading = NO;
         }
-
+        
         // notify the InAppNotification SDK that this the active view controller
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+        
+        self.requestDone = YES;
         
         if(self.firstLoading)
         {
@@ -210,11 +274,15 @@
 {
     if(0 == [[self.cart cartCount] integerValue])
     {
+        [self setCartViewHidden:YES];
         [self setupEmptyCart];
+        [self setEmptyCartViewHidden:NO];
     }
     else
     {
+        [self setEmptyCartViewHidden:YES];
         [self setupCart];
+        [self setCartViewHidden:NO];
     }
 }
 
@@ -223,12 +291,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
     
     self.screenName = @"CartEmpty";
-    
-    [self.emptyCartView setHidden:NO];
-    [self.emptyCartLabel setHidden:NO];
-    [self.continueShoppingButton setHidden:NO];
-    
-    [self.cartScrollView setHidden:YES];
     
     self.emptyCartView.layer.cornerRadius = 5.0f;
     [self.emptyCartLabel setText:STRING_NO_ITEMS_IN_CART];
@@ -244,17 +306,69 @@
 
 -(void)setupCart
 {
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat verticalMargin = 6.0f;
+    CGFloat headerSize = 26.0f;
+    CGFloat itemSize = 90.0f;
+    
     self.screenName = @"CartWithItems";
     
-    [self.emptyCartView setHidden:YES];
-    [self.emptyCartLabel setHidden:YES];
-    [self.continueShoppingButton setHidden:YES];
+    CGFloat viewsWidth = self.view.frame.size.width - (2 * horizontalMargin);
+    CGFloat originY = 6.0f;
+    
+    [self.productCollectionView removeFromSuperview];
+    [self.productsScrollView removeFromSuperview];
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        viewsWidth = (self.view.frame.size.width - (3 * horizontalMargin)) / 2;
+        
+        self.flowLayout.itemSize = CGSizeMake(viewsWidth, itemSize);
+        [self.flowLayout setHeaderReferenceSize:CGSizeMake(viewsWidth, headerSize)];
+        
+        [self.productsScrollView setFrame:CGRectMake(horizontalMargin,
+                                                     0.0f,
+                                                     viewsWidth,
+                                                     self.view.frame.size.height)];
+        [self.view addSubview:self.productsScrollView];
+        
+        [self.cartScrollView setFrame:CGRectMake(CGRectGetMaxX(self.productsScrollView.frame) + 6.0f,
+                                                 0.0f,
+                                                 viewsWidth,
+                                                 self.view.frame.size.height)];
+        
+        [self.productsScrollView addSubview:self.productCollectionView];
+        [self.productCollectionView setFrame:CGRectMake(0.0f,
+                                                        verticalMargin,
+                                                        self.productsScrollView.frame.size.width,
+                                                        ([self.cart.cartItems count] * itemSize) + headerSize)];
+        [self.productCollectionView reloadData];
+        [self.productsScrollView setContentSize:CGSizeMake(self.productsScrollView.frame.size.width,
+                                                           self.productCollectionView.frame.size.height + (2 * verticalMargin))];
+        
+    }
+    else
+    {
+        self.flowLayout.itemSize = CGSizeMake(viewsWidth, itemSize);
+        [self.flowLayout setHeaderReferenceSize:CGSizeMake(viewsWidth, headerSize)];
+        
+        [self.cartScrollView setFrame:CGRectMake(6.0f,
+                                                 0.0f,
+                                                 viewsWidth,
+                                                 self.view.frame.size.height)];
+        
+        [self.cartScrollView addSubview:self.productCollectionView];
+        [self.productCollectionView setFrame:CGRectMake(0.0f,
+                                                        6.0f,
+                                                        self.cartScrollView.frame.size.width,
+                                                        ([self.cart.cartItems count] * itemSize) + headerSize)];
+        [self.productCollectionView reloadData];
+        
+        originY = CGRectGetMaxY(self.productCollectionView.frame) + 3.0f;
+    }
     
     [self.cartScrollView setHidden:NO];
-    
-    NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
-    [self.productCollectionView setFrame:CGRectMake(6.0f, 6.0f, 308.0f, ([cartItemsKeys count] * 90.0f) + 26.0f)];
-    [self.productCollectionView reloadData];
+    self.cartScrollViewInitialFrame = self.cartScrollView.frame;
     
     // coupon
     if(VALID_NOTEMPTY(self.couponView, UIView))
@@ -262,28 +376,23 @@
         [self.couponView removeFromSuperview];
     }
     
-    self.couponView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, CGRectGetMaxY(self.productCollectionView.frame) + 3.0f, 308.0f, 86.0f)];
+    self.couponView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                               originY,
+                                                               self.cartScrollView.frame.size.width,
+                                                               86.0f)];
     [self.couponView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.couponView.layer.cornerRadius = 5.0f;
     
-    self.couponTitle = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, 280.0f, 25.0f)];
+    self.couponTitle = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 26.0f)];
     [self.couponTitle setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.couponTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.couponTitle setText:STRING_COUPON];
     [self.couponTitle setBackgroundColor:[UIColor clearColor]];
     [self.couponView addSubview:self.couponTitle];
     
-    self.couponTitleSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.couponTitle.frame), 308.0f, 1.0f)];
+    self.couponTitleSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.couponTitle.frame), self.cartScrollView.frame.size.width, 1.0f)];
     [self.couponTitleSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.couponView addSubview:self.couponTitleSeparator];
-    
-    self.couponTextField = [[UITextField alloc] initWithFrame:CGRectMake(6.0f, CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f, 240.0f, 30.0f)];
-    [self.couponTextField setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
-    [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-    [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
-    [self.couponTextField setDelegate:self];
-    [self.couponView addSubview:self.couponTextField];
     
     self.useCouponButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *useCouponImageNormal = [UIImage imageNamed:@"useCoupon_normal"];
@@ -294,8 +403,26 @@
     [self.useCouponButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
     [self.useCouponButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.useCouponButton addTarget:self action:@selector(useCouponButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.useCouponButton setFrame:CGRectMake(CGRectGetMaxX(self.couponTextField.frame) + 5.0f, CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f, useCouponImageNormal.size.width, useCouponImageNormal.size.height)];
+    [self.useCouponButton setFrame:CGRectMake(self.couponView.frame.size.width - useCouponImageNormal.size.width - 6.0f,
+                                              CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
+                                              useCouponImageNormal.size.width,
+                                              useCouponImageNormal.size.height)];
     [self.couponView addSubview:self.useCouponButton];
+    
+    // To the left margin of the coupon button we need to remove the left margin of the textfield (6.0f)
+    // and the margin between the text field and the button (6.0f)
+    CGFloat textFieldWidth = CGRectGetMinX(self.useCouponButton.frame) - 12.0f;
+    self.couponTextField = [[UITextField alloc] initWithFrame:CGRectMake(6.0f,
+                                                                         CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
+                                                                         textFieldWidth,
+                                                                         30.0f)];
+    [self.couponTextField setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
+    [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
+    [self.couponTextField setDelegate:self];
+    [self.couponView addSubview:self.couponTextField];
+    
     
     [self.cartScrollView addSubview:self.couponView];
     
@@ -321,19 +448,24 @@
     {
         [self.subtotalView removeFromSuperview];
     }
+    
+    // Remove left and right margins, plus extra 12.0f so that we have a margin between the fields.
+    // The division by 2 is because we have 2 fields in each line.
+    CGFloat subTotalFieldsWidth = (self.cartScrollView.frame.size.width - (2 * horizontalMargin) - 12.0f) / 2;
+    
     // subtotal
-    self.subtotalView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, CGRectGetMaxY(self.couponView.frame) + 3.0f, 308.0f, 0.0f)];
+    self.subtotalView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.couponView.frame) + 3.0f, self.cartScrollView.frame.size.width, 0.0f)];
     [self.subtotalView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.subtotalView.layer.cornerRadius = 5.0f;
     
-    self.subtotalTitle = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, 280.0f, 25.0f)];
+    self.subtotalTitle = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 26.0f)];
     [self.subtotalTitle setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
     [self.subtotalTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.subtotalTitle setText:STRING_SUBTOTAL];
     [self.subtotalTitle setBackgroundColor:[UIColor clearColor]];
     [self.subtotalView addSubview:self.subtotalTitle];
     
-    self.subtotalTitleSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.subtotalTitle.frame), 308.0f, 1.0f)];
+    self.subtotalTitleSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.subtotalTitle.frame), self.cartScrollView.frame.size.width, 1.0f)];
     [self.subtotalTitleSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.subtotalView addSubview:self.subtotalTitleSeparator];
     
@@ -351,7 +483,7 @@
         [self.articlesCount setText:[NSString stringWithFormat:STRING_ARTICLES, cartCount]];
     }
     [self.articlesCount sizeToFit];
-    [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, 140.0f, self.articlesCount.frame.size.height)];
+    [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, subTotalFieldsWidth, self.articlesCount.frame.size.height)];
     [self.subtotalView addSubview:self.articlesCount];
     
     self.totalPriceView = [[JAPriceView alloc] init];
@@ -609,44 +741,78 @@
     [self.subtotalView addSubview:self.totalLabel];
     [self.subtotalView addSubview:self.totalValue];
     
-    [self.subtotalView setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.couponView.frame) + 3.0f, 308.0f, CGRectGetMaxY(self.totalValue.frame) + 10.0f)];
+    [self.subtotalView setFrame:CGRectMake(0.0f,
+                                           CGRectGetMaxY(self.couponView.frame) + 3.0f,
+                                           self.cartScrollView.frame.size.width,
+                                           CGRectGetMaxY(self.totalValue.frame) + 10.0f)];
     [self.cartScrollView addSubview:self.subtotalView];
     
     if(VALID_NOTEMPTY(self.checkoutButton, UIButton))
     {
         [self.checkoutButton removeFromSuperview];
     }
+    
+    NSString *greyButtonName = @"greyBig_%@";
+    NSString *orangeButtonName = @"orangeBig_%@";
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        {
+            orangeButtonName = @"orangeHalfLandscape_%@";
+            greyButtonName = @"greyHalfLandscape_%@";
+        }
+        else
+        {
+            orangeButtonName = @"orangeFullPortrait_%@";
+            greyButtonName = @"greyFullPortrait_%@";
+        }
+    }
+    
     self.checkoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *checkoutButtonImageNormal = [UIImage imageNamed:@"orangeBig_normal"];
+    UIImage *checkoutButtonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]];
     [self.checkoutButton setBackgroundImage:checkoutButtonImageNormal forState:UIControlStateNormal];
-    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
-    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
-    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
+    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
+    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateSelected];
+    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"disabled"]] forState:UIControlStateDisabled];
     [self.checkoutButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.checkoutButton setTitle:STRING_PROCEED_TO_CHECKOUT forState:UIControlStateNormal];
     [self.checkoutButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.checkoutButton addTarget:self action:@selector(checkoutButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.checkoutButton setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalView.frame) + 6.0f, checkoutButtonImageNormal.size.width, checkoutButtonImageNormal.size.height)];
+    [self.checkoutButton setFrame:CGRectMake(0.0f,
+                                             CGRectGetMaxY(self.subtotalView.frame) + 6.0f,
+                                             checkoutButtonImageNormal.size.width,
+                                             checkoutButtonImageNormal.size.height)];
     [self.cartScrollView addSubview:self.checkoutButton];
     
-    if(VALID_NOTEMPTY(self.callToOrderButton, UIButton))
-    {
-        [self.callToOrderButton removeFromSuperview];
-    }
-    self.callToOrderButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *callToOrderButtonImageNormal = [UIImage imageNamed:@"grayBig_normal"];
-    [self.callToOrderButton setBackgroundImage:callToOrderButtonImageNormal forState:UIControlStateNormal];
-    [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"] forState:UIControlStateHighlighted];
-    [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"] forState:UIControlStateSelected];
-    [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:@"grayBig_disabled"] forState:UIControlStateDisabled];
-    [self.callToOrderButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
-    [self.callToOrderButton setTitle:STRING_CALL_TO_ORDER forState:UIControlStateNormal];
-    [self.callToOrderButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.callToOrderButton addTarget:self action:@selector(callToOrderButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.callToOrderButton setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.checkoutButton.frame) + 6.0f, callToOrderButtonImageNormal.size.width, callToOrderButtonImageNormal.size.height)];
-    [self.cartScrollView addSubview:self.callToOrderButton];
+    [self.cartScrollView setContentSize:CGSizeMake(self.cartScrollView.frame.size.width,
+                                                   self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.checkoutButton.frame) + 6.0f)];
     
-    [self.cartScrollView setContentSize:CGSizeMake(308.0f, self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.callToOrderButton.frame) + 6.0f)];
+    UIDevice *device = [UIDevice currentDevice];
+    if ([@"iPhone" isEqualToString:[device model]])
+    {
+        if(VALID_NOTEMPTY(self.callToOrderButton, UIButton))
+        {
+            [self.callToOrderButton removeFromSuperview];
+        }
+        self.callToOrderButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *callToOrderButtonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"normal"]];
+        [self.callToOrderButton setBackgroundImage:callToOrderButtonImageNormal forState:UIControlStateNormal];
+        [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
+        [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]] forState:UIControlStateSelected];
+        [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"disabled"]] forState:UIControlStateDisabled];
+        [self.callToOrderButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        [self.callToOrderButton setTitle:STRING_CALL_TO_ORDER forState:UIControlStateNormal];
+        [self.callToOrderButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+        [self.callToOrderButton addTarget:self action:@selector(callToOrderButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.callToOrderButton setFrame:CGRectMake(0.0f,
+                                                    CGRectGetMaxY(self.checkoutButton.frame) + 6.0f,
+                                                    callToOrderButtonImageNormal.size.width,
+                                                    callToOrderButtonImageNormal.size.height)];
+        [self.cartScrollView addSubview:self.callToOrderButton];
+        
+        [self.cartScrollView setContentSize:CGSizeMake(self.cartScrollView.frame.size.width,
+                                                       self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.callToOrderButton.frame) + 6.0f)];
+    }
 }
 
 -(void)goToHomeScreen
@@ -664,11 +830,9 @@
 
 - (void)removeFromCartPressed:(UIButton*)button
 {
-    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSDictionary))
+    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSArray))
     {
-        NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
-        NSString *key = [cartItemsKeys objectAtIndex:button.tag];
-        RICartItem *product = [self.cart.cartItems objectForKey:key];
+        RICartItem *product = [self.cart.cartItems objectAtIndex:button.tag];
         NSNumber *cartValue = self.cart.cartValue;
         [self showLoading];
         [RICart removeProductWithQuantity:[product.quantity stringValue]
@@ -683,14 +847,15 @@
                              NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                              [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
                              
-                             NSNumber *price = (VALID_NOTEMPTY(product.specialPrice, NSNumber)  && [product.specialPrice floatValue] > 0.0f) ? product.specialPrice : product.price;
-                             [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
+                             // Since we're sending the converted price, we have to send the currency as EUR.
+                             // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
+                             NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
+                             [trackingDictionary setValue:price forKey:kRIEventPriceKey];
+                             [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                              
                              [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
-                             [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
                              [trackingDictionary setValue:[product.quantity stringValue] forKey:kRIEventQuantityKey];
                              [trackingDictionary setValue:cartValue forKey:kRIEventTotalCartKey];
-                             
                              
                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
                                                                        data:[trackingDictionary copy]];
@@ -709,11 +874,9 @@
 
 - (void)quantityPressed:(UIButton*)button
 {
-    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSDictionary))
+    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSArray))
     {
-        NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
-        NSString *key = [cartItemsKeys objectAtIndex:button.tag];
-        self.currentItem = [self.cart.cartItems objectForKey:key];
+        self.currentItem = [self.cart.cartItems objectAtIndex:button.tag];
         
         [self setupPickerView];
     }
@@ -721,137 +884,44 @@
 
 - (void)setupPickerView
 {
-    self.quantityPickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                                 0.0f,
-                                                                                 self.view.frame.size.width,
-                                                                                 self.view.frame.size.height)];
-    [self.quantityPickerBackgroundView setBackgroundColor:[UIColor clearColor]];
-    
-    UITapGestureRecognizer *removePickerViewTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(removePickerView)];
-    [self.quantityPickerBackgroundView addGestureRecognizer:removePickerViewTap];
-    
-    self.quantityPicker = [[UIPickerView alloc] init];
-    [self.quantityPicker setFrame:CGRectMake(self.quantityPickerBackgroundView.frame.origin.x,
-                                             CGRectGetMaxY(self.quantityPickerBackgroundView.frame) - self.quantityPicker.frame.size.height,
-                                             self.quantityPicker.frame.size.width,
-                                             self.quantityPicker.frame.size.height)];
-    [self.quantityPicker setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.quantityPicker setAlpha:0.9];
-    [self.quantityPicker setShowsSelectionIndicator:YES];
-    [self.quantityPicker setDataSource:self];
-    [self.quantityPicker setDelegate:self];
-    
-    self.quantityPickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [self.quantityPickerToolbar setTranslucent:NO];
-    [self.quantityPickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.quantityPickerToolbar setAlpha:0.9];
-    [self.quantityPickerToolbar setFrame:CGRectMake(0.0f,
-                                                    CGRectGetMinY(self.quantityPicker.frame) - self.quantityPickerToolbar.frame.size.height,
-                                                    self.quantityPickerToolbar.frame.size.width,
-                                                    self.quantityPickerToolbar.frame.size.height)];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
-    [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-    [button setTitle:STRING_DONE forState:UIControlStateNormal];
-    [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-    [button addTarget:self action:@selector(selectQuantity:) forControlEvents:UIControlEventTouchUpInside];
-    [button sizeToFit];
-    
-    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    [self.quantityPickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
-    
-    [self.quantityPicker selectRow:([[self.currentItem quantity] integerValue] - 1) inComponent:0 animated:NO];
-    [self.quantityPickerBackgroundView addSubview:self.quantityPicker];
-    [self.quantityPickerBackgroundView addSubview:self.quantityPickerToolbar];
-    [self.view addSubview:self.quantityPickerBackgroundView];
-}
-
-- (void)selectQuantity:(UIButton*)sender
-{
-    NSInteger newQuantity = [self.quantityPicker selectedRowInComponent:0] + 1;
-    if(newQuantity != [[self.currentItem quantity] integerValue])
+    if(VALID(self.picker, JAPicker))
     {
-        [self showLoading];
-        
-        NSNumber *event = [NSNumber numberWithInt:RIEventDecreaseQuantity];
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        
-        NSNumber *price = VALID_NOTEMPTY(self.currentItem.specialPrice, NSNumber) ? self.currentItem.specialPrice : self.currentItem.price;
-        [trackingDictionary setValue:[price stringValue] forKey:kRIEventPriceKey];
-
-        [trackingDictionary setValue:self.currentItem.sku forKey:kRIEventSkuKey];
-        [trackingDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-        NSString *discountPercentage = @"0";
-        if(VALID_NOTEMPTY(self.currentItem.savingPercentage, NSNumber))
-        {
-            discountPercentage = [self.currentItem.savingPercentage stringValue];
-        }
-        [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
-        [trackingDictionary setValue:@"Cart" forKey:kRIEventLocationKey];
-        [trackingDictionary setValue:self.cart.cartValue  forKey:kRIEventTotalCartKey];
-        
-        NSInteger quantity = 0;
-        if(newQuantity > [[self.currentItem quantity] integerValue])
-        {
-            quantity = newQuantity - [[self.currentItem quantity] integerValue];
-            event = [NSNumber numberWithInt:RIEventIncreaseQuantity];
-        }
-        else
-        {
-            quantity = [[self.currentItem quantity] integerValue] - newQuantity;
-        }
-        [trackingDictionary setValue:[NSString stringWithFormat:@"%d", quantity] forKey:kRIEventQuantityKey];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:event
-                                                  data:[trackingDictionary copy]];
-        
-        
-        NSMutableDictionary *quantitiesToChange = [[NSMutableDictionary alloc] init];
-        NSArray *cartItemsKeys = [[self.cart cartItems] allKeys];
-        for (NSString *cartItemKey in cartItemsKeys)
-        {
-            RICartItem *cartItem = [[self.cart cartItems] objectForKey:cartItemKey];
-            [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", [[cartItem quantity] integerValue]] forKey:[NSString stringWithFormat:@"qty_%@", cartItemKey]];
-        }
-        
-        [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", newQuantity] forKey:[NSString stringWithFormat:@"qty_%@", [self.currentItem simpleSku]]];
-        
-        [RICart changeQuantityInProducts:quantitiesToChange
-                        withSuccessBlock:^(RICart *cart) {
-                            self.cart = cart;
-                            
-                            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-                            
-                            [self removePickerView];
-                            [self setupCart];
-                            [self hideLoading];
-                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                            [self removePickerView];
-                            [self hideLoading];
-                            
-                            [self showMessage:STRING_ERROR_CHANGING_QUANTITY success:NO];
-                        }];
+        [self.picker removeFromSuperview];
     }
-    else
-    {
-        [self removePickerView];
-    }
-}
-
-- (void)removePickerView
-{
-    [self.quantityPicker removeFromSuperview];
-    self.quantityPicker = nil;
     
-    [self.quantityPickerBackgroundView removeFromSuperview];
-    self.quantityPickerBackgroundView = nil;
+    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    [self.picker setDelegate:self];
+    
+    NSMutableArray *dataSource = [NSMutableArray new];
+    if(VALID_NOTEMPTY([self.currentItem maxQuantity], NSNumber) && 0 < [[self.currentItem maxQuantity] integerValue])
+    {
+        for (int i = 0; i < [[self.currentItem maxQuantity] integerValue]; i++)
+        {
+            [dataSource addObject:[NSString stringWithFormat:@"%d", (i + 1)]];
+        }
+    }
+    
+    NSString *selectedItem = [NSString stringWithFormat:@"%d", ([[self.currentItem quantity] integerValue] )];
+    
+    [self.picker setDataSourceArray:[dataSource copy]
+                       previousText:selectedItem];
+    
+    CGFloat pickerViewHeight = self.view.frame.size.height;
+    CGFloat pickerViewWidth = self.view.frame.size.width;
+    [self.picker setFrame:CGRectMake(0.0f,
+                                     pickerViewHeight,
+                                     pickerViewWidth,
+                                     pickerViewHeight)];
+    [self.view addSubview:self.picker];
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         [self.picker setFrame:CGRectMake(0.0f,
+                                                          0.0f,
+                                                          pickerViewWidth,
+                                                          pickerViewHeight)];
+                     }];
+    
 }
 
 - (void)useCouponButtonPressed
@@ -940,11 +1010,7 @@
             
             [self hideLoading];
             
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
-                                                                object:nil
-                                                              userInfo:userInfo];
+            [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
         }];
     }
     else
@@ -958,22 +1024,18 @@
 - (void)callToOrderButtonPressed
 {
     [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-        UIDevice *device = [UIDevice currentDevice];
-        if ([[device model] isEqualToString:@"iPhone"] )
-        {
-            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
-                                                      data:[trackingDictionary copy]];
-            
-            NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-        }
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
+                                                  data:[trackingDictionary copy]];
+        
+        NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
     }];
 }
@@ -989,7 +1051,7 @@
     NSInteger numberOfItemsInSection = 0;
     if(VALID_NOTEMPTY(self.cart, RICart))
     {
-        numberOfItemsInSection = [self.cart.cartItems allKeys].count;
+        numberOfItemsInSection = self.cart.cartItems.count;
     }
     
     return numberOfItemsInSection;
@@ -998,11 +1060,9 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JACatalogListCell *cell = nil;
-    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSDictionary) && indexPath.row < [self.cart.cartCount integerValue])
+    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSArray) && indexPath.row < [self.cart.cartCount integerValue])
     {
-        NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
-        NSString *key = [cartItemsKeys objectAtIndex:indexPath.row];
-        RICartItem *product = [self.cart.cartItems objectForKey:key];
+        RICartItem *product = [self.cart.cartItems objectAtIndex:indexPath.row];
         
         NSString *cellIdentifier = @"cartListCell";
         
@@ -1047,7 +1107,7 @@
     if (kind == UICollectionElementKindSectionHeader) {
         JACartListHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader" forIndexPath:indexPath];
         
-        [headerView loadHeaderWithText:@"Items"];
+        [headerView loadHeaderWithText:@"Items" width:self.productCollectionView.frame.size.width];
         
         reusableview = headerView;
     }
@@ -1058,19 +1118,15 @@
 #pragma mark UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSDictionary) && indexPath.row < [self.cart.cartCount integerValue])
+    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSArray) && indexPath.row < [self.cart.cartCount integerValue])
     {
-        NSArray *cartItemsKeys = [self.cart.cartItems allKeys];
-        NSString *key = [cartItemsKeys objectAtIndex:indexPath.row];
-        RICartItem *product = [self.cart.cartItems objectForKey:key];
+        RICartItem *product = [self.cart.cartItems objectAtIndex:indexPath.row];
         
-        JAPDVViewController *pdv = [self.storyboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
-        pdv.productUrl = product.productUrl;
-        pdv.fromCatalogue = NO;
-        pdv.previousCategory = STRING_CART;
-        
-        [self.navigationController pushViewController:pdv
-                                             animated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                            object:nil
+                                                          userInfo:@{ @"url" : product.productUrl,
+                                                                      @"previousCategory" : STRING_CART,
+                                                                      @"show_back_button" : [NSNumber numberWithBool:NO]}];
     }
 }
 
@@ -1083,7 +1139,7 @@
     {
         [self.useCouponButton setEnabled:NO];
     }
-    else
+    else if(VALID_NOTEMPTY(textField.text, NSString))
     {
         [self.useCouponButton setEnabled:YES];
     }
@@ -1094,6 +1150,122 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.couponTextField resignFirstResponder];
+    
+    if(VALID_NOTEMPTY([self.couponTextField text], NSString))
+    {
+        [self useCouponButtonPressed];
+        [self.useCouponButton setEnabled:YES];
+    }
+    else
+    {
+        [self.useCouponButton setEnabled:NO];
+    }
+    
+    return YES;
+}
+
+#pragma mark JAPickerDelegate
+- (void)selectedRow:(NSInteger)selectedRow
+{
+    NSInteger newQuantity = selectedRow + 1;
+    if(newQuantity != [[self.currentItem quantity] integerValue])
+    {
+        [self showLoading];
+        
+        NSNumber *event = [NSNumber numberWithInt:RIEventDecreaseQuantity];
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        
+        // Since we're sending the converted price, we have to send the currency as EUR.
+        // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
+        NSNumber *price = (VALID_NOTEMPTY(self.currentItem.specialPriceEuroConverted, NSNumber) && [self.currentItem.specialPriceEuroConverted floatValue] > 0.0f) ? self.currentItem.specialPriceEuroConverted : self.currentItem.priceEuroConverted;
+        [trackingDictionary setValue:price forKey:kRIEventPriceKey];
+        [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
+        
+        [trackingDictionary setValue:self.currentItem.sku forKey:kRIEventSkuKey];
+        NSString *discountPercentage = @"0";
+        if(VALID_NOTEMPTY(self.currentItem.savingPercentage, NSNumber))
+        {
+            discountPercentage = [self.currentItem.savingPercentage stringValue];
+        }
+        [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
+        [trackingDictionary setValue:@"Cart" forKey:kRIEventLocationKey];
+        [trackingDictionary setValue:self.cart.cartValue  forKey:kRIEventTotalCartKey];
+        
+        NSInteger quantity = 0;
+        if(newQuantity > [[self.currentItem quantity] integerValue])
+        {
+            quantity = newQuantity - [[self.currentItem quantity] integerValue];
+            event = [NSNumber numberWithInt:RIEventIncreaseQuantity];
+        }
+        else
+        {
+            quantity = [[self.currentItem quantity] integerValue] - newQuantity;
+        }
+        [trackingDictionary setValue:[NSString stringWithFormat:@"%d", quantity] forKey:kRIEventQuantityKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:event
+                                                  data:[trackingDictionary copy]];
+        
+        
+        NSMutableDictionary *quantitiesToChange = [[NSMutableDictionary alloc] init];
+        for (int i = 0; i < self.cart.cartItems.count; i++) {
+            RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
+            [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", [[cartItem quantity] integerValue]] forKey:[NSString stringWithFormat:@"qty_%@", cartItem.simpleSku]];
+        }
+        
+        [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", newQuantity] forKey:[NSString stringWithFormat:@"qty_%@", [self.currentItem simpleSku]]];
+        
+        [RICart changeQuantityInProducts:quantitiesToChange
+                        withSuccessBlock:^(RICart *cart) {
+                            self.cart = cart;
+                            
+                            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                            
+                            [self closePicker];
+                            [self setupCart];
+                            [self hideLoading];
+                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                            [self closePicker];
+                            [self hideLoading];
+                            
+                            [self showMessage:STRING_ERROR_CHANGING_QUANTITY success:NO];
+                        }];
+    }
+    else
+    {
+        [self closePicker];
+    }
+    
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [self.picker removeFromSuperview];
+                         self.picker = nil;
+                     }];
+}
+
+- (void)closePicker
+{
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [self.picker removeFromSuperview];
+                         self.picker = nil;
+                     }];
 }
 
 #pragma mark UIPickerViewDataSource
@@ -1123,32 +1295,30 @@
 
 #pragma mark Observers
 
-- (void)keyboardDidShow:(NSNotification*)notification
+- (void)keyboardWillShow:(NSNotification*)notification
 {
-    NSDictionary *info = notification.userInfo;
-    NSValue *value = info[UIKeyboardFrameEndUserInfoKey];
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    CGRect rawFrame = [value CGRectValue];
-    self.keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
+    CGFloat height = kbSize.height;
+    if(self.view.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
     
-    [self.cartScrollView setFrame:CGRectMake(self.cartScrollView.frame.origin.x,
-                                             self.cartScrollView.frame.origin.y,
-                                             self.cartScrollView.frame.size.width,
-                                             self.cartScrollView.frame.size.height - self.keyboardFrame.size.height)];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.cartScrollView setFrame:CGRectMake(self.cartScrollViewInitialFrame.origin.x,
+                                                 self.cartScrollViewInitialFrame.origin.y,
+                                                 self.cartScrollViewInitialFrame.size.width,
+                                                 self.cartScrollViewInitialFrame.size.height - height)];
+    }];
 }
 
-- (void)keyboardDidHide:(NSNotification*)notification
+- (void)keyboardWillHide:(NSNotification*)notification
 {
-    NSDictionary *info = notification.userInfo;
-    NSValue *value = info[UIKeyboardFrameEndUserInfoKey];
-    
-    CGRect rawFrame = [value CGRectValue];
-    CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
-    
-    [self.cartScrollView setFrame:CGRectMake(self.cartScrollView.frame.origin.x,
-                                             self.cartScrollView.frame.origin.y,
-                                             self.cartScrollView.frame.size.width,
-                                             self.cartScrollView.frame.size.height + keyboardFrame.size.height)];;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.cartScrollView setFrame:self.cartScrollViewInitialFrame];
+    }];
 }
 
 @end

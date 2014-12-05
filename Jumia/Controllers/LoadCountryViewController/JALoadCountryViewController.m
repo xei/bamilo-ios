@@ -18,6 +18,12 @@
 @property (assign, nonatomic) NSInteger requestCount;
 @property (assign, nonatomic) NSInteger configurationRequestCount;
 @property (strong, nonatomic) RICustomer *customer;
+@property (strong, nonatomic) NSString *loginMethod;
+@property (strong, nonatomic) NSString *countriesRequestId;
+@property (strong, nonatomic) NSString *apiRequestId;
+@property (strong, nonatomic) NSString *cartRequestId;
+@property (strong, nonatomic) NSString *customerRequestId;
+@property (assign, nonatomic) BOOL isRequestDone;
 
 @end
 
@@ -39,57 +45,6 @@
     
     // Do any additional setup after loading the view.
     self.screenName = @"SplashScreen";
-    
-    if(VALID_NOTEMPTY(self.pushNotification, NSDictionary))
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                            object:nil];
-        
-        if (VALID_NOTEMPTY([self.pushNotification objectForKey:@"u"], NSString))
-        {
-            NSString *urlString = [self.pushNotification objectForKey:@"u"];
-            
-            // Check if the country is the same
-            NSString *currentCountry = [RIApi getCountryIsoInUse];
-            NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
-            
-            if([currentCountry isEqualToString:countryFromUrl])
-            {
-                [self continueProcessing];
-            }
-            else
-            {
-                // Change country
-                [RICountry getCountriesWithSuccessBlock:^(id countries)
-                 {
-                     for (RICountry *country in countries)
-                     {
-                         if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
-                         {
-                             self.selectedCountry = country;
-                             [self continueProcessing];
-                         }
-                     }
-                     
-                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-                 {
-                     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-                 }];
-            }
-        }
-        else
-        {
-            if(VALID_NOTEMPTY(self.pushNotification, NSDictionary) && VALID_NOTEMPTY([self.pushNotification objectForKey:@"UTM"], NSString))
-            {
-                [[RITrackingWrapper sharedInstance] trackCampaignWithName:[self.pushNotification objectForKey:@"UTM"]];
-            }
-        }
-
-    }
-    else
-    {
-        [self continueProcessing];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -97,11 +52,95 @@
     [super viewWillAppear:animated];
     
     self.isPopupOpened = NO;
+    
+    if(!self.isRequestDone)
+    {
+        if(VALID_NOTEMPTY(self.pushNotification, NSDictionary))
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                                object:nil];
+            
+            if (VALID_NOTEMPTY([self.pushNotification objectForKey:@"u"], NSString))
+            {
+                NSString *urlString = [self.pushNotification objectForKey:@"u"];
+                
+                // Check if the country is the same
+                NSString *currentCountry = [RIApi getCountryIsoInUse];
+                NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
+                if([currentCountry isEqualToString:countryFromUrl])
+                {
+                    [self continueProcessing];
+                }
+                else
+                {
+                    // Change country
+                    self.countriesRequestId = [RICountry getCountriesWithSuccessBlock:^(id countries)
+                                               {
+                                                   for (RICountry *country in countries)
+                                                   {
+                                                       if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
+                                                       {
+                                                           self.selectedCountry = country;
+                                                           
+                                                           [self continueProcessing];
+                                                       }
+                                                   }
+                                                   
+                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+                                               {
+                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                                               }];
+                }
+            }
+            else
+            {
+                if(VALID_NOTEMPTY(self.pushNotification, NSDictionary) && VALID_NOTEMPTY([self.pushNotification objectForKey:@"UTM"], NSString))
+                {
+                    [[RITrackingWrapper sharedInstance] trackCampaignWithName:[self.pushNotification objectForKey:@"UTM"]];
+                }
+            }
+        }
+        else
+        {
+            [self continueProcessing];
+        }
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    if(VALID_NOTEMPTY(self.countriesRequestId, NSString))
+    {
+        [RICountry cancelRequest:self.countriesRequestId];
+        self.countriesRequestId = nil;
+    }
+    
+    if(VALID_NOTEMPTY(self.apiRequestId, NSString))
+    {
+        [RIApi cancelRequest:self.apiRequestId];
+        self.apiRequestId = nil;
+    }
+    
+    if(VALID_NOTEMPTY(self.cartRequestId, NSString))
+    {
+        [RICart cancelRequest:self.cartRequestId];
+        self.cartRequestId = nil;
+    }
+    
+    if(VALID_NOTEMPTY(self.customerRequestId, NSString))
+    {
+        [RICustomer cancelRequest:self.customerRequestId];
+        self.customerRequestId = nil;
+    }
+    
+    [self hideLoading];
 }
 
 - (void)continueProcessing
 {
     [self showLoading];
+    
+    self.isRequestDone = NO;
     
     self.requestCount = 0;
     
@@ -112,54 +151,56 @@
     {
         [RICommunicationWrapper deleteSessionCookie];
     }
-    
-    [RIApi startApiWithCountry:self.selectedCountry
-                  successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory)
-     {         
-         if(hasUpdate)
-         {
-             self.isPopupOpened = YES;
-             if(isUpdateMandatory)
-             {
-                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:STRING_UPDATE_NECESSARY_MESSAGE delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
-                 [alert setTag:kForceUpdateAlertViewTag];
-                 [alert show];
-                 
-                 [self hideLoading];
-             }
-             else
-             {
-                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:STRING_UPDATE_AVAILABLE_MESSAGE delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
-                 [alert setTag:kUpdateAvailableAlertViewTag];
-                 [alert show];
-             }
-         }
-         else
-         {
-             if (0 >= self.requestCount)
-             {
-                 [self getConfigurations];
-             }
-         }
-     }
-               andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage)
-     {
-         if(RIApiResponseMaintenancePage == apiResponse)
-         {
-             [self showMaintenancePage:@selector(continueProcessing) objects:nil];
-         }
-         else
-         {
-             BOOL noInternet = NO;
-             if(RIApiResponseNoInternetConnection == apiResponse)
-             {
-                 noInternet = YES;
-             }
-             
-             [self showErrorView:noInternet startingY:0.0f selector:@selector(continueProcessing) objects:nil];
-         }
-         [self hideLoading];
-     }];
+    self.apiRequestId = [RIApi startApiWithCountry:self.selectedCountry
+                                      successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory)
+                         {
+                             if(hasUpdate)
+                             {
+                                 self.isPopupOpened = YES;
+                                 self.isRequestDone = YES;
+                                 if(isUpdateMandatory)
+                                 {
+                                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:STRING_UPDATE_NECESSARY_MESSAGE delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
+                                     [alert setTag:kForceUpdateAlertViewTag];
+                                     [alert show];
+                                     [self hideLoading];
+                                 }
+                                 else
+                                 {
+                                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:STRING_UPDATE_AVAILABLE_MESSAGE delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
+                                     [alert setTag:kUpdateAvailableAlertViewTag];
+                                     [alert show];
+                                     
+                                     [self hideLoading];
+                                 }
+                             }
+                             else
+                             {
+                                 if (0 >= self.requestCount)
+                                 {
+                                     [self getConfigurations];
+                                 }
+                             }
+                         }
+                                   andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage)
+                         {
+                             self.isRequestDone=YES;
+                             if(RIApiResponseMaintenancePage == apiResponse)
+                             {
+                                 [self showMaintenancePage:@selector(continueProcessing) objects:nil];
+                             }
+                             else
+                             {
+                                 BOOL noInternet = NO;
+                                 if(RIApiResponseNoInternetConnection == apiResponse)
+                                 {
+                                     noInternet = YES;
+                                 }
+                                 
+                                 [self showErrorView:noInternet startingY:0.0f selector:@selector(continueProcessing) objects:nil];
+                             }
+                             [self hideLoading];
+                         }];
 }
 
 - (void)incrementRequestCount
@@ -187,37 +228,46 @@
         {
             self.configurationRequestCount = 2;
             
-            [RICart getCartWithSuccessBlock:^(RICart *cartData)
-             {
-                 NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cartData forKey:kUpdateCartNotificationValue];
-                 [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-
-                 self.configurationRequestCount--;
-                 
-             } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages)
-             {
-                 self.configurationRequestCount--;
-             }];
+            self.cartRequestId = [RICart getCartWithSuccessBlock:^(RICart *cartData)
+                                  {
+                                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cartData forKey:kUpdateCartNotificationValue];
+                                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                                      
+                                      self.configurationRequestCount--;
+                                      
+                                  } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages)
+                                  {
+                                      self.configurationRequestCount--;
+                                  }];
         }
         
-        [RICustomer autoLogin:^(BOOL success, RICustomer *customer)
-         {
-             self.customer = customer;
-             [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration)
-              {
-                  [RIGoogleAnalyticsTracker initGATrackerWithId:configuration.gaId];
-                  
-                  self.configurationRequestCount--;
-              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-              {
-                  self.configurationRequestCount--;
-              }];
-         }];
+        self.customerRequestId = [RICustomer autoLogin:^(BOOL success, RICustomer *customer, NSString *loginMethod)
+                                  {
+                                      self.customer = customer;
+                                      self.loginMethod = loginMethod;
+                                      [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration)
+                                       {
+                                           [RIGoogleAnalyticsTracker initGATrackerWithId:configuration.gaId];
+                                           
+                                           self.configurationRequestCount--;
+                                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+                                       {
+                                           self.configurationRequestCount--;
+                                       }];
+                                  }];
     }
 }
 
 - (void)initCountry
 {
+    self.isRequestDone = YES;
+    
+    if(VALID_NOTEMPTY(self.loginMethod, NSString) && [@"signup" isEqualToString:self.loginMethod])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
+        [RICommunicationWrapper deleteSessionCookie];
+    }
+    
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
     
@@ -256,6 +306,16 @@
     [launchData setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
     [launchData setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [launchData setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+    
+    NSString *source = @"Organic";
+    if(VALID_NOTEMPTY(self.pushNotification, NSDictionary))
+    {
+        source = @"Push";
+        if(VALID_NOTEMPTY([self.pushNotification objectForKey:@"UTM"], NSString))
+        {
+            [launchData setObject:[self.pushNotification objectForKey:@"UTM"] forKey:kRILaunchEventCampaignKey];
+        }
+    }
     
     [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
     

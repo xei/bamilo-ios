@@ -12,11 +12,11 @@ Background:
 * I wait to see the side menu
 * I touch the catagories option
 * I wait for 1 seconds
-* I touch list item number 3
+* I touch list item number 5
 * I wait for 1 seconds
-* I touch list item number 1
+* I touch list item number 4
 * I wait to see the catalog
-* I touch collection view item number 1
+* I touch collection view item number 2
 * I wait for 2 seconds
 * I wait to see the product detail screen
 
@@ -30,21 +30,25 @@ Scenario: Product Specifications
 * I should see the product features
 * I should see the product desctiption
 
-#@pdv_ro
-#Scenario: Review Overview
+@pdv_ro
+Scenario: Review Overview
 #* I scroll down
-#* I touch the rate button
-#* I should see the rating screen
+* I touch the rate button
+* I wait for 1 seconds
+* I should see the rating screen
 
-#@pdv_wr
-#Scenario: Write Review
+@pdv_wr
+Scenario: Write Review
 #* I scroll down
-#* I touch the rate button
-#* I should see the rating screen
-#* I enter a review
-#* I wait for 1 seconds
-#* I touch send review button
-#* I wait to see the message review sent
+* I touch the rate button
+* I wait for 1 seconds
+* I should see the rating screen
+* I touch the write review button
+* I wait for 2 seconds
+* I enter a review
+* I wait for 1 seconds
+* I touch send review button
+* I wait to see the message review sent
 
 @pdv_sh
 Scenario: Share
@@ -66,14 +70,31 @@ Scenario: Zoom in and out
 
 @pdv_do
 Scenario: Done in product zoom page
+* I wait for 5 seconds
 * I touch the product detail image
 * I pinch to zoom in
 * I pinch to zoom out
 * I touch done button
 
+@pdv_clean_favs
+Scenario: Clean Favourites
+* I touch the cart button
+* I wait for 3 seconds
+* I touch the hamburger
+* I wait for 1 seconds
+* I touch the back button
+* I wait for 1 seconds
+* I touch the back button
+* I wait for 1 seconds
+* I touch the my favourites option
+* I wait to see the my favourites screen
+* I wait for 5 seconds
+* I make sure I have no favourites
+
 @pdv_fa
 Scenario: Favourites
 * I touch the favorites button
 * I wait to see the message item added to favorites
+* I wait for 6 seconds
 * I touch the favorites button
 * I wait to see the message item removed from favorites

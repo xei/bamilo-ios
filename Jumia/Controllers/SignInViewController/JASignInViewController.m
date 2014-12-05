@@ -30,6 +30,7 @@ FBLoginViewDelegate
 @property (strong, nonatomic) UIButton *facebookLoginButton;
 @property (strong, nonatomic) UILabel *facebookLoginLabel;
 @property (assign, nonatomic) CGFloat loginViewCurrentY;
+@property (assign, nonatomic) BOOL requestDone;
 
 @end
 
@@ -43,12 +44,17 @@ FBLoginViewDelegate
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
-                                                 name:@"UIKeyboardWillShowNotification"
+                                                 name:UIKeyboardWillShowNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:)
-                                                 name:@"UIKeyboardWillHideNotification"
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
                                                object:nil];
     
     self.screenName = @"Login";
@@ -61,112 +67,39 @@ FBLoginViewDelegate
     self.scrollView.clipsToBounds = YES;
     [self.view addSubview:self.scrollView];
     
-    [self showLoading];
-    
-    self.loginView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
-                                                              6.0f,
-                                                              308.0f,
-                                                              340.0f)];
+    self.loginView = [[UIView alloc] initWithFrame:CGRectZero];
     self.loginView.layer.cornerRadius = 5.0f;
     self.loginView.backgroundColor = [UIColor whiteColor];
     [self.scrollView addSubview:self.loginView];
-    
-    self.loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
-                                                                2.0f,
-                                                                296.0f,
-                                                                21.0f)];
+
+    self.loginLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.loginLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
     [self.loginLabel setText:STRING_CREDENTIALS];
     [self.loginLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.loginView addSubview:self.loginLabel];
     
-    self.loginSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                   26.0f,
-                                                                   308.0f,
-                                                                   1.0f)];
+    self.loginSeparator = [[UIView alloc] initWithFrame:CGRectZero];
     [self.loginSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.loginView addSubview:self.loginSeparator];
-
+    
     self.facebookLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.facebookLoginButton setFrame:CGRectMake(6.0f, 42.0f, 296.0f, 44.0f)];
-    [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_normal"] forState:UIControlStateNormal];
-    [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_highlighted"] forState:UIControlStateHighlighted];
-    [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_highlighted"] forState:UIControlStateSelected];
+    [self.facebookLoginButton setFrame:CGRectZero];
     [self.facebookLoginButton setTitle:STRING_LOGIN_WITH_FACEBOOK forState:UIControlStateNormal];
     [self.facebookLoginButton setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
     [self.facebookLoginButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.facebookLoginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
-    
     [self.loginView addSubview:self.facebookLoginButton];
     
-    self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginButton.frame) + 6.0f;
-
-    [self getLoginForm];
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)getLoginForm
-{
-    [RIForm getForm:@"login"
-       successBlock:^(RIForm *form) {
-           
-           self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.loginViewCurrentY];
-           [self.dynamicForm setDelegate:self];
-           
-           for(UIView *view in self.dynamicForm.formViews)
-           {
-               [self.loginView addSubview:view];
-               self.loginViewCurrentY = CGRectGetMaxY(view.frame);
-           }
-           
-           [self finishedFormLoading];
-           
-       } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-           
-           if(RIApiResponseMaintenancePage == apiResponse)
-           {
-               [self showMaintenancePage:@selector(getLoginForm) objects:nil];
-           }
-           else
-           {
-               BOOL noConnection = NO;
-               if (RIApiResponseNoInternetConnection == apiResponse)
-               {
-                   noConnection = YES;
-               }
-               [self showErrorView:noConnection startingY:0.0f selector:@selector(getLoginForm) objects:nil];
-           }
-           
-           [self hideLoading];
-       }];
-}
-
-#pragma mark - Action
-
-- (void)finishedFormLoading
-{
-    self.loginViewCurrentY += 15.0f;
-    
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.loginButton setFrame:CGRectMake(6.0f, self.loginViewCurrentY, 296.0f, 44.0f)];
-    [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_normal"] forState:UIControlStateNormal];
-    [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateHighlighted];
-    [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
-    [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
+    [self.loginButton setFrame:CGRectZero];
     [self.loginButton setTitle:STRING_LOGIN forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.loginButton addTarget:self action:@selector(loginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.loginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.loginView addSubview:self.loginButton];
-    
-    self.loginViewCurrentY = CGRectGetMaxY(self.loginButton.frame) + 5.0f;
-    // Forgot Password
+
     self.forgotPasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.forgotPasswordButton setFrame:CGRectMake(6.0f, self.loginViewCurrentY, 296.0f, 30.0f)];
+    [self.forgotPasswordButton setFrame:CGRectZero];
     [self.forgotPasswordButton setBackgroundColor:[UIColor clearColor]];
     [self.forgotPasswordButton setTitle:STRING_FORGOT_PASSWORD forState:UIControlStateNormal];
     [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
@@ -177,26 +110,187 @@ FBLoginViewDelegate
     [self.loginView addSubview:self.forgotPasswordButton];
     
     self.loginViewCurrentY = CGRectGetMaxY(self.forgotPasswordButton.frame) + 6.0f;
+    
     self.signUpButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.signUpButton setFrame:CGRectMake(6.0f, self.loginViewCurrentY, 296.0f, 44.0f)];
-    [self.signUpButton setBackgroundImage:[UIImage imageNamed:@"grayBig_normal"] forState:UIControlStateNormal];
-    [self.signUpButton setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"] forState:UIControlStateHighlighted];
-    [self.signUpButton setBackgroundImage:[UIImage imageNamed:@"grayBig_highlighted"] forState:UIControlStateSelected];
-    [self.signUpButton setBackgroundImage:[UIImage imageNamed:@"grayBig_disabled"] forState:UIControlStateDisabled];
+    [self.signUpButton setFrame:CGRectZero];
     [self.signUpButton setTitle:STRING_CREATE_ACCOUNT forState:UIControlStateNormal];
     [self.signUpButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.signUpButton addTarget:self action:@selector(signUpButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.signUpButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.loginView addSubview:self.signUpButton];
     
+    [self showLoading];
+    
+    [self getLoginForm];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if(self.requestDone)
+    {
+        [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+        
+        [self hideLoading];
+    }
+}
+
+- (void) hideKeyboard
+{
+    [self.dynamicForm resignResponder];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)getLoginForm
+{
+    self.requestDone = NO;
+    
+    [RIForm getForm:@"login"
+       successBlock:^(RIForm *form)
+     {
+         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:0.0f];
+         [self.dynamicForm setDelegate:self];
+         
+         for(UIView *view in self.dynamicForm.formViews)
+         {
+             [self.loginView addSubview:view];
+         }
+         
+         [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+         
+         [self.scrollView setHidden:NO];
+         self.requestDone = YES;
+         
+         [self hideLoading];
+     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
+     {
+         self.requestDone = YES;
+         if(RIApiResponseMaintenancePage == apiResponse)
+         {
+             [self showMaintenancePage:@selector(getLoginForm) objects:nil];
+         }
+         else
+         {
+             BOOL noConnection = NO;
+             if (RIApiResponseNoInternetConnection == apiResponse)
+             {
+                 noConnection = YES;
+             }
+             [self.scrollView setHidden:YES];
+             [self showErrorView:noConnection startingY:0.0f selector:@selector(getLoginForm) objects:nil];
+         }
+         
+         [self hideLoading];
+     }];
+}
+
+#pragma mark - Action
+
+- (void)setupViews:(CGFloat)width height:(CGFloat)height toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat verticalMargin = 6.0f;
+    
+    [self.scrollView setFrame:CGRectMake(0.0f,
+                                         0.0f,
+                                         width,
+                                         height)];
+    
+    [self.loginView setFrame:CGRectMake(horizontalMargin,
+                                        verticalMargin,
+                                        self.scrollView.frame.size.width - (2 * horizontalMargin),
+                                        340.0f)];
+    
+    [self.loginLabel setFrame:CGRectMake(horizontalMargin,
+                                         2.0f,
+                                         self.loginView.frame.size.width - (2 * horizontalMargin),
+                                         21.0f)];
+    
+    [self.loginSeparator setFrame:CGRectMake(0.0f,
+                                                                   26.0f,
+                                                                   self.scrollView.frame.size.width - (2 * horizontalMargin),
+                                             1.0f)];
+    
+    NSString *facebookImageNameFormatter = @"facebookMedium_%@";
+    NSString *loginImageNameFormatter = @"orangeMedium_%@";
+    NSString *signupImageNameFormatter = @"greyMedium_%@";
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        facebookImageNameFormatter = @"facebookMediumPortrait_%@";
+        loginImageNameFormatter = @"orangeMediumPortrait_%@";
+        signupImageNameFormatter = @"greyMediumPortrait_%@";
+        
+        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+        {
+            facebookImageNameFormatter = @"facebookFullPortrait_%@";
+            loginImageNameFormatter = @"orangeFullPortrait_%@";
+            signupImageNameFormatter = @"greyFullPortrait_%@";
+        }
+    }
+    
+    UIImage *facebookNormalImage = [UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"normal"]];
+    [self.facebookLoginButton setFrame:CGRectMake((self.loginView.frame.size.width - facebookNormalImage.size.width) / 2,
+                                                  42.0f,
+                                                  facebookNormalImage.size.width,
+                                                  facebookNormalImage.size.height)];
+    [self.facebookLoginButton setBackgroundImage:facebookNormalImage forState:UIControlStateNormal];
+    [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]] forState:UIControlStateHighlighted];
+    [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]] forState:UIControlStateSelected];
+    
+    self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginButton.frame) + 6.0f;
+    
+    for(UIView *view in self.dynamicForm.formViews)
+    {
+        CGRect dynamicFormFieldViewFrame = view.frame;
+        dynamicFormFieldViewFrame.origin.x = self.facebookLoginButton.frame.origin.x;
+        dynamicFormFieldViewFrame.origin.y = self.loginViewCurrentY;
+        dynamicFormFieldViewFrame.size.width = self.facebookLoginButton.frame.size.width;
+        ;
+        view.frame = dynamicFormFieldViewFrame;
+        self.loginViewCurrentY = CGRectGetMaxY(view.frame);
+    }
+    
+    self.loginViewCurrentY += 15.0f;
+    UIImage *loginNormalImage = [UIImage imageNamed:[NSString stringWithFormat:loginImageNameFormatter, @"normal"]];
+    [self.loginButton setFrame:CGRectMake((self.loginView.frame.size.width - loginNormalImage.size.width) / 2,
+                                          self.loginViewCurrentY,
+                                          loginNormalImage.size.width,
+                                          loginNormalImage.size.height)];
+    [self.loginButton setBackgroundImage:loginNormalImage forState:UIControlStateNormal];
+    [self.loginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:loginImageNameFormatter, @"highlighted"]] forState:UIControlStateHighlighted];
+    [self.loginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:loginImageNameFormatter, @"highlighted"]] forState:UIControlStateSelected];
+    [self.loginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:loginImageNameFormatter, @"disabled"]] forState:UIControlStateDisabled];
+    
+    self.loginViewCurrentY = CGRectGetMaxY(self.loginButton.frame) + 5.0f;
+    // Forgot Password
+    [self.forgotPasswordButton setFrame:CGRectMake((self.loginView.frame.size.width - loginNormalImage.size.width) / 2,
+                                                   self.loginViewCurrentY,
+                                                   loginNormalImage.size.width,
+                                                   30.0f)];
+    
+    self.loginViewCurrentY = CGRectGetMaxY(self.forgotPasswordButton.frame) + 6.0f;
+    
+    UIImage *singupNormalImage = [UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"normal"]];
+    [self.signUpButton setFrame:CGRectMake((self.loginView.frame.size.width - singupNormalImage.size.width) / 2,
+                                           self.loginViewCurrentY,
+                                           singupNormalImage.size.width,
+                                           singupNormalImage.size.height)];
+    [self.signUpButton setBackgroundImage:singupNormalImage forState:UIControlStateNormal];
+    [self.signUpButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"highlighted"]] forState:UIControlStateHighlighted];
+    [self.signUpButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"highlighted"]] forState:UIControlStateSelected];
+    [self.signUpButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"disabled"]] forState:UIControlStateDisabled];
+    
     [self.loginView setFrame:CGRectMake(self.loginView.frame.origin.x,
                                         self.loginView.frame.origin.y,
                                         self.loginView.frame.size.width,
                                         CGRectGetMaxY(self.signUpButton.frame) + 10.0f)];
     [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width,
-                                               self.loginView.frame.size.height + 2*6.0f)];
-    
-    [self hideLoading];
+                                               self.loginView.frame.size.height + (2 * verticalMargin))];
     
     if(self.firstLoading)
     {
@@ -215,8 +309,34 @@ FBLoginViewDelegate
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self showLoading];
+    
+    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    CGFloat newHeight = self.view.frame.size.width + self.view.frame.origin.x;
+    
+    [self setupViews:newWidth height:newHeight toInterfaceOrientation:toInterfaceOrientation];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+    
+    [self hideLoading];
+    
+    [self hideKeyboard];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
 - (void)facebookLoginButtonPressed:(id)sender
 {
+    [self hideKeyboard];
+    
     FBSession *session = [[FBSession alloc] initWithPermissions:@[@"public_profile", @"email", @"user_birthday"]];
     [FBSession setActiveSession:session];
     
@@ -340,7 +460,7 @@ FBLoginViewDelegate
 
 - (void)signUpButtonPressed:(id)sender
 {
-    [self.dynamicForm resignResponder];
+    [self hideKeyboard];
     
     NSMutableDictionary *userInfo = nil;
     
@@ -358,7 +478,7 @@ FBLoginViewDelegate
 
 - (void)forgotPasswordButtonPressed:(id)sender
 {
-    [self.dynamicForm resignResponder];
+    [self hideKeyboard];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowForgotPasswordScreenNotification
                                                         object:nil
@@ -367,14 +487,14 @@ FBLoginViewDelegate
 
 - (void)loginButtonPressed:(id)sender
 {
-    [self.dynamicForm resignResponder];
+    [self hideKeyboard];
     
     [self continueLogin];
 }
 
 - (void)continueLogin
 {
-    [self.dynamicForm resignResponder];
+    [self hideKeyboard];
     
     [self showLoading];
     
@@ -394,7 +514,7 @@ FBLoginViewDelegate
          [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
          [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
          [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];         
+         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
          [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
          if(self.fromSideMenu)
          {
@@ -429,7 +549,7 @@ FBLoginViewDelegate
              
              [[NSNotificationCenter defaultCenter] postNotificationName:self.nextNotification.name
                                                                  object:self.nextNotification.object
-                                                               userInfo:self.nextNotification.userInfo];             
+                                                               userInfo:self.nextNotification.userInfo];
          }
          else
          {
@@ -540,13 +660,19 @@ FBLoginViewDelegate
 - (void) keyboardWillShow:(NSNotification *)notification
 {
     NSDictionary *userInfo = [notification userInfo];
-    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGFloat height = kbSize.height;
+    
+    if(self.view.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.scrollView setFrame:CGRectMake(self.view.bounds.origin.x,
                                              self.view.bounds.origin.y,
                                              self.view.bounds.size.width,
-                                             self.view.bounds.size.height - kbSize.height)];
+                                             self.view.bounds.size.height - height)];
     }];
 }
 

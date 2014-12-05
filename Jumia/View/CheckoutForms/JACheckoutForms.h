@@ -15,7 +15,7 @@
 
 @property (nonatomic, strong) NSMutableDictionary *paymentMethodFormViews;
 
--(id)initWithPaymentMethodForm:(RIPaymentMethodForm*)paymentMethodForm;
+-(id)initWithPaymentMethodForm:(RIPaymentMethodForm*)paymentMethodForm width:(CGFloat)width;
 
 -(UIView*)getPaymentMethodView:(RIPaymentMethodFormOption*)paymentMethod;
 

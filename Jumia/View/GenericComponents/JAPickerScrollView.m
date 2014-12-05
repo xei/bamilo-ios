@@ -9,6 +9,7 @@
 #import "JAPickerScrollView.h"
 
 #define JAPickerScrollViewCenterWidth 100.0f
+#define JAPickerScrollViewCenterWidthiPad 130.0f
 #define JAPickerScrollViewBackgroundColor UIColorFromRGB(0xe3e3e3);
 #define JAPickerScrollViewTextColor UIColorFromRGB(0x4e4e4e);
 #define JAPickerScrollViewTextSize 13.0f
@@ -43,9 +44,15 @@
     
     self.backgroundColor = JAPickerScrollViewBackgroundColor;
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((self.bounds.size.width - JAPickerScrollViewCenterWidth) / 2,
+    CGFloat centerWidth = JAPickerScrollViewCenterWidth;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        centerWidth = JAPickerScrollViewCenterWidthiPad;
+    }
+    
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((self.bounds.size.width - centerWidth) / 2,
                                                                      self.bounds.origin.y,
-                                                                     JAPickerScrollViewCenterWidth,
+                                                                     centerWidth,
                                                                      self.bounds.size.height)];
     self.scrollView.delegate = self;
     self.scrollView.pagingEnabled = YES;
@@ -113,15 +120,23 @@
 {
     CGPoint point = [tap locationInView:self];
     
+
     if (point.x < self.scrollView.frame.origin.x)
     {
-        [self scrollRight];
+        CGFloat distanceFromPointToCenterView = self.scrollView.frame.origin.x - point.x;
+        NSInteger relativeIndex = (distanceFromPointToCenterView / self.scrollView.frame.size.width) + 1;
+        while (relativeIndex > 0) {
+            [self scrollRightAnimated:NO];
+            relativeIndex--;
+        }
     }
-    else
+    else if (point.x > (self.scrollView.frame.origin.x + self.scrollView.frame.size.width))
     {
-        if (point.x > (self.scrollView.frame.origin.x + self.scrollView.frame.size.width))
-        {
-            [self scrollLeftAnimated:YES];
+        CGFloat distanceFromPointToCenterView = point.x - self.scrollView.frame.origin.x - self.scrollView.frame.size.width;
+        NSInteger relativeIndex = (distanceFromPointToCenterView / self.scrollView.frame.size.width) + 1;
+        while (relativeIndex > 0) {
+            [self scrollLeftAnimated:NO];
+            relativeIndex--;
         }
     }
 }
@@ -162,7 +177,7 @@
     }
 }
 
-- (void)scrollRight
+- (void)scrollRightAnimated:(BOOL)animated;
 {
     CGFloat newIndex = self.selectedIndex - 1;
     
@@ -170,7 +185,7 @@
         [self.scrollView scrollRectToVisible:CGRectMake(newIndex * self.scrollView.bounds.size.width,
                                                         self.scrollView.bounds.origin.y,
                                                         self.scrollView.bounds.size.width,
-                                                        self.scrollView.bounds.size.height) animated:YES];
+                                                        self.scrollView.bounds.size.height) animated:animated];
         [self selectLabelAtIndex:newIndex];
     }
 }
@@ -181,7 +196,13 @@
 {
     CGPoint point = *targetContentOffset;
     
-    [self selectLabelAtIndex:(point.x/JAPickerScrollViewCenterWidth)];
+    NSInteger index = (point.x/JAPickerScrollViewCenterWidth);
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        index = (point.x/JAPickerScrollViewCenterWidthiPad);
+    }
+    
+    [self selectLabelAtIndex:index];
 }
 
 

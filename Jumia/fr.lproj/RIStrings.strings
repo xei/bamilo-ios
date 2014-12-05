@@ -92,7 +92,7 @@
 "voucher_use" = "Utiliser";
 "voucher_remove" = "Supprimer";
 "voucher_message_hint" = "Entrez votre Code Promotionnel ici";
-"call_to_order" = "Appeler pour commander";
+"call_to_order" = "Appeler";
 "string_article" = "1 Produit";
 "string_articles" = "%d Produits";
 "error_add_to_shopping_cart_quantity" = "Vous ne pouvez pas commander plus que la quantité disponible. Désolé.";
@@ -201,7 +201,7 @@
 "campaing_offer_ended" = "Promo Expirée!";
 "campaing_timer_end" = "Se termine le:";
 "string_format_off_label" = "-%d%%";
-"campaigns_label" = "Campaigns";
+"campaigns_label" = "Offres";
 
 "product_specifications" = "Caractéristiques";
 
@@ -244,3 +244,10 @@
 "fallback_mobile" = "Téléphonie";
 "fallback_welcome" = "BIENVENUE";
 
+"reviews" = "Avis";
+"more" = "Plus";
+"reviews_empty" = "Ce produit n'a pas de avis!";
+
+"order_summary_label" = "Résumé de la commande";
+"string_edit" = "Modifier";
+"track_your_order_tip" = "Recherche votre numéro de commande";

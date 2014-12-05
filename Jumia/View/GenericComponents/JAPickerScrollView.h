@@ -21,10 +21,11 @@
 @property (nonatomic, assign) BOOL disableDelagation; // used in undefined search therm
 
 @property (nonatomic, assign)NSInteger startingIndex;
+@property (nonatomic, readonly)NSInteger selectedIndex;
 
 - (void)setOptions:(NSArray*)options;
 
 - (void)scrollLeftAnimated:(BOOL)animated;
-- (void)scrollRight;
+- (void)scrollRightAnimated:(BOOL)animated;
 
 @end

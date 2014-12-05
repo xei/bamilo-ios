@@ -1,5 +1,6 @@
 Then /^I swipe down inside home$/ do
-    scroll("UIScrollView marked:'teaserPageScrollView'", :down)
+    scroll("view marked:'teaserPageScrollView'", :down)
+    #scroll("UIScrollView marked:'teaserPageScrollView'", :down)
 end
 
 Then /^I scroll down the quantity$/ do

@@ -12,45 +12,45 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C9J-iB-7kg">
-                    <rect key="frame" x="6" y="6" width="308" height="200"/>
+                    <rect key="frame" x="6" y="8" width="308" height="198"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="img_nonetwork" translatesAutoresizingMaskIntoConstraints="NO" id="OMs-vw-tGv">
-                            <rect key="frame" x="87" y="29" width="135" height="96"/>
+                            <rect key="frame" x="87" y="27" width="135" height="96"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HdF-jO-fhJ">
-                            <rect key="frame" x="26" y="149" width="252" height="21"/>
+                            <rect key="frame" x="26" y="147" width="252" height="21"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="img_errorscreen" translatesAutoresizingMaskIntoConstraints="NO" id="yV9-kH-HG7">
-                            <rect key="frame" x="92" y="16" width="120" height="96"/>
-                        </imageView>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7V-cA-9b0" userLabel="Label generic">
-                            <rect key="frame" x="8" y="128" width="292" height="21"/>
+                            <rect key="frame" x="8" y="126" width="292" height="21"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZF-vb-QYh" userLabel="Label generic details">
-                            <rect key="frame" x="8" y="163" width="292" height="21"/>
+                            <rect key="frame" x="8" y="161" width="292" height="21"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="img_errorscreen" translatesAutoresizingMaskIntoConstraints="NO" id="yV9-kH-HG7">
+                            <rect key="frame" x="92" y="14" width="120" height="96"/>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XBP-2c-RqZ">
                     <rect key="frame" x="6" y="214" width="308" height="44"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                    <state key="normal" title="Button" backgroundImage="grayBig_normal">
+                    <state key="normal" title="Button" backgroundImage="greyBig_normal">
                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <state key="disabled" backgroundImage="grayBig_disabled"/>
-                    <state key="selected" backgroundImage="grayBig_highlighted"/>
-                    <state key="highlighted" backgroundImage="grayBig_highlighted"/>
+                    <state key="disabled" backgroundImage="greyBig_disabled"/>
+                    <state key="selected" backgroundImage="greyBig_highlighted"/>
+                    <state key="highlighted" backgroundImage="greyBig_highlighted"/>
                     <connections>
                         <action selector="retryConnectionButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="dTu-7T-0EE"/>
                     </connections>
@@ -72,9 +72,9 @@
         </view>
     </objects>
     <resources>
-        <image name="grayBig_disabled" width="308" height="44"/>
-        <image name="grayBig_highlighted" width="308" height="44"/>
-        <image name="grayBig_normal" width="308" height="44"/>
+        <image name="greyBig_disabled" width="308" height="44"/>
+        <image name="greyBig_highlighted" width="308" height="44"/>
+        <image name="greyBig_normal" width="308" height="44"/>
         <image name="img_errorscreen" width="120" height="96"/>
         <image name="img_nonetwork" width="135" height="96"/>
     </resources>

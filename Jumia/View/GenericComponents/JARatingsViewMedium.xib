@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="JARatingsViewMedium">
+            <rect key="frame" x="0.0" y="0.0" width="217" height="17"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2c-PV-5gf" userLabel="starButton1">
+                    <rect key="frame" x="0.0" y="1" width="15" height="15"/>
+                    <state key="normal" title="Button" image="img_rating_star_medium_empty">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="img_rating_star_medium_full"/>
+                    <state key="highlighted" image="img_rating_star_medium_full"/>
+                </button>
+                <button opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gak-BB-tdw" userLabel="starButton2">
+                    <rect key="frame" x="19" y="1" width="15" height="15"/>
+                    <state key="normal" title="Button" image="img_rating_star_medium_empty">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="img_rating_star_medium_full"/>
+                    <state key="highlighted" image="img_rating_star_medium_full"/>
+                </button>
+                <button opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tuO-5N-BWa" userLabel="starButton3">
+                    <rect key="frame" x="38" y="1" width="15" height="15"/>
+                    <state key="normal" title="Button" image="img_rating_star_medium_empty">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="img_rating_star_medium_full"/>
+                    <state key="highlighted" image="img_rating_star_medium_full"/>
+                </button>
+                <button opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W2n-vD-1Q5" userLabel="starButton4">
+                    <rect key="frame" x="57" y="1" width="15" height="15"/>
+                    <state key="normal" title="Button" image="img_rating_star_medium_empty">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="img_rating_star_medium_full"/>
+                    <state key="highlighted" image="img_rating_star_medium_full"/>
+                </button>
+                <button opaque="NO" userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Gj-9k-wlF" userLabel="starButton5">
+                    <rect key="frame" x="76" y="1" width="15" height="15"/>
+                    <state key="normal" title="Button" image="img_rating_star_medium_empty">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="img_rating_star_medium_full"/>
+                    <state key="highlighted" image="img_rating_star_medium_full"/>
+                </button>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4hY-1q-69B">
+                    <rect key="frame" x="101" y="0.0" width="110" height="17"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="label" destination="4hY-1q-69B" id="rfg-y3-wG8"/>
+                <outlet property="starButton1" destination="P2c-PV-5gf" id="qWv-rS-S45"/>
+                <outlet property="starButton2" destination="Gak-BB-tdw" id="tsG-33-yCJ"/>
+                <outlet property="starButton3" destination="tuO-5N-BWa" id="X8I-Zr-CbT"/>
+                <outlet property="starButton4" destination="W2n-vD-1Q5" id="qGk-F4-4ag"/>
+                <outlet property="starButton5" destination="7Gj-9k-wlF" id="DPo-Yu-WKb"/>
+            </connections>
+            <point key="canvasLocation" x="202.5" y="154.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="img_rating_star_medium_empty" width="15" height="15"/>
+        <image name="img_rating_star_medium_full" width="15" height="15"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

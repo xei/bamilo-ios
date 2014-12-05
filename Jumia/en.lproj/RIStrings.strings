@@ -244,3 +244,10 @@
 "fallback_mobile" = "Mobile Phones";
 "fallback_welcome" = "WELCOME TO";
 
+"reviews" = "Reviews";
+"more" = "More";
+"reviews_empty" = "This Product has no ratings, yet!";
+
+"order_summary_label" = "Order Summary";
+"string_edit" = "Edit";
+"track_your_order_tip" = "Search for your Order ID and every detail about it will show here";

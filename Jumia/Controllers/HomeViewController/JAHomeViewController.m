@@ -21,8 +21,15 @@
 
 @property (nonatomic, strong) NSArray* teaserCategories;
 @property (weak, nonatomic) IBOutlet JAPickerScrollView *teaserCategoryScrollView;
-@property (weak, nonatomic) IBOutlet UIScrollView *teaserPagesScrollView;
+@property (strong, nonatomic) UIScrollView *teaserPagesScrollView;
 @property (nonatomic, strong) NSMutableArray* teaserPageViews;
+
+@property (nonatomic, assign)CGRect teaserPageScrollPortraitRect;
+@property (nonatomic, assign)CGRect teaserPageScrollLandscapeRect;
+@property (nonatomic, assign)NSInteger lastIndex;
+
+@property (nonatomic, strong)JAHomeWizardView *wizardView;
+@property (nonatomic, strong)JAFallbackView *fallbackView;
 
 @end
 
@@ -59,16 +66,13 @@
     
     self.teaserCategoryScrollView.delegate = self;
     self.teaserCategoryScrollView.startingIndex = 0;
+    
+    
+    self.teaserPagesScrollView = [[UIScrollView alloc] init];
     self.teaserPagesScrollView.pagingEnabled = YES;
     self.teaserPagesScrollView.scrollEnabled = NO;
     self.teaserPagesScrollView.delegate = self;
-    
-    self.teaserPagesScrollView.frame = CGRectMake(self.teaserPagesScrollView.frame.origin.x,
-                                                  CGRectGetMaxY(self.teaserCategoryScrollView.frame),
-                                                  self.teaserPagesScrollView.frame.size.width,
-                                                  self.view.frame.size.height - self.teaserCategoryScrollView.frame.size.height - 64.0f);
-    
-    [self completeTeasersLoading];
+    [self.view addSubview:self.teaserPagesScrollView];
 }
 
 - (void)stopLoading
@@ -82,14 +86,44 @@
     
     [self addNotifications];
     
+    CGRect rectToStart;
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        self.teaserPageScrollLandscapeRect = CGRectMake(self.view.bounds.origin.x,
+                                                        CGRectGetMaxY(self.teaserCategoryScrollView.frame),
+                                                        self.view.bounds.size.width,
+                                                        self.view.bounds.size.height - self.teaserCategoryScrollView.frame.size.height);
+        self.teaserPageScrollPortraitRect = CGRectMake(self.teaserPageScrollLandscapeRect.origin.x,
+                                                       self.teaserPageScrollLandscapeRect.origin.y,
+                                                       self.view.bounds.size.height + 64.0f,
+                                                       self.view.bounds.size.width - self.teaserCategoryScrollView.frame.size.height - 64.0f);
+        rectToStart = self.teaserPageScrollLandscapeRect;
+    } else {
+        self.teaserPageScrollPortraitRect = CGRectMake(self.view.bounds.origin.x,
+                                                       CGRectGetMaxY(self.teaserCategoryScrollView.frame),
+                                                       self.view.bounds.size.width,
+                                                       self.view.bounds.size.height - self.teaserCategoryScrollView.frame.size.height);
+        self.teaserPageScrollLandscapeRect = CGRectMake(self.teaserPageScrollPortraitRect.origin.x,
+                                                        self.teaserPageScrollPortraitRect.origin.y,
+                                                        self.view.bounds.size.height + 64.0f,
+                                                        self.view.bounds.size.width - self.teaserCategoryScrollView.frame.size.height - 64.0f);
+        
+        rectToStart = self.teaserPageScrollPortraitRect;
+    }
+    [self.teaserPagesScrollView setFrame:rectToStart];
+    
+    [self completeTeasersLoading];
+    
+    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0];
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
     
     BOOL alreadyShowedWizardHome = [[NSUserDefaults standardUserDefaults] boolForKey:kJAHomeWizardUserDefaultsKey];
     if(alreadyShowedWizardHome == NO)
     {
-        JAHomeWizardView* wizardView = [[JAHomeWizardView alloc] initWithFrame:self.view.bounds];
-        [self.view addSubview:wizardView];
+        self.wizardView = [[JAHomeWizardView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAHomeWizardUserDefaultsKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
@@ -112,6 +146,7 @@
 {
     //we do this to make sure no notification is added more than once
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(pushCatalogWithUrl:)
                                                  name:kTeaserNotificationPushCatalogWithUrl
@@ -136,6 +171,75 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self showLoading];
+    
+    if(VALID_NOTEMPTY(self.wizardView, JAHomeWizardView))
+    {
+        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
+                                     self.wizardView.frame.origin.y,
+                                     self.view.frame.size.height + self.view.frame.origin.y,
+                                     self.view.frame.size.width - self.view.frame.origin.y);
+        [self.wizardView reloadForFrame:newFrame];
+    }
+    
+    if(VALID_NOTEMPTY(self.fallbackView, JAFallbackView) && VALID_NOTEMPTY(self.fallbackView.superview, UIView))
+    {
+        [self.fallbackView reloadFallbackView:CGRectMake(self.fallbackView.frame.origin.x,
+                                                         self.fallbackView.frame.origin.y,
+                                                         self.view.frame.size.height + self.view.frame.origin.y,
+                                                         self.view.frame.size.width - self.view.frame.origin.y)
+                                  orientation:toInterfaceOrientation];
+    }
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    if (UIInterfaceOrientationLandscapeLeft == toInterfaceOrientation || UIInterfaceOrientationLandscapeRight == toInterfaceOrientation) {
+        self.teaserPagesScrollView.frame = self.teaserPageScrollLandscapeRect;
+    } else {
+        self.teaserPagesScrollView.frame = self.teaserPageScrollPortraitRect;
+    }
+    [self.teaserPagesScrollView removeFromSuperview];
+    
+    self.lastIndex = self.teaserCategoryScrollView.selectedIndex;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self hideLoading];
+    CGFloat currentPageX = 0.0f;
+    CGFloat currentPageY = 0.0f;
+    for (JATeaserPageView* teaserPageView in self.teaserPageViews) {
+        [teaserPageView loadTeasersForFrame:CGRectMake(currentPageX,
+                                                       currentPageY,
+                                                       self.teaserPagesScrollView.bounds.size.width,
+                                                       self.teaserPagesScrollView.bounds.size.height)];
+        [self.teaserPagesScrollView addSubview:teaserPageView];
+        
+        currentPageX += teaserPageView.frame.size.width;
+    }
+    [self.teaserPagesScrollView setContentSize:CGSizeMake(currentPageX,
+                                                          self.teaserPagesScrollView.frame.size.height)];
+    [self selectedIndex:self.lastIndex];
+    self.teaserCategoryScrollView.startingIndex = self.lastIndex;
+    [self.teaserCategoryScrollView setNeedsLayout];
+    [self.view addSubview:self.teaserPagesScrollView];
+    
+    if(VALID_NOTEMPTY(self.wizardView, JAHomeWizardView))
+    {
+        [self.wizardView reloadForFrame:self.view.bounds];
+        [self.view bringSubviewToFront:self.wizardView];
+    }
+    
+    if(VALID_NOTEMPTY(self.fallbackView, JAFallbackView) && VALID_NOTEMPTY(self.fallbackView.superview, UIView))
+    {
+        [self.fallbackView reloadFallbackView:self.view.bounds orientation:self.interfaceOrientation];
+    }
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
 - (void)completeTeasersLoading
 {
     [RITeaserCategory getTeaserCategoriesWithSuccessBlock:^(id teaserCategories) {
@@ -152,11 +256,13 @@
             {
                 [titles addObject:teaserCategory.homePageTitle];
                 
-                JATeaserPageView* teaserPageView = [[JATeaserPageView alloc] initWithFrame:CGRectMake(currentPageX,
-                                                                                                      self.teaserPagesScrollView.bounds.origin.y,
-                                                                                                      self.teaserPagesScrollView.bounds.size.width,
-                                                                                                      self.teaserPagesScrollView.bounds.size.height)];
+                JATeaserPageView* teaserPageView = [[JATeaserPageView alloc] init];
                 teaserPageView.teaserCategory = teaserCategory;
+                NSLog(@"%@", NSStringFromCGRect(self.teaserPagesScrollView.frame));
+                [teaserPageView loadTeasersForFrame:CGRectMake(currentPageX,
+                                                               self.teaserPagesScrollView.bounds.origin.y,
+                                                               self.teaserPagesScrollView.bounds.size.width,
+                                                               self.teaserPagesScrollView.bounds.size.height)];
                 [self.teaserPagesScrollView addSubview:teaserPageView];
                 [self.teaserPageViews addObject:teaserPageView];
                 
@@ -175,7 +281,7 @@
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
             self.firstLoading = NO;
         }
-
+        
         // notify the InAppNotification SDK that this the active view controller
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         
@@ -202,9 +308,9 @@
             {
                 [self showErrorView:YES startingY:0.0f selector:@selector(completeTeasersLoading) objects:nil];
             } else {
-                JAFallbackView* fallbackView = [JAFallbackView getNewJAFallbackView];
-                [fallbackView setupFallbackView:self.view.bounds];
-                [self.view addSubview:fallbackView];
+                self.fallbackView = [JAFallbackView getNewJAFallbackView];
+                [self.fallbackView setupFallbackView:self.view.bounds orientation:self.interfaceOrientation];
+                [self.view addSubview:self.fallbackView];
             }
         }
     }];
@@ -225,19 +331,6 @@
     
     JATeaserPageView* teaserPageView = [self.teaserPageViews objectAtIndex:index];
     
-    if (NO ==  teaserPageView.isLoaded) {
-        [teaserPageView loadTeasers];
-    }
-    
-    if (index + 1 < self.teaserPageViews.count) {
-        
-        JATeaserPageView* nextTeaserPageView = [self.teaserPageViews objectAtIndex:index + 1];
-        
-        if (NO ==  nextTeaserPageView.isLoaded) {
-            [nextTeaserPageView loadTeasers];
-        }
-    }
-    
     [self.teaserPagesScrollView scrollRectToVisible:teaserPageView.frame animated:YES];
 }
 
@@ -248,12 +341,20 @@
 
 - (IBAction)swipeRight:(id)sender
 {
+    if(VALID_NOTEMPTY(self.wizardView, JAHomeWizardView) && VALID_NOTEMPTY(self.wizardView.superview, UIView))
+    {
+        return;
+    }
     [self removeNotifications];
-    [self.teaserCategoryScrollView scrollRight];
+    [self.teaserCategoryScrollView scrollRightAnimated:YES];
 }
 
 - (IBAction)swipeLeft:(id)sender
 {
+    if(VALID_NOTEMPTY(self.wizardView, JAHomeWizardView) && VALID_NOTEMPTY(self.wizardView.superview, UIView))
+    {
+        return;
+    }
     [self removeNotifications];
     [self.teaserCategoryScrollView scrollLeftAnimated:YES];
 }

@@ -15,8 +15,8 @@
 
 @interface JAChooseCountryViewController ()
 <
-    UITableViewDelegate,
-    UITableViewDataSource
+UITableViewDelegate,
+UITableViewDataSource
 >
 
 @property (strong, nonatomic) NSArray *countriesArray;
@@ -45,8 +45,6 @@
                                                object:nil];
     
     self.tableViewContries.layer.cornerRadius = 5.0f;
-    
-    [self loadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,6 +55,19 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    if(!VALID_NOTEMPTY([RIApi getCountryUrlInUse], NSString))
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+                                                            object:nil];
+    }
+
+    [self loadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -79,6 +90,12 @@
         [self hideLoading];
         
         [self.tableViewContries reloadData];
+        
+        CGFloat finalHeight = MIN(self.tableViewContries.frame.size.height, self.tableViewContries.contentSize.height - 20.0f);
+        [self.tableViewContries setFrame:CGRectMake(self.tableViewContries.frame.origin.x,
+                                                    self.tableViewContries.frame.origin.y,
+                                                    self.tableViewContries.frame.size.width,
+                                                    finalHeight)];
         
         NSIndexPath *tempIndex;
         
@@ -136,6 +153,29 @@
         [self hideLoading];
         
     }];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self showLoading];
+    
+    self.tableViewContries.hidden = YES;
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    [self hideLoading];
+
+    CGFloat finalHeight = MIN(self.tableViewContries.frame.size.height, self.tableViewContries.contentSize.height - 20.0f);
+    [self.tableViewContries setFrame:CGRectMake(self.tableViewContries.frame.origin.x,
+                                                self.tableViewContries.frame.origin.y,
+                                                self.tableViewContries.frame.size.width,
+                                                finalHeight)];
+    self.tableViewContries.hidden = NO;
 }
 
 #pragma mark - Selected apply

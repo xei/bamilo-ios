@@ -129,7 +129,6 @@
     for (NSDictionary* categoryJSON in categories) {
         
         if (VALID_NOTEMPTY(categoryJSON, NSDictionary)) {
-            
             RICategory* category = [RICategory parseCategory:categoryJSON];
             if (persistData) {
                 [RICategory saveCategory:category];

@@ -34,6 +34,8 @@
 
 - (void)setupWithField:(RIField*)field
 {
+    self.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.storedValue = @"";
     self.hasError = NO;
     self.field = field;
@@ -53,6 +55,39 @@
         self.storedValue = field.value;
         [self.textField setText:field.value];
     }
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(assignFirstResponder)];
+    [self addGestureRecognizer:tap];
+}
+
+-(void)setupWithLabel:(NSString*)label value:(NSString*)value mandatory:(BOOL)mandatory
+{
+    self.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.storedValue = @"";
+    self.hasError = NO;
+
+    [self.textField setPlaceholder:label];
+    
+    [self.textField setTextColor:UIColorFromRGB(0x666666)];
+    [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    
+    if(mandatory)
+    {
+        [self.requiredSymbol setHidden:NO];
+        [self.requiredSymbol setTextColor:UIColorFromRGB(0xfaa41a)];
+    }
+    
+    if(VALID_NOTEMPTY(value, NSString))
+    {
+        self.storedValue = value;
+        [self.textField setText:value];
+    }
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(assignFirstResponder)];
+    [self addGestureRecognizer:tap];
 }
 
 -(BOOL)isComponentWithKey:(NSString*)key
@@ -144,7 +179,7 @@
         }
         
         if([self.field.required boolValue] || VALID_NOTEMPTY(self.textField.text, NSString))
-        {        
+        {
             if(VALID_NOTEMPTY(self.field.min, NSNumber) && [self.field.min intValue] > [self.textField.text length])
             {
                 [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
@@ -196,6 +231,11 @@
         self.storedValue = self.field.value;
         [self.textField setText:self.field.value];
     }
+}
+
+- (void)assignFirstResponder
+{
+    [self.textField becomeFirstResponder];
 }
 
 @end

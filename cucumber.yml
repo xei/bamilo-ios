@@ -1,3 +1,1 @@
-# config/cucumber.yml##YAML Template---html_report: --format progress --format html --out=features_report.html  bvt: --tags @bvt
-json_report: --tags @all -f json -o ch.json -f html -o ch.html APP_BUNDLE_PATH=/Users/rocket/Workspace/Jenkins/workspace/Jumia_Calabash_iOS_1.0_Test3
-country: --tags @choose_country APP_BUNDLE_PATH=/Users/rocket/Workspace/Jenkins/workspace/Jumia_Calabash_iOS_1.0_Test3
+# config/cucumber.yml##YAML Template---html_report: --format progress --format html --out=features_report.html  bvt: --tags @bvtjson_report: --tags @all -f json -o ch.json -f html -o ch.html APP_BUNDLE_PATH=/Users/rocket/Workspace/Jenkins/workspace/Jumia_Calabash_iOS_1.0_NGcountry: --tags @choose_country APP_BUNDLE_PATH=/Users/rocket/Workspace/Jenkins/workspace/Jumia_Calabash_iOS_1.0_NG

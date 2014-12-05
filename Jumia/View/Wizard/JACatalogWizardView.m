@@ -8,6 +8,17 @@
 
 #import "JACatalogWizardView.h"
 
+@interface JACatalogWizardView ()
+
+@property (nonatomic, strong) UIView* wizardPage1;
+@property (nonatomic, strong) UIImageView* wizardPage1ImageView;
+@property (nonatomic, strong) UILabel* wizardPage1Label;
+@property (nonatomic, strong) UIView* wizardPage2;
+@property (nonatomic, strong) UIImageView* wizardPage2ImageView;
+@property (nonatomic, strong) UILabel* wizardPage2Label;
+
+@end
+
 @implementation JACatalogWizardView
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -17,78 +28,151 @@
         
         CGFloat currentX = 0.0f;
         
-        UIView* wizardPage1 = [[UIView alloc] initWithFrame:CGRectMake(currentX,
-                                                                       self.scrollView.bounds.origin.y,
-                                                                       self.scrollView.bounds.size.width,
-                                                                       self.scrollView.bounds.size.height)];
-        [self.scrollView addSubview:wizardPage1];
+        self.wizardPage1 = [[UIView alloc] initWithFrame:CGRectMake(currentX,
+                                                                    self.scrollView.bounds.origin.y,
+                                                                    self.scrollView.bounds.size.width,
+                                                                    self.scrollView.bounds.size.height)];
+        [self.scrollView addSubview:self.wizardPage1];
         
+        CGFloat topMargin = kJAWizardViewImageGenericTopMargin;
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+            topMargin = kJAWizardViewImageGenericTopMargin_ipad;
+        }
         UIImage* image1 = [UIImage imageNamed:@"wizard_swipe"];
-        UIImageView* imageView1 = [[UIImageView alloc] initWithImage:image1];
-        [imageView1 setFrame:CGRectMake((wizardPage1.bounds.size.width - image1.size.width) / 2,
-                                        kJAWizardViewImageGenericTopMargin,
-                                        imageView1.frame.size.width,
-                                        imageView1.frame.size.height)];
-        [wizardPage1 addSubview:imageView1];
+        self.wizardPage1ImageView = [[UIImageView alloc] initWithImage:image1];
+        [self.wizardPage1ImageView setFrame:CGRectMake((self.wizardPage1.bounds.size.width - image1.size.width) / 2,
+                                                       topMargin,
+                                                       image1.size.width,
+                                                       image1.size.height)];
+        [self.wizardPage1 addSubview:self.wizardPage1ImageView];
         
-        UILabel* wizardLabel1 = [[UILabel alloc] init];
-        wizardLabel1.textAlignment = NSTextAlignmentCenter;
-        wizardLabel1.numberOfLines = -1;
-        wizardLabel1.font = kJAWizardFont;
-        wizardLabel1.textColor = kJAWizardFontColor;
-        wizardLabel1.text = STRING_WIZARD_CATALOG_SWIPE;
+        self.wizardPage1Label = [[UILabel alloc] init];
+        self.wizardPage1Label.textAlignment = NSTextAlignmentCenter;
+        self.wizardPage1Label.numberOfLines = -1;
+        self.wizardPage1Label.font = kJAWizardFont;
+        self.wizardPage1Label.textColor = kJAWizardFontColor;
+        self.wizardPage1Label.text = STRING_WIZARD_CATALOG_SWIPE;
         
-        CGRect wizardLabe1Rect = [STRING_WIZARD_CATALOG_SWIPE boundingRectWithSize:CGSizeMake(wizardPage1.bounds.size.width - kJAWizardCatalog1TextHorizontalMargin*2, 1000.0f)
+        CGRect wizardLabe1Rect = [STRING_WIZARD_CATALOG_SWIPE boundingRectWithSize:CGSizeMake(self.wizardPage1.bounds.size.width - kJAWizardCatalog1TextHorizontalMargin*2, 1000.0f)
                                                                            options:NSStringDrawingUsesLineFragmentOrigin
                                                                         attributes:@{NSFontAttributeName:kJAWizardFont} context:nil];
         
-        [wizardLabel1 setFrame:CGRectMake(wizardPage1.bounds.origin.x + kJAWizardCatalog1TextHorizontalMargin,
-                                          CGRectGetMaxY(imageView1.frame) + kJAWizardCatalog1ViewTextVerticalMargin,
-                                          wizardPage1.bounds.size.width - kJAWizardCatalog1TextHorizontalMargin*2,
-                                          wizardLabe1Rect.size.height)];
-        [wizardPage1 addSubview:wizardLabel1];
+        [self.wizardPage1Label setFrame:CGRectMake(self.wizardPage1.bounds.origin.x + kJAWizardCatalog1TextHorizontalMargin,
+                                                   CGRectGetMaxY(self.wizardPage1ImageView.frame) + kJAWizardCatalog1ViewTextVerticalMargin,
+                                                   self.wizardPage1.bounds.size.width - kJAWizardCatalog1TextHorizontalMargin*2,
+                                                   wizardLabe1Rect.size.height)];
+        [self.wizardPage1 addSubview:self.wizardPage1Label];
         
-        currentX += wizardPage1.frame.size.width;
+        currentX += self.wizardPage1.frame.size.width;
         
-        UIView* wizardPage2 = [[UIView alloc] initWithFrame:CGRectMake(currentX,
-                                                                       self.scrollView.bounds.origin.y,
-                                                                       self.scrollView.bounds.size.width,
-                                                                       self.scrollView.bounds.size.height)];
-        [self.scrollView addSubview:wizardPage2];
+        self.wizardPage2 = [[UIView alloc] initWithFrame:CGRectMake(currentX,
+                                                                    self.scrollView.bounds.origin.y,
+                                                                    self.scrollView.bounds.size.width,
+                                                                    self.scrollView.bounds.size.height)];
+        [self.scrollView addSubview:self.wizardPage2];
         
         UIImage* image2 = [UIImage imageNamed:@"wizard_fav"];
-        UIImageView* imageView2 = [[UIImageView alloc] initWithImage:image2];
-        [imageView2 setFrame:CGRectMake(wizardPage2.bounds.size.width - image2.size.width - 15.0f,
-                                        kJAWizardViewImageGenericSmallTopMargin,
-                                        imageView2.frame.size.width,
-                                        imageView2.frame.size.height)];
-        [wizardPage2 addSubview:imageView2];
+        self.wizardPage2ImageView = [[UIImageView alloc] initWithImage:image2];
+        [self.wizardPage2ImageView setFrame:CGRectMake(self.wizardPage2.bounds.size.width - self.wizardPage2ImageView.frame.size.width - 15.0f,
+                                                       kJAWizardViewImageGenericSmallTopMargin,
+                                                       image2.size.width,
+                                                       image2.size.height)];
+        [self.wizardPage2 addSubview:self.wizardPage2ImageView];
         
-        UILabel* wizardLabel2 = [[UILabel alloc] init];
-        wizardLabel2.textAlignment = NSTextAlignmentCenter;
-        wizardLabel2.numberOfLines = -1;
-        wizardLabel2.font = kJAWizardFont;
-        wizardLabel2.textColor = kJAWizardFontColor;
-        wizardLabel2.text = STRING_WIZARD_CATALOG_FAVORITE;
+        self.wizardPage2Label = [[UILabel alloc] init];
+        self.wizardPage2Label.textAlignment = NSTextAlignmentCenter;
+        self.wizardPage2Label.numberOfLines = -1;
+        self.wizardPage2Label.font = kJAWizardFont;
+        self.wizardPage2Label.textColor = kJAWizardFontColor;
+        self.wizardPage2Label.text = STRING_WIZARD_CATALOG_FAVORITE;
         
-        CGRect wizardLabe2ect = [STRING_WIZARD_CATALOG_FAVORITE boundingRectWithSize:CGSizeMake(wizardPage1.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2, 1000.0f)
+        CGRect wizardLabe2ect = [STRING_WIZARD_CATALOG_FAVORITE boundingRectWithSize:CGSizeMake(self.wizardPage1.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2, 1000.0f)
                                                                              options:NSStringDrawingUsesLineFragmentOrigin
                                                                           attributes:@{NSFontAttributeName:kJAWizardFont} context:nil];
         
-        [wizardLabel2 setFrame:CGRectMake(wizardPage2.bounds.origin.x + kJAWizardCatalog2TextHorizontalMargin,
-                                          CGRectGetMaxY(imageView2.frame) + kJAWizardCatalog2ViewTextVerticalMargin,
-                                          wizardPage2.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2,
-                                          wizardLabe2ect.size.height)];
-        [wizardPage2 addSubview:wizardLabel2];
+        CGFloat labelTopMargin = kJAWizardCatalog2ViewTextVerticalMargin;
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+            labelTopMargin = kJAWizardCatalog2ViewTextVerticalMargin_ipad;
+        }
+        [self.wizardPage2Label setFrame:CGRectMake(self.wizardPage2.bounds.origin.x + kJAWizardCatalog2TextHorizontalMargin,
+                                                   CGRectGetMaxY(self.wizardPage2ImageView.frame) + labelTopMargin,
+                                                   self.wizardPage2.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2,
+                                                   wizardLabe2ect.size.height)];
+        [self.wizardPage2 addSubview:self.wizardPage2Label];
         
-        currentX += wizardPage2.frame.size.width;
+        currentX += self.wizardPage2.frame.size.width;
         
         [self.scrollView setContentSize:CGSizeMake(currentX,
                                                    self.scrollView.frame.size.height)];
         
         self.pageControl.numberOfPages = 2;
+        
+        [self reloadForFrame:frame];
     }
     return self;
+}
+
+- (void)reloadForFrame:(CGRect)frame
+{
+    [super reloadForFrame:frame];
+    
+    CGFloat currentX = 0.0f;
+    
+    [self.wizardPage1 setFrame:CGRectMake(currentX,
+                                          self.scrollView.bounds.origin.y,
+                                          self.scrollView.bounds.size.width,
+                                          self.scrollView.bounds.size.height)];
+    
+    CGFloat topMargin = kJAWizardViewImageGenericTopMargin;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+        topMargin = kJAWizardViewImageGenericTopMargin_ipad;
+    }
+    [self.wizardPage1ImageView setFrame:CGRectMake((self.wizardPage1.bounds.size.width -  self.wizardPage1ImageView.frame.size.width) / 2,
+                                                   topMargin,
+                                                   self.wizardPage1ImageView.frame.size.width,
+                                                   self.wizardPage1ImageView.frame.size.height)];
+    
+    CGRect wizardLabe1Rect = [STRING_WIZARD_CATALOG_SWIPE boundingRectWithSize:CGSizeMake(self.wizardPage1.bounds.size.width - kJAWizardCatalog1TextHorizontalMargin*2, 1000.0f)
+                                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                                    attributes:@{NSFontAttributeName:kJAWizardFont} context:nil];
+    
+    [self.wizardPage1Label setFrame:CGRectMake(self.wizardPage1.bounds.origin.x + kJAWizardCatalog1TextHorizontalMargin,
+                                               CGRectGetMaxY(self.wizardPage1ImageView.frame) + kJAWizardCatalog1ViewTextVerticalMargin,
+                                               self.wizardPage1.bounds.size.width - kJAWizardCatalog1TextHorizontalMargin*2,
+                                               wizardLabe1Rect.size.height)];
+    currentX += self.wizardPage1.frame.size.width;
+    
+    [self.wizardPage2 setFrame:CGRectMake(currentX,
+                                          self.scrollView.bounds.origin.y,
+                                          self.scrollView.bounds.size.width,
+                                          self.scrollView.bounds.size.height)];
+    
+    [self.wizardPage2ImageView setFrame:CGRectMake(self.wizardPage2.bounds.size.width - self.wizardPage2ImageView.frame.size.width - 15.0f,
+                                                   kJAWizardViewImageGenericSmallTopMargin,
+                                                   self.wizardPage2ImageView.frame.size.width,
+                                                   self.wizardPage2ImageView.frame.size.height)];
+    
+    CGRect wizardLabe2ect = [STRING_WIZARD_CATALOG_FAVORITE boundingRectWithSize:CGSizeMake(self.wizardPage1.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2, 1000.0f)
+                                                                         options:NSStringDrawingUsesLineFragmentOrigin
+                                                                      attributes:@{NSFontAttributeName:kJAWizardFont} context:nil];
+    
+    CGFloat labelTopMargin = kJAWizardCatalog2ViewTextVerticalMargin;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+        labelTopMargin = kJAWizardCatalog2ViewTextVerticalMargin_ipad;
+    }
+    [self.wizardPage2Label setFrame:CGRectMake(self.wizardPage2.bounds.origin.x + kJAWizardCatalog2TextHorizontalMargin,
+                                               CGRectGetMaxY(self.wizardPage2ImageView.frame) + labelTopMargin,
+                                               self.wizardPage2.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2,
+                                               wizardLabe2ect.size.height)];
+    
+    currentX += self.wizardPage2.frame.size.width;
+    
+    [self.scrollView setContentSize:CGSizeMake(currentX,
+                                               self.scrollView.frame.size.height)];
+    
+    self.pageControl.numberOfPages = 2;
+    
+    [self.scrollView scrollRectToVisible:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:NO];
 }
 
 @end

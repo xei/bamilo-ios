@@ -1,4 +1,4 @@
-    //
+//
 //  JANavigationBarView.m
 //  Jumia
 //
@@ -7,12 +7,9 @@
 //
 
 #import "JANavigationBarView.h"
+#import "JAAppDelegate.h"
 
 @interface JANavigationBarView ()
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *backButtonWidth;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabelWidth;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabelLeftMargin;
 
 @end
 
@@ -37,6 +34,23 @@
 
 - (void)initialSetup;
 {
+    self.translatesAutoresizingMaskIntoConstraints = YES;
+    self.editButton.translatesAutoresizingMaskIntoConstraints = YES;
+    self.backButton.translatesAutoresizingMaskIntoConstraints = YES;
+    self.leftButton.translatesAutoresizingMaskIntoConstraints = YES;
+    self.titleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.doneButton.translatesAutoresizingMaskIntoConstraints = YES;
+    self.cartButton.translatesAutoresizingMaskIntoConstraints = YES;
+    self.cartCountLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.logoImageView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    CGFloat initialWidth = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size.width;
+    
+    [self setFrame:CGRectMake(self.frame.origin.x,
+                              self.frame.origin.y,
+                              initialWidth,
+                              self.frame.size.height)];
+    
     self.backgroundColor = JANavBarBackgroundGrey;
     [self.editButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
@@ -46,9 +60,24 @@
     
     [self.backButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.backButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orientationChanged:)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
 }
 
-- (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout;
+- (void)orientationChanged:(NSNotification *)notification
+{
+    [self adjustTitleFrame];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout
 {
     //left side
     if (layout.showBackButton) {
@@ -89,7 +118,7 @@
     self.leftButton.hidden = YES;
     self.editButton.hidden = YES;
     
-    [self adjustTitleFrame];    
+    [self adjustTitleFrame];
 }
 - (void)showEditButton;
 {
@@ -144,7 +173,7 @@
     } else {
         finalTitleString = [[NSMutableAttributedString alloc] initWithString:title attributes:attributes];
     }
-
+    
     [self.titleLabel setAttributedText:finalTitleString];
     self.logoImageView.hidden = YES;
     self.titleLabel.hidden = NO;
@@ -154,19 +183,81 @@
 
 -(void)adjustTitleFrame
 {
+    CGRect frame = [[UIScreen mainScreen] bounds];
+    CGFloat width = frame.size.width;
+    UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if(UIDeviceOrientationUnknown != deviceOrientation && UIDeviceOrientationIsPortrait(deviceOrientation))
+    {
+        if(frame.size.width > frame.size.height)
+        {
+            width = frame.size.height;
+        }
+    }
+    else if(UIDeviceOrientationUnknown != deviceOrientation && UIDeviceOrientationIsLandscape(deviceOrientation))
+    {
+        if(frame.size.height > frame.size.width)
+        {
+            width = frame.size.height;
+        }
+    }
+    else if(UIInterfaceOrientationIsPortrait(interfaceOrientation))
+    {
+        if(frame.size.width > frame.size.height)
+        {
+            width = frame.size.height;
+        }
+    }
+    else if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
+    {
+        if(frame.size.height > frame.size.width)
+        {
+            width = frame.size.height;
+        }
+    }
+    
+    CGFloat leftMargin = 0.0f;
+    CGFloat backButtonLeftMargin = 4.0f;
+    CGFloat editButtonLeftMargin = 7.0f;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        leftMargin = 6.0f;
+        backButtonLeftMargin = 12.0f;
+        editButtonLeftMargin = 16.0f;
+    }
+    
+    [self.logoImageView setFrame:CGRectMake((width - self.logoImageView.frame.size.width) / 2,
+                                            self.logoImageView.frame.origin.y,
+                                            self.logoImageView.frame.size.width,
+                                            self.logoImageView.frame.size.height)];
+    
     CGRect rightItemFrame = CGRectZero;
     if(!self.doneButton.hidden)
     {
         NSString *doneButtonText = self.doneButton.titleLabel.text;
         NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
         CGSize doneButtonTextSize = [doneButtonText sizeWithAttributes:attributes];
-        CGRect frame = self.doneButton.frame;
-        frame.size.width = 6.0f + doneButtonTextSize.width;
-        self.doneButton.frame = frame;
-        rightItemFrame = frame;
+        CGFloat doneButtonWidth = 6.0f + doneButtonTextSize.width;
+
+        [self.doneButton setFrame:CGRectMake(width - doneButtonWidth - editButtonLeftMargin,
+                                             self.doneButton.frame.origin.y,
+                                             doneButtonWidth,
+                                             self.doneButton.frame.size.height)];
+        rightItemFrame = self.doneButton.frame;
     }
     else if(!self.cartButton.hidden)
     {
+        [self.cartButton setFrame:CGRectMake(width - self.cartButton.frame.size.width - leftMargin,
+                                             self.cartButton.frame.origin.y,
+                                             self.cartButton.frame.size.width,
+                                             self.cartButton.frame.size.height)];
+        
+        CGFloat marginBetweenCartButtonAndLabel = 7.0f;
+        [self.cartCountLabel setFrame:CGRectMake(width - self.cartCountLabel.frame.size.width - leftMargin - marginBetweenCartButtonAndLabel,
+                                                 self.cartCountLabel.frame.origin.y,
+                                                 self.cartCountLabel.frame.size.width,
+                                                 self.cartCountLabel.frame.size.height)];
+        
         rightItemFrame = self.cartButton.frame;
     }
     
@@ -176,39 +267,50 @@
         NSString *backButtonText = self.backButton.titleLabel.text;
         NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
         CGSize backButtonTextSize = [backButtonText sizeWithAttributes:attributes];
-        CGRect frame = self.backButton.frame;
+        
         CGFloat backButtonMaxWidth = backButtonTextSize.width;
+        CGFloat backButtonFinalWidth = self.backButton.frame.size.width;
+        
         if(backButtonTextSize.width > 80.0f && !self.titleLabel.hidden)
         {
             backButtonMaxWidth = 80.0f;
-            frame.size.width = 6.0f + backButtonMaxWidth + 11.0f + 12.0f;
+            backButtonFinalWidth = 6.0f + backButtonMaxWidth + 11.0f + 12.0f;
         }
         else
         {
             if(!self.titleLabel.hidden)
             {
                 backButtonMaxWidth = backButtonTextSize.width;
-                frame.size.width = 6.0f + backButtonMaxWidth + 11.0f + 12.0f;
+                backButtonFinalWidth = 6.0f + backButtonMaxWidth + 11.0f + 12.0f;
             }
             else
             {
-                backButtonMaxWidth = self.frame.size.width - rightItemFrame.size.width - 12.0f;
-                frame.size.width = 6.0f + backButtonMaxWidth + 11.0f;
+                backButtonMaxWidth = width - rightItemFrame.size.width - 12.0f;
+                backButtonFinalWidth = 6.0f + backButtonMaxWidth + 11.0f;
             }
         }
-            
-        self.backButton.frame = frame;
-        self.backButtonWidth.constant = frame.size.width;
-        leftItemFrame = frame;
+        
+        [self.backButton setFrame:CGRectMake(backButtonLeftMargin,
+                                             self.backButton.frame.origin.y,
+                                             backButtonFinalWidth,
+                                             self.backButton.frame.size.height)];
+        leftItemFrame = self.backButton.frame;
     }
     else if(!self.leftButton.hidden)
     {
-        [self.leftButton sizeToFit];
+        [self.leftButton setFrame:CGRectMake(leftMargin,
+                                             self.leftButton.frame.origin.y,
+                                             self.leftButton.frame.size.width,
+                                             self.leftButton.frame.size.height)];
         leftItemFrame = self.leftButton.frame;
     }
     else if(!self.editButton.hidden)
     {
         [self.editButton sizeToFit];
+        [self.editButton setFrame:CGRectMake(editButtonLeftMargin,
+                                             self.editButton.frame.origin.y,
+                                             self.editButton.frame.size.width,
+                                             self.editButton.frame.size.height)];
         leftItemFrame = self.editButton.frame;
     }
     
@@ -222,19 +324,21 @@
     {
         titleLabelLeftMargin = rightItemFrame.size.width + 3.0f;
     }
-    titleLabelWidth = self.frame.size.width - (2 * titleLabelLeftMargin);
+    titleLabelWidth = width - (2 * titleLabelLeftMargin);
     
     NSString *titleLabelText = self.titleLabel.text;
     NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
     CGSize titleLabelTextSize = [titleLabelText sizeWithAttributes:titleLabelAttributes];
     if (titleLabelTextSize.width > titleLabelWidth)
     {
-        titleLabelWidth = self.frame.size.width - leftItemFrame.size.width - rightItemFrame.size.width - 24.0f;
-        titleLabelLeftMargin = (self.frame.size.width - titleLabelWidth) / 2 + 12.0;
+        titleLabelWidth = width - leftItemFrame.size.width - rightItemFrame.size.width - 24.0f;
+        titleLabelLeftMargin = (width - titleLabelWidth) / 2 + 12.0;
     }
-
-    self.titleLabelLeftMargin.constant = titleLabelLeftMargin;
-    self.titleLabelWidth.constant = titleLabelWidth;
+    
+    [self.titleLabel setFrame:CGRectMake(titleLabelLeftMargin,
+                                         self.titleLabel.frame.origin.y,
+                                         titleLabelWidth,
+                                         self.titleLabel.frame.size.height)];
 }
 
 - (void)hideCenterItems

@@ -57,16 +57,31 @@
     }
 }
 
-+ (JACampaignSingleView *)getNewJACampaignSingleView
++ (JACampaignSingleView *)getNewJACampaignSingleView:(UIInterfaceOrientation)interfaceOrientation
 {
     NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JACampaignSingleView"
                                                  owner:nil
                                                options:nil];
     
+    if(UIUserInterfaceIdiomPad ==  UI_USER_INTERFACE_IDIOM())
+    {
+        if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
+        {
+            xib = [[NSBundle mainBundle] loadNibNamed:@"JACampaignSingleView~iPad_Landscape"
+                                                 owner:nil
+                                               options:nil];
+        }
+        else
+        {
+            xib = [[NSBundle mainBundle] loadNibNamed:@"JACampaignSingleView~iPad_Portrait"
+                                                 owner:nil
+                                               options:nil];
+        }
+    }
+    
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JACampaignSingleView class]]) {
             JACampaignSingleView *temp = (JACampaignSingleView *)obj;
-            temp.frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame;
             return temp;
         }
     }

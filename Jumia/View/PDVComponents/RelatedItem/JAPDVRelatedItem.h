@@ -15,4 +15,6 @@
 
 + (JAPDVRelatedItem *)getNewPDVRelatedItemSection;
 
+- (void)setupWithFrame:(CGRect)frame;
+
 @end

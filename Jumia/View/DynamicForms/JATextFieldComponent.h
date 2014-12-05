@@ -21,6 +21,8 @@
 
 -(void)setupWithField:(RIField*)field;
 
+-(void)setupWithLabel:(NSString*)label value:(NSString*)value mandatory:(BOOL)mandatory;
+
 -(BOOL)isComponentWithKey:(NSString*)key;
 
 -(void)setValue:(NSString*)value;

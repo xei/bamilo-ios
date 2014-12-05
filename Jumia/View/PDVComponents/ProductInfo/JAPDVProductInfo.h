@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
 
+@class RIProduct;
+
 @interface JAPDVProductInfo : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
@@ -25,17 +27,15 @@
 @property (weak, nonatomic) IBOutlet UIImageView *goToReviewsImageView;
 @property (weak, nonatomic) IBOutlet UILabel *specificationsLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *goToSpecificationsImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *priceSeparator;
 @property (weak, nonatomic) IBOutlet UIImageView *sizeImageViewSeparator;
+@property (weak, nonatomic) IBOutlet UIImageView *ratingsSeparator;
+
+@property (weak, nonatomic) IBOutlet UIButton *productFeaturesMore;
+@property (weak, nonatomic) IBOutlet UIButton *productDescriptionMore;
 
 + (JAPDVProductInfo *)getNewPDVProductInfoSection;
 
-- (void)setup;
-
-- (void)setNumberOfStars:(NSInteger)stars;
-
-- (void)setPriceWithNewValue:(NSString *)newValue
-                 andOldValue:(NSString *)oldValue;
-
-- (void)removeSizeOptions;
+- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize numberOfRatings:(NSString*)numberOfRatings;
 
 @end

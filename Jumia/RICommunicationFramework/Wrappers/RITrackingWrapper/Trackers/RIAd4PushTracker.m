@@ -82,7 +82,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         [events addObject:[NSNumber numberWithInt:RIEventViewCampaign]];
         [events addObject:[NSNumber numberWithInt:RIEventTopCategory]];
         [events addObject:[NSNumber numberWithInt:RIEventAddFromWishlistToCart]];
-
+        
         self.registeredEvents = [events copy];
     }
     return self;
@@ -120,7 +120,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                              options:options];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-       [[BMA4SNotification sharedBMA4S] didFinishLaunchingWithOptions:options]; 
+        [[BMA4SNotification sharedBMA4S] didFinishLaunchingWithOptions:options];
     });
     
     NSDictionary *deviceInfo = [NSDictionary dictionaryWithObject:@"0" forKey:kAd4PushProfileUserIdKey];
@@ -130,7 +130,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 #pragma mark - RINotificationTracking protocol
 
 - (void)applicationDidRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
-{    
+{
     RIDebugLog(@"Ad4Push - Registering for remote notifications.");
     
     id tracker = [BMA4SNotification sharedBMA4S];
@@ -185,8 +185,6 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     }
     
     [[BMA4SNotification sharedBMA4S] applicationHandleOpenUrl:url];
-    
-    [self handlePushNotificationWithOpenURL:url];
 }
 
 #pragma mark - RIPushNotificaitonTracking
@@ -215,7 +213,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         [BMA4STracker trackEventWithType:1003 parameters:parameters];
         
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"has_app_opened"];
-        [[NSUserDefaults standardUserDefaults] synchronize];        
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 
@@ -223,7 +221,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 - (void)trackEvent:(NSNumber *)eventType data:(NSDictionary *)data
 {
     RIDebugLog(@"Ad4Push - Tracking event = %@, data %@", eventType, data);
-
+    
     if([self.registeredEvents containsObject:eventType])
     {
         NSString *articleId = @"";
@@ -258,7 +256,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             [[NSUserDefaults standardUserDefaults] setObject:userStatus forKey:kAd4PushProfileStatusInAppKey];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
-
+        
         NSMutableDictionary *deviceInfo = [[NSMutableDictionary alloc] init];
         NSMutableArray *parameters = [[NSMutableArray alloc] init];
         NSInteger event = [eventType integerValue];
@@ -323,9 +321,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     categoryId = [data objectForKey:kRIEventCategoryIdKey];
                 }
                 
-                if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSString))
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSNumber))
                 {
-                    price = [data objectForKey:kRIEventPriceKey];
+                    price = [[data objectForKey:kRIEventPriceKey] stringValue];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventCurrencyCodeKey], NSString))
@@ -492,7 +490,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         [[NSUserDefaults standardUserDefaults] setObject:userStatus forKey:kAd4PushProfileStatusInAppKey];
     }
     [deviceInfo setObject:userStatus forKey:kAd4PushProfileStatusInAppKey];
-
+    
     NSNumber *numberOfPurchases = [NSNumber numberWithInt:0];
     if(VALID_NOTEMPTY([data objectForKey:kRIEventAmountTransactions], NSNumber))
     {
@@ -502,7 +500,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     
     NSNumber *total = [data objectForKey:kRIEcommerceTotalValueKey];
     [deviceInfo setObject:total forKey:kAd4PushProfileCartValueKey];
-
+    
     CGFloat grandTotalValue = 0.0f;
     NSNumber *grandTotal = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfilePurchaseGrandTotalKey];
     if(VALID_NOTEMPTY(grandTotal, NSNumber))
@@ -530,7 +528,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     [deviceInfo setObject:[data objectForKey:kRIEcommerceCartAverageValueKey] forKey:kAd4PushProfileAvgCartValueKey];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
-
+    
     [BMA4STracker updateDeviceInfo:deviceInfo];
     
     NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
@@ -588,7 +586,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             if ([key isEqualToString:@""])
             {
                 // Home
-                [self pushHomeViewController];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
             }
             else if ([key isEqualToString:@"c"] && VALID_NOTEMPTY(arguments, NSString))
             {
@@ -600,7 +598,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:parameterKey forKey:@"filter_type"];
                     [userInfo setObject:parameterValue forKey:@"filter_value"];
                 }
-
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cbr"] && VALID_NOTEMPTY(arguments, NSString))
@@ -614,7 +612,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:parameterKey forKey:@"filter_type"];
                     [userInfo setObject:parameterValue forKey:@"filter_value"];
                 }
-
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cp"] && VALID_NOTEMPTY(arguments, NSString))
@@ -628,7 +626,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:parameterKey forKey:@"filter_type"];
                     [userInfo setObject:parameterValue forKey:@"filter_value"];
                 }
-
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cin"] && VALID_NOTEMPTY(arguments, NSString))
@@ -642,7 +640,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:parameterKey forKey:@"filter_type"];
                     [userInfo setObject:parameterValue forKey:@"filter_value"];
                 }
-
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cpu"] && VALID_NOTEMPTY(arguments, NSString))
@@ -656,7 +654,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:parameterKey forKey:@"filter_type"];
                     [userInfo setObject:parameterValue forKey:@"filter_value"];
                 }
-
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cpd"] && VALID_NOTEMPTY(arguments, NSString))
@@ -670,7 +668,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:parameterKey forKey:@"filter_type"];
                     [userInfo setObject:parameterValue forKey:@"filter_value"];
                 }
-
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cb"] && VALID_NOTEMPTY(arguments, NSString))
@@ -684,7 +682,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:parameterKey forKey:@"filter_type"];
                     [userInfo setObject:parameterValue forKey:@"filter_value"];
                 }
-
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cn"] && VALID_NOTEMPTY(arguments, NSString))
@@ -698,7 +696,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:parameterKey forKey:@"filter_type"];
                     [userInfo setObject:parameterValue forKey:@"filter_value"];
                 }
-
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"n"] && VALID_NOTEMPTY(arguments, NSString))
@@ -788,105 +786,6 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             }
         }
     }
-}
-
-- (void)handlePushNotificationWithOpenURL:(NSURL *)url
-{
-    NSString *urlScheme = [url scheme];
-    
-    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *faceAppId = [infoDict objectForKey:@"FacebookAppID"];
-    NSString *facebookSchema = @"";
-    
-    if (faceAppId.length > 0)
-    {
-        facebookSchema = [NSString stringWithFormat:@"fb%@", faceAppId];
-    }
-    
-    if ((urlScheme != nil && [urlScheme isEqualToString:@"jumia"]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme]))
-    {
-        if ([facebookSchema isEqualToString:urlScheme])
-        {
-            [self pushHomeViewController];
-            
-            return;
-        }
-        
-        NSString *path = [NSString stringWithString:url.path];
-        NSString *urlHost = [NSString stringWithString:url.host];
-        NSString *urlQuery = nil;
-        
-        if (url.query != nil)
-        {
-            if ([url.query length] >= 5)
-            {
-                if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"])
-                {
-                    NSRange range = [url.query rangeOfString:@"?ADXID"];
-                    if (range.location != NSNotFound)
-                    {
-                        NSString *paramsWithoutAdXData = [url.query substringToIndex:range.location];
-                        urlQuery = [NSString stringWithFormat:@"?%@",paramsWithoutAdXData];
-                        path = [url.path stringByAppendingString:urlQuery];
-                    } else
-                    {
-                        urlQuery = [NSString stringWithFormat:@"?%@",url.query];
-                        path = [url.path stringByAppendingString:urlQuery];
-                    }
-                }
-            }
-        }
-        
-        NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
-        if (![urlHost isEqualToString:bundleIdentifier])
-        {
-            path = [urlHost stringByAppendingString:path];
-        }
-        else
-        {
-            path = [path substringFromIndex:1];
-        }
-        
-        NSDictionary *dict = [self parseQueryString:[url query]];
-        
-        NSMutableDictionary *urlDictionary = [NSMutableDictionary dictionaryWithObject:path forKey:@"u"];
-        
-        NSString *temp = [dict objectForKey:@"UTM"];
-        
-        if (temp)
-        {
-            [urlDictionary addEntriesFromDictionary:dict];
-        }
-        
-        [self handleNotificationWithDictionary:urlDictionary];
-    }
-}
-
-#pragma mark - Push view controllers
-
-- (void)pushHomeViewController
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-}
-
-#pragma mark - Auxiliar methods
-
-- (NSDictionary *)parseQueryString:(NSString *)query
-{
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:16];
-    NSArray *pairs = [query componentsSeparatedByString:@"&"];
-    
-    for (NSString *pair in pairs)
-    {
-        NSArray *elements = [pair componentsSeparatedByString:@"="];
-        
-        NSString *key = [elements[0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *val = [elements[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
-        [dict setObject:val forKey:key];
-    }
-    
-    return dict;
 }
 
 @end

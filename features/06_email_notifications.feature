@@ -38,6 +38,7 @@ Scenario: Email Notifications Section
 Scenario: Change Email Notifications
 * I touch the email notification option
 * I wait to see the email notifications section
+* I wait for 2 seconds
 * I change the newsletter settings
 * I touch the Save button
 * I wait to see the message preferences updated

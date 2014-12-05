@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
-#import "JABaseViewController.h"
+#import "JASubFiltersViewController.h"
 #import "RIFilter.h"
 
-@interface JAGenericFilterViewController : JABaseViewController <UITableViewDelegate, UITableViewDataSource>
+@interface JAGenericFilterViewController : JASubFiltersViewController
 
 @property (nonatomic, strong)RIFilter* filter;
 

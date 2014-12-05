@@ -55,6 +55,7 @@ UIAlertViewDelegate
 @property (weak, nonatomic) IBOutlet UILabel *cartItensNumber;
 @property (weak, nonatomic) IBOutlet JAClickableView *cartView;
 @property (nonatomic, assign) CGFloat yOffset;
+@property (nonatomic, strong) UIStoryboard *mainStoryboard;
 
 // Handle external payment actions
 @property (assign, nonatomic) JAMenuViewControllerAction nextAction;
@@ -73,6 +74,12 @@ UIAlertViewDelegate
     self.screenName = @"LeftMenu";
     
     self.title = @"";
+    
+    self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+    {
+        self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+    }
     
     [self showLoading];
     
@@ -108,6 +115,16 @@ UIAlertViewDelegate
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateCart:)
                                                  name:kUpdateSideMenuCartNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(openMenu:)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(closeMenu:)
+                                                 name:kCloseMenuNotification
                                                object:nil];
     
     [self.cartView addTarget:self
@@ -150,7 +167,7 @@ UIAlertViewDelegate
 -(void)updateCart:(NSNotification*)notification
 {
     self.cart = nil;
-
+    
     if(VALID_NOTEMPTY(notification, NSNotification))
     {
         NSDictionary *userInfo = notification.userInfo;
@@ -199,15 +216,6 @@ UIAlertViewDelegate
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"showSubCategories"]) {
-        [segue.destinationViewController setSourceCategoriesArray:self.categories];
-    }
 }
 
 #pragma mark - Tableview datasource and delegate
@@ -337,11 +345,12 @@ UIAlertViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.view endEditing:YES];
-
-    [self.customNavBar resignFirstResponder];
     
     self.nextAction = JAMenuViewControllerOpenSideMenuItem;
     self.nextActionIndexPath = indexPath;
+    
+    [self.customNavBar resignFirstResponder];
+    [self.customNavBar.searchBar resignFirstResponder];
     
     if(self.needsExternalPaymentMethod)
     {
@@ -377,8 +386,15 @@ UIAlertViewDelegate
             if (1 == indexPath.row)
             {
                 [self.customNavBar addBackButtonToNavBar];
-                [self performSegueWithIdentifier:@"showSubCategories"
-                                          sender:nil];
+                
+                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                
+                if(VALID_NOTEMPTY(self.categories, NSArray))
+                {
+                    [userInfo setObject:self.categories forKey:@"categories"];
+                }
+                
+                [self showSubCategory];
             }
             else
             {
@@ -392,30 +408,30 @@ UIAlertViewDelegate
                         
                         [RICustomer logoutCustomerWithSuccessBlock:^
                          {
-                            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                            [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
-                            [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
-                            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-                            [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
-                            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                            
-                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
-                                                                      data:[trackingDictionary copy]];
-                            
-                            [self userDidLogout];
-                            
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-                            
-                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject)
-                        {
-                            [self userDidLogout];
-                            
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-                            
-                        }];
+                             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                             [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
+                             [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
+                             [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                             [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
+                             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                             [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                             [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                             
+                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
+                                                                       data:[trackingDictionary copy]];
+                             
+                             [self userDidLogout];
+                             
+                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                             
+                         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject)
+                         {
+                             [self userDidLogout];
+                             
+                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                             
+                         }];
                     }
                     else
                     {
@@ -433,6 +449,30 @@ UIAlertViewDelegate
             }
         }
     }
+}
+
+- (void)showSubCategory
+{
+    JASubCategoriesViewController* subCategoriesViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"subCategoriesViewController"];
+    
+    subCategoriesViewController.sourceCategoriesArray = self.categories;
+    
+    [self.navigationController pushViewController:subCategoriesViewController animated:YES];
+    
+}
+
+-(void)openMenu:(NSNotification*)notification
+{
+    if(VALID_NOTEMPTY(self.resultsTableView, UITableView))
+    {
+        [self.customNavBar.searchBar becomeFirstResponder];
+    }
+}
+
+-(void)closeMenu:(NSNotification*)notification
+{
+    [self.customNavBar.searchBar resignFirstResponder];
+    [self.customNavBar resignFirstResponder];
 }
 
 #pragma mark - Navigation bar custom delegate
@@ -721,6 +761,7 @@ UIAlertViewDelegate
         switch (self.nextAction) {
             case JAMenuViewControllerOpenSearchBar:
                 [self.customNavBar resignFirstResponder];
+                [self.customNavBar.searchBar resignFirstResponder];
                 break;
             default:
                 break;

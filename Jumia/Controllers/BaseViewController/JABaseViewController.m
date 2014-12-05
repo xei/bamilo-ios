@@ -17,6 +17,9 @@
 @property (assign, nonatomic) int requestNumber;
 @property (strong, nonatomic) UIView *loadingView;
 @property (nonatomic, strong) UIImageView *loadingAnimation;
+@property (strong, nonatomic) JANoConnectionView *noConnectionView;
+@property (strong, nonatomic) JAMessageView *messageView;
+@property (strong, nonatomic) JAMaintenancePage *maintenancePage;
 
 @end
 
@@ -77,13 +80,93 @@
     self.loadingView.alpha = 0.0f;
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:toInterfaceOrientation];
+    
+    if(VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)){
+        
+        UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+        [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.height, window.frame.size.width) orientation:toInterfaceOrientation];
+    }
+}
+- (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation
+{
+    CGFloat screenWidth = frame.size.width;
+    CGFloat screenHeight = frame.size.height;
+    
+    if(UIInterfaceOrientationIsPortrait(orientation))
+    {
+        if(screenWidth > screenHeight)
+        {
+            self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
+        }
+        else
+        {
+            self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
+        }
+    }
+    else
+    {
+        if(screenWidth > screenHeight)
+        {
+            self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
+        }
+        else
+        {
+            self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
+        }
+    }
+    
+    self.loadingAnimation.center = self.loadingView.center;
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    CGRect viewFrame = self.view.frame;
+    CGFloat screenWidth = viewFrame.size.width;
+    CGFloat screenHeight = viewFrame.size.height;
+    
+    if(VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView))
+    {
+        self.noConnectionView.frame = CGRectMake(self.noConnectionView.frame.origin.x,
+                                                 self.noConnectionView.frame.origin.y,
+                                                 screenWidth,
+                                                 screenHeight);
+        [self.view bringSubviewToFront:self.noConnectionView];
+    }
+    if(VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)){
+        
+        UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+        [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height)orientation:self.interfaceOrientation];
+    }
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
     [self reloadNavBar];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
                                                         object:nil];
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    NSUInteger supportedInterfaceOrientations = UIInterfaceOrientationMaskPortrait;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        supportedInterfaceOrientations = UIInterfaceOrientationMaskAll;
+    }
+    return supportedInterfaceOrientations;
 }
 
 - (void)reloadNavBar
@@ -95,6 +178,8 @@
 - (void) showLoading
 {
     self.requestNumber++;
+    
+    [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:self.interfaceOrientation];
     
     if(1 == self.requestNumber) {
         [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingView];
@@ -136,103 +221,118 @@
 
 - (void)showMessage:(NSString*)message success:(BOOL)success
 {
-    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+    UIViewController *rootViewController = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
     
-    JAMessageView *messageView = [JAMessageView getNewJAMessageView];
-    [messageView setTitle:message success:success addTo:window.rootViewController];
+    if(!VALID_NOTEMPTY(self.messageView, JAMessageView))
+    {
+        self.messageView = [JAMessageView getNewJAMessageView];
+        [self.messageView setupView];
+    }
+    
+    if(!VALID_NOTEMPTY([self.messageView superview], UIView))
+    {
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        CGFloat width = rootViewController.view.frame.size.width;
+        if(UIInterfaceOrientationIsLandscape(orientation))
+        {
+            if(width < rootViewController.view.frame.size.height)
+            {
+                width = rootViewController.view.frame.size.height;
+            }
+        }
+        else
+        {
+            if(width > rootViewController.view.frame.size.height)
+            {
+                width = rootViewController.view.frame.size.height;
+            }
+        }
+        
+        [self.messageView setFrame:CGRectMake(self.messageView.frame.origin.x,
+                                              self.messageView.frame.origin.y,
+                                              width,
+                                              self.messageView.frame.size.height)];
+        [rootViewController.view addSubview:self.messageView];
+    }
+    
+    [self.messageView setTitle:message success:success];
 }
 
 - (void)removeMessageView
 {
-    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
-    if(VALID_NOTEMPTY(window.rootViewController, UIViewController) && VALID_NOTEMPTY(window.rootViewController.view, UIView))
-    {
-        for(UIView *view in window.rootViewController.view.subviews)
-        {
-            if([view isKindOfClass:[JAMessageView class]])
-            {
-                [view removeFromSuperview];
-                break;
-            }
-        }
-    }
+    [self.messageView removeFromSuperview];
 }
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
 {
-    JANoConnectionView *lostConnection = [JANoConnectionView getNewJANoConnectionView];
-    [lostConnection setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
-    lostConnection.frame = CGRectMake(self.view.frame.origin.x,
-                                      startingY,
-                                      self.view.frame.size.width,
-                                      self.view.frame.size.height);
+    if(VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView))
+    {
+        [self.noConnectionView removeFromSuperview];
+    }
     
-    [lostConnection setRetryBlock:^(BOOL dismiss)
+    self.noConnectionView = [JANoConnectionView getNewJANoConnectionView];
+    [self.noConnectionView setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
+    self.noConnectionView.frame = CGRectMake(self.view.frame.origin.x,
+                                             startingY,
+                                             self.view.frame.size.width,
+                                             self.view.frame.size.height);
+    
+    // This is to avoid a retain cycle
+    __block JABaseViewController *viewController = self;
+    [self.noConnectionView setRetryBlock:^(BOOL dismiss)
      {
-         if([self respondsToSelector:selector])
+         if([viewController respondsToSelector:selector])
          {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
              if(ISEMPTY(objects))
              {
-                 [self performSelector:selector];
+                 [viewController performSelector:selector];
              }
              else if(1 == [objects count])
              {
-                 [self performSelector:selector withObject:[objects objectAtIndex:0]];
+                 [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
              }
              else if(2 == [objects count])
              {
-                 [self performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+                 [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
              }
 #pragma clang diagnostic pop
          }
      }];
     
-    for (UIView* view in self.view.subviews) {
-        if ([view isKindOfClass:[JANoConnectionView class]]) {
-            [view removeFromSuperview];
-        }
-    }
-    
-    [self.view addSubview:lostConnection];
+    [self.view addSubview:self.noConnectionView];
 }
 
 - (void)removeErrorView
 {
-    for(UIView *view in self.view.subviews)
-    {
-        if([view isKindOfClass:[JANoConnectionView class]])
-        {
-            [view removeFromSuperview];
-            break;
-        }
-    }
+    [self.noConnectionView removeFromSuperview];
 }
 
 - (void)showMaintenancePage:(SEL)selector objects:(NSArray*)objects
 {
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     
-    JAMaintenancePage *maintenancePage = [JAMaintenancePage getNewJAMaintenancePage];
-    [maintenancePage setupMaintenancePage:window.frame];
-    [maintenancePage setRetryBlock:^(BOOL dismiss)
+    self.maintenancePage = [JAMaintenancePage getNewJAMaintenancePage];
+    [self.maintenancePage setupMaintenancePage:window.frame orientation:self.interfaceOrientation];
+    __block JABaseViewController *viewController = self;
+    [self.maintenancePage setRetryBlock:^(BOOL dismiss)
      {
-         if([self respondsToSelector:selector])
+         if([viewController respondsToSelector:selector])
          {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
              if(ISEMPTY(objects))
              {
-                 [self performSelector:selector];
+                 [viewController performSelector:selector];
              }
              else if(1 == [objects count])
              {
-                 [self performSelector:selector withObject:[objects objectAtIndex:0]];
+                 [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
              }
              else if(2 == [objects count])
              {
-                 [self performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+                 [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
              }
 #pragma clang diagnostic pop
          }
@@ -244,7 +344,7 @@
         }
     }
     
-    [window.rootViewController.view addSubview:maintenancePage];
+    [window.rootViewController.view addSubview:self.maintenancePage];
 }
 
 - (void)removeMaintenancePage
@@ -259,5 +359,4 @@
         }
     }
 }
-
 @end

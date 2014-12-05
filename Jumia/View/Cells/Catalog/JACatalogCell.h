@@ -15,6 +15,9 @@
 #define JACatalogCellLightFont [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f]
 #define JACatalogCellRedFontColor UIColorFromRGB(0xcc0000)
 #define JACatalogCellGrayFontColor UIColorFromRGB(0xcccccc)
+#define JACatalogCellPriceLabelOffsetY 2.0f
+#define JACatalogCellPriceLabelOffsetX 7.0f
+#define JACatalogCellPriceLabelOffsetX_ipad 0.0f
 #define JACatalogCellRatingsViewOffsetY 0.0f
 #define JACatalogCellRatingsViewOffsetX 7.0f
 
@@ -28,7 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *brandLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *recentProductImageView;
-@property (weak, nonatomic) IBOutlet UILabel *recentProductLabel;
+@property (strong, nonatomic)UILabel* recentLabel;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *discountImageView;
 @property (weak, nonatomic) IBOutlet UILabel *discountLabel;

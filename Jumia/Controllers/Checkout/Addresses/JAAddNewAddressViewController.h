@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class RICart;
+
 @interface JAAddNewAddressViewController : JABaseViewController
 
 @property (assign, nonatomic) BOOL isBillingAddress;
 @property (assign, nonatomic) BOOL isShippingAddress;
 @property (assign, nonatomic) BOOL showBackButton;
+@property (nonatomic, strong) RICart *cart;
 
 @end

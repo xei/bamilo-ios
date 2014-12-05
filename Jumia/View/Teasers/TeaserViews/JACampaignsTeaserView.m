@@ -83,6 +83,13 @@
     [contentView addSubview:topClickableView];
     
     UIImage* backgroundImage = [UIImage imageNamed:@"CampaignsTeaserBackground"];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        if (self.isLandscape) {
+            backgroundImage = [UIImage imageNamed:@"CampaignsTeaserBackground_ipad_landscape"];
+        } else {
+            backgroundImage = [UIImage imageNamed:@"CampaignsTeaserBackground_ipad_portrait"];
+        }
+    }
     UIImageView* backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
     [backgroundImageView setFrame:topClickableView.bounds];
     [topClickableView addSubview:backgroundImageView];

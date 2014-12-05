@@ -12,6 +12,7 @@ $country = ENV['country']
 
 def initvars
     puts "initvars EN"
+    
     #init
     @wait_timeout = 5
     @wait_timeout_extra = 20
@@ -55,7 +56,7 @@ def initvars
     @credentials = "Credentials"
     @error_form_validation = "Form Validation Failed."
     @error_check_username = "Check your username and password"
-    @e_mail = "E-Mail"
+    @email = "E-Mail"
     @password = "Password"
     @invalid_email = "Email@invalido.com"
     @invalid_password = "umapasswordqualquer"
@@ -104,7 +105,7 @@ def initvars
     @receive_newsletter = "Receive Newsletter?"
     @first_name = "First name"
     @last_name = "Last name"
-    @retype_password_2 = "Retype password"
+    @retype_password_2 = "Re-type password"
     @newsletter = "Newsletter"
     @register = "Register"
     @error = "Error"
@@ -113,7 +114,7 @@ def initvars
     @first_name_text = "Tester"
     @last_name_text = "Test"
     @random = Time.now.to_i
-    @new_email = "testjumia+brunoqa"+@random.to_s+"@gmail.com"
+    @new_email = "testjumia1brunoqa"+@random.to_s+"@gmail.com"
     
     #search
     @search = "Search"
@@ -139,6 +140,7 @@ def initvars
     #product details
     @share_button = "btn share"
     @rate_button = "Rate Now"
+    @write_review = "Write a Review"
     @specification = "Specification"
     @add_to_cart = "Add to Cart"
     @related_items = "Related Items"
@@ -183,7 +185,7 @@ def initvars
     @track_order = "Track Order"
     @empty_order_id_message = "Please enter the order ID"
     @no_results_track_order_message = "No results found for the searched order id. Please recheck the order id and try again."
-    @track_order_id_valid = "300726581"
+    @track_order_id_valid = "304488292"
     @track_order_id_invalid = "000"
     @creation_date = "Creation Date:"
     @keyboard_delete_key = "Apagar"
@@ -249,7 +251,7 @@ def initvars_fr
     @credentials = "Identifiants"
     @error_form_validation = "Formulaire de validation a échoué."
     @error_check_username = "Vérifiez votre nom d'utilisateur ou mot de passe."
-    @e_mail = "E-Mail"
+    @email = "E-Mail"
     @password = "Mot de passe"
     @invalid_email = "Email@invalido.com"
     @invalid_password = "umapasswordqualquer"
@@ -283,7 +285,7 @@ def initvars_fr
     @preferences_updated = "Préférences mises à jour"
     
     #forgot password
-    @please_type_email = "Veillez entrer votre e-mail."
+    @please_type_email = "Veillez entrer votre email."
     @submit = "Soumettre"
     @error_empty_fields_fp = "Il y a des erreurs dans les données communiquées, vérifiez les différents champs renseignés"
     @error_please_check_input = "L'adresse électronique fournie n'est pas correct."
@@ -333,6 +335,7 @@ def initvars_fr
     #product details
     @share_button = "btn share"
     @rate_button = "Evaluez Maintenant"
+    @write_review = "Écrire un Avis"
     @specification = "Caractéristiques"
     @add_to_cart = "Ajouter au panier"
     @related_items = "Produits Similaires"
@@ -355,7 +358,7 @@ def initvars_fr
     @proceed_to_chechout = "Valider la commande"
     @cart = "Panier"
     @change_quantity_1 = "Quantité 1"
-    @call_to_order = "Appeler pour commander"
+    @call_to_order = "Appeler"
     
     #my favourites
     @no_favourites_message = "Vous n'avez pas de favoris pour le moment"

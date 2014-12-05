@@ -13,7 +13,7 @@ Background:
 * I touch the catagories option
 * I wait for 1 seconds
 * I touch list item number 3
-* I wait for 1 seconds
+* I wait for 5 seconds
 * I touch list item number 1
 * I wait to see the catalog
 * I touch the filter button
@@ -29,7 +29,9 @@ Scenario: Apply Filter
 * I touch the table list item number 0
 * I wait for 1 seconds
 * I touch done button
+* I wait for 1 seconds
 * I touch done button
+* I wait for 1 seconds
 * I wait to see the catalog
 
 @filters_rf
@@ -39,14 +41,19 @@ Scenario: Remove Filter
 * I touch the table list item number 0
 * I wait for 1 seconds
 * I touch done button
+* I wait for 1 seconds
 * I touch done button
+* I wait for 1 seconds
 * I wait to see the catalog
 * I touch the filter button
+* I wait for 1 seconds
 * I wait to see the filters screen
 * I touch the table list item number 0
 * I wait for 1 seconds
 * I touch the table list item number 0
 * I wait for 1 seconds
 * I touch done button
+* I wait for 1 seconds
 * I touch done button
+* I wait for 1 seconds
 * I wait to see the catalog

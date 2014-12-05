@@ -32,6 +32,7 @@
 @property (weak, nonatomic) id<JAUndefinedSearchViewDelegate>delegate;
 
 - (void)setupWithUndefinedSearchResult:(RIUndefinedSearchTerm *)searchResult
-                            searchText:(NSString *)searchText;
+                            searchText:(NSString *)searchText orientation: (UIInterfaceOrientation)myOrientation;
+-(void)didRotate;
 
 @end

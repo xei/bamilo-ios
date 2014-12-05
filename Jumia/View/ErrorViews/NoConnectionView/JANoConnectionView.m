@@ -19,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *genericImageView;
 @property (weak, nonatomic) IBOutlet UILabel *genericErrorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *genericDetailLabel;
+@property (weak, nonatomic) IBOutlet UIView *noInternetFirstView;
+@property (weak, nonatomic) IBOutlet UIView *errorFirstView;
 
 @end
 
@@ -32,6 +34,11 @@ void(^retryBock)(BOOL dismiss);
                                                  owner:nil
                                                options:nil];
     
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        xib = [[NSBundle mainBundle] loadNibNamed:@"JANoConnectionView~iPad" owner:nil options:nil];
+    }
+    
     for (NSObject *obj in xib)
     {
         if ([obj isKindOfClass:[JANoConnectionView class]])
@@ -39,12 +46,12 @@ void(^retryBock)(BOOL dismiss);
             return (JANoConnectionView *)obj;
         }
     }
-    
     return nil;
 }
 
 - (void)setupNoConnectionViewForNoInternetConnection:(BOOL)internetConnection
 {
+    self.translatesAutoresizingMaskIntoConstraints = YES;
     self.backgroundColor = UIColorFromRGB(0xc8c8c8);
     self.noNetworkView.layer.cornerRadius = 5.0f;
 
@@ -64,6 +71,8 @@ void(^retryBock)(BOOL dismiss);
         self.genericImageView.hidden = YES;
         self.genericErrorLabel.hidden = YES;
         self.genericDetailLabel.hidden = YES;
+        self.errorFirstView.hidden = YES;
+        self.noInternetFirstView.hidden = NO;
     }
     else
     {
@@ -72,6 +81,8 @@ void(^retryBock)(BOOL dismiss);
         self.genericImageView.hidden = NO;
         self.genericErrorLabel.hidden = NO;
         self.genericDetailLabel.hidden = NO;
+        self.errorFirstView.hidden = NO;
+        self.noInternetFirstView.hidden = YES;
         
         self.genericErrorLabel.text = STRING_OOPS;
         self.genericDetailLabel.text = STRING_SOMETHING_BROKEN;

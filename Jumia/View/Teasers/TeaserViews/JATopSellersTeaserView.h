@@ -11,4 +11,6 @@
 
 @interface JATopSellersTeaserView : JATeaserView
 
+@property (nonatomic, assign)BOOL isLandscape;
+
 @end

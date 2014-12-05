@@ -17,7 +17,7 @@
 {
     NSString *countryListURL = RI_COUNTRIES_URL;
 #if defined(STAGING) && STAGING
-    countryListURL = [NSString stringWithFormat:@"%@/staging", RI_COUNTRIES_URL];
+    countryListURL = RI_COUNTRIES_URL_ALL;
 #endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
@@ -149,10 +149,6 @@
         country.name = [jsonObject objectForKey:@"name"];
     }
     
-    if ([jsonObject objectForKey:@"url"]) {
-        country.url = [jsonObject objectForKey:@"url"];
-    }
-    
     if ([jsonObject objectForKey:@"flag"]) {
         country.flag = [jsonObject objectForKey:@"flag"];
     }
@@ -163,7 +159,6 @@
         if(VALID_NOTEMPTY(mapImagesObject, NSDictionary)) {
             NSArray *mapImagesObjectKeys = [mapImagesObject allKeys];
             for(NSString *mapImageKey in mapImagesObjectKeys) {
-    #warning we only need iOS images; parse them when API returns the correct images for iOS
                 [mapImagesDictionary setValue:[mapImagesObject objectForKey:mapImageKey] forKey:mapImageKey];
             }
         }
@@ -182,6 +177,23 @@
         country.countryIso = [jsonObject objectForKey:@"country_iso"];
     }
     
+    if ([jsonObject objectForKey:@"url"]) {
+        if([[jsonObject objectForKey:@"url"] rangeOfString:@"http://"].location == NSNotFound && [[jsonObject objectForKey:@"url"] rangeOfString:@"https://"].location == NSNotFound)
+        {
+            if(country.forceHttps)
+            {
+                country.url = [NSString stringWithFormat:@"%@%@", @"https://", [jsonObject objectForKey:@"url"]];
+            }
+            else
+            {
+                country.url = [NSString stringWithFormat:@"%@%@", @"http://", [jsonObject objectForKey:@"url"]];
+            }
+        }
+        else
+        {
+            country.url = [jsonObject objectForKey:@"url"];
+        }
+    }
     return country;
 }
 

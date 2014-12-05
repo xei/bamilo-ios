@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "JABaseViewController.h"
+#import "JAPicker.h"
 
-@interface JAShippingViewController : JABaseViewController
+@interface JAShippingViewController : JABaseViewController <JAPickerDelegate>
 
 @end

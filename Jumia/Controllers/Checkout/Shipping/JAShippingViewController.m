@@ -13,6 +13,7 @@
 #import "JAShippingInfoCell.h"
 #import "JAPickupStationInfoCell.h"
 #import "JAUtils.h"
+#import "JAOrderSummaryView.h"
 #import "RICheckout.h"
 #import "RIShippingMethodPickupStationOption.h"
 #import "RICustomer.h"
@@ -23,17 +24,14 @@
 <
 UICollectionViewDataSource,
 UICollectionViewDelegate,
-UICollectionViewDelegateFlowLayout,
-UIPickerViewDataSource,
-UIPickerViewDelegate
+UICollectionViewDelegateFlowLayout
 >
 
 // Steps
+@property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
 @property (weak, nonatomic) IBOutlet UIView *stepView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepIconLeftConstrain;
 @property (weak, nonatomic) IBOutlet UIImageView *stepIcon;
 @property (weak, nonatomic) IBOutlet UILabel *stepLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *stepLabelWidthConstrain;
 
 // Shipping methods
 @property (strong, nonatomic) UIScrollView *scrollView;
@@ -43,10 +41,12 @@ UIPickerViewDelegate
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
 // Picker view
-@property (strong, nonatomic) UIView *pickerBackgroundView;
-@property (strong, nonatomic) UIToolbar *pickerToolbar;
-@property (strong, nonatomic) UIPickerView *pickerView;
+@property (strong, nonatomic) JAPicker *picker;
+@property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (strong, nonatomic) NSIndexPath *pickerIndexPath;
+
+// Order summary
+@property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
 @property (strong, nonatomic) RICheckout *checkout;
 @property (strong, nonatomic) RIShippingMethodForm* shippingMethodForm;
@@ -80,19 +80,66 @@ UIPickerViewDelegate
     
     self.navBarLayout.title = STRING_CHECKOUT;
     
-    self.navBarLayout.showCartButton = NO;    
+    self.navBarLayout.showCartButton = NO;
     
     self.pickupStationsForRegion = [[NSMutableArray alloc] init];
     self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
     
-    [self setupViews];
+    self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.stepLabel setText:STRING_CHECKOUT_SHIPPING];
+    
+    [self initViews];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     [self continueLoading];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    if(VALID(self.picker, JAPicker))
+    {
+        [self.picker removeFromSuperview];
+    }
+    
+    [self showLoading];
+    
+    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+    {
+        newWidth = self.view.frame.size.width;
+    }
+    
+    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    CGFloat newWidth = self.view.frame.size.width;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    }
+    
+    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    
+    [self hideLoading];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)continueLoading
 {
     [self showLoading];
+    
     [RICheckout getShippingMethodFormWithSuccessBlock:^(RICheckout *checkout)
      {
          self.checkout = checkout;
@@ -121,28 +168,14 @@ UIPickerViewDelegate
      }];
 }
 
-- (void) setupViews
+- (void) initViews
 {
-    CGFloat availableWidth = self.stepView.frame.size.width;
+    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     
-    [self.stepLabel setText:STRING_CHECKOUT_SHIPPING];
-    [self.stepLabel sizeToFit];
-    
-    CGFloat realWidth = self.stepIcon.frame.size.width + 6.0f + self.stepLabel.frame.size.width;
-    
-    if(availableWidth >= realWidth)
-    {
-        CGFloat xStepIconValue = (availableWidth - realWidth) / 2;
-        self.stepIconLeftConstrain.constant = xStepIconValue;
-        self.stepLabelWidthConstrain.constant = self.stepLabel.frame.size.width;
-    }
-    else
-    {
-        self.stepLabelWidthConstrain.constant = (availableWidth - self.stepIcon.frame.size.width - 6.0f);
-        self.stepIconLeftConstrain.constant = 0.0f;
-    }
-    
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 21.0f, self.view.frame.size.width, self.view.frame.size.height - 21.0f - 64.0f)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                     self.stepBackground.frame.size.height,
+                                                                     self.view.frame.size.width,
+                                                                     self.view.frame.size.height - self.stepBackground.frame.size.height)];
     
     UICollectionViewFlowLayout* collectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
     [collectionViewFlowLayout setMinimumLineSpacing:0.0f];
@@ -160,7 +193,7 @@ UIPickerViewDelegate
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(6.0f,
                                                                              6.0f,
                                                                              self.scrollView.frame.size.width - 12.0f,
-                                                                             26.0f) collectionViewLayout:collectionViewFlowLayout];
+                                                                             27.0f) collectionViewLayout:collectionViewFlowLayout];
     self.collectionView.layer.cornerRadius = 5.0f;
     [self.collectionView setBackgroundColor:UIColorFromRGB(0xffffff)];
     [self.collectionView registerNib:shippingListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"shippingListHeader"];
@@ -175,11 +208,75 @@ UIPickerViewDelegate
     [self.scrollView addSubview:self.collectionView];
     [self.view addSubview:self.scrollView];
     
-    self.bottomView = [[JAButtonWithBlur alloc] init];
-    [self.bottomView setFrame:CGRectMake(0.0f, self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height, self.bottomView.frame.size.width, self.bottomView.frame.size.height)];
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:UIInterfaceOrientationPortrait];
     
+    [self.bottomView setFrame:CGRectMake(0.0f,
+                                         self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
+                                         self.view.frame.size.width,
+                                         self.bottomView.frame.size.height)];
     [self.view addSubview:self.bottomView];
+}
+
+- (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    CGFloat stepViewLeftMargin = 130.0f;
+    NSString *stepBackgroundImageName = @"headerCheckoutStep3";
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+        {
+            stepViewLeftMargin =  477.0f;
+            stepBackgroundImageName = @"headerCheckoutStep3Landscape";
+        }
+        else
+        {
+            stepViewLeftMargin = 349.0f;
+            stepBackgroundImageName = @"headerCheckoutStep3Portrait";
+        }
+    }
+    UIImage *stepBackgroundImage = [UIImage imageNamed:stepBackgroundImageName];
+    
+    [self.stepBackground setImage:stepBackgroundImage];
+    [self.stepBackground setFrame:CGRectMake(self.stepBackground.frame.origin.x,
+                                             self.stepBackground.frame.origin.y,
+                                             stepBackgroundImage.size.width,
+                                             stepBackgroundImage.size.height)];
+    
+    [self.stepView setFrame:CGRectMake(stepViewLeftMargin,
+                                       (stepBackgroundImage.size.height - self.stepView.frame.size.height) / 2,
+                                       self.stepView.frame.size.width,
+                                       stepBackgroundImage.size.height)];
+    [self.stepLabel sizeToFit];
+    
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat marginBetweenIconAndLabel = 5.0f;
+    CGFloat realWidth = self.stepIcon.frame.size.width + marginBetweenIconAndLabel + self.stepLabel.frame.size.width - (2 * horizontalMargin);
+    
+    if(self.stepView.frame.size.width >= realWidth)
+    {
+        CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
+        [self.stepIcon setFrame:CGRectMake(xStepIconValue,
+                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
+                                           self.stepIcon.frame.size.width,
+                                           self.stepIcon.frame.size.height)];
+        
+        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
+                                            4.0f,
+                                            self.stepLabel.frame.size.width,
+                                            12.0f)];
+    }
+    else
+    {
+        [self.stepIcon setFrame:CGRectMake(horizontalMargin,
+                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
+                                           self.stepIcon.frame.size.width,
+                                           self.stepIcon.frame.size.height)];
+        
+        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
+                                            4.0f,
+                                            (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
+                                            12.0f)];
+    }
 }
 
 -(void)finishedLoadingShippingMethods
@@ -212,7 +309,15 @@ UIPickerViewDelegate
             }
         }
         
-        [self reloadCollectionView];
+        CGFloat newWidth = self.view.frame.size.width;
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        {
+            newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+        }
+        
+        [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+        
+        [self collectionView:self.collectionView didSelectItemAtIndexPath:self.collectionViewIndexSelected];
     }
     
     if(self.firstLoading)
@@ -221,15 +326,54 @@ UIPickerViewDelegate
         [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
         self.firstLoading = NO;
     }
-
+    
     [self hideLoading];
 }
 
--(void)reloadCollectionView
+- (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
+    
+    [self.scrollView setFrame:CGRectMake(0.0f,
+                                         self.stepBackground.frame.size.height,
+                                         width,
+                                         self.view.frame.size.height - self.stepBackground.frame.size.height)];
+    
+    if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
+    {
+        [self.orderSummary removeFromSuperview];
+    }
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width))
+    {
+        CGFloat orderSummaryRightMargin = 6.0f;
+        self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
+                                                                                 self.stepBackground.frame.size.height,
+                                                                                 self.view.frame.size.width - width - orderSummaryRightMargin,
+                                                                                 self.view.frame.size.height - self.stepBackground.frame.size.height)];
+        [self.orderSummary loadWithCheckout:self.checkout shippingMethod:NO];
+        [self.view addSubview:self.orderSummary];
+    }
+    
+    [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
+                                             self.collectionView.frame.origin.y,
+                                             self.scrollView.frame.size.width - 12.0f,
+                                             self.collectionView.frame.size.height)];
+    
+    [self.bottomView reloadFrame:CGRectMake(0.0f,
+                                            self.view.frame.size.height - self.bottomView.frame.size.height,
+                                            width,
+                                            self.bottomView.frame.size.height)];
+    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    
+    [self reloadCollectionView];
+}
+
+- (void)reloadCollectionView
 {
     if(VALID_NOTEMPTY(self.shippingMethods, NSArray))
     {
-        CGFloat collectionViewHeight = 26.0f + ([self.shippingMethods count] * 44.0f);
+        CGFloat collectionViewHeight = 27.0f + ([self.shippingMethods count] * 44.0f);
         
         if(VALID_NOTEMPTY(self.selectedShippingMethod, NSString))
         {
@@ -269,53 +413,18 @@ UIPickerViewDelegate
 
 - (void)openPicker
 {
-    [self removePickerView];
+    if(VALID(self.picker, JAPicker))
+    {
+        [self.picker removeFromSuperview];
+    }
     
-    self.pickerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
-    UITapGestureRecognizer *removePickerViewTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(removePickerView)];
-    [self.pickerBackgroundView addGestureRecognizer:removePickerViewTap];
+    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    [self.picker setDelegate:self];
     
-    self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
-    [self.pickerView setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.pickerView setAlpha:0.9];
-    [self.pickerView setDataSource:self];
-    [self.pickerView setDelegate:self];
-    [self.pickerView setFrame:CGRectMake(0.0f,
-                                         (self.pickerBackgroundView.frame.size.height - self.pickerView.frame.size.height),
-                                         self.pickerView.frame.size.width,
-                                         self.pickerView.frame.size.height)];
+    self.pickerDataSource = [NSMutableArray new];
+    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
     
-    self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
-    [self.pickerToolbar setTranslucent:NO];
-    [self.pickerToolbar setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.pickerToolbar setAlpha:0.9];
-    [self.pickerToolbar setFrame:CGRectMake(0.0f,
-                                            CGRectGetMinY(self.pickerView.frame) - 44.0f,
-                                            320.0f,
-                                            44.0f)];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0.0, 0.0f, 0.0f, 0.0f)];
-    [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-    [button setTitle:STRING_DONE forState:UIControlStateNormal];
-    [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [button setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-    [button addTarget:self action:@selector(regionSelected:) forControlEvents:UIControlEventTouchUpInside];
-    [button sizeToFit];
-    
-    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    [self.pickerToolbar setItems:[NSArray arrayWithObjects:flexibleItem, doneButton, nil]];
-    [self.pickerBackgroundView addSubview:self.pickerToolbar];
-    
-    [self.pickerBackgroundView addSubview:self.pickerView];
-    [self.view addSubview:self.pickerBackgroundView];
-    
-    NSInteger selectedRow = 0;
-    if(VALID_NOTEMPTY(self.pickupStationRegions, NSDictionary) && VALID_NOTEMPTY(self.pickerIndexPath, NSIndexPath))
+    if(VALID_NOTEMPTY(self.pickupStationRegions, NSDictionary))
     {
         NSArray *allKeys = [self.pickupStationRegions allKeys];
         if(VALID_NOTEMPTY(allKeys, NSArray))
@@ -323,71 +432,36 @@ UIPickerViewDelegate
             for (int i = 0; i < [allKeys count]; i++)
             {
                 NSString *key = [allKeys objectAtIndex:i];
-                if([self.selectedRegion isEqualToString:[self.pickupStationRegions objectForKey:key]])
-                {
-                    selectedRow = i;
-                    break;
-                }
+                [self.pickerDataSource addObject:key];
+                [dataSource addObject:[self.pickupStationRegions objectForKey:key]];
             }
         }
     }
     
-    [self.pickerView selectRow:selectedRow inComponent:0 animated:NO];
-}
-
--(void)removePickerView
-{
-    if(VALID_NOTEMPTY(self.pickerToolbar, UIToolbar))
+    NSString *previousRegion = @"";
+    if(VALID_NOTEMPTY(self.pickerIndexPath, NSIndexPath))
     {
-        [self.pickerToolbar removeFromSuperview];
+        previousRegion = self.selectedRegion;
     }
     
-    if(VALID_NOTEMPTY(self.pickerView, UIPickerView))
-    {
-        [self.pickerView removeFromSuperview];
-    }
+    [self.picker setDataSourceArray:[dataSource copy]
+                       previousText:previousRegion];
     
-    if(VALID_NOTEMPTY(self.pickerBackgroundView, UIView))
-    {
-        [self.pickerBackgroundView removeFromSuperview];
-    }
+    CGFloat pickerViewHeight = self.view.frame.size.height;
+    CGFloat pickerViewWidth = self.view.frame.size.width;
+    [self.picker setFrame:CGRectMake(0.0f,
+                                     pickerViewHeight,
+                                     pickerViewWidth,
+                                     pickerViewHeight)];
+    [self.view addSubview:self.picker];
     
-    self.pickerView = nil;
-    self.pickerBackgroundView = nil;
-}
-
--(void)regionSelected:(id)sender
-{
-    NSInteger selectedRow = [self.pickerView selectedRowInComponent:0];
-    if(VALID_NOTEMPTY(self.pickupStationRegions, NSDictionary) && VALID_NOTEMPTY(self.pickerIndexPath, NSIndexPath))
-    {
-        NSArray *allKeys = [self.pickupStationRegions allKeys];
-        if(VALID_NOTEMPTY(allKeys, NSArray) && selectedRow < [self.pickupStationRegions count])
-        {
-            self.selectedRegionId = [allKeys objectAtIndex:selectedRow];
-            self.selectedRegion = [self.pickupStationRegions objectForKey:self.selectedRegionId];
-            
-            self.pickupStationsForRegion = [[NSMutableArray alloc] initWithArray:[RIShippingMethodForm getPickupStationsForRegion:self.selectedRegionId shippingMethod:self.selectedShippingMethod inForm:self.shippingMethodForm]];
-            self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
-            for(RIShippingMethodPickupStationOption *pickupStation in self.pickupStationsForRegion)
-            {
-                CGFloat size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation];
-                
-                if(size < 120.0f)
-                {
-                    size = 120.0f;
-                }
-                
-                [self.pickupStationHeightsForRegion addObject:[NSNumber numberWithFloat:size]];
-            }
-            
-            self.selectedPickupStationIndexPath = [NSIndexPath indexPathForItem:(self.pickerIndexPath.item + 1) inSection:self.pickerIndexPath.section];
-        }
-    }
-    
-    [self removePickerView];
-    
-    [self reloadCollectionView];
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         [self.picker setFrame:CGRectMake(0.0f,
+                                                          0.0f,
+                                                          pickerViewWidth,
+                                                          pickerViewHeight)];
+                     }];
 }
 
 -(void)nextStepButtonPressed
@@ -422,7 +496,7 @@ UIPickerViewDelegate
                                  
                                  [self hideLoading];
                                  
-                                 [JAUtils goToCheckout:self.checkout inStoryboard:self.storyboard];
+                                 [JAUtils goToCheckout:self.checkout];
                                  
                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                  [self hideLoading];
@@ -442,6 +516,53 @@ UIPickerViewDelegate
             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
         }
     }
+}
+
+#pragma mark JAPickerDelegate
+- (void)selectedRow:(NSInteger)selectedRow
+{
+    if(VALID_NOTEMPTY(self.pickupStationRegions, NSDictionary) && VALID_NOTEMPTY(self.pickerIndexPath, NSIndexPath))
+    {
+        if(VALID_NOTEMPTY(self.pickerDataSource, NSMutableArray) && selectedRow < [self.pickupStationRegions count])
+        {
+            self.selectedRegionId = [self.pickerDataSource objectAtIndex:selectedRow];
+            self.selectedRegion = [self.pickupStationRegions objectForKey:self.selectedRegionId];
+            
+            self.pickupStationsForRegion = [[NSMutableArray alloc] initWithArray:[RIShippingMethodForm getPickupStationsForRegion:self.selectedRegionId shippingMethod:self.selectedShippingMethod inForm:self.shippingMethodForm]];
+            self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
+            for(RIShippingMethodPickupStationOption *pickupStation in self.pickupStationsForRegion)
+            {
+                CGFloat size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation];
+                
+                if(size < 120.0f)
+                {
+                    size = 120.0f;
+                }
+                
+                [self.pickupStationHeightsForRegion addObject:[NSNumber numberWithFloat:size]];
+            }
+            
+            self.selectedPickupStationIndexPath = [NSIndexPath indexPathForItem:(self.pickerIndexPath.item + 1) inSection:self.pickerIndexPath.section];
+        }
+    }
+    
+    [self closePicker];
+    
+    [self reloadCollectionView];
+}
+
+- (void)closePicker
+{
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [self.picker removeFromSuperview];
+                         self.picker = nil;
+                     }];
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
@@ -489,7 +610,7 @@ UIPickerViewDelegate
     CGSize referenceSizeForHeaderInSection = CGSizeZero;
     if(collectionView == self.collectionView)
     {
-        referenceSizeForHeaderInSection = CGSizeMake(self.collectionView.frame.size.width, 26.0f);
+        referenceSizeForHeaderInSection = CGSizeMake(self.collectionView.frame.size.width, 27.0f);
     }
     
     return referenceSizeForHeaderInSection;
@@ -665,7 +786,7 @@ UIPickerViewDelegate
         
         if(collectionView == self.collectionView)
         {
-            [headerView loadHeaderWithText:STRING_SHIPPING];
+            [headerView loadHeaderWithText:STRING_SHIPPING width:self.collectionView.frame.size.width];
         }
         reusableview = headerView;
     }
@@ -682,7 +803,7 @@ UIPickerViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(collectionView == self.collectionView && VALID_NOTEMPTY(self.shippingMethods, NSArray) && indexPath.row != self.collectionViewIndexSelected.row)
+    if(collectionView == self.collectionView && VALID_NOTEMPTY(self.shippingMethods, NSArray))
     {
         if(indexPath.row <= self.collectionViewIndexSelected.row || indexPath.row > (self.collectionViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
         {
@@ -739,40 +860,6 @@ UIPickerViewDelegate
             self.selectedPickupStationIndexPath = indexPath;
         }
     }
-}
-
-#pragma mark UIPickerViewDataSource
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    NSInteger numberOfRowsInComponent = 0;
-    if(VALID_NOTEMPTY(self.pickupStationRegions , NSDictionary))
-    {
-        numberOfRowsInComponent = [self.pickupStationRegions count];
-    }
-    return numberOfRowsInComponent;
-}
-
-#pragma mark UIPickerViewDelegate
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    NSString *titleForRow = @"";
-    if(VALID_NOTEMPTY(self.pickupStationRegions, NSDictionary))
-    {
-        NSArray *allKeys = [self.pickupStationRegions allKeys];
-        if(VALID_NOTEMPTY(allKeys, NSArray) && row < [allKeys count])
-        {
-            NSString *key = [allKeys objectAtIndex:row];
-            titleForRow = [self.pickupStationRegions objectForKey:key];
-        }
-    }
-    return  titleForRow;
 }
 
 @end

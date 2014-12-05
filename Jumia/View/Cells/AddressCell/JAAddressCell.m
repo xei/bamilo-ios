@@ -7,6 +7,7 @@
 //
 
 #import "JAAddressCell.h"
+#import "JAClickableView.h"
 #import "RIAddress.h"
 
 @interface JAAddressCell ()
@@ -22,6 +23,12 @@
 -(void)loadWithAddress:(RIAddress*)address
 {
     self.backgroundColor = UIColorFromRGB(0xffffff);
+    
+    self.clickableView.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.clickableView setFrame:CGRectMake(0.0f,
+                                            0.0f,
+                                            self.frame.size.width,
+                                            self.frame.size.height)];
     
     [self.checkMark setHidden:YES];
     

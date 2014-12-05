@@ -10,4 +10,6 @@
 
 @interface JATopCategoriesTeaserView : JATeaserView
 
+- (void)adjustHeight:(CGFloat)height;
+
 @end

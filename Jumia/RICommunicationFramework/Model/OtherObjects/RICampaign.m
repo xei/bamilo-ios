@@ -47,7 +47,7 @@
 @implementation RICampaign
 
 + (NSString *)getCampaignsWithUrl:(NSString*)url
-                     successBlock:(void (^)(NSArray* campaigns, NSString* bannerImageUrl))successBlock
+                     successBlock:(void (^)(NSString *name, NSArray* campaigns, NSString* bannerImageUrl))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
@@ -64,21 +64,33 @@
                                                                   NSString* bannerImageUrl;
                                                                   
                                                                   NSDictionary* cms = [data objectForKey:@"cms"];
-                                                                  if (VALID_NOTEMPTY(cms, NSDictionary)) {
-                                                                      NSArray* bannerArray = [cms objectForKey:@"mobile_banner"];
+                                                                  if (VALID_NOTEMPTY(cms, NSDictionary))
+                                                                  {
+                                                                      NSString *campaignsImageKey = @"mobile_banner";
+                                                                      if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                                                                      {
+                                                                          campaignsImageKey = @"desktop_banner";
+                                                                      }
+
+                                                                      NSArray* bannerArray = [cms objectForKey:campaignsImageKey];
                                                                       if (VALID_NOTEMPTY(bannerArray, NSArray)) {
                                                                           bannerImageUrl = [bannerArray firstObject];
                                                                       }
                                                                   }
                                                                   
                                                                   NSDictionary* campaign = [data objectForKey:@"campaign"];
+                                                                  NSString* name = [campaign objectForKey:@"name"];
                                                                   NSArray* campaignData = [campaign objectForKey:@"data"];
                                                                   
                                                                   if (VALID_NOTEMPTY(campaignData, NSArray)) {
                                                                       NSArray* campaignsArray = [RICampaign parseCampaigns:campaignData country:configuration];
                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                          successBlock(campaignsArray, bannerImageUrl);
+                                                                          successBlock(name, campaignsArray, bannerImageUrl);
                                                                       });
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                      failureBlock(RIApiResponseAPIError, nil);
                                                                   }
                                                                   
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -97,7 +109,7 @@
                                                                   failureBlock(apiResponse, nil);
                                                               }
                                                           }];
-
+    
 }
 
 + (NSString *)getCampaignsWitId:(NSString*)campaignId
@@ -121,8 +133,15 @@
                                                                   NSString* bannerImageUrl;
                                                                   
                                                                   NSDictionary* cms = [data objectForKey:@"cms"];
-                                                                  if (VALID_NOTEMPTY(cms, NSDictionary)) {
-                                                                      NSArray* bannerArray = [cms objectForKey:@"mobile_banner"];
+                                                                  if (VALID_NOTEMPTY(cms, NSDictionary))
+                                                                  {
+                                                                      NSString *campaignsImageKey = @"mobile_banner";
+                                                                      if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                                                                      {
+                                                                          campaignsImageKey = @"desktop_banner";
+                                                                      }
+                                                                      
+                                                                      NSArray* bannerArray = [cms objectForKey:campaignsImageKey];
                                                                       if (VALID_NOTEMPTY(bannerArray, NSArray)) {
                                                                           bannerImageUrl = [bannerArray firstObject];
                                                                       }
@@ -189,10 +208,20 @@
                 campaign.savePriceFormatted = [RICountryConfiguration formatPrice:campaign.savePrice country:country];
             }
         }
+        if ([campaignJSON objectForKey:@"save_price_euroConverted"]) {
+            if (![[campaignJSON objectForKey:@"save_price_euroConverted"] isKindOfClass:[NSNull class]]) {
+                campaign.savePriceEuroConverted = [campaignJSON objectForKey:@"save_price_euroConverted"];
+            }
+        }
         if ([campaignJSON objectForKey:@"special_price"]) {
             if (![[campaignJSON objectForKey:@"special_price"] isKindOfClass:[NSNull class]]) {
                 campaign.specialPrice = [campaignJSON objectForKey:@"special_price"];
                 campaign.specialPriceFormatted = [RICountryConfiguration formatPrice:campaign.specialPrice country:country];
+            }
+        }
+        if ([campaignJSON objectForKey:@"special_price_euroConverted"]) {
+            if (![[campaignJSON objectForKey:@"special_price_euroConverted"] isKindOfClass:[NSNull class]]) {
+                campaign.specialPriceEuroConverted = [campaignJSON objectForKey:@"special_price_euroConverted"];
             }
         }
         if ([campaignJSON objectForKey:@"max_special_price"]) {
@@ -201,16 +230,31 @@
                 campaign.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:campaign.maxSpecialPrice country:country];
             }
         }
+        if ([campaignJSON objectForKey:@"max_special_price_euroConverted"]) {
+            if (![[campaignJSON objectForKey:@"max_special_price_euroConverted"] isKindOfClass:[NSNull class]]) {
+                campaign.maxSpecialPriceEuroConverted = [campaignJSON objectForKey:@"max_special_price_euroConverted"];
+            }
+        }
         if ([campaignJSON objectForKey:@"price"]) {
             if (![[campaignJSON objectForKey:@"price"] isKindOfClass:[NSNull class]]) {
                 campaign.price = [campaignJSON objectForKey:@"price"];
                 campaign.priceFormatted = [RICountryConfiguration formatPrice:campaign.price country:country];
             }
         }
+        if ([campaignJSON objectForKey:@"price_euroConverted"]) {
+            if (![[campaignJSON objectForKey:@"price_euroConverted"] isKindOfClass:[NSNull class]]) {
+                campaign.priceEuroConverted = [campaignJSON objectForKey:@"price_euroConverted"];
+            }
+        }
         if ([campaignJSON objectForKey:@"max_price"]) {
             if (![[campaignJSON objectForKey:@"max_price"] isKindOfClass:[NSNull class]]) {
                 campaign.maxPrice = [campaignJSON objectForKey:@"max_price"];
                 campaign.maxPriceFormatted = [RICountryConfiguration formatPrice:campaign.maxPrice country:country];
+            }
+        }
+        if ([campaignJSON objectForKey:@"max_price_euroConverted"]) {
+            if (![[campaignJSON objectForKey:@"max_price_euroConverted"] isKindOfClass:[NSNull class]]) {
+                campaign.maxPriceEuroConverted = [campaignJSON objectForKey:@"max_price_euroConverted"];
             }
         }
         if ([campaignJSON objectForKey:@"sku"]) {

@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "JACatalogCell.h"
 
+#define JACatalogViewControllerGridCellHeight_ipad 206.0f
 #define JACatalogViewControllerGridCellHeight 196.0f
+#define JACatalogViewControllerGridCellPriceViewY 181.0f
+#define JACatalogViewControllerGridCellPriceViewY_ipad 188.0f
 
 @interface JACatalogGridCell : JACatalogCell
 

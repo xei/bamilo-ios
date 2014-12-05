@@ -28,10 +28,7 @@
     
     self.view.backgroundColor = JABackgroundGrey;
     
-    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
-                                                                6.0f,
-                                                                self.view.frame.size.width - 6.0f*2,
-                                                                1)];
+    self.contentView = [[UIView alloc] init];
     self.contentView.backgroundColor = [UIColor whiteColor];
     self.contentView.layer.cornerRadius = 5.0f;
     [self.view addSubview:self.contentView];
@@ -45,6 +42,45 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self continueLoading];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(backButtonPressed)
+                                                 name:kDidPressBackNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self.contentView setFrame:CGRectMake(6.0f,
+                                          6.0f,
+                                          self.view.frame.size.width - 6.0f*2,
+                                          1)];
+    [self.tableView reloadData];
+    
+    CGFloat contentHeight = [self tableView:self.tableView heightForRowAtIndexPath:nil] * [self tableView:self.tableView numberOfRowsInSection:0];
+    CGFloat maxHeight = self.view.frame.size.height - 6.0f*2;
+    if (contentHeight > maxHeight) {
+        [self.tableView setScrollEnabled:YES];
+        contentHeight = maxHeight;
+    } else {
+        [self.tableView setScrollEnabled:NO];
+    }
+    [self.contentView setFrame:CGRectMake(self.contentView.frame.origin.x,
+                                          self.contentView.frame.origin.y,
+                                          self.contentView.frame.size.width,
+                                          contentHeight)];
+    [self.tableView setFrame:self.contentView.bounds];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -145,18 +181,10 @@
     if (ISEMPTY(cell)) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                     43.0f,
-                                                                     self.view.frame.size.width,
-                                                                     1)];
-        separator.backgroundColor = JALabelGrey;
-        [cell addSubview:separator];
-
     }
     
-    //remove the clickable view
     for (UIView* view in cell.subviews) {
-        if ([view isKindOfClass:[JAClickableView class]]) {
+        if ([view isKindOfClass:[JAClickableView class]] || -1 == view.tag) { //remove the clickable view or separator
             [view removeFromSuperview];
         }
     }
@@ -165,6 +193,16 @@
     clickView.tag = indexPath.row;
     [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     [cell addSubview:clickView];
+    
+    
+    //add the new separator
+    UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                 43.0f,
+                                                                 self.view.frame.size.width,
+                                                                 1)];
+    separator.tag = -1;
+    separator.backgroundColor = JALabelGrey;
+    [cell addSubview:separator];
     
     NSInteger realIndex = indexPath.row;
     
@@ -274,5 +312,11 @@
     }
 }
 
+#pragma mark - Button Actions
+
+- (void)backButtonPressed
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+}
 
 @end

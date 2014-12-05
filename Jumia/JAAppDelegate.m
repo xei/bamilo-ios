@@ -78,10 +78,47 @@
     }
     
     // Push Notifications Activation
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                            UIRemoteNotificationTypeSound |
-                                                                            UIRemoteNotificationTypeAlert )];
     
+    BOOL checkNotificationsSwitch = YES;
+    BOOL checkSoundSwitch = YES;
+
+    if(!ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kChangeNotificationsOptions]))
+    {
+        checkNotificationsSwitch = [[NSUserDefaults standardUserDefaults] boolForKey:kChangeNotificationsOptions];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kChangeNotificationsOptions];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    if(!ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kChangeSoundOptions]))
+    {
+        checkSoundSwitch = [[NSUserDefaults standardUserDefaults] boolForKey:kChangeSoundOptions];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kChangeSoundOptions];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    if (checkNotificationsSwitch && checkSoundSwitch)
+    {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                                UIRemoteNotificationTypeSound |
+                                                                                UIRemoteNotificationTypeAlert )];
+    }
+    else if(checkNotificationsSwitch && !checkNotificationsSwitch)
+    {
+        
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                                UIRemoteNotificationTypeAlert )];
+    }
+    else{
+        [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+    }
+
+
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil)
     {
         UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
@@ -164,11 +201,44 @@
                                               data:[trackingDictionary copy]];
 }
 
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    NSUInteger supportedInterfaceOrientationsForWindow = -1;
+    
+    UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
+    JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
+    if(VALID_NOTEMPTY(mainController, JARootViewController))
+    {
+        UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
+        if(VALID_NOTEMPTY(centerPanel, UINavigationController))
+        {
+            NSArray *viewControllers = centerPanel.viewControllers;
+            if(VALID_NOTEMPTY(viewControllers, NSArray))
+            {
+                JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
+                supportedInterfaceOrientationsForWindow = [rootViewController supportedInterfaceOrientations];
+            }
+        }
+    }
+
+    // This should not happen.
+    if(-1 == supportedInterfaceOrientationsForWindow)
+    {
+        supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskPortrait;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskAll;
+        }
+    }
+    return supportedInterfaceOrientationsForWindow;
+}
+
 #pragma mark - Push notification
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+    
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
@@ -199,12 +269,112 @@
                                       NSLog(@"Unhandled deep link: %@", url);
                                   }];
     
-    if (VALID_NOTEMPTY(url, NSURL))
+    if (!urlWasHandled && VALID_NOTEMPTY(url, NSURL))
     {
         [[RITrackingWrapper sharedInstance] trackOpenURL:url];
+            
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self handlePushNotificationURL:url];
+        });
     }
     
     return urlWasHandled;
+}
+
+- (void)handlePushNotificationURL:(NSURL *)url
+{
+    NSString *urlScheme = [url scheme];
+    
+    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *faceAppId = [infoDict objectForKey:@"FacebookAppID"];
+    NSString *facebookSchema = @"";
+    
+    if (faceAppId.length > 0)
+    {
+        facebookSchema = [NSString stringWithFormat:@"fb%@", faceAppId];
+    }
+    
+    if ((urlScheme != nil && [urlScheme isEqualToString:@"jumia"]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme]))
+    {
+        NSMutableDictionary *pushNotification = [NSMutableDictionary dictionaryWithObject:@"" forKey:@"u"];
+        
+        if ([facebookSchema isEqualToString:urlScheme])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
+                                                                object:nil
+                                                              userInfo:pushNotification];
+        }
+        else
+        {
+            NSString *path = [NSString stringWithString:url.path];
+            NSString *urlHost = [NSString stringWithString:url.host];
+            NSString *urlQuery = nil;
+            
+            if (url.query != nil)
+            {
+                if ([url.query length] >= 5)
+                {
+                    if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"])
+                    {
+                        NSRange range = [url.query rangeOfString:@"?ADXID"];
+                        if (range.location != NSNotFound)
+                        {
+                            NSString *paramsWithoutAdXData = [url.query substringToIndex:range.location];
+                            urlQuery = [NSString stringWithFormat:@"?%@",paramsWithoutAdXData];
+                            path = [url.path stringByAppendingString:urlQuery];
+                        } else
+                        {
+                            urlQuery = [NSString stringWithFormat:@"?%@",url.query];
+                            path = [url.path stringByAppendingString:urlQuery];
+                        }
+                    }
+                }
+            }
+            
+            NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+            if (![urlHost isEqualToString:bundleIdentifier])
+            {
+                path = [urlHost stringByAppendingString:path];
+            }
+            else
+            {
+                path = [path substringFromIndex:1];
+            }
+            
+            NSDictionary *dict = [self parseQueryString:[url query]];
+            
+            pushNotification = [NSMutableDictionary dictionaryWithObject:path forKey:@"u"];
+            
+            NSString *temp = [dict objectForKey:@"UTM"];
+            
+            if (temp)
+            {
+                [pushNotification addEntriesFromDictionary:dict];
+            }
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
+                                                                object:nil
+                                                              userInfo:pushNotification];
+        }
+    }
+}
+
+- (NSDictionary *)parseQueryString:(NSString *)query
+{
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:16];
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    
+    for (NSString *pair in pairs)
+    {
+        NSArray *elements = [pair componentsSeparatedByString:@"="];
+        
+        NSString *key = [elements[0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *val = [elements[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        [dict setObject:val forKey:key];
+    }
+    
+    return dict;
 }
 
 @end

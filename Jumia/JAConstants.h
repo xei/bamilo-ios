@@ -24,6 +24,7 @@
 
 //************ root view controller notifications
 #define kOpenMenuNotification @"NOTIFICATION_OPEN_MENU"
+#define kCloseMenuNotification @"NOTIFICATION_OPEN_COLSE"
 #define kOpenCenterPanelNotification @"NOTIFICATION_OPEN_CENTER_PANEL"
 #define kTurnOffLeftSwipePanelNotification @"NOTIFICATION_TURN_OFF_LEFT_SWIPE_PANEL"
 #define kTurnOnLeftSwipePanelNotification @"NOTIFICATION_TURN_ON_LEFT_SWIPE_PANEL"
@@ -63,6 +64,17 @@
 #define kShowCheckoutThanksScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_THANKS_SCREEN"
 #define kShowTrackOrderScreenNotification @"NOTIFICATION_SHOW_TRACK_ORDER_SCREEN"
 
+// Filters
+#define kShowFiltersScreenNotification @"NOTIFICATION_SHOW_FILTERS_SCREEN"
+#define kShowCategoryFiltersScreenNotification @"NOTIFICATION_SHOW_PRICE_FILTERS_SCREEN"
+#define kShowPriceFiltersScreenNotification @"NOTIFICATION_SHOW_CATEGORY_FILTERS_SCREEN"
+#define kShowGenericFiltersScreenNotification @"NOTIFICATION_SHOW_GENERIC_FILTERS_SCREEN"
+
+// Product
+#define kShowProductSpecificationScreenNotification @"NOTIFICATION_SHOW_PRODUCT_SPECIFICATION_SCREEN"
+#define kShowRatingsScreenNotification @"NOTIFICATION_SHOW_RATINGS_SCREEN"
+#define kShowNewRatingScreenNotification @"NOTIFICATION_SHOW_NEW_RATING_SCREEN"
+
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"
 #define kDidSelectTeaserWithPDVUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_PDV_URL"
@@ -74,12 +86,17 @@
 #define kChangeNavigationBarNotification @"NOTIFICATION_CHANGE_NAVIGATION_BAR"
 #define kEditShouldChangeStateNotification @"EDIT_SHOULD_CHANGE_NOTIFICATION"
 #define kDoneShouldChangeStateNotification @"DONE_SHOULD_CHANGE_NOTIFICATION"
+#define kDidPressBackNotification @"DID_PRESS_BACK_NOTIFICATION"
 #define kDidPressDoneNotification @"DID_PRESS_DONE_NOTIFICATION"
 #define kDidPressEditNotification @"DID_PRESS_EDIT_NOTIFICATION"
+
 
 // Ad4Push Notifications
 #define A4S_INAPP_NOTIF_VIEW_DID_APPEAR @"A4S_INAPP_NOTIF_VIEW_DID_APPEAR"
 #define A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR @"A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR"
+
+
+
 
 //************
 //my account notifications
@@ -97,6 +114,8 @@
 #define kDidFirstBuyKey @"did_first_buy"
 #define kNumberOfSessions @"amount_sessions"
 #define kSessionDate @"session_date"
+#define kChangeNotificationsOptions @"change_notifications_option"
+#define kChangeSoundOptions @"change_sound_option"
 
 // Colors
 
