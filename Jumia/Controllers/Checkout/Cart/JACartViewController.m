@@ -611,37 +611,6 @@
     [self.subtotalView addSubview:self.cartVatLabel];
     [self.subtotalView addSubview:self.cartVatValue];
     
-    self.cartShippingLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.cartShippingLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-    [self.cartShippingLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.cartShippingLabel setText:STRING_SHIPPING];
-    [self.cartShippingLabel sizeToFit];
-    [self.cartShippingLabel setBackgroundColor:[UIColor clearColor]];
-    [self.cartShippingLabel setFrame:CGRectMake(6.0f,
-                                                CGRectGetMaxY(self.cartVatLabel.frame),
-                                                self.cartShippingLabel.frame.size.width,
-                                                self.cartShippingLabel.frame.size.height)];
-    [self.subtotalView addSubview:self.cartShippingLabel];
-    
-    self.cartShippingValue = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.cartShippingValue setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-    [self.cartShippingValue setTextColor:UIColorFromRGB(0x666666)];
-    if(0.0f == [[[self cart] shippingValue] floatValue])
-    {
-        [self.cartShippingValue setText:STRING_FREE];
-    }
-    else
-    {
-        [self.cartShippingValue setText:[[self cart] shippingValueFormatted]];
-    }
-    [self.cartShippingValue sizeToFit];
-    [self.cartShippingValue setBackgroundColor:[UIColor clearColor]];
-    [self.cartShippingValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.cartShippingValue.frame.size.width - 4.0f,
-                                                CGRectGetMaxY(self.cartVatLabel.frame),
-                                                self.cartShippingValue.frame.size.width,
-                                                self.cartShippingValue.frame.size.height)];
-    [self.subtotalView addSubview:self.cartShippingValue];
-    
     self.extraCostsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.extraCostsLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
     [self.extraCostsLabel setTextColor:UIColorFromRGB(0x666666)];
@@ -649,7 +618,7 @@
     [self.extraCostsLabel sizeToFit];
     [self.extraCostsLabel setBackgroundColor:[UIColor clearColor]];
     [self.extraCostsLabel setFrame:CGRectMake(6.0f,
-                                              CGRectGetMaxY(self.cartShippingLabel.frame),
+                                              CGRectGetMaxY(self.cartVatLabel.frame),
                                               self.extraCostsLabel.frame.size.width,
                                               self.extraCostsLabel.frame.size.height)];
     [self.subtotalView addSubview:self.extraCostsLabel];
@@ -661,7 +630,7 @@
     [self.extraCostsValue sizeToFit];
     [self.extraCostsValue setBackgroundColor:[UIColor clearColor]];
     [self.extraCostsValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.extraCostsValue.frame.size.width - 4.0f,
-                                              CGRectGetMaxY(self.cartShippingLabel.frame),
+                                              CGRectGetMaxY(self.cartVatLabel.frame),
                                               self.extraCostsValue.frame.size.width,
                                               self.extraCostsValue.frame.size.height)];
     [self.subtotalView addSubview:self.extraCostsValue];
