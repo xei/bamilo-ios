@@ -303,6 +303,8 @@
 		B56BBF3319A60D5400F4B1A3 /* JACartListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */; };
 		B57822561A371B1E00B4DD8B /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B57822551A371B1E00B4DD8B /* JANoConnectionView~iPad.xib */; };
 		B57822571A371B2C00B4DD8B /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B57822551A371B1E00B4DD8B /* JANoConnectionView~iPad.xib */; };
+		B578225A1A37516800B4DD8B /* JAGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B57822591A37516800B4DD8B /* JAGradientLayer.m */; };
+		B578225B1A37516800B4DD8B /* JAGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B57822591A37516800B4DD8B /* JAGradientLayer.m */; };
 		B57DC97E19B90AB10080C818 /* JAEditAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */; };
 		B58767FE19BB62B3001651D6 /* JAShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58767FC19BB62B3001651D6 /* JAShippingCell.m */; };
 		B58767FF19BB62B3001651D6 /* JAShippingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58767FD19BB62B3001651D6 /* JAShippingCell.xib */; };
@@ -961,6 +963,8 @@
 		B55CF28F19BE072800A6C6B6 /* JAShippingInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAShippingInfoCell.h; path = ShippingCell/JAShippingInfoCell.h; sourceTree = "<group>"; };
 		B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACartListCell.xib; sourceTree = "<group>"; };
 		B57822551A371B1E00B4DD8B /* JANoConnectionView~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANoConnectionView~iPad.xib"; sourceTree = "<group>"; };
+		B57822581A37516800B4DD8B /* JAGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAGradientLayer.h; path = GradientLayer/JAGradientLayer.h; sourceTree = "<group>"; };
+		B57822591A37516800B4DD8B /* JAGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAGradientLayer.m; path = GradientLayer/JAGradientLayer.m; sourceTree = "<group>"; };
 		B57DC97C19B90AB10080C818 /* JAEditAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAEditAddressViewController.h; sourceTree = "<group>"; };
 		B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAEditAddressViewController.m; sourceTree = "<group>"; };
 		B58767FB19BB62B3001651D6 /* JAShippingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAShippingCell.h; path = ShippingCell/JAShippingCell.h; sourceTree = "<group>"; };
@@ -1707,6 +1711,8 @@
 				4A4ABF08198B902600342D92 /* Cells */,
 				4A39213B198921A100B70A9C /* GlobalNavigationBar */,
 				CE69B58D19868B7A005CC699 /* Teasers */,
+				B57822581A37516800B4DD8B /* JAGradientLayer.h */,
+				B57822591A37516800B4DD8B /* JAGradientLayer.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3662,6 +3668,7 @@
 				BB4FB8D919E7FC4E006FEFF6 /* RICampaign.m in Sources */,
 				BB4FB8D619E7FAC5006FEFF6 /* JACampaignSingleView.m in Sources */,
 				BB4FB8D719E7FAC5006FEFF6 /* JAPercentageBarView.m in Sources */,
+				B578225B1A37516800B4DD8B /* JAGradientLayer.m in Sources */,
 				BB4FB8D819E7FAC5006FEFF6 /* JACampaignsViewController.m in Sources */,
 				BB4FB8D519E7FA8A006FEFF6 /* JACampaignPageView.m in Sources */,
 				BB4FB8D419E7FA73006FEFF6 /* JALoadCountryViewController.m in Sources */,
@@ -3879,6 +3886,7 @@
 				B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */,
 				CED30C24199CAA5C00C67F4B /* JAGenericFilterViewController.m in Sources */,
 				4A454F3B199CBF1400B44821 /* RIAddress.m in Sources */,
+				B578225A1A37516800B4DD8B /* JAGradientLayer.m in Sources */,
 				4A2FD84619912BC500C65C1D /* JAPDVSingleRelatedItem.m in Sources */,
 				B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */,
 				B5A3025B19811E8A00F71726 /* SDWebImageManager.m in Sources */,
