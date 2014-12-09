@@ -68,6 +68,12 @@
     [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
 }
 
+- (void)showLoading
+{
+    self.catalogTopButton.hidden=YES;
+    [super showLoading];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -851,6 +857,7 @@
     NSMutableArray *productsArray = [self.productsMap objectForKey:key];
     if (!self.loadedEverything && productsArray.count - self.numberOfCellsInScreen <= indexPath.row)
     {
+        self.catalogTopButton.hidden = YES;
         [self loadMoreProducts];
     }
     
