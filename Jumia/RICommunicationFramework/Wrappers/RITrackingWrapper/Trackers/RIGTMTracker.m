@@ -75,6 +75,10 @@
 #define kGTMEventTransactionProductQuantityKey  @"quantity"
 #define kGTMEventScreenNameKey                  @"screenName"
 #define kGTMEventLoadTimeKey                    @"loadTime"
+#define kGTMEventInstallNetworkKey              @"installNetwork"
+#define kGTMEventInstallAdgroupKey              @"installAdgroup"
+#define kGTMEventInstallCampaignKey             @"installCampaign"
+#define kGTMEventInstallCreativeKey             @"installCreative"
 
 NSString * const kGTMToken = @"kGTMToken";
 
@@ -143,6 +147,7 @@ NSString * const kGTMToken = @"kGTMToken";
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]];
         [events addObject:[NSNumber numberWithInt:RIEventCloseApp]];
+        [events addObject:[NSNumber numberWithInt:RIEventInstallViaAdjust]];
         
         self.registeredEvents = [events copy];
     }
@@ -870,6 +875,26 @@ NSString * const kGTMToken = @"kGTMToken";
             case RIEventCloseApp:
                 [pushedData setObject:@"openScreen" forKey:kGTMEventKey];
                 [pushedData setObject:[data objectForKey:kRIEventScreenNameKey] forKey:kGTMEventScreenNameKey];
+                break;
+            case RIEventInstallViaAdjust:
+                [pushedData setObject:@"appInstall" forKey:kGTMEventKey];
+
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventNetworkKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventNetworkKey] forKey:kGTMEventInstallNetworkKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventAdgroupKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventAdgroupKey] forKey:kGTMEventInstallAdgroupKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCampaignKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventCampaignKey] forKey:kGTMEventInstallCampaignKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCreativeKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventCreativeKey] forKey:kGTMEventInstallCreativeKey];
+                }
                 break;
         }
         

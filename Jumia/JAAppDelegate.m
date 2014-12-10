@@ -9,12 +9,14 @@
 #import "JAAppDelegate.h"
 #import "JARootViewController.h"
 #import "JAUtils.h"
+#import "RIAdjustTracker.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <HockeySDK/HockeySDK.h>
 
 #define kSessionDuration 1800.0f
 
 @interface JAAppDelegate ()
+<RIAdjustTrackerDelegate>
 
 @property (nonatomic, strong)NSDate *startLoadingTime;
 
@@ -43,7 +45,8 @@
     
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug" ofType:@"plist"];
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
-                                                                       launchOptions:launchOptions];
+                                                                       launchOptions:launchOptions
+                                                                        delegate:self];
 #else
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"dc297f584830db92a1047ba154dadb9e"];
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
@@ -51,7 +54,8 @@
     
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
-                                                                       launchOptions:launchOptions];
+                                                                       launchOptions:launchOptions
+                                                                            delegate:self];
 #endif
     
     [FBLoginView class];
@@ -375,6 +379,29 @@
     }
     
     return dict;
+}
+
+- (void)adjustAttributionChanged:(NSString *)network campaign:(NSString *)campaign adGroup:(NSString *)adGroup creative:(NSString *)creative
+{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+    if(VALID_NOTEMPTY(network, NSString))
+    {
+        [dictionary setObject:network forKey:kRIEventNetworkKey];
+    }
+    if(VALID_NOTEMPTY(campaign, NSString))
+    {
+        [dictionary setObject:campaign forKey:kRIEventAdgroupKey];
+    }
+    if(VALID_NOTEMPTY(adGroup, NSString))
+    {
+        [dictionary setObject:adGroup forKey:kRIEventCreativeKey];
+    }
+    if(VALID_NOTEMPTY(creative, NSString))
+    {
+        [dictionary setObject:creative forKey:kRIEventCreativeKey];
+    }
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventInstallViaAdjust] data:dictionary];
 }
 
 @end
