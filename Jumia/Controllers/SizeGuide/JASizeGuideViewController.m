@@ -23,17 +23,6 @@
     
     self.navBarLayout.backButtonTitle = STRING_BACK;
     self.navBarLayout.title = STRING_SIZE_GUIDE;
-    
-    
-    self.scrollView = [UIScrollView new];
-    self.scrollView.delegate = self;
-    self.scrollView.minimumZoomScale = 1.0f;
-    self.scrollView.maximumZoomScale = 2.0f;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.showsVerticalScrollIndicator = NO;
-    [self.view addSubview:self.scrollView];
-
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,12 +33,33 @@
 {
     [super viewWillAppear:animated];
     
+    [self positionViews];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    [self positionViews];
+}
+
+- (void)positionViews
+{
+    [self.scrollView removeFromSuperview];
+    self.scrollView = [UIScrollView new];
+    self.scrollView.delegate = self;
+    self.scrollView.minimumZoomScale = 1.0f;
+    self.scrollView.maximumZoomScale = 2.0f;
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.showsVerticalScrollIndicator = NO;
     [self.scrollView setFrame:self.view.bounds];
+    [self.view addSubview:self.scrollView];
     if (VALID_NOTEMPTY(self.sizeGuideUrl, NSString)) {
+        [self.imageView removeFromSuperview];
         self.imageView = [[UIImageView alloc] initWithFrame:self.scrollView.bounds];
         [self.imageView setImageWithURL:[NSURL URLWithString:self.sizeGuideUrl]];
         [self.scrollView addSubview:self.imageView];
-        self.scrollView.contentSize = self.view.frame.size;
+        self.scrollView.contentSize = self.view.bounds.size;
     }
 }
 
