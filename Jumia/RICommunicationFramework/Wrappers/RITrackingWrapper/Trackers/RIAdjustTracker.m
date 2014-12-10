@@ -120,6 +120,12 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     [Adjust appDidLaunch:adjustConfig];
 }
 
+#pragma mark RIOpenURLTracking protocol
+- (void)trackOpenURL:(NSURL *)url
+{
+    [Adjust appWillOpenUrl:url];
+}
+
 #pragma mark RIEventTracking protocol
 
 - (void)trackEvent:(NSNumber *)eventType data:(NSDictionary *)data
@@ -507,9 +513,15 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 #pragma mark AdjustDelegate
 - (void)adjustAttributionChanged:(ADJAttribution *)attribution
 {
-    if(VALID_NOTEMPTY(attribution.dictionary, NSDictionary) && VALID_NOTEMPTY(attribution.dictionary.description, NSString))
+    if(VALID_NOTEMPTY(attribution, ADJAttribution))
     {
-        NSLog(@"adjustAttributionChanged: %@", [attribution.dictionary description]);
+        if(self.delegate && [self.delegate respondsToSelector:@selector(adjustAttributionChanged:campaign:adGroup:creative:)])
+        {
+            [self.delegate adjustAttributionChanged:attribution.network
+                                           campaign:attribution.campaign
+                                            adGroup:attribution.adgroup
+                                           creative:attribution.creative];
+        }
     }
 }
 

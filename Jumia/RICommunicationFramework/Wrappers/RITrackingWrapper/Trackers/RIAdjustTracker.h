@@ -11,13 +11,27 @@
 
 extern NSString * const kRIAdjustToken;
 
+@protocol RIAdjustTrackerDelegate <NSObject>
+
+@optional
+
+- (void)adjustAttributionChanged:(NSString*)network
+                        campaign:(NSString*)campaign
+                         adGroup:(NSString*)adGroup
+                        creative:(NSString*)creative;
+
+@end
+
 @interface RIAdjustTracker : NSObject
 <
 RITracker,
+RIOpenURLTracking,
 RIEventTracking,
 RILaunchEventTracker,
 RIEcommerceEventTracking,
 AdjustDelegate
 >
+
+@property (nonatomic, assign) id<RIAdjustTrackerDelegate> delegate;
 
 @end
