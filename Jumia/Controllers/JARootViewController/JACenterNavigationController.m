@@ -52,6 +52,7 @@
 #import "JASubCategoriesViewController.h"
 #import "JACategoryFilterViewController.h"
 #import "RICart.h"
+#import "JASizeGuideViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -302,6 +303,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showNewRatingScreen:)
                                                  name:kShowNewRatingScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSizeGuide:)
+                                                 name:kShowSizeGuideNotification
                                                object:nil];
 }
 
@@ -1044,6 +1050,22 @@
         
         [self pushViewController:newRatingViewController animated:animated];
     }
+}
+
+- (void)showSizeGuide:(NSNotification*)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JASizeGuideViewController class]])
+    {
+        JASizeGuideViewController* viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"sizeGuideViewController"];
+        
+        if ([notification.userInfo objectForKey:@"sizeGuideUrl"]) {
+            viewController.sizeGuideUrl = [notification.userInfo objectForKey:@"sizeGuideUrl"];
+        }
+        
+        [self pushViewController:viewController animated:YES];
+    }
+
 }
 
 #pragma mark - Teaser Actions

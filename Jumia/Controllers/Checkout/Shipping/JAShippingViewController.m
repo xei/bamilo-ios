@@ -445,7 +445,8 @@ UICollectionViewDelegateFlowLayout
     }
     
     [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:previousRegion];
+                       previousText:previousRegion
+                    leftButtonTitle:nil];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;

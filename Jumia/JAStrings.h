@@ -255,4 +255,6 @@
 #define STRING_EDIT RILocalizedString(@"string_edit", nil)
 #define STRING_TRACK_YOUR_ORDER_TIP RILocalizedString(@"track_your_order_tip", nil)
 
+#define STRING_SIZE_GUIDE RILocalizedString(@"size_guide_label", nil)
+
 #endif

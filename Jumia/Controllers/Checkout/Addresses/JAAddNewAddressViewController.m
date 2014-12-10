@@ -806,7 +806,8 @@ JAPickerDelegate>
     }
     
     [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:[self getPickerSelectedRow]];
+                       previousText:[self getPickerSelectedRow]
+                    leftButtonTitle:nil];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
