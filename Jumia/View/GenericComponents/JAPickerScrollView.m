@@ -7,19 +7,22 @@
 //
 
 #import "JAPickerScrollView.h"
+#import "JAGradientLayer.h"
 
 #define JAPickerScrollViewCenterWidth 100.0f
 #define JAPickerScrollViewCenterWidthiPad 130.0f
-#define JAPickerScrollViewBackgroundColor UIColorFromRGB(0xe3e3e3);
-#define JAPickerScrollViewTextColor UIColorFromRGB(0x4e4e4e);
+#define JAPickerScrollViewBackgroundColor UIColorFromRGB(0xe3e3e3)
+#define JAPickerScrollViewTextColor UIColorFromRGB(0x4e4e4e)
 #define JAPickerScrollViewTextSize 13.0f
 #define JAPickerScrollViewIndicatorImageName @"PickerScrollIndicator"
-
+#define JAPickerScrollViewFadeWidth 30.0f
 
 @interface JAPickerScrollView ()
 
 @property (nonatomic, strong)UIScrollView* scrollView;
 @property (nonatomic, strong)UIImageView* arrowImageView;
+@property (nonatomic, strong)UIView* leftFadeView;
+@property (nonatomic, strong)UIView* rightFadeView;
 @property (nonatomic, strong)NSArray* optionStrings;
 @property (nonatomic, strong)NSArray* optionLabels;
 @property (nonatomic, assign)NSInteger selectedIndex;
@@ -38,7 +41,8 @@
 {
     [self.scrollView removeFromSuperview];
     [self.arrowImageView removeFromSuperview];
-    
+    [self.leftFadeView removeFromSuperview];
+    [self.rightFadeView removeFromSuperview];
     
     self.disableDelagation = NO;
     
@@ -102,6 +106,23 @@
                                              indicatorImage.size.height)];
     [self addSubview:self.arrowImageView];
     
+    
+    self.leftFadeView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                 0.0f,
+                                                                 JAPickerScrollViewFadeWidth,
+                                                                 self.frame.size.height)];
+    self.leftFadeView.backgroundColor = [UIColor clearColor];
+    [self.leftFadeView.layer insertSublayer:[JAGradientLayer alphaGradient:JAPickerScrollViewBackgroundColor bounds:self.leftFadeView.bounds leftToRight:YES] atIndex:0];
+    [self addSubview:self.leftFadeView];
+    
+    self.rightFadeView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width - JAPickerScrollViewFadeWidth,
+                                                                  0.0f,
+                                                                  JAPickerScrollViewFadeWidth,
+                                                                  self.frame.size.height)];
+    self.rightFadeView.backgroundColor = [UIColor clearColor];
+    [self.rightFadeView.layer insertSublayer:[JAGradientLayer alphaGradient:JAPickerScrollViewBackgroundColor bounds:self.rightFadeView.bounds leftToRight:NO] atIndex:0];
+    [self addSubview:self.rightFadeView];
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(touchedInScrollView:)];
     self.userInteractionEnabled = YES;
@@ -156,6 +177,17 @@
     }
     
     self.selectedIndex = index;
+
+    [self.leftFadeView setHidden:NO];
+    [self.rightFadeView setHidden:NO];
+    if(0 == self.selectedIndex)
+    {
+        [self.leftFadeView setHidden:YES];
+    }
+    else if(([self.optionLabels count] - 1) == self.selectedIndex)
+    {
+        [self.rightFadeView setHidden:YES];
+    }
     
     if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(selectedIndex:)]) {
         if (!self.disableDelagation) {
