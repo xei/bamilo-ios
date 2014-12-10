@@ -520,7 +520,8 @@ JADatePickerDelegate
         NSString *selectedValue = [radioComponent getSelectedValue];
         
         [self.picker setDataSourceArray:[dataSource copy]
-                           previousText:selectedValue];
+                           previousText:selectedValue
+                        leftButtonTitle:nil];
         
         CGFloat pickerViewHeight = self.view.frame.size.height;
         CGFloat pickerViewWidth = self.view.frame.size.width;

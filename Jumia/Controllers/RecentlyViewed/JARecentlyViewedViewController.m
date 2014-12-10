@@ -448,8 +448,14 @@
             simpleSize = simple.variation;
         }
     }
+
+    NSString* sizeGuideTitle = nil;
+    if (VALID_NOTEMPTY(product.sizeGuideUrl, NSString)) {
+        sizeGuideTitle = STRING_SIZE_GUIDE;
+    }
     [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:simpleSize];
+                       previousText:simpleSize
+                    leftButtonTitle:sizeGuideTitle];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
@@ -503,6 +509,15 @@
                          [self.picker removeFromSuperview];
                          self.picker = nil;
                      }];
+}
+
+- (void)leftButtonPressed;
+{
+    RIProduct* product = [self.productsArray objectAtIndex:self.picker.tag];
+    if (VALID_NOTEMPTY(product.sizeGuideUrl, NSString)) {
+        NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:product.sizeGuideUrl, @"sizeGuideUrl", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
+    }
 }
 
 #pragma mark - UIPickerView

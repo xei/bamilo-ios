@@ -19,6 +19,7 @@ UIPickerViewDelegate
 @property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) UIView *buttonBackgroundView;
 @property (strong, nonatomic) UIButton *doneButton;
+@property (strong, nonatomic) UIButton *leftButton;
 
 @end
 
@@ -90,6 +91,19 @@ UIPickerViewDelegate
     [self.doneButton addTarget:self action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonBackgroundView addSubview:self.doneButton];
     [self addSubview:self.buttonBackgroundView];
+    
+    CGFloat leftButtonWidth = 100.0f;
+    self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.leftButton setFrame:CGRectMake(0.0f,
+                                         0.0f,
+                                         leftButtonWidth,
+                                         44.0f)];
+    [self.leftButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.leftButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.leftButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [self.leftButton addTarget:self action:@selector(leftButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonBackgroundView addSubview:self.leftButton];
+    self.leftButton.hidden = YES;
 }
 
 - (void)removePickerView
@@ -106,7 +120,15 @@ UIPickerViewDelegate
 
 - (void)setDataSourceArray:(NSArray *)dataSource
               previousText:(NSString *)previousText
+           leftButtonTitle:(NSString*)leftButtonTitle;
 {
+    if (VALID_NOTEMPTY(leftButtonTitle, NSString)) {
+        [self.leftButton setTitle:leftButtonTitle forState:UIControlStateNormal];
+        self.leftButton.hidden = NO;
+    } else {
+        self.leftButton.hidden = YES;
+    }
+    
     self.dataSource = [NSArray arrayWithArray:dataSource];
     [self.pickerView reloadAllComponents];
     
@@ -128,6 +150,14 @@ UIPickerViewDelegate
     if(self.delegate && [self.delegate respondsToSelector:@selector(selectedRow:)])
     {
         [self.delegate selectedRow:[self.pickerView selectedRowInComponent:0]];
+    }
+}
+
+- (void)leftButtonPressed
+{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(leftButtonPressed)])
+    {
+        [self.delegate leftButtonPressed];
     }
 }
 

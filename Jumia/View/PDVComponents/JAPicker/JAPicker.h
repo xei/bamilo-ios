@@ -11,6 +11,7 @@
 @protocol JAPickerDelegate <NSObject>
 
 - (void)selectedRow:(NSInteger)selectedRow;
+- (void)leftButtonPressed;
 
 @optional
 
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) UIPickerView *pickerView;
 
 - (void)setDataSourceArray:(NSArray *)dataSource
-              previousText:(NSString *)previousText;
+              previousText:(NSString *)previousText
+           leftButtonTitle:(NSString*)leftButtonTitle;
 
 @end

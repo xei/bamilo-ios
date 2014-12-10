@@ -355,6 +355,13 @@
             newProduct.categoryIds = [NSOrderedSet orderedSetWithArray:[dataDic objectForKey:@"categories"]];
         }
         
+        if ([dataDic objectForKey:@"size_guide"]) {
+            NSString* sizeGuideUrl = [dataDic objectForKey:@"size_guide"];
+            if (VALID_NOTEMPTY(sizeGuideUrl, NSString)) {
+                newProduct.sizeGuideUrl = sizeGuideUrl;
+            }
+        }
+        
         __block NSString* variationKey = @"";
             NSDictionary* uniques = [dataDic objectForKey:@"uniques"];
             if (VALID_NOTEMPTY(uniques, NSDictionary)) {

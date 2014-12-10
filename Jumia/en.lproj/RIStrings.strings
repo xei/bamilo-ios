@@ -251,3 +251,5 @@
 "order_summary_label" = "Order Summary";
 "string_edit" = "Edit";
 "track_your_order_tip" = "Search for your Order ID and every detail about it will show here";
+
+"size_guide_label" = "Size Guide";

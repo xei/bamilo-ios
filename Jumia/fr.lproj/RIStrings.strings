@@ -251,3 +251,5 @@
 "order_summary_label" = "Résumé de la commande";
 "string_edit" = "Modifier";
 "track_your_order_tip" = "Recherche votre numéro de commande";
+
+"size_guide_label" = "Taille Guide";

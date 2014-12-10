@@ -1143,8 +1143,13 @@ JAActivityViewControllerDelegate
         }
     }
     
+    NSString* sizeGuideTitle = nil;
+    if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
+        sizeGuideTitle = STRING_SIZE_GUIDE;
+    }
     [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:self.productInfoSection.sizeLabel.text];
+                       previousText:self.productInfoSection.sizeLabel.text
+                    leftButtonTitle:sizeGuideTitle];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
@@ -1220,6 +1225,14 @@ JAActivityViewControllerDelegate
                          [self.picker removeFromSuperview];
                          self.picker = nil;
                      }];
+}
+
+- (void)leftButtonPressed;
+{
+    if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
+        NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:self.product.sizeGuideUrl, @"sizeGuideUrl", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
+    }
 }
 
 #pragma mark JAPDVImageSectionDelegate

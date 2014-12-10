@@ -873,7 +873,8 @@
     NSString *selectedItem = [NSString stringWithFormat:@"%d", ([[self.currentItem quantity] integerValue] )];
     
     [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:selectedItem];
+                       previousText:selectedItem
+                    leftButtonTitle:nil];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
