@@ -48,6 +48,7 @@
     [self.scrollView removeFromSuperview];
     self.scrollView = [UIScrollView new];
     self.scrollView.delegate = self;
+    self.scrollView.backgroundColor = [UIColor whiteColor];
     self.scrollView.minimumZoomScale = 1.0f;
     self.scrollView.maximumZoomScale = 2.0f;
     self.scrollView.showsHorizontalScrollIndicator = NO;
@@ -56,12 +57,25 @@
     [self.view addSubview:self.scrollView];
     if (VALID_NOTEMPTY(self.sizeGuideUrl, NSString)) {
         [self.imageView removeFromSuperview];
-        self.imageView = [[UIImageView alloc] initWithFrame:self.scrollView.bounds];
-        [self.imageView setImageWithURL:[NSURL URLWithString:self.sizeGuideUrl]];
+        self.imageView = [[UIImageView alloc] init];
+        __weak typeof(self) weakSelf = self;
+        [self.imageView setImageWithURL:[NSURL URLWithString:self.sizeGuideUrl] success:^(UIImage *image, BOOL cached) {
+            [weakSelf resizeWithImage:image];
+        } failure:^(NSError *error) {}];
+     
+        [self.imageView setFrame:self.scrollView.bounds];
         [self.scrollView addSubview:self.imageView];
-        self.scrollView.contentSize = self.view.bounds.size;
     }
 }
+
+- (void)resizeWithImage:(UIImage*)image
+{
+    if (image.size.height < self.view.frame.size.height ||
+        image.size.width < self.view.frame.size.width) {
+        self.imageView.contentMode = UIViewContentModeCenter;
+    }
+}
+
 
 #pragma mark - UIScrollView
 
