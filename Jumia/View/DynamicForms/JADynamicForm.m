@@ -91,6 +91,11 @@
                     [textField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
                 }
                 
+                if([@"address-form" isEqualToString:[self.form uid]] && [textField isComponentWithKey:@"fk_customer_address_city"] && VALID_NOTEMPTY([values objectForKey:@"city"], NSString))
+                {
+                    [textField setValue:[values objectForKey:@"city"]];
+                }
+                
                 CGRect frame = textField.frame;
                 frame.origin.y = startingY;
                 textField.frame = frame;
