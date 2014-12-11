@@ -527,6 +527,30 @@
                                                                               self.loadedEverything = YES;
                                                                           }
                                                                           
+                                                                          NSString *categoryName = @"";
+                                                                          NSString *subCategoryName = @"";
+                                                                          if(VALID_NOTEMPTY(self.category, RICategory))
+                                                                          {
+                                                                              if(VALID_NOTEMPTY(self.category.parent, RICategory))
+                                                                              {
+                                                                                  RICategory *parent = self.category.parent;
+                                                                                  while (VALID_NOTEMPTY(parent.parent, RICategory))
+                                                                                  {
+                                                                                      parent = parent.parent;
+                                                                                  }
+                                                                                  categoryName = parent.name;
+                                                                                  subCategoryName = self.category.name;
+                                                                              }
+                                                                              else
+                                                                              {
+                                                                                  categoryName = self.category.name;
+                                                                              }
+                                                                          }
+                                                                          else if(VALID_NOTEMPTY(category, RICategory))
+                                                                          {
+                                                                              categoryName = category.name;
+                                                                          }
+                                                                          
                                                                           NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                                                                           // Track events only in the first load of the products
                                                                           if (!self.isFirstLoadTracking)
@@ -567,19 +591,19 @@
                                                                               [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
                                                                               [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
                                                                               [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+
+                                                                              if(VALID_NOTEMPTY(categoryName, NSString))
+                                                                              {
+                                                                                  [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+                                                                              }
                                                                               
                                                                               if(VALID_NOTEMPTY(category, RICategory))
                                                                               {
-                                                                                  [trackingDictionary setValue:category.name forKey:kRIEventCategoryNameKey];
                                                                                   [trackingDictionary setValue:category.uid forKey:kRIEventCategoryIdKey];
-                                                                                  
-                                                                                  [trackingDictionary setValue:[RICategory getTree:category.uid] forKey:kRIEventTreeKey];
                                                                               }
                                                                               else if(VALID_NOTEMPTY(categoryId, NSString))
                                                                               {
-                                                                                  [trackingDictionary setValue:category.name forKey:kRIEventCategoryNameKey];
                                                                                   [trackingDictionary setValue:categoryId forKey:kRIEventCategoryIdKey];
-                                                                                  
                                                                                   [trackingDictionary setValue:[RICategory getTree:categoryId] forKey:kRIEventTreeKey];
                                                                               }
                                                                               
@@ -593,29 +617,15 @@
                                                                           }
                                                                           
                                                                           trackingDictionary = [[NSMutableDictionary alloc] init];
-                                                                          if(VALID_NOTEMPTY(self.category, RICategory))
+                                                                          
+                                                                          if(VALID_NOTEMPTY(categoryName, NSString))
                                                                           {
-                                                                              if(VALID_NOTEMPTY(self.category.parent, RICategory))
-                                                                              {
-                                                                                  RICategory *parent = self.category.parent;
-                                                                                  while (VALID_NOTEMPTY(parent.parent, RICategory))
-                                                                                  {
-                                                                                      parent = parent.parent;
-                                                                                  }
-                                                                                  [trackingDictionary setValue:parent.name forKey:kRIEventCategoryNameKey];
-                                                                                  
-                                                                                  [trackingDictionary setValue:category.name forKey:kRIEventSubCategoryNameKey];
-                                                                              }
-                                                                              else
-                                                                              {
-                                                                                  [trackingDictionary setValue:self.category.name forKey:kRIEventCategoryNameKey];
-                                                                              }
+                                                                              [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
                                                                           }
-                                                                          else if(VALID_NOTEMPTY(category, RICategory))
+                                                                          if(VALID_NOTEMPTY(subCategoryName, NSString))
                                                                           {
-                                                                              [trackingDictionary setValue:category.name forKey:kRIEventCategoryNameKey];
+                                                                              [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
                                                                           }
-
                                                                           
                                                                           [trackingDictionary setValue:pageNumber forKey:kRIEventPageNumberKey];
                                                                           
@@ -1149,19 +1159,54 @@
                                         [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
                                         [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
                                         [trackingDictionary setValue:@"Catalog" forKey:kRIEventLocationKey];
-
-                                        if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
+                                        
+                                        NSString *categoryName = @"";
+                                        NSString *subCategoryName = @"";
+                                        if(VALID_NOTEMPTY(self.category, RICategory))
+                                        {
+                                            if(VALID_NOTEMPTY(self.category.parent, RICategory))
+                                            {
+                                                RICategory *parent = self.category.parent;
+                                                while (VALID_NOTEMPTY(parent.parent, RICategory))
+                                                {
+                                                    parent = parent.parent;
+                                                }
+                                                categoryName = parent.name;
+                                                subCategoryName = self.category.name;
+                                            }
+                                            else
+                                            {
+                                                categoryName = self.category.name;
+                                            }
+                                        }
+                                        else if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
                                         {
                                             NSArray *categoryIds = [product.categoryIds array];
-                                            if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
-                                            {
-                                                [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
-                                            }
+                                            NSInteger subCategoryIndex = [categoryIds count] - 1;
+                                            NSInteger categoryIndex = subCategoryIndex - 1;
                                             
-                                            if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+                                            if(categoryIndex >= 0)
                                             {
-                                                [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+                                                NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+                                                categoryName = [RICategory getCategoryName:categoryId];
+                                                
+                                                NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                                                subCategoryName = [RICategory getCategoryName:subCategoryId];
                                             }
+                                            else
+                                            {
+                                                NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                                                categoryName = [RICategory getCategoryName:categoryId];
+                                            }
+                                        }
+                                        
+                                        if(VALID_NOTEMPTY(categoryName, NSString))
+                                        {
+                                            [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+                                        }
+                                        if(VALID_NOTEMPTY(subCategoryName, NSString))
+                                        {
+                                            [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
                                         }
                                         
                                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]

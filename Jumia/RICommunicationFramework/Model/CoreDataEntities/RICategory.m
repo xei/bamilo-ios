@@ -163,6 +163,22 @@
     return categoryTree;
 }
 
++ (NSString*)getCategoryName:(NSString*)categoryId
+{
+    NSString *categoryName = categoryId;
+    if(VALID_NOTEMPTY(categoryId, NSString))
+    {
+        NSArray* savedCategoryArray = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"uid" andPropertyValue:categoryId];
+        
+        if(VALID_NOTEMPTY(savedCategoryArray, NSArray))
+        {
+            RICategory *savedCategory = [savedCategoryArray objectAtIndex:0];
+            categoryName = savedCategory.name;
+        }
+    }
+    return categoryName;
+}
+
 + (NSString*)getTopCategory:(RICategory*)seenCategory
 {
     [RICategory seenCategory:seenCategory];

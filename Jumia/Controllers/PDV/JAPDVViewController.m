@@ -426,20 +426,55 @@ JAActivityViewControllerDelegate
         [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
     }
     
-    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+    NSString *categoryName = @"";
+    NSString *subCategoryName = @"";
+    if(VALID_NOTEMPTY(self.category, RICategory))
+    {
+        if(VALID_NOTEMPTY(self.category.parent, RICategory))
+        {
+            RICategory *parent = self.category.parent;
+            while (VALID_NOTEMPTY(parent.parent, RICategory))
+            {
+                parent = parent.parent;
+            }
+            categoryName = parent.name;
+            subCategoryName = self.category.name;
+        }
+        else
+        {
+            categoryName = self.category.name;
+        }
+    }
+    else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
         NSArray *categoryIds = [self.product.categoryIds array];
-        if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
-        {
-            [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
-        }
+        NSInteger subCategoryIndex = [categoryIds count] - 1;
+        NSInteger categoryIndex = subCategoryIndex - 1;
         
-        if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+        if(categoryIndex >= 0)
         {
-            [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+            NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+            categoryName = [RICategory getCategoryName:categoryId];
+            
+            NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+            subCategoryName = [RICategory getCategoryName:subCategoryId];
+        }
+        else
+        {
+            NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+            categoryName = [RICategory getCategoryName:categoryId];
         }
     }
     
+    if(VALID_NOTEMPTY(categoryName, NSString))
+    {
+        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+    }
+    if(VALID_NOTEMPTY(subCategoryName, NSString))
+    {
+        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
+    }
+
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewProduct]
                                               data:[trackingDictionary copy]];
     
@@ -969,13 +1004,53 @@ JAActivityViewControllerDelegate
         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
         [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
 
-        if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+        NSString *categoryName = @"";
+        NSString *subCategoryName = @"";
+        if(VALID_NOTEMPTY(self.category, RICategory))
+        {
+            if(VALID_NOTEMPTY(self.category.parent, RICategory))
+            {
+                RICategory *parent = self.category.parent;
+                while (VALID_NOTEMPTY(parent.parent, RICategory))
+                {
+                    parent = parent.parent;
+                }
+                categoryName = parent.name;
+                subCategoryName = self.category.name;
+            }
+            else
+            {
+                categoryName = self.category.name;
+            }
+        }
+        else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
         {
             NSArray *categoryIds = [self.product.categoryIds array];
-            if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
+            NSInteger subCategoryIndex = [categoryIds count] - 1;
+            NSInteger categoryIndex = subCategoryIndex - 1;
+            
+            if(categoryIndex >= 0)
             {
-                [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
+                NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+                categoryName = [RICategory getCategoryName:categoryId];
+                
+                NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                subCategoryName = [RICategory getCategoryName:subCategoryId];
             }
+            else
+            {
+                NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                categoryName = [RICategory getCategoryName:categoryId];
+            }
+        }
+        
+        if(VALID_NOTEMPTY(categoryName, NSString))
+        {
+            [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+        }
+        if(VALID_NOTEMPTY(subCategoryName, NSString))
+        {
+            [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
         }
         
         [[RITrackingWrapper sharedInstance] trackEvent:eventType
@@ -1059,18 +1134,53 @@ JAActivityViewControllerDelegate
                           [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
                           [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
                           
-                          if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+                          NSString *categoryName = @"";
+                          NSString *subCategoryName = @"";
+                          if(VALID_NOTEMPTY(self.category, RICategory))
+                          {
+                              if(VALID_NOTEMPTY(self.category.parent, RICategory))
+                              {
+                                  RICategory *parent = self.category.parent;
+                                  while (VALID_NOTEMPTY(parent.parent, RICategory))
+                                  {
+                                      parent = parent.parent;
+                                  }
+                                  categoryName = parent.name;
+                                  subCategoryName = self.category.name;
+                              }
+                              else
+                              {
+                                  categoryName = self.category.name;
+                              }
+                          }
+                          else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
                           {
                               NSArray *categoryIds = [self.product.categoryIds array];
-                              if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
-                              {
-                                  [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
-                              }
+                              NSInteger subCategoryIndex = [categoryIds count] - 1;
+                              NSInteger categoryIndex = subCategoryIndex - 1;
                               
-                              if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+                              if(categoryIndex >= 0)
                               {
-                                  [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+                                  NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+                                  categoryName = [RICategory getCategoryName:categoryId];
+                                  
+                                  NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                                  subCategoryName = [RICategory getCategoryName:subCategoryId];
                               }
+                              else
+                              {
+                                  NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                                  categoryName = [RICategory getCategoryName:categoryId];
+                              }
+                          }
+                          
+                          if(VALID_NOTEMPTY(categoryName, NSString))
+                          {
+                              [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+                          }
+                          if(VALID_NOTEMPTY(subCategoryName, NSString))
+                          {
+                              [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
                           }
                           
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
@@ -1344,18 +1454,53 @@ JAActivityViewControllerDelegate
             [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
             [trackingDictionary setValue:@"Catalog" forKey:kRIEventLocationKey];
 
-            if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+            NSString *categoryName = @"";
+            NSString *subCategoryName = @"";
+            if(VALID_NOTEMPTY(self.category, RICategory))
+            {
+                if(VALID_NOTEMPTY(self.category.parent, RICategory))
+                {
+                    RICategory *parent = self.category.parent;
+                    while (VALID_NOTEMPTY(parent.parent, RICategory))
+                    {
+                        parent = parent.parent;
+                    }
+                    categoryName = parent.name;
+                    subCategoryName = self.category.name;
+                }
+                else
+                {
+                    categoryName = self.category.name;
+                }
+            }
+            else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
             {
                 NSArray *categoryIds = [self.product.categoryIds array];
-                if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
-                {
-                    [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
-                }
+                NSInteger subCategoryIndex = [categoryIds count] - 1;
+                NSInteger categoryIndex = subCategoryIndex - 1;
                 
-                if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+                if(categoryIndex >= 0)
                 {
-                    [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+                    NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+                    categoryName = [RICategory getCategoryName:categoryId];
+                    
+                    NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                    subCategoryName = [RICategory getCategoryName:subCategoryId];
                 }
+                else
+                {
+                    NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                    categoryName = [RICategory getCategoryName:categoryId];
+                }
+            }
+            
+            if(VALID_NOTEMPTY(categoryName, NSString))
+            {
+                [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+            }
+            if(VALID_NOTEMPTY(subCategoryName, NSString))
+            {
+                [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
             }
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]

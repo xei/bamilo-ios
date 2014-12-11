@@ -316,7 +316,8 @@
             [launchData setObject:[self.pushNotification objectForKey:@"UTM"] forKey:kRILaunchEventCampaignKey];
         }
     }
-    
+
+    [launchData setValue:source forKey:kRILaunchEventSourceKey];
     [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
     
     [[RITrackingWrapper sharedInstance] trackEvent:event

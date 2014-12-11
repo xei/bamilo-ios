@@ -313,11 +313,10 @@
         if ([dataDic objectForKey:@"ratings_total"]) {
             NSDictionary *ratingsDic = [dataDic objectForKey:@"ratings_total"];
             if (VALID_NOTEMPTY(ratingsDic, NSDictionary)) {
-                if ([ratingsDic objectForKey:@"avr"]) {
+                if (VALID_NOTEMPTY([ratingsDic objectForKey:@"avr"], NSNumber)) {
                     newProduct.avr = [ratingsDic objectForKey:@"avr"];
                 }
-                if ([ratingsDic objectForKey:@"sum"]) {
-                    newProduct.sum = [ratingsDic objectForKey:@"sum"];
+                if (VALID_NOTEMPTY([ratingsDic objectForKey:@"sum"], NSNumber)) {                    newProduct.sum = [ratingsDic objectForKey:@"sum"];
                 }
             }
         }
@@ -490,6 +489,7 @@
             sortingName = @"Brand";
             break;
         default: //RICatalogSortingPopularity
+            sortingName = @"Popularity";
             break;
     }
     
