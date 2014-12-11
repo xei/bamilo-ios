@@ -19,6 +19,7 @@
 #import "RIRatings.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
+#import "RICategory.h"
 
 @interface JARatingsViewController ()
 <
@@ -257,18 +258,25 @@ UITableViewDataSource
     
     NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
     [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-    
+
     if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
         NSArray *categoryIds = [self.product.categoryIds array];
-        if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
-        {
-            [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
-        }
+        NSInteger subCategoryIndex = [categoryIds count] - 1;
+        NSInteger categoryIndex = subCategoryIndex - 1;
         
-        if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+        if(categoryIndex >= 0)
         {
-            [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+            NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+            
+            NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+            [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryNameKey];
+        }
+        else
+        {
+            NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
         }
     }
     

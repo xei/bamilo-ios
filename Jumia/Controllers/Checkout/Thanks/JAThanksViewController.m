@@ -323,6 +323,11 @@
         [ecommerceDictionary setValue:self.checkout.orderSummary.discountCouponCode forKey:kRIEcommerceCouponKey];
     }
     
+    if(VALID_NOTEMPTY(self.checkout.orderSummary.discountCouponValue, NSNumber))
+    {
+        [ecommerceDictionary setValue:self.checkout.orderSummary.discountCouponValue forKey:kRIEcommerceCouponValue];
+    }
+    
     [ecommerceDictionary setValue:self.checkout.orderSummary.shippingAmount forKey:kRIEcommerceShippingKey];
     [ecommerceDictionary setValue:self.checkout.orderSummary.taxAmount forKey:kRIEcommerceTaxKey];
     

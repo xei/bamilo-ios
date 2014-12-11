@@ -120,6 +120,7 @@ NSString * const kGTMToken = @"kGTMToken";
         [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventSignupFail]];
         [events addObject:[NSNumber numberWithInt:RIEventRegisterFail]];
+        [events addObject:[NSNumber numberWithInt:RIEventLogout]];
         [events addObject:[NSNumber numberWithInt:RIEventNewsletter]];
         [events addObject:[NSNumber numberWithInt:RIEventSearch]];
         [events addObject:[NSNumber numberWithInt:RIEventShareEmail]];
@@ -916,9 +917,9 @@ NSString * const kGTMToken = @"kGTMToken";
         [pushedData setObject:[data objectForKey:kRIEcommercePaymentMethodKey] forKey:kGTMEventPaymentMethodKey];
     }
     
-    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceCouponKey], NSString))
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceCouponValue], NSNumber))
     {
-        [pushedData setObject:[data objectForKey:kRIEcommerceCouponKey] forKey:kGTMEventVoucherAmountKey];
+        [pushedData setObject:[data objectForKey:kRIEcommerceCouponValue] forKey:kGTMEventVoucherAmountKey];
     }
     
     if(VALID_NOTEMPTY([data objectForKey:kRIEcommercePreviousPurchases], NSNumber))

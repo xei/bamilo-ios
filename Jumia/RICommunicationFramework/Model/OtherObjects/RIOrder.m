@@ -58,6 +58,10 @@
         order.discountCouponCode = [orderObject objectForKey:@"coupon_code"];
     }
     
+    if (VALID_NOTEMPTY([orderObject objectForKey:@"coupon_discount"], NSNumber)) {
+        order.discountCouponValue = [orderObject objectForKey:@"coupon_discount"];
+    }
+    
     NSString *shippingMethod = @"";
     if (VALID_NOTEMPTY([orderObject objectForKey:@"shipping_method"], NSDictionary)) {
         NSDictionary *shippingMethodObject = [orderObject objectForKey:@"shipping_method"];
