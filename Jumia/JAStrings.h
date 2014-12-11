@@ -257,4 +257,7 @@
 
 #define STRING_SIZE_GUIDE RILocalizedString(@"size_guide_label", nil)
 
+#define STRING_MY_ADDRESSES RILocalizedString(@"my_addresses", nil)
+#define STRING_CREATE_EDIT_ADDRESS RILocalizedString(@"create_edit_address", nil)
+
 #endif

@@ -759,8 +759,8 @@ FBLoginViewDelegate
                                                           else
                                                           {
                                                               [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                                                                  object:nil
-                                                                                                                userInfo:nil];
+                                                                                                                  object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                                                                                userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
                                                           }
                                                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                           [self hideLoading];
@@ -837,8 +837,8 @@ FBLoginViewDelegate
         if([RICustomer checkIfUserHasAddresses])
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                object:nil
-                                                              userInfo:nil];
+                                                                object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                              userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
         }
         else
         {

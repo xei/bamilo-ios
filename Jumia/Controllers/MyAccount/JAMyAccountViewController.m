@@ -23,6 +23,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *emailTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailSubtitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *emailArrow;
+@property (weak, nonatomic) IBOutlet UIView *emailAndAddressesSeparator;
+@property (weak, nonatomic) IBOutlet JAClickableView *addressesClickableView;
+@property (weak, nonatomic) IBOutlet UILabel *addressesTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *addressesSubtitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *addressesArrow;
 @property (weak, nonatomic) IBOutlet UIView *notificationView;
 @property (weak, nonatomic) IBOutlet UILabel *notificationSettingsTitleLabel;
 @property (weak, nonatomic) IBOutlet UIView *notificationViewTopSeparator;
@@ -65,6 +70,7 @@
     
     self.accountViewTopSeparator.backgroundColor = UIColorFromRGB(0xfaa41a);
     self.accountAndEmailSeparator.backgroundColor = UIColorFromRGB(0xcccccc);
+    self.emailAndAddressesSeparator.backgroundColor = UIColorFromRGB(0xcccccc);
     
     self.userDataTitleLabel.textColor = UIColorFromRGB(0x666666);
     self.userDataTitleLabel.text = STRING_USER_DATA;
@@ -85,6 +91,16 @@
     self.emailSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.emailArrow.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.addressesTitleLabel.textColor = UIColorFromRGB(0x666666);
+    self.addressesTitleLabel.text = STRING_MY_ADDRESSES;
+    self.addressesTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.addressesSubtitleLabel.textColor = UIColorFromRGB(0x666666);
+    self.addressesSubtitleLabel.text = STRING_CREATE_EDIT_ADDRESS;
+    self.addressesSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.addressesArrow.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.notificationView.layer.cornerRadius = 5.0f;
     self.notificationView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -126,6 +142,11 @@
     [self.emailClickableView addTarget:self
                                 action:@selector(pushEmailNotifications:)
                       forControlEvents:UIControlEventTouchUpInside];
+    
+    self.addressesClickableView.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.addressesClickableView addTarget:self
+                                    action:@selector(pushAddresses:)
+                          forControlEvents:UIControlEventTouchUpInside];
     
     BOOL isNotiActive = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeNotificationsOptions];
     BOOL isSoundActive = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeSoundOptions];
@@ -204,6 +225,11 @@
                                                  self.accountView.frame.size.width,
                                                  self.emailClickableView.frame.size.height)];
     
+    [self.addressesClickableView setFrame:CGRectMake(self.addressesClickableView.frame.origin.x,
+                                                     self.addressesClickableView.frame.origin.y,
+                                                     self.accountView.frame.size.width,
+                                                     self.addressesClickableView.frame.size.height)];
+    
     [self.notificationView setFrame:CGRectMake(self.notificationView.frame.origin.x,
                                                self.notificationView.frame.origin.y,
                                                width - (self.notificationView.frame.origin.x * 2),
@@ -246,6 +272,21 @@
                                                  self.emailSubtitleLabel.frame.origin.y,
                                                  self.emailSubtitleLabel.frame.size.width,
                                                  self.emailSubtitleLabel.frame.size.height)];
+    
+    [self.addressesArrow setFrame:CGRectMake(self.accountView.frame.size.width - self.addressesArrow.frame.size.width - rightMargin,
+                                             self.addressesArrow.frame.origin.y,
+                                             self.addressesArrow.frame.size.width,
+                                             self.addressesArrow.frame.size.height)];
+    
+    [self.addressesTitleLabel setFrame:CGRectMake(leftMargin,
+                                                  self.addressesTitleLabel.frame.origin.y,
+                                                  self.addressesTitleLabel.frame.size.width,
+                                                  self.addressesTitleLabel.frame.size.height)];
+    
+    [self.addressesSubtitleLabel setFrame:CGRectMake(leftMargin,
+                                                     self.addressesSubtitleLabel.frame.origin.y,
+                                                     self.addressesSubtitleLabel.frame.size.width,
+                                                     self.addressesSubtitleLabel.frame.size.height)];
     
     [self.notificationSwitch setFrame:CGRectMake(self.notificationView.frame.size.width - self.notificationSwitch.frame.size.width - rightMargin,
                                                  self.notificationSwitch.frame.origin.y,
@@ -345,6 +386,13 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowEmailNotificationsScreenNotification
                                                         object:@{@"animated":[NSNumber numberWithBool:YES]}];
+}
+
+- (void)pushAddresses:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                        object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                      userInfo:@{@"from_checkout":[NSNumber numberWithBool:NO]}];
 }
 
 -(void)showUserDataSavedMessage
