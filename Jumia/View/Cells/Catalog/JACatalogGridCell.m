@@ -31,8 +31,13 @@
                                       self.frame.size.width - 4.0f,
                                       self.priceView.frame.size.height);
     
+    CGFloat recentLabelY = JACatalogViewControllerGridCellNewLabelY;
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        recentLabelY = JACatalogViewControllerGridCellNewLabelY_ipad;
+    }
+    
     [self.recentLabel removeFromSuperview];
-    self.recentLabel = [[UILabel alloc] initWithFrame:CGRectMake(-2.0f, 17.0f, 48.0f, 14.0f)];
+    self.recentLabel = [[UILabel alloc] initWithFrame:CGRectMake(-2.0f, recentLabelY, 48.0f, 14.0f)];
     self.recentLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:8.0f];
     self.recentLabel.text = STRING_NEW;
     self.recentLabel.textAlignment = NSTextAlignmentCenter;
