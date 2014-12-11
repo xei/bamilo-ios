@@ -72,6 +72,8 @@ FBLoginViewDelegate
 @property (nonatomic, assign)CGRect subLandscapeRect;
 @property (nonatomic, assign)CGRect mainPortraitRect;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (assign, nonatomic) CGRect scrollViewOriginalFrame;
 @end
 
 @implementation JALoginViewController
@@ -115,6 +117,7 @@ FBLoginViewDelegate
     
     self.loginView.translatesAutoresizingMaskIntoConstraints = YES;
     self.loginFormView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
     
     UITapGestureRecognizer *showLoginViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -141,6 +144,9 @@ FBLoginViewDelegate
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.scrollView setFrame:CGRectMake(0, CGRectGetMaxY(self.stepView.frame), self.view.frame.size.width, self.view.frame.size.height - CGRectGetMaxY(self.stepView.frame))];
+    self.scrollViewOriginalFrame = self.scrollView.frame;
     
     CGFloat orderSummaryY = self.stepBackground.frame.size.height;
     CGFloat orderSummaryWidth = 250.0f;
@@ -588,13 +594,14 @@ FBLoginViewDelegate
                                                     self.loginFormHeight)];
             
             [self.loginView setFrame:CGRectMake(self.loginView.frame.origin.x,
-                                                27.0f,
+                                                6.0,
                                                 self.loginView.frame.size.width,
                                                 27.0f + self.loginFormHeight + 6.0f)];
         } completion:^(BOOL finished) {
             [self.loginArrow setImage:[UIImage imageNamed:@"arrowOrangeOpened"]];
             [self.loginFormView setHidden:NO];
             self.isAnimationRunning = NO;
+            [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.signUpView.frame)+6.0f)];
         }];
     }
 }
@@ -609,7 +616,7 @@ FBLoginViewDelegate
                                             0.0f)];
     
     [self.loginView setFrame:CGRectMake(self.loginView.frame.origin.x,
-                                        27.0f,
+                                        6.0f,
                                         self.loginView.frame.size.width,
                                         26.0f)];
     
@@ -633,13 +640,14 @@ FBLoginViewDelegate
                                                      self.signupFormHeight)];
             
             [self.signUpView setFrame:CGRectMake(self.signUpView.frame.origin.x,
-                                                 58.0f,
+                                                 37.0f,
                                                  self.signUpView.frame.size.width,
                                                  26.0f + self.signupFormHeight + 6.0f)];
         } completion:^(BOOL finished) {
             [self.signUpArrow setImage:[UIImage imageNamed:@"arrowOrangeOpened"]];
             [self.signUpFormView setHidden:NO];
             self.isAnimationRunning = NO;
+            [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.signUpView.frame)+6.0f)];
         }];
     }
 }
@@ -655,7 +663,7 @@ FBLoginViewDelegate
                                              0.0f)];
     
     [self.signUpView setFrame:CGRectMake(self.signUpView.frame.origin.x,
-                                         54.0f + self.loginFormHeight + 12.0f,
+                                         33.0f + self.loginFormHeight + 12.0f,
                                          self.signUpView.frame.size.width,
                                          26.0f)];
     
@@ -953,6 +961,11 @@ FBLoginViewDelegate
                                                    self.orderSummaryOriginalFrame.origin.y,
                                                    self.orderSummaryOriginalFrame.size.width,
                                                    self.orderSummaryOriginalFrame.size.height - height)];
+
+        [self.scrollView setFrame:CGRectMake(self.scrollViewOriginalFrame.origin.x,
+                                             self.scrollViewOriginalFrame.origin.y,
+                                             self.scrollViewOriginalFrame.size.width,
+                                             self.scrollViewOriginalFrame.size.height - height)];
     }];
 }
 
@@ -960,6 +973,7 @@ FBLoginViewDelegate
 {
     [UIView animateWithDuration:0.3 animations:^{
         [self.orderSummaryView setFrame:self.orderSummaryOriginalFrame];
+        [self.scrollView setFrame:self.scrollViewOriginalFrame];
     }];
 }
 
