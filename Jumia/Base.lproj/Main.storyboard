@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
         <!--Load Country View Controller-->
@@ -2230,10 +2231,10 @@
                                                 </constraints>
                                             </imageView>
                                             <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9fH-lt-Mkr">
-                                                <rect key="frame" x="0.0" y="26" width="756" height="1"/>
+                                                <rect key="frame" x="0.0" y="26" width="308" height="1"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kmt-jR-BNc">
-                                                        <rect key="frame" x="0.0" y="0.0" width="756" height="1"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="308" height="1"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="fzd-ma-oAB"/>
@@ -2273,10 +2274,10 @@
                                                 </constraints>
                                             </imageView>
                                             <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="749-44-WsD">
-                                                <rect key="frame" x="0.0" y="26" width="756" height="1"/>
+                                                <rect key="frame" x="0.0" y="26" width="308" height="1"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E85-Zb-N0f">
-                                                        <rect key="frame" x="0.0" y="0.0" width="756" height="1"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="308" height="1"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="gfa-cm-QrZ"/>
