@@ -178,7 +178,7 @@ FBLoginViewDelegate
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
            
-           self.loginDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
+           self.loginDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:nil startingPosition:7.0f widthSize:self.loginView.frame.size.width];
            self.loginFormHeight = 0.0f;
 
            for(UIView *view in self.loginDynamicForm.formViews)
