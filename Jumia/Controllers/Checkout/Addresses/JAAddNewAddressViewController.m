@@ -828,7 +828,7 @@ JAPickerDelegate>
 
 - (void)downloadRegions:(JARadioComponent *)regionComponent cities:(JARadioComponent*) citiesComponent
 {
-    if(VALID_NOTEMPTY(regionComponent, JARadioComponent) && VALID_NOTEMPTY(citiesComponent, JARadioComponent))
+    if(VALID_NOTEMPTY(regionComponent, JARadioComponent))
     {
         if(!VALID_NOTEMPTY(self.regionsDataset, NSArray))
         {
@@ -863,7 +863,7 @@ JAPickerDelegate>
                      [regionComponent setRegionValue:self.shippingSelectedRegion];
                  }
                  
-                 if(VALID_NOTEMPTY(self.shippingSelectedRegion, RIRegion))
+                 if(VALID_NOTEMPTY(self.shippingSelectedRegion, RIRegion) && VALID_NOTEMPTY(citiesComponent, JARadioComponent))
                  {
                      [RICity getCitiesForUrl:[citiesComponent getApiCallUrl] region:[self.shippingSelectedRegion uid] successBlock:^(NSArray *cities) {
                          self.shippingCitiesDataset = [cities copy];
@@ -885,6 +885,10 @@ JAPickerDelegate>
                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                          [self hideLoading];
                      }];
+                 }
+                 else
+                 {
+                     [self hideLoading];
                  }
              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
              {
