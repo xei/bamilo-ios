@@ -156,7 +156,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutAddressesScreen)
+                                             selector:@selector(showCheckoutAddressesScreen:)
                                                  name:kShowCheckoutAddressesScreenNotification
                                                object:nil];
     
@@ -684,17 +684,53 @@
 }
 
 #pragma mark Checkout Addresses Screen
-- (void)showCheckoutAddressesScreen
+- (void)showCheckoutAddressesScreen:(NSNotification*)notification
 {
+    BOOL animated = NO;
+    if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
+    {
+        animated = [[notification.object objectForKey:@"animated"] boolValue];
+    }
+    
+    BOOL fromCheckout = YES;
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_checkout"], NSNumber))
+    {
+        fromCheckout = [[notification.userInfo objectForKey:@"from_checkout"] boolValue];
+    }
+    
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAAddressesViewController class]] && [RICustomer checkIfUserIsLogged])
     {
         JAAddressesViewController *addressesVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
         
         addressesVC.cart = self.cart;
+        addressesVC.fromCheckout = fromCheckout;
         
-        [self popToRootViewControllerAnimated:NO];
+        addressesVC.navBarLayout.showCartButton = NO;
+        if(fromCheckout)
+        {
+            addressesVC.navBarLayout.title = STRING_CHECKOUT;
+        }
+        else
+        {
+            addressesVC.navBarLayout.backButtonTitle = STRING_MY_ADDRESSES;
+            addressesVC.navBarLayout.showLogo = NO;
+        }
+
         [self pushViewController:addressesVC animated:NO];
+    }
+    else
+    {
+        if (!fromCheckout && ![topViewController isKindOfClass:[JASignInViewController class]])
+        {
+            JASignInViewController *signInViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+            
+            signInViewController.navBarLayout.showBackButton = YES;
+            signInViewController.fromSideMenu = NO;
+            signInViewController.nextNotification = notification;
+            
+            [self pushViewController:signInViewController animated:NO];
+        }
     }
 }
 
@@ -709,11 +745,31 @@
         NSNumber* isBillingAddress = [notification.userInfo objectForKey:@"is_billing_address"];
         NSNumber* isShippingAddress = [notification.userInfo objectForKey:@"is_shipping_address"];
         NSNumber* showBackButton = [notification.userInfo objectForKey:@"show_back_button"];
+        NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
         
         addAddressVC.isBillingAddress = [isBillingAddress boolValue];
         addAddressVC.isShippingAddress = [isShippingAddress boolValue];
-        addAddressVC.showBackButton = [showBackButton boolValue];
+        addAddressVC.fromCheckout = [fromCheckout boolValue];
         addAddressVC.cart = self.cart;
+
+        if([fromCheckout boolValue])
+        {
+            addAddressVC.navBarLayout.showCartButton = NO;
+            if([showBackButton boolValue])
+            {
+                addAddressVC.navBarLayout.backButtonTitle = STRING_CHECKOUT;
+                addAddressVC.navBarLayout.showLogo = NO;
+            }
+            else
+            {
+                addAddressVC.navBarLayout.title = STRING_CHECKOUT;
+            }
+        }
+        else
+        {
+            addAddressVC.navBarLayout.backButtonTitle = STRING_MY_ADDRESSES;
+            addAddressVC.navBarLayout.showLogo = NO;
+        }
         
         [self pushViewController:addAddressVC animated:YES];
     }
@@ -727,9 +783,23 @@
     {
         JAEditAddressViewController *editAddressVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"editAddressViewController"];
         
+        NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
+        
         RIAddress* editAddress = [notification.userInfo objectForKey:@"address_to_edit"];
         editAddressVC.editAddress = editAddress;
         editAddressVC.cart = self.cart;
+        editAddressVC.fromCheckout = [fromCheckout boolValue];
+        
+        editAddressVC.navBarLayout.showCartButton = NO;
+        if([fromCheckout boolValue])
+        {
+            editAddressVC.navBarLayout.title = STRING_CHECKOUT;
+        }
+        else
+        {
+            editAddressVC.navBarLayout.backButtonTitle = STRING_MY_ADDRESSES;
+            editAddressVC.navBarLayout.showLogo = NO;
+        }
         
         [self pushViewController:editAddressVC animated:YES];
     }
@@ -743,7 +813,6 @@
     {
         JAShippingViewController *shippingVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"shippingViewController"];
         
-        [self popToRootViewControllerAnimated:NO];
         [self pushViewController:shippingVC animated:YES];
     }
 }
@@ -756,7 +825,6 @@
     {
         JAPaymentViewController *paymentVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"paymentViewController"];
         
-        [self popToRootViewControllerAnimated:NO];
         [self pushViewController:paymentVC animated:YES];
     }
 }
@@ -773,7 +841,6 @@
             orderVC.checkout = notification.object;
         }
         
-        [self popToRootViewControllerAnimated:NO];
         [self pushViewController:orderVC animated:YES];
     }
 }

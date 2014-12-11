@@ -20,8 +20,8 @@
     else if([@"billing" isEqualToString:checkout.nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                            object:nil
-                                                          userInfo:nil];
+                                                            object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                          userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
     }
     else if([@"shippingMethod" isEqualToString:checkout.nextStep])
     {

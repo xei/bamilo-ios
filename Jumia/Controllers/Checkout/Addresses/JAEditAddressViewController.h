@@ -13,7 +13,8 @@
 
 @interface JAEditAddressViewController : JABaseViewController
 
+@property (assign, nonatomic) BOOL fromCheckout;
 @property (strong, nonatomic) RIAddress *editAddress;
-@property (nonatomic, strong) RICart *cart;
+@property (strong, nonatomic) RICart *cart;
 
 @end
