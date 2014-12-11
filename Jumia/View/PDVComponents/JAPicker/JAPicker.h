@@ -11,11 +11,11 @@
 @protocol JAPickerDelegate <NSObject>
 
 - (void)selectedRow:(NSInteger)selectedRow;
-- (void)leftButtonPressed;
 
 @optional
 
 - (void)closePicker;
+- (void)leftButtonPressed;
 
 @end
 
