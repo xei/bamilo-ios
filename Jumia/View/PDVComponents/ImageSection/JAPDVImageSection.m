@@ -144,6 +144,16 @@
     {
         [self setupForPortrait:frame product:product];
     }
+    
+    [self.pageControl removeFromSuperview];
+    self.pageControl = [[JAPageControl alloc] initWithFrame:CGRectMake(self.imageScrollView.frame.origin.x,
+                                                                       self.imageScrollView.frame.origin.y + self.imageScrollView.frame.size.height - 20.0f,
+                                                                       self.imageScrollView.frame.size.width,
+                                                                       10.0f)];
+    self.pageControl.numberOfPages = [product.images array].count;
+    self.pageControl.hidesForSinglePage = YES; //has to be set AFTER the numberOfPages
+    [self addSubview:self.pageControl];
+    self.pageControl.currentPage = 0;
 }
 
 - (void)setupForPortrait:(CGRect)frame product:(RIProduct*)product
@@ -359,16 +369,6 @@
         [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"]];
         
     }
-    
-    [self.pageControl removeFromSuperview];
-    self.pageControl = [[JAPageControl alloc] initWithFrame:CGRectMake(self.imageScrollView.frame.origin.x,
-                                                                       self.imageScrollView.frame.size.height - 20.0f,
-                                                                       self.imageScrollView.frame.size.width,
-                                                                       10.0f)];
-    self.pageControl.numberOfPages = imagesArray.count;
-    self.pageControl.hidesForSinglePage = YES; //has to be set AFTER the numberOfPages
-    [self addSubview:self.pageControl];
-    self.pageControl.currentPage = 0;
 }
 
 - (void)imageViewPressed:(UIControl*)sender
