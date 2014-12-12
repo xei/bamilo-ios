@@ -36,9 +36,6 @@
 @property (nonatomic, retain) NSString * locale;
 @property (nonatomic, retain) RICustomer *customer;
 
-+ (NSString*)getBillingAddressWithSuccessBlock:(void (^)(id billingAddress))successBlock
-                               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
-
 + (NSString*)getCustomerAddressListWithSuccessBlock:(void (^)(id adressList))successBlock
                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
