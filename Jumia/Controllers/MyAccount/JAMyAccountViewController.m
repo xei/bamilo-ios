@@ -227,6 +227,8 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    [self dismissViewControllerAnimated:NO completion:nil];
+    
     [self showLoading];
     
     CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
