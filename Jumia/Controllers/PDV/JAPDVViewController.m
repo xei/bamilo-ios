@@ -957,7 +957,7 @@ JAActivityViewControllerDelegate
 
 - (void)shareProduct
 {
-    JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initWithProduct:self.product];
+    JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initForProductShare:self.product];
     
     NSArray *objectsToShare = @[provider];
     
