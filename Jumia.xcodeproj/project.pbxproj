@@ -4195,7 +4195,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"\"$(SRCROOT)\"",
@@ -4207,7 +4206,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 				);
@@ -4283,7 +4281,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 				);
@@ -4294,7 +4291,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 				);
@@ -4386,7 +4382,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 				);
@@ -4397,7 +4392,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 				);
@@ -4443,7 +4437,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"\"$(SRCROOT)\"",
@@ -4455,7 +4448,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 				);
@@ -4571,7 +4563,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 				);
@@ -4582,7 +4573,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 				);
@@ -4606,7 +4596,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 				);
@@ -4617,7 +4606,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 				);
@@ -4680,7 +4668,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"\"$(SRCROOT)\"",
@@ -4692,7 +4679,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 				);
@@ -4723,7 +4709,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK/FBAudienceNetwork",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"\"$(SRCROOT)\"",
@@ -4735,7 +4720,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/Ad4ScreenTrackingSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.08",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 				);

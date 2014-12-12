@@ -59,7 +59,6 @@ NSString *const RI_API_GET_CART_CHANGE = @"order/cartchange/";
 NSString *const RI_API_REMOVE_FROM_CART = @"order/remove?setDevice=mobileApi";
 NSString *const RI_API_ADD_VOUCHER_TO_CART = @"/order/addvoucher/";
 NSString *const RI_API_REMOVE_VOUCHER_FROM_CART = @"/order/removevoucher/";
-NSString *const RI_API_GET_CUSTOMER_BILLING_ADDRESS = @"/customer/billingaddress/";
 NSString *const RI_API_GET_CUSTOMER_ADDRESS_LIST = @"/customer/address/list/";
 NSString *const RI_API_GET_BILLING_ADDRESS_FORM = @"multistep/billing/";
 NSString *const RI_API_GET_SHIPPING_ADDRESS_FORM = @"multistep/shipping/";
