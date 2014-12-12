@@ -483,7 +483,7 @@
     JAActivityViewController *activityController = [[JAActivityViewController alloc] initWithActivityItems:objectsToShare
                                                                                      applicationActivities:nil];
     
-    [activityController setValue:STRING_SHARE_OBJECT
+    [activityController setValue:STRING_SHARE_JUMIA_APP
                           forKey:@"subject"];
     
 #ifdef __IPHONE_8_0
