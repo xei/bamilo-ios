@@ -262,5 +262,7 @@
 #define STRING_APP_SHARING RILocalizedString(@"app_sharing", nil)
 #define STRING_SHARE_THE_APP RILocalizedString(@"share_the_app", nil)
 #define STRING_CAN_SHARE_APP_WITH_FRIENDS RILocalizedString(@"can_share_app_with_friends", nil)
+#define STRING_SHARE_JUMIA_APP RILocalizedString(@"share_jumia_app", nil)
+#define STRING_INSTALL_JUMIA_IOS RILocalizedString(@"install_jumia_ios", nil)
 
 #endif
