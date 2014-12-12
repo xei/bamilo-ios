@@ -12,11 +12,13 @@
 #import "RIProductSimple.h"
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
+#import "JAPageControl.h"
 
 @interface JAPDVImageSection ()
 
 @property (nonatomic, strong)JAPriceView* priceView;
 @property (nonatomic, assign)NSInteger numberOfImages;
+@property (nonatomic, strong) JAPageControl* pageControl;
 
 @end
 
@@ -357,6 +359,16 @@
         [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"]];
         
     }
+    
+    [self.pageControl removeFromSuperview];
+    self.pageControl = [[JAPageControl alloc] initWithFrame:CGRectMake(self.imageScrollView.frame.origin.x,
+                                                                       self.imageScrollView.frame.size.height - 20.0f,
+                                                                       self.imageScrollView.frame.size.width,
+                                                                       10.0f)];
+    self.pageControl.numberOfPages = imagesArray.count;
+    self.pageControl.hidesForSinglePage = YES; //has to be set AFTER the numberOfPages
+    [self addSubview:self.pageControl];
+    self.pageControl.currentPage = 0;
 }
 
 - (void)imageViewPressed:(UIControl*)sender
@@ -391,6 +403,14 @@
                                              animated:NO];
         }
     }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    //add 0.5 to make sure we scroll the indicators with the middle of the page
+    //and then subtract 1 to make up for the fake image offset (fake images that are used for infinite scrolling)
+    self.pageControl.currentPage = (scrollView.contentOffset.x / scrollView.frame.size.width) + 0.5f - 1.0f;
+    
 }
 
 @end

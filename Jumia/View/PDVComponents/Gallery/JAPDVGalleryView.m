@@ -186,10 +186,6 @@ UIScrollViewDelegate
     self.pageControl.currentPage = self.index;
 }
 
-- (void)startPageControl
-{
-}
-
 - (void)reloadFrame:(CGRect)frame
 {
     [self setFrame:CGRectMake(frame.origin.x,

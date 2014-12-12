@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define kJAPageControlMarginBetweenDots 3.0f
+
 @interface JAPageControl : UIPageControl
 
 @end

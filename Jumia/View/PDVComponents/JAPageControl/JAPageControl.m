@@ -42,14 +42,14 @@
         [self.dotsArray addObject:dotImageView];
     }
     UIImageView* imageView = [self.dotsArray objectAtIndex:0];
-    CGFloat total = imageView.frame.size.width * self.dotsArray.count + 3.0f * (self.dotsArray.count - 1);
+    CGFloat total = (imageView.frame.size.width * self.dotsArray.count) + (kJAPageControlMarginBetweenDots * (self.dotsArray.count - 1));
     CGFloat currentX = (self.frame.size.width - total) / 2;
     for (UIView* view in self.dotsArray) {
         [view setFrame:CGRectMake(currentX,
                                   self.bounds.origin.y,
                                   view.frame.size.width,
                                   view.frame.size.height)];
-        currentX += view.frame.size.width;
+        currentX += view.frame.size.width + kJAPageControlMarginBetweenDots;
         [self addSubview:view];
     }
 }
