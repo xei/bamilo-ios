@@ -259,5 +259,8 @@
 
 #define STRING_MY_ADDRESSES RILocalizedString(@"my_addresses", nil)
 #define STRING_CREATE_EDIT_ADDRESS RILocalizedString(@"create_edit_address", nil)
+#define STRING_APP_SHARING RILocalizedString(@"app_sharing", nil)
+#define STRING_SHARE_THE_APP RILocalizedString(@"share_the_app", nil)
+#define STRING_CAN_SHARE_APP_WITH_FRIENDS RILocalizedString(@"can_share_app_with_friends", nil)
 
 #endif
