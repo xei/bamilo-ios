@@ -107,11 +107,13 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     // Create tracker instance.
     [[GAI sharedInstance] trackerWithTrackingId:trackingId];
-    
+        
     // Setup the app version
     NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
     [[GAI sharedInstance].defaultTracker set:kGAIAppVersion value:version];
-
+    
+    [[GAI sharedInstance].defaultTracker setAllowIDFACollection:YES];
+    
     NSLog(@"Initialized Google Analytics %d", [GAI sharedInstance].trackUncaughtExceptions);
 }
 
