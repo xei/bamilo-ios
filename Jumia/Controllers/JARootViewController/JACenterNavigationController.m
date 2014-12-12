@@ -706,9 +706,9 @@
         addressesVC.cart = self.cart;
         addressesVC.fromCheckout = fromCheckout;
         
-        addressesVC.navBarLayout.showCartButton = NO;
         if(fromCheckout)
         {
+            addressesVC.navBarLayout.showCartButton = NO;
             addressesVC.navBarLayout.title = STRING_CHECKOUT;
         }
         else
@@ -790,9 +790,9 @@
         editAddressVC.cart = self.cart;
         editAddressVC.fromCheckout = [fromCheckout boolValue];
         
-        editAddressVC.navBarLayout.showCartButton = NO;
         if([fromCheckout boolValue])
         {
+            editAddressVC.navBarLayout.showCartButton = NO;
             editAddressVC.navBarLayout.title = STRING_CHECKOUT;
         }
         else
