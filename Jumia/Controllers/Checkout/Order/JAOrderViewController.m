@@ -855,15 +855,15 @@
 - (void)editButtonForShippingAddress
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                        object:nil
-                                                      userInfo:nil];
+                                                        object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                      userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
 }
 
 - (void)editButtonForBillingAddress
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                        object:nil
-                                                      userInfo:nil];
+                                                        object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                      userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
 }
 
 - (void)editButtonForShippingMethod

@@ -1225,7 +1225,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lkL-Nb-fF6" userLabel="Account Settings">
-                                <rect key="frame" x="6" y="6" width="756" height="116"/>
+                                <rect key="frame" x="6" y="6" width="756" height="161"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nxs-6A-sNX" userLabel="Account Settings Title">
                                         <rect key="frame" x="6" y="4" width="742" height="18"/>
@@ -1283,7 +1283,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbx-z6-Cuf" userLabel="Email Clickable View" customClass="JAClickableView">
-                                        <rect key="frame" x="0.0" y="71" width="756" height="44"/>
+                                        <rect key="frame" x="0.0" y="72" width="756" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="8C7-MP-bHt"/>
@@ -1314,11 +1314,49 @@
                                             <constraint firstAttribute="width" constant="8" id="RWd-dR-itI"/>
                                         </constraints>
                                     </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tvd-Nh-6Zv" userLabel="Email Separator">
+                                        <rect key="frame" x="0.0" y="116" width="756" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="Uyr-0y-Rd2"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Moe-lD-GSH" userLabel="Addresses Clickable View" customClass="JAClickableView">
+                                        <rect key="frame" x="0.0" y="117" width="756" height="44"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="y8E-Uh-11M"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LZx-T1-Q1H" userLabel="Addresses Title">
+                                        <rect key="frame" x="17" y="123" width="722" height="19"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="19" id="wd0-eP-IHF"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ifc-oW-BUY" userLabel="Addresses Subitle">
+                                        <rect key="frame" x="17" y="142" width="722" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="RZM-uJ-Vb9"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrow_gotoarea" translatesAutoresizingMaskIntoConstraints="NO" id="Gaf-4N-WnG" userLabel="Addresses Arrow">
+                                        <rect key="frame" x="731" y="131" width="8" height="14"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="6aO-Vh-b63" firstAttribute="top" secondItem="lkL-Nb-fF6" secondAttribute="top" constant="26" id="1YM-4U-kkt"/>
                                     <constraint firstItem="P5T-Aq-THc" firstAttribute="top" secondItem="k8A-4p-3Kw" secondAttribute="bottom" id="1l5-Mc-luV"/>
+                                    <constraint firstAttribute="trailing" secondItem="Moe-lD-GSH" secondAttribute="trailing" id="24c-6s-wh7"/>
+                                    <constraint firstItem="tvd-Nh-6Zv" firstAttribute="leading" secondItem="lkL-Nb-fF6" secondAttribute="leading" id="8SJ-kJ-9ce"/>
+                                    <constraint firstAttribute="trailing" secondItem="LZx-T1-Q1H" secondAttribute="trailing" constant="17" id="CD3-nh-oPc"/>
                                     <constraint firstItem="bYG-Db-Wjq" firstAttribute="top" secondItem="6aO-Vh-b63" secondAttribute="bottom" constant="6" id="DzW-Eo-PzI"/>
                                     <constraint firstAttribute="trailing" secondItem="Zvf-ZU-1xQ" secondAttribute="trailing" constant="17" id="EPf-kx-9w7"/>
                                     <constraint firstItem="VdH-ye-ZWA" firstAttribute="top" secondItem="6aO-Vh-b63" secondAttribute="bottom" constant="15" id="Egi-Ud-3xZ"/>
@@ -1326,7 +1364,7 @@
                                     <constraint firstAttribute="trailing" secondItem="k8A-4p-3Kw" secondAttribute="trailing" constant="17" id="HBN-Fg-MQx"/>
                                     <constraint firstItem="Zvf-ZU-1xQ" firstAttribute="top" secondItem="bYG-Db-Wjq" secondAttribute="bottom" id="Hwd-Wk-lLU"/>
                                     <constraint firstItem="1As-pq-k76" firstAttribute="leading" secondItem="lkL-Nb-fF6" secondAttribute="leading" id="Lhh-rA-aNx"/>
-                                    <constraint firstAttribute="height" constant="116" id="MlU-QX-UbV"/>
+                                    <constraint firstAttribute="height" constant="161" id="MlU-QX-UbV"/>
                                     <constraint firstItem="k8A-4p-3Kw" firstAttribute="top" secondItem="1As-pq-k76" secondAttribute="bottom" constant="6" id="Na2-oJ-sm9"/>
                                     <constraint firstAttribute="trailing" secondItem="6aO-Vh-b63" secondAttribute="trailing" id="OEG-PC-Pdy"/>
                                     <constraint firstItem="xif-Fp-7By" firstAttribute="top" secondItem="lkL-Nb-fF6" secondAttribute="top" constant="27" id="OSs-ya-uwQ"/>
@@ -1334,25 +1372,34 @@
                                     <constraint firstItem="Nxs-6A-sNX" firstAttribute="leading" secondItem="lkL-Nb-fF6" secondAttribute="leading" constant="6" id="Qia-75-KnU"/>
                                     <constraint firstAttribute="trailing" secondItem="Nxs-6A-sNX" secondAttribute="trailing" constant="8" id="R9A-lV-Za5"/>
                                     <constraint firstItem="P5T-Aq-THc" firstAttribute="leading" secondItem="lkL-Nb-fF6" secondAttribute="leading" constant="17" id="RkH-aJ-wOV"/>
+                                    <constraint firstItem="Ifc-oW-BUY" firstAttribute="top" secondItem="LZx-T1-Q1H" secondAttribute="bottom" id="Slp-cb-ubB"/>
                                     <constraint firstAttribute="trailing" secondItem="bYG-Db-Wjq" secondAttribute="trailing" constant="45" id="T4m-eB-3DM"/>
+                                    <constraint firstItem="tvd-Nh-6Zv" firstAttribute="top" secondItem="gbx-z6-Cuf" secondAttribute="bottom" id="TfU-Px-PQe"/>
                                     <constraint firstAttribute="trailing" secondItem="gbx-z6-Cuf" secondAttribute="trailing" id="Uyp-b1-eLe"/>
                                     <constraint firstAttribute="trailing" secondItem="xif-Fp-7By" secondAttribute="trailing" id="YHe-Bf-glO"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ifc-oW-BUY" secondAttribute="trailing" constant="17" id="YHi-Lo-pUE"/>
+                                    <constraint firstItem="Ifc-oW-BUY" firstAttribute="leading" secondItem="lkL-Nb-fF6" secondAttribute="leading" constant="17" id="b14-Uv-mQO"/>
                                     <constraint firstItem="bYG-Db-Wjq" firstAttribute="leading" secondItem="lkL-Nb-fF6" secondAttribute="leading" constant="17" id="b5i-yn-vvL"/>
                                     <constraint firstAttribute="trailing" secondItem="P5T-Aq-THc" secondAttribute="trailing" constant="17" id="bUL-M8-VSe"/>
                                     <constraint firstAttribute="trailing" secondItem="aiC-ax-uzj" secondAttribute="trailing" constant="17" id="bhV-C3-fpA"/>
                                     <constraint firstItem="6aO-Vh-b63" firstAttribute="leading" secondItem="lkL-Nb-fF6" secondAttribute="leading" id="cgX-cs-bYi"/>
                                     <constraint firstAttribute="trailing" secondItem="1As-pq-k76" secondAttribute="trailing" id="cvQ-ZJ-GbG"/>
                                     <constraint firstItem="xif-Fp-7By" firstAttribute="leading" secondItem="lkL-Nb-fF6" secondAttribute="leading" id="eFn-K5-3mY"/>
-                                    <constraint firstItem="gbx-z6-Cuf" firstAttribute="top" secondItem="xif-Fp-7By" secondAttribute="bottom" id="eVc-hs-Wh8"/>
+                                    <constraint firstItem="gbx-z6-Cuf" firstAttribute="top" secondItem="xif-Fp-7By" secondAttribute="bottom" constant="1" id="eVc-hs-Wh8"/>
+                                    <constraint firstAttribute="trailing" secondItem="tvd-Nh-6Zv" secondAttribute="trailing" id="gH0-hn-zwh"/>
                                     <constraint firstItem="aiC-ax-uzj" firstAttribute="top" secondItem="1As-pq-k76" secondAttribute="bottom" constant="15" id="glX-cp-EaD"/>
+                                    <constraint firstItem="LZx-T1-Q1H" firstAttribute="leading" secondItem="lkL-Nb-fF6" secondAttribute="leading" constant="17" id="lcc-Fs-MB9"/>
                                     <constraint firstItem="Nxs-6A-sNX" firstAttribute="top" secondItem="lkL-Nb-fF6" secondAttribute="top" constant="4" id="nbH-EK-ghL"/>
+                                    <constraint firstItem="LZx-T1-Q1H" firstAttribute="top" secondItem="tvd-Nh-6Zv" secondAttribute="bottom" constant="6" id="qYf-6g-4t0"/>
+                                    <constraint firstItem="Moe-lD-GSH" firstAttribute="top" secondItem="tvd-Nh-6Zv" secondAttribute="bottom" id="qgf-zh-54b"/>
                                     <constraint firstItem="1As-pq-k76" firstAttribute="top" secondItem="xif-Fp-7By" secondAttribute="bottom" id="sUr-3Z-BBh"/>
                                     <constraint firstItem="k8A-4p-3Kw" firstAttribute="leading" secondItem="lkL-Nb-fF6" secondAttribute="leading" constant="17" id="tgv-fw-9i4"/>
                                     <constraint firstItem="Zvf-ZU-1xQ" firstAttribute="leading" secondItem="lkL-Nb-fF6" secondAttribute="leading" constant="17" id="z1F-dV-ZGq"/>
+                                    <constraint firstItem="Moe-lD-GSH" firstAttribute="leading" secondItem="lkL-Nb-fF6" secondAttribute="leading" id="zIp-vI-Vnh"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f44-GG-o3H" userLabel="Notification Settings">
-                                <rect key="frame" x="6" y="128" width="756" height="116"/>
+                                <rect key="frame" x="6" y="173" width="756" height="116"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EgQ-mP-1qR" userLabel="Notification Settings Title">
                                         <rect key="frame" x="6" y="4" width="744" height="18"/>
@@ -1482,6 +1529,11 @@
                         <outlet property="accountSettingsTitleLabel" destination="Nxs-6A-sNX" id="Ij9-RV-vpM"/>
                         <outlet property="accountView" destination="lkL-Nb-fF6" id="kAS-Yn-tz0"/>
                         <outlet property="accountViewTopSeparator" destination="6aO-Vh-b63" id="3dZ-9r-MwY"/>
+                        <outlet property="addressesArrow" destination="Gaf-4N-WnG" id="2tz-fL-PCL"/>
+                        <outlet property="addressesClickableView" destination="Moe-lD-GSH" id="38Z-Bw-gcE"/>
+                        <outlet property="addressesSubtitleLabel" destination="Ifc-oW-BUY" id="Ria-yh-hxu"/>
+                        <outlet property="addressesTitleLabel" destination="LZx-T1-Q1H" id="ttf-in-20C"/>
+                        <outlet property="emailAndAddressesSeparator" destination="tvd-Nh-6Zv" id="GOc-Qz-GqP"/>
                         <outlet property="emailArrow" destination="aiC-ax-uzj" id="mel-w0-qYy"/>
                         <outlet property="emailClickableView" destination="gbx-z6-Cuf" id="kvW-Ua-Gd5"/>
                         <outlet property="emailSubtitleLabel" destination="P5T-Aq-THc" id="K9h-MO-mbI"/>

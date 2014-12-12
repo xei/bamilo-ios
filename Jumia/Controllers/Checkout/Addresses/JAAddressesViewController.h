@@ -14,5 +14,6 @@
 @interface JAAddressesViewController : JABaseViewController
 
 @property (nonatomic, strong) RICart *cart;
+@property (nonatomic, assign) BOOL fromCheckout;
 
 @end

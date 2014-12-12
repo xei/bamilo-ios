@@ -140,7 +140,7 @@
         productRatings.productSku = [dic objectForKey:@"product_sku"];
     }
     
-    if ([dic objectForKey:@"commentsCount"]) {
+    if (VALID_NOTEMPTY([dic objectForKey:@"commentsCount"], NSNumber)) {
         productRatings.commentsCount = [dic objectForKey:@"commentsCount"];
     }
     

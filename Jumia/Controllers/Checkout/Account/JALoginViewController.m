@@ -178,7 +178,7 @@ FBLoginViewDelegate
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
            
-           self.loginDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
+           self.loginDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:nil startingPosition:7.0f widthSize:self.loginView.frame.size.width];
            self.loginFormHeight = 0.0f;
 
            for(UIView *view in self.loginDynamicForm.formViews)
@@ -759,8 +759,8 @@ FBLoginViewDelegate
                                                           else
                                                           {
                                                               [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                                                                  object:nil
-                                                                                                                userInfo:nil];
+                                                                                                                  object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                                                                                userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
                                                           }
                                                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                           [self hideLoading];
@@ -837,8 +837,8 @@ FBLoginViewDelegate
         if([RICustomer checkIfUserHasAddresses])
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                object:nil
-                                                              userInfo:nil];
+                                                                object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                              userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
         }
         else
         {

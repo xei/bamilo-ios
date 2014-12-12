@@ -91,6 +91,13 @@
  */
 + (NSString*)getTopCategory:(RICategory*)seenCategory;
 
+/**
+ *  Method to obtain the name of a category.
+ *
+ *  @return a string with the category name for the correspondent category id
+ */
++ (NSString*)getCategoryName:(NSString*)categoryId;
+
 @end
 
 @interface RICategory (CoreDataGeneratedAccessors)
