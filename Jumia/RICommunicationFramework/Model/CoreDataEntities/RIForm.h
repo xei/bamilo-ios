@@ -22,7 +22,29 @@
 
 //Class Methods
 
+/**
+ * Method to get a form
+ *
+ * @param the form to what we want
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
 + (NSString*)getForm:(NSString*)formIndexID
+        successBlock:(void (^)(id form))successBlock
+        failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
+
+/**
+ * Method to get a form
+ *
+ * @param the form to what we want
+ * @param the extra arguments that we need to send on the request
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString*)getForm:(NSString*)formIndexID
+      extraArguments:(NSDictionary*)extraArguments
         successBlock:(void (^)(id form))successBlock
         failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
@@ -48,6 +70,22 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString*)sendForm:(RIForm*)form
+           parameters:(NSDictionary*)parameters
+         successBlock:(void (^)(id object))successBlock
+      andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock;
+
+/**
+ * Method to send a request to a form action
+ *
+ * @param the form to what we want to make the request
+ * @param the extra arguments that we need to send on the request
+ * @param the parameters that the form needs
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString*)sendForm:(RIForm*)form
+       extraArguments:(NSDictionary*)extraArguments
            parameters:(NSDictionary*)parameters
          successBlock:(void (^)(id object))successBlock
       andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock;
