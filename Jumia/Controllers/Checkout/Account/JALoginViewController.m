@@ -310,7 +310,7 @@ FBLoginViewDelegate
 
 - (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    CGFloat stepViewLeftMargin = 25.0f;
+    CGFloat stepViewLeftMargin = 18.0f;
     NSString *stepBackgroundImageName = @"headerCheckoutStep1";
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {

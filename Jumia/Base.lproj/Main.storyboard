@@ -2467,8 +2467,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep1" translatesAutoresizingMaskIntoConstraints="NO" id="691-zF-Pjw">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                            </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RzM-iD-RZv">
-                                <rect key="frame" x="175" y="0.0" width="160" height="21"/>
+                                <rect key="frame" x="18" y="0.0" width="116" height="21"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep1Icon" translatesAutoresizingMaskIntoConstraints="NO" id="dfz-5b-PZc">
                                         <rect key="frame" x="14" y="3" width="9" height="13"/>
@@ -2589,9 +2592,6 @@
                                     </view>
                                 </subviews>
                             </scrollView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep1Portrait" translatesAutoresizingMaskIntoConstraints="NO" id="691-zF-Pjw">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="21"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -2630,8 +2630,8 @@
         <image name="greyHalf_disabled" width="152" height="44"/>
         <image name="greyHalf_highlighted" width="152" height="44"/>
         <image name="greyHalf_normal" width="152" height="44"/>
+        <image name="headerCheckoutStep1" width="320" height="21"/>
         <image name="headerCheckoutStep1Icon" width="9" height="12"/>
-        <image name="headerCheckoutStep1Portrait" width="25" height="20"/>
         <image name="headerCheckoutStep2" width="320" height="21"/>
         <image name="headerCheckoutStep2Icon" width="8" height="13"/>
         <image name="headerCheckoutStep3" width="320" height="21"/>
