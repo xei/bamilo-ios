@@ -439,7 +439,7 @@ JAPickerDelegate>
                                                                                  scrollViewStartY,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
                                                                                  self.view.frame.size.height - scrollViewStartY)];
-        [self.orderSummary loadWithCart:self.cart];
+        [self.orderSummary loadWithCart:self.cart shippingFee:NO];
         [self.view addSubview:self.orderSummary];
         self.orderSummaryOriginalFrame = self.orderSummary.frame;
     }

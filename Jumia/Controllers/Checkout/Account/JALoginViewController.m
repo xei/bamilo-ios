@@ -157,7 +157,7 @@ FBLoginViewDelegate
                                                                                  self.view.frame.size.height - orderSummaryY)];
     self.orderSummaryOriginalFrame = self.orderSummaryView.frame;
     if (VALID_NOTEMPTY(self.cart, RICart)) {
-        [self.orderSummaryView loadWithCart:self.cart];
+        [self.orderSummaryView loadWithCart:self.cart shippingFee:NO];
     } else {
         [self getCart];
     }
@@ -235,7 +235,7 @@ FBLoginViewDelegate
     [self showLoading];
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
         if (VALID_NOTEMPTY(self.orderSummaryView, JAOrderSummaryView) && VALID_NOTEMPTY(cartData.cartItems, NSArray)) {
-            [self.orderSummaryView loadWithCart:cartData];
+            [self.orderSummaryView loadWithCart:cartData shippingFee:NO];
         }
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
