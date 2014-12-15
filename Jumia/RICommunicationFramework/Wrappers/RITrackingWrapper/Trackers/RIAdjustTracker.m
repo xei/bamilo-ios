@@ -226,9 +226,9 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
                 break;
         }
         
-        //        ADJEvent *event = [ADJEvent eventWithEventToken:eventKey];
-        //        [self addCallbackParameters:data toEvent:event withAmountOfTransactions:amountOfTransactions];
-        //        [Adjust trackEvent:event];
+        ADJEvent *event = [ADJEvent eventWithEventToken:eventKey];
+        [self addCallbackParameters:data toEvent:event withAmountOfTransactions:amountOfTransactions];
+        [Adjust trackEvent:event];
     }
 }
 
