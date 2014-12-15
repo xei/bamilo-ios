@@ -423,6 +423,8 @@
 		B5B5FDFB19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDDB19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */; };
 		B5B5FDFC19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDDC19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape.xib */; };
 		B5B5FDFD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDDD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib */; };
+		B5B79B401A3F4A2A00639F9E /* RIShippingMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */; };
+		B5B79B411A3F4A2A00639F9E /* RIShippingMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */; };
 		B5BDD98B19FFAAF000C2C2CC /* JANewsletterComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */; };
 		B5BDD98C19FFAAF000C2C2CC /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */; };
 		B5C0085D1A038F55000BBC52 /* JAPDVImageSection~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C0085B1A038F55000BBC52 /* JAPDVImageSection~iPad_Landscape.xib */; };
@@ -1196,6 +1198,8 @@
 		B5B5FDDB19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
 		B5B5FDDC19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape.xib"; sourceTree = "<group>"; };
 		B5B5FDDD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneWebViewNotifView.xib; sourceTree = "<group>"; };
+		B5B79B3E1A3F4A2A00639F9E /* RIShippingMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIShippingMethod.h; sourceTree = "<group>"; };
+		B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIShippingMethod.m; sourceTree = "<group>"; };
 		B5BDD98819FFAAF000C2C2CC /* JANewsletterComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterComponent.h; sourceTree = "<group>"; };
 		B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewsletterComponent.m; sourceTree = "<group>"; };
 		B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewsletterComponent.xib; sourceTree = "<group>"; };
@@ -2451,6 +2455,8 @@
 				4A944FF41992805100C02734 /* RIProductRatings.m */,
 				B5A3029A19811E9200F71726 /* RIRatings.h */,
 				B5A3029B19811E9200F71726 /* RIRatings.m */,
+				B5B79B3E1A3F4A2A00639F9E /* RIShippingMethod.h */,
+				B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */,
 				B5C682F31986C41D0094C92C /* RIShippingMethodForm.h */,
 				B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */,
 				B5C682F11986C41D0094C92C /* RIShippingMethodFormField.h */,
@@ -3813,6 +3819,7 @@
 				e39ee093e35c257cd5514d65 /* RIRegion.m in Sources */,
 				f1332fc46e026575362f26f8 /* RIProductReview.m in Sources */,
 				683688e1b9b2108556cfa333 /* JATopCategoriesTeaserView.m in Sources */,
+				B5B79B411A3F4A2A00639F9E /* RIShippingMethod.m in Sources */,
 				7fa37d4ab462805a50e33847 /* JASmallTeaserView.m in Sources */,
 				ed678b1c1c88881ed466339e /* JACenterNavigationController.m in Sources */,
 				265d6ed8bd7c10f9dbd3b757 /* JAAddNewAddressViewController.m in Sources */,
@@ -4036,6 +4043,7 @@
 				CEC376E619F015C600558B98 /* JACatalogWizardView.m in Sources */,
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
 				B59D196319C333CF004843C3 /* JAExternalPaymentsViewController.m in Sources */,
+				B5B79B401A3F4A2A00639F9E /* RIShippingMethod.m in Sources */,
 				4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */,
 				CE3AF90E19DBF68400D8C51B /* RICampaign.m in Sources */,
 				B5B5FDDE19D99D06008B8059 /* BMA4SViewController.m in Sources */,
