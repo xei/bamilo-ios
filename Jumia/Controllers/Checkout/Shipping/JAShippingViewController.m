@@ -379,7 +379,7 @@ UICollectionViewDelegateFlowLayout
         {
             if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
             {
-                collectionViewHeight += 50.0f;
+                collectionViewHeight += 50.0f; // JAShippingCell Height
                 
                 if(VALID_NOTEMPTY(self.pickupStationHeightsForRegion, NSMutableArray))
                 {
@@ -391,7 +391,7 @@ UICollectionViewDelegateFlowLayout
             }
             else
             {
-                collectionViewHeight += 36.0f;
+                collectionViewHeight += 53.0f; // JAShippingInfoCell Height
             }
         }
         
@@ -588,7 +588,8 @@ UICollectionViewDelegateFlowLayout
             }
             else
             {
-                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 36.0f);
+                // JAShippingInfoCell Height
+                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 53.0f);
             }
         }
         else
@@ -722,7 +723,19 @@ UICollectionViewDelegateFlowLayout
                 {
                     shippingFee = STRING_FREE;
                 }
-                [shippingInfoCell loadWithShippingFee:shippingFee];
+                
+                NSDictionary *shippingMethodDictionary = [self.shippingMethods objectAtIndex:self.collectionViewIndexSelected.row];
+                
+                NSArray *shippingMethodKeys = [shippingMethodDictionary allKeys];
+                if(VALID_NOTEMPTY(shippingMethodKeys, NSArray))
+                {
+                    NSString *shippingMethodKey = [shippingMethodKeys objectAtIndex:0];
+                    RIShippingMethod *shippingMethod = [shippingMethodDictionary objectForKey:shippingMethodKey];
+                    if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
+                    {
+                        [shippingInfoCell loadWithShippingFee:shippingFee deliveryTime:shippingMethod.deliveryTime];
+                    }
+                }
                 
                 if(([self.shippingMethods count] - 1) == self.collectionViewIndexSelected.row)
                 {

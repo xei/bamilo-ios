@@ -140,7 +140,7 @@
 "string_address" = "Address: ";
 "string_opening_hours" = "Opening Hours: ";
 "string_please_select" = "Please Select";
-"order_summary_shipping_fee_label" = "Shipping Fee: ";
+"order_summary_shipping_fee_label" = "Shipping Fee:";
 
 "checkout_header_step_4" = "4. Payment";
 "payment" = "Payment";
@@ -261,3 +261,5 @@
 "can_share_app_with_friends" = "You can now share the app with your friends";
 "install_jumia_ios" = "Install the Jumia iOS App in an instant";
 "share_jumia_app" = "Share the Jumia App";
+
+"delivery_time" = "Delivery time:";

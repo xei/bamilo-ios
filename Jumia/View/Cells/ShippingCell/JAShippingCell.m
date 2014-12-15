@@ -17,9 +17,9 @@
 
 @implementation JAShippingCell
 
--(void)loadWithShippingMethod:(NSString *)shippingMethod
+-(void)loadWithShippingMethod:(RIShippingMethod *)shippingMethod
 {
-    [self.label setText:shippingMethod];
+    [self.label setText:[shippingMethod label]];
 }
 
 -(void)selectShippingMethod

@@ -10,6 +10,7 @@
 
 @interface JAShippingInfoCell ()
 
+@property (weak, nonatomic) IBOutlet UILabel *deliveryTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UIView *labelSeparator;
 
@@ -26,13 +27,14 @@
 }
 
 -(void)loadWithShippingFee:(NSString *)shippingFee
+              deliveryTime:(NSString *)deliveryTime
 {
     NSDictionary* shippingFeeLabelAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue" size:13.0f], NSFontAttributeName, nil];
     NSDictionary* shippingFeeAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f], NSFontAttributeName, nil];
     
     NSString *shippingFeeLabel = STRING_SHIPPING_FEE;
     NSRange shippingFeeRange = NSMakeRange(shippingFeeLabel.length, shippingFee.length);
-    NSMutableAttributedString *finalshippingFeeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", shippingFeeLabel, shippingFee]
+    NSMutableAttributedString *finalshippingFeeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", shippingFeeLabel, shippingFee]
                                                                                                attributes:shippingFeeLabelAttributes];
     
     [finalshippingFeeString setAttributes:shippingFeeAttributes
@@ -40,6 +42,20 @@
     
     
     [self.label setAttributedText:finalshippingFeeString];
+    
+    NSDictionary* deliveryTimeLabelAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue" size:13.0f], NSFontAttributeName, nil];
+    NSDictionary* deliveryTimeAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f], NSFontAttributeName, nil];
+    
+    NSString *deliveryTimeString = STRING_DELIVERY_TIME;
+    NSRange deliveryTimeRange = NSMakeRange(deliveryTimeString.length, deliveryTime.length);
+    NSMutableAttributedString *finalDeliveryTimeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", deliveryTimeString, deliveryTime]
+                                                                                                attributes:deliveryTimeLabelAttributes];
+    
+    [finalDeliveryTimeString setAttributes:deliveryTimeAttributes
+                                     range:deliveryTimeRange];
+    
+    
+    [self.deliveryTimeLabel setAttributedText:finalDeliveryTimeString];
 }
 
 -(void)loadWithPickupStation

@@ -7,6 +7,7 @@
 //
 
 #import "RIShippingMethodFormField.h"
+#import "RIShippingMethod.h"
 #import "RIShippingMethodPickupStationOption.h"
 
 @implementation RIShippingMethodFormField
@@ -54,9 +55,10 @@
         for(NSString *optionKey in optionsKeys)
         {
             NSDictionary *optionDictionaryObject = [optionsObject objectForKey:optionKey];
-            if(VALID_NOTEMPTY(optionDictionaryObject, NSDictionary) && VALID_NOTEMPTY([optionDictionaryObject objectForKey:@"label"], NSString))
+            RIShippingMethod *shippingMethod = [RIShippingMethod parseShippingMethod:optionDictionaryObject];
+            if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
             {
-                NSDictionary *optionDictionary = [NSDictionary dictionaryWithObject:[optionDictionaryObject objectForKey:@"label"] forKey:optionKey];
+                NSDictionary *optionDictionary = [NSDictionary dictionaryWithObject:shippingMethod forKey:optionKey];
                 [optionsArray addObject:optionDictionary];
             }
         }
