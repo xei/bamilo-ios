@@ -266,4 +266,6 @@
 #define STRING_SHARE_JUMIA_APP RILocalizedString(@"share_jumia_app", nil)
 #define STRING_INSTALL_JUMIA_IOS RILocalizedString(@"install_jumia_ios", nil)
 
+#define STRING_DELIVERY_TIME RILocalizedString(@"delivery_time", nil)
+
 #endif

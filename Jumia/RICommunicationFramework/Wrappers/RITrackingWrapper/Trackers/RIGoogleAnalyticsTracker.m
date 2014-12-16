@@ -28,6 +28,10 @@ NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
 
 @property (nonatomic, strong) NSString *campaignData;
 
+// Used for sending Google Analytics traffic in the background.
+@property(nonatomic, assign) BOOL okToWait;
+@property(nonatomic, copy) void (^dispatchHandler)(GAIDispatchResult result);
+
 @end
 
 @implementation RIGoogleAnalyticsTracker
@@ -105,6 +109,8 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     // Dispatch tracking information every 5 seconds (default: 120)
     [GAI sharedInstance].dispatchInterval = 5;
     
+    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelInfo];
+    
     // Create tracker instance.
     [[GAI sharedInstance] trackerWithTrackingId:trackingId];
         
@@ -120,6 +126,31 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 - (void)applicationDidLaunchWithOptions:(NSDictionary *)options
 {
 
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    self.okToWait = YES;
+    __weak RIGoogleAnalyticsTracker *weakSelf = self;
+    __block UIBackgroundTaskIdentifier backgroundTaskId =
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        weakSelf.okToWait = NO;
+    }];
+    
+    if (backgroundTaskId == UIBackgroundTaskInvalid) {
+        return;
+    }
+    
+    self.dispatchHandler = ^(GAIDispatchResult result) {
+        // If the last dispatch succeeded, and we're still OK to stay in the background then kick off
+        // again.
+        if (result == kGAIDispatchGood && weakSelf.okToWait ) {
+            [[GAI sharedInstance] dispatchWithCompletionHandler:weakSelf.dispatchHandler];
+        } else {
+            [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskId];
+        }
+    };
+    [[GAI sharedInstance] dispatchWithCompletionHandler:self.dispatchHandler];
 }
 
 #pragma mark - Track campaign

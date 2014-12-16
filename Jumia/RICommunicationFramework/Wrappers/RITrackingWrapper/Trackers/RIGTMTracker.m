@@ -90,6 +90,10 @@ NSString * const kGTMToken = @"kGTMToken";
 @property (nonatomic, strong) NSMutableArray *pendingEvents;
 @property (nonatomic, assign) BOOL containerIsAvailable;
 
+// Used for sending traffic in the background.
+@property(nonatomic, assign) BOOL okToWait;
+@property(nonatomic, copy) void (^dispatchHandler)(TAGDispatchResult result);
+
 @end
 
 @implementation RIGTMTracker
@@ -219,6 +223,31 @@ NSString * const kGTMToken = @"kGTMToken";
     {
         [self.pendingEvents addObject:event];
     }
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    self.okToWait = YES;
+    __weak RIGTMTracker *weakSelf = self;
+    __block UIBackgroundTaskIdentifier backgroundTaskId =
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        weakSelf.okToWait = NO;
+    }];
+    
+    if (backgroundTaskId == UIBackgroundTaskInvalid) {
+        return;
+    }
+    
+    self.dispatchHandler = ^(TAGDispatchResult result) {
+        // If the last dispatch succeeded, and we're still OK to stay in the background then kick off
+        // again.
+        if (result == kTAGDispatchGood && weakSelf.okToWait ) {
+            [[TAGManager instance] dispatchWithCompletionHandler:weakSelf.dispatchHandler];
+        } else {
+            [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskId];
+        }
+    };
+    [[TAGManager instance] dispatchWithCompletionHandler:self.dispatchHandler];
 }
 
 #pragma mark - RILaunchEventTracker implementation

@@ -425,12 +425,52 @@
 		B5B5FDFB19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDDB19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */; };
 		B5B5FDFC19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDDC19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape.xib */; };
 		B5B5FDFD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDDD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib */; };
+		B5B79B401A3F4A2A00639F9E /* RIShippingMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */; };
+		B5B79B411A3F4A2A00639F9E /* RIShippingMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */; };
 		B5BDD98B19FFAAF000C2C2CC /* JANewsletterComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */; };
 		B5BDD98C19FFAAF000C2C2CC /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */; };
 		B5C0085D1A038F55000BBC52 /* JAPDVImageSection~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C0085B1A038F55000BBC52 /* JAPDVImageSection~iPad_Landscape.xib */; };
 		B5C0085E1A038F55000BBC52 /* JAPDVImageSection~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C0085C1A038F55000BBC52 /* JAPDVImageSection~iPad_Portrait.xib */; };
 		B5C0085F1A038F61000BBC52 /* JAPDVImageSection~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C0085B1A038F55000BBC52 /* JAPDVImageSection~iPad_Landscape.xib */; };
 		B5C008601A038F63000BBC52 /* JAPDVImageSection~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C0085C1A038F55000BBC52 /* JAPDVImageSection~iPad_Portrait.xib */; };
+		B5C13EA01A402A9E00484398 /* ADJActivityHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E7A1A402A9E00484398 /* ADJActivityHandler.m */; };
+		B5C13EA11A402A9E00484398 /* ADJActivityHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E7A1A402A9E00484398 /* ADJActivityHandler.m */; };
+		B5C13EA21A402A9E00484398 /* ADJActivityKind.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E7C1A402A9E00484398 /* ADJActivityKind.m */; };
+		B5C13EA31A402A9E00484398 /* ADJActivityKind.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E7C1A402A9E00484398 /* ADJActivityKind.m */; };
+		B5C13EA41A402A9E00484398 /* ADJActivityPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E7E1A402A9E00484398 /* ADJActivityPackage.m */; };
+		B5C13EA51A402A9E00484398 /* ADJActivityPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E7E1A402A9E00484398 /* ADJActivityPackage.m */; };
+		B5C13EA61A402A9E00484398 /* ADJActivityState.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E801A402A9E00484398 /* ADJActivityState.m */; };
+		B5C13EA71A402A9E00484398 /* ADJActivityState.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E801A402A9E00484398 /* ADJActivityState.m */; };
+		B5C13EA81A402A9E00484398 /* NSString+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E831A402A9E00484398 /* NSString+ADJAdditions.m */; };
+		B5C13EA91A402A9E00484398 /* NSString+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E831A402A9E00484398 /* NSString+ADJAdditions.m */; };
+		B5C13EAA1A402A9E00484398 /* UIDevice+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E851A402A9E00484398 /* UIDevice+ADJAdditions.m */; };
+		B5C13EAB1A402A9E00484398 /* UIDevice+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E851A402A9E00484398 /* UIDevice+ADJAdditions.m */; };
+		B5C13EAC1A402A9E00484398 /* ADJAdjustFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E871A402A9E00484398 /* ADJAdjustFactory.m */; };
+		B5C13EAD1A402A9E00484398 /* ADJAdjustFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E871A402A9E00484398 /* ADJAdjustFactory.m */; };
+		B5C13EAE1A402A9E00484398 /* ADJAttribution.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E891A402A9E00484398 /* ADJAttribution.m */; };
+		B5C13EAF1A402A9E00484398 /* ADJAttribution.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E891A402A9E00484398 /* ADJAttribution.m */; };
+		B5C13EB01A402A9E00484398 /* ADJAttributionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E8B1A402A9E00484398 /* ADJAttributionHandler.m */; };
+		B5C13EB11A402A9E00484398 /* ADJAttributionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E8B1A402A9E00484398 /* ADJAttributionHandler.m */; };
+		B5C13EB21A402A9E00484398 /* ADJConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E8D1A402A9E00484398 /* ADJConfig.m */; };
+		B5C13EB31A402A9E00484398 /* ADJConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E8D1A402A9E00484398 /* ADJConfig.m */; };
+		B5C13EB41A402A9E00484398 /* ADJDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E8F1A402A9E00484398 /* ADJDeviceInfo.m */; };
+		B5C13EB51A402A9E00484398 /* ADJDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E8F1A402A9E00484398 /* ADJDeviceInfo.m */; };
+		B5C13EB61A402A9E00484398 /* ADJEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E911A402A9E00484398 /* ADJEvent.m */; };
+		B5C13EB71A402A9E00484398 /* ADJEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E911A402A9E00484398 /* ADJEvent.m */; };
+		B5C13EB81A402A9E00484398 /* ADJLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E931A402A9E00484398 /* ADJLogger.m */; };
+		B5C13EB91A402A9E00484398 /* ADJLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E931A402A9E00484398 /* ADJLogger.m */; };
+		B5C13EBA1A402A9E00484398 /* ADJPackageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E951A402A9E00484398 /* ADJPackageBuilder.m */; };
+		B5C13EBB1A402A9E00484398 /* ADJPackageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E951A402A9E00484398 /* ADJPackageBuilder.m */; };
+		B5C13EBC1A402A9E00484398 /* ADJPackageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E971A402A9E00484398 /* ADJPackageHandler.m */; };
+		B5C13EBD1A402A9E00484398 /* ADJPackageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E971A402A9E00484398 /* ADJPackageHandler.m */; };
+		B5C13EBE1A402A9E00484398 /* ADJRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E991A402A9E00484398 /* ADJRequestHandler.m */; };
+		B5C13EBF1A402A9E00484398 /* ADJRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E991A402A9E00484398 /* ADJRequestHandler.m */; };
+		B5C13EC01A402A9E00484398 /* ADJTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E9B1A402A9E00484398 /* ADJTimer.m */; };
+		B5C13EC11A402A9E00484398 /* ADJTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E9B1A402A9E00484398 /* ADJTimer.m */; };
+		B5C13EC21A402A9E00484398 /* Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E9D1A402A9E00484398 /* Adjust.m */; };
+		B5C13EC31A402A9E00484398 /* Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E9D1A402A9E00484398 /* Adjust.m */; };
+		B5C13EC41A402A9E00484398 /* ADJUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E9F1A402A9E00484398 /* ADJUtil.m */; };
+		B5C13EC51A402A9E00484398 /* ADJUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C13E9F1A402A9E00484398 /* ADJUtil.m */; };
 		B5C1E33719BA1E73009C422C /* UIImageView+JA.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1E33619BA1E73009C422C /* UIImageView+JA.m */; };
 		B5C2B0681A0911AB00B4872D /* JAPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C2B0671A0911AB00B4872D /* JAPicker.m */; };
 		B5C2B0691A0911AB00B4872D /* JAPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C2B0671A0911AB00B4872D /* JAPicker.m */; };
@@ -456,44 +496,6 @@
 		B5D1258F1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D1258D1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib */; };
 		B5D125911A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */; };
 		B5D125921A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */; };
-		B5DDAB291A3ED48900DE768A /* ADJActivityHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB031A3ED48900DE768A /* ADJActivityHandler.m */; };
-		B5DDAB2A1A3ED48900DE768A /* ADJActivityHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB031A3ED48900DE768A /* ADJActivityHandler.m */; };
-		B5DDAB2B1A3ED48900DE768A /* ADJActivityKind.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB051A3ED48900DE768A /* ADJActivityKind.m */; };
-		B5DDAB2C1A3ED48900DE768A /* ADJActivityKind.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB051A3ED48900DE768A /* ADJActivityKind.m */; };
-		B5DDAB2D1A3ED48900DE768A /* ADJActivityPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB071A3ED48900DE768A /* ADJActivityPackage.m */; };
-		B5DDAB2E1A3ED48900DE768A /* ADJActivityPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB071A3ED48900DE768A /* ADJActivityPackage.m */; };
-		B5DDAB2F1A3ED48900DE768A /* ADJActivityState.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB091A3ED48900DE768A /* ADJActivityState.m */; };
-		B5DDAB301A3ED48900DE768A /* ADJActivityState.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB091A3ED48900DE768A /* ADJActivityState.m */; };
-		B5DDAB311A3ED48900DE768A /* NSString+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB0C1A3ED48900DE768A /* NSString+ADJAdditions.m */; };
-		B5DDAB321A3ED48900DE768A /* NSString+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB0C1A3ED48900DE768A /* NSString+ADJAdditions.m */; };
-		B5DDAB331A3ED48900DE768A /* UIDevice+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB0E1A3ED48900DE768A /* UIDevice+ADJAdditions.m */; };
-		B5DDAB341A3ED48900DE768A /* UIDevice+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB0E1A3ED48900DE768A /* UIDevice+ADJAdditions.m */; };
-		B5DDAB351A3ED48900DE768A /* ADJAdjustFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB101A3ED48900DE768A /* ADJAdjustFactory.m */; };
-		B5DDAB361A3ED48900DE768A /* ADJAdjustFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB101A3ED48900DE768A /* ADJAdjustFactory.m */; };
-		B5DDAB371A3ED48900DE768A /* ADJAttribution.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB121A3ED48900DE768A /* ADJAttribution.m */; };
-		B5DDAB381A3ED48900DE768A /* ADJAttribution.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB121A3ED48900DE768A /* ADJAttribution.m */; };
-		B5DDAB391A3ED48900DE768A /* ADJAttributionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB141A3ED48900DE768A /* ADJAttributionHandler.m */; };
-		B5DDAB3A1A3ED48900DE768A /* ADJAttributionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB141A3ED48900DE768A /* ADJAttributionHandler.m */; };
-		B5DDAB3B1A3ED48900DE768A /* ADJConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB161A3ED48900DE768A /* ADJConfig.m */; };
-		B5DDAB3C1A3ED48900DE768A /* ADJConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB161A3ED48900DE768A /* ADJConfig.m */; };
-		B5DDAB3D1A3ED48900DE768A /* ADJDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB181A3ED48900DE768A /* ADJDeviceInfo.m */; };
-		B5DDAB3E1A3ED48900DE768A /* ADJDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB181A3ED48900DE768A /* ADJDeviceInfo.m */; };
-		B5DDAB3F1A3ED48900DE768A /* ADJEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB1A1A3ED48900DE768A /* ADJEvent.m */; };
-		B5DDAB401A3ED48900DE768A /* ADJEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB1A1A3ED48900DE768A /* ADJEvent.m */; };
-		B5DDAB411A3ED48900DE768A /* ADJLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB1C1A3ED48900DE768A /* ADJLogger.m */; };
-		B5DDAB421A3ED48900DE768A /* ADJLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB1C1A3ED48900DE768A /* ADJLogger.m */; };
-		B5DDAB431A3ED48900DE768A /* ADJPackageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB1E1A3ED48900DE768A /* ADJPackageBuilder.m */; };
-		B5DDAB441A3ED48900DE768A /* ADJPackageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB1E1A3ED48900DE768A /* ADJPackageBuilder.m */; };
-		B5DDAB451A3ED48900DE768A /* ADJPackageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB201A3ED48900DE768A /* ADJPackageHandler.m */; };
-		B5DDAB461A3ED48900DE768A /* ADJPackageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB201A3ED48900DE768A /* ADJPackageHandler.m */; };
-		B5DDAB471A3ED48900DE768A /* ADJRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB221A3ED48900DE768A /* ADJRequestHandler.m */; };
-		B5DDAB481A3ED48900DE768A /* ADJRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB221A3ED48900DE768A /* ADJRequestHandler.m */; };
-		B5DDAB491A3ED48900DE768A /* ADJTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB241A3ED48900DE768A /* ADJTimer.m */; };
-		B5DDAB4A1A3ED48900DE768A /* ADJTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB241A3ED48900DE768A /* ADJTimer.m */; };
-		B5DDAB4B1A3ED48900DE768A /* Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB261A3ED48900DE768A /* Adjust.m */; };
-		B5DDAB4C1A3ED48900DE768A /* Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB261A3ED48900DE768A /* Adjust.m */; };
-		B5DDAB4D1A3ED48900DE768A /* ADJUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB281A3ED48900DE768A /* ADJUtil.m */; };
-		B5DDAB4E1A3ED48900DE768A /* ADJUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DDAB281A3ED48900DE768A /* ADJUtil.m */; };
 		B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759B19814EF000005B13 /* FacebookSDK.framework */; };
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
 		B5FBD58A19CAF26800BD9510 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FBD58919CAF26800BD9510 /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -1200,11 +1202,51 @@
 		B5B5FDDB19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape-ret4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape-ret4.xib"; sourceTree = "<group>"; };
 		B5B5FDDC19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-landscape.xib"; sourceTree = "<group>"; };
 		B5B5FDDD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BMA4SiPhoneWebViewNotifView.xib; sourceTree = "<group>"; };
+		B5B79B3E1A3F4A2A00639F9E /* RIShippingMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIShippingMethod.h; sourceTree = "<group>"; };
+		B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIShippingMethod.m; sourceTree = "<group>"; };
 		B5BDD98819FFAAF000C2C2CC /* JANewsletterComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterComponent.h; sourceTree = "<group>"; };
 		B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewsletterComponent.m; sourceTree = "<group>"; };
 		B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewsletterComponent.xib; sourceTree = "<group>"; };
 		B5C0085B1A038F55000BBC52 /* JAPDVImageSection~iPad_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVImageSection~iPad_Landscape.xib"; sourceTree = "<group>"; };
 		B5C0085C1A038F55000BBC52 /* JAPDVImageSection~iPad_Portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVImageSection~iPad_Portrait.xib"; sourceTree = "<group>"; };
+		B5C13E791A402A9E00484398 /* ADJActivityHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJActivityHandler.h; sourceTree = "<group>"; };
+		B5C13E7A1A402A9E00484398 /* ADJActivityHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJActivityHandler.m; sourceTree = "<group>"; };
+		B5C13E7B1A402A9E00484398 /* ADJActivityKind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJActivityKind.h; sourceTree = "<group>"; };
+		B5C13E7C1A402A9E00484398 /* ADJActivityKind.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJActivityKind.m; sourceTree = "<group>"; };
+		B5C13E7D1A402A9E00484398 /* ADJActivityPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJActivityPackage.h; sourceTree = "<group>"; };
+		B5C13E7E1A402A9E00484398 /* ADJActivityPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJActivityPackage.m; sourceTree = "<group>"; };
+		B5C13E7F1A402A9E00484398 /* ADJActivityState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJActivityState.h; sourceTree = "<group>"; };
+		B5C13E801A402A9E00484398 /* ADJActivityState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJActivityState.m; sourceTree = "<group>"; };
+		B5C13E821A402A9E00484398 /* NSString+ADJAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ADJAdditions.h"; sourceTree = "<group>"; };
+		B5C13E831A402A9E00484398 /* NSString+ADJAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ADJAdditions.m"; sourceTree = "<group>"; };
+		B5C13E841A402A9E00484398 /* UIDevice+ADJAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+ADJAdditions.h"; sourceTree = "<group>"; };
+		B5C13E851A402A9E00484398 /* UIDevice+ADJAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+ADJAdditions.m"; sourceTree = "<group>"; };
+		B5C13E861A402A9E00484398 /* ADJAdjustFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJAdjustFactory.h; sourceTree = "<group>"; };
+		B5C13E871A402A9E00484398 /* ADJAdjustFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJAdjustFactory.m; sourceTree = "<group>"; };
+		B5C13E881A402A9E00484398 /* ADJAttribution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJAttribution.h; sourceTree = "<group>"; };
+		B5C13E891A402A9E00484398 /* ADJAttribution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJAttribution.m; sourceTree = "<group>"; };
+		B5C13E8A1A402A9E00484398 /* ADJAttributionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJAttributionHandler.h; sourceTree = "<group>"; };
+		B5C13E8B1A402A9E00484398 /* ADJAttributionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJAttributionHandler.m; sourceTree = "<group>"; };
+		B5C13E8C1A402A9E00484398 /* ADJConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJConfig.h; sourceTree = "<group>"; };
+		B5C13E8D1A402A9E00484398 /* ADJConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJConfig.m; sourceTree = "<group>"; };
+		B5C13E8E1A402A9E00484398 /* ADJDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJDeviceInfo.h; sourceTree = "<group>"; };
+		B5C13E8F1A402A9E00484398 /* ADJDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJDeviceInfo.m; sourceTree = "<group>"; };
+		B5C13E901A402A9E00484398 /* ADJEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJEvent.h; sourceTree = "<group>"; };
+		B5C13E911A402A9E00484398 /* ADJEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJEvent.m; sourceTree = "<group>"; };
+		B5C13E921A402A9E00484398 /* ADJLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJLogger.h; sourceTree = "<group>"; };
+		B5C13E931A402A9E00484398 /* ADJLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJLogger.m; sourceTree = "<group>"; };
+		B5C13E941A402A9E00484398 /* ADJPackageBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJPackageBuilder.h; sourceTree = "<group>"; };
+		B5C13E951A402A9E00484398 /* ADJPackageBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJPackageBuilder.m; sourceTree = "<group>"; };
+		B5C13E961A402A9E00484398 /* ADJPackageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJPackageHandler.h; sourceTree = "<group>"; };
+		B5C13E971A402A9E00484398 /* ADJPackageHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJPackageHandler.m; sourceTree = "<group>"; };
+		B5C13E981A402A9E00484398 /* ADJRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJRequestHandler.h; sourceTree = "<group>"; };
+		B5C13E991A402A9E00484398 /* ADJRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJRequestHandler.m; sourceTree = "<group>"; };
+		B5C13E9A1A402A9E00484398 /* ADJTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJTimer.h; sourceTree = "<group>"; };
+		B5C13E9B1A402A9E00484398 /* ADJTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJTimer.m; sourceTree = "<group>"; };
+		B5C13E9C1A402A9E00484398 /* Adjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Adjust.h; sourceTree = "<group>"; };
+		B5C13E9D1A402A9E00484398 /* Adjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Adjust.m; sourceTree = "<group>"; };
+		B5C13E9E1A402A9E00484398 /* ADJUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJUtil.h; sourceTree = "<group>"; };
+		B5C13E9F1A402A9E00484398 /* ADJUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJUtil.m; sourceTree = "<group>"; };
 		B5C1E33519BA1E73009C422C /* UIImageView+JA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+JA.h"; path = "Categories/UIImageView+JA.h"; sourceTree = "<group>"; };
 		B5C1E33619BA1E73009C422C /* UIImageView+JA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+JA.m"; path = "Categories/UIImageView+JA.m"; sourceTree = "<group>"; };
 		B5C2B0661A0911AB00B4872D /* JAPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPicker.h; sourceTree = "<group>"; };
@@ -1234,44 +1276,6 @@
 		B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAAddRatingView.xib; sourceTree = "<group>"; };
 		B5D1258D1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JACampaignSingleView~iPad_Portrait.xib"; sourceTree = "<group>"; };
 		B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JACampaignSingleView~iPad_Landscape.xib"; sourceTree = "<group>"; };
-		B5DDAB021A3ED48900DE768A /* ADJActivityHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJActivityHandler.h; sourceTree = "<group>"; };
-		B5DDAB031A3ED48900DE768A /* ADJActivityHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJActivityHandler.m; sourceTree = "<group>"; };
-		B5DDAB041A3ED48900DE768A /* ADJActivityKind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJActivityKind.h; sourceTree = "<group>"; };
-		B5DDAB051A3ED48900DE768A /* ADJActivityKind.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJActivityKind.m; sourceTree = "<group>"; };
-		B5DDAB061A3ED48900DE768A /* ADJActivityPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJActivityPackage.h; sourceTree = "<group>"; };
-		B5DDAB071A3ED48900DE768A /* ADJActivityPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJActivityPackage.m; sourceTree = "<group>"; };
-		B5DDAB081A3ED48900DE768A /* ADJActivityState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJActivityState.h; sourceTree = "<group>"; };
-		B5DDAB091A3ED48900DE768A /* ADJActivityState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJActivityState.m; sourceTree = "<group>"; };
-		B5DDAB0B1A3ED48900DE768A /* NSString+ADJAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ADJAdditions.h"; sourceTree = "<group>"; };
-		B5DDAB0C1A3ED48900DE768A /* NSString+ADJAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ADJAdditions.m"; sourceTree = "<group>"; };
-		B5DDAB0D1A3ED48900DE768A /* UIDevice+ADJAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+ADJAdditions.h"; sourceTree = "<group>"; };
-		B5DDAB0E1A3ED48900DE768A /* UIDevice+ADJAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+ADJAdditions.m"; sourceTree = "<group>"; };
-		B5DDAB0F1A3ED48900DE768A /* ADJAdjustFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJAdjustFactory.h; sourceTree = "<group>"; };
-		B5DDAB101A3ED48900DE768A /* ADJAdjustFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJAdjustFactory.m; sourceTree = "<group>"; };
-		B5DDAB111A3ED48900DE768A /* ADJAttribution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJAttribution.h; sourceTree = "<group>"; };
-		B5DDAB121A3ED48900DE768A /* ADJAttribution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJAttribution.m; sourceTree = "<group>"; };
-		B5DDAB131A3ED48900DE768A /* ADJAttributionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJAttributionHandler.h; sourceTree = "<group>"; };
-		B5DDAB141A3ED48900DE768A /* ADJAttributionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJAttributionHandler.m; sourceTree = "<group>"; };
-		B5DDAB151A3ED48900DE768A /* ADJConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJConfig.h; sourceTree = "<group>"; };
-		B5DDAB161A3ED48900DE768A /* ADJConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJConfig.m; sourceTree = "<group>"; };
-		B5DDAB171A3ED48900DE768A /* ADJDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJDeviceInfo.h; sourceTree = "<group>"; };
-		B5DDAB181A3ED48900DE768A /* ADJDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJDeviceInfo.m; sourceTree = "<group>"; };
-		B5DDAB191A3ED48900DE768A /* ADJEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJEvent.h; sourceTree = "<group>"; };
-		B5DDAB1A1A3ED48900DE768A /* ADJEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJEvent.m; sourceTree = "<group>"; };
-		B5DDAB1B1A3ED48900DE768A /* ADJLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJLogger.h; sourceTree = "<group>"; };
-		B5DDAB1C1A3ED48900DE768A /* ADJLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJLogger.m; sourceTree = "<group>"; };
-		B5DDAB1D1A3ED48900DE768A /* ADJPackageBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJPackageBuilder.h; sourceTree = "<group>"; };
-		B5DDAB1E1A3ED48900DE768A /* ADJPackageBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJPackageBuilder.m; sourceTree = "<group>"; };
-		B5DDAB1F1A3ED48900DE768A /* ADJPackageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJPackageHandler.h; sourceTree = "<group>"; };
-		B5DDAB201A3ED48900DE768A /* ADJPackageHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJPackageHandler.m; sourceTree = "<group>"; };
-		B5DDAB211A3ED48900DE768A /* ADJRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJRequestHandler.h; sourceTree = "<group>"; };
-		B5DDAB221A3ED48900DE768A /* ADJRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJRequestHandler.m; sourceTree = "<group>"; };
-		B5DDAB231A3ED48900DE768A /* ADJTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJTimer.h; sourceTree = "<group>"; };
-		B5DDAB241A3ED48900DE768A /* ADJTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJTimer.m; sourceTree = "<group>"; };
-		B5DDAB251A3ED48900DE768A /* Adjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Adjust.h; sourceTree = "<group>"; };
-		B5DDAB261A3ED48900DE768A /* Adjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Adjust.m; sourceTree = "<group>"; };
-		B5DDAB271A3ED48900DE768A /* ADJUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJUtil.h; sourceTree = "<group>"; };
-		B5DDAB281A3ED48900DE768A /* ADJUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJUtil.m; sourceTree = "<group>"; };
 		B5EF759B19814EF000005B13 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		B5FBD58919CAF26800BD9510 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -2288,7 +2292,7 @@
 			isa = PBXGroup;
 			children = (
 				B5B5FDA919D99D05008B8059 /* AccengageiOSSDK */,
-				B5DDAB011A3ED48900DE768A /* Adjust */,
+				B5C13E781A402A9E00484398 /* Adjust */,
 				B59DCA6319B710DA00DE7960 /* FXBlurView */,
 				B5376A0B1A3B51BD009C03AD /* GoogleAnalyticsServicesiOS_3.10 */,
 				B5007ABD19A4E8EC0024035A /* HockeySDK.embeddedframework */,
@@ -2455,6 +2459,8 @@
 				4A944FF41992805100C02734 /* RIProductRatings.m */,
 				B5A3029A19811E9200F71726 /* RIRatings.h */,
 				B5A3029B19811E9200F71726 /* RIRatings.m */,
+				B5B79B3E1A3F4A2A00639F9E /* RIShippingMethod.h */,
+				B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */,
 				B5C682F31986C41D0094C92C /* RIShippingMethodForm.h */,
 				B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */,
 				B5C682F11986C41D0094C92C /* RIShippingMethodFormField.h */,
@@ -2724,6 +2730,59 @@
 			path = WebViewBanner;
 			sourceTree = "<group>";
 		};
+		B5C13E781A402A9E00484398 /* Adjust */ = {
+			isa = PBXGroup;
+			children = (
+				B5C13E791A402A9E00484398 /* ADJActivityHandler.h */,
+				B5C13E7A1A402A9E00484398 /* ADJActivityHandler.m */,
+				B5C13E7B1A402A9E00484398 /* ADJActivityKind.h */,
+				B5C13E7C1A402A9E00484398 /* ADJActivityKind.m */,
+				B5C13E7D1A402A9E00484398 /* ADJActivityPackage.h */,
+				B5C13E7E1A402A9E00484398 /* ADJActivityPackage.m */,
+				B5C13E7F1A402A9E00484398 /* ADJActivityState.h */,
+				B5C13E801A402A9E00484398 /* ADJActivityState.m */,
+				B5C13E811A402A9E00484398 /* ADJAdditions */,
+				B5C13E861A402A9E00484398 /* ADJAdjustFactory.h */,
+				B5C13E871A402A9E00484398 /* ADJAdjustFactory.m */,
+				B5C13E881A402A9E00484398 /* ADJAttribution.h */,
+				B5C13E891A402A9E00484398 /* ADJAttribution.m */,
+				B5C13E8A1A402A9E00484398 /* ADJAttributionHandler.h */,
+				B5C13E8B1A402A9E00484398 /* ADJAttributionHandler.m */,
+				B5C13E8C1A402A9E00484398 /* ADJConfig.h */,
+				B5C13E8D1A402A9E00484398 /* ADJConfig.m */,
+				B5C13E8E1A402A9E00484398 /* ADJDeviceInfo.h */,
+				B5C13E8F1A402A9E00484398 /* ADJDeviceInfo.m */,
+				B5C13E901A402A9E00484398 /* ADJEvent.h */,
+				B5C13E911A402A9E00484398 /* ADJEvent.m */,
+				B5C13E921A402A9E00484398 /* ADJLogger.h */,
+				B5C13E931A402A9E00484398 /* ADJLogger.m */,
+				B5C13E941A402A9E00484398 /* ADJPackageBuilder.h */,
+				B5C13E951A402A9E00484398 /* ADJPackageBuilder.m */,
+				B5C13E961A402A9E00484398 /* ADJPackageHandler.h */,
+				B5C13E971A402A9E00484398 /* ADJPackageHandler.m */,
+				B5C13E981A402A9E00484398 /* ADJRequestHandler.h */,
+				B5C13E991A402A9E00484398 /* ADJRequestHandler.m */,
+				B5C13E9A1A402A9E00484398 /* ADJTimer.h */,
+				B5C13E9B1A402A9E00484398 /* ADJTimer.m */,
+				B5C13E9C1A402A9E00484398 /* Adjust.h */,
+				B5C13E9D1A402A9E00484398 /* Adjust.m */,
+				B5C13E9E1A402A9E00484398 /* ADJUtil.h */,
+				B5C13E9F1A402A9E00484398 /* ADJUtil.m */,
+			);
+			path = Adjust;
+			sourceTree = "<group>";
+		};
+		B5C13E811A402A9E00484398 /* ADJAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				B5C13E821A402A9E00484398 /* NSString+ADJAdditions.h */,
+				B5C13E831A402A9E00484398 /* NSString+ADJAdditions.m */,
+				B5C13E841A402A9E00484398 /* UIDevice+ADJAdditions.h */,
+				B5C13E851A402A9E00484398 /* UIDevice+ADJAdditions.m */,
+			);
+			path = ADJAdditions;
+			sourceTree = "<group>";
+		};
 		B5C1E33419BA1E3D009C422C /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -2749,59 +2808,6 @@
 				B5C9C7031A1A5E6F0065AFD4 /* JADatePicker.m */,
 			);
 			name = JADatePicker;
-			sourceTree = "<group>";
-		};
-		B5DDAB011A3ED48900DE768A /* Adjust */ = {
-			isa = PBXGroup;
-			children = (
-				B5DDAB021A3ED48900DE768A /* ADJActivityHandler.h */,
-				B5DDAB031A3ED48900DE768A /* ADJActivityHandler.m */,
-				B5DDAB041A3ED48900DE768A /* ADJActivityKind.h */,
-				B5DDAB051A3ED48900DE768A /* ADJActivityKind.m */,
-				B5DDAB061A3ED48900DE768A /* ADJActivityPackage.h */,
-				B5DDAB071A3ED48900DE768A /* ADJActivityPackage.m */,
-				B5DDAB081A3ED48900DE768A /* ADJActivityState.h */,
-				B5DDAB091A3ED48900DE768A /* ADJActivityState.m */,
-				B5DDAB0A1A3ED48900DE768A /* ADJAdditions */,
-				B5DDAB0F1A3ED48900DE768A /* ADJAdjustFactory.h */,
-				B5DDAB101A3ED48900DE768A /* ADJAdjustFactory.m */,
-				B5DDAB111A3ED48900DE768A /* ADJAttribution.h */,
-				B5DDAB121A3ED48900DE768A /* ADJAttribution.m */,
-				B5DDAB131A3ED48900DE768A /* ADJAttributionHandler.h */,
-				B5DDAB141A3ED48900DE768A /* ADJAttributionHandler.m */,
-				B5DDAB151A3ED48900DE768A /* ADJConfig.h */,
-				B5DDAB161A3ED48900DE768A /* ADJConfig.m */,
-				B5DDAB171A3ED48900DE768A /* ADJDeviceInfo.h */,
-				B5DDAB181A3ED48900DE768A /* ADJDeviceInfo.m */,
-				B5DDAB191A3ED48900DE768A /* ADJEvent.h */,
-				B5DDAB1A1A3ED48900DE768A /* ADJEvent.m */,
-				B5DDAB1B1A3ED48900DE768A /* ADJLogger.h */,
-				B5DDAB1C1A3ED48900DE768A /* ADJLogger.m */,
-				B5DDAB1D1A3ED48900DE768A /* ADJPackageBuilder.h */,
-				B5DDAB1E1A3ED48900DE768A /* ADJPackageBuilder.m */,
-				B5DDAB1F1A3ED48900DE768A /* ADJPackageHandler.h */,
-				B5DDAB201A3ED48900DE768A /* ADJPackageHandler.m */,
-				B5DDAB211A3ED48900DE768A /* ADJRequestHandler.h */,
-				B5DDAB221A3ED48900DE768A /* ADJRequestHandler.m */,
-				B5DDAB231A3ED48900DE768A /* ADJTimer.h */,
-				B5DDAB241A3ED48900DE768A /* ADJTimer.m */,
-				B5DDAB251A3ED48900DE768A /* Adjust.h */,
-				B5DDAB261A3ED48900DE768A /* Adjust.m */,
-				B5DDAB271A3ED48900DE768A /* ADJUtil.h */,
-				B5DDAB281A3ED48900DE768A /* ADJUtil.m */,
-			);
-			path = Adjust;
-			sourceTree = "<group>";
-		};
-		B5DDAB0A1A3ED48900DE768A /* ADJAdditions */ = {
-			isa = PBXGroup;
-			children = (
-				B5DDAB0B1A3ED48900DE768A /* NSString+ADJAdditions.h */,
-				B5DDAB0C1A3ED48900DE768A /* NSString+ADJAdditions.m */,
-				B5DDAB0D1A3ED48900DE768A /* UIDevice+ADJAdditions.h */,
-				B5DDAB0E1A3ED48900DE768A /* UIDevice+ADJAdditions.m */,
-			);
-			path = ADJAdditions;
 			sourceTree = "<group>";
 		};
 		BB128E9D19E2F4060033514F /* search */ = {
@@ -3345,6 +3351,11 @@
 				TargetAttributes = {
 					B5A301A719811D0700F71726 = {
 						CreatedOnToolsVersion = 6.0;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					B5A301C019811D0700F71726 = {
 						CreatedOnToolsVersion = 6.0;
@@ -3714,10 +3725,12 @@
 				BB995B7D19F67A970090E081 /* JAFallbackView.m in Sources */,
 				BB9546A219F51FE400AC7D05 /* JAWizardView.m in Sources */,
 				BB9546A119F51F5700AC7D05 /* JAPDVWizardView.m in Sources */,
+				B5C13EB71A402A9E00484398 /* ADJEvent.m in Sources */,
 				BB9546A019F51F4800AC7D05 /* JAHomeWizardView.m in Sources */,
 				BB95469F19F51F2200AC7D05 /* JACatalogWizardView.m in Sources */,
 				B5B21B4719ED943C00099E25 /* JAMaintenancePage.m in Sources */,
 				BB746F4019ED8D5A00341B33 /* JAClickableView.m in Sources */,
+				B5C13EC11A402A9E00484398 /* ADJTimer.m in Sources */,
 				BB4FB8D919E7FC4E006FEFF6 /* RICampaign.m in Sources */,
 				BB4FB8D619E7FAC5006FEFF6 /* JACampaignSingleView.m in Sources */,
 				BB4FB8D719E7FAC5006FEFF6 /* JAPercentageBarView.m in Sources */,
@@ -3730,6 +3743,7 @@
 				CEA86DA41A3A0FEE000032AD /* JAPageControl.m in Sources */,
 				4c2fef288bf2196e345a6ca6 /* RIProductSimple.m in Sources */,
 				ef9c559f71ceab6fa71c4313 /* JACartListHeaderView.m in Sources */,
+				B5C13EA11A402A9E00484398 /* ADJActivityHandler.m in Sources */,
 				8c281b362211f7077d4edb4b /* RINewsletterCategory.m in Sources */,
 				2b32daf78a4b1be86b5cb815 /* FXBlurView.m in Sources */,
 				843c5f5135a7a237f2ebe305 /* RIError.m in Sources */,
@@ -3748,18 +3762,14 @@
 				2eb23f2dd745a7b0b0c14765 /* JAAppDelegate.m in Sources */,
 				c795918e6661f2b2410f9f58 /* RIFilter.m in Sources */,
 				abfbf9f4e3ea7badd0389cb2 /* JACatalogViewController.m in Sources */,
-				B5DDAB341A3ED48900DE768A /* UIDevice+ADJAdditions.m in Sources */,
-				B5DDAB461A3ED48900DE768A /* ADJPackageHandler.m in Sources */,
-				B5DDAB421A3ED48900DE768A /* ADJLogger.m in Sources */,
 				dff8783bfc2786b09d981442 /* RIImage.m in Sources */,
 				c0e941af43b887c904d319ec /* JAPickupStationInfoCell.m in Sources */,
 				80cd392bb7db149dcac66e13 /* RICheckout.m in Sources */,
-				B5DDAB3A1A3ED48900DE768A /* ADJAttributionHandler.m in Sources */,
 				7115e1b7774de2fe61bfb715 /* RIAdjustTracker.m in Sources */,
-				B5DDAB401A3ED48900DE768A /* ADJEvent.m in Sources */,
 				f30fa9e7d7b939469d4b3c6b /* JAForgotPasswordViewController.m in Sources */,
 				CEABEEC81A126652000D0CF8 /* JAGenericFiltersView.m in Sources */,
 				51686b7e16269d6e716c8f70 /* RIOperation.m in Sources */,
+				B5C13EA71A402A9E00484398 /* ADJActivityState.m in Sources */,
 				e3ca2d59f72455e53096afbc /* UIImageView+JA.m in Sources */,
 				85f0b6e186127c0b70b1f3e7 /* JAThanksViewController.m in Sources */,
 				74575dc39b7757725904ad3d /* JAShareActivityProvider.m in Sources */,
@@ -3768,32 +3778,31 @@
 				df9ac75b2b86dba7a92360ac /* UIImageView+WebCache.m in Sources */,
 				b858fbf852fa6e8b3d3449a9 /* JACampaignsTeaserView.m in Sources */,
 				e76d2c90dc89f574c5611048 /* JASwitchCell.m in Sources */,
+				B5C13EAD1A402A9E00484398 /* ADJAdjustFactory.m in Sources */,
 				ecc9deac3f4a367450e9394f /* JAEditAddressViewController.m in Sources */,
 				752ae601414aa038b29c8385 /* JAMyAccountViewController.m in Sources */,
 				188b1698381587c85d2a12fe /* JAEmailNotificationsViewController.m in Sources */,
 				870b4ebe400fa2c7ddaa09d5 /* JAPriceFilterViewController.m in Sources */,
-				B5DDAB2C1A3ED48900DE768A /* ADJActivityKind.m in Sources */,
-				B5DDAB361A3ED48900DE768A /* ADJAdjustFactory.m in Sources */,
 				3f31c314fcacf615881a795c /* RILocalizationWrapper.m in Sources */,
 				24b4052a11ae5d2c331ce0de /* JANoConnectionView.m in Sources */,
 				81b3a64b4fe2078961216565 /* JACatalogListCell.m in Sources */,
 				b65e6cef037b082f736bb259 /* JASignInViewController.m in Sources */,
 				295494b4735267cda90182f3 /* RIConfiguration.m in Sources */,
-				B5DDAB4A1A3ED48900DE768A /* ADJTimer.m in Sources */,
 				5ac7bf2fc57469353240789a /* JASubCategoriesViewController.m in Sources */,
 				862e1ea524aed9a3a5f24743 /* JACategoriesViewController.m in Sources */,
 				133596524b905259ce5de2ae /* RITeaserProduct.m in Sources */,
 				f575a95b379f740aa4f8d828 /* JAShippingCell.m in Sources */,
 				30d4cd7f193c424dfc1c6ab1 /* JATopBrandsTeaserView.m in Sources */,
 				df5a29254b4e39fe8a0a7d40 /* RITeaserGroup.m in Sources */,
+				B5C13EBB1A402A9E00484398 /* ADJPackageBuilder.m in Sources */,
 				6ad0a1988b1e51c37142c75b /* JACartViewController.m in Sources */,
 				b94cfa8d37757acab329072f /* JAPDVProductInfo.m in Sources */,
 				842d7c4fad06679139869ced /* RIField.m in Sources */,
 				4e6c662ba5a46bb8730e617e /* RITeaserImage.m in Sources */,
 				886c5fa519e7301d1103b66d /* JAPaymentCell.m in Sources */,
 				24f9ed0833a68d3bcdd58ad1 /* RIApi.m in Sources */,
+				B5C13EB91A402A9E00484398 /* ADJLogger.m in Sources */,
 				73a2376ce1e1395d429b0dff /* RIFieldOption.m in Sources */,
-				B5DDAB441A3ED48900DE768A /* ADJPackageBuilder.m in Sources */,
 				fe12819671b95b14243da09e /* RITeaserText.m in Sources */,
 				bc2215ef52ef8f4c62accebd /* RIShippingMethodFormField.m in Sources */,
 				0d76562f22d9837dfe85f86d /* RIPaymentMethodFormOption.m in Sources */,
@@ -3804,8 +3813,10 @@
 				0d61a534825a19926f082cdd /* JAChooseCountryViewController.m in Sources */,
 				99064e0e1729a0012aaba9d6 /* JAHomeViewController.m in Sources */,
 				ec915e246a5d1c593d1caa89 /* JAMenuNavigationBar.m in Sources */,
+				B5C13EB11A402A9E00484398 /* ADJAttributionHandler.m in Sources */,
 				ac030ec40f4f5b911adb9da0 /* JARecentlyViewedViewController.m in Sources */,
 				B5C2B0691A0911AB00B4872D /* JAPicker.m in Sources */,
+				B5C13EA51A402A9E00484398 /* ADJActivityPackage.m in Sources */,
 				227641879a675f5bdc88d47a /* SDWebImageDownloader.m in Sources */,
 				B5CFE99E1A0CF45F004CE545 /* JAAddRatingView.m in Sources */,
 				f216f801001f61223ca8024c /* JAColorFilterCell.m in Sources */,
@@ -3819,6 +3830,7 @@
 				e39ee093e35c257cd5514d65 /* RIRegion.m in Sources */,
 				f1332fc46e026575362f26f8 /* RIProductReview.m in Sources */,
 				683688e1b9b2108556cfa333 /* JATopCategoriesTeaserView.m in Sources */,
+				B5B79B411A3F4A2A00639F9E /* RIShippingMethod.m in Sources */,
 				7fa37d4ab462805a50e33847 /* JASmallTeaserView.m in Sources */,
 				ed678b1c1c88881ed466339e /* JACenterNavigationController.m in Sources */,
 				265d6ed8bd7c10f9dbd3b757 /* JAAddNewAddressViewController.m in Sources */,
@@ -3830,9 +3842,7 @@
 				52E8CC1E1A40947000D33FD9 /* JASizeGuideWizardView.m in Sources */,
 				334b2d58a1b29954afa8a3b3 /* JAPDVVariations.m in Sources */,
 				788967f20470d1c650b89ccf /* BMA4SViewController.m in Sources */,
-				B5DDAB381A3ED48900DE768A /* ADJAttribution.m in Sources */,
 				0422832b3e819cb8751b64ec /* JARatingsView.m in Sources */,
-				B5DDAB2A1A3ED48900DE768A /* ADJActivityHandler.m in Sources */,
 				112111cde8e66f08ed6f3c52 /* RIProduct.m in Sources */,
 				8467290c94785ccd3ea64ce6 /* JANavigationBarLayout.m in Sources */,
 				d085cc95773f8a9e25e9ac1c /* RIPaymentMethodFormField.m in Sources */,
@@ -3847,7 +3857,6 @@
 				B5C9C7051A1A6CB30065AFD4 /* JADatePicker.m in Sources */,
 				e50648146d628861d4e0bc0f /* JATeaserView.m in Sources */,
 				24395e3fd684124d0dc59179 /* JAUtils.m in Sources */,
-				B5DDAB2E1A3ED48900DE768A /* ADJActivityPackage.m in Sources */,
 				CEABEEC71A126652000D0CF8 /* JAPriceFiltersView.m in Sources */,
 				62add1971fcfac7a3f4f4acc /* JAPDVViewController.m in Sources */,
 				36d44c903225b19fe74884ab /* JAColorView.m in Sources */,
@@ -3855,23 +3864,28 @@
 				a7db6ed31621c11e28c044a6 /* JACheckoutForms.m in Sources */,
 				8ef6f1e3abc13f3eae6e5711 /* JAMessageView.m in Sources */,
 				85b61709066677c2f1fcfd1c /* JARadioComponent.m in Sources */,
+				B5C13EC31A402A9E00484398 /* Adjust.m in Sources */,
 				94d7dc4aac253d51f42cf556 /* RIFieldDataSetComponent.m in Sources */,
 				027125b0e1eb09bbf6ac31b8 /* JATextFieldComponent.m in Sources */,
 				f8c3d3d4e4aeb8e1b38b80e7 /* RIImageResolution.m in Sources */,
 				b30c4e6be5c0c8eee6b4a94c /* RIURLCacheWrapper.m in Sources */,
 				1ab3cd2be973c7bdad01987e /* JAButtonWithBlur.m in Sources */,
+				B5C13EAB1A402A9E00484398 /* UIDevice+ADJAdditions.m in Sources */,
 				b42870fb0eb0010aae996ca1 /* JALoginViewController.m in Sources */,
 				cff7ffb08e5519934a445721 /* RICategory.m in Sources */,
 				CE88F7BE1A23886100A3A586 /* JAOrderSummaryView.m in Sources */,
 				3fc6abd339ec5b39978481ff /* RISearchSuggestion.m in Sources */,
 				c98a2364f0dc0bb39541a1e3 /* RIPaymentMethodForm.m in Sources */,
-				B5DDAB3E1A3ED48900DE768A /* ADJDeviceInfo.m in Sources */,
 				39d64ebd01d50db348ddca2c /* RINewRelicTracker.m in Sources */,
 				132783da23c3a550a0c52064 /* RIGoogleAnalyticsTracker.m in Sources */,
 				c9e480b3a6b434d9b5f027fc /* JAPriceView.m in Sources */,
 				CE88F7AD1A1E33F000A3A586 /* JAProductListFlowLayout.m in Sources */,
+				B5C13EBF1A402A9E00484398 /* ADJRequestHandler.m in Sources */,
 				952aecdd0bf3e87bd38f9e12 /* RITrackingWrapper.m in Sources */,
+				B5C13EAF1A402A9E00484398 /* ADJAttribution.m in Sources */,
+				B5C13EB31A402A9E00484398 /* ADJConfig.m in Sources */,
 				3b2e034618cfeae11e103642 /* RIVariation.m in Sources */,
+				B5C13EA31A402A9E00484398 /* ADJActivityKind.m in Sources */,
 				df135d936bd63706b4e3db54 /* JAMainFiltersViewController.m in Sources */,
 				98f2c1c10bfdddd3c20a7666 /* RIGTMTracker.m in Sources */,
 				17d0609e5e70be279c8ec4c4 /* JABaseViewController.m in Sources */,
@@ -3880,18 +3894,17 @@
 				CEABEEC91A126652000D0CF8 /* JACategoryFiltersView.m in Sources */,
 				171502ed39676ad6e9d765b4 /* RISection.m in Sources */,
 				2bbb2d86eb24453bcfd24a98 /* JACheckBoxWithOptionsComponent.m in Sources */,
-				B5DDAB4E1A3ED48900DE768A /* ADJUtil.m in Sources */,
 				560ac91adb9d3b1dec49fa39 /* RICart.m in Sources */,
 				9a39dc0f3a939d6e0ce2df01 /* RITrackingConfiguration.m in Sources */,
 				185e4d8d406a3ebd18ee19ec /* RIFormIndex.m in Sources */,
 				B5CBFF671A10B33D0050C553 /* JARatingsViewMedium.m in Sources */,
-				B5DDAB481A3ED48900DE768A /* ADJRequestHandler.m in Sources */,
 				3c19ddaf1c0aad1ad6bfad03 /* JADynamicForm.m in Sources */,
+				B5C13EC51A402A9E00484398 /* ADJUtil.m in Sources */,
 				7eb64a1c587a08b5852171a0 /* main.m in Sources */,
 				3193bc811c58a8831f67c283 /* UIButton+WebCache.m in Sources */,
+				B5C13EA91A402A9E00484398 /* NSString+ADJAdditions.m in Sources */,
 				5bc41904f3c484bf6f1248ae /* SDWebImagePrefetcher.m in Sources */,
 				2f2b2b1158b3a928ea0ab3f8 /* JAPickerScrollView.m in Sources */,
-				B5DDAB301A3ED48900DE768A /* ADJActivityState.m in Sources */,
 				3d642f69591ea75c8ec0ab53 /* JARecentSearchesViewController.m in Sources */,
 				f48eb2e331b5aa7bbd7c8bd6 /* JACatalogGridCell.m in Sources */,
 				ee9b30540cdeea119d3484d6 /* JANewRatingViewController.m in Sources */,
@@ -3902,21 +3915,19 @@
 				0a7dd54e89ecf32139d07fd4 /* JASidePanelController.m in Sources */,
 				9071405acbc614db8a470148 /* NMRangeSlider.m in Sources */,
 				d765de058e273cba2b2628fd /* RICustomer.m in Sources */,
-				B5DDAB321A3ED48900DE768A /* NSString+ADJAdditions.m in Sources */,
 				09a540fd5e97a0761054d14c /* SDWebImageDecoder.m in Sources */,
 				692fece832938452dbf8505a /* JATeaserPageView.m in Sources */,
 				361729cf70d97eaad6ee214b /* JACountryCell.m in Sources */,
 				3c85e0382a65fc870da0282e /* JATrackMyOrderViewController.m in Sources */,
 				74acae0cc3cb94fc8c207de4 /* Reachability.m in Sources */,
+				B5C13EB51A402A9E00484398 /* ADJDeviceInfo.m in Sources */,
 				5212d644bfc7dda87b731f2c /* JAMainTeaserView.m in Sources */,
 				e5bebaafc3af5de4288199c7 /* JAAddressCell.m in Sources */,
 				6be80f134e67002eecb79292 /* RILanguage.m in Sources */,
 				74c288d3007d11abbcd827d3 /* RIAd4PushTracker.m in Sources */,
-				B5DDAB3C1A3ED48900DE768A /* ADJConfig.m in Sources */,
 				CE4848981A162803003C3D53 /* JAFiltersView.m in Sources */,
 				460503d31c163545ffffa862 /* RIBugSenseTracker.m in Sources */,
 				1fab3dec6fadd712d6a2a8c0 /* RIOpenURLHandler.m in Sources */,
-				B5DDAB4C1A3ED48900DE768A /* Adjust.m in Sources */,
 				e827050642f7bb99bff26f98 /* RICartItem.m in Sources */,
 				fe0f7b01d4bbd5142aedb639 /* JAProductDetailsViewController.m in Sources */,
 				839e583fc75316c30aa08c95 /* SDImageCache.m in Sources */,
@@ -3924,6 +3935,7 @@
 				c7f7a3e79d1ad30af79a27c0 /* JABirthDateComponent.m in Sources */,
 				67f4a0b88343cac1bc885793 /* RIURLCache.m in Sources */,
 				4da991f80db2e035397322c9 /* RIRatings.m in Sources */,
+				B5C13EBD1A402A9E00484398 /* ADJPackageHandler.m in Sources */,
 				5612820b1a73e2366b652295 /* RIDataBaseWrapper.m in Sources */,
 				4bc43fda46c675d38bdb8ad7 /* JARootViewController.m in Sources */,
 				c9f69801c66118e53de177a7 /* RIShippingMethodPickupStationOption.m in Sources */,
@@ -3938,10 +3950,12 @@
 				B542546B19AE9F7500C792FF /* JACartListHeaderView.m in Sources */,
 				B5B5FDA519D95B6D008B8059 /* RINewsletterCategory.m in Sources */,
 				B59DCA6619B710DA00DE7960 /* FXBlurView.m in Sources */,
+				B5C13EB61A402A9E00484398 /* ADJEvent.m in Sources */,
 				B5A302D719811E9200F71726 /* RIError.m in Sources */,
 				CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */,
 				B50B03A6198A544A002046DF /* JAShippingViewController.m in Sources */,
 				B510B01219AE466B00A9754A /* JACheckBoxComponent.m in Sources */,
+				B5C13EC01A402A9E00484398 /* ADJTimer.m in Sources */,
 				B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */,
 				CED30C24199CAA5C00C67F4B /* JAGenericFilterViewController.m in Sources */,
 				4A454F3B199CBF1400B44821 /* RIAddress.m in Sources */,
@@ -3954,6 +3968,7 @@
 				CEA86DA31A39F82C000032AD /* JAPageControl.m in Sources */,
 				4AFC7F94199BC124007D67F4 /* JASignupViewController.m in Sources */,
 				B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */,
+				B5C13EA01A402A9E00484398 /* ADJActivityHandler.m in Sources */,
 				CEDEB983199A51E30022BAB5 /* RIFilter.m in Sources */,
 				CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */,
 				B5A302C519811E9200F71726 /* RIImage.m in Sources */,
@@ -3972,18 +3987,14 @@
 				B55BFB9519E6A83E0098467E /* JALoadCountryViewController.m in Sources */,
 				CEC376D319EBCA5800558B98 /* JAClickableView.m in Sources */,
 				CE445879198BF15B00CE7E8D /* JACampaignsTeaserView.m in Sources */,
-				B5DDAB331A3ED48900DE768A /* UIDevice+ADJAdditions.m in Sources */,
-				B5DDAB451A3ED48900DE768A /* ADJPackageHandler.m in Sources */,
-				B5DDAB411A3ED48900DE768A /* ADJLogger.m in Sources */,
 				B59DCA7619B88DAD00DE7960 /* JASwitchCell.m in Sources */,
 				B57DC97E19B90AB10080C818 /* JAEditAddressViewController.m in Sources */,
 				4A39213419891FB200B70A9C /* JAMyAccountViewController.m in Sources */,
-				B5DDAB391A3ED48900DE768A /* ADJAttributionHandler.m in Sources */,
 				CEABEEBF1A122BEA000D0CF8 /* JAGenericFiltersView.m in Sources */,
-				B5DDAB3F1A3ED48900DE768A /* ADJEvent.m in Sources */,
 				4AE865C019C9D7F100406159 /* JAEmailNotificationsViewController.m in Sources */,
 				CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */,
 				B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */,
+				B5C13EA61A402A9E00484398 /* ADJActivityState.m in Sources */,
 				4A19C51919D01ABE0070D194 /* JANoConnectionView.m in Sources */,
 				CE2F576E19913B33000A9E09 /* JACatalogListCell.m in Sources */,
 				4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */,
@@ -3992,32 +4003,31 @@
 				CE13787819A357B400CA0751 /* JACategoriesViewController.m in Sources */,
 				B5A302D019811E9200F71726 /* RITeaserProduct.m in Sources */,
 				B58767FE19BB62B3001651D6 /* JAShippingCell.m in Sources */,
+				B5C13EAC1A402A9E00484398 /* ADJAdjustFactory.m in Sources */,
 				CE4848971A161979003C3D53 /* JAFiltersView.m in Sources */,
 				CE44586C198BD20A00CE7E8D /* JATopBrandsTeaserView.m in Sources */,
 				B5A302CE19811E9200F71726 /* RITeaserGroup.m in Sources */,
 				B5225E30198950C500C18F1E /* JACartViewController.m in Sources */,
-				B5DDAB2B1A3ED48900DE768A /* ADJActivityKind.m in Sources */,
-				B5DDAB351A3ED48900DE768A /* ADJAdjustFactory.m in Sources */,
 				4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */,
 				CEC376E319F0050F00558B98 /* JAHomeWizardView.m in Sources */,
 				B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */,
 				CE3AF90B19DBF50800D8C51B /* JAPercentageBarView.m in Sources */,
 				B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */,
-				B5DDAB491A3ED48900DE768A /* ADJTimer.m in Sources */,
 				B58DBF3919C0AF9600D4678A /* JAPaymentCell.m in Sources */,
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
 				B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */,
 				B5A302D119811E9200F71726 /* RITeaserText.m in Sources */,
 				B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */,
 				B5225E1B1989308300C18F1E /* RIPaymentMethodFormOption.m in Sources */,
+				B5C13EBA1A402A9E00484398 /* ADJPackageBuilder.m in Sources */,
 				4AE730B8198F8ACA000CA1DD /* JAPDVImageSection.m in Sources */,
 				4A01EE61199259C7005F5AD1 /* JAPDVGalleryView.m in Sources */,
 				CE3AF90819DBF50800D8C51B /* JACampaignPageView.m in Sources */,
 				CE2FB75B1993BCB900E7CD00 /* JACatalogCell.m in Sources */,
 				CE445880198C03D100CE7E8D /* JAPopularBrandsTeaserView.m in Sources */,
 				4A39213719891FBA00B70A9C /* JAChooseCountryViewController.m in Sources */,
+				B5C13EB81A402A9E00484398 /* ADJLogger.m in Sources */,
 				4AE242E51986570500E37C90 /* JAHomeViewController.m in Sources */,
-				B5DDAB431A3ED48900DE768A /* ADJPackageBuilder.m in Sources */,
 				4A1270FB1987EFB0004142F5 /* JAMenuNavigationBar.m in Sources */,
 				4A39213019891F7800B70A9C /* JARecentlyViewedViewController.m in Sources */,
 				B5A3025A19811E8A00F71726 /* SDWebImageDownloader.m in Sources */,
@@ -4028,8 +4038,10 @@
 				B59DCA6219B710B100DE7960 /* RICity.m in Sources */,
 				B5A3025719811E8A00F71726 /* MKAnnotationView+WebCache.m in Sources */,
 				4AE730BE198F8ADF000CA1DD /* JAPDVRelatedItem.m in Sources */,
+				B5C13EB01A402A9E00484398 /* ADJAttributionHandler.m in Sources */,
 				B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */,
 				B5C2B0681A0911AB00B4872D /* JAPicker.m in Sources */,
+				B5C13EA41A402A9E00484398 /* ADJActivityPackage.m in Sources */,
 				B59DCA6119B710B100DE7960 /* RIRegion.m in Sources */,
 				CE9193BD19F503FB00F89840 /* JAFallbackView.m in Sources */,
 				B5A302D819811E9200F71726 /* RIProductReview.m in Sources */,
@@ -4043,6 +4055,7 @@
 				CEC376E619F015C600558B98 /* JACatalogWizardView.m in Sources */,
 				B5A302CD19811E9200F71726 /* RITeaserCategory.m in Sources */,
 				B59D196319C333CF004843C3 /* JAExternalPaymentsViewController.m in Sources */,
+				B5B79B401A3F4A2A00639F9E /* RIShippingMethod.m in Sources */,
 				4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */,
 				CE3AF90E19DBF68400D8C51B /* RICampaign.m in Sources */,
 				B5B5FDDE19D99D06008B8059 /* BMA4SViewController.m in Sources */,
@@ -4054,9 +4067,7 @@
 				52AC8FDC1A4056CB00E7C874 /* JASizeGuideWizardView.m in Sources */,
 				B5A302D419811E9200F71726 /* Model.xcdatamodeld in Sources */,
 				B5A302DA19811E9200F71726 /* RICommunicationWrapper.m in Sources */,
-				B5DDAB371A3ED48900DE768A /* ADJAttribution.m in Sources */,
 				4A3719BD19C05F52002D4199 /* JAUndefinedSearchView.m in Sources */,
-				B5DDAB291A3ED48900DE768A /* ADJActivityHandler.m in Sources */,
 				CE13256819C7355000B5018E /* RITeaser.m in Sources */,
 				CE13787019A2304500CA0751 /* JACategoryFilterViewController.m in Sources */,
 				B59DCA7E19B88DDB00DE7960 /* JAAddNewAddressCell.m in Sources */,
@@ -4071,7 +4082,6 @@
 				B5C9C7041A1A5E6F0065AFD4 /* JADatePicker.m in Sources */,
 				B530D57119C1998B0052FEDA /* JACheckoutForms.m in Sources */,
 				8C38E18719CF16F50007F6F9 /* JAMessageView.m in Sources */,
-				B5DDAB2D1A3ED48900DE768A /* ADJActivityPackage.m in Sources */,
 				B510B01519AE466B00A9754A /* JARadioComponent.m in Sources */,
 				CEABEEBC1A1119AB000D0CF8 /* JAPriceFiltersView.m in Sources */,
 				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
@@ -4079,23 +4089,28 @@
 				B5A302C619811E9200F71726 /* RIImageResolution.m in Sources */,
 				B5A302E619811E9200F71726 /* RIURLCacheWrapper.m in Sources */,
 				B59DCA6A19B8521A00DE7960 /* JAButtonWithBlur.m in Sources */,
+				B5C13EC21A402A9E00484398 /* Adjust.m in Sources */,
 				B50B039D198A5420002046DF /* JALoginViewController.m in Sources */,
 				B5A302C019811E9200F71726 /* RICategory.m in Sources */,
 				B5CFE99A1A0CE3BC004CE545 /* JAAddRatingView.m in Sources */,
 				B5A302CA19811E9200F71726 /* RISearchSuggestion.m in Sources */,
 				B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */,
+				B5C13EAA1A402A9E00484398 /* UIDevice+ADJAdditions.m in Sources */,
 				B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */,
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
 				CE88F7BD1A23886100A3A586 /* JAOrderSummaryView.m in Sources */,
 				CE3AF90919DBF50800D8C51B /* JACampaignSingleView.m in Sources */,
 				CE33CA0119AB36FA00333B1A /* JAPriceView.m in Sources */,
-				B5DDAB3D1A3ED48900DE768A /* ADJDeviceInfo.m in Sources */,
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
 				B5A302D319811E9200F71726 /* RIVariation.m in Sources */,
 				CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */,
 				CE88F7AC1A1E33F000A3A586 /* JAProductListFlowLayout.m in Sources */,
+				B5C13EBE1A402A9E00484398 /* ADJRequestHandler.m in Sources */,
 				CE3AF91219DD5D6700D8C51B /* JAPromotionPopUp.m in Sources */,
+				B5C13EAE1A402A9E00484398 /* ADJAttribution.m in Sources */,
+				B5C13EB21A402A9E00484398 /* ADJConfig.m in Sources */,
 				B5A0059019D5A1EE0069C0A9 /* RIGTMTracker.m in Sources */,
+				B5C13EA21A402A9E00484398 /* ADJActivityKind.m in Sources */,
 				B5A30303198121A400F71726 /* JABaseViewController.m in Sources */,
 				B59DCA5919B70C2E00DE7960 /* JATextField.m in Sources */,
 				B5A302CB19811E9200F71726 /* RISection.m in Sources */,
@@ -4104,18 +4119,17 @@
 				B5BDD98B19FFAAF000C2C2CC /* JANewsletterComponent.m in Sources */,
 				CEABEEC61A1255F5000D0CF8 /* JACategoryFiltersView.m in Sources */,
 				B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */,
-				B5DDAB4D1A3ED48900DE768A /* ADJUtil.m in Sources */,
 				B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */,
 				B510B01419AE466B00A9754A /* JADynamicForm.m in Sources */,
 				B5A301AE19811D0700F71726 /* main.m in Sources */,
 				B5A3025D19811E8A00F71726 /* UIButton+WebCache.m in Sources */,
-				B5DDAB471A3ED48900DE768A /* ADJRequestHandler.m in Sources */,
 				B5CBFF661A10B33D0050C553 /* JARatingsViewMedium.m in Sources */,
+				B5C13EC41A402A9E00484398 /* ADJUtil.m in Sources */,
 				B5A3025C19811E8A00F71726 /* SDWebImagePrefetcher.m in Sources */,
 				CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */,
+				B5C13EA81A402A9E00484398 /* NSString+ADJAdditions.m in Sources */,
 				4A39212D19891F6D00B70A9C /* JARecentSearchesViewController.m in Sources */,
 				CE2FB75619938EA100E7CD00 /* JACatalogGridCell.m in Sources */,
-				B5DDAB2F1A3ED48900DE768A /* ADJActivityState.m in Sources */,
 				4A1892D51993BCC90036F327 /* JANewRatingViewController.m in Sources */,
 				4A39213A19891FC400B70A9C /* JAMyFavouritesViewController.m in Sources */,
 				4A18856419B8A368003337FC /* JAActivityViewController.m in Sources */,
@@ -4126,21 +4140,19 @@
 				B5B5FDA819D95D8E008B8059 /* RICustomer.m in Sources */,
 				B5A3025919811E8A00F71726 /* SDWebImageDecoder.m in Sources */,
 				CE3AF91A19DD8BC400D8C51B /* RIPromotion.m in Sources */,
-				B5DDAB311A3ED48900DE768A /* NSString+ADJAdditions.m in Sources */,
 				CEE91B9C1989065A0078DFC9 /* JATeaserPageView.m in Sources */,
 				4A4ABF0C198B903B00342D92 /* JACountryCell.m in Sources */,
 				4A39212719891F2D00B70A9C /* JATrackMyOrderViewController.m in Sources */,
 				4A19C51419D019100070D194 /* Reachability.m in Sources */,
 				CE44586B198BD20A00CE7E8D /* JAMainTeaserView.m in Sources */,
+				B5C13EB41A402A9E00484398 /* ADJDeviceInfo.m in Sources */,
 				B59DCA6F19B8712500DE7960 /* JAAddressCell.m in Sources */,
 				B5A302C719811E9200F71726 /* RILanguage.m in Sources */,
 				B5A302E219811E9200F71726 /* RIAd4PushTracker.m in Sources */,
 				B5A302E419811E9200F71726 /* RIBugSenseTracker.m in Sources */,
-				B5DDAB3B1A3ED48900DE768A /* ADJConfig.m in Sources */,
 				B524311F19EC1163001E532C /* JAMaintenancePage.m in Sources */,
 				B5A302DF19811E9200F71726 /* RIOpenURLHandler.m in Sources */,
 				B517FDFC198265AD00F65253 /* RICartItem.m in Sources */,
-				B5DDAB4B1A3ED48900DE768A /* Adjust.m in Sources */,
 				4A480C2C19951E9700E054B8 /* JAProductDetailsViewController.m in Sources */,
 				CEC376DD19EFC1E800558B98 /* JAWizardView.m in Sources */,
 				B5A3025819811E8A00F71726 /* SDImageCache.m in Sources */,
@@ -4148,6 +4160,7 @@
 				B510B01019AE466B00A9754A /* JABirthDateComponent.m in Sources */,
 				B5A302D219811E9200F71726 /* RIURLCache.m in Sources */,
 				B5A302D919811E9200F71726 /* RIRatings.m in Sources */,
+				B5C13EBC1A402A9E00484398 /* ADJPackageHandler.m in Sources */,
 				B5A302DC19811E9200F71726 /* RIDataBaseWrapper.m in Sources */,
 				4AE242E01986569000E37C90 /* JARootViewController.m in Sources */,
 				B5C682F81986C41D0094C92C /* RIShippingMethodPickupStationOption.m in Sources */,
