@@ -65,8 +65,8 @@
     NSString *shippingMethod = @"";
     if (VALID_NOTEMPTY([orderObject objectForKey:@"shipping_method"], NSDictionary)) {
         NSDictionary *shippingMethodObject = [orderObject objectForKey:@"shipping_method"];
-        if (VALID_NOTEMPTY([shippingMethodObject objectForKey:@"method"], NSString)) {
-            shippingMethod = [shippingMethodObject objectForKey:@"method"];
+        if (VALID_NOTEMPTY([shippingMethodObject objectForKey:@"label"], NSString)) {
+            shippingMethod = [shippingMethodObject objectForKey:@"label"];
         }
     }
     order.shippingMethod = shippingMethod;
@@ -74,11 +74,11 @@
     NSString *paymentMethod = @"";
     if (VALID_NOTEMPTY([orderObject objectForKey:@"payment_method"], NSDictionary)) {
         NSDictionary *paymentMethodObject = [orderObject objectForKey:@"payment_method"];
-        if (VALID_NOTEMPTY([paymentMethodObject objectForKey:@"provider"], NSString)) {
-            paymentMethod = [paymentMethodObject objectForKey:@"provider"];
+        if (VALID_NOTEMPTY([paymentMethodObject objectForKey:@"label"], NSString)) {
+            paymentMethod = [paymentMethodObject objectForKey:@"label"];
         }
     }
-    if (VALID_NOTEMPTY([orderObject objectForKey:@"payment_method"], NSString))
+    else if (VALID_NOTEMPTY([orderObject objectForKey:@"payment_method"], NSString))
     {
         paymentMethod = [orderObject objectForKey:@"payment_method"];
     }
