@@ -11,6 +11,7 @@
 #import "JANoConnectionView.h"
 #import "JAMaintenancePage.h"
 #import "JAFallbackView.h"
+#import "JASearchView.h"
 
 @interface JABaseViewController ()
 
@@ -157,6 +158,20 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
                                                         object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSearchView)
+                                                 name:kDidPressSearchButtonNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kDidPressSearchButtonNotification
+                                                  object:nil];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -173,6 +188,13 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification
                                                         object:self.navBarLayout];
+}
+
+- (void)showSearchView
+{
+    UIView* window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
+    JASearchView* searchView = [[JASearchView alloc] initWithFrame:window.bounds];
+    [window addSubview:searchView];
 }
 
 - (void) showLoading

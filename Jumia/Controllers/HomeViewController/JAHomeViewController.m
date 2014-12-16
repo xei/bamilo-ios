@@ -82,9 +82,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    
     [self addNotifications];
+    
+    [super viewWillAppear:animated];
     
     CGRect rectToStart;
     if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
