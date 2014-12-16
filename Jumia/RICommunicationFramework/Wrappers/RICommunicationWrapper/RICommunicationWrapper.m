@@ -293,8 +293,6 @@
     {    [operation.request addValue:RI_HTTP_USER_AGENT_HEADER_IPHONE_VALUE forHTTPHeaderField:RI_HTTP_USER_AGENT_HEADER_NAME];
     }
     
-    NSLog(@"%@", [operation.request allHTTPHeaderFields]);
-    
     return operation.request;
 }
 
