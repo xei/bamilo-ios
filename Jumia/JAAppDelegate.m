@@ -183,7 +183,18 @@
             }
         }
     }
+    
+    [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
 }
+
+// In case the app was sent into the background when there was no network connection, we will use
+// the background data fetching mechanism to send any pending Google Analytics data.
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {

@@ -3345,6 +3345,11 @@
 				TargetAttributes = {
 					B5A301A719811D0700F71726 = {
 						CreatedOnToolsVersion = 6.0;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					B5A301C019811D0700F71726 = {
 						CreatedOnToolsVersion = 6.0;
