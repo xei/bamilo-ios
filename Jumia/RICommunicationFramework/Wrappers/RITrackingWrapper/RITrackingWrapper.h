@@ -385,6 +385,15 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  */
 - (void)applicationDidLaunchWithOptions:(NSDictionary *)options;
 
+@optional
+
+/**
+ *  Hook to recognise when the app goes to background
+ *
+ *  @param application The application.
+ */
+- (void)applicationDidEnterBackground:(UIApplication *)application;
+
 @end
 
 /**
@@ -437,6 +446,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 - (void)startWithConfigurationFromPropertyListAtPath:(NSString *)path
                                        launchOptions:(NSDictionary *)launchOptions
                                             delegate:(id)delegate;
+
+- (void)applicationDidEnterBackground:(UIApplication *)application;
 
 /**
  *  Creates and initializes an `RITracking`object
