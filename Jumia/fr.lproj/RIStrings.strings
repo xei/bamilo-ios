@@ -233,6 +233,7 @@
 "tip_share_text" = "Cliquez pour Partager ce Produit";
 "tip_swipe_text" = "Balayez vers la gauche ou la droite pour observer les différentes images";
 "tip_tap_text" = "Cliquez pour voir l\'ensemble \ndes images produit";
+"pinch_to_zoom_label" = "Pincez pour zommer";
 
 "fallback_audio_ios" = "Son & Image";
 "fallback_books" = "Livres";

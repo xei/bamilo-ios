@@ -8,11 +8,13 @@
 
 #import "JASizeGuideViewController.h"
 #import "UIImageView+WebCache.h"
+#import "JASizeGuideWizardView.h"
 
 @interface JASizeGuideViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, strong)UIImageView* imageView;
 @property (nonatomic, strong)UIScrollView* scrollView;
+@property (nonatomic, strong) JASizeGuideWizardView *wizardView;
 
 @end
 
@@ -43,6 +45,7 @@
     [self positionViews];
 }
 
+
 - (void)positionViews
 {
     [self.scrollView removeFromSuperview];
@@ -66,7 +69,26 @@
         [self.imageView setFrame:self.scrollView.bounds];
         [self.scrollView addSubview:self.imageView];
     }
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:kJASizeGuideWizardUserDefaultsKey] == NO)
+    {
+        self.wizardView = [[JASizeGuideWizardView alloc] initWithFrame:self.view.bounds];
+        [self setupWizardView:self.wizardView];
+    }
+
+    self.wizardView = [[JASizeGuideWizardView alloc] initWithFrame:self.view.bounds];
+    [self setupWizardView:self.wizardView];
+
 }
+
+
+-(void)setupWizardView:(JAWizardView *)wizardView
+{
+    [self.view addSubview:wizardView];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJASizeGuideWizardUserDefaultsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 
 - (void)resizeWithImage:(UIImage*)image
 {

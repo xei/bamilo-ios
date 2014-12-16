@@ -233,6 +233,7 @@
 "tip_share_text" = "Click to share this product";
 "tip_swipe_text" = "Swipe left or right to\nview different images";
 "tip_tap_text" = "Tap to open the product gallery";
+"pinch_to_zoom_label" = "Pinch to zoom";
 
 "fallback_audio_ios" = "Audio & Video";
 "fallback_books" = "Books";
