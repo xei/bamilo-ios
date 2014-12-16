@@ -75,10 +75,6 @@
         self.wizardView = [[JASizeGuideWizardView alloc] initWithFrame:self.view.bounds];
         [self setupWizardView:self.wizardView];
     }
-
-    self.wizardView = [[JASizeGuideWizardView alloc] initWithFrame:self.view.bounds];
-    [self setupWizardView:self.wizardView];
-
 }
 
 
@@ -89,7 +85,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-
 - (void)resizeWithImage:(UIImage*)image
 {
     if (image.size.height < self.view.frame.size.height ||
@@ -98,14 +93,11 @@
     }
 }
 
-
 #pragma mark - UIScrollView
 
 -(UIView *) viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
     return self.imageView;
 }
-
-
 
 @end
