@@ -602,7 +602,7 @@
     return didProductFail;
 }
 
-- (void)addAddAllToCartFinishedWithOutOfStock:(BOOL)success
+- (void)addAddAllToCartFinishedWithOutOfStock:(BOOL)outOfStock
 {
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cartData forKey:kUpdateCartNotificationValue];
@@ -621,7 +621,7 @@
         if (VALID_NOTEMPTY(favoriteProducts, NSArray))
         {
             NSString* errorMessage = STRING_ERROR_ADDING_TO_CART;           
-            if(success)
+            if(outOfStock)
             {
                 errorMessage = STRING_PRODCUT_OUT_OF_STOCK;
                 if (1 < favoriteProducts.count) {
