@@ -463,7 +463,7 @@
                 for (RIProductSimple* simple in product.productSimples) {
                     if ([simpleName isEqualToString:simple.variation]) {
                         //found it
-                        [productToAdd setObject:@"asdasds" forKey:@"simple"];
+                        [productToAdd setObject:simple.sku forKey:@"simple"];
                         break;
                     }
                 }
