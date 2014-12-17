@@ -81,21 +81,25 @@
 {
     RIError *error = [[RIError alloc] init];
     
-    if(VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+    if(VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary))
+    {
         NSDictionary *messagesObject = [jsonObject objectForKey:@"messages"];
-        if(VALID_NOTEMPTY([messagesObject objectForKey:@"error"], NSArray)) {
+        if(VALID_NOTEMPTY([messagesObject objectForKey:@"error"], NSArray))
+        {
             NSArray *errorCodesObject = [messagesObject objectForKey:@"error"];
-            if(NOTEMPTY(errorCodesObject)) {
+            if(NOTEMPTY(errorCodesObject))
+            {
                 NSMutableArray *errorCodesArray = [[NSMutableArray alloc] init];
-                
-                for (NSString *errorCodeString in errorCodesObject) {
+                for (NSString *errorCodeString in errorCodesObject)
+                {
                     [errorCodesArray addObject:errorCodeString];
                 }
                 error.errorCodes = [errorCodesArray copy];
             }
         }
     
-        if(nil != [messagesObject objectForKey:@"validate"]) {
+        if(NOT_NIL([messagesObject objectForKey:@"validate"]))
+        {
             id errorMessagesObject = [messagesObject objectForKey:@"validate"];
             if (VALID_NOTEMPTY(errorMessagesObject, NSDictionary))
             {
@@ -115,6 +119,10 @@
                 }
                 error.errorMessagesArray = [errorMessagesArray copy];
             }
+        }
+        else if(VALID_NOTEMPTY([messagesObject objectForKey:@"error"], NSDictionary))
+        {
+            error.errorMessagesDictionary = [[messagesObject objectForKey:@"error"] copy];
         }
     }
     return error;
