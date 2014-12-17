@@ -262,6 +262,7 @@
                                                  self.cartCountLabel.frame.size.width,
                                                  self.cartCountLabel.frame.size.height)];
         
+        rightItemFrame = self.cartButton.frame;
         if (!self.searchButton.hidden) {
             
             [self.searchButton setFrame:CGRectMake(self.cartButton.frame.origin.x - self.searchButton.frame.size.width,
@@ -273,8 +274,6 @@
                                         self.searchButton.frame.origin.y,
                                         self.searchButton.frame.size.width + self.cartButton.frame.size.width,
                                         self.searchButton.frame.size.height);
-        } else {
-            rightItemFrame = self.cartButton.frame;
         }
     }
     
@@ -332,16 +331,16 @@
     }
     
     CGFloat titleLabelWidth = 0.0f;
-    CGFloat titleLabelLeftMargin = 0.0f;
+    CGFloat titleLabelSideMargin = 0.0f;
     if(leftItemFrame.size.width >= rightItemFrame.size.width)
     {
-        titleLabelLeftMargin = leftItemFrame.size.width + 3.0f;
+        titleLabelSideMargin = leftItemFrame.size.width + 3.0f;
     }
     else
     {
-        titleLabelLeftMargin = rightItemFrame.size.width + 3.0f;
+        titleLabelSideMargin = rightItemFrame.size.width + 3.0f;
     }
-    titleLabelWidth = width - (2 * titleLabelLeftMargin);
+    titleLabelWidth = width - (2 * titleLabelSideMargin);
     
     NSString *titleLabelText = self.titleLabel.text;
     NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
@@ -349,10 +348,10 @@
     if (titleLabelTextSize.width > titleLabelWidth)
     {
         titleLabelWidth = width - leftItemFrame.size.width - rightItemFrame.size.width - 24.0f;
-        titleLabelLeftMargin = (width - titleLabelWidth) / 2 + 12.0;
+        titleLabelSideMargin = (width - titleLabelWidth) / 2;
     }
     
-    [self.titleLabel setFrame:CGRectMake(titleLabelLeftMargin,
+    [self.titleLabel setFrame:CGRectMake(titleLabelSideMargin,
                                          self.titleLabel.frame.origin.y,
                                          titleLabelWidth,
                                          self.titleLabel.frame.size.height)];
