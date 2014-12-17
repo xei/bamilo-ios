@@ -264,3 +264,6 @@
 "share_jumia_app" = "Share the Jumia App";
 
 "delivery_time" = "Delivery time:";
+
+"product_outof_stock" = "Item is out of stock";
+"products_outof_stock" = "Items are out of stock";

@@ -267,5 +267,7 @@
 #define STRING_INSTALL_JUMIA_IOS RILocalizedString(@"install_jumia_ios", nil)
 
 #define STRING_DELIVERY_TIME RILocalizedString(@"delivery_time", nil)
+#define STRING_PRODCUT_OUT_OF_STOCK RILocalizedString(@"product_outof_stock", nil)
+#define STRING_PRODCUTS_OUT_OF_STOCK RILocalizedString(@"products_outof_stock", nil)
 
 #endif

@@ -12,6 +12,10 @@
 #warning "This project uses features only available in iOS SDK 3.0 and later."
 #endif
 
+#ifndef NOT_NIL
+#define NOT_NIL(__OBJECT) (nil != __OBJECT)
+#endif
+
 #ifndef VALID
 #define VALID(__OBJECT, __CLASSNAME) (nil != __OBJECT && [__OBJECT isKindOfClass:[__CLASSNAME class]])
 #endif
