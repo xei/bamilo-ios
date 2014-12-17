@@ -38,11 +38,33 @@
     [self positionViews];
 }
 
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
+    {
+        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
+                                     self.wizardView.frame.origin.y,
+                                     self.view.frame.size.height + self.view.frame.origin.y,
+                                     self.view.frame.size.width - self.view.frame.origin.y);
+        [self.wizardView reloadForFrame:newFrame];
+    }
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
     [self positionViews];
+    
+    if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
+    {
+        [self.wizardView reloadForFrame:self.view.bounds];
+        [self.view bringSubviewToFront:self.wizardView];
+    }
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 
