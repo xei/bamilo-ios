@@ -157,7 +157,7 @@ FBLoginViewDelegate
                                                                                  self.view.frame.size.height - orderSummaryY)];
     self.orderSummaryOriginalFrame = self.orderSummaryView.frame;
     if (VALID_NOTEMPTY(self.cart, RICart)) {
-        [self.orderSummaryView loadWithCart:self.cart];
+        [self.orderSummaryView loadWithCart:self.cart shippingFee:NO];
     } else {
         [self getCart];
     }
@@ -235,7 +235,7 @@ FBLoginViewDelegate
     [self showLoading];
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
         if (VALID_NOTEMPTY(self.orderSummaryView, JAOrderSummaryView) && VALID_NOTEMPTY(cartData.cartItems, NSArray)) {
-            [self.orderSummaryView loadWithCart:cartData];
+            [self.orderSummaryView loadWithCart:cartData shippingFee:NO];
         }
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
@@ -310,7 +310,7 @@ FBLoginViewDelegate
 
 - (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    CGFloat stepViewLeftMargin = 25.0f;
+    CGFloat stepViewLeftMargin = 18.0f;
     NSString *stepBackgroundImageName = @"headerCheckoutStep1";
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
@@ -750,7 +750,7 @@ FBLoginViewDelegate
                                                           
                                                           if([nextStep isEqualToString:@"createAddress"])
                                                           {
-                                                              NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                                                              NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
                                                               
                                                               [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                                                                   object:nil
@@ -842,7 +842,7 @@ FBLoginViewDelegate
         }
         else
         {
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                 object:nil
@@ -910,7 +910,7 @@ FBLoginViewDelegate
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
         
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                             object:nil

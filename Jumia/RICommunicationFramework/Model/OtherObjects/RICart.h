@@ -56,6 +56,19 @@
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
+ *  Method to add multiple products to the cart
+ *
+ *  @param an array of products to add (format: each element of this array should contain a dictionary with three keys quantity, p and simple)
+ *  @param the success block
+ *  @param the error block that contains the error case the operation fails
+ *
+ *  @return the string with the code to cancel the request
+ */
++ (NSString *)addProductsWithQuantity:(NSArray *)productsToAdd
+                     withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
+                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock;
+
+/**
  *  Method to remove product from cart
  *
  *  @param the quantity that will be removed

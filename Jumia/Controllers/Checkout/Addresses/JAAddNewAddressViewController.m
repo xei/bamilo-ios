@@ -63,6 +63,7 @@ JAPickerDelegate>
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
 @property (assign, nonatomic) NSInteger numberOfRequests;
+@property (assign, nonatomic) NSInteger numberOfGetFormRequests;
 @property (assign, nonatomic) BOOL hasErrors;
 @property (strong, nonatomic) RICheckout *checkout;
 
@@ -71,6 +72,11 @@ JAPickerDelegate>
 // Order summary
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
+@property (strong, nonatomic) NSDictionary *extraParameters;
+
+@property (assign, nonatomic) BOOL loadFailed;
+@property (assign, nonatomic) RIApiResponse apiResponse;
+
 @end
 
 @implementation JAAddNewAddressViewController
@@ -78,9 +84,18 @@ JAPickerDelegate>
 @synthesize numberOfRequests=_numberOfRequests;
 -(void)setNumberOfRequests:(NSInteger)numberOfRequests
 {
-    _numberOfRequests=numberOfRequests;
+    _numberOfRequests = numberOfRequests;
     if (0 == numberOfRequests) {
         [self finishedRequests];
+    }
+}
+
+@synthesize numberOfGetFormRequests=_numberOfGetFormRequests;
+-(void)setNumberOfGetFormRequests:(NSInteger)numberOfGetFormRequests
+{
+    _numberOfGetFormRequests = numberOfGetFormRequests;
+    if (0 == numberOfGetFormRequests) {
+        [self finishedGetFromRequests];
     }
 }
 
@@ -91,6 +106,12 @@ JAPickerDelegate>
     self.screenName = @"NewAddress";
     
     self.hasErrors = NO;
+    
+    self.extraParameters = nil;
+    if([RICustomer wasSignup])
+    {
+        self.extraParameters = [NSDictionary dictionaryWithObject:@"true" forKey:@"showGender"];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -111,7 +132,10 @@ JAPickerDelegate>
     
     [self initViews];
     
+    self.numberOfGetFormRequests = 2;
+    
     [RIForm getForm:@"addresscreate"
+     extraArguments:self.extraParameters
        successBlock:^(RIForm *form)
      {
          self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.shippingAddressViewCurrentY widthSize:self.shippingContentView.frame.size.width];
@@ -121,28 +145,58 @@ JAPickerDelegate>
              [self.shippingContentView addSubview:view];
          }
          
+         self.numberOfGetFormRequests--;
+     }
+       failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
+     {
+         if(!self.loadFailed)
+         {
+             self.apiResponse = apiResponse;
+         }
+         
+         self.loadFailed = YES;
+         self.numberOfGetFormRequests--;
+     }];
+    
+    [RIForm getForm:@"addresscreate"
+       successBlock:^(RIForm *form)
+     {
          self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width];
          
          for(UIView *view in self.billingDynamicForm.formViews)
          {
              [self.billingContentView addSubview:view];
          }
-         
-         [self finishedFormLoading];
+         self.numberOfGetFormRequests--;
      }
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
-         [self finishedFormLoading];
+         if(!self.loadFailed)
+         {
+             self.apiResponse = apiResponse;
+         }
          
-         if (RIApiResponseNoInternetConnection == apiResponse)
-         {
-             [self showMessage:STRING_NO_NEWTORK success:NO];
-         }
-         else
-         {
-             [self showMessage:STRING_ERROR success:NO];
-         }
+         self.loadFailed = YES;
+         self.numberOfGetFormRequests--;
      }];
+}
+
+- (void)finishedGetFromRequests
+{
+    if(self.loadFailed)
+    {
+    if (RIApiResponseNoInternetConnection == self.apiResponse)
+    {
+        [self showMessage:STRING_NO_NEWTORK success:NO];
+    }
+    else
+    {
+        [self showMessage:STRING_ERROR success:NO];
+    }
+    }
+    else
+    {
+    [self finishedFormLoading];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -151,6 +205,7 @@ JAPickerDelegate>
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddresses]
                                               data:[trackingDictionary copy]];
+    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -384,7 +439,7 @@ JAPickerDelegate>
                                                                                  scrollViewStartY,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
                                                                                  self.view.frame.size.height - scrollViewStartY)];
-        [self.orderSummary loadWithCart:self.cart];
+        [self.orderSummary loadWithCart:self.cart shippingFee:NO];
         [self.view addSubview:self.orderSummary];
         self.orderSummaryOriginalFrame = self.orderSummary.frame;
     }
@@ -623,6 +678,7 @@ JAPickerDelegate>
     }
     
     [RIForm sendForm:[self.shippingDynamicForm form]
+      extraArguments:self.extraParameters
           parameters:shippingParameters
         successBlock:^(id object)
      {
@@ -766,6 +822,15 @@ JAPickerDelegate>
             }
         }
     }
+    else if([radioComponent isComponentWithKey:@"gender"])
+    {
+        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray))
+        {
+            self.radioComponentDataset  = [[self.radioComponent dataset] copy];
+            
+            [self setupPickerView];
+        }
+    }
 }
 
 -(NSString*)getPickerSelectedRow
@@ -819,6 +884,10 @@ JAPickerDelegate>
             else if(VALID_NOTEMPTY(currentObject, RICity))
             {
                 title = ((RICity*) currentObject).value;
+            }
+            else if(VALID_NOTEMPTY(currentObject, NSString))
+            {
+                title = currentObject;
             }
             [dataSource addObject:title];
         }
@@ -942,6 +1011,10 @@ JAPickerDelegate>
                     
                     [self.shippingDynamicForm setCityValue:selectedObject];
                 }
+                else if(VALID_NOTEMPTY(selectedObject, NSString))
+                {
+                    [self.radioComponent setValue:selectedObject];
+                }
             }
             else if(self.billingContentView == [self.radioComponent superview])
             {
@@ -958,6 +1031,10 @@ JAPickerDelegate>
                     self.billingSelectedCity = selectedObject;
                     
                     [self.billingDynamicForm setCityValue:selectedObject];
+                }
+                else if(VALID_NOTEMPTY(selectedObject, NSString))
+                {
+                    [self.radioComponent setValue:selectedObject];
                 }
             }
         }

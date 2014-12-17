@@ -187,47 +187,48 @@
 
 -(void)adjustTitleFrame
 {
-    CGRect frame = [[UIScreen mainScreen] bounds];
-    CGFloat width = frame.size.width;
-    UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
-    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-    if(UIDeviceOrientationUnknown != deviceOrientation && UIDeviceOrientationIsPortrait(deviceOrientation))
-    {
-        if(frame.size.width > frame.size.height)
-        {
-            width = frame.size.height;
-        }
-    }
-    else if(UIDeviceOrientationUnknown != deviceOrientation && UIDeviceOrientationIsLandscape(deviceOrientation))
-    {
-        if(frame.size.height > frame.size.width)
-        {
-            width = frame.size.height;
-        }
-    }
-    else if(UIInterfaceOrientationIsPortrait(interfaceOrientation))
-    {
-        if(frame.size.width > frame.size.height)
-        {
-            width = frame.size.height;
-        }
-    }
-    else if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
-    {
-        if(frame.size.height > frame.size.width)
-        {
-            width = frame.size.height;
-        }
-    }
-    
     CGFloat leftMargin = 0.0f;
     CGFloat backButtonLeftMargin = 4.0f;
     CGFloat editButtonLeftMargin = 7.0f;
+
+    CGRect frame = [[UIScreen mainScreen] bounds];
+    CGFloat width = frame.size.width;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
         leftMargin = 6.0f;
         backButtonLeftMargin = 12.0f;
         editButtonLeftMargin = 16.0f;
+        
+        UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
+        UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+        if(UIDeviceOrientationUnknown != deviceOrientation && UIDeviceOrientationIsPortrait(deviceOrientation))
+        {
+            if(frame.size.width > frame.size.height)
+            {
+                width = frame.size.height;
+            }
+        }
+        else if(UIDeviceOrientationUnknown != deviceOrientation && UIDeviceOrientationIsLandscape(deviceOrientation))
+        {
+            if(frame.size.height > frame.size.width)
+            {
+                width = frame.size.height;
+            }
+        }
+        else if(UIInterfaceOrientationIsPortrait(interfaceOrientation))
+        {
+            if(frame.size.width > frame.size.height)
+            {
+                width = frame.size.height;
+            }
+        }
+        else if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
+        {
+            if(frame.size.height > frame.size.width)
+            {
+                width = frame.size.height;
+            }
+        }
     }
     
     [self.logoImageView setFrame:CGRectMake((width - self.logoImageView.frame.size.width) / 2,

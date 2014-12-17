@@ -62,8 +62,8 @@ static const int kTransactionIdCount = 10;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"ec:%d sc:%d ssc:%d sl:%.1f ts:%.1f la:%.1f",
-            self.eventCount, self.sessionCount, self.subsessionCount, self.sessionLength,
+    return [NSString stringWithFormat:@"ec:%d sc:%d ssc:%d ask:%d sl:%.1f ts:%.1f la:%.1f",
+            self.eventCount, self.sessionCount, self.subsessionCount, self.askingAttribution, self.sessionLength,
             self.timeSpent, self.lastActivity];
 }
 
@@ -80,25 +80,33 @@ static const int kTransactionIdCount = 10;
     self.timeSpent         = [decoder decodeDoubleForKey:@"timeSpent"];
     self.createdAt         = [decoder decodeDoubleForKey:@"createdAt"];
     self.lastActivity      = [decoder decodeDoubleForKey:@"lastActivity"];
-    self.uuid              = [decoder decodeObjectForKey:@"uuid"];
-    self.transactionIds    = [decoder decodeObjectForKey:@"transactionIds"];
-    self.enabled           = [decoder decodeBoolForKey:@"enabled"];
-    self.askingAttribution = [decoder decodeBoolForKey:@"askingAttribution"];
 
     // default values for migrating devices
+    if ([decoder containsValueForKey:@"uuid"]) {
+        self.uuid              = [decoder decodeObjectForKey:@"uuid"];
+    }
+
     if (self.uuid == nil) {
         self.uuid = [UIDevice.currentDevice adjCreateUuid];
+    }
+
+    if ([decoder containsValueForKey:@"transactionIds"]) {
+        self.transactionIds    = [decoder decodeObjectForKey:@"transactionIds"];
     }
 
     if (self.transactionIds == nil) {
         self.transactionIds = [NSMutableArray arrayWithCapacity:kTransactionIdCount];
     }
 
-    if (![decoder containsValueForKey:@"enabled"]) {
+    if ([decoder containsValueForKey:@"enabled"]) {
+        self.enabled           = [decoder decodeBoolForKey:@"enabled"];
+    } else {
         self.enabled = YES;
     }
 
-    if (![decoder containsValueForKey:@"askingAttribution"]) {
+    if ([decoder containsValueForKey:@"askingAttribution"]) {
+        self.askingAttribution = [decoder decodeBoolForKey:@"askingAttribution"];
+    } else {
         self.askingAttribution = NO;
     }
 

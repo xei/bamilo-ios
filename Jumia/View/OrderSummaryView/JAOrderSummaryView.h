@@ -12,8 +12,8 @@
 
 @interface JAOrderSummaryView : UIView
 
-- (void)loadWithCart:(RICart*)cart;
+- (void)loadWithCart:(RICart*)cart shippingFee:(BOOL)shippingFee;
 
-- (void)loadWithCheckout:(RICheckout*)checkout shippingMethod:(BOOL)shippingMethod;
+- (void)loadWithCheckout:(RICheckout*)checkout shippingMethod:(BOOL)shippingMethod shippingFee:(BOOL)shippingFee;
 
 @end

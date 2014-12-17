@@ -49,6 +49,7 @@
 @dynamic images;
 @dynamic productSimples;
 @dynamic variations;
+@dynamic sizeGuideUrl;
 
 @synthesize categoryIds;
 

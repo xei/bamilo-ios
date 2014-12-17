@@ -35,37 +35,6 @@
 @dynamic locale;
 @dynamic customer;
 
-+ (NSString*)getBillingAddressWithSuccessBlock:(void (^)(id billingAddress))successBlock
-                               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
-{
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_CUSTOMER_BILLING_ADDRESS]]
-                                                            parameters:nil httpMethodPost:YES
-                                                             cacheType:RIURLCacheNoCache
-                                                             cacheTime:RIURLCacheDefaultTime
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                              if (VALID_NOTEMPTY(metadata, NSDictionary)) {
-                                                                  NSDictionary* data = [metadata objectForKey:@"data"];
-                                                                  if (VALID_NOTEMPTY(data, NSDictionary)) {
-                                                                      successBlock([RIAddress parseAddress:data]);
-                                                                      return;
-                                                                  }
-                                                              } else {
-                                                                  failureBlock(apiResponse, nil);
-                                                              }
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              if(NOTEMPTY(errorJsonObject))
-                                                              {
-                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                              } else if(NOTEMPTY(errorObject)) {
-                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(apiResponse, errorArray);
-                                                              } else {
-                                                                  failureBlock(apiResponse, nil);
-                                                              }
-                                                          }];
-}
-
 + (NSString*)getCustomerAddressListWithSuccessBlock:(void (^)(id adressList))successBlock
                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {

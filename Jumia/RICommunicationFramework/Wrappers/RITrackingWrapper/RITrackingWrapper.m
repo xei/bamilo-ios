@@ -98,6 +98,13 @@ static dispatch_once_t sharedInstanceToken;
     return self.cartState;
 }
 
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    [self RI_callTrackersConformToProtocol:@protocol(RITracker)
+                                  selector:@selector(applicationDidEnterBackground:)
+                                 arguments:[NSArray arrayWithObjects:application, nil]];
+}
+
 #pragma mark - RIEventTracking protocol
 
 - (void)trackEvent:(NSNumber* )eventType
@@ -206,7 +213,6 @@ static dispatch_once_t sharedInstanceToken;
 {
     RIDebugLog(@"Application did register for remote notification");
     
-    
     [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking)
                                   selector:@selector(applicationDidRegisterForRemoteNotificationsWithDeviceToken:) arguments:@[deviceToken]];
 }
@@ -306,7 +312,7 @@ static dispatch_once_t sharedInstanceToken;
     }
     
     for (id tracker in self.trackers) {
-        if ([tracker conformsToProtocol:protocol]) {
+        if ([tracker conformsToProtocol:protocol] && [tracker respondsToSelector:selector]) {
             [((id<RITracker>)tracker).queue addOperationWithBlock:^{
                 NSMethodSignature *signature = [[tracker class] instanceMethodSignatureForSelector:selector];
                 NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];

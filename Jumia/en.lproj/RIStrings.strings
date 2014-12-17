@@ -140,7 +140,7 @@
 "string_address" = "Address: ";
 "string_opening_hours" = "Opening Hours: ";
 "string_please_select" = "Please Select";
-"order_summary_shipping_fee_label" = "Shipping Fee: ";
+"order_summary_shipping_fee_label" = "Shipping Fee:";
 
 "checkout_header_step_4" = "4. Payment";
 "payment" = "Payment";
@@ -233,6 +233,7 @@
 "tip_share_text" = "Click to share this product";
 "tip_swipe_text" = "Swipe left or right to\nview different images";
 "tip_tap_text" = "Tap to open the product gallery";
+"pinch_to_zoom_label" = "Pinch to zoom";
 
 "fallback_audio_ios" = "Audio & Video";
 "fallback_books" = "Books";
@@ -256,3 +257,13 @@
 
 "my_addresses" = "My Addresses";
 "create_edit_address" = "Create or edit your addresses";
+"app_sharing" = "App Sharing";
+"share_the_app" = "Share the App";
+"can_share_app_with_friends" = "You can now share the app with your friends";
+"install_jumia_ios" = "Install the Jumia iOS App in an instant";
+"share_jumia_app" = "Share the Jumia App";
+
+"delivery_time" = "Delivery time:";
+
+"product_outof_stock" = "Item is out of stock";
+"products_outof_stock" = "Items are out of stock";

@@ -86,6 +86,8 @@ static const char * const kInternalQueueName    = "io.adjust.PackageQueue";
 }
 
 - (void)sendClickPackage:(ADJActivityPackage *)clickPackage {
+    [self.logger debug:@"Sending click package (%@)", clickPackage];
+    [self.logger verbose:@"%@", clickPackage.extendedString];
     [self.requestHandler sendClickPackage:clickPackage];
 }
 
@@ -138,6 +140,7 @@ static const char * const kInternalQueueName    = "io.adjust.PackageQueue";
 #pragma mark - private
 - (void)readPackageQueue {
     @try {
+        [NSKeyedUnarchiver setClass:[ADJActivityPackage class] forClassName:@"AIActivityPackage"];
         NSString *filename = self.packageQueueFilename;
         id object = [NSKeyedUnarchiver unarchiveObjectWithFile:filename];
         if ([object isKindOfClass:[NSArray class]]) {

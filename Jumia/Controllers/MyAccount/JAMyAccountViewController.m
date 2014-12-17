@@ -8,6 +8,8 @@
 
 #import "JAMyAccountViewController.h"
 #import "JAClickableView.h"
+#import "JAShareActivityProvider.h"
+#import "JAActivityViewController.h"
 
 @interface JAMyAccountViewController ()
 
@@ -38,6 +40,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *soundTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *soundSubtitleLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *soundSwitch;
+@property (weak, nonatomic) IBOutlet UIView *appSharingView;
+@property (weak, nonatomic) IBOutlet UILabel *appSharingTitleLabel;
+@property (weak, nonatomic) IBOutlet UIView *appSharingSeparator;
+@property (weak, nonatomic) IBOutlet JAClickableView *shareAppClickableView;
+@property (weak, nonatomic) IBOutlet UILabel *shareAppTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shareAppSubtitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *shareAppArrow;
+@property (strong, nonatomic) UIPopoverController *currentPopoverController;
 
 @end
 
@@ -133,6 +143,24 @@
     self.soundSwitch.translatesAutoresizingMaskIntoConstraints = YES;
     [self.soundSwitch setAccessibilityLabel:STRING_SOUND];
     
+    self.appSharingView.layer.cornerRadius = 5.0f;
+    self.appSharingView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.appSharingTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.appSharingTitleLabel.text = STRING_APP_SHARING;
+    
+    self.appSharingSeparator.backgroundColor = UIColorFromRGB(0xfaa41a);
+    
+    self.shareAppTitleLabel.textColor = UIColorFromRGB(0x666666);
+    self.shareAppTitleLabel.text = STRING_SHARE_THE_APP;
+    self.shareAppTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.shareAppSubtitleLabel.textColor = UIColorFromRGB(0x666666);
+    self.shareAppSubtitleLabel.text = STRING_CAN_SHARE_APP_WITH_FRIENDS;
+    self.shareAppSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.shareAppArrow.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.userDataClickableView.translatesAutoresizingMaskIntoConstraints = YES;
     [self.userDataClickableView addTarget:self
                                    action:@selector(pushUserData:)
@@ -147,6 +175,11 @@
     [self.addressesClickableView addTarget:self
                                     action:@selector(pushAddresses:)
                           forControlEvents:UIControlEventTouchUpInside];
+    
+    self.shareAppClickableView.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.shareAppClickableView addTarget:self
+                                   action:@selector(shareApp:)
+                         forControlEvents:UIControlEventTouchUpInside];
     
     BOOL isNotiActive = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeNotificationsOptions];
     BOOL isSoundActive = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeSoundOptions];
@@ -165,6 +198,11 @@
                                                    self.notificationView.frame.origin.y,
                                                    self.notificationView.frame.size.width,
                                                    70.0f)];
+        
+        [self.appSharingView setFrame:CGRectMake(self.appSharingView.frame.origin.x,
+                                                 CGRectGetMaxY(self.notificationView.frame) + 6.0f,
+                                                 self.appSharingView.frame.size.width,
+                                                 self.appSharingView.frame.size.height)];
     }
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -190,13 +228,18 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
+    {
+        [self.currentPopoverController dismissPopoverAnimated:NO];
+    }
+    
     [self showLoading];
     
     CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     
     [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
-
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];    
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -234,6 +277,16 @@
                                                self.notificationView.frame.origin.y,
                                                width - (self.notificationView.frame.origin.x * 2),
                                                self.notificationView.frame.size.height)];
+    
+    [self.appSharingView setFrame:CGRectMake(self.appSharingView.frame.origin.x,
+                                             CGRectGetMaxY(self.notificationView.frame) + 6.0f,
+                                             width - (self.notificationView.frame.origin.x * 2),
+                                             self.appSharingView.frame.size.height)];
+    
+    [self.shareAppClickableView setFrame:CGRectMake(self.shareAppClickableView.frame.origin.x,
+                                                    self.shareAppClickableView.frame.origin.y,
+                                                    self.appSharingView.frame.size.width,
+                                                    self.shareAppClickableView.frame.size.height)];
     
     CGFloat leftMargin = 17.0f;
     CGFloat rightMargin = 17.0f;
@@ -317,6 +370,26 @@
                                                  self.soundSubtitleLabel.frame.origin.y,
                                                  self.soundSubtitleLabel.frame.size.width,
                                                  self.soundSubtitleLabel.frame.size.height)];
+    
+    [self.shareAppArrow setFrame:CGRectMake(self.accountView.frame.size.width - self.userDataArrow.frame.size.width - rightMargin,
+                                            self.shareAppArrow.frame.origin.y,
+                                            self.shareAppArrow.frame.size.width,
+                                            self.shareAppArrow.frame.size.height)];
+    
+    [self.shareAppTitleLabel setFrame:CGRectMake(leftMargin,
+                                                 self.shareAppTitleLabel.frame.origin.y,
+                                                 self.shareAppTitleLabel.frame.size.width,
+                                                 self.shareAppTitleLabel.frame.size.height)];
+    
+    [self.shareAppSubtitleLabel setFrame:CGRectMake(leftMargin,
+                                                    self.shareAppSubtitleLabel.frame.origin.y,
+                                                    self.shareAppSubtitleLabel.frame.size.width,
+                                                    self.shareAppSubtitleLabel.frame.size.height)];
+    
+    [self.shareAppArrow setFrame:CGRectMake(self.appSharingView.frame.size.width - self.shareAppArrow.frame.size.width - rightMargin,
+                                            self.shareAppArrow.frame.origin.y,
+                                            self.shareAppArrow.frame.size.width,
+                                            self.shareAppArrow.frame.size.height)];
 }
 
 #pragma mark - Actions
@@ -337,6 +410,11 @@
                                                    self.notificationView.frame.size.width,
                                                    116.0f)];
         
+        [self.appSharingView setFrame:CGRectMake(self.appSharingView.frame.origin.x,
+                                                 CGRectGetMaxY(self.notificationView.frame) + 6.0f,
+                                                 self.appSharingView.frame.size.width,
+                                                 self.appSharingView.frame.size.height)];
+        
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey: kChangeNotificationsOptions];
     }
     else
@@ -350,6 +428,11 @@
                                                    self.notificationView.frame.origin.y,
                                                    self.notificationView.frame.size.width,
                                                    70.0f)];
+        
+        [self.appSharingView setFrame:CGRectMake(self.appSharingView.frame.origin.x,
+                                                 CGRectGetMaxY(self.notificationView.frame) + 6.0f,
+                                                 self.appSharingView.frame.size.width,
+                                                 self.appSharingView.frame.size.height)];
         
         [[UIApplication sharedApplication] unregisterForRemoteNotifications];
         
@@ -394,6 +477,40 @@
                                                         object:@{@"animated":[NSNumber numberWithBool:YES]}
                                                       userInfo:@{@"from_checkout":[NSNumber numberWithBool:NO]}];
 }
+
+- (void)shareApp:(id)sender
+{
+    JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initForAppShare];
+    
+    NSArray *objectsToShare = @[provider];
+    
+    JAActivityViewController *activityController = [[JAActivityViewController alloc] initWithActivityItems:objectsToShare
+                                                                                     applicationActivities:nil];
+    
+    [activityController setValue:STRING_SHARE_JUMIA_APP
+                          forKey:@"subject"];
+    
+    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        CGRect sharePopoverRect = CGRectMake(self.shareAppClickableView.frame.size.width / 2,
+                                             self.shareAppClickableView.frame.size.height - 6.0f,
+                                             0.0f,
+                                             0.0f);
+        
+        UIPopoverController* popoverController =
+        [[UIPopoverController alloc] initWithContentViewController:activityController];
+        [popoverController presentPopoverFromRect:sharePopoverRect inView:self.shareAppClickableView permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        popoverController.passthroughViews = nil;
+        self.currentPopoverController = popoverController;
+    }
+    else
+    {
+        [self presentViewController:activityController animated:YES completion:nil];
+    }
+}
+
 
 -(void)showUserDataSavedMessage
 {

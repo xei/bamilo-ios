@@ -15,6 +15,8 @@
     UIActivityItemSource
 >
 
-- (id)initWithProduct:(RIProduct *)product;
+- (id)initForProductShare:(RIProduct *)product;
+
+- (id)initForAppShare;
 
 @end

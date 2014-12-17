@@ -236,6 +236,7 @@
 #define STRING_WIZARD_PDV_SHARE RILocalizedString(@"tip_share_text", nil)
 #define STRING_WIZARD_PDV_SWIPE RILocalizedString(@"tip_swipe_text", nil)
 #define STRING_WIZARD_PDV_TAP RILocalizedString(@"tip_tap_text", nil)
+#define STRING_WIZARD_SIZE_GUIDE_PINCH RILocalizedString(@"pinch_to_zoom_label", nil)
 
 #define STRING_FALLBACK_AUDIO RILocalizedString(@"fallback_audio_ios", nil)
 #define STRING_FALLBACK_BOOKS RILocalizedString(@"fallback_books", nil)
@@ -259,5 +260,14 @@
 
 #define STRING_MY_ADDRESSES RILocalizedString(@"my_addresses", nil)
 #define STRING_CREATE_EDIT_ADDRESS RILocalizedString(@"create_edit_address", nil)
+#define STRING_APP_SHARING RILocalizedString(@"app_sharing", nil)
+#define STRING_SHARE_THE_APP RILocalizedString(@"share_the_app", nil)
+#define STRING_CAN_SHARE_APP_WITH_FRIENDS RILocalizedString(@"can_share_app_with_friends", nil)
+#define STRING_SHARE_JUMIA_APP RILocalizedString(@"share_jumia_app", nil)
+#define STRING_INSTALL_JUMIA_IOS RILocalizedString(@"install_jumia_ios", nil)
+
+#define STRING_DELIVERY_TIME RILocalizedString(@"delivery_time", nil)
+#define STRING_PRODCUT_OUT_OF_STOCK RILocalizedString(@"product_outof_stock", nil)
+#define STRING_PRODCUTS_OUT_OF_STOCK RILocalizedString(@"products_outof_stock", nil)
 
 #endif

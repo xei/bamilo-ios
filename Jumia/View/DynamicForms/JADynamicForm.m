@@ -422,7 +422,7 @@
             {
                 JARadioComponent *radioComponent = (JARadioComponent*) view;
                 
-                if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [radioComponent isComponentWithKey:@"gender"])
+                if(([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] || [@"address-form" isEqualToString:[self.form uid]]) && [radioComponent isComponentWithKey:@"gender"])
                 {
                     genderComponent = radioComponent;
                 }

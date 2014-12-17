@@ -110,7 +110,7 @@
 #define kUpdateAvailableAlertViewTag 1
 
 // App url (this is needed to redirect to itunes connect to update the app)
-#define kAppStoreUrl @"https://itunes.apple.com/us/app/jumia-online-shopping/id925015459?ls=1&mt=8"
+#define kAppStoreUrl @"https://itunes.apple.com/us/app/jumia-online-shopping/id925015459?mt=8"
 
 // Preferences
 #define kDidFirstBuyKey @"did_first_buy"

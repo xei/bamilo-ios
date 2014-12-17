@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString * scenario;
 @property (nonatomic, assign) BOOL required;
 @property (nonatomic, strong) NSDictionary *options;
+@property (nonatomic, strong) NSArray *pickupStations;
 
 /**
  * Method to parse a shipping method form field
