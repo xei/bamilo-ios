@@ -58,6 +58,8 @@ JAActivityViewControllerDelegate
 
 @property (nonatomic, assign) BOOL hasLoaddedProduct;
 
+@property (strong, nonatomic) UIPopoverController *currentPopoverController;
+
 @end
 
 @implementation JAPDVViewController
@@ -147,7 +149,10 @@ JAActivityViewControllerDelegate
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
+    if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
+    {
+        [self.currentPopoverController dismissPopoverAnimated:NO];
+    }
     
     [self showLoading];
     
@@ -1056,22 +1061,26 @@ JAActivityViewControllerDelegate
         [[RITrackingWrapper sharedInstance] trackEvent:eventType
                                                   data:[trackingDictionary copy]];
     };
+
+    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
     
-#ifdef __IPHONE_8_0
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
         CGRect sharePopoverRect = CGRectMake(self.imageSection.shareButton.frame.size.width,
                                              self.imageSection.shareButton.frame.size.height / 2,
                                              0.0f,
                                              0.0f);
-        activityController.popoverPresentationController.sourceView = self.imageSection.shareButton;
-        activityController.popoverPresentationController.sourceRect = sharePopoverRect;
+        
+        UIPopoverController* popoverController =
+        [[UIPopoverController alloc] initWithContentViewController:activityController];
+        [popoverController presentPopoverFromRect:sharePopoverRect inView:self.imageSection.shareButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        popoverController.passthroughViews = nil;
+        self.currentPopoverController = popoverController;
     }
-#endif
-    
-    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
-    
-    [self presentViewController:activityController animated:YES completion:nil];
+    else
+    {
+        [self presentViewController:activityController animated:YES completion:nil];
+    }
 }
 
 - (void)addToCart

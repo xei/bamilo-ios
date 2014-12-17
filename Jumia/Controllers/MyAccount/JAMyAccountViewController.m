@@ -47,6 +47,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *shareAppTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *shareAppSubtitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *shareAppArrow;
+@property (strong, nonatomic) UIPopoverController *currentPopoverController;
 
 @end
 
@@ -227,7 +228,10 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
+    if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
+    {
+        [self.currentPopoverController dismissPopoverAnimated:NO];
+    }
     
     [self showLoading];
     
@@ -486,22 +490,25 @@
     [activityController setValue:STRING_SHARE_JUMIA_APP
                           forKey:@"subject"];
     
-#ifdef __IPHONE_8_0
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
         CGRect sharePopoverRect = CGRectMake(self.shareAppClickableView.frame.size.width / 2,
                                              self.shareAppClickableView.frame.size.height - 6.0f,
                                              0.0f,
                                              0.0f);
-        activityController.popoverPresentationController.sourceView = self.shareAppClickableView;
-        activityController.popoverPresentationController.sourceRect = sharePopoverRect;
-        activityController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+        
+        UIPopoverController* popoverController =
+        [[UIPopoverController alloc] initWithContentViewController:activityController];
+        [popoverController presentPopoverFromRect:sharePopoverRect inView:self.shareAppClickableView permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        popoverController.passthroughViews = nil;
+        self.currentPopoverController = popoverController;
     }
-#endif
-    
-    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
-    
-    [self presentViewController:activityController animated:YES completion:nil];
+    else
+    {
+        [self presentViewController:activityController animated:YES completion:nil];
+    }
 }
 
 
