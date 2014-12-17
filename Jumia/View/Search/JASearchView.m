@@ -93,6 +93,26 @@
     return self;
 }
 
+- (void)resetFrame:(CGRect)frame
+{
+    self.frame = frame;
+    
+    self.backView.frame = CGRectMake(self.bounds.origin.x,
+                                     self.bounds.origin.y + 20.0f,
+                                     self.bounds.size.width,
+                                     self.bounds.size.height - 20.0f);
+    
+    self.searchBar.frame = CGRectMake(0.0f,
+                                      20.0f,
+                                      frame.size.width,
+                                      44.0f);
+    
+    self.resultsTableView.frame = CGRectMake(0.0f,
+                                             CGRectGetMaxY(self.searchBar.frame),
+                                             self.frame.size.width,
+                                             self.frame.size.height - CGRectGetMaxY(self.searchBar.frame));
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
