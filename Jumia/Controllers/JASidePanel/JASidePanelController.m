@@ -245,6 +245,7 @@ static char ja_kvoContext;
         frame.origin.x = self.state == JASidePanelLeftVisible ? self.centerPanelContainer.frame.size.width : -self.centerPanelContainer.frame.size.width;
         self.centerPanelContainer.frame = frame;
     }
+    [self updateShadowFrame];
 }
 
 #pragma mark - State
@@ -1033,6 +1034,23 @@ static char ja_kvoContext;
     }
     return NO;
 }
+
+
+/**
+ * updates the shadowViewFrame, usefull for resizing purposes
+ *
+ * @return void
+ */
+-(void)updateShadowFrame
+{
+    UIView *shadowView = [self.view viewWithTag: -1];
+
+    if(shadowView != nil)
+    {
+        shadowView.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height);
+    }
+}
+
 
 #pragma mark - Key Value Observing
 
