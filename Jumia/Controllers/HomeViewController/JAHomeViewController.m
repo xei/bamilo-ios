@@ -82,9 +82,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self addNotifications];
-    
     [super viewWillAppear:animated];
+    
+    [self addNotifications];
     
     CGRect rectToStart;
     if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
@@ -145,7 +145,7 @@
 - (void)addNotifications
 {
     //we do this to make sure no notification is added more than once
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeNotifications];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(pushCatalogWithUrl:)
@@ -159,7 +159,6 @@
                                              selector:@selector(pushAllCategories)
                                                  name:kTeaserNotificationPushAllCategories
                                                object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(pushCampaigns:)
                                                  name:kTeaserNotificationPushCatalogWithUrlForCampaigns
@@ -168,7 +167,18 @@
 
 - (void)removeNotifications
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kTeaserNotificationPushCatalogWithUrl
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kTeaserNotificationPushPDVWithUrl
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kTeaserNotificationPushAllCategories
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kTeaserNotificationPushCatalogWithUrlForCampaigns
+                                                  object:nil];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
