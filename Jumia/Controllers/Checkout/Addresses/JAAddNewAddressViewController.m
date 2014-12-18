@@ -159,6 +159,7 @@ JAPickerDelegate>
      }];
     
     [RIForm getForm:@"addresscreate"
+     extraArguments:nil
        successBlock:^(RIForm *form)
      {
          self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width];
@@ -185,26 +186,26 @@ JAPickerDelegate>
 {
     if(self.loadFailed)
     {
-    if (RIApiResponseNoInternetConnection == self.apiResponse)
-    {
-        [self showMessage:STRING_NO_NEWTORK success:NO];
+        if (RIApiResponseNoInternetConnection == self.apiResponse)
+        {
+            [self showMessage:STRING_NO_NEWTORK success:NO];
+        }
+        else
+        {
+            [self showMessage:STRING_ERROR success:NO];
+        }
     }
     else
     {
-        [self showMessage:STRING_ERROR success:NO];
-    }
-    }
-    else
-    {
-    [self finishedFormLoading];
-    
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"CheckoutMyAddress" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddresses]
-                                              data:[trackingDictionary copy]];
+        [self finishedFormLoading];
+        
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"CheckoutMyAddress" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddresses]
+                                                  data:[trackingDictionary copy]];
     }
 }
 
@@ -759,6 +760,9 @@ JAPickerDelegate>
 
 - (void)openPicker:(JARadioComponent *)radioComponent
 {
+    [self.shippingDynamicForm resignResponder];
+    [self.billingDynamicForm resignResponder];
+
     [self removePickerView];
     
     self.radioComponent = radioComponent;
