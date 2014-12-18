@@ -270,4 +270,6 @@
 #define STRING_PRODCUT_OUT_OF_STOCK RILocalizedString(@"product_outof_stock", nil)
 #define STRING_PRODCUTS_OUT_OF_STOCK RILocalizedString(@"products_outof_stock", nil)
 
+#define STRING_REMEMBER_EMAIL RILocalizedString(@"login_remember_user_email", nil)
+
 #endif
