@@ -12,8 +12,9 @@
 
 @interface JASubCategoriesViewController : UIViewController
 
-@property (strong, nonatomic) RICategory *parentCategory;
-@property (strong, nonatomic) NSArray *sourceCategoriesArray;
+@property (nonatomic, strong) NSString *backTitle;
+@property (strong, nonatomic) RICategory *currentCategory;
+@property (strong, nonatomic) NSArray *categories;
 
 @property (nonatomic, retain) NSString* A4SViewControllerAlias;
 

@@ -455,7 +455,7 @@ UIAlertViewDelegate
 {
     JASubCategoriesViewController* subCategoriesViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"subCategoriesViewController"];
     
-    subCategoriesViewController.sourceCategoriesArray = self.categories;
+    subCategoriesViewController.categories = self.categories;
     
     [self.navigationController pushViewController:subCategoriesViewController animated:YES];
     
