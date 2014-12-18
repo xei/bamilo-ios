@@ -656,6 +656,7 @@
 		CEA86D9F1A3894C0000032AD /* JASizeGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */; };
 		CEA86DA31A39F82C000032AD /* JAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DA21A39F82C000032AD /* JAPageControl.m */; };
 		CEA86DA41A3A0FEE000032AD /* JAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DA21A39F82C000032AD /* JAPageControl.m */; };
+		CEA86DAC1A3F5128000032AD /* JASearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DAB1A3F5128000032AD /* JASearchView.m */; };
 		CEABEEB91A1118A1000D0CF8 /* JAPriceFiltersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEABEEB81A1118A1000D0CF8 /* JAPriceFiltersView.xib */; };
 		CEABEEBC1A1119AB000D0CF8 /* JAPriceFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEABEEBB1A1119AB000D0CF8 /* JAPriceFiltersView.m */; };
 		CEABEEBF1A122BEA000D0CF8 /* JAGenericFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEABEEBE1A122BEA000D0CF8 /* JAGenericFiltersView.m */; };
@@ -1413,6 +1414,8 @@
 		CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASizeGuideViewController.m; path = SizeGuide/JASizeGuideViewController.m; sourceTree = "<group>"; };
 		CEA86DA11A39F82C000032AD /* JAPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPageControl.h; path = JAPageControl/JAPageControl.h; sourceTree = "<group>"; };
 		CEA86DA21A39F82C000032AD /* JAPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPageControl.m; path = JAPageControl/JAPageControl.m; sourceTree = "<group>"; };
+		CEA86DAA1A3F5128000032AD /* JASearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASearchView.h; path = Search/JASearchView.h; sourceTree = "<group>"; };
+		CEA86DAB1A3F5128000032AD /* JASearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASearchView.m; path = Search/JASearchView.m; sourceTree = "<group>"; };
 		CEABEEB81A1118A1000D0CF8 /* JAPriceFiltersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPriceFiltersView.xib; path = Filters/JAPriceFiltersView.xib; sourceTree = "<group>"; };
 		CEABEEBA1A1119AB000D0CF8 /* JAPriceFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPriceFiltersView.h; path = Filters/JAPriceFiltersView.h; sourceTree = "<group>"; };
 		CEABEEBB1A1119AB000D0CF8 /* JAPriceFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPriceFiltersView.m; path = Filters/JAPriceFiltersView.m; sourceTree = "<group>"; };
@@ -1723,6 +1726,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CEA86DA91A3F510A000032AD /* Search */,
 				CE88F7BA1A23882E00A3A586 /* OrderSummaryView */,
 				CE88F7A91A1E339F00A3A586 /* CollectionViewLayouts */,
 				CEABEEB71A11186F000D0CF8 /* Filters */,
@@ -3175,6 +3179,15 @@
 			name = JAPageControl;
 			sourceTree = "<group>";
 		};
+		CEA86DA91A3F510A000032AD /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				CEA86DAA1A3F5128000032AD /* JASearchView.h */,
+				CEA86DAB1A3F5128000032AD /* JASearchView.m */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
 		CEABEEB71A11186F000D0CF8 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
@@ -4024,6 +4037,7 @@
 				4A01EE61199259C7005F5AD1 /* JAPDVGalleryView.m in Sources */,
 				CE3AF90819DBF50800D8C51B /* JACampaignPageView.m in Sources */,
 				CE2FB75B1993BCB900E7CD00 /* JACatalogCell.m in Sources */,
+				CEA86DAC1A3F5128000032AD /* JASearchView.m in Sources */,
 				CE445880198C03D100CE7E8D /* JAPopularBrandsTeaserView.m in Sources */,
 				4A39213719891FBA00B70A9C /* JAChooseCountryViewController.m in Sources */,
 				B5C13EB81A402A9E00484398 /* ADJLogger.m in Sources */,

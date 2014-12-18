@@ -151,7 +151,6 @@
                                                                        self.imageScrollView.frame.size.width,
                                                                        10.0f)];
     self.pageControl.numberOfPages = [product.images array].count;
-    self.pageControl.hidesForSinglePage = YES; //has to be set AFTER the numberOfPages
     [self addSubview:self.pageControl];
     self.pageControl.currentPage = 0;
 }
