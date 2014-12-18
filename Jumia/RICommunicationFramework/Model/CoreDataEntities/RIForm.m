@@ -118,11 +118,16 @@
                                                                        
                                                                        RIForm* newForm = [RIForm parseForm:[data firstObject]];
                                                                        
-                                                                       [RIForm saveForm:newForm];
-                                                                       newForm.formIndex = formIndex;
-                                                                       formIndex.form = newForm;
-                                                                       //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
-                                                                       [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                                       // We just want to save the form if there are no extra arguments on the request.
+                                                                       // Otherwise we'll save the address form with the gender field
+                                                                       if(!VALID_NOTEMPTY(extraArguments, NSDictionary))
+                                                                       {
+                                                                           [RIForm saveForm:newForm];
+                                                                           newForm.formIndex = formIndex;
+                                                                           formIndex.form = newForm;
+                                                                           //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
+                                                                           [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                                       }
                                                                        
                                                                        dispatch_async(dispatch_get_main_queue(), ^{
                                                                            successBlock(newForm);
