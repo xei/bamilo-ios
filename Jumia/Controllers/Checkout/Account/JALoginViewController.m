@@ -418,15 +418,15 @@ FBLoginViewDelegate
     }
     
     self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
-    self.loginFormHeight += 35.0f;
+    self.loginFormHeight += 10.0f;
     [self.checkBoxComponent setFrame:CGRectMake(self.facebookLoginButton.frame.origin.x,
                                                 self.loginFormHeight,
                                                 self.checkBoxComponent.frame.size.width - 12.0f,
                                                 self.checkBoxComponent.frame.size.height)];
     [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
     [self.checkBoxComponent.switchComponent setOn:YES];
-    [self.loginView addSubview:self.checkBoxComponent];
-    self.loginFormHeight += self.checkBoxComponent.frame.size.height;
+    [self.loginFormView addSubview:self.checkBoxComponent];
+    self.loginFormHeight += self.checkBoxComponent.frame.size.height + 10.0f;
     
     // Login
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
