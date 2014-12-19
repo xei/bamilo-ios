@@ -18,7 +18,7 @@
 #import "JAMyAccountViewController.h"
 #import "JAUserDataViewController.h"
 #import "JAEmailNotificationsViewController.h"
-#import "JATrackMyOrderViewController.h"
+#import "JAMyOrdersViewController.h"
 #import "JASignInViewController.h"
 #import "JASignupViewController.h"
 #import "JAForgotPasswordViewController.h"
@@ -126,8 +126,8 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showTrackOrderViewController:)
-                                                 name:kShowTrackOrderScreenNotification
+                                             selector:@selector(showMyOrdersViewController:)
+                                                 name:kShowMyOrdersScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -430,9 +430,9 @@
     {
         [self showMyAccountController];
     }
-    else if ([newScreenName isEqualToString:STRING_TRACK_MY_ORDER])
+    else if ([newScreenName isEqualToString:STRING_MY_ORDERS])
     {
-        [self showTrackOrderViewController:nil];
+        [self showMyOrdersViewController:nil];
     }
     else if ([newScreenName isEqualToString:STRING_USER_DATA])
     {
@@ -487,10 +487,10 @@
         
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
         {
-            signInVC.navBarLayout.showBackButton = ![[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
-            signInVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
+            NSNumber *fromSideMenu = [notification.userInfo objectForKey:@"from_side_menu"];
+            signInVC.navBarLayout.showBackButton = ![fromSideMenu boolValue];
+            signInVC.fromSideMenu = [fromSideMenu boolValue];
             signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
-            [self popViewControllerAnimated:NO];
         }
         else
         {
@@ -568,20 +568,37 @@
 }
 
 #pragma mark Track Order Screen
-- (void)showTrackOrderViewController:(NSNotification*)notification
+- (void)showMyOrdersViewController:(NSNotification*)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JATrackMyOrderViewController class]])
+    if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
     {
-        JATrackMyOrderViewController *myOrderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"jaTrackOrderViewController"];
+        JAMyOrdersViewController *myOrderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"jAMyOrdersViewController"];
         
         NSString* orderNumber = notification.object;
-        if (VALID_NOTEMPTY(orderNumber, NSString)) {
+        if (VALID_NOTEMPTY(orderNumber, NSString))
+        {
+            myOrderVC.selectedIndex = 0;
             myOrderVC.startingTrackOrderNumber = orderNumber;
         }
+
+        NSDictionary *userInfo = notification.userInfo;
+        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
+        {
+            myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
+        }        
         
         [self popToRootViewControllerAnimated:NO];
         [self pushViewController:myOrderVC animated:NO];
+    }
+    else
+    {
+        JAMyOrdersViewController *myOrderVC = (JAMyOrdersViewController*) topViewController;
+        NSDictionary *userInfo = notification.userInfo;
+        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
+        {
+            myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
+        }
     }
 }
 

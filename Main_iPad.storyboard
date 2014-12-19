@@ -2078,7 +2078,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CNC-rb-1HT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-770.56000000000006" y="5015.8933333333334"/>
+            <point key="canvasLocation" x="-297" y="4875"/>
         </scene>
         <!--Addresses Controller-->
         <scene sceneID="m0H-6f-97D">
@@ -2174,7 +2174,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YKT-0k-Ydb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="79.359999999999999" y="5026.1333333333332"/>
+            <point key="canvasLocation" x="711" y="5015"/>
         </scene>
         <!--Shipping View Controller-->
         <scene sceneID="7xf-T0-Dx8">
@@ -2222,7 +2222,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L4h-tk-Vdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-49.493333333333332" y="4037.0915555555562"/>
+            <point key="canvasLocation" x="2" y="4341"/>
         </scene>
         <!--Payment View Controller-->
         <scene sceneID="9gx-SX-tW7">
@@ -2268,7 +2268,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Tk-xN-iyH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="462.50666666666666" y="4037.0915555555562"/>
+            <point key="canvasLocation" x="738" y="3989"/>
         </scene>
         <!--Order View Controller-->
         <scene sceneID="TVf-Pe-5kS">
@@ -2288,7 +2288,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P8C-6J-zp9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="462.07999999999998" y="5164.3733333333339"/>
+            <point key="canvasLocation" x="1527" y="5096"/>
         </scene>
         <!--External Payments View Controller-->
         <scene sceneID="CaS-ir-ZBI">
@@ -2318,7 +2318,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xgO-hv-jNI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-49.920000000000002" y="5154.1333333333332"/>
+            <point key="canvasLocation" x="-73" y="5722"/>
         </scene>
         <!--Thanks View Controller-->
         <scene sceneID="KcU-m4-Wv6">
@@ -2467,10 +2467,10 @@
             </objects>
             <point key="canvasLocation" x="1517" y="528"/>
         </scene>
-        <!--Track My Order View Controller-->
+        <!--My Orders View Controller-->
         <scene sceneID="aCE-sP-eFO">
             <objects>
-                <viewController storyboardIdentifier="jaTrackOrderViewController" id="CEu-3u-Lad" customClass="JATrackMyOrderViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="jAMyOrdersViewController" automaticallyAdjustsScrollViewInsets="NO" id="CEu-3u-Lad" customClass="JAMyOrdersViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="c87-AO-r7a"/>
                         <viewControllerLayoutGuide type="bottom" id="UY5-8R-1ep"/>
@@ -2479,21 +2479,52 @@
                         <rect key="frame" x="0.0" y="64" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6cN-P8-hba">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="504"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eFX-qu-ogq" customClass="JAPickerScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Jhc-hx-ILB"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6cN-P8-hba">
+                                <rect key="frame" x="0.0" y="44" width="768" height="980"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="eFX-qu-ogq" firstAttribute="leading" secondItem="zNv-Ur-e1Q" secondAttribute="leading" id="5Ac-B2-8Ov"/>
+                            <constraint firstItem="6cN-P8-hba" firstAttribute="top" secondItem="eFX-qu-ogq" secondAttribute="bottom" id="Ggd-Q5-tdY"/>
+                            <constraint firstItem="6cN-P8-hba" firstAttribute="leading" secondItem="zNv-Ur-e1Q" secondAttribute="leading" id="LOm-XX-L90"/>
+                            <constraint firstItem="eFX-qu-ogq" firstAttribute="top" secondItem="zNv-Ur-e1Q" secondAttribute="top" id="QXD-9p-EiC"/>
+                            <constraint firstAttribute="trailing" secondItem="eFX-qu-ogq" secondAttribute="trailing" id="V47-Lk-uII"/>
+                            <constraint firstAttribute="trailing" secondItem="6cN-P8-hba" secondAttribute="trailing" id="in8-nx-G6Z"/>
+                            <constraint firstItem="UY5-8R-1ep" firstAttribute="top" secondItem="6cN-P8-hba" secondAttribute="bottom" id="l3K-2Q-igB"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="tsJ-yU-5rG" appends="YES" id="dRs-5c-y3C"/>
+                            <outletCollection property="gestureRecognizers" destination="3Jn-b1-00i" appends="YES" id="LDR-T5-PN3"/>
+                        </connections>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="qyH-VK-CX2"/>
                     <connections>
                         <outlet property="contentScrollView" destination="6cN-P8-hba" id="4s2-tC-8Mf"/>
+                        <outlet property="myOrdersPickerScrollView" destination="eFX-qu-ogq" id="7QA-Kc-BCF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uCu-6k-eGt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="tsJ-yU-5rG" userLabel="Left Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="swipeLeft:" destination="CEu-3u-Lad" id="n0I-pG-KDS"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="3Jn-b1-00i" userLabel="Right Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="swipeRight:" destination="CEu-3u-Lad" id="7Iy-KL-lDr"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2512" y="924"/>
+            <point key="canvasLocation" x="2412" y="386"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="QiH-sH-Lco">

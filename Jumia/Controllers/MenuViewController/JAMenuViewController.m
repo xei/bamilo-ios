@@ -354,7 +354,7 @@ UIAlertViewDelegate
                           @{ @"name": STRING_MY_ACCOUNT,
                              @"image": @"ico_myaccount",
                              @"selected": @"ico_myaccount_pressed" },
-                          @{ @"name": STRING_TRACK_MY_ORDER,
+                          @{ @"name": STRING_MY_ORDERS,
                              @"image": @"ico_trackorder",
                              @"selected": @"ico_trackorder_pressed" },
                           @{ @"name": STRING_CHOOSE_COUNTRY,

@@ -392,7 +392,7 @@
 
 - (void)goToTrackOrders
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowTrackOrderScreenNotification object:self.orderNumber];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification object:self.orderNumber];
 }
 
 @end

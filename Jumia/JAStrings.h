@@ -270,6 +270,16 @@
 #define STRING_PRODCUT_OUT_OF_STOCK RILocalizedString(@"product_outof_stock", nil)
 #define STRING_PRODCUTS_OUT_OF_STOCK RILocalizedString(@"products_outof_stock", nil)
 
+
 #define STRING_REMEMBER_EMAIL RILocalizedString(@"login_remember_user_email", nil)
+
+#define STRING_MY_ORDERS RILocalizedString(@"my_orders_label", nil)
+#define STRING_MY_ORDER_HISTORY RILocalizedString(@"my_order_history_label", nil)
+#define STRING_ORDER_TRACKING RILocalizedString(@"my_order_tracking_label", nil)
+#define STRING_ORDER_DETAILS RILocalizedString(@"my_order_details_label", nil)
+#define STRING_ORDER_NUMBER RILocalizedString(@"my_order_number_label", nil)
+#define STRING_ORDER_DATE RILocalizedString(@"my_order_date_label", nil)
+#define STRING_ORDER_QUANTITY RILocalizedString(@"my_order_quantity_label", nil)
+#define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
 
 #endif
