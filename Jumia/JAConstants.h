@@ -98,6 +98,9 @@
 #define A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR @"A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR"
 
 
+#define kRememberedEmail @"REMEMBER_EMAIL"
+
+
 
 
 //************

@@ -37,6 +37,7 @@ JADatePickerDelegate
 @property (strong, nonatomic) JARadioComponent *radioComponent;
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) JADatePicker *datePicker;
+@property (strong, nonatomic) JACheckBoxComponent *checkBoxComponent;
 
 @property (nonatomic, assign)BOOL isOpeningPicker;
 
@@ -93,6 +94,11 @@ JADatePickerDelegate
     self.headerSeparator = [[UIView alloc] initWithFrame:CGRectZero];
     [self.headerSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.contentView addSubview:self.headerSeparator];
+    
+    self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
+    [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
+    [self.checkBoxComponent.switchComponent setOn:YES];
+    [self.contentView addSubview:self.checkBoxComponent];
     
     self.registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.registerButton setFrame:CGRectZero];
@@ -169,9 +175,9 @@ JADatePickerDelegate
            {
                [self.contentView addSubview:view];
            }
-
-         [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
-         [self.contentView setHidden:NO];
+           
+           [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+           [self.contentView setHidden:NO];
            
        } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
            
@@ -247,12 +253,18 @@ JADatePickerDelegate
         self.registerViewCurrentY = CGRectGetMaxY(view.frame);
     }
     
+    [self.checkBoxComponent setFrame:CGRectMake((self.contentView.frame.size.width - signupNormalImage.size.width) / 2,
+                                                self.registerViewCurrentY,
+                                                self.checkBoxComponent.frame.size.width,
+                                                self.checkBoxComponent.frame.size.height)];
+    
+    self.registerViewCurrentY = CGRectGetMaxY(self.checkBoxComponent.frame);
     [self.registerButton setBackgroundImage:signupNormalImage forState:UIControlStateNormal];
     [self.registerButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"highlighted"]] forState:UIControlStateHighlighted];
     [self.registerButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"highlighted"]] forState:UIControlStateSelected];
     [self.registerButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"disabled"]] forState:UIControlStateDisabled];
     [self.registerButton setFrame:CGRectMake((self.contentView.frame.size.width - signupNormalImage.size.width) / 2,
-                                             self.registerViewCurrentY,
+                                             self.registerViewCurrentY + 10.0f,
                                              signupNormalImage.size.width,
                                              signupNormalImage.size.height)];
     
@@ -307,6 +319,17 @@ JADatePickerDelegate
     [self showLoading];
     
     [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object) {
+        
+        RICustomer *customerObject = ((RICustomer *)object);
+        
+        if(self.checkBoxComponent.switchComponent.isOn)
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:customerObject.email forKey:kRememberedEmail];
+        }else
+        {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRememberedEmail];
+        }
+        [[NSUserDefaults standardUserDefaults] synchronize];
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventLabelKey];
@@ -624,4 +647,14 @@ JADatePickerDelegate
     }];
 }
 
+-(NSDictionary *)getEmail
+{
+    NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
+    NSString *email = [[NSUserDefaults standardUserDefaults] stringForKey:kRememberedEmail];
+    if(VALID_NOTEMPTY(email, NSString))
+    {
+        [values setObject:email forKey:@"email"];
+    }
+    return values;
+}
 @end
