@@ -9,11 +9,11 @@
 #import "JAPickerScrollView.h"
 #import "JAGradientLayer.h"
 
-#define JAPickerScrollViewCenterWidth 100.0f
-#define JAPickerScrollViewCenterWidthiPad 130.0f
 #define JAPickerScrollViewBackgroundColor UIColorFromRGB(0xe3e3e3)
 #define JAPickerScrollViewTextColor UIColorFromRGB(0x4e4e4e)
 #define JAPickerScrollViewTextSize 13.0f
+#define JAPickerScrollViewNormalFont [UIFont fontWithName:@"HelveticaNeue-Light" size:JAPickerScrollViewTextSize]
+#define JAPickerScrollViewSelectedFont [UIFont fontWithName:@"HelveticaNeue" size:JAPickerScrollViewTextSize]
 #define JAPickerScrollViewIndicatorImageName @"PickerScrollIndicator"
 #define JAPickerScrollViewFadeWidth 30.0f
 
@@ -26,6 +26,7 @@
 @property (nonatomic, strong)NSArray* optionStrings;
 @property (nonatomic, strong)NSArray* optionLabels;
 @property (nonatomic, assign)NSInteger selectedIndex;
+@property (nonatomic, assign)CGFloat maxWidth;
 
 @end
 
@@ -34,6 +35,7 @@
 - (void)setOptions:(NSArray*)options;
 {
     self.optionStrings = options;
+    
     [self setNeedsLayout];
 }
 
@@ -45,18 +47,24 @@
     [self.rightFadeView removeFromSuperview];
     
     self.disableDelagation = NO;
+    self.maxWidth = 0.0f;
     
     self.backgroundColor = JAPickerScrollViewBackgroundColor;
     
-    CGFloat centerWidth = JAPickerScrollViewCenterWidth;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    for(NSString *option in self.optionStrings)
     {
-        centerWidth = JAPickerScrollViewCenterWidthiPad;
+        CGRect optionRect = [option boundingRectWithSize:CGSizeMake(1000.0f, self.bounds.size.height)
+                                                 options:NSStringDrawingUsesLineFragmentOrigin
+                                              attributes:@{NSFontAttributeName:JAPickerScrollViewSelectedFont} context:nil];
+        if(ceilf(optionRect.size.width) + 10.0f > self.maxWidth)
+        {
+            self.maxWidth = ceilf(optionRect.size.width) + 10.0f;
+        }
     }
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((self.bounds.size.width - centerWidth) / 2,
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((self.bounds.size.width - self.maxWidth) / 2,
                                                                      self.bounds.origin.y,
-                                                                     centerWidth,
+                                                                     self.maxWidth,
                                                                      self.bounds.size.height)];
     self.scrollView.delegate = self;
     self.scrollView.pagingEnabled = YES;
@@ -75,7 +83,7 @@
                                                                       self.scrollView.frame.size.width,
                                                                       self.scrollView.frame.size.height)];
         newLabel.textAlignment = NSTextAlignmentCenter;
-        newLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:JAPickerScrollViewTextSize];
+        newLabel.font = JAPickerScrollViewNormalFont;
         newLabel.textColor = JAPickerScrollViewTextColor;
         newLabel.text = category;
         newLabel.tag = i;
@@ -141,7 +149,7 @@
 {
     CGPoint point = [tap locationInView:self];
     
-
+    
     if (point.x < self.scrollView.frame.origin.x)
     {
         CGFloat distanceFromPointToCenterView = self.scrollView.frame.origin.x - point.x;
@@ -169,15 +177,15 @@
         
         if (i == index) {
             //select
-            label.font = [UIFont fontWithName:@"HelveticaNeue" size:JAPickerScrollViewTextSize];
+            label.font = JAPickerScrollViewSelectedFont;
         } else {
             //de-select
-            label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:JAPickerScrollViewTextSize];
+            label.font = JAPickerScrollViewNormalFont;
         }
     }
     
     self.selectedIndex = index;
-
+    
     [self.leftFadeView setHidden:NO];
     [self.rightFadeView setHidden:NO];
     if(0 == self.selectedIndex)
@@ -228,11 +236,7 @@
 {
     CGPoint point = *targetContentOffset;
     
-    NSInteger index = (point.x/JAPickerScrollViewCenterWidth);
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
-        index = (point.x/JAPickerScrollViewCenterWidthiPad);
-    }
+    NSInteger index = (point.x/self.maxWidth);
     
     [self selectLabelAtIndex:index];
 }
