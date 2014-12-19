@@ -267,3 +267,5 @@
 
 "product_outof_stock" = "Le produit n\'est plus disponible";
 "products_outof_stock" = "Items are out of stock";
+
+"login_remember_user_email" = "Mémoriser mon email";

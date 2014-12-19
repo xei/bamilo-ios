@@ -89,14 +89,6 @@ UITableViewDataSource
         
         [self hideLoading];
         
-        [self.tableViewContries reloadData];
-        
-        CGFloat finalHeight = MIN(self.tableViewContries.frame.size.height, self.tableViewContries.contentSize.height - 20.0f);
-        [self.tableViewContries setFrame:CGRectMake(self.tableViewContries.frame.origin.x,
-                                                    self.tableViewContries.frame.origin.y,
-                                                    self.tableViewContries.frame.size.width,
-                                                    finalHeight)];
-        
         NSIndexPath *tempIndex;
         
         if (VALID_NOTEMPTY(countryUrl, NSString))
@@ -121,8 +113,17 @@ UITableViewDataSource
         }
         
         if (VALID_NOTEMPTY(tempIndex, NSIndexPath)) {
-            [self tableView:self.tableViewContries didSelectRowAtIndexPath:tempIndex];
+            
+            self.selectedIndex = tempIndex;
         }
+        
+        [self.tableViewContries reloadData];
+        
+        CGFloat finalHeight = MIN(self.tableViewContries.frame.size.height, self.tableViewContries.contentSize.height - 20.0f);
+        [self.tableViewContries setFrame:CGRectMake(self.tableViewContries.frame.origin.x,
+                                                    self.tableViewContries.frame.origin.y,
+                                                    self.tableViewContries.frame.size.width,
+                                                    finalHeight)];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         

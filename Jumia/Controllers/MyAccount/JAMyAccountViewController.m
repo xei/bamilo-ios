@@ -438,6 +438,7 @@
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kChangeNotificationsOptions];
     }
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (IBAction)changeSound:(id)sender
@@ -457,6 +458,7 @@
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kChangeSoundOptions];
         
     }
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)pushUserData:(id)sender
