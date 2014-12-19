@@ -126,7 +126,7 @@
 
 - (void)updateCountry:(NSNotification*)notification
 {
-    [self setLeftPanel:[self.storyboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"first_screen"]];
 
