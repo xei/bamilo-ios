@@ -87,6 +87,7 @@ FBLoginViewDelegate
     [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
     [self.checkBoxComponent.switchComponent setOn:YES];
     [self.loginView addSubview:self.checkBoxComponent];
+    [self.checkBoxComponent setHidden:YES];
     
     self.facebookLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.facebookLoginButton setFrame:CGRectZero];
@@ -264,8 +265,9 @@ FBLoginViewDelegate
     self.loginViewCurrentY += 10.0f;
     [self.checkBoxComponent setFrame:CGRectMake(self.facebookLoginButton.frame.origin.x,
                                                 self.loginViewCurrentY,
-                                                self.checkBoxComponent.frame.size.width - 12.0f,
+                                                self.facebookLoginButton.frame.size.width - 12.0f,
                                                 self.checkBoxComponent.frame.size.height)];
+    [self.checkBoxComponent setHidden:NO];
     self.loginViewCurrentY += self.checkBoxComponent.frame.size.height;
     
     self.loginViewCurrentY += 20.0f;
