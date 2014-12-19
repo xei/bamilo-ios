@@ -9,7 +9,6 @@
 #import "JAMenuViewController.h"
 #import "JASubCategoriesViewController.h"
 #import "RICategory.h"
-#import "JAMenuNavigationBar.h"
 #import "JAUtils.h"
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
@@ -20,9 +19,8 @@
 #import "JAClickableView.h"
 
 typedef NS_ENUM(NSUInteger, JAMenuViewControllerAction) {
-    JAMenuViewControllerOpenSearchBar = 0,
-    JAMenuViewControllerOpenCart = 1,
-    JAMenuViewControllerOpenSideMenuItem = 2
+    JAMenuViewControllerOpenCart = 0,
+    JAMenuViewControllerOpenSideMenuItem = 1
 };
 
 typedef enum ScrollDirection {
@@ -38,15 +36,11 @@ typedef enum ScrollDirection {
 <
 UITableViewDataSource,
 UITableViewDelegate,
-UISearchBarDelegate,
 UIAlertViewDelegate
 >
 
 @property (strong, nonatomic) NSMutableArray *sourceArray;
 @property (strong, nonatomic) NSArray *categories;
-@property (strong, nonatomic) JAMenuNavigationBar *customNavBar;
-@property (strong, nonatomic) NSMutableArray *resultsArray;
-@property (strong, nonatomic) UITableView *resultsTableView;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewMenu;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewCart;
 @property (weak, nonatomic) IBOutlet UILabel *cartLabelTitle;
@@ -87,20 +81,7 @@ UIAlertViewDelegate
     
     self.yOffset = 0.0;
     
-    self.customNavBar = [[JAMenuNavigationBar alloc] init];
-    [self.navigationController setValue:self.customNavBar
-                             forKeyPath:@"navigationBar"];
-    
-    [self.customNavBar.backButton addTarget:self
-                                     action:@selector(didPressedBackButton)
-                           forControlEvents:UIControlEventTouchUpInside];
-    
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didPressedBackButton)
-                                                 name:kCancelButtonPressedInMenuSearchBar
-                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userDidLogin)
@@ -115,16 +96,6 @@ UIAlertViewDelegate
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateCart:)
                                                  name:kUpdateSideMenuCartNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(openMenu:)
-                                                 name:kOpenMenuNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(closeMenu:)
-                                                 name:kCloseMenuNotification
                                                object:nil];
     
     [self.cartView addTarget:self
@@ -144,8 +115,6 @@ UIAlertViewDelegate
         self.cartLabelDetails.text = STRING_VAT_SHIPPING_INCLUDED;
         self.cartItensNumber.text = [[self.cart cartCount] stringValue];
     }
-    
-    [self.customNavBar setSearchBarDelegate:self];
     
     // Added because of the footer space
     self.tableViewMenu.contentInset = UIEdgeInsetsMake(0, 0, -20, 0);
@@ -222,11 +191,7 @@ UIAlertViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.resultsTableView == tableView) {
-        return self.resultsArray.count;
-    } else {
-        return self.sourceArray.count;
-    }
+    return self.sourceArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -250,86 +215,19 @@ UIAlertViewDelegate
     clickView.tag = indexPath.row;
     [cell addSubview:clickView];
     
-    if (self.resultsTableView == tableView)
+    [clickView addTarget:self action:@selector(menuCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
+    cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
+    
+    cell.imageView.image = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"image"]];
+    cell.imageView.highlightedImage = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"selected"]];
+    
+    if (1 == indexPath.row)
     {
-        RISearchSuggestion *sugestion = [self.resultsArray objectAtIndex:indexPath.row];
-        
-        NSString *text = sugestion.item;
-        NSString *searchedText = self.customNavBar.searchBar.text;
-        
-        if (text.length == 0)
-        {
-            text = STRING_ERROR;
-        }
-        
-        NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:text];
-        NSInteger stringTextLenght = text.length;
-        
-        UIFont *stringTextFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
-        UIFont *subStringTextFont = [UIFont fontWithName:@"HelveticaNeue" size:17.0f];
-        UIColor *stringTextColor = UIColorFromRGB(0x4e4e4e);
-        
-        
-        [stringText addAttribute:NSFontAttributeName
-                           value:stringTextFont
-                           range:NSMakeRange(0, stringTextLenght)];
-        
-        [stringText addAttribute:NSStrokeColorAttributeName
-                           value:stringTextColor
-                           range:NSMakeRange(0, stringTextLenght)];
-        
-        NSRange range = [text rangeOfString:searchedText];
-        
-        [stringText addAttribute:NSFontAttributeName
-                           value:subStringTextFont
-                           range:range];
-        
-        cell.textLabel.attributedText = stringText;
-        
-        if (1 == sugestion.isRecentSearch)
-        {
-            cell.imageView.image = [UIImage imageNamed:@"ico_recentsearchsuggestion"];
-        }
-        else
-        {
-            cell.imageView.image = [UIImage imageNamed:@"ico_searchsuggestion"];
-        }
-        
-        if (0 == indexPath.row)
-        {
-            UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
-            line.backgroundColor = UIColorFromRGB(0xcccccc);
-            line.tag = 99;
-            [cell.viewForBaselineLayout addSubview:line];
-        }
-        
-        UIImageView *line2 = [[UIImageView alloc] initWithFrame:CGRectMake(45, cell.frame.size.height-1, cell.frame.size.width-20, 1)];
-        line2.backgroundColor = UIColorFromRGB(0xcccccc);
-        [cell.viewForBaselineLayout addSubview:line2];
-        
-        [clickView addTarget:self action:@selector(resultCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-        
-    } else
-    {
-        [clickView addTarget:self action:@selector(menuCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
-        cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
-        
-        cell.imageView.image = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"image"]];
-        cell.imageView.highlightedImage = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"selected"]];
-        
-        if (1 == indexPath.row)
-        {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     return cell;
-}
-
-- (void)resultCellWasPressed:(UIControl*)sender
-{
-    [self tableView:self.resultsTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
 - (void)menuCellWasPressed:(UIControl*)sender
@@ -349,9 +247,6 @@ UIAlertViewDelegate
     self.nextAction = JAMenuViewControllerOpenSideMenuItem;
     self.nextActionIndexPath = indexPath;
     
-    [self.customNavBar resignFirstResponder];
-    [self.customNavBar.searchBar resignFirstResponder];
-    
     if(self.needsExternalPaymentMethod)
     {
         [[[UIAlertView alloc] initWithTitle:STRING_LOOSING_ORDER_TITLE
@@ -362,83 +257,53 @@ UIAlertViewDelegate
     }
     else
     {
-        if (self.resultsTableView == tableView)
+        if (1 == indexPath.row)
         {
-            [self.customNavBar.searchBar resignFirstResponder];
+            NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
             
-            RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
-            NSString *item = suggestion.item;
-            
-            if(!suggestion.isRecentSearch)
+            if(VALID_NOTEMPTY(self.categories, NSArray))
             {
-                [RISearchSuggestion saveSearchSuggestionOnDB:suggestion.item
-                                              isRecentSearch:YES];
+                [userInfo setObject:self.categories forKey:@"categories"];
             }
             
-            // I changed the index to 99 to know that it's to display a search result
-            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                                object:@{@"index": @(99),
-                                                                         @"name": STRING_SEARCH,
-                                                                         @"text": item }];
+            [self showSubCategory];
         }
         else
         {
-            if (1 == indexPath.row)
+            if (8 == indexPath.row)
             {
-                [self.customNavBar addBackButtonToNavBar];
-                
-                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-                
-                if(VALID_NOTEMPTY(self.categories, NSArray))
+                if ([RICustomer checkIfUserIsLogged])
                 {
-                    [userInfo setObject:self.categories forKey:@"categories"];
-                }
-                
-                [self showSubCategory];
-            }
-            else
-            {
-                if (8 == indexPath.row)
-                {
-                    if ([RICustomer checkIfUserIsLogged])
-                    {
-                        __block NSString *custumerId = [RICustomer getCustomerId];
-                        [[FBSession activeSession] closeAndClearTokenInformation];
-                        [FBSession setActiveSession:nil];
-                        
-                        [RICustomer logoutCustomerWithSuccessBlock:^
-                         {
-                             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                             [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
-                             [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
-                             [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-                             [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
-                             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                             [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                             [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                             
-                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
-                                                                       data:[trackingDictionary copy]];
-                             
-                             [self userDidLogout];
-                             
-                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-                             
-                         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject)
-                         {
-                             [self userDidLogout];
-                             
-                             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-                             
-                         }];
-                    }
-                    else
-                    {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                                            object:@{@"index": @(indexPath.row),
-                                                                                     @"name": [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"]}];
-                    }
+                    __block NSString *custumerId = [RICustomer getCustomerId];
+                    [[FBSession activeSession] closeAndClearTokenInformation];
+                    [FBSession setActiveSession:nil];
+                    
+                    [RICustomer logoutCustomerWithSuccessBlock:^
+                     {
+                         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                         [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
+                         [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
+                         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                         [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
+                         [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                         [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                         
+                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout]
+                                                                   data:[trackingDictionary copy]];
+                         
+                         [self userDidLogout];
+                         
+                         [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                         
+                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject)
+                     {
+                         [self userDidLogout];
+                         
+                         [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                         
+                     }];
                 }
                 else
                 {
@@ -446,6 +311,12 @@ UIAlertViewDelegate
                                                                         object:@{@"index": @(indexPath.row),
                                                                                  @"name": [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"]}];
                 }
+            }
+            else
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                    object:@{@"index": @(indexPath.row),
+                                                                             @"name": [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"]}];
             }
         }
     }
@@ -459,202 +330,6 @@ UIAlertViewDelegate
     
     [self.navigationController pushViewController:subCategoriesViewController animated:YES];
     
-}
-
--(void)openMenu:(NSNotification*)notification
-{
-    if(VALID_NOTEMPTY(self.resultsTableView, UITableView))
-    {
-        [self.customNavBar.searchBar becomeFirstResponder];
-    }
-}
-
--(void)closeMenu:(NSNotification*)notification
-{
-    [self.customNavBar.searchBar resignFirstResponder];
-    [self.customNavBar resignFirstResponder];
-}
-
-#pragma mark - Navigation bar custom delegate
-
-- (void)didPressedBackButton
-{
-    if (VALID_NOTEMPTY(self.resultsTableView, UITableView))
-    {
-        [self.customNavBar.searchBar resignFirstResponder];
-        self.customNavBar.searchBar.text = @"";
-        [self.customNavBar removeBackButtonFromNavBar];
-        [self removeResultsTableViewFromView];
-    } else
-    {
-        
-        self.customNavBar.backButton.userInteractionEnabled = NO;
-        
-        if (self.navigationController.viewControllers.count > 1)
-        {
-            if (self.navigationController.viewControllers.count == 2)
-            {
-                [self.customNavBar removeBackButtonFromNavBar];
-            }
-            
-            [self.navigationController popViewControllerAnimated:YES];
-        } else
-        {
-            [self.customNavBar removeBackButtonFromNavBar];
-        }
-        
-        [NSTimer scheduledTimerWithTimeInterval:0.5f
-                                         target:self
-                                       selector:@selector(activateBackButton)
-                                       userInfo:nil
-                                        repeats:NO];
-    }
-}
-
-- (void)activateBackButton
-{
-    self.customNavBar.backButton.userInteractionEnabled = YES;
-}
-
-#pragma mark - SearchBar delegate
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    self.nextAction = JAMenuViewControllerOpenSearchBar;
-    if(self.needsExternalPaymentMethod)
-    {
-        [[[UIAlertView alloc] initWithTitle:STRING_LOOSING_ORDER_TITLE
-                                    message:STRING_LOOSING_ORDER_MESSAGE
-                                   delegate:self
-                          cancelButtonTitle:STRING_CANCEL
-                          otherButtonTitles:STRING_OK, nil] show];
-    }
-    else
-    {
-        if (self.customNavBar.isBackVisible) {
-            [self.customNavBar removeBackButtonFromNavBarNoResetVariable];
-        } else {
-            [self.customNavBar removeBackButtonFromNavBar];
-        }
-        
-        searchBar.showsCancelButton = YES;
-        
-        [self addResultsTableViewToView];
-    }
-    
-    return YES;
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    [searchBar resignFirstResponder];
-    
-    [RISearchSuggestion saveSearchSuggestionOnDB:searchBar.text
-                                  isRecentSearch:YES];
-    
-    // I changed the index to 99 to know that it's to display a search result
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(99),
-                                                                 @"name": STRING_SEARCH,
-                                                                 @"text": searchBar.text }];
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    [searchBar resignFirstResponder];
-    searchBar.text = @"";
-    
-    searchBar.showsCancelButton = NO;
-    
-    [self removeResultsTableViewFromView];
-    
-    if (self.customNavBar.isBackVisible) {
-        [self.customNavBar addBackButtonToNavBar];
-    }
-}
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    if (searchText.length > 1)
-    {
-        [RISearchSuggestion getSuggestionsForQuery:searchText
-                                      successBlock:^(NSArray *suggestions) {
-                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                              [self.resultsArray removeAllObjects];
-                                              [self.resultsTableView reloadData];
-                                              
-                                              self.resultsArray = [suggestions mutableCopy];
-                                              
-                                              [self.resultsTableView reloadSections:[NSIndexSet indexSetWithIndex:0]
-                                                                   withRowAnimation:UITableViewRowAnimationFade];
-                                          });
-                                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                                          
-                                      }];
-    }
-}
-
-#pragma mark - Results table view methods
-
-- (void)addResultsTableViewToView
-{
-    if (self.resultsTableView == nil) {
-        
-        NSArray *viewControllers = self.navigationController.viewControllers;
-        UIView *tempView = ((UIViewController *)[viewControllers lastObject]).view;
-        
-        self.resultsArray = [NSMutableArray new];
-        
-        CGRect resultsTableFrame = CGRectMake(self.cartView.frame.origin.x,
-                                              self.cartView.frame.origin.y,
-                                              self.cartView.frame.size.width,
-                                              self.navigationController.view.frame.size.height - 35);
-        
-        resultsTableFrame.origin.y += resultsTableFrame.size.height;
-        
-        self.resultsTableView = [[UITableView alloc] initWithFrame:resultsTableFrame
-                                                             style:UITableViewStyleGrouped];
-        
-        self.resultsTableView.backgroundColor = UIColorFromRGB(0xffffff);
-        self.resultsTableView.delegate = self;
-        self.resultsTableView.dataSource = self;
-        
-        self.resultsTableView.contentInset = UIEdgeInsetsMake(-35.0f, 0.f, 0.f, 0.f);
-        
-        [self.resultsTableView registerClass:[UITableViewCell class]
-                      forCellReuseIdentifier:@"cell"];
-        
-        self.resultsTableView.separatorColor = [UIColor clearColor];
-        
-        [tempView addSubview:self.resultsTableView];
-        
-        [UIView animateWithDuration:0.4f
-                         animations:^{
-                             CGRect newFrame = self.resultsTableView.frame;
-                             newFrame.origin.y = self.cartView.frame.origin.y + 1;
-                             
-                             if ([[viewControllers lastObject] isKindOfClass:[JASubCategoriesViewController class]]) {
-                                 newFrame.origin.y -= 64;
-                             }
-                             
-                             self.resultsTableView.frame = newFrame;
-                         }];
-    }
-}
-
-- (void)removeResultsTableViewFromView
-{
-    CGRect newFrame = self.resultsTableView.frame;
-    newFrame.origin.y = newFrame.size.height + 242;
-    
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         self.resultsTableView.frame = newFrame;
-                     } completion:^(BOOL finished) {
-                         [self.resultsTableView removeFromSuperview];
-                         self.resultsArray = nil;
-                         self.resultsTableView = nil;
-                     }];
 }
 
 #pragma mark - Init souce array
@@ -740,9 +415,6 @@ UIAlertViewDelegate
         [[NSNotificationCenter defaultCenter] postNotificationName:kDeactivateExternalPaymentNotification object:nil userInfo:nil];
         
         switch (self.nextAction) {
-            case JAMenuViewControllerOpenSearchBar:
-                [self.customNavBar becomeFirstResponder];
-                break;
             case JAMenuViewControllerOpenCart:
                 [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification object:nil userInfo:nil];
                 break;
@@ -751,17 +423,6 @@ UIAlertViewDelegate
                 {
                     [self tableView:self.tableViewMenu didSelectRowAtIndexPath:self.nextActionIndexPath];
                 }
-                break;
-            default:
-                break;
-        }
-    }
-    else
-    {
-        switch (self.nextAction) {
-            case JAMenuViewControllerOpenSearchBar:
-                [self.customNavBar resignFirstResponder];
-                [self.customNavBar.searchBar resignFirstResponder];
                 break;
             default:
                 break;
@@ -782,8 +443,6 @@ UIAlertViewDelegate
     {
         // scrolls up.
         self.yOffset = scrollView.contentOffset.y;
-        
-        [self.customNavBar.searchBar resignFirstResponder];
     }
 }
 
