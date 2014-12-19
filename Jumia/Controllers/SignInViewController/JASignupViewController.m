@@ -258,13 +258,13 @@ JADatePickerDelegate
                                                 self.checkBoxComponent.frame.size.width,
                                                 self.checkBoxComponent.frame.size.height)];
     
-    self.registerViewCurrentY = CGRectGetMaxY(self.checkBoxComponent.frame);
+    self.registerViewCurrentY = CGRectGetMaxY(self.checkBoxComponent.frame) + 10.0f;
     [self.registerButton setBackgroundImage:signupNormalImage forState:UIControlStateNormal];
     [self.registerButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"highlighted"]] forState:UIControlStateHighlighted];
     [self.registerButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"highlighted"]] forState:UIControlStateSelected];
     [self.registerButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:signupImageNameFormatter, @"disabled"]] forState:UIControlStateDisabled];
     [self.registerButton setFrame:CGRectMake((self.contentView.frame.size.width - signupNormalImage.size.width) / 2,
-                                             self.registerViewCurrentY + 10.0f,
+                                             self.registerViewCurrentY,
                                              signupNormalImage.size.width,
                                              signupNormalImage.size.height)];
     

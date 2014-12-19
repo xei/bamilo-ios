@@ -261,8 +261,9 @@ FBLoginViewDelegate
         self.loginViewCurrentY = CGRectGetMaxY(view.frame);
     }
     
+    self.loginViewCurrentY += 10.0f;
     [self.checkBoxComponent setFrame:CGRectMake(self.facebookLoginButton.frame.origin.x,
-                                                self.loginViewCurrentY + 10.0f,
+                                                self.loginViewCurrentY,
                                                 self.checkBoxComponent.frame.size.width - 12.0f,
                                                 self.checkBoxComponent.frame.size.height)];
     self.loginViewCurrentY += self.checkBoxComponent.frame.size.height;

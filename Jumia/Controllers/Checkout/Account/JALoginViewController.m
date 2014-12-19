@@ -418,9 +418,9 @@ FBLoginViewDelegate
     }
     
     self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
-    self.loginFormHeight += 20.0f;
+    self.loginFormHeight += 35.0f;
     [self.checkBoxComponent setFrame:CGRectMake(self.facebookLoginButton.frame.origin.x,
-                                                self.loginFormHeight + 15.0f,
+                                                self.loginFormHeight,
                                                 self.checkBoxComponent.frame.size.width - 12.0f,
                                                 self.checkBoxComponent.frame.size.height)];
     [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
