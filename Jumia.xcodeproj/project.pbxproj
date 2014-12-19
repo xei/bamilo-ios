@@ -86,7 +86,6 @@
 		3b2e034618cfeae11e103642 /* RIVariation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028E19811E9200F71726 /* RIVariation.m */; };
 		3c0ad639becc3ca29c25bcd2 /* JARadioComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B510B00C19AE466B00A9754A /* JARadioComponent.xib */; };
 		3c19ddaf1c0aad1ad6bfad03 /* JADynamicForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B510B00919AE466B00A9754A /* JADynamicForm.m */; };
-		3c85e0382a65fc870da0282e /* JATrackMyOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212619891F2D00B70A9C /* JATrackMyOrderViewController.m */; };
 		3d2cabe0544154cdb6c84858 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F319811F0200F71726 /* CoreLocation.framework */; };
 		3d4e69f99ca0b3d33a569394 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302EB19811ED700F71726 /* libz.dylib */; };
 		3d53d0ff180f7f9853dba337 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDCA19D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView.xib */; };
@@ -120,7 +119,6 @@
 		4A2FD84A19913FCA00C65C1D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2FD84919913FCA00C65C1D /* Social.framework */; };
 		4A3719BD19C05F52002D4199 /* JAUndefinedSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */; };
 		4A3719BF19C05F5D002D4199 /* JAUndefinedSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A3719BE19C05F5D002D4199 /* JAUndefinedSearchView.xib */; };
-		4A39212719891F2D00B70A9C /* JATrackMyOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212619891F2D00B70A9C /* JATrackMyOrderViewController.m */; };
 		4A39212D19891F6D00B70A9C /* JARecentSearchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */; };
 		4A39213019891F7800B70A9C /* JARecentlyViewedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212F19891F7800B70A9C /* JARecentlyViewedViewController.m */; };
 		4A39213419891FB200B70A9C /* JAMyAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39213319891FB200B70A9C /* JAMyAccountViewController.m */; };
@@ -497,6 +495,8 @@
 		B5D125921A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */; };
 		B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759B19814EF000005B13 /* FacebookSDK.framework */; };
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
+		B5F30FFA1A41E60F00434106 /* JAMyOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F30FF91A41E60F00434106 /* JAMyOrdersViewController.m */; };
+		B5F30FFB1A41E60F00434106 /* JAMyOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F30FF91A41E60F00434106 /* JAMyOrdersViewController.m */; };
 		B5FBD58A19CAF26800BD9510 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FBD58919CAF26800BD9510 /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B5FBD58D19CAF2F400BD9510 /* RIAdjustTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD58C19CAF2F400BD9510 /* RIAdjustTracker.m */; };
 		B5FE9FB119A1F362006F7D63 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */; };
@@ -846,8 +846,6 @@
 		4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUndefinedSearchView.m; sourceTree = "<group>"; };
 		4A3719BE19C05F5D002D4199 /* JAUndefinedSearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAUndefinedSearchView.xib; sourceTree = "<group>"; };
 		4A3921191988E27A00B70A9C /* JAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAConstants.h; sourceTree = "<group>"; };
-		4A39212519891F2D00B70A9C /* JATrackMyOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATrackMyOrderViewController.h; sourceTree = "<group>"; };
-		4A39212619891F2D00B70A9C /* JATrackMyOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATrackMyOrderViewController.m; sourceTree = "<group>"; };
 		4A39212B19891F6D00B70A9C /* JARecentSearchesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARecentSearchesViewController.h; sourceTree = "<group>"; };
 		4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARecentSearchesViewController.m; sourceTree = "<group>"; };
 		4A39212E19891F7800B70A9C /* JARecentlyViewedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARecentlyViewedViewController.h; sourceTree = "<group>"; };
@@ -1275,6 +1273,8 @@
 		B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JACampaignSingleView~iPad_Landscape.xib"; sourceTree = "<group>"; };
 		B5EF759B19814EF000005B13 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
+		B5F30FF81A41E60F00434106 /* JAMyOrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrdersViewController.h; sourceTree = "<group>"; };
+		B5F30FF91A41E60F00434106 /* JAMyOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrdersViewController.m; sourceTree = "<group>"; };
 		B5FBD58919CAF26800BD9510 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		B5FBD58B19CAF2F400BD9510 /* RIAdjustTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAdjustTracker.h; sourceTree = "<group>"; };
 		B5FBD58C19CAF2F400BD9510 /* RIAdjustTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAdjustTracker.m; sourceTree = "<group>"; };
@@ -1644,15 +1644,6 @@
 				4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */,
 			);
 			path = RecentSearches;
-			sourceTree = "<group>";
-		};
-		4A39212319891F1500B70A9C /* TrackMyOrder */ = {
-			isa = PBXGroup;
-			children = (
-				4A39212519891F2D00B70A9C /* JATrackMyOrderViewController.h */,
-				4A39212619891F2D00B70A9C /* JATrackMyOrderViewController.m */,
-			);
-			path = TrackMyOrder;
 			sourceTree = "<group>";
 		};
 		4A39213119891FA200B70A9C /* MyFavourites */ = {
@@ -2587,7 +2578,7 @@
 				4A39211B19891F1500B70A9C /* MyAccount */,
 				4A39211D19891F1500B70A9C /* RecentlyViewed */,
 				4A39211E19891F1500B70A9C /* RecentSearches */,
-				4A39212319891F1500B70A9C /* TrackMyOrder */,
+				B5F30FF71A41E60F00434106 /* MyOrders */,
 				4AE242E1198656F500E37C90 /* HomeViewController */,
 				4AE242E2198656F500E37C90 /* MenuViewController */,
 				B5A303001981218E00F71726 /* BaseViewController */,
@@ -2806,6 +2797,15 @@
 				B5C9C7031A1A5E6F0065AFD4 /* JADatePicker.m */,
 			);
 			name = JADatePicker;
+			sourceTree = "<group>";
+		};
+		B5F30FF71A41E60F00434106 /* MyOrders */ = {
+			isa = PBXGroup;
+			children = (
+				B5F30FF81A41E60F00434106 /* JAMyOrdersViewController.h */,
+				B5F30FF91A41E60F00434106 /* JAMyOrdersViewController.m */,
+			);
+			path = MyOrders;
 			sourceTree = "<group>";
 		};
 		BB128E9D19E2F4060033514F /* search */ = {
@@ -3827,6 +3827,7 @@
 				B5CFE99E1A0CF45F004CE545 /* JAAddRatingView.m in Sources */,
 				f216f801001f61223ca8024c /* JAColorFilterCell.m in Sources */,
 				ed304145f21e8a21401fd967 /* JAAddressesViewController.m in Sources */,
+				B5F30FFB1A41E60F00434106 /* JAMyOrdersViewController.m in Sources */,
 				1c7fae3c0896dcfa1ef5ed50 /* JAReviewCell.m in Sources */,
 				63909af668fbc1eea2f99ca5 /* JAMenuViewController.m in Sources */,
 				5ddb2cd2f090566c17bfc751 /* RICity.m in Sources */,
@@ -3924,7 +3925,6 @@
 				09a540fd5e97a0761054d14c /* SDWebImageDecoder.m in Sources */,
 				692fece832938452dbf8505a /* JATeaserPageView.m in Sources */,
 				361729cf70d97eaad6ee214b /* JACountryCell.m in Sources */,
-				3c85e0382a65fc870da0282e /* JATrackMyOrderViewController.m in Sources */,
 				74acae0cc3cb94fc8c207de4 /* Reachability.m in Sources */,
 				B5C13EB51A402A9E00484398 /* ADJDeviceInfo.m in Sources */,
 				5212d644bfc7dda87b731f2c /* JAMainTeaserView.m in Sources */,
@@ -4052,6 +4052,7 @@
 				CE9193BD19F503FB00F89840 /* JAFallbackView.m in Sources */,
 				B5A302D819811E9200F71726 /* RIProductReview.m in Sources */,
 				CE44587C198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m in Sources */,
+				B5F30FFA1A41E60F00434106 /* JAMyOrdersViewController.m in Sources */,
 				CE445875198BD5D800CE7E8D /* JASmallTeaserView.m in Sources */,
 				4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */,
 				B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */,
@@ -4148,7 +4149,6 @@
 				CE3AF91A19DD8BC400D8C51B /* RIPromotion.m in Sources */,
 				CEE91B9C1989065A0078DFC9 /* JATeaserPageView.m in Sources */,
 				4A4ABF0C198B903B00342D92 /* JACountryCell.m in Sources */,
-				4A39212719891F2D00B70A9C /* JATrackMyOrderViewController.m in Sources */,
 				4A19C51419D019100070D194 /* Reachability.m in Sources */,
 				CE44586B198BD20A00CE7E8D /* JAMainTeaserView.m in Sources */,
 				B5C13EB41A402A9E00484398 /* ADJDeviceInfo.m in Sources */,

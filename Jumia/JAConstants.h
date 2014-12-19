@@ -62,7 +62,7 @@
 #define kShowCheckoutFinishScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_FINISH_SCREEN"
 #define kShowCheckoutExternalPaymentsScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_EXTERNAL_PAYMENTS_SCREEN"
 #define kShowCheckoutThanksScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_THANKS_SCREEN"
-#define kShowTrackOrderScreenNotification @"NOTIFICATION_SHOW_TRACK_ORDER_SCREEN"
+#define kShowMyOrdersScreenNotification @"NOTIFICATION_SHOW_MY_ORDERS_SCREEN"
 
 // Filters
 #define kShowFiltersScreenNotification @"NOTIFICATION_SHOW_FILTERS_SCREEN"

@@ -1,5 +1,5 @@
 //
-//  JATrackMyOrderViewController.h
+//  JAMyOrdersViewController.h
 //  Jumia
 //
 //  Created by Miguel Chaves on 30/Jul/14.
@@ -8,8 +8,9 @@
 
 #import "JABaseViewController.h"
 
-@interface JATrackMyOrderViewController : JABaseViewController
+@interface JAMyOrdersViewController : JABaseViewController
 
+@property (nonatomic, assign)NSInteger selectedIndex;
 @property (nonatomic, strong)NSString* startingTrackOrderNumber;
 
 @end
