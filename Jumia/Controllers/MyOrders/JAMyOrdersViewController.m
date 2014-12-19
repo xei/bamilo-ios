@@ -151,7 +151,7 @@ JAPickerScrollViewDelegate
     
     self.emptyOrderHistoryView = [[UIView alloc] initWithFrame:CGRectZero];
     self.emptyOrderHistoryView.layer.cornerRadius = 5.0f;
-    [self.emptyOrderHistoryView setBackgroundColor:UIColorFromRGB(0x0000ff)];
+    [self.emptyOrderHistoryView setBackgroundColor:UIColorFromRGB(0xffffff)];
     [self.contentScrollView addSubview:self.emptyOrderHistoryView];
     
     UIImage *emptyOrderImage = [UIImage imageNamed:@"noOrdersImage"];
