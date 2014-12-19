@@ -177,10 +177,10 @@
         
         if (i == index) {
             //select
-            label.font = JAPickerScrollViewNormalFont;
+            label.font = JAPickerScrollViewSelectedFont;
         } else {
             //de-select
-            label.font = JAPickerScrollViewSelectedFont;
+            label.font = JAPickerScrollViewNormalFont;
         }
     }
     
