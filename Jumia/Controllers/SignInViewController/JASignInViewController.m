@@ -31,6 +31,7 @@ FBLoginViewDelegate
 @property (strong, nonatomic) UILabel *facebookLoginLabel;
 @property (assign, nonatomic) CGFloat loginViewCurrentY;
 @property (assign, nonatomic) BOOL requestDone;
+@property (strong, nonatomic) JACheckBoxComponent *checkBoxComponent;
 
 @end
 
@@ -81,6 +82,12 @@ FBLoginViewDelegate
     self.loginSeparator = [[UIView alloc] initWithFrame:CGRectZero];
     [self.loginSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.loginView addSubview:self.loginSeparator];
+    
+    self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
+    [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
+    [self.checkBoxComponent.switchComponent setOn:YES];
+    [self.loginView addSubview:self.checkBoxComponent];
+    [self.checkBoxComponent setHidden:YES];
     
     self.facebookLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.facebookLoginButton setFrame:CGRectZero];
@@ -153,7 +160,7 @@ FBLoginViewDelegate
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form)
      {
-         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:0.0f];
+         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self values:[self getEmail] startingPosition:0.0f];
          [self.dynamicForm setDelegate:self];
          
          for(UIView *view in self.dynamicForm.formViews)
@@ -212,8 +219,8 @@ FBLoginViewDelegate
                                          21.0f)];
     
     [self.loginSeparator setFrame:CGRectMake(0.0f,
-                                                                   26.0f,
-                                                                   self.scrollView.frame.size.width - (2 * horizontalMargin),
+                                             26.0f,
+                                             self.scrollView.frame.size.width - (2 * horizontalMargin),
                                              1.0f)];
     
     NSString *facebookImageNameFormatter = @"facebookMedium_%@";
@@ -255,7 +262,15 @@ FBLoginViewDelegate
         self.loginViewCurrentY = CGRectGetMaxY(view.frame);
     }
     
-    self.loginViewCurrentY += 15.0f;
+    self.loginViewCurrentY += 10.0f;
+    [self.checkBoxComponent setFrame:CGRectMake(self.facebookLoginButton.frame.origin.x,
+                                                self.loginViewCurrentY,
+                                                self.facebookLoginButton.frame.size.width - 12.0f,
+                                                self.checkBoxComponent.frame.size.height)];
+    [self.checkBoxComponent setHidden:NO];
+    self.loginViewCurrentY += self.checkBoxComponent.frame.size.height;
+    
+    self.loginViewCurrentY += 20.0f;
     UIImage *loginNormalImage = [UIImage imageNamed:[NSString stringWithFormat:loginImageNameFormatter, @"normal"]];
     [self.loginButton setFrame:CGRectMake((self.loginView.frame.size.width - loginNormalImage.size.width) / 2,
                                           self.loginViewCurrentY,
@@ -506,6 +521,15 @@ FBLoginViewDelegate
          
          RICustomer *customerObject = ((RICustomer *)object);
          
+         if(self.checkBoxComponent.switchComponent.isOn)
+         {
+             [[NSUserDefaults standardUserDefaults] setObject:customerObject.email forKey:kRememberedEmail];
+         }else
+         {
+             [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRememberedEmail];
+         }
+         [[NSUserDefaults standardUserDefaults] synchronize];
+         
          NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
          [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
          [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
@@ -681,6 +705,16 @@ FBLoginViewDelegate
     [UIView animateWithDuration:0.3 animations:^{
         [self.scrollView setFrame:self.view.bounds];
     }];
+}
+-(NSDictionary *)getEmail
+{
+    NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
+    NSString *email = [[NSUserDefaults standardUserDefaults] stringForKey:kRememberedEmail];
+    if(VALID_NOTEMPTY(email, NSString))
+    {
+        [values setObject:email forKey:@"email"];
+    }
+    return values;
 }
 
 @end

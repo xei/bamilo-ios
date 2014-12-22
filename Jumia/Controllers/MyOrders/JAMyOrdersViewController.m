@@ -1,14 +1,16 @@
 //
-//  JATrackMyOrderViewController.m
+//  JAMyOrdersViewController.m
 //  Jumia
 //
 //  Created by Miguel Chaves on 30/Jul/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
-#import "JATrackMyOrderViewController.h"
+#import "JAMyOrdersViewController.h"
+#import "JAPickerScrollView.h"
 #import "JATextFieldComponent.h"
 #import "RIOrder.h"
+#import "RICustomer.h"
 
 #define kMyOrderViewTag 999
 
@@ -17,56 +19,85 @@ typedef NS_ENUM(NSUInteger, RITrackOrderRequestState) {
     RITrackOrderRequestDone = 1
 };
 
-@interface JATrackMyOrderViewController ()
+@interface JAMyOrdersViewController ()
 <
-UITextFieldDelegate
+UITextFieldDelegate,
+JAPickerScrollViewDelegate
 >
 
-//@property (weak, nonatomic) IBOutlet UIView *topView;
-//@property (weak, nonatomic) IBOutlet UILabel *trackOrderLabel;
-//@property (weak, nonatomic) IBOutlet UIImageView *imageViewLine;
-//@property (weak, nonatomic) IBOutlet UITextField *orderTextField;
-//@property (weak, nonatomic) IBOutlet UIButton *buttonTrack;
-//@property (weak, nonatomic) IBOutlet UILabel *labelAsterisco;
-//@property (weak, nonatomic) IBOutlet UIImageView *imageViewTextField;
-//@property (weak, nonatomic) IBOutlet UIView *variableView;
-//@property (weak, nonatomic) IBOutlet UILabel *orderIdLabel;
-//@property (weak, nonatomic) IBOutlet UIImageView *lineImageView;
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *variableViewHeightConstraint;
-
+@property (weak, nonatomic) IBOutlet JAPickerScrollView *myOrdersPickerScrollView;
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
+
+@property (strong, nonatomic) NSArray* sortList;
+
+@property (strong, nonatomic) UIScrollView *firstScrollView;
+@property (strong, nonatomic) UIScrollView *secondScrollView;
+
+@property (assign, nonatomic) BOOL animatedScroll;
+
+// Track Order
 @property (strong, nonatomic) UIView *trackOrderView;
 @property (strong, nonatomic) UILabel *trackOrderLabel;
 @property (strong, nonatomic) UIView *trackOrderSeparator;
 @property (strong, nonatomic) JATextFieldComponent *trackOrderTextField;
 @property (strong, nonatomic) UIButton *trackOrderButton;
-@property (strong, nonatomic) UIScrollView *landscapeScrollView;
 @property (strong, nonatomic) UIView *myOrderView;
 @property (strong, nonatomic) UILabel *myOrderViewLabel;
 @property (strong, nonatomic) UIView *myOrderViewSeparator;
 @property (strong, nonatomic) UILabel *myOrderHintLabel;
-
 @property (assign, nonatomic) RITrackOrderRequestState trackOrderRequestState;
 @property (strong, nonatomic) RITrackOrder *trackingOrder;
 
+// Empty order history
+@property (strong, nonatomic) UIView *emptyOrderHistoryView;
+@property (strong, nonatomic) UIImageView *emptyOrderHistoryImageView;
+@property (strong, nonatomic) UILabel *emptyOrderHistoryLabel;
+
+// Order history
+
+
 @end
 
-@implementation JATrackMyOrderViewController
+@implementation JAMyOrdersViewController
 
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.animatedScroll = YES;
+    
+    self.screenName = @"TrackOrder";
     
     self.trackingOrder = nil;
     self.trackOrderRequestState = RITrackOrderRequestNotDone;
     
     self.navBarLayout.showLogo = NO;
-    self.navBarLayout.title = STRING_ORDER_STATUS;
+    self.navBarLayout.title = STRING_MY_ORDERS;
     
-    self.contentScrollView.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.contentScrollView setFrame:self.view.frame];
+    [self.contentScrollView setPagingEnabled:YES];
+    [self.contentScrollView setScrollEnabled:NO];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+                                                        object:nil];
+    
+    self.firstScrollView = [[UIScrollView alloc] initWithFrame:self.contentScrollView.frame];
+    [self.contentScrollView addSubview:self.firstScrollView];
+    
+    self.sortList = [NSArray arrayWithObjects:STRING_ORDER_TRACKING, STRING_MY_ORDER_HISTORY, nil];
+    
+    self.contentScrollView.contentSize = CGSizeMake(self.view.frame.size.width * [self.sortList count], self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height);
     
     self.trackOrderView = [[UIView alloc] initWithFrame:CGRectZero];
     self.trackOrderView.layer.cornerRadius = 5.0f;
@@ -94,7 +125,7 @@ UITextFieldDelegate
     [self.trackOrderButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.trackOrderView addSubview:self.trackOrderButton];
     
-    [self.contentScrollView addSubview:self.trackOrderView];
+    [self.firstScrollView addSubview:self.trackOrderView];
     
     self.myOrderView = [[UIView alloc] initWithFrame:CGRectZero];
     self.myOrderView.layer.cornerRadius = 5.0f;
@@ -118,19 +149,32 @@ UITextFieldDelegate
     [self.myOrderHintLabel setBackgroundColor:[UIColor clearColor]];
     [self.myOrderView addSubview:self.myOrderHintLabel];
     
-    self.screenName = @"TrackOrder";
-}
+    self.emptyOrderHistoryView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.emptyOrderHistoryView.layer.cornerRadius = 5.0f;
+    [self.emptyOrderHistoryView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.contentScrollView addSubview:self.emptyOrderHistoryView];
+    
+    UIImage *emptyOrderImage = [UIImage imageNamed:@"noOrdersImage"];
+    self.emptyOrderHistoryImageView = [[UIImageView alloc] initWithImage:emptyOrderImage];
+    [self.emptyOrderHistoryImageView setFrame:CGRectZero];
+    [self.emptyOrderHistoryView addSubview:self.emptyOrderHistoryImageView];
+    
+    self.emptyOrderHistoryLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    [self.emptyOrderHistoryLabel setNumberOfLines:0];
+    [self.emptyOrderHistoryLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:15.0f]];
+    [self.emptyOrderHistoryLabel setTextColor:UIColorFromRGB(0xcccccc)];
+    [self.emptyOrderHistoryLabel setText:STRING_NO_ORDERS];
+    [self.emptyOrderHistoryLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.emptyOrderHistoryLabel setBackgroundColor:[UIColor clearColor]];
+    [self.emptyOrderHistoryView addSubview:self.emptyOrderHistoryLabel];
 
-- (void) viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+    [self setupOrderTrackingViews:self.view.frame.size.width height:self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height interfaceOrientation:self.interfaceOrientation];
     
-    [self setupViews:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+    self.myOrdersPickerScrollView.delegate = self;
+    self.myOrdersPickerScrollView.startingIndex = self.selectedIndex;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(hideKeyboard)
-                                                 name:kOpenMenuNotification
-                                               object:nil];
+    //this will trigger load methods
+    [self.myOrdersPickerScrollView setOptions:self.sortList];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -141,20 +185,36 @@ UITextFieldDelegate
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    [self.contentScrollView setHidden:YES];
+    
+    self.selectedIndex = self.myOrdersPickerScrollView.selectedIndex;
+    
     [self showLoading];
+    
+    self.myOrdersPickerScrollView.startingIndex = self.selectedIndex;
     
     CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     CGFloat newHeight = self.view.frame.size.width - self.view.frame.origin.y;
-    [self setupViews:newWidth height:newHeight interfaceOrientation:toInterfaceOrientation];
+    [self setupOrderTrackingViews:newWidth height:newHeight interfaceOrientation:toInterfaceOrientation];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self setupViews:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+    self.contentScrollView.contentSize = CGSizeMake(self.view.frame.size.width * [self.sortList count], self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height);
+    
+    [self setupOrderTrackingViews:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+    
+    self.animatedScroll = NO;
+    
+    [self selectedIndex:self.selectedIndex];
+    
+    [self.myOrdersPickerScrollView setNeedsLayout];
     
     [self hideLoading];
+    
+    [self.contentScrollView setHidden:NO];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
@@ -164,12 +224,62 @@ UITextFieldDelegate
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark Swipe Actions
+- (IBAction)swipeRight:(id)sender
+{
+    //    [self removeNotifications];
+    [self.myOrdersPickerScrollView scrollRightAnimated:YES];
+}
+
+- (IBAction)swipeLeft:(id)sender
+{
+    //    [self removeNotifications];
+    [self.myOrdersPickerScrollView scrollLeftAnimated:YES];
+}
+
 - (void) hideKeyboard
 {
     [self.trackOrderTextField.textField resignFirstResponder];
 }
-#pragma mark - Actions
 
+#pragma mark JAPickerScrollView
+- (void)selectedIndex:(NSInteger)index
+{
+    // Track Order
+    if(0 == index)
+    {
+        [self.contentScrollView scrollRectToVisible:CGRectMake(index * self.contentScrollView.frame.size.width,
+                                                               0.0f,
+                                                               self.contentScrollView.frame.size.width,
+                                                               self.contentScrollView.frame.size.height) animated:self.animatedScroll];
+    }
+    // Order history
+    else if(1 == index)
+    {
+        if([RICustomer checkIfUserIsLogged])
+        {
+            [self.contentScrollView scrollRectToVisible:CGRectMake(index * self.contentScrollView.frame.size.width,
+                                                                   0.0f,
+                                                                   self.contentScrollView.frame.size.width,
+                                                                   self.contentScrollView.frame.size.height) animated:self.animatedScroll];
+        }
+        else
+        {
+            NSNotification *nextNotification = [NSNotification notificationWithName:kShowMyOrdersScreenNotification object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:index] forKey:@"selected_index"]];
+            
+            NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
+            [userInfo setObject:nextNotification forKey:@"notification"];
+            [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"from_side_menu"];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
+                                                                object:nil
+                                                              userInfo:userInfo];
+        }
+    }
+    self.animatedScroll = YES;
+}
+
+#pragma mark - Actions
 - (IBAction)trackOrder:(id)sender
 {
     [self.view endEditing:YES];
@@ -360,15 +470,15 @@ UITextFieldDelegate
                                         self.myOrderView.frame.size.width,
                                         startingY);
     
-    if(VALID_NOTEMPTY(self.landscapeScrollView, UIScrollView))
+    if(VALID_NOTEMPTY(self.secondScrollView, UIScrollView))
     {
-        self.landscapeScrollView.contentSize = CGSizeMake(self.landscapeScrollView.frame.size.width,
-                                                          CGRectGetMaxY(self.myOrderView.frame) + 6.0f);
+        self.secondScrollView.contentSize = CGSizeMake(self.secondScrollView.frame.size.width,
+                                                       CGRectGetMaxY(self.myOrderView.frame) + 6.0f);
     }
     else
     {
-        self.contentScrollView.contentSize = CGSizeMake(self.contentScrollView.frame.size.width,
-                                                        CGRectGetMaxY(self.myOrderView.frame) + 6.0f);
+        self.firstScrollView.contentSize = CGSizeMake(self.firstScrollView.frame.size.width,
+                                                      CGRectGetMaxY(self.myOrderView.frame) + 6.0f);
     }
 }
 
@@ -400,13 +510,13 @@ UITextFieldDelegate
     CGFloat noResultsWidth = self.myOrderView.frame.size.width - (2 * noResultsHorizontalMargin);
     
     CGRect noResultsLabelRect = [noResultsLabel.text boundingRectWithSize:CGSizeMake(noResultsWidth, 1000.0f)
-                                                                          options:NSStringDrawingUsesLineFragmentOrigin
-                                                                       attributes:@{NSFontAttributeName:noResultsLabel.font} context:nil];
+                                                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                                               attributes:@{NSFontAttributeName:noResultsLabel.font} context:nil];
     
     if(noResultsLabelRect.size.height + (2 * noResultsVerticalMargin) > self.trackOrderView.frame.size.height)
     {
         [noResultsLabel setFrame:CGRectMake((self.myOrderView.frame.size.width - noResultsLabelRect.size.width) / 2,
-                                             CGRectGetMaxY(self.myOrderViewSeparator.frame) + noResultsVerticalMargin,
+                                            CGRectGetMaxY(self.myOrderViewSeparator.frame) + noResultsVerticalMargin,
                                             noResultsLabelRect.size.width,
                                             ceilf(noResultsLabelRect.size.height))];
         
@@ -430,21 +540,21 @@ UITextFieldDelegate
                                               self.trackOrderView.frame.size.height)];
     }
     
-    if(VALID_NOTEMPTY(self.landscapeScrollView, UIScrollView))
+    if(VALID_NOTEMPTY(self.secondScrollView, UIScrollView))
     {
-        self.landscapeScrollView.contentSize = CGSizeMake(self.landscapeScrollView.frame.size.width,
-                                                          CGRectGetMaxY(self.myOrderView.frame) + 6.0f);
+        self.secondScrollView.contentSize = CGSizeMake(self.secondScrollView.frame.size.width,
+                                                       CGRectGetMaxY(self.myOrderView.frame) + 6.0f);
     }
     else
     {
-        self.contentScrollView.contentSize = CGSizeMake(self.contentScrollView.frame.size.width,
-                                                        CGRectGetMaxY(self.myOrderView.frame) + 6.0f);
+        self.firstScrollView.contentSize = CGSizeMake(self.firstScrollView.frame.size.width,
+                                                      CGRectGetMaxY(self.myOrderView.frame) + 6.0f);
     }
 }
 
 #pragma mark - Init elements
 
-- (void)setupViews:(CGFloat)width height:(CGFloat)height interfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (void)setupOrderTrackingViews:(CGFloat)width height:(CGFloat)height interfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     CGFloat horizontalMargin = 6.0f;
     CGFloat verticalMargin = 6.0f;
@@ -453,28 +563,28 @@ UITextFieldDelegate
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(interfaceOrientation))
     {
         viewsWidth = (width - (3 * horizontalMargin)) / 2;
-        self.landscapeScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(horizontalMargin + viewsWidth + horizontalMargin,
-                                                                                  0.0f,
-                                                                                  viewsWidth,
-                                                                                  height)];
-        [self.view addSubview:self.landscapeScrollView];
+        self.secondScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(horizontalMargin + viewsWidth + horizontalMargin,
+                                                                               0.0f,
+                                                                               viewsWidth,
+                                                                               height)];
+        [self.contentScrollView addSubview:self.secondScrollView];
     }
     else
     {
-        if(VALID_NOTEMPTY(self.landscapeScrollView, UIScrollView))
+        if(VALID_NOTEMPTY(self.secondScrollView, UIScrollView))
         {
             [self.myOrderHintLabel removeFromSuperview];
             [self.myOrderView removeFromSuperview];
             
-            [self.landscapeScrollView removeFromSuperview];
-            self.landscapeScrollView = nil;
+            [self.secondScrollView removeFromSuperview];
+            self.secondScrollView = nil;
         }
     }
     
-    [self.contentScrollView setFrame:CGRectMake(horizontalMargin,
-                                                0.0f,
-                                                viewsWidth,
-                                                height)];
+    [self.firstScrollView setFrame:CGRectMake(horizontalMargin,
+                                              0.0f,
+                                              viewsWidth,
+                                              height)];
     
     CGFloat trackOrderViewWidth = viewsWidth;
     
@@ -523,8 +633,8 @@ UITextFieldDelegate
                                              trackOrderViewWidth,
                                              CGRectGetMaxY(self.trackOrderButton.frame) + 6.0f)];
     
-    self.contentScrollView.contentSize = CGSizeMake(self.contentScrollView.frame.size.width,
-                                                    CGRectGetMaxY(self.trackOrderView.frame) + 6.0f);
+    self.firstScrollView.contentSize = CGSizeMake(self.firstScrollView.frame.size.width,
+                                                  CGRectGetMaxY(self.trackOrderView.frame) + 6.0f);
     
     [self.myOrderViewLabel setFrame:CGRectMake(horizontalMargin,
                                                0.0f,
@@ -536,7 +646,7 @@ UITextFieldDelegate
                                                    trackOrderViewWidth,
                                                    1.0f)];
     
-    if(VALID_NOTEMPTY(self.landscapeScrollView, self.myOrderView))
+    if(VALID_NOTEMPTY(self.secondScrollView, self.myOrderView))
     {
         [self.myOrderHintLabel setTag:kMyOrderViewTag];
         CGFloat myOrderViewHeight = CGRectGetMaxY(self.trackOrderButton.frame) + 6.0f;
@@ -551,7 +661,7 @@ UITextFieldDelegate
                                               trackOrderViewWidth,
                                               myOrderViewHeight)];
         [self.myOrderView setHidden:NO];
-        [self.landscapeScrollView addSubview:self.myOrderView];
+        [self.secondScrollView addSubview:self.myOrderView];
     }
     else
     {
@@ -560,7 +670,7 @@ UITextFieldDelegate
                                               CGRectGetMaxY(self.trackOrderView.frame) + 6.0f,
                                               trackOrderViewWidth,
                                               27.0f)];
-        [self.contentScrollView addSubview:self.myOrderView];
+        [self.firstScrollView addSubview:self.myOrderView];
     }
     
     if(RITrackOrderRequestDone == self.trackOrderRequestState)
@@ -574,6 +684,70 @@ UITextFieldDelegate
             [self builContentForNoResult];
         }
     }
+    
+    [self setupEmptyOrderHistoryViews:width height:height interfaceOrientation:interfaceOrientation];
+}
+
+- (void)setupEmptyOrderHistoryViews:(CGFloat)width height:(CGFloat)height interfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    CGFloat emptyOrderHistoryViewHorizontalMargin = 6.0f;
+    CGFloat emptyOrderHistoryViewVerticalMargin = 6.0f;
+    CGFloat emptyOrderHistoryViewMinHeight = 200.0f;
+    CGFloat emptyOrderHistoryViewInnerHorizontaMargin = 6.0f;
+    CGFloat emptyOrderHistoryViewInnerVerticalMargin = 20.0f;
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        emptyOrderHistoryViewMinHeight = 300.0f;
+        if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
+        {
+            emptyOrderHistoryViewInnerHorizontaMargin = 60.0f;
+        }
+    }
+    
+    // This layout should start on the second page of the scrollview
+    CGFloat startingX = width;
+    [self.emptyOrderHistoryView setFrame:CGRectMake(startingX + emptyOrderHistoryViewHorizontalMargin,
+                                                    emptyOrderHistoryViewVerticalMargin,
+                                                    width - (2 * emptyOrderHistoryViewHorizontalMargin),
+                                                    0.0f)];
+    
+    CGFloat emptyOrderViewActualSize = 0.0f;
+    UIImage *emptyOrderImage = [UIImage imageNamed:@"noOrdersImage"];
+    emptyOrderViewActualSize += emptyOrderImage.size.height;
+    
+    
+    CGRect emptyOrderHistoryLabelRect = [self.emptyOrderHistoryLabel.text boundingRectWithSize:CGSizeMake(self.emptyOrderHistoryView.frame.size.width - (2 * emptyOrderHistoryViewInnerHorizontaMargin), 1000.0f)
+                                                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                                                    attributes:@{NSFontAttributeName:self.emptyOrderHistoryLabel.font} context:nil];
+    emptyOrderViewActualSize += ceilf(emptyOrderHistoryLabelRect.size.height) + 10.0f;
+    
+    
+    CGFloat emptyOrderHistoryViewStartY = emptyOrderHistoryViewInnerVerticalMargin;
+    if(emptyOrderViewActualSize + (2 * emptyOrderHistoryViewInnerVerticalMargin) < emptyOrderHistoryViewMinHeight)
+    {
+        emptyOrderHistoryViewStartY = (emptyOrderHistoryViewMinHeight - emptyOrderViewActualSize) / 2;
+        emptyOrderViewActualSize = emptyOrderHistoryViewMinHeight;
+    }
+    else
+    {
+        emptyOrderViewActualSize += (2 * emptyOrderHistoryViewInnerVerticalMargin);
+    }
+    
+    [self.emptyOrderHistoryView setFrame:CGRectMake(startingX +emptyOrderHistoryViewHorizontalMargin,
+                                                    emptyOrderHistoryViewVerticalMargin,
+                                                    width - (2 * emptyOrderHistoryViewHorizontalMargin),
+                                                    emptyOrderViewActualSize)];
+    
+    [self.emptyOrderHistoryImageView setFrame:CGRectMake((self.emptyOrderHistoryView.frame.size.width - emptyOrderImage.size.width) / 2,
+                                                         emptyOrderHistoryViewStartY,
+                                                         emptyOrderImage.size.width,
+                                                         emptyOrderImage.size.height)];
+    
+    [self.emptyOrderHistoryLabel setFrame:CGRectMake(emptyOrderHistoryViewInnerHorizontaMargin,
+                                                     CGRectGetMaxY(self.emptyOrderHistoryImageView.frame) + 10.0f,
+                                                     self.emptyOrderHistoryView.frame.size.width - (2 * emptyOrderHistoryViewInnerHorizontaMargin),
+                                                     ceilf(emptyOrderHistoryLabelRect.size.height))];
 }
 
 @end

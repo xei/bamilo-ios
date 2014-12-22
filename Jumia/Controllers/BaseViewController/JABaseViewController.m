@@ -11,6 +11,7 @@
 #import "JANoConnectionView.h"
 #import "JAMaintenancePage.h"
 #import "JAFallbackView.h"
+#import "JASearchView.h"
 
 @interface JABaseViewController ()
 
@@ -20,6 +21,7 @@
 @property (strong, nonatomic) JANoConnectionView *noConnectionView;
 @property (strong, nonatomic) JAMessageView *messageView;
 @property (strong, nonatomic) JAMaintenancePage *maintenancePage;
+@property (nonatomic, strong) JASearchView* searchView;
 
 @end
 
@@ -84,10 +86,18 @@
 {
     [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:toInterfaceOrientation];
     
+    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     if(VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)){
         
-        UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+        
         [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.height, window.frame.size.width) orientation:toInterfaceOrientation];
+    }
+    
+    if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
+        [self.searchView resetFrame:CGRectMake(window.frame.origin.y,
+                                               window.frame.origin.x,
+                                               window.frame.size.height,
+                                               window.frame.size.width)];
     }
 }
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation
@@ -142,10 +152,16 @@
                                                  screenHeight);
         [self.view bringSubviewToFront:self.noConnectionView];
     }
+    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     if(VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)){
         
-        UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
         [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height)orientation:self.interfaceOrientation];
+    }
+    if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
+        [self.searchView resetFrame:CGRectMake(window.frame.origin.x,
+                                               window.frame.origin.y,
+                                               window.frame.size.width,
+                                               window.frame.size.height)];
     }
 }
 
@@ -157,6 +173,20 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
                                                         object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSearchView)
+                                                 name:kDidPressSearchButtonNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kDidPressSearchButtonNotification
+                                                  object:nil];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -173,6 +203,16 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification
                                                         object:self.navBarLayout];
+}
+
+- (void)showSearchView
+{
+    UIView* window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
+    if (self.searchView) {
+        [self.searchView removeFromSuperview];
+    }
+    self.searchView = [[JASearchView alloc] initWithFrame:window.bounds];
+    [window addSubview:self.searchView];
 }
 
 - (void) showLoading

@@ -269,3 +269,14 @@
 
 "product_outof_stock" = "Item is out of stock";
 "products_outof_stock" = "Items are out of stock";
+
+"login_remember_user_email" = "Remember my email";
+
+"my_orders_label" = "My Orders";
+"my_order_history_label" = "My Order History";
+"my_order_tracking_label" = "Order Tracking";
+"my_order_details_label" = "Order Details";
+"my_order_number_label" = "Nr.";
+"my_order_date_label" = "Date:";
+"my_order_quantity_label" = "Qty.";
+"my_order_no_orders_label" = "You have placed no orders.";

@@ -54,87 +54,104 @@ UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.sourceCategoriesArray.count + 1;
+    CGFloat total = self.categories.count + 1;//add one for title
+    if (VALID_NOTEMPTY(self.currentCategory, RICategory)) {
+        total++;
+    }
+    return total;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    UITableViewCell *cell;
+    return [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *cellIdentifier = @"cell";
     
-    if (0 == indexPath.row) {
-        
-        cell = [tableView dequeueReusableCellWithIdentifier:@"parentCategoryCell"];
-        
-        cell.backgroundColor = UIColorFromRGB(0xf2f2f2);
-        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
-        cell.textLabel.backgroundColor = [UIColor clearColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        //remove the clickable view
-        for (UIView* view in cell.subviews) {
-            if ([view isKindOfClass:[JAClickableView class]]) {
-                [view removeFromSuperview];
-            }
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (ISEMPTY(cell)) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    for (UIView* view in cell.subviews) {
+        if ([view isKindOfClass:[JAClickableView class]] || -1 == view.tag) { //remove the clickable view or separator
+            [view removeFromSuperview];
         }
-        //add the new clickable view
-        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-        clickView.tag = indexPath.row;
-        [cell addSubview:clickView];
-        [clickView addTarget:self
-                      action:@selector(cellWasPressed:)
-            forControlEvents:UIControlEventTouchUpInside];
-        
-        if (VALID_NOTEMPTY(self.parentCategory, RICategory)) {
-            
-            cell.textLabel.text = [self.parentCategory.name uppercaseString];
+    }
+    //add the new clickable view
+    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+    clickView.tag = indexPath.row;
+    [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [cell addSubview:clickView];
+    
+    
+    //add the new separator
+    UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                 43.0f,
+                                                                 self.view.frame.size.width,
+                                                                 1)];
+    separator.tag = -1;
+    separator.backgroundColor = JALabelGrey;
+    [cell addSubview:separator];
+    
+    NSInteger realIndex = indexPath.row;
+    
+    NSString* backCellTitle = STRING_BACK;
+    if (VALID_NOTEMPTY(self.backTitle, NSString)) {
+        backCellTitle = self.backTitle;
+    }
+    //ALWAYS has back cell
+    if (0 == realIndex) {
+        //this is the back cell
+        cell.textLabel.text = backCellTitle;
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:17.0f];
+        cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        [cell.imageView setImage:[UIImage imageNamed:@"btn_back"]];
+        return cell;
+    }
+    realIndex--;
+    
+    [cell.imageView setImage:nil];
+    
+    if (VALID_NOTEMPTY(self.currentCategory, RICategory)) {
+        //has current category
+        if (0 == realIndex) {
+            //this is the current category cell
+            cell.textLabel.text = self.currentCategory.name;
+            cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0f];
             cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
-        } else {
-            
-            cell.textLabel.text = [STRING_CATEGORIES uppercaseString];
-            cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
-            clickView.enabled = NO;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            return cell;
         }
     } else {
-        
-        for (UIView* view in cell.subviews) {
-            if (69 == view.tag) {
-                [view removeFromSuperview];
-            }
+        //does not have current category
+        if (0 == realIndex) {
+            //this is the current category cell
+            cell.textLabel.text = [STRING_CATEGORIES uppercaseString];
+            cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+            cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            clickView.enabled = NO;
+            [clickView removeFromSuperview];
+            return cell;
         }
-        
-        NSInteger realIndex = indexPath.row - 1;
-        
-        cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-        
-        RICategory *category = [self.sourceCategoriesArray objectAtIndex:realIndex];
-        
-        cell.textLabel.text = category.name;
-        
-        if (category.children.count > 0) {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-        
-        UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                     43.0f,
-                                                                     cell.frame.size.width,
-                                                                     1)];
-        separator.tag = 69;
-        separator.backgroundColor = JALabelGrey;
-        [cell addSubview:separator];
-        
-        //remove the clickable view
-        for (UIView* view in cell.subviews) {
-            if ([view isKindOfClass:[JAClickableView class]]) {
-                [view removeFromSuperview];
-            }
-        }
-        //add the new clickable view
-        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-        clickView.tag = indexPath.row;
-        [cell addSubview:clickView];
-        [clickView addTarget:self
-                      action:@selector(cellWasPressed:)
-            forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    realIndex--;
+    
+    RICategory* category = [self.categories objectAtIndex:realIndex];
+    
+    cell.textLabel.text = category.name;
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
+    cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    if (VALID_NOTEMPTY(category.children, NSOrderedSet)) {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
     return cell;
@@ -146,69 +163,75 @@ UITableViewDelegate
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{    
-    if (0 == indexPath.row) {
+{
+    NSInteger realIndex = indexPath.row;
+    NSString* backButtonTitle = [STRING_CATEGORIES uppercaseString];
+    
+    //ALWAYS has back cell
+    if (0 == realIndex) {
+        //this is the back cell
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+    realIndex--;
+    
+    if (VALID_NOTEMPTY(self.currentCategory, RICategory)) {
+        //has current category
         
-        if (VALID_NOTEMPTY(self.parentCategory, RICategory)) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
-                                                                object:@{@"category":self.parentCategory}];
+        if (0 == realIndex) {
+            //this is the current category cell
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCategoryFromCenterPanelNotification
+                                                                object:@{@"category":self.currentCategory}];
+            return;
         }
+        backButtonTitle = self.currentCategory.name;
     } else {
-        NSInteger realIndex = indexPath.row - 1;
-        
-        RICategory *category = [self.sourceCategoriesArray objectAtIndex:realIndex];
-        
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        if(ISEMPTY(category.parent))
-        {
-            [trackingDictionary setObject:[RICategory getTopCategory:category] forKey:kRIEventTopCategoryKey];
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTopCategory]
-                                                      data:[trackingDictionary copy]];
-        }
-
-        trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:category.name forKey:kRIEventLabelKey];
-        [trackingDictionary setValue:@"Categories" forKey:kRIEventActionKey];
-        [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCategories]
-                                                  data:[trackingDictionary copy]];
-        
-        if (VALID(category, RICategory) && category.children.count > 0) {
-            
-            UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main"
-                                                            bundle:nil];
-            
-            JASubCategoriesViewController *newSubCategories = [story instantiateViewControllerWithIdentifier:@"subCategoriesViewController"];
-            newSubCategories.sourceCategoriesArray = category.children.array;
-            newSubCategories.parentCategory = category;
-            
-            [self.navigationController pushViewController:newSubCategories
-                                                 animated:YES];
-        } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
-                                                                object:@{@"category":category}];
+        if (0 == realIndex) {
+            //do nothing
+            return;
         }
     }
-}
+    
+    realIndex--;
+    
+    RICategory* category = [self.categories objectAtIndex:realIndex];
+    
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    if(ISEMPTY(category.parent))
+    {
+        [trackingDictionary setObject:[RICategory getTopCategory:category] forKey:kRIEventTopCategoryKey];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTopCategory]
+                                                  data:[trackingDictionary copy]];
+    }
+    
+    trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:category.name forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"Categories" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCategories]
+                                              data:[trackingDictionary copy]];
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 30.0f;
-//}
-//
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sectionHeader"];
-//
-//    cell.textLabel.text = self.subCategoriesTitle;
-//
-//    return cell;
-//}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    return [[UIView alloc] initWithFrame:CGRectZero];
+    
+    if (VALID_NOTEMPTY(category.children, NSOrderedSet)) {
+        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main"
+                                                        bundle:nil];
+        
+        JASubCategoriesViewController *newSubCategories = [story instantiateViewControllerWithIdentifier:@"subCategoriesViewController"];
+        newSubCategories.categories = category.children.array;
+        newSubCategories.currentCategory = category;
+        if (VALID_NOTEMPTY(self.currentCategory, RICategory)) {
+            newSubCategories.backTitle = self.currentCategory.name;
+        } else {
+            newSubCategories.backTitle = STRING_CATEGORIES;
+        }
+        
+        [self.navigationController pushViewController:newSubCategories
+                                             animated:YES];
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
+                                                            object:@{@"category":category}];
+    }
 }
 
 @end

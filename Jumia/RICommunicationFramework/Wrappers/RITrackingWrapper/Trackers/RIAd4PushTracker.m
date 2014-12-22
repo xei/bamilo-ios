@@ -750,7 +750,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             else if ([key isEqualToString:@"o"])
             {
                 // Order overview
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowTrackOrderScreenNotification
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification
                                                                     object:nil];
             }
             else if ([key isEqualToString:@"l"])

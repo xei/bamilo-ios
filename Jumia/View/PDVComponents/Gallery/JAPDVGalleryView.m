@@ -181,7 +181,6 @@ UIScrollViewDelegate
                                                                        self.bounds.size.width,
                                                                        10.0f)];
     self.pageControl.numberOfPages = source.count;
-    self.pageControl.hidesForSinglePage = YES; //has to be set AFTER the numberOfPages
     [self addSubview:self.pageControl];
     self.pageControl.currentPage = self.index;
 }

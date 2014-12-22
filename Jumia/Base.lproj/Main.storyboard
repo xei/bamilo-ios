@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
         <!--Load Country View Controller-->
@@ -61,39 +60,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="parentCategoryCell" id="wTS-TD-s4F">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wTS-TD-s4F" id="mLP-5p-zSW">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4gk-7c-cWR">
-                                                    <rect key="frame" x="0.0" y="43" width="320" height="1"/>
-                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                                </view>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="EyF-PU-wmr" rowHeight="44" style="IBUITableViewCellStyleDefault" id="3ma-Tk-9ay">
-                                        <rect key="frame" x="0.0" y="52" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3ma-Tk-9ay" id="8WI-Jf-en2">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EyF-PU-wmr">
-                                                    <rect key="frame" x="15" y="0.0" width="290" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                                    <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="XR4-T4-6LA" id="cxX-Za-uhR"/>
                                     <outlet property="delegate" destination="XR4-T4-6LA" id="7Kc-oC-8f6"/>
@@ -502,7 +468,7 @@
         <!--Side Menu Navigation Controller-->
         <scene sceneID="euH-wI-leh">
             <objects>
-                <navigationController storyboardIdentifier="menuViewController" automaticallyAdjustsScrollViewInsets="NO" id="tA5-pZ-pB4" userLabel="Side Menu Navigation Controller" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="menuViewController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="tA5-pZ-pB4" userLabel="Side Menu Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UvQ-KB-VPd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -820,10 +786,10 @@
             </objects>
             <point key="canvasLocation" x="2116" y="401"/>
         </scene>
-        <!--Track My Order View Controller-->
+        <!--My Orders View Controller-->
         <scene sceneID="5kL-8W-mV7">
             <objects>
-                <viewController storyboardIdentifier="jaTrackOrderViewController" id="OuJ-bo-0Lu" customClass="JATrackMyOrderViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="jAMyOrdersViewController" automaticallyAdjustsScrollViewInsets="NO" id="OuJ-bo-0Lu" customClass="JAMyOrdersViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jOZ-WU-rcC"/>
                         <viewControllerLayoutGuide type="bottom" id="MpL-2G-7Ky"/>
@@ -832,19 +798,50 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nAe-nT-yWu">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yh6-Xi-6O0" customClass="JAPickerScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="tWb-Ze-EyK"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nAe-nT-yWu">
+                                <rect key="frame" x="0.0" y="44" width="320" height="460"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="nAe-nT-yWu" firstAttribute="leading" secondItem="ahg-dq-Nw3" secondAttribute="leading" id="FLi-vQ-EEm"/>
+                            <constraint firstItem="yh6-Xi-6O0" firstAttribute="top" secondItem="jOZ-WU-rcC" secondAttribute="bottom" id="FUy-F5-sv6"/>
+                            <constraint firstItem="nAe-nT-yWu" firstAttribute="top" secondItem="yh6-Xi-6O0" secondAttribute="bottom" id="JlT-NP-plH"/>
+                            <constraint firstItem="yh6-Xi-6O0" firstAttribute="leading" secondItem="ahg-dq-Nw3" secondAttribute="leading" id="Kqd-Fq-7kM"/>
+                            <constraint firstAttribute="trailing" secondItem="nAe-nT-yWu" secondAttribute="trailing" id="Rna-2Q-EDU"/>
+                            <constraint firstAttribute="bottom" secondItem="nAe-nT-yWu" secondAttribute="bottom" id="bU8-H6-5YN"/>
+                            <constraint firstAttribute="trailing" secondItem="yh6-Xi-6O0" secondAttribute="trailing" id="fHi-cA-lOC"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="PuN-hw-EgW" appends="YES" id="Yzq-hi-Mwe"/>
+                            <outletCollection property="gestureRecognizers" destination="yAz-ve-ZIs" appends="YES" id="Sbe-Gt-1Lg"/>
+                        </connections>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="PAc-zn-YgL"/>
                     <connections>
                         <outlet property="contentScrollView" destination="nAe-nT-yWu" id="e35-Gq-UPb"/>
+                        <outlet property="myOrdersPickerScrollView" destination="yh6-Xi-6O0" id="83Q-UI-JNG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F8P-XE-SZ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="PuN-hw-EgW" userLabel="Left Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="swipeLeft:" destination="OuJ-bo-0Lu" id="P6u-gV-BtA"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="yAz-ve-ZIs" userLabel="Right Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="swipeRight:" destination="OuJ-bo-0Lu" id="8z3-Et-c3k"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2512" y="924"/>
         </scene>

@@ -74,6 +74,7 @@ FBLoginViewDelegate
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (assign, nonatomic) CGRect scrollViewOriginalFrame;
+@property (strong, nonatomic) JACheckBoxComponent* checkBoxComponent;
 @end
 
 @implementation JALoginViewController
@@ -178,7 +179,8 @@ FBLoginViewDelegate
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
            
-           self.loginDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:nil startingPosition:7.0f widthSize:self.loginView.frame.size.width];
+           self.loginDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:nil values:[self getEmail] startingPosition:7.0f];
+           
            self.loginFormHeight = 0.0f;
 
            for(UIView *view in self.loginDynamicForm.formViews)
@@ -383,7 +385,7 @@ FBLoginViewDelegate
     if(!self.loadFailed)
     {
         [self finishingSetupViews];
-        
+        [self.checkBoxComponent setHidden:YES];
         [self showLogin];
     }
     else
@@ -415,8 +417,17 @@ FBLoginViewDelegate
         componentWidth = 296.0f;
     }
     
+    self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
+    self.loginFormHeight += 10.0f;
+    [self.checkBoxComponent setFrame:CGRectMake(self.facebookLoginButton.frame.origin.x,
+                                                self.loginFormHeight,
+                                                self.checkBoxComponent.frame.size.width - 12.0f,
+                                                self.checkBoxComponent.frame.size.height)];
+    [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
+    [self.checkBoxComponent.switchComponent setOn:YES];
+    [self.loginFormView addSubview:self.checkBoxComponent];
+    self.loginFormHeight += self.checkBoxComponent.frame.size.height + 10.0f;
     
-    self.loginFormHeight += 15.0f;
     // Login
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
@@ -600,6 +611,7 @@ FBLoginViewDelegate
         } completion:^(BOOL finished) {
             [self.loginArrow setImage:[UIImage imageNamed:@"arrowOrangeOpened"]];
             [self.loginFormView setHidden:NO];
+            [self.checkBoxComponent setHidden:NO];
             self.isAnimationRunning = NO;
             [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.signUpView.frame)+6.0f)];
         }];
@@ -619,7 +631,7 @@ FBLoginViewDelegate
                                         6.0f,
                                         self.loginView.frame.size.width,
                                         26.0f)];
-    
+    [self.checkBoxComponent setHidden:YES];
     [self.loginArrow setImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
 }
 
@@ -795,6 +807,15 @@ FBLoginViewDelegate
     [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object) {
         
         RICustomer *customerObject = ((RICustomer *)object);
+        
+        if(self.checkBoxComponent.switchComponent.isOn)
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:customerObject.email forKey:kRememberedEmail];
+        }else
+        {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRememberedEmail];
+        }
+        [[NSUserDefaults standardUserDefaults] synchronize];
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
@@ -977,4 +998,14 @@ FBLoginViewDelegate
     }];
 }
 
+-(NSDictionary *)getEmail
+{
+    NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
+    NSString *email = [[NSUserDefaults standardUserDefaults] stringForKey:kRememberedEmail];
+    if(VALID_NOTEMPTY(email, NSString))
+    {
+        [values setObject:email forKey:@"email"];
+    }
+    return values;
+}
 @end
