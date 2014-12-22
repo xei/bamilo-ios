@@ -38,6 +38,8 @@
 "shopping_cart" = "Panier d\'achat";
 "navigation_cart_empty" = "Votre panier est vide";
 "string_vat_shipping_included" = "TVA et frais de port inclus";
+"catalog_no_results" = "Il n'y a pas de résultat pour votre criteria.\nRecherche pour une filtre moins générale.";
+"catalog_edit_filters" = "Modifier Filtres";
 
 "teaser_campaign_button_first_line" = "HOT";
 "teaser_campaign_button_second_line" = "OFFRES";
