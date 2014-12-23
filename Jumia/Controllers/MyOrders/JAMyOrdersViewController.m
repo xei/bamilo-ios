@@ -41,9 +41,10 @@ JAPickerScrollViewDelegate
 @property (strong, nonatomic) UIScrollView *firstScrollView;
 @property (strong, nonatomic) UIScrollView *secondScrollView;
 
-@property (strong, nonatomic) NSArray *orders;
+@property (strong, nonatomic) NSMutableArray *orders;
 @property (assign, nonatomic) NSInteger currentOrdersPage;
-@property (assign, nonatomic) NSInteger totalOrders;
+@property (assign, nonatomic) NSInteger ordersTotal;
+@property (assign, nonatomic) BOOL isLoadingOrders;
 
 @property (assign, nonatomic) BOOL animatedScroll;
 
@@ -85,7 +86,8 @@ JAPickerScrollViewDelegate
     [super viewDidLoad];
     
     self.currentOrdersPage = 0;
-    self.totalOrders = 0;
+    self.orders = [[NSMutableArray alloc] init];
+    self.ordersTotal = 0;
     self.animatedScroll = YES;
     
     self.screenName = @"TrackOrder";
@@ -209,18 +211,21 @@ JAPickerScrollViewDelegate
 
 - (void) loadOrders
 {
+    self.isLoadingOrders = YES;
     [self showLoading];
     
     [RIOrder getOrdersPage:[NSNumber numberWithInt:self.currentOrdersPage]
                   maxItems:[NSNumber numberWithInt:kOrdersPerPage]
           withSuccessBlock:^(NSArray *orders, NSInteger ordersTotal) {
-              self.orders = orders;
+              [self.orders addObjectsFromArray:orders];
+              self.ordersTotal = ordersTotal;
               
               [self.emptyOrderHistoryView setHidden:YES];
               [self.ordersCollectionView setHidden:NO];
               [self.ordersCollectionView reloadData];
               
-              CGFloat collectionHeight =  [JAMyOrderCell getCellHeight] * [orders count];
+              // 27.0f is the height of the header
+              CGFloat collectionHeight =  27.0f + [JAMyOrderCell getCellHeight] * [orders count];
               if(!(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)))
               {
                   if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && self.selectedOrderIndexPath.row < [self.orders count])
@@ -241,9 +246,11 @@ JAPickerScrollViewDelegate
                                                              self.ordersCollectionView.frame.size.width,
                                                              collectionHeight)];
               
+              self.isLoadingOrders = NO;
               [self hideLoading];
           }
            andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+               self.isLoadingOrders = NO;
                if(RIApiResponseMaintenancePage == apiResponse)
                {
                    [self showMaintenancePage:@selector(loadOrders) objects:nil];
@@ -360,7 +367,7 @@ JAPickerScrollViewDelegate
                     self.selectedOrderIndexPath = [NSIndexPath indexPathForItem:0 inSection:0];
                     [self setupOrderDetailView:self.ordersCollectionView.frame.size.width interfaceOrientation:self.interfaceOrientation];
                 }
-
+                
                 [self.emptyOrderHistoryView setHidden:YES];
                 [self.ordersCollectionView setHidden:NO];
                 [self.ordersCollectionView reloadData];
@@ -807,7 +814,8 @@ JAPickerScrollViewDelegate
         // can have
         CGFloat maxCollectionHeight = height - self.myOrdersPickerScrollView.frame.size.height  - (2 * orderHistoryViewVerticalMargin);
         
-        collectionHeight = [JAMyOrderCell getCellHeight] * [self.orders count];
+        // 27.0f is the height of the header
+        collectionHeight = 27.0f + [JAMyOrderCell getCellHeight] * [self.orders count];
         if(!(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)))
         {
             if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && self.selectedOrderIndexPath.row < [self.orders count])
@@ -828,7 +836,7 @@ JAPickerScrollViewDelegate
                                                    orderHistoryViewVerticalMargin,
                                                    viewsWidth,
                                                    collectionHeight)];
-
+    
     [self setupOrderDetailView:viewsWidth interfaceOrientation:interfaceOrientation];
     
     [self setupEmptyOrderHistoryViews:width height:height interfaceOrientation:interfaceOrientation];
@@ -1090,6 +1098,12 @@ JAPickerScrollViewDelegate
     
     if(collectionView == self.ordersCollectionView)
     {
+        if (!self.isLoadingOrders && [self.orders count] < self.ordersTotal && [self.orders count] - 5 <= indexPath.row)
+        {
+            self.currentOrdersPage++;
+            [self loadOrders];
+        }
+        
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
         {
             if(VALID_NOTEMPTY(self.orders, NSArray) && indexPath.row < [self.orders count])
