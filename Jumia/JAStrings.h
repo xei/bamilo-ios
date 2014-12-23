@@ -41,6 +41,8 @@
 #define STRING_SHOPPING_CART RILocalizedString(@"shopping_cart", nil)
 #define STRING_YOUR_CART_IS_EMPTY RILocalizedString(@"navigation_cart_empty", nil)
 #define STRING_VAT_SHIPPING_INCLUDED RILocalizedString(@"string_vat_shipping_included", nil)
+#define STRING_FILTER_NO_RESULTS RILocalizedString(@"catalog_no_results", nil)
+#define STRING_CATALOG_EDIT_FILTERS RILocalizedString(@"catalog_edit_filters", nil)
 
 #define STRING_HOT RILocalizedString(@"teaser_campaign_button_first_line", nil)
 #define STRING_OFFERS RILocalizedString(@"teaser_campaign_button_second_line", nil)
@@ -270,6 +272,18 @@
 #define STRING_PRODCUT_OUT_OF_STOCK RILocalizedString(@"product_outof_stock", nil)
 #define STRING_PRODCUTS_OUT_OF_STOCK RILocalizedString(@"products_outof_stock", nil)
 
+
 #define STRING_REMEMBER_EMAIL RILocalizedString(@"login_remember_user_email", nil)
+
+#define STRING_MY_ORDERS RILocalizedString(@"my_orders_label", nil)
+#define STRING_MY_ORDER_HISTORY RILocalizedString(@"my_order_history_label", nil)
+#define STRING_ORDER_TRACKING RILocalizedString(@"my_order_tracking_label", nil)
+#define STRING_ORDER_DETAILS RILocalizedString(@"my_order_details_label", nil)
+#define STRING_ORDER_NUMBER RILocalizedString(@"my_order_number_label", nil)
+#define STRING_ORDER_DATE RILocalizedString(@"my_order_date_label", nil)
+#define STRING_ORDER_PAYMENT_REFERENCE RILocalizedString(@"my_order_payment_reference_label", nil)
+#define STRING_ORDER_PAYMENT_STATUS RILocalizedString(@"my_order_payment_status_label", nil)
+#define STRING_ORDER_QUANTITY RILocalizedString(@"my_order_quantity_label", nil)
+#define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
 
 #endif

@@ -73,13 +73,18 @@
         self.connection = [[NSURLConnection alloc] initWithRequest:self.request
                                                           delegate:self];
     }
+    else if(error.code == NSURLErrorNotConnectedToInternet)
+    {
+        NSLog(@"Connection failed with error: %@", error);
+        self.failureBlock(RIApiResponseNoInternetConnection, nil, error);
+        [self clearRequestData];
+    }
     else if(error.code == NSURLErrorTimedOut)
     {
         NSLog(@"Connection failed with error: %@", error);
         self.failureBlock(RIApiResponseTimeOut, nil, error);
         [self clearRequestData];
-    }
-    else if(error.code == 503)
+    }    else if(error.code == 503)
     {
         NSLog(@"Connection failed with error: %@", error);
         self.failureBlock(RIApiResponseMaintenancePage, nil, error);

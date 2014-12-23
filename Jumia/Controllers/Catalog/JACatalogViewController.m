@@ -17,14 +17,17 @@
 #import "JACatalogWizardView.h"
 #import "JAClickableView.h"
 #import "JAUndefinedSearchView.h"
+#import "JAFilteredNoResultsView.h"
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
 #define JACatalogViewControllerMaxProducts_ipad 46
 
 @interface JACatalogViewController ()
+<JAFilteredNoResulsViewDelegate>
 
 @property (nonatomic, strong)JACatalogWizardView* wizardView;
+@property (nonatomic, strong) JAFilteredNoResultsView *filteredNoResultsView;
 
 @property (weak, nonatomic) IBOutlet JAClickableView *filterButton;
 @property (weak, nonatomic) IBOutlet JAClickableView *viewToggleButton;
@@ -66,6 +69,48 @@
     }
     
     [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
+}
+
+-(void)showNoResultsView:(CGFloat)withVerticalPadding
+{
+    self.filteredNoResultsView = [JAFilteredNoResultsView getFilteredNoResultsView];
+    
+    // fail-safe condition: launches error view in case something goes wrong
+    if(self.filteredNoResultsView == nil || ISEMPTY(self.filtersArray))
+    {
+        [self showErrorView:NO startingY:withVerticalPadding selector:@selector(loadMoreProducts) objects:nil];
+    }
+    else
+    {
+        self.filteredNoResultsView.delegate = self;
+        
+        if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
+        {
+            [self.wizardView removeFromSuperview];
+        }
+    
+        self.sortingScrollView.hidden = YES;
+        
+        CGRect frame = CGRectMake(self.view.frame.origin.x,
+                                  0.0,
+                                  self.view.frame.size.width,
+                                  self.view.frame.size.height);
+        
+        [self.filteredNoResultsView setupView:frame];
+        
+        [self.view addSubview:self.filteredNoResultsView];
+    }
+}
+
+/**
+ * delegate method to respond when the edit filters button is pressed in the JAFilteredNoResultsView
+ *
+ */
+-(void)pressedEditFiltersButton:(JAFilteredNoResultsView *)view
+{
+    [self.filteredNoResultsView removeFromSuperview];
+    self.sortingScrollView.hidden = NO;
+    [self filterButtonPressed:nil];
 }
 
 - (void)showLoading
@@ -330,7 +375,6 @@
     }
 }
 
-
 - (void)loadMoreProducts
 {
     if(!self.isLoadingMoreProducts)
@@ -465,19 +509,21 @@
                                                                                       }
                                                                                       else
                                                                                       {
-                                                                                          BOOL noConnection = NO;
                                                                                           if (RIApiResponseNoInternetConnection == apiResponse)
                                                                                           {
-                                                                                              noConnection = YES;
+                                                                                              [self showErrorView:YES startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+                                                                                              
                                                                                           }
-                                                                                          [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+                                                                                          else if(RIApiResponseAPIError == apiResponse)
+                                                                                          {
+                                                                                              [self showNoResultsView:CGRectGetMaxY(self.sortingScrollView.frame)];
+                                                                                          }
                                                                                       }
                                                                                   }
                                                                               }
                                                                               
                                                                               self.isLoadingMoreProducts = NO;
-                                                                              [self hideLoading];
-                                                                              
+                                                                              [self hideLoading];                                                                              
                                                                           }];
         }
         else
@@ -660,12 +706,15 @@
                                                                               }
                                                                               else
                                                                               {
-                                                                                  BOOL noConnection = NO;
                                                                                   if (RIApiResponseNoInternetConnection == apiResponse)
                                                                                   {
-                                                                                      noConnection = YES;
+                                                                                      [self showErrorView:YES startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+
                                                                                   }
-                                                                                  [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+                                                                                  else if(RIApiResponseAPIError == apiResponse)
+                                                                                  {
+                                                                                      [self showNoResultsView:CGRectGetMaxY(self.sortingScrollView.frame)];
+                                                                                  }
                                                                               }
                                                                           }
                                                                           
@@ -807,7 +856,6 @@
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCatalog]
                                               data:[trackingDictionary copy]];
 }
-
 
 - (NSInteger)getNumberOfCellsInScreenForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
