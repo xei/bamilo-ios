@@ -71,16 +71,13 @@
     [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
 }
 
-
-
 -(void)showNoResultsView:(CGFloat)withVerticalPadding
 {
     self.filteredNoResultsView = [JAFilteredNoResultsView getFilteredNoResultsView];
     
     // fail-safe condition: launches error view in case something goes wrong
-    if(self.filteredNoResultsView == nil)
+    if(self.filteredNoResultsView == nil || ISEMPTY(self.filtersArray))
     {
-
         [self showErrorView:NO startingY:withVerticalPadding selector:@selector(loadMoreProducts) objects:nil];
     }
     else
@@ -105,7 +102,6 @@
     }
 }
 
-
 /**
  * delegate method to respond when the edit filters button is pressed in the JAFilteredNoResultsView
  *
@@ -117,13 +113,11 @@
     [self filterButtonPressed:nil];
 }
 
-
 - (void)showLoading
 {
     self.catalogTopButton.hidden=YES;
     [super showLoading];
 }
-
 
 - (void)viewDidLoad
 {
@@ -381,7 +375,6 @@
     }
 }
 
-
 - (void)loadMoreProducts
 {
     if(!self.isLoadingMoreProducts)
@@ -516,19 +509,21 @@
                                                                                       }
                                                                                       else
                                                                                       {
-                                                                                          BOOL noConnection = NO;
                                                                                           if (RIApiResponseNoInternetConnection == apiResponse)
                                                                                           {
-                                                                                              noConnection = YES;
+                                                                                              [self showErrorView:YES startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+                                                                                              
                                                                                           }
-                                                                                          [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+                                                                                          else if(RIApiResponseAPIError == apiResponse)
+                                                                                          {
+                                                                                              [self showNoResultsView:CGRectGetMaxY(self.sortingScrollView.frame)];
+                                                                                          }
                                                                                       }
                                                                                   }
                                                                               }
                                                                               
                                                                               self.isLoadingMoreProducts = NO;
-                                                                              [self hideLoading];
-                                                                              
+                                                                              [self hideLoading];                                                                              
                                                                           }];
         }
         else
@@ -709,15 +704,11 @@
                                                                               {
                                                                                   [self showMaintenancePage:@selector(loadMoreProducts) objects:nil];
                                                                               }
-                                                                              
-                                                                              
                                                                               else
                                                                               {
-                                                                                  BOOL noConnection = NO;
                                                                                   if (RIApiResponseNoInternetConnection == apiResponse)
                                                                                   {
-                                                                                      noConnection = YES;
-                                                                                      [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+                                                                                      [self showErrorView:YES startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
 
                                                                                   }
                                                                                   else if(RIApiResponseAPIError == apiResponse)
@@ -865,7 +856,6 @@
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCatalog]
                                               data:[trackingDictionary copy]];
 }
-
 
 - (NSInteger)getNumberOfCellsInScreenForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
