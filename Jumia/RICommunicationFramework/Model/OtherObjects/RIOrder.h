@@ -10,10 +10,18 @@
 #import "RICart.h"
 #import "RIAddress.h"
 
-@interface RIStatus : NSObject
+// My Orders Objects
+@interface RITrackOrder : NSObject
 
-@property (nonatomic, strong) NSString *itemStatus;
-@property (nonatomic, strong) NSString *lastChangeStatus;
+@property (strong, nonatomic) NSString *orderId;
+@property (strong, nonatomic) NSString *creationDate;
+@property (strong, nonatomic) NSString *lastOrderUpdate;
+@property (strong, nonatomic) NSString *paymentMethod;
+@property (strong, nonatomic) NSString *paymentDescription;
+@property (strong, nonatomic) NSString *paymentReference;
+@property (strong, nonatomic) NSString *total;
+@property (strong, nonatomic) NSString *totalFormatted;
+@property (strong, nonatomic) NSArray *itemCollection;
 
 @end
 
@@ -22,20 +30,20 @@
 @property (strong, nonatomic) NSString *sku;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSNumber *quantity;
+@property (strong, nonatomic) NSNumber *total;
+@property (strong, nonatomic) NSString *totalFormatted;
 @property (strong, nonatomic) NSArray *status;
 
 @end
 
-@interface RITrackOrder : NSObject
+@interface RIStatus : NSObject
 
-@property (strong, nonatomic) NSString *orderId;
-@property (strong, nonatomic) NSString *creationDate;
-@property (strong, nonatomic) NSString *lastOrderUpdate;
-@property (strong, nonatomic) NSString *paymentMethod;
-@property (strong, nonatomic) NSArray *itemCollection;
+@property (nonatomic, strong) NSString *itemStatus;
+@property (nonatomic, strong) NSString *lastChangeStatus;
 
 @end
 
+// Checkout Order Object
 @interface RIOrder : NSObject
 
 @property (nonatomic, strong) NSNumber *grandTotal;
@@ -53,6 +61,30 @@
 
 + (RIOrder*)parseOrder:(NSDictionary*)orderObject;
 
+/**
+ * Method to get the list of orders of the user
+ *
+ * @param the page number
+ * @param the max items
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ *
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString *)getOrdersPage:(NSNumber*)page
+                   maxItems:(NSNumber*)maxItems
+           withSuccessBlock:(void (^)(NSArray *orders, NSInteger ordersTotal))successBlock
+            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
+/**
+ * Method to track an order
+ *
+ * @param the order number
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ *
+ * @return a string with the operationID that can be used to cancel the operation
+ */
 + (NSString *)trackOrderWithOrderNumber:(NSString *)orderNumber
                        WithSuccessBlock:(void (^)(RITrackOrder *trackingOrder))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
