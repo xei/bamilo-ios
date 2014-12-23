@@ -116,21 +116,19 @@ FBLoginViewDelegate
     self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
     [self.stepLabel setText:STRING_CHECKOUT_ABOUT_YOU];
     
+    self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
+
     self.viewToScroll = [[UIView alloc] initWithFrame:self.scrollView.bounds];
     
     UITapGestureRecognizer *showLoginViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(showLogin)];
+    
     self.loginView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.viewToScroll.frame.size.width-12.0f, 26.0f)];
     [self.loginView setBackgroundColor:UIColorFromRGB(0xffffff)];
-    
-    self.signUpView = [[UIView alloc]initWithFrame:CGRectMake(6.0f, CGRectGetMaxY(self.loginView.frame) + 6.0f,self.viewToScroll.frame.size.width-12.0f, 26.0f)];
-    [self.signUpView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.loginView.layer.cornerRadius = 5.0f;
-    self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
     [self.loginView addGestureRecognizer:showLoginViewTap];
     
-    self.loginArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
     self.loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
                                                                 0,
                                                                 self.loginView.frame.size.width - self.loginArrow.frame.size.width - 12.0f,
@@ -138,13 +136,16 @@ FBLoginViewDelegate
     [self.loginLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.loginLabel setBackgroundColor:[UIColor clearColor]];
     [self.loginLabel setText:STRING_LOGIN];
-    self.loginLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    [self.loginLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]];
     [self.loginView addSubview:self.loginLabel];
-    [self.loginArrow setFrame:CGRectMake(self.loginLabel.frame.size.width + 6.0f,
+
+    self.loginArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
+    [self.loginArrow setFrame:CGRectMake(self.loginView.frame.size.width - self.loginArrow.frame.size.width - 6.0f,
                                         (self.loginView.frame.size.height - self.loginArrow.frame.size.height)/2,
                                         self.loginArrow.frame.size.width,
                                         self.loginArrow.frame.size.height)];
     [self.loginView addSubview:self.loginArrow];
+    
     self.loginSeparator = [[UIImageView alloc] initWithFrame:CGRectMake(0,
                                              26.0f,
                                              self.loginView.frame.size.width,
@@ -152,18 +153,23 @@ FBLoginViewDelegate
     [self.loginSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.loginSeparator setHidden:YES];
     [self.loginView addSubview:self.loginSeparator];
+    
     self.loginFormView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.loginSeparator.frame), 0, 0)];
     [self.loginFormView setHidden: YES];
     [self.loginView addSubview:self.loginFormView];
-    [self.loginSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
-    self.signUpView.layer.cornerRadius = 5.0f;
-    [self.signUpSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     
     UITapGestureRecognizer *showSignupViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(showSignup)];
+
+    self.signUpView = [[UIView alloc]initWithFrame:CGRectMake(6.0f, CGRectGetMaxY(self.loginView.frame) + 6.0f,self.viewToScroll.frame.size.width-12.0f, 26.0f)];
+    [self.signUpView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    self.signUpView.layer.cornerRadius = 5.0f;
+    [self.signUpView addGestureRecognizer:showSignupViewTap];
     
-    self.signUpArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
+    [self.signUpSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    
+    
     self.signUpLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
                                                                  0,
                                                                  self.signUpView.frame.size.width - self.signUpArrow.frame.size.width - 12.0f,
@@ -174,8 +180,8 @@ FBLoginViewDelegate
     self.signUpLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     [self.signUpView addSubview:self.signUpLabel];
     
-    
-    [self.signUpArrow setFrame:CGRectMake(self.signUpLabel.frame.size.width + 6.0f,
+    self.signUpArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
+    [self.signUpArrow setFrame:CGRectMake(self.signUpView.frame.size.width - self.signUpArrow.frame.size.width - 6.0f,
                                           (self.signUpView.frame.size.height - self.signUpArrow.frame.size.height)/2,
                                           self.signUpArrow.frame.size.width,
                                           self.signUpArrow.frame.size.height)];
@@ -186,10 +192,8 @@ FBLoginViewDelegate
     [self.signUpView addSubview:self.signUpSeparator];
     
     self.signUpFormView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.signUpSeparator.frame), 0, 0)];
-    [self.signUpFormView setHidden: YES];
+    [self.signUpFormView setHidden:YES];
     [self.signUpView addSubview:self.signUpFormView];
-    
-    [self.signUpView addGestureRecognizer:showSignupViewTap];
 }
 
 - (void)viewWillAppear:(BOOL)animated
