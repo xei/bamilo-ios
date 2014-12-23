@@ -8,18 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RICampaignProductSimple : NSObject
+@interface RICampaign : NSObject
 
-@property (nonatomic, strong)NSString* sku;
-@property (nonatomic, strong)NSNumber* price;
-@property (nonatomic, strong)NSString* priceFormatted;
-@property (nonatomic, strong)NSNumber* savePrice;
-@property (nonatomic, strong)NSString* savePriceFormatted;
-@property (nonatomic, strong)NSString* size;
+@property (nonatomic, strong)NSString* bannerImageURL;
+@property (nonatomic, strong)NSString* name;
+@property (nonatomic, strong)NSArray* campaignProducts;
+
++ (NSString *)getCampaignWithUrl:(NSString*)url
+                    successBlock:(void (^)(RICampaign* campaign))successBlock
+                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+
++ (NSString *)getCampaignWithId:(NSString*)campaignId
+                   successBlock:(void (^)(RICampaign* campaign))successBlock
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 @end
 
-@interface RICampaign : NSObject
+@interface RICampaignProduct : NSObject
 
 @property (nonatomic, strong) NSNumber* savePrice;
 @property (nonatomic, strong) NSString* savePriceFormatted;
@@ -45,12 +50,20 @@
 @property (nonatomic, strong) NSArray* productSimples;
 @property (nonatomic, strong) NSNumber* remainingTime;
 
-+ (NSString *)getCampaignsWithUrl:(NSString*)url
-                     successBlock:(void (^)(NSString *name, NSArray* campaigns, NSString* bannerImageUrl))successBlock
-                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
++ (RICampaignProduct*)parseCampaignProduct:(NSDictionary*)campaignProductJSON
+                                   country:(RICountryConfiguration*)country;
+@end
 
-+ (NSString *)getCampaignsWitId:(NSString*)campaignId
-                   successBlock:(void (^)(NSString *name, NSArray* campaigns, NSString* bannerImageUrl))successBlock
-                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+@interface RICampaignProductSimple : NSObject
+
+@property (nonatomic, strong)NSString* sku;
+@property (nonatomic, strong)NSNumber* price;
+@property (nonatomic, strong)NSString* priceFormatted;
+@property (nonatomic, strong)NSNumber* savePrice;
+@property (nonatomic, strong)NSString* savePriceFormatted;
+@property (nonatomic, strong)NSString* size;
+
++ (RICampaignProductSimple*)parseCampaignProductSimple:(NSDictionary*)campaignProductSimpleJSON
+                                               country:(RICountryConfiguration*)country;
 
 @end
