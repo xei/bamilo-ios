@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="JAFilteredNoResultsView">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3jC-lf-3LE">
+                    <rect key="frame" x="5" y="6" width="756" height="300"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="emptyFilter" translatesAutoresizingMaskIntoConstraints="NO" id="q0V-Lw-bCN">
+                            <rect key="frame" x="329" y="67" width="98" height="98"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6v-vW-X9L">
+                            <rect key="frame" x="357" y="173" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="300" id="0U0-6A-676"/>
+                        <constraint firstAttribute="centerX" secondItem="J6v-vW-X9L" secondAttribute="centerX" id="HDp-AM-T59"/>
+                        <constraint firstAttribute="width" constant="756" id="MlD-QR-fVZ"/>
+                        <constraint firstAttribute="centerX" secondItem="q0V-Lw-bCN" secondAttribute="centerX" id="Xgg-MS-mN5"/>
+                        <constraint firstItem="J6v-vW-X9L" firstAttribute="top" secondItem="q0V-Lw-bCN" secondAttribute="bottom" constant="50" id="p4n-k5-XPS"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="MlD-QR-fVZ"/>
+                        </mask>
+                    </variation>
+                </view>
+                <button opaque="NO" tag="1000" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JO8-vO-yxt">
+                    <rect key="frame" x="6" y="314" width="756" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="756" id="YhW-fb-UMp"/>
+                        <constraint firstAttribute="height" constant="44" id="nAN-H0-zkY"/>
+                    </constraints>
+                    <state key="normal" title="Button" backgroundImage="orangeFullPortrait_disabled">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="editFiltersButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="iIW-Zi-1Dc"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="3jC-lf-3LE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="0c1-BE-wI1"/>
+                <constraint firstAttribute="centerX" secondItem="3jC-lf-3LE" secondAttribute="centerX" id="7Fr-tO-8VK"/>
+                <constraint firstItem="JO8-vO-yxt" firstAttribute="top" secondItem="3jC-lf-3LE" secondAttribute="bottom" constant="6" id="BVi-MK-S4v"/>
+                <constraint firstAttribute="trailing" secondItem="3jC-lf-3LE" secondAttribute="trailing" constant="6" id="DuJ-yM-00e"/>
+                <constraint firstItem="JO8-vO-yxt" firstAttribute="top" secondItem="3jC-lf-3LE" secondAttribute="bottom" constant="6" id="e5t-Ua-gec"/>
+                <constraint firstItem="3jC-lf-3LE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="tFO-0Z-sge"/>
+                <constraint firstAttribute="centerX" secondItem="JO8-vO-yxt" secondAttribute="centerX" id="uLT-Tq-bp4"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
+            <connections>
+                <outlet property="filtersLabel" destination="J6v-vW-X9L" id="3Wm-cJ-oQ8"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="emptyFilter" width="98" height="98"/>
+        <image name="orangeFullPortrait_disabled" width="15" height="15"/>
+    </resources>
+</document>
