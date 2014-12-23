@@ -97,7 +97,8 @@
 }
 
 - (void)reloadViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{    
+{
+    self.bannerImage = nil;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
             self.cellIdentifier = @"campaignProductCell_ipad_landscape";
