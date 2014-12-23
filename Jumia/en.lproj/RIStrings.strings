@@ -278,5 +278,7 @@
 "my_order_details_label" = "Order Details";
 "my_order_number_label" = "Nr.";
 "my_order_date_label" = "Date:";
+"my_order_payment_reference_label" = "Reference #:";
+"my_order_payment_status_label" = "Status:";
 "my_order_quantity_label" = "Qty.";
 "my_order_no_orders_label" = "You have placed no orders.";

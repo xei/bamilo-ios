@@ -281,6 +281,8 @@
 #define STRING_ORDER_DETAILS RILocalizedString(@"my_order_details_label", nil)
 #define STRING_ORDER_NUMBER RILocalizedString(@"my_order_number_label", nil)
 #define STRING_ORDER_DATE RILocalizedString(@"my_order_date_label", nil)
+#define STRING_ORDER_PAYMENT_REFERENCE RILocalizedString(@"my_order_payment_reference_label", nil)
+#define STRING_ORDER_PAYMENT_STATUS RILocalizedString(@"my_order_payment_status_label", nil)
 #define STRING_ORDER_QUANTITY RILocalizedString(@"my_order_quantity_label", nil)
 #define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
 
