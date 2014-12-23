@@ -90,6 +90,8 @@
         }
     
         self.sortingScrollView.hidden = YES;
+        self.viewToggleButton.hidden = YES;
+        self.filterButton.hidden = YES;
         
         CGRect frame = CGRectMake(self.view.frame.origin.x,
                                   0.0,
@@ -110,6 +112,8 @@
 {
     [self.filteredNoResultsView removeFromSuperview];
     self.sortingScrollView.hidden = NO;
+    self.viewToggleButton.hidden = NO;
+    self.filterButton.hidden = NO;
     [self filterButtonPressed:nil];
 }
 
