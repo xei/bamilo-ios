@@ -222,7 +222,8 @@ UITableViewDataSource
     cell.countryImage.layer.masksToBounds = YES;
     cell.countryImage.layer.borderWidth = 0;
     
-    if (self.selectedIndex.row == indexPath.row) {
+    
+    if (VALID_NOTEMPTY(self.selectedIndex, NSIndexPath) && self.selectedIndex.row == indexPath.row) {
         cell.checkImage.hidden = NO;
     } else {
         cell.checkImage.hidden = YES;
