@@ -96,6 +96,11 @@ JAActivityViewControllerDelegate
     self.landscapeScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.landscapeScrollView setHidden:YES];
     [self.view addSubview:self.landscapeScrollView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector( applicationDidEnterBackgroundNotification:)
+                                                 name: UIApplicationDidEnterBackgroundNotification
+                                               object: nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -140,6 +145,19 @@ JAActivityViewControllerDelegate
 {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
+}
+
+- (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification
+{
+    if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
+    {
+        [self.currentPopoverController dismissPopoverAnimated:NO];
+    }
+    
+    if([self respondsToSelector:@selector(dismissViewControllerAnimated:completion:)])
+    {
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning
