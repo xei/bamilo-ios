@@ -207,6 +207,11 @@
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector( applicationDidEnterBackgroundNotification:)
+                                                 name: UIApplicationDidEnterBackgroundNotification
+                                               object: nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -214,6 +219,19 @@
     [super viewWillAppear:animated];
     
     [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
+}
+
+- (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification
+{
+    if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
+    {
+        [self.currentPopoverController dismissPopoverAnimated:NO];
+    }
+    
+    if([self respondsToSelector:@selector(dismissViewControllerAnimated:completion:)])
+    {
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning
