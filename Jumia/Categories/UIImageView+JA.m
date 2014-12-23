@@ -27,8 +27,8 @@
     }
 }
 
-- (void) changeImageSize:(CGFloat)height
-                andWidth:(CGFloat)width
+- (void) changeImageHeight:(CGFloat)height
+                  andWidth:(CGFloat)width
 {
     if (0.0f != height)
     {
@@ -69,13 +69,13 @@
 - (CGFloat) getImageWidth:(UIImage*)image
                fromHeight:(CGFloat)height
 {
-    return image.size.width*height/image.size.height;
+    return ceilf(image.size.width*height/image.size.height);
 }
 
 - (CGFloat) getImageHeight:(UIImage*)image
                  fromWidth:(CGFloat)width
 {
-    return image.size.height*width/image.size.width;
+    return ceilf(image.size.height*width/image.size.width);
 }
 
 @end

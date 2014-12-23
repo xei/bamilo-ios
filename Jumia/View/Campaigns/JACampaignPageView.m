@@ -52,7 +52,7 @@
             __weak JACampaignPageView* weakSelf = self;
             [_bannerImage setImageWithURL:[NSURL URLWithString:self.campaign.bannerImageURL]
                                   success:^(UIImage *image, BOOL cached){
-                                      [blockedImageView changeImageSize:0.0f andWidth:weakSelf.frame.size.width];
+                                      [blockedImageView changeImageHeight:0.0f andWidth:weakSelf.frame.size.width];
                                       [weakSelf.collectionView reloadData];
                                   }failure:^(NSError *error){}];
         }
