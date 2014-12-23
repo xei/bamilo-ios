@@ -90,8 +90,6 @@ JAPickerScrollViewDelegate
     self.ordersTotal = 0;
     self.animatedScroll = YES;
     
-    self.screenName = @"TrackOrder";
-    
     self.trackingOrder = nil;
     self.trackOrderRequestState = RITrackOrderRequestNotDone;
     
@@ -345,6 +343,9 @@ JAPickerScrollViewDelegate
     // Track Order
     if(0 == index)
     {
+        self.screenName = @"TrackOrder";
+        [[RITrackingWrapper sharedInstance] trackScreenWithName:self.screenName];
+        
         [self.contentScrollView scrollRectToVisible:CGRectMake(index * self.contentScrollView.frame.size.width,
                                                                0.0f,
                                                                self.contentScrollView.frame.size.width,
@@ -353,8 +354,11 @@ JAPickerScrollViewDelegate
     // Order history
     else if(1 == index)
     {
+        self.screenName = @"MyOrders";
         if([RICustomer checkIfUserIsLogged])
         {
+            [[RITrackingWrapper sharedInstance] trackScreenWithName:self.screenName];
+            
             [self.contentScrollView scrollRectToVisible:CGRectMake(index * self.contentScrollView.frame.size.width,
                                                                    0.0f,
                                                                    self.contentScrollView.frame.size.width,
