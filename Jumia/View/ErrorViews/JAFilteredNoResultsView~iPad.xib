@@ -44,9 +44,12 @@
                         <constraint firstAttribute="width" constant="756" id="YhW-fb-UMp"/>
                         <constraint firstAttribute="height" constant="44" id="nAN-H0-zkY"/>
                     </constraints>
-                    <state key="normal" title="Button" backgroundImage="orangeFullPortrait_disabled">
+                    <state key="normal" title="Button" backgroundImage="orangeBig_normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <state key="disabled" backgroundImage="orangeBig_disabled"/>
+                    <state key="selected" backgroundImage="orangeBig_highlighted"/>
+                    <state key="highlighted" backgroundImage="orangeBig_highlighted"/>
                     <connections>
                         <action selector="editFiltersButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="iIW-Zi-1Dc"/>
                     </connections>
@@ -70,6 +73,8 @@
     </objects>
     <resources>
         <image name="emptyFilter" width="98" height="98"/>
-        <image name="orangeFullPortrait_disabled" width="15" height="15"/>
+        <image name="orangeBig_disabled" width="308" height="44"/>
+        <image name="orangeBig_highlighted" width="308" height="44"/>
+        <image name="orangeBig_normal" width="308" height="44"/>
     </resources>
 </document>

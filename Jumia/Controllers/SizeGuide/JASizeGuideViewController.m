@@ -110,10 +110,17 @@
 - (void)resizeWithImage:(UIImage*)image
 {
     if (image.size.height < self.view.frame.size.height ||
-        image.size.width < self.view.frame.size.width) {
-        self.imageView.contentMode = UIViewContentModeCenter;
+        image.size.width < self.view.frame.size.width)
+    {
+        CGSize scrolableArea = CGSizeMake(image.size.width, image.size.height);
+        [self.scrollView setContentSize:scrolableArea];
+        
+        self.scrollView.bounces = NO;
+        
+        self.imageView.contentMode = UIViewContentModeTop;
     }
 }
+
 
 #pragma mark - UIScrollView
 
