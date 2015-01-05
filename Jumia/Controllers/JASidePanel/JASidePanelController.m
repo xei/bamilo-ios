@@ -879,14 +879,14 @@ static char ja_kvoContext;
     //add shadow if no shadow is already there
     BOOL placeShadow = YES;
     for (UIView* view in [self.centerPanel.view subviews]) {
-        if (-1 == view.tag) {
+        if (1000 == view.tag) {
             placeShadow = NO;
             break;
         }
     }
     if (placeShadow) {
         UIView* shadowView = [[UIView alloc] initWithFrame:self.centerPanel.view.frame];
-        shadowView.tag = -1;
+        shadowView.tag = 1000;
         shadowView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
         [self.centerPanel.view addSubview:shadowView];
     }
@@ -922,14 +922,14 @@ static char ja_kvoContext;
     //add shadow if no shadow is already there
     BOOL placeShadow = YES;
     for (UIView* view in [self.centerPanel.view subviews]) {
-        if (-1 == view.tag) {
+        if (1000 == view.tag) {
             placeShadow = NO;
             break;
         }
     }
     if (placeShadow) {
         UIView* shadowView = [[UIView alloc] initWithFrame:self.centerPanel.view.frame];
-        shadowView.tag = -1;
+        shadowView.tag = 1000;
         shadowView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
         [self.centerPanel.view addSubview:shadowView];
     }
@@ -964,7 +964,7 @@ static char ja_kvoContext;
     
     //remove shadow
     for (UIView* view in [self.centerPanel.view subviews]) {
-        if (-1 == view.tag) {
+        if (1000 == view.tag) {
             [view removeFromSuperview];
         }
     }
@@ -1043,7 +1043,7 @@ static char ja_kvoContext;
  */
 -(void)updateShadowFrame
 {
-    UIView *shadowView = [self.view viewWithTag: -1];
+    UIView *shadowView = [self.view viewWithTag: 1000];
 
     if(shadowView != nil)
     {
