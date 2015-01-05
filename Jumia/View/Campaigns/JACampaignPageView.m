@@ -53,7 +53,9 @@
             [_bannerImage setImageWithURL:[NSURL URLWithString:self.campaign.bannerImageURL]
                                   success:^(UIImage *image, BOOL cached){
                                       [blockedImageView changeImageHeight:0.0f andWidth:weakSelf.frame.size.width];
-                                      [weakSelf.collectionView reloadData];
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          [weakSelf.collectionView reloadData];
+                                      });
                                   }failure:^(NSError *error){}];
         }
     }
