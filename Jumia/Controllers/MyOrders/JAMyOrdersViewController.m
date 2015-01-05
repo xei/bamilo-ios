@@ -1185,7 +1185,16 @@ JAPickerScrollViewDelegate
 {
     JAClickableView *clickableView = sender;
     NSInteger tag = clickableView.tag;
-    self.selectedOrderIndexPath = [NSIndexPath indexPathForRow:tag inSection:0];
+
+    if(UIInterfaceOrientationIsPortrait(self.interfaceOrientation) && VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && self.selectedOrderIndexPath.row == tag)
+    {
+        self.selectedOrderIndexPath = nil;
+    }
+    else
+    {
+        self.selectedOrderIndexPath = [NSIndexPath indexPathForRow:tag inSection:0];
+    }
+    
     [self.ordersCollectionView reloadData];
     
     [self setupOrderDetailView:self.ordersCollectionView.frame.size.width interfaceOrientation:self.interfaceOrientation];
