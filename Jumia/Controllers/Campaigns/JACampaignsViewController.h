@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "JAPickerScrollView.h"
-#import "JACampaignSingleView.h"
-#import "JACampaignPageView.h"
+#import "JACampaignProductCell.h"
 #import "JAPicker.h"
 
-@interface JACampaignsViewController : JABaseViewController <UIScrollViewDelegate, JAPickerDelegate, JAPickerScrollViewDelegate, JACampaignSingleViewDelegate, JACampaignPageViewDelegate>
+@interface JACampaignsViewController : JABaseViewController <UIScrollViewDelegate, JAPickerDelegate, JAPickerScrollViewDelegate, JACampaignProductCellDelegate>
 
 @property (nonatomic, strong)NSArray* campaignTeasers;
 @property (nonatomic, strong)NSString* startingTitle;

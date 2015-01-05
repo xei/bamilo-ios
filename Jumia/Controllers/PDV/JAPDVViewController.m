@@ -734,7 +734,7 @@ JAActivityViewControllerDelegate
                                                                                       imageHeight)];
             [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
                          placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
-            [newImageView changeImageSize:imageHeight andWidth:0.0f];
+            [newImageView changeImageHeight:imageHeight andWidth:0.0f];
             [variationClickableView addSubview:newImageView];
             
             currentX += variationClickableView.frame.size.width;
