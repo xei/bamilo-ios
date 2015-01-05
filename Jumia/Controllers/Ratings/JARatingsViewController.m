@@ -258,7 +258,7 @@ UITableViewDataSource
     
     NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
     [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-
+    
     if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
         NSArray *categoryIds = [self.product.categoryIds array];
@@ -567,7 +567,8 @@ UITableViewDataSource
     self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                         delegate:nil
                                                 startingPosition:currentY
-                                                    widthSize:width];
+                                                       widthSize:width
+                                              hasFieldNavigation:YES];
     
     CGFloat spaceBetweenFormFields = 6.0f;
     NSInteger count = 0;
@@ -831,7 +832,7 @@ UITableViewDataSource
         successBlock:^(id object) {
             
             NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
-
+            
             NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
