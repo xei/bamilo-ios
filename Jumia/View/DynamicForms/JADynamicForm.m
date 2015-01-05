@@ -20,11 +20,12 @@
 
 @implementation JADynamicForm
 
--(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
+-(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY
 {
     self = [super init];
     if(self)
     {
+        self.hasFieldNavigation = YES;
         self.form = form;
         [self generateForm:[[[form fields] array] copy] values:nil startingY:startingY widthSize:1204.0f];
         
@@ -32,11 +33,12 @@
     return self;
 }
 
--(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate startingPosition:(CGFloat)startingY widthSize:(CGFloat)widthComponent;
+-(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate startingPosition:(CGFloat)startingY widthSize:(CGFloat)widthComponent hasFieldNavigation:(BOOL)hasFieldNavigation
 {
     self = [super init];
     if(self)
     {
+        self.hasFieldNavigation = hasFieldNavigation;        
         self.form = form;
         self.delegate = delegate;
         [self generateForm:[[[form fields] array] copy] values:nil startingY:startingY widthSize:widthComponent];
@@ -44,11 +46,12 @@
     return self;
 }
 
--(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate values:(NSDictionary*)values startingPosition:(CGFloat)startingY;
+-(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate values:(NSDictionary*)values startingPosition:(CGFloat)startingY hasFieldNavigation:(BOOL)hasFieldNavigation
 {
     self = [super init];
     if(self)
     {
+        self.hasFieldNavigation = hasFieldNavigation;
         self.form = form;
         self.delegate = delegate;
         [self generateForm:[[[form fields] array] copy] values:values startingY:startingY widthSize:308.0f];
@@ -58,6 +61,12 @@
 
 - (void)generateForm:(NSArray*)fields values:(NSDictionary*)values startingY:(CGFloat)startingY widthSize:(CGFloat)widthComponent
 {
+    UIReturnKeyType returnKeyType = UIReturnKeyNext;
+    if(!self.hasFieldNavigation)
+    {
+        returnKeyType = UIReturnKeyDone;
+    }
+    
     RIField *dayField = nil;
     RIField *monthField = nil;
     RIField *yearField = nil;
@@ -84,7 +93,7 @@
                 JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
                 [textField setupWithField:field];
                 [textField.textField setDelegate:self];
-                [textField.textField setReturnKeyType:UIReturnKeyNext];
+                [textField.textField setReturnKeyType:returnKeyType];
                 
                 if([@"email" isEqualToString:field.type])
                 {
@@ -113,7 +122,7 @@
             JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
-            [textField.textField setReturnKeyType:UIReturnKeyNext];
+            [textField.textField setReturnKeyType:returnKeyType];
             [textField.textField setSecureTextEntry:YES];
             
             CGRect frame = textField.frame;
@@ -162,7 +171,7 @@
                 [textField setupWithField:field];
                 [textField.textField setDelegate:self];
                 [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
-                [textField.textField setReturnKeyType:UIReturnKeyNext];
+                [textField.textField setReturnKeyType:returnKeyType];
                 
                 CGRect frame = textField.frame;
                 frame.origin.y = startingY;
@@ -183,7 +192,7 @@
                 JARadioComponent *radioComponent = [JARadioComponent getNewJARadioComponent];
                 [radioComponent setupWithField:field];
                 [radioComponent.textField setDelegate:self];
-                [radioComponent.textField setReturnKeyType:UIReturnKeyNext];
+                [radioComponent.textField setReturnKeyType:returnKeyType];
                 
                 CGRect frame = radioComponent.frame;
                 frame.origin.y = startingY;
@@ -265,7 +274,7 @@
     {
         [birthDateComponent setupWithLabel:@"Birthday" day:dayField month:monthField year:yearField];
         [birthDateComponent.textField setDelegate:self];
-        [birthDateComponent.textField setReturnKeyType:UIReturnKeyNext];
+        [birthDateComponent.textField setReturnKeyType:returnKeyType];
         
         if(lastTextFieldIndex >= birthdayFieldPosition)
         {
@@ -603,12 +612,13 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     UIView *nextView = [self viewWithTag:textField.tag + 1];
-    if([nextView isKindOfClass:[JATextFieldComponent class]])
+    if(self.hasFieldNavigation && [nextView isKindOfClass:[JATextFieldComponent class]])
     {
         JATextFieldComponent *textField = (JATextFieldComponent *) nextView;
         [textField.textField becomeFirstResponder];
     }
-    else {
+    else
+    {
         [textField resignFirstResponder];
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(lostFocus)]) {

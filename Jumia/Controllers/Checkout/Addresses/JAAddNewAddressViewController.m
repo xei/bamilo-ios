@@ -138,7 +138,7 @@ JAPickerDelegate>
      extraArguments:self.extraParameters
        successBlock:^(RIForm *form)
      {
-         self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.shippingAddressViewCurrentY widthSize:self.shippingContentView.frame.size.width];
+         self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.shippingAddressViewCurrentY widthSize:self.shippingContentView.frame.size.width hasFieldNavigation:NO];
          
          for(UIView *view in self.shippingDynamicForm.formViews)
          {
@@ -162,7 +162,7 @@ JAPickerDelegate>
      extraArguments:nil
        successBlock:^(RIForm *form)
      {
-         self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width];
+         self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width hasFieldNavigation:NO];
          
          for(UIView *view in self.billingDynamicForm.formViews)
          {

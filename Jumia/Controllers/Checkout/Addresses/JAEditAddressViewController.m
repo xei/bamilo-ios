@@ -89,7 +89,7 @@ JAPickerDelegate>
     [RIForm getForm:@"addressedit"
        successBlock:^(RIForm *form)
      {
-         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self values:[self getAddressValues] startingPosition:self.addressViewCurrentY];
+         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self values:[self getAddressValues] startingPosition:self.addressViewCurrentY hasFieldNavigation:NO];
          
          for(UIView *view in self.dynamicForm.formViews)
          {
