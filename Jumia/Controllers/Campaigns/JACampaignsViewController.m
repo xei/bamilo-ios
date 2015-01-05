@@ -101,7 +101,7 @@
     [self.pickerScrollView setHidden:YES];
     [self.scrollView setHidden:YES];
     
-    [self setupCampaings:self.view.frame.origin.y + self.view.frame.size.height height:self.view.frame.size.width interfaceOrientation:toInterfaceOrientation];
+    [self setupCampaings:self.view.frame.origin.y + self.view.frame.size.height height:self.view.frame.size.width - self.view.frame.origin.y interfaceOrientation:toInterfaceOrientation];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
