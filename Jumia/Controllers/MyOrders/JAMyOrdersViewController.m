@@ -218,31 +218,41 @@ JAPickerScrollViewDelegate
               [self.orders addObjectsFromArray:orders];
               self.ordersTotal = ordersTotal;
               
-              [self.emptyOrderHistoryView setHidden:YES];
-              [self.ordersCollectionView setHidden:NO];
-              [self.ordersCollectionView reloadData];
-              
-              // 27.0f is the height of the header
-              CGFloat collectionHeight =  27.0f + [JAMyOrderCell getCellHeight] * [orders count];
-              if(!(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)))
+              if(VALID_NOTEMPTY(self.orders, NSMutableArray))
               {
-                  if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && self.selectedOrderIndexPath.row < [self.orders count])
+                  [self.emptyOrderHistoryView setHidden:YES];
+                  [self.ordersCollectionView setHidden:NO];
+                  [self.ordersCollectionView reloadData];
+                  
+                  // 27.0f is the height of the header
+                  CGFloat collectionHeight =  27.0f + [JAMyOrderCell getCellHeight] * [orders count];
+                  if(!(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)))
                   {
-                      // Add order detail row
-                      RITrackOrder *order = [self.orders objectAtIndex:self.selectedOrderIndexPath.row];
-                      collectionHeight += [JAMyOrderDetailView getOrderDetailViewHeight:order maxWidth:self.ordersCollectionView.frame.size.width];
+                      if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && self.selectedOrderIndexPath.row < [self.orders count])
+                      {
+                          // Add order detail row
+                          RITrackOrder *order = [self.orders objectAtIndex:self.selectedOrderIndexPath.row];
+                          collectionHeight += [JAMyOrderDetailView getOrderDetailViewHeight:order maxWidth:self.ordersCollectionView.frame.size.width];
+                      }
                   }
+                  
+                  if(collectionHeight > self.contentScrollView.contentSize.height - 12.0f)
+                  {
+                      collectionHeight = self.contentScrollView.contentSize.height - 12.0f;
+                  }
+                  
+                  CGFloat horizontalMargin = 6.0f;
+                  CGFloat viewsWidth = (self.view.frame.size.width - (2 * horizontalMargin));
+                  if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+                  {
+                      viewsWidth = ((self.view.frame.size.width - (3 * horizontalMargin)) / 2);
+                  }
+                  
+                  [self.ordersCollectionView setFrame:CGRectMake(self.view.frame.size.width + horizontalMargin,
+                                                                 6.0f,
+                                                                 viewsWidth,
+                                                                 collectionHeight)];
               }
-              
-              if(collectionHeight > self.contentScrollView.contentSize.height - 12.0f)
-              {
-                  collectionHeight = self.contentScrollView.contentSize.height - 12.0f;
-              }
-              
-              [self.ordersCollectionView setFrame:CGRectMake(self.ordersCollectionView.frame.origin.x,
-                                                             self.ordersCollectionView.frame.origin.y,
-                                                             self.ordersCollectionView.frame.size.width,
-                                                             collectionHeight)];
               
               self.isLoadingOrders = NO;
               [self hideLoading];
@@ -834,16 +844,20 @@ JAPickerScrollViewDelegate
         {
             collectionHeight = maxCollectionHeight;
         }
+        
+        [self.ordersCollectionView setFrame:CGRectMake(startingX + orderHistoryViewHorizontalMargin,
+                                                       orderHistoryViewVerticalMargin,
+                                                       viewsWidth,
+                                                       collectionHeight)];
+        
+        [self setupOrderDetailView:viewsWidth interfaceOrientation:interfaceOrientation];
+        
+        [self.contentScrollView bringSubviewToFront:self.ordersCollectionView];
     }
-    
-    [self.ordersCollectionView setFrame:CGRectMake(startingX + orderHistoryViewHorizontalMargin,
-                                                   orderHistoryViewVerticalMargin,
-                                                   viewsWidth,
-                                                   collectionHeight)];
-    
-    [self setupOrderDetailView:viewsWidth interfaceOrientation:interfaceOrientation];
-    
-    [self setupEmptyOrderHistoryViews:width height:height interfaceOrientation:interfaceOrientation];
+    else
+    {
+        [self setupEmptyOrderHistoryViews:width height:height interfaceOrientation:interfaceOrientation];
+    }
 }
 
 - (void)setupOrderDetailView:(CGFloat)width interfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
