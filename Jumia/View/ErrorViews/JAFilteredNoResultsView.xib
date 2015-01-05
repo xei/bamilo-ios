@@ -34,12 +34,15 @@
                         <constraint firstAttribute="centerX" secondItem="JbR-J0-WKz" secondAttribute="centerX" id="kRG-wi-SZM"/>
                     </constraints>
                 </view>
-                <button opaque="NO" tag="1000" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VLR-fB-QLt">
+                <button opaque="NO" tag="1000" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VLR-fB-QLt">
                     <rect key="frame" x="4" y="319" width="308" height="44"/>
                     <state key="normal" title="Button" backgroundImage="orangeBig_normal">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <state key="disabled" backgroundImage="orangeBig_disabled"/>
+                    <state key="selected" backgroundImage="orangeBig_highlighted"/>
+                    <state key="highlighted" backgroundImage="orangeBig_highlighted"/>
                     <connections>
                         <action selector="editFiltersButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="Tc5-lQ-f8d"/>
                     </connections>
@@ -67,6 +70,8 @@
     </objects>
     <resources>
         <image name="emptyFilter" width="98" height="98"/>
+        <image name="orangeBig_disabled" width="308" height="44"/>
+        <image name="orangeBig_highlighted" width="308" height="44"/>
         <image name="orangeBig_normal" width="308" height="44"/>
     </resources>
 </document>
