@@ -509,10 +509,6 @@
 		B5CFE99C1A0CE475004CE545 /* JAAddRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */; };
 		B5CFE99D1A0CF45C004CE545 /* JAAddRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */; };
 		B5CFE99E1A0CF45F004CE545 /* JAAddRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */; };
-		B5D1258E1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D1258D1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib */; };
-		B5D1258F1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D1258D1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib */; };
-		B5D125911A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */; };
-		B5D125921A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */; };
 		B5EF759C19814EF000005B13 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759B19814EF000005B13 /* FacebookSDK.framework */; };
 		B5EF759E19814EFA00005B13 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */; };
 		B5FBD58A19CAF26800BD9510 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FBD58919CAF26800BD9510 /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -530,9 +526,6 @@
 		BB4F1BD219E2B16600E89C3F /* RIPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF91919DD8BC400D8C51B /* RIPromotion.m */; };
 		BB4F1BD419E2D4D600E89C3F /* navigation.rb in Resources */ = {isa = PBXBuildFile; fileRef = BB4F1BD319E2D4D600E89C3F /* navigation.rb */; };
 		BB4FB8D419E7FA73006FEFF6 /* JALoadCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B55BFB9419E6A83E0098467E /* JALoadCountryViewController.m */; };
-		BB4FB8D519E7FA8A006FEFF6 /* JACampaignPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90219DBF50800D8C51B /* JACampaignPageView.m */; };
-		BB4FB8D619E7FAC5006FEFF6 /* JACampaignSingleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90419DBF50800D8C51B /* JACampaignSingleView.m */; };
-		BB4FB8D719E7FAC5006FEFF6 /* JAPercentageBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90719DBF50800D8C51B /* JAPercentageBarView.m */; };
 		BB4FB8D819E7FAC5006FEFF6 /* JACampaignsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF8FF19DBF4FB00D8C51B /* JACampaignsViewController.m */; };
 		BB4FB8D919E7FC4E006FEFF6 /* RICampaign.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90D19DBF68400D8C51B /* RICampaign.m */; };
 		BB746F4019ED8D5A00341B33 /* JAClickableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376D219EBCA5800558B98 /* JAClickableView.m */; };
@@ -621,10 +614,6 @@
 		CE38E0E51A07A8C600B1738B /* JACatalogListCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE38E0E41A07A8C600B1738B /* JACatalogListCell_ipad_landscape.xib */; };
 		CE38E0E71A07AA1000B1738B /* JACatalogListCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE38E0E61A07AA1000B1738B /* JACatalogListCell_ipad_portrait.xib */; };
 		CE3AF90019DBF4FB00D8C51B /* JACampaignsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF8FF19DBF4FB00D8C51B /* JACampaignsViewController.m */; };
-		CE3AF90819DBF50800D8C51B /* JACampaignPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90219DBF50800D8C51B /* JACampaignPageView.m */; };
-		CE3AF90919DBF50800D8C51B /* JACampaignSingleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90419DBF50800D8C51B /* JACampaignSingleView.m */; };
-		CE3AF90A19DBF50800D8C51B /* JACampaignSingleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3AF90519DBF50800D8C51B /* JACampaignSingleView.xib */; };
-		CE3AF90B19DBF50800D8C51B /* JAPercentageBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90719DBF50800D8C51B /* JAPercentageBarView.m */; };
 		CE3AF90E19DBF68400D8C51B /* RICampaign.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90D19DBF68400D8C51B /* RICampaign.m */; };
 		CE3AF91219DD5D6700D8C51B /* JAPromotionPopUp.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF91119DD5D6700D8C51B /* JAPromotionPopUp.m */; };
 		CE3AF91A19DD8BC400D8C51B /* RIPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF91919DD8BC400D8C51B /* RIPromotion.m */; };
@@ -673,6 +662,22 @@
 		CEA86D9F1A3894C0000032AD /* JASizeGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */; };
 		CEA86DA31A39F82C000032AD /* JAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DA21A39F82C000032AD /* JAPageControl.m */; };
 		CEA86DA41A3A0FEE000032AD /* JAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DA21A39F82C000032AD /* JAPageControl.m */; };
+		CEA86E001A49D247000032AD /* JACampaignBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DF51A49D247000032AD /* JACampaignBannerCell.m */; };
+		CEA86E011A49D247000032AD /* JACampaignBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DF51A49D247000032AD /* JACampaignBannerCell.m */; };
+		CEA86E021A49D247000032AD /* JACampaignBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DF61A49D247000032AD /* JACampaignBannerCell.xib */; };
+		CEA86E031A49D247000032AD /* JACampaignBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DF61A49D247000032AD /* JACampaignBannerCell.xib */; };
+		CEA86E041A49D247000032AD /* JACampaignPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DF81A49D247000032AD /* JACampaignPageView.m */; };
+		CEA86E051A49D247000032AD /* JACampaignPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DF81A49D247000032AD /* JACampaignPageView.m */; };
+		CEA86E061A49D247000032AD /* JACampaignProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DFA1A49D247000032AD /* JACampaignProductCell.m */; };
+		CEA86E071A49D247000032AD /* JACampaignProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DFA1A49D247000032AD /* JACampaignProductCell.m */; };
+		CEA86E081A49D247000032AD /* JACampaignProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DFB1A49D247000032AD /* JACampaignProductCell.xib */; };
+		CEA86E091A49D247000032AD /* JACampaignProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DFB1A49D247000032AD /* JACampaignProductCell.xib */; };
+		CEA86E0A1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DFC1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib */; };
+		CEA86E0B1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DFC1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib */; };
+		CEA86E0C1A49D247000032AD /* JACampaignProductCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DFD1A49D247000032AD /* JACampaignProductCell_ipad_portrait.xib */; };
+		CEA86E0D1A49D247000032AD /* JACampaignProductCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DFD1A49D247000032AD /* JACampaignProductCell_ipad_portrait.xib */; };
+		CEA86E0E1A49D247000032AD /* JAPercentageBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DFF1A49D247000032AD /* JAPercentageBarView.m */; };
+		CEA86E0F1A49D247000032AD /* JAPercentageBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DFF1A49D247000032AD /* JAPercentageBarView.m */; };
 		CEABEEB91A1118A1000D0CF8 /* JAPriceFiltersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEABEEB81A1118A1000D0CF8 /* JAPriceFiltersView.xib */; };
 		CEABEEBC1A1119AB000D0CF8 /* JAPriceFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEABEEBB1A1119AB000D0CF8 /* JAPriceFiltersView.m */; };
 		CEABEEBF1A122BEA000D0CF8 /* JAGenericFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEABEEBE1A122BEA000D0CF8 /* JAGenericFiltersView.m */; };
@@ -1302,8 +1307,6 @@
 		B5CFE9981A0CE3BC004CE545 /* JAAddRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAddRatingView.h; sourceTree = "<group>"; };
 		B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAddRatingView.m; sourceTree = "<group>"; };
 		B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAAddRatingView.xib; sourceTree = "<group>"; };
-		B5D1258D1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JACampaignSingleView~iPad_Portrait.xib"; sourceTree = "<group>"; };
-		B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JACampaignSingleView~iPad_Landscape.xib"; sourceTree = "<group>"; };
 		B5EF759B19814EF000005B13 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		B5EF759D19814EFA00005B13 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		B5FBD58919CAF26800BD9510 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -1375,13 +1378,6 @@
 		CE3AF8FC19DBF4EB00D8C51B /* Jumia-cal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Jumia-cal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3AF8FE19DBF4FB00D8C51B /* JACampaignsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACampaignsViewController.h; sourceTree = "<group>"; };
 		CE3AF8FF19DBF4FB00D8C51B /* JACampaignsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACampaignsViewController.m; sourceTree = "<group>"; };
-		CE3AF90119DBF50800D8C51B /* JACampaignPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACampaignPageView.h; sourceTree = "<group>"; };
-		CE3AF90219DBF50800D8C51B /* JACampaignPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACampaignPageView.m; sourceTree = "<group>"; };
-		CE3AF90319DBF50800D8C51B /* JACampaignSingleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACampaignSingleView.h; sourceTree = "<group>"; };
-		CE3AF90419DBF50800D8C51B /* JACampaignSingleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACampaignSingleView.m; sourceTree = "<group>"; };
-		CE3AF90519DBF50800D8C51B /* JACampaignSingleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACampaignSingleView.xib; sourceTree = "<group>"; };
-		CE3AF90619DBF50800D8C51B /* JAPercentageBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPercentageBarView.h; sourceTree = "<group>"; };
-		CE3AF90719DBF50800D8C51B /* JAPercentageBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPercentageBarView.m; sourceTree = "<group>"; };
 		CE3AF90C19DBF68400D8C51B /* RICampaign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICampaign.h; sourceTree = "<group>"; };
 		CE3AF90D19DBF68400D8C51B /* RICampaign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICampaign.m; sourceTree = "<group>"; };
 		CE3AF91019DD5D6700D8C51B /* JAPromotionPopUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPromotionPopUp.h; path = PromotionPopUp/JAPromotionPopUp.h; sourceTree = "<group>"; };
@@ -1441,6 +1437,18 @@
 		CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASizeGuideViewController.m; path = SizeGuide/JASizeGuideViewController.m; sourceTree = "<group>"; };
 		CEA86DA11A39F82C000032AD /* JAPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPageControl.h; path = JAPageControl/JAPageControl.h; sourceTree = "<group>"; };
 		CEA86DA21A39F82C000032AD /* JAPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPageControl.m; path = JAPageControl/JAPageControl.m; sourceTree = "<group>"; };
+		CEA86DF41A49D247000032AD /* JACampaignBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACampaignBannerCell.h; sourceTree = "<group>"; };
+		CEA86DF51A49D247000032AD /* JACampaignBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACampaignBannerCell.m; sourceTree = "<group>"; };
+		CEA86DF61A49D247000032AD /* JACampaignBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACampaignBannerCell.xib; sourceTree = "<group>"; };
+		CEA86DF71A49D247000032AD /* JACampaignPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACampaignPageView.h; sourceTree = "<group>"; };
+		CEA86DF81A49D247000032AD /* JACampaignPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACampaignPageView.m; sourceTree = "<group>"; };
+		CEA86DF91A49D247000032AD /* JACampaignProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACampaignProductCell.h; sourceTree = "<group>"; };
+		CEA86DFA1A49D247000032AD /* JACampaignProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACampaignProductCell.m; sourceTree = "<group>"; };
+		CEA86DFB1A49D247000032AD /* JACampaignProductCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACampaignProductCell.xib; sourceTree = "<group>"; };
+		CEA86DFC1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACampaignProductCell_ipad_landscape.xib; sourceTree = "<group>"; };
+		CEA86DFD1A49D247000032AD /* JACampaignProductCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACampaignProductCell_ipad_portrait.xib; sourceTree = "<group>"; };
+		CEA86DFE1A49D247000032AD /* JAPercentageBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPercentageBarView.h; sourceTree = "<group>"; };
+		CEA86DFF1A49D247000032AD /* JAPercentageBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPercentageBarView.m; sourceTree = "<group>"; };
 		CEABEEB81A1118A1000D0CF8 /* JAPriceFiltersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPriceFiltersView.xib; path = Filters/JAPriceFiltersView.xib; sourceTree = "<group>"; };
 		CEABEEBA1A1119AB000D0CF8 /* JAPriceFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPriceFiltersView.h; path = Filters/JAPriceFiltersView.h; sourceTree = "<group>"; };
 		CEABEEBB1A1119AB000D0CF8 /* JAPriceFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPriceFiltersView.m; path = Filters/JAPriceFiltersView.m; sourceTree = "<group>"; };
@@ -1743,6 +1751,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CEA86DF31A49D247000032AD /* Campaigns */,
 				B5240E451A496E59006264E9 /* MyOrderDetailView */,
 				520A37CF1A4890CD0046C8B1 /* Search */,
 				B59DCA6719B851F700DE7960 /* Buttons */,
@@ -3185,15 +3194,6 @@
 		CE69B58D19868B7A005CC699 /* Teasers */ = {
 			isa = PBXGroup;
 			children = (
-				CE3AF90119DBF50800D8C51B /* JACampaignPageView.h */,
-				CE3AF90219DBF50800D8C51B /* JACampaignPageView.m */,
-				CE3AF90319DBF50800D8C51B /* JACampaignSingleView.h */,
-				CE3AF90419DBF50800D8C51B /* JACampaignSingleView.m */,
-				CE3AF90519DBF50800D8C51B /* JACampaignSingleView.xib */,
-				B5D1258D1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib */,
-				B5D125901A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib */,
-				CE3AF90619DBF50800D8C51B /* JAPercentageBarView.h */,
-				CE3AF90719DBF50800D8C51B /* JAPercentageBarView.m */,
 				CEE91B9A1989065A0078DFC9 /* JATeaserPageView.h */,
 				CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */,
 				CE445864198BD20A00CE7E8D /* TeaserViews */,
@@ -3245,6 +3245,25 @@
 				CEA86DA21A39F82C000032AD /* JAPageControl.m */,
 			);
 			name = JAPageControl;
+			sourceTree = "<group>";
+		};
+		CEA86DF31A49D247000032AD /* Campaigns */ = {
+			isa = PBXGroup;
+			children = (
+				CEA86DF41A49D247000032AD /* JACampaignBannerCell.h */,
+				CEA86DF51A49D247000032AD /* JACampaignBannerCell.m */,
+				CEA86DF61A49D247000032AD /* JACampaignBannerCell.xib */,
+				CEA86DF71A49D247000032AD /* JACampaignPageView.h */,
+				CEA86DF81A49D247000032AD /* JACampaignPageView.m */,
+				CEA86DF91A49D247000032AD /* JACampaignProductCell.h */,
+				CEA86DFA1A49D247000032AD /* JACampaignProductCell.m */,
+				CEA86DFB1A49D247000032AD /* JACampaignProductCell.xib */,
+				CEA86DFC1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib */,
+				CEA86DFD1A49D247000032AD /* JACampaignProductCell_ipad_portrait.xib */,
+				CEA86DFE1A49D247000032AD /* JAPercentageBarView.h */,
+				CEA86DFF1A49D247000032AD /* JAPercentageBarView.m */,
+			);
+			path = Campaigns;
 			sourceTree = "<group>";
 		};
 		CEABEEB71A11186F000D0CF8 /* Filters */ = {
@@ -3467,6 +3486,7 @@
 				d4d033bbf2ace93ceba9031e /* JAPickupStationInfoCell.xib in Resources */,
 				BBB7F57719E532FA00E898E3 /* 21_native_checkout.feature in Resources */,
 				14af203c5f59a40d772466df /* JANoConnectionView.xib in Resources */,
+				CEA86E091A49D247000032AD /* JACampaignProductCell.xib in Resources */,
 				e21f541d289492fe85dd190e /* JAShippingCell.xib in Resources */,
 				a0fb37b44e2006622629d2c3 /* slider-default7-handle@2x.png in Resources */,
 				34a536cae01afe5c3273576f /* JAShippingInfoCell.xib in Resources */,
@@ -3477,7 +3497,6 @@
 				BBBA4CC619E41F83004271B2 /* 15_my_favourites.feature in Resources */,
 				B5B3AB511A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				B5CFE99D1A0CF45C004CE545 /* JAAddRatingView.xib in Resources */,
-				B5D1258F1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib in Resources */,
 				BBBA4CD219E43993004271B2 /* 18_track_order.feature in Resources */,
 				BB9546AA19F5512600AC7D05 /* touch.rb in Resources */,
 				BB9546A519F5511500AC7D05 /* env.rb in Resources */,
@@ -3505,7 +3524,6 @@
 				37a7d0b54c205bb3a0c500c0 /* JAAddNewAddressCell.xib in Resources */,
 				9fe40da6008fc103a0ca8cbb /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
 				0ae503a9046dc0361e776798 /* RITracking.plist in Resources */,
-				B5D125921A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib in Resources */,
 				BB9546A619F5511900AC7D05 /* 02_pre_stop_hooks.rb in Resources */,
 				BBB12A9919DD874D00656529 /* 08_registration.feature in Resources */,
 				3683c8aeaaa69a884e004685 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
@@ -3538,6 +3556,8 @@
 				3d947baae146c98dbd50bedf /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
 				507ba71a40fd000b7faa7bcc /* JACartListHeaderView.xib in Resources */,
 				B5C0085F1A038F61000BBC52 /* JAPDVImageSection~iPad_Landscape.xib in Resources */,
+				CEA86E031A49D247000032AD /* JACampaignBannerCell.xib in Resources */,
+				CEA86E0D1A49D247000032AD /* JACampaignProductCell_ipad_portrait.xib in Resources */,
 				73e27fe926d9b8bfdf5533aa /* HockeySDKResources.bundle in Resources */,
 				ff66c78cdee50a4002746a01 /* JAPDVRelatedItem.xib in Resources */,
 				9cd5e1568d3e8d595420bc7f /* HockeySDK.xcconfig in Resources */,
@@ -3548,6 +3568,7 @@
 				4f946a6031dc658465b500d8 /* slider-default7-trackCrossedOver.png in Resources */,
 				BB9546B019F5515F00AC7D05 /* 11_catalog.feature in Resources */,
 				5fabf66fb80ebc6b30c67313 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
+				CEA86E0B1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib in Resources */,
 				BBBA4CD519E44CDC004271B2 /* 19_filters.feature in Resources */,
 				B5C008601A038F63000BBC52 /* JAPDVImageSection~iPad_Portrait.xib in Resources */,
 				B57822571A371B2C00B4DD8B /* JANoConnectionView~iPad.xib in Resources */,
@@ -3620,10 +3641,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA86E0C1A49D247000032AD /* JACampaignProductCell_ipad_portrait.xib in Resources */,
+				CEA86E0A1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib in Resources */,
 				B5B3AB501A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				BBA707B819EEB93C0094C565 /* 00_choose_country.feature in Resources */,
 				6C18BDAC1A1B4CA300626706 /* JANewsletterComponent~iPad.xib in Resources */,
-				B5D1258E1A2CC9F00016FCAB /* JACampaignSingleView~iPad_Portrait.xib in Resources */,
 				BBBA4CBD19E3F764004271B2 /* 13_related_items.feature in Resources */,
 				BBA145B219DC56BF003F0CA7 /* init.rb in Resources */,
 				BBBA4CCD19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
@@ -3710,7 +3732,6 @@
 				B5007AC419A4E8EC0024035A /* HockeySDKResources.bundle in Resources */,
 				4A4F12EA198FF35600F93C89 /* JAPDVRelatedItem.xib in Resources */,
 				B5007AC319A4E8EC0024035A /* HockeySDK.xcconfig in Resources */,
-				CE3AF90A19DBF50800D8C51B /* JACampaignSingleView.xib in Resources */,
 				BB128EA319E2FA410033514F /* 11_catalog.feature in Resources */,
 				CEDEB9BD199BA8FA0022BAB5 /* slider-default7-trackBackground.png in Resources */,
 				CE2C6B6F1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib in Resources */,
@@ -3722,6 +3743,7 @@
 				CEDEB9BF199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png in Resources */,
 				B5B3AB561A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */,
 				B5B5FDF719D99D06008B8059 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
+				CEA86E081A49D247000032AD /* JACampaignProductCell.xib in Resources */,
 				CEDEB9C1199BA8FA0022BAB5 /* slider-metal-handle-highlighted.png in Resources */,
 				BBA145B119DC56BF003F0CA7 /* calabash_steps.rb in Resources */,
 				BBA778101A25E3B1003A39D5 /* 03_remember_email.feature in Resources */,
@@ -3752,6 +3774,7 @@
 				CEDEB9BB199BA8FA0022BAB5 /* slider-default7-track.png in Resources */,
 				CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */,
 				CE13789519A4DC4E00CA0751 /* JARecentlyViewedListCell.xib in Resources */,
+				CEA86E021A49D247000032AD /* JACampaignBannerCell.xib in Resources */,
 				B59DCA7019B8712500DE7960 /* JAAddressCell.xib in Resources */,
 				B5CBFF681A10B33D0050C553 /* JARatingsViewMedium.xib in Resources */,
 				B5B5FDE619D99D06008B8059 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
@@ -3765,7 +3788,6 @@
 				B5A301BC19811D0700F71726 /* Images.xcassets in Resources */,
 				B5B5FDF319D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				B5CDC7541A00E50C00DA8ADB /* Main_iPad.storyboard in Resources */,
-				B5D125911A2CC9F50016FCAB /* JACampaignSingleView~iPad_Landscape.xib in Resources */,
 				CEDEB9B6199BA8FA0022BAB5 /* slider-default-trackCrossedOver.png in Resources */,
 				CEDEB9BE199BA8FA0022BAB5 /* slider-default7-trackBackground@2x.png in Resources */,
 				BBBA4CD419E44CDC004271B2 /* 19_filters.feature in Resources */,
@@ -3812,11 +3834,8 @@
 				BB746F4019ED8D5A00341B33 /* JAClickableView.m in Sources */,
 				B5C13EC11A402A9E00484398 /* ADJTimer.m in Sources */,
 				BB4FB8D919E7FC4E006FEFF6 /* RICampaign.m in Sources */,
-				BB4FB8D619E7FAC5006FEFF6 /* JACampaignSingleView.m in Sources */,
-				BB4FB8D719E7FAC5006FEFF6 /* JAPercentageBarView.m in Sources */,
 				B578225B1A37516800B4DD8B /* JAGradientLayer.m in Sources */,
 				BB4FB8D819E7FAC5006FEFF6 /* JACampaignsViewController.m in Sources */,
-				BB4FB8D519E7FA8A006FEFF6 /* JACampaignPageView.m in Sources */,
 				BB4FB8D419E7FA73006FEFF6 /* JALoadCountryViewController.m in Sources */,
 				BB4F1BD219E2B16600E89C3F /* RIPromotion.m in Sources */,
 				BB4F1BD119E2B15400E89C3F /* JAPromotionPopUp.m in Sources */,
@@ -3826,6 +3845,7 @@
 				B5C13EA11A402A9E00484398 /* ADJActivityHandler.m in Sources */,
 				8c281b362211f7077d4edb4b /* RINewsletterCategory.m in Sources */,
 				2b32daf78a4b1be86b5cb815 /* FXBlurView.m in Sources */,
+				CEA86E071A49D247000032AD /* JACampaignProductCell.m in Sources */,
 				843c5f5135a7a237f2ebe305 /* RIError.m in Sources */,
 				477e79c583ecaf47f4e737b6 /* RIStaticBlockIndex.m in Sources */,
 				1e6713adaced26b8b8ad2c86 /* JAShippingViewController.m in Sources */,
@@ -3846,6 +3866,7 @@
 				c0e941af43b887c904d319ec /* JAPickupStationInfoCell.m in Sources */,
 				80cd392bb7db149dcac66e13 /* RICheckout.m in Sources */,
 				7115e1b7774de2fe61bfb715 /* RIAdjustTracker.m in Sources */,
+				CEA86E011A49D247000032AD /* JACampaignBannerCell.m in Sources */,
 				f30fa9e7d7b939469d4b3c6b /* JAForgotPasswordViewController.m in Sources */,
 				CEABEEC81A126652000D0CF8 /* JAGenericFiltersView.m in Sources */,
 				51686b7e16269d6e716c8f70 /* RIOperation.m in Sources */,
@@ -3877,6 +3898,7 @@
 				df5a29254b4e39fe8a0a7d40 /* RITeaserGroup.m in Sources */,
 				B5C13EBB1A402A9E00484398 /* ADJPackageBuilder.m in Sources */,
 				6ad0a1988b1e51c37142c75b /* JACartViewController.m in Sources */,
+				CEA86E0F1A49D247000032AD /* JAPercentageBarView.m in Sources */,
 				b94cfa8d37757acab329072f /* JAPDVProductInfo.m in Sources */,
 				842d7c4fad06679139869ced /* RIField.m in Sources */,
 				4e6c662ba5a46bb8730e617e /* RITeaserImage.m in Sources */,
@@ -4015,6 +4037,7 @@
 				e827050642f7bb99bff26f98 /* RICartItem.m in Sources */,
 				fe0f7b01d4bbd5142aedb639 /* JAProductDetailsViewController.m in Sources */,
 				839e583fc75316c30aa08c95 /* SDImageCache.m in Sources */,
+				CEA86E051A49D247000032AD /* JACampaignPageView.m in Sources */,
 				976cc1afdb4c41be05ed1470 /* RIOrder.m in Sources */,
 				c7f7a3e79d1ad30af79a27c0 /* JABirthDateComponent.m in Sources */,
 				67f4a0b88343cac1bc885793 /* RIURLCache.m in Sources */,
@@ -4052,6 +4075,7 @@
 				CEA86DA31A39F82C000032AD /* JAPageControl.m in Sources */,
 				4AFC7F94199BC124007D67F4 /* JASignupViewController.m in Sources */,
 				B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */,
+				CEA86E061A49D247000032AD /* JACampaignProductCell.m in Sources */,
 				B5C13EA01A402A9E00484398 /* ADJActivityHandler.m in Sources */,
 				CEDEB983199A51E30022BAB5 /* RIFilter.m in Sources */,
 				CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */,
@@ -4072,6 +4096,7 @@
 				CEC376D319EBCA5800558B98 /* JAClickableView.m in Sources */,
 				CE445879198BF15B00CE7E8D /* JACampaignsTeaserView.m in Sources */,
 				B59DCA7619B88DAD00DE7960 /* JASwitchCell.m in Sources */,
+				CEA86E001A49D247000032AD /* JACampaignBannerCell.m in Sources */,
 				B57DC97E19B90AB10080C818 /* JAEditAddressViewController.m in Sources */,
 				4A39213419891FB200B70A9C /* JAMyAccountViewController.m in Sources */,
 				CEABEEBF1A122BEA000D0CF8 /* JAGenericFiltersView.m in Sources */,
@@ -4096,7 +4121,6 @@
 				4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */,
 				CEC376E319F0050F00558B98 /* JAHomeWizardView.m in Sources */,
 				B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */,
-				CE3AF90B19DBF50800D8C51B /* JAPercentageBarView.m in Sources */,
 				B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */,
 				B58DBF3919C0AF9600D4678A /* JAPaymentCell.m in Sources */,
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
@@ -4104,10 +4128,10 @@
 				B5A302D119811E9200F71726 /* RITeaserText.m in Sources */,
 				B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */,
 				B5225E1B1989308300C18F1E /* RIPaymentMethodFormOption.m in Sources */,
+				CEA86E0E1A49D247000032AD /* JAPercentageBarView.m in Sources */,
 				B5C13EBA1A402A9E00484398 /* ADJPackageBuilder.m in Sources */,
 				4AE730B8198F8ACA000CA1DD /* JAPDVImageSection.m in Sources */,
 				4A01EE61199259C7005F5AD1 /* JAPDVGalleryView.m in Sources */,
-				CE3AF90819DBF50800D8C51B /* JACampaignPageView.m in Sources */,
 				CE2FB75B1993BCB900E7CD00 /* JACatalogCell.m in Sources */,
 				CE445880198C03D100CE7E8D /* JAPopularBrandsTeaserView.m in Sources */,
 				4A39213719891FBA00B70A9C /* JAChooseCountryViewController.m in Sources */,
@@ -4185,7 +4209,6 @@
 				B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */,
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
 				CE88F7BD1A23886100A3A586 /* JAOrderSummaryView.m in Sources */,
-				CE3AF90919DBF50800D8C51B /* JACampaignSingleView.m in Sources */,
 				CE33CA0119AB36FA00333B1A /* JAPriceView.m in Sources */,
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
 				B5A302D319811E9200F71726 /* RIVariation.m in Sources */,
@@ -4244,6 +4267,7 @@
 				4A480C2C19951E9700E054B8 /* JAProductDetailsViewController.m in Sources */,
 				CEC376DD19EFC1E800558B98 /* JAWizardView.m in Sources */,
 				B5A3025819811E8A00F71726 /* SDImageCache.m in Sources */,
+				CEA86E041A49D247000032AD /* JACampaignPageView.m in Sources */,
 				B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */,
 				B510B01019AE466B00A9754A /* JABirthDateComponent.m in Sources */,
 				B5A302D219811E9200F71726 /* RIURLCache.m in Sources */,
