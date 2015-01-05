@@ -190,7 +190,7 @@
         
         CGRect finalFrame = self.resultsTableView.frame;
         self.resultsTableView.frame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                                 self.resultsTableView.frame.origin.y + self.resultsTableView.frame.size.height,
+                                                 0.0f + self.resultsTableView.frame.size.height,
                                                  self.resultsTableView.frame.size.width,
                                                  self.resultsTableView.frame.size.height);
         
@@ -204,7 +204,7 @@
 {
     CGRect startFrame = self.resultsTableView.frame;
     CGRect finalFrame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                   self.resultsTableView.frame.origin.y + self.resultsTableView.frame.size.height,
+                                   0.0f + self.resultsTableView.frame.size.height,
                                    self.resultsTableView.frame.size.width,
                                    self.resultsTableView.frame.size.height);
     
