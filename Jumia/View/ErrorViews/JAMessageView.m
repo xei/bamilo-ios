@@ -60,7 +60,7 @@
     
     self.errorImageView.translatesAutoresizingMaskIntoConstraints = YES;
     self.errorImageView.frame = CGRectMake(self.errorImageView.frame.origin.x,
-                                           self.errorImageView.frame.origin.y,
+                                           -self.errorImageViewHeight,
                                            self.errorImageView.frame.size.width,
                                            0);
     
@@ -107,6 +107,15 @@
                             self.frame.size.width,
                             0.0f);
     
+    self.errorImageView.frame = CGRectMake(self.errorImageView.frame.origin.x,
+                                           -self.errorImageViewHeight,
+                                           self.errorImageView.frame.size.width,
+                                           0.0f);
+    
+    self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x,
+                                       self.titleLabel.frame.origin.y,
+                                       self.titleLabel.frame.size.width,
+                                       0.0f);
     if (VALID(title, NSString))
     {
         self.titleLabel.text = title;
@@ -140,19 +149,19 @@
         [UIView animateWithDuration:0.5f
                          animations:^{
                              self.errorImageView.frame = CGRectMake(self.errorImageView.frame.origin.x,
-                                                                    self.errorImageView.frame.origin.y,
+                                                                    -self.errorImageViewHeight,
                                                                     self.errorImageView.frame.size.width,
                                                                     0.0f);
-                             
-                             self.frame = CGRectMake(0.0f,
-                                                     self.messageViewInitialY,
-                                                     self.frame.size.width,
-                                                     0.0f);
                              
                              self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x,
                                                                 self.titleLabel.frame.origin.y,
                                                                 self.titleLabel.frame.size.width,
                                                                 0.0f);
+                             
+                             self.frame = CGRectMake(0.0f,
+                                                     self.messageViewInitialY,
+                                                     self.frame.size.width,
+                                                     0.0f);
                          } completion:^(BOOL finished) {
                              [self removeFromSuperview];
                          }];
@@ -162,53 +171,61 @@
 - (void)adjustFrames
 {
     CGFloat maxHeight = 88.0f;
-    CGFloat startingPosLabel;
-    CGFloat leftMargin;
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat verticalMargin = 6.0f;
     
-    CGRect titleLabelRect = [self.titleLabel.text boundingRectWithSize:CGSizeMake(self.frame.size.width - 12.0f -10.0f - self.errorImageView.frame.size.width, maxHeight)
-                                                               options:NSStringDrawingUsesLineFragmentOrigin
-                                                            attributes:@{NSFontAttributeName:self.titleLabel.font} context:nil];
+    CGFloat titleLabelStartingX = 0.0f;
+    CGFloat marginBetweenImageAndText = 10.0f;
     
-    if(titleLabelRect.size.height>self.messageViewHeight - 12.0f ){
-        self.messageViewHeight = 12.0f + titleLabelRect.size.height;
-    }else
-    {
-        if(titleLabelRect.size.height>maxHeight)
-        {
-            self.messageViewHeight = 88.0f;
-        }
-    }
+    CGFloat roundedTitleWidth = 0.0f;
+    CGFloat roundedTitleHeight = 0.0f;
     
     if(!self.successState)
     {
-        
-        leftMargin = (self.frame.size.width - titleLabelRect.size.width - self.errorImageView.frame.size.width - 10)/2;
-        
         [self.errorImageView setHidden:NO];
+        
+        CGRect titleLabelRect = [self.titleLabel.text boundingRectWithSize:CGSizeMake(self.frame.size.width - (2 * horizontalMargin) - marginBetweenImageAndText - self.errorImageView.frame.size.width, maxHeight)
+                                                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                                                attributes:@{NSFontAttributeName:self.titleLabel.font} context:nil];
+        roundedTitleWidth = ceilf(titleLabelRect.size.width);
+        roundedTitleHeight = ceilf(titleLabelRect.size.height);
+        
+        CGFloat leftMargin = (self.frame.size.width - roundedTitleWidth - self.errorImageView.frame.size.width - marginBetweenImageAndText)/2;
+        
+        titleLabelStartingX = leftMargin + marginBetweenImageAndText + self.errorImageView.frame.size.width;
+        
         // Adjust frames
         self.errorImageView.frame = CGRectMake(leftMargin,
-                                               (self.messageViewHeight - self.errorImageViewHeight)/2,
+                                               self.errorImageView.frame.origin.y,
                                                self.errorImageView.frame.size.width,
                                                self.errorImageView.frame.size.height);
-        startingPosLabel = leftMargin + 10.0f + self.errorImageView.frame.size.width;
-        
     }
     else
     {
         [self.errorImageView setHidden:YES];
-        titleLabelRect = [self.titleLabel.text boundingRectWithSize:CGSizeMake(self.frame.size.width - 20.0f, maxHeight)
-                                                            options:NSStringDrawingUsesLineFragmentOrigin
-                                                         attributes:@{NSFontAttributeName:self.titleLabel.font} context:nil];
         
-        leftMargin = (self.frame.size.width - titleLabelRect.size.width)/2;
-        startingPosLabel = leftMargin;
+        CGRect titleLabelRect = [self.titleLabel.text boundingRectWithSize:CGSizeMake(self.frame.size.width - (2 * horizontalMargin), maxHeight)
+                                                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                                                attributes:@{NSFontAttributeName:self.titleLabel.font} context:nil];
+        
+        roundedTitleWidth = ceilf(titleLabelRect.size.width);
+        roundedTitleHeight = ceilf(titleLabelRect.size.height);
+        titleLabelStartingX = (self.frame.size.width - roundedTitleWidth)/2;
     }
     
-    [self.titleLabel setFrame:CGRectMake(startingPosLabel,
-                                         0.0f,
-                                         titleLabelRect.size.width,
-                                         self.titleLabel.frame.size.height)];
+    if(roundedTitleHeight > self.messageViewHeight - (2 * verticalMargin))
+    {
+        self.messageViewHeight = (2 * verticalMargin) + roundedTitleHeight;
+    }
+    else if(roundedTitleHeight > maxHeight)
+    {
+        self.messageViewHeight = 88.0f;
+    }
     
+    [self.titleLabel setFrame:CGRectMake(titleLabelStartingX,
+                                         0.0f,
+                                         roundedTitleWidth,
+                                         self.titleLabel.frame.size.height)];
 }
 
 - (void)orientationChanged:(NSNotification *)notification
