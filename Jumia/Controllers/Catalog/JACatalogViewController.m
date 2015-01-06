@@ -78,6 +78,8 @@
     
     self.filteredNoResultsView = [JAFilteredNoResultsView getFilteredNoResultsView];
     
+    self.filteredNoResultsView.tag = 1001;
+    
     // fail-safe condition: launches error view in case something goes wrong
     if(self.filteredNoResultsView == nil || ISEMPTY(self.filtersArray))
     {
@@ -1450,6 +1452,13 @@
         [self.undefinedView didRotate];
     }
     [self hideLoading];
+    
+    // disabling delegation in case there's a filters view when device finishes rotating
+    UIView *filtersView = [self.view viewWithTag:1001];
+    if(filtersView != nil)
+    {
+        self.sortingScrollView.disableDelagation = YES;
+    }
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
