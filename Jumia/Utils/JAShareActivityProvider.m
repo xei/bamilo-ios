@@ -64,7 +64,16 @@
             if(VALID_NOTEMPTY(self.product.url, NSString))
             {
                 productUrl = self.product.url;
-                productUrl = [productUrl stringByReplacingOccurrencesOfString:@"mobapi/" withString:@""];
+                
+                if(NSNotFound != [productUrl rangeOfString:RI_MOBAPI_PREFIX].location)
+                {
+                    productUrl = [productUrl stringByReplacingOccurrencesOfString:RI_MOBAPI_PREFIX withString:@""];
+                }
+
+                if(NSNotFound != [productUrl rangeOfString:RI_API_VERSION].location)
+                {
+                    productUrl = [productUrl stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
+                }
             }
             
             if(VALID_NOTEMPTY(self.product.name, NSString))
