@@ -554,7 +554,7 @@ JAPickerDelegate>
         [self.bottomView addButton:STRING_SAVE_LABEL target:self action:@selector(createAddressButtonPressed)];
     }
     
-    if(VALID_NOTEMPTY(self.checkBoxComponent, JACheckBoxComponent) && [self.checkBoxComponent isCheckBoxOn])
+    if(!VALID_NOTEMPTY(self.checkBoxComponent, JACheckBoxComponent) || [self.checkBoxComponent isCheckBoxOn])
     {
         [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
                                                           self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.bottomView.frame.size.height)];
