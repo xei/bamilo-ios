@@ -211,6 +211,7 @@
 "promotion_tip_tap_text" = "Cliquez sur la case ci-dessus pour copier le code dans le presse-papier et gardez le ainsi à portée de main pour le paiement final";
 "string_try_again" = "Réessayer";
 "string_no_newtork" = "Aucune connection.";
+"internet_no_connection_details_label" = "Un problème de connection s'est produit, Veuillez essayer à nouveau";
 "string_oops" = "Oups!";
 "string_something_broken" = "Une erreur s'est produite. Veuillez réessayer.";
 
@@ -257,18 +258,18 @@
 
 "size_guide_label" = "Taille Guide";
 
-"my_addresses" = "My Addresses";
-"create_edit_address" = "Create or edit your addresses";
-"app_sharing" = "App Sharing";
-"share_the_app" = "Share the App";
-"can_share_app_with_friends" = "You can now share the app with your friends";
-"install_jumia_ios" = "Install the Jumia iOS App in an instant";
-"share_jumia_app" = "Share the Jumia App";
+"my_addresses" = "Mes adresses";
+"create_edit_address" = "Créez ou modifiez vos adresses";
+"app_sharing" = "Partage d'application";
+"share_the_app" = "Partagez l'App";
+"can_share_app_with_friends" = "Vous pouvez maintenant partager l'application avec vos amis";
+"install_jumia_ios" = "Installer l'iOS App de Jumia en un instant";
+"share_jumia_app" = "Partagez l'App de Jumia";
 
-"delivery_time" = "Delivery time:";
+"delivery_time" = "Délai de livraison:";
 
 "product_outof_stock" = "Le produit n\'est plus disponible";
-"products_outof_stock" = "Items are out of stock";
+"products_outof_stock" = "Les articles sont en rupture de stock";
 
 "login_remember_user_email" = "Mémoriser mon email";
 
@@ -278,7 +279,7 @@
 "my_order_details_label" = "Détails de la command";
 "my_order_number_label" = "Nr.";
 "my_order_date_label" = "Date:";
-"my_order_payment_reference_label" = "Reference #:";
-"my_order_payment_status_label" = "Status:";
+"my_order_payment_reference_label" = "Référence #:";
+"my_order_payment_status_label" = "statut:";
 "my_order_quantity_label" = "Qté.";
 "my_order_no_orders_label" = "Vous n'avez rien commandé";

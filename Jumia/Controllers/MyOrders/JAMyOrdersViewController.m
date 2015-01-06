@@ -188,6 +188,9 @@ JAPickerScrollViewDelegate
 {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+                                                        object:nil];
+    
     [self.firstScrollView setFrame:self.contentScrollView.frame];
     
     self.contentScrollView.contentSize = CGSizeMake(self.view.frame.size.width * [self.sortList count], self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height);
@@ -225,7 +228,7 @@ JAPickerScrollViewDelegate
                   
                   // 27.0f is the height of the header
                   CGFloat collectionHeight =  27.0f + [JAMyOrderCell getCellHeight] * [orders count];
-                  if(!(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)))
+                  if(UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
                   {
                       if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && self.selectedOrderIndexPath.row < [self.orders count])
                       {
@@ -242,7 +245,7 @@ JAPickerScrollViewDelegate
                   
                   CGFloat horizontalMargin = 6.0f;
                   CGFloat viewsWidth = (self.view.frame.size.width - (2 * horizontalMargin));
-                  if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+                  if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
                   {
                       viewsWidth = ((self.view.frame.size.width - (3 * horizontalMargin)) / 2);
                   }
@@ -251,12 +254,13 @@ JAPickerScrollViewDelegate
                                                                  6.0f,
                                                                  viewsWidth,
                                                                  collectionHeight)];
-
+                  
                   if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && !VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath))
                   {
                       self.selectedOrderIndexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-                      [self setupOrderDetailView:self.ordersCollectionView.frame.size.width interfaceOrientation:self.interfaceOrientation];
                   }
+                  
+                  [self setupOrderDetailView:self.ordersCollectionView.frame.size.width interfaceOrientation:self.interfaceOrientation];
               }
               
               self.isLoadingOrders = NO;
@@ -264,6 +268,7 @@ JAPickerScrollViewDelegate
           }
            andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
                self.isLoadingOrders = NO;
+               [self hideLoading];
                if(RIApiResponseMaintenancePage == apiResponse)
                {
                    [self showMaintenancePage:@selector(loadOrders) objects:nil];
@@ -298,6 +303,9 @@ JAPickerScrollViewDelegate
     
     CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     CGFloat newHeight = self.view.frame.size.width - self.view.frame.origin.y;
+    
+    self.contentScrollView.contentSize = CGSizeMake(newWidth * [self.sortList count], newHeight - self.myOrdersPickerScrollView.frame.size.height);
+    
     [self setupMyOrdersViews:newWidth height:newHeight interfaceOrientation:toInterfaceOrientation];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
@@ -305,8 +313,6 @@ JAPickerScrollViewDelegate
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    self.contentScrollView.contentSize = CGSizeMake(self.view.frame.size.width * [self.sortList count], self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height);
-    
     [self setupMyOrdersViews:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
     
     self.animatedScroll = NO;
@@ -315,7 +321,7 @@ JAPickerScrollViewDelegate
     
     [self.myOrdersPickerScrollView setNeedsLayout];
     
-    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && !VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath))
+    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && !VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && 1 == self.selectedIndex)
     {
         self.selectedOrderIndexPath = [NSIndexPath indexPathForItem:0 inSection:0];
     }
@@ -323,6 +329,8 @@ JAPickerScrollViewDelegate
     [self.ordersCollectionView reloadData];
     
     [self hideLoading];
+    
+    self.contentScrollView.contentSize = CGSizeMake(self.view.frame.size.width * [self.sortList count], self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height);
     
     [self.contentScrollView setHidden:NO];
     
@@ -707,7 +715,7 @@ JAPickerScrollViewDelegate
     {
         [self.myOrderView removeFromSuperview];
         [self.myOrderHintLabel removeFromSuperview];
-
+        
         [self.secondScrollView removeFromSuperview];
         self.secondScrollView = nil;
     }
@@ -911,7 +919,7 @@ JAPickerScrollViewDelegate
             [self.orderDetailsLabel setBackgroundColor:[UIColor clearColor]];
             [self.orderDetailsContainer addSubview:self.orderDetailsLabel];
             
-            self.orderDetailsSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.orderDetailsLabel.frame), width - 12.0f, 1.0f)];
+            self.orderDetailsSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.orderDetailsLabel.frame), width, 1.0f)];
             [self.orderDetailsSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
             [self.orderDetailsContainer addSubview:self.orderDetailsSeparator];
             
@@ -1048,25 +1056,16 @@ JAPickerScrollViewDelegate
     
     if(collectionView == self.ordersCollectionView)
     {
-        if(VALID_NOTEMPTY(self.orders, NSArray) && indexPath.row < [self.orders count])
+        sizeForItemAtIndexPath = CGSizeMake(self.ordersCollectionView.frame.size.width, [JAMyOrderCell getCellHeight]);
+        
+        // If it is iPad in landscape then the order detail view appears out of the collection view
+        if(UIInterfaceOrientationIsPortrait(self.interfaceOrientation) && VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && ((self.selectedOrderIndexPath.row + 1) == indexPath.row))
         {
-            // If it is iPad in landscape then the order detail view appears out of the collection view
-            if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+            // order detail row
+            if(VALID_NOTEMPTY(self.orders, NSArray) && self.selectedOrderIndexPath.row < [self.orders count])
             {
-                sizeForItemAtIndexPath = CGSizeMake(self.ordersCollectionView.frame.size.width, [JAMyOrderCell getCellHeight]);
-            }
-            else
-            {
-                if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && (self.selectedOrderIndexPath.row + 1) == indexPath.row)
-                {
-                    // order detail row
-                    RITrackOrder *order = [self.orders objectAtIndex:self.selectedOrderIndexPath.row];
-                    sizeForItemAtIndexPath = CGSizeMake(self.ordersCollectionView.frame.size.width, [JAMyOrderDetailView getOrderDetailViewHeight:order maxWidth:self.ordersCollectionView.frame.size.width]);
-                }
-                else
-                {
-                    sizeForItemAtIndexPath = CGSizeMake(self.ordersCollectionView.frame.size.width, [JAMyOrderCell getCellHeight]);
-                }
+                RITrackOrder *order = [self.orders objectAtIndex:self.selectedOrderIndexPath.row];
+                sizeForItemAtIndexPath = CGSizeMake(self.ordersCollectionView.frame.size.width, [JAMyOrderDetailView getOrderDetailViewHeight:order maxWidth:self.ordersCollectionView.frame.size.width]);
             }
         }
     }
@@ -1105,12 +1104,12 @@ JAPickerScrollViewDelegate
     if(VALID_NOTEMPTY(self.orders, NSArray))
     {
         numberOfItemsInSection = [self.orders count];
-        if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && !(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)))
+        if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
         {
             numberOfItemsInSection++;
         }
     }
-    return numberOfItemsInSection;
+    return numberOfItemsInSection++;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -1160,24 +1159,32 @@ JAPickerScrollViewDelegate
                 }
                 else
                 {
-                    RITrackOrder *order = [self.orders objectAtIndex:indexPath.row];
-                    JAMyOrderCell *myOrderCell = (JAMyOrderCell*) [collectionView dequeueReusableCellWithReuseIdentifier:@"myOrderListCell" forIndexPath:indexPath];
-                    [myOrderCell setupWithOrder:order isInLandscape:UIInterfaceOrientationIsLandscape(self.interfaceOrientation)];
-                    [myOrderCell.clickableView setTag:indexPath.row];
-                    [myOrderCell.clickableView addTarget:self action:@selector(selectedOrder:) forControlEvents:UIControlEventTouchUpInside];
-                    
-                    [myOrderCell.clickableView setSelected:NO];
-                    [myOrderCell.portraitArrowImageView setImage:[UIImage imageNamed:@"arrowGreyClose"]];
-                    if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && (self.selectedOrderIndexPath.row) == indexPath.row)
+                    NSInteger orderIndex = indexPath.row;
+                    if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && self.selectedOrderIndexPath.row < indexPath.row)
                     {
-                        [myOrderCell.clickableView setSelected:YES];
-                        [myOrderCell.portraitArrowImageView setImage:[UIImage imageNamed:@"arrowGreyOpen"]];
+                        orderIndex--;
                     }
                     
-                    cell = myOrderCell;
+                    if(orderIndex < [self.orders count])
+                    {
+                        RITrackOrder *order = [self.orders objectAtIndex:orderIndex];
+                        JAMyOrderCell *myOrderCell = (JAMyOrderCell*) [collectionView dequeueReusableCellWithReuseIdentifier:@"myOrderListCell" forIndexPath:indexPath];
+                        [myOrderCell setupWithOrder:order isInLandscape:UIInterfaceOrientationIsLandscape(self.interfaceOrientation)];
+                        [myOrderCell.clickableView setTag:orderIndex];
+                        [myOrderCell.clickableView addTarget:self action:@selector(selectedOrder:) forControlEvents:UIControlEventTouchUpInside];
+                        
+                        [myOrderCell.clickableView setSelected:NO];
+                        [myOrderCell.portraitArrowImageView setImage:[UIImage imageNamed:@"arrowGreyClose"]];
+                        if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && (self.selectedOrderIndexPath.row) == orderIndex)
+                        {
+                            [myOrderCell.clickableView setSelected:YES];
+                            [myOrderCell.portraitArrowImageView setImage:[UIImage imageNamed:@"arrowGreyOpen"]];
+                        }
+
+                        cell = myOrderCell;
+                    }
                 }
             }
-            
         }
     }
     
@@ -1188,7 +1195,7 @@ JAPickerScrollViewDelegate
 {
     JAClickableView *clickableView = sender;
     NSInteger tag = clickableView.tag;
-
+    
     if(UIInterfaceOrientationIsPortrait(self.interfaceOrientation) && VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && self.selectedOrderIndexPath.row == tag)
     {
         self.selectedOrderIndexPath = nil;
@@ -1200,7 +1207,10 @@ JAPickerScrollViewDelegate
     
     [self.ordersCollectionView reloadData];
     
-    [self setupOrderDetailView:self.ordersCollectionView.frame.size.width interfaceOrientation:self.interfaceOrientation];
+    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        [self setupOrderDetailView:self.ordersCollectionView.frame.size.width interfaceOrientation:self.interfaceOrientation];
+    }
 }
 
 @end
