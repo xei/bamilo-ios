@@ -13,9 +13,9 @@
 
 @protocol JACampaignProductCellDelegate <NSObject>
 
-- (void)addToCartForProduct:(RICampaignProduct*)campaignProduct
-          withProductSimple:(NSString*)simpleSku;
-- (void)sizePressedOnView:(JACampaignProductCell*)campaignProductCell;
+- (void)pressedAddToCartForProduct:(RICampaignProduct*)campaignProduct
+                 withProductSimple:(NSString*)simpleSku;
+- (void)pressedSizeOnView:(JACampaignProductCell*)campaignProductCell;
 - (void)pressedCampaignWithSku:(NSString*)sku;
 
 @end
@@ -28,6 +28,7 @@
 @property (nonatomic, strong)NSString* chosenSize;
 
 - (void)loadWithCampaignProduct:(RICampaignProduct*)campaignProduct
-           elapsedTimeInSeconds:(NSInteger)elapsedTimeInSeconds;
+           elapsedTimeInSeconds:(NSInteger)elapsedTimeInSeconds
+                     chosenSize:(NSString*)chosenSize;
 
 @end

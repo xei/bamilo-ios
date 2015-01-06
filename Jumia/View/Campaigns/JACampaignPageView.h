@@ -9,12 +9,27 @@
 #import <UIKit/UIKit.h>
 #import "JACampaignProductCell.h"
 
-@interface JACampaignPageView : UIView <UICollectionViewDataSource, UICollectionViewDelegate>
+@class JACampaignPageView;
+
+@protocol JACampaignPageViewDelegate <NSObject>
+
+- (void)addToCartForProduct:(RICampaignProduct*)campaignProduct
+          withProductSimple:(NSString*)simpleSku;
+- (void)openCampaignWithSku:(NSString*)sku;
+- (void)openPickerForCampaignPage:(JACampaignPageView*)campaignPage
+                       dataSource:(NSArray*)dataSource
+                     previousText:(NSString*)previousText;
+
+@end
+
+@interface JACampaignPageView : UIView <UICollectionViewDataSource, UICollectionViewDelegate, JACampaignProductCellDelegate>
 
 @property (nonatomic, assign)UIInterfaceOrientation interfaceOrientation;
-@property (nonatomic, assign)id<JACampaignProductCellDelegate>singleViewDelegate;
 @property (nonatomic, assign)BOOL isLoaded;
+@property (nonatomic, assign)id<JACampaignPageViewDelegate>delegate;
 
 - (void)loadWithCampaign:(RICampaign*)campaign;
+
+- (void)selectedSizeIndex:(NSInteger)index;
 
 @end

@@ -23,6 +23,9 @@
 @property (nonatomic, strong)UIImageView* bannerImage;
 @property (nonatomic, assign)NSInteger elapsedTimeInSeconds;
 
+@property (nonatomic, strong)NSMutableArray* chosenSimpleNames;
+@property (nonatomic, strong)JACampaignProductCell* lastPressedCampaignProductCell;
+
 @end
 
 @implementation JACampaignPageView
@@ -68,6 +71,11 @@
         self.isLoaded = YES;
         
         self.campaign = campaign;
+        
+        self.chosenSimpleNames = [NSMutableArray new];
+        for (int i = 0; i < self.campaign.campaignProducts.count; i++) {
+            [self.chosenSimpleNames addObject:@""];
+        }
         
         self.elapsedTimeInSeconds = 0;
         [NSTimer scheduledTimerWithTimeInterval:1.0
@@ -166,11 +174,16 @@
         realIndex--;
     }
     JACampaignProductCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
-    
-    cell.delegate = self.singleViewDelegate;
+    cell.delegate = self;
+    cell.tag = realIndex;
     
     RICampaignProduct* product = [self.campaign.campaignProducts objectAtIndex:realIndex];
-    [cell loadWithCampaignProduct:product elapsedTimeInSeconds:self.elapsedTimeInSeconds];
+    
+    NSString* chosenSimpleName = [self.chosenSimpleNames objectAtIndex:realIndex];
+    
+    [cell loadWithCampaignProduct:product
+             elapsedTimeInSeconds:self.elapsedTimeInSeconds
+                       chosenSize:chosenSimpleName];
     
     return cell;
 
@@ -181,6 +194,64 @@
 - (void)updateSeconds
 {
     self.elapsedTimeInSeconds++;
+}
+
+#pragma mark - JACampaignProductCellDelegate
+
+- (void)pressedAddToCartForProduct:(RICampaignProduct*)campaignProduct
+                 withProductSimple:(NSString*)simpleSku;
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(addToCartForProduct:withProductSimple:)]) {
+        [self.delegate addToCartForProduct:campaignProduct withProductSimple:simpleSku];
+    }
+}
+
+- (void)pressedCampaignWithSku:(NSString*)sku;
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(openCampaignWithSku:)]) {
+        [self.delegate openCampaignWithSku:sku];
+    }
+}
+
+- (void)pressedSizeOnView:(JACampaignProductCell*)campaignProductCell;
+{
+    self.lastPressedCampaignProductCell = campaignProductCell;
+    
+    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
+    
+    NSString *simpleSize = @"";
+    if(VALID_NOTEMPTY(campaignProductCell.campaignProduct.productSimples, NSArray))
+    {
+        for (int i = 0; i < campaignProductCell.campaignProduct.productSimples.count; i++)
+        {
+            RICampaignProductSimple* simple = [campaignProductCell.campaignProduct.productSimples objectAtIndex:i];
+            if(VALID_NOTEMPTY(simple.size, NSString))
+            {
+                [dataSource addObject:simple.size];
+                if ([simple.size isEqualToString:campaignProductCell.chosenSize])
+                {
+                    //found it
+                    simpleSize = simple.size;
+                }
+            }
+        }
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(openPickerForCampaignPage:dataSource:previousText:)]) {
+        [self.delegate openPickerForCampaignPage:self
+                                      dataSource:[dataSource copy]
+                                    previousText:simpleSize];
+    }
+}
+
+- (void)selectedSizeIndex:(NSInteger)index;
+{
+    RICampaignProductSimple* selectedSimple = [self.lastPressedCampaignProductCell.campaignProduct.productSimples objectAtIndex:index];
+    if(VALID_NOTEMPTY(selectedSimple.size, NSString))
+    {
+        [self.chosenSimpleNames replaceObjectAtIndex:self.lastPressedCampaignProductCell.tag withObject:selectedSimple.size];
+        [self.collectionView reloadData];
+    }
 }
 
 @end

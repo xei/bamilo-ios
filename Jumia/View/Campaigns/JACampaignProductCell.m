@@ -54,9 +54,11 @@
 @implementation JACampaignProductCell
 
 - (void)loadWithCampaignProduct:(RICampaignProduct*)campaignProduct
-           elapsedTimeInSeconds:(NSInteger)elapsedTimeInSeconds;
+           elapsedTimeInSeconds:(NSInteger)elapsedTimeInSeconds
+                     chosenSize:(NSString*)chosenSize;
 {
     self.campaignProduct = campaignProduct;
+    self.chosenSize = chosenSize;
     
     self.backgroundColor = [UIColor clearColor];
     
@@ -246,7 +248,6 @@
                                                            1.0f);
         if (ISEMPTY(self.sizeLabel)) {
             self.sizeLabel = [[UILabel alloc] init];
-            self.sizeLabel.text = STRING_SIZE;
             self.sizeLabel.textColor = UIColorFromRGB(0x55a1ff);
             self.sizeLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
             [self.sizeClickableView addSubview:self.sizeLabel];
@@ -255,6 +256,11 @@
                                             self.sizeClickableView.bounds.origin.y,
                                             self.sizeClickableView.bounds.size.width - 10.0f * 2,
                                             self.sizeClickableView.bounds.size.height)];
+        if (VALID_NOTEMPTY(self.chosenSize, NSString)) {
+            self.sizeLabel.text = [NSString stringWithFormat:STRING_SIZE_WITH_VALUE, self.chosenSize];
+        } else {
+            self.sizeLabel.text = STRING_SIZE;
+        }
     } else {
         [self.sizeClickableView removeFromSuperview];
         self.sizeClickableView = nil;
@@ -313,7 +319,7 @@
 - (void)buyButtonPressed
 {
     if (YES == self.offerEndedContent.hidden) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(addToCartForProduct:withProductSimple:)]) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(pressedAddToCartForProduct:withProductSimple:)]) {
             
             NSString* simpleSku;
             if (self.campaignProduct.productSimples.count == 1) {
@@ -327,8 +333,8 @@
                     }
                 }
             }
-            [self.delegate addToCartForProduct:self.campaignProduct
-                             withProductSimple:simpleSku];
+            [self.delegate pressedAddToCartForProduct:self.campaignProduct
+                                    withProductSimple:simpleSku];
         }
     }
 }
@@ -336,8 +342,8 @@
 - (void)sizeButtonPressed
 {
     if (YES == self.offerEndedContent.hidden) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(sizePressedOnView:)]) {
-            [self.delegate sizePressedOnView:self];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(pressedSizeOnView:)]) {
+            [self.delegate pressedSizeOnView:self];
         }
     }
 }
