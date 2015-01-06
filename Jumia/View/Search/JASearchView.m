@@ -71,7 +71,7 @@
         }];
         [self.searchBar becomeFirstResponder];
         
-
+        
         self.resultsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f,
                                                                               CGRectGetMaxY(self.searchBar.frame),
                                                                               self.frame.size.width,
@@ -216,9 +216,13 @@
     if (self.resultsTableView.hidden) {
         self.resultsTableView.hidden = NO;
         
-        CGRect finalFrame = self.resultsTableView.frame;
+        CGRect finalFrame = CGRectMake(self.resultsTableView.frame.origin.x,
+                                       CGRectGetMaxY(self.searchBar.frame),
+                                       self.resultsTableView.frame.size.width,
+                                       self.resultsTableView.frame.size.height);
+        
         self.resultsTableView.frame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                                 0.0f + self.resultsTableView.frame.size.height,
+                                                 self.resultsTableView.frame.size.height,
                                                  self.resultsTableView.frame.size.width,
                                                  self.resultsTableView.frame.size.height);
         
@@ -230,9 +234,13 @@
 
 - (void)removeResultsTableViewFromView
 {
-    CGRect startFrame = self.resultsTableView.frame;
+    CGRect startFrame = CGRectMake(self.resultsTableView.frame.origin.x,
+                                   CGRectGetMaxY(self.searchBar.frame),
+                                   self.resultsTableView.frame.size.width,
+                                   self.resultsTableView.frame.size.height);
+    
     CGRect finalFrame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                   0.0f + self.resultsTableView.frame.size.height,
+                                   self.resultsTableView.frame.size.height,
                                    self.resultsTableView.frame.size.width,
                                    self.resultsTableView.frame.size.height);
     
@@ -259,15 +267,21 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    
+
     //remove the clickable view
     for (UIView* view in cell.subviews) {
         if ([view isKindOfClass:[JAClickableView class]]) {
             [view removeFromSuperview];
         }
     }
+
     //add the new clickable view
     CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    [cell setFrame:CGRectMake(cell.frame.origin.x,
+                              cell.frame.origin.y,
+                              self.resultsTableView.frame.size.width,
+                              cell.frame.size.height)];
+    
     JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f,
                                                                                    0.0f,
                                                                                    self.resultsTableView.frame.size.width,
