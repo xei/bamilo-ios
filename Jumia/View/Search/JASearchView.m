@@ -330,6 +330,10 @@
     NSDictionary *userInfo = [notification userInfo];
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     CGFloat height = kbSize.height;
+    if(self.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.resultsTableView setFrame:CGRectMake(self.resultsTableView.frame.origin.x,
@@ -344,6 +348,10 @@
     NSDictionary *userInfo = [notification userInfo];
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     CGFloat height = kbSize.height;
+    if(self.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.resultsTableView setFrame:CGRectMake(self.resultsTableView.frame.origin.x,
