@@ -76,6 +76,11 @@ JAPickerDelegate>
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -104,6 +109,11 @@ JAPickerDelegate>
          
          [self showMessage:STRING_ERROR success:NO];
      }];
+}
+
+- (void) hideKeyboard
+{
+    [self.dynamicForm resignResponder];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

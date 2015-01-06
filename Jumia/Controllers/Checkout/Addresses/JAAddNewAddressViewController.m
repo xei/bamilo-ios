@@ -122,6 +122,11 @@ JAPickerDelegate>
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -180,6 +185,12 @@ JAPickerDelegate>
          self.loadFailed = YES;
          self.numberOfGetFormRequests--;
      }];
+}
+
+- (void) hideKeyboard
+{
+    [self.shippingDynamicForm resignResponder];
+    [self.billingDynamicForm resignResponder];
 }
 
 - (void)finishedGetFromRequests
@@ -543,7 +554,7 @@ JAPickerDelegate>
         [self.bottomView addButton:STRING_SAVE_LABEL target:self action:@selector(createAddressButtonPressed)];
     }
     
-    if(VALID_NOTEMPTY(self.checkBoxComponent, JACheckBoxComponent) && [self.checkBoxComponent isCheckBoxOn])
+    if(!VALID_NOTEMPTY(self.checkBoxComponent, JACheckBoxComponent) || [self.checkBoxComponent isCheckBoxOn])
     {
         [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
                                                           self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.bottomView.frame.size.height)];
