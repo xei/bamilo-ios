@@ -56,6 +56,8 @@ UICollectionViewDelegateFlowLayout>
 @property (assign, nonatomic) BOOL firstLoading;
 @property (assign, nonatomic) BOOL shouldForceAddAddress;
 
+@property (assign, nonatomic) RIApiResponse apiResponse;
+
 @end
 
 @implementation JAAddressesViewController
@@ -83,6 +85,7 @@ UICollectionViewDelegateFlowLayout>
 {
     [super viewDidLoad];
     
+    self.apiResponse = RIApiResponseSuccess;
     self.firstLoading = YES;
     
     self.shouldForceAddAddress = YES;
@@ -183,7 +186,10 @@ UICollectionViewDelegateFlowLayout>
 
 - (void)getAddressList
 {
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
         
@@ -240,9 +246,10 @@ UICollectionViewDelegateFlowLayout>
                 [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification	 object:nil];
             }
         }
-        
+        [self removeErrorView];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        
+        [self removeErrorView];
+        self.apiResponse = apiResponse;
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];

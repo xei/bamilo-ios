@@ -60,6 +60,8 @@ UICollectionViewDelegateFlowLayout
 @property (strong, nonatomic) NSIndexPath *collectionViewIndexSelected;
 @property (strong, nonatomic) NSIndexPath *selectedPickupStationIndexPath;
 
+@property (assign, nonatomic) RIApiResponse apiResponse;
+
 @end
 
 @implementation JAShippingViewController
@@ -69,7 +71,7 @@ UICollectionViewDelegateFlowLayout
     [super viewDidLoad];
     
     self.screenName = @"Shipping";
-    
+    self.apiResponse = RIApiResponseSuccess;
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"CheckoutShippingMethods" forKey:kRIEventActionKey];
@@ -138,7 +140,10 @@ UICollectionViewDelegateFlowLayout
 
 - (void)continueLoading
 {
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     [RICheckout getShippingMethodFormWithSuccessBlock:^(RICheckout *checkout)
      {
@@ -149,8 +154,11 @@ UICollectionViewDelegateFlowLayout
          self.shippingMethods = [RIShippingMethodForm getShippingMethods:checkout.shippingMethodForm];
          
          [self finishedLoadingShippingMethods];
+         [self removeErrorView];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
+         [self removeErrorView];
+         self.apiResponse = apiResponse;
          if(RIApiResponseMaintenancePage == apiResponse)
          {
              [self showMaintenancePage:@selector(continueLoading) objects:nil];

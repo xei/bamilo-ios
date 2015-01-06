@@ -23,6 +23,7 @@ UITableViewDataSource
 @property (strong, nonatomic) NSString *requestId;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewContries;
 @property (strong, nonatomic) NSIndexPath *selectedIndex;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
@@ -33,7 +34,7 @@ UITableViewDataSource
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.apiResponse = RIApiResponseSuccess;
     self.screenName = @"ChooseCountry";
     
     self.navBarLayout.title = STRING_CHOOSE_COUNTRY;
@@ -79,13 +80,18 @@ UITableViewDataSource
 
 - (void)loadData
 {
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     NSString *countryUrl = [RIApi getCountryUrlInUse];
     
     self.requestId = [RICountry getCountriesWithSuccessBlock:^(id countries) {
         
         self.countriesArray = [NSArray arrayWithArray:countries];
+        
+        [self removeErrorView];
         
         [self hideLoading];
         
@@ -126,7 +132,8 @@ UITableViewDataSource
                                                     finalHeight)];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        
+        [self removeErrorView];
+        self.apiResponse = apiResponse;
         if (VALID_NOTEMPTY(countryUrl, NSString))
         {
             if(self.firstLoading)

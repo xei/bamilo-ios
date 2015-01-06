@@ -55,6 +55,7 @@ JAActivityViewControllerDelegate
 @property (assign, nonatomic) BOOL openPickerFromCart;
 @property (strong, nonatomic) RIProductSimple *currentSimple;
 @property (nonatomic, strong) JAPDVWizardView* wizardView;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @property (nonatomic, assign) BOOL hasLoaddedProduct;
 
@@ -69,7 +70,7 @@ JAActivityViewControllerDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.apiResponse = RIApiResponseSuccess;
     if(VALID_NOTEMPTY(self.product.sku, NSString))
     {
         self.screenName = [NSString stringWithFormat:@"PDS / %@", self.product.sku];
@@ -287,14 +288,20 @@ JAActivityViewControllerDelegate
 
 - (void)loadCompleteProduct
 {
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     self.hasLoaddedProduct = NO;
     
     if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
             [self loadedProduct:product];
+            [self removeErrorView];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+            self.apiResponse = apiResponse;
+            [self removeErrorView];
             if(self.firstLoading)
             {
                 NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -321,7 +328,10 @@ JAActivityViewControllerDelegate
     } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
         [RIProduct getCompleteProductWithSku:self.productSku successBlock:^(id product) {
             [self loadedProduct:product];
+            [self removeErrorView];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+            self.apiResponse = apiResponse;
+            [self removeErrorView];
             if(self.firstLoading)
             {
                 NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
