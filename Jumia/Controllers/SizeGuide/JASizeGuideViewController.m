@@ -19,6 +19,9 @@
 @end
 
 @implementation JASizeGuideViewController
+{
+    UIImage *sizeGuideImage;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -70,26 +73,27 @@
 
 - (void)positionViews
 {
-    [self.scrollView removeFromSuperview];
-    self.scrollView = [UIScrollView new];
-    self.scrollView.delegate = self;
-    self.scrollView.backgroundColor = [UIColor whiteColor];
-    self.scrollView.minimumZoomScale = 1.0f;
-    self.scrollView.maximumZoomScale = 2.0f;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.showsVerticalScrollIndicator = NO;
-    [self.scrollView setFrame:self.view.bounds];
-    [self.view addSubview:self.scrollView];
-    if (VALID_NOTEMPTY(self.sizeGuideUrl, NSString)) {
-        [self.imageView removeFromSuperview];
-        self.imageView = [[UIImageView alloc] init];
-        __weak typeof(self) weakSelf = self;
-        [self.imageView setImageWithURL:[NSURL URLWithString:self.sizeGuideUrl] success:^(UIImage *image, BOOL cached) {
-            [weakSelf resizeWithImage:image];
-        } failure:^(NSError *error) {}];
-     
-        [self.imageView setFrame:self.scrollView.bounds];
-        [self.scrollView addSubview:self.imageView];
+    if(sizeGuideImage == nil)
+    {
+        [self showLoading];
+        
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        
+        dispatch_async(queue, ^{
+            
+            NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:self.sizeGuideUrl]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self hideLoading];
+                UIImage *image = [UIImage imageWithData:imageData];
+                sizeGuideImage = image;
+                [self setupScrollViewBasedOnImage:sizeGuideImage];
+            });
+        });
+    }
+    else
+    {
+        [self setupScrollViewBasedOnImage:sizeGuideImage];
     }
     
     if([[NSUserDefaults standardUserDefaults] boolForKey:kJASizeGuideWizardUserDefaultsKey] == NO)
@@ -100,25 +104,81 @@
 }
 
 
+/**
+ * utility method to set up the scroll view based on the image that will be used in the scroll view
+ *
+ * @param: UIImage image    image to add to the scroll view
+ */
+-(void)setupScrollViewBasedOnImage:(UIImage *)image
+{
+    [self.scrollView removeFromSuperview];
+    self.scrollView = [UIScrollView new];
+    self.scrollView.delegate = self;
+    self.scrollView.backgroundColor = [UIColor whiteColor];
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    [self.scrollView setFrame:self.view.bounds];
+    [self.view addSubview:self.scrollView];
+    
+    [self.imageView removeFromSuperview];
+    self.imageView = [[UIImageView alloc] init];
+    [self.imageView setImage:image];
+    
+    self.scrollView.contentSize = image.size;
+    CGRect scrollViewFrame = self.scrollView.frame;
+    CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
+    CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
+    CGFloat minScale = MIN(scaleWidth, scaleHeight);
+    self.scrollView.minimumZoomScale = minScale;
+    self.scrollView.maximumZoomScale = 2.0f;
+    self.scrollView.zoomScale = minScale;
+    self.scrollView.bounces = NO;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [self centerScrollViewContents];
+    
+    [self.imageView setFrame:self.scrollView.bounds];
+    [self.scrollView addSubview:self.imageView];
+}
+
+
+/**
+ * adjusts the contents of the scroll view so that they show up 
+ * centered in the scroll view
+ *
+ */
+-(void)centerScrollViewContents
+{
+    CGSize boundsSize = self.scrollView.bounds.size;
+    CGRect contentsFrame = self.imageView.frame;
+    
+    if(contentsFrame.size.width < boundsSize.width)
+    {
+        contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2.0f;
+    }
+    else
+    {
+        contentsFrame.origin.x = 0.0f;
+    }
+    
+    if(contentsFrame.size.height < boundsSize.height)
+    {
+        contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2.0f;
+    }
+    else
+    {
+        contentsFrame.origin.y = 0.0f;
+    }
+    
+    self.imageView.frame = contentsFrame;
+}
+
+
 -(void)setupWizardView:(JAWizardView *)wizardView
 {
     [self.view addSubview:wizardView];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJASizeGuideWizardUserDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)resizeWithImage:(UIImage*)image
-{
-    if (image.size.height < self.view.frame.size.height ||
-        image.size.width < self.view.frame.size.width)
-    {
-        CGSize scrolableArea = CGSizeMake(image.size.width, image.size.height);
-        [self.scrollView setContentSize:scrolableArea];
-        
-        self.scrollView.bounces = NO;
-        
-        self.imageView.contentMode = UIViewContentModeTop;
-    }
 }
 
 
