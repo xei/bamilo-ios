@@ -97,6 +97,7 @@
 {
     [self showLoading];
     
+    [self closePicker];
     [self.pickerScrollView setHidden:YES];
     [self.scrollView setHidden:YES];
     
