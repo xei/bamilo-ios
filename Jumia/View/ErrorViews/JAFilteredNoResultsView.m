@@ -54,8 +54,6 @@
 
 -(IBAction)editFiltersButtonPressed
 {
-    NSLog(@"button was pressed");
-    
     [self.delegate pressedEditFiltersButton:self];
 }
 
