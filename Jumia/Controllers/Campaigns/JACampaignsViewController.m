@@ -14,7 +14,6 @@
 #import "RICampaign.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
-#import "JACampaignPageView.h"
 
 @interface JACampaignsViewController ()
 
@@ -30,13 +29,13 @@
 @property (nonatomic, strong)RICampaignProduct* backupCampaignProduct;
 @property (nonatomic, strong)NSString* backupSimpleSku;
 
-@property (nonatomic, strong)JACampaignProductCell* lastPressedCampaignProductCell;
-
 @property (nonatomic, assign)BOOL shouldPerformButtonActions;
 
 @property (nonatomic, assign)BOOL pickerNamesAlreadySet;
 
 @property (nonatomic, assign)NSInteger campaignIndex;
+
+@property (nonatomic, assign)JACampaignPageView* campaignPageWithSizePickerOpen;
 
 @end
 
@@ -212,7 +211,7 @@
                                                                                             self.scrollView.bounds.size.width,
                                                                                             self.scrollView.bounds.size.height)];
     campaignPage.interfaceOrientation = self.interfaceOrientation;
-    campaignPage.singleViewDelegate = self;
+    campaignPage.delegate = self;
     [self.campaignPages addObject:campaignPage];
     [self.scrollView addSubview:campaignPage];
     
@@ -324,7 +323,7 @@
     [self.pickerScrollView scrollRightAnimated:YES];
 }
 
-#pragma mark - JACampaignProductCellDelegate
+#pragma mark - JACampaignPageViewDelegate
 
 - (void)addToCartForProduct:(RICampaignProduct*)campaignProduct
           withProductSimple:(NSString*)simpleSku;
@@ -338,7 +337,7 @@
     }
 }
 
-- (void)pressedCampaignWithSku:(NSString*)sku;
+- (void)openCampaignWithSku:(NSString*)sku;
 {
     //the flag shouldPerformButtonActions is used to fix the scrolling, if the campaignPages.count is 1, then it is not needed
     if (self.shouldPerformButtonActions || 1 == self.campaignPages.count) {
@@ -350,9 +349,11 @@
     }
 }
 
-- (void)sizePressedOnView:(JACampaignProductCell*)campaignProductCell;
+- (void)openPickerForCampaignPage:(JACampaignPageView*)campaignPage
+                       dataSource:(NSArray*)dataSource
+                     previousText:(NSString*)previousText;
 {
-    self.lastPressedCampaignProductCell = campaignProductCell;
+    self.campaignPageWithSizePickerOpen = campaignPage;
     
     if(VALID(self.picker, JAPicker))
     {
@@ -362,28 +363,9 @@
     self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
     [self.picker setDelegate:self];
     self.pickerDataSource = [NSMutableArray new];
-    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
     
-    NSString *simpleSize = @"";
-    if(VALID_NOTEMPTY(campaignProductCell.campaignProduct.productSimples, NSArray))
-    {
-        for (int i = 0; i < campaignProductCell.campaignProduct.productSimples.count; i++)
-        {
-            RICampaignProductSimple* simple = [campaignProductCell.campaignProduct.productSimples objectAtIndex:i];
-            if(VALID_NOTEMPTY(simple.size, NSString))
-            {
-                [dataSource addObject:simple.size];
-                if ([simple.size isEqualToString:campaignProductCell.chosenSize])
-                {
-                    //found it
-                    simpleSize = simple.size;
-                }
-            }
-        }
-    }
-    
-    [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:simpleSize
+    [self.picker setDataSourceArray:dataSource
+                       previousText:previousText
                     leftButtonTitle:nil];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
@@ -481,11 +463,7 @@
 #pragma mark JAPickerDelegate
 - (void)selectedRow:(NSInteger)selectedRow
 {
-    RICampaignProductSimple* selectedSimple = [self.lastPressedCampaignProductCell.campaignProduct.productSimples objectAtIndex:selectedRow];
-    if(VALID_NOTEMPTY(selectedSimple.size, NSString))
-    {
-        self.lastPressedCampaignProductCell.chosenSize = selectedSimple.size;
-    }
+    [self.campaignPageWithSizePickerOpen selectedSizeIndex:selectedRow];
     
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
