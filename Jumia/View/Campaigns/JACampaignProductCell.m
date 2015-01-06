@@ -224,34 +224,39 @@
     [self.buyButton addTarget:self action:@selector(buyButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     if (campaignProduct.productSimples.count > 1) {
-        if (ISEMPTY(self.sizeClickableView)) {
-            self.sizeClickableView = [[JAClickableView alloc] init];
-            [self.sizeClickableView addTarget:self
-                                       action:@selector(sizeButtonPressed)
-                             forControlEvents:UIControlEventTouchUpInside];
-            self.sizeClickableView.backgroundColor = [UIColor whiteColor];
-            [self.backgroundContentView addSubview:self.sizeClickableView];
+
+        if (VALID_NOTEMPTY(self.sizeClickableViewSeparator, UIView)) {
+            [self.sizeClickableViewSeparator removeFromSuperview];
         }
+        if (VALID_NOTEMPTY(self.sizeLabel, UILabel)) {
+            [self.sizeLabel removeFromSuperview];
+        }
+        if (VALID_NOTEMPTY(self.sizeClickableView, JAClickableView)) {
+            [self.sizeClickableView removeFromSuperview];
+        }
+        
+        self.sizeClickableView = [[JAClickableView alloc] init];
+        [self.sizeClickableView addTarget:self
+                                   action:@selector(sizeButtonPressed)
+                         forControlEvents:UIControlEventTouchUpInside];
+        self.sizeClickableView.backgroundColor = [UIColor whiteColor];
+        [self.backgroundContentView addSubview:self.sizeClickableView];
         self.sizeClickableView.frame = CGRectMake(self.backgroundContentView.bounds.origin.x,
                                                   self.bottomContentView.frame.origin.y + 10.0f - 44.0f,
                                                   self.backgroundContentView.bounds.size.width,
                                                   44.0f);
         
-        if (ISEMPTY(self.sizeClickableViewSeparator)) {
-            self.sizeClickableViewSeparator = [[UIView alloc] init];
-            self.sizeClickableViewSeparator.backgroundColor = JABackgroundGrey;
-            [self.sizeClickableView addSubview:self.sizeClickableViewSeparator];
-        }
+        self.sizeClickableViewSeparator = [[UIView alloc] init];
+        self.sizeClickableViewSeparator.backgroundColor = JABackgroundGrey;
+        [self.sizeClickableView addSubview:self.sizeClickableViewSeparator];
         self.sizeClickableViewSeparator.frame = CGRectMake(self.sizeClickableView.bounds.origin.x,
                                                            self.sizeClickableView.bounds.origin.y,
                                                            self.sizeClickableView.bounds.size.width,
                                                            1.0f);
-        if (ISEMPTY(self.sizeLabel)) {
-            self.sizeLabel = [[UILabel alloc] init];
-            self.sizeLabel.textColor = UIColorFromRGB(0x55a1ff);
-            self.sizeLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
-            [self.sizeClickableView addSubview:self.sizeLabel];
-        }
+        self.sizeLabel = [[UILabel alloc] init];
+        self.sizeLabel.textColor = UIColorFromRGB(0x55a1ff);
+        self.sizeLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+        [self.sizeClickableView addSubview:self.sizeLabel];
         [self.sizeLabel setFrame:CGRectMake(self.sizeClickableView.bounds.origin.x + 10.0f,
                                             self.sizeClickableView.bounds.origin.y,
                                             self.sizeClickableView.bounds.size.width - 10.0f * 2,
