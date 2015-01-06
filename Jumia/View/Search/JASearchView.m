@@ -94,7 +94,34 @@
 }
 
 - (void)resetFrame:(CGRect)frame
+       orientation:(UIInterfaceOrientation)orientation
 {
+    CGFloat screenWidth = frame.size.width;
+    CGFloat screenHeight = frame.size.height;
+    
+    if(UIInterfaceOrientationIsPortrait(orientation))
+    {
+        if(screenWidth > screenHeight)
+        {
+            frame  = CGRectMake(0.0f, 0.0f, screenHeight, screenWidth);
+        }
+        else
+        {
+            frame  = CGRectMake(0.0f, 0.0f, screenWidth, screenHeight);
+        }
+    }
+    else
+    {
+        if(screenWidth > screenHeight)
+        {
+            frame  = CGRectMake(0.0f, 0.0f, screenWidth, screenHeight);
+        }
+        else
+        {
+            frame  = CGRectMake(0.0f, 0.0f, screenHeight, screenWidth);
+        }
+    }
+    
     self.frame = frame;
     
     self.backView.frame = CGRectMake(self.bounds.origin.x,

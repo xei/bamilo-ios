@@ -94,10 +94,11 @@
     }
     
     if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
-        [self.searchView resetFrame:CGRectMake(window.frame.origin.y,
-                                               window.frame.origin.x,
+        [self.searchView resetFrame:CGRectMake(0.0f,
+                                               0.0f,
                                                window.frame.size.height,
-                                               window.frame.size.width)];
+                                               window.frame.size.width)
+                        orientation:toInterfaceOrientation];
     }
 }
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation
@@ -158,10 +159,11 @@
         [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height)orientation:self.interfaceOrientation];
     }
     if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
-        [self.searchView resetFrame:CGRectMake(window.frame.origin.x,
-                                               window.frame.origin.y,
+        [self.searchView resetFrame:CGRectMake(0.0f,
+                                               0.0f,
                                                window.frame.size.width,
-                                               window.frame.size.height)];
+                                               window.frame.size.height)
+                        orientation:self.interfaceOrientation];
     }
 }
 
