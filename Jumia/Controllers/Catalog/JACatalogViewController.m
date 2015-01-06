@@ -74,6 +74,8 @@
 
 -(void)showNoResultsView:(CGFloat)withVerticalPadding
 {
+    [self.wizardView removeFromSuperview];
+    
     self.filteredNoResultsView = [JAFilteredNoResultsView getFilteredNoResultsView];
     
     // fail-safe condition: launches error view in case something goes wrong
@@ -91,10 +93,11 @@
         }
     
         self.sortingScrollView.hidden = YES;
+        self.sortingScrollView.disableDelagation = YES;
         self.viewToggleButton.hidden = YES;
         self.filterButton.hidden = YES;
         
-        CGRect frame = CGRectMake(self.view.frame.origin.x,
+        CGRect frame = CGRectMake(0.0,
                                   0.0,
                                   self.view.frame.size.width,
                                   self.view.frame.size.height);
@@ -115,6 +118,8 @@
     self.sortingScrollView.hidden = NO;
     self.viewToggleButton.hidden = NO;
     self.filterButton.hidden = NO;
+    self.sortingScrollView.disableDelagation = NO;
+    
     [self filterButtonPressed:nil];
 }
 

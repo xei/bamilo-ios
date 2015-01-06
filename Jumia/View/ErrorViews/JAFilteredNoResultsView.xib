@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JAFilteredNoResultsView"/>
@@ -11,30 +12,52 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rOb-gX-d35">
-                    <rect key="frame" x="6" y="6" width="308" height="200"/>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rOb-gX-d35">
+                    <rect key="frame" x="6" y="78" width="308" height="236"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="emptyFilter" translatesAutoresizingMaskIntoConstraints="NO" id="Vu0-7C-wDC">
-                            <rect key="frame" x="105" y="14" width="98" height="98"/>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="No results match your search criteria. You can try to use less specific filters." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JbR-J0-WKz">
-                            <rect key="frame" x="0.0" y="130" width="308" height="88"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hYM-Cb-q2X">
+                            <rect key="frame" x="0.0" y="12" width="300" height="223"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="emptyFilter" translatesAutoresizingMaskIntoConstraints="NO" id="Vu0-7C-wDC">
+                                    <rect key="frame" x="101" y="30" width="98" height="98"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No results match your search criteria. You can try to use less specific filters." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JbR-J0-WKz">
+                                    <rect key="frame" x="-4" y="123" width="308" height="63"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="63" id="9a8-Fv-FJE"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="308" id="VCK-Rv-89w"/>
-                                <constraint firstAttribute="height" constant="88" id="hI5-it-pTG"/>
+                                <constraint firstItem="JbR-J0-WKz" firstAttribute="centerX" secondItem="Vu0-7C-wDC" secondAttribute="centerX" id="41N-em-sN1"/>
+                                <constraint firstAttribute="trailing" secondItem="JbR-J0-WKz" secondAttribute="trailing" id="GIh-48-QZg"/>
+                                <constraint firstItem="JbR-J0-WKz" firstAttribute="leading" secondItem="hYM-Cb-q2X" secondAttribute="leading" id="OFk-2K-aqY"/>
+                                <constraint firstAttribute="bottom" secondItem="JbR-J0-WKz" secondAttribute="bottom" constant="37" id="bvN-xc-gkH"/>
+                                <constraint firstAttribute="width" secondItem="hYM-Cb-q2X" secondAttribute="height" multiplier="300:223" id="fQd-Um-ey9"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="JbR-J0-WKz" firstAttribute="top" secondItem="Vu0-7C-wDC" secondAttribute="bottom" constant="20" id="I4F-T6-q3x"/>
-                        <constraint firstAttribute="centerX" secondItem="JbR-J0-WKz" secondAttribute="centerX" id="kRG-wi-SZM"/>
+                        <constraint firstAttribute="bottom" secondItem="hYM-Cb-q2X" secondAttribute="bottom" constant="85" id="QPt-f1-1aZ"/>
+                        <constraint firstItem="hYM-Cb-q2X" firstAttribute="top" secondItem="rOb-gX-d35" secondAttribute="top" constant="12" id="Qmf-0P-yR7"/>
+                        <constraint firstAttribute="centerX" secondItem="hYM-Cb-q2X" secondAttribute="centerX" constant="4" id="RAi-bh-hU5"/>
+                        <constraint firstAttribute="trailing" secondItem="hYM-Cb-q2X" secondAttribute="trailing" constant="8" id="iXw-s8-0kp"/>
+                        <constraint firstItem="hYM-Cb-q2X" firstAttribute="top" secondItem="rOb-gX-d35" secondAttribute="top" constant="12" id="lxu-bf-VPo"/>
+                        <constraint firstItem="hYM-Cb-q2X" firstAttribute="leading" secondItem="rOb-gX-d35" secondAttribute="leading" id="yTJ-sf-ofJ"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="QPt-f1-1aZ"/>
+                            <exclude reference="Qmf-0P-yR7"/>
+                        </mask>
+                    </variation>
                 </view>
-                <button opaque="NO" tag="1000" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VLR-fB-QLt">
+                <button opaque="NO" tag="1000" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VLR-fB-QLt">
                     <rect key="frame" x="4" y="319" width="308" height="44"/>
                     <state key="normal" title="Button" backgroundImage="orangeBig_normal">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -50,16 +73,22 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="rOb-gX-d35" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="Dzz-O4-wNh"/>
+                <constraint firstAttribute="trailing" secondItem="rOb-gX-d35" secondAttribute="trailing" constant="6" id="0t9-Fq-eQL"/>
+                <constraint firstItem="VLR-fB-QLt" firstAttribute="top" secondItem="rOb-gX-d35" secondAttribute="bottom" constant="5" id="DOp-d4-lKB"/>
+                <constraint firstItem="VLR-fB-QLt" firstAttribute="top" secondItem="hYM-Cb-q2X" secondAttribute="bottom" constant="6" id="FzM-2w-9cA"/>
                 <constraint firstItem="VLR-fB-QLt" firstAttribute="top" secondItem="rOb-gX-d35" secondAttribute="bottom" constant="24" id="LrT-6h-uZR"/>
+                <constraint firstItem="rOb-gX-d35" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="NEy-1M-7Nv"/>
                 <constraint firstAttribute="centerX" secondItem="VLR-fB-QLt" secondAttribute="centerX" id="Y6P-dJ-719"/>
-                <constraint firstItem="VLR-fB-QLt" firstAttribute="top" secondItem="rOb-gX-d35" secondAttribute="bottom" constant="6" id="cyf-iQ-yDv"/>
+                <constraint firstItem="rOb-gX-d35" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="ZId-gL-FMC"/>
+                <constraint firstItem="VLR-fB-QLt" firstAttribute="top" secondItem="rOb-gX-d35" secondAttribute="bottom" constant="5" id="cyf-iQ-yDv"/>
+                <constraint firstItem="rOb-gX-d35" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="ifK-aJ-jjY"/>
                 <constraint firstAttribute="centerX" secondItem="rOb-gX-d35" secondAttribute="centerX" id="xAI-je-KXU"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="LrT-6h-uZR"/>
+                    <exclude reference="cyf-iQ-yDv"/>
                 </mask>
             </variation>
             <connections>

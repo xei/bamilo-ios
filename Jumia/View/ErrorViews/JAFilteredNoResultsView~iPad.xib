@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,34 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3jC-lf-3LE">
-                    <rect key="frame" x="5" y="6" width="756" height="300"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="emptyFilter" translatesAutoresizingMaskIntoConstraints="NO" id="q0V-Lw-bCN">
-                            <rect key="frame" x="329" y="67" width="98" height="98"/>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6v-vW-X9L">
-                            <rect key="frame" x="357" y="173" width="42" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="300" id="0U0-6A-676"/>
-                        <constraint firstAttribute="centerX" secondItem="J6v-vW-X9L" secondAttribute="centerX" id="HDp-AM-T59"/>
-                        <constraint firstAttribute="width" constant="756" id="MlD-QR-fVZ"/>
-                        <constraint firstAttribute="centerX" secondItem="q0V-Lw-bCN" secondAttribute="centerX" id="Xgg-MS-mN5"/>
-                        <constraint firstItem="J6v-vW-X9L" firstAttribute="top" secondItem="q0V-Lw-bCN" secondAttribute="bottom" constant="50" id="p4n-k5-XPS"/>
-                    </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="MlD-QR-fVZ"/>
-                        </mask>
-                    </variation>
-                </view>
-                <button opaque="NO" tag="1000" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JO8-vO-yxt">
+                <button opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JO8-vO-yxt">
                     <rect key="frame" x="6" y="314" width="756" height="44"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="756" id="YhW-fb-UMp"/>
@@ -54,21 +28,87 @@
                         <action selector="editFiltersButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="iIW-Zi-1Dc"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3jC-lf-3LE">
+                    <rect key="frame" x="0.0" y="8" width="768" height="300"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GW8-xH-I6k">
+                            <rect key="frame" x="158" y="53" width="493" height="193"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="emptyFilter" translatesAutoresizingMaskIntoConstraints="NO" id="q0V-Lw-bCN">
+                                    <rect key="frame" x="177" y="14" width="98" height="98"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="J6v-vW-X9L">
+                                    <rect key="frame" x="41" y="99" width="422" height="94"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="94" id="Wck-f7-vkf"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="J6v-vW-X9L" secondAttribute="bottom" id="3RZ-7I-gcX"/>
+                                <constraint firstItem="J6v-vW-X9L" firstAttribute="leading" secondItem="GW8-xH-I6k" secondAttribute="leading" constant="41" id="FtS-sG-ehT"/>
+                                <constraint firstItem="J6v-vW-X9L" firstAttribute="top" secondItem="q0V-Lw-bCN" secondAttribute="bottom" constant="-13" id="Gj5-48-7BG"/>
+                                <constraint firstItem="J6v-vW-X9L" firstAttribute="centerX" secondItem="q0V-Lw-bCN" secondAttribute="centerX" constant="26" id="ULs-tv-P7Q"/>
+                                <constraint firstAttribute="centerX" secondItem="J6v-vW-X9L" secondAttribute="centerX" constant="-5.5" id="vLf-pv-Hez"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="300" id="0U0-6A-676"/>
+                        <constraint firstAttribute="centerX" secondItem="GW8-xH-I6k" secondAttribute="centerX" constant="-20.5" id="8gO-DJ-mqo"/>
+                        <constraint firstItem="GW8-xH-I6k" firstAttribute="top" secondItem="3jC-lf-3LE" secondAttribute="top" constant="53" id="9u2-Pa-KCu"/>
+                        <constraint firstItem="GW8-xH-I6k" firstAttribute="leading" secondItem="3jC-lf-3LE" secondAttribute="leading" constant="56" id="BIm-zs-h1v"/>
+                        <constraint firstAttribute="centerY" secondItem="GW8-xH-I6k" secondAttribute="centerY" constant="-5.5" id="Lb8-tD-uTV"/>
+                        <constraint firstAttribute="width" constant="756" id="MlD-QR-fVZ"/>
+                        <constraint firstItem="GW8-xH-I6k" firstAttribute="leading" secondItem="3jC-lf-3LE" secondAttribute="leading" constant="158" id="Q2X-ga-P6a"/>
+                        <constraint firstItem="GW8-xH-I6k" firstAttribute="centerX" secondItem="3jC-lf-3LE" secondAttribute="centerX" id="eXC-NN-rwx"/>
+                        <constraint firstItem="GW8-xH-I6k" firstAttribute="leading" secondItem="3jC-lf-3LE" secondAttribute="leading" constant="135" id="mZk-63-JDm"/>
+                        <constraint firstAttribute="centerY" secondItem="GW8-xH-I6k" secondAttribute="centerY" id="mjJ-LN-TBq"/>
+                        <constraint firstAttribute="centerX" secondItem="GW8-xH-I6k" secondAttribute="centerX" constant="-20.5" id="ou4-iH-ZX4"/>
+                        <constraint firstItem="GW8-xH-I6k" firstAttribute="bottom" secondItem="3jC-lf-3LE" secondAttribute="bottomMargin" constant="-25" id="t4W-nV-Yqo"/>
+                        <constraint firstItem="GW8-xH-I6k" firstAttribute="top" secondItem="3jC-lf-3LE" secondAttribute="top" constant="47" id="zCZ-A9-Pvn"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="MlD-QR-fVZ"/>
+                            <exclude reference="BIm-zs-h1v"/>
+                            <exclude reference="Lb8-tD-uTV"/>
+                            <exclude reference="eXC-NN-rwx"/>
+                            <exclude reference="mZk-63-JDm"/>
+                            <exclude reference="t4W-nV-Yqo"/>
+                            <exclude reference="zCZ-A9-Pvn"/>
+                        </mask>
+                    </variation>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="3jC-lf-3LE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="0c1-BE-wI1"/>
-                <constraint firstAttribute="centerX" secondItem="3jC-lf-3LE" secondAttribute="centerX" id="7Fr-tO-8VK"/>
+                <constraint firstItem="3jC-lf-3LE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="0c1-BE-wI1"/>
+                <constraint firstAttribute="centerX" secondItem="3jC-lf-3LE" secondAttribute="centerX" constant="6" id="7Fr-tO-8VK"/>
                 <constraint firstItem="JO8-vO-yxt" firstAttribute="top" secondItem="3jC-lf-3LE" secondAttribute="bottom" constant="6" id="BVi-MK-S4v"/>
-                <constraint firstAttribute="trailing" secondItem="3jC-lf-3LE" secondAttribute="trailing" constant="6" id="DuJ-yM-00e"/>
-                <constraint firstItem="JO8-vO-yxt" firstAttribute="top" secondItem="3jC-lf-3LE" secondAttribute="bottom" constant="6" id="e5t-Ua-gec"/>
-                <constraint firstItem="3jC-lf-3LE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="tFO-0Z-sge"/>
+                <constraint firstAttribute="trailing" secondItem="3jC-lf-3LE" secondAttribute="trailing" id="DuJ-yM-00e"/>
+                <constraint firstItem="3jC-lf-3LE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="lJW-Qj-aYH"/>
+                <constraint firstAttribute="trailing" secondItem="3jC-lf-3LE" secondAttribute="trailing" constant="6" id="oyT-gQ-2ia"/>
                 <constraint firstAttribute="centerX" secondItem="JO8-vO-yxt" secondAttribute="centerX" id="uLT-Tq-bp4"/>
+                <constraint firstItem="3jC-lf-3LE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="vjK-Oc-K76"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="0c1-BE-wI1"/>
+                    <exclude reference="7Fr-tO-8VK"/>
+                    <exclude reference="DuJ-yM-00e"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="filtersLabel" destination="J6v-vW-X9L" id="3Wm-cJ-oQ8"/>
             </connections>
+            <point key="canvasLocation" x="88" y="155"/>
         </view>
     </objects>
     <resources>
