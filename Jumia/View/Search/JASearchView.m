@@ -94,7 +94,34 @@
 }
 
 - (void)resetFrame:(CGRect)frame
+       orientation:(UIInterfaceOrientation)orientation
 {
+    CGFloat screenWidth = frame.size.width;
+    CGFloat screenHeight = frame.size.height;
+    
+    if(UIInterfaceOrientationIsPortrait(orientation))
+    {
+        if(screenWidth > screenHeight)
+        {
+            frame  = CGRectMake(0.0f, 0.0f, screenHeight, screenWidth);
+        }
+        else
+        {
+            frame  = CGRectMake(0.0f, 0.0f, screenWidth, screenHeight);
+        }
+    }
+    else
+    {
+        if(screenWidth > screenHeight)
+        {
+            frame  = CGRectMake(0.0f, 0.0f, screenWidth, screenHeight);
+        }
+        else
+        {
+            frame  = CGRectMake(0.0f, 0.0f, screenHeight, screenWidth);
+        }
+    }
+    
     self.frame = frame;
     
     self.backView.frame = CGRectMake(self.bounds.origin.x,
@@ -111,6 +138,7 @@
                                              CGRectGetMaxY(self.searchBar.frame),
                                              self.frame.size.width,
                                              self.frame.size.height - CGRectGetMaxY(self.searchBar.frame));
+    [self.resultsTableView reloadData];
 }
 
 - (void)dealloc
@@ -190,7 +218,7 @@
         
         CGRect finalFrame = self.resultsTableView.frame;
         self.resultsTableView.frame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                                 self.resultsTableView.frame.origin.y + self.resultsTableView.frame.size.height,
+                                                 0.0f + self.resultsTableView.frame.size.height,
                                                  self.resultsTableView.frame.size.width,
                                                  self.resultsTableView.frame.size.height);
         
@@ -204,7 +232,7 @@
 {
     CGRect startFrame = self.resultsTableView.frame;
     CGRect finalFrame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                   self.resultsTableView.frame.origin.y + self.resultsTableView.frame.size.height,
+                                   0.0f + self.resultsTableView.frame.size.height,
                                    self.resultsTableView.frame.size.width,
                                    self.resultsTableView.frame.size.height);
     
@@ -290,6 +318,12 @@
         cell.imageView.image = [UIImage imageNamed:@"ico_searchsuggestion"];
     }
     
+    //remove the clickable view
+    for (UIView* view in cell.subviews) {
+        if (99 == view.tag || 98 == view.tag) {
+            [view removeFromSuperview];
+        }
+    }
     if (0 == indexPath.row)
     {
         UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
@@ -300,6 +334,7 @@
     
     UIImageView *line2 = [[UIImageView alloc] initWithFrame:CGRectMake(45, cell.frame.size.height-1, cell.frame.size.width-20, 1)];
     line2.backgroundColor = UIColorFromRGB(0xcccccc);
+    line2.tag = 98;
     [cell.viewForBaselineLayout addSubview:line2];
     
     [clickView addTarget:self action:@selector(resultCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -330,6 +365,10 @@
     NSDictionary *userInfo = [notification userInfo];
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     CGFloat height = kbSize.height;
+    if(self.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.resultsTableView setFrame:CGRectMake(self.resultsTableView.frame.origin.x,
@@ -344,6 +383,10 @@
     NSDictionary *userInfo = [notification userInfo];
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     CGFloat height = kbSize.height;
+    if(self.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.resultsTableView setFrame:CGRectMake(self.resultsTableView.frame.origin.x,

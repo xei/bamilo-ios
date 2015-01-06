@@ -148,7 +148,7 @@
             width = 339.0f;
         }
     } else {
-        width = 308;
+        width = 320;
     }
     
     return CGSizeMake(width, height);

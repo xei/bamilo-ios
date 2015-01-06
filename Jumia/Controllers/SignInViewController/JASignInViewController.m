@@ -521,12 +521,14 @@ FBLoginViewDelegate
          
          RICustomer *customerObject = ((RICustomer *)object);
          
+         NSString* emailKeyForCountry = [NSString stringWithFormat:@"%@_%@", kRememberedEmail, [RIApi getCountryIsoInUse]];
+         
          if(self.checkBoxComponent.switchComponent.isOn)
          {
-             [[NSUserDefaults standardUserDefaults] setObject:customerObject.email forKey:kRememberedEmail];
+             [[NSUserDefaults standardUserDefaults] setObject:customerObject.email forKey:emailKeyForCountry];
          }else
          {
-             [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRememberedEmail];
+             [[NSUserDefaults standardUserDefaults] removeObjectForKey:emailKeyForCountry];
          }
          [[NSUserDefaults standardUserDefaults] synchronize];
          
@@ -708,8 +710,9 @@ FBLoginViewDelegate
 }
 -(NSDictionary *)getEmail
 {
+    NSString* emailKeyForCountry = [NSString stringWithFormat:@"%@_%@", kRememberedEmail, [RIApi getCountryIsoInUse]];
     NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
-    NSString *email = [[NSUserDefaults standardUserDefaults] stringForKey:kRememberedEmail];
+    NSString *email = [[NSUserDefaults standardUserDefaults] stringForKey:emailKeyForCountry];
     if(VALID_NOTEMPTY(email, NSString))
     {
         [values setObject:email forKey:@"email"];
