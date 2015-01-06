@@ -214,6 +214,7 @@
 #define STRING_PROMOTION_TIP_TAP RILocalizedString(@"promotion_tip_tap_text", nil)
 #define STRING_TRY_AGAIN RILocalizedString(@"string_try_again", nil)
 #define STRING_NO_NEWTORK RILocalizedString(@"string_no_newtork", nil)
+#define STRING_NO_NETWORK_DETAILS RILocalizedString(@"internet_no_connection_details_label", nil)
 #define STRING_OOPS RILocalizedString(@"string_oops", nil)
 #define STRING_SOMETHING_BROKEN RILocalizedString(@"string_something_broken", nil)
 

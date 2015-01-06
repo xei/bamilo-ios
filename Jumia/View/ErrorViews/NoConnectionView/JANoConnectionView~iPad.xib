@@ -153,7 +153,7 @@
         </view>
     </objects>
     <resources>
-        <image name="greyFull_disabled" width="15" height="15"/>
+        <image name="greyFull_disabled" width="135" height="96"/>
         <image name="greyFull_highlighted" width="22" height="19"/>
         <image name="img_errorscreen" width="120" height="96"/>
         <image name="img_nonetwork" width="135" height="96"/>
