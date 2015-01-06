@@ -110,6 +110,11 @@ FBLoginViewDelegate
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
     self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
     self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
     self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
@@ -157,6 +162,7 @@ FBLoginViewDelegate
     self.loginFormView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.loginSeparator.frame), 0, 0)];
     [self.loginFormView setHidden: YES];
     [self.loginView addSubview:self.loginFormView];
+    [self.viewToScroll addSubview:self.loginView];
     
     UITapGestureRecognizer *showSignupViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -194,19 +200,15 @@ FBLoginViewDelegate
     self.signUpFormView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.signUpSeparator.frame), 0, 0)];
     [self.signUpFormView setHidden:YES];
     [self.signUpView addSubview:self.signUpFormView];
+    [self.viewToScroll addSubview:self.signUpView];
+    
+    [self.scrollView addSubview:self.viewToScroll];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    [self.scrollView setFrame:CGRectMake(0, CGRectGetMaxY(self.stepView.frame), self.view.frame.size.width, self.view.frame.size.height - CGRectGetMaxY(self.stepView.frame))];
-    
-    self.scrollViewOriginalFrame = self.scrollView.frame;
-    
-    [self.viewToScroll addSubview:self.loginView];
-    [self.viewToScroll addSubview:self.signUpView];
-    [self.scrollView addSubview:self.viewToScroll];
     
     CGFloat orderSummaryY = self.stepBackground.frame.size.height;
     CGFloat orderSummaryWidth = 250.0f;
@@ -310,6 +312,13 @@ FBLoginViewDelegate
     
     [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
     
+    [self.scrollView setFrame:CGRectMake(0,
+                                         CGRectGetMaxY(self.stepView.frame),
+                                         self.view.frame.size.width,
+                                         self.view.frame.size.height - CGRectGetMaxY(self.stepView.frame))];
+    
+    self.scrollViewOriginalFrame = self.scrollView.frame;
+    
     if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
         self.orderSummaryView.hidden = NO;
     } else {
@@ -346,6 +355,11 @@ FBLoginViewDelegate
                                   componentWidth + margin*2, //form already has its own margins
                                   view.frame.size.height)];
     }
+    
+    [self.viewToScroll setFrame:CGRectMake(0.0f,
+                                           0.0f,
+                                           self.scrollView.frame.size.width,
+                                           CGRectGetMaxY(self.signUpView.frame) + 6.0f)];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -376,6 +390,14 @@ FBLoginViewDelegate
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    [self hideKeyboard];
+}
+
+- (void) hideKeyboard
+{
+    [self.loginDynamicForm resignResponder];
+    [self.signupDynamicForm resignResponder];
 }
 
 - (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation

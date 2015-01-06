@@ -256,6 +256,8 @@ JAPickerDelegate>
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    [self hideKeyboard];
 }
 
 -(void)initViews
