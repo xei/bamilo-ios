@@ -211,6 +211,7 @@
 "promotion_tip_tap_text" = "Cliquez sur la case ci-dessus pour copier le code dans le presse-papier et gardez le ainsi à portée de main pour le paiement final";
 "string_try_again" = "Réessayer";
 "string_no_newtork" = "Aucune connection.";
+"internet_no_connection_details_label" = "Un problème de connection s'est produit, Veuillez essayer à nouveau";
 "string_oops" = "Oups!";
 "string_something_broken" = "Une erreur s'est produite. Veuillez réessayer.";
 
