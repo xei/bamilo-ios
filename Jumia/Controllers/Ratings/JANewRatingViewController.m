@@ -86,7 +86,7 @@ UIAlertViewDelegate
     self.navBarLayout.showLogo = NO;
     
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
-
+    
     self.brandLabel.text = self.product.brand;
     self.brandLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
@@ -339,7 +339,8 @@ UIAlertViewDelegate
     self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                         delegate:nil
                                                 startingPosition:currentY
-                                                    widthSize:centerViewWidth];
+                                                       widthSize:centerViewWidth
+                                              hasFieldNavigation:YES];
     
     CGFloat spaceBetweenFormFields = 6.0f;
     NSInteger count = 0;
@@ -444,7 +445,7 @@ UIAlertViewDelegate
         successBlock:^(id object) {
             
             NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
-
+            
             NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];

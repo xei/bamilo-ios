@@ -180,7 +180,7 @@ UITableViewDelegate
         
         if (0 == realIndex) {
             //this is the current category cell
-            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCategoryFromCenterPanelNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
                                                                 object:@{@"category":self.currentCategory}];
             return;
         }

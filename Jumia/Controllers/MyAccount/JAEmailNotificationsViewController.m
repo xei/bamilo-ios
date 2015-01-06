@@ -207,7 +207,8 @@ JADynamicFormDelegate
     self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                   delegate:self
                                           startingPosition:0.0f
-                                                 widthSize:self.scrollView.frame.size.width];
+                                                 widthSize:self.scrollView.frame.size.width
+                                        hasFieldNavigation:YES];
     
     self.notificationsView = [[UIView alloc] initWithFrame:CGRectZero];
     self.notificationsView.layer.cornerRadius = 5.0f;
@@ -232,7 +233,7 @@ JADynamicFormDelegate
                                                 0.0f,
                                                 self.scrollView.frame.size.width,
                                                 formHeight + 6.0f)];
-
+    
     NSString *orangeButtonName = @"orangeBig_%@";
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
@@ -276,7 +277,7 @@ JADynamicFormDelegate
     [self removeView];
     
     [self showLoading];
-
+    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
@@ -286,7 +287,7 @@ JADynamicFormDelegate
     
     [self hideLoading];
     
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 @end

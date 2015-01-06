@@ -730,7 +730,7 @@
         }
         else
         {
-            addressesVC.navBarLayout.backButtonTitle = STRING_MY_ADDRESSES;
+            addressesVC.navBarLayout.backButtonTitle = STRING_BACK;
             addressesVC.navBarLayout.showLogo = NO;
         }
 
@@ -784,7 +784,7 @@
         }
         else
         {
-            addAddressVC.navBarLayout.backButtonTitle = STRING_MY_ADDRESSES;
+            addAddressVC.navBarLayout.backButtonTitle = STRING_BACK;
             addAddressVC.navBarLayout.showLogo = NO;
         }
         
@@ -814,7 +814,7 @@
         }
         else
         {
-            editAddressVC.navBarLayout.backButtonTitle = STRING_MY_ADDRESSES;
+            editAddressVC.navBarLayout.backButtonTitle = STRING_BACK;
             editAddressVC.navBarLayout.showLogo = NO;
         }
         

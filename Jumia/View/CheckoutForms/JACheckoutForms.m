@@ -46,7 +46,7 @@
                 
                 if(VALID_NOTEMPTY(paymentMethod.form, RIForm))
                 {
-                    JADynamicForm *dynamicForm = [[JADynamicForm alloc] initWithForm:paymentMethod.form delegate:nil startingPosition:0.0f widthSize:width];
+                    JADynamicForm *dynamicForm = [[JADynamicForm alloc] initWithForm:paymentMethod.form delegate:nil startingPosition:0.0f widthSize:width hasFieldNavigation:YES];
                     
                     [self.dynamicForms setObject:dynamicForm forKey:paymentMethod.uid];
                     

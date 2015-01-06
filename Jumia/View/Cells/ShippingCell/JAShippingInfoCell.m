@@ -33,11 +33,11 @@
     NSDictionary* shippingFeeAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f], NSFontAttributeName, nil];
     
     NSString *shippingFeeLabel = STRING_SHIPPING_FEE;
-    NSRange shippingFeeRange = NSMakeRange(shippingFeeLabel.length, shippingFee.length);
+    NSRange shippingFeeRange = NSMakeRange(0, shippingFeeLabel.length);
     NSMutableAttributedString *finalshippingFeeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", shippingFeeLabel, shippingFee]
-                                                                                               attributes:shippingFeeLabelAttributes];
+                                                                                               attributes:shippingFeeAttributes];
     
-    [finalshippingFeeString setAttributes:shippingFeeAttributes
+    [finalshippingFeeString setAttributes:shippingFeeLabelAttributes
                                     range:shippingFeeRange];
     
     
@@ -47,11 +47,11 @@
     NSDictionary* deliveryTimeAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f], NSFontAttributeName, nil];
     
     NSString *deliveryTimeString = STRING_DELIVERY_TIME;
-    NSRange deliveryTimeRange = NSMakeRange(deliveryTimeString.length, deliveryTime.length);
+    NSRange deliveryTimeRange = NSMakeRange(0, deliveryTimeString.length);
     NSMutableAttributedString *finalDeliveryTimeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", deliveryTimeString, deliveryTime]
-                                                                                                attributes:deliveryTimeLabelAttributes];
+                                                                                                attributes:deliveryTimeAttributes];
     
-    [finalDeliveryTimeString setAttributes:deliveryTimeAttributes
+    [finalDeliveryTimeString setAttributes:deliveryTimeLabelAttributes
                                      range:deliveryTimeRange];
     
     

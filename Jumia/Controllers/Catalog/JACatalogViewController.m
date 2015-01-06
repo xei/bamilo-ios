@@ -19,6 +19,7 @@
 #import "JAUndefinedSearchView.h"
 #import "JAFilteredNoResultsView.h"
 
+#define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
 #define JACatalogViewControllerMaxProducts_ipad 46
@@ -164,12 +165,21 @@
     [self.filterButton addSubview:filterIconView];
     [self.filterButton addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIImage* gridIcon = [UIImage imageNamed:@"gridIcon"];
-    self.viewToggleButtonIcon = [[UIImageView alloc] initWithImage:gridIcon];
-    [self.viewToggleButtonIcon setFrame:CGRectMake((self.viewToggleButton.bounds.size.width - gridIcon.size.width) / 2,
-                                                   (self.viewToggleButton.bounds.size.height - gridIcon.size.height) / 2,
-                                                   gridIcon.size.width,
-                                                   gridIcon.size.height)];
+    
+    self.gridSelected = NO;
+    UIImage* viewToggleIcon = [UIImage imageNamed:@"gridIcon"];
+    NSNumber *gridSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
+    if(VALID_NOTEMPTY(gridSelected, NSNumber))
+    {
+        self.gridSelected = [gridSelected boolValue];
+        viewToggleIcon = [UIImage imageNamed:@"listIcon"];
+    }
+    
+    self.viewToggleButtonIcon = [[UIImageView alloc] initWithImage:viewToggleIcon];
+    [self.viewToggleButtonIcon setFrame:CGRectMake((self.viewToggleButton.bounds.size.width - viewToggleIcon.size.width) / 2,
+                                                   (self.viewToggleButton.bounds.size.height - viewToggleIcon.size.height) / 2,
+                                                   viewToggleIcon.size.width,
+                                                   viewToggleIcon.size.height)];
     [self.viewToggleButton addSubview:self.viewToggleButtonIcon];
     [self.viewToggleButton addTarget:self action:@selector(viewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -237,8 +247,6 @@
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
-    
-    self.gridSelected = NO;
     
     self.sortingMethod = NSIntegerMax;
 }
@@ -1137,6 +1145,8 @@
 {
     //reverse selection
     self.gridSelected = !self.gridSelected;
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.gridSelected] forKey:JACatalogGridSelected];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     UIImage* image;
     if (self.gridSelected) {
