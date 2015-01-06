@@ -111,6 +111,7 @@
                                              CGRectGetMaxY(self.searchBar.frame),
                                              self.frame.size.width,
                                              self.frame.size.height - CGRectGetMaxY(self.searchBar.frame));
+    [self.resultsTableView reloadData];
 }
 
 - (void)dealloc
@@ -290,6 +291,12 @@
         cell.imageView.image = [UIImage imageNamed:@"ico_searchsuggestion"];
     }
     
+    //remove the clickable view
+    for (UIView* view in cell.subviews) {
+        if (99 == view.tag || 98 == view.tag) {
+            [view removeFromSuperview];
+        }
+    }
     if (0 == indexPath.row)
     {
         UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
@@ -300,6 +307,7 @@
     
     UIImageView *line2 = [[UIImageView alloc] initWithFrame:CGRectMake(45, cell.frame.size.height-1, cell.frame.size.width-20, 1)];
     line2.backgroundColor = UIColorFromRGB(0xcccccc);
+    line2.tag = 98;
     [cell.viewForBaselineLayout addSubview:line2];
     
     [clickView addTarget:self action:@selector(resultCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
