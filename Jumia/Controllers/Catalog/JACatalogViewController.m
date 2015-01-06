@@ -169,7 +169,7 @@
     self.gridSelected = NO;
     UIImage* viewToggleIcon = [UIImage imageNamed:@"gridIcon"];
     NSNumber *gridSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
-    if(VALID_NOTEMPTY(gridSelected, NSNumber))
+    if(VALID_NOTEMPTY(gridSelected, NSNumber) && ![gridSelected boolValue])
     {
         self.gridSelected = [gridSelected boolValue];
         viewToggleIcon = [UIImage imageNamed:@"listIcon"];
