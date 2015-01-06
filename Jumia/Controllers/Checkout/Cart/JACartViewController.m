@@ -29,6 +29,7 @@
 @property (nonatomic, assign) BOOL requestDone;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, assign) CGRect cartScrollViewInitialFrame;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
@@ -46,6 +47,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.apiResponse = RIApiResponseSuccess;
     
     self.firstLoading = YES;
     
@@ -142,7 +145,10 @@
 {
     self.requestDone = NO;
     
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
         self.requestDone = YES;
@@ -156,6 +162,7 @@
         NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
         NSMutableDictionary *trackingDictionary = nil;
         NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
+        [self removeErrorView];
         
         for (int i = 0; i < self.cart.cartItems.count; i++) {
             RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
@@ -235,7 +242,8 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        
+        [self removeErrorView];
+        self.apiResponse = apiResponse;
         self.requestDone = YES;
         
         if(self.firstLoading)
@@ -256,7 +264,6 @@
             {
                 noConnection = YES;
             }
-            
             [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
         }
         

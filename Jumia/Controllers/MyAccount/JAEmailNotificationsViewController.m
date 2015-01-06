@@ -23,6 +23,7 @@ JADynamicFormDelegate
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (strong, nonatomic) RIForm *form;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
@@ -33,7 +34,7 @@ JADynamicFormDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.apiResponse = RIApiResponseSuccess;
     self.screenName = @"CustomerEmailNotifications";
     
     self.navBarLayout.showBackButton = YES;
@@ -57,13 +58,15 @@ JADynamicFormDelegate
 {
     [super viewWillAppear:animated];
     
-    [self showLoading];
-    
     [self getForm];
 }
 
 - (void)getForm
 {
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     [RIForm getForm:@"managenewsletters"
        successBlock:^(RIForm *form) {
            
@@ -77,11 +80,12 @@ JADynamicFormDelegate
            }
            
            [self setupView];
-           
+           [self removeErrorView];
            [self hideLoading];
            
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-           
+           [self removeErrorView];
+           self.apiResponse = apiResponse;
            if(self.firstLoading)
            {
                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
