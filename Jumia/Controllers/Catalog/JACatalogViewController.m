@@ -1212,11 +1212,6 @@
     NSMutableArray *productsArray = [self.productsMap objectForKey:key];
     
     RIProduct* product = [productsArray objectAtIndex:button.tag];
-    if (!button.selected) {
-        product.favoriteAddDate = [NSDate date];
-    } else {
-        product.favoriteAddDate = nil;
-    }
 
     [self showLoading];
     
@@ -1227,6 +1222,7 @@
                                 successBlock:^(id completeProduct) {
                                     [RIProduct addToFavorites:completeProduct successBlock:^{
                                         button.selected = !button.selected;
+                                        product.favoriteAddDate = [NSDate date];
                                         
                                         NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
                                         
@@ -1335,6 +1331,7 @@
     } else {
         [RIProduct removeFromFavorites:product successBlock:^(void) {
             button.selected = !button.selected;
+            product.favoriteAddDate = nil;
             
             NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
             
