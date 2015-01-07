@@ -869,9 +869,16 @@
     [self.picker setDelegate:self];
     
     NSMutableArray *dataSource = [NSMutableArray new];
+    
     if(VALID_NOTEMPTY([self.currentItem maxQuantity], NSNumber) && 0 < [[self.currentItem maxQuantity] integerValue])
     {
-        for (int i = 0; i < [[self.currentItem maxQuantity] integerValue]; i++)
+        NSInteger maxQuantity = [[self.currentItem maxQuantity] integerValue];
+        if(VALID_NOTEMPTY([self.currentItem stock], NSNumber) && [[self.currentItem stock] integerValue] < [[self.currentItem maxQuantity] integerValue])
+        {
+            maxQuantity = [[self.currentItem stock] integerValue];
+        }
+        
+        for (int i = 0; i < maxQuantity; i++)
         {
             [dataSource addObject:[NSString stringWithFormat:@"%d", (i + 1)]];
         }
