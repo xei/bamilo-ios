@@ -171,7 +171,10 @@ JAActivityViewControllerDelegate
         [self.currentPopoverController dismissPopoverAnimated:NO];
     }
     
-    [self showLoading];
+    if (RIApiResponseNoInternetConnection != self.apiResponse)
+    {
+        [self showLoading];
+    }
     
     [self.mainScrollView setHidden:YES];
     [self.landscapeScrollView setHidden:YES];
@@ -286,7 +289,7 @@ JAActivityViewControllerDelegate
 
 - (void)loadCompleteProduct
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -295,6 +298,8 @@ JAActivityViewControllerDelegate
     
     if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
+            self.apiResponse = RIApiResponseSuccess;
+            
             [self loadedProduct:product];
             [self removeErrorView];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -325,6 +330,8 @@ JAActivityViewControllerDelegate
         }];
     } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
         [RIProduct getCompleteProductWithSku:self.productSku successBlock:^(id product) {
+            self.apiResponse = RIApiResponseSuccess;
+            
             [self loadedProduct:product];
             [self removeErrorView];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -530,10 +537,6 @@ JAActivityViewControllerDelegate
 {
     [self removeSuperviews];
 
-    if (RIApiResponseNoInternetConnection == self.apiResponse) {
-        [self showLoading];    
-    }
-    
     self.hasLoaddedProduct = YES;
     
     [self.mainScrollView setFrame:CGRectMake(0.0f,
