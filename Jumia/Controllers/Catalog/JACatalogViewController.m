@@ -70,9 +70,7 @@
     if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView)) {
         [self.wizardView removeFromSuperview];
     }
- 
-    [self removeErrorView];
-    
+
     [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
 }
 
@@ -325,6 +323,7 @@
          
      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
          self.apiResponse = apiResponse;
+         [self removeErrorView];
          
          if(RIApiResponseMaintenancePage == apiResponse)
          {
@@ -519,6 +518,7 @@
                                                                               
                                                                           } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
                                                                               self.apiResponse = apiResponse;
+                                                                              [self removeErrorView];
                                                                               self.searchSuggestionOperationID = nil;
                                                                               
                                                                               NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
@@ -729,6 +729,7 @@
                                                                           
                                                                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                                                           self.apiResponse = apiResponse;
+                                                                          [self removeErrorView];
                                                                           self.getProductsOperationID = nil;
                                                                           
                                                                           NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
