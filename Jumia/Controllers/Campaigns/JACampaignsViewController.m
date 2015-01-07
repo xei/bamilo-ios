@@ -251,6 +251,7 @@
 {
     [self showLoading];
     [RICampaign getCampaignWithUrl:campaignUrl successBlock:^(RICampaign *campaign) {
+        [self removeErrorView];
         [campaignPage loadWithCampaign:campaign];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
@@ -263,6 +264,7 @@
 {
     [self showLoading];
     [RICampaign getCampaignWithId:campaignId successBlock:^(RICampaign *campaign) {
+        [self removeErrorView];
         [campaignPage loadWithCampaign:campaign];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
@@ -283,6 +285,7 @@
 
 - (void)loadCampaignFailedWithResponse:(RIApiResponse)apiResponse
 {
+    [self removeErrorView];
     BOOL noConnection = NO;
     if(RIApiResponseMaintenancePage == apiResponse)
     {
