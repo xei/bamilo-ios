@@ -1212,7 +1212,7 @@
     NSMutableArray *productsArray = [self.productsMap objectForKey:key];
     
     RIProduct* product = [productsArray objectAtIndex:button.tag];
-    if (button.selected) {
+    if (!button.selected) {
         product.favoriteAddDate = [NSDate date];
     } else {
         product.favoriteAddDate = nil;
