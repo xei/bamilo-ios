@@ -75,6 +75,8 @@ JAPickerScrollViewDelegate
 @property (strong, nonatomic) JAMyOrderDetailView *orderDetailsView;
 @property (strong, nonatomic) NSIndexPath *selectedOrderIndexPath;
 
+@property (assign, nonatomic) RIApiResponse apiResponse;
+
 @end
 
 @implementation JAMyOrdersViewController
@@ -84,7 +86,7 @@ JAPickerScrollViewDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.apiResponse = RIApiResponseSuccess;
     self.currentOrdersPage = 0;
     self.orders = [[NSMutableArray alloc] init];
     self.ordersTotal = 0;
@@ -211,8 +213,11 @@ JAPickerScrollViewDelegate
 
 - (void) loadOrders
 {
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     self.isLoadingOrders = YES;
-    [self showLoading];
     
     [RIOrder getOrdersPage:[NSNumber numberWithInt:self.currentOrdersPage]
                   maxItems:[NSNumber numberWithInt:kOrdersPerPage]
@@ -265,8 +270,11 @@ JAPickerScrollViewDelegate
               
               self.isLoadingOrders = NO;
               [self hideLoading];
+              [self removeErrorView];
           }
            andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+               [self removeErrorView];
+               self.apiResponse = apiResponse;
                self.isLoadingOrders = NO;
                [self hideLoading];
                if(RIApiResponseMaintenancePage == apiResponse)
@@ -438,7 +446,10 @@ JAPickerScrollViewDelegate
 
 - (void)loadOrderDetails
 {
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     self.trackOrderRequestState = RITrackOrderRequestDone;
     
@@ -455,11 +466,12 @@ JAPickerScrollViewDelegate
                               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
                               self.firstLoading = NO;
                           }
-                          
+                          [self removeErrorView];
                           [self hideLoading];
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                          
+                          [self removeErrorView];
+                          self.apiResponse = apiResponse;
                           self.trackingOrder = nil;
                           
                           if(self.firstLoading)
@@ -1205,6 +1217,35 @@ JAPickerScrollViewDelegate
         self.selectedOrderIndexPath = [NSIndexPath indexPathForRow:tag inSection:0];
     }
     
+    // 27.0f is the height of the header
+    CGFloat collectionHeight =  27.0f + [JAMyOrderCell getCellHeight] * [self.orders count];
+    if(UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
+    {
+        if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && self.selectedOrderIndexPath.row < [self.orders count])
+        {
+            // Add order detail row
+            RITrackOrder *order = [self.orders objectAtIndex:self.selectedOrderIndexPath.row];
+            collectionHeight += [JAMyOrderDetailView getOrderDetailViewHeight:order maxWidth:self.ordersCollectionView.frame.size.width];
+        }
+    }
+    
+    if(collectionHeight > self.contentScrollView.contentSize.height - 12.0f)
+    {
+        collectionHeight = self.contentScrollView.contentSize.height - 12.0f;
+    }
+    
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat viewsWidth = (self.view.frame.size.width - (2 * horizontalMargin));
+    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        viewsWidth = ((self.view.frame.size.width - (3 * horizontalMargin)) / 2);
+    }
+    
+    [self.ordersCollectionView setFrame:CGRectMake(self.view.frame.size.width + horizontalMargin,
+                                                   6.0f,
+                                                   viewsWidth,
+                                                   collectionHeight)];
+
     [self.ordersCollectionView reloadData];
     
     if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))

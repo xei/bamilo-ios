@@ -68,10 +68,6 @@ FBLoginViewDelegate
 @property (nonatomic, strong)JAOrderSummaryView* orderSummaryView;
 @property (assign, nonatomic) CGRect orderSummaryOriginalFrame;
 
-@property (nonatomic, assign)CGRect mainLandscapeRect;
-@property (nonatomic, assign)CGRect subLandscapeRect;
-@property (nonatomic, assign)CGRect mainPortraitRect;
-
 @property (strong, nonatomic) UIView *viewToScroll;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (assign, nonatomic) CGRect scrollViewOriginalFrame;
@@ -393,8 +389,8 @@ FBLoginViewDelegate
     
     [self hideKeyboard];
     
-    [self.orderSummaryView setFrame:self.orderSummaryOriginalFrame];
-    [self.scrollView setFrame:self.scrollViewOriginalFrame];
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
+                                               CGRectGetMaxY(self.signUpView.frame) + 6.0f)];
 }
 
 - (void) hideKeyboard
@@ -474,6 +470,8 @@ FBLoginViewDelegate
         [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
         self.firstLoading = NO;
     }
+    
+    [self removeErrorView];
     
     if(!self.loadFailed)
     {

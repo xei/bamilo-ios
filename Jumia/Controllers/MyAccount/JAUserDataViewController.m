@@ -53,7 +53,7 @@ JADynamicFormDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.apiResponse = RIApiResponseSuccess;
     self.screenName = @"CustomerData";
     
     self.numberOfFields = 0;
@@ -92,8 +92,6 @@ JADynamicFormDelegate
     
     self.currentY = 32.0f;
     
-    [self showLoading];
-    
     [self makeRequests];
 }
 
@@ -120,6 +118,12 @@ JADynamicFormDelegate
 - (void)makeRequests
 {
     self.numberOfRequests = 2;
+    
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
+    
     self.apiResponse = RIApiResponseSuccess;
     
     [RIForm getForm:@"changepassword"
@@ -132,9 +136,9 @@ JADynamicFormDelegate
                                                     hasFieldNavigation:YES];
          
          self.numberOfRequests--;
-         
+         [self removeErrorView];
      } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
-     {
+     {   [self removeErrorView];
          self.apiResponse = apiResponse;
          self.numberOfRequests--;
      }];
@@ -143,6 +147,7 @@ JADynamicFormDelegate
      {
          self.customer = customer;
          self.numberOfRequests--;
+         
          
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
@@ -297,7 +302,7 @@ JADynamicFormDelegate
          
          if(RIApiResponseNoInternetConnection == apiResponse)
          {
-             [self showMessage:STRING_NO_NEWTORK success:NO];
+             [self showMessage:STRING_NO_CONNECTION success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {

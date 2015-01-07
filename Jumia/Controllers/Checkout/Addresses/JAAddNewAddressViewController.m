@@ -133,11 +133,21 @@ JAPickerDelegate>
 {
     [super viewWillAppear:animated];
     
-    [self showLoading];
-    
     [self initViews];
     
+    [self getForms];
+}
+
+- (void) getForms
+{
+    if(RIApiResponseSuccess == self.apiResponse)
+    {
+        [self showLoading];
+    }
+    
+    self.apiResponse = RIApiResponseSuccess;
     self.numberOfGetFormRequests = 2;
+    self.loadFailed = NO;
     
     [RIForm getForm:@"addresscreate"
      extraArguments:self.extraParameters
@@ -197,19 +207,22 @@ JAPickerDelegate>
 {
     if(self.loadFailed)
     {
+        BOOL noInternetConnection = NO;
         if (RIApiResponseNoInternetConnection == self.apiResponse)
         {
-            [self showMessage:STRING_NO_NEWTORK success:NO];
+            noInternetConnection = YES;
         }
-        else
-        {
-            [self showMessage:STRING_ERROR success:NO];
-        }
+        
+        [self hideLoading];
+        
+        [self removeErrorView];
+        [self showErrorView:noInternetConnection startingY:0.0f selector:@selector(getForms) objects:nil];
     }
     else
     {
         [self finishedFormLoading];
-        
+        [self removeErrorView];
+
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"CheckoutMyAddress" forKey:kRIEventActionKey];
@@ -706,7 +719,7 @@ JAPickerDelegate>
          
          if (RIApiResponseNoInternetConnection == apiResponse)
          {
-             [self showMessage:STRING_NO_NEWTORK success:NO];
+             [self showMessage:STRING_NO_CONNECTION success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {

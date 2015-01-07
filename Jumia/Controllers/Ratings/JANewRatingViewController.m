@@ -82,6 +82,8 @@ UIAlertViewDelegate
         self.screenName = @"WriteRatingScreen";
     }
     
+    self.apiResponse = RIApiResponseSuccess;
+    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
@@ -106,10 +108,21 @@ UIAlertViewDelegate
 - (void)ratingsRequests
 {
     self.numberOfRequests = 2;
-    self.apiResponse = RIApiResponseSuccess;
     
     [self hideViews];
-    [self showLoading];
+    if(RIApiResponseSuccess != self.apiResponse)
+    {
+        if(VALID_NOTEMPTY(self.ratingDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingDynamicForm.formViews, NSMutableArray))
+        {
+            [self showLoading];
+        }
+        
+        self.apiResponse = RIApiResponseSuccess;
+    }
+    else
+    {
+        [self showLoading];
+    }
     
     [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
      {
@@ -143,6 +156,7 @@ UIAlertViewDelegate
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
     
+    [self removeErrorView];
     if(RIApiResponseSuccess == self.apiResponse)
     {
         [self setupViews];
@@ -151,7 +165,7 @@ UIAlertViewDelegate
     {
         if(VALID_NOTEMPTY(self.ratingDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingDynamicForm.formViews, NSMutableArray))
         {
-            [self showMessage:STRING_NO_NEWTORK success:NO];
+            [self showMessage:STRING_NO_CONNECTION success:NO];
         }
         else
         {
@@ -507,7 +521,7 @@ UIAlertViewDelegate
             
             if (RIApiResponseNoInternetConnection == apiResponse)
             {
-                [self showMessage:STRING_NO_NEWTORK success:NO];
+                [self showMessage:STRING_NO_CONNECTION success:NO];
             }
             else if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {

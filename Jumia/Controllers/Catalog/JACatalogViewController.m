@@ -57,7 +57,9 @@
 @property (nonatomic, assign) NSInteger numberOfCellsInScreen;
 @property (nonatomic, assign) NSInteger maxProducts;
 
-@property (nonatomic, assign)NSInteger lastIndex;
+@property (nonatomic, assign) NSInteger lastIndex;
+
+@property (nonatomic, assign) RIApiResponse apiResponse;
 
 @end
 
@@ -68,6 +70,8 @@
     if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView)) {
         [self.wizardView removeFromSuperview];
     }
+ 
+    [self removeErrorView];
     
     [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
 }
@@ -134,6 +138,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.apiResponse = RIApiResponseSuccess;
     
     if (self.forceShowBackButton)
     {
@@ -260,10 +266,16 @@
 
 - (void)getCategories
 {
-    [self showLoading];
+    if(RIApiResponseSuccess == self.apiResponse || RIApiResponseMaintenancePage == self.apiResponse)
+    {
+        [self showLoading];
+    }
     
     [RICategory getAllCategoriesWithSuccessBlock:^(id categories)
      {
+         self.apiResponse = RIApiResponseSuccess;
+         [self removeErrorView];
+         
          for (RICategory *category in categories)
          {
              if(VALID_NOTEMPTY(self.categoryId, NSString))
@@ -307,12 +319,13 @@
                  noConnection = YES;
              }
              [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(getCategories) objects:nil];
-             
          }
          
          [self hideLoading];
          
      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+         self.apiResponse = apiResponse;
+         
          if(RIApiResponseMaintenancePage == apiResponse)
          {
              [self showMaintenancePage:@selector(getCategories) objects:nil];
@@ -369,6 +382,7 @@
 
 - (void)addProdutsToMap:(NSArray*)products
 {
+    self.apiResponse = RIApiResponseSuccess;
     [self removeErrorView];
     
     NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
@@ -404,7 +418,11 @@
         if (VALID_NOTEMPTY(self.searchString, NSString))
         {
             // In case of this is a search
-            [self showLoading];
+            if(RIApiResponseSuccess == self.apiResponse || RIApiResponseMaintenancePage == self.apiResponse || RIApiResponseAPIError == self.apiResponse)
+            {
+                [self showLoading];
+            }
+            
             self.isLoadingMoreProducts =YES;
             
             self.searchSuggestionOperationID = [RISearchSuggestion getResultsForSearch:self.searchString
@@ -413,6 +431,7 @@
                                                                          sortingMethod:self.sortingMethod
                                                                                filters:self.filtersArray
                                                                           successBlock:^(NSArray *results, NSArray *filters, NSNumber *productCount) {
+                                                                              
                                                                               self.searchSuggestionOperationID = nil;
                                                                               
                                                                               if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
@@ -499,6 +518,7 @@
                                                                               [self hideLoading];
                                                                               
                                                                           } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
+                                                                              self.apiResponse = apiResponse;
                                                                               self.searchSuggestionOperationID = nil;
                                                                               
                                                                               NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
@@ -508,7 +528,7 @@
                                                                                   NSString *erroMessasge = STRING_ERROR;
                                                                                   if (RIApiResponseNoInternetConnection == apiResponse)
                                                                                   {
-                                                                                      erroMessasge = STRING_NO_NEWTORK;
+                                                                                      erroMessasge = STRING_NO_CONNECTION;
                                                                                   }
                                                                                   
                                                                                   [self showMessage:erroMessasge success:NO];
@@ -549,7 +569,11 @@
         {
             if (NO == self.loadedEverything)
             {
-                [self showLoading];
+                if(RIApiResponseSuccess == self.apiResponse || RIApiResponseMaintenancePage == self.apiResponse || RIApiResponseAPIError == self.apiResponse)
+                {
+                    [self showLoading];
+                }
+                
                 self.isLoadingMoreProducts =YES;
                 
                 NSString* urlToUse = self.catalogUrl;
@@ -568,6 +592,7 @@
                                                                         filterType:self.filterType
                                                                        filterValue:self.filterValue
                                                                       successBlock:^(NSArray* products, NSString* productCount, NSArray* filters, NSString *categoryId, NSArray* categories) {
+                                                                          
                                                                           self.getProductsOperationID = nil;
                                                                           
                                                                           self.navBarLayout.subTitle = productCount;
@@ -703,6 +728,7 @@
                                                                           [self hideLoading];
                                                                           
                                                                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                                                          self.apiResponse = apiResponse;
                                                                           self.getProductsOperationID = nil;
                                                                           
                                                                           NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
@@ -712,7 +738,7 @@
                                                                               NSString *erroMessasge = STRING_ERROR;
                                                                               if (RIApiResponseNoInternetConnection == apiResponse)
                                                                               {
-                                                                                  erroMessasge = STRING_NO_NEWTORK;
+                                                                                  erroMessasge = STRING_NO_CONNECTION;
                                                                               }
                                                                               
                                                                               [self showMessage:erroMessasge success:NO];
@@ -1014,6 +1040,7 @@
     {
         self.sortingMethod = index;
         
+        self.apiResponse = RIApiResponseSuccess;
         [self removeErrorView];
         
         NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
@@ -1191,7 +1218,9 @@
     } else {
         product.favoriteAddDate = nil;
     }
+
     [self showLoading];
+    
     if (button.selected)
     {
         //add to favorites
@@ -1290,7 +1319,7 @@
                                         NSString *addToWishlistError = STRING_ERROR_ADDING_TO_WISHLIST;
                                         if(RIApiResponseNoInternetConnection == apiResponse)
                                         {
-                                            addToWishlistError = STRING_NO_NEWTORK;
+                                            addToWishlistError = STRING_NO_CONNECTION;
                                         }
                                         
                                         [self showMessage:addToWishlistError success:NO];

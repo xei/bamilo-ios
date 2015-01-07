@@ -56,17 +56,26 @@
                                         </mask>
                                     </variation>
                                 </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qat-Ge-7QR">
+                                    <rect key="frame" x="0.0" y="155" width="636" height="17"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstItem="qat-Ge-7QR" firstAttribute="leading" secondItem="O6X-1u-xws" secondAttribute="leading" id="2Nq-wP-grl"/>
                                 <constraint firstAttribute="trailing" secondItem="W8s-I9-HVl" secondAttribute="trailing" id="6ht-Cg-IVM"/>
                                 <constraint firstAttribute="height" constant="140" id="AhP-xV-bsF"/>
                                 <constraint firstItem="W8s-I9-HVl" firstAttribute="leading" secondItem="O6X-1u-xws" secondAttribute="leading" id="Pyk-Ix-oDQ"/>
                                 <constraint firstItem="8rR-Cd-zHZ" firstAttribute="top" secondItem="O6X-1u-xws" secondAttribute="top" id="UaM-5R-1WD"/>
                                 <constraint firstAttribute="centerX" secondItem="8rR-Cd-zHZ" secondAttribute="centerX" id="WVr-Xr-rYD"/>
+                                <constraint firstItem="qat-Ge-7QR" firstAttribute="top" secondItem="W8s-I9-HVl" secondAttribute="bottom" constant="15" id="Zgc-Hg-zVm"/>
                                 <constraint firstItem="W8s-I9-HVl" firstAttribute="leading" secondItem="O6X-1u-xws" secondAttribute="leading" id="c61-85-Cpf"/>
                                 <constraint firstItem="W8s-I9-HVl" firstAttribute="top" secondItem="8rR-Cd-zHZ" secondAttribute="bottom" constant="20" id="cb2-zb-Stz"/>
                                 <constraint firstItem="8rR-Cd-zHZ" firstAttribute="leading" secondItem="O6X-1u-xws" secondAttribute="leading" id="cw1-90-zdc"/>
+                                <constraint firstAttribute="trailing" secondItem="qat-Ge-7QR" secondAttribute="trailing" id="zKw-2b-QoL"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
@@ -143,6 +152,7 @@
                 <outlet property="genericDetailLabel" destination="RMa-vS-Yzy" id="XzK-BJ-BMk"/>
                 <outlet property="genericErrorLabel" destination="AvN-6q-Joe" id="Hdh-zH-6DV"/>
                 <outlet property="genericImageView" destination="rqa-iY-PqB" id="aAy-7e-Toc"/>
+                <outlet property="noConnectionDetailsLabel" destination="qat-Ge-7QR" id="cEX-XI-KxD"/>
                 <outlet property="noInternetFirstView" destination="O6X-1u-xws" id="mA7-UW-iH8"/>
                 <outlet property="noInternetImageView" destination="8rR-Cd-zHZ" id="qhA-qV-Iwo"/>
                 <outlet property="noNetworkView" destination="QZ9-o0-Zuc" id="iqY-C3-8WI"/>
