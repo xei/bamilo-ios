@@ -37,6 +37,8 @@
 
 @property (nonatomic, assign)JACampaignPageView* campaignPageWithSizePickerOpen;
 
+@property (nonatomic, assign)RIApiResponse apiResponse;
+
 @end
 
 @implementation JACampaignsViewController
@@ -249,7 +251,11 @@
 - (void)loadPage:(JACampaignPageView*)campaignPage
  withCampaignUrl:(NSString*)campaignUrl
 {
-    [self showLoading];
+    if (RIApiResponseNoInternetConnection != self.apiResponse)
+    {
+        [self showLoading];
+    }
+    self.apiResponse = RIApiResponseSuccess;
     [RICampaign getCampaignWithUrl:campaignUrl successBlock:^(RICampaign *campaign) {
         [self removeErrorView];
         [campaignPage loadWithCampaign:campaign];
@@ -285,6 +291,7 @@
 
 - (void)loadCampaignFailedWithResponse:(RIApiResponse)apiResponse
 {
+    self.apiResponse = apiResponse;
     [self removeErrorView];
     BOOL noConnection = NO;
     if(RIApiResponseMaintenancePage == apiResponse)
