@@ -74,7 +74,7 @@
     [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
 }
 
--(void)showNoResultsView:(CGFloat)withVerticalPadding
+-(void)showNoResultsView:(CGFloat)withVerticalPadding undefinedSearchTerm:(RIUndefinedSearchTerm*)undefinedSearchTerm
 {
     [self.wizardView removeFromSuperview];
     
@@ -85,7 +85,17 @@
     // fail-safe condition: launches error view in case something goes wrong
     if(self.filteredNoResultsView == nil || ISEMPTY(self.filtersArray))
     {
-        [self showErrorView:NO startingY:withVerticalPadding selector:@selector(loadMoreProducts) objects:nil];
+        if(VALID_NOTEMPTY(undefinedSearchTerm, RIUndefinedSearchTerm))
+        {
+            self.undefinedBackup = undefinedSearchTerm;
+            self.navBarLayout.subTitle = @"0";
+            [self reloadNavBar];
+            [self addUndefinedSearchView:undefinedSearchTerm frame:self.collectionView.frame];
+        }
+        else
+        {
+            [self showErrorView:NO startingY:withVerticalPadding selector:@selector(loadMoreProducts) objects:nil];
+        }
     }
     else
     {
@@ -535,28 +545,20 @@
                                                                               }
                                                                               else
                                                                               {
-                                                                                  if (VALID_NOTEMPTY(undefSearchTerm, RIUndefinedSearchTerm))
-                                                                                  {                                                                                       self.navBarLayout.subTitle = @"0";
-                                                                                      [self reloadNavBar];
-                                                                                      self.undefinedBackup = undefSearchTerm;
-                                                                                      [self addUndefinedSearchView:undefSearchTerm frame:self.collectionView.frame];
-                                                                                  } else
+                                                                                  if(RIApiResponseMaintenancePage == apiResponse)
                                                                                   {
-                                                                                      if(RIApiResponseMaintenancePage == apiResponse)
+                                                                                      [self showMaintenancePage:@selector(loadMoreProducts) objects:nil];
+                                                                                  }
+                                                                                  else
+                                                                                  {
+                                                                                      if (RIApiResponseNoInternetConnection == apiResponse)
                                                                                       {
-                                                                                          [self showMaintenancePage:@selector(loadMoreProducts) objects:nil];
+                                                                                          [self showErrorView:YES startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+                                                                                          
                                                                                       }
-                                                                                      else
+                                                                                      else if(RIApiResponseAPIError == apiResponse)
                                                                                       {
-                                                                                          if (RIApiResponseNoInternetConnection == apiResponse)
-                                                                                          {
-                                                                                              [self showErrorView:YES startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
-                                                                                              
-                                                                                          }
-                                                                                          else if(RIApiResponseAPIError == apiResponse)
-                                                                                          {
-                                                                                              [self showNoResultsView:CGRectGetMaxY(self.sortingScrollView.frame)];
-                                                                                          }
+                                                                                          [self showNoResultsView:CGRectGetMaxY(self.sortingScrollView.frame) undefinedSearchTerm:undefSearchTerm];
                                                                                       }
                                                                                   }
                                                                               }
@@ -759,7 +761,7 @@
                                                                                   }
                                                                                   else if(RIApiResponseAPIError == apiResponse)
                                                                                   {
-                                                                                      [self showNoResultsView:CGRectGetMaxY(self.sortingScrollView.frame)];
+                                                                                      [self showNoResultsView:CGRectGetMaxY(self.sortingScrollView.frame) undefinedSearchTerm:nil];
                                                                                   }
                                                                               }
                                                                           }
