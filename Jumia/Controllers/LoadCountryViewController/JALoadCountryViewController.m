@@ -189,6 +189,9 @@
                                  }
                              }
                              [self removeErrorView];
+                             //show loading has to be added here, in case the no connection error view was shown
+                             // and the loading was removed because of that
+                             [self showLoading];
                          }
                                    andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage)
                          {
