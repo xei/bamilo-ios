@@ -531,6 +531,8 @@ JAActivityViewControllerDelegate
 - (void)productLoaded
 {
     [self removeSuperviews];
+
+    [self showLoading];
     
     self.hasLoaddedProduct = YES;
     
