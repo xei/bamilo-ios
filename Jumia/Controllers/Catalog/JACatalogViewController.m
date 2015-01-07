@@ -528,7 +528,7 @@
                                                                                   NSString *erroMessasge = STRING_ERROR;
                                                                                   if (RIApiResponseNoInternetConnection == apiResponse)
                                                                                   {
-                                                                                      erroMessasge = STRING_NO_NEWTORK;
+                                                                                      erroMessasge = STRING_NO_CONNECTION;
                                                                                   }
                                                                                   
                                                                                   [self showMessage:erroMessasge success:NO];
@@ -738,7 +738,7 @@
                                                                               NSString *erroMessasge = STRING_ERROR;
                                                                               if (RIApiResponseNoInternetConnection == apiResponse)
                                                                               {
-                                                                                  erroMessasge = STRING_NO_NEWTORK;
+                                                                                  erroMessasge = STRING_NO_CONNECTION;
                                                                               }
                                                                               
                                                                               [self showMessage:erroMessasge success:NO];
@@ -1319,7 +1319,7 @@
                                         NSString *addToWishlistError = STRING_ERROR_ADDING_TO_WISHLIST;
                                         if(RIApiResponseNoInternetConnection == apiResponse)
                                         {
-                                            addToWishlistError = STRING_NO_NEWTORK;
+                                            addToWishlistError = STRING_NO_CONNECTION;
                                         }
                                         
                                         [self showMessage:addToWishlistError success:NO];

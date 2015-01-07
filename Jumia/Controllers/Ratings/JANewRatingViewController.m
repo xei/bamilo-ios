@@ -165,7 +165,7 @@ UIAlertViewDelegate
     {
         if(VALID_NOTEMPTY(self.ratingDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingDynamicForm.formViews, NSMutableArray))
         {
-            [self showMessage:STRING_NO_NEWTORK success:NO];
+            [self showMessage:STRING_NO_CONNECTION success:NO];
         }
         else
         {
@@ -521,7 +521,7 @@ UIAlertViewDelegate
             
             if (RIApiResponseNoInternetConnection == apiResponse)
             {
-                [self showMessage:STRING_NO_NEWTORK success:NO];
+                [self showMessage:STRING_NO_CONNECTION success:NO];
             }
             else if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {

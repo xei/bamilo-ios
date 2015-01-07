@@ -451,7 +451,7 @@ JAPickerDelegate>
          
          if (RIApiResponseNoInternetConnection == apiResponse)
          {
-             [self showMessage:STRING_NO_NEWTORK success:NO];
+             [self showMessage:STRING_NO_CONNECTION success:NO];
          } else {
              [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
          }

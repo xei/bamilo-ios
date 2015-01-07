@@ -128,7 +128,7 @@
          {
              if(VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray))
              {
-                 [self showMessage:STRING_NO_NEWTORK success:NO];
+                 [self showMessage:STRING_NO_CONNECTION success:NO];
                  [self finishedFormLoading:self.interfaceOrientation];
              }
              else
@@ -290,7 +290,7 @@
          
          if (RIApiResponseNoInternetConnection == apiResponse)
          {
-             [self showMessage:STRING_NO_NEWTORK success:NO];
+             [self showMessage:STRING_NO_CONNECTION success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
