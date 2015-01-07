@@ -1208,8 +1208,6 @@
 
 - (void)continueAddingToFavouritesWithButton:(UIButton *)button
 {
-    button.selected = !button.selected;
-    
     NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
     NSMutableArray *productsArray = [self.productsMap objectForKey:key];
     
@@ -1222,12 +1220,13 @@
 
     [self showLoading];
     
-    if (button.selected)
+    if (!button.selected)
     {
         //add to favorites
         [RIProduct getCompleteProductWithUrl:product.url
                                 successBlock:^(id completeProduct) {
                                     [RIProduct addToFavorites:completeProduct successBlock:^{
+                                        button.selected = !button.selected;
                                         
                                         NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
                                         
@@ -1335,6 +1334,7 @@
                                 }];
     } else {
         [RIProduct removeFromFavorites:product successBlock:^(void) {
+            button.selected = !button.selected;
             
             NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
             
