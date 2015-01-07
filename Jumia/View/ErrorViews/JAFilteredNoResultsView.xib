@@ -18,7 +18,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hYM-Cb-q2X">
                             <rect key="frame" x="0.0" y="12" width="300" height="223"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="emptyFilter" translatesAutoresizingMaskIntoConstraints="NO" id="Vu0-7C-wDC">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyFilter" translatesAutoresizingMaskIntoConstraints="NO" id="Vu0-7C-wDC">
                                     <rect key="frame" x="101" y="30" width="98" height="98"/>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No results match your search criteria. You can try to use less specific filters." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JbR-J0-WKz">
@@ -38,6 +38,7 @@
                                 <constraint firstItem="JbR-J0-WKz" firstAttribute="leading" secondItem="hYM-Cb-q2X" secondAttribute="leading" id="OFk-2K-aqY"/>
                                 <constraint firstAttribute="bottom" secondItem="JbR-J0-WKz" secondAttribute="bottom" constant="37" id="bvN-xc-gkH"/>
                                 <constraint firstAttribute="width" secondItem="hYM-Cb-q2X" secondAttribute="height" multiplier="300:223" id="fQd-Um-ey9"/>
+                                <constraint firstItem="Vu0-7C-wDC" firstAttribute="top" secondItem="hYM-Cb-q2X" secondAttribute="top" constant="30" id="yoG-IW-3vE"/>
                             </constraints>
                         </view>
                     </subviews>
