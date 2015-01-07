@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UIView* contentView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray* categories;
+@property (nonatomic, assign) RIApiResponse apiResponse;
 
 @end
 
@@ -22,6 +23,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.apiResponse = RIApiResponseSuccess;
     
     self.screenName = @"ShopCategories";
     self.A4SViewControllerAlias = @"CATEGORY";
@@ -91,13 +94,21 @@
 
 - (void)continueLoading
 {
-    [self showLoading];
+    if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
+    
     if (VALID_NOTEMPTY(self.currentCategory, RICategory)) {
         [self categoryLoadingFinished:[self.currentCategory.children array]];
     } else {
         [RICategory getCategoriesWithSuccessBlock:^(id categories) {
             [self categoryLoadingFinished:categories];
+            [self removeErrorView];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+            
+            [self removeErrorView];
+            self.apiResponse = apiResponse;
             
             if(self.firstLoading)
             {
