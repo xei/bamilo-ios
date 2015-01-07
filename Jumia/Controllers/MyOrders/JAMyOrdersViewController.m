@@ -1205,6 +1205,35 @@ JAPickerScrollViewDelegate
         self.selectedOrderIndexPath = [NSIndexPath indexPathForRow:tag inSection:0];
     }
     
+    // 27.0f is the height of the header
+    CGFloat collectionHeight =  27.0f + [JAMyOrderCell getCellHeight] * [self.orders count];
+    if(UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
+    {
+        if(VALID_NOTEMPTY(self.selectedOrderIndexPath, NSIndexPath) && self.selectedOrderIndexPath.row < [self.orders count])
+        {
+            // Add order detail row
+            RITrackOrder *order = [self.orders objectAtIndex:self.selectedOrderIndexPath.row];
+            collectionHeight += [JAMyOrderDetailView getOrderDetailViewHeight:order maxWidth:self.ordersCollectionView.frame.size.width];
+        }
+    }
+    
+    if(collectionHeight > self.contentScrollView.contentSize.height - 12.0f)
+    {
+        collectionHeight = self.contentScrollView.contentSize.height - 12.0f;
+    }
+    
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat viewsWidth = (self.view.frame.size.width - (2 * horizontalMargin));
+    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        viewsWidth = ((self.view.frame.size.width - (3 * horizontalMargin)) / 2);
+    }
+    
+    [self.ordersCollectionView setFrame:CGRectMake(self.view.frame.size.width + horizontalMargin,
+                                                   6.0f,
+                                                   viewsWidth,
+                                                   collectionHeight)];
+
     [self.ordersCollectionView reloadData];
     
     if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
