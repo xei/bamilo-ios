@@ -402,7 +402,7 @@
                       NSString *errorAddToCart = STRING_ERROR_ADDING_TO_CART;
                       if (RIApiResponseNoInternetConnection == apiResponse)
                       {
-                          errorAddToCart = STRING_NO_NEWTORK;
+                          errorAddToCart = STRING_NO_CONNECTION;
                       }
                       
                       [self showMessage:errorAddToCart success:NO];

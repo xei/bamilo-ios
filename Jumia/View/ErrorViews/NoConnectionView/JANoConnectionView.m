@@ -63,6 +63,7 @@ void(^retryBock)(BOOL dismiss);
     [self.retryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     
     self.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.noConnectionDetailsLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.genericErrorLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.genericDetailLabel.textColor = UIColorFromRGB(0x4e4e4e);
     
@@ -99,7 +100,7 @@ void(^retryBock)(BOOL dismiss);
 
     if (internetConnection)
     {
-        self.textLabel.text = STRING_NO_NEWTORK;
+        self.textLabel.text = STRING_NO_CONNECTION;
         self.noConnectionDetailsLabel.text = STRING_NO_NETWORK_DETAILS;
         self.noInternetImageView.hidden = NO;
         self.textLabel.hidden = NO;
