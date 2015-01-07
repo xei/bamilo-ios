@@ -41,6 +41,8 @@ JADatePickerDelegate
 
 @property (nonatomic, assign)BOOL isOpeningPicker;
 
+@property (assign, nonatomic) RIApiResponse apiResponse;
+
 @end
 
 @implementation JASignupViewController
@@ -65,6 +67,7 @@ JADatePickerDelegate
                                              selector:@selector(hideKeyboard)
                                                  name:kOpenMenuNotification
                                                object:nil];
+    self.apiResponse = RIApiResponseSuccess;
     
     self.screenName = @"Register";
     
@@ -122,7 +125,10 @@ JADatePickerDelegate
     [self.contentView addSubview:self.loginButton];
     self.registerViewCurrentY = CGRectGetMaxY(self.loginButton.frame) + 3.0f;
     
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     [self getRegisterForm];
 }
@@ -178,9 +184,10 @@ JADatePickerDelegate
            
            [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
            [self.contentView setHidden:NO];
-           
+           [self removeErrorView];
        } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
-           
+           [self removeErrorView];
+           self.apiResponse = apiResponse;
            if(RIApiResponseMaintenancePage == apiResponse)
            {
                [self showMaintenancePage:@selector(getRegisterForm) objects:nil];
