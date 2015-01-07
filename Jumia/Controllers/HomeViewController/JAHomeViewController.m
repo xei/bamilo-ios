@@ -253,7 +253,7 @@
 - (void)completeTeasersLoading
 {
     [RITeaserCategory getTeaserCategoriesWithSuccessBlock:^(id teaserCategories) {
-        
+        [self removeErrorView];
         self.teaserCategories = teaserCategories;
         
         NSMutableArray* titles = [NSMutableArray new];
@@ -301,6 +301,7 @@
             
         }];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+        [self removeErrorView];
         if(self.firstLoading)
         {
             NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
