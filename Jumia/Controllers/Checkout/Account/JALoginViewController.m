@@ -392,6 +392,9 @@ FBLoginViewDelegate
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
     [self hideKeyboard];
+    
+    [self.orderSummaryView setFrame:self.orderSummaryOriginalFrame];
+    [self.scrollView setFrame:self.scrollViewOriginalFrame];
 }
 
 - (void) hideKeyboard
