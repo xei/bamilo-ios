@@ -532,7 +532,9 @@ JAActivityViewControllerDelegate
 {
     [self removeSuperviews];
 
-    [self showLoading];
+    if (RIApiResponseNoInternetConnection == self.apiResponse) {
+        [self showLoading];    
+    }
     
     self.hasLoaddedProduct = YES;
     
