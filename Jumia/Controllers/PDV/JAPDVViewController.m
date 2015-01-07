@@ -117,9 +117,7 @@ JAActivityViewControllerDelegate
     }
     
     if(self.hasLoaddedProduct)
-    {
-        [self showLoading];
-        
+    {        
         [self removeSuperviews];
         
         [self productLoaded];
