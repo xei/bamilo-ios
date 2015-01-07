@@ -73,39 +73,47 @@
 
 - (void)positionViews
 {
-    if(sizeGuideImage == nil)
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
     {
-        [self showLoading];
-        
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        
-        dispatch_async(queue, ^{
+        [self hideLoading];
+        [self showErrorView:YES startingY:0.0f selector:@selector(positionViews) objects:nil];
+    } else {
+        if(sizeGuideImage == nil)
+        {
+            [self removeErrorView];
+            [self showLoading];
             
-            NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:self.sizeGuideUrl]];
+            dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self hideLoading];
-                UIImage *image = [UIImage imageWithData:imageData];
-                sizeGuideImage = image;
-                [self setupScrollViewBasedOnImage:sizeGuideImage];
+            dispatch_async(queue, ^{
                 
-                if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
-                {
-                    [self.wizardView reloadForFrame:self.view.bounds];
-                    [self.view bringSubviewToFront:self.wizardView];
-                }
+                
+                NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:self.sizeGuideUrl]];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self hideLoading];
+                    UIImage *image = [UIImage imageWithData:imageData];
+                    sizeGuideImage = image;
+                    [self setupScrollViewBasedOnImage:sizeGuideImage];
+                    
+                    if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
+                    {
+                        [self.wizardView reloadForFrame:self.view.bounds];
+                        [self.view bringSubviewToFront:self.wizardView];
+                    }
+                });
             });
-        });
-    }
-    else
-    {
-        [self setupScrollViewBasedOnImage:sizeGuideImage];
-    }
-    
-    if([[NSUserDefaults standardUserDefaults] boolForKey:kJASizeGuideWizardUserDefaultsKey] == NO)
-    {
-        self.wizardView = [[JASizeGuideWizardView alloc] initWithFrame:self.view.bounds];
-        [self setupWizardView:self.wizardView];
+        }
+        else
+        {
+            [self setupScrollViewBasedOnImage:sizeGuideImage];
+        }
+        
+        if([[NSUserDefaults standardUserDefaults] boolForKey:kJASizeGuideWizardUserDefaultsKey] == NO)
+        {
+            self.wizardView = [[JASizeGuideWizardView alloc] initWithFrame:self.view.bounds];
+            [self setupWizardView:self.wizardView];
+        }
     }
 }
 
