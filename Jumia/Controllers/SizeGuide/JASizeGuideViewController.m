@@ -88,6 +88,12 @@
                 UIImage *image = [UIImage imageWithData:imageData];
                 sizeGuideImage = image;
                 [self setupScrollViewBasedOnImage:sizeGuideImage];
+                
+                if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
+                {
+                    [self.wizardView reloadForFrame:self.view.bounds];
+                    [self.view bringSubviewToFront:self.wizardView];
+                }
             });
         });
     }
