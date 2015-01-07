@@ -71,7 +71,7 @@ UICollectionViewDelegateFlowLayout
     [super viewDidLoad];
     
     self.screenName = @"Shipping";
-    self.apiResponse = RIApiResponseSuccess;
+
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"CheckoutShippingMethods" forKey:kRIEventActionKey];
@@ -99,7 +99,9 @@ UICollectionViewDelegateFlowLayout
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
+    self.apiResponse = RIApiResponseSuccess;
+
     [self continueLoading];
 }
 
@@ -158,6 +160,7 @@ UICollectionViewDelegateFlowLayout
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
          [self removeErrorView];
+         [self hideLoading];
          self.apiResponse = apiResponse;
          if(RIApiResponseMaintenancePage == apiResponse)
          {

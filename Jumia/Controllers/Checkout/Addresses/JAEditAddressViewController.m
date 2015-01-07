@@ -54,6 +54,8 @@ JAPickerDelegate>
 // Order summary
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
+@property (assign, nonatomic) RIApiResponse apiResponse;
+
 @end
 
 @implementation JAEditAddressViewController
@@ -87,9 +89,19 @@ JAPickerDelegate>
 {
     [super viewWillAppear:animated];
     
-    [self showLoading];
-    
     [self initViews];
+
+    [self getForm];
+}
+
+- (void) getForm
+{
+    if(RIApiResponseSuccess == self.apiResponse)
+    {
+        [self showLoading];
+    }
+
+    self.apiResponse = RIApiResponseSuccess;
     
     [RIForm getForm:@"addressedit"
        successBlock:^(RIForm *form)
@@ -101,13 +113,22 @@ JAPickerDelegate>
              [self.contentView addSubview:view];
          }
          
+         [self removeErrorView];
          [self finishedFormLoading];
      }
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
-         [self finishedFormLoading];
+         self.apiResponse = apiResponse;
+         [self removeErrorView];
          
-         [self showMessage:STRING_ERROR success:NO];
+         BOOL noInternetConnection = NO;
+         if (RIApiResponseNoInternetConnection == self.apiResponse)
+         {
+             noInternetConnection = YES;
+         }
+         
+         [self showErrorView:noInternetConnection startingY:0.0f selector:@selector(getForm) objects:nil];
+         [self hideLoading];
      }];
 }
 
