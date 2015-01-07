@@ -32,6 +32,7 @@ FBLoginViewDelegate
 @property (assign, nonatomic) CGFloat loginViewCurrentY;
 @property (assign, nonatomic) BOOL requestDone;
 @property (strong, nonatomic) JACheckBoxComponent *checkBoxComponent;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
@@ -57,6 +58,8 @@ FBLoginViewDelegate
                                              selector:@selector(hideKeyboard)
                                                  name:kOpenMenuNotification
                                                object:nil];
+    
+    self.apiResponse = RIApiResponseSuccess;
     
     self.screenName = @"Login";
     
@@ -126,7 +129,10 @@ FBLoginViewDelegate
     [self.signUpButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
     [self.loginView addSubview:self.signUpButton];
     
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     [self getLoginForm];
 }
@@ -174,8 +180,11 @@ FBLoginViewDelegate
          self.requestDone = YES;
          
          [self hideLoading];
+         [self removeErrorView];
      } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
+         [self removeErrorView];
+         self.apiResponse = apiResponse;
          self.requestDone = YES;
          if(RIApiResponseMaintenancePage == apiResponse)
          {

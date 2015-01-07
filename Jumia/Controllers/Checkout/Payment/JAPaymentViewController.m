@@ -56,6 +56,8 @@ UITextFieldDelegate>
 @property (assign, nonatomic) CGRect originalFrame;
 @property (assign, nonatomic) CGRect orderSummaryOriginalFrame;
 
+@property (assign, nonatomic) RIApiResponse apiResponse;
+
 @end
 
 @implementation JAPaymentViewController
@@ -83,6 +85,8 @@ UITextFieldDelegate>
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPayment]
                                               data:[trackingDictionary copy]];
+    
+    self.apiResponse = RIApiResponseSuccess;
     
     self.navBarLayout.title = STRING_CHECKOUT;
     
@@ -136,7 +140,10 @@ UITextFieldDelegate>
 
 -(void)continueLoading
 {
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     [RICheckout getPaymentMethodFormWithSuccessBlock:^(RICheckout *checkout)
      {
@@ -149,10 +156,12 @@ UITextFieldDelegate>
          self.paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:checkout.paymentMethodForm];
          
          self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:checkout.paymentMethodForm width:(self.view.frame.size.width - 12.0f)];
-         
+         [self removeErrorView];
          [self finishedLoadingPaymentMethods];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
+         [self removeErrorView];
+         self.apiResponse = apiResponse;
          if(RIApiResponseMaintenancePage == apiResponse)
          {
              [self showMaintenancePage:@selector(continueLoading) objects:nil];
@@ -167,6 +176,7 @@ UITextFieldDelegate>
              
              [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
          }
+         [self hideLoading];
      }];
 }
 

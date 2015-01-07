@@ -75,6 +75,8 @@ JAPickerScrollViewDelegate
 @property (strong, nonatomic) JAMyOrderDetailView *orderDetailsView;
 @property (strong, nonatomic) NSIndexPath *selectedOrderIndexPath;
 
+@property (assign, nonatomic) RIApiResponse apiResponse;
+
 @end
 
 @implementation JAMyOrdersViewController
@@ -84,7 +86,7 @@ JAPickerScrollViewDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.apiResponse = RIApiResponseSuccess;
     self.currentOrdersPage = 0;
     self.orders = [[NSMutableArray alloc] init];
     self.ordersTotal = 0;
@@ -211,8 +213,11 @@ JAPickerScrollViewDelegate
 
 - (void) loadOrders
 {
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     self.isLoadingOrders = YES;
-    [self showLoading];
     
     [RIOrder getOrdersPage:[NSNumber numberWithInt:self.currentOrdersPage]
                   maxItems:[NSNumber numberWithInt:kOrdersPerPage]
@@ -265,8 +270,11 @@ JAPickerScrollViewDelegate
               
               self.isLoadingOrders = NO;
               [self hideLoading];
+              [self removeErrorView];
           }
            andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+               [self removeErrorView];
+               self.apiResponse = apiResponse;
                self.isLoadingOrders = NO;
                [self hideLoading];
                if(RIApiResponseMaintenancePage == apiResponse)
@@ -438,7 +446,10 @@ JAPickerScrollViewDelegate
 
 - (void)loadOrderDetails
 {
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     self.trackOrderRequestState = RITrackOrderRequestDone;
     
@@ -455,11 +466,12 @@ JAPickerScrollViewDelegate
                               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
                               self.firstLoading = NO;
                           }
-                          
+                          [self removeErrorView];
                           [self hideLoading];
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                          
+                          [self removeErrorView];
+                          self.apiResponse = apiResponse;
                           self.trackingOrder = nil;
                           
                           if(self.firstLoading)

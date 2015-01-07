@@ -20,6 +20,8 @@
 @property (nonatomic, strong) UIScrollView* scrollView;
 @property (nonatomic, strong) UIScrollView* secondScrollView;
 
+@property (assign, nonatomic) RIApiResponse apiResponse;
+
 // Bottom view
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
@@ -59,6 +61,8 @@
                                                   orientation:UIInterfaceOrientationPortrait];
     [self.bottomView setHidden:YES];
     [self.view addSubview:self.bottomView];
+    
+    self.apiResponse = RIApiResponseSuccess;
     
     [self showLoading];
     
@@ -805,7 +809,10 @@
 
 - (void)continueNextStep
 {
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     [RICheckout finishCheckoutWithSuccessBlock:^(RICheckout *checkout) {
         NSLog(@"SUCCESS Finishing checkout");
@@ -830,9 +837,11 @@
                                                                   userInfo:userInfo];
             }
         }
-        
+        [self removeErrorView];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+        [self removeErrorView];
+        self.apiResponse = apiResponse;
         
         if(RIApiResponseMaintenancePage == apiResponse)
         {
