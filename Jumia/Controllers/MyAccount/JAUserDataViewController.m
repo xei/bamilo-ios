@@ -92,11 +92,6 @@ JADynamicFormDelegate
     
     self.currentY = 32.0f;
     
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
-    {
-        [self showLoading];
-    }
-    
     [self makeRequests];
 }
 
@@ -124,6 +119,13 @@ JADynamicFormDelegate
 {
     self.numberOfRequests = 2;
     
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
+    
+    self.apiResponse = RIApiResponseSuccess;
+    
     [RIForm getForm:@"changepassword"
        successBlock:^(RIForm *form)
      {
@@ -145,6 +147,7 @@ JADynamicFormDelegate
      {
          self.customer = customer;
          self.numberOfRequests--;
+         
          
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {

@@ -471,6 +471,8 @@ FBLoginViewDelegate
         self.firstLoading = NO;
     }
     
+    [self removeErrorView];
+    
     if(!self.loadFailed)
     {
         [self finishingSetupViews];
