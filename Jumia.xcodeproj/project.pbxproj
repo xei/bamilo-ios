@@ -1408,6 +1408,7 @@
 		CE4848931A1502C4003C3D53 /* JASubFiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASubFiltersViewController.m; sourceTree = "<group>"; };
 		CE4848951A161979003C3D53 /* JAFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAFiltersView.h; path = Filters/JAFiltersView.h; sourceTree = "<group>"; };
 		CE4848961A161979003C3D53 /* JAFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAFiltersView.m; path = Filters/JAFiltersView.m; sourceTree = "<group>"; };
+		CE4991001A5ED62F00508C1F /* Model_1.4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.4.xcdatamodel; sourceTree = "<group>"; };
 		CE55A4E21992873300EE75DE /* RIProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIProduct.h; sourceTree = "<group>"; };
 		CE55A4E31992873300EE75DE /* RIProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIProduct.m; sourceTree = "<group>"; };
 		CE55A4E51993672600EE75DE /* JARatingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARatingsView.h; sourceTree = "<group>"; };
@@ -4934,12 +4935,13 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CE4991001A5ED62F00508C1F /* Model_1.4.xcdatamodel */,
 				CEA86D9A1A374D32000032AD /* Model_1.3.xcdatamodel */,
 				B5181F4D19FE9C98006C5EC0 /* Model_1.2.xcdatamodel */,
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = CEA86D9A1A374D32000032AD /* Model_1.3.xcdatamodel */;
+			currentVersion = CE4991001A5ED62F00508C1F /* Model_1.4.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
