@@ -201,6 +201,10 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventPaymentMethodKey    @"RIEventPaymentMethodKey"
 #define kRIEventScreenNameKey       @"RIEventScreenNameKey"
 #define kRIEventColorKey            @"RIEventColorKey"
+#define kRIEventNetworkKey          @"RIEventNetworkKey"
+#define kRIEventAdgroupKey          @"RIEventAdgroupKey"
+#define kRIEventCampaignKey         @"RIEventCampaignKey"
+#define kRIEventCreativeKey         @"RIEventCreativeKey"
 
 /**
  *  Struct to identify events
@@ -273,7 +277,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventCheckoutPaymentSuccess = 64,
     RIEventCheckoutPaymentFail = 65,
     RIEventCloseApp = 66,
-    RIEventOpenApp = 67
+    RIEventOpenApp = 67,
+    RIEventInstallViaAdjust = 68
 };
 
 /**
@@ -308,6 +313,7 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 #define kRIEcommerceGuestKey                @"RIEcommerceGuestKey"
 #define kRIEcommerceProducts                @"RIEcommerceProducts"
 #define kRIEcommerceCouponKey               @"RIEcommerceCouponKey"
+#define kRIEcommerceCouponValue             @"RIEcommerceCouponValue"
 #define kRIEcommerceCartAverageValueKey     @"RIEcommerceCartAverageValueKey"
 #define kRIEcommerceAffiliationKey          @"RIEcommerceAffiliationKey"
 #define kRIEcommercePaymentMethodKey        @"RIEcommercePaymentMethodKey"
@@ -379,6 +385,15 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  */
 - (void)applicationDidLaunchWithOptions:(NSDictionary *)options;
 
+@optional
+
+/**
+ *  Hook to recognise when the app goes to background
+ *
+ *  @param application The application.
+ */
+- (void)applicationDidEnterBackground:(UIApplication *)application;
+
 @end
 
 /**
@@ -426,9 +441,13 @@ typedef NS_ENUM(NSInteger, RIEventType) {
  *
  *  @param path Path to the configuration file (plist file).
  *  @param launchOptions The launching options.
+ *  @param the delegate where all trackers will respond to
  */
 - (void)startWithConfigurationFromPropertyListAtPath:(NSString *)path
-                                       launchOptions:(NSDictionary *)launchOptions;
+                                       launchOptions:(NSDictionary *)launchOptions
+                                            delegate:(id)delegate;
+
+- (void)applicationDidEnterBackground:(UIApplication *)application;
 
 /**
  *  Creates and initializes an `RITracking`object

@@ -23,6 +23,7 @@ UITableViewDataSource
 @property (strong, nonatomic) NSString *requestId;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewContries;
 @property (strong, nonatomic) NSIndexPath *selectedIndex;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
@@ -33,7 +34,7 @@ UITableViewDataSource
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.apiResponse = RIApiResponseSuccess;
     self.screenName = @"ChooseCountry";
     
     self.navBarLayout.title = STRING_CHOOSE_COUNTRY;
@@ -79,7 +80,10 @@ UITableViewDataSource
 
 - (void)loadData
 {
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     NSString *countryUrl = [RIApi getCountryUrlInUse];
     
@@ -87,15 +91,9 @@ UITableViewDataSource
         
         self.countriesArray = [NSArray arrayWithArray:countries];
         
+        [self removeErrorView];
+        
         [self hideLoading];
-        
-        [self.tableViewContries reloadData];
-        
-        CGFloat finalHeight = MIN(self.tableViewContries.frame.size.height, self.tableViewContries.contentSize.height - 20.0f);
-        [self.tableViewContries setFrame:CGRectMake(self.tableViewContries.frame.origin.x,
-                                                    self.tableViewContries.frame.origin.y,
-                                                    self.tableViewContries.frame.size.width,
-                                                    finalHeight)];
         
         NSIndexPath *tempIndex;
         
@@ -121,11 +119,21 @@ UITableViewDataSource
         }
         
         if (VALID_NOTEMPTY(tempIndex, NSIndexPath)) {
-            [self tableView:self.tableViewContries didSelectRowAtIndexPath:tempIndex];
+            
+            self.selectedIndex = tempIndex;
         }
         
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+        [self.tableViewContries reloadData];
         
+        CGFloat finalHeight = MIN(self.tableViewContries.frame.size.height, self.tableViewContries.contentSize.height - 20.0f);
+        [self.tableViewContries setFrame:CGRectMake(self.tableViewContries.frame.origin.x,
+                                                    self.tableViewContries.frame.origin.y,
+                                                    self.tableViewContries.frame.size.width,
+                                                    finalHeight)];
+        
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+        [self removeErrorView];
+        self.apiResponse = apiResponse;
         if (VALID_NOTEMPTY(countryUrl, NSString))
         {
             if(self.firstLoading)
@@ -220,6 +228,13 @@ UITableViewDataSource
     cell.countryImage.layer.cornerRadius = cell.countryImage.frame.size.height /2;
     cell.countryImage.layer.masksToBounds = YES;
     cell.countryImage.layer.borderWidth = 0;
+    
+    
+    if (VALID_NOTEMPTY(self.selectedIndex, NSIndexPath) && self.selectedIndex.row == indexPath.row) {
+        cell.checkImage.hidden = NO;
+    } else {
+        cell.checkImage.hidden = YES;
+    }
     
     return cell;
 }

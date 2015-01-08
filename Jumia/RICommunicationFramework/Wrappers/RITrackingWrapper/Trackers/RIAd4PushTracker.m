@@ -14,7 +14,9 @@
 #import "GAIFields.h"
 #import "RIGoogleAnalyticsTracker.h"
 #import "RICategory.h"
+#import <AdSupport/AdSupport.h>
 
+#define kAd4PushIDFAIdKey                                   @"idfa"
 #define kAd4PushProfileShopCountryKey                       @"shopCountry"
 #define kAd4PushProfileUserIdKey                            @"userID"
 #define kAd4PushProfileRegistrationStatusKey                @"registrationStatus"
@@ -123,7 +125,10 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         [[BMA4SNotification sharedBMA4S] didFinishLaunchingWithOptions:options];
     });
     
-    NSDictionary *deviceInfo = [NSDictionary dictionaryWithObject:@"0" forKey:kAd4PushProfileUserIdKey];
+    NSMutableDictionary *deviceInfo = [[NSMutableDictionary alloc] init];
+    [deviceInfo setObject:@"0" forKey:kAd4PushProfileUserIdKey];
+    NSString *idfaString = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    [deviceInfo setObject:idfaString ? : @"" forKey:kAd4PushIDFAIdKey];
     [BMA4STracker updateDeviceInfo:deviceInfo];
 }
 
@@ -745,7 +750,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             else if ([key isEqualToString:@"o"])
             {
                 // Order overview
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowTrackOrderScreenNotification
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification
                                                                     object:nil];
             }
             else if ([key isEqualToString:@"l"])

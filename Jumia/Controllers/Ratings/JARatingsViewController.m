@@ -19,6 +19,7 @@
 #import "RIRatings.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
+#import "RICategory.h"
 
 @interface JARatingsViewController ()
 <
@@ -240,7 +241,7 @@ UITableViewDataSource
     {
         if (RIApiResponseNoInternetConnection == self.apiResponse)
         {
-            [self showMessage:STRING_NO_NEWTORK success:NO];
+            [self showMessage:STRING_NO_CONNECTION success:NO];
         }
         else
         {
@@ -261,14 +262,21 @@ UITableViewDataSource
     if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
         NSArray *categoryIds = [self.product.categoryIds array];
-        if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
-        {
-            [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
-        }
+        NSInteger subCategoryIndex = [categoryIds count] - 1;
+        NSInteger categoryIndex = subCategoryIndex - 1;
         
-        if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+        if(categoryIndex >= 0)
         {
-            [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+            NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+            
+            NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+            [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryNameKey];
+        }
+        else
+        {
+            NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
         }
     }
     
@@ -559,7 +567,8 @@ UITableViewDataSource
     self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                         delegate:nil
                                                 startingPosition:currentY
-                                                    widthSize:width];
+                                                       widthSize:width
+                                              hasFieldNavigation:YES];
     
     CGFloat spaceBetweenFormFields = 6.0f;
     NSInteger count = 0;
@@ -823,7 +832,7 @@ UITableViewDataSource
         successBlock:^(id object) {
             
             NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
-
+            
             NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
@@ -885,7 +894,7 @@ UITableViewDataSource
             
             if (RIApiResponseNoInternetConnection == apiResponse)
             {
-                [self showMessage:STRING_NO_NEWTORK success:NO];
+                [self showMessage:STRING_NO_CONNECTION success:NO];
             }
             else if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {

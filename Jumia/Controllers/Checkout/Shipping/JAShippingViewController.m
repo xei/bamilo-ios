@@ -60,6 +60,8 @@ UICollectionViewDelegateFlowLayout
 @property (strong, nonatomic) NSIndexPath *collectionViewIndexSelected;
 @property (strong, nonatomic) NSIndexPath *selectedPickupStationIndexPath;
 
+@property (assign, nonatomic) RIApiResponse apiResponse;
+
 @end
 
 @implementation JAShippingViewController
@@ -69,7 +71,7 @@ UICollectionViewDelegateFlowLayout
     [super viewDidLoad];
     
     self.screenName = @"Shipping";
-    
+
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"CheckoutShippingMethods" forKey:kRIEventActionKey];
@@ -97,7 +99,9 @@ UICollectionViewDelegateFlowLayout
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
+    self.apiResponse = RIApiResponseSuccess;
+
     [self continueLoading];
 }
 
@@ -138,7 +142,10 @@ UICollectionViewDelegateFlowLayout
 
 - (void)continueLoading
 {
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     [RICheckout getShippingMethodFormWithSuccessBlock:^(RICheckout *checkout)
      {
@@ -149,8 +156,12 @@ UICollectionViewDelegateFlowLayout
          self.shippingMethods = [RIShippingMethodForm getShippingMethods:checkout.shippingMethodForm];
          
          [self finishedLoadingShippingMethods];
+         [self removeErrorView];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
+         [self removeErrorView];
+         [self hideLoading];
+         self.apiResponse = apiResponse;
          if(RIApiResponseMaintenancePage == apiResponse)
          {
              [self showMaintenancePage:@selector(continueLoading) objects:nil];
@@ -351,7 +362,7 @@ UICollectionViewDelegateFlowLayout
                                                                                  self.stepBackground.frame.size.height,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
                                                                                  self.view.frame.size.height - self.stepBackground.frame.size.height)];
-        [self.orderSummary loadWithCheckout:self.checkout shippingMethod:NO];
+        [self.orderSummary loadWithCheckout:self.checkout shippingMethod:NO shippingFee:NO];
         [self.view addSubview:self.orderSummary];
     }
     
@@ -379,7 +390,7 @@ UICollectionViewDelegateFlowLayout
         {
             if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
             {
-                collectionViewHeight += 50.0f;
+                collectionViewHeight += 50.0f; // JAShippingCell Height
                 
                 if(VALID_NOTEMPTY(self.pickupStationHeightsForRegion, NSMutableArray))
                 {
@@ -391,7 +402,7 @@ UICollectionViewDelegateFlowLayout
             }
             else
             {
-                collectionViewHeight += 36.0f;
+                collectionViewHeight += 53.0f; // JAShippingInfoCell Height
             }
         }
         
@@ -445,7 +456,8 @@ UICollectionViewDelegateFlowLayout
     }
     
     [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:previousRegion];
+                       previousText:previousRegion
+                    leftButtonTitle:nil];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
@@ -503,7 +515,7 @@ UICollectionViewDelegateFlowLayout
                                  
                                  if (RIApiResponseNoInternetConnection == apiResponse)
                                  {
-                                     [self showMessage:STRING_NO_NEWTORK success:NO];
+                                     [self showMessage:STRING_NO_CONNECTION success:NO];
                                  }
                                  else
                                  {
@@ -587,7 +599,8 @@ UICollectionViewDelegateFlowLayout
             }
             else
             {
-                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 36.0f);
+                // JAShippingInfoCell Height
+                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 53.0f);
             }
         }
         else
@@ -721,7 +734,19 @@ UICollectionViewDelegateFlowLayout
                 {
                     shippingFee = STRING_FREE;
                 }
-                [shippingInfoCell loadWithShippingFee:shippingFee];
+                
+                NSDictionary *shippingMethodDictionary = [self.shippingMethods objectAtIndex:self.collectionViewIndexSelected.row];
+                
+                NSArray *shippingMethodKeys = [shippingMethodDictionary allKeys];
+                if(VALID_NOTEMPTY(shippingMethodKeys, NSArray))
+                {
+                    NSString *shippingMethodKey = [shippingMethodKeys objectAtIndex:0];
+                    RIShippingMethod *shippingMethod = [shippingMethodDictionary objectForKey:shippingMethodKey];
+                    if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
+                    {
+                        [shippingInfoCell loadWithShippingFee:shippingFee deliveryTime:shippingMethod.deliveryTime];
+                    }
+                }
                 
                 if(([self.shippingMethods count] - 1) == self.collectionViewIndexSelected.row)
                 {

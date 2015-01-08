@@ -245,6 +245,7 @@ static char ja_kvoContext;
         frame.origin.x = self.state == JASidePanelLeftVisible ? self.centerPanelContainer.frame.size.width : -self.centerPanelContainer.frame.size.width;
         self.centerPanelContainer.frame = frame;
     }
+    [self updateShadowFrame];
 }
 
 #pragma mark - State
@@ -878,14 +879,14 @@ static char ja_kvoContext;
     //add shadow if no shadow is already there
     BOOL placeShadow = YES;
     for (UIView* view in [self.centerPanel.view subviews]) {
-        if (-1 == view.tag) {
+        if (1000 == view.tag) {
             placeShadow = NO;
             break;
         }
     }
     if (placeShadow) {
         UIView* shadowView = [[UIView alloc] initWithFrame:self.centerPanel.view.frame];
-        shadowView.tag = -1;
+        shadowView.tag = 1000;
         shadowView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
         [self.centerPanel.view addSubview:shadowView];
     }
@@ -921,14 +922,14 @@ static char ja_kvoContext;
     //add shadow if no shadow is already there
     BOOL placeShadow = YES;
     for (UIView* view in [self.centerPanel.view subviews]) {
-        if (-1 == view.tag) {
+        if (1000 == view.tag) {
             placeShadow = NO;
             break;
         }
     }
     if (placeShadow) {
         UIView* shadowView = [[UIView alloc] initWithFrame:self.centerPanel.view.frame];
-        shadowView.tag = -1;
+        shadowView.tag = 1000;
         shadowView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
         [self.centerPanel.view addSubview:shadowView];
     }
@@ -963,7 +964,7 @@ static char ja_kvoContext;
     
     //remove shadow
     for (UIView* view in [self.centerPanel.view subviews]) {
-        if (-1 == view.tag) {
+        if (1000 == view.tag) {
             [view removeFromSuperview];
         }
     }
@@ -1033,6 +1034,23 @@ static char ja_kvoContext;
     }
     return NO;
 }
+
+
+/**
+ * updates the shadowViewFrame, usefull for resizing purposes
+ *
+ * @return void
+ */
+-(void)updateShadowFrame
+{
+    UIView *shadowView = [self.view viewWithTag: 1000];
+
+    if(shadowView != nil)
+    {
+        shadowView.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height);
+    }
+}
+
 
 #pragma mark - Key Value Observing
 

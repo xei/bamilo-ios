@@ -23,6 +23,7 @@ JADynamicFormDelegate
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (strong, nonatomic) RIForm *form;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
@@ -33,7 +34,7 @@ JADynamicFormDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.apiResponse = RIApiResponseSuccess;
     self.screenName = @"CustomerEmailNotifications";
     
     self.navBarLayout.showBackButton = YES;
@@ -57,13 +58,15 @@ JADynamicFormDelegate
 {
     [super viewWillAppear:animated];
     
-    [self showLoading];
-    
     [self getForm];
 }
 
 - (void)getForm
 {
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     [RIForm getForm:@"managenewsletters"
        successBlock:^(RIForm *form) {
            
@@ -77,11 +80,12 @@ JADynamicFormDelegate
            }
            
            [self setupView];
-           
+           [self removeErrorView];
            [self hideLoading];
            
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-           
+           [self removeErrorView];
+           self.apiResponse = apiResponse;
            if(self.firstLoading)
            {
                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -175,7 +179,7 @@ JADynamicFormDelegate
          
          if (RIApiResponseNoInternetConnection == apiResponse)
          {
-             [self showMessage:STRING_NO_NEWTORK success:NO];
+             [self showMessage:STRING_NO_CONNECTION success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
@@ -207,7 +211,8 @@ JADynamicFormDelegate
     self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                   delegate:self
                                           startingPosition:0.0f
-                                                 widthSize:self.scrollView.frame.size.width];
+                                                 widthSize:self.scrollView.frame.size.width
+                                        hasFieldNavigation:YES];
     
     self.notificationsView = [[UIView alloc] initWithFrame:CGRectZero];
     self.notificationsView.layer.cornerRadius = 5.0f;
@@ -232,7 +237,7 @@ JADynamicFormDelegate
                                                 0.0f,
                                                 self.scrollView.frame.size.width,
                                                 formHeight + 6.0f)];
-
+    
     NSString *orangeButtonName = @"orangeBig_%@";
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
@@ -276,7 +281,7 @@ JADynamicFormDelegate
     [self removeView];
     
     [self showLoading];
-
+    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
@@ -286,7 +291,7 @@ JADynamicFormDelegate
     
     [self hideLoading];
     
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 @end

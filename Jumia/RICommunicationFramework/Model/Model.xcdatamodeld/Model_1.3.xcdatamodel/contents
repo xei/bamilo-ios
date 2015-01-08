@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdBy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="customerAddressCityId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="customerAddressRegion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="customerAddressRegionId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="customerId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hidden" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isDefaultBilling" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isDefaultShipping" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locale" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedBy" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="customer" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RICustomer" inverseName="addresses" inverseEntity="RICustomer" syncable="YES"/>
+    </entity>
+    <entity name="RIApi" representedClassName="RIApi" syncable="YES">
+        <attribute name="actionName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryIso" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="curVersion" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="minVersion" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <relationship name="sections" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RISection" inverseName="api" inverseEntity="RISection" syncable="YES"/>
+    </entity>
+    <entity name="RICategory" representedClassName="RICategory" syncable="YES">
+        <attribute name="apiUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="numberOfTimesSeen" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="urlKey" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="children" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RICategory" inverseName="parent" inverseEntity="RICategory" syncable="YES"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RICategory" inverseName="children" inverseEntity="RICategory" syncable="YES"/>
+    </entity>
+    <entity name="RICountryConfiguration" representedClassName="RICountryConfiguration" syncable="YES">
+        <attribute name="csEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="currencyIso" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="currencyPosition" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="currencySymbol" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="decimalsSep" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gaId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="noDecimals" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thousandsSep" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="languages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RILanguage" inverseName="countryConfig" inverseEntity="RILanguage" syncable="YES"/>
+    </entity>
+    <entity name="RICustomer" representedClassName="RICustomer" syncable="YES">
+        <attribute name="birthday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="idCustomer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loginMethod" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="plainPassword" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="addresses" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIAddress" inverseName="customer" inverseEntity="RIAddress" syncable="YES"/>
+    </entity>
+    <entity name="RIField" representedClassName="RIField" syncable="YES">
+        <attribute name="apiCall" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="max" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="min" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="regex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="required" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="requiredMessage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="dataSet" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIFieldDataSetComponent" inverseName="field" inverseEntity="RIFieldDataSetComponent" syncable="YES"/>
+        <relationship name="form" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIForm" inverseName="fields" inverseEntity="RIForm" syncable="YES"/>
+        <relationship name="options" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIFieldOption" inverseName="field" inverseEntity="RIFieldOption" syncable="YES"/>
+    </entity>
+    <entity name="RIFieldDataSetComponent" representedClassName="RIFieldDataSetComponent" syncable="YES">
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="field" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RIField" inverseName="dataSet" inverseEntity="RIField" syncable="YES"/>
+    </entity>
+    <entity name="RIFieldOption" representedClassName="RIFieldOption" syncable="YES">
+        <attribute name="isDefault" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isUserSubscribed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="field" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RIField" inverseName="options" inverseEntity="RIField" syncable="YES"/>
+    </entity>
+    <entity name="RIForm" representedClassName="RIForm" syncable="YES">
+        <attribute name="action" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="method" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fields" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIField" inverseName="form" inverseEntity="RIField" syncable="YES"/>
+        <relationship name="formIndex" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIFormIndex" inverseName="form" inverseEntity="RIFormIndex" syncable="YES"/>
+    </entity>
+    <entity name="RIFormIndex" representedClassName="RIFormIndex" syncable="YES">
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="form" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RIForm" inverseName="formIndex" inverseEntity="RIForm" syncable="YES"/>
+    </entity>
+    <entity name="RIImage" representedClassName="RIImage" syncable="YES">
+        <attribute name="format" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="height" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="width" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="images" inverseEntity="RIProduct" syncable="YES"/>
+        <relationship name="variation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIVariation" inverseName="image" inverseEntity="RIVariation" syncable="YES"/>
+    </entity>
+    <entity name="RIImageResolution" representedClassName="RIImageResolution" syncable="YES">
+        <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="height" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="width" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="RILanguage" representedClassName="RILanguage" syncable="YES">
+        <attribute name="langCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="langDefault" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="langName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="countryConfig" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RICountryConfiguration" inverseName="languages" inverseEntity="RICountryConfiguration" syncable="YES"/>
+    </entity>
+    <entity name="RINewsletterCategory" representedClassName="RINewsletterCategory" syncable="YES">
+        <attribute name="idNewsletterCategory" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="RIProduct" representedClassName="RIProduct" syncable="YES">
+        <attribute name="activatedAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="attributeCareLabel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="attributeColor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="attributeDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="attributeMainMaterial" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="attributeSetId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="attributeShortDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="avr" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="descriptionString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="favoriteAddDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="idCatalogConfig" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isNew" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="maxPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="maxPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="maxPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maxSavingPercentage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maxSpecialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="maxSpecialPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="maxSpecialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="priceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="recentlyViewedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="sizeGuideUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sku" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="specialPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="specialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sum" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIImage" inverseName="product" inverseEntity="RIImage" syncable="YES"/>
+        <relationship name="productSimples" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIProductSimple" inverseName="product" inverseEntity="RIProductSimple" syncable="YES"/>
+        <relationship name="variations" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIVariation" inverseName="product" inverseEntity="RIVariation" syncable="YES"/>
+    </entity>
+    <entity name="RIProductSimple" representedClassName="RIProductSimple" syncable="YES">
+        <attribute name="attributePackageType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maxDeliveryTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="minDeliveryTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="priceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sku" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="specialPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="specialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stock" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="variation" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="productSimples" inverseEntity="RIProduct" syncable="YES"/>
+    </entity>
+    <entity name="RISearchSuggestion" representedClassName="RISearchSuggestion" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="isRecentSearch" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="relevance" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="RISection" representedClassName="RISection" syncable="YES">
+        <attribute name="md5" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="api" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIApi" inverseName="sections" inverseEntity="RIApi" syncable="YES"/>
+    </entity>
+    <entity name="RIStaticBlockIndex" representedClassName="RIStaticBlockIndex" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="RITeaser" representedClassName="RITeaser" syncable="YES">
+        <attribute name="targetType" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="teaserGroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaserGroup" inverseName="teasers" inverseEntity="RITeaserGroup" syncable="YES"/>
+        <relationship name="teaserImages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaserImage" inverseName="teaser" inverseEntity="RITeaserImage" syncable="YES"/>
+        <relationship name="teaserProducts" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaserProduct" inverseName="teaser" inverseEntity="RITeaserProduct" syncable="YES"/>
+        <relationship name="teaserTexts" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaserText" inverseName="teaser" inverseEntity="RITeaserText" syncable="YES"/>
+    </entity>
+    <entity name="RITeaserCategory" representedClassName="RITeaserCategory" syncable="YES">
+        <attribute name="homePageDefault" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="homePageId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="homePageLayout" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="homePageTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="md5" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="teaserGroups" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaserGroup" inverseName="teaserCategory" inverseEntity="RITeaserGroup" syncable="YES"/>
+    </entity>
+    <entity name="RITeaserGroup" representedClassName="RITeaserGroup" syncable="YES">
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="teaserCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaserCategory" inverseName="teaserGroups" inverseEntity="RITeaserCategory" syncable="YES"/>
+        <relationship name="teasers" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaser" inverseName="teaserGroup" inverseEntity="RITeaser" syncable="YES"/>
+    </entity>
+    <entity name="RITeaserImage" representedClassName="RITeaserImage" syncable="YES">
+        <attribute name="deviceType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teaserDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="teaser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaser" inverseName="teaserImages" inverseEntity="RITeaser" syncable="YES"/>
+    </entity>
+    <entity name="RITeaserProduct" representedClassName="RITeaserProduct" syncable="YES">
+        <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maxPrice" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="maxPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maxSavingPercentage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maxSpecialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="maxSpecialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="specialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="teaser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaser" inverseName="teaserProducts" inverseEntity="RITeaser" syncable="YES"/>
+    </entity>
+    <entity name="RITeaserText" representedClassName="RITeaserText" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="teaser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaser" inverseName="teaserTexts" inverseEntity="RITeaser" syncable="YES"/>
+    </entity>
+    <entity name="RIURLCache" representedClassName="RIURLCache" syncable="YES">
+        <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="responseData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="RIVariation" representedClassName="RIVariation" syncable="YES">
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sku" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="image" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RIImage" inverseName="variation" inverseEntity="RIImage" syncable="YES"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="variations" inverseEntity="RIProduct" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="RIAddress" positionX="90" positionY="666" width="128" height="375"/>
+        <element name="RIApi" positionX="-308" positionY="227" width="128" height="150"/>
+        <element name="RICategory" positionX="-261" positionY="27" width="128" height="150"/>
+        <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="195"/>
+        <element name="RICustomer" positionX="279" positionY="650" width="128" height="208"/>
+        <element name="RIField" positionX="-299" positionY="681" width="128" height="268"/>
+        <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="73"/>
+        <element name="RIFieldOption" positionX="-137" positionY="963" width="128" height="118"/>
+        <element name="RIForm" positionX="-504" positionY="362" width="128" height="118"/>
+        <element name="RIFormIndex" positionX="-504" positionY="234" width="128" height="88"/>
+        <element name="RIImage" positionX="27" positionY="486" width="128" height="135"/>
+        <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
+        <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
+        <element name="RINewsletterCategory" positionX="-486" positionY="-63" width="128" height="73"/>
+        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="570"/>
+        <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
+        <element name="RISearchSuggestion" positionX="-648" positionY="27" width="128" height="105"/>
+        <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
+        <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
+        <element name="RITeaser" positionX="-686" positionY="527" width="128" height="120"/>
+        <element name="RITeaserCategory" positionX="-686" positionY="245" width="128" height="133"/>
+        <element name="RITeaserGroup" positionX="-686" positionY="398" width="128" height="103"/>
+        <element name="RITeaserImage" positionX="-486" positionY="558" width="128" height="118"/>
+        <element name="RITeaserProduct" positionX="-504" positionY="693" width="128" height="270"/>
+        <element name="RITeaserText" positionX="-684" positionY="677" width="128" height="88"/>
+        <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
+        <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>
+    </elements>
+</model>

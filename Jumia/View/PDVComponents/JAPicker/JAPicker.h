@@ -15,6 +15,7 @@
 @optional
 
 - (void)closePicker;
+- (void)leftButtonPressed;
 
 @end
 
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) UIPickerView *pickerView;
 
 - (void)setDataSourceArray:(NSArray *)dataSource
-              previousText:(NSString *)previousText;
+              previousText:(NSString *)previousText
+           leftButtonTitle:(NSString*)leftButtonTitle;
 
 @end

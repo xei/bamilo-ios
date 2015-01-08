@@ -49,6 +49,7 @@
 @dynamic images;
 @dynamic productSimples;
 @dynamic variations;
+@dynamic sizeGuideUrl;
 
 @synthesize categoryIds;
 
@@ -313,11 +314,10 @@
         if ([dataDic objectForKey:@"ratings_total"]) {
             NSDictionary *ratingsDic = [dataDic objectForKey:@"ratings_total"];
             if (VALID_NOTEMPTY(ratingsDic, NSDictionary)) {
-                if ([ratingsDic objectForKey:@"avr"]) {
+                if (VALID_NOTEMPTY([ratingsDic objectForKey:@"avr"], NSNumber)) {
                     newProduct.avr = [ratingsDic objectForKey:@"avr"];
                 }
-                if ([ratingsDic objectForKey:@"sum"]) {
-                    newProduct.sum = [ratingsDic objectForKey:@"sum"];
+                if (VALID_NOTEMPTY([ratingsDic objectForKey:@"sum"], NSNumber)) {                    newProduct.sum = [ratingsDic objectForKey:@"sum"];
                 }
             }
         }
@@ -353,6 +353,13 @@
         }
         if ([dataDic objectForKey:@"categories"]) {
             newProduct.categoryIds = [NSOrderedSet orderedSetWithArray:[dataDic objectForKey:@"categories"]];
+        }
+        
+        if ([dataDic objectForKey:@"size_guide"]) {
+            NSString* sizeGuideUrl = [dataDic objectForKey:@"size_guide"];
+            if (VALID_NOTEMPTY(sizeGuideUrl, NSString)) {
+                newProduct.sizeGuideUrl = sizeGuideUrl;
+            }
         }
         
         __block NSString* variationKey = @"";
@@ -483,6 +490,7 @@
             sortingName = @"Brand";
             break;
         default: //RICatalogSortingPopularity
+            sortingName = @"Popularity";
             break;
     }
     

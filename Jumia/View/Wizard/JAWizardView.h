@@ -18,6 +18,8 @@
 #define kJAWizardCatalog2TextHorizontalMargin 25.0f
 #define kJAWizardCatalog2ViewTextVerticalMargin 72.0f
 #define kJAWizardCatalog2ViewTextVerticalMargin_ipad 125.0f
+#define kJAWizardSizeGuideViewTextHorizontalMargin 40.0f
+#define kJAWizardSizeGuideViewTextVerticalMargin 32.0f
 
 #define kJAWizardPDV1TextHorizontalMargin 35.0f
 #define kJAWizardPDV1ViewTextVerticalMargin 32.0f

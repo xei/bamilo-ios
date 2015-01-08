@@ -19,7 +19,6 @@
        withHeight:(CGFloat)height
          andWidth:(CGFloat)width;
 
-- (void) changeImageSize:(CGFloat)height
-                andWidth:(CGFloat)width;
-
+- (void) changeImageHeight:(CGFloat)height
+                  andWidth:(CGFloat)width;
 @end

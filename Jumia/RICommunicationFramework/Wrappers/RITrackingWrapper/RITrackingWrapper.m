@@ -56,6 +56,7 @@ static dispatch_once_t sharedInstanceToken;
 
 - (void)startWithConfigurationFromPropertyListAtPath:(NSString *)path
                                        launchOptions:(NSDictionary *)launchOptions
+                                            delegate:(id)delegate
 {
     RIDebugLog(@"Starting initialisation with launch options '%@' and property list at path '%@'",
                launchOptions, path);
@@ -73,6 +74,7 @@ static dispatch_once_t sharedInstanceToken;
     RIAd4PushTracker *ad4PushTracker = [[RIAd4PushTracker alloc] init];
     RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
     RIAdjustTracker *adjustTracker = [[RIAdjustTracker alloc] init];
+    [adjustTracker setDelegate:delegate];
     RIGTMTracker *gtmTracker = [[RIGTMTracker alloc] init];
     
     self.trackers = @[googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, newRelicTracker, adjustTracker, gtmTracker];
@@ -94,6 +96,13 @@ static dispatch_once_t sharedInstanceToken;
 - (RICartState)getCartState
 {
     return self.cartState;
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    [self RI_callTrackersConformToProtocol:@protocol(RITracker)
+                                  selector:@selector(applicationDidEnterBackground:)
+                                 arguments:[NSArray arrayWithObjects:application, nil]];
 }
 
 #pragma mark - RIEventTracking protocol
@@ -204,7 +213,6 @@ static dispatch_once_t sharedInstanceToken;
 {
     RIDebugLog(@"Application did register for remote notification");
     
-    
     [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking)
                                   selector:@selector(applicationDidRegisterForRemoteNotificationsWithDeviceToken:) arguments:@[deviceToken]];
 }
@@ -304,7 +312,7 @@ static dispatch_once_t sharedInstanceToken;
     }
     
     for (id tracker in self.trackers) {
-        if ([tracker conformsToProtocol:protocol]) {
+        if ([tracker conformsToProtocol:protocol] && [tracker respondsToSelector:selector]) {
             [((id<RITracker>)tracker).queue addOperationWithBlock:^{
                 NSMethodSignature *signature = [[tracker class] instanceMethodSignatureForSelector:selector];
                 NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];

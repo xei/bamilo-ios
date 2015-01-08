@@ -82,11 +82,13 @@ UIAlertViewDelegate
         self.screenName = @"WriteRatingScreen";
     }
     
+    self.apiResponse = RIApiResponseSuccess;
+    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
-
+    
     self.brandLabel.text = self.product.brand;
     self.brandLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
@@ -106,10 +108,21 @@ UIAlertViewDelegate
 - (void)ratingsRequests
 {
     self.numberOfRequests = 2;
-    self.apiResponse = RIApiResponseSuccess;
     
     [self hideViews];
-    [self showLoading];
+    if(RIApiResponseSuccess != self.apiResponse)
+    {
+        if(VALID_NOTEMPTY(self.ratingDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingDynamicForm.formViews, NSMutableArray))
+        {
+            [self showLoading];
+        }
+        
+        self.apiResponse = RIApiResponseSuccess;
+    }
+    else
+    {
+        [self showLoading];
+    }
     
     [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
      {
@@ -143,6 +156,7 @@ UIAlertViewDelegate
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
     
+    [self removeErrorView];
     if(RIApiResponseSuccess == self.apiResponse)
     {
         [self setupViews];
@@ -151,7 +165,7 @@ UIAlertViewDelegate
     {
         if(VALID_NOTEMPTY(self.ratingDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingDynamicForm.formViews, NSMutableArray))
         {
-            [self showMessage:STRING_NO_NEWTORK success:NO];
+            [self showMessage:STRING_NO_CONNECTION success:NO];
         }
         else
         {
@@ -339,7 +353,8 @@ UIAlertViewDelegate
     self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                         delegate:nil
                                                 startingPosition:currentY
-                                                    widthSize:centerViewWidth];
+                                                       widthSize:centerViewWidth
+                                              hasFieldNavigation:YES];
     
     CGFloat spaceBetweenFormFields = 6.0f;
     NSInteger count = 0;
@@ -444,7 +459,7 @@ UIAlertViewDelegate
         successBlock:^(id object) {
             
             NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
-
+            
             NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
@@ -506,7 +521,7 @@ UIAlertViewDelegate
             
             if (RIApiResponseNoInternetConnection == apiResponse)
             {
-                [self showMessage:STRING_NO_NEWTORK success:NO];
+                [self showMessage:STRING_NO_CONNECTION success:NO];
             }
             else if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {

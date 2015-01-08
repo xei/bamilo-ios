@@ -41,6 +41,8 @@
 #define STRING_SHOPPING_CART RILocalizedString(@"shopping_cart", nil)
 #define STRING_YOUR_CART_IS_EMPTY RILocalizedString(@"navigation_cart_empty", nil)
 #define STRING_VAT_SHIPPING_INCLUDED RILocalizedString(@"string_vat_shipping_included", nil)
+#define STRING_FILTER_NO_RESULTS RILocalizedString(@"catalog_no_results", nil)
+#define STRING_CATALOG_EDIT_FILTERS RILocalizedString(@"catalog_edit_filters", nil)
 
 #define STRING_HOT RILocalizedString(@"teaser_campaign_button_first_line", nil)
 #define STRING_OFFERS RILocalizedString(@"teaser_campaign_button_second_line", nil)
@@ -211,7 +213,10 @@
 #define STRING_GO_SHOP RILocalizedString(@"go_shop_text", nil)
 #define STRING_PROMOTION_TIP_TAP RILocalizedString(@"promotion_tip_tap_text", nil)
 #define STRING_TRY_AGAIN RILocalizedString(@"string_try_again", nil)
+
+#define STRING_NO_CONNECTION RILocalizedString(@"error_no_connection", nil)
 #define STRING_NO_NEWTORK RILocalizedString(@"string_no_newtork", nil)
+#define STRING_NO_NETWORK_DETAILS RILocalizedString(@"internet_no_connection_details_label", nil)
 #define STRING_OOPS RILocalizedString(@"string_oops", nil)
 #define STRING_SOMETHING_BROKEN RILocalizedString(@"string_something_broken", nil)
 
@@ -236,6 +241,7 @@
 #define STRING_WIZARD_PDV_SHARE RILocalizedString(@"tip_share_text", nil)
 #define STRING_WIZARD_PDV_SWIPE RILocalizedString(@"tip_swipe_text", nil)
 #define STRING_WIZARD_PDV_TAP RILocalizedString(@"tip_tap_text", nil)
+#define STRING_WIZARD_SIZE_GUIDE_PINCH RILocalizedString(@"pinch_to_zoom_label", nil)
 
 #define STRING_FALLBACK_AUDIO RILocalizedString(@"fallback_audio_ios", nil)
 #define STRING_FALLBACK_BOOKS RILocalizedString(@"fallback_books", nil)
@@ -254,5 +260,33 @@
 #define STRING_ORDER_SUMMARY RILocalizedString(@"order_summary_label", nil)
 #define STRING_EDIT RILocalizedString(@"string_edit", nil)
 #define STRING_TRACK_YOUR_ORDER_TIP RILocalizedString(@"track_your_order_tip", nil)
+
+#define STRING_SIZE_GUIDE RILocalizedString(@"size_guide_label", nil)
+
+#define STRING_MY_ADDRESSES RILocalizedString(@"my_addresses", nil)
+#define STRING_CREATE_EDIT_ADDRESS RILocalizedString(@"create_edit_address", nil)
+#define STRING_APP_SHARING RILocalizedString(@"app_sharing", nil)
+#define STRING_SHARE_THE_APP RILocalizedString(@"share_the_app", nil)
+#define STRING_CAN_SHARE_APP_WITH_FRIENDS RILocalizedString(@"can_share_app_with_friends", nil)
+#define STRING_SHARE_JUMIA_APP RILocalizedString(@"share_jumia_app", nil)
+#define STRING_INSTALL_JUMIA_IOS RILocalizedString(@"install_jumia_ios", nil)
+
+#define STRING_DELIVERY_TIME RILocalizedString(@"delivery_time", nil)
+#define STRING_PRODCUT_OUT_OF_STOCK RILocalizedString(@"product_outof_stock", nil)
+#define STRING_PRODCUTS_OUT_OF_STOCK RILocalizedString(@"products_outof_stock", nil)
+
+
+#define STRING_REMEMBER_EMAIL RILocalizedString(@"login_remember_user_email", nil)
+
+#define STRING_MY_ORDERS RILocalizedString(@"my_orders_label", nil)
+#define STRING_MY_ORDER_HISTORY RILocalizedString(@"my_order_history_label", nil)
+#define STRING_ORDER_TRACKING RILocalizedString(@"my_order_tracking_label", nil)
+#define STRING_ORDER_DETAILS RILocalizedString(@"my_order_details_label", nil)
+#define STRING_ORDER_NUMBER RILocalizedString(@"my_order_number_label", nil)
+#define STRING_ORDER_DATE RILocalizedString(@"my_order_date_label", nil)
+#define STRING_ORDER_PAYMENT_REFERENCE RILocalizedString(@"my_order_payment_reference_label", nil)
+#define STRING_ORDER_PAYMENT_STATUS RILocalizedString(@"my_order_payment_status_label", nil)
+#define STRING_ORDER_QUANTITY RILocalizedString(@"my_order_quantity_label", nil)
+#define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
 
 #endif

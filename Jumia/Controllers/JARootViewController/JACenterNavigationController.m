@@ -18,7 +18,7 @@
 #import "JAMyAccountViewController.h"
 #import "JAUserDataViewController.h"
 #import "JAEmailNotificationsViewController.h"
-#import "JATrackMyOrderViewController.h"
+#import "JAMyOrdersViewController.h"
 #import "JASignInViewController.h"
 #import "JASignupViewController.h"
 #import "JAForgotPasswordViewController.h"
@@ -52,6 +52,7 @@
 #import "JASubCategoriesViewController.h"
 #import "JACategoryFilterViewController.h"
 #import "RICart.h"
+#import "JASizeGuideViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -125,8 +126,8 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showTrackOrderViewController:)
-                                                 name:kShowTrackOrderScreenNotification
+                                             selector:@selector(showMyOrdersViewController:)
+                                                 name:kShowMyOrdersScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -155,7 +156,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutAddressesScreen)
+                                             selector:@selector(showCheckoutAddressesScreen:)
                                                  name:kShowCheckoutAddressesScreenNotification
                                                object:nil];
     
@@ -303,6 +304,11 @@
                                              selector:@selector(showNewRatingScreen:)
                                                  name:kShowNewRatingScreenNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSizeGuide:)
+                                                 name:kShowSizeGuideNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -424,9 +430,9 @@
     {
         [self showMyAccountController];
     }
-    else if ([newScreenName isEqualToString:STRING_TRACK_MY_ORDER])
+    else if ([newScreenName isEqualToString:STRING_MY_ORDERS])
     {
-        [self showTrackOrderViewController:nil];
+        [self showMyOrdersViewController:nil];
     }
     else if ([newScreenName isEqualToString:STRING_USER_DATA])
     {
@@ -481,10 +487,10 @@
         
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
         {
-            signInVC.navBarLayout.showBackButton = ![[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
-            signInVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
+            NSNumber *fromSideMenu = [notification.userInfo objectForKey:@"from_side_menu"];
+            signInVC.navBarLayout.showBackButton = ![fromSideMenu boolValue];
+            signInVC.fromSideMenu = [fromSideMenu boolValue];
             signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
-            [self popViewControllerAnimated:NO];
         }
         else
         {
@@ -562,20 +568,37 @@
 }
 
 #pragma mark Track Order Screen
-- (void)showTrackOrderViewController:(NSNotification*)notification
+- (void)showMyOrdersViewController:(NSNotification*)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JATrackMyOrderViewController class]])
+    if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
     {
-        JATrackMyOrderViewController *myOrderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"jaTrackOrderViewController"];
+        JAMyOrdersViewController *myOrderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"jAMyOrdersViewController"];
         
         NSString* orderNumber = notification.object;
-        if (VALID_NOTEMPTY(orderNumber, NSString)) {
+        if (VALID_NOTEMPTY(orderNumber, NSString))
+        {
+            myOrderVC.selectedIndex = 0;
             myOrderVC.startingTrackOrderNumber = orderNumber;
         }
+
+        NSDictionary *userInfo = notification.userInfo;
+        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
+        {
+            myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
+        }        
         
         [self popToRootViewControllerAnimated:NO];
         [self pushViewController:myOrderVC animated:NO];
+    }
+    else
+    {
+        JAMyOrdersViewController *myOrderVC = (JAMyOrdersViewController*) topViewController;
+        NSDictionary *userInfo = notification.userInfo;
+        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
+        {
+            myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
+        }
     }
 }
 
@@ -678,17 +701,53 @@
 }
 
 #pragma mark Checkout Addresses Screen
-- (void)showCheckoutAddressesScreen
+- (void)showCheckoutAddressesScreen:(NSNotification*)notification
 {
+    BOOL animated = NO;
+    if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
+    {
+        animated = [[notification.object objectForKey:@"animated"] boolValue];
+    }
+    
+    BOOL fromCheckout = YES;
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_checkout"], NSNumber))
+    {
+        fromCheckout = [[notification.userInfo objectForKey:@"from_checkout"] boolValue];
+    }
+    
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAAddressesViewController class]] && [RICustomer checkIfUserIsLogged])
     {
         JAAddressesViewController *addressesVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
         
         addressesVC.cart = self.cart;
+        addressesVC.fromCheckout = fromCheckout;
         
-        [self popToRootViewControllerAnimated:NO];
+        if(fromCheckout)
+        {
+            addressesVC.navBarLayout.showCartButton = NO;
+            addressesVC.navBarLayout.title = STRING_CHECKOUT;
+        }
+        else
+        {
+            addressesVC.navBarLayout.backButtonTitle = STRING_BACK;
+            addressesVC.navBarLayout.showLogo = NO;
+        }
+
         [self pushViewController:addressesVC animated:NO];
+    }
+    else
+    {
+        if (!fromCheckout && ![topViewController isKindOfClass:[JASignInViewController class]])
+        {
+            JASignInViewController *signInViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+            
+            signInViewController.navBarLayout.showBackButton = YES;
+            signInViewController.fromSideMenu = NO;
+            signInViewController.nextNotification = notification;
+            
+            [self pushViewController:signInViewController animated:NO];
+        }
     }
 }
 
@@ -703,11 +762,31 @@
         NSNumber* isBillingAddress = [notification.userInfo objectForKey:@"is_billing_address"];
         NSNumber* isShippingAddress = [notification.userInfo objectForKey:@"is_shipping_address"];
         NSNumber* showBackButton = [notification.userInfo objectForKey:@"show_back_button"];
+        NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
         
         addAddressVC.isBillingAddress = [isBillingAddress boolValue];
         addAddressVC.isShippingAddress = [isShippingAddress boolValue];
-        addAddressVC.showBackButton = [showBackButton boolValue];
+        addAddressVC.fromCheckout = [fromCheckout boolValue];
         addAddressVC.cart = self.cart;
+
+        if([fromCheckout boolValue])
+        {
+            addAddressVC.navBarLayout.showCartButton = NO;
+            if([showBackButton boolValue])
+            {
+                addAddressVC.navBarLayout.backButtonTitle = STRING_CHECKOUT;
+                addAddressVC.navBarLayout.showLogo = NO;
+            }
+            else
+            {
+                addAddressVC.navBarLayout.title = STRING_CHECKOUT;
+            }
+        }
+        else
+        {
+            addAddressVC.navBarLayout.backButtonTitle = STRING_BACK;
+            addAddressVC.navBarLayout.showLogo = NO;
+        }
         
         [self pushViewController:addAddressVC animated:YES];
     }
@@ -721,9 +800,23 @@
     {
         JAEditAddressViewController *editAddressVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"editAddressViewController"];
         
+        NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
+        
         RIAddress* editAddress = [notification.userInfo objectForKey:@"address_to_edit"];
         editAddressVC.editAddress = editAddress;
         editAddressVC.cart = self.cart;
+        editAddressVC.fromCheckout = [fromCheckout boolValue];
+        
+        if([fromCheckout boolValue])
+        {
+            editAddressVC.navBarLayout.showCartButton = NO;
+            editAddressVC.navBarLayout.title = STRING_CHECKOUT;
+        }
+        else
+        {
+            editAddressVC.navBarLayout.backButtonTitle = STRING_BACK;
+            editAddressVC.navBarLayout.showLogo = NO;
+        }
         
         [self pushViewController:editAddressVC animated:YES];
     }
@@ -737,7 +830,6 @@
     {
         JAShippingViewController *shippingVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"shippingViewController"];
         
-        [self popToRootViewControllerAnimated:NO];
         [self pushViewController:shippingVC animated:YES];
     }
 }
@@ -750,7 +842,6 @@
     {
         JAPaymentViewController *paymentVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"paymentViewController"];
         
-        [self popToRootViewControllerAnimated:NO];
         [self pushViewController:paymentVC animated:YES];
     }
 }
@@ -767,7 +858,6 @@
             orderVC.checkout = notification.object;
         }
         
-        [self popToRootViewControllerAnimated:NO];
         [self pushViewController:orderVC animated:YES];
     }
 }
@@ -1046,6 +1136,22 @@
     }
 }
 
+- (void)showSizeGuide:(NSNotification*)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JASizeGuideViewController class]])
+    {
+        JASizeGuideViewController* viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"sizeGuideViewController"];
+        
+        if ([notification.userInfo objectForKey:@"sizeGuideUrl"]) {
+            viewController.sizeGuideUrl = [notification.userInfo objectForKey:@"sizeGuideUrl"];
+        }
+        
+        [self pushViewController:viewController animated:YES];
+    }
+
+}
+
 #pragma mark - Teaser Actions
 - (void)didSelectTeaserWithCatalogUrl:(NSNotification*)notification
 {
@@ -1265,6 +1371,9 @@
     [self.navigationBarView.backButton addTarget:self
                                           action:@selector(back)
                                 forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.searchButton addTarget:self
+                                            action:@selector(search)
+                                  forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)changeNavigationWithNotification:(NSNotification*)notification
@@ -1342,6 +1451,12 @@
 - (void)edit
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressEditNotification
+                                                        object:nil];
+}
+
+- (void)search
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressSearchButtonNotification
                                                         object:nil];
 }
 

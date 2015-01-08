@@ -24,6 +24,8 @@
 @property (strong, nonatomic) NSString *cartRequestId;
 @property (strong, nonatomic) NSString *customerRequestId;
 @property (assign, nonatomic) BOOL isRequestDone;
+@property (assign, nonatomic) RIApiResponse apiResponse;
+
 
 @end
 
@@ -42,6 +44,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.apiResponse = RIApiResponseSuccess;
     
     // Do any additional setup after loading the view.
     self.screenName = @"SplashScreen";
@@ -138,7 +142,10 @@
 
 - (void)continueProcessing
 {
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     self.isRequestDone = NO;
     
@@ -181,9 +188,15 @@
                                      [self getConfigurations];
                                  }
                              }
+                             [self removeErrorView];
+                             //show loading has to be added here, in case the no connection error view was shown
+                             // and the loading was removed because of that
+                             [self showLoading];
                          }
                                    andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage)
                          {
+                             [self removeErrorView];
+                             self.apiResponse = apiResponse;
                              self.isRequestDone=YES;
                              if(RIApiResponseMaintenancePage == apiResponse)
                              {
@@ -316,7 +329,8 @@
             [launchData setObject:[self.pushNotification objectForKey:@"UTM"] forKey:kRILaunchEventCampaignKey];
         }
     }
-    
+
+    [launchData setValue:source forKey:kRILaunchEventSourceKey];
     [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
     
     [[RITrackingWrapper sharedInstance] trackEvent:event

@@ -20,6 +20,7 @@
 @property (strong, nonatomic) UILabel *secondLabel;
 @property (strong, nonatomic) UIButton *forgotPasswordButton;
 @property (assign, nonatomic) CGFloat forgotPasswordViewCurrentY;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
@@ -37,6 +38,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.apiResponse = RIApiResponseSuccess;
     
     self.screenName = @"ForgotPassword";
     
@@ -88,13 +91,15 @@
 {
     [super viewWillAppear:animated];
     
-    [self showLoading];
-    
     [self getForgotPasswordForm];
 }
 
 - (void) getForgotPasswordForm
 {
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     [self.scrollView setHidden:YES];
     
     [self.scrollView addSubview:self.contentView];
@@ -110,18 +115,20 @@
          }
          
          [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
-         
+         [self removeErrorView];
          [self hideLoading];
      }
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
+         self.apiResponse = apiResponse;
+         [self removeErrorView];
          [self hideLoading];
          
          if (RIApiResponseNoInternetConnection == apiResponse)
          {
              if(VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray))
              {
-                 [self showMessage:STRING_NO_NEWTORK success:NO];
+                 [self showMessage:STRING_NO_CONNECTION success:NO];
                  [self finishedFormLoading:self.interfaceOrientation];
              }
              else
@@ -283,7 +290,7 @@
          
          if (RIApiResponseNoInternetConnection == apiResponse)
          {
-             [self showMessage:STRING_NO_NEWTORK success:NO];
+             [self showMessage:STRING_NO_CONNECTION success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {

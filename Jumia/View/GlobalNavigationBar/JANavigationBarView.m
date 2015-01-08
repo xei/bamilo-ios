@@ -42,6 +42,7 @@
     self.doneButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.cartButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.cartCountLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.searchButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.logoImageView.translatesAutoresizingMaskIntoConstraints = YES;
     
     CGFloat initialWidth = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size.width;
@@ -102,6 +103,9 @@
         [self showDoneButtonWithTitle:layout.doneButtonTitle];
     } else if (layout.showCartButton) {
         [self showCartButton];
+        if (layout.showSearchButton) {
+            [self showSearchButton];
+        }
     } else { //default
         [self hideRightItems];
     }
@@ -183,47 +187,48 @@
 
 -(void)adjustTitleFrame
 {
-    CGRect frame = [[UIScreen mainScreen] bounds];
-    CGFloat width = frame.size.width;
-    UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
-    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-    if(UIDeviceOrientationUnknown != deviceOrientation && UIDeviceOrientationIsPortrait(deviceOrientation))
-    {
-        if(frame.size.width > frame.size.height)
-        {
-            width = frame.size.height;
-        }
-    }
-    else if(UIDeviceOrientationUnknown != deviceOrientation && UIDeviceOrientationIsLandscape(deviceOrientation))
-    {
-        if(frame.size.height > frame.size.width)
-        {
-            width = frame.size.height;
-        }
-    }
-    else if(UIInterfaceOrientationIsPortrait(interfaceOrientation))
-    {
-        if(frame.size.width > frame.size.height)
-        {
-            width = frame.size.height;
-        }
-    }
-    else if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
-    {
-        if(frame.size.height > frame.size.width)
-        {
-            width = frame.size.height;
-        }
-    }
-    
     CGFloat leftMargin = 0.0f;
     CGFloat backButtonLeftMargin = 4.0f;
     CGFloat editButtonLeftMargin = 7.0f;
+
+    CGRect frame = [[UIScreen mainScreen] bounds];
+    CGFloat width = frame.size.width;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
         leftMargin = 6.0f;
         backButtonLeftMargin = 12.0f;
         editButtonLeftMargin = 16.0f;
+        
+        UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
+        UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+        if(UIDeviceOrientationUnknown != deviceOrientation && UIDeviceOrientationIsPortrait(deviceOrientation))
+        {
+            if(frame.size.width > frame.size.height)
+            {
+                width = frame.size.height;
+            }
+        }
+        else if(UIDeviceOrientationUnknown != deviceOrientation && UIDeviceOrientationIsLandscape(deviceOrientation))
+        {
+            if(frame.size.height > frame.size.width)
+            {
+                width = frame.size.height;
+            }
+        }
+        else if(UIInterfaceOrientationIsPortrait(interfaceOrientation))
+        {
+            if(frame.size.width > frame.size.height)
+            {
+                width = frame.size.height;
+            }
+        }
+        else if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
+        {
+            if(frame.size.height > frame.size.width)
+            {
+                width = frame.size.height;
+            }
+        }
     }
     
     [self.logoImageView setFrame:CGRectMake((width - self.logoImageView.frame.size.width) / 2,
@@ -259,6 +264,18 @@
                                                  self.cartCountLabel.frame.size.height)];
         
         rightItemFrame = self.cartButton.frame;
+        if (!self.searchButton.hidden) {
+            
+            [self.searchButton setFrame:CGRectMake(self.cartButton.frame.origin.x - self.searchButton.frame.size.width,
+                                                   self.searchButton.frame.origin.y,
+                                                   self.searchButton.frame.size.width,
+                                                   self.searchButton.frame.size.height)];
+            
+            rightItemFrame = CGRectMake(self.searchButton.frame.origin.x,
+                                        self.searchButton.frame.origin.y,
+                                        self.searchButton.frame.size.width + self.cartButton.frame.size.width,
+                                        self.searchButton.frame.size.height);
+        }
     }
     
     CGRect leftItemFrame = CGRectZero;
@@ -315,16 +332,16 @@
     }
     
     CGFloat titleLabelWidth = 0.0f;
-    CGFloat titleLabelLeftMargin = 0.0f;
+    CGFloat titleLabelSideMargin = 0.0f;
     if(leftItemFrame.size.width >= rightItemFrame.size.width)
     {
-        titleLabelLeftMargin = leftItemFrame.size.width + 3.0f;
+        titleLabelSideMargin = leftItemFrame.size.width + 3.0f;
     }
     else
     {
-        titleLabelLeftMargin = rightItemFrame.size.width + 3.0f;
+        titleLabelSideMargin = rightItemFrame.size.width + 3.0f;
     }
-    titleLabelWidth = width - (2 * titleLabelLeftMargin);
+    titleLabelWidth = width - (2 * titleLabelSideMargin);
     
     NSString *titleLabelText = self.titleLabel.text;
     NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
@@ -332,10 +349,10 @@
     if (titleLabelTextSize.width > titleLabelWidth)
     {
         titleLabelWidth = width - leftItemFrame.size.width - rightItemFrame.size.width - 24.0f;
-        titleLabelLeftMargin = (width - titleLabelWidth) / 2 + 12.0;
+        titleLabelSideMargin = (width - titleLabelWidth) / 2;
     }
     
-    [self.titleLabel setFrame:CGRectMake(titleLabelLeftMargin,
+    [self.titleLabel setFrame:CGRectMake(titleLabelSideMargin,
                                          self.titleLabel.frame.origin.y,
                                          titleLabelWidth,
                                          self.titleLabel.frame.size.height)];
@@ -354,6 +371,7 @@
     self.doneButton.hidden = NO;
     self.cartButton.hidden = YES;
     self.cartCountLabel.hidden = YES;
+    self.searchButton.hidden = YES;
 }
 
 - (void)showCartButton;
@@ -363,11 +381,17 @@
     self.cartCountLabel.hidden = NO;
 }
 
+- (void)showSearchButton
+{
+    self.searchButton.hidden = NO;
+}
+
 - (void)hideRightItems
 {
     self.doneButton.hidden = YES;
     self.cartButton.hidden = YES;
     self.cartCountLabel.hidden = YES;
+    self.searchButton.hidden = YES;
 }
 
 #pragma mark - Details

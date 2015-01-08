@@ -63,14 +63,19 @@ JAPickerDelegate>
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
 @property (assign, nonatomic) NSInteger numberOfRequests;
+@property (assign, nonatomic) NSInteger numberOfGetFormRequests;
 @property (assign, nonatomic) BOOL hasErrors;
-@property (strong, nonatomic) NSString *nextStep;
 @property (strong, nonatomic) RICheckout *checkout;
 
 @property (strong, nonatomic) JACheckBoxComponent *checkBoxComponent;
 
 // Order summary
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
+
+@property (strong, nonatomic) NSDictionary *extraParameters;
+
+@property (assign, nonatomic) BOOL loadFailed;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
@@ -79,9 +84,18 @@ JAPickerDelegate>
 @synthesize numberOfRequests=_numberOfRequests;
 -(void)setNumberOfRequests:(NSInteger)numberOfRequests
 {
-    _numberOfRequests=numberOfRequests;
+    _numberOfRequests = numberOfRequests;
     if (0 == numberOfRequests) {
         [self finishedRequests];
+    }
+}
+
+@synthesize numberOfGetFormRequests=_numberOfGetFormRequests;
+-(void)setNumberOfGetFormRequests:(NSInteger)numberOfGetFormRequests
+{
+    _numberOfGetFormRequests = numberOfGetFormRequests;
+    if (0 == numberOfGetFormRequests) {
+        [self finishedGetFromRequests];
     }
 }
 
@@ -93,16 +107,10 @@ JAPickerDelegate>
     
     self.hasErrors = NO;
     
-    self.navBarLayout.showCartButton = NO;
-    
-    if(self.showBackButton)
+    self.extraParameters = nil;
+    if([RICustomer wasSignup])
     {
-        self.navBarLayout.backButtonTitle = STRING_CHECKOUT;
-        self.navBarLayout.showLogo = NO;
-    }
-    else
-    {
-        self.navBarLayout.title = STRING_CHECKOUT;
+        self.extraParameters = [NSDictionary dictionaryWithObject:@"true" forKey:@"showGender"];
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -114,56 +122,115 @@ JAPickerDelegate>
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    [self showLoading];
-    
     [self initViews];
     
+    [self getForms];
+}
+
+- (void) getForms
+{
+    if(RIApiResponseSuccess == self.apiResponse)
+    {
+        [self showLoading];
+    }
+    
+    self.apiResponse = RIApiResponseSuccess;
+    self.numberOfGetFormRequests = 2;
+    self.loadFailed = NO;
+    
     [RIForm getForm:@"addresscreate"
+     extraArguments:self.extraParameters
        successBlock:^(RIForm *form)
      {
-         self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.shippingAddressViewCurrentY widthSize:self.shippingContentView.frame.size.width];
+         self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.shippingAddressViewCurrentY widthSize:self.shippingContentView.frame.size.width hasFieldNavigation:NO];
          
          for(UIView *view in self.shippingDynamicForm.formViews)
          {
              [self.shippingContentView addSubview:view];
          }
          
-         self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width];
+         self.numberOfGetFormRequests--;
+     }
+       failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
+     {
+         if(!self.loadFailed)
+         {
+             self.apiResponse = apiResponse;
+         }
+         
+         self.loadFailed = YES;
+         self.numberOfGetFormRequests--;
+     }];
+    
+    [RIForm getForm:@"addresscreate"
+     extraArguments:nil
+       successBlock:^(RIForm *form)
+     {
+         self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width hasFieldNavigation:NO];
          
          for(UIView *view in self.billingDynamicForm.formViews)
          {
              [self.billingContentView addSubview:view];
          }
-         
-         [self finishedFormLoading];
+         self.numberOfGetFormRequests--;
      }
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
-         [self finishedFormLoading];
+         if(!self.loadFailed)
+         {
+             self.apiResponse = apiResponse;
+         }
          
-         if (RIApiResponseNoInternetConnection == apiResponse)
-         {
-             [self showMessage:STRING_NO_NEWTORK success:NO];
-         }
-         else
-         {
-             [self showMessage:STRING_ERROR success:NO];
-         }
+         self.loadFailed = YES;
+         self.numberOfGetFormRequests--;
      }];
-    
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"CheckoutMyAddress" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddresses]
-                                              data:[trackingDictionary copy]];
+}
+
+- (void) hideKeyboard
+{
+    [self.shippingDynamicForm resignResponder];
+    [self.billingDynamicForm resignResponder];
+}
+
+- (void)finishedGetFromRequests
+{
+    if(self.loadFailed)
+    {
+        BOOL noInternetConnection = NO;
+        if (RIApiResponseNoInternetConnection == self.apiResponse)
+        {
+            noInternetConnection = YES;
+        }
+        
+        [self hideLoading];
+        
+        [self removeErrorView];
+        [self showErrorView:noInternetConnection startingY:0.0f selector:@selector(getForms) objects:nil];
+    }
+    else
+    {
+        [self finishedFormLoading];
+        [self removeErrorView];
+
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"CheckoutMyAddress" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddresses]
+                                                  data:[trackingDictionary copy]];
+    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -176,7 +243,7 @@ JAPickerDelegate>
     [self showLoading];
     
     CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && self.fromCheckout)
     {
         newWidth = self.view.frame.size.width;
     }
@@ -189,7 +256,7 @@ JAPickerDelegate>
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && self.fromCheckout)
     {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
@@ -202,17 +269,28 @@ JAPickerDelegate>
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    [self hideKeyboard];
 }
 
 -(void)initViews
 {
-    self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
-    
-    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
+    if(self.fromCheckout)
+    {
+        self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
+        self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
+        self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
+        self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
+        [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
+        [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];        
+    }
+    else
+    {
+        [self.stepBackground removeFromSuperview];
+        [self.stepView removeFromSuperview];
+        [self.stepIcon removeFromSuperview];
+        [self.stepLabel removeFromSuperview];
+    }
     
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
@@ -275,7 +353,7 @@ JAPickerDelegate>
 -(void)finishedFormLoading
 {
     CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && self.fromCheckout)
     {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
@@ -367,31 +445,37 @@ JAPickerDelegate>
 
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
-    
     self.shippingAddressViewCurrentY = CGRectGetMaxY(self.shippingHeaderSeparator.frame) + 6.0f;
+    
+    CGFloat scrollViewStartY = 0.0f;
+    if(self.fromCheckout)
+    {
+        [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
+        scrollViewStartY = self.stepBackground.frame.size.height;
+    }
     
     if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
     {
         [self.orderSummary removeFromSuperview];
     }
     
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && (width < self.view.frame.size.width))
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && (width < self.view.frame.size.width) && self.fromCheckout)
     {
         CGFloat orderSummaryRightMargin = 6.0f;
         self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
-                                                                                 self.stepBackground.frame.size.height,
+                                                                                 scrollViewStartY,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
-                                                                                 self.view.frame.size.height - self.stepBackground.frame.size.height)];
-        [self.orderSummary loadWithCart:self.cart];
+                                                                                 self.view.frame.size.height - scrollViewStartY)];
+        [self.orderSummary loadWithCart:self.cart shippingFee:NO];
         [self.view addSubview:self.orderSummary];
-        self.orderSummaryOriginalFrame = self.orderSummary.frame;        
+        self.orderSummaryOriginalFrame = self.orderSummary.frame;
     }
     
+    
     [self.contentScrollView setFrame:CGRectMake(0.0f,
-                                                self.stepBackground.frame.size.height,
+                                                scrollViewStartY,
                                                 width,
-                                                self.view.frame.size.height - self.stepBackground.frame.size.height)];
+                                                self.view.frame.size.height - scrollViewStartY)];
     
     [self.shippingContentView setFrame:CGRectMake(6.0f,
                                                   6.0f,
@@ -475,9 +559,17 @@ JAPickerDelegate>
                                             self.view.frame.size.height - self.bottomView.frame.size.height,
                                             width,
                                             self.bottomView.frame.size.height)];
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(createAddressButtonPressed)];
     
-    if(VALID_NOTEMPTY(self.checkBoxComponent, JACheckBoxComponent) && [self.checkBoxComponent isCheckBoxOn])
+    if(self.fromCheckout)
+    {
+        [self.bottomView addButton:STRING_NEXT target:self action:@selector(createAddressButtonPressed)];
+    }
+    else
+    {
+        [self.bottomView addButton:STRING_SAVE_LABEL target:self action:@selector(createAddressButtonPressed)];
+    }
+    
+    if(!VALID_NOTEMPTY(self.checkBoxComponent, JACheckBoxComponent) || [self.checkBoxComponent isCheckBoxOn])
     {
         [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
                                                           self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.bottomView.frame.size.height)];
@@ -613,6 +705,7 @@ JAPickerDelegate>
     }
     
     [RIForm sendForm:[self.shippingDynamicForm form]
+      extraArguments:self.extraParameters
           parameters:shippingParameters
         successBlock:^(id object)
      {
@@ -626,7 +719,7 @@ JAPickerDelegate>
          
          if (RIApiResponseNoInternetConnection == apiResponse)
          {
-             [self showMessage:STRING_NO_NEWTORK success:NO];
+             [self showMessage:STRING_NO_CONNECTION success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
@@ -655,7 +748,16 @@ JAPickerDelegate>
     }
     else
     {
-        [JAUtils goToCheckout:self.checkout];
+        if(self.fromCheckout)
+        {
+            [JAUtils goToCheckout:self.checkout];
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+                                                                object:nil
+                                                              userInfo:nil];
+        }
     }
 }
 
@@ -684,6 +786,9 @@ JAPickerDelegate>
 
 - (void)openPicker:(JARadioComponent *)radioComponent
 {
+    [self.shippingDynamicForm resignResponder];
+    [self.billingDynamicForm resignResponder];
+
     [self removePickerView];
     
     self.radioComponent = radioComponent;
@@ -747,6 +852,15 @@ JAPickerDelegate>
             }
         }
     }
+    else if([radioComponent isComponentWithKey:@"gender"])
+    {
+        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray))
+        {
+            self.radioComponentDataset  = [[self.radioComponent dataset] copy];
+            
+            [self setupPickerView];
+        }
+    }
 }
 
 -(NSString*)getPickerSelectedRow
@@ -801,12 +915,17 @@ JAPickerDelegate>
             {
                 title = ((RICity*) currentObject).value;
             }
+            else if(VALID_NOTEMPTY(currentObject, NSString))
+            {
+                title = currentObject;
+            }
             [dataSource addObject:title];
         }
     }
     
     [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:[self getPickerSelectedRow]];
+                       previousText:[self getPickerSelectedRow]
+                    leftButtonTitle:nil];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
@@ -827,7 +946,7 @@ JAPickerDelegate>
 
 - (void)downloadRegions:(JARadioComponent *)regionComponent cities:(JARadioComponent*) citiesComponent
 {
-    if(VALID_NOTEMPTY(regionComponent, JARadioComponent) && VALID_NOTEMPTY(citiesComponent, JARadioComponent))
+    if(VALID_NOTEMPTY(regionComponent, JARadioComponent))
     {
         if(!VALID_NOTEMPTY(self.regionsDataset, NSArray))
         {
@@ -862,7 +981,7 @@ JAPickerDelegate>
                      [regionComponent setRegionValue:self.shippingSelectedRegion];
                  }
                  
-                 if(VALID_NOTEMPTY(self.shippingSelectedRegion, RIRegion))
+                 if(VALID_NOTEMPTY(self.shippingSelectedRegion, RIRegion) && VALID_NOTEMPTY(citiesComponent, JARadioComponent))
                  {
                      [RICity getCitiesForUrl:[citiesComponent getApiCallUrl] region:[self.shippingSelectedRegion uid] successBlock:^(NSArray *cities) {
                          self.shippingCitiesDataset = [cities copy];
@@ -884,6 +1003,10 @@ JAPickerDelegate>
                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                          [self hideLoading];
                      }];
+                 }
+                 else
+                 {
+                     [self hideLoading];
                  }
              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
              {
@@ -918,6 +1041,10 @@ JAPickerDelegate>
                     
                     [self.shippingDynamicForm setCityValue:selectedObject];
                 }
+                else if(VALID_NOTEMPTY(selectedObject, NSString))
+                {
+                    [self.radioComponent setValue:selectedObject];
+                }
             }
             else if(self.billingContentView == [self.radioComponent superview])
             {
@@ -934,6 +1061,10 @@ JAPickerDelegate>
                     self.billingSelectedCity = selectedObject;
                     
                     [self.billingDynamicForm setCityValue:selectedObject];
+                }
+                else if(VALID_NOTEMPTY(selectedObject, NSString))
+                {
+                    [self.radioComponent setValue:selectedObject];
                 }
             }
         }
@@ -961,10 +1092,13 @@ JAPickerDelegate>
                                                     self.originalFrame.size.width,
                                                     self.originalFrame.size.height - height)];
         
-        [self.orderSummary setFrame:CGRectMake(self.orderSummaryOriginalFrame.origin.x,
-                                               self.orderSummaryOriginalFrame.origin.y,
-                                               self.orderSummaryOriginalFrame.size.width,
-                                               self.orderSummaryOriginalFrame.size.height - height)];
+        if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
+        {
+            [self.orderSummary setFrame:CGRectMake(self.orderSummaryOriginalFrame.origin.x,
+                                                   self.orderSummaryOriginalFrame.origin.y,
+                                                   self.orderSummaryOriginalFrame.size.width,
+                                                   self.orderSummaryOriginalFrame.size.height - height)];
+        }
     }];
 }
 
@@ -972,7 +1106,11 @@ JAPickerDelegate>
 {
     [UIView animateWithDuration:0.3 animations:^{
         [self.contentScrollView setFrame:self.originalFrame];
-        [self.orderSummary setFrame:self.orderSummaryOriginalFrame];
+        
+        if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
+        {
+            [self.orderSummary setFrame:self.orderSummaryOriginalFrame];
+        }
     }];
 }
 

@@ -29,11 +29,11 @@
     [self.scrollView setFrame:self.bounds];
 }
 
-- (void)loadWithCart:(RICart *)cart
+- (void)loadWithCart:(RICart *)cart shippingFee:(BOOL)shippingFee
 {
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
     [self addSubview:self.scrollView];
-
+    
     CGFloat topMargin = 6.0f;
     
     self.backgroundColor = JABackgroundGrey;
@@ -77,11 +77,25 @@
             }
         }
         
+        NSString *shippingFeeValue = nil;
+        if(shippingFee)
+        {
+            if (0 == [cart.shippingValue integerValue])
+            {
+                shippingFeeValue = STRING_FREE;
+            }
+            else
+            {
+                shippingFeeValue = cart.shippingValueFormatted;
+            }
+        }
+        
         currentY = [self loadTotalSectionInPositionY:currentY
                                                  vat:cart.vatValueFormatted
                                             subtotal:cart.cartValueFormatted
-                                               extra:cart.extraCostsFormatted];
-
+                                               extra:cart.extraCostsFormatted
+                                         shippingFee:shippingFeeValue];
+        
         [self.cartView setFrame:CGRectMake(self.cartView.frame.origin.x,
                                            self.cartView.frame.origin.y,
                                            self.cartView.frame.size.width,
@@ -92,11 +106,11 @@
     }
 }
 
-- (void)loadWithCheckout:(RICheckout*)checkout shippingMethod:(BOOL)shippingMethod
+- (void)loadWithCheckout:(RICheckout*)checkout shippingMethod:(BOOL)shippingMethod shippingFee:(BOOL)shippingFee
 {
     if(VALID_NOTEMPTY(checkout, RICheckout))
     {
-        [self loadWithCart:checkout.cart];
+        [self loadWithCart:checkout.cart shippingFee:shippingFee];
         
         RIOrder *orderSummary = checkout.orderSummary;
         if(VALID_NOTEMPTY(orderSummary, RIOrder))
@@ -298,6 +312,7 @@
                                    vat:(NSString*)vat
                               subtotal:(NSString*)subtotal
                                  extra:(NSString*)extra
+                           shippingFee:(NSString*)shippingFee
 {
     currentY += 15.0f;
     
@@ -323,8 +338,6 @@
     
     currentY += VATLabel.frame.size.height + 7.0f;
     
-    
-    
     UILabel* subtotalLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
                                                                        currentY,
                                                                        self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
@@ -347,7 +360,30 @@
     
     currentY += subtotalLabel.frame.size.height + 7.0f;
     
-    
+    if(VALID_NOTEMPTY(shippingFee, NSString))
+    {
+        UILabel* shippingFeeLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                              currentY,
+                                                                              self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                              1.0f)];
+        shippingFeeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+        shippingFeeLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        shippingFeeLabel.text = STRING_SHIPPING_FEE;
+        [shippingFeeLabel sizeToFit];
+        [self.cartView addSubview:shippingFeeLabel];
+        
+        UILabel* shippingFeeValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                                   currentY,
+                                                                                   self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                                   shippingFeeLabel.frame.size.height)];
+        shippingFeeValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+        shippingFeeValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        shippingFeeValueLabel.text = shippingFee;
+        shippingFeeValueLabel.textAlignment = NSTextAlignmentRight;
+        [self.cartView addSubview:shippingFeeValueLabel];
+        
+        currentY += shippingFeeValueLabel.frame.size.height + 7.0f;
+    }
     
     UILabel* extraLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
                                                                     currentY,
@@ -479,15 +515,15 @@
 - (void)editButtonForShippingAddress
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                        object:nil
-                                                      userInfo:nil];
+                                                        object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                      userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
 }
 
 - (void)editButtonForBillingAddress
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                        object:nil
-                                                      userInfo:nil];
+                                                        object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                      userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
 }
 
 - (void)editButtonForShippingMethod

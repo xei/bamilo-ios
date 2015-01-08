@@ -53,7 +53,7 @@ JADynamicFormDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.apiResponse = RIApiResponseSuccess;
     self.screenName = @"CustomerData";
     
     self.numberOfFields = 0;
@@ -68,13 +68,13 @@ JADynamicFormDelegate
     
     self.personalTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.personalTitleLabel.text = STRING_YOUR_PERSONAL_DATA;
-
+    
     self.nameLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.nameLabel.textColor = UIColorFromRGB(0x666666);
     
     self.emailLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.emailLabel.textColor = UIColorFromRGB(0x666666);
-
+    
     self.personalLine.backgroundColor = UIColorFromRGB(0xfaa41a);
     
     self.changePasswordView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -92,8 +92,6 @@ JADynamicFormDelegate
     
     self.currentY = 32.0f;
     
-    [self showLoading];
-    
     [self makeRequests];
 }
 
@@ -110,7 +108,7 @@ JADynamicFormDelegate
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];    
+    [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     
     [self hideLoading];
     
@@ -120,6 +118,12 @@ JADynamicFormDelegate
 - (void)makeRequests
 {
     self.numberOfRequests = 2;
+    
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
+    
     self.apiResponse = RIApiResponseSuccess;
     
     [RIForm getForm:@"changepassword"
@@ -128,12 +132,13 @@ JADynamicFormDelegate
          self.changePasswordForm = [[JADynamicForm alloc] initWithForm:form
                                                               delegate:self
                                                       startingPosition:self.currentY
-                                                             widthSize:self.changePasswordView.frame.size.width];
+                                                             widthSize:self.changePasswordView.frame.size.width
+                                                    hasFieldNavigation:YES];
          
          self.numberOfRequests--;
-         
+         [self removeErrorView];
      } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
-     {
+     {   [self removeErrorView];
          self.apiResponse = apiResponse;
          self.numberOfRequests--;
      }];
@@ -142,6 +147,7 @@ JADynamicFormDelegate
      {
          self.customer = customer;
          self.numberOfRequests--;
+         
          
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
@@ -212,14 +218,14 @@ JADynamicFormDelegate
     }
     
     [self.nameLabel setFrame:CGRectMake(leftMargin,
-                                       self.nameLabel.frame.origin.y,
-                                       self.personalDataView.frame.size.width - (2 * leftMargin),
-                                       self.nameLabel.frame.size.height)];
+                                        self.nameLabel.frame.origin.y,
+                                        self.personalDataView.frame.size.width - (2 * leftMargin),
+                                        self.nameLabel.frame.size.height)];
     
     [self.emailLabel setFrame:CGRectMake(leftMargin,
-                                        self.emailLabel.frame.origin.y,
-                                        self.personalDataView.frame.size.width - (2 * leftMargin),
-                                        self.emailLabel.frame.size.height)];
+                                         self.emailLabel.frame.origin.y,
+                                         self.personalDataView.frame.size.width - (2 * leftMargin),
+                                         self.emailLabel.frame.size.height)];
     
     
     for(UIView *view in self.changePasswordForm.formViews)
@@ -229,7 +235,7 @@ JADynamicFormDelegate
                                   self.changePasswordView.frame.size.width - (2 * dynamicFormleftMargin),
                                   view.frame.size.height)];
     }
-
+    
     [self.saveButton setFrame:CGRectMake((width - self.saveButton.frame.size.width) / 2, CGRectGetMaxY(self.changePasswordView.frame) + 6.0f, self.saveButton.frame.size.width, self.saveButton.frame.size.height)];
     
     [self.personalDataView setHidden:NO];
@@ -296,7 +302,7 @@ JADynamicFormDelegate
          
          if(RIApiResponseNoInternetConnection == apiResponse)
          {
-             [self showMessage:STRING_NO_NEWTORK success:NO];
+             [self showMessage:STRING_NO_CONNECTION success:NO];
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {

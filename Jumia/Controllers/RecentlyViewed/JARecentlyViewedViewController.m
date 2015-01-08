@@ -15,6 +15,7 @@
 #import "JAUtils.h"
 #import "RICustomer.h"
 #import "JAProductListFlowLayout.h"
+#import "RICategory.h"
 
 @interface JARecentlyViewedViewController ()
 
@@ -339,20 +340,21 @@
                       if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
                       {
                           NSArray *categoryIds = [product.categoryIds array];
-                          [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
-                      }
-                      
-                      if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
-                      {
-                          NSArray *categoryIds = [product.categoryIds array];
-                          if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
-                          {
-                              [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
-                          }
+                          NSInteger subCategoryIndex = [categoryIds count] - 1;
+                          NSInteger categoryIndex = subCategoryIndex - 1;
                           
-                          if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+                          if(categoryIndex >= 0)
                           {
-                              [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+                              NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+                              
+                              NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                              [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryNameKey];
+                          }
+                          else
+                          {
+                              NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
                           }
                       }
                       
@@ -400,7 +402,7 @@
                       NSString *errorAddToCart = STRING_ERROR_ADDING_TO_CART;
                       if (RIApiResponseNoInternetConnection == apiResponse)
                       {
-                          errorAddToCart = STRING_NO_NEWTORK;
+                          errorAddToCart = STRING_NO_CONNECTION;
                       }
                       
                       [self showMessage:errorAddToCart success:NO];
@@ -448,8 +450,14 @@
             simpleSize = simple.variation;
         }
     }
+
+    NSString* sizeGuideTitle = nil;
+    if (VALID_NOTEMPTY(product.sizeGuideUrl, NSString)) {
+        sizeGuideTitle = STRING_SIZE_GUIDE;
+    }
     [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:simpleSize];
+                       previousText:simpleSize
+                    leftButtonTitle:sizeGuideTitle];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
@@ -503,6 +511,15 @@
                          [self.picker removeFromSuperview];
                          self.picker = nil;
                      }];
+}
+
+- (void)leftButtonPressed;
+{
+    RIProduct* product = [self.productsArray objectAtIndex:self.picker.tag];
+    if (VALID_NOTEMPTY(product.sizeGuideUrl, NSString)) {
+        NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:product.sizeGuideUrl, @"sizeGuideUrl", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
+    }
 }
 
 #pragma mark - UIPickerView

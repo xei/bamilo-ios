@@ -55,8 +55,11 @@ JAActivityViewControllerDelegate
 @property (assign, nonatomic) BOOL openPickerFromCart;
 @property (strong, nonatomic) RIProductSimple *currentSimple;
 @property (nonatomic, strong) JAPDVWizardView* wizardView;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @property (nonatomic, assign) BOOL hasLoaddedProduct;
+
+@property (strong, nonatomic) UIPopoverController *currentPopoverController;
 
 @end
 
@@ -67,7 +70,7 @@ JAActivityViewControllerDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.apiResponse = RIApiResponseSuccess;
     if(VALID_NOTEMPTY(self.product.sku, NSString))
     {
         self.screenName = [NSString stringWithFormat:@"PDS / %@", self.product.sku];
@@ -94,6 +97,11 @@ JAActivityViewControllerDelegate
     self.landscapeScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.landscapeScrollView setHidden:YES];
     [self.view addSubview:self.landscapeScrollView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector( applicationDidEnterBackgroundNotification:)
+                                                 name: UIApplicationDidEnterBackgroundNotification
+                                               object: nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -109,9 +117,7 @@ JAActivityViewControllerDelegate
     }
     
     if(self.hasLoaddedProduct)
-    {
-        [self showLoading];
-        
+    {        
         [self removeSuperviews];
         
         [self productLoaded];
@@ -140,6 +146,19 @@ JAActivityViewControllerDelegate
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
+- (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification
+{
+    if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
+    {
+        [self.currentPopoverController dismissPopoverAnimated:NO];
+    }
+    
+    if([self respondsToSelector:@selector(dismissViewControllerAnimated:completion:)])
+    {
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -147,9 +166,15 @@ JAActivityViewControllerDelegate
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
+    if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
+    {
+        [self.currentPopoverController dismissPopoverAnimated:NO];
+    }
     
-    [self showLoading];
+    if (RIApiResponseNoInternetConnection != self.apiResponse)
+    {
+        [self showLoading];
+    }
     
     [self.mainScrollView setHidden:YES];
     [self.landscapeScrollView setHidden:YES];
@@ -264,14 +289,22 @@ JAActivityViewControllerDelegate
 
 - (void)loadCompleteProduct
 {
-    [self showLoading];
+    if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     self.hasLoaddedProduct = NO;
     
     if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
+            self.apiResponse = RIApiResponseSuccess;
+            
             [self loadedProduct:product];
+            [self removeErrorView];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+            self.apiResponse = apiResponse;
+            [self removeErrorView];
             if(self.firstLoading)
             {
                 NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -297,8 +330,13 @@ JAActivityViewControllerDelegate
         }];
     } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
         [RIProduct getCompleteProductWithSku:self.productSku successBlock:^(id product) {
+            self.apiResponse = RIApiResponseSuccess;
+            
             [self loadedProduct:product];
+            [self removeErrorView];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+            self.apiResponse = apiResponse;
+            [self removeErrorView];
             if(self.firstLoading)
             {
                 NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -426,20 +464,55 @@ JAActivityViewControllerDelegate
         [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
     }
     
-    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+    NSString *categoryName = @"";
+    NSString *subCategoryName = @"";
+    if(VALID_NOTEMPTY(self.category, RICategory))
+    {
+        if(VALID_NOTEMPTY(self.category.parent, RICategory))
+        {
+            RICategory *parent = self.category.parent;
+            while (VALID_NOTEMPTY(parent.parent, RICategory))
+            {
+                parent = parent.parent;
+            }
+            categoryName = parent.name;
+            subCategoryName = self.category.name;
+        }
+        else
+        {
+            categoryName = self.category.name;
+        }
+    }
+    else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
         NSArray *categoryIds = [self.product.categoryIds array];
-        if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
-        {
-            [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
-        }
+        NSInteger subCategoryIndex = [categoryIds count] - 1;
+        NSInteger categoryIndex = subCategoryIndex - 1;
         
-        if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+        if(categoryIndex >= 0)
         {
-            [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+            NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+            categoryName = [RICategory getCategoryName:categoryId];
+            
+            NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+            subCategoryName = [RICategory getCategoryName:subCategoryId];
+        }
+        else
+        {
+            NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+            categoryName = [RICategory getCategoryName:categoryId];
         }
     }
     
+    if(VALID_NOTEMPTY(categoryName, NSString))
+    {
+        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+    }
+    if(VALID_NOTEMPTY(subCategoryName, NSString))
+    {
+        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
+    }
+
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewProduct]
                                               data:[trackingDictionary copy]];
     
@@ -463,7 +536,7 @@ JAActivityViewControllerDelegate
 - (void)productLoaded
 {
     [self removeSuperviews];
-    
+
     self.hasLoaddedProduct = YES;
     
     [self.mainScrollView setFrame:CGRectMake(0.0f,
@@ -676,7 +749,7 @@ JAActivityViewControllerDelegate
                                                                                       imageHeight)];
             [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
                          placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
-            [newImageView changeImageSize:imageHeight andWidth:0.0f];
+            [newImageView changeImageHeight:imageHeight andWidth:0.0f];
             [variationClickableView addSubview:newImageView];
             
             currentX += variationClickableView.frame.size.width;
@@ -922,7 +995,7 @@ JAActivityViewControllerDelegate
 
 - (void)shareProduct
 {
-    JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initWithProduct:self.product];
+    JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initForProductShare:self.product];
     
     NSArray *objectsToShare = @[provider];
     
@@ -969,34 +1042,78 @@ JAActivityViewControllerDelegate
         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
         [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
 
-        if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+        NSString *categoryName = @"";
+        NSString *subCategoryName = @"";
+        if(VALID_NOTEMPTY(self.category, RICategory))
+        {
+            if(VALID_NOTEMPTY(self.category.parent, RICategory))
+            {
+                RICategory *parent = self.category.parent;
+                while (VALID_NOTEMPTY(parent.parent, RICategory))
+                {
+                    parent = parent.parent;
+                }
+                categoryName = parent.name;
+                subCategoryName = self.category.name;
+            }
+            else
+            {
+                categoryName = self.category.name;
+            }
+        }
+        else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
         {
             NSArray *categoryIds = [self.product.categoryIds array];
-            if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
+            NSInteger subCategoryIndex = [categoryIds count] - 1;
+            NSInteger categoryIndex = subCategoryIndex - 1;
+            
+            if(categoryIndex >= 0)
             {
-                [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
+                NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+                categoryName = [RICategory getCategoryName:categoryId];
+                
+                NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                subCategoryName = [RICategory getCategoryName:subCategoryId];
             }
+            else
+            {
+                NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                categoryName = [RICategory getCategoryName:categoryId];
+            }
+        }
+        
+        if(VALID_NOTEMPTY(categoryName, NSString))
+        {
+            [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+        }
+        if(VALID_NOTEMPTY(subCategoryName, NSString))
+        {
+            [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
         }
         
         [[RITrackingWrapper sharedInstance] trackEvent:eventType
                                                   data:[trackingDictionary copy]];
     };
+
+    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
     
-#ifdef __IPHONE_8_0
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
         CGRect sharePopoverRect = CGRectMake(self.imageSection.shareButton.frame.size.width,
                                              self.imageSection.shareButton.frame.size.height / 2,
                                              0.0f,
                                              0.0f);
-        activityController.popoverPresentationController.sourceView = self.imageSection.shareButton;
-        activityController.popoverPresentationController.sourceRect = sharePopoverRect;
+        
+        UIPopoverController* popoverController =
+        [[UIPopoverController alloc] initWithContentViewController:activityController];
+        [popoverController presentPopoverFromRect:sharePopoverRect inView:self.imageSection.shareButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        popoverController.passthroughViews = nil;
+        self.currentPopoverController = popoverController;
     }
-#endif
-    
-    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypePostToTwitter];
-    
-    [self presentViewController:activityController animated:YES completion:nil];
+    else
+    {
+        [self presentViewController:activityController animated:YES completion:nil];
+    }
 }
 
 - (void)addToCart
@@ -1059,18 +1176,53 @@ JAActivityViewControllerDelegate
                           [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
                           [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
                           
-                          if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+                          NSString *categoryName = @"";
+                          NSString *subCategoryName = @"";
+                          if(VALID_NOTEMPTY(self.category, RICategory))
+                          {
+                              if(VALID_NOTEMPTY(self.category.parent, RICategory))
+                              {
+                                  RICategory *parent = self.category.parent;
+                                  while (VALID_NOTEMPTY(parent.parent, RICategory))
+                                  {
+                                      parent = parent.parent;
+                                  }
+                                  categoryName = parent.name;
+                                  subCategoryName = self.category.name;
+                              }
+                              else
+                              {
+                                  categoryName = self.category.name;
+                              }
+                          }
+                          else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
                           {
                               NSArray *categoryIds = [self.product.categoryIds array];
-                              if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
-                              {
-                                  [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
-                              }
+                              NSInteger subCategoryIndex = [categoryIds count] - 1;
+                              NSInteger categoryIndex = subCategoryIndex - 1;
                               
-                              if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+                              if(categoryIndex >= 0)
                               {
-                                  [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+                                  NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+                                  categoryName = [RICategory getCategoryName:categoryId];
+                                  
+                                  NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                                  subCategoryName = [RICategory getCategoryName:subCategoryId];
                               }
+                              else
+                              {
+                                  NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                                  categoryName = [RICategory getCategoryName:categoryId];
+                              }
+                          }
+                          
+                          if(VALID_NOTEMPTY(categoryName, NSString))
+                          {
+                              [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+                          }
+                          if(VALID_NOTEMPTY(subCategoryName, NSString))
+                          {
+                              [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
                           }
                           
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
@@ -1090,7 +1242,7 @@ JAActivityViewControllerDelegate
                           NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
                           if (RIApiResponseNoInternetConnection == apiResponse)
                           {
-                              addToCartError = STRING_NO_NEWTORK;
+                              addToCartError = STRING_NO_CONNECTION;
                           }
                           
                           [self showMessage:addToCartError success:NO];
@@ -1143,8 +1295,13 @@ JAActivityViewControllerDelegate
         }
     }
     
+    NSString* sizeGuideTitle = nil;
+    if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
+        sizeGuideTitle = STRING_SIZE_GUIDE;
+    }
     [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:self.productInfoSection.sizeLabel.text];
+                       previousText:self.productInfoSection.sizeLabel.text
+                    leftButtonTitle:sizeGuideTitle];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
@@ -1220,6 +1377,14 @@ JAActivityViewControllerDelegate
                          [self.picker removeFromSuperview];
                          self.picker = nil;
                      }];
+}
+
+- (void)leftButtonPressed;
+{
+    if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
+        NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:self.product.sizeGuideUrl, @"sizeGuideUrl", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
+    }
 }
 
 #pragma mark JAPDVImageSectionDelegate
@@ -1331,18 +1496,53 @@ JAActivityViewControllerDelegate
             [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
             [trackingDictionary setValue:@"Catalog" forKey:kRIEventLocationKey];
 
-            if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+            NSString *categoryName = @"";
+            NSString *subCategoryName = @"";
+            if(VALID_NOTEMPTY(self.category, RICategory))
+            {
+                if(VALID_NOTEMPTY(self.category.parent, RICategory))
+                {
+                    RICategory *parent = self.category.parent;
+                    while (VALID_NOTEMPTY(parent.parent, RICategory))
+                    {
+                        parent = parent.parent;
+                    }
+                    categoryName = parent.name;
+                    subCategoryName = self.category.name;
+                }
+                else
+                {
+                    categoryName = self.category.name;
+                }
+            }
+            else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
             {
                 NSArray *categoryIds = [self.product.categoryIds array];
-                if(VALID_NOTEMPTY([categoryIds objectAtIndex:0], NSString))
-                {
-                    [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryNameKey];
-                }
+                NSInteger subCategoryIndex = [categoryIds count] - 1;
+                NSInteger categoryIndex = subCategoryIndex - 1;
                 
-                if (1 < [categoryIds count] && VALID_NOTEMPTY([categoryIds objectAtIndex:1], NSString))
+                if(categoryIndex >= 0)
                 {
-                    [trackingDictionary setValue:[categoryIds objectAtIndex:1] forKey:kRIEventSubCategoryNameKey];
+                    NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+                    categoryName = [RICategory getCategoryName:categoryId];
+                    
+                    NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                    subCategoryName = [RICategory getCategoryName:subCategoryId];
                 }
+                else
+                {
+                    NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+                    categoryName = [RICategory getCategoryName:categoryId];
+                }
+            }
+            
+            if(VALID_NOTEMPTY(categoryName, NSString))
+            {
+                [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+            }
+            if(VALID_NOTEMPTY(subCategoryName, NSString))
+            {
+                [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
             }
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]

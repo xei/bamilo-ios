@@ -12,6 +12,8 @@
 @interface JAShareActivityProvider ()
 
 @property (nonatomic, strong) RIProduct *product;
+@property (nonatomic, assign) BOOL productShare;
+@property (nonatomic, assign) BOOL appShare;
 
 @end
 
@@ -19,13 +21,28 @@
 
 @synthesize product = _product;
 
-- (id)initWithProduct:(RIProduct *)product
+- (id)initForProductShare:(RIProduct *)product
 {
     self = [super init];
     
     if(self)
     {
         self.product = product;
+        self.productShare = YES;
+        self.appShare = NO;
+    }
+    
+    return self;
+}
+
+- (id)initForAppShare
+{
+    self = [super init];
+    
+    if(self)
+    {
+        self.productShare = NO;
+        self.appShare = YES;
     }
     
     return self;
@@ -34,61 +51,80 @@
 - (id)activityViewController:(UIActivityViewController *)activityViewController
          itemForActivityType:(NSString *)activityType
 {
-    NSString *productUrl = @"";
-    NSString *productName = @"";
-    NSString *productDescription = @"";
-    NSString *productImageUrl = @"";
-    
-    if(VALID_NOTEMPTY(self.product, RIProduct))
+    NSString *shareObject = @"";
+    if(self.productShare)
     {
-        if(VALID_NOTEMPTY(self.product.url, NSString))
+        NSString *productUrl = @"";
+        NSString *productName = @"";
+        NSString *productDescription = @"";
+        NSString *productImageUrl = @"";
+        
+        if(VALID_NOTEMPTY(self.product, RIProduct))
         {
-            productUrl = self.product.url;
-            productUrl = [productUrl stringByReplacingOccurrencesOfString:@"mobapi/" withString:@""];
+            if(VALID_NOTEMPTY(self.product.url, NSString))
+            {
+                productUrl = self.product.url;
+                
+                if(NSNotFound != [productUrl rangeOfString:RI_MOBAPI_PREFIX].location)
+                {
+                    productUrl = [productUrl stringByReplacingOccurrencesOfString:RI_MOBAPI_PREFIX withString:@""];
+                }
+
+                if(NSNotFound != [productUrl rangeOfString:RI_API_VERSION].location)
+                {
+                    productUrl = [productUrl stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
+                }
+            }
+            
+            if(VALID_NOTEMPTY(self.product.name, NSString))
+            {
+                productName = self.product.name;
+            }
+            
+            if(VALID_NOTEMPTY(self.product.descriptionString, NSString))
+            {
+                productDescription = self.product.descriptionString;
+            }
+            
+            if(self.product.images.count > 0)
+            {
+                RIImage *image = [self.product.images firstObject];
+                productImageUrl = image.url;
+            }
         }
         
-        if(VALID_NOTEMPTY(self.product.name, NSString))
+        if ([activityType isEqualToString:UIActivityTypeMessage])
         {
-            productName = self.product.name;
+            NSString *smsShare = [NSString stringWithFormat:@"%@: %@", STRING_SHARE_PRODUCT_MESSAGE, productUrl];
+            
+            shareObject = smsShare;
         }
         
-        if(VALID_NOTEMPTY(self.product.descriptionString, NSString))
+        else if ([activityType isEqualToString:UIActivityTypeMail])
         {
-            productDescription = self.product.descriptionString;
+            productUrl = [productUrl stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/mobapi"]
+                                                               withString:@""];
+            
+            NSString *emailShare = [NSString stringWithFormat:@"<html><body>%@:<br><br><a href='%@'><img src='%@'></a><br><br><a href='%@'>%@</a></body></html>", STRING_SHARE_PRODUCT_MESSAGE, productUrl, productImageUrl, productUrl, productName];
+            
+            shareObject = emailShare;
         }
         
-        if(self.product.images.count > 0)
+        else
         {
-            RIImage *image = [self.product.images firstObject];
-            productImageUrl = image.url;
+            NSString *socialShare = [NSString stringWithFormat:@"%@: %@ \n\n%@", STRING_SHARE_PRODUCT_MESSAGE, productName, productUrl];
+            
+            shareObject = socialShare;
         }
+        
+        shareObject = productUrl;
     }
-    
-    if ([activityType isEqualToString:UIActivityTypeMessage])
+    else if(self.appShare)
     {
-        NSString *smsShare = [NSString stringWithFormat:@"%@: %@", STRING_SHARE_PRODUCT_MESSAGE, productUrl];
-        
-        return smsShare;
+        shareObject = [NSString stringWithFormat:@"%@ %@", STRING_INSTALL_JUMIA_IOS, kAppStoreUrl];
     }
     
-    else if ([activityType isEqualToString:UIActivityTypeMail])
-    {
-        productUrl = [productUrl stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/mobapi"]
-                                                           withString:@""];
-        
-        NSString *emailShare = [NSString stringWithFormat:@"<html><body>%@:<br><br><a href='%@'><img src='%@'></a><br><br><a href='%@'>%@</a></body></html>", STRING_SHARE_PRODUCT_MESSAGE, productUrl, productImageUrl, productUrl, productName];
-        
-        return emailShare;
-    }
-    
-    else
-    {
-        NSString *socialShare = [NSString stringWithFormat:@"%@: %@ \n\n%@", STRING_SHARE_PRODUCT_MESSAGE, productName, productUrl];
-        
-        return socialShare;
-    }
-    
-    return productUrl;
+    return shareObject;
 }
 
 - (id) activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController

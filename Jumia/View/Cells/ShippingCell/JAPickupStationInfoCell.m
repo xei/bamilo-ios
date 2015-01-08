@@ -191,7 +191,7 @@
     
     [self.image setImageWithURL:[NSURL URLWithString:pickupStation.image]
                placeholderImage:[UIImage imageNamed:@"placeholder_variations"]];
-    [self.image changeImageSize:0.0f andWidth:60.0f];
+    [self.image changeImageHeight:0.0f andWidth:60.0f];
     
     self.clickableView.frame = self.bounds;
 }

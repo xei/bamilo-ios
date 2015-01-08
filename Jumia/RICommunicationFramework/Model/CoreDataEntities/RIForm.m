@@ -22,24 +22,50 @@
 @dynamic fields;
 @dynamic formIndex;
 
++ (NSString *)getForm:(NSString *)formIndexID
+         successBlock:(void (^)(id))successBlock
+         failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock
+{
+    return [self getForm:formIndexID
+          extraArguments:nil
+            successBlock:successBlock
+            failureBlock:failureBlock];
+}
+
 + (NSString*)getForm:(NSString*)formIndexID
+      extraArguments:(NSDictionary*)extraArguments
         successBlock:(void (^)(id form))successBlock
         failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 {
     //get form for index
+    
     return [RIFormIndex getFormWithIndexId:formIndexID successBlock:^(RIFormIndex* formIndex) {
         
-        if (VALID_NOTEMPTY(formIndex, RIFormIndex) && VALID_NOTEMPTY(formIndex.form, RIForm)) {
+        if (!VALID_NOTEMPTY(extraArguments, NSDictionary) && VALID_NOTEMPTY(formIndex, RIFormIndex) && VALID_NOTEMPTY(formIndex.form, RIForm)) {
             //index has form
             dispatch_async(dispatch_get_main_queue(), ^{
                 successBlock(formIndex.form);
             });
         } else {
             
-            if (VALID_NOTEMPTY(formIndex.url, NSString)) {
+            if (VALID_NOTEMPTY(formIndex.url, NSString))
+            {
+                NSURL *url = [NSURL URLWithString:formIndex.url];
+                if(VALID_NOTEMPTY(extraArguments, NSDictionary))
+                {
+                    NSArray *keys = [extraArguments allKeys];
+                    NSMutableArray *extraArgumentsArray = [[NSMutableArray alloc] init];
+                    for(NSString *key in keys)
+                    {
+                        [extraArgumentsArray addObject:[NSString stringWithFormat:@"%@=%@", key, [extraArguments objectForKey:key]]];
+                    }
+                    
+                    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", formIndex.url, [extraArgumentsArray componentsJoinedByString:@"&"]]];
+                }
                 
-                [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:formIndex.url]
-                                                                 parameters:nil httpMethodPost:YES
+                [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
+                                                                 parameters:nil
+                                                             httpMethodPost:YES
                                                                   cacheType:RIURLCacheNoCache
                                                                   cacheTime:RIURLCacheDefaultTime
                                                                successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
@@ -92,11 +118,16 @@
                                                                        
                                                                        RIForm* newForm = [RIForm parseForm:[data firstObject]];
                                                                        
-                                                                       [RIForm saveForm:newForm];
-                                                                       newForm.formIndex = formIndex;
-                                                                       formIndex.form = newForm;
-                                                                       //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
-                                                                       [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                                       // We just want to save the form if there are no extra arguments on the request.
+                                                                       // Otherwise we'll save the address form with the gender field
+                                                                       if(!VALID_NOTEMPTY(extraArguments, NSDictionary))
+                                                                       {
+                                                                           [RIForm saveForm:newForm];
+                                                                           newForm.formIndex = formIndex;
+                                                                           formIndex.form = newForm;
+                                                                           //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
+                                                                           [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                                       }
                                                                        
                                                                        dispatch_async(dispatch_get_main_queue(), ^{
                                                                            successBlock(newForm);
@@ -135,18 +166,31 @@
     } andFailureBlock:failureBlock];
 }
 
-#pragma mark - Facebook Login
 + (NSString*)sendForm:(RIForm*)form
          successBlock:(void (^)(id object))successBlock
       andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock
 {
     return [RIForm sendForm:form
+             extraArguments:nil
                  parameters:[RIForm getParametersForForm:form]
                successBlock:successBlock
             andFailureBlock:failureBlock];
 }
 
 + (NSString*)sendForm:(RIForm*)form
+           parameters:(NSDictionary *)parameters
+         successBlock:(void (^)(id object))successBlock
+      andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock
+{
+    return [RIForm sendForm:form
+             extraArguments:nil
+                 parameters:parameters
+               successBlock:successBlock
+            andFailureBlock:failureBlock];
+}
+
++ (NSString*)sendForm:(RIForm*)form
+       extraArguments:(NSDictionary *)extraArguments
            parameters:(NSDictionary*)parameters
          successBlock:(void (^)(id object))successBlock
       andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock
@@ -162,7 +206,20 @@
         }
     }
     
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
+    NSURL *url = [NSURL URLWithString:form.action];
+    if(VALID_NOTEMPTY(extraArguments, NSDictionary))
+    {
+        NSArray *keys = [extraArguments allKeys];
+        NSMutableArray *extraArgumentsArray = [[NSMutableArray alloc] init];
+        for(NSString *key in keys)
+        {
+            [extraArgumentsArray addObject:[NSString stringWithFormat:@"%@=%@", key, [extraArguments objectForKey:key]]];
+        }
+
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", form.action, [extraArgumentsArray componentsJoinedByString:@"&"]]];
+    }
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:allParameters
                                                         httpMethodPost:isPostRequest
                                                              cacheType:RIURLCacheNoCache

@@ -103,9 +103,18 @@
 {
     NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
     
-    [values setObject:[NSString stringWithFormat:@"%d", self.storedDay] forKey:self.dayField.name];
-    [values setObject:[NSString stringWithFormat:@"%d", self.storedMonth] forKey:self.monthField.name];
-    [values setObject:[NSString stringWithFormat:@"%d", self.storedYear] forKey:self.yearField.name];
+    if(self.storedDay > -1)
+    {
+        [values setObject:[NSString stringWithFormat:@"%d", self.storedDay] forKey:self.dayField.name];
+    }
+    if(self.storedMonth > -1)
+    {
+        [values setObject:[NSString stringWithFormat:@"%d", self.storedMonth] forKey:self.monthField.name];
+    }
+    if(self.storedYear > -1)
+    {
+        [values setObject:[NSString stringWithFormat:@"%d", self.storedYear] forKey:self.yearField.name];
+    }
     
     return values;
 }

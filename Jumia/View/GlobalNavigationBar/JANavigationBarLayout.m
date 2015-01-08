@@ -19,6 +19,7 @@
         self.doneButtonTitle=STRING_DONE;
         self.showMenuButton=YES;
         self.showCartButton=YES;
+        self.showSearchButton=YES;
         self.showLogo=YES;
     }
     return self;
@@ -114,6 +115,7 @@
     _showDoneButton=showDoneButton;
     if (showDoneButton) {
         self.showCartButton = NO;
+        self.showSearchButton = NO;
     }
 }
 @synthesize doneButtonTitle=_doneButtonTitle;
@@ -134,6 +136,12 @@
     if (showCartButton) {
         self.showDoneButton = NO;
     }
+}
+
+@synthesize showSearchButton=_showSearchButton;
+-(void)setShowSearchButton:(BOOL)showSearchButton
+{
+    _showSearchButton=showSearchButton;
 }
 
 @end

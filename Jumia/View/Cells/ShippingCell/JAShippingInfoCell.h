@@ -12,7 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *separator;
 
--(void)loadWithShippingFee:(NSString *)shippingFee;
+-(void)loadWithShippingFee:(NSString *)shippingFee
+              deliveryTime:(NSString *)deliveryTime;
 
 -(void)loadWithPickupStation;
 

@@ -10,6 +10,7 @@
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 #import "JAAppDelegate.h"
+#import "JAPageControl.h"
 
 @interface JAPDVGalleryView ()
 <
@@ -17,6 +18,7 @@ UIScrollViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollViewImages;
+@property (nonatomic, strong) JAPageControl* pageControl;
 @property (strong, nonatomic) NSMutableArray *modifiedArray;
 @property (strong, nonatomic) NSMutableArray *imageViewsArray;
 @property (strong, nonatomic) NSArray *source;
@@ -172,6 +174,15 @@ UIScrollViewDelegate
     }
 
     self.index = index;
+    
+    [self.pageControl removeFromSuperview];
+    self.pageControl = [[JAPageControl alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
+                                                                       self.bounds.size.height - 20.0f,
+                                                                       self.bounds.size.width,
+                                                                       10.0f)];
+    self.pageControl.numberOfPages = source.count;
+    [self addSubview:self.pageControl];
+    self.pageControl.currentPage = self.index;
 }
 
 - (void)reloadFrame:(CGRect)frame
@@ -250,13 +261,20 @@ UIScrollViewDelegate
     }
 }
 
-#pragma mark - Zoom method
-
+#pragma mark UIScrollViewDelegate
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
     UIImageView *imageView = [self.imageViewsArray objectAtIndex:scrollView.tag];
     
     return imageView;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    //add 0.5 to make sure we scroll the indicators with the middle of the page
+    //and then subtract 1 to make up for the fake image offset (fake images that are used for infinite scrolling)
+    self.pageControl.currentPage = (scrollView.contentOffset.x / self.scrollViewImages.frame.size.width) + 0.5f - 1.0f;
+
 }
 
 @end

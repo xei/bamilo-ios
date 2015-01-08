@@ -42,6 +42,7 @@
 - (void)setupView
 {
     self.translatesAutoresizingMaskIntoConstraints = YES;
+    self.titleLabel.textAlignment = (NSTextAlignmentLeft);
     
     self.alpha = 0.95f;
     
@@ -51,7 +52,7 @@
     
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.titleLabel.textColor = UIColorFromRGB(0xffffff);
-    self.titleLabel.numberOfLines = 2;
+    self.titleLabel.numberOfLines = 0;
     self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x,
                                        self.titleLabel.frame.origin.y,
                                        self.titleLabel.frame.size.width,
@@ -59,12 +60,12 @@
     
     self.errorImageView.translatesAutoresizingMaskIntoConstraints = YES;
     self.errorImageView.frame = CGRectMake(self.errorImageView.frame.origin.x,
-                                           self.errorImageView.frame.origin.y,
+                                           -self.errorImageViewHeight,
                                            self.errorImageView.frame.size.width,
                                            0);
     
     // Add tap to remove
-    self.userInteractionEnabled = YES;    
+    self.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(removeView)];
     [self addGestureRecognizer:tap];
@@ -104,29 +105,36 @@
     self.frame = CGRectMake(0.0f,
                             self.messageViewInitialY,
                             self.frame.size.width,
-                            self.messageViewHeight);
+                            0.0f);
     
+    self.errorImageView.frame = CGRectMake(self.errorImageView.frame.origin.x,
+                                           -self.errorImageViewHeight,
+                                           self.errorImageView.frame.size.width,
+                                           0.0f);
+    
+    self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x,
+                                       self.titleLabel.frame.origin.y,
+                                       self.titleLabel.frame.size.width,
+                                       0.0f);
     if (VALID(title, NSString))
     {
-        self.titleLabel.text = title;        
+        self.titleLabel.text = title;
         [self adjustFrames];
-        
         [UIView animateWithDuration:0.5f
                          animations:^{
-        
                              self.frame = CGRectMake(0.0f,
                                                      self.messageViewInitialY,
                                                      self.frame.size.width,
                                                      self.messageViewHeight);
                              
                              self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x,
-                                                                self.titleLabel.frame.origin.y,
+                                                                0.0f,
                                                                 self.titleLabel.frame.size.width,
                                                                 self.frame.size.height);
                              if(!success)
                              {
                                  self.errorImageView.frame = CGRectMake(self.errorImageView.frame.origin.x,
-                                                                        self.errorImageView.frame.origin.y,
+                                                                        (self.messageViewHeight - self.errorImageViewHeight)/2,
                                                                         self.errorImageView.frame.size.width,
                                                                         self.errorImageViewHeight);
                              }
@@ -141,19 +149,19 @@
         [UIView animateWithDuration:0.5f
                          animations:^{
                              self.errorImageView.frame = CGRectMake(self.errorImageView.frame.origin.x,
-                                                                    self.errorImageView.frame.origin.y,
+                                                                    -self.errorImageViewHeight,
                                                                     self.errorImageView.frame.size.width,
                                                                     0.0f);
+                             
+                             self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x,
+                                                                self.titleLabel.frame.origin.y,
+                                                                self.titleLabel.frame.size.width,
+                                                                0.0f);
                              
                              self.frame = CGRectMake(0.0f,
                                                      self.messageViewInitialY,
                                                      self.frame.size.width,
                                                      0.0f);
-                             
-                             self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x,
-                                                                self.titleLabel.frame.origin.y,
-                                                                self.titleLabel.frame.size.width,
-                                                                self.frame.size.height);
                          } completion:^(BOOL finished) {
                              [self removeFromSuperview];
                          }];
@@ -162,23 +170,32 @@
 
 - (void)adjustFrames
 {
-    CGRect titleLabelRect = [self.titleLabel.text boundingRectWithSize:CGSizeMake(self.frame.size.width - (2 * 6.0f), self.messageViewHeight)
-                                                               options:NSStringDrawingUsesLineFragmentOrigin
-                                                            attributes:@{NSFontAttributeName:self.titleLabel.font} context:nil];
+    CGFloat maxHeight = 88.0f;
+    CGFloat horizontalMargin = 6.0f;
+    CGFloat verticalMargin = 6.0f;
     
-    CGFloat totalWidth = titleLabelRect.size.width;
-    CGFloat remaningSpace = self.frame.size.width - totalWidth;
-    CGFloat leftMargin = (remaningSpace / 2);
+    CGFloat titleLabelStartingX = 0.0f;
+    CGFloat marginBetweenImageAndText = 10.0f;
+    
+    CGFloat roundedTitleWidth = 0.0f;
+    CGFloat roundedTitleHeight = 0.0f;
     
     if(!self.successState)
     {
-        totalWidth += self.errorImageView.frame.size.width + 10; // 10 it's the space in the elements
-        remaningSpace = self.frame.size.width - totalWidth;
-        leftMargin = (remaningSpace / 2) + self.errorImageView.frame.size.width + 10;
-        
         [self.errorImageView setHidden:NO];
+        
+        CGRect titleLabelRect = [self.titleLabel.text boundingRectWithSize:CGSizeMake(self.frame.size.width - (2 * horizontalMargin) - marginBetweenImageAndText - self.errorImageView.frame.size.width, maxHeight)
+                                                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                                                attributes:@{NSFontAttributeName:self.titleLabel.font} context:nil];
+        roundedTitleWidth = ceilf(titleLabelRect.size.width);
+        roundedTitleHeight = ceilf(titleLabelRect.size.height);
+        
+        CGFloat leftMargin = (self.frame.size.width - roundedTitleWidth - self.errorImageView.frame.size.width - marginBetweenImageAndText)/2;
+        
+        titleLabelStartingX = leftMargin + marginBetweenImageAndText + self.errorImageView.frame.size.width;
+        
         // Adjust frames
-        self.errorImageView.frame = CGRectMake(remaningSpace / 2,
+        self.errorImageView.frame = CGRectMake(leftMargin,
                                                self.errorImageView.frame.origin.y,
                                                self.errorImageView.frame.size.width,
                                                self.errorImageView.frame.size.height);
@@ -186,11 +203,28 @@
     else
     {
         [self.errorImageView setHidden:YES];
+        
+        CGRect titleLabelRect = [self.titleLabel.text boundingRectWithSize:CGSizeMake(self.frame.size.width - (2 * horizontalMargin), maxHeight)
+                                                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                                                attributes:@{NSFontAttributeName:self.titleLabel.font} context:nil];
+        
+        roundedTitleWidth = ceilf(titleLabelRect.size.width);
+        roundedTitleHeight = ceilf(titleLabelRect.size.height);
+        titleLabelStartingX = (self.frame.size.width - roundedTitleWidth)/2;
     }
-
-    [self.titleLabel setFrame:CGRectMake(leftMargin,
+    
+    if(roundedTitleHeight > self.messageViewHeight - (2 * verticalMargin))
+    {
+        self.messageViewHeight = (2 * verticalMargin) + roundedTitleHeight;
+    }
+    else if(roundedTitleHeight > maxHeight)
+    {
+        self.messageViewHeight = 88.0f;
+    }
+    
+    [self.titleLabel setFrame:CGRectMake(titleLabelStartingX,
                                          0.0f,
-                                         ceilf(titleLabelRect.size.width),
+                                         roundedTitleWidth,
                                          self.titleLabel.frame.size.height)];
 }
 

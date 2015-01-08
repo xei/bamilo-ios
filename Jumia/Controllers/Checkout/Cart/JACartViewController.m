@@ -29,6 +29,7 @@
 @property (nonatomic, assign) BOOL requestDone;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, assign) CGRect cartScrollViewInitialFrame;
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
@@ -46,6 +47,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.apiResponse = RIApiResponseSuccess;
     
     self.firstLoading = YES;
     
@@ -142,7 +145,10 @@
 {
     self.requestDone = NO;
     
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
         self.requestDone = YES;
@@ -156,6 +162,7 @@
         NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
         NSMutableDictionary *trackingDictionary = nil;
         NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
+        [self removeErrorView];
         
         for (int i = 0; i < self.cart.cartItems.count; i++) {
             RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
@@ -235,7 +242,8 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        
+        [self removeErrorView];
+        self.apiResponse = apiResponse;
         self.requestDone = YES;
         
         if(self.firstLoading)
@@ -256,7 +264,6 @@
             {
                 noConnection = YES;
             }
-            
             [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
         }
         
@@ -611,37 +618,6 @@
     [self.subtotalView addSubview:self.cartVatLabel];
     [self.subtotalView addSubview:self.cartVatValue];
     
-    self.cartShippingLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.cartShippingLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-    [self.cartShippingLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.cartShippingLabel setText:STRING_SHIPPING];
-    [self.cartShippingLabel sizeToFit];
-    [self.cartShippingLabel setBackgroundColor:[UIColor clearColor]];
-    [self.cartShippingLabel setFrame:CGRectMake(6.0f,
-                                                CGRectGetMaxY(self.cartVatLabel.frame),
-                                                self.cartShippingLabel.frame.size.width,
-                                                self.cartShippingLabel.frame.size.height)];
-    [self.subtotalView addSubview:self.cartShippingLabel];
-    
-    self.cartShippingValue = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.cartShippingValue setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-    [self.cartShippingValue setTextColor:UIColorFromRGB(0x666666)];
-    if(0.0f == [[[self cart] shippingValue] floatValue])
-    {
-        [self.cartShippingValue setText:STRING_FREE];
-    }
-    else
-    {
-        [self.cartShippingValue setText:[[self cart] shippingValueFormatted]];
-    }
-    [self.cartShippingValue sizeToFit];
-    [self.cartShippingValue setBackgroundColor:[UIColor clearColor]];
-    [self.cartShippingValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.cartShippingValue.frame.size.width - 4.0f,
-                                                CGRectGetMaxY(self.cartVatLabel.frame),
-                                                self.cartShippingValue.frame.size.width,
-                                                self.cartShippingValue.frame.size.height)];
-    [self.subtotalView addSubview:self.cartShippingValue];
-    
     self.extraCostsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.extraCostsLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
     [self.extraCostsLabel setTextColor:UIColorFromRGB(0x666666)];
@@ -649,7 +625,7 @@
     [self.extraCostsLabel sizeToFit];
     [self.extraCostsLabel setBackgroundColor:[UIColor clearColor]];
     [self.extraCostsLabel setFrame:CGRectMake(6.0f,
-                                              CGRectGetMaxY(self.cartShippingLabel.frame),
+                                              CGRectGetMaxY(self.cartVatLabel.frame),
                                               self.extraCostsLabel.frame.size.width,
                                               self.extraCostsLabel.frame.size.height)];
     [self.subtotalView addSubview:self.extraCostsLabel];
@@ -661,7 +637,7 @@
     [self.extraCostsValue sizeToFit];
     [self.extraCostsValue setBackgroundColor:[UIColor clearColor]];
     [self.extraCostsValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.extraCostsValue.frame.size.width - 4.0f,
-                                              CGRectGetMaxY(self.cartShippingLabel.frame),
+                                              CGRectGetMaxY(self.cartVatLabel.frame),
                                               self.extraCostsValue.frame.size.width,
                                               self.extraCostsValue.frame.size.height)];
     [self.subtotalView addSubview:self.extraCostsValue];
@@ -893,9 +869,16 @@
     [self.picker setDelegate:self];
     
     NSMutableArray *dataSource = [NSMutableArray new];
+    
     if(VALID_NOTEMPTY([self.currentItem maxQuantity], NSNumber) && 0 < [[self.currentItem maxQuantity] integerValue])
     {
-        for (int i = 0; i < [[self.currentItem maxQuantity] integerValue]; i++)
+        NSInteger maxQuantity = [[self.currentItem maxQuantity] integerValue];
+        if(VALID_NOTEMPTY([self.currentItem stock], NSNumber) && [[self.currentItem stock] integerValue] < [[self.currentItem maxQuantity] integerValue])
+        {
+            maxQuantity = [[self.currentItem stock] integerValue];
+        }
+        
+        for (int i = 0; i < maxQuantity; i++)
         {
             [dataSource addObject:[NSString stringWithFormat:@"%d", (i + 1)]];
         }
@@ -904,7 +887,8 @@
     NSString *selectedItem = [NSString stringWithFormat:@"%d", ([[self.currentItem quantity] integerValue] )];
     
     [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:selectedItem];
+                       previousText:selectedItem
+                    leftButtonTitle:nil];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
@@ -991,7 +975,7 @@
             }
             else
             {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil

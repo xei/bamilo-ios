@@ -21,6 +21,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *genericDetailLabel;
 @property (weak, nonatomic) IBOutlet UIView *noInternetFirstView;
 @property (weak, nonatomic) IBOutlet UIView *errorFirstView;
+@property (weak, nonatomic) IBOutlet UILabel *noConnectionDetailsLabel;
+
+@property (strong, nonatomic) UIImageView *animationView;
 
 @end
 
@@ -52,6 +55,7 @@ void(^retryBock)(BOOL dismiss);
 - (void)setupNoConnectionViewForNoInternetConnection:(BOOL)internetConnection
 {
     self.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.backgroundColor = UIColorFromRGB(0xc8c8c8);
     self.noNetworkView.layer.cornerRadius = 5.0f;
 
@@ -59,15 +63,48 @@ void(^retryBock)(BOOL dismiss);
     [self.retryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     
     self.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.noConnectionDetailsLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.genericErrorLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.genericDetailLabel.textColor = UIColorFromRGB(0x4e4e4e);
     
+    CGRect buttonTextLabelRect = [self.textLabel.text boundingRectWithSize: CGSizeMake(self.retryButton.frame.size.width, self.retryButton.frame.size.height)
+                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                  attributes: @{NSFontAttributeName:self.textLabel.font} context:nil];
+    
+    [self.textLabel setFrame:(CGRectMake((self.retryButton.frame.size.width - buttonTextLabelRect.size.width)/2,
+                                         self.textLabel.frame.origin.y,
+                                         buttonTextLabelRect.size.width,
+                                         buttonTextLabelRect.size.height))];
+    
+    UIImage *tryAgainImage = [UIImage imageNamed:@"tryAgainAnimationF1"];
+    self.animationView = [[UIImageView alloc] initWithFrame:CGRectMake(self.textLabel.frame.origin.x - 24.0f - tryAgainImage.size.width ,
+                                                                       (self.retryButton.frame.size.height - tryAgainImage.size.height)/2,
+                                                                       tryAgainImage.size.width,
+                                                                       tryAgainImage.size.height)];
+
+    [self.animationView setImage:tryAgainImage];
+    
+    NSMutableArray* animationFrames = [NSMutableArray new];
+    for (int i = 1; i <= 25; i++) {
+        NSString* frameName = [NSString stringWithFormat:@"tryAgainAnimationF%d", i];
+        UIImage* frame = [UIImage imageNamed:frameName];
+        [animationFrames addObject:frame];
+    }
+    
+    self.animationView.animationImages = [animationFrames copy];
+
+    self.animationView.animationDuration = 2.0f;
+    
+    self.animationView.alpha = 1.0f;
+    [self.retryButton addSubview:self.animationView];
+
     if (internetConnection)
     {
-        self.textLabel.text = STRING_NO_NEWTORK;
-        
+        self.textLabel.text = STRING_NO_CONNECTION;
+        self.noConnectionDetailsLabel.text = STRING_NO_NETWORK_DETAILS;
         self.noInternetImageView.hidden = NO;
         self.textLabel.hidden = NO;
+        self.noConnectionDetailsLabel.hidden = NO;
         self.genericImageView.hidden = YES;
         self.genericErrorLabel.hidden = YES;
         self.genericDetailLabel.hidden = YES;
@@ -78,6 +115,7 @@ void(^retryBock)(BOOL dismiss);
     {
         self.noInternetImageView.hidden = YES;
         self.textLabel.hidden = YES;
+        self.noConnectionDetailsLabel.hidden = YES; 
         self.genericImageView.hidden = NO;
         self.genericErrorLabel.hidden = NO;
         self.genericDetailLabel.hidden = NO;
@@ -91,12 +129,12 @@ void(^retryBock)(BOOL dismiss);
 
 - (IBAction)retryConnectionButtonTapped:(id)sender
 {
+    [self.animationView startAnimating];
+    
     if (retryBock)
     {
         retryBock(YES);
-    }
-        
-    [self removeFromSuperview];
+    }   
 }
 
 - (void)setRetryBlock:(void(^)(BOOL dismiss))completion

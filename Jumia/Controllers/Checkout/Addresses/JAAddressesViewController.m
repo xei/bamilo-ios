@@ -54,6 +54,9 @@ UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
 @property (assign, nonatomic) BOOL firstLoading;
+@property (assign, nonatomic) BOOL shouldForceAddAddress;
+
+@property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
@@ -61,11 +64,19 @@ UICollectionViewDelegateFlowLayout>
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
 {
-    [self.stepBackground setHidden:YES];
-    [self.stepView setHidden:YES];
     [self.contentScrollView setHidden:YES];
-    [self.orderSummary setHidden:YES];
     [self.bottomView setHidden:YES];
+    
+    if(self.fromCheckout)
+    {
+        [self.stepBackground setHidden:YES];
+        [self.stepView setHidden:YES];
+    }
+    
+    if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
+    {
+        [self.orderSummary setHidden:YES];
+    }
     
     [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
 }
@@ -74,12 +85,12 @@ UICollectionViewDelegateFlowLayout>
 {
     [super viewDidLoad];
     
+    self.apiResponse = RIApiResponseSuccess;
     self.firstLoading = YES;
     
-    self.screenName = @"Address";
-    self.navBarLayout.title = STRING_CHECKOUT;
+    self.shouldForceAddAddress = YES;
     
-    self.navBarLayout.showCartButton = NO;
+    self.screenName = @"Address";
     
     self.firstCollectionViewAddresses = [[NSArray alloc] init];
     self.secondCollectionViewAddresses = [[NSArray alloc] init];
@@ -89,11 +100,21 @@ UICollectionViewDelegateFlowLayout>
     
     self.useSameAddressAsBillingAndShipping = YES;
     
-    self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
+    if(self.fromCheckout)
+    {
+        self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
+        self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
+        self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
+        self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
+        [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
+    }
+    else
+    {
+        [self.stepBackground removeFromSuperview];
+        [self.stepView removeFromSuperview];
+        [self.stepIcon removeFromSuperview];
+        [self.stepLabel removeFromSuperview];
+    }
     
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
@@ -155,24 +176,38 @@ UICollectionViewDelegateFlowLayout>
     [self.contentScrollView setHidden:YES];
     [self.bottomView setHidden:YES];
     
-    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
+    if(self.fromCheckout)
+    {
+        [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
+    }
     
     [self getAddressList];
 }
 
 - (void)getAddressList
 {
-    [self showLoading];
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    {
+        [self showLoading];
+    }
     
     [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
         
         self.addresses = adressList;
         if(VALID_NOTEMPTY(self.addresses, NSDictionary))
         {
-            [self.stepBackground setHidden:NO];
-            [self.stepView setHidden:NO];
+            if(self.fromCheckout)
+            {
+                [self.stepBackground setHidden:NO];
+                [self.stepView setHidden:NO];
+            }
+            
+            if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
+            {
+                [self.orderSummary setHidden:NO];
+            }
+            
             [self.contentScrollView setHidden:NO];
-            [self.orderSummary setHidden:NO];
             [self.bottomView setHidden:NO];
             
             [self hideLoading];
@@ -193,16 +228,28 @@ UICollectionViewDelegateFlowLayout>
         }
         else
         {
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+            [self hideLoading];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
-                                                                object:nil
-                                                              userInfo:userInfo];
+            if(self.shouldForceAddAddress)
+            {
+                // shouldForceAddAddress should be setted to NO otherwise, everytime that the user goes back in add address screen the screen will reopen
+                self.shouldForceAddAddress = NO;
+                
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:self.fromCheckout]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
+                                                                    object:nil
+                                                                  userInfo:userInfo];
+            }
+            else
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification	 object:nil];
+            }
         }
-        
-        
+        [self removeErrorView];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        
+        [self removeErrorView];
+        self.apiResponse = apiResponse;
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
@@ -212,7 +259,7 @@ UICollectionViewDelegateFlowLayout>
                                                   data:[trackingDictionary copy]];
         
         [self showErrorView:(RIApiResponseNoInternetConnection == apiResponse) startingY:0.0f selector:@selector(getAddressList) objects:nil];
-                
+        
         [self hideLoading];
     }];
 }
@@ -222,7 +269,7 @@ UICollectionViewDelegateFlowLayout>
     [self showLoading];
     
     CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && self.fromCheckout)
     {
         newWidth = self.view.frame.size.width;
     }
@@ -235,7 +282,7 @@ UICollectionViewDelegateFlowLayout>
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && self.fromCheckout)
     {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
@@ -314,28 +361,33 @@ UICollectionViewDelegateFlowLayout>
 
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
+    CGFloat scrollViewStartY = 0.0f;
+    if(self.fromCheckout)
+    {
+        [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
+        scrollViewStartY = self.stepBackground.frame.size.height;
+    }
     
     if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
     {
         [self.orderSummary removeFromSuperview];
     }
     
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width))
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width) && self.fromCheckout)
     {
         CGFloat orderSummaryRightMargin = 6.0f;
         self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
-                                                                                 self.stepBackground.frame.size.height,
+                                                                                 scrollViewStartY,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
-                                                                                 self.view.frame.size.height - self.stepBackground.frame.size.height)];
-        [self.orderSummary loadWithCart:self.cart];
+                                                                                 self.view.frame.size.height - scrollViewStartY)];
+        [self.orderSummary loadWithCart:self.cart shippingFee:NO];
         [self.view addSubview:self.orderSummary];
     }
     
     [self.contentScrollView setFrame:CGRectMake(0.0f,
-                                                self.stepBackground.frame.size.height,
+                                                scrollViewStartY,
                                                 width,
-                                                self.view.frame.size.height - self.stepBackground.frame.size.height)];
+                                                self.view.frame.size.height - scrollViewStartY)];
     
     [self.firstAddressesCollectionView setFrame:CGRectMake(6.0f,
                                                            6.0f,
@@ -388,7 +440,15 @@ UICollectionViewDelegateFlowLayout>
                                             self.view.frame.size.height - self.bottomView.frame.size.height,
                                             width,
                                             self.bottomView.frame.size.height)];
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    if(self.fromCheckout)
+    {
+        [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    }
+    else
+    {
+        [self.bottomView addButton:STRING_SAVE_LABEL target:self action:@selector(nextStepButtonPressed)];
+    }
+    
     [self.bottomView setHidden:NO];
 }
 
@@ -469,7 +529,7 @@ UICollectionViewDelegateFlowLayout>
     }
     
     CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && self.fromCheckout)
     {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
@@ -529,7 +589,7 @@ UICollectionViewDelegateFlowLayout>
                 {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutEditAddressScreenNotification
                                                                         object:nil
-                                                                      userInfo:[NSDictionary dictionaryWithObjects:@[addressToEdit] forKeys:@[@"address_to_edit"]]];
+                                                                      userInfo:[NSDictionary dictionaryWithObjects:@[addressToEdit, [NSNumber numberWithBool:self.fromCheckout]] forKeys:@[@"address_to_edit", @"from_checkout"]]];
                 }
             }
         }
@@ -830,7 +890,7 @@ UICollectionViewDelegateFlowLayout>
             else if(indexPath.row < ([self.firstCollectionViewAddresses count] + 2))
             {
                 // Add new address
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:self.fromCheckout]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil
@@ -871,7 +931,7 @@ UICollectionViewDelegateFlowLayout>
             // Add new address
             if(self.useSameAddressAsBillingAndShipping)
             {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:self.fromCheckout]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil
@@ -879,7 +939,7 @@ UICollectionViewDelegateFlowLayout>
             }
             else
             {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:self.fromCheckout]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil
@@ -918,7 +978,16 @@ UICollectionViewDelegateFlowLayout>
             
             [self hideLoading];
             
-            [JAUtils goToCheckout:checkout];
+            if(self.fromCheckout)
+            {
+                [JAUtils goToCheckout:checkout];
+            }
+            else
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+                                                                    object:nil
+                                                                  userInfo:nil];
+            }
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

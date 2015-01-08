@@ -75,6 +75,10 @@
 #define kGTMEventTransactionProductQuantityKey  @"quantity"
 #define kGTMEventScreenNameKey                  @"screenName"
 #define kGTMEventLoadTimeKey                    @"loadTime"
+#define kGTMEventInstallNetworkKey              @"installNetwork"
+#define kGTMEventInstallAdgroupKey              @"installAdgroup"
+#define kGTMEventInstallCampaignKey             @"installCampaign"
+#define kGTMEventInstallCreativeKey             @"installCreative"
 
 NSString * const kGTMToken = @"kGTMToken";
 
@@ -85,6 +89,10 @@ NSString * const kGTMToken = @"kGTMToken";
 @property (nonatomic, strong) TAGContainer *container;
 @property (nonatomic, strong) NSMutableArray *pendingEvents;
 @property (nonatomic, assign) BOOL containerIsAvailable;
+
+// Used for sending traffic in the background.
+@property(nonatomic, assign) BOOL okToWait;
+@property(nonatomic, copy) void (^dispatchHandler)(TAGDispatchResult result);
 
 @end
 
@@ -116,6 +124,7 @@ NSString * const kGTMToken = @"kGTMToken";
         [events addObject:[NSNumber numberWithInt:RIEventRegisterSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventSignupFail]];
         [events addObject:[NSNumber numberWithInt:RIEventRegisterFail]];
+        [events addObject:[NSNumber numberWithInt:RIEventLogout]];
         [events addObject:[NSNumber numberWithInt:RIEventNewsletter]];
         [events addObject:[NSNumber numberWithInt:RIEventSearch]];
         [events addObject:[NSNumber numberWithInt:RIEventShareEmail]];
@@ -143,6 +152,7 @@ NSString * const kGTMToken = @"kGTMToken";
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]];
         [events addObject:[NSNumber numberWithInt:RIEventCloseApp]];
+        [events addObject:[NSNumber numberWithInt:RIEventInstallViaAdjust]];
         
         self.registeredEvents = [events copy];
     }
@@ -213,6 +223,31 @@ NSString * const kGTMToken = @"kGTMToken";
     {
         [self.pendingEvents addObject:event];
     }
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    self.okToWait = YES;
+    __weak RIGTMTracker *weakSelf = self;
+    __block UIBackgroundTaskIdentifier backgroundTaskId =
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        weakSelf.okToWait = NO;
+    }];
+    
+    if (backgroundTaskId == UIBackgroundTaskInvalid) {
+        return;
+    }
+    
+    self.dispatchHandler = ^(TAGDispatchResult result) {
+        // If the last dispatch succeeded, and we're still OK to stay in the background then kick off
+        // again.
+        if (result == kTAGDispatchGood && weakSelf.okToWait ) {
+            [[TAGManager instance] dispatchWithCompletionHandler:weakSelf.dispatchHandler];
+        } else {
+            [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskId];
+        }
+    };
+    [[TAGManager instance] dispatchWithCompletionHandler:self.dispatchHandler];
 }
 
 #pragma mark - RILaunchEventTracker implementation
@@ -871,6 +906,26 @@ NSString * const kGTMToken = @"kGTMToken";
                 [pushedData setObject:@"openScreen" forKey:kGTMEventKey];
                 [pushedData setObject:[data objectForKey:kRIEventScreenNameKey] forKey:kGTMEventScreenNameKey];
                 break;
+            case RIEventInstallViaAdjust:
+                [pushedData setObject:@"appInstall" forKey:kGTMEventKey];
+
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventNetworkKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventNetworkKey] forKey:kGTMEventInstallNetworkKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventAdgroupKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventAdgroupKey] forKey:kGTMEventInstallAdgroupKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCampaignKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventCampaignKey] forKey:kGTMEventInstallCampaignKey];
+                }
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCreativeKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventCreativeKey] forKey:kGTMEventInstallCreativeKey];
+                }
+                break;
         }
         
         [self pushEvent:pushedData];
@@ -891,9 +946,9 @@ NSString * const kGTMToken = @"kGTMToken";
         [pushedData setObject:[data objectForKey:kRIEcommercePaymentMethodKey] forKey:kGTMEventPaymentMethodKey];
     }
     
-    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceCouponKey], NSString))
+    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceCouponValue], NSNumber))
     {
-        [pushedData setObject:[data objectForKey:kRIEcommerceCouponKey] forKey:kGTMEventVoucherAmountKey];
+        [pushedData setObject:[data objectForKey:kRIEcommerceCouponValue] forKey:kGTMEventVoucherAmountKey];
     }
     
     if(VALID_NOTEMPTY([data objectForKey:kRIEcommercePreviousPurchases], NSNumber))

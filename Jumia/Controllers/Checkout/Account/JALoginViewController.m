@@ -30,11 +30,11 @@ FBLoginViewDelegate
 
 // Login
 @property (strong, nonatomic) JADynamicForm *loginDynamicForm;
-@property (weak, nonatomic) IBOutlet UIView *loginView;
-@property (weak, nonatomic) IBOutlet UIView *loginSeparator;
-@property (weak, nonatomic) IBOutlet UILabel *loginLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *loginArrow;
-@property (weak, nonatomic) IBOutlet UIView *loginFormView;
+@property (strong, nonatomic) UIView *loginView;
+@property (strong, nonatomic) UIView *loginSeparator;
+@property (strong, nonatomic) UILabel *loginLabel;
+@property (strong, nonatomic) UIImageView *loginArrow;
+@property (strong, nonatomic) UIView *loginFormView;
 
 @property (assign, nonatomic) CGFloat loginFormHeight;
 @property (strong, nonatomic) UIButton *loginButton;
@@ -47,13 +47,13 @@ FBLoginViewDelegate
 
 // Signup
 @property (strong, nonatomic) JADynamicForm *signupDynamicForm;
-@property (weak, nonatomic) IBOutlet UIView *signUpView;
-@property (weak, nonatomic) IBOutlet UIView *signUpSeparator;
-@property (weak, nonatomic) IBOutlet UILabel *signUpLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *signUpArrow;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *signUpViewConstrains;
-@property (weak, nonatomic) IBOutlet UIView *signUpFormView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *signUpViewFormConstrains;
+@property (strong, nonatomic) UIView *signUpView;
+@property (strong, nonatomic) UIView *signUpSeparator;
+@property (strong, nonatomic) UILabel *signUpLabel;
+@property (strong, nonatomic) UIImageView *signUpArrow;
+@property (strong, nonatomic) NSLayoutConstraint *signUpViewConstrains;
+@property (strong, nonatomic) UIView *signUpFormView;
+@property (strong, nonatomic)  NSLayoutConstraint *signUpViewFormConstrains;
 @property (assign, nonatomic) CGFloat signupFormHeight;
 @property (strong, nonatomic) UIButton *signUpButton;
 @property (strong, nonatomic) UIView *facebookSignupSeparator;
@@ -68,10 +68,10 @@ FBLoginViewDelegate
 @property (nonatomic, strong)JAOrderSummaryView* orderSummaryView;
 @property (assign, nonatomic) CGRect orderSummaryOriginalFrame;
 
-@property (nonatomic, assign)CGRect mainLandscapeRect;
-@property (nonatomic, assign)CGRect subLandscapeRect;
-@property (nonatomic, assign)CGRect mainPortraitRect;
-
+@property (strong, nonatomic) UIView *viewToScroll;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (assign, nonatomic) CGRect scrollViewOriginalFrame;
+@property (strong, nonatomic) JACheckBoxComponent* checkBoxComponent;
 @end
 
 @implementation JALoginViewController
@@ -106,41 +106,105 @@ FBLoginViewDelegate
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
     self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
     self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
     self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
     self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
     [self.stepLabel setText:STRING_CHECKOUT_ABOUT_YOU];
-    self.loginView.layer.cornerRadius = 5.0f;
     
-    self.loginView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.loginFormView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.viewToScroll = [[UIView alloc] initWithFrame:self.scrollView.bounds];
     
     UITapGestureRecognizer *showLoginViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(showLogin)];
+    
+    self.loginView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.viewToScroll.frame.size.width-12.0f, 26.0f)];
+    [self.loginView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    self.loginView.layer.cornerRadius = 5.0f;
     [self.loginView addGestureRecognizer:showLoginViewTap];
+    
+    self.loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+                                                                0,
+                                                                self.loginView.frame.size.width - self.loginArrow.frame.size.width - 12.0f,
+                                                                self.loginView.frame.size.height)];
     [self.loginLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+    [self.loginLabel setBackgroundColor:[UIColor clearColor]];
     [self.loginLabel setText:STRING_LOGIN];
+    [self.loginLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]];
+    [self.loginView addSubview:self.loginLabel];
+    
+    self.loginArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
+    [self.loginArrow setFrame:CGRectMake(self.loginView.frame.size.width - self.loginArrow.frame.size.width - 6.0f,
+                                         (self.loginView.frame.size.height - self.loginArrow.frame.size.height)/2,
+                                         self.loginArrow.frame.size.width,
+                                         self.loginArrow.frame.size.height)];
+    [self.loginView addSubview:self.loginArrow];
+    
+    self.loginSeparator = [[UIImageView alloc] initWithFrame:CGRectMake(0,
+                                                                        26.0f,
+                                                                        self.loginView.frame.size.width,
+                                                                        1.0f)];
     [self.loginSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.loginSeparator setHidden:YES];
+    [self.loginView addSubview:self.loginSeparator];
     
-    self.signUpView.layer.cornerRadius = 5.0f;
-    
-    self.signUpView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.signUpFormView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.loginFormView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.loginSeparator.frame), 0, 0)];
+    [self.loginFormView setHidden: YES];
+    [self.loginView addSubview:self.loginFormView];
+    [self.viewToScroll addSubview:self.loginView];
     
     UITapGestureRecognizer *showSignupViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(showSignup)];
+    
+    self.signUpView = [[UIView alloc]initWithFrame:CGRectMake(6.0f, CGRectGetMaxY(self.loginView.frame) + 6.0f,self.viewToScroll.frame.size.width-12.0f, 26.0f)];
+    [self.signUpView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    self.signUpView.layer.cornerRadius = 5.0f;
     [self.signUpView addGestureRecognizer:showSignupViewTap];
-    [self.signUpLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.signUpLabel setText:STRING_SIGNUP];
+    
     [self.signUpSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    
+    
+    self.signUpLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
+                                                                 0,
+                                                                 self.signUpView.frame.size.width - self.signUpArrow.frame.size.width - 12.0f,
+                                                                 self.signUpView.frame.size.height)];
+    [self.signUpLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+    [self.signUpLabel setBackgroundColor:[UIColor clearColor]];
+    [self.signUpLabel setText:STRING_SIGNUP];
+    self.signUpLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    [self.signUpView addSubview:self.signUpLabel];
+    
+    self.signUpArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
+    [self.signUpArrow setFrame:CGRectMake(self.signUpView.frame.size.width - self.signUpArrow.frame.size.width - 6.0f,
+                                          (self.signUpView.frame.size.height - self.signUpArrow.frame.size.height)/2,
+                                          self.signUpArrow.frame.size.width,
+                                          self.signUpArrow.frame.size.height)];
+    [self.signUpView addSubview:self.signUpArrow];
+    
+    self.signUpSeparator = [[UIImageView alloc] initWithFrame:CGRectZero];
+    [self.signUpSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.signUpView addSubview:self.signUpSeparator];
+    
+    self.signUpFormView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.signUpSeparator.frame), 0, 0)];
+    [self.signUpFormView setHidden:YES];
+    [self.signUpView addSubview:self.signUpFormView];
+    [self.viewToScroll addSubview:self.signUpView];
+    
+    [self.scrollView addSubview:self.viewToScroll];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     
     CGFloat orderSummaryY = self.stepBackground.frame.size.height;
     CGFloat orderSummaryWidth = 250.0f;
@@ -151,7 +215,7 @@ FBLoginViewDelegate
                                                                                  self.view.frame.size.height - orderSummaryY)];
     self.orderSummaryOriginalFrame = self.orderSummaryView.frame;
     if (VALID_NOTEMPTY(self.cart, RICart)) {
-        [self.orderSummaryView loadWithCart:self.cart];
+        [self.orderSummaryView loadWithCart:self.cart shippingFee:NO];
     } else {
         [self getCart];
     }
@@ -172,9 +236,10 @@ FBLoginViewDelegate
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form) {
            
-           self.loginDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
+           self.loginDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:nil values:[self getEmail] startingPosition:7.0f hasFieldNavigation:YES];
+           
            self.loginFormHeight = 0.0f;
-
+           
            for(UIView *view in self.loginDynamicForm.formViews)
            {
                [self.loginFormView addSubview:view];
@@ -201,7 +266,7 @@ FBLoginViewDelegate
            
            self.signupDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
            self.signupFormHeight = 0.0f;
-
+           
            for(UIView *view in self.signupDynamicForm.formViews)
            {
                [self.signUpFormView addSubview:view];
@@ -229,7 +294,7 @@ FBLoginViewDelegate
     [self showLoading];
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
         if (VALID_NOTEMPTY(self.orderSummaryView, JAOrderSummaryView) && VALID_NOTEMPTY(cartData.cartItems, NSArray)) {
-            [self.orderSummaryView loadWithCart:cartData];
+            [self.orderSummaryView loadWithCart:cartData shippingFee:NO];
         }
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
@@ -243,12 +308,19 @@ FBLoginViewDelegate
     
     [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
     
+    [self.scrollView setFrame:CGRectMake(0,
+                                         CGRectGetMaxY(self.stepView.frame),
+                                         self.view.frame.size.width,
+                                         self.view.frame.size.height - CGRectGetMaxY(self.stepView.frame))];
+    
+    self.scrollViewOriginalFrame = self.scrollView.frame;
+    
     if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
         self.orderSummaryView.hidden = NO;
     } else {
         self.orderSummaryView.hidden = YES;
     }
-
+    
     CGFloat margin = 6.0f;
     CGFloat componentWidth;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
@@ -256,6 +328,15 @@ FBLoginViewDelegate
     } else {
         componentWidth = 296.0f;
     }
+    [self.loginFormView setFrame:CGRectMake(self.loginFormView.frame.origin.x,
+                                            self.loginFormView.frame.origin.y,
+                                            self.loginView.frame.size.width,
+                                            self.loginView.frame.size.height)];
+    
+    [self.signUpFormView setFrame:CGRectMake(self.loginFormView.frame.origin.x,
+                                             self.loginFormView.frame.origin.y,
+                                             self.loginView.frame.size.width,
+                                             self.loginView.frame.size.height)];
     
     for(UIView *view in self.loginDynamicForm.formViews) {
         [view setFrame:CGRectMake(view.frame.origin.x,
@@ -270,6 +351,11 @@ FBLoginViewDelegate
                                   componentWidth + margin*2, //form already has its own margins
                                   view.frame.size.height)];
     }
+    
+    [self.viewToScroll setFrame:CGRectMake(0.0f,
+                                           0.0f,
+                                           self.scrollView.frame.size.width,
+                                           CGRectGetMaxY(self.signUpView.frame) + 6.0f)];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -296,15 +382,26 @@ FBLoginViewDelegate
     }
     
     [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
-        
+    
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    [self hideKeyboard];
+    
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
+                                               CGRectGetMaxY(self.signUpView.frame) + 6.0f)];
+}
+
+- (void) hideKeyboard
+{
+    [self.loginDynamicForm resignResponder];
+    [self.signupDynamicForm resignResponder];
 }
 
 - (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    CGFloat stepViewLeftMargin = 25.0f;
+    CGFloat stepViewLeftMargin = 18.0f;
     NSString *stepBackgroundImageName = @"headerCheckoutStep1";
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
@@ -374,10 +471,12 @@ FBLoginViewDelegate
         self.firstLoading = NO;
     }
     
+    [self removeErrorView];
+    
     if(!self.loadFailed)
     {
         [self finishingSetupViews];
-        
+        [self.checkBoxComponent setHidden:YES];
         [self showLogin];
     }
     else
@@ -404,13 +503,21 @@ FBLoginViewDelegate
 {
     CGFloat componentWidth;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-        componentWidth = 744.0f;
+        componentWidth = 740.0f;
     } else {
         componentWidth = 296.0f;
     }
+    self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
+    self.loginFormHeight += 10.0f;
+    [self.checkBoxComponent setFrame:CGRectMake(self.facebookLoginButton.frame.origin.x,
+                                                self.loginFormHeight,
+                                                self.checkBoxComponent.frame.size.width - 12.0f,
+                                                self.checkBoxComponent.frame.size.height)];
+    [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
+    [self.checkBoxComponent.switchComponent setOn:YES];
+    [self.loginFormView addSubview:self.checkBoxComponent];
+    self.loginFormHeight += self.checkBoxComponent.frame.size.height + 10.0f;
     
-    
-    self.loginFormHeight += 15.0f;
     // Login
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
@@ -495,7 +602,7 @@ FBLoginViewDelegate
     [self.facebookLoginButton setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
     [self.facebookLoginButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.facebookLoginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
-
+    
     [self.loginFormView addSubview:self.facebookLoginButton];
     self.loginFormHeight += self.facebookLoginButton.frame.size.height;
     
@@ -582,19 +689,30 @@ FBLoginViewDelegate
         
         [UIView animateWithDuration:0.5 animations:^{
             
+            
             [self.loginFormView setFrame:CGRectMake(self.loginFormView.frame.origin.x,
                                                     self.loginFormView.frame.origin.y,
                                                     self.loginFormView.frame.size.width,
                                                     self.loginFormHeight)];
             
             [self.loginView setFrame:CGRectMake(self.loginView.frame.origin.x,
-                                                27.0f,
+                                                6.0,
                                                 self.loginView.frame.size.width,
                                                 27.0f + self.loginFormHeight + 6.0f)];
         } completion:^(BOOL finished) {
             [self.loginArrow setImage:[UIImage imageNamed:@"arrowOrangeOpened"]];
             [self.loginFormView setHidden:NO];
+            [self.loginSeparator setHidden:NO];
+            [self.checkBoxComponent setHidden:NO];
             self.isAnimationRunning = NO;
+            [self.signUpSeparator setHidden:YES];
+            
+            [self.viewToScroll setFrame:CGRectMake(0.0f,
+                                                   0.0f,
+                                                   self.scrollView.frame.size.width,
+                                                   CGRectGetMaxY(self.signUpView.frame)+6.0f)];
+            
+            [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.signUpView.frame)+6.0f)];
         }];
     }
 }
@@ -609,10 +727,11 @@ FBLoginViewDelegate
                                             0.0f)];
     
     [self.loginView setFrame:CGRectMake(self.loginView.frame.origin.x,
-                                        27.0f,
+                                        6.0f,
                                         self.loginView.frame.size.width,
                                         26.0f)];
-    
+    [self.checkBoxComponent setHidden:YES];
+    [self.loginSeparator setHidden:YES];
     [self.loginArrow setImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
 }
 
@@ -633,13 +752,25 @@ FBLoginViewDelegate
                                                      self.signupFormHeight)];
             
             [self.signUpView setFrame:CGRectMake(self.signUpView.frame.origin.x,
-                                                 58.0f,
+                                                 37.0f,
                                                  self.signUpView.frame.size.width,
                                                  26.0f + self.signupFormHeight + 6.0f)];
+            [self.signUpSeparator setFrame:CGRectMake(0,
+                                                      26.0f,
+                                                      self.signUpView.frame.size.width,
+                                                      1.0f)];
         } completion:^(BOOL finished) {
             [self.signUpArrow setImage:[UIImage imageNamed:@"arrowOrangeOpened"]];
             [self.signUpFormView setHidden:NO];
             self.isAnimationRunning = NO;
+            [self.signUpSeparator setHidden:NO];
+            
+            [self.viewToScroll setFrame:CGRectMake(0.0f,
+                                                   0.0f,
+                                                   self.scrollView.frame.size.width,
+                                                   CGRectGetMaxY(self.signUpView.frame)+6.0f)];
+            
+            [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.signUpView.frame)+6.0f)];
         }];
     }
 }
@@ -655,10 +786,10 @@ FBLoginViewDelegate
                                              0.0f)];
     
     [self.signUpView setFrame:CGRectMake(self.signUpView.frame.origin.x,
-                                         54.0f + self.loginFormHeight + 12.0f,
+                                         33.0f + self.loginFormHeight + 12.0f,
                                          self.signUpView.frame.size.width,
                                          26.0f)];
-    
+    [self.signUpSeparator setHidden:YES];
     [self.signUpArrow setImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
 }
 
@@ -742,7 +873,7 @@ FBLoginViewDelegate
                                                           
                                                           if([nextStep isEqualToString:@"createAddress"])
                                                           {
-                                                              NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+                                                              NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
                                                               
                                                               [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                                                                   object:nil
@@ -751,8 +882,8 @@ FBLoginViewDelegate
                                                           else
                                                           {
                                                               [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                                                                  object:nil
-                                                                                                                userInfo:nil];
+                                                                                                                  object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                                                                                userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
                                                           }
                                                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                           [self hideLoading];
@@ -788,6 +919,17 @@ FBLoginViewDelegate
         
         RICustomer *customerObject = ((RICustomer *)object);
         
+        NSString* emailKeyForCountry = [NSString stringWithFormat:@"%@_%@", kRememberedEmail, [RIApi getCountryIsoInUse]];
+        
+        if(self.checkBoxComponent.switchComponent.isOn)
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:customerObject.email forKey:emailKeyForCountry];
+        }else
+        {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:emailKeyForCountry];
+        }
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
@@ -808,7 +950,7 @@ FBLoginViewDelegate
         NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
         NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
         [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
-
+        
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
                                                   data:[trackingDictionary copy]];
         
@@ -829,12 +971,12 @@ FBLoginViewDelegate
         if([RICustomer checkIfUserHasAddresses])
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                object:nil
-                                                              userInfo:nil];
+                                                                object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                              userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
         }
         else
         {
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                 object:nil
@@ -902,7 +1044,7 @@ FBLoginViewDelegate
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
         
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button"]];
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                             object:nil
@@ -912,7 +1054,7 @@ FBLoginViewDelegate
         [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSignupFail]
                                                   data:trackingDictionary];
-
+        
         [self hideLoading];
         
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
@@ -948,11 +1090,16 @@ FBLoginViewDelegate
         height = kbSize.width;
     }
     
-    [UIView animateWithDuration:0.3 animations:^{        
+    [UIView animateWithDuration:0.3 animations:^{
         [self.orderSummaryView setFrame:CGRectMake(self.orderSummaryOriginalFrame.origin.x,
                                                    self.orderSummaryOriginalFrame.origin.y,
                                                    self.orderSummaryOriginalFrame.size.width,
                                                    self.orderSummaryOriginalFrame.size.height - height)];
+        
+        [self.scrollView setFrame:CGRectMake(self.scrollViewOriginalFrame.origin.x,
+                                             self.scrollViewOriginalFrame.origin.y,
+                                             self.scrollViewOriginalFrame.size.width,
+                                             self.scrollViewOriginalFrame.size.height - height)];
     }];
 }
 
@@ -960,7 +1107,19 @@ FBLoginViewDelegate
 {
     [UIView animateWithDuration:0.3 animations:^{
         [self.orderSummaryView setFrame:self.orderSummaryOriginalFrame];
+        [self.scrollView setFrame:self.scrollViewOriginalFrame];
     }];
 }
 
+-(NSDictionary *)getEmail
+{
+    NSString* emailKeyForCountry = [NSString stringWithFormat:@"%@_%@", kRememberedEmail, [RIApi getCountryIsoInUse]];
+    NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
+    NSString *email = [[NSUserDefaults standardUserDefaults] stringForKey:emailKeyForCountry];
+    if(VALID_NOTEMPTY(email, NSString))
+    {
+        [values setObject:email forKey:@"email"];
+    }
+    return values;
+}
 @end
