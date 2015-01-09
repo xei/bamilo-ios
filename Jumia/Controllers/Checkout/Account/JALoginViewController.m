@@ -798,7 +798,7 @@ FBLoginViewDelegate
     FBSession *session = [[FBSession alloc] initWithPermissions:@[@"public_profile", @"email", @"user_birthday"]];
     [FBSession setActiveSession:session];
     
-    [[FBSession activeSession] openWithBehavior:FBSessionLoginBehaviorForcingWebView completionHandler:^(FBSession *session, FBSessionState status, NSError *error)
+    [[FBSession activeSession] openWithBehavior:FBSessionLoginBehaviorWithFallbackToWebView completionHandler:^(FBSession *session, FBSessionState status, NSError *error)
      {
          if(FBSessionStateOpen == status)
          {
