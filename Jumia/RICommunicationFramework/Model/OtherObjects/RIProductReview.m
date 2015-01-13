@@ -21,47 +21,47 @@
 
 #pragma mark - Get costumer
 
-+ (NSString*)getReviewForProductWithSku:(NSString *)sku
-                           successBlock:(void (^)(id review))successBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
-{
-    NSString *operationID = nil;
-    if (VALID_NOTEMPTY(sku, NSString)) {
-        NSDictionary *dic = @{@"sku": sku };
-        operationID = [[RICommunicationWrapper sharedInstance]
-                       sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_RATING_OPTIONS]]
-                       parameters:dic
-                       httpMethodPost:YES
-                       cacheType:RIURLCacheDBCache
-                       cacheTime:RIURLCacheDefaultTime
-                       successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                           
-                           dispatch_async(dispatch_get_main_queue(), ^{
-                               successBlock([RIProductReview parseReviewWithDictionay:jsonObject]);
-                           });
-                           
-                       } failureBlock:^(RIApiResponse apiResponse,  NSDictionary *errorJsonObject, NSError *errorObject) {
-                           
-                           dispatch_async(dispatch_get_main_queue(), ^{
-                               if(NOTEMPTY(errorJsonObject))
-                               {
-                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                               } else if(NOTEMPTY(errorObject))
-                               {
-                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                   failureBlock(apiResponse, errorArray);
-                               } else
-                               {
-                                   failureBlock(apiResponse, nil);
-                               }
-                           });
-                       }];
-    } else {
-        failureBlock(RIApiResponseUnknownError, nil);
-    }
-    
-    return operationID;
-}
+//+ (NSString*)getReviewForProductWithSku:(NSString *)sku
+//                           successBlock:(void (^)(id review))successBlock
+//                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
+//{
+//    NSString *operationID = nil;
+//    if (VALID_NOTEMPTY(sku, NSString)) {
+//        NSDictionary *dic = @{@"sku": sku };
+//        operationID = [[RICommunicationWrapper sharedInstance]
+//                       sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_RATING_OPTIONS]]
+//                       parameters:dic
+//                       httpMethodPost:YES
+//                       cacheType:RIURLCacheDBCache
+//                       cacheTime:RIURLCacheDefaultTime
+//                       successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+//                           
+//                           dispatch_async(dispatch_get_main_queue(), ^{
+//                               successBlock([RIProductReview parseReviewWithDictionay:jsonObject]);
+//                           });
+//                           
+//                       } failureBlock:^(RIApiResponse apiResponse,  NSDictionary *errorJsonObject, NSError *errorObject) {
+//                           
+//                           dispatch_async(dispatch_get_main_queue(), ^{
+//                               if(NOTEMPTY(errorJsonObject))
+//                               {
+//                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+//                               } else if(NOTEMPTY(errorObject))
+//                               {
+//                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+//                                   failureBlock(apiResponse, errorArray);
+//                               } else
+//                               {
+//                                   failureBlock(apiResponse, nil);
+//                               }
+//                           });
+//                       }];
+//    } else {
+//        failureBlock(RIApiResponseUnknownError, nil);
+//    }
+//    
+//    return operationID;
+//}
 
 #pragma mark - Cancel requests
 

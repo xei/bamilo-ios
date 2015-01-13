@@ -13,6 +13,8 @@
 #import "JARadioComponent.h"
 #import "JACheckBoxWithOptionsComponent.h"
 
+#define kDistanceBetweenStarsAndText 40.0f
+
 @class RIForm;
 @class RIRegion;
 @class RICity;

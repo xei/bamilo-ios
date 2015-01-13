@@ -92,11 +92,11 @@
         if (VALID_NOTEMPTY(ratingDic, NSDictionary)) {
             
             if ([ratingDic objectForKey:@"is_enable"]) {
-                newConfig.ratingIsEnabled = [json objectForKey:@"is_enable"];
+                newConfig.ratingIsEnabled = [ratingDic objectForKey:@"is_enable"];
             }
             
             if ([ratingDic objectForKey:@"required_login"]) {
-                newConfig.ratingRequiresLogin = [json objectForKey:@"required_login"];
+                newConfig.ratingRequiresLogin = [ratingDic objectForKey:@"required_login"];
             }
         }
     }
@@ -107,15 +107,15 @@
         if (VALID_NOTEMPTY(reviewDic, NSDictionary)) {
             
             if ([reviewDic objectForKey:@"is_enable"]) {
-                newConfig.reviewIsEnabled = [json objectForKey:@"is_enable"];
+                newConfig.reviewIsEnabled = [reviewDic objectForKey:@"is_enable"];
             }
             
             if ([reviewDic objectForKey:@"required_login"]) {
-                newConfig.reviewRequiresLogin = [json objectForKey:@"required_login"];
+                newConfig.reviewRequiresLogin = [reviewDic objectForKey:@"required_login"];
             }
             
             if ([reviewDic objectForKey:@"allow_comments"]) {
-                newConfig.reviewAllowsComments = [json objectForKey:@"allow_comments"];
+                newConfig.reviewAllowsComments = [reviewDic objectForKey:@"allow_comments"];
             }
         }
     }

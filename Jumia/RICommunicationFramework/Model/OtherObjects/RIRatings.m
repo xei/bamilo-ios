@@ -23,44 +23,44 @@
 
 @implementation RIRatings
 
-+ (NSString*)getRatingsWithSuccessBlock:(void (^)(NSArray *ratings))successBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
-{
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_RATING_OPTIONS]]
-                                                            parameters:nil
-                                                        httpMethodPost:YES
-                                                             cacheType:RIURLCacheNoCache
-                                                             cacheTime:RIURLCacheNoTime
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              
-                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                              if (VALID_NOTEMPTY(metadata, NSDictionary)) {
-                                                                  NSDictionary *dataDic = [metadata objectForKey:@"data"];
-                                                                  NSMutableArray *returnArray = [NSMutableArray new];
-                                                                  
-                                                                  for (NSDictionary *dic in dataDic) {
-                                                                      [returnArray addObject:[RIRatings parseRatingWithDictionay:dic]];
-                                                                  }
-                                                                  
-                                                                  successBlock(returnArray);
-                                                              } else
-                                                              {
-                                                                  failureBlock(apiResponse, nil);
-                                                              }
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              if(NOTEMPTY(errorJsonObject))
-                                                              {
-                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                              } else if(NOTEMPTY(errorObject))
-                                                              {
-                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(apiResponse, errorArray);
-                                                              } else
-                                                              {
-                                                                  failureBlock(apiResponse, nil);
-                                                              }
-                                                          }];
-}
+//+ (NSString*)getRatingsWithSuccessBlock:(void (^)(NSArray *ratings))successBlock
+//                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+//{
+//    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_RATING_OPTIONS]]
+//                                                            parameters:nil
+//                                                        httpMethodPost:YES
+//                                                             cacheType:RIURLCacheNoCache
+//                                                             cacheTime:RIURLCacheNoTime
+//                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+//                                                              
+//                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+//                                                              if (VALID_NOTEMPTY(metadata, NSDictionary)) {
+//                                                                  NSDictionary *dataDic = [metadata objectForKey:@"data"];
+//                                                                  NSMutableArray *returnArray = [NSMutableArray new];
+//                                                                  
+//                                                                  for (NSDictionary *dic in dataDic) {
+//                                                                      [returnArray addObject:[RIRatings parseRatingWithDictionay:dic]];
+//                                                                  }
+//                                                                  
+//                                                                  successBlock(returnArray);
+//                                                              } else
+//                                                              {
+//                                                                  failureBlock(apiResponse, nil);
+//                                                              }
+//                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+//                                                              if(NOTEMPTY(errorJsonObject))
+//                                                              {
+//                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+//                                                              } else if(NOTEMPTY(errorObject))
+//                                                              {
+//                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+//                                                                  failureBlock(apiResponse, errorArray);
+//                                                              } else
+//                                                              {
+//                                                                  failureBlock(apiResponse, nil);
+//                                                              }
+//                                                          }];
+//}
 
 #pragma mark - Cancel requests
 

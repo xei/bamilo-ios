@@ -10,7 +10,7 @@
 #import "RIFieldDataSetComponent.h"
 #import "RIFieldOption.h"
 #import "RIForm.h"
-
+#import "RIFieldRatingStars.h"
 
 @implementation RIField
 
@@ -29,6 +29,7 @@
 @dynamic apiCall;
 @dynamic form;
 @dynamic options;
+@dynamic ratingStars;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 {
@@ -80,6 +81,18 @@
         }
     }
     
+    if (VALID_NOTEMPTY([fieldJSON objectForKey:@"data_set"], NSArray)) {
+        
+        NSArray *dataSetArray = [fieldJSON objectForKey:@"data_set"];
+        if (VALID_NOTEMPTY(dataSetArray, NSArray)) {
+            
+            for (NSDictionary* fieldRatingStarsJSON in dataSetArray) {
+                RIFieldRatingStars* newFieldRatingStars = [RIFieldRatingStars parseFieldRatingStars:fieldRatingStarsJSON];
+                newFieldRatingStars.field = newField;
+                [newField addRatingStarsObject:newFieldRatingStars];
+            }
+        }
+    }
     
     if ([fieldJSON objectForKey:@"options"]) {
         NSArray *optionsArray = [fieldJSON objectForKey:@"options"];
@@ -124,6 +137,9 @@
 
 + (void)saveField:(RIField *)field;
 {
+    for (RIFieldRatingStars* fieldRatingStars in field.ratingStars) {
+        [RIFieldRatingStars saveFieldRatingStars:fieldRatingStars];
+    }
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:field];
     [[RIDataBaseWrapper sharedInstance] saveContext];
 }

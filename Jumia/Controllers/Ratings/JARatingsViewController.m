@@ -205,20 +205,20 @@ UITableViewDataSource
 
 - (void)ratingsRequests
 {
-    self.numberOfRequests = 2;
+    self.numberOfRequests = 1;
     self.apiResponse = RIApiResponseSuccess;
     
     [self showLoading];
     
-    [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
-     {
-         self.ratings = ratings;
-         self.numberOfRequests--;
-     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-     {
-         self.apiResponse = apiResponse;
-         self.numberOfRequests--;
-     }];
+//    [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
+//     {
+//         self.ratings = ratings;
+//         self.numberOfRequests--;
+//     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+//     {
+//         self.apiResponse = apiResponse;
+//         self.numberOfRequests--;
+//     }];
     
     [RIForm getForm:@"rating"
        successBlock:^(RIForm *form)
@@ -545,24 +545,24 @@ UITableViewDataSource
     self.ratingStarsArray = [NSMutableArray new];
     
     CGFloat currentY = CGRectGetMaxY(self.fixedLabel.frame) + 12.0f;
-    for (RIRatingsDetails *option in self.ratings)
-    {
-        JAAddRatingView *stars = [JAAddRatingView getNewJAAddRatingView];
-        [stars setupWithOption:option];
-        
-        CGRect frame = stars.frame;
-        frame.origin.y = currentY;
-        frame.origin.x = dynamicFormHorizontalMargin;
-        frame.size.width = width - (2 * dynamicFormHorizontalMargin);
-        [stars setFrame:frame];
-        
-        [self.centerView addSubview:stars];
-        currentY += stars.frame.size.height;
-        
-        [self.ratingStarsArray addObject:stars];
-        
-        self.numberOfFields++;
-    }
+//    for (RIRatingsDetails *option in self.ratings)
+//    {
+//        JAAddRatingView *stars = [JAAddRatingView getNewJAAddRatingView];
+//        [stars setupWithOption:option];
+//        
+//        CGRect frame = stars.frame;
+//        frame.origin.y = currentY;
+//        frame.origin.x = dynamicFormHorizontalMargin;
+//        frame.size.width = width - (2 * dynamicFormHorizontalMargin);
+//        [stars setFrame:frame];
+//        
+//        [self.centerView addSubview:stars];
+//        currentY += stars.frame.size.height;
+//        
+//        [self.ratingStarsArray addObject:stars];
+//        
+//        self.numberOfFields++;
+//    }
     
     self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:self.form
                                                         delegate:nil
@@ -810,111 +810,111 @@ UITableViewDataSource
 
 - (void)continueSendingReview
 {
-    [self showLoading];
-    
-    [self.ratingDynamicForm resignResponder];
-    
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.ratingDynamicForm getValues]];
-    
-    for (JAAddRatingView *component in self.ratingStarsArray)
-    {
-        RIRatingsOptions *option = [component.ratingOptions objectAtIndex:(component.rating - 1)];
-        NSString *key = [NSString stringWithFormat:@"rating-option--%@", option.fkRatingType];
-        
-        [parameters addEntriesFromDictionary:@{key: option.value}];
-    }
-    
-    [parameters addEntriesFromDictionary:@{@"rating-customer": [RICustomer getCustomerId]}];
-    [parameters addEntriesFromDictionary:@{@"rating-catalog-sku": self.product.sku}];
-    
-    [RIForm sendForm:self.ratingDynamicForm.form
-          parameters:parameters
-        successBlock:^(id object) {
-            
-            NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
-            
-            NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
-            [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
-            [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
-            [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
-            
-            for (JAAddRatingView *component in self.ratingStarsArray)
-            {
-                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
-                [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-                [trackingDictionary setValue:@(component.rating) forKey:kRIEventValueKey];
-                
-                if ([component.idRatingType isEqualToString:@"1"])
-                {
-                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingPriceKey];
-                    [trackingDictionary setValue:@"RateProductPrice" forKey:kRIEventActionKey];
-                }
-                else if ([component.idRatingType isEqualToString:@"2"])
-                {
-                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingAppearanceKey];
-                    [trackingDictionary setValue:@"RateProductAppearance" forKey:kRIEventActionKey];
-                }
-                else if ([component.idRatingType isEqualToString:@"3"])
-                {
-                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingQualityKey];
-                    [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
-                }
-                else
-                {
-                    // There is no indication about the default tracking for rating
-                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingKey];
-                    [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
-                }
-                
-                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
-                
-                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProduct]
-                                                          data:[trackingDictionary copy]];
-            }
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProductGlobal]
-                                                      data:[globalRateDictionary copy]];
-            
-            [self hideLoading];
-            
-            [self showMessage:STRING_REVIEW_SENT success:YES];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
-                                                                object:nil
-                                                              userInfo:nil];
-        } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {
-            
-            [self hideLoading];
-            
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                [self showMessage:STRING_NO_CONNECTION success:NO];
-            }
-            else if(VALID_NOTEMPTY(errorObject, NSDictionary))
-            {
-                [self.ratingDynamicForm validateFields:errorObject];
-                
-                [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
-            }
-            else if(VALID_NOTEMPTY(errorObject, NSArray))
-            {
-                [self.ratingDynamicForm checkErrors];
-                
-                [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
-            }
-            else
-            {
-                [self.ratingDynamicForm checkErrors];
-                
-                [self showMessage:STRING_ERROR success:NO];
-            }
-        }];
+//    [self showLoading];
+//    
+//    [self.ratingDynamicForm resignResponder];
+//    
+//    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.ratingDynamicForm getValues]];
+//    
+//    for (JAAddRatingView *component in self.ratingStarsArray)
+//    {
+//        RIRatingsOptions *option = [component.ratingOptions objectAtIndex:(component.rating - 1)];
+//        NSString *key = [NSString stringWithFormat:@"rating-option--%@", option.fkRatingType];
+//        
+//        [parameters addEntriesFromDictionary:@{key: option.value}];
+//    }
+//    
+//    [parameters addEntriesFromDictionary:@{@"rating-customer": [RICustomer getCustomerId]}];
+//    [parameters addEntriesFromDictionary:@{@"rating-catalog-sku": self.product.sku}];
+//    
+//    [RIForm sendForm:self.ratingDynamicForm.form
+//          parameters:parameters
+//        successBlock:^(id object) {
+//            
+//            NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
+//            
+//            NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
+//            [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
+//            [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
+//            [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
+//            
+//            for (JAAddRatingView *component in self.ratingStarsArray)
+//            {
+//                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//                [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
+//                [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+//                [trackingDictionary setValue:@(component.rating) forKey:kRIEventValueKey];
+//                
+//                if ([component.idRatingType isEqualToString:@"1"])
+//                {
+//                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingPriceKey];
+//                    [trackingDictionary setValue:@"RateProductPrice" forKey:kRIEventActionKey];
+//                }
+//                else if ([component.idRatingType isEqualToString:@"2"])
+//                {
+//                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingAppearanceKey];
+//                    [trackingDictionary setValue:@"RateProductAppearance" forKey:kRIEventActionKey];
+//                }
+//                else if ([component.idRatingType isEqualToString:@"3"])
+//                {
+//                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingQualityKey];
+//                    [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
+//                }
+//                else
+//                {
+//                    // There is no indication about the default tracking for rating
+//                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingKey];
+//                    [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
+//                }
+//                
+//                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+//                [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+//                [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+//                NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+//                [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+//                [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
+//                
+//                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProduct]
+//                                                          data:[trackingDictionary copy]];
+//            }
+//            
+//            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProductGlobal]
+//                                                      data:[globalRateDictionary copy]];
+//            
+//            [self hideLoading];
+//            
+//            [self showMessage:STRING_REVIEW_SENT success:YES];
+//            
+//            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+//                                                                object:nil
+//                                                              userInfo:nil];
+//        } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {
+//            
+//            [self hideLoading];
+//            
+//            if (RIApiResponseNoInternetConnection == apiResponse)
+//            {
+//                [self showMessage:STRING_NO_CONNECTION success:NO];
+//            }
+//            else if(VALID_NOTEMPTY(errorObject, NSDictionary))
+//            {
+//                [self.ratingDynamicForm validateFields:errorObject];
+//                
+//                [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+//            }
+//            else if(VALID_NOTEMPTY(errorObject, NSArray))
+//            {
+//                [self.ratingDynamicForm checkErrors];
+//                
+//                [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+//            }
+//            else
+//            {
+//                [self.ratingDynamicForm checkErrors];
+//                
+//                [self showMessage:STRING_ERROR success:NO];
+//            }
+//        }];
 }
 
 #pragma mark - Keyboard notifications

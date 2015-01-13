@@ -88,6 +88,7 @@
         <relationship name="dataSet" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIFieldDataSetComponent" inverseName="field" inverseEntity="RIFieldDataSetComponent" syncable="YES"/>
         <relationship name="form" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIForm" inverseName="fields" inverseEntity="RIForm" syncable="YES"/>
         <relationship name="options" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIFieldOption" inverseName="field" inverseEntity="RIFieldOption" syncable="YES"/>
+        <relationship name="ratingStars" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIFieldRatingStars" inverseName="field" inverseEntity="RIFieldRatingStars" syncable="YES"/>
     </entity>
     <entity name="RIFieldDataSetComponent" representedClassName="RIFieldDataSetComponent" syncable="YES">
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
@@ -99,6 +100,13 @@
         <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="field" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RIField" inverseName="options" inverseEntity="RIField" syncable="YES"/>
+    </entity>
+    <entity name="RIFieldRatingStars" representedClassName="RIFieldRatingStars" syncable="YES">
+        <attribute name="maxStar" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="minStar" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="field" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIField" inverseName="ratingStars" inverseEntity="RIField" syncable="YES"/>
     </entity>
     <entity name="RIForm" representedClassName="RIForm" syncable="YES">
         <attribute name="action" optional="YES" attributeType="String" syncable="YES"/>
@@ -273,7 +281,7 @@
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="150"/>
         <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="268"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="208"/>
-        <element name="RIField" positionX="-299" positionY="681" width="128" height="268"/>
+        <element name="RIField" positionX="-299" positionY="681" width="128" height="283"/>
         <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="73"/>
         <element name="RIFieldOption" positionX="-137" positionY="963" width="128" height="118"/>
         <element name="RIForm" positionX="-504" positionY="362" width="128" height="118"/>
@@ -295,5 +303,6 @@
         <element name="RITeaserText" positionX="-684" positionY="677" width="128" height="88"/>
         <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
         <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>
+        <element name="RIFieldRatingStars" positionX="-306" positionY="998" width="128" height="118"/>
     </elements>
 </model>

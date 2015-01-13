@@ -10,6 +10,7 @@
 #import "RIForm.h"
 #import "RIFieldDataSetComponent.h"
 #import "RIFieldOption.h"
+#import "JAAddRatingView.h"
 
 @interface JADynamicForm ()
 <UITextFieldDelegate>
@@ -267,6 +268,29 @@
         }
         else if ([@"hidden" isEqualToString:field.type])
         {
+        }
+        else if ([@"array" isEqualToString:field.type])
+        {
+            if ([@"ratings" isEqualToString:field.key] && VALID_NOTEMPTY(field.ratingStars, NSOrderedSet)) {
+                
+                for (RIFieldRatingStars *ratingStars in field.ratingStars)
+                {
+                    JAAddRatingView *stars = [JAAddRatingView getNewJAAddRatingView];
+                    [stars setupWithFieldRatingStars:ratingStars];
+                    
+                    CGRect frame = stars.frame;
+                    frame.origin.y = startingY;
+                    frame.origin.x = 0.0;
+                    frame.size.width = widthComponent;
+                    [stars setFrame:frame];
+                    
+                    [self.formViews addObject:stars];
+                    startingY += stars.frame.size.height;
+                    
+                }
+                
+                startingY += kDistanceBetweenStarsAndText;
+            }
         }
     }
     
