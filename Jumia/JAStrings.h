@@ -289,4 +289,6 @@
 #define STRING_ORDER_QUANTITY RILocalizedString(@"my_order_quantity_label", nil)
 #define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
 
+#define STRING_LIKE_US RILocalizedString(@"like_us_on_facebook", nil)
+
 #endif
