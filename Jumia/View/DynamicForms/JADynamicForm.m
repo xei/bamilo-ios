@@ -288,8 +288,6 @@
                     startingY += stars.frame.size.height;
                     
                 }
-                
-                startingY += kDistanceBetweenStarsAndText;
             }
         }
     }

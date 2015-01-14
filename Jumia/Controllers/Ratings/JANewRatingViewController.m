@@ -19,6 +19,8 @@
 #import "JAUtils.h"
 #import "RIProduct.h"
 
+#define kDistanceBetweenStarsAndText 40.0f
+
 @interface JANewRatingViewController ()
 <
 UITextFieldDelegate,
@@ -407,13 +409,22 @@ UIAlertViewDelegate
             {
                 frame.size.width = centerViewWidth;
             }
+            if (NO == [view isKindOfClass:[JAAddRatingView class]]) {
+                if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
+                    //has switch
+                    frame.origin.y = frame.origin.y + kDistanceBetweenStarsAndText;
+                }
+            }
             view.frame = frame;
             
             [self.reviewsContentView addSubview:view];
 
             initialContentY += view.frame.size.height + spaceBetweenFormFields;
         }
-        initialContentY += kDistanceBetweenStarsAndText;
+        if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
+            //has switch
+            initialContentY += kDistanceBetweenStarsAndText;
+        }
         [self.reviewsContentView setFrame:CGRectMake(0.0,
                                                      currentY,
                                                      centerViewWidth,
@@ -425,7 +436,7 @@ UIAlertViewDelegate
     if (self.isShowingRating && VALID_NOTEMPTY(self.ratingsContentView, UIView)) {
         self.reviewsContentView.hidden = YES;
         currentY += self.ratingsContentView.frame.size.height;
-    } else if (NO != self.isShowingRating && VALID_NOTEMPTY(self.reviewsContentView, UIView)){
+    } else if (NO == self.isShowingRating && VALID_NOTEMPTY(self.reviewsContentView, UIView)){
         self.ratingsContentView.hidden = NO;
         currentY += self.reviewsContentView.frame.size.height;
     }
