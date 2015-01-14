@@ -26,7 +26,6 @@
 @property (nonatomic, retain) NSNumber * ratingRequiresLogin;
 @property (nonatomic, retain) NSNumber * reviewIsEnabled;
 @property (nonatomic, retain) NSNumber * reviewRequiresLogin;
-@property (nonatomic, retain) NSNumber * reviewAllowsComments;
 @property (nonatomic, retain) NSOrderedSet *languages;
 
 /**

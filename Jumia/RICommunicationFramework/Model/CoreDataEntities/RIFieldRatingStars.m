@@ -11,7 +11,7 @@
 
 @implementation RIFieldRatingStars
 
-@dynamic uid;
+@dynamic type;
 @dynamic title;
 @dynamic minStar;
 @dynamic maxStar;
@@ -22,7 +22,7 @@
     RIFieldRatingStars* newFieldRatingStars = (RIFieldRatingStars*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIFieldRatingStars class])];
     
     if ([json objectForKey:@"id_rating_type"]) {
-        newFieldRatingStars.uid = [json objectForKey:@"id_rating_type"];
+        newFieldRatingStars.type = [json objectForKey:@"id_rating_type"];
     }
     if ([json objectForKey:@"display_title"]) {
         newFieldRatingStars.title = [json objectForKey:@"display_title"];

@@ -12,7 +12,7 @@
 
 @interface RIFieldRatingStars : NSManagedObject
 
-@property (nonatomic, retain) NSString * uid;
+@property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSNumber * minStar;
 @property (nonatomic, retain) NSNumber * maxStar;

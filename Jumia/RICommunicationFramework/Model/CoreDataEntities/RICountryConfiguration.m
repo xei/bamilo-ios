@@ -25,7 +25,6 @@
 @dynamic ratingRequiresLogin;
 @dynamic reviewIsEnabled;
 @dynamic reviewRequiresLogin;
-@dynamic reviewAllowsComments;
 @dynamic languages;
 
 + (RICountryConfiguration *)parseCountryConfiguration:(NSDictionary *)json
@@ -112,10 +111,6 @@
             
             if ([reviewDic objectForKey:@"required_login"]) {
                 newConfig.reviewRequiresLogin = [reviewDic objectForKey:@"required_login"];
-            }
-            
-            if ([reviewDic objectForKey:@"allow_comments"]) {
-                newConfig.reviewAllowsComments = [reviewDic objectForKey:@"allow_comments"];
             }
         }
     }

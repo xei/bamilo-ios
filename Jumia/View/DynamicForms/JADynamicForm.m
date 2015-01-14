@@ -506,6 +506,15 @@
                     [parameters setValue:textFieldComponent.textField.text forKey:[self getFieldNameForKey:@"city"]];
                 }
             }
+            else if ([view isKindOfClass:[JAAddRatingView class]])
+            {
+                JAAddRatingView* addRatingView = (JAAddRatingView*) view;
+
+                NSString *key = [NSString stringWithFormat:@"%@[%@]", addRatingView.fieldRatingStars.field.name, addRatingView.fieldRatingStars.type];
+                NSString* rating = [NSString stringWithFormat:@"%d",addRatingView.rating];
+                [parameters addEntriesFromDictionary:@{key: rating}];
+                NSLog(@"%@",parameters);
+            }
         }
     }
     
