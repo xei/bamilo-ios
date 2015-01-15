@@ -823,11 +823,37 @@ FBLoginViewDelegate
                  NSString *birthday = [user objectForKey:@"birthday"];
                  NSString *gender = [user objectForKey:@"gender"];
                  
-                 NSDictionary *parameters = @{ @"email": email,
-                                               @"first_name": firstName,
-                                               @"last_name": lastName,
-                                               @"birthday": birthday,
-                                               @"gender": gender };
+                 NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+                 if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString)) && (VALID_NOTEMPTY(gender, NSString)) && (VALID_NOTEMPTY(birthday, NSString)))
+                 {
+                     [parameters setValue:email forKey:@"email"];
+                     [parameters setValue:firstName forKey:@"first_name"];
+                     [parameters setValue:lastName forKey:@"last_name"];
+                     [parameters setValue:gender forKey:@"gender"];
+                     [parameters setValue:birthday forKey:@"birthday"];
+                     
+                 }else if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString)) && (VALID_NOTEMPTY(gender, NSString)))
+                 {
+                     [parameters setValue:email forKey:@"email"];
+                     [parameters setValue:firstName forKey:@"first_name"];
+                     [parameters setValue:lastName forKey:@"last_name"];
+                     [parameters setValue:gender forKey:@"gender"];
+                     
+                 }else if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString))){
+                     [parameters setValue:email forKey:@"email"];
+                     [parameters setValue:firstName forKey:@"first_name"];
+                     [parameters setValue:lastName forKey:@"last_name"];
+                     
+                 }else if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)))
+                 {
+                     [parameters setValue:email forKey:@"email"];
+                     [parameters setValue:firstName forKey:@"first_name"];
+                     
+                 }else
+                 {
+                     [parameters setValue:email forKey:@"email"];
+                 }
+
                  
                  [RICustomer loginCustomerByFacebookWithParameters:parameters
                                                       successBlock:^(RICustomer* customer, NSString* nextStep) {
