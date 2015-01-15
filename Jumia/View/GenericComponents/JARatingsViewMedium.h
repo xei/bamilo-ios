@@ -14,6 +14,6 @@
 
 + (JARatingsViewMedium *)getNewJARatingsViewMedium;
 
--(void)setNumberOfReviews:(NSNumber*)numberOfReviews;
+-(void)setNumberOfReviews:(NSInteger)numberOfReviews;
 
 @end

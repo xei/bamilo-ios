@@ -8,11 +8,140 @@
 
 #import "RIProductRatings.h"
 
-@implementation RIRatingOption
+@implementation RIReview
+
++ (NSArray*)parseReviews:(NSDictionary*)reviewsJSON
+{
+    NSMutableArray* newReviews = [NSMutableArray new];
+    
+    if ([reviewsJSON objectForKey:@"comments"]) {
+        
+        NSArray* comments = [reviewsJSON objectForKey:@"comments"];
+        if (VALID_NOTEMPTY(comments, NSArray)) {
+            
+            for (NSDictionary* comment in comments) {
+                if (VALID_NOTEMPTY(comment, NSDictionary)) {
+                    
+                    RIReview* review = [RIReview parseReview:comment];
+                    
+                    [newReviews addObject:review];
+                }
+            }
+        }
+    }
+    
+    return [newReviews copy];
+}
+
++ (RIReview*)parseReview:(NSDictionary*)reviewJSON
+{
+    RIReview* newReview = [[RIReview alloc] init];
+    
+    if ([reviewJSON objectForKey:@"name"]) {
+        newReview.userName = [reviewJSON objectForKey:@"name"];
+    }
+    
+    if ([reviewJSON objectForKey:@"title"]) {
+        newReview.title = [reviewJSON objectForKey:@"title"];
+    }
+    
+    if ([reviewJSON objectForKey:@"comment"]) {
+        newReview.comment = [reviewJSON objectForKey:@"comment"];
+    }
+    
+    if ([reviewJSON objectForKey:@"date"]) {
+        newReview.dateString = [reviewJSON objectForKey:@"date"];
+    }
+    
+    if ([reviewJSON objectForKey:@"stars"]) {
+        
+        NSArray* starsJSON = [reviewJSON objectForKey:@"stars"];
+        if (VALID_NOTEMPTY(starsJSON, NSArray)) {
+            
+            NSMutableArray* stars = [NSMutableArray new];
+            NSMutableArray* titles = [NSMutableArray new];
+            for (NSDictionary* star in starsJSON) {
+                
+                if (VALID_NOTEMPTY(star, NSDictionary)) {
+                    
+                    if ([star objectForKey:@"title"] && [star objectForKey:@"average"]) {
+                        
+                        NSString* title = [star objectForKey:@"title"];
+                        NSNumber* average = [star objectForKey:@"average"];
+                        
+                        if (VALID_NOTEMPTY(title, NSString) && VALID_NOTEMPTY(average, NSNumber)) {
+                            
+                            [stars addObject:average];
+                            [titles addObject:title];
+                        }
+                    }
+                }
+            }
+            
+            newReview.ratingStars = [stars copy];
+            newReview.ratingTitles = [titles copy];
+        }
+    }
+    
+    return newReview;
+}
 
 @end
 
-@implementation RIRatingComment
+@implementation RIRatingInfo
+
++ (RIRatingInfo*)parseRatingInfo:(NSDictionary*)ratingInfoJSON
+{
+    RIRatingInfo* newRatingInfo = [[RIRatingInfo alloc] init];
+    
+    if ([ratingInfoJSON objectForKey:@"based_on"]) {
+        newRatingInfo.basedOn = [ratingInfoJSON objectForKey:@"based_on"];
+    }
+    
+    if ([ratingInfoJSON objectForKey:@"by_type"]) {
+        
+        NSArray* byTypeArray = [ratingInfoJSON objectForKey:@"by_type"];
+        if (VALID_NOTEMPTY(byTypeArray, NSArray)) {
+            
+            NSMutableDictionary* averageRatingsByTypeTitle = [NSMutableDictionary new];
+            
+            for (NSDictionary* byType in byTypeArray) {
+                
+                if (VALID_NOTEMPTY(byType, NSDictionary)) {
+                    
+                    if ([byType objectForKey:@"average"] && [byType objectForKey:@"title"]) {
+                        
+                        NSNumber* average = [byType objectForKey:@"average"];
+                        NSString* title = [byType objectForKey:@"title"];
+                        
+                        if (VALID_NOTEMPTY(average, NSNumber) && VALID_NOTEMPTY(title, NSString)) {
+                            [averageRatingsByTypeTitle setObject:average forKey:title];
+                        }
+                    }
+                }
+            }
+            
+            newRatingInfo.averageRatingsByTypeTitle = [averageRatingsByTypeTitle copy];
+        }
+    }
+    
+    if ([ratingInfoJSON objectForKey:@"by_stars"]) {
+        
+        NSDictionary* byStars = [ratingInfoJSON objectForKey:@"by_stars"];
+        
+        if (VALID_NOTEMPTY(byStars, NSDictionary) && [byStars objectForKey:@"stars"]) {
+            
+            NSDictionary* stars = [byStars objectForKey:@"stars"];
+            
+            if (VALID_NOTEMPTY(stars, NSDictionary)) {
+                
+                newRatingInfo.numberOfRatingsByStar = [stars copy];
+            }
+        }
+    }
+    
+    return newRatingInfo;
+}
 
 @end
 
@@ -130,109 +259,40 @@
     NSDictionary *metadata = [dictionary objectForKey:@"metadata"];
     NSDictionary *dic = [metadata objectForKey:@"data"];
     
-    RIProductRatings *productRatings = [[RIProductRatings alloc] init];
+    RIProductRatings *newProductRatings = [[RIProductRatings alloc] init];
     
-    if ([dic objectForKey:@"product_name"]) {
-        productRatings.productName = [dic objectForKey:@"product_name"];
-    }
-    
-    if ([dic objectForKey:@"product_sku"]) {
-        productRatings.productSku = [dic objectForKey:@"product_sku"];
-    }
-    
-    if (VALID_NOTEMPTY([dic objectForKey:@"commentsCount"], NSNumber)) {
-        productRatings.commentsCount = [dic objectForKey:@"commentsCount"];
-    }
-    
-    if ([dic objectForKey:@"comments"]) {
-        NSArray *arrayOfComments = [dic objectForKey:@"comments"];
-        NSMutableArray *tempArray = [NSMutableArray new];
+    if ([dic objectForKey:@"product"]) {
         
-        for (NSDictionary *commentDic in arrayOfComments) {
-            [tempArray addObject:[RIProductRatings parseRatingCommentWithDic:commentDic]];
+        NSDictionary* product = [dic objectForKey:@"product"];
+        if (VALID_NOTEMPTY(product, NSDictionary)) {
+            if ([product objectForKey:@"sku"]) {
+                newProductRatings.productSku = [dic objectForKey:@"sku"];
+            }
+            if ([product objectForKey:@"name"]) {
+                newProductRatings.productSku = [dic objectForKey:@"name"];
+            }
         }
+    }
+    
+    if ([dic objectForKey:@"ratings"]) {
         
-        productRatings.comments = [tempArray copy];
-    }
-    
-    return productRatings;
-}
-
-+ (RIRatingComment *)parseRatingCommentWithDic:(NSDictionary *)dic
-{    
-    RIRatingComment *ratingComment = [[RIRatingComment alloc] init];
-    
-    if ([dic objectForKey:@"created_at"]) {
-        ratingComment.createdAt = [dic objectForKey:@"created_at"];
-    }
-    
-    if ([dic objectForKey:@"id_review"]) {
-        ratingComment.idReview = [dic objectForKey:@"id_review"];
-    }
-    
-    if ([dic objectForKey:@"title"]) {
-        ratingComment.title = [dic objectForKey:@"title"];
-    }
-    
-    if ([dic objectForKey:@"detail"]) {
-        ratingComment.detail = [dic objectForKey:@"detail"];
-    }
-    
-    if ([dic objectForKey:@"email"]) {
-        ratingComment.email = [dic objectForKey:@"email"];
-    }
-    
-    if ([dic objectForKey:@"nickname"]) {
-        ratingComment.nickname = [dic objectForKey:@"nickname"];
-    }
-    
-    if ([dic objectForKey:@"id_aggregated"]) {
-        ratingComment.idAggregated = [dic objectForKey:@"id_aggregated"];
-    }
-    
-    if ([dic objectForKey:@"avg_rating"]) {
-        ratingComment.avgRating = [dic objectForKey:@"avg_rating"];
-    }
-    
-    if ([dic objectForKey:@"dateString"]) {
-        ratingComment.dateString = [dic objectForKey:@"dateString"];
-    }
-    
-    if ([dic objectForKey:@"options"]) {
-        NSArray *arrayOfoptions = [dic objectForKey:@"options"];
-        NSMutableArray *tempArray = [NSMutableArray new];
-        
-        for (NSDictionary *optionDic in arrayOfoptions) {
-            [tempArray addObject:[RIProductRatings parseOptionWithDictionary:optionDic]];
+        NSDictionary* ratingInfoJSON = [dic objectForKey:@"ratings"];
+        if (VALID_NOTEMPTY(ratingInfoJSON, NSDictionary)) {
+            
+            newProductRatings.ratingInfo = [RIRatingInfo parseRatingInfo:ratingInfoJSON];
         }
+    }
+    
+    if ([dic objectForKey:@"reviews"]) {
         
-        ratingComment.options = [tempArray copy];
+        NSDictionary* reviewsJSON = [dic objectForKey:@"reviews"];
+        if (VALID_NOTEMPTY(reviewsJSON, NSDictionary)) {
+            
+            newProductRatings.reviews = [RIReview parseReviews:reviewsJSON];
+        }
     }
     
-    return ratingComment;
-}
-
-+ (RIRatingOption *)parseOptionWithDictionary:(NSDictionary *)dic
-{
-    RIRatingOption *option = [[RIRatingOption alloc] init];
-    
-    if ([dic objectForKey:@"option_value"]) {
-        option.optionValue = [dic objectForKey:@"option_value"];
-    }
-    
-    if ([dic objectForKey:@"type_title"]) {
-        option.typeTitle = [dic objectForKey:@"type_title"];
-    }
-    
-    if ([dic objectForKey:@"title"]) {
-        option.title = [dic objectForKey:@"title"];
-    }
-    
-    if ([dic objectForKey:@"percentage_rating"]) {
-        option.percentageRating = [dic objectForKey:@"percentage_rating"];
-    }
-    
-    return option;
+    return newProductRatings;
 }
 
 @end

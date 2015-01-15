@@ -635,7 +635,7 @@ JAActivityViewControllerDelegate
     [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
                                          
-                                         self.commentsCount = [ratings.commentsCount integerValue];
+                                         self.commentsCount = ratings.reviews.count;
                                          
                                          self.productRatings = ratings;
                                          
@@ -769,7 +769,7 @@ JAActivityViewControllerDelegate
      *******/
     
     self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
-    [self.productInfoSection setupWithFrame:self.mainScrollView.frame product:self.product preSelectedSize:self.preSelectedSize numberOfRatings:[self.productRatings.commentsCount stringValue]];
+    [self.productInfoSection setupWithFrame:self.mainScrollView.frame product:self.product preSelectedSize:self.preSelectedSize numberOfRatings:[NSString stringWithFormat:@"%d",self.productRatings.reviews.count]];
     
     [self.productInfoSection.reviewsClickableView addTarget:self
                                                      action:@selector(goToRatinsMainScreen)
