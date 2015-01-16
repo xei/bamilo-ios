@@ -19,7 +19,7 @@
 #import "JAUtils.h"
 #import "RIProduct.h"
 
-#define kDistanceBetweenStarsAndText 40.0f
+#define kDistanceBetweenStarsAndText 70.0f
 
 @interface JANewRatingViewController ()
 <
@@ -331,7 +331,7 @@ UIAlertViewDelegate
     CGFloat dynamicFormHorizontalMargin = 6.0f;
     if(isiPad)
     {
-        dynamicFormHorizontalMargin = 60.0f;
+        dynamicFormHorizontalMargin = 250.0f;
     }
     
     if(VALID_NOTEMPTY(self.fixedLabel, UILabel))
@@ -445,9 +445,16 @@ UIAlertViewDelegate
         //show the switch
         self.modeSwitch = [UISwitch new];
         [self.modeSwitch addTarget:self action:@selector(switchBetweenModes) forControlEvents:UIControlEventTouchUpInside];
-        [self.modeSwitch setFrame:CGRectMake(10.0f, currentY, self.modeSwitch.frame.size.width, self.modeSwitch.frame.size.height)];
+        CGFloat modeSwitchX = 10.0f;
+        if (isiPad) {
+            modeSwitchX = 260.0f;
+        }
+        [self.modeSwitch setFrame:CGRectMake(modeSwitchX,
+                                             currentY,
+                                             self.modeSwitch.frame.size.width,
+                                             self.modeSwitch.frame.size.height)];
         [self.centerView addSubview:self.modeSwitch];
-        currentY += self.modeSwitch.frame.size.height + 10.0f;
+        currentY += self.modeSwitch.frame.size.height + 50.0f;
     } else {
         // Add space between last form field and send review button
         currentY += 38.0f;
