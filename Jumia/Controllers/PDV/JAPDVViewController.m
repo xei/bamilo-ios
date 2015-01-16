@@ -15,7 +15,6 @@
 #import "UIImageView+JA.h"
 #import "RIImage.h"
 #import "RIVariation.h"
-#import "RIProductReview.h"
 #import "RICart.h"
 #import "RIProductSimple.h"
 #import "JAPicker.h"
