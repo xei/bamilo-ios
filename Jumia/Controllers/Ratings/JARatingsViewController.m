@@ -16,7 +16,6 @@
 #import "JARatingsViewMedium.h"
 #import "RIProduct.h"
 #import "RIForm.h"
-#import "RIRatings.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import "RICategory.h"

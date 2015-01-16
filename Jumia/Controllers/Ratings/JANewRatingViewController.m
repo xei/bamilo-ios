@@ -11,7 +11,6 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "RIProductRatings.h"
-#import "RIRatings.h"
 #import "JADynamicForm.h"
 #import "JAAddRatingView.h"
 #import "RICustomer.h"

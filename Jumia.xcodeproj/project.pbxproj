@@ -152,7 +152,6 @@
 		4bc43fda46c675d38bdb8ad7 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
 		4c2fef288bf2196e345a6ca6 /* RIProductSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027A19811E9200F71726 /* RIProductSimple.m */; };
 		4c63827f343c921bf28405ea /* RITracking_example.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5A302AE19811E9200F71726 /* RITracking_example.plist */; };
-		4da991f80db2e035397322c9 /* RIRatings.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029B19811E9200F71726 /* RIRatings.m */; };
 		4e6c662ba5a46bb8730e617e /* RITeaserImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028619811E9200F71726 /* RITeaserImage.m */; };
 		4f946a6031dc658465b500d8 /* slider-default7-trackCrossedOver.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A2199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png */; };
 		5037ac35e4d71a246fd9ed5a /* JAGenericFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */; };
@@ -375,7 +374,6 @@
 		B5A302D519811E9200F71726 /* RICountry.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029319811E9200F71726 /* RICountry.m */; };
 		B5A302D719811E9200F71726 /* RIError.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029719811E9200F71726 /* RIError.m */; };
 		B5A302D819811E9200F71726 /* RIProductReview.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029919811E9200F71726 /* RIProductReview.m */; };
-		B5A302D919811E9200F71726 /* RIRatings.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029B19811E9200F71726 /* RIRatings.m */; };
 		B5A302DA19811E9200F71726 /* RICommunicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029F19811E9200F71726 /* RICommunicationWrapper.m */; };
 		B5A302DB19811E9200F71726 /* RIOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302A119811E9200F71726 /* RIOperation.m */; };
 		B5A302DC19811E9200F71726 /* RIDataBaseWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302A419811E9200F71726 /* RIDataBaseWrapper.m */; };
@@ -1144,8 +1142,6 @@
 		B5A3029719811E9200F71726 /* RIError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIError.m; sourceTree = "<group>"; };
 		B5A3029819811E9200F71726 /* RIProductReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIProductReview.h; sourceTree = "<group>"; };
 		B5A3029919811E9200F71726 /* RIProductReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIProductReview.m; sourceTree = "<group>"; };
-		B5A3029A19811E9200F71726 /* RIRatings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIRatings.h; sourceTree = "<group>"; };
-		B5A3029B19811E9200F71726 /* RIRatings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIRatings.m; sourceTree = "<group>"; };
 		B5A3029E19811E9200F71726 /* RICommunicationWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICommunicationWrapper.h; sourceTree = "<group>"; };
 		B5A3029F19811E9200F71726 /* RICommunicationWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICommunicationWrapper.m; sourceTree = "<group>"; };
 		B5A302A019811E9200F71726 /* RIOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOperation.h; sourceTree = "<group>"; };
@@ -2544,8 +2540,6 @@
 				B5A3029919811E9200F71726 /* RIProductReview.m */,
 				4A944FF31992805100C02734 /* RIProductRatings.h */,
 				4A944FF41992805100C02734 /* RIProductRatings.m */,
-				B5A3029A19811E9200F71726 /* RIRatings.h */,
-				B5A3029B19811E9200F71726 /* RIRatings.m */,
 				B5B79B3E1A3F4A2A00639F9E /* RIShippingMethod.h */,
 				B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */,
 				B5C682F31986C41D0094C92C /* RIShippingMethodForm.h */,
@@ -4047,7 +4041,6 @@
 				976cc1afdb4c41be05ed1470 /* RIOrder.m in Sources */,
 				c7f7a3e79d1ad30af79a27c0 /* JABirthDateComponent.m in Sources */,
 				67f4a0b88343cac1bc885793 /* RIURLCache.m in Sources */,
-				4da991f80db2e035397322c9 /* RIRatings.m in Sources */,
 				B5C13EBD1A402A9E00484398 /* ADJPackageHandler.m in Sources */,
 				5612820b1a73e2366b652295 /* RIDataBaseWrapper.m in Sources */,
 				4bc43fda46c675d38bdb8ad7 /* JARootViewController.m in Sources */,
@@ -4278,7 +4271,6 @@
 				B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */,
 				B510B01019AE466B00A9754A /* JABirthDateComponent.m in Sources */,
 				B5A302D219811E9200F71726 /* RIURLCache.m in Sources */,
-				B5A302D919811E9200F71726 /* RIRatings.m in Sources */,
 				B5C13EBC1A402A9E00484398 /* ADJPackageHandler.m in Sources */,
 				B5A302DC19811E9200F71726 /* RIDataBaseWrapper.m in Sources */,
 				4AE242E01986569000E37C90 /* JARootViewController.m in Sources */,

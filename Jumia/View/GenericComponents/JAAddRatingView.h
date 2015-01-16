@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RIRatings.h"
 #import "RIFieldRatingStars.h"
 
 @interface JAAddRatingView : UIView
