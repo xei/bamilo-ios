@@ -22,7 +22,8 @@
 @interface RIRatingInfo : NSObject
 
 @property (nonatomic, strong) NSNumber* basedOn;
-@property (nonatomic, strong) NSDictionary* averageRatingsByTypeTitle;
+@property (nonatomic, strong) NSArray* averageRatingsArray;
+@property (nonatomic, strong) NSArray* typesArray;
 @property (nonatomic, strong) NSDictionary* numberOfRatingsByStar;
 
 @end

@@ -103,7 +103,8 @@
         NSArray* byTypeArray = [ratingInfoJSON objectForKey:@"by_type"];
         if (VALID_NOTEMPTY(byTypeArray, NSArray)) {
             
-            NSMutableDictionary* averageRatingsByTypeTitle = [NSMutableDictionary new];
+            NSMutableArray* averages = [NSMutableArray new];
+            NSMutableArray* titles = [NSMutableArray new];
             
             for (NSDictionary* byType in byTypeArray) {
                 
@@ -115,13 +116,15 @@
                         NSString* title = [byType objectForKey:@"title"];
                         
                         if (VALID_NOTEMPTY(average, NSNumber) && VALID_NOTEMPTY(title, NSString)) {
-                            [averageRatingsByTypeTitle setObject:average forKey:title];
+                            [averages addObject:average];
+                            [titles addObject:title];
                         }
                     }
                 }
             }
             
-            newRatingInfo.averageRatingsByTypeTitle = [averageRatingsByTypeTitle copy];
+            newRatingInfo.averageRatingsArray = [averages copy];
+            newRatingInfo.typesArray = [titles copy];
         }
     }
     

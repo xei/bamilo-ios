@@ -32,7 +32,8 @@ UITableViewDataSource
 @property (weak, nonatomic) IBOutlet UILabel *brandLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIView *resumeView;
-@property (weak, nonatomic) JARatingsViewMedium *stars;
+@property (nonatomic, strong) NSMutableArray* ratingStars;
+@property (nonatomic, strong) NSMutableArray* ratingStarLabels;
 @property (weak, nonatomic) IBOutlet UILabel *labelUsedProduct;
 @property (weak, nonatomic) IBOutlet UIButton *writeReviewButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewComments;
@@ -458,23 +459,77 @@ UITableViewDataSource
     
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
     
-    if(VALID_NOTEMPTY(self.stars, JARatingsViewMedium))
-    {
-        [self.stars removeFromSuperview];
+    if (VALID_NOTEMPTY(self.ratingStars, NSMutableArray)) {
+        for (UIView* view in self.ratingStars) {
+            [view removeFromSuperview];
+        }
     }
+    
+    if (VALID_NOTEMPTY(self.ratingStarLabels, NSMutableArray)) {
+        for (UIView* view in self.ratingStarLabels) {
+            [view removeFromSuperview];
+        }
+    }
+    
+    self.ratingStars = [NSMutableArray new];
+    self.ratingStarLabels = [NSMutableArray new];
     
     if(addNumberOfReviewsInTopView)
     {
+        NSInteger numberOfItemsSideBySide = 3;
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+        {
+            if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
+            {
+                numberOfItemsSideBySide = 7;
+            }
+        }
+        
         topViewMinHeight += 6.0f;
-        self.stars = [JARatingsViewMedium getNewJARatingsViewMedium];
-        [self.stars setFrame:CGRectMake(12.0f,
-                                        topViewMinHeight,
-                                        self.stars.frame.size.width,
-                                        self.stars.frame.size.height)];
-        [self.topView addSubview:self.stars];
-        [self.stars setRating:[self.product.avr integerValue]];
-        [self.stars setNumberOfReviews:self.productRatings.reviews.count];
-        topViewMinHeight += self.stars.frame.size.height;
+        
+        CGFloat currentX = 6.0f;
+        CGFloat ratingViewWidth = (self.topView.frame.size.width - 6.0f*2) / numberOfItemsSideBySide;
+        for (int i = 0; i < self.productRatings.ratingInfo.averageRatingsArray.count; i++) {
+            
+            NSString* title = [self.productRatings.ratingInfo.typesArray objectAtIndex:i];
+            
+            UILabel* titleLabel = [UILabel new];
+            [titleLabel setTextColor:UIColorFromRGB(0x666666)];
+            [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+            [titleLabel setText:title];
+            [titleLabel sizeToFit];
+            [titleLabel setFrame:CGRectMake(currentX,
+                                            topViewMinHeight,
+                                            ratingViewWidth,
+                                            titleLabel.frame.size.height)];
+            [self.topView addSubview:titleLabel];
+            [self.ratingStarLabels addObject:titleLabel];
+            
+            NSNumber* average = [self.productRatings.ratingInfo.averageRatingsArray objectAtIndex:i];
+            
+            JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
+            [ratingsView setRating:[average integerValue]];
+            [ratingsView setFrame:CGRectMake(currentX,
+                                             topViewMinHeight + titleLabel.frame.size.height,
+                                             ratingsView.frame.size.width,
+                                             ratingsView.frame.size.height)];
+            [self.topView addSubview:ratingsView];
+            [self.ratingStars addObject:ratingsView];
+            
+            currentX += ratingViewWidth;
+            
+            NSInteger nextIndex = i+1;
+            if (nextIndex < self.productRatings.ratingInfo.averageRatingsArray.count) {
+                if (0 == nextIndex%numberOfItemsSideBySide) {
+                    currentX = 6.0f;
+                    if (0 != nextIndex) {
+                        topViewMinHeight += titleLabel.frame.size.height + ratingsView.frame.size.height;
+                    }
+                }
+            } else {
+                topViewMinHeight += 20.0f + ratingsView.frame.size.height;
+            }
+        }
     }
     
     if(topViewMinHeight < 38.0f)
@@ -492,30 +547,72 @@ UITableViewDataSource
 
 - (void)setupResumeView:(CGFloat)width
 {
-    self.resumeView.layer.cornerRadius = 5.0f;
-    [self.resumeView setFrame:CGRectMake(6.0f,
-                                         CGRectGetMaxY(self.topView.frame) + 6.0f,
-                                         width,
-                                         self.resumeView.frame.size.height)];
-    
-    if(VALID_NOTEMPTY(self.stars, JARatingsViewMedium))
-    {
-        [self.stars removeFromSuperview];
+    if (VALID_NOTEMPTY(self.ratingStars, NSMutableArray)) {
+        for (UIView* view in self.ratingStars) {
+            [view removeFromSuperview];
+        }
     }
-    self.stars = [JARatingsViewMedium getNewJARatingsViewMedium];
-    [self.stars setFrame:CGRectMake(6.0f,
-                                    10.0f,
-                                    self.stars.frame.size.width,
-                                    self.stars.frame.size.height)];
-    [self.resumeView addSubview:self.stars];
-    [self.stars setRating:[self.product.avr integerValue]];
-    [self.stars setNumberOfReviews:self.productRatings.reviews.count];
+    
+    if (VALID_NOTEMPTY(self.ratingStarLabels, NSMutableArray)) {
+        for (UIView* view in self.ratingStars) {
+            [view removeFromSuperview];
+        }
+    }
+    
+    self.ratingStars = [NSMutableArray new];
+    self.ratingStarLabels = [NSMutableArray new];
+    
+    CGFloat currentY = 6.0f;
+    
+    CGFloat currentX = 6.0f;
+    CGFloat ratingViewWidth = (self.topView.frame.size.width - 6.0f*2) / 3;
+    for (int i = 0; i < self.productRatings.ratingInfo.averageRatingsArray.count; i++) {
+        
+        NSString* title = [self.productRatings.ratingInfo.typesArray objectAtIndex:i];
+        
+        UILabel* titleLabel = [UILabel new];
+        [titleLabel setTextColor:UIColorFromRGB(0x666666)];
+        [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [titleLabel setText:title];
+        [titleLabel sizeToFit];
+        [titleLabel setFrame:CGRectMake(currentX,
+                                        currentY,
+                                        ratingViewWidth,
+                                        titleLabel.frame.size.height)];
+        [self.resumeView addSubview:titleLabel];
+        [self.ratingStarLabels addObject:titleLabel];
+        
+        NSNumber* average = [self.productRatings.ratingInfo.averageRatingsArray objectAtIndex:i];
+        
+        JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
+        [ratingsView setRating:[average integerValue]];
+        [ratingsView setFrame:CGRectMake(currentX,
+                                         currentY + titleLabel.frame.size.height,
+                                         ratingsView.frame.size.width,
+                                         ratingsView.frame.size.height)];
+        [self.resumeView addSubview:ratingsView];
+        [self.ratingStars addObject:ratingsView];
+        
+        currentX += ratingViewWidth;
+        
+        NSInteger nextIndex = i+1;
+        if (nextIndex < self.productRatings.ratingInfo.averageRatingsArray.count) {
+            if (0 == nextIndex%3) {
+                currentX = 6.0f;
+                if (0 != nextIndex) {
+                    currentY += titleLabel.frame.size.height + ratingsView.frame.size.height;
+                }
+            }
+        } else {
+            currentY += 20.0f + ratingsView.frame.size.height;
+        }
+    }
     
     self.labelUsedProduct.text = STRING_RATE_PRODUCT;
     [self.labelUsedProduct setTextColor:UIColorFromRGB(0x666666)];
     self.labelUsedProduct.translatesAutoresizingMaskIntoConstraints = YES;
     [self.labelUsedProduct setFrame:CGRectMake(self.labelUsedProduct.frame.origin.x,
-                                               CGRectGetMaxY(self.stars.frame) + 5.0f,
+                                               currentY,
                                                self.labelUsedProduct.frame.size.width,
                                                self.labelUsedProduct.frame.size.height)];
     [self.writeReviewButton setTitle:STRING_WRITE_REVIEW
@@ -523,6 +620,12 @@ UITableViewDataSource
     [self.writeReviewButton sizeToFit];
     [self.writeReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
                                  forState:UIControlStateNormal];
+    
+    self.resumeView.layer.cornerRadius = 5.0f;
+    [self.resumeView setFrame:CGRectMake(6.0f,
+                                         CGRectGetMaxY(self.topView.frame) + 6.0f,
+                                         width,
+                                         currentY + self.labelUsedProduct.frame.size.height + self.writeReviewButton.frame.size.height + 20.0f)];
 }
 
 - (void)setupSendReviewView:(CGFloat)width originY:(CGFloat)originY
