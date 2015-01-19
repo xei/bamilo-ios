@@ -31,6 +31,9 @@
 #import "JAUtils.h"
 #import "RICustomer.h"
 #import "JAPDVWizardView.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import "AQSFacebookMessengerActivity.h"
+
 
 @interface JAPDVViewController ()
 <
@@ -994,16 +997,34 @@ JAActivityViewControllerDelegate
 
 - (void)shareProduct
 {
-    JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initForProductShare:self.product];
     
-    NSArray *objectsToShare = @[provider];
+
+    NSString *url = self.product.url;
+
+    if(NSNotFound != [url rangeOfString:RI_MOBAPI_PREFIX].location)
+    {
+        url = [url stringByReplacingOccurrencesOfString:RI_MOBAPI_PREFIX withString:@""];
+    }
     
-    JAActivityViewController *activityController = [[JAActivityViewController alloc] initWithActivityItems:objectsToShare
-                                                                                     applicationActivities:nil];
+    if(NSNotFound != [url rangeOfString:RI_API_VERSION].location)
+    {
+        url = [url stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
+    }
+    
+    NSArray *objectsToShare = @[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url]];
+    
+
+    UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
+    
+    
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:@[fbmActivity]];
+    
+    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
     
     [activityController setValue:STRING_SHARE_OBJECT
-                          forKey:@"subject"];
+                         forKey:@"subject"];
     
+
     activityController.completionHandler = ^(NSString *activityType, BOOL completed)
     {
         NSString *type = @"Shared";
@@ -1094,7 +1115,7 @@ JAActivityViewControllerDelegate
                                                   data:[trackingDictionary copy]];
     };
 
-    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
+    
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
