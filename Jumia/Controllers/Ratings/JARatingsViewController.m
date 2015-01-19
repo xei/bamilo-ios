@@ -421,6 +421,8 @@ UITableViewDataSource
                                                     self.view.frame.size.height - originY - verticalMargin)];
         [self.tableViewComments setHidden:NO];
     }
+    
+    [self.tableViewComments reloadData];
 }
 
 - (void)setupTopView:(BOOL)addNumberOfReviewsInTopView
@@ -787,95 +789,23 @@ UITableViewDataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self heightForBasicCellAtIndexPath:indexPath];
-}
-
-- (CGFloat)heightForBasicCellAtIndexPath:(NSIndexPath *)indexPath
-{
-    static JAReviewCell *cell = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        cell = [self.tableViewComments dequeueReusableCellWithIdentifier:@"reviewCell"];
-    });
-
     RIReview* review = [self.productRatings.reviews objectAtIndex:indexPath.row];
-    cell.labelDescription.text = review.description;
-    cell.labelDescription.preferredMaxLayoutWidth = self.tableViewComments.frame.size.width - 24.0f;
-    
-    return [self calculateHeightForConfiguredSizingCell:cell];
-}
-
-- (CGFloat)calculateHeightForConfiguredSizingCell:(UITableViewCell *)sizingCell
-{
-    [sizingCell setNeedsLayout];
-    [sizingCell layoutSubviews];
-    
-    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingExpandedSize];
-    
-    return size.height;
+    return [JAReviewCell cellHeightWithReview:review width:self.tableViewComments.frame.size.width];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JAReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reviewCell"];
-    [cell setupCell:self.tableViewComments.frame];
-    
-    cell.labelPrice.text = STRING_PRICE;
-    cell.labelAppearance.text = STRING_APPEARENCE;
-    cell.labelQuality.text = STRING_QUANTITY;
-    
-    
+
     RIReview* review = [self.productRatings.reviews objectAtIndex:indexPath.row];
-    
-    cell.labelTitle.text = review.title;
-    cell.labelDescription.text = review.comment;
-    
-    NSInteger count = review.ratingStars.count;
-    
-    if (count == 1) {
-        [cell.viewAppearance removeFromSuperview];
-        [cell.viewQuality removeFromSuperview];
-    } else if (2 == count) {
-        [cell.viewQuality removeFromSuperview];
-    }
-    
-    for (int i = 0 ; i < count ; i++)
-    {
-        NSNumber* ratingAverage = [review.ratingStars objectAtIndex:i];
-        NSString* ratingTitle = [review.ratingTitles objectAtIndex:i];
-        
-        if (i == 0)
-        {
-            [cell setPriceRating:[ratingAverage integerValue]];
-            cell.labelPrice.text = ratingTitle;
-        }
-        else if (i == 1)
-        {
-            [cell setAppearanceRating:[ratingAverage integerValue]];
-            cell.labelAppearance.text = ratingTitle;
-        }
-        else if (i == 2)
-        {
-            [cell setQualityRating:[ratingAverage integerValue]];
-            cell.labelQuality.text = ratingTitle;
-        }
-    }
-    
-    NSString *string;
-    
-    if (review.userName.length > 0) {
-        string = [NSString stringWithFormat:STRING_POSTED_BY, review.userName, review.dateString];
-    } else {
-        string = [NSString stringWithFormat:STRING_POSTED_BY_ANONYMOUS, review.dateString];
-    }
-    
-    cell.labelAuthorDate.text = string;
-    
-    [cell.separator setHidden:NO];
+
+    BOOL showSeparator = YES;
     if(indexPath.row == ([self.productRatings.reviews count] - 1))
     {
-        [cell.separator setHidden:YES];
+        showSeparator = NO;
     }
+    
+    [cell setupWithReview:review showSeparator:showSeparator];
     
     return cell;
 }
