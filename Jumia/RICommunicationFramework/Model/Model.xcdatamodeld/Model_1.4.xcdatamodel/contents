@@ -168,7 +168,10 @@
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ratingAverage" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="ratingsTotal" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="recentlyViewedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="reviewsTotal" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sizeGuideUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sku" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -290,7 +293,7 @@
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
         <element name="RINewsletterCategory" positionX="-486" positionY="-63" width="128" height="73"/>
-        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="570"/>
+        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="615"/>
         <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
         <element name="RISearchSuggestion" positionX="-648" positionY="27" width="128" height="105"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>

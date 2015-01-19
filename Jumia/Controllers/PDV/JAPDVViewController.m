@@ -768,7 +768,7 @@ JAActivityViewControllerDelegate
      *******/
     
     self.productInfoSection = [JAPDVProductInfo getNewPDVProductInfoSection];
-    [self.productInfoSection setupWithFrame:self.mainScrollView.frame product:self.product preSelectedSize:self.preSelectedSize numberOfRatings:[NSString stringWithFormat:@"%d",self.productRatings.reviews.count]];
+    [self.productInfoSection setupWithFrame:self.mainScrollView.frame product:self.product preSelectedSize:self.preSelectedSize];
     
     [self.productInfoSection.reviewsClickableView addTarget:self
                                                      action:@selector(goToRatinsMainScreen)

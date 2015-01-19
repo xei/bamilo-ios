@@ -36,6 +36,6 @@
 
 + (JAPDVProductInfo *)getNewPDVProductInfoSection;
 
-- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize numberOfRatings:(NSString*)numberOfRatings;
+- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize;
 
 @end

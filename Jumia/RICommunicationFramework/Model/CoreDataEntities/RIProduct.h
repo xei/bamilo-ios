@@ -63,6 +63,9 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSOrderedSet *productSimples;
 @property (nonatomic, retain) NSOrderedSet *variations;
 @property (nonatomic, retain) NSString* sizeGuideUrl;
+@property (nonatomic, retain) NSNumber * ratingAverage;
+@property (nonatomic, retain) NSNumber * ratingsTotal;
+@property (nonatomic, retain) NSNumber * reviewsTotal;
 
 //Not a coredata relationship
 @property (nonatomic, retain) NSOrderedSet *categoryIds;

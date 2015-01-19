@@ -52,6 +52,8 @@
 
 #define STRING_NEW RILocalizedString(@"string_new", nil)
 #define STRING_SIZE RILocalizedString(@"string_size", nil)
+#define STRING_RATING RILocalizedString(@"string_rating", nil)
+#define STRING_RATINGS RILocalizedString(@"string_ratings", nil)
 #define STRING_REVIEW RILocalizedString(@"string_review", nil)
 #define STRING_REVIEWS RILocalizedString(@"string_reviews", nil)
 #define STRING_QUANTITY RILocalizedString(@"string_quantity", nil)

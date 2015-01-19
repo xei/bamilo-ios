@@ -50,6 +50,9 @@
 @dynamic productSimples;
 @dynamic variations;
 @dynamic sizeGuideUrl;
+@dynamic ratingAverage;
+@dynamic ratingsTotal;
+@dynamic reviewsTotal;
 
 @synthesize categoryIds;
 
@@ -318,6 +321,21 @@
                     newProduct.avr = [ratingsDic objectForKey:@"avr"];
                 }
                 if (VALID_NOTEMPTY([ratingsDic objectForKey:@"sum"], NSNumber)) {                    newProduct.sum = [ratingsDic objectForKey:@"sum"];
+                }
+            }
+        }
+        
+        if ([dataDic objectForKey:@"rating_reviews_summary"]) {
+            NSDictionary *ratingsDic = [dataDic objectForKey:@"rating_reviews_summary"];
+            if (VALID_NOTEMPTY(ratingsDic, NSDictionary)) {
+                if (VALID_NOTEMPTY([ratingsDic objectForKey:@"average"], NSNumber)) {
+                    newProduct.ratingAverage = [ratingsDic objectForKey:@"average"];
+                }
+                if (VALID_NOTEMPTY([ratingsDic objectForKey:@"ratings_total"], NSNumber)) {
+                    newProduct.ratingsTotal = [ratingsDic objectForKey:@"ratings_total"];
+                }
+                if (VALID_NOTEMPTY([ratingsDic objectForKey:@"reviews_total"], NSNumber)) {
+                    newProduct.reviewsTotal = [ratingsDic objectForKey:@"reviews_total"];
                 }
             }
         }

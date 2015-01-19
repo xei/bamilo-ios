@@ -49,8 +49,10 @@
 
 "string_new" = "NOUVEAU";
 "string_size" = "Taille";
-"string_review" = "%@ Avis";
-"string_reviews" = "%@ Avis";
+"string_rating" = "1 Avis";
+"string_ratings" = "%d Avis";
+"string_review" = "1 Avis";
+"string_reviews" = "%d Avis";
 "string_quantity" = "Quantité %@";
 "products_sort_bestrated" = "Mieux Notés";
 "products_sort_popularity" = "Popularité";
