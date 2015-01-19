@@ -8,36 +8,32 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RIRatingOption : NSObject
+@interface RIReview : NSObject
 
-@property (strong, nonatomic) NSString *optionValue;
-@property (strong, nonatomic) NSString *typeTitle;
-@property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSString *percentageRating;
+@property (nonatomic, strong) NSString* comment;
+@property (nonatomic, strong) NSString* dateString;
+@property (nonatomic, strong) NSString* userName;
+@property (nonatomic, strong) NSString* title;
+@property (nonatomic, strong) NSArray* ratingStars;
+@property (nonatomic, strong) NSArray* ratingTitles;
 
 @end
 
-@interface RIRatingComment : NSObject
+@interface RIRatingInfo : NSObject
 
-@property (strong, nonatomic) NSString *createdAt;
-@property (strong, nonatomic) NSString *idReview;
-@property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSString *detail;
-@property (strong, nonatomic) NSString *email;
-@property (strong, nonatomic) NSString *nickname;
-@property (strong, nonatomic) NSString *idAggregated;
-@property (strong, nonatomic) NSNumber *avgRating;
-@property (strong, nonatomic) NSString *dateString;
-@property (strong, nonatomic) NSArray *options;
+@property (nonatomic, strong) NSNumber* basedOn;
+@property (nonatomic, strong) NSArray* averageRatingsArray;
+@property (nonatomic, strong) NSArray* typesArray;
+@property (nonatomic, strong) NSDictionary* numberOfRatingsByStar;
 
 @end
 
 @interface RIProductRatings : NSObject
 
 @property (strong, nonatomic) NSString *productName;
-@property (strong, nonatomic) NSNumber *commentsCount;
 @property (strong, nonatomic) NSString *productSku;
-@property (strong, nonatomic) NSArray *comments;
+@property (strong, nonatomic) NSArray *reviews;
+@property (nonatomic, strong) RIRatingInfo* ratingInfo;
 
 /**
  *  Method to review for a product given it's sku

@@ -73,27 +73,84 @@
     return nil;
 }
 
-- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize numberOfRatings:(NSString*)numberOfRatings
+- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
         {
-            [self setupForLandscape:frame product:product numberOfRatings:numberOfRatings];
+            [self setupForLandscape:frame product:product];
         }
         else
         {
-            [self setupForPortrait:frame product:product preSelectedSize:preSelectedSize numberOfRatings:numberOfRatings];
+            [self setupForPortrait:frame product:product preSelectedSize:preSelectedSize];
         }
     }
     else
     {
-        [self setupForPortrait:frame product:product preSelectedSize:preSelectedSize numberOfRatings:numberOfRatings];
+        [self setupForPortrait:frame product:product preSelectedSize:preSelectedSize];
     }
 }
 
-- (void)setupForPortrait:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize numberOfRatings:(NSString*)numberOfRatings
+- (NSString*)ratingAndReviewString:(RIProduct*)product
+{
+    NSString* ratingString = @"";
+    NSString* reviewString = @"";
+    if (VALID_NOTEMPTY(product.ratingsTotal, NSNumber)) {
+        if (1 == [product.ratingsTotal integerValue]) {
+            ratingString = STRING_RATING;
+        } else {
+            ratingString = [NSString stringWithFormat:STRING_RATINGS, [product.ratingsTotal integerValue]];
+        }
+    }
+    
+    
+    if (VALID_NOTEMPTY(product.reviewsTotal, NSNumber)) {
+        if (1 == [product.reviewsTotal integerValue]) {
+            reviewString = STRING_REVIEW;
+        } else {
+            reviewString = [NSString stringWithFormat:STRING_REVIEWS, [product.reviewsTotal integerValue]];
+        }
+    }
+    
+    
+    NSString* finalString = @"";
+    
+    if (VALID_NOTEMPTY(ratingString, NSString)) {
+        
+        finalString = ratingString;
+        
+        if (VALID_NOTEMPTY(reviewString, NSString)) {
+            
+            finalString = [NSString stringWithFormat:@"%@ / %@", ratingString, reviewString];
+            
+            if (0 == [product.ratingsTotal integerValue] && 0 == [product.reviewsTotal integerValue]) {
+                
+                finalString = STRING_RATE_NOW;
+            }
+        } else {
+            
+            if (0 == [product.ratingsTotal integerValue]) {
+                
+                finalString = STRING_RATE_NOW;
+            }
+        }
+    } else {
+        
+        if (VALID_NOTEMPTY(reviewString, NSString) &&  0 == [product.reviewsTotal integerValue]) {
+            
+            finalString = reviewString;
+            
+        } else {
+            
+            finalString = STRING_RATE_NOW;
+        }
+    }
+    return finalString;
+}
+
+- (void)setupForPortrait:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
 {
     self.layer.cornerRadius = 5.0f;
     
@@ -159,16 +216,9 @@
     [self setPriceWithNewValue:product.specialPriceFormatted
                    andOldValue:product.priceFormatted];
     
-    [self setNumberOfStars:[product.avr integerValue]];
+    [self setNumberOfStars:[product.ratingAverage integerValue]];
     
-    if (VALID_NOTEMPTY(numberOfRatings, NSString) && [numberOfRatings integerValue] > 0)
-    {
-        self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, numberOfRatings];
-    }
-    else
-    {
-        self.numberOfReviewsLabel.text = STRING_RATE_NOW;
-    }
+    self.numberOfReviewsLabel.text = [self ratingAndReviewString:product];
     
     self.specificationsLabel.text = STRING_SPECIFICATIONS;
     
@@ -217,7 +267,7 @@
     }
 }
 
-- (void)setupForLandscape:(CGRect)frame product:(RIProduct*)product numberOfRatings:(NSString*)numberOfRatings
+- (void)setupForLandscape:(CGRect)frame product:(RIProduct*)product
 {
     CGFloat width = frame.size.width - 12.0f;
     
@@ -225,16 +275,9 @@
     [self.reviewsLabel setText:STRING_REVIEWS_LABEL];
     [self.reviewsLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.reviewsSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
-    [self setNumberOfStars:[product.avr integerValue]];
-    
-    if (VALID_NOTEMPTY(numberOfRatings, NSString) && [numberOfRatings integerValue] > 0)
-    {
-        self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, numberOfRatings];
-    }
-    else
-    {
-        self.numberOfReviewsLabel.text = STRING_RATE_NOW;
-    }
+    [self setNumberOfStars:[product.ratingAverage integerValue]];
+
+    self.numberOfReviewsLabel.text = [self ratingAndReviewString:product];
     
     NSString *productFeaturesText = product.descriptionString;
     NSString *productDescriptionText = nil;

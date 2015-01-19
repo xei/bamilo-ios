@@ -105,7 +105,6 @@
 		4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */; };
 		4A18856419B8A368003337FC /* JAActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A18856319B8A368003337FC /* JAActivityViewController.m */; };
 		4A1892D219939A0C0036F327 /* JAReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D119939A0C0036F327 /* JAReviewCell.m */; };
-		4A1892D51993BCC90036F327 /* JANewRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D41993BCC90036F327 /* JANewRatingViewController.m */; };
 		4A19C51019D018F10070D194 /* JAShareActivityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */; };
 		4A19C51419D019100070D194 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C51319D019100070D194 /* Reachability.m */; };
 		4A19C51919D01ABE0070D194 /* JANoConnectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C51819D01ABE0070D194 /* JANoConnectionView.m */; };
@@ -153,7 +152,6 @@
 		4bc43fda46c675d38bdb8ad7 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
 		4c2fef288bf2196e345a6ca6 /* RIProductSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027A19811E9200F71726 /* RIProductSimple.m */; };
 		4c63827f343c921bf28405ea /* RITracking_example.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5A302AE19811E9200F71726 /* RITracking_example.plist */; };
-		4da991f80db2e035397322c9 /* RIRatings.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029B19811E9200F71726 /* RIRatings.m */; };
 		4e6c662ba5a46bb8730e617e /* RITeaserImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028619811E9200F71726 /* RITeaserImage.m */; };
 		4f946a6031dc658465b500d8 /* slider-default7-trackCrossedOver.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A2199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png */; };
 		5037ac35e4d71a246fd9ed5a /* JAGenericFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */; };
@@ -376,8 +374,6 @@
 		B5A302D419811E9200F71726 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028F19811E9200F71726 /* Model.xcdatamodeld */; };
 		B5A302D519811E9200F71726 /* RICountry.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029319811E9200F71726 /* RICountry.m */; };
 		B5A302D719811E9200F71726 /* RIError.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029719811E9200F71726 /* RIError.m */; };
-		B5A302D819811E9200F71726 /* RIProductReview.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029919811E9200F71726 /* RIProductReview.m */; };
-		B5A302D919811E9200F71726 /* RIRatings.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029B19811E9200F71726 /* RIRatings.m */; };
 		B5A302DA19811E9200F71726 /* RICommunicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029F19811E9200F71726 /* RICommunicationWrapper.m */; };
 		B5A302DB19811E9200F71726 /* RIOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302A119811E9200F71726 /* RIOperation.m */; };
 		B5A302DC19811E9200F71726 /* RIDataBaseWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302A419811E9200F71726 /* RIDataBaseWrapper.m */; };
@@ -604,8 +600,11 @@
 		CE13787819A357B400CA0751 /* JACategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13787719A357B400CA0751 /* JACategoriesViewController.m */; };
 		CE13789519A4DC4E00CA0751 /* JARecentlyViewedListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE13789419A4DC4E00CA0751 /* JARecentlyViewedListCell.xib */; };
 		CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */; };
+		CE283E4D1A6515F600F3E92D /* JANewRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E4C1A6515F600F3E92D /* JANewRatingViewController.m */; };
 		CE2C6B6F1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */; };
 		CE2C6B711A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B701A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib */; };
+		CE2DBC6E1A603B160075C21F /* RIFieldRatingStars.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DBC6D1A603B160075C21F /* RIFieldRatingStars.m */; };
+		CE2DBC751A63D5F40075C21F /* RIFieldRatingStars.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DBC6D1A603B160075C21F /* RIFieldRatingStars.m */; };
 		CE2F576E19913B33000A9E09 /* JACatalogListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F576D19913B33000A9E09 /* JACatalogListCell.m */; };
 		CE2F577019913B6D000A9E09 /* JACatalogListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2F576F19913B6D000A9E09 /* JACatalogListCell.xib */; };
 		CE2FB75619938EA100E7CD00 /* JACatalogGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2FB75519938EA100E7CD00 /* JACatalogGridCell.m */; };
@@ -805,11 +804,9 @@
 		ed3e1db94221143eef46fba7 /* slider-metal-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AC199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png */; };
 		ed6763c8490700c234cadbce /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDC819D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib */; };
 		ed678b1c1c88881ed466339e /* JACenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */; };
-		ee9b30540cdeea119d3484d6 /* JANewRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D41993BCC90036F327 /* JANewRatingViewController.m */; };
 		ef9c559f71ceab6fa71c4313 /* JACartListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B542546919AE9F7500C792FF /* JACartListHeaderView.m */; };
 		eff7e3b1020d2863ebc2e153 /* JACheckBoxComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B510B00619AE466B00A9754A /* JACheckBoxComponent.m */; };
 		f00ce9fe15cb6e122385dd86 /* JAPDVVariations.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A862226198FA00D007FD76A /* JAPDVVariations.xib */; };
-		f1332fc46e026575362f26f8 /* RIProductReview.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029919811E9200F71726 /* RIProductReview.m */; };
 		f216f801001f61223ca8024c /* JAColorFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */; };
 		f30fa9e7d7b939469d4b3c6b /* JAForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */; };
 		f3343ad59c47a2f2e6120500 /* JACatalogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2FB75A1993BCB900E7CD00 /* JACatalogCell.m */; };
@@ -847,8 +844,6 @@
 		4A18856319B8A368003337FC /* JAActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAActivityViewController.m; sourceTree = "<group>"; };
 		4A1892D019939A0C0036F327 /* JAReviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAReviewCell.h; sourceTree = "<group>"; };
 		4A1892D119939A0C0036F327 /* JAReviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAReviewCell.m; sourceTree = "<group>"; };
-		4A1892D31993BCC90036F327 /* JANewRatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewRatingViewController.h; sourceTree = "<group>"; };
-		4A1892D41993BCC90036F327 /* JANewRatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewRatingViewController.m; sourceTree = "<group>"; };
 		4A19C50E19D018F10070D194 /* JAShareActivityProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAShareActivityProvider.h; path = Utils/JAShareActivityProvider.h; sourceTree = "<group>"; };
 		4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAShareActivityProvider.m; path = Utils/JAShareActivityProvider.m; sourceTree = "<group>"; };
 		4A19C51219D019100070D194 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -1146,10 +1141,6 @@
 		B5A3029319811E9200F71726 /* RICountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICountry.m; sourceTree = "<group>"; };
 		B5A3029619811E9200F71726 /* RIError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIError.h; sourceTree = "<group>"; };
 		B5A3029719811E9200F71726 /* RIError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIError.m; sourceTree = "<group>"; };
-		B5A3029819811E9200F71726 /* RIProductReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIProductReview.h; sourceTree = "<group>"; };
-		B5A3029919811E9200F71726 /* RIProductReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIProductReview.m; sourceTree = "<group>"; };
-		B5A3029A19811E9200F71726 /* RIRatings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIRatings.h; sourceTree = "<group>"; };
-		B5A3029B19811E9200F71726 /* RIRatings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIRatings.m; sourceTree = "<group>"; };
 		B5A3029E19811E9200F71726 /* RICommunicationWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICommunicationWrapper.h; sourceTree = "<group>"; };
 		B5A3029F19811E9200F71726 /* RICommunicationWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICommunicationWrapper.m; sourceTree = "<group>"; };
 		B5A302A019811E9200F71726 /* RIOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOperation.h; sourceTree = "<group>"; };
@@ -1364,8 +1355,12 @@
 		CE13789419A4DC4E00CA0751 /* JARecentlyViewedListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARecentlyViewedListCell.xib; sourceTree = "<group>"; };
 		CE21CB02198147EE00F7DC66 /* RIStaticBlockIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIStaticBlockIndex.h; sourceTree = "<group>"; };
 		CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIStaticBlockIndex.m; sourceTree = "<group>"; };
+		CE283E4B1A6515F600F3E92D /* JANewRatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewRatingViewController.h; sourceTree = "<group>"; };
+		CE283E4C1A6515F600F3E92D /* JANewRatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewRatingViewController.m; sourceTree = "<group>"; };
 		CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell_ipad_landscape.xib; sourceTree = "<group>"; };
 		CE2C6B701A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell_ipad_portrait.xib; sourceTree = "<group>"; };
+		CE2DBC6C1A603B160075C21F /* RIFieldRatingStars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldRatingStars.h; sourceTree = "<group>"; };
+		CE2DBC6D1A603B160075C21F /* RIFieldRatingStars.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIFieldRatingStars.m; sourceTree = "<group>"; };
 		CE2F576C19913B33000A9E09 /* JACatalogListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogListCell.h; sourceTree = "<group>"; };
 		CE2F576D19913B33000A9E09 /* JACatalogListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogListCell.m; sourceTree = "<group>"; };
 		CE2F576F19913B6D000A9E09 /* JACatalogListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogListCell.xib; sourceTree = "<group>"; };
@@ -1411,6 +1406,7 @@
 		CE4848931A1502C4003C3D53 /* JASubFiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASubFiltersViewController.m; sourceTree = "<group>"; };
 		CE4848951A161979003C3D53 /* JAFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAFiltersView.h; path = Filters/JAFiltersView.h; sourceTree = "<group>"; };
 		CE4848961A161979003C3D53 /* JAFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAFiltersView.m; path = Filters/JAFiltersView.m; sourceTree = "<group>"; };
+		CE4991001A5ED62F00508C1F /* Model_1.4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.4.xcdatamodel; sourceTree = "<group>"; };
 		CE55A4E21992873300EE75DE /* RIProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIProduct.h; sourceTree = "<group>"; };
 		CE55A4E31992873300EE75DE /* RIProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIProduct.m; sourceTree = "<group>"; };
 		CE55A4E51993672600EE75DE /* JARatingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARatingsView.h; sourceTree = "<group>"; };
@@ -1736,8 +1732,8 @@
 			children = (
 				4A944FF6199290F200C02734 /* JARatingsViewController.h */,
 				4A944FF7199290F200C02734 /* JARatingsViewController.m */,
-				4A1892D31993BCC90036F327 /* JANewRatingViewController.h */,
-				4A1892D41993BCC90036F327 /* JANewRatingViewController.m */,
+				CE283E4B1A6515F600F3E92D /* JANewRatingViewController.h */,
+				CE283E4C1A6515F600F3E92D /* JANewRatingViewController.m */,
 			);
 			path = Ratings;
 			sourceTree = "<group>";
@@ -2454,6 +2450,8 @@
 		B5A3026419811E9200F71726 /* CoreDataEntities */ = {
 			isa = PBXGroup;
 			children = (
+				CE2DBC6C1A603B160075C21F /* RIFieldRatingStars.h */,
+				CE2DBC6D1A603B160075C21F /* RIFieldRatingStars.m */,
 				B5A3026519811E9200F71726 /* RIApi.h */,
 				B5A3026619811E9200F71726 /* RIApi.m */,
 				B5A3026719811E9200F71726 /* RICategory.h */,
@@ -2539,12 +2537,8 @@
 				B5225E191989308300C18F1E /* RIPaymentInformation.m */,
 				B5A3029619811E9200F71726 /* RIError.h */,
 				B5A3029719811E9200F71726 /* RIError.m */,
-				B5A3029819811E9200F71726 /* RIProductReview.h */,
-				B5A3029919811E9200F71726 /* RIProductReview.m */,
 				4A944FF31992805100C02734 /* RIProductRatings.h */,
 				4A944FF41992805100C02734 /* RIProductRatings.m */,
-				B5A3029A19811E9200F71726 /* RIRatings.h */,
-				B5A3029B19811E9200F71726 /* RIRatings.m */,
 				B5B79B3E1A3F4A2A00639F9E /* RIShippingMethod.h */,
 				B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */,
 				B5C682F31986C41D0094C92C /* RIShippingMethodForm.h */,
@@ -3860,6 +3854,7 @@
 				0b1e813172ab4ac5baf4294c /* RIAddress.m in Sources */,
 				c4a111d276094b3ae6890461 /* JAPDVSingleRelatedItem.m in Sources */,
 				74ae21885fff40a8bed5b863 /* RIShippingMethodForm.m in Sources */,
+				CE2DBC751A63D5F40075C21F /* RIFieldRatingStars.m in Sources */,
 				bf81d9401f5ca279a3161ca2 /* SDWebImageManager.m in Sources */,
 				b99ff21639ad13d2b87fbcaf /* JAButtonCell.m in Sources */,
 				4b5ae89debacca2cb1f16964 /* RIForm.m in Sources */,
@@ -3935,7 +3930,6 @@
 				2608f636ef2e99dcbbfb171e /* JAPDVRelatedItem.m in Sources */,
 				94e152e4d8dd3055aab7a4d0 /* JAPaymentViewController.m in Sources */,
 				e39ee093e35c257cd5514d65 /* RIRegion.m in Sources */,
-				f1332fc46e026575362f26f8 /* RIProductReview.m in Sources */,
 				683688e1b9b2108556cfa333 /* JATopCategoriesTeaserView.m in Sources */,
 				B5B79B411A3F4A2A00639F9E /* RIShippingMethod.m in Sources */,
 				7fa37d4ab462805a50e33847 /* JASmallTeaserView.m in Sources */,
@@ -4018,7 +4012,6 @@
 				2f2b2b1158b3a928ea0ab3f8 /* JAPickerScrollView.m in Sources */,
 				3d642f69591ea75c8ec0ab53 /* JARecentSearchesViewController.m in Sources */,
 				f48eb2e331b5aa7bbd7c8bd6 /* JACatalogGridCell.m in Sources */,
-				ee9b30540cdeea119d3484d6 /* JANewRatingViewController.m in Sources */,
 				4040f1f0ed9a15a6ffac0790 /* JAMyFavouritesViewController.m in Sources */,
 				2232ab40a167c23aad4a3d84 /* JAActivityViewController.m in Sources */,
 				6e0b7de87382100c6d8b4606 /* JAOrderViewController.m in Sources */,
@@ -4046,7 +4039,6 @@
 				976cc1afdb4c41be05ed1470 /* RIOrder.m in Sources */,
 				c7f7a3e79d1ad30af79a27c0 /* JABirthDateComponent.m in Sources */,
 				67f4a0b88343cac1bc885793 /* RIURLCache.m in Sources */,
-				4da991f80db2e035397322c9 /* RIRatings.m in Sources */,
 				B5C13EBD1A402A9E00484398 /* ADJPackageHandler.m in Sources */,
 				5612820b1a73e2366b652295 /* RIDataBaseWrapper.m in Sources */,
 				4bc43fda46c675d38bdb8ad7 /* JARootViewController.m in Sources */,
@@ -4090,6 +4082,7 @@
 				B5C682FC1986C41D0094C92C /* RICheckout.m in Sources */,
 				B5FBD58D19CAF2F400BD9510 /* RIAdjustTracker.m in Sources */,
 				4A454F4A199CE67500B44821 /* JAForgotPasswordViewController.m in Sources */,
+				CE2DBC6E1A603B160075C21F /* RIFieldRatingStars.m in Sources */,
 				B5A302DB19811E9200F71726 /* RIOperation.m in Sources */,
 				B5C1E33719BA1E73009C422C /* UIImageView+JA.m in Sources */,
 				B59D196719C333F4004843C3 /* JAThanksViewController.m in Sources */,
@@ -4104,6 +4097,7 @@
 				CEA86E001A49D247000032AD /* JACampaignBannerCell.m in Sources */,
 				B57DC97E19B90AB10080C818 /* JAEditAddressViewController.m in Sources */,
 				4A39213419891FB200B70A9C /* JAMyAccountViewController.m in Sources */,
+				CE283E4D1A6515F600F3E92D /* JANewRatingViewController.m in Sources */,
 				CEABEEBF1A122BEA000D0CF8 /* JAGenericFiltersView.m in Sources */,
 				4AE865C019C9D7F100406159 /* JAEmailNotificationsViewController.m in Sources */,
 				CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */,
@@ -4158,7 +4152,6 @@
 				B5C13EA41A402A9E00484398 /* ADJActivityPackage.m in Sources */,
 				B59DCA6119B710B100DE7960 /* RIRegion.m in Sources */,
 				CE9193BD19F503FB00F89840 /* JAFallbackView.m in Sources */,
-				B5A302D819811E9200F71726 /* RIProductReview.m in Sources */,
 				CE44587C198BF2EE00CE7E8D /* JATopCategoriesTeaserView.m in Sources */,
 				CE445875198BD5D800CE7E8D /* JASmallTeaserView.m in Sources */,
 				4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */,
@@ -4247,7 +4240,6 @@
 				B5C13EA81A402A9E00484398 /* NSString+ADJAdditions.m in Sources */,
 				4A39212D19891F6D00B70A9C /* JARecentSearchesViewController.m in Sources */,
 				CE2FB75619938EA100E7CD00 /* JACatalogGridCell.m in Sources */,
-				4A1892D51993BCC90036F327 /* JANewRatingViewController.m in Sources */,
 				4A39213A19891FC400B70A9C /* JAMyFavouritesViewController.m in Sources */,
 				4A18856419B8A368003337FC /* JAActivityViewController.m in Sources */,
 				B59D195F19C33122004843C3 /* JAOrderViewController.m in Sources */,
@@ -4277,7 +4269,6 @@
 				B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */,
 				B510B01019AE466B00A9754A /* JABirthDateComponent.m in Sources */,
 				B5A302D219811E9200F71726 /* RIURLCache.m in Sources */,
-				B5A302D919811E9200F71726 /* RIRatings.m in Sources */,
 				B5C13EBC1A402A9E00484398 /* ADJPackageHandler.m in Sources */,
 				B5A302DC19811E9200F71726 /* RIDataBaseWrapper.m in Sources */,
 				4AE242E01986569000E37C90 /* JARootViewController.m in Sources */,
@@ -4940,12 +4931,13 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CE4991001A5ED62F00508C1F /* Model_1.4.xcdatamodel */,
 				CEA86D9A1A374D32000032AD /* Model_1.3.xcdatamodel */,
 				B5181F4D19FE9C98006C5EC0 /* Model_1.2.xcdatamodel */,
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = CEA86D9A1A374D32000032AD /* Model_1.3.xcdatamodel */;
+			currentVersion = CE4991001A5ED62F00508C1F /* Model_1.4.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

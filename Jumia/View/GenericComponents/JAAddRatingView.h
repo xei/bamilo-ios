@@ -7,16 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RIRatings.h"
+#import "RIFieldRatingStars.h"
 
 @interface JAAddRatingView : UIView
 
 @property (assign, nonatomic) NSInteger rating;
-@property (strong, nonatomic) NSString *idRatingType;
-@property (strong, nonatomic) NSArray *ratingOptions;
+//@property (strong, nonatomic) NSArray *ratingOptions;
+@property (nonatomic, strong) RIFieldRatingStars* fieldRatingStars;
 
 + (JAAddRatingView *)getNewJAAddRatingView;
 
-- (void)setupWithOption:(RIRatingsDetails*)option;
+//- (void)setupWithOption:(RIRatingsDetails*)option;
+- (void)setupWithFieldRatingStars:(RIFieldRatingStars*)fieldRatingStars;
 
 @end

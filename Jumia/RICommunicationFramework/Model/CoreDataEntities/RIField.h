@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class RIFieldDataSetComponent, RIFieldOption, RIForm;
+@class RIFieldDataSetComponent, RIFieldOption, RIForm, RIFieldRatingStars;
 
 @interface RIField : NSManagedObject
 
@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSString * apiCall;
 @property (nonatomic, retain) RIForm *form;
 @property (nonatomic, retain) NSOrderedSet *options;
+@property (nonatomic, retain) NSOrderedSet *ratingStars;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 + (void)saveField:(RIField *)field;
@@ -56,4 +57,14 @@
 - (void)removeOptionsObject:(RIFieldOption *)value;
 - (void)addOptions:(NSOrderedSet *)values;
 - (void)removeOptions:(NSOrderedSet *)values;
+- (void)insertObject:(RIFieldRatingStars *)value inRatingStarsAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromRatingStarsAtIndex:(NSUInteger)idx;
+- (void)insertRatingStars:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeRatingStarsAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInRatingStarsAtIndex:(NSUInteger)idx withObject:(RIFieldRatingStars *)value;
+- (void)replaceRatingStarsAtIndexes:(NSIndexSet *)indexes withRatingStars:(NSArray *)values;
+- (void)addRatingStarsObject:(RIFieldRatingStars *)value;
+- (void)removeRatingStarsObject:(RIFieldRatingStars *)value;
+- (void)addRatingStars:(NSOrderedSet *)values;
+- (void)removeRatingStars:(NSOrderedSet *)values;
 @end

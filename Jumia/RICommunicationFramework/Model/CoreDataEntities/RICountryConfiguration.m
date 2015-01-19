@@ -12,15 +12,19 @@
 
 @implementation RICountryConfiguration
 
+@dynamic csEmail;
 @dynamic currencyIso;
-@dynamic currencySymbol;
 @dynamic currencyPosition;
-@dynamic noDecimals;
-@dynamic thousandsSep;
+@dynamic currencySymbol;
 @dynamic decimalsSep;
 @dynamic gaId;
+@dynamic noDecimals;
 @dynamic phoneNumber;
-@dynamic csEmail;
+@dynamic thousandsSep;
+@dynamic ratingIsEnabled;
+@dynamic ratingRequiresLogin;
+@dynamic reviewIsEnabled;
+@dynamic reviewRequiresLogin;
 @dynamic languages;
 
 + (RICountryConfiguration *)parseCountryConfiguration:(NSDictionary *)json
@@ -81,6 +85,36 @@
         }
     }
 
+    if ([json objectForKey:@"rating"]) {
+        
+        NSDictionary* ratingDic = [json objectForKey:@"rating"];
+        if (VALID_NOTEMPTY(ratingDic, NSDictionary)) {
+            
+            if ([ratingDic objectForKey:@"is_enable"]) {
+                newConfig.ratingIsEnabled = [NSNumber numberWithBool:YES];//[ratingDic objectForKey:@"is_enable"];
+            }
+            
+            if ([ratingDic objectForKey:@"required_login"]) {
+                newConfig.ratingRequiresLogin = [ratingDic objectForKey:@"required_login"];
+            }
+        }
+    }
+    
+    if ([json objectForKey:@"review"]) {
+        
+        NSDictionary* reviewDic = [json objectForKey:@"review"];
+        if (VALID_NOTEMPTY(reviewDic, NSDictionary)) {
+            
+            if ([reviewDic objectForKey:@"is_enable"]) {
+                newConfig.reviewIsEnabled = [NSNumber numberWithBool:YES];//[reviewDic objectForKey:@"is_enable"];
+            }
+            
+            if ([reviewDic objectForKey:@"required_login"]) {
+                newConfig.reviewRequiresLogin = [reviewDic objectForKey:@"required_login"];
+            }
+        }
+    }
+    
     [[NSUserDefaults standardUserDefaults] setObject:languageCode forKey:kLanguageCodeKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
     

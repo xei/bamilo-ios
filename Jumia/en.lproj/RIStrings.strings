@@ -49,8 +49,10 @@
 
 "string_new" = "NEW";
 "string_size" = "Size";
-"string_review" = "%@ review";
-"string_reviews" = "%@ reviews";
+"string_rating" = "1 rating";
+"string_ratings" = "%d ratings";
+"string_review" = "1 review";
+"string_reviews" = "%d reviews";
 "string_quantity" = "Quantity: %@";
 "products_sort_bestrated" = "Best Rating";
 "products_sort_popularity" = "Popularity";
