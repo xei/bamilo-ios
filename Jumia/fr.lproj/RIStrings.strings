@@ -49,8 +49,8 @@
 
 "string_new" = "NOUVEAU";
 "string_size" = "Taille";
-"string_rating" = "1 Avis";
-"string_ratings" = "%d Avis";
+"string_rating" = "1 Notes";
+"string_ratings" = "%d Notes";
 "string_review" = "1 Avis";
 "string_reviews" = "%d Avis";
 "string_quantity" = "Quantité %@";
