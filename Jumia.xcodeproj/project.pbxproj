@@ -197,7 +197,6 @@
 		692fece832938452dbf8505a /* JATeaserPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */; };
 		69c7ac2a38a28dc5589a97ca /* JANavigationBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A392142198925E300B70A9C /* JANavigationBarView.xib */; };
 		6C18BDAC1A1B4CA300626706 /* JANewsletterComponent~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */; };
-		6C26DC321A66C19700141634 /* AQSFacebookMessengerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C26DC311A66C19700141634 /* AQSFacebookMessengerActivity.m */; };
 		6ad0a1988b1e51c37142c75b /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
 		6be80f134e67002eecb79292 /* RILanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027619811E9200F71726 /* RILanguage.m */; };
 		6e0b7de87382100c6d8b4606 /* JAOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D195E19C33122004843C3 /* JAOrderViewController.m */; };
@@ -601,6 +600,8 @@
 		CE13789519A4DC4E00CA0751 /* JARecentlyViewedListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE13789419A4DC4E00CA0751 /* JARecentlyViewedListCell.xib */; };
 		CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */; };
 		CE283E4D1A6515F600F3E92D /* JANewRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E4C1A6515F600F3E92D /* JANewRatingViewController.m */; };
+		CE283E511A6D56E800F3E92D /* AQSFacebookMessengerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E501A6D56E800F3E92D /* AQSFacebookMessengerActivity.m */; };
+		CE283E521A6D56E800F3E92D /* AQSFacebookMessengerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E501A6D56E800F3E92D /* AQSFacebookMessengerActivity.m */; };
 		CE2C6B6F1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */; };
 		CE2C6B711A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B701A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib */; };
 		CE2DBC6E1A603B160075C21F /* RIFieldRatingStars.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DBC6D1A603B160075C21F /* RIFieldRatingStars.m */; };
@@ -930,8 +931,6 @@
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
-		6C26DC301A66C19700141634 /* AQSFacebookMessengerActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AQSFacebookMessengerActivity.h; path = "../../Desktop/AQSFacebookMessengerActivity-master/AQSFacebookMessengerActivity/Classes/AQSFacebookMessengerActivity.h"; sourceTree = "<group>"; };
-		6C26DC311A66C19700141634 /* AQSFacebookMessengerActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AQSFacebookMessengerActivity.m; path = "../../Desktop/AQSFacebookMessengerActivity-master/AQSFacebookMessengerActivity/Classes/AQSFacebookMessengerActivity.m"; sourceTree = "<group>"; };
 		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
 		8C38E18519CF16F50007F6F9 /* JAMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMessageView.h; sourceTree = "<group>"; };
 		8C38E18619CF16F50007F6F9 /* JAMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMessageView.m; sourceTree = "<group>"; };
@@ -1357,6 +1356,8 @@
 		CE21CB03198147EE00F7DC66 /* RIStaticBlockIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIStaticBlockIndex.m; sourceTree = "<group>"; };
 		CE283E4B1A6515F600F3E92D /* JANewRatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewRatingViewController.h; sourceTree = "<group>"; };
 		CE283E4C1A6515F600F3E92D /* JANewRatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewRatingViewController.m; sourceTree = "<group>"; };
+		CE283E4F1A6D56E800F3E92D /* AQSFacebookMessengerActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQSFacebookMessengerActivity.h; sourceTree = "<group>"; };
+		CE283E501A6D56E800F3E92D /* AQSFacebookMessengerActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AQSFacebookMessengerActivity.m; sourceTree = "<group>"; };
 		CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell_ipad_landscape.xib; sourceTree = "<group>"; };
 		CE2C6B701A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell_ipad_portrait.xib; sourceTree = "<group>"; };
 		CE2DBC6C1A603B160075C21F /* RIFieldRatingStars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldRatingStars.h; sourceTree = "<group>"; };
@@ -1970,8 +1971,6 @@
 		B50B03A8198A883D002046DF /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				6C26DC301A66C19700141634 /* AQSFacebookMessengerActivity.h */,
-				6C26DC311A66C19700141634 /* AQSFacebookMessengerActivity.m */,
 				4A19C51119D019100070D194 /* Reachability */,
 				4A19C50E19D018F10070D194 /* JAShareActivityProvider.h */,
 				4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */,
@@ -2373,6 +2372,7 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE283E4E1A6D56E800F3E92D /* AQSFacebookMessengerActivity */,
 				B5B5FDA919D99D05008B8059 /* AccengageiOSSDK */,
 				B5C13E781A402A9E00484398 /* Adjust */,
 				B59DCA6319B710DA00DE7960 /* FXBlurView */,
@@ -3074,6 +3074,15 @@
 				CE13787719A357B400CA0751 /* JACategoriesViewController.m */,
 			);
 			path = Categories;
+			sourceTree = "<group>";
+		};
+		CE283E4E1A6D56E800F3E92D /* AQSFacebookMessengerActivity */ = {
+			isa = PBXGroup;
+			children = (
+				CE283E4F1A6D56E800F3E92D /* AQSFacebookMessengerActivity.h */,
+				CE283E501A6D56E800F3E92D /* AQSFacebookMessengerActivity.m */,
+			);
+			path = AQSFacebookMessengerActivity;
 			sourceTree = "<group>";
 		};
 		CE2F576B19913B33000A9E09 /* Catalog */ = {
@@ -3876,6 +3885,7 @@
 				74575dc39b7757725904ad3d /* JAShareActivityProvider.m in Sources */,
 				8cb5f5fbf86ddac3c1390d87 /* RICountry.m in Sources */,
 				0038baca6e7694481dd2aab4 /* RIProductRatings.m in Sources */,
+				CE283E521A6D56E800F3E92D /* AQSFacebookMessengerActivity.m in Sources */,
 				df9ac75b2b86dba7a92360ac /* UIImageView+WebCache.m in Sources */,
 				b858fbf852fa6e8b3d3449a9 /* JACampaignsTeaserView.m in Sources */,
 				e76d2c90dc89f574c5611048 /* JASwitchCell.m in Sources */,
@@ -4128,9 +4138,9 @@
 				B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */,
 				B5225E1B1989308300C18F1E /* RIPaymentMethodFormOption.m in Sources */,
 				CEA86E0E1A49D247000032AD /* JAPercentageBarView.m in Sources */,
+				CE283E511A6D56E800F3E92D /* AQSFacebookMessengerActivity.m in Sources */,
 				B5C13EBA1A402A9E00484398 /* ADJPackageBuilder.m in Sources */,
 				4AE730B8198F8ACA000CA1DD /* JAPDVImageSection.m in Sources */,
-				6C26DC321A66C19700141634 /* AQSFacebookMessengerActivity.m in Sources */,
 				4A01EE61199259C7005F5AD1 /* JAPDVGalleryView.m in Sources */,
 				CE2FB75B1993BCB900E7CD00 /* JACatalogCell.m in Sources */,
 				CE445880198C03D100CE7E8D /* JAPopularBrandsTeaserView.m in Sources */,
