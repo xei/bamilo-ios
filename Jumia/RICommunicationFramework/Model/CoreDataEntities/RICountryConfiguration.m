@@ -149,10 +149,18 @@
     {
         NSString *thousands = [noFraction substringWithRange:NSMakeRange([noFraction length] - 3, 3)];
         NSString *other = [noFraction substringWithRange:NSMakeRange(0, [noFraction length] - 3)];
-        
+        NSString *millions = @"";
+      
         if(0 == [[country noDecimals] integerValue])
         {
             formattedPrice = [NSString stringWithFormat:@"%@%@%@", other, [country thousandsSep], thousands];
+            if(6 <[noFraction length])
+            {
+                thousands = [noFraction substringWithRange:NSMakeRange([noFraction length] - 3, 3)];
+                other = [noFraction substringWithRange:NSMakeRange([noFraction length] - 6, 3)];
+                millions = [noFraction substringWithRange:NSMakeRange(0, [noFraction length]- 6)];
+                formattedPrice = [NSString stringWithFormat:@"%@%@%@%@%@",millions, [country thousandsSep], other, [country thousandsSep], thousands];
+            }
         }
         else
         {
