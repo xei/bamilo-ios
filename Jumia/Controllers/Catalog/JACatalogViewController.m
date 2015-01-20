@@ -78,6 +78,8 @@
 {
     [self.wizardView removeFromSuperview];
     
+    self.filteredNoResultsView.delegate = nil;
+    [self.filteredNoResultsView removeFromSuperview];
     self.filteredNoResultsView = [JAFilteredNoResultsView getFilteredNoResultsView];
     
     self.filteredNoResultsView.tag = 1001;
