@@ -9,6 +9,7 @@
 #import "RIConfiguration.h"
 
 NSString *const RI_USERNAME = @"rocket";
+//NSString *const RI_PASSWORD = @"z7euN7qfRD769BP";
 NSString *const RI_PASSWORD = @"rock4me";
 
 BOOL RI_MOBAPI_HEADERS_ENABLED = NO;

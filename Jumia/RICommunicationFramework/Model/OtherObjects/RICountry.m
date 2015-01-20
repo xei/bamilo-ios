@@ -159,6 +159,27 @@
     [countriesArray addObject:country];
     //*****************
     
+    //INSERTING INTEGRATION MOBILE
+    //*****************
+    NSMutableDictionary* integrationDict2 = [NSMutableDictionary new];
+    
+    [integrationDict2 setObject:@"NG" forKey:@"country_iso"];
+    [integrationDict2 setObject:@"http://www.jumia.com/images/mobapi/flag_nigeria.png" forKey:@"flag"];
+    [integrationDict2 setObject:[NSNumber numberWithBool:0] forKey:@"force_files"];
+    [integrationDict2 setObject:@"Integration Mobile Nigeria" forKey:@"name"];
+    [integrationDict2 setObject:@"integration-mobile-www.jumia.com.ng/mobapi/" forKey:@"url"];
+    
+    NSMutableDictionary* mapFiles2 = [NSMutableDictionary new];
+    [mapFiles2 setObject:@"http://www.jumia.com/images/mobapi/map_hdpi_ng.png" forKey:@"hdpi"];
+    [mapFiles2 setObject:@"http://www.jumia.com/images/mobapi/map_mdpi_ng.png" forKey:@"mdpi"];
+    [mapFiles2 setObject:@"http://www.jumia.com/images/mobapi/map_xhdpi_ng.png" forKey:@"xdpi"];
+    
+    [integrationDict2 setObject:mapFiles2 forKey:@"map_files"];
+    
+    RICountry *country2 = [RICountry parseCountryWithJson:integrationDict2];
+    [countriesArray addObject:country2];
+    //*****************
+    
     
     return [countriesArray copy];
 }
