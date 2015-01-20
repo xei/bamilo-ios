@@ -19,6 +19,7 @@
 #import "RICartItem.h"
 #import "RICustomer.h"
 #import "RIAddress.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface JACartViewController ()
 
@@ -208,6 +209,14 @@
 
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
                                                       data:[trackingDictionary copy]];
+            
+            float value = [cartItem.price floatValue];
+            [FBAppEvents logEvent:FBAppEventNameInitiatedCheckout
+                        valueToSum:value
+                       parameters:@{
+                                    FBAppEventParameterNameContentID:cartItem.sku,
+                                    FBAppEventParameterNameNumItems:cartItem.quantity,
+                                    FBAppEventParameterNameCurrency: @"EUR"}];
         }
         
         trackingDictionary = [[NSMutableDictionary alloc] init];

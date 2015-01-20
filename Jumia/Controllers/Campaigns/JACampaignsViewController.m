@@ -14,6 +14,7 @@
 #import "RICampaign.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface JACampaignsViewController ()
 
@@ -444,6 +445,13 @@
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
                       
+                      float value = [price floatValue];
+                      [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                                    valueToSum:value
+                                 parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
+                                               FBAppEventParameterNameContentType : self.backupCampaignProduct.name,
+                                               FBAppEventParameterNameContentID   : self.backupCampaignProduct.sku}];
+
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
