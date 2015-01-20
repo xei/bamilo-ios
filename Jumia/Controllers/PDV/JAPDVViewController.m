@@ -1248,6 +1248,13 @@ JAActivityViewControllerDelegate
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                     data:[trackingDictionary copy]];
                           
+                          float value = [price floatValue];
+                          [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                                     valueToSum:value
+                                     parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
+                                                   FBAppEventParameterNameContentType : self.product.name,
+                                                   FBAppEventParameterNameContentID   : self.product.sku}];
+                           
                           NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                           [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                           
@@ -1567,6 +1574,13 @@ JAActivityViewControllerDelegate
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
                                                       data:[trackingDictionary copy]];
+            
+            float value = [price floatValue];
+            [FBAppEvents logEvent:FBAppEventNameAddedToWishlist
+                       valueToSum:value
+                       parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
+                                     FBAppEventParameterNameContentType : self.product.name,
+                                     FBAppEventParameterNameContentID   : self.product.sku}];
             
             if (button.selected) {
                 self.product.favoriteAddDate = [NSDate date];

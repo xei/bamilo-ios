@@ -10,6 +10,7 @@
 #import "RICustomer.h"
 #import "RICartItem.h"
 #import "JAUtils.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface JAThanksViewController ()
 
@@ -202,6 +203,9 @@
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewTransaction]
                                                   data:[trackingDictionary copy]];
+        float value = [cartItem.price floatValue];
+        [FBAppEvents logPurchase:value currency:@"EUR" parameters:@{FBAppEventParameterNameContentID: cartItem.sku,
+                                                                  FBAppEventParameterNameContentType:cartItem.name}];
 
         NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
         [viewCartTrackingProduct setValue:cartItem.sku forKey:kRIEventSkuKey];

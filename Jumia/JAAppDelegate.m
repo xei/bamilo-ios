@@ -415,4 +415,8 @@
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventInstallViaAdjust] data:dictionary];
 }
 
+-(void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [FBAppEvents activateApp];
+}
 @end
