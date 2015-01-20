@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIView *backgroundContentView;
 
 @property (weak, nonatomic) IBOutlet UILabel *discountLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *discountBadge;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
@@ -66,7 +67,14 @@
     
     //TOP STUFF
     self.discountLabel.textColor = [UIColor whiteColor];
-    self.discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF, [campaignProduct.maxSavingPercentage integerValue]];
+    if (VALID_NOTEMPTY(campaignProduct.maxSavingPercentage, NSNumber) && 0 < [campaignProduct.maxSavingPercentage integerValue]){
+        self.discountBadge.hidden = NO;
+        self.discountLabel.hidden = NO;
+        self.discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF, [campaignProduct.maxSavingPercentage integerValue]];
+    } else {
+        self.discountBadge.hidden = YES;
+        self.discountLabel.hidden = YES;
+    }
     
     self.titleLabel.textColor = UIColorFromRGB(0x666666);
     self.titleLabel.text = campaignProduct.name;
