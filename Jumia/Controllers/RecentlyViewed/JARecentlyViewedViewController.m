@@ -16,6 +16,7 @@
 #import "RICustomer.h"
 #import "JAProductListFlowLayout.h"
 #import "RICategory.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface JARecentlyViewedViewController ()
 
@@ -372,6 +373,13 @@
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
+                      
+                      float value = [price floatValue];
+                      [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                                 valueToSum:value
+                                 parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
+                                               FBAppEventParameterNameContentType : product.name,
+                                               FBAppEventParameterNameContentID   : product.sku}];
                       
                       [RIProduct removeFromRecentlyViewed:product];
                       

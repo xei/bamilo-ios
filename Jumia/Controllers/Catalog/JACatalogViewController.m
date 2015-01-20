@@ -18,6 +18,7 @@
 #import "JAClickableView.h"
 #import "JAUndefinedSearchView.h"
 #import "JAFilteredNoResultsView.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -476,6 +477,9 @@
                                                                                   
                                                                                   [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
                                                                                                                             data:[trackingDictionary copy]];
+                                                                                  [FBAppEvents logEvent:FBAppEventNameSearched
+                                                                                             parameters:@{FBAppEventParameterNameSearchString: self.searchString,
+                                                                                                          FBAppEventParameterNameSuccess: @1 }];
                                                                                   
                                                                                   trackingDictionary = [[NSMutableDictionary alloc] init];
                                                                                   NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
@@ -562,6 +566,10 @@
                                                                                       }
                                                                                   }
                                                                               }
+                                                                              
+                                                                              [FBAppEvents logEvent:FBAppEventNameSearched
+                                                                                         parameters:@{FBAppEventParameterNameSearchString:self.searchString  ,
+                                                                                                      FBAppEventParameterNameSuccess: @0 }];
                                                                               
                                                                               self.isLoadingMoreProducts = NO;
                                                                               [self hideLoading];                                                                              
@@ -1307,6 +1315,12 @@
                                         
                                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
                                                                                   data:[trackingDictionary copy]];
+                                        float value = [price floatValue];
+                                        [FBAppEvents logEvent:FBAppEventNameAddedToWishlist
+                                                   valueToSum:value
+                                                   parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
+                                                                 FBAppEventParameterNameContentType : product.name,
+                                                                 FBAppEventParameterNameContentID   : product.sku}];
                                         
                                         
                                         [self hideLoading];
