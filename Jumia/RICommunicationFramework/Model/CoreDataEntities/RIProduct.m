@@ -12,6 +12,7 @@
 #import "RIVariation.h"
 #import "RIFilter.h"
 #import "RICategory.h"
+#import "RISeller.h"
 
 @implementation RIProduct
 
@@ -53,6 +54,11 @@
 @dynamic ratingAverage;
 @dynamic ratingsTotal;
 @dynamic reviewsTotal;
+@dynamic seller;
+@dynamic offersMinPrice;
+@dynamic offersMinPriceEuroConverted;
+@dynamic offersMinPriceFormatted;
+@dynamic offersTotal;
 
 @synthesize categoryIds;
 
@@ -451,6 +457,32 @@
     
     newProduct.favoriteAddDate = [RIProduct productIsFavoriteInDatabase:newProduct];
     
+    if ([dataDic objectForKey:@"seller"]) {
+        NSDictionary* sellerJSON = [dataDic objectForKey:@"seller"];
+        if (VALID_NOTEMPTY(sellerJSON, NSDictionary)) {
+            
+            RISeller* seller = [RISeller parseSeller:sellerJSON];
+            seller.product = newProduct;
+            newProduct.seller = seller;
+        }
+    }
+    
+    if ([dataDic objectForKey:@"offers"]) {
+        NSDictionary* offersJSON = [dataDic objectForKey:@"offers"];
+        if (VALID_NOTEMPTY(offersJSON, NSDictionary)) {
+            if ([offersJSON objectForKey:@"min_price"]) {
+                newProduct.offersMinPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"min_price"] floatValue]];
+                newProduct.offersMinPriceFormatted = [RICountryConfiguration formatPrice:newProduct.offersMinPrice country:country];
+            }
+            if ([offersJSON objectForKey:@"min_price_euroConverted"]) {
+                newProduct.offersMinPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"min_price_euroConverted"] floatValue]];
+            }
+            if ([offersJSON objectForKey:@"total"]) {
+                newProduct.offersTotal = [NSNumber numberWithInteger:[[dataDic objectForKey:@"total"] integerValue]];
+            }
+        }
+    }
+    
     return newProduct;
 }
 
@@ -765,6 +797,10 @@
     }
     for (RIVariation* variation in product.variations) {
         [RIVariation saveVariation:variation];
+    }
+    
+    if (VALID_NOTEMPTY(product.seller, RISeller)) {
+        [RISeller saveSeller:product.seller];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:product];
