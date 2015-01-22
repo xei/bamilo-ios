@@ -33,7 +33,7 @@
 #import "JAPDVWizardView.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "AQSFacebookMessengerActivity.h"
-
+#import "JAOtherOffersView.h"
 
 @interface JAPDVViewController ()
 <
@@ -58,6 +58,7 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) RIProductSimple *currentSimple;
 @property (nonatomic, strong) JAPDVWizardView* wizardView;
 @property (assign, nonatomic) RIApiResponse apiResponse;
+@property (nonatomic, strong) JAOtherOffersView* otherOffersView;
 
 @property (nonatomic, assign) BOOL hasLoaddedProduct;
 
@@ -765,6 +766,25 @@ JAActivityViewControllerDelegate
         
         mainScrollViewY += (6.0f + self.variationsSection.frame.size.height);
     }
+    
+    /*******
+     Other Offers Section
+     *******/
+    
+    if (isiPadInLandscape) {
+        if (VALID_NOTEMPTY(self.product.offersTotal, NSNumber) && 0 < [self.product.offersTotal integerValue]) {
+            self.otherOffersView = [JAOtherOffersView getNewOtherOffersView];
+            
+            [self.otherOffersView setupWithFrame:self.mainScrollView.frame product:self.product];
+            [self.otherOffersView setFrame:CGRectMake(6.0f,
+                                                      mainScrollViewY,
+                                                      self.otherOffersView.frame.size.width,
+                                                      self.otherOffersView.frame.size.height)];
+            
+            [self.mainScrollView addSubview:self.otherOffersView];
+        }
+    }
+
     
     /*******
      Product Info Section

@@ -604,6 +604,8 @@
 		CE283E521A6D56E800F3E92D /* AQSFacebookMessengerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E501A6D56E800F3E92D /* AQSFacebookMessengerActivity.m */; };
 		CE283E591A6FA27A00F3E92D /* RISeller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E581A6FA27A00F3E92D /* RISeller.m */; };
 		CE283E5A1A6FA27A00F3E92D /* RISeller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E581A6FA27A00F3E92D /* RISeller.m */; };
+		CE283E681A714D4900F3E92D /* JAOtherOffersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E671A714D4900F3E92D /* JAOtherOffersView.m */; };
+		CE283E6A1A714FD300F3E92D /* JAOtherOffersView_Landscape~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE283E691A714FD300F3E92D /* JAOtherOffersView_Landscape~iPad.xib */; };
 		CE2C6B6F1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */; };
 		CE2C6B711A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B701A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib */; };
 		CE2DBC6E1A603B160075C21F /* RIFieldRatingStars.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DBC6D1A603B160075C21F /* RIFieldRatingStars.m */; };
@@ -1362,6 +1364,9 @@
 		CE283E501A6D56E800F3E92D /* AQSFacebookMessengerActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AQSFacebookMessengerActivity.m; sourceTree = "<group>"; };
 		CE283E571A6FA27A00F3E92D /* RISeller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISeller.h; sourceTree = "<group>"; };
 		CE283E581A6FA27A00F3E92D /* RISeller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISeller.m; sourceTree = "<group>"; };
+		CE283E661A714D4900F3E92D /* JAOtherOffersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAOtherOffersView.h; path = OtherOffers/JAOtherOffersView.h; sourceTree = "<group>"; };
+		CE283E671A714D4900F3E92D /* JAOtherOffersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAOtherOffersView.m; path = OtherOffers/JAOtherOffersView.m; sourceTree = "<group>"; };
+		CE283E691A714FD300F3E92D /* JAOtherOffersView_Landscape~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAOtherOffersView_Landscape~iPad.xib"; path = "OtherOffers/JAOtherOffersView_Landscape~iPad.xib"; sourceTree = "<group>"; };
 		CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell_ipad_landscape.xib; sourceTree = "<group>"; };
 		CE2C6B701A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell_ipad_portrait.xib; sourceTree = "<group>"; };
 		CE2DBC6C1A603B160075C21F /* RIFieldRatingStars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldRatingStars.h; sourceTree = "<group>"; };
@@ -1838,6 +1843,7 @@
 		4AE730B0198F8A74000CA1DD /* PDVComponents */ = {
 			isa = PBXGroup;
 			children = (
+				CE283E651A714D0F00F3E92D /* OtherOffers */,
 				CEA86DA01A39F7FA000032AD /* JAPageControl */,
 				B5C9C7011A1A5E540065AFD4 /* JADatePicker */,
 				B5C2B0651A0911AB00B4872D /* JAPicker */,
@@ -3091,6 +3097,16 @@
 			path = AQSFacebookMessengerActivity;
 			sourceTree = "<group>";
 		};
+		CE283E651A714D0F00F3E92D /* OtherOffers */ = {
+			isa = PBXGroup;
+			children = (
+				CE283E661A714D4900F3E92D /* JAOtherOffersView.h */,
+				CE283E671A714D4900F3E92D /* JAOtherOffersView.m */,
+				CE283E691A714FD300F3E92D /* JAOtherOffersView_Landscape~iPad.xib */,
+			);
+			name = OtherOffers;
+			sourceTree = "<group>";
+		};
 		CE2F576B19913B33000A9E09 /* Catalog */ = {
 			isa = PBXGroup;
 			children = (
@@ -3774,6 +3790,7 @@
 				B5B5FDE919D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
 				CEDEB9B1199BA8FA0022BAB5 /* slider-default-handle.png in Resources */,
 				4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */,
+				CE283E6A1A714FD300F3E92D /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
 				BBB12A9C19DDA01E00656529 /* 09_home.feature in Resources */,
 				B5B5FDF419D99D06008B8059 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
 				CE2F577019913B6D000A9E09 /* JACatalogListCell.xib in Resources */,
@@ -4175,6 +4192,7 @@
 				4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */,
 				B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */,
 				4A944FF8199290F200C02734 /* JARatingsViewController.m in Sources */,
+				CE283E681A714D4900F3E92D /* JAOtherOffersView.m in Sources */,
 				CE3AF90019DBF4FB00D8C51B /* JACampaignsViewController.m in Sources */,
 				4AE865BD19C9D7C400406159 /* JAUserDataViewController.m in Sources */,
 				CEC376E619F015C600558B98 /* JACatalogWizardView.m in Sources */,

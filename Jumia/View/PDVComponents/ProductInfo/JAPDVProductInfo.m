@@ -26,6 +26,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *productDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIView *productDescriptionSeparator;
 @property (weak, nonatomic) IBOutlet UILabel *productDescriptionText;
+@property (weak, nonatomic) IBOutlet UIView *otherOffersTopSeparator;
+@property (weak, nonatomic) IBOutlet UILabel *otherOffersLabel;
+@property (strong, nonatomic) UILabel *fromLabel;
+@property (strong, nonatomic) UILabel *offerMinPriceLabel;
 
 @end
 
@@ -157,7 +161,8 @@
     [self.sizeLabel setTextColor:UIColorFromRGB(0x55a1ff)];
     [self.numberOfReviewsLabel setTextColor:UIColorFromRGB(0xcccccc)];
     [self.specificationsLabel setTextColor:UIColorFromRGB(0x666666)];
-   
+    [self.otherOffersLabel setTextColor:UIColorFromRGB(0x666666)];
+    
     CGFloat width = frame.size.width - 12.0f;
     
     [self setFrame:CGRectMake(self.frame.origin.x,
@@ -204,6 +209,16 @@
                                                           self.goToSpecificationsImageView.frame.origin.y,
                                                           self.goToSpecificationsImageView.frame.size.width,
                                                           self.goToSpecificationsImageView.frame.size.height)];
+    
+    [self.otherOffersClickableView setFrame:CGRectMake(self.otherOffersClickableView.frame.origin.x,
+                                                       self.otherOffersClickableView.frame.origin.y,
+                                                       width,
+                                                       self.otherOffersClickableView.frame.size.height)];
+    
+    [self.goToOtherOffersImageView setFrame:CGRectMake(self.otherOffersClickableView.frame.size.width - self.otherOffersClickableView.frame.origin.x - self.goToOtherOffersImageView.frame.size.width - 9.0f,
+                                                          self.goToOtherOffersImageView.frame.origin.y,
+                                                          self.goToOtherOffersImageView.frame.size.width,
+                                                          self.goToOtherOffersImageView.frame.size.height)];
     
     for(UIView *subView in self.subviews)
     {
@@ -264,6 +279,39 @@
                 }
             }
         }
+    }
+    
+    
+    /*
+     Check if there are other offers
+     */
+    if (NO == VALID_NOTEMPTY(product.offersTotal, NSNumber) || 0 >= [product.offersTotal integerValue]) {
+        [self removeOtherOffers];
+    } else {
+        self.otherOffersLabel.text = [NSString stringWithFormat:@"%@ (%d)", STRING_OTHER_SELLERS, [product.offersTotal integerValue]];
+        
+        self.fromLabel = [UILabel new];
+        [self.fromLabel setTextColor:UIColorFromRGB(0x666666)];
+        [self.fromLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:9.0f]];
+        self.fromLabel.text = [NSString stringWithFormat:@"%@ ", STRING_FROM];
+        [self.fromLabel sizeToFit];
+        [self.fromLabel setFrame:CGRectMake(self.otherOffersLabel.frame.origin.x,
+                                            CGRectGetMaxY(self.otherOffersLabel.frame) - 2.0f,
+                                            self.fromLabel.frame.size.width,
+                                            self.fromLabel.frame.size.height)];
+        [self.otherOffersClickableView addSubview:self.fromLabel];
+        
+        self.offerMinPriceLabel = [UILabel new];
+        [self.offerMinPriceLabel setTextColor:UIColorFromRGB(0xcc0000)];
+        [self.offerMinPriceLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:9.0f]];
+        self.offerMinPriceLabel.text = product.offersMinPriceFormatted;
+        [self.offerMinPriceLabel sizeToFit];
+        [self.offerMinPriceLabel setFrame:CGRectMake(CGRectGetMaxX(self.fromLabel.frame),
+                                                     self.fromLabel.frame.origin.y,
+                                                     self.offerMinPriceLabel.frame.size.width,
+                                                     self.offerMinPriceLabel.frame.size.height)];
+        [self.otherOffersClickableView addSubview:self.offerMinPriceLabel];
+
     }
 }
 
@@ -427,6 +475,17 @@
     [self layoutSubviews];
 }
 
+- (void)removeOtherOffers
+{
+    [self.otherOffersClickableView removeFromSuperview];
+    [self.otherOffersTopSeparator removeFromSuperview];
+    
+    CGRect frame = self.frame;
+    frame.size.height -= 44.0f;
+    
+    self.frame = frame;
+}
+
 - (void)removeSizeOptions
 {
     [self.sizeClickableView removeFromSuperview];
@@ -438,6 +497,10 @@
     CGRect buttonFrame = self.specificationsClickableView.frame;
     buttonFrame.origin.y -= 44.0f;
     self.specificationsClickableView.frame = buttonFrame;
+    
+    CGRect otherOffersFrame = self.otherOffersClickableView.frame;
+    otherOffersFrame.origin.y -= 44.0f;
+    self.otherOffersClickableView.frame = otherOffersFrame;
     
     CGRect frame = self.frame;
     frame.size.height -= 44.0f;

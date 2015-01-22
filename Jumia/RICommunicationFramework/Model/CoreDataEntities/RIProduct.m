@@ -471,14 +471,14 @@
         NSDictionary* offersJSON = [dataDic objectForKey:@"offers"];
         if (VALID_NOTEMPTY(offersJSON, NSDictionary)) {
             if ([offersJSON objectForKey:@"min_price"]) {
-                newProduct.offersMinPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"min_price"] floatValue]];
+                newProduct.offersMinPrice = [NSNumber numberWithFloat:[[offersJSON objectForKey:@"min_price"] floatValue]];
                 newProduct.offersMinPriceFormatted = [RICountryConfiguration formatPrice:newProduct.offersMinPrice country:country];
             }
             if ([offersJSON objectForKey:@"min_price_euroConverted"]) {
-                newProduct.offersMinPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"min_price_euroConverted"] floatValue]];
+                newProduct.offersMinPriceEuroConverted = [NSNumber numberWithFloat:[[offersJSON objectForKey:@"min_price_euroConverted"] floatValue]];
             }
             if ([offersJSON objectForKey:@"total"]) {
-                newProduct.offersTotal = [NSNumber numberWithInteger:[[dataDic objectForKey:@"total"] integerValue]];
+                newProduct.offersTotal = [NSNumber numberWithInteger:[[offersJSON objectForKey:@"total"] integerValue]];
             }
         }
     }
