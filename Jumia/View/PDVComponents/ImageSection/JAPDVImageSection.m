@@ -9,16 +9,24 @@
 #import "JAPDVImageSection.h"
 #import "JAPriceView.h"
 #import "RIProduct.h"
+#import "RISeller.h"
 #import "RIProductSimple.h"
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 #import "JAPageControl.h"
+#import "JARatingsView.h"
 
 @interface JAPDVImageSection ()
 
 @property (nonatomic, strong)JAPriceView* priceView;
 @property (nonatomic, assign)NSInteger numberOfImages;
 @property (nonatomic, strong) JAPageControl* pageControl;
+
+@property (nonatomic, strong)UILabel* soldByLabel;
+@property (nonatomic, strong)UIButton* sellerButton;
+@property (nonatomic, strong)UILabel* sellerDeliveryLabel;
+@property (nonatomic, strong)JARatingsView* sellerRatings;
+@property (nonatomic, strong)UILabel* numberOfSellerReviewsLabel;
 
 @end
 
@@ -168,11 +176,84 @@
                                                       self.imageScrollView.frame.size.width - 12.0f,
                                                       1000.0f)];
     [self.productDescriptionLabel sizeToFit];
+
+    
+    CGFloat currentY = CGRectGetMaxY(self.productDescriptionLabel.frame) + 6.0f;
+    
+    [self.soldByLabel removeFromSuperview];
+    [self.sellerButton removeFromSuperview];
+    [self.sellerDeliveryLabel removeFromSuperview];
+    [self.sellerRatings removeFromSuperview];
+    [self.numberOfSellerReviewsLabel removeFromSuperview];
+    if (VALID_NOTEMPTY(product.seller, RISeller)) {
+        
+        currentY += 20.0f;
+        
+        self.soldByLabel = [UILabel new];
+        self.soldByLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        self.soldByLabel.textColor = UIColorFromRGB(0x666666);
+        self.soldByLabel.text = @"Sold by:";
+        [self.soldByLabel sizeToFit];
+        [self.soldByLabel setFrame:CGRectMake(6.0f,
+                                              currentY,
+                                              self.soldByLabel.frame.size.width,
+                                              self.soldByLabel.frame.size.height)];
+        [self addSubview:self.soldByLabel];
+        
+        
+        self.sellerButton = [UIButton new];
+        [self.sellerButton setTitle:product.seller.name forState:UIControlStateNormal];
+        [self.sellerButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateNormal];
+        self.sellerButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        [self.sellerButton sizeToFit];
+        self.sellerButton.center = self.soldByLabel.center;
+        [self.sellerButton setFrame:CGRectMake(CGRectGetMaxX(self.soldByLabel.frame) + 6.0f,
+                                               self.sellerButton.frame.origin.y,
+                                               self.sellerButton.frame.size.width,
+                                               self.sellerButton.frame.size.height)];
+        [self addSubview:self.sellerButton];
+        
+        
+        self.numberOfSellerReviewsLabel = [UILabel new];
+        self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f];
+        self.numberOfSellerReviewsLabel.textColor = UIColorFromRGB(0xcccccc);
+        self.numberOfSellerReviewsLabel.text = [NSString stringWithFormat:@"%d reviews", [product.seller.reviewTotal integerValue]];
+        [self.numberOfSellerReviewsLabel sizeToFit];
+        [self.numberOfSellerReviewsLabel setFrame:CGRectMake(self.frame.size.width - 6.0f - self.numberOfSellerReviewsLabel.frame.size.width,
+                                                             currentY + 4.0f,
+                                                             self.numberOfSellerReviewsLabel.frame.size.width,
+                                                             self.numberOfSellerReviewsLabel.frame.size.height)];
+        [self addSubview:self.numberOfSellerReviewsLabel];
+        
+        
+        self.sellerRatings = [JARatingsView getNewJARatingsView];
+        self.sellerRatings.rating = [product.seller.reviewAverage integerValue];
+        [self.sellerRatings setFrame:CGRectMake(self.numberOfSellerReviewsLabel.frame.origin.x - 6.0f - self.sellerRatings.frame.size.width,
+                                                currentY + 4.0f,
+                                                self.sellerRatings.frame.size.width,
+                                                self.sellerRatings.frame.size.width)];
+        [self addSubview:self.sellerRatings];
+        
+        currentY += self.soldByLabel.frame.size.height;
+        
+        self.sellerDeliveryLabel = [UILabel new];
+        self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
+        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"Delivery Within: %d - %d days", [product.seller.minDeliveryTime integerValue], [product.seller.maxDeliveryTime integerValue]];
+        [self.sellerDeliveryLabel sizeToFit];
+        [self.sellerDeliveryLabel setFrame:CGRectMake(6.0f,
+                                                      currentY,
+                                                      self.sellerDeliveryLabel.frame.size.width,
+                                                      self.sellerDeliveryLabel.frame.size.height)];
+        [self addSubview:self.sellerDeliveryLabel];
+        
+        currentY += self.sellerDeliveryLabel.frame.size.height + 16.0f;
+    }
     
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
-                              CGRectGetMaxY(self.productDescriptionLabel.frame) + 6.0f)];
+                              currentY)];
 }
 
 - (void)setupForLandscape:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
@@ -194,6 +275,85 @@
     
     [self setPriceWithNewValue:product.specialPriceFormatted
                    andOldValue:product.priceFormatted];
+    
+    
+    CGFloat currentY = CGRectGetMaxY(self.priceView.frame) + 6.0f;
+    
+    [self.soldByLabel removeFromSuperview];
+    [self.sellerButton removeFromSuperview];
+    [self.sellerDeliveryLabel removeFromSuperview];
+    [self.sellerRatings removeFromSuperview];
+    [self.numberOfSellerReviewsLabel removeFromSuperview];
+    if (VALID_NOTEMPTY(product.seller, RISeller)) {
+        
+        currentY += 20.0f;
+        
+        self.soldByLabel = [UILabel new];
+        self.soldByLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        self.soldByLabel.textColor = UIColorFromRGB(0x666666);
+        self.soldByLabel.text = @"Sold by:";
+        [self.soldByLabel sizeToFit];
+        [self.soldByLabel setFrame:CGRectMake(6.0f,
+                                              currentY,
+                                              self.soldByLabel.frame.size.width,
+                                              self.soldByLabel.frame.size.height)];
+        [self addSubview:self.soldByLabel];
+        
+        
+        self.sellerButton = [UIButton new];
+        [self.sellerButton setTitle:product.seller.name forState:UIControlStateNormal];
+        [self.sellerButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateNormal];
+        self.sellerButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        [self.sellerButton sizeToFit];
+        self.sellerButton.center = self.soldByLabel.center;
+        [self.sellerButton setFrame:CGRectMake(CGRectGetMaxX(self.soldByLabel.frame) + 6.0f,
+                                               self.sellerButton.frame.origin.y,
+                                               self.sellerButton.frame.size.width,
+                                               self.sellerButton.frame.size.height)];
+        [self addSubview:self.sellerButton];
+        
+        
+        self.numberOfSellerReviewsLabel = [UILabel new];
+        self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f];
+        self.numberOfSellerReviewsLabel.textColor = UIColorFromRGB(0xcccccc);
+        self.numberOfSellerReviewsLabel.text = [NSString stringWithFormat:@"%d reviews", [product.seller.reviewTotal integerValue]];
+        [self.numberOfSellerReviewsLabel sizeToFit];
+        [self.numberOfSellerReviewsLabel setFrame:CGRectMake(self.frame.size.width - 6.0f - self.numberOfSellerReviewsLabel.frame.size.width,
+                                                             currentY + 4.0f,
+                                                             self.numberOfSellerReviewsLabel.frame.size.width,
+                                                             self.numberOfSellerReviewsLabel.frame.size.height)];
+        [self addSubview:self.numberOfSellerReviewsLabel];
+        
+        
+        self.sellerRatings = [JARatingsView getNewJARatingsView];
+        self.sellerRatings.rating = [product.seller.reviewAverage integerValue];
+        [self.sellerRatings setFrame:CGRectMake(self.numberOfSellerReviewsLabel.frame.origin.x - 6.0f - self.sellerRatings.frame.size.width,
+                                                currentY + 4.0f,
+                                                self.sellerRatings.frame.size.width,
+                                                self.sellerRatings.frame.size.width)];
+        [self addSubview:self.sellerRatings];
+        
+        currentY += self.soldByLabel.frame.size.height;
+        
+        self.sellerDeliveryLabel = [UILabel new];
+        self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
+        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"Delivery Within: %d - %d days", [product.seller.minDeliveryTime integerValue], [product.seller.maxDeliveryTime integerValue]];
+        [self.sellerDeliveryLabel sizeToFit];
+        [self.sellerDeliveryLabel setFrame:CGRectMake(6.0f,
+                                                      currentY,
+                                                      self.sellerDeliveryLabel.frame.size.width,
+                                                      self.sellerDeliveryLabel.frame.size.height)];
+        [self addSubview:self.sellerDeliveryLabel];
+        
+        currentY += self.sellerDeliveryLabel.frame.size.height + 16.0f;
+    }
+    
+    
+    [self.separatorImageView setFrame:CGRectMake(self.separatorImageView.frame.origin.x,
+                                                 currentY + 6.0f,
+                                                 self.separatorImageView.frame.size.width,
+                                                 self.separatorImageView.frame.size.height)];
     
     [self.imageScrollView setFrame:CGRectMake(self.imageScrollView.frame.origin.x,
                                               CGRectGetMaxY(self.separatorImageView.frame),
@@ -285,11 +445,6 @@
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
     [self addSubview:self.priceView];
-    
-    [self.separatorImageView setFrame:CGRectMake(self.separatorImageView.frame.origin.x,
-                                                 CGRectGetMaxY(self.priceView.frame) + 6.0f,
-                                                 self.separatorImageView.frame.size.width,
-                                                 self.separatorImageView.frame.size.height)];
 }
 
 - (void)loadWithImages:(NSArray*)imagesArray
