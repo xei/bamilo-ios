@@ -291,3 +291,6 @@
 "other_sellers" = "Other Sellers";
 "same_product_from_other_sellers" = "Same Product from Other Sellers";
 "from" = "From";
+"product_delivery_time" = "Delivery Within:";
+"product_delivery_days" = "days";
+"number_offers_from_ios" = "%d Offers from";

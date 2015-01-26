@@ -37,6 +37,16 @@
     return self;
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        JANavigationBarLayout* defaultLayout = [[JANavigationBarLayout alloc] init];
+        self.navBarLayout = defaultLayout;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

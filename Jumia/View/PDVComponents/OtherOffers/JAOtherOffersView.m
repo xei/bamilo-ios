@@ -18,6 +18,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *goToOtherOffersImageView;
 @property (nonatomic, strong)UILabel* fromLabel;
 @property (nonatomic, strong)UILabel* offerMinPriceLabel;
+
+@property (nonatomic, strong)RIProduct* product;
+
 @end
 
 @implementation JAOtherOffersView
@@ -40,6 +43,8 @@
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product
 {
+    self.product = product;
+    
     self.layer.cornerRadius = 5.0f;
     
     CGFloat width = frame.size.width - 6.0f;
@@ -83,6 +88,8 @@
         
         self.otherOffersLabel.text = [NSString stringWithFormat:@"%@ (%d)", STRING_OTHER_SELLERS, [product.offersTotal integerValue]];
         
+        [self.otherOffersClickableView addTarget:self action:@selector(pressedOtherOffers) forControlEvents:UIControlEventTouchUpInside];
+        
         self.fromLabel = [UILabel new];
         [self.fromLabel setTextColor:UIColorFromRGB(0x666666)];
         [self.fromLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:9.0f]];
@@ -106,6 +113,11 @@
         [self.otherOffersClickableView addSubview:self.offerMinPriceLabel];
         
     }
+}
+
+- (void)pressedOtherOffers
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenOtherOffers object:self.product];
 }
 
 

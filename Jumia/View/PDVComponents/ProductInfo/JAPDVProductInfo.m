@@ -31,6 +31,8 @@
 @property (strong, nonatomic) UILabel *fromLabel;
 @property (strong, nonatomic) UILabel *offerMinPriceLabel;
 
+@property (nonatomic, strong) RIProduct* product;
+
 @end
 
 @implementation JAPDVProductInfo
@@ -79,6 +81,8 @@
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
 {
+    self.product = product;
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -289,6 +293,8 @@
         [self removeOtherOffers];
     } else {
         self.otherOffersLabel.text = [NSString stringWithFormat:@"%@ (%d)", STRING_OTHER_SELLERS, [product.offersTotal integerValue]];
+
+        [self.otherOffersClickableView addTarget:self action:@selector(pressedOtherOffers) forControlEvents:UIControlEventTouchUpInside];
         
         self.fromLabel = [UILabel new];
         [self.fromLabel setTextColor:UIColorFromRGB(0x666666)];
@@ -313,6 +319,11 @@
         [self.otherOffersClickableView addSubview:self.offerMinPriceLabel];
 
     }
+}
+
+- (void)pressedOtherOffers
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenOtherOffers object:self.product];
 }
 
 - (void)setupForLandscape:(CGRect)frame product:(RIProduct*)product

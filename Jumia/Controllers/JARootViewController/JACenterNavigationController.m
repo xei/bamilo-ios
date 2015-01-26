@@ -53,6 +53,7 @@
 #import "JACategoryFilterViewController.h"
 #import "RICart.h"
 #import "JASizeGuideViewController.h"
+#import "JAOtherOffersViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -308,6 +309,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showSizeGuide:)
                                                  name:kShowSizeGuideNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showOtherOffers:)
+                                                 name:kOpenOtherOffers
                                                object:nil];
 }
 
@@ -1150,6 +1156,23 @@
         [self pushViewController:viewController animated:YES];
     }
 
+}
+
+#pragma mark - PDV Actions
+
+- (void)showOtherOffers:(NSNotification*)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAOtherOffersViewController class]]) {
+    
+        JAOtherOffersViewController* otherOffersVC = [[JAOtherOffersViewController alloc] init];
+        
+        if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
+            otherOffersVC.product = notification.object;
+        }
+        
+        [self pushViewController:otherOffersVC animated:YES];
+    }
 }
 
 #pragma mark - Teaser Actions
