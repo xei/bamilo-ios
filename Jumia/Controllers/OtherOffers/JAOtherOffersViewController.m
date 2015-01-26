@@ -9,6 +9,10 @@
 #import "JAOtherOffersViewController.h"
 #import "RIProductOffer.h"
 #import "JAOfferCollectionViewCell.h"
+#import "RICart.h"
+#import "RICustomer.h"
+#import "JAUtils.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface JAOtherOffersViewController ()
 
@@ -290,7 +294,60 @@
 {
     RIProductOffer* offer = [self.productOffers objectAtIndex:sender.tag];
     
-    NSLog(@"offer: %@", offer.productSku);
+    [self showLoading];
+    [RICart addProductWithQuantity:@"1"
+                               sku:offer.productSku
+                            simple:offer.simpleSku
+                  withSuccessBlock:^(RICart *cart) {
+                      
+                      NSNumber *price = offer.priceEuroConverted;
+                      
+                      NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                      [trackingDictionary setValue:offer.simpleSku forKey:kRIEventLabelKey];
+                      [trackingDictionary setValue:@"SellerAddToCart" forKey:kRIEventActionKey];
+                      [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                      [trackingDictionary setValue:price forKey:kRIEventValueKey];
+                      
+                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                      
+                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                      [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                      
+                      // Since we're sending the converted price, we have to send the currency as EUR.
+                      // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
+                      [trackingDictionary setValue:price forKey:kRIEventPriceKey];
+                      [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
+
+                      [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+                      
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+                                                                data:[trackingDictionary copy]];
+                      
+                      float value = [price floatValue];
+                      [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                                 valueToSum:value
+                                 parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
+                                               FBAppEventParameterNameContentType : self.product.name,
+                                               FBAppEventParameterNameContentID   : self.product.sku}];
+                      
+                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                      
+                      [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
+                      [self hideLoading];
+                      
+                  } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                      NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
+                      if(RIApiResponseNoInternetConnection == apiResponse)
+                      {
+                          addToCartError = STRING_NO_CONNECTION;
+                      }
+                      
+                      [self showMessage:addToCartError success:NO];
+                      [self hideLoading];
+                  }];
 }
 
 
