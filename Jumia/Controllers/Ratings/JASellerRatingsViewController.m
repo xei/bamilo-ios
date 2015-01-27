@@ -177,18 +177,18 @@
     self.tableViewComments.layer.cornerRadius = 5.0f;
     self.tableViewComments.allowsSelection = NO;
     
-    if(isiPad)
-    {
-        if(isInLandscape)
-        {
+//    if(isiPad)
+//    {
+//        if(isInLandscape)
+//        {
             [self.resumeView setHidden:YES];
             [self.writeReviewScrollView setHidden:NO];
             
             originY = CGRectGetMaxY(self.topView.frame) + verticalMargin;
             
             // The 18.0f pixeis are the left, middle and right margins
-            viewsWidth = ((self.view.frame.size.width - 18.0f) / 2);
-            
+//            viewsWidth = ((self.view.frame.size.width - 18.0f) / 2);
+    
             [self.tableViewComments setFrame:CGRectMake(horizontalMargin,
                                                         originY,
                                                         viewsWidth,
@@ -206,39 +206,39 @@
   
             [self setupSendReviewView:viewsWidth originY:originY];
             
-            [self setupEmptyReviewsView:viewsWidth originY:originY];
-        }
-        else
-        {
-            [self.resumeView setHidden:NO];
-            [self.emptyReviewsView setHidden:YES];
-            
-            if(hasComments)
-            {
-                [self.writeReviewScrollView setHidden:YES];
-                [self.tableViewComments setFrame:CGRectMake(verticalMargin,
-                                                            originY,
-                                                            viewsWidth,
-                                                            self.view.frame.size.height - originY - verticalMargin)];
-                [self.tableViewComments setHidden:NO];
-            }
-            else
-            {
-                [self.tableViewComments setHidden:YES];
-                [self.writeReviewScrollView setHidden:NO];
-            }
-        }
-    }
-    else
-    {
-        [self.resumeView setHidden:NO];
-        
-        [self.tableViewComments setFrame:CGRectMake(verticalMargin,
-                                                    originY,
-                                                    viewsWidth,
-                                                    self.view.frame.size.height - originY - verticalMargin)];
-        [self.tableViewComments setHidden:NO];
-    }
+//            [self setupEmptyReviewsView:viewsWidth originY:originY];
+//        }
+//        else
+//        {
+//            [self.resumeView setHidden:NO];
+//            [self.emptyReviewsView setHidden:YES];
+//            
+//            if(hasComments)
+//            {
+//                [self.writeReviewScrollView setHidden:YES];
+//                [self.tableViewComments setFrame:CGRectMake(verticalMargin,
+//                                                            originY,
+//                                                            viewsWidth,
+//                                                            self.view.frame.size.height - originY - verticalMargin)];
+//                [self.tableViewComments setHidden:NO];
+//            }
+//            else
+//            {
+//                [self.tableViewComments setHidden:YES];
+//                [self.writeReviewScrollView setHidden:NO];
+//            }
+//        }
+//    }
+//    else
+//    {
+//        [self.resumeView setHidden:NO];
+//        
+//        [self.tableViewComments setFrame:CGRectMake(verticalMargin,
+//                                                    originY,
+//                                                    viewsWidth,
+//                                                    self.view.frame.size.height - originY - verticalMargin)];
+//        [self.tableViewComments setHidden:NO];
+//    }
     
     [self.tableViewComments reloadData];
 }
