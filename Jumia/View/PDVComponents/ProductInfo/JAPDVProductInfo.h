@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet JAClickableView *sizeClickableView;
 @property (weak, nonatomic) IBOutlet JAClickableView *reviewsClickableView;
 @property (weak, nonatomic) IBOutlet JAClickableView* specificationsClickableView;
+@property (weak, nonatomic) IBOutlet JAClickableView *otherOffersClickableView;
 @property (weak, nonatomic) IBOutlet UIImageView *star1;
 @property (weak, nonatomic) IBOutlet UIImageView *star2;
 @property (weak, nonatomic) IBOutlet UIImageView *star3;
@@ -33,6 +34,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *productFeaturesMore;
 @property (weak, nonatomic) IBOutlet UIButton *productDescriptionMore;
+@property (weak, nonatomic) IBOutlet UIImageView *goToOtherOffersImageView;
 
 + (JAPDVProductInfo *)getNewPDVProductInfoSection;
 

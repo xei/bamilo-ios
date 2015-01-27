@@ -293,4 +293,12 @@
 
 #define STRING_LIKE_US RILocalizedString(@"like_us_on_facebook", nil)
 
+#define STRING_OTHER_SELLERS RILocalizedString(@"other_sellers", nil)
+#define STRING_SAME_PRODUCT_FROM_OTHER_SELLERS RILocalizedString(@"same_product_from_other_sellers", nil)
+#define STRING_FROM RILocalizedString(@"from", nil)
+#define STRING_DELIVERY_WITHIN RILocalizedString(@"product_delivery_time", nil)
+#define STRING_DAYS RILocalizedString(@"product_delivery_days", nil)
+#define STRING_NUMBER_OFFERS_FROM RILocalizedString(@"number_offers_from_ios", nil)
+
+
 #endif

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class RIImage, RIProductSimple, RIVariation;
+@class RIImage, RIProductSimple, RIVariation, RISeller;
 
 /*
  * IMPORTANT NOTICE
@@ -66,6 +66,11 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSNumber * ratingAverage;
 @property (nonatomic, retain) NSNumber * ratingsTotal;
 @property (nonatomic, retain) NSNumber * reviewsTotal;
+@property (nonatomic, retain) RISeller *seller;
+@property (nonatomic, retain) NSNumber * offersMinPrice;
+@property (nonatomic, retain) NSNumber * offersMinPriceEuroConverted;
+@property (nonatomic, retain) NSNumber * offersTotal;
+@property (nonatomic, retain) NSString * offersMinPriceFormatted;
 
 //Not a coredata relationship
 @property (nonatomic, retain) NSOrderedSet *categoryIds;
