@@ -519,6 +519,16 @@ JAActivityViewControllerDelegate
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewProduct]
                                               data:[trackingDictionary copy]];
     
+    float value = [price floatValue];
+    [FBAppEvents logEvent:FBAppEventNameViewedContent
+                            valueToSum: value
+               parameters:@{FBAppEventParameterNameContentID: self.product.sku,
+                                FBAppEventParameterNameContentType: self.product.name,
+                                FBAppEventParameterNameCurrency:@"EUR"}];
+     
+    
+    
+    
     if(self.firstLoading)
     {
         NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
