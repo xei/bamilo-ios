@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JARatingsView.h"
 #import "RIProductRatings.h"
+#import "RISellerReviewInfo.h"
 
 @interface JAReviewCell : UITableViewCell
 
@@ -23,7 +24,13 @@
 - (void)setupWithReview:(RIReview *)review
           showSeparator:(BOOL)showSeparator;
 
+- (void)setupWithSellerReview:(RISellerReview*)sellerReview
+                showSeparator:(BOOL)showSeparator;
+
 + (CGFloat)cellHeightWithReview:(RIReview*)review
                           width:(CGFloat)width;
+
++ (CGFloat)cellHeightWithSellerReview:(RISellerReview*)sellerReview
+                                width:(CGFloat)width;
 
 @end

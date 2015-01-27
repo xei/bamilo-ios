@@ -616,6 +616,10 @@
 		CE283E7D1A765AEF00F3E92D /* JAOfferCollectionViewCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE283E7C1A765AEF00F3E92D /* JAOfferCollectionViewCell_ipad_portrait.xib */; };
 		CE283E7E1A765AEF00F3E92D /* JAOfferCollectionViewCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE283E7C1A765AEF00F3E92D /* JAOfferCollectionViewCell_ipad_portrait.xib */; };
 		CE283E7F1A765AF700F3E92D /* JAOfferCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE283E761A72C00E00F3E92D /* JAOfferCollectionViewCell.xib */; };
+		CE283E921A77899F00F3E92D /* JASellerRatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */; };
+		CE283E931A77899F00F3E92D /* JASellerRatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */; };
+		CE283E961A77981900F3E92D /* RISellerReviewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E951A77981900F3E92D /* RISellerReviewInfo.m */; };
+		CE283E971A77981900F3E92D /* RISellerReviewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E951A77981900F3E92D /* RISellerReviewInfo.m */; };
 		CE2C6B6F1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */; };
 		CE2C6B711A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B701A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib */; };
 		CE2DBC6E1A603B160075C21F /* RIFieldRatingStars.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DBC6D1A603B160075C21F /* RIFieldRatingStars.m */; };
@@ -1386,6 +1390,10 @@
 		CE283E761A72C00E00F3E92D /* JAOfferCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAOfferCollectionViewCell.xib; path = OfferCell/JAOfferCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE283E791A765AE600F3E92D /* JAOfferCollectionViewCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAOfferCollectionViewCell_ipad_landscape.xib; path = OfferCell/JAOfferCollectionViewCell_ipad_landscape.xib; sourceTree = "<group>"; };
 		CE283E7C1A765AEF00F3E92D /* JAOfferCollectionViewCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAOfferCollectionViewCell_ipad_portrait.xib; path = OfferCell/JAOfferCollectionViewCell_ipad_portrait.xib; sourceTree = "<group>"; };
+		CE283E901A77899F00F3E92D /* JASellerRatingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASellerRatingsViewController.h; sourceTree = "<group>"; };
+		CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASellerRatingsViewController.m; sourceTree = "<group>"; };
+		CE283E941A77981900F3E92D /* RISellerReviewInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISellerReviewInfo.h; sourceTree = "<group>"; };
+		CE283E951A77981900F3E92D /* RISellerReviewInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISellerReviewInfo.m; sourceTree = "<group>"; };
 		CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell_ipad_landscape.xib; sourceTree = "<group>"; };
 		CE2C6B701A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell_ipad_portrait.xib; sourceTree = "<group>"; };
 		CE2DBC6C1A603B160075C21F /* RIFieldRatingStars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldRatingStars.h; sourceTree = "<group>"; };
@@ -1760,6 +1768,8 @@
 		4A944FF2199273E000C02734 /* Ratings */ = {
 			isa = PBXGroup;
 			children = (
+				CE283E901A77899F00F3E92D /* JASellerRatingsViewController.h */,
+				CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */,
 				4A944FF6199290F200C02734 /* JARatingsViewController.h */,
 				4A944FF7199290F200C02734 /* JARatingsViewController.m */,
 				CE283E4B1A6515F600F3E92D /* JANewRatingViewController.h */,
@@ -2569,6 +2579,8 @@
 				B5225E191989308300C18F1E /* RIPaymentInformation.m */,
 				B5A3029619811E9200F71726 /* RIError.h */,
 				B5A3029719811E9200F71726 /* RIError.m */,
+				CE283E941A77981900F3E92D /* RISellerReviewInfo.h */,
+				CE283E951A77981900F3E92D /* RISellerReviewInfo.m */,
 				4A944FF31992805100C02734 /* RIProductRatings.h */,
 				4A944FF41992805100C02734 /* RIProductRatings.m */,
 				B5B79B3E1A3F4A2A00639F9E /* RIShippingMethod.h */,
@@ -3914,6 +3926,7 @@
 				B5B21B4719ED943C00099E25 /* JAMaintenancePage.m in Sources */,
 				BB746F4019ED8D5A00341B33 /* JAClickableView.m in Sources */,
 				B5C13EC11A402A9E00484398 /* ADJTimer.m in Sources */,
+				CE283E971A77981900F3E92D /* RISellerReviewInfo.m in Sources */,
 				BB4FB8D919E7FC4E006FEFF6 /* RICampaign.m in Sources */,
 				B578225B1A37516800B4DD8B /* JAGradientLayer.m in Sources */,
 				BB4FB8D819E7FAC5006FEFF6 /* JACampaignsViewController.m in Sources */,
@@ -4082,6 +4095,7 @@
 				077c3ad308e5a8bac062e6b5 /* JATextField.m in Sources */,
 				CE4848991A162807003C3D53 /* JASubFiltersViewController.m in Sources */,
 				CEABEEC91A126652000D0CF8 /* JACategoryFiltersView.m in Sources */,
+				CE283E931A77899F00F3E92D /* JASellerRatingsViewController.m in Sources */,
 				171502ed39676ad6e9d765b4 /* RISection.m in Sources */,
 				2bbb2d86eb24453bcfd24a98 /* JACheckBoxWithOptionsComponent.m in Sources */,
 				560ac91adb9d3b1dec49fa39 /* RICart.m in Sources */,
@@ -4191,6 +4205,7 @@
 				B5C13EA61A402A9E00484398 /* ADJActivityState.m in Sources */,
 				4A19C51919D01ABE0070D194 /* JANoConnectionView.m in Sources */,
 				CE2F576E19913B33000A9E09 /* JACatalogListCell.m in Sources */,
+				CE283E921A77899F00F3E92D /* JASellerRatingsViewController.m in Sources */,
 				4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */,
 				B5A302BE19811E9200F71726 /* RIConfiguration.m in Sources */,
 				4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */,
@@ -4266,6 +4281,7 @@
 				B5A302DA19811E9200F71726 /* RICommunicationWrapper.m in Sources */,
 				B5240E551A496E69006264E9 /* JAMyOrderDetailCell.m in Sources */,
 				4A3719BD19C05F52002D4199 /* JAUndefinedSearchView.m in Sources */,
+				CE283E961A77981900F3E92D /* RISellerReviewInfo.m in Sources */,
 				CE13256819C7355000B5018E /* RITeaser.m in Sources */,
 				CE13787019A2304500CA0751 /* JACategoryFilterViewController.m in Sources */,
 				B59DCA7E19B88DDB00DE7960 /* JAAddNewAddressCell.m in Sources */,

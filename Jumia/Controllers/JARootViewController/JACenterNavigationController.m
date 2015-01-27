@@ -54,6 +54,7 @@
 #import "RICart.h"
 #import "JASizeGuideViewController.h"
 #import "JAOtherOffersViewController.h"
+#import "JASellerRatingsViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -314,6 +315,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showOtherOffers:)
                                                  name:kOpenOtherOffers
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSellerReviews:)
+                                                 name:kOpenSellerReviews
                                                object:nil];
 }
 
@@ -1172,6 +1178,21 @@
         }
         
         [self pushViewController:otherOffersVC animated:YES];
+    }
+}
+
+- (void)showSellerReviews:(NSNotification*)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JASellerRatingsViewController class]])
+    {
+        JASellerRatingsViewController* viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"sellerRatingsViewController"];
+        
+        if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
+            viewController.product = notification.object;
+        }
+        
+        [self pushViewController:viewController animated:YES];
     }
 }
 

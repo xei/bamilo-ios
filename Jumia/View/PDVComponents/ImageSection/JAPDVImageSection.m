@@ -26,7 +26,10 @@
 @property (nonatomic, strong)UIButton* sellerButton;
 @property (nonatomic, strong)UILabel* sellerDeliveryLabel;
 @property (nonatomic, strong)JARatingsView* sellerRatings;
+@property (nonatomic, strong)UIButton* rateSellerButton;
 @property (nonatomic, strong)UILabel* numberOfSellerReviewsLabel;
+
+@property (nonatomic, strong)RIProduct* product;
 
 @end
 
@@ -75,6 +78,8 @@
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
 {
+    self.product = product;
+    
     self.layer.cornerRadius = 5.0f;
     self.translatesAutoresizingMaskIntoConstraints = YES;
     
@@ -184,6 +189,7 @@
     [self.sellerButton removeFromSuperview];
     [self.sellerDeliveryLabel removeFromSuperview];
     [self.sellerRatings removeFromSuperview];
+    [self.rateSellerButton removeFromSuperview];
     [self.numberOfSellerReviewsLabel removeFromSuperview];
     if (VALID_NOTEMPTY(product.seller, RISeller)) {
         
@@ -231,8 +237,17 @@
         [self.sellerRatings setFrame:CGRectMake(self.numberOfSellerReviewsLabel.frame.origin.x - 6.0f - self.sellerRatings.frame.size.width,
                                                 currentY + 4.0f,
                                                 self.sellerRatings.frame.size.width,
-                                                self.sellerRatings.frame.size.width)];
+                                                self.sellerRatings.frame.size.height)];
         [self addSubview:self.sellerRatings];
+        
+        CGFloat buttonHeight = 22.0f;
+        CGFloat buttonOffset = -(buttonHeight - self.sellerRatings.frame.size.height)/2;
+        self.rateSellerButton = [[UIButton alloc] initWithFrame:CGRectMake(self.sellerRatings.frame.origin.x,
+                                                                           self.sellerRatings.frame.origin.y + buttonOffset,
+                                                                           self.sellerRatings.frame.size.width,
+                                                                           buttonHeight)];
+        [self.rateSellerButton addTarget:self action:@selector(sellerRatingButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.rateSellerButton];
         
         currentY += self.soldByLabel.frame.size.height;
         
@@ -283,6 +298,7 @@
     [self.sellerButton removeFromSuperview];
     [self.sellerDeliveryLabel removeFromSuperview];
     [self.sellerRatings removeFromSuperview];
+    [self.rateSellerButton removeFromSuperview];
     [self.numberOfSellerReviewsLabel removeFromSuperview];
     if (VALID_NOTEMPTY(product.seller, RISeller)) {
         
@@ -312,7 +328,6 @@
                                                self.sellerButton.frame.size.height)];
         [self addSubview:self.sellerButton];
         
-        
         self.numberOfSellerReviewsLabel = [UILabel new];
         self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f];
         self.numberOfSellerReviewsLabel.textColor = UIColorFromRGB(0xcccccc);
@@ -330,8 +345,17 @@
         [self.sellerRatings setFrame:CGRectMake(self.numberOfSellerReviewsLabel.frame.origin.x - 6.0f - self.sellerRatings.frame.size.width,
                                                 currentY + 4.0f,
                                                 self.sellerRatings.frame.size.width,
-                                                self.sellerRatings.frame.size.width)];
+                                                self.sellerRatings.frame.size.height)];
         [self addSubview:self.sellerRatings];
+        
+        CGFloat buttonHeight = 22.0f;
+        CGFloat buttonOffset = -(buttonHeight - self.sellerRatings.frame.size.height)/2;
+        self.rateSellerButton = [[UIButton alloc] initWithFrame:CGRectMake(self.sellerRatings.frame.origin.x,
+                                                                           self.sellerRatings.frame.origin.y + buttonOffset,
+                                                                           self.sellerRatings.frame.size.width,
+                                                                           buttonHeight)];
+        [self.rateSellerButton addTarget:self action:@selector(sellerRatingButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.rateSellerButton];
         
         currentY += self.soldByLabel.frame.size.height;
         
@@ -565,6 +589,13 @@
     //and then subtract 1 to make up for the fake image offset (fake images that are used for infinite scrolling)
     self.pageControl.currentPage = (scrollView.contentOffset.x / scrollView.frame.size.width) + 0.5f - 1.0f;
     
+}
+
+#pragma mark - ButtonActions
+
+-(void)sellerRatingButtonPressed
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerReviews object:self.product];
 }
 
 @end
