@@ -91,7 +91,20 @@
 - (void)setupWithSellerReview:(RISellerReview*)sellerReview
                 showSeparator:(BOOL)showSeparator;
 {
-    [self loadBottomOfCellWithY:0.0
+    CGFloat currentY = 8.0f;
+    
+    JARatingsView* ratingsView = [JARatingsView getNewJARatingsView];
+    [ratingsView setRating:[sellerReview.average integerValue]];
+    [ratingsView setFrame:CGRectMake(kJAReviewCellHorizontalMargins,
+                                     currentY,
+                                     ratingsView.frame.size.width,
+                                     ratingsView.frame.size.height)];
+    [self addSubview:ratingsView];
+    [self.ratingStarViews addObject:ratingsView];
+    
+    currentY += ratingsView.frame.size.height + 6.0f;
+    
+    [self loadBottomOfCellWithY:currentY
                           title:sellerReview.title
                         comment:sellerReview.comment
                        userName:sellerReview.userName
@@ -186,7 +199,14 @@
 + (CGFloat)cellHeightWithSellerReview:(RISellerReview*)sellerReview
                                 width:(CGFloat)width;
 {
-    return [JAReviewCell cellHeightForBottomOfCellWithPreviousHeight:0.0f
+    CGFloat currentY = 8.0f;
+    
+    JARatingsView* ratingsView = [JARatingsView getNewJARatingsView];
+    [ratingsView setRating:1];
+    
+    currentY += ratingsView.frame.size.height + 6.0f;
+    
+    return [JAReviewCell cellHeightForBottomOfCellWithPreviousHeight:currentY
                                                                width:width
                                                                title:sellerReview.title
                                                              comment:sellerReview.comment];
