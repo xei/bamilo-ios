@@ -514,7 +514,7 @@
     [self showLoading];
 
     [RISellerReviewInfo getSellerReviewForProductWithUrl:self.product.url
-                                                pageSize:10
+                                                pageSize:100
                                               pageNumber:1
                                             successBlock:^(RISellerReviewInfo *sellerReviewInfo) {
                                                 self.sellerReviewInfo = sellerReviewInfo;

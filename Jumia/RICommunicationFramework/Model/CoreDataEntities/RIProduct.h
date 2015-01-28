@@ -71,6 +71,8 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSNumber * offersMinPriceEuroConverted;
 @property (nonatomic, retain) NSNumber * offersTotal;
 @property (nonatomic, retain) NSString * offersMinPriceFormatted;
+@property (nonatomic, retain) NSSet *relatedProducts;
+@property (nonatomic, retain) RIProduct *referredFromProduct;
 
 //Not a coredata relationship
 @property (nonatomic, retain) NSOrderedSet *categoryIds;
@@ -257,5 +259,9 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 - (void)removeVariationsObject:(RIVariation *)value;
 - (void)addVariations:(NSOrderedSet *)values;
 - (void)removeVariations:(NSOrderedSet *)values;
+- (void)addRelatedProductsObject:(RIProduct *)value;
+- (void)removeRelatedProductsObject:(RIProduct *)value;
+- (void)addRelatedProducts:(NSSet *)values;
+- (void)removeRelatedProducts:(NSSet *)values;
 
 @end

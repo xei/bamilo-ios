@@ -1262,10 +1262,6 @@
         if ([notification.userInfo objectForKey:@"fromCatalog"])
         {
             pdv.fromCatalogue = YES;
-            
-            if ([notification.userInfo objectForKey:@"relatedItems"]) {
-                pdv.arrayWithRelatedItems = [notification.userInfo objectForKey:@"relatedItems"];
-            }
         }
         else
         {

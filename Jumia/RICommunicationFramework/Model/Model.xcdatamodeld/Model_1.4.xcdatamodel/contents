@@ -185,6 +185,8 @@
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIImage" inverseName="product" inverseEntity="RIImage" syncable="YES"/>
         <relationship name="productSimples" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIProductSimple" inverseName="product" inverseEntity="RIProductSimple" syncable="YES"/>
+        <relationship name="referredFromProduct" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="relatedProducts" inverseEntity="RIProduct" syncable="YES"/>
+        <relationship name="relatedProducts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RIProduct" inverseName="referredFromProduct" inverseEntity="RIProduct" syncable="YES"/>
         <relationship name="seller" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RISeller" inverseName="product" inverseEntity="RISeller" syncable="YES"/>
         <relationship name="variations" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIVariation" inverseName="product" inverseEntity="RIVariation" syncable="YES"/>
     </entity>
@@ -303,15 +305,15 @@
         <element name="RIFieldRatingStars" positionX="-306" positionY="998" width="128" height="118"/>
         <element name="RIForm" positionX="-504" positionY="362" width="128" height="118"/>
         <element name="RIFormIndex" positionX="-504" positionY="234" width="128" height="88"/>
-        <element name="RIImage" positionX="27" positionY="486" width="128" height="135"/>
+        <element name="RIImage" positionX="70" positionY="486" width="128" height="135"/>
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
         <element name="RINewsletterCategory" positionX="-486" positionY="-63" width="128" height="73"/>
-        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="688"/>
+        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="718"/>
         <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
         <element name="RISearchSuggestion" positionX="-648" positionY="27" width="128" height="105"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
-        <element name="RISeller" positionX="-101" positionY="662" width="128" height="150"/>
+        <element name="RISeller" positionX="-225" positionY="759" width="128" height="150"/>
         <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
         <element name="RITeaser" positionX="-686" positionY="527" width="128" height="120"/>
         <element name="RITeaserCategory" positionX="-686" positionY="245" width="128" height="133"/>
