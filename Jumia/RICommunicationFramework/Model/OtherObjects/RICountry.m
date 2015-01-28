@@ -159,25 +159,46 @@
     [countriesArray addObject:country];
     //*****************
     
-    //INSERTING INTEGRATION MOBILE
+    //INSERTING ALGERIA STG
     //*****************
     NSMutableDictionary* integrationDict2 = [NSMutableDictionary new];
     
-    [integrationDict2 setObject:@"NG" forKey:@"country_iso"];
-    [integrationDict2 setObject:@"http://www.jumia.com/images/mobapi/flag_nigeria.png" forKey:@"flag"];
+    [integrationDict2 setObject:@"DZ" forKey:@"country_iso"];
+    [integrationDict2 setObject:@"http://www.jumia.com/images/mobapi/flag_algeria.png" forKey:@"flag"];
     [integrationDict2 setObject:[NSNumber numberWithBool:0] forKey:@"force_files"];
-    [integrationDict2 setObject:@"Integration Mobile Nigeria" forKey:@"name"];
-    [integrationDict2 setObject:@"integration-mobile-www.jumia.com.ng/mobapi/" forKey:@"url"];
+    [integrationDict2 setObject:@"Staging Algeria" forKey:@"name"];
+    [integrationDict2 setObject:@"alice-staging.dz.jumia.com/mobapi/" forKey:@"url"];
     
     NSMutableDictionary* mapFiles2 = [NSMutableDictionary new];
-    [mapFiles2 setObject:@"http://www.jumia.com/images/mobapi/map_hdpi_ng.png" forKey:@"hdpi"];
-    [mapFiles2 setObject:@"http://www.jumia.com/images/mobapi/map_mdpi_ng.png" forKey:@"mdpi"];
-    [mapFiles2 setObject:@"http://www.jumia.com/images/mobapi/map_xhdpi_ng.png" forKey:@"xdpi"];
+    [mapFiles2 setObject:@"http://www.jumia.com/images/mobapi/map_hdpi_dz.png" forKey:@"hdpi"];
+    [mapFiles2 setObject:@"http://www.jumia.com/images/mobapi/map_mdpi_dz.png" forKey:@"mdpi"];
+    [mapFiles2 setObject:@"http://www.jumia.com/images/mobapi/map_xhdpi_dz.png" forKey:@"xdpi"];
     
     [integrationDict2 setObject:mapFiles2 forKey:@"map_files"];
     
     RICountry *country2 = [RICountry parseCountryWithJson:integrationDict2];
     [countriesArray addObject:country2];
+    //*****************
+    
+    //INSERTING ALGERIA LIVE
+    //*****************
+    NSMutableDictionary* integrationDict3 = [NSMutableDictionary new];
+    
+    [integrationDict3 setObject:@"DZ" forKey:@"country_iso"];
+    [integrationDict3 setObject:@"http://www.jumia.com/images/mobapi/flag_algeria.png" forKey:@"flag"];
+    [integrationDict3 setObject:[NSNumber numberWithBool:0] forKey:@"force_files"];
+    [integrationDict3 setObject:@"Live Algeria" forKey:@"name"];
+    [integrationDict3 setObject:@"http://dz.jumia.com/mobapi/" forKey:@"url"];
+    
+    NSMutableDictionary* mapFiles3 = [NSMutableDictionary new];
+    [mapFiles3 setObject:@"http://www.jumia.com/images/mobapi/map_hdpi_dz.png" forKey:@"hdpi"];
+    [mapFiles3 setObject:@"http://www.jumia.com/images/mobapi/map_mdpi_dz.png" forKey:@"mdpi"];
+    [mapFiles3 setObject:@"http://www.jumia.com/images/mobapi/map_xhdpi_dz.png" forKey:@"xdpi"];
+    
+    [integrationDict3 setObject:mapFiles3 forKey:@"map_files"];
+    
+    RICountry *country3 = [RICountry parseCountryWithJson:integrationDict3];
+    [countriesArray addObject:country3];
     //*****************
     
     
