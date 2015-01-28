@@ -246,7 +246,10 @@
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"] plainPassword:password loginMethod:@"normal"];
-                                                                      successBlock(customer);
+                                                                      NSDictionary* nativeCheckoutDic = [metadata objectForKey:@"native_checkout"];
+                                                                      NSMutableDictionary* successDic = [NSMutableDictionary dictionaryWithDictionary:nativeCheckoutDic];
+                                                                      [successDic setValue:customer forKey:@"customer"];
+                                                                      successBlock([successDic copy]);
                                                                   }
                                                                   else if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:form.uid])
                                                                   {
