@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class RIImage, RIProductSimple, RIVariation, RIBundle;
+
+@class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller;
 
 /*
  * IMPORTANT NOTICE
@@ -66,6 +67,13 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSNumber * ratingAverage;
 @property (nonatomic, retain) NSNumber * ratingsTotal;
 @property (nonatomic, retain) NSNumber * reviewsTotal;
+@property (nonatomic, retain) RISeller *seller;
+@property (nonatomic, retain) NSNumber * offersMinPrice;
+@property (nonatomic, retain) NSNumber * offersMinPriceEuroConverted;
+@property (nonatomic, retain) NSNumber * offersTotal;
+@property (nonatomic, retain) NSString * offersMinPriceFormatted;
+@property (nonatomic, retain) NSSet *relatedProducts;
+@property (nonatomic, retain) RIProduct *referredFromProduct;
 
 //Not a coredata relationship
 @property (nonatomic, retain) NSOrderedSet *categoryIds;
@@ -256,6 +264,10 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 - (void)removeVariationsObject:(RIVariation *)value;
 - (void)addVariations:(NSOrderedSet *)values;
 - (void)removeVariations:(NSOrderedSet *)values;
+- (void)addRelatedProductsObject:(RIProduct *)value;
+- (void)removeRelatedProductsObject:(RIProduct *)value;
+- (void)addRelatedProducts:(NSSet *)values;
+- (void)removeRelatedProducts:(NSSet *)values;
 
 @end
 

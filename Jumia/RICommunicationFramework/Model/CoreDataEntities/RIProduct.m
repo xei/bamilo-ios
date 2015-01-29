@@ -12,6 +12,7 @@
 #import "RIVariation.h"
 #import "RIFilter.h"
 #import "RICategory.h"
+#import "RISeller.h"
 
 @implementation RIBundle
 
@@ -91,6 +92,13 @@
 @dynamic ratingAverage;
 @dynamic ratingsTotal;
 @dynamic reviewsTotal;
+@dynamic seller;
+@dynamic offersMinPrice;
+@dynamic offersMinPriceEuroConverted;
+@dynamic offersMinPriceFormatted;
+@dynamic offersTotal;
+@dynamic relatedProducts;
+@dynamic referredFromProduct;
 
 @synthesize categoryIds;
 
@@ -470,8 +478,7 @@
                 }
             }
             
-        } else {
-            
+        } else if ([productJSON objectForKey:@"images"]) {
             //in catalog request, we have images out of the data dictionary
             NSArray* imagesJSONArray = [productJSON objectForKey:@"images"];
             if (imagesJSONArray && [imagesJSONArray isKindOfClass:[NSArray class]]) {
@@ -485,10 +492,60 @@
                     }
                 }
             }
+        } else if ([dataDic objectForKey:@"image"]) {
+            //a related item only has one image url, inside the data dictionary
+            NSDictionary* imageDic = [NSDictionary dictionaryWithObject:[dataDic objectForKey:@"image"] forKey:@"image"];
+            RIImage* image = [RIImage parseImage:imageDic];
+            [newProduct addImagesObject:image];
+        }
+        
+        newProduct.favoriteAddDate = [RIProduct productIsFavoriteInDatabase:newProduct];
+        
+        if ([dataDic objectForKey:@"seller"]) {
+            NSDictionary* sellerJSON = [dataDic objectForKey:@"seller"];
+            if (VALID_NOTEMPTY(sellerJSON, NSDictionary)) {
+                
+                RISeller* seller = [RISeller parseSeller:sellerJSON];
+                seller.product = newProduct;
+                newProduct.seller = seller;
+            }
+        }
+        
+        if ([dataDic objectForKey:@"offers"]) {
+            NSDictionary* offersJSON = [dataDic objectForKey:@"offers"];
+            if (VALID_NOTEMPTY(offersJSON, NSDictionary)) {
+                if ([offersJSON objectForKey:@"min_price"]) {
+                    newProduct.offersMinPrice = [NSNumber numberWithFloat:[[offersJSON objectForKey:@"min_price"] floatValue]];
+                    newProduct.offersMinPriceFormatted = [RICountryConfiguration formatPrice:newProduct.offersMinPrice country:country];
+                }
+                if ([offersJSON objectForKey:@"min_price_euroConverted"]) {
+                    newProduct.offersMinPriceEuroConverted = [NSNumber numberWithFloat:[[offersJSON objectForKey:@"min_price_euroConverted"] floatValue]];
+                }
+                if ([offersJSON objectForKey:@"total"]) {
+                    newProduct.offersTotal = [NSNumber numberWithInteger:[[offersJSON objectForKey:@"total"] integerValue]];
+                }
+            }
+        }
+        
+        if ([dataDic objectForKey:@"related_products"]) {
+            NSArray* relatedProductsArray = [dataDic objectForKey:@"related_products"];
+            if (VALID_NOTEMPTY(relatedProductsArray, NSArray)) {
+                
+                for (NSDictionary* relatedProductJSON in relatedProductsArray) {
+                    
+                    if (VALID_NOTEMPTY(relatedProductJSON, NSDictionary)) {
+                        
+                        NSMutableDictionary* fakeData = [NSMutableDictionary new];
+                        [fakeData setObject:relatedProductJSON forKey:@"data"];
+                        
+                        RIProduct* relatedProduct = [RIProduct parseProduct:fakeData country:country];
+                        relatedProduct.referredFromProduct = newProduct;
+                        [newProduct addRelatedProductsObject:relatedProduct];
+                    }
+                }
+            }
         }
     }
-    
-    newProduct.favoriteAddDate = [RIProduct productIsFavoriteInDatabase:newProduct];
     
     return newProduct;
 }
@@ -843,6 +900,13 @@
     }
     for (RIVariation* variation in product.variations) {
         [RIVariation saveVariation:variation];
+    }
+//    for (RIProduct* relatedProduct in product.relatedProducts) {
+//        [RIProduct saveProduct:relatedProduct];
+//    }
+    
+    if (VALID_NOTEMPTY(product.seller, RISeller)) {
+        [RISeller saveSeller:product.seller];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:product];

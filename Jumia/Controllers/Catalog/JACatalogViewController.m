@@ -1012,12 +1012,6 @@
         count = 20;
     }
     
-    NSMutableArray *tempArray = [NSMutableArray new];
-    
-    for (int i = 0 ; i < count ; i ++) {
-        [tempArray addObject:[productsArray objectAtIndex:i]];
-    }
-    
     NSString *temp = self.category.name;
     
     
@@ -1027,7 +1021,6 @@
                                                           userInfo:@{ @"url" : product.url,
                                                                       @"previousCategory" : temp,
                                                                       @"fromCatalog" : @"YES",
-                                                                      @"relatedItems" : tempArray,
                                                                       @"delegate" : self,
                                                                       @"category" : self.category,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
@@ -1039,7 +1032,6 @@
                                                           userInfo:@{ @"url" : product.url,
                                                                       @"fromCatalog" : @"YES",
                                                                       @"previousCategory" : self.navBarLayout.title,
-                                                                      @"relatedItems" : tempArray ,
                                                                       @"delegate": self ,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
     }

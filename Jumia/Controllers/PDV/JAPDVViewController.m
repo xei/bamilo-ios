@@ -36,6 +36,7 @@
 #import "JAPDVBundles.h"
 #import "JAPDVBundleSingleItem.h"
 #import "RIProduct.h"
+#import "JAOtherOffersView.h"
 
 @interface JAPDVViewController ()
 <
@@ -65,7 +66,7 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) NSArray *bundleProducts;
 @property (strong, nonatomic) NSMutableArray *bundlesArray;
 @property (assign, nonatomic) BOOL click;
-
+@property (nonatomic, strong) JAOtherOffersView* otherOffersView;
 
 @property (nonatomic, assign) BOOL hasLoaddedProduct;
 
@@ -653,7 +654,7 @@ JAActivityViewControllerDelegate
                      target:self
                      action:@selector(addToCart)];
     
-    [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=3&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
+    [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=1&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
                                          
                                          self.commentsCount = ratings.reviews.count;
@@ -811,6 +812,25 @@ JAActivityViewControllerDelegate
     }
     
     /*******
+     Other Offers Section
+     *******/
+    
+    if (isiPadInLandscape) {
+        if (VALID_NOTEMPTY(self.product.offersTotal, NSNumber) && 0 < [self.product.offersTotal integerValue]) {
+            self.otherOffersView = [JAOtherOffersView getNewOtherOffersView];
+            
+            [self.otherOffersView setupWithFrame:self.mainScrollView.frame product:self.product];
+            [self.otherOffersView setFrame:CGRectMake(6.0f,
+                                                      mainScrollViewY,
+                                                      self.otherOffersView.frame.size.width,
+                                                      self.otherOffersView.frame.size.height)];
+            
+            [self.mainScrollView addSubview:self.otherOffersView];
+        }
+    }
+
+    
+    /*******
      Product Info Section
      *******/
     
@@ -946,7 +966,7 @@ JAActivityViewControllerDelegate
     CGFloat relatedItemStart = 5.0f;
     [self.relatedItems removeFromSuperview];
     
-    if (self.fromCatalogue && VALID_NOTEMPTY(self.arrayWithRelatedItems, NSArray) && 1 < self.arrayWithRelatedItems.count)
+    if (VALID_NOTEMPTY(self.product.relatedProducts, NSSet) && 1 < self.product.relatedProducts.count)
     {
         self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
         [self.relatedItems setupWithFrame:self.mainScrollView.frame];
@@ -954,8 +974,10 @@ JAActivityViewControllerDelegate
         
         
         
-        for (int i = 0; i < self.arrayWithRelatedItems.count; i++) {
-            RIProduct* product = [self.arrayWithRelatedItems objectAtIndex:i];
+        NSArray* relatedProducts = [self.product.relatedProducts allObjects];
+        
+        for (int i = 0; i < self.product.relatedProducts.count; i++) {
+            RIProduct* product = [relatedProducts objectAtIndex:i];
             if (![product.sku isEqualToString:self.product.sku])
             {
                 JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
@@ -1042,14 +1064,24 @@ JAActivityViewControllerDelegate
 
 - (void)selectedRelatedItem:(UIControl*)sender
 {
-    RIProduct *tempProduct = [self.arrayWithRelatedItems objectAtIndex:sender.tag];
+    NSArray* relatedProducts = [self.product.relatedProducts allObjects];
+    RIProduct *tempProduct = [relatedProducts objectAtIndex:sender.tag];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                        object:nil
-                                                      userInfo:@{ @"url" : tempProduct.url,
-                                                                  @"previousCategory" : @"",
-                                                                  @"show_back_button" : [NSNumber numberWithBool:self.showBackButton],
-                                                                  @"delegate" : self.delegate}];
+    if (self.delegate) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                            object:nil
+                                                          userInfo:@{ @"url" : tempProduct.url,
+                                                                      @"previousCategory" : @"",
+                                                                      @"show_back_button" : [NSNumber numberWithBool:YES],
+                                                                      @"delegate" : self.delegate}];
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                            object:nil
+                                                          userInfo:@{ @"url" : tempProduct.url,
+                                                                      @"previousCategory" : @"",
+                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
+    }
+
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:tempProduct.sku forKey:kRIEventLabelKey];

@@ -287,6 +287,14 @@
 "my_order_quantity_label" = "Qty.";
 "my_order_no_orders_label" = "You have placed no orders.";
 "like_us_on_facebook" = "Like us on Facebook";
+
 "bundle_title" = "Frequently Bought Together";
 "bundle_total_price" = "Total Price:";
 "buy_now" = "Buy Now";
+
+"other_sellers" = "Other Sellers";
+"same_product_from_other_sellers" = "Same Product from Other Sellers";
+"from" = "From";
+"product_delivery_time" = "Delivery Within:";
+"product_delivery_days" = "days";
+"number_offers_from_ios" = "%d Offers from";

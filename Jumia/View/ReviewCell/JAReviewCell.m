@@ -79,12 +79,51 @@
             currentY += 35.0f;
         }
     }
+ 
+    [self loadBottomOfCellWithY:currentY
+                          title:review.title
+                        comment:review.comment
+                       userName:review.userName
+                     dateString:review.dateString
+                  showSeparator:showSeparator];
+}
+
+- (void)setupWithSellerReview:(RISellerReview*)sellerReview
+                showSeparator:(BOOL)showSeparator;
+{
+    CGFloat currentY = 8.0f;
     
+    JARatingsView* ratingsView = [JARatingsView getNewJARatingsView];
+    [ratingsView setRating:[sellerReview.average integerValue]];
+    [ratingsView setFrame:CGRectMake(kJAReviewCellHorizontalMargins,
+                                     currentY,
+                                     ratingsView.frame.size.width,
+                                     ratingsView.frame.size.height)];
+    [self addSubview:ratingsView];
+    [self.ratingStarViews addObject:ratingsView];
+    
+    currentY += ratingsView.frame.size.height + 6.0f;
+    
+    [self loadBottomOfCellWithY:currentY
+                          title:sellerReview.title
+                        comment:sellerReview.comment
+                       userName:sellerReview.userName
+                     dateString:sellerReview.dateString
+                  showSeparator:showSeparator];
+}
+
+-(void)loadBottomOfCellWithY:(CGFloat)currentY
+                       title:(NSString*)title
+                     comment:(NSString*)comment
+                    userName:(NSString*)userName
+                  dateString:(NSString*)dateString
+               showSeparator:(BOOL)showSeparator
+{
     [self.titleLabel removeFromSuperview];
     self.titleLabel = [UILabel new];
     [self.titleLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:12.0f]];
-    [self.titleLabel setText:review.title];
+    [self.titleLabel setText:title];
     [self.titleLabel sizeToFit];
     [self.titleLabel setFrame:CGRectMake(kJAReviewCellHorizontalMargins,
                                          currentY,
@@ -96,7 +135,7 @@
     self.descriptionLabel = [UILabel new];
     [self.descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.descriptionLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
-    [self.descriptionLabel setText:review.comment];
+    [self.descriptionLabel setText:comment];
     [self.descriptionLabel setNumberOfLines:0];
     [self.descriptionLabel setFrame:CGRectMake(kJAReviewCellHorizontalMargins,
                                                CGRectGetMaxY(self.titleLabel.frame) + 10.0f,
@@ -110,10 +149,10 @@
     [self.authorDateLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.authorDateLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f]];
     NSString* authorDateString;
-    if (review.userName.length > 0) {
-        authorDateString = [NSString stringWithFormat:STRING_POSTED_BY, review.userName, review.dateString];
+    if (userName.length > 0) {
+        authorDateString = [NSString stringWithFormat:STRING_POSTED_BY, userName, dateString];
     } else {
-        authorDateString = [NSString stringWithFormat:STRING_POSTED_BY_ANONYMOUS, review.dateString];
+        authorDateString = [NSString stringWithFormat:STRING_POSTED_BY_ANONYMOUS, dateString];
     }
     [self.authorDateLabel setText:authorDateString];
     
@@ -151,9 +190,38 @@
     
     totalHeight += numberOfRatingLines*(ratingLabel.frame.size.height+ratingsView.frame.size.height) + 35.0f;
     
+    return [JAReviewCell cellHeightForBottomOfCellWithPreviousHeight:totalHeight
+                                                        width:width
+                                                        title:review.title
+                                                      comment:review.comment];
+}
+
++ (CGFloat)cellHeightWithSellerReview:(RISellerReview*)sellerReview
+                                width:(CGFloat)width;
+{
+    CGFloat currentY = 8.0f;
+    
+    JARatingsView* ratingsView = [JARatingsView getNewJARatingsView];
+    [ratingsView setRating:1];
+    
+    currentY += ratingsView.frame.size.height + 6.0f;
+    
+    return [JAReviewCell cellHeightForBottomOfCellWithPreviousHeight:currentY
+                                                               width:width
+                                                               title:sellerReview.title
+                                                             comment:sellerReview.comment];
+}
+
++(CGFloat)cellHeightForBottomOfCellWithPreviousHeight:(CGFloat)previousHeight
+                                                width:(CGFloat)width
+                                                title:(NSString*)title
+                                              comment:(NSString*)comment
+{
+    CGFloat totalHeight = previousHeight;
+    
     UILabel* titleLabel = [UILabel new];
     [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:12.0f]];
-    [titleLabel setText:review.title];
+    [titleLabel setText:title];
     [titleLabel sizeToFit];
     
     totalHeight += titleLabel.frame.size.height + 10;
@@ -161,7 +229,7 @@
     UILabel* descriptionLabel = [UILabel new];
     [descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
     [descriptionLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
-    [descriptionLabel setText:review.comment];
+    [descriptionLabel setText:comment];
     [descriptionLabel setNumberOfLines:0];
     [descriptionLabel setFrame:CGRectMake(0.0f,
                                           0.0f,

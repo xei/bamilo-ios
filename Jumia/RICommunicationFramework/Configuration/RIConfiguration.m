@@ -9,8 +9,8 @@
 #import "RIConfiguration.h"
 
 NSString *const RI_USERNAME = @"rocket";
-//NSString *const RI_PASSWORD = @"z7euN7qfRD769BP";
-NSString *const RI_PASSWORD = @"rock4me";
+NSString *const RI_PASSWORD = @"z7euN7qfRD769BP";
+//NSString *const RI_PASSWORD = @"rock4me";
 
 BOOL RI_MOBAPI_HEADERS_ENABLED = NO;
 NSString *const RI_MOBAPI_VERSION_HEADER_VERSION_NAME = @"X-ROCKET-MOBAPI-VERSION";
@@ -71,3 +71,5 @@ NSString *const RI_API_PROMOTIONS_URL = @"main/getstatic?key=mobile_promotions";
 NSString *const RI_RATE_CONVERSION = @"http://rate-exchange.appspot.com/currency?from=%@&to=EUR";
 NSString *const RI_GET_CAMPAIGN = @"campaign/get/?campaign_slug=%@";
 NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
+NSString *const RI_API_PRODUCT_OFFERS = @"?all_offers=1";
+NSString *const RI_API_SELLER_RATING = @"?seller_rating=1&per_page=%d&page=%d";
