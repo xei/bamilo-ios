@@ -287,3 +287,6 @@
 "my_order_quantity_label" = "Qty.";
 "my_order_no_orders_label" = "You have placed no orders.";
 "like_us_on_facebook" = "Like us on Facebook";
+"bundle_title" = "Frequently Bought Together";
+"bundle_total_price" = "Total Price:";
+"buy_now" = "Buy Now";

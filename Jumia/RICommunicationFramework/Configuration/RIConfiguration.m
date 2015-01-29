@@ -70,3 +70,4 @@ NSString *const RI_API_FINISH_CHECKOUT = @"multistep/finish/";
 NSString *const RI_API_PROMOTIONS_URL = @"main/getstatic?key=mobile_promotions";
 NSString *const RI_RATE_CONVERSION = @"http://rate-exchange.appspot.com/currency?from=%@&to=EUR";
 NSString *const RI_GET_CAMPAIGN = @"campaign/get/?campaign_slug=%@";
+NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";

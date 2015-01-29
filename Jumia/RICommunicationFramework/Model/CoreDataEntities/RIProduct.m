@@ -13,6 +13,44 @@
 #import "RIFilter.h"
 #import "RICategory.h"
 
+@implementation RIBundle
+
+
++ (RIBundle *)parseRIBundle:(NSDictionary *)bundleJSON country:(RICountryConfiguration*)country
+{
+    RIBundle *newBundle = [[RIBundle alloc] init];
+    
+    NSDictionary *dataDic = [bundleJSON objectForKey:@"data"];
+    
+    if (VALID_NOTEMPTY(dataDic, NSDictionary)) {
+        
+        if([dataDic objectForKey:@"bundle_id"])
+        {
+            newBundle.bundleId = [dataDic objectForKey:@"bundle_id"];
+        }
+        
+        if([dataDic objectForKey:@"bundle_products"])
+        {
+            NSArray* bundleProductsArray = [dataDic objectForKey:@"bundle_products"];
+            if (VALID_NOTEMPTY(bundleProductsArray, NSArray)) {
+                NSMutableArray* newBundleProducts = [NSMutableArray new];
+                for (NSDictionary* productJSON in bundleProductsArray) {
+                    if (VALID_NOTEMPTY(productJSON, NSDictionary)) {
+                        NSDictionary* fakeData = [NSDictionary dictionaryWithObject:productJSON forKey:@"data"];
+                        RIProduct *product = [RIProduct parseProduct:fakeData country:country];
+                        [newBundleProducts addObject:product];
+                    }
+                }
+                newBundle.bundleProducts = [newBundleProducts copy];
+            }
+        }
+    }
+    
+    return newBundle;
+}
+
+@end
+
 @implementation RIProduct
 
 @dynamic activatedAt;
@@ -106,6 +144,7 @@
                                                               }
                                                           }];
 }
+
 
 + (NSString *)getProductsWithCatalogUrl:(NSString*)url
                           sortingMethod:(RICatalogSorting)sortingMethod
@@ -751,6 +790,45 @@
     }
     
     return nil;
+}
+
++ (NSString *)getBundleWithSku:(NSString *)sku
+                  successBlock:(void (^)(RIBundle* bundle))successBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
+{
+    NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_BUNDLE, sku];
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
+                                                            parameters:nil
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheDefaultTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                                  {
+                                                                      successBlock([RIBundle parseRIBundle:metadata country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(apiResponse, nil);
+                                                                  }
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }];
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
 }
 
 #pragma mark - Save method

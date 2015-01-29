@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="C6h-NX-rjV" customClass="JAPDVBundles">
+            <rect key="frame" x="0.0" y="0.0" width="308" height="197"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gd7-Dx-LdH" userLabel="bundleTitle">
+                    <rect key="frame" x="6" y="4" width="308" height="19"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AKV-nD-eSJ">
+                    <rect key="frame" x="0.0" y="25" width="308" height="1"/>
+                    <color key="backgroundColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                </imageView>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S5D-cw-5zn">
+                    <rect key="frame" x="0.0" y="26" width="308" height="123"/>
+                </scrollView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kT5-bS-Lmt">
+                    <rect key="frame" x="0.0" y="148" width="308" height="1"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </imageView>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5ml-3C-sHo">
+                    <rect key="frame" x="0.0" y="149" width="308" height="44"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Az2-kg-DB8">
+                            <rect key="frame" x="6" y="0.0" width="210" height="42"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyS-IF-WaR">
+                            <rect key="frame" x="232" y="8" width="70" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <state key="normal" backgroundImage="addToCart_normal">
+                                <color key="titleColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <state key="highlighted" image="addToCart_normal"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="AKV-nD-eSJ" secondAttribute="trailing" id="70w-B1-FhM"/>
+                <constraint firstItem="kT5-bS-Lmt" firstAttribute="leading" secondItem="C6h-NX-rjV" secondAttribute="leading" id="MfV-gd-1wF"/>
+                <constraint firstItem="AKV-nD-eSJ" firstAttribute="leading" secondItem="C6h-NX-rjV" secondAttribute="leading" id="ba9-JL-LDX"/>
+                <constraint firstAttribute="trailing" secondItem="kT5-bS-Lmt" secondAttribute="trailing" id="znW-hp-xME"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="bottomView" destination="5ml-3C-sHo" id="Q2B-W5-Lm4"/>
+                <outlet property="bundleScrollView" destination="S5D-cw-5zn" id="VVG-uN-KyU"/>
+                <outlet property="bundleTitle" destination="Gd7-Dx-LdH" id="JFK-sF-0QO"/>
+                <outlet property="buynowButton" destination="lyS-IF-WaR" id="wac-xd-Zst"/>
+                <outlet property="totalLabel" destination="Az2-kg-DB8" id="koV-iF-mHt"/>
+            </connections>
+            <point key="canvasLocation" x="270" y="461"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="addToCart_normal" width="70" height="30"/>
+    </resources>
+</document>
