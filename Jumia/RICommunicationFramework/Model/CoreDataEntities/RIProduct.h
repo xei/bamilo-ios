@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class RIImage, RIProductSimple, RIVariation, RISeller;
+
+@class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller;
 
 /*
  * IMPORTANT NOTICE
@@ -225,6 +226,10 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 
 + (NSString*)sortingName:(RICatalogSorting)sortingMethod;
 
+
++ (NSString *)getBundleWithSku:(NSString *)sku
+                  successBlock:(void (^)(RIBundle* bundle))successBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 @end
 
 @interface RIProduct (CoreDataGeneratedAccessors)
@@ -263,5 +268,12 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 - (void)removeRelatedProductsObject:(RIProduct *)value;
 - (void)addRelatedProducts:(NSSet *)values;
 - (void)removeRelatedProducts:(NSSet *)values;
+
+@end
+
+@interface RIBundle : NSObject
+
+@property (strong, nonatomic) NSString *bundleId;
+@property (strong, nonatomic) NSArray *bundleProducts;
 
 @end

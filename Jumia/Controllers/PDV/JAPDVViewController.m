@@ -33,6 +33,9 @@
 #import "JAPDVWizardView.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "AQSFacebookMessengerActivity.h"
+#import "JAPDVBundles.h"
+#import "JAPDVBundleSingleItem.h"
+#import "RIProduct.h"
 #import "JAOtherOffersView.h"
 
 @interface JAPDVViewController ()
@@ -49,6 +52,7 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
 @property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
 @property (strong, nonatomic) JAPDVRelatedItem *relatedItems;
+@property (strong, nonatomic) JAPDVBundles *bundleLayout;
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (strong, nonatomic) JAPDVGalleryView *gallery;
@@ -58,6 +62,10 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) RIProductSimple *currentSimple;
 @property (nonatomic, strong) JAPDVWizardView* wizardView;
 @property (assign, nonatomic) RIApiResponse apiResponse;
+@property (strong, nonatomic) JAPDVBundleSingleItem *bundleSingleItem;
+@property (strong, nonatomic) NSArray *bundleProducts;
+@property (strong, nonatomic) NSMutableArray *bundlesArray;
+@property (assign, nonatomic) BOOL click;
 @property (nonatomic, strong) JAOtherOffersView* otherOffersView;
 
 @property (nonatomic, assign) BOOL hasLoaddedProduct;
@@ -105,6 +113,7 @@ JAActivityViewControllerDelegate
                                              selector: @selector( applicationDidEnterBackgroundNotification:)
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
+    self.click = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -120,7 +129,7 @@ JAActivityViewControllerDelegate
     }
     
     if(self.hasLoaddedProduct)
-    {        
+    {
         [self removeSuperviews];
         
         [self productLoaded];
@@ -254,7 +263,7 @@ JAActivityViewControllerDelegate
                 height = gallerySuperView.frame.size.width;
             }
         }
-
+        
         [self.gallery reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
     }
     
@@ -278,7 +287,7 @@ JAActivityViewControllerDelegate
             [subView removeFromSuperview];
         }
     }
-
+    
     if(VALID_NOTEMPTY(self.ctaView, JAButtonWithBlur))
     {
         [self.ctaView removeFromSuperview];
@@ -515,17 +524,17 @@ JAActivityViewControllerDelegate
     {
         [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
     }
-
+    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewProduct]
                                               data:[trackingDictionary copy]];
     
     float value = [price floatValue];
     [FBAppEvents logEvent:FBAppEventNameViewedContent
-                            valueToSum: value
+               valueToSum: value
                parameters:@{FBAppEventParameterNameContentID: self.product.sku,
-                                FBAppEventParameterNameContentType: self.product.name,
-                                FBAppEventParameterNameCurrency:@"EUR"}];
-     
+                            FBAppEventParameterNameContentType: self.product.name,
+                            FBAppEventParameterNameCurrency:@"EUR"}];
+    
     
     
     
@@ -549,7 +558,7 @@ JAActivityViewControllerDelegate
 - (void)productLoaded
 {
     [self removeSuperviews];
-
+    
     self.hasLoaddedProduct = YES;
     
     [self.mainScrollView setFrame:CGRectMake(0.0f,
@@ -652,18 +661,43 @@ JAActivityViewControllerDelegate
                                          
                                          self.productRatings = ratings;
                                          
-                                         [self fillTheViews];
-                                         
                                          [self hideLoading];
+                                         
+                                         [self requestBundles];
+                                         
                                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                          
-                                         [self fillTheViews];
-                                         
                                          [self hideLoading];
+                                         
+                                         [self requestBundles];
                                      }];
     
     //make sure wizard is in front
     [self.view bringSubviewToFront:self.wizardView];
+}
+
+- (void)requestBundles
+{
+    [self showLoading];
+    //fill the views
+    [RIProduct getBundleWithSku:self.product.sku successBlock:^(RIBundle* bundle) {
+        self.bundleProducts = bundle.bundleProducts;
+        
+        [self fillTheViews];
+        
+        [self hideLoading];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+        
+        self.bundleProducts = nil;
+        
+        [self fillTheViews];
+        
+        [self.bundleLayout removeFromSuperview];
+        
+        [self hideLoading];
+        
+    }];
+    
 }
 
 #pragma mark - Fill the views
@@ -847,9 +881,89 @@ JAActivityViewControllerDelegate
     }
     
     /*******
-     Related Items
+     Bundles
      *******/
     
+    CGFloat bundleSingleItemStart = 5.0f;
+    [self.bundleLayout removeFromSuperview];
+    self.bundleLayout = [JAPDVBundles getNewPDVBundle];
+    [self.bundleLayout setupWithFrame:self.mainScrollView.frame];
+    self.bundlesArray = [[NSMutableArray alloc] init];
+    
+    for(int i=0; i<self.bundleProducts.count; i++)
+    {
+        
+        RIProduct *product = [self.bundleProducts objectAtIndex:i];
+       
+        self.bundleSingleItem = [JAPDVBundleSingleItem getNewPDVBundleSingleItem];
+        self.bundleSingleItem.tag = i;
+        [self.bundlesArray addObject:self.bundleSingleItem];
+        
+        [self.bundleSingleItem.selectedProduct addTarget:self
+                                                  action:@selector(checkBundle:)
+                                        forControlEvents:UIControlEventTouchUpInside];
+        
+        CGRect tempFrame = self.bundleSingleItem.frame;
+        tempFrame.origin.x = bundleSingleItemStart;
+        self.bundleSingleItem.frame = tempFrame;
+        
+        self.bundleLayout.bundleTitle.text = STRING_BUNDLE_TITLE;
+        self.bundleLayout.totalLabel.text = STRING_BUNDLE_TOTAL_PRICE;
+        [self.bundleLayout.totalLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+        
+        
+        self.bundleLayout.layer.cornerRadius = 5.0f;
+        
+        
+        
+        if (VALID_NOTEMPTY(product.images, NSOrderedSet))
+        {
+            RIImage *imageTemp = [product.images firstObject];
+            
+            [self.bundleSingleItem.productImage setImageWithURL:[NSURL URLWithString:imageTemp.url]
+                                               placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+        }
+        
+        self.bundleSingleItem.productNameLabel.text = product.brand;
+        self.bundleSingleItem.productTypeLabel.text = product.name;
+        self.bundleSingleItem.productPriceLabel.text = product.priceFormatted;
+        self.bundleSingleItem.product = product;
+        
+        
+        [self.bundleLayout.bundleScrollView addSubview:self.bundleSingleItem];
+        [self.bundleSingleItem bringSubviewToFront: self.bundleSingleItem.selectedProduct];
+        
+        
+        bundleSingleItemStart += self.bundleSingleItem.frame.size.width + 5.0f;
+    }
+    
+    
+    [self.bundleLayout.bundleScrollView setContentSize:CGSizeMake(bundleSingleItemStart, self.bundleLayout.bundleScrollView.frame.size.height)];
+    
+    self.bundleLayout.frame = CGRectMake(6.0f,
+                                   mainScrollViewY,
+                                   self.bundleLayout.frame.size.width,
+                                   self.bundleLayout.frame.size.height);
+    [self.mainScrollView addSubview:self.bundleLayout];
+    mainScrollViewY += (6.0f + self.bundleLayout.frame.size.height);
+    
+    if(isiPadInLandscape)
+    {
+        [self.bundleLayout setFrame:CGRectMake(self.bundleLayout.frame.origin.x,
+                                         self.bundleLayout.frame.origin.y,
+                                         self.imageSection.frame.size.width,
+                                         self.bundleLayout.frame.size.height)];
+        
+        [self.bundleLayout.buynowButton setFrame:(CGRectMake(self.bundleLayout.bottomView.frame.size.width - (self.bundleLayout.buynowButton.frame.size.width + 10.0f),
+                                                       self.bundleLayout.buynowButton.frame.origin.y,
+                                                       self.bundleLayout.buynowButton.frame.size.width,
+                                                       self.bundleLayout.buynowButton.frame.size.height))];
+    }
+    
+    /*******
+     Related Items
+     *******/
+    CGFloat relatedItemStart = 5.0f;
     [self.relatedItems removeFromSuperview];
     
     if (VALID_NOTEMPTY(self.product.relatedProducts, NSSet) && 1 < self.product.relatedProducts.count)
@@ -858,7 +972,7 @@ JAActivityViewControllerDelegate
         [self.relatedItems setupWithFrame:self.mainScrollView.frame];
         self.relatedItems.topLabel.text = STRING_RELATED_ITEMS;
         
-        CGFloat relatedItemStart = 5.0f;
+        
         
         NSArray* relatedProducts = [self.product.relatedProducts allObjects];
         
@@ -895,7 +1009,7 @@ JAActivityViewControllerDelegate
             }
         }
         
-        [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height)];
+        [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height + self.bundleLayout.frame.size.height)];
         
         if(isiPadInLandscape)
         {
@@ -1040,9 +1154,9 @@ JAActivityViewControllerDelegate
 - (void)shareProduct
 {
     
-
+    
     NSString *url = self.product.url;
-
+    
     if(NSNotFound != [url rangeOfString:RI_MOBAPI_PREFIX].location)
     {
         url = [url stringByReplacingOccurrencesOfString:RI_MOBAPI_PREFIX withString:@""];
@@ -1055,7 +1169,7 @@ JAActivityViewControllerDelegate
     
     NSArray *objectsToShare = @[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url]];
     
-
+    
     UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
     
     
@@ -1064,9 +1178,9 @@ JAActivityViewControllerDelegate
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
     
     [activityController setValue:STRING_SHARE_OBJECT
-                         forKey:@"subject"];
+                          forKey:@"subject"];
     
-
+    
     activityController.completionHandler = ^(NSString *activityType, BOOL completed)
     {
         NSString *type = @"Shared";
@@ -1103,7 +1217,7 @@ JAActivityViewControllerDelegate
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
         [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
-
+        
         NSString *categoryName = @"";
         NSString *subCategoryName = @"";
         if(VALID_NOTEMPTY(self.category, RICategory))
@@ -1156,7 +1270,7 @@ JAActivityViewControllerDelegate
         [[RITrackingWrapper sharedInstance] trackEvent:eventType
                                                   data:[trackingDictionary copy]];
     };
-
+    
     
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
@@ -1198,9 +1312,9 @@ JAActivityViewControllerDelegate
                                    sku:self.product.sku
                                 simple:self.currentSimple.sku
                       withSuccessBlock:^(RICart *cart) {
-
+                          
                           NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f)? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
-
+                          
                           NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                           [trackingDictionary setValue:((RIProduct *)[self.product.productSimples firstObject]).sku forKey:kRIEventLabelKey];
                           [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
@@ -1296,7 +1410,7 @@ JAActivityViewControllerDelegate
                                      parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
                                                    FBAppEventParameterNameContentType : self.product.name,
                                                    FBAppEventParameterNameContentID   : self.product.sku}];
-                           
+                          
                           NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                           [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                           
@@ -1525,6 +1639,24 @@ JAActivityViewControllerDelegate
                      }];
 }
 
+- (IBAction)checkBundle:(UIButton*)sender
+{
+    NSInteger index = sender.tag;
+    JAPDVBundleSingleItem* currentSingleBundle = self.bundlesArray[index];
+    
+    
+    
+    if(!self.click){
+            [currentSingleBundle.selectedProduct setImage:[UIImage imageNamed:@"check_empty"] forState:UIControlStateNormal];
+        self.click = YES;
+        }else{
+            [currentSingleBundle.selectedProduct setImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+            self.click = NO;
+        }
+}
+
+
+
 - (void)addToFavoritesPressed:(UIButton*)button
 {
     button.selected = !button.selected;
@@ -1536,7 +1668,7 @@ JAActivityViewControllerDelegate
         //add to favorites
         [RIProduct addToFavorites:self.product successBlock:^{
             //[self hideLoading];
-
+            
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
             [trackingDictionary setValue:@"AddtoWishlist" forKey:kRIEventActionKey];
@@ -1564,7 +1696,7 @@ JAActivityViewControllerDelegate
             [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
             [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
             [trackingDictionary setValue:@"Catalog" forKey:kRIEventLocationKey];
-
+            
             NSString *categoryName = @"";
             NSString *subCategoryName = @"";
             if(VALID_NOTEMPTY(self.category, RICategory))

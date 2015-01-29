@@ -292,6 +292,9 @@
 #define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
 
 #define STRING_LIKE_US RILocalizedString(@"like_us_on_facebook", nil)
+#define STRING_BUNDLE_TITLE RILocalizedString(@"bundle_title", nil);
+#define STRING_BUNDLE_TOTAL_PRICE RILocalizedString(@"bundle_total_price", nil);
+#define STRING_BUY_NOW RILocalizedString(@"buy_now", nil);
 
 #define STRING_OTHER_SELLERS RILocalizedString(@"other_sellers", nil)
 #define STRING_SAME_PRODUCT_FROM_OTHER_SELLERS RILocalizedString(@"same_product_from_other_sellers", nil)
