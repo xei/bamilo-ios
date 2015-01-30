@@ -44,6 +44,21 @@
     return nil;
 }
 
++ (JAPDVBundles *)getNewPDVBundleWithSize
+{
+    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVBundlesWithSize"
+                                                 owner:nil
+                                               options:nil];
+    
+    for (NSObject *obj in xib) {
+        if ([obj isKindOfClass:[JAPDVBundles class]]) {
+            return (JAPDVBundles *)obj;
+        }
+    }
+    
+    return nil;
+}
+
 
 - (void)setupWithFrame:(CGRect)frame
 {
@@ -60,20 +75,15 @@
                               self.frame.size.height)];
     [self.bundleScrollView setFrame:CGRectMake(self.bundleScrollView.frame.origin.x,
                                                self.bundleScrollView.frame.origin.y,
-                                               width, self.bundleScrollView.frame.size.height)];
-    [self.bottomView setFrame:CGRectMake(self.bottomView.frame.origin.x,
-                                         self.bottomView.frame.origin.y, width, self.bottomView.frame.size.height)];
+                                               width,
+                                               self.bundleScrollView.frame.size.height)];
+    [self.buynowButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.buynowButton setTitle:STRING_BUY_NOW forState:UIControlStateNormal];
     
-    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
-    {
-        [self.buynowButton setFrame:CGRectMake(self.bottomView.frame.size.width - self.buynowButton.frame.size.width - 10.0f,
-                                               self.buynowButton.frame.origin.y,
-                                               self.buynowButton.frame.size.width,
-                                               self.buynowButton.frame.size.height)];
-        
-    }
-    
-    //[self.buynowButton setTitle:STRING_BUY_NOW forState:UIControlStateNormal];
+    [self.buynowButton setFrame:CGRectMake(width - 6.0f - self.buynowButton.frame.size.width,
+                                           self.buynowButton.frame.origin.y,
+                                           self.buynowButton.frame.size.width,
+                                           self.buynowButton.frame.size.height)];
 }
 
 @end
