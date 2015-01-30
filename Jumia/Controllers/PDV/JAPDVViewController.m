@@ -1053,7 +1053,7 @@ JAActivityViewControllerDelegate
             }
         }
         
-        [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height + self.bundleLayout.frame.size.height)];
+        [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height)];
         
         if(isiPadInLandscape)
         {
