@@ -31,6 +31,9 @@
     RIProductSimple* newProductSimple = (RIProductSimple*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIProductSimple class])];
     
     NSDictionary* meta = [productSimpleJSON objectForKey:@"meta"];
+    if (ISEMPTY(meta)) {
+        meta = productSimpleJSON;
+    }
     if ([meta isKindOfClass:[NSDictionary class]]) {
         
         if ([meta objectForKey:@"sku"]) {
@@ -95,6 +98,9 @@
             {
                 newProductSimple.variation = @"";
             }
+        }
+        else if ([meta objectForKey:@"size"]) {
+            newProductSimple.variation = [meta objectForKey:@"size"];
         }
     }
     

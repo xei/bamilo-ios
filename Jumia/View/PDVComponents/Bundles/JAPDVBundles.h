@@ -12,13 +12,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *bundleTitle;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *bundleScrollView;
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UIButton *buynowButton;
 
-
-
 + (JAPDVBundles *)getNewPDVBundle;
++ (JAPDVBundles *)getNewPDVBundleWithSize;
 
 - (void)setupWithFrame:(CGRect)frame;
 

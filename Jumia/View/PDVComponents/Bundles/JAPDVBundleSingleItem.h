@@ -10,16 +10,21 @@
 #import "JAClickableView.h"
 #import "RIProduct.h"
 
-@interface JAPDVBundleSingleItem : JAClickableView
+@interface JAPDVBundleSingleItem : UIView
 
-@property (weak, nonatomic) IBOutlet UIImageView *productImage;
+@property (weak, nonatomic) IBOutlet UIImageView *productImageView;
 @property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productPriceLabel;
 @property (weak, nonatomic) IBOutlet UIButton *selectedProduct;
+@property (weak, nonatomic) IBOutlet JAClickableView *sizeClickableView;
 @property (strong, nonatomic) RIProduct *product;
 @property (strong, nonatomic) NSString *productUrl;
 
+@property (nonatomic, assign)BOOL alwaysSelected;
+@property (nonatomic, assign)BOOL selected;
+
 + (JAPDVBundleSingleItem *)getNewPDVBundleSingleItem;
++ (JAPDVBundleSingleItem *)getNewPDVBundleSingleItemWithSize;
 
 @end
