@@ -197,11 +197,6 @@
 		692fece832938452dbf8505a /* JATeaserPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */; };
 		69c7ac2a38a28dc5589a97ca /* JANavigationBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A392142198925E300B70A9C /* JANavigationBarView.xib */; };
 		6C18BDAC1A1B4CA300626706 /* JANewsletterComponent~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */; };
-		6C4BAECB1A6FFFEF006ACE07 /* JAPDVBundleSingleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C4BAECA1A6FFFEF006ACE07 /* JAPDVBundleSingleItem.m */; };
-		6C4BAECE1A7019EF006ACE07 /* JAPDVBundles.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C4BAECD1A7019EF006ACE07 /* JAPDVBundles.m */; };
-		6C9355991A6EC98200167486 /* JAPDVBundles.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C9355981A6EC98200167486 /* JAPDVBundles.xib */; };
-		6C93559B1A6ECA3C00167486 /* JAPDVBundleSingleItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C93559A1A6ECA3C00167486 /* JAPDVBundleSingleItem.xib */; };
-		6CDB9D221A78019200244895 /* JAPDVBundles.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C9355981A6EC98200167486 /* JAPDVBundles.xib */; };
 		6ad0a1988b1e51c37142c75b /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
 		6be80f134e67002eecb79292 /* RILanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027619811E9200F71726 /* RILanguage.m */; };
 		6e0b7de87382100c6d8b4606 /* JAOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D195E19C33122004843C3 /* JAOrderViewController.m */; };
@@ -754,6 +749,18 @@
 		CEDEB9C8199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AC199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png */; };
 		CEDEB9C9199BA8FA0022BAB5 /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB9AE199BA8FA0022BAB5 /* NMRangeSlider.m */; };
 		CEE91B9C1989065A0078DFC9 /* JATeaserPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */; };
+		CEED472C1A7B973B006D9CE7 /* JAPDVBundles.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47261A7B973B006D9CE7 /* JAPDVBundles.m */; };
+		CEED472D1A7B973B006D9CE7 /* JAPDVBundles.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47261A7B973B006D9CE7 /* JAPDVBundles.m */; };
+		CEED472E1A7B973B006D9CE7 /* JAPDVBundles.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEED47271A7B973B006D9CE7 /* JAPDVBundles.xib */; };
+		CEED472F1A7B973B006D9CE7 /* JAPDVBundles.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEED47271A7B973B006D9CE7 /* JAPDVBundles.xib */; };
+		CEED47301A7B973B006D9CE7 /* JAPDVBundleSingleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47291A7B973B006D9CE7 /* JAPDVBundleSingleItem.m */; };
+		CEED47311A7B973B006D9CE7 /* JAPDVBundleSingleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47291A7B973B006D9CE7 /* JAPDVBundleSingleItem.m */; };
+		CEED47321A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEED472A1A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib */; };
+		CEED47331A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEED472A1A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib */; };
+		CEED47341A7B973B006D9CE7 /* JAPDVBundleSingleItemWithSize.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEED472B1A7B973B006D9CE7 /* JAPDVBundleSingleItemWithSize.xib */; };
+		CEED47351A7B973B006D9CE7 /* JAPDVBundleSingleItemWithSize.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEED472B1A7B973B006D9CE7 /* JAPDVBundleSingleItemWithSize.xib */; };
+		CEED47371A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEED47361A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib */; };
+		CEED47381A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEED47361A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib */; };
 		a0fb37b44e2006622629d2c3 /* slider-default7-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99D199BA8FA0022BAB5 /* slider-default7-handle@2x.png */; };
 		a21f2a2963e751f03c461b5c /* calabash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6af3ca12ac4f2d50fa243e2b /* calabash.framework */; };
 		a2b0dc6d9bc2f3b3589ff3a4 /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FDC319D99D06008B8059 /* BMA4SiPhoneIntersticialTextNotifView.xib */; };
@@ -954,12 +961,6 @@
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
-		6C4BAEC91A6FFFEF006ACE07 /* JAPDVBundleSingleItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVBundleSingleItem.h; sourceTree = "<group>"; };
-		6C4BAECA1A6FFFEF006ACE07 /* JAPDVBundleSingleItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVBundleSingleItem.m; sourceTree = "<group>"; };
-		6C4BAECC1A7019EF006ACE07 /* JAPDVBundles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVBundles.h; sourceTree = "<group>"; };
-		6C4BAECD1A7019EF006ACE07 /* JAPDVBundles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVBundles.m; sourceTree = "<group>"; };
-		6C9355981A6EC98200167486 /* JAPDVBundles.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVBundles.xib; sourceTree = "<group>"; };
-		6C93559A1A6ECA3C00167486 /* JAPDVBundleSingleItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVBundleSingleItem.xib; sourceTree = "<group>"; };
 		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
 		8C38E18519CF16F50007F6F9 /* JAMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMessageView.h; sourceTree = "<group>"; };
 		8C38E18619CF16F50007F6F9 /* JAMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMessageView.m; sourceTree = "<group>"; };
@@ -1562,6 +1563,14 @@
 		CEDEB9AE199BA8FA0022BAB5 /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
 		CEE91B9A1989065A0078DFC9 /* JATeaserPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATeaserPageView.h; sourceTree = "<group>"; };
 		CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATeaserPageView.m; sourceTree = "<group>"; };
+		CEED47251A7B973B006D9CE7 /* JAPDVBundles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPDVBundles.h; path = Bundles/JAPDVBundles.h; sourceTree = "<group>"; };
+		CEED47261A7B973B006D9CE7 /* JAPDVBundles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPDVBundles.m; path = Bundles/JAPDVBundles.m; sourceTree = "<group>"; };
+		CEED47271A7B973B006D9CE7 /* JAPDVBundles.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPDVBundles.xib; path = Bundles/JAPDVBundles.xib; sourceTree = "<group>"; };
+		CEED47281A7B973B006D9CE7 /* JAPDVBundleSingleItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPDVBundleSingleItem.h; path = Bundles/JAPDVBundleSingleItem.h; sourceTree = "<group>"; };
+		CEED47291A7B973B006D9CE7 /* JAPDVBundleSingleItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPDVBundleSingleItem.m; path = Bundles/JAPDVBundleSingleItem.m; sourceTree = "<group>"; };
+		CEED472A1A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPDVBundleSingleItem.xib; path = Bundles/JAPDVBundleSingleItem.xib; sourceTree = "<group>"; };
+		CEED472B1A7B973B006D9CE7 /* JAPDVBundleSingleItemWithSize.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPDVBundleSingleItemWithSize.xib; path = Bundles/JAPDVBundleSingleItemWithSize.xib; sourceTree = "<group>"; };
+		CEED47361A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPDVBundlesWithSize.xib; path = Bundles/JAPDVBundlesWithSize.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1884,7 +1893,7 @@
 		4AE730B0198F8A74000CA1DD /* PDVComponents */ = {
 			isa = PBXGroup;
 			children = (
-				6C9355941A6EC8E700167486 /* JABundles */,
+				6C9355941A6EC8E700167486 /* Bundles */,
 				CE283E651A714D0F00F3E92D /* OtherOffers */,
 				CEA86DA01A39F7FA000032AD /* JAPageControl */,
 				B5C9C7011A1A5E540065AFD4 /* JADatePicker */,
@@ -1988,17 +1997,19 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
-		6C9355941A6EC8E700167486 /* JABundles */ = {
+		6C9355941A6EC8E700167486 /* Bundles */ = {
 			isa = PBXGroup;
 			children = (
-				6C9355981A6EC98200167486 /* JAPDVBundles.xib */,
-				6C93559A1A6ECA3C00167486 /* JAPDVBundleSingleItem.xib */,
-				6C4BAEC91A6FFFEF006ACE07 /* JAPDVBundleSingleItem.h */,
-				6C4BAECA1A6FFFEF006ACE07 /* JAPDVBundleSingleItem.m */,
-				6C4BAECC1A7019EF006ACE07 /* JAPDVBundles.h */,
-				6C4BAECD1A7019EF006ACE07 /* JAPDVBundles.m */,
+				CEED47251A7B973B006D9CE7 /* JAPDVBundles.h */,
+				CEED47261A7B973B006D9CE7 /* JAPDVBundles.m */,
+				CEED47271A7B973B006D9CE7 /* JAPDVBundles.xib */,
+				CEED47361A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib */,
+				CEED47281A7B973B006D9CE7 /* JAPDVBundleSingleItem.h */,
+				CEED47291A7B973B006D9CE7 /* JAPDVBundleSingleItem.m */,
+				CEED472A1A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib */,
+				CEED472B1A7B973B006D9CE7 /* JAPDVBundleSingleItemWithSize.xib */,
 			);
-			name = JABundles;
+			name = Bundles;
 			sourceTree = "<group>";
 		};
 		8C38E17F19CF164A0007F6F9 /* ErrorViews */ = {
@@ -3618,6 +3629,7 @@
 				7536269f2e6aa9581f101618 /* slider-metal-handle.png in Resources */,
 				2eb6a67a027c66cc430443ee /* slider-metal-handle@2x.png in Resources */,
 				c59c6a3e586330701722adde /* BMA4SiPhoneIntersticialTextNotifView-landscape-ret4.xib in Resources */,
+				CEED47351A7B973B006D9CE7 /* JAPDVBundleSingleItemWithSize.xib in Resources */,
 				BB9546B219F5516C00AC7D05 /* 05_user_data.feature in Resources */,
 				8c80e586175eb9be57e6032b /* slider-default-handle-highlighted.png in Resources */,
 				CE283E7F1A765AF700F3E92D /* JAOfferCollectionViewCell.xib in Resources */,
@@ -3662,6 +3674,7 @@
 				bc498f82bcc9b32f500887de /* JACatalogGridCell.xib in Resources */,
 				3adbf3574d3dc5f8b2adb76f /* JATextFieldComponent.xib in Resources */,
 				BB9546B519F5522E00AC7D05 /* 01_login.feature in Resources */,
+				CEED472F1A7B973B006D9CE7 /* JAPDVBundles.xib in Resources */,
 				B5CBFF691A10B33D0050C553 /* JARatingsViewMedium.xib in Resources */,
 				bf03e69fd5cb89aada2968fc /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */,
 				287b907897ac71738f12ec84 /* JASwitchCell.xib in Resources */,
@@ -3694,7 +3707,6 @@
 				3f21597c4c4882316f373e33 /* JAPDVProductInfo.xib in Resources */,
 				CE88F7A21A1CF64900A3A586 /* JAFavoriteListCell_ipad_portrait.xib in Resources */,
 				bc226a46ffc7b0880f9f8ab4 /* RITrackingDebug.plist in Resources */,
-				6CDB9D221A78019200244895 /* JAPDVBundles.xib in Resources */,
 				e8cdf19ae478212bba2a64b2 /* JAOrangeButtonCell.xib in Resources */,
 				551f1b565eeda72c3ef168a7 /* slider-metal-track@2x.png in Resources */,
 				BB128EA019E2F4260033514F /* 10_search.feature in Resources */,
@@ -3724,6 +3736,7 @@
 				B5B3AB571A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */,
 				61cfabf0628c374f78080c28 /* BMA4SiPhoneIntersticialTextNotifView-ret4.xib in Resources */,
 				cc25950211e1df6cf12e953f /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
+				CEED47381A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib in Resources */,
 				520A37C21A4444860046C8B1 /* JAFilteredNoResultsView.xib in Resources */,
 				e5c2612fb2a7b831d10cc411 /* JACartListCell.xib in Resources */,
 				BBB12A9D19DDA01E00656529 /* 09_home.feature in Resources */,
@@ -3748,6 +3761,7 @@
 				a2b50e1f14acaf67564f97c8 /* slider-default7-track@2x.png in Resources */,
 				ba0de2bd53769849ea410fdc /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */,
 				35bad95b5016fd211536c130 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
+				CEED47331A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib in Resources */,
 				4c63827f343c921bf28405ea /* RITracking_example.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3766,7 +3780,6 @@
 				BBBA4CCD19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
 				CEC3F71219A5FBF800DE12F6 /* JAFavoriteListCell.xib in Resources */,
 				B524312119EC117F001E532C /* JAMaintenancePage.xib in Resources */,
-				6C93559B1A6ECA3C00167486 /* JAPDVBundleSingleItem.xib in Resources */,
 				CEABEEC11A122BFE000D0CF8 /* JAGenericFiltersView.xib in Resources */,
 				BBA145B319DC56BF003F0CA7 /* keyboard.rb in Resources */,
 				B501E88E19BEF7DE00BE51DD /* JAPickupStationInfoCell.xib in Resources */,
@@ -3834,6 +3847,7 @@
 				CEC3F71D19A5FDDA00DE12F6 /* JAGrayButtonCell.xib in Resources */,
 				B510B01119AE466B00A9754A /* JABirthDateComponent.xib in Resources */,
 				CEDEB9C0199BA8FA0022BAB5 /* slider-default7-trackCrossedOver@2x.png in Resources */,
+				CEED47371A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib in Resources */,
 				CEDEB9B7199BA8FA0022BAB5 /* slider-default-trackCrossedOver@2x.png in Resources */,
 				B58DBF3A19C0AF9600D4678A /* JAPaymentCell.xib in Resources */,
 				B5B5FDFD19D99D06008B8059 /* BMA4SiPhoneWebViewNotifView.xib in Resources */,
@@ -3860,7 +3874,6 @@
 				520A37C11A4444860046C8B1 /* JAFilteredNoResultsView.xib in Resources */,
 				CEDEB9BF199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png in Resources */,
 				B5B3AB561A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */,
-				6C9355991A6EC98200167486 /* JAPDVBundles.xib in Resources */,
 				B5B5FDF719D99D06008B8059 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				CEA86E081A49D247000032AD /* JACampaignProductCell.xib in Resources */,
 				CEDEB9C1199BA8FA0022BAB5 /* slider-metal-handle-highlighted.png in Resources */,
@@ -3879,6 +3892,7 @@
 				CEDEB9C6199BA8FA0022BAB5 /* slider-metal-track@2x.png in Resources */,
 				B5B5FDE919D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
 				CEDEB9B1199BA8FA0022BAB5 /* slider-default-handle.png in Resources */,
+				CEED47321A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib in Resources */,
 				4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */,
 				CE283E6A1A714FD300F3E92D /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
 				BBB12A9C19DDA01E00656529 /* 09_home.feature in Resources */,
@@ -3892,6 +3906,7 @@
 				8C38E18919CF170F0007F6F9 /* JAMessageView.xib in Resources */,
 				B5B5FDEB19D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */,
 				B5B5FDF619D99D06008B8059 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
+				CEED47341A7B973B006D9CE7 /* JAPDVBundleSingleItemWithSize.xib in Resources */,
 				CEDEB9BB199BA8FA0022BAB5 /* slider-default7-track.png in Resources */,
 				CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */,
 				CE13789519A4DC4E00CA0751 /* JARecentlyViewedListCell.xib in Resources */,
@@ -3923,6 +3938,7 @@
 				B5B5FDE019D99D06008B8059 /* A4S.bundle in Resources */,
 				CEDEB9B8199BA8FA0022BAB5 /* slider-default_trackBackground@2x.png in Resources */,
 				CE88F7A11A1CF64900A3A586 /* JAFavoriteListCell_ipad_portrait.xib in Resources */,
+				CEED472E1A7B973B006D9CE7 /* JAPDVBundles.xib in Resources */,
 				CEDEB9BC199BA8FA0022BAB5 /* slider-default7-track@2x.png in Resources */,
 				B5B5FDE819D99D06008B8059 /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */,
 				B5B5FDE219D99D06008B8059 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
@@ -3994,6 +4010,7 @@
 				CEABEEC81A126652000D0CF8 /* JAGenericFiltersView.m in Sources */,
 				51686b7e16269d6e716c8f70 /* RIOperation.m in Sources */,
 				B5C13EA71A402A9E00484398 /* ADJActivityState.m in Sources */,
+				CEED47311A7B973B006D9CE7 /* JAPDVBundleSingleItem.m in Sources */,
 				e3ca2d59f72455e53096afbc /* UIImageView+JA.m in Sources */,
 				85f0b6e186127c0b70b1f3e7 /* JAThanksViewController.m in Sources */,
 				74575dc39b7757725904ad3d /* JAShareActivityProvider.m in Sources */,
@@ -4066,6 +4083,7 @@
 				74184dc81a4fcd636b69e8c2 /* JAUserDataViewController.m in Sources */,
 				CEA86D9F1A3894C0000032AD /* JASizeGuideViewController.m in Sources */,
 				7a12981c2968c2aacbe9a9fb /* RITeaserCategory.m in Sources */,
+				CEED472D1A7B973B006D9CE7 /* JAPDVBundles.m in Sources */,
 				7d1d33afb7c6d4f0efa0644b /* JAExternalPaymentsViewController.m in Sources */,
 				52E8CC1E1A40947000D33FD9 /* JASizeGuideWizardView.m in Sources */,
 				334b2d58a1b29954afa8a3b3 /* JAPDVVariations.m in Sources */,
@@ -4184,7 +4202,6 @@
 				B5C13EB61A402A9E00484398 /* ADJEvent.m in Sources */,
 				B5A302D719811E9200F71726 /* RIError.m in Sources */,
 				CE21CB04198147EE00F7DC66 /* RIStaticBlockIndex.m in Sources */,
-				6C4BAECE1A7019EF006ACE07 /* JAPDVBundles.m in Sources */,
 				B50B03A6198A544A002046DF /* JAShippingViewController.m in Sources */,
 				B510B01219AE466B00A9754A /* JACheckBoxComponent.m in Sources */,
 				B5C13EC01A402A9E00484398 /* ADJTimer.m in Sources */,
@@ -4252,6 +4269,7 @@
 				B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */,
 				B5A302CF19811E9200F71726 /* RITeaserImage.m in Sources */,
 				B58DBF3919C0AF9600D4678A /* JAPaymentCell.m in Sources */,
+				CEED47301A7B973B006D9CE7 /* JAPDVBundleSingleItem.m in Sources */,
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
 				B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */,
 				B5A302D119811E9200F71726 /* RITeaserText.m in Sources */,
@@ -4275,6 +4293,7 @@
 				4AE242E81986570F00E37C90 /* JAMenuViewController.m in Sources */,
 				CE283E6D1A726B3B00F3E92D /* RIProductOffer.m in Sources */,
 				B59DCA6219B710B100DE7960 /* RICity.m in Sources */,
+				CEED472C1A7B973B006D9CE7 /* JAPDVBundles.m in Sources */,
 				B5A3025719811E8A00F71726 /* MKAnnotationView+WebCache.m in Sources */,
 				4AE730BE198F8ADF000CA1DD /* JAPDVRelatedItem.m in Sources */,
 				B5C13EB01A402A9E00484398 /* ADJAttributionHandler.m in Sources */,
@@ -4329,7 +4348,6 @@
 				CEABEEBC1A1119AB000D0CF8 /* JAPriceFiltersView.m in Sources */,
 				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
 				B510B01719AE466B00A9754A /* JATextFieldComponent.m in Sources */,
-				6C4BAECB1A6FFFEF006ACE07 /* JAPDVBundleSingleItem.m in Sources */,
 				B5A302C619811E9200F71726 /* RIImageResolution.m in Sources */,
 				B5A302E619811E9200F71726 /* RIURLCacheWrapper.m in Sources */,
 				B59DCA6A19B8521A00DE7960 /* JAButtonWithBlur.m in Sources */,

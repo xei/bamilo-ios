@@ -35,6 +35,11 @@
     return self.overlayButton.enabled;
 }
 
+- (NSString*)title
+{
+    return self.overlayButton.titleLabel.text;
+}
+
 - (void)setTag:(NSInteger)tag
 {
     self.overlayButton.tag = tag;
@@ -100,6 +105,18 @@
     [self bringSubviewToFront:self.overlayButton];
 }
 
+- (void)setTitle:(NSString*)title forState:(UIControlState)state;
+{
+    [self.overlayButton setTitle:title forState:state];
+}
+- (void)setTitleColor:(UIColor*)color forState:(UIControlState)state;
+{
+    [self.overlayButton setTitleColor:color forState:state];
+}
+- (void)setFont:(UIFont*)font;
+{
+    [self.overlayButton.titleLabel setFont:font];
+}
 - (void)addTarget:(id)target
            action:(SEL)action
 forControlEvents:(UIControlEvents)controlEvents
