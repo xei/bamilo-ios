@@ -122,6 +122,7 @@ JAActivityViewControllerDelegate
     BOOL alreadyShowedWizardPDV = [[NSUserDefaults standardUserDefaults] boolForKey:kJAPDVWizardUserDefaultsKey];
     if(alreadyShowedWizardPDV == NO)
     {
+        [self hideLoading];
         self.wizardView = [[JAPDVWizardView alloc] initWithFrame:self.view.bounds];
         [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
@@ -660,15 +661,15 @@ JAActivityViewControllerDelegate
                                          
                                          self.productRatings = ratings;
                                          
-                                         [self hideLoading];
-                                         
                                          [self requestBundles];
+                                         
+                                         [self hideLoading];
                                          
                                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+
+                                         [self requestBundles];
                                          
                                          [self hideLoading];
-                                         
-                                         [self requestBundles];
                                      }];
     
     //make sure wizard is in front
