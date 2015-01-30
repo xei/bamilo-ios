@@ -1040,7 +1040,11 @@ JAActivityViewControllerDelegate
                 
                 singleItem.labelBrand.text = product.brand;
                 singleItem.labelName.text = product.name;
-                singleItem.labelPrice.text = product.priceFormatted;
+                if (VALID_NOTEMPTY(product.specialPrice, NSNumber) && 0.0f == [product.specialPrice floatValue]) {
+                    singleItem.labelPrice.text = product.priceFormatted;
+                } else {
+                    singleItem.labelPrice.text = product.specialPriceFormatted;
+                }
                 singleItem.product = product;
                 
                 [self.relatedItems.relatedItemsScrollView addSubview:singleItem];
