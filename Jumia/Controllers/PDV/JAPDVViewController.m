@@ -123,6 +123,7 @@ JAActivityViewControllerDelegate
     BOOL alreadyShowedWizardPDV = [[NSUserDefaults standardUserDefaults] boolForKey:kJAPDVWizardUserDefaultsKey];
     if(alreadyShowedWizardPDV == NO)
     {
+        [self hideLoading];
         self.wizardView = [[JAPDVWizardView alloc] initWithFrame:self.view.bounds];
         [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
