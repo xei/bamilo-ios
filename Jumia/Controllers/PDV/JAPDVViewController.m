@@ -661,15 +661,15 @@ JAActivityViewControllerDelegate
                                          
                                          self.productRatings = ratings;
                                          
-                                         [self hideLoading];
-                                         
                                          [self requestBundles];
+                                         
+                                         [self hideLoading];
                                          
                                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+
+                                         [self requestBundles];
                                          
                                          [self hideLoading];
-                                         
-                                         [self requestBundles];
                                      }];
     
     //make sure wizard is in front
