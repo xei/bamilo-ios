@@ -1124,6 +1124,19 @@ UITableViewDataSource
     [self.reviewsDynamicForm resignResponder];
     [self.ratingsDynamicForm resignResponder];
     
+    for (int i = 0; i < self.ratingsDynamicForm.formViews.count; i++) {
+        JAAddRatingView* ratingView = [self.ratingsDynamicForm.formViews objectAtIndex:i];
+        JAAddRatingView* reviewView = [self.reviewsDynamicForm.formViews objectAtIndex:i];
+        
+        if (VALID_NOTEMPTY(ratingView, JAAddRatingView) && VALID_NOTEMPTY(reviewView, JAAddRatingView)) {
+            if (self.isShowingRating) {
+                reviewView.rating = ratingView.rating;
+            } else {
+                ratingView.rating = reviewView.rating;
+            }
+        }
+    }
+    
     self.isShowingRating = !self.isShowingRating;
     
     CGFloat difference = self.ratingsContentView.frame.size.height - self.reviewsContentView.frame.size.height + kDistanceBetweenStarsAndText;
