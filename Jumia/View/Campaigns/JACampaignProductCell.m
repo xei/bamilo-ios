@@ -191,11 +191,16 @@
                                       self.bottomContentView.bounds.origin.y + self.coverupView.frame.size.height + 3.0f,
                                       self.remainingStockLabel.frame.size.width,
                                       self.remainingStockLabel.frame.size.height);
-    [self.priceView loadWithPrice:campaignProduct.priceFormatted
-                     specialPrice:campaignProduct.specialPriceFormatted
-                         fontSize:11.0f specialPriceOnTheLeft:NO];
+    if (VALID_NOTEMPTY(self.campaignProduct.specialPrice, NSNumber) && 0 != [self.campaignProduct.specialPrice integerValue]) {
+        [self.priceView loadWithPrice:campaignProduct.priceFormatted
+                         specialPrice:campaignProduct.specialPriceFormatted
+                             fontSize:11.0f specialPriceOnTheLeft:NO];
+    } else {
+        [self.priceView loadWithPrice:campaignProduct.priceFormatted
+                         specialPrice:nil
+                             fontSize:11.0f specialPriceOnTheLeft:NO];
+    }
 
-    
     self.savingLabel.textColor = UIColorFromRGB(0x666666);
     self.savingLabel.text = STRING_CAMPAIGN_SAVE;
     [self.savingLabel sizeToFit];
@@ -212,6 +217,14 @@
                                              self.savingMoneyLabel.frame.size.width,
                                              self.savingMoneyLabel.frame.size.height);
     [self.bottomContentView addSubview:self.savingMoneyLabel];
+    
+    if (VALID_NOTEMPTY(campaignProduct.savePrice, NSNumber) && 0.0f < [campaignProduct.savePrice floatValue]) {
+        [self.savingLabel setHidden:NO];
+        [self.savingMoneyLabel setHidden:NO];
+    } else {
+        [self.savingLabel setHidden:YES];
+        [self.savingMoneyLabel setHidden:YES];
+    }
     
     if (ISEMPTY(self.percentageBarView)) {
         self.percentageBarView = [[JAPercentageBarView alloc] init];
