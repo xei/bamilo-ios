@@ -531,6 +531,13 @@
     cart.cartUnreducedValue = nil;
     cart.cartUnreducedValueFormatted = nil;
     
+    if ([json objectForKey:@"cart"]) {
+        NSDictionary* cart = [json objectForKey:@"cart"];
+        if (VALID_NOTEMPTY(cart, NSDictionary)) {
+            json = cart;
+        }
+    }
+    
     BOOL showUnreducedPrice = NO;
     CGFloat cartUnreducedValue = 0.0f;
     if ([json objectForKey:@"cartItems"]) {
