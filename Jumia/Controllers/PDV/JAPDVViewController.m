@@ -930,12 +930,6 @@ JAActivityViewControllerDelegate
             tempFrame.origin.x = bundleSingleItemStart;
             bundleSingleItem.frame = tempFrame;
             
-            self.bundleLayout.bundleTitle.text = STRING_BUNDLE_TITLE;
-            self.bundleLayout.totalLabel.text = STRING_BUNDLE_TOTAL_PRICE;
-            [self.bundleLayout.totalLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-            
-            self.bundleLayout.layer.cornerRadius = 5.0f;
-            
             if (VALID_NOTEMPTY(product.images, NSOrderedSet))
             {
                 RIImage *imageTemp = [product.images firstObject];

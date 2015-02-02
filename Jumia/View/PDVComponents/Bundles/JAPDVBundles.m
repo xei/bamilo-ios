@@ -84,6 +84,12 @@
                                            self.buynowButton.frame.origin.y,
                                            self.buynowButton.frame.size.width,
                                            self.buynowButton.frame.size.height)];
+    
+    self.bundleTitle.text = STRING_BUNDLE_TITLE;
+    self.totalLabel.text = STRING_BUNDLE_TOTAL_PRICE;
+    [self.totalLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+    
+    self.layer.cornerRadius = 5.0f;
 }
 
 @end
