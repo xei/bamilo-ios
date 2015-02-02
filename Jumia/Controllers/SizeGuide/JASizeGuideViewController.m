@@ -111,6 +111,7 @@
         
         if([[NSUserDefaults standardUserDefaults] boolForKey:kJASizeGuideWizardUserDefaultsKey] == NO)
         {
+            [self hideLoading];
             self.wizardView = [[JASizeGuideWizardView alloc] initWithFrame:self.view.bounds];
             [self setupWizardView:self.wizardView];
         }
