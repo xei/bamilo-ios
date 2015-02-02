@@ -253,7 +253,7 @@
 
 "reviews" = "Reviews";
 "more" = "More";
-"reviews_empty" = "This Product has no ratings, yet!";
+"reviews_empty" = "This Product has no reviews, yet!";
 
 "order_summary_label" = "Order Summary";
 "string_edit" = "Edit";
