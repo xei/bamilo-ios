@@ -488,7 +488,7 @@ UITableViewDataSource
         
         topViewMinHeight += 6.0f;
         
-        CGFloat currentX = 6.0f;
+        CGFloat currentX = 12.0f;
         CGFloat ratingViewWidth = (self.topView.frame.size.width - 6.0f*2) / numberOfItemsSideBySide;
         for (int i = 0; i < self.productRatings.ratingInfo.averageRatingsArray.count; i++) {
             
