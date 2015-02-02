@@ -40,6 +40,8 @@
 
 @property (nonatomic, assign)RIApiResponse apiResponse;
 
+@property (nonatomic, assign)BOOL isLoaded;
+
 @end
 
 @implementation JACampaignsViewController
@@ -76,6 +78,8 @@
     
     self.shouldPerformButtonActions = YES;
     
+    self.isLoaded = NO;
+    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
 }
 
@@ -83,7 +87,11 @@
 {
     [super viewWillAppear:animated];
     
-    [self loadCampaigns];
+    if (self.isLoaded) {
+        [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+    } else {
+        [self loadCampaigns];
+    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
@@ -205,6 +213,8 @@
         self.pickerNamesAlreadySet = YES;
         self.pickerScrollView.startingIndex = startingIndex;
     }
+    
+    self.isLoaded = YES;
     
     [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
 }
