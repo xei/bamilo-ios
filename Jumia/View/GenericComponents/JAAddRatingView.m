@@ -21,6 +21,25 @@
 
 @implementation JAAddRatingView
 
+@synthesize rating=_rating;
+- (void)setRating:(NSInteger)rating
+{
+    _rating = rating;
+    for (UIButton* subview in self.subviews)
+    {
+        if (VALID_NOTEMPTY(subview, UIButton))
+        {
+            if (rating < subview.tag)
+            {
+                subview.selected = NO;
+            } else
+            {
+                subview.selected = YES;
+            }
+        }
+    }
+}
+
 + (JAAddRatingView *)getNewJAAddRatingView;
 {
     NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAAddRatingView"

@@ -253,7 +253,7 @@
 
 "reviews" = "Reviews";
 "more" = "More";
-"reviews_empty" = "This Product has no ratings, yet!";
+"reviews_empty" = "This Product has no reviews, yet!";
 
 "order_summary_label" = "Order Summary";
 "string_edit" = "Edit";
@@ -298,3 +298,5 @@
 "product_delivery_time" = "Delivery Within:";
 "product_delivery_days" = "days";
 "number_offers_from_ios" = "%d Offers from";
+
+"write_full_review" = "Write a full review";
