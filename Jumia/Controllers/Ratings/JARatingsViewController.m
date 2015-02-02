@@ -775,6 +775,18 @@ UITableViewDataSource
         }
         [self.modeSwitch setFrame:CGRectMake(modeSwitchX, currentY, self.modeSwitch.frame.size.width, self.modeSwitch.frame.size.height)];
         [self.centerView addSubview:self.modeSwitch];
+        
+        UILabel* writeReviewLabel = [UILabel new];
+        writeReviewLabel.textColor = UIColorFromRGB(0x666666);
+        writeReviewLabel.font = [UIFont fontWithName:@"Helvetica-Neue" size:13.0f];
+        writeReviewLabel.text = STRING_WRITE_FULL_REVIEW;
+        [writeReviewLabel sizeToFit];
+        [writeReviewLabel setFrame:CGRectMake(CGRectGetMaxX(self.modeSwitch.frame) + 15.0f,
+                                              self.modeSwitch.frame.origin.y + 5.0f,
+                                              writeReviewLabel.frame.size.width,
+                                              writeReviewLabel.frame.size.height)];
+        [self.centerView addSubview:writeReviewLabel];
+        
         currentY += self.modeSwitch.frame.size.height + 50.0f;
     } else {
         // Add space between last form field and send review button

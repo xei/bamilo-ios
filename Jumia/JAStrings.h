@@ -303,5 +303,7 @@
 #define STRING_DAYS RILocalizedString(@"product_delivery_days", nil)
 #define STRING_NUMBER_OFFERS_FROM RILocalizedString(@"number_offers_from_ios", nil)
 
+#define STRING_WRITE_FULL_REVIEW RILocalizedString(@"write_full_review", nil)
+
 
 #endif
