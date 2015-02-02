@@ -80,8 +80,12 @@
             }
         }
     }
-    
-    return [productOffers copy];
+        
+    return [productOffers sortedArrayUsingSelector:@selector(compare:)];
+}
+
+- (NSComparisonResult)compare:(RIProductOffer *)productOffer {
+    return [self.price compare:productOffer.price];
 }
 
 + (RIProductOffer*)parseProductOffer:(NSDictionary*)productOfferJSON
