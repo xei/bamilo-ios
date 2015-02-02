@@ -69,6 +69,7 @@
     [self.secondLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.secondLabel setText:STRING_WE_WILL_SEND_PASSWORD];
     [self.secondLabel setBackgroundColor:[UIColor clearColor]];
+    [self.secondLabel setNumberOfLines:2];
     [self.contentView addSubview:self.secondLabel];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
