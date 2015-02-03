@@ -146,6 +146,7 @@ JAActivityViewControllerDelegate
 {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
+    [self removeSuperviews];
 }
 
 - (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification
