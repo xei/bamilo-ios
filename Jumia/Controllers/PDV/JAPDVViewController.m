@@ -895,10 +895,10 @@ JAActivityViewControllerDelegate
         for(int i=0; i<self.productBundle.bundleProducts.count; i++)
         {
             
-            RIProduct *product = [self.productBundle.bundleProducts objectAtIndex:i];
+            RIProduct *bundleProduct = [self.productBundle.bundleProducts objectAtIndex:i];
             
             JAPDVBundleSingleItem* bundleSingleItem;
-            if (VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet) && 1 < self.product.productSimples.count) {
+            if (VALID_NOTEMPTY(bundleProduct.productSimples, NSOrderedSet) && 1 < bundleProduct.productSimples.count) {
                 
                 bundleSingleItem = [JAPDVBundleSingleItem getNewPDVBundleSingleItemWithSize];
                 
@@ -930,22 +930,22 @@ JAActivityViewControllerDelegate
             tempFrame.origin.x = bundleSingleItemStart;
             bundleSingleItem.frame = tempFrame;
             
-            if (VALID_NOTEMPTY(product.images, NSOrderedSet))
+            if (VALID_NOTEMPTY(bundleProduct.images, NSOrderedSet))
             {
-                RIImage *imageTemp = [product.images firstObject];
+                RIImage *imageTemp = [bundleProduct.images firstObject];
                 
                 [bundleSingleItem.productImageView setImageWithURL:[NSURL URLWithString:imageTemp.url]
                                                   placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
             }
             
-            bundleSingleItem.productNameLabel.text = product.brand;
-            bundleSingleItem.productTypeLabel.text = product.name;
-            if (VALID_NOTEMPTY(product.specialPrice, NSNumber) && 0.0f == [product.specialPrice floatValue]) {
-                bundleSingleItem.productPriceLabel.text = product.priceFormatted;
+            bundleSingleItem.productNameLabel.text = bundleProduct.brand;
+            bundleSingleItem.productTypeLabel.text = bundleProduct.name;
+            if (VALID_NOTEMPTY(bundleProduct.specialPrice, NSNumber) && 0.0f == [bundleProduct.specialPrice floatValue]) {
+                bundleSingleItem.productPriceLabel.text = bundleProduct.priceFormatted;
             } else {
-                bundleSingleItem.productPriceLabel.text = product.specialPriceFormatted;
+                bundleSingleItem.productPriceLabel.text = bundleProduct.specialPriceFormatted;
             }
-            bundleSingleItem.product = product;
+            bundleSingleItem.product = bundleProduct;
             
             if (0==i) {
                 //always selected
