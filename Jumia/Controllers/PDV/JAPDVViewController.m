@@ -127,15 +127,6 @@ JAActivityViewControllerDelegate
         [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
     }
-    
-    if(self.hasLoaddedProduct)
-    {
-        [self removeSuperviews];
-        
-        [self productLoaded];
-    }
-    else
-    {
         if (VALID_NOTEMPTY(self.productUrl, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
         {
             [self loadCompleteProduct];
@@ -150,7 +141,6 @@ JAActivityViewControllerDelegate
             }
         }
     }
-}
 
 - (void)viewDidDisappear:(BOOL)animated
 {
