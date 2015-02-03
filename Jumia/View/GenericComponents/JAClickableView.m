@@ -13,6 +13,9 @@
 
 @property (nonatomic, strong)UIButton* overlayButton;
 
+//redefinition
+@property (nonatomic, strong)NSString* title;
+
 @end
 
 @implementation JAClickableView
@@ -33,11 +36,6 @@
 - (BOOL)enabled
 {
     return self.overlayButton.enabled;
-}
-
-- (NSString*)title
-{
-    return self.overlayButton.titleLabel.text;
 }
 
 - (void)setTag:(NSInteger)tag
@@ -107,6 +105,7 @@
 
 - (void)setTitle:(NSString*)title forState:(UIControlState)state;
 {
+    self.title = title;
     [self.overlayButton setTitle:title forState:state];
 }
 - (void)setTitleColor:(UIColor*)color forState:(UIControlState)state;

@@ -198,7 +198,7 @@
         self.soldByLabel = [UILabel new];
         self.soldByLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
         self.soldByLabel.textColor = UIColorFromRGB(0x666666);
-        self.soldByLabel.text = @"Sold by:";
+        self.soldByLabel.text = STRING_SOLD_BY;
         [self.soldByLabel sizeToFit];
         [self.soldByLabel setFrame:CGRectMake(6.0f,
                                               currentY,
@@ -223,7 +223,7 @@
         self.numberOfSellerReviewsLabel = [UILabel new];
         self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f];
         self.numberOfSellerReviewsLabel.textColor = UIColorFromRGB(0xcccccc);
-        self.numberOfSellerReviewsLabel.text = [NSString stringWithFormat:@"%d reviews", [product.seller.reviewTotal integerValue]];
+        self.numberOfSellerReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [product.seller.reviewTotal integerValue]];
         [self.numberOfSellerReviewsLabel sizeToFit];
         [self.numberOfSellerReviewsLabel setFrame:CGRectMake(self.frame.size.width - 6.0f - self.numberOfSellerReviewsLabel.frame.size.width,
                                                              currentY + 4.0f,
@@ -256,7 +256,7 @@
         self.sellerDeliveryLabel = [UILabel new];
         self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
         self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
-        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"Delivery Within: %d - %d days", [product.seller.minDeliveryTime integerValue], [product.seller.maxDeliveryTime integerValue]];
+        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %d - %d %@", STRING_DELIVERY_WITHIN, [product.seller.minDeliveryTime integerValue], [product.seller.maxDeliveryTime integerValue], STRING_DAYS];
         [self.sellerDeliveryLabel sizeToFit];
         [self.sellerDeliveryLabel setFrame:CGRectMake(6.0f,
                                                       currentY,
@@ -309,7 +309,7 @@
         self.soldByLabel = [UILabel new];
         self.soldByLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
         self.soldByLabel.textColor = UIColorFromRGB(0x666666);
-        self.soldByLabel.text = @"Sold by:";
+        self.soldByLabel.text = STRING_SOLD_BY;
         [self.soldByLabel sizeToFit];
         [self.soldByLabel setFrame:CGRectMake(6.0f,
                                               currentY,
@@ -333,7 +333,7 @@
         self.numberOfSellerReviewsLabel = [UILabel new];
         self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f];
         self.numberOfSellerReviewsLabel.textColor = UIColorFromRGB(0xcccccc);
-        self.numberOfSellerReviewsLabel.text = [NSString stringWithFormat:@"%d reviews", [product.seller.reviewTotal integerValue]];
+        self.numberOfSellerReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [product.seller.reviewTotal integerValue]];
         [self.numberOfSellerReviewsLabel sizeToFit];
         [self.numberOfSellerReviewsLabel setFrame:CGRectMake(self.frame.size.width - 6.0f - self.numberOfSellerReviewsLabel.frame.size.width,
                                                              currentY + 4.0f,
@@ -364,7 +364,7 @@
         self.sellerDeliveryLabel = [UILabel new];
         self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
         self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
-        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"Delivery Within: %d - %d days", [product.seller.minDeliveryTime integerValue], [product.seller.maxDeliveryTime integerValue]];
+        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %d - %d %@", STRING_DELIVERY_WITHIN, [product.seller.minDeliveryTime integerValue], [product.seller.maxDeliveryTime integerValue], STRING_DAYS];
         [self.sellerDeliveryLabel sizeToFit];
         [self.sellerDeliveryLabel setFrame:CGRectMake(6.0f,
                                                       currentY,
