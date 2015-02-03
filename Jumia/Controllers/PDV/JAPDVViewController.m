@@ -133,6 +133,8 @@ JAActivityViewControllerDelegate
         [self removeSuperviews];
         
         [self productLoaded];
+        
+        [self fillTheViews];
     }
     else
     {
@@ -234,6 +236,7 @@ JAActivityViewControllerDelegate
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self productLoaded];
+    [self fillTheViews];
     
     if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
     {
@@ -545,6 +548,7 @@ JAActivityViewControllerDelegate
         self.firstLoading = NO;
     }
     
+    [self requestReviews];
     [self productLoaded];
 }
 
@@ -654,6 +658,12 @@ JAActivityViewControllerDelegate
                      target:self
                      action:@selector(addToCart)];
     
+    //make sure wizard is in front
+    [self.view bringSubviewToFront:self.wizardView];
+}
+
+- (void)requestReviews
+{
     [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=1&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
                                          
@@ -666,14 +676,11 @@ JAActivityViewControllerDelegate
                                          [self hideLoading];
                                          
                                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-
+                                         
                                          [self requestBundles];
                                          
                                          [self hideLoading];
                                      }];
-    
-    //make sure wizard is in front
-    [self.view bringSubviewToFront:self.wizardView];
 }
 
 - (void)requestBundles

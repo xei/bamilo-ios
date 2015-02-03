@@ -36,7 +36,7 @@ NSString *const RI_HTTP_USER_AGENT_HEADER_IPHONE_VALUE = @"iPhone: Mozilla/5.0 (
 NSString *const RI_HTTP_USER_AGENT_HEADER_IPAD_VALUE = @"iPad: Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10";
 
 NSString *const RI_COUNTRIES_URL = @"http://www.jumia.com/mobapi/availablecountries";
-NSString *const RI_COUNTRIES_URL_ALL = @"http://kaymu.com/jtmobapi/";
+NSString *const RI_COUNTRIES_URL_ALL = @"https://cld.pt/dl/download/58f926ce-7da6-40cf-bb54-886bb44ae3b3/jtmobapi_290115/";
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
 NSString *const RI_API_VERSION = @"v1.6/";
 NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
