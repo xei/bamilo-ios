@@ -198,7 +198,7 @@
         self.soldByLabel = [UILabel new];
         self.soldByLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
         self.soldByLabel.textColor = UIColorFromRGB(0x666666);
-        self.soldByLabel.text = @"Sold by:";
+        self.soldByLabel.text = STRING_SOLD_BY;
         [self.soldByLabel sizeToFit];
         [self.soldByLabel setFrame:CGRectMake(6.0f,
                                               currentY,
@@ -309,7 +309,7 @@
         self.soldByLabel = [UILabel new];
         self.soldByLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
         self.soldByLabel.textColor = UIColorFromRGB(0x666666);
-        self.soldByLabel.text = @"Sold by:";
+        self.soldByLabel.text = STRING_SOLD_BY;
         [self.soldByLabel sizeToFit];
         [self.soldByLabel setFrame:CGRectMake(6.0f,
                                               currentY,

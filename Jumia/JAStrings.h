@@ -304,6 +304,6 @@
 #define STRING_NUMBER_OFFERS_FROM RILocalizedString(@"number_offers_from_ios", nil)
 
 #define STRING_WRITE_FULL_REVIEW RILocalizedString(@"write_full_review", nil)
-
+#define STRING_SOLD_BY RILocalizedString(@"product_sold_by", nil)
 
 #endif
