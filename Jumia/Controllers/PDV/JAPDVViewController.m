@@ -127,6 +127,17 @@ JAActivityViewControllerDelegate
         [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
     }
+    
+    if(self.hasLoaddedProduct)
+    {
+        [self removeSuperviews];
+        
+        [self productLoaded];
+        
+        [self fillTheViews];
+    }
+    else
+    {
         if (VALID_NOTEMPTY(self.productUrl, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
         {
             [self loadCompleteProduct];
@@ -141,12 +152,12 @@ JAActivityViewControllerDelegate
             }
         }
     }
+}
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
-    [self removeSuperviews];
 }
 
 - (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification
@@ -225,6 +236,7 @@ JAActivityViewControllerDelegate
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self productLoaded];
+    [self fillTheViews];
     
     if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
     {
@@ -536,6 +548,7 @@ JAActivityViewControllerDelegate
         self.firstLoading = NO;
     }
     
+    [self requestReviews];
     [self productLoaded];
 }
 
@@ -645,6 +658,12 @@ JAActivityViewControllerDelegate
                      target:self
                      action:@selector(addToCart)];
     
+    //make sure wizard is in front
+    [self.view bringSubviewToFront:self.wizardView];
+}
+
+- (void)requestReviews
+{
     [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=1&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
                                          
@@ -657,14 +676,11 @@ JAActivityViewControllerDelegate
                                          [self hideLoading];
                                          
                                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-
+                                         
                                          [self requestBundles];
                                          
                                          [self hideLoading];
                                      }];
-    
-    //make sure wizard is in front
-    [self.view bringSubviewToFront:self.wizardView];
 }
 
 - (void)requestBundles
