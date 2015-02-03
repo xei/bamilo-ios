@@ -77,6 +77,8 @@
                                                self.bundleScrollView.frame.origin.y,
                                                width,
                                                self.bundleScrollView.frame.size.height)];
+    
+    self.buynowButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     [self.buynowButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.buynowButton setTitle:STRING_BUY_NOW forState:UIControlStateNormal];
     
