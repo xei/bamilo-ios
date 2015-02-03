@@ -7,10 +7,10 @@
 //
 
 #import "RIAd4PushTracker.h"
-#import "BMA4SInAppNotification.h"
-#import "BMA4SNotification.h"
-#import "BMA4STracker+Analytics.h"
-#import "BMA4STracker.h"
+#import <libBMA4SSDK/BMA4SInAppNotification.h>
+#import <libBMA4SSDK/BMA4SNotification.h>
+#import <libBMA4SSDK/BMA4STracker+Analytics.h>
+#import <libBMA4SSDK/BMA4STracker.h>
 #import "GAIFields.h"
 #import "RIGoogleAnalyticsTracker.h"
 #import "RICategory.h"
@@ -117,19 +117,19 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     
     [BMA4STracker setDebugMode:YES];
     
-    [BMA4STracker trackWithPartnerId:userId
-                          privateKey:privateKey
-                             options:options];
-    
     dispatch_async(dispatch_get_main_queue(), ^{
+        [BMA4STracker trackWithPartnerId:userId
+                              privateKey:privateKey
+                                 options:options];
+        
+        NSMutableDictionary *deviceInfo = [[NSMutableDictionary alloc] init];
+        [deviceInfo setObject:@"0" forKey:kAd4PushProfileUserIdKey];
+        NSString *idfaString = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        [deviceInfo setObject:idfaString ? : @"" forKey:kAd4PushIDFAIdKey];
+        [BMA4STracker updateDeviceInfo:deviceInfo];
+        
         [[BMA4SNotification sharedBMA4S] didFinishLaunchingWithOptions:options];
     });
-    
-    NSMutableDictionary *deviceInfo = [[NSMutableDictionary alloc] init];
-    [deviceInfo setObject:@"0" forKey:kAd4PushProfileUserIdKey];
-    NSString *idfaString = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-    [deviceInfo setObject:idfaString ? : @"" forKey:kAd4PushIDFAIdKey];
-    [BMA4STracker updateDeviceInfo:deviceInfo];
 }
 
 #pragma mark - RINotificationTracking protocol

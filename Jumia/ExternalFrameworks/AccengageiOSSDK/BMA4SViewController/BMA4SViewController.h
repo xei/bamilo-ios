@@ -1,13 +1,14 @@
 //
-//  A4SViewController.h
-//  Accengage SDK
+//  BMA4SViewController.h
+//  Accengage SDK 
 //
 //  Copyright (c) 2010-2014 Accengage. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+
 /**
- Use Ad4ScreenViewController if you want show inapp or push notification in this view.
+ Use BMA4SViewController if you want show inapp or push notification in this view.
  You can use this ViewController as a standard UIViewController.
  */
 @interface BMA4SViewController : UIViewController
