@@ -1623,7 +1623,8 @@ JAActivityViewControllerDelegate
         }
     }
     
-    [self.bundleLayout.totalLabel setText:[RICountryConfiguration formatPrice:[NSNumber numberWithFloat:total] country:[RICountryConfiguration getCurrentConfiguration]]];
+    NSString* totalText = [NSString stringWithFormat:@"%@ %@", STRING_BUNDLE_TOTAL_PRICE, [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:total] country:[RICountryConfiguration getCurrentConfiguration]]];
+    [self.bundleLayout.totalLabel setText:totalText];
     
     if (1 >= numberOfSelected) {
         self.bundleLayout.buynowButton.enabled = NO;
