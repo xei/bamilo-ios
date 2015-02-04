@@ -166,6 +166,10 @@
                                               width - (kJAReviewCellHorizontalMargins*2),
                                               self.authorDateLabel.frame.size.height)];
     [self.authorDateLabel sizeToFit];
+    [self.authorDateLabel setFrame:CGRectMake(self.authorDateLabel.frame.origin.x,
+                                              self.authorDateLabel.frame.origin.y,
+                                              width - (kJAReviewCellHorizontalMargins*2),
+                                              self.authorDateLabel.frame.size.height)];
     [self addSubview:self.authorDateLabel];
     
     [self.separator removeFromSuperview];
