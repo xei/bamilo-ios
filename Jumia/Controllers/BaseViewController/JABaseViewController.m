@@ -196,7 +196,9 @@
 {
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kDidPressSearchButtonNotification
+                                                  object:nil];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
