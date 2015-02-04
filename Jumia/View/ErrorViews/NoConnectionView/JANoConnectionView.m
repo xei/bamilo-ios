@@ -77,7 +77,7 @@ void(^retryBock)(BOOL dismiss);
                                          buttonTextLabelRect.size.height))];
     
     UIImage *tryAgainImage = [UIImage imageNamed:@"tryAgainAnimationF1"];
-    self.animationView = [[UIImageView alloc] initWithFrame:CGRectMake(self.textLabel.frame.origin.x - 24.0f - tryAgainImage.size.width ,
+    self.animationView = [[UIImageView alloc] initWithFrame:CGRectMake(self.textLabel.frame.origin.x - 50.0f - tryAgainImage.size.width ,
                                                                        (self.retryButton.frame.size.height - tryAgainImage.size.height)/2,
                                                                        tryAgainImage.size.width,
                                                                        tryAgainImage.size.height)];
