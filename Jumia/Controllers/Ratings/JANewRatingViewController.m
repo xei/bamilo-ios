@@ -470,15 +470,26 @@ UIAlertViewDelegate
                                              self.modeSwitch.frame.size.height)];
         [self.centerView addSubview:self.modeSwitch];
         
+        CGFloat writeReviewLabelX = CGRectGetMaxX(self.modeSwitch.frame) + 15.0f;
+        CGFloat maxWriteReviewWidth = centerViewWidth - writeReviewLabelX;
         UILabel* writeReviewLabel = [UILabel new];
         writeReviewLabel.textColor = UIColorFromRGB(0x666666);
         writeReviewLabel.font = [UIFont fontWithName:@"Helvetica-Neue" size:13.0f];
+        writeReviewLabel.numberOfLines = 2;
         writeReviewLabel.text = STRING_WRITE_FULL_REVIEW;
         [writeReviewLabel sizeToFit];
-        [writeReviewLabel setFrame:CGRectMake(CGRectGetMaxX(self.modeSwitch.frame) + 15.0f,
-                                              self.modeSwitch.frame.origin.y + 5.0f,
-                                              writeReviewLabel.frame.size.width,
-                                              writeReviewLabel.frame.size.height)];
+        CGFloat finalWidth = writeReviewLabel.frame.size.width;
+        CGFloat finalHeight = writeReviewLabel.frame.size.height;
+        CGFloat yOffset = 5.0f;
+        if (maxWriteReviewWidth < writeReviewLabel.frame.size.width) {
+            finalWidth = maxWriteReviewWidth;
+            finalHeight *= 2;
+            yOffset = 0.0f;
+        }
+        [writeReviewLabel setFrame:CGRectMake(writeReviewLabelX,
+                                              self.modeSwitch.frame.origin.y + yOffset,
+                                              finalWidth,
+                                              finalHeight)];
         [self.centerView addSubview:writeReviewLabel];
         
         currentY += self.modeSwitch.frame.size.height + 50.0f;
