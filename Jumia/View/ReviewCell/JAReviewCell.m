@@ -249,7 +249,7 @@
                                          authorDateLabel.frame.size.height)];
     [authorDateLabel sizeToFit];
     
-    totalHeight += authorDateLabel.frame.size.height + 16; //separator height, plus margin
+    totalHeight += authorDateLabel.frame.size.height + 20; //separator height, plus margin
     
     return totalHeight;
 }

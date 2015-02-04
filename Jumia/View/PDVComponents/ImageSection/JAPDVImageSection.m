@@ -206,20 +206,6 @@
                                               self.soldByLabel.frame.size.height)];
         [self addSubview:self.soldByLabel];
         
-        
-        self.sellerButton = [UIButton new];
-        [self.sellerButton setTitle:product.seller.name forState:UIControlStateNormal];
-        [self.sellerButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateNormal];
-        self.sellerButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
-        [self.sellerButton sizeToFit];
-        self.sellerButton.center = self.soldByLabel.center;
-        [self.sellerButton setFrame:CGRectMake(CGRectGetMaxX(self.soldByLabel.frame) + 6.0f,
-                                               self.sellerButton.frame.origin.y,
-                                               self.sellerButton.frame.size.width,
-                                               self.sellerButton.frame.size.height)];
-        [self addSubview:self.sellerButton];
-        
-        
         self.numberOfSellerReviewsLabel = [UILabel new];
         self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f];
         self.numberOfSellerReviewsLabel.textColor = UIColorFromRGB(0xcccccc);
@@ -240,6 +226,33 @@
                                                 self.sellerRatings.frame.size.height)];
         [self addSubview:self.sellerRatings];
         
+        //now that we know the ratings starting point, we can set the seller button frame
+        CGFloat sellerButtonX = CGRectGetMaxX(self.soldByLabel.frame) + 6.0f;
+        CGFloat sellerButtonMaxWidth = self.sellerRatings.frame.origin.x - sellerButtonX;
+        
+        self.sellerButton = [UIButton new];
+        [self.sellerButton setTitle:product.seller.name forState:UIControlStateNormal];
+        [self.sellerButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateNormal];
+        self.sellerButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        [self.sellerButton sizeToFit];
+        CGFloat finalButtonWidth = self.sellerButton.frame.size.width;
+        CGFloat finalButtonHeight = self.sellerButton.frame.size.height;
+        CGFloat yOffset = 5.0f;
+        if (sellerButtonMaxWidth < self.sellerButton.frame.size.width) {
+            self.sellerButton.titleLabel.numberOfLines = 2;
+            finalButtonWidth = sellerButtonMaxWidth;
+            finalButtonHeight = self.sellerButton.frame.size.height + 10.0f;
+            yOffset = yOffset*2;
+        }
+        
+        [self.sellerButton setFrame:CGRectMake(sellerButtonX,
+                                               self.soldByLabel.frame.origin.y - yOffset, //offset
+                                               finalButtonWidth,
+                                               finalButtonHeight)];
+        
+        [self addSubview:self.sellerButton];
+
+        
         if (0 != [product.seller.reviewTotal integerValue]) {
             CGFloat buttonHeight = 22.0f;
             CGFloat buttonOffset = -(buttonHeight - self.sellerRatings.frame.size.height)/2;
@@ -251,7 +264,7 @@
             [self addSubview:self.rateSellerButton];
         }
         
-        currentY += self.soldByLabel.frame.size.height;
+        currentY = CGRectGetMaxY(self.sellerButton.frame);
         
         self.sellerDeliveryLabel = [UILabel new];
         self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
@@ -318,18 +331,6 @@
         [self addSubview:self.soldByLabel];
         
         
-        self.sellerButton = [UIButton new];
-        [self.sellerButton setTitle:product.seller.name forState:UIControlStateNormal];
-        [self.sellerButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateNormal];
-        self.sellerButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
-        [self.sellerButton sizeToFit];
-        self.sellerButton.center = self.soldByLabel.center;
-        [self.sellerButton setFrame:CGRectMake(CGRectGetMaxX(self.soldByLabel.frame) + 6.0f,
-                                               self.sellerButton.frame.origin.y,
-                                               self.sellerButton.frame.size.width,
-                                               self.sellerButton.frame.size.height)];
-        [self addSubview:self.sellerButton];
-        
         self.numberOfSellerReviewsLabel = [UILabel new];
         self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f];
         self.numberOfSellerReviewsLabel.textColor = UIColorFromRGB(0xcccccc);
@@ -349,6 +350,32 @@
                                                 self.sellerRatings.frame.size.width,
                                                 self.sellerRatings.frame.size.height)];
         [self addSubview:self.sellerRatings];
+
+        //now that we know the ratings starting point, we can set the seller button frame
+        CGFloat sellerButtonX = CGRectGetMaxX(self.soldByLabel.frame) + 6.0f;
+        CGFloat sellerButtonMaxWidth = self.sellerRatings.frame.origin.x - sellerButtonX;
+        
+        self.sellerButton = [UIButton new];
+        [self.sellerButton setTitle:product.seller.name forState:UIControlStateNormal];
+        [self.sellerButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateNormal];
+        self.sellerButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        [self.sellerButton sizeToFit];
+        CGFloat finalButtonWidth = self.sellerButton.frame.size.width;
+        CGFloat finalButtonHeight = self.sellerButton.frame.size.height;
+        CGFloat yOffset = 5.0f;
+        if (sellerButtonMaxWidth < self.sellerButton.frame.size.width) {
+            self.sellerButton.titleLabel.numberOfLines = 2;
+            finalButtonWidth = sellerButtonMaxWidth;
+            finalButtonHeight = self.sellerButton.frame.size.height + 10.0f;
+            yOffset = 4.0f;
+        }
+        
+        [self.sellerButton setFrame:CGRectMake(sellerButtonX,
+                                               self.soldByLabel.frame.origin.y - yOffset, //offset
+                                               finalButtonWidth,
+                                               finalButtonHeight)];
+        
+        [self addSubview:self.sellerButton];
         
         CGFloat buttonHeight = 22.0f;
         CGFloat buttonOffset = -(buttonHeight - self.sellerRatings.frame.size.height)/2;
@@ -359,7 +386,7 @@
         [self.rateSellerButton addTarget:self action:@selector(sellerRatingButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.rateSellerButton];
         
-        currentY += self.soldByLabel.frame.size.height;
+        currentY = CGRectGetMaxY(self.sellerButton.frame);
         
         self.sellerDeliveryLabel = [UILabel new];
         self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
