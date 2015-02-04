@@ -237,6 +237,7 @@ JAActivityViewControllerDelegate
 {
     [self productLoaded];
     [self fillTheViews];
+    [self hideLoading];
     
     if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
     {
