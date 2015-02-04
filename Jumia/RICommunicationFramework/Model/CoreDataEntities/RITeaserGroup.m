@@ -28,7 +28,7 @@
     }
     
     if ([json objectForKey:@"group_type"]) {
-        newGroup.type = [NSNumber numberWithInt:[[json objectForKey:@"group_type"] integerValue]];
+        newGroup.type = [NSNumber numberWithInteger:[[json objectForKey:@"group_type"] integerValue]];
         
         NSInteger tempGroupTypeId = [[json objectForKey:@"group_type"] integerValue];
     

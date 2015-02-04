@@ -88,7 +88,7 @@
             if (VALID_NOTEMPTY(filterOption, RIFilterOption)) {
                 
                 if (filterOption.lowerValue != filterOption.min || filterOption.upperValue != filterOption.max) {
-                    urlString = [NSString stringWithFormat:@"price=%d-%d", filterOption.lowerValue, filterOption.upperValue];
+                    urlString = [NSString stringWithFormat:@"price=%ld-%ld", (long)filterOption.lowerValue, (long)filterOption.upperValue];
                 }
             }
         } else {

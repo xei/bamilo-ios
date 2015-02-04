@@ -438,7 +438,7 @@ FBLoginViewDelegate
                                                           [dateFormatter setDateFormat:@"yyyy-MM-dd"];
                                                           NSDate *dateOfBirth = [dateFormatter dateFromString:customer.birthday];
                                                           NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
-                                                          [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+                                                          [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
                                                           
                                                           
                                                           NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
@@ -597,7 +597,7 @@ FBLoginViewDelegate
              [dateFormatter setDateFormat:@"yyyy-MM-dd"];
              NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
              NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
-             [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+             [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
              
              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
                                                        data:[trackingDictionary copy]];

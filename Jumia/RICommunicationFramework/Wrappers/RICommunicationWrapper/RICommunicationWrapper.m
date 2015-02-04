@@ -231,7 +231,7 @@
     } else  {
         operation.request.cachePolicy = NSURLRequestUseProtocolCachePolicy;
         
-        NSString *maxAge = [NSString stringWithFormat:@"max-age=%d", [RIURLCacheWrapper getCacheTime:operation.cacheTime]];
+        NSString *maxAge = [NSString stringWithFormat:@"max-age=%ld", (long)[RIURLCacheWrapper getCacheTime:operation.cacheTime]];
         [operation.request setValue:maxAge forHTTPHeaderField:@"Cache-Control"];
     }
     
@@ -317,7 +317,7 @@
 - (NSString *) encodeParameter:(NSString *) string{
     NSMutableString *output = [NSMutableString string];
     const unsigned char *source = (const unsigned char *)[string UTF8String];
-    int sourceLen = strlen((const char *)source);
+    NSInteger sourceLen = strlen((const char *)source);
     for (int i = 0; i < sourceLen; ++i) {
         const unsigned char thisChar = source[i];
         if (thisChar == ' '){

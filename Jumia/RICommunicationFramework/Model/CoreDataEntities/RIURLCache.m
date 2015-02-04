@@ -54,7 +54,7 @@
     
     newCache.responseData = [cachedResponse data];
     newCache.url = url;
-    newCache.duration = [NSNumber numberWithInt:duration];
+    newCache.duration = [NSNumber numberWithInteger:duration];
     
     return newCache;
 }

@@ -331,10 +331,10 @@
         NSInteger minutes = remainingSeconds / 60;
         remainingSeconds = remainingSeconds % 60; //keep the remainder
         
-        NSString* timeString = [NSString stringWithFormat:@"%02d:%02d:%02d",hours,minutes,remainingSeconds];
+        NSString* timeString = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)hours,(long)minutes,(long)remainingSeconds];
         
         if (days > 0) {
-            timeString = [NSString stringWithFormat:@"%02d:%@",days,timeString];
+            timeString = [NSString stringWithFormat:@"%02ld:%@",(long)days,timeString];
         }
         
         self.timeLabel.text = timeString;
