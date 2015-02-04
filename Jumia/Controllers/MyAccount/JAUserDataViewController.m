@@ -115,6 +115,24 @@ JADynamicFormDelegate
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter]  addObserver:self
+                                                selector:@selector(hideKeyboard)
+                                                name:kOpenMenuNotification
+                                                object:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)hideKeyboard
+{
+        [self.changePasswordForm resignResponder];
+}
+
 - (void)makeRequests
 {
     self.numberOfRequests = 2;
@@ -324,5 +342,4 @@ JADynamicFormDelegate
          }
      }];
 }
-
 @end
