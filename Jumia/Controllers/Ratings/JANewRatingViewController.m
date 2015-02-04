@@ -281,7 +281,10 @@ UIAlertViewDelegate
             {
                 [userInfo setObject:self.product forKey:@"product"];
             }
-            
+            if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+            {
+                [userInfo setObject:self.productRatings forKey:@"productRatings"];
+            }
             [userInfo setObject:[NSNumber numberWithBool:self.goToNewRatingButtonPressed] forKey:@"goToNewRatingButtonPressed"];
             
             [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"popLastViewController"];

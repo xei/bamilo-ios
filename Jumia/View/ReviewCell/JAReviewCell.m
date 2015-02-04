@@ -24,6 +24,7 @@
 }
 
 - (void)setupWithReview:(RIReview *)review
+                  width:(CGFloat)width
           showSeparator:(BOOL)showSeparator;
 {
     for (int i = 0; i < self.ratingStarViews.count; i++) {
@@ -37,7 +38,7 @@
     
     CGFloat currentX = kJAReviewCellHorizontalMargins;
     CGFloat currentY = 6.0f;
-    CGFloat ratingViewWidth = (self.frame.size.width - kJAReviewCellHorizontalMargins*2) / 3;
+    CGFloat ratingViewWidth = (width - kJAReviewCellHorizontalMargins*2) / 3;
     for (int i = 0; i < review.ratingStars.count; i++) {
         
         NSString* title = [review.ratingTitles objectAtIndex:i];
@@ -81,6 +82,7 @@
     }
  
     [self loadBottomOfCellWithY:currentY
+                          width:width
                           title:review.title
                         comment:review.comment
                        userName:review.userName
@@ -89,6 +91,7 @@
 }
 
 - (void)setupWithSellerReview:(RISellerReview*)sellerReview
+                  width:(CGFloat)width
                 showSeparator:(BOOL)showSeparator;
 {
     CGFloat currentY = 8.0f;
@@ -105,6 +108,7 @@
     currentY += ratingsView.frame.size.height + 6.0f;
     
     [self loadBottomOfCellWithY:currentY
+                          width:width
                           title:sellerReview.title
                         comment:sellerReview.comment
                        userName:sellerReview.userName
@@ -113,6 +117,7 @@
 }
 
 -(void)loadBottomOfCellWithY:(CGFloat)currentY
+                       width:(CGFloat)width
                        title:(NSString*)title
                      comment:(NSString*)comment
                     userName:(NSString*)userName
@@ -127,7 +132,7 @@
     [self.titleLabel sizeToFit];
     [self.titleLabel setFrame:CGRectMake(kJAReviewCellHorizontalMargins,
                                          currentY,
-                                         self.frame.size.width - (kJAReviewCellHorizontalMargins*2),
+                                         width - (kJAReviewCellHorizontalMargins*2),
                                          self.titleLabel.frame.size.height)];
     [self addSubview:self.titleLabel];
     
@@ -139,7 +144,7 @@
     [self.descriptionLabel setNumberOfLines:0];
     [self.descriptionLabel setFrame:CGRectMake(kJAReviewCellHorizontalMargins,
                                                CGRectGetMaxY(self.titleLabel.frame) + 10.0f,
-                                               self.frame.size.width - (kJAReviewCellHorizontalMargins*2),
+                                               width - (kJAReviewCellHorizontalMargins*2),
                                                self.descriptionLabel.frame.size.height)];
     [self.descriptionLabel sizeToFit];
     [self addSubview:self.descriptionLabel];
@@ -158,7 +163,7 @@
     
     [self.authorDateLabel setFrame:CGRectMake(kJAReviewCellHorizontalMargins,
                                               CGRectGetMaxY(self.descriptionLabel.frame) + 10.0f,
-                                              self.frame.size.width - (kJAReviewCellHorizontalMargins*2),
+                                              width - (kJAReviewCellHorizontalMargins*2),
                                               self.authorDateLabel.frame.size.height)];
     [self.authorDateLabel sizeToFit];
     [self addSubview:self.authorDateLabel];
@@ -167,7 +172,7 @@
     if (showSeparator) {
         self.separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
                                                                   CGRectGetMaxY(self.authorDateLabel.frame) + 10.0f,
-                                                                  self.frame.size.width,
+                                                                  width,
                                                                   1)];
         [self.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
         [self addSubview:self.separator];
