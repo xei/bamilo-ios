@@ -563,10 +563,8 @@
     {
         showSeparator = NO;
     }
-    
-    [cell setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, 100)];
-    
-    [cell setupWithSellerReview:review showSeparator:showSeparator];
+        
+    [cell setupWithSellerReview:review width:self.tableViewComments.frame.size.width showSeparator:showSeparator];
     
     return cell;
 }
