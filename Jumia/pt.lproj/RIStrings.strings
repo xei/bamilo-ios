@@ -420,3 +420,6 @@
 "shipping_fee" = "Taxa de entrega:";
 "rating_option_error_message" = "Todas as opções de avaliação devem ser preenchidas";
 "number_offers_from_ios" = "%@ Ofertas de";
+
+"write_full_review" = "Escrever uma avaliação completa";
+"product_sold_by" = "Vendido por:";
