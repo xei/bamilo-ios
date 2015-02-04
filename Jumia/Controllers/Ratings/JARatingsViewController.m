@@ -139,6 +139,12 @@ UITableViewDataSource
 {
     [super viewWillAppear:animated];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboards)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
     if(self.requestsDone)
     {
         [self setupViews];
@@ -154,6 +160,13 @@ UITableViewDataSource
             self.numberOfRequests = 0;
         }
     }
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -1176,6 +1189,11 @@ UITableViewDataSource
             self.reviewsContentView.hidden = NO;
         }
     }];
+}
+
+-(void)hideKeyboards
+{
+    [self.reviewsDynamicForm resignResponder];
 }
 
 

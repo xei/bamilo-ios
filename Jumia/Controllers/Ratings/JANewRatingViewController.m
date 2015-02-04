@@ -109,7 +109,19 @@ UIAlertViewDelegate
 {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboards)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
     [self ratingsRequests];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    //[super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)ratingsRequests
@@ -751,4 +763,8 @@ UIAlertViewDelegate
     }];
 }
 
+-(void)hideKeyboards
+{
+    [self.reviewsDynamicForm resignResponder];
+}
 @end
