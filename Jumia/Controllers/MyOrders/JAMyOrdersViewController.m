@@ -188,6 +188,11 @@ JAPickerScrollViewDelegate
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
     [self.firstScrollView setFrame:self.contentScrollView.frame];
     
     self.contentScrollView.contentSize = CGSizeMake(self.view.frame.size.width * [self.sortList count], self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height);
@@ -350,14 +355,12 @@ JAPickerScrollViewDelegate
 {
     //    [self removeNotifications];
     [self.myOrdersPickerScrollView scrollRightAnimated:YES];
-    [self hideKeyboard];
 }
 
 - (IBAction)swipeLeft:(id)sender
 {
     //    [self removeNotifications];
     [self.myOrdersPickerScrollView scrollLeftAnimated:YES];
-    [self hideKeyboard];
 }
 
 - (void) hideKeyboard
@@ -424,6 +427,7 @@ JAPickerScrollViewDelegate
         }
     }
     self.animatedScroll = YES;
+    [self hideKeyboard];
 }
 
 #pragma mark - Actions
