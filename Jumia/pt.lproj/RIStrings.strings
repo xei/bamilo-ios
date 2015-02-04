@@ -17,7 +17,7 @@
 "added_to_shop_cart_dialog_text" = "O artigo foi adicionado ao carrinho de compras";
 "all_label" = "Todos";
 "app_name" = "Jumia";
-"back_label" = "VOLTAR";
+"back_label" = "Voltar";
 "back_level" = "Voltar ao nível anterior";
 "billing_add_label" = "%@ Ofertas de";
 "billing_billing_label" = "Morada de Faturação";
@@ -156,7 +156,7 @@
 "nav_track_order" = "Localizar a Minha Encomenda";
 "navigation_cart_empty" = "O seu carrinho está vazio";
 "new_password_hint" = "Nova password";
-"new_password_label" = "Nova Password အသစ";
+"new_password_label" = "Nova Password";
 "newsletter_saved_message" = "A configuração das notificações de email foram guardadas.";
 "newsletters_label" = "Newsletters";
 "next_button" = "Próximo";
@@ -355,7 +355,7 @@
 "string_update_necessary_message" = "Encontramos algo que foi necessário corrigir para que a experiência de comprar no Jumia seja ainda melhor! Para continuar a usar a aplicação, deverá atualizá-la.";
 "string_update_necessary_title" = "Atualização necessária";
 "string_variations" = "Variações";
-"string_vat_shipping_included" = "O IVA e os custos de envio estão incluídos";
+"string_vat_shipping_included" = "IVA e custos de envio incluídos";
 "string_with_discount_only" = "Apenas com desconto";
 "enter_order_id" = "Por favor insira o número da encomenda";
 "error_adding_to_wishlist" = "Erro ao adicionar aos favoritos";
