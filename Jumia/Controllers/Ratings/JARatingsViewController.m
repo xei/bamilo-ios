@@ -1011,23 +1011,23 @@ UITableViewDataSource
                     
                     if ([ratingView.fieldRatingStars.type isEqualToString:@"1"])
                     {
-                        [globalRateDictionary setValue:[NSNumber numberWithInt:ratingView.rating] forKey:kRIEventRatingPriceKey];
+                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingPriceKey];
                         [trackingDictionary setValue:@"RateProductPrice" forKey:kRIEventActionKey];
                     }
                     else if ([ratingView.fieldRatingStars.type isEqualToString:@"2"])
                     {
-                        [globalRateDictionary setValue:[NSNumber numberWithInt:ratingView.rating] forKey:kRIEventRatingAppearanceKey];
+                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingAppearanceKey];
                         [trackingDictionary setValue:@"RateProductAppearance" forKey:kRIEventActionKey];
                     }
                     else if ([ratingView.fieldRatingStars.type isEqualToString:@"3"])
                     {
-                        [globalRateDictionary setValue:[NSNumber numberWithInt:ratingView.rating] forKey:kRIEventRatingQualityKey];
+                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingQualityKey];
                         [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
                     }
                     else
                     {
                         // There is no indication about the default tracking for rating
-                        [globalRateDictionary setValue:[NSNumber numberWithInt:ratingView.rating] forKey:kRIEventRatingKey];
+                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingKey];
                         [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
                     }
                     

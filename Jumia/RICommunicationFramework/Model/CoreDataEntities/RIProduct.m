@@ -194,11 +194,11 @@
     
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
-        fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
+        fullUrl = [NSString stringWithFormat:@"%@?page=%ld&maxitems=%ld&%@&%@", url, (long)page, (long)maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
     }
     else
     {
-        fullUrl = [NSString stringWithFormat:@"%@?page=%d&maxitems=%d&%@", url, page, maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod]];
+        fullUrl = [NSString stringWithFormat:@"%@?page=%ld&maxitems=%ld&%@", url, (long)page, (long)maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod]];
     }
     return [RIProduct getProductsWithFullUrl:fullUrl
                                 successBlock:successBlock

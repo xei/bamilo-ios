@@ -303,7 +303,7 @@
             [dateFormatter setDateFormat:@"yyyy-MM-dd"];
             NSDate *dateOfBirth = [dateFormatter dateFromString:self.customer.birthday];
             NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
-            [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+            [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
         }
     }
     

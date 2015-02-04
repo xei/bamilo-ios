@@ -426,7 +426,7 @@
     if(!self.isLoadingMoreProducts)
     {
         self.loadedEverything = NO;
-        NSNumber *pageNumber = [NSNumber numberWithInt:[self getCurrentPage] + 1];
+        NSNumber *pageNumber = [NSNumber numberWithInteger:[self getCurrentPage] + 1];
         
         if (VALID_NOTEMPTY(self.searchString, NSString))
         {
@@ -440,7 +440,7 @@
             
             self.searchSuggestionOperationID = [RISearchSuggestion getResultsForSearch:self.searchString
                                                                                   page:[pageNumber stringValue]
-                                                                              maxItems:[NSString stringWithFormat:@"%d",self.maxProducts]
+                                                                              maxItems:[NSString stringWithFormat:@"%ld",(long)self.maxProducts]
                                                                          sortingMethod:self.sortingMethod
                                                                                filters:self.filtersArray
                                                                           successBlock:^(NSArray *results, NSArray *filters, NSNumber *productCount) {
@@ -476,7 +476,7 @@
                                                                                   {
                                                                                       numberOfResults = [results count];
                                                                                   }
-                                                                                  [trackingDictionary setValue:[NSNumber numberWithInt:numberOfResults] forKey:kRIEventNumberOfProductsKey];
+                                                                                  [trackingDictionary setValue:[NSNumber numberWithInteger:numberOfResults] forKey:kRIEventNumberOfProductsKey];
                                                                                   
                                                                                   [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
                                                                                                                             data:[trackingDictionary copy]];
@@ -518,7 +518,7 @@
                                                                                   
                                                                               }
                                                                               
-                                                                              self.navBarLayout.subTitle = [NSString stringWithFormat:@"%d", [productCount integerValue]];
+                                                                              self.navBarLayout.subTitle = [NSString stringWithFormat:@"%ld", (long)[productCount integerValue]];
                                                                               [self reloadNavBar];
                                                                               
                                                                               [self addProdutsToMap:results];

@@ -37,7 +37,7 @@
     self.sellerLabel.text = productOffer.seller.name;
     
     self.deliveryLabel.textColor = UIColorFromRGB(0x666666);
-    self.deliveryLabel.text = [NSString stringWithFormat:@"%@ %d - %d %@", STRING_DELIVERY_WITHIN, [productOffer.minDeliveryTime integerValue], [productOffer.maxDeliveryTime integerValue], STRING_DAYS];
+    self.deliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[productOffer.minDeliveryTime integerValue], (long)[productOffer.maxDeliveryTime integerValue], STRING_DAYS];
     
     [self.ratingsView removeFromSuperview];
     self.ratingsView = [JARatingsView getNewJARatingsView];

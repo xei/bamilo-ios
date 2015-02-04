@@ -299,7 +299,7 @@
     quantityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     quantityLabel.textColor = UIColorFromRGB(0x4e4e4e);
     quantityLabel.numberOfLines = -1;
-    quantityLabel.text = [NSString stringWithFormat:@"%d x %@", quantity, price];
+    quantityLabel.text = [NSString stringWithFormat:@"%ld x %@", (long)quantity, price];
     [quantityLabel sizeToFit];
     [self.cartView addSubview:quantityLabel];
     

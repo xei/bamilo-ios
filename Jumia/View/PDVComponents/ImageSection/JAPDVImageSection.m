@@ -269,7 +269,7 @@
         self.sellerDeliveryLabel = [UILabel new];
         self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
         self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
-        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %d - %d %@", STRING_DELIVERY_WITHIN, [product.seller.minDeliveryTime integerValue], [product.seller.maxDeliveryTime integerValue], STRING_DAYS];
+        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[product.seller.minDeliveryTime integerValue], (long)[product.seller.maxDeliveryTime integerValue], STRING_DAYS];
         [self.sellerDeliveryLabel sizeToFit];
         [self.sellerDeliveryLabel setFrame:CGRectMake(6.0f,
                                                       currentY,
@@ -391,7 +391,7 @@
         self.sellerDeliveryLabel = [UILabel new];
         self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
         self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
-        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %d - %d %@", STRING_DELIVERY_WITHIN, [product.seller.minDeliveryTime integerValue], [product.seller.maxDeliveryTime integerValue], STRING_DAYS];
+        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[product.seller.minDeliveryTime integerValue], (long)[product.seller.maxDeliveryTime integerValue], STRING_DAYS];
         [self.sellerDeliveryLabel sizeToFit];
         [self.sellerDeliveryLabel setFrame:CGRectMake(6.0f,
                                                       currentY,

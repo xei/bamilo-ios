@@ -38,7 +38,7 @@
 
 -(void)setNumberOfReviews:(NSInteger)numberOfReviews
 {
-    [self.label setText:[NSString stringWithFormat:STRING_REVIEWS, [NSString stringWithFormat:@"%d",numberOfReviews]]];
+    [self.label setText:[NSString stringWithFormat:STRING_REVIEWS, [NSString stringWithFormat:@"%ld",(long)numberOfReviews]]];
     [self.label setTextColor:UIColorFromRGB(0xcccccc)];
     [self.label sizeToFit];
     [self.label setFrame:CGRectMake(self.label.frame.origin.x,

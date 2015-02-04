@@ -86,7 +86,7 @@
      */
     if (VALID_NOTEMPTY(product.offersTotal, NSNumber) && 0 < [product.offersTotal integerValue]) {
         
-        self.otherOffersLabel.text = [NSString stringWithFormat:@"%@ (%d)", STRING_OTHER_SELLERS, [product.offersTotal integerValue]];
+        self.otherOffersLabel.text = [NSString stringWithFormat:@"%@ (%ld)", STRING_OTHER_SELLERS, [product.offersTotal longValue]];
         
         [self.otherOffersClickableView addTarget:self action:@selector(pressedOtherOffers) forControlEvents:UIControlEventTouchUpInside];
         
