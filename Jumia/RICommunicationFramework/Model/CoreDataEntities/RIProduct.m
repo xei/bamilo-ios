@@ -130,7 +130,12 @@
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                                   {
-                                                                      successBlock([RIProduct parseProduct:metadata country:configuration]);
+                                                                      RIProduct* newProduct = [RIProduct parseProduct:metadata country:configuration];
+                                                                      if (VALID_NOTEMPTY(newProduct, RIProduct) && VALID_NOTEMPTY(newProduct.sku, NSString)) {
+                                                                          successBlock(newProduct);
+                                                                      } else {
+                                                                          failureBlock(apiResponse, nil);
+                                                                      }
                                                                   } else
                                                                   {
                                                                       failureBlock(apiResponse, nil);
