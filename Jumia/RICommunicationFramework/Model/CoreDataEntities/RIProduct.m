@@ -196,14 +196,20 @@
         
         filtersString = [RIFilter urlWithFiltersArray:filters];
     }
-    
+
+    //sometimes the url of the product already has ? in it. yeah...
+    NSString* particle = @"?";
+    if ([url rangeOfString:@"?"].location != NSNotFound) {
+        particle = @"&";
+    }
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
-        fullUrl = [NSString stringWithFormat:@"%@?page=%ld&maxitems=%ld&%@&%@", url, (long)page, (long)maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
+
+        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld&%@&%@", url, particle, (long)page, (long)maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
     }
     else
     {
-        fullUrl = [NSString stringWithFormat:@"%@?page=%ld&maxitems=%ld&%@", url, (long)page, (long)maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod]];
+        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld&%@", url, particle, (long)page, (long)maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod]];
     }
     return [RIProduct getProductsWithFullUrl:fullUrl
                                 successBlock:successBlock
