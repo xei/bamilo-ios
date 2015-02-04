@@ -803,11 +803,17 @@ JAPickerScrollViewDelegate
     {
         [self.myOrderHintLabel setTag:kMyOrderViewTag];
         CGFloat myOrderViewHeight = CGRectGetMaxY(self.trackOrderButton.frame) + 6.0f;
+        self.myOrderHintLabel.numberOfLines = 2;
+        [self.myOrderHintLabel setFrame:CGRectMake(0,
+                                                   0,
+                                                   trackOrderViewWidth,
+                                                   1)];
         [self.myOrderHintLabel sizeToFit];
         [self.myOrderHintLabel setFrame:CGRectMake((trackOrderViewWidth - self.myOrderHintLabel.frame.size.width) / 2,
                                                    CGRectGetMaxY(self.myOrderViewSeparator.frame) + ((myOrderViewHeight - CGRectGetMaxY(self.myOrderViewSeparator.frame)) - self.myOrderHintLabel.frame.size.height) / 2,
                                                    self.myOrderHintLabel.frame.size.width,
                                                    self.myOrderHintLabel.frame.size.height)];
+
         [self.myOrderView addSubview:self.myOrderHintLabel];
         [self.myOrderView setFrame:CGRectMake(0.0f,
                                               verticalMargin,
