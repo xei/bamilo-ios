@@ -179,11 +179,6 @@ JAPickerScrollViewDelegate
     [self.ordersCollectionView setHidden:YES];
     
     [self.contentScrollView addSubview:self.ordersCollectionView];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(hideKeyboard)
-                                                 name:kOpenMenuNotification
-                                               object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -355,12 +350,14 @@ JAPickerScrollViewDelegate
 {
     //    [self removeNotifications];
     [self.myOrdersPickerScrollView scrollRightAnimated:YES];
+    [self hideKeyboard];
 }
 
 - (IBAction)swipeLeft:(id)sender
 {
     //    [self removeNotifications];
     [self.myOrdersPickerScrollView scrollLeftAnimated:YES];
+    [self hideKeyboard];
 }
 
 - (void) hideKeyboard
