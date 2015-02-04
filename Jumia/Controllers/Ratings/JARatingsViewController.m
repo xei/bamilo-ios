@@ -947,7 +947,7 @@ UITableViewDataSource
         showSeparator = NO;
     }
     
-    [cell setupWithReview:review showSeparator:showSeparator];
+    [cell setupWithReview:review width:self.tableViewComments.frame.size.width showSeparator:showSeparator];
     
     return cell;
 }

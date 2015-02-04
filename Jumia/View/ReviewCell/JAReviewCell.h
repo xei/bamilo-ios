@@ -22,9 +22,11 @@
 
 
 - (void)setupWithReview:(RIReview *)review
+                  width:(CGFloat)width
           showSeparator:(BOOL)showSeparator;
 
 - (void)setupWithSellerReview:(RISellerReview*)sellerReview
+                        width:(CGFloat)width
                 showSeparator:(BOOL)showSeparator;
 
 + (CGFloat)cellHeightWithReview:(RIReview*)review
