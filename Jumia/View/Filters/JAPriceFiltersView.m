@@ -41,7 +41,9 @@
     
     [self sliderMoved:nil];
     
+    self.discountLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.discountLabel.text = STRING_WITH_DISCOUNT_ONLY;
+    [self.discountLabel sizeToFit];
     self.discountSwitch.on = self.priceFilterOption.discountOnly;
     [self.discountSwitch setAccessibilityLabel:STRING_WITH_DISCOUNT_ONLY];
 }
