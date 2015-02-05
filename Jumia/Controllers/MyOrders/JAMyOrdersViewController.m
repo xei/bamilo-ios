@@ -179,11 +179,6 @@ JAPickerScrollViewDelegate
     [self.ordersCollectionView setHidden:YES];
     
     [self.contentScrollView addSubview:self.ordersCollectionView];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(hideKeyboard)
-                                                 name:kOpenMenuNotification
-                                               object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -192,6 +187,11 @@ JAPickerScrollViewDelegate
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
     
     [self.firstScrollView setFrame:self.contentScrollView.frame];
     
@@ -219,8 +219,8 @@ JAPickerScrollViewDelegate
     }
     self.isLoadingOrders = YES;
     
-    [RIOrder getOrdersPage:[NSNumber numberWithInt:self.currentOrdersPage]
-                  maxItems:[NSNumber numberWithInt:kOrdersPerPage]
+    [RIOrder getOrdersPage:[NSNumber numberWithInteger:self.currentOrdersPage]
+                  maxItems:[NSNumber numberWithInteger:kOrdersPerPage]
           withSuccessBlock:^(NSArray *orders, NSInteger ordersTotal) {
               [self.orders addObjectsFromArray:orders];
               self.ordersTotal = ordersTotal;
@@ -415,7 +415,7 @@ JAPickerScrollViewDelegate
         }
         else
         {
-            NSNotification *nextNotification = [NSNotification notificationWithName:kShowMyOrdersScreenNotification object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:index] forKey:@"selected_index"]];
+            NSNotification *nextNotification = [NSNotification notificationWithName:kShowMyOrdersScreenNotification object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:index] forKey:@"selected_index"]];
             
             NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
             [userInfo setObject:nextNotification forKey:@"notification"];
@@ -427,6 +427,7 @@ JAPickerScrollViewDelegate
         }
     }
     self.animatedScroll = YES;
+    [self hideKeyboard];
 }
 
 #pragma mark - Actions
@@ -802,11 +803,17 @@ JAPickerScrollViewDelegate
     {
         [self.myOrderHintLabel setTag:kMyOrderViewTag];
         CGFloat myOrderViewHeight = CGRectGetMaxY(self.trackOrderButton.frame) + 6.0f;
+        self.myOrderHintLabel.numberOfLines = 2;
+        [self.myOrderHintLabel setFrame:CGRectMake(0,
+                                                   0,
+                                                   trackOrderViewWidth,
+                                                   1)];
         [self.myOrderHintLabel sizeToFit];
         [self.myOrderHintLabel setFrame:CGRectMake((trackOrderViewWidth - self.myOrderHintLabel.frame.size.width) / 2,
                                                    CGRectGetMaxY(self.myOrderViewSeparator.frame) + ((myOrderViewHeight - CGRectGetMaxY(self.myOrderViewSeparator.frame)) - self.myOrderHintLabel.frame.size.height) / 2,
                                                    self.myOrderHintLabel.frame.size.width,
                                                    self.myOrderHintLabel.frame.size.height)];
+
         [self.myOrderView addSubview:self.myOrderHintLabel];
         [self.myOrderView setFrame:CGRectMake(0.0f,
                                               verticalMargin,

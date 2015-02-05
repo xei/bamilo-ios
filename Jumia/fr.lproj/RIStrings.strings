@@ -49,8 +49,10 @@
 
 "string_new" = "NOUVEAU";
 "string_size" = "Taille";
-"string_review" = "%@ Avis";
-"string_reviews" = "%@ Avis";
+"string_rating" = "1 Notes";
+"string_ratings" = "%d Notes";
+"string_review" = "1 Avis";
+"string_reviews" = "%d Avis";
 "string_quantity" = "Quantité %@";
 "products_sort_bestrated" = "Mieux Notés";
 "products_sort_popularity" = "Popularité";
@@ -284,3 +286,7 @@
 "my_order_payment_status_label" = "statut:";
 "my_order_quantity_label" = "Qté.";
 "my_order_no_orders_label" = "Vous n'avez rien commandé";
+"buy_now" = "Acheter maintenant";
+
+"write_full_review" = "Donnez votre avis complet";
+"product_sold_by" = "Vendu par:";

@@ -138,6 +138,27 @@
         }
     }
     
+    //INSERTING INTEGRATION MOBILE
+    //*****************
+//    NSMutableDictionary* integrationDict = [NSMutableDictionary new];
+//    
+//    [integrationDict setObject:@"MA" forKey:@"country_iso"];
+//    [integrationDict setObject:@"http://www.jumia.com/images/mobapi/flag_morocco.png" forKey:@"flag"];
+//    [integrationDict setObject:[NSNumber numberWithBool:0] forKey:@"force_files"];
+//    [integrationDict setObject:@"Integration Mobile Maroc" forKey:@"name"];
+//    [integrationDict setObject:@"integration-mobile-www.jumia.ma/mobapi/" forKey:@"url"];
+//    
+//    NSMutableDictionary* mapFiles = [NSMutableDictionary new];
+//    [mapFiles setObject:@"http://www.jumia.com/images/mobapi/map_hdpi_ma.png" forKey:@"hdpi"];
+//    [mapFiles setObject:@"http://www.jumia.com/images/mobapi/map_mdpi_ma.png" forKey:@"mdpi"];
+//    [mapFiles setObject:@"http://www.jumia.com/images/mobapi/map_xhdpi_ma.png" forKey:@"xdpi"];
+//    
+//    [integrationDict setObject:mapFiles forKey:@"map_files"];
+//    
+//    RICountry *country = [RICountry parseCountryWithJson:integrationDict];
+//    [countriesArray addObject:country];
+    //*****************
+    
     return [countriesArray copy];
 }
 

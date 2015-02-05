@@ -9,16 +9,27 @@
 #import "JAPDVImageSection.h"
 #import "JAPriceView.h"
 #import "RIProduct.h"
+#import "RISeller.h"
 #import "RIProductSimple.h"
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 #import "JAPageControl.h"
+#import "JARatingsView.h"
 
 @interface JAPDVImageSection ()
 
 @property (nonatomic, strong)JAPriceView* priceView;
 @property (nonatomic, assign)NSInteger numberOfImages;
 @property (nonatomic, strong) JAPageControl* pageControl;
+
+@property (nonatomic, strong)UILabel* soldByLabel;
+@property (nonatomic, strong)UIButton* sellerButton;
+@property (nonatomic, strong)UILabel* sellerDeliveryLabel;
+@property (nonatomic, strong)JARatingsView* sellerRatings;
+@property (nonatomic, strong)UIButton* rateSellerButton;
+@property (nonatomic, strong)UILabel* numberOfSellerReviewsLabel;
+
+@property (nonatomic, strong)RIProduct* product;
 
 @end
 
@@ -67,6 +78,8 @@
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
 {
+    self.product = product;
+    
     self.layer.cornerRadius = 5.0f;
     self.translatesAutoresizingMaskIntoConstraints = YES;
     
@@ -168,11 +181,109 @@
                                                       self.imageScrollView.frame.size.width - 12.0f,
                                                       1000.0f)];
     [self.productDescriptionLabel sizeToFit];
+
+    
+    CGFloat currentY = CGRectGetMaxY(self.productDescriptionLabel.frame) + 6.0f;
+    
+    [self.soldByLabel removeFromSuperview];
+    [self.sellerButton removeFromSuperview];
+    [self.sellerDeliveryLabel removeFromSuperview];
+    [self.sellerRatings removeFromSuperview];
+    [self.rateSellerButton removeFromSuperview];
+    [self.numberOfSellerReviewsLabel removeFromSuperview];
+    if (VALID_NOTEMPTY(product.seller, RISeller)) {
+        
+        currentY += 20.0f;
+        
+        self.soldByLabel = [UILabel new];
+        self.soldByLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        self.soldByLabel.textColor = UIColorFromRGB(0x666666);
+        self.soldByLabel.text = STRING_SOLD_BY;
+        [self.soldByLabel sizeToFit];
+        [self.soldByLabel setFrame:CGRectMake(6.0f,
+                                              currentY,
+                                              self.soldByLabel.frame.size.width,
+                                              self.soldByLabel.frame.size.height)];
+        [self addSubview:self.soldByLabel];
+        
+        self.numberOfSellerReviewsLabel = [UILabel new];
+        self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f];
+        self.numberOfSellerReviewsLabel.textColor = UIColorFromRGB(0xcccccc);
+        self.numberOfSellerReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [product.seller.reviewTotal integerValue]];
+        [self.numberOfSellerReviewsLabel sizeToFit];
+        [self.numberOfSellerReviewsLabel setFrame:CGRectMake(self.frame.size.width - 6.0f - self.numberOfSellerReviewsLabel.frame.size.width,
+                                                             currentY + 4.0f,
+                                                             self.numberOfSellerReviewsLabel.frame.size.width,
+                                                             self.numberOfSellerReviewsLabel.frame.size.height)];
+        [self addSubview:self.numberOfSellerReviewsLabel];
+        
+        
+        self.sellerRatings = [JARatingsView getNewJARatingsView];
+        self.sellerRatings.rating = [product.seller.reviewAverage integerValue];
+        [self.sellerRatings setFrame:CGRectMake(self.numberOfSellerReviewsLabel.frame.origin.x - 6.0f - self.sellerRatings.frame.size.width,
+                                                currentY + 4.0f,
+                                                self.sellerRatings.frame.size.width,
+                                                self.sellerRatings.frame.size.height)];
+        [self addSubview:self.sellerRatings];
+        
+        //now that we know the ratings starting point, we can set the seller button frame
+        CGFloat sellerButtonX = CGRectGetMaxX(self.soldByLabel.frame) + 6.0f;
+        CGFloat sellerButtonMaxWidth = self.sellerRatings.frame.origin.x - sellerButtonX;
+        
+        self.sellerButton = [UIButton new];
+        [self.sellerButton setTitle:product.seller.name forState:UIControlStateNormal];
+        [self.sellerButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateNormal];
+        self.sellerButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        [self.sellerButton sizeToFit];
+        CGFloat finalButtonWidth = self.sellerButton.frame.size.width;
+        CGFloat finalButtonHeight = self.sellerButton.frame.size.height;
+        CGFloat yOffset = 5.0f;
+        if (sellerButtonMaxWidth < self.sellerButton.frame.size.width) {
+            self.sellerButton.titleLabel.numberOfLines = 2;
+            finalButtonWidth = sellerButtonMaxWidth;
+            finalButtonHeight = self.sellerButton.frame.size.height + 10.0f;
+            yOffset = yOffset*2;
+        }
+        
+        [self.sellerButton setFrame:CGRectMake(sellerButtonX,
+                                               self.soldByLabel.frame.origin.y - yOffset, //offset
+                                               finalButtonWidth,
+                                               finalButtonHeight)];
+        
+        [self addSubview:self.sellerButton];
+
+        
+        if (0 != [product.seller.reviewTotal integerValue]) {
+            CGFloat buttonHeight = 22.0f;
+            CGFloat buttonOffset = -(buttonHeight - self.sellerRatings.frame.size.height)/2;
+            self.rateSellerButton = [[UIButton alloc] initWithFrame:CGRectMake(self.sellerRatings.frame.origin.x,
+                                                                               self.sellerRatings.frame.origin.y + buttonOffset,
+                                                                               self.sellerRatings.frame.size.width,
+                                                                               buttonHeight)];
+            [self.rateSellerButton addTarget:self action:@selector(sellerRatingButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:self.rateSellerButton];
+        }
+        
+        currentY = CGRectGetMaxY(self.sellerButton.frame);
+        
+        self.sellerDeliveryLabel = [UILabel new];
+        self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
+        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[product.seller.minDeliveryTime integerValue], (long)[product.seller.maxDeliveryTime integerValue], STRING_DAYS];
+        [self.sellerDeliveryLabel sizeToFit];
+        [self.sellerDeliveryLabel setFrame:CGRectMake(6.0f,
+                                                      currentY,
+                                                      self.sellerDeliveryLabel.frame.size.width,
+                                                      self.sellerDeliveryLabel.frame.size.height)];
+        [self addSubview:self.sellerDeliveryLabel];
+        
+        currentY += self.sellerDeliveryLabel.frame.size.height + 16.0f;
+    }
     
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
-                              CGRectGetMaxY(self.productDescriptionLabel.frame) + 6.0f)];
+                              currentY)];
 }
 
 - (void)setupForLandscape:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
@@ -194,6 +305,108 @@
     
     [self setPriceWithNewValue:product.specialPriceFormatted
                    andOldValue:product.priceFormatted];
+    
+    
+    CGFloat currentY = CGRectGetMaxY(self.priceView.frame) + 6.0f;
+    
+    [self.soldByLabel removeFromSuperview];
+    [self.sellerButton removeFromSuperview];
+    [self.sellerDeliveryLabel removeFromSuperview];
+    [self.sellerRatings removeFromSuperview];
+    [self.rateSellerButton removeFromSuperview];
+    [self.numberOfSellerReviewsLabel removeFromSuperview];
+    if (VALID_NOTEMPTY(product.seller, RISeller)) {
+        
+        currentY += 20.0f;
+        
+        self.soldByLabel = [UILabel new];
+        self.soldByLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        self.soldByLabel.textColor = UIColorFromRGB(0x666666);
+        self.soldByLabel.text = STRING_SOLD_BY;
+        [self.soldByLabel sizeToFit];
+        [self.soldByLabel setFrame:CGRectMake(6.0f,
+                                              currentY,
+                                              self.soldByLabel.frame.size.width,
+                                              self.soldByLabel.frame.size.height)];
+        [self addSubview:self.soldByLabel];
+        
+        
+        self.numberOfSellerReviewsLabel = [UILabel new];
+        self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f];
+        self.numberOfSellerReviewsLabel.textColor = UIColorFromRGB(0xcccccc);
+        self.numberOfSellerReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [product.seller.reviewTotal integerValue]];
+        [self.numberOfSellerReviewsLabel sizeToFit];
+        [self.numberOfSellerReviewsLabel setFrame:CGRectMake(self.frame.size.width - 6.0f - self.numberOfSellerReviewsLabel.frame.size.width,
+                                                             currentY + 4.0f,
+                                                             self.numberOfSellerReviewsLabel.frame.size.width,
+                                                             self.numberOfSellerReviewsLabel.frame.size.height)];
+        [self addSubview:self.numberOfSellerReviewsLabel];
+        
+        
+        self.sellerRatings = [JARatingsView getNewJARatingsView];
+        self.sellerRatings.rating = [product.seller.reviewAverage integerValue];
+        [self.sellerRatings setFrame:CGRectMake(self.numberOfSellerReviewsLabel.frame.origin.x - 6.0f - self.sellerRatings.frame.size.width,
+                                                currentY + 4.0f,
+                                                self.sellerRatings.frame.size.width,
+                                                self.sellerRatings.frame.size.height)];
+        [self addSubview:self.sellerRatings];
+
+        //now that we know the ratings starting point, we can set the seller button frame
+        CGFloat sellerButtonX = CGRectGetMaxX(self.soldByLabel.frame) + 6.0f;
+        CGFloat sellerButtonMaxWidth = self.sellerRatings.frame.origin.x - sellerButtonX;
+        
+        self.sellerButton = [UIButton new];
+        [self.sellerButton setTitle:product.seller.name forState:UIControlStateNormal];
+        [self.sellerButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateNormal];
+        self.sellerButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        [self.sellerButton sizeToFit];
+        CGFloat finalButtonWidth = self.sellerButton.frame.size.width;
+        CGFloat finalButtonHeight = self.sellerButton.frame.size.height;
+        CGFloat yOffset = 5.0f;
+        if (sellerButtonMaxWidth < self.sellerButton.frame.size.width) {
+            self.sellerButton.titleLabel.numberOfLines = 2;
+            finalButtonWidth = sellerButtonMaxWidth;
+            finalButtonHeight = self.sellerButton.frame.size.height + 10.0f;
+            yOffset = 4.0f;
+        }
+        
+        [self.sellerButton setFrame:CGRectMake(sellerButtonX,
+                                               self.soldByLabel.frame.origin.y - yOffset, //offset
+                                               finalButtonWidth,
+                                               finalButtonHeight)];
+        
+        [self addSubview:self.sellerButton];
+        
+        CGFloat buttonHeight = 22.0f;
+        CGFloat buttonOffset = -(buttonHeight - self.sellerRatings.frame.size.height)/2;
+        self.rateSellerButton = [[UIButton alloc] initWithFrame:CGRectMake(self.sellerRatings.frame.origin.x,
+                                                                           self.sellerRatings.frame.origin.y + buttonOffset,
+                                                                           self.sellerRatings.frame.size.width,
+                                                                           buttonHeight)];
+        [self.rateSellerButton addTarget:self action:@selector(sellerRatingButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.rateSellerButton];
+        
+        currentY = CGRectGetMaxY(self.sellerButton.frame);
+        
+        self.sellerDeliveryLabel = [UILabel new];
+        self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
+        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[product.seller.minDeliveryTime integerValue], (long)[product.seller.maxDeliveryTime integerValue], STRING_DAYS];
+        [self.sellerDeliveryLabel sizeToFit];
+        [self.sellerDeliveryLabel setFrame:CGRectMake(6.0f,
+                                                      currentY,
+                                                      self.sellerDeliveryLabel.frame.size.width,
+                                                      self.sellerDeliveryLabel.frame.size.height)];
+        [self addSubview:self.sellerDeliveryLabel];
+        
+        currentY += self.sellerDeliveryLabel.frame.size.height + 16.0f;
+    }
+    
+    
+    [self.separatorImageView setFrame:CGRectMake(self.separatorImageView.frame.origin.x,
+                                                 currentY + 6.0f,
+                                                 self.separatorImageView.frame.size.width,
+                                                 self.separatorImageView.frame.size.height)];
     
     [self.imageScrollView setFrame:CGRectMake(self.imageScrollView.frame.origin.x,
                                               CGRectGetMaxY(self.separatorImageView.frame),
@@ -285,11 +498,6 @@
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
     [self addSubview:self.priceView];
-    
-    [self.separatorImageView setFrame:CGRectMake(self.separatorImageView.frame.origin.x,
-                                                 CGRectGetMaxY(self.priceView.frame) + 6.0f,
-                                                 self.separatorImageView.frame.size.width,
-                                                 self.separatorImageView.frame.size.height)];
 }
 
 - (void)loadWithImages:(NSArray*)imagesArray
@@ -410,6 +618,13 @@
     //and then subtract 1 to make up for the fake image offset (fake images that are used for infinite scrolling)
     self.pageControl.currentPage = (scrollView.contentOffset.x / scrollView.frame.size.width) + 0.5f - 1.0f;
     
+}
+
+#pragma mark - ButtonActions
+
+-(void)sellerRatingButtonPressed
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerReviews object:self.product];
 }
 
 @end

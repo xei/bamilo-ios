@@ -131,10 +131,14 @@
     [self.rightFadeView.layer insertSublayer:[JAGradientLayer alphaGradient:JAPickerScrollViewBackgroundColor bounds:self.rightFadeView.bounds leftToRight:NO] atIndex:0];
     [self addSubview:self.rightFadeView];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(touchedInScrollView:)];
-    self.userInteractionEnabled = YES;
-    [self addGestureRecognizer:tap];
+    //$$$ HOTFIX
+    if(UIUserInterfaceIdiomPhone == UI_USER_INTERFACE_IDIOM())
+    {
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                              action:@selector(touchedInScrollView:)];
+        self.userInteractionEnabled = YES;
+        [self addGestureRecognizer:tap];
+    }
 }
 
 - (UIView *) hitTest:(CGPoint)point withEvent:(UIEvent *)event {

@@ -69,6 +69,24 @@
                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock;
 
 /**
+ *  Method to add multiple products from a bundle to the cart
+ *
+ *  @param an array of products skus to add
+ *  @param an array of products simple skus to add
+ *  @param the id of the bundle
+ *  @param the success block
+ *  @param the error block that contains the error case the operation fails
+ *
+ *  @return the string with the code to cancel the request
+ */
++ (NSString *)addBundleProductsWithSkus:(NSArray *)productSkus
+                             simpleSkus:(NSArray *)simpleSkus
+                               bundleId:(NSString *)bundleId
+                       withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock;
+
+
+/**
  *  Method to remove product from cart
  *
  *  @param the quantity that will be removed

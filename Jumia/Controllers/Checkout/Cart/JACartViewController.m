@@ -19,6 +19,7 @@
 #import "RICartItem.h"
 #import "RICustomer.h"
 #import "RIAddress.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface JACartViewController ()
 
@@ -208,6 +209,14 @@
 
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
                                                       data:[trackingDictionary copy]];
+            
+            float value = [cartItem.price floatValue];
+            [FBAppEvents logEvent:FBAppEventNameInitiatedCheckout
+                        valueToSum:value
+                       parameters:@{
+                                    FBAppEventParameterNameContentID:cartItem.sku,
+                                    FBAppEventParameterNameNumItems:cartItem.quantity,
+                                    FBAppEventParameterNameCurrency: @"EUR"}];
         }
         
         trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -222,7 +231,7 @@
             [trackingDictionary setObject:[viewCartTrackingProducts copy] forKey:kRIEventProductsKey];
         }
         
-        [trackingDictionary setValue:[NSNumber numberWithInt:[[cartData cartItems] count]] forKey:kRIEventQuantityKey];
+        [trackingDictionary setValue:[NSNumber numberWithInteger:[[cartData cartItems] count]] forKey:kRIEventQuantityKey];
         [trackingDictionary setValue:[cartData cartValue] forKey:kRIEventTotalCartKey];
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCart]
@@ -884,7 +893,7 @@
         }
     }
     
-    NSString *selectedItem = [NSString stringWithFormat:@"%d", ([[self.currentItem quantity] integerValue] )];
+    NSString *selectedItem = [NSString stringWithFormat:@"%ld", [[self.currentItem quantity] longValue]];
     
     [self.picker setDataSourceArray:[dataSource copy]
                        previousText:selectedItem
@@ -959,7 +968,7 @@
             [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
             
-            [trackingDictionary setValue:[NSNumber numberWithInt:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
+            [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
             [trackingDictionary setValue:[self.cart cartValue] forKey:kRIEventTotalCartKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
@@ -1190,7 +1199,7 @@
         {
             quantity = [[self.currentItem quantity] integerValue] - newQuantity;
         }
-        [trackingDictionary setValue:[NSString stringWithFormat:@"%d", quantity] forKey:kRIEventQuantityKey];
+        [trackingDictionary setValue:[NSString stringWithFormat:@"%ld", (long)quantity] forKey:kRIEventQuantityKey];
         
         [[RITrackingWrapper sharedInstance] trackEvent:event
                                                   data:[trackingDictionary copy]];
@@ -1199,10 +1208,10 @@
         NSMutableDictionary *quantitiesToChange = [[NSMutableDictionary alloc] init];
         for (int i = 0; i < self.cart.cartItems.count; i++) {
             RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
-            [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", [[cartItem quantity] integerValue]] forKey:[NSString stringWithFormat:@"qty_%@", cartItem.simpleSku]];
+            [quantitiesToChange setValue:[NSString stringWithFormat:@"%ld", [[cartItem quantity] longValue]] forKey:[NSString stringWithFormat:@"qty_%@", cartItem.simpleSku]];
         }
         
-        [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", newQuantity] forKey:[NSString stringWithFormat:@"qty_%@", [self.currentItem simpleSku]]];
+        [quantitiesToChange setValue:[NSString stringWithFormat:@"%ld", (long)newQuantity] forKey:[NSString stringWithFormat:@"qty_%@", [self.currentItem simpleSku]]];
         
         [RICart changeQuantityInProducts:quantitiesToChange
                         withSuccessBlock:^(RICart *cart) {
@@ -1273,7 +1282,7 @@
 #pragma mark UIPickerViewDelegate
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSString *title = [NSString stringWithFormat:@"%d", (row + 1)];
+    NSString *title = [NSString stringWithFormat:@"%ld", (long)(row + 1)];
     return title;
 }
 

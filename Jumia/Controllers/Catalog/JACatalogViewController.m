@@ -18,6 +18,7 @@
 #import "JAClickableView.h"
 #import "JAUndefinedSearchView.h"
 #import "JAFilteredNoResultsView.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -78,6 +79,8 @@
 {
     [self.wizardView removeFromSuperview];
     
+    self.filteredNoResultsView.delegate = nil;
+    [self.filteredNoResultsView removeFromSuperview];
     self.filteredNoResultsView = [JAFilteredNoResultsView getFilteredNoResultsView];
     
     self.filteredNoResultsView.tag = 1001;
@@ -363,6 +366,7 @@
     BOOL alreadyShowedWizardCatalog = [[NSUserDefaults standardUserDefaults] boolForKey:kJACatalogWizardUserDefaultsKey];
     if(alreadyShowedWizardCatalog == NO)
     {
+        [self hideLoading]; 
         self.wizardView = [[JACatalogWizardView alloc] initWithFrame:self.view.bounds];
         [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJACatalogWizardUserDefaultsKey];
@@ -422,7 +426,7 @@
     if(!self.isLoadingMoreProducts)
     {
         self.loadedEverything = NO;
-        NSNumber *pageNumber = [NSNumber numberWithInt:[self getCurrentPage] + 1];
+        NSNumber *pageNumber = [NSNumber numberWithInteger:[self getCurrentPage] + 1];
         
         if (VALID_NOTEMPTY(self.searchString, NSString))
         {
@@ -436,7 +440,7 @@
             
             self.searchSuggestionOperationID = [RISearchSuggestion getResultsForSearch:self.searchString
                                                                                   page:[pageNumber stringValue]
-                                                                              maxItems:[NSString stringWithFormat:@"%d",self.maxProducts]
+                                                                              maxItems:[NSString stringWithFormat:@"%ld",(long)self.maxProducts]
                                                                          sortingMethod:self.sortingMethod
                                                                                filters:self.filtersArray
                                                                           successBlock:^(NSArray *results, NSArray *filters, NSNumber *productCount) {
@@ -472,10 +476,13 @@
                                                                                   {
                                                                                       numberOfResults = [results count];
                                                                                   }
-                                                                                  [trackingDictionary setValue:[NSNumber numberWithInt:numberOfResults] forKey:kRIEventNumberOfProductsKey];
+                                                                                  [trackingDictionary setValue:[NSNumber numberWithInteger:numberOfResults] forKey:kRIEventNumberOfProductsKey];
                                                                                   
                                                                                   [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
                                                                                                                             data:[trackingDictionary copy]];
+                                                                                  [FBAppEvents logEvent:FBAppEventNameSearched
+                                                                                             parameters:@{FBAppEventParameterNameSearchString: self.searchString,
+                                                                                                          FBAppEventParameterNameSuccess: @1 }];
                                                                                   
                                                                                   trackingDictionary = [[NSMutableDictionary alloc] init];
                                                                                   NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
@@ -511,7 +518,7 @@
                                                                                   
                                                                               }
                                                                               
-                                                                              self.navBarLayout.subTitle = [NSString stringWithFormat:@"%d", [productCount integerValue]];
+                                                                              self.navBarLayout.subTitle = [NSString stringWithFormat:@"%ld", (long)[productCount integerValue]];
                                                                               [self reloadNavBar];
                                                                               
                                                                               [self addProdutsToMap:results];
@@ -562,6 +569,10 @@
                                                                                       }
                                                                                   }
                                                                               }
+                                                                              
+                                                                              [FBAppEvents logEvent:FBAppEventNameSearched
+                                                                                         parameters:@{FBAppEventParameterNameSearchString:self.searchString  ,
+                                                                                                      FBAppEventParameterNameSuccess: @0 }];
                                                                               
                                                                               self.isLoadingMoreProducts = NO;
                                                                               [self hideLoading];                                                                              
@@ -1002,12 +1013,6 @@
         count = 20;
     }
     
-    NSMutableArray *tempArray = [NSMutableArray new];
-    
-    for (int i = 0 ; i < count ; i ++) {
-        [tempArray addObject:[productsArray objectAtIndex:i]];
-    }
-    
     NSString *temp = self.category.name;
     
     
@@ -1017,7 +1022,6 @@
                                                           userInfo:@{ @"url" : product.url,
                                                                       @"previousCategory" : temp,
                                                                       @"fromCatalog" : @"YES",
-                                                                      @"relatedItems" : tempArray,
                                                                       @"delegate" : self,
                                                                       @"category" : self.category,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
@@ -1029,7 +1033,6 @@
                                                           userInfo:@{ @"url" : product.url,
                                                                       @"fromCatalog" : @"YES",
                                                                       @"previousCategory" : self.navBarLayout.title,
-                                                                      @"relatedItems" : tempArray ,
                                                                       @"delegate": self ,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
     }
@@ -1307,6 +1310,12 @@
                                         
                                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
                                                                                   data:[trackingDictionary copy]];
+                                        float value = [price floatValue];
+                                        [FBAppEvents logEvent:FBAppEventNameAddedToWishlist
+                                                   valueToSum:value
+                                                   parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
+                                                                 FBAppEventParameterNameContentType : product.name,
+                                                                 FBAppEventParameterNameContentID   : product.sku}];
                                         
                                         
                                         [self hideLoading];

@@ -26,6 +26,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *productDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIView *productDescriptionSeparator;
 @property (weak, nonatomic) IBOutlet UILabel *productDescriptionText;
+@property (weak, nonatomic) IBOutlet UIView *otherOffersTopSeparator;
+@property (weak, nonatomic) IBOutlet UILabel *otherOffersLabel;
+@property (strong, nonatomic) UILabel *fromLabel;
+@property (strong, nonatomic) UILabel *offerMinPriceLabel;
+
+@property (nonatomic, strong) RIProduct* product;
 
 @end
 
@@ -73,34 +79,94 @@
     return nil;
 }
 
-- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize numberOfRatings:(NSString*)numberOfRatings
+- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
 {
+    self.product = product;
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
         {
-            [self setupForLandscape:frame product:product numberOfRatings:numberOfRatings];
+            [self setupForLandscape:frame product:product];
         }
         else
         {
-            [self setupForPortrait:frame product:product preSelectedSize:preSelectedSize numberOfRatings:numberOfRatings];
+            [self setupForPortrait:frame product:product preSelectedSize:preSelectedSize];
         }
     }
     else
     {
-        [self setupForPortrait:frame product:product preSelectedSize:preSelectedSize numberOfRatings:numberOfRatings];
+        [self setupForPortrait:frame product:product preSelectedSize:preSelectedSize];
     }
 }
 
-- (void)setupForPortrait:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize numberOfRatings:(NSString*)numberOfRatings
+- (NSString*)ratingAndReviewString:(RIProduct*)product
+{
+    NSString* ratingString = @"";
+    NSString* reviewString = @"";
+    if (VALID_NOTEMPTY(product.ratingsTotal, NSNumber)) {
+        if (1 == [product.ratingsTotal integerValue]) {
+            ratingString = STRING_RATING;
+        } else {
+            ratingString = [NSString stringWithFormat:STRING_RATINGS, [product.ratingsTotal integerValue]];
+        }
+    }
+    
+    
+    if (VALID_NOTEMPTY(product.reviewsTotal, NSNumber)) {
+        if (1 == [product.reviewsTotal integerValue]) {
+            reviewString = STRING_REVIEW;
+        } else {
+            reviewString = [NSString stringWithFormat:STRING_REVIEWS, [product.reviewsTotal integerValue]];
+        }
+    }
+    
+    
+    NSString* finalString = @"";
+    
+    if (VALID_NOTEMPTY(ratingString, NSString)) {
+        
+        finalString = ratingString;
+        
+        if (VALID_NOTEMPTY(reviewString, NSString)) {
+            
+            finalString = [NSString stringWithFormat:@"%@ / %@", ratingString, reviewString];
+            
+            if (0 == [product.ratingsTotal integerValue] && 0 == [product.reviewsTotal integerValue]) {
+                
+                finalString = STRING_RATE_NOW;
+            }
+        } else {
+            
+            if (0 == [product.ratingsTotal integerValue]) {
+                
+                finalString = STRING_RATE_NOW;
+            }
+        }
+    } else {
+        
+        if (VALID_NOTEMPTY(reviewString, NSString) &&  0 == [product.reviewsTotal integerValue]) {
+            
+            finalString = reviewString;
+            
+        } else {
+            
+            finalString = STRING_RATE_NOW;
+        }
+    }
+    return finalString;
+}
+
+- (void)setupForPortrait:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
 {
     self.layer.cornerRadius = 5.0f;
     
     [self.sizeLabel setTextColor:UIColorFromRGB(0x55a1ff)];
     [self.numberOfReviewsLabel setTextColor:UIColorFromRGB(0xcccccc)];
     [self.specificationsLabel setTextColor:UIColorFromRGB(0x666666)];
-   
+    [self.otherOffersLabel setTextColor:UIColorFromRGB(0x666666)];
+    
     CGFloat width = frame.size.width - 12.0f;
     
     [self setFrame:CGRectMake(self.frame.origin.x,
@@ -148,6 +214,16 @@
                                                           self.goToSpecificationsImageView.frame.size.width,
                                                           self.goToSpecificationsImageView.frame.size.height)];
     
+    [self.otherOffersClickableView setFrame:CGRectMake(self.otherOffersClickableView.frame.origin.x,
+                                                       self.otherOffersClickableView.frame.origin.y,
+                                                       width,
+                                                       self.otherOffersClickableView.frame.size.height)];
+    
+    [self.goToOtherOffersImageView setFrame:CGRectMake(self.otherOffersClickableView.frame.size.width - self.otherOffersClickableView.frame.origin.x - self.goToOtherOffersImageView.frame.size.width - 9.0f,
+                                                          self.goToOtherOffersImageView.frame.origin.y,
+                                                          self.goToOtherOffersImageView.frame.size.width,
+                                                          self.goToOtherOffersImageView.frame.size.height)];
+    
     for(UIView *subView in self.subviews)
     {
         [subView setFrame:CGRectMake(subView.frame.origin.x,
@@ -159,16 +235,9 @@
     [self setPriceWithNewValue:product.specialPriceFormatted
                    andOldValue:product.priceFormatted];
     
-    [self setNumberOfStars:[product.avr integerValue]];
+    [self setNumberOfStars:[product.ratingAverage integerValue]];
     
-    if (VALID_NOTEMPTY(numberOfRatings, NSString) && [numberOfRatings integerValue] > 0)
-    {
-        self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, numberOfRatings];
-    }
-    else
-    {
-        self.numberOfReviewsLabel.text = STRING_RATE_NOW;
-    }
+    self.numberOfReviewsLabel.text = [self ratingAndReviewString:product];
     
     self.specificationsLabel.text = STRING_SPECIFICATIONS;
     
@@ -215,9 +284,49 @@
             }
         }
     }
+    
+    
+    /*
+     Check if there are other offers
+     */
+    if (NO == VALID_NOTEMPTY(product.offersTotal, NSNumber) || 0 >= [product.offersTotal integerValue]) {
+        [self removeOtherOffers];
+    } else {
+        self.otherOffersLabel.text = [NSString stringWithFormat:@"%@ (%ld)", STRING_OTHER_SELLERS, [product.offersTotal longValue]];
+
+        [self.otherOffersClickableView addTarget:self action:@selector(pressedOtherOffers) forControlEvents:UIControlEventTouchUpInside];
+        
+        self.fromLabel = [UILabel new];
+        [self.fromLabel setTextColor:UIColorFromRGB(0x666666)];
+        [self.fromLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:9.0f]];
+        self.fromLabel.text = [NSString stringWithFormat:@"%@ ", STRING_FROM];
+        [self.fromLabel sizeToFit];
+        [self.fromLabel setFrame:CGRectMake(self.otherOffersLabel.frame.origin.x,
+                                            CGRectGetMaxY(self.otherOffersLabel.frame) - 2.0f,
+                                            self.fromLabel.frame.size.width,
+                                            self.fromLabel.frame.size.height)];
+        [self.otherOffersClickableView addSubview:self.fromLabel];
+        
+        self.offerMinPriceLabel = [UILabel new];
+        [self.offerMinPriceLabel setTextColor:UIColorFromRGB(0xcc0000)];
+        [self.offerMinPriceLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:9.0f]];
+        self.offerMinPriceLabel.text = product.offersMinPriceFormatted;
+        [self.offerMinPriceLabel sizeToFit];
+        [self.offerMinPriceLabel setFrame:CGRectMake(CGRectGetMaxX(self.fromLabel.frame),
+                                                     self.fromLabel.frame.origin.y,
+                                                     self.offerMinPriceLabel.frame.size.width,
+                                                     self.offerMinPriceLabel.frame.size.height)];
+        [self.otherOffersClickableView addSubview:self.offerMinPriceLabel];
+
+    }
 }
 
-- (void)setupForLandscape:(CGRect)frame product:(RIProduct*)product numberOfRatings:(NSString*)numberOfRatings
+- (void)pressedOtherOffers
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenOtherOffers object:self.product];
+}
+
+- (void)setupForLandscape:(CGRect)frame product:(RIProduct*)product
 {
     CGFloat width = frame.size.width - 12.0f;
     
@@ -225,16 +334,9 @@
     [self.reviewsLabel setText:STRING_REVIEWS_LABEL];
     [self.reviewsLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.reviewsSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
-    [self setNumberOfStars:[product.avr integerValue]];
-    
-    if (VALID_NOTEMPTY(numberOfRatings, NSString) && [numberOfRatings integerValue] > 0)
-    {
-        self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, numberOfRatings];
-    }
-    else
-    {
-        self.numberOfReviewsLabel.text = STRING_RATE_NOW;
-    }
+    [self setNumberOfStars:[product.ratingAverage integerValue]];
+
+    self.numberOfReviewsLabel.text = [self ratingAndReviewString:product];
     
     NSString *productFeaturesText = product.descriptionString;
     NSString *productDescriptionText = nil;
@@ -384,6 +486,17 @@
     [self layoutSubviews];
 }
 
+- (void)removeOtherOffers
+{
+    [self.otherOffersClickableView removeFromSuperview];
+    [self.otherOffersTopSeparator removeFromSuperview];
+    
+    CGRect frame = self.frame;
+    frame.size.height -= 44.0f;
+    
+    self.frame = frame;
+}
+
 - (void)removeSizeOptions
 {
     [self.sizeClickableView removeFromSuperview];
@@ -395,6 +508,10 @@
     CGRect buttonFrame = self.specificationsClickableView.frame;
     buttonFrame.origin.y -= 44.0f;
     self.specificationsClickableView.frame = buttonFrame;
+    
+    CGRect otherOffersFrame = self.otherOffersClickableView.frame;
+    otherOffersFrame.origin.y -= 44.0f;
+    self.otherOffersClickableView.frame = otherOffersFrame;
     
     CGRect frame = self.frame;
     frame.size.height -= 44.0f;

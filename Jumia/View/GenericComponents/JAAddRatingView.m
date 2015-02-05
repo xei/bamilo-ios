@@ -21,6 +21,25 @@
 
 @implementation JAAddRatingView
 
+@synthesize rating=_rating;
+- (void)setRating:(NSInteger)rating
+{
+    _rating = rating;
+    for (UIButton* subview in self.subviews)
+    {
+        if (VALID_NOTEMPTY(subview, UIButton))
+        {
+            if (rating < subview.tag)
+            {
+                subview.selected = NO;
+            } else
+            {
+                subview.selected = YES;
+            }
+        }
+    }
+}
+
 + (JAAddRatingView *)getNewJAAddRatingView;
 {
     NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAAddRatingView"
@@ -36,18 +55,19 @@
     return nil;
 }
 
-- (void)setupWithOption:(RIRatingsDetails*)option
+- (void)setupWithFieldRatingStars:(RIFieldRatingStars*)fieldRatingStars
 {
+    self.fieldRatingStars = fieldRatingStars;
+    
     self.translatesAutoresizingMaskIntoConstraints = YES;
     
     [self.label setTextColor:UIColorFromRGB(0x666666)];
     
-    if(VALID_NOTEMPTY(option.title, NSString))
+    if(VALID_NOTEMPTY(fieldRatingStars.title, NSString))
     {
-        [self.label setText:option.title];
+        [self.label setText:fieldRatingStars.title];
     }
     
-    self.ratingOptions = option.options;
     self.rating = 1;
     
     [self.starButton1 setImage:[UIImage imageNamed:@"img_rating_star_big_full.png"] forState:UIControlStateSelected | UIControlStateHighlighted];
@@ -61,6 +81,7 @@
     [self.starButton5 setImage:[UIImage imageNamed:@"img_rating_star_big_full.png"] forState:UIControlStateSelected | UIControlStateHighlighted];
     
     [self starPressed:self.starButton1];
+    
 }
 
 - (IBAction)starPressed:(id)sender

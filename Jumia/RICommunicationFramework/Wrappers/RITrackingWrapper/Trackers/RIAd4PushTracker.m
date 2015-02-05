@@ -7,10 +7,10 @@
 //
 
 #import "RIAd4PushTracker.h"
-#import "BMA4SInAppNotification.h"
-#import "BMA4SNotification.h"
-#import "BMA4STracker+Analytics.h"
-#import "BMA4STracker.h"
+#import <libBMA4SSDK/BMA4SInAppNotification.h>
+#import <libBMA4SSDK/BMA4SNotification.h>
+#import <libBMA4SSDK/BMA4STracker+Analytics.h>
+#import <libBMA4SSDK/BMA4STracker.h>
 #import "GAIFields.h"
 #import "RIGoogleAnalyticsTracker.h"
 #import "RICategory.h"
@@ -117,19 +117,19 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     
     [BMA4STracker setDebugMode:YES];
     
-    [BMA4STracker trackWithPartnerId:userId
-                          privateKey:privateKey
-                             options:options];
-    
     dispatch_async(dispatch_get_main_queue(), ^{
+        [BMA4STracker trackWithPartnerId:userId
+                              privateKey:privateKey
+                                 options:options];
+        
+        NSMutableDictionary *deviceInfo = [[NSMutableDictionary alloc] init];
+        [deviceInfo setObject:@"0" forKey:kAd4PushProfileUserIdKey];
+        NSString *idfaString = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        [deviceInfo setObject:idfaString ? : @"" forKey:kAd4PushIDFAIdKey];
+        [BMA4STracker updateDeviceInfo:deviceInfo];
+        
         [[BMA4SNotification sharedBMA4S] didFinishLaunchingWithOptions:options];
     });
-    
-    NSMutableDictionary *deviceInfo = [[NSMutableDictionary alloc] init];
-    [deviceInfo setObject:@"0" forKey:kAd4PushProfileUserIdKey];
-    NSString *idfaString = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-    [deviceInfo setObject:idfaString ? : @"" forKey:kAd4PushIDFAIdKey];
-    [BMA4STracker updateDeviceInfo:deviceInfo];
 }
 
 #pragma mark - RINotificationTracking protocol
@@ -344,7 +344,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     numberOfProductsInWishlistValue = [numberOfProductsInWishlist integerValue];
                 }
                 numberOfProductsInWishlistValue++;
-                numberOfProductsInWishlist = [NSNumber numberWithInt:numberOfProductsInWishlistValue];
+                numberOfProductsInWishlist = [NSNumber numberWithInteger:numberOfProductsInWishlistValue];
                 [[NSUserDefaults standardUserDefaults] setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [deviceInfo setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
@@ -361,7 +361,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     numberOfProductsInWishlistValue = [numberOfProductsInWishlist integerValue];
                 }
                 numberOfProductsInWishlistValue--;
-                numberOfProductsInWishlist = [NSNumber numberWithInt:numberOfProductsInWishlistValue];
+                numberOfProductsInWishlist = [NSNumber numberWithInteger:numberOfProductsInWishlistValue];
                 [[NSUserDefaults standardUserDefaults] setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [deviceInfo setObject:numberOfProductsInWishlist forKey:kAd4PushProfileWishlistStatusKey];
@@ -389,7 +389,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                         brandFilterValue = [brandFilter integerValue];
                     }
                     brandFilterValue++;
-                    brandFilter = [NSNumber numberWithInt:brandFilterValue];
+                    brandFilter = [NSNumber numberWithInteger:brandFilterValue];
                     [[NSUserDefaults standardUserDefaults] setObject:brandFilter forKey:kAd4PushProfileFilterBrandKey];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
@@ -403,7 +403,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                         colorFilterValue = [colorFilter integerValue];
                     }
                     colorFilterValue++;
-                    colorFilter = [NSNumber numberWithInt:colorFilterValue];
+                    colorFilter = [NSNumber numberWithInteger:colorFilterValue];
                     [[NSUserDefaults standardUserDefaults] setObject:colorFilter forKey:kAd4PushProfileFilterColorKey];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
@@ -417,7 +417,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                         categoryFilterValue = [categoryFilter integerValue];
                     }
                     categoryFilterValue++;
-                    categoryFilter = [NSNumber numberWithInt:categoryFilterValue];
+                    categoryFilter = [NSNumber numberWithInteger:categoryFilterValue];
                     [[NSUserDefaults standardUserDefaults] setObject:categoryFilter forKey:kAd4PushProfileFilterCategoryKey];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
@@ -431,7 +431,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                         priceFilterValue = [priceFilter integerValue];
                     }
                     priceFilterValue++;
-                    priceFilter = [NSNumber numberWithInt:priceFilterValue];
+                    priceFilter = [NSNumber numberWithInteger:priceFilterValue];
                     [[NSUserDefaults standardUserDefaults] setObject:priceFilter forKey:kAd4PushProfileFilterPriceKey];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
@@ -450,7 +450,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     campaignNumberValue = [campaignNumber integerValue];
                 }
                 campaignNumberValue++;
-                campaignNumber = [NSNumber numberWithInt:campaignNumberValue];
+                campaignNumber = [NSNumber numberWithInteger:campaignNumberValue];
                 [[NSUserDefaults standardUserDefaults] setObject:campaignNumber forKey:kAd4PushProfileCampaignPageViewCountKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [deviceInfo setObject:campaignNumber forKey:kAd4PushProfileCampaignPageViewCountKey];
@@ -522,7 +522,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     {
         numberOfProducts = [[data objectForKey:kRIEcommerceSkusKey] count];
     }
-    [deviceInfo setObject:[NSNumber numberWithInt:numberOfProducts] forKey:kAd4PushProfileCartStatusKey];
+    [deviceInfo setObject:[NSNumber numberWithInteger:numberOfProducts] forKey:kAd4PushProfileCartStatusKey];
     
     NSString *couponCode = @"";
     if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceCouponKey], NSString))

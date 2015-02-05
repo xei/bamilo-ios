@@ -93,7 +93,7 @@
     
     self.sizeLabel.text = cartItem.variation;
     
-    self.discountLabel.text = [NSString stringWithFormat:@"-%d%%",[cartItem.savingPercentage integerValue]];
+    self.discountLabel.text = [NSString stringWithFormat:@"-%ld%%",[cartItem.savingPercentage longValue]];
     self.discountLabel.hidden = !cartItem.savingPercentage;
     self.discountImageView.hidden = !cartItem.savingPercentage;
 }

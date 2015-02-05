@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIView *backgroundContentView;
 
 @property (weak, nonatomic) IBOutlet UILabel *discountLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *discountBadge;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
@@ -66,7 +67,14 @@
     
     //TOP STUFF
     self.discountLabel.textColor = [UIColor whiteColor];
-    self.discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF, [campaignProduct.maxSavingPercentage integerValue]];
+    if (VALID_NOTEMPTY(campaignProduct.maxSavingPercentage, NSNumber) && 0 < [campaignProduct.maxSavingPercentage integerValue]){
+        self.discountBadge.hidden = NO;
+        self.discountLabel.hidden = NO;
+        self.discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF, [campaignProduct.maxSavingPercentage integerValue]];
+    } else {
+        self.discountBadge.hidden = YES;
+        self.discountLabel.hidden = YES;
+    }
     
     self.titleLabel.textColor = UIColorFromRGB(0x666666);
     self.titleLabel.text = campaignProduct.name;
@@ -183,11 +191,16 @@
                                       self.bottomContentView.bounds.origin.y + self.coverupView.frame.size.height + 3.0f,
                                       self.remainingStockLabel.frame.size.width,
                                       self.remainingStockLabel.frame.size.height);
-    [self.priceView loadWithPrice:campaignProduct.priceFormatted
-                     specialPrice:campaignProduct.specialPriceFormatted
-                         fontSize:11.0f specialPriceOnTheLeft:NO];
+    if (VALID_NOTEMPTY(self.campaignProduct.specialPrice, NSNumber) && 0 != [self.campaignProduct.specialPrice integerValue]) {
+        [self.priceView loadWithPrice:campaignProduct.priceFormatted
+                         specialPrice:campaignProduct.specialPriceFormatted
+                             fontSize:11.0f specialPriceOnTheLeft:NO];
+    } else {
+        [self.priceView loadWithPrice:campaignProduct.priceFormatted
+                         specialPrice:nil
+                             fontSize:11.0f specialPriceOnTheLeft:NO];
+    }
 
-    
     self.savingLabel.textColor = UIColorFromRGB(0x666666);
     self.savingLabel.text = STRING_CAMPAIGN_SAVE;
     [self.savingLabel sizeToFit];
@@ -204,6 +217,14 @@
                                              self.savingMoneyLabel.frame.size.width,
                                              self.savingMoneyLabel.frame.size.height);
     [self.bottomContentView addSubview:self.savingMoneyLabel];
+    
+    if (VALID_NOTEMPTY(campaignProduct.savePrice, NSNumber) && 0.0f < [campaignProduct.savePrice floatValue]) {
+        [self.savingLabel setHidden:NO];
+        [self.savingMoneyLabel setHidden:NO];
+    } else {
+        [self.savingLabel setHidden:YES];
+        [self.savingMoneyLabel setHidden:YES];
+    }
     
     if (ISEMPTY(self.percentageBarView)) {
         self.percentageBarView = [[JAPercentageBarView alloc] init];
@@ -310,10 +331,10 @@
         NSInteger minutes = remainingSeconds / 60;
         remainingSeconds = remainingSeconds % 60; //keep the remainder
         
-        NSString* timeString = [NSString stringWithFormat:@"%02d:%02d:%02d",hours,minutes,remainingSeconds];
+        NSString* timeString = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)hours,(long)minutes,(long)remainingSeconds];
         
         if (days > 0) {
-            timeString = [NSString stringWithFormat:@"%02d:%@",days,timeString];
+            timeString = [NSString stringWithFormat:@"%02ld:%@",(long)days,timeString];
         }
         
         self.timeLabel.text = timeString;

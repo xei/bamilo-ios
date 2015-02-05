@@ -798,7 +798,7 @@ FBLoginViewDelegate
     FBSession *session = [[FBSession alloc] initWithPermissions:@[@"public_profile", @"email", @"user_birthday"]];
     [FBSession setActiveSession:session];
     
-    [[FBSession activeSession] openWithBehavior:FBSessionLoginBehaviorForcingWebView completionHandler:^(FBSession *session, FBSessionState status, NSError *error)
+    [[FBSession activeSession] openWithBehavior:FBSessionLoginBehaviorWithFallbackToWebView completionHandler:^(FBSession *session, FBSessionState status, NSError *error)
      {
          if(FBSessionStateOpen == status)
          {
@@ -823,11 +823,37 @@ FBLoginViewDelegate
                  NSString *birthday = [user objectForKey:@"birthday"];
                  NSString *gender = [user objectForKey:@"gender"];
                  
-                 NSDictionary *parameters = @{ @"email": email,
-                                               @"first_name": firstName,
-                                               @"last_name": lastName,
-                                               @"birthday": birthday,
-                                               @"gender": gender };
+                 NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+                 if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString)) && (VALID_NOTEMPTY(gender, NSString)) && (VALID_NOTEMPTY(birthday, NSString)))
+                 {
+                     [parameters setValue:email forKey:@"email"];
+                     [parameters setValue:firstName forKey:@"first_name"];
+                     [parameters setValue:lastName forKey:@"last_name"];
+                     [parameters setValue:gender forKey:@"gender"];
+                     [parameters setValue:birthday forKey:@"birthday"];
+                     
+                 }else if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString)) && (VALID_NOTEMPTY(gender, NSString)))
+                 {
+                     [parameters setValue:email forKey:@"email"];
+                     [parameters setValue:firstName forKey:@"first_name"];
+                     [parameters setValue:lastName forKey:@"last_name"];
+                     [parameters setValue:gender forKey:@"gender"];
+                     
+                 }else if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString))){
+                     [parameters setValue:email forKey:@"email"];
+                     [parameters setValue:firstName forKey:@"first_name"];
+                     [parameters setValue:lastName forKey:@"last_name"];
+                     
+                 }else if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)))
+                 {
+                     [parameters setValue:email forKey:@"email"];
+                     [parameters setValue:firstName forKey:@"first_name"];
+                     
+                 }else
+                 {
+                     [parameters setValue:email forKey:@"email"];
+                 }
+
                  
                  [RICustomer loginCustomerByFacebookWithParameters:parameters
                                                       successBlock:^(RICustomer* customer, NSString* nextStep) {
@@ -849,7 +875,7 @@ FBLoginViewDelegate
                                                           [dateFormatter setDateFormat:@"yyyy-MM-dd"];
                                                           NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
                                                           NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
-                                                          [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
+                                                          [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
                                                           [trackingDictionary setValue:@"Checkou" forKey:kRIEventLocationKey];
                                                           NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                                                           [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
@@ -917,71 +943,76 @@ FBLoginViewDelegate
     
     [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object) {
         
-        RICustomer *customerObject = ((RICustomer *)object);
-        
-        NSString* emailKeyForCountry = [NSString stringWithFormat:@"%@_%@", kRememberedEmail, [RIApi getCountryIsoInUse]];
-        
-        if(self.checkBoxComponent.switchComponent.isOn)
-        {
-            [[NSUserDefaults standardUserDefaults] setObject:customerObject.email forKey:emailKeyForCountry];
-        }else
-        {
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:emailKeyForCountry];
+        if ([object isKindOfClass:[NSDictionary class]]) {
+            NSDictionary* responseDictionary = (NSDictionary*)object;
+            
+            RICustomer *customerObject = [responseDictionary objectForKey:@"customer"];
+            NSString* nextStep = [responseDictionary objectForKey:@"next_step"];
+            
+            NSString* emailKeyForCountry = [NSString stringWithFormat:@"%@_%@", kRememberedEmail, [RIApi getCountryIsoInUse]];
+            
+            if(self.checkBoxComponent.switchComponent.isOn)
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:customerObject.email forKey:emailKeyForCountry];
+            }else
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:emailKeyForCountry];
+            }
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+            [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
+            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+            [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+            [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
+            [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+            
+            NSDate* now = [NSDate date];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+            NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+            NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+            [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
+                                                      data:[trackingDictionary copy]];
+            
+            trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAboutYou]
+                                                      data:[trackingDictionary copy]];
+            
+            [self.loginDynamicForm resetValues];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                                object:nil];
+            
+            if(VALID_NOTEMPTY(nextStep, NSString) && [nextStep isEqualToString:@"billing"])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                                    object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                                  userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
+            }
+            else
+            {
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
+                                                                    object:nil
+                                                                  userInfo:userInfo];
+            }
         }
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
-        [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
-        [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-        [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
-        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-        [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
-        [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
-        [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
-        
-        NSDate* now = [NSDate date];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
-        NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
-        [trackingDictionary setValue:[NSNumber numberWithInt:[ageComponents year]] forKey:kRIEventAgeKey];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
-                                                  data:[trackingDictionary copy]];
-        
-        trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-        [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];
-        [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAboutYou]
-                                                  data:[trackingDictionary copy]];
-        
-        [self.loginDynamicForm resetValues];
         
         [self hideLoading];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                            object:nil];
-        
-        if([RICustomer checkIfUserHasAddresses])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                object:@{@"animated":[NSNumber numberWithBool:YES]}
-                                                              userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
-        }
-        else
-        {
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
-                                                                object:nil
-                                                              userInfo:userInfo];
-        }
         
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         [self hideLoading];

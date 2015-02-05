@@ -279,7 +279,7 @@
             
             RIFilterOption* option = [filter.options firstObject];
             
-            string = [NSString stringWithFormat:@"%d - %d", option.lowerValue, option.upperValue];
+            string = [NSString stringWithFormat:@"%ld - %ld", (long)option.lowerValue, (long)option.upperValue];
             
         } else {
             NSMutableArray* selectedOptionsNames = [NSMutableArray new];

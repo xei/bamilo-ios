@@ -52,6 +52,8 @@
 
 #define STRING_NEW RILocalizedString(@"string_new", nil)
 #define STRING_SIZE RILocalizedString(@"string_size", nil)
+#define STRING_RATING RILocalizedString(@"string_rating", nil)
+#define STRING_RATINGS RILocalizedString(@"string_ratings", nil)
 #define STRING_REVIEW RILocalizedString(@"string_review", nil)
 #define STRING_REVIEWS RILocalizedString(@"string_reviews", nil)
 #define STRING_QUANTITY RILocalizedString(@"string_quantity", nil)
@@ -288,5 +290,20 @@
 #define STRING_ORDER_PAYMENT_STATUS RILocalizedString(@"my_order_payment_status_label", nil)
 #define STRING_ORDER_QUANTITY RILocalizedString(@"my_order_quantity_label", nil)
 #define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
+
+#define STRING_LIKE_US RILocalizedString(@"like_us_on_facebook", nil)
+#define STRING_BUNDLE_TITLE RILocalizedString(@"bundle_title", nil)
+#define STRING_BUNDLE_TOTAL_PRICE RILocalizedString(@"bundle_total_price", nil)
+#define STRING_BUY_NOW RILocalizedString(@"buy_now", nil)
+
+#define STRING_OTHER_SELLERS RILocalizedString(@"other_sellers", nil)
+#define STRING_SAME_PRODUCT_FROM_OTHER_SELLERS RILocalizedString(@"same_product_from_other_sellers", nil)
+#define STRING_FROM RILocalizedString(@"from", nil)
+#define STRING_DELIVERY_WITHIN RILocalizedString(@"product_delivery_time", nil)
+#define STRING_DAYS RILocalizedString(@"product_delivery_days", nil)
+#define STRING_NUMBER_OFFERS_FROM RILocalizedString(@"number_offers_from_ios", nil)
+
+#define STRING_WRITE_FULL_REVIEW RILocalizedString(@"write_full_review", nil)
+#define STRING_SOLD_BY RILocalizedString(@"product_sold_by", nil)
 
 #endif

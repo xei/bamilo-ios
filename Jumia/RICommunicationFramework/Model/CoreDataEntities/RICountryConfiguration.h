@@ -13,15 +13,19 @@
 
 @interface RICountryConfiguration : NSManagedObject
 
+@property (nonatomic, retain) NSString * csEmail;
 @property (nonatomic, retain) NSString * currencyIso;
-@property (nonatomic, retain) NSString * currencySymbol;
 @property (nonatomic, retain) NSNumber * currencyPosition;
-@property (nonatomic, retain) NSNumber * noDecimals;
-@property (nonatomic, retain) NSString * thousandsSep;
+@property (nonatomic, retain) NSString * currencySymbol;
 @property (nonatomic, retain) NSString * decimalsSep;
 @property (nonatomic, retain) NSString * gaId;
+@property (nonatomic, retain) NSNumber * noDecimals;
 @property (nonatomic, retain) NSString * phoneNumber;
-@property (nonatomic, retain) NSString * csEmail;
+@property (nonatomic, retain) NSString * thousandsSep;
+@property (nonatomic, retain) NSNumber * ratingIsEnabled;
+@property (nonatomic, retain) NSNumber * ratingRequiresLogin;
+@property (nonatomic, retain) NSNumber * reviewIsEnabled;
+@property (nonatomic, retain) NSNumber * reviewRequiresLogin;
 @property (nonatomic, retain) NSOrderedSet *languages;
 
 /**

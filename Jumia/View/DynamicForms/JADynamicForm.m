@@ -10,6 +10,7 @@
 #import "RIForm.h"
 #import "RIFieldDataSetComponent.h"
 #import "RIFieldOption.h"
+#import "JAAddRatingView.h"
 
 @interface JADynamicForm ()
 <UITextFieldDelegate>
@@ -268,6 +269,27 @@
         else if ([@"hidden" isEqualToString:field.type])
         {
         }
+        else if ([@"array" isEqualToString:field.type])
+        {
+            if ([@"ratings" isEqualToString:field.key] && VALID_NOTEMPTY(field.ratingStars, NSOrderedSet)) {
+                
+                for (RIFieldRatingStars *ratingStars in field.ratingStars)
+                {
+                    JAAddRatingView *stars = [JAAddRatingView getNewJAAddRatingView];
+                    [stars setupWithFieldRatingStars:ratingStars];
+                    
+                    CGRect frame = stars.frame;
+                    frame.origin.y = startingY;
+                    frame.origin.x = 0.0;
+                    frame.size.width = widthComponent;
+                    [stars setFrame:frame];
+                    
+                    [self.formViews addObject:stars];
+                    startingY += stars.frame.size.height;
+                    
+                }
+            }
+        }
     }
     
     if(-1 != birthdayFieldPosition && VALID_NOTEMPTY(dayField, RIField) && VALID_NOTEMPTY(monthField, RIField) && VALID_NOTEMPTY(yearField, RIField))
@@ -481,6 +503,15 @@
                 {
                     [parameters setValue:textFieldComponent.textField.text forKey:[self getFieldNameForKey:@"city"]];
                 }
+            }
+            else if ([view isKindOfClass:[JAAddRatingView class]])
+            {
+                JAAddRatingView* addRatingView = (JAAddRatingView*) view;
+
+                NSString *key = [NSString stringWithFormat:@"%@[%@]", addRatingView.fieldRatingStars.field.name, addRatingView.fieldRatingStars.type];
+                NSString* rating = [NSString stringWithFormat:@"%ld",(long)addRatingView.rating];
+                [parameters addEntriesFromDictionary:@{key: rating}];
+                NSLog(@"%@",parameters);
             }
         }
     }

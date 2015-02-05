@@ -67,7 +67,7 @@
     if(error.code == NSURLErrorTimedOut && (self.shouldRetry && (self.numberOfRetry < self.totalRetriesNumber)))
     {
         self.numberOfRetry++;
-        NSLog(@"Connection failed with timeout error: retry %d of %d", self.numberOfRetry, self.totalRetriesNumber);
+        NSLog(@"Connection failed with timeout error: retry %ld of %ld", (long)self.numberOfRetry, (long)self.totalRetriesNumber);
         
         // Retry
         self.connection = [[NSURLConnection alloc] initWithRequest:self.request

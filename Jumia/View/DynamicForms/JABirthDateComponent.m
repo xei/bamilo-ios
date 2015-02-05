@@ -63,7 +63,7 @@
     
     if(-1 != self.storedDay && -1 != self.storedMonth && -1 != self.storedYear)
     {
-        [self.textField setText:[NSString stringWithFormat:@"%d-%d-%d", self.storedDay, self.storedMonth, self.storedYear]];
+        [self.textField setText:[NSString stringWithFormat:@"%ld-%ld-%ld", (long)self.storedDay, (long)self.storedMonth, (long)self.storedYear]];
     }
 }
 
@@ -81,7 +81,7 @@
     self.storedMonth = [components month];
     self.storedYear = [components year];
     
-    [self.textField setText:[NSString stringWithFormat:@"%d-%d-%d", self.storedDay, self.storedMonth, self.storedYear]];
+    [self.textField setText:[NSString stringWithFormat:@"%ld-%ld-%ld", (long)self.storedDay, (long)self.storedMonth, (long)self.storedYear]];
 }
 
 -(NSDate*)getDate
@@ -105,15 +105,15 @@
     
     if(self.storedDay > -1)
     {
-        [values setObject:[NSString stringWithFormat:@"%d", self.storedDay] forKey:self.dayField.name];
+        [values setObject:[NSString stringWithFormat:@"%ld", (long)self.storedDay] forKey:self.dayField.name];
     }
     if(self.storedMonth > -1)
     {
-        [values setObject:[NSString stringWithFormat:@"%d", self.storedMonth] forKey:self.monthField.name];
+        [values setObject:[NSString stringWithFormat:@"%ld", (long)self.storedMonth] forKey:self.monthField.name];
     }
     if(self.storedYear > -1)
     {
-        [values setObject:[NSString stringWithFormat:@"%d", self.storedYear] forKey:self.yearField.name];
+        [values setObject:[NSString stringWithFormat:@"%ld", (long)self.storedYear] forKey:self.yearField.name];
     }
     
     return values;

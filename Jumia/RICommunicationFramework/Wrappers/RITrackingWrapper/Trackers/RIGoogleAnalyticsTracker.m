@@ -185,7 +185,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     if (!ISEMPTY(tracker))
     {
         NSDictionary *dict = [[GAIDictionaryBuilder createExceptionWithDescription:name
-                                                                         withFatal:NO] build];
+                                                                         withFatal:[NSNumber numberWithBool:NO]] build];
         
         [tracker send:dict];
     }

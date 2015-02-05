@@ -320,8 +320,113 @@
                                                           }];
 }
 
+#pragma mark - Add Bundles
+
++ (NSString *)addBundleProductsWithSkus:(NSArray *)productSkus
+                             simpleSkus:(NSArray *)simpleSkus
+                               bundleId:(NSString *)bundleId
+                     withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
+                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock
+{
+    NSMutableDictionary* parameters = [NSMutableDictionary new];
+    
+    [parameters setObject:bundleId forKey:@"bundleId"];
+    
+    for (int i = 0; i < productSkus.count; i++) {
+        NSString* productSku = [productSkus objectAtIndex:i];
+        [parameters setObject:productSku forKey:[NSString stringWithFormat:@"product-item-selector[%d]",i]];
+
+        NSString* productSimpleSku = [simpleSkus objectAtIndex:i];
+        [parameters setObject:productSimpleSku forKey:[NSString stringWithFormat:@"product-simple-selector[%d]",i]];
+    }
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_ADD_BUNDLE]]
+                                                            parameters:parameters
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  RICart *cart = nil;
+                                                                  NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                                  {
+                                                                      cart = [RICart parseCart:[jsonObject objectForKey:@"metadata"] country:configuration];
+                                                                  }
+                                                                  
+                                                                  NSDictionary *errorMessages = [RIError getErrorDictionary:jsonObject];
+                                                                  
+                                                                  if(VALID_NOTEMPTY(cart, RICart))
+                                                                  {
+                                                                      if(VALID_NOTEMPTY(errorMessages, NSDictionary))
+                                                                      {
+                                                                          sucessBlock(cart, [errorMessages allKeys]);
+                                                                      }
+                                                                      else
+                                                                      {
+                                                                          sucessBlock(cart, nil);
+                                                                      }
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                      failureBlock(apiResponse, nil, NO);
+                                                                  }
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil, NO);
+                                                              }];
+                                                              
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              
+                                                              if (NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  NSArray *errorMessagesArray = [RIError getErrorMessages:errorJsonObject];
+                                                                  NSArray *errorMessages = nil;
+                                                                  
+                                                                  BOOL outOfStockError = YES;
+                                                                  
+                                                                  if(VALID_NOTEMPTY(errorMessagesArray, NSArray))
+                                                                  {
+                                                                      outOfStockError = NO;
+                                                                      errorMessages = [errorMessagesArray copy];
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                      NSDictionary *errorMessagesDictionary = [RIError getErrorDictionary:errorJsonObject];
+                                                                      
+                                                                      if(VALID_NOTEMPTY(errorMessagesDictionary, NSDictionary))
+                                                                      {
+                                                                          errorMessages = [errorMessagesDictionary allKeys];
+                                                                          for(NSString *errorMessagesKey in errorMessages)
+                                                                          {
+                                                                              NSString *errorMessageValue = [errorMessagesDictionary objectForKey:errorMessagesKey];
+                                                                              if(VALID_NOTEMPTY(errorMessageValue, NSString) && ![@"ORDER_PRODUCT_SOLD_OUT" isEqualToString:errorMessageValue])
+                                                                              {
+                                                                                  outOfStockError = NO;
+                                                                                  break;
+                                                                              }
+                                                                          }
+                                                                      }
+                                                                  }
+                                                                  
+                                                                  failureBlock(apiResponse, errorMessages, outOfStockError);
+                                                                  
+                                                              }
+                                                              else if (NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray, NO);
+                                                                  
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil, NO);
+                                                              }
+                                                          }];
+
+}
 
 
+#pragma mark - Vouchers
 + (NSString *) addVoucherWithCode:(NSString *)voucherCode
                  withSuccessBlock:(void (^)(RICart *cart))sucessBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
@@ -425,6 +530,13 @@
     
     cart.cartUnreducedValue = nil;
     cart.cartUnreducedValueFormatted = nil;
+    
+    if ([json objectForKey:@"cart"]) {
+        NSDictionary* cart = [json objectForKey:@"cart"];
+        if (VALID_NOTEMPTY(cart, NSDictionary)) {
+            json = cart;
+        }
+    }
     
     BOOL showUnreducedPrice = NO;
     CGFloat cartUnreducedValue = 0.0f;

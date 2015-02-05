@@ -233,7 +233,13 @@
         }
         if ([campaignProductJSON objectForKey:@"max_saving_percentage"]) {
             if (![[campaignProductJSON objectForKey:@"max_saving_percentage"] isKindOfClass:[NSNull class]]) {
-                campaignProduct.maxSavingPercentage = [campaignProductJSON objectForKey:@"max_saving_percentage"];
+                if (VALID_NOTEMPTY([campaignProductJSON objectForKey:@"max_saving_percentage"], NSString)) {
+                    NSString* maxSavingPercentageString = [campaignProductJSON objectForKey:@"max_saving_percentage"];
+                    campaignProduct.maxSavingPercentage = [NSNumber numberWithInteger:[maxSavingPercentageString integerValue]];
+                }
+                if (VALID_NOTEMPTY([campaignProductJSON objectForKey:@"max_saving_percentage"], NSNumber)) {
+                    campaignProduct.maxSavingPercentage = [campaignProductJSON objectForKey:@"max_saving_percentage"];    
+                }
             }
         }
         

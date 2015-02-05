@@ -14,6 +14,7 @@
 #import <HockeySDK/HockeySDK.h>
 
 #define kSessionDuration 1800.0f
+#define IS_IOS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 @interface JAAppDelegate ()
 <RIAdjustTrackerDelegate>
@@ -108,15 +109,28 @@
     
     if (checkNotificationsSwitch && checkSoundSwitch)
     {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                                UIRemoteNotificationTypeSound |
-                                                                                UIRemoteNotificationTypeAlert )];
+
+        if(IS_IOS_8_OR_LATER) {
+            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIRemoteNotificationTypeBadge
+                                                                                                  |UIRemoteNotificationTypeSound
+                                                                                                  |UIRemoteNotificationTypeAlert) categories:nil];
+            [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        } else {
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                                    UIRemoteNotificationTypeSound |
+                                                                                    UIRemoteNotificationTypeAlert )];
+        }
     }
     else if(checkNotificationsSwitch && !checkNotificationsSwitch)
     {
-        
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                                UIRemoteNotificationTypeAlert )];
+        if(IS_IOS_8_OR_LATER) {
+            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIRemoteNotificationTypeBadge
+                                                                                                  |UIRemoteNotificationTypeSound) categories:nil];
+            [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        } else {
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                                    UIRemoteNotificationTypeAlert )];
+        }
     }
     else{
         [[UIApplication sharedApplication] unregisterForRemoteNotifications];
@@ -136,6 +150,23 @@
     
     return YES;
 }
+
+#ifdef __IPHONE_8_0
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:   (UIUserNotificationSettings *)notificationSettings
+{
+    //register to receive notifications
+    [application registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString   *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
+{
+    //handle the actions
+    if ([identifier isEqualToString:@"declineAction"]){
+    }
+    else if ([identifier isEqualToString:@"answerAction"]){
+    }
+}
+#endif
 
 - (void)checkSession
 {
@@ -415,4 +446,8 @@
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventInstallViaAdjust] data:dictionary];
 }
 
+-(void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [FBAppEvents activateApp];
+}
 @end

@@ -14,6 +14,7 @@
 #import "RICampaign.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface JACampaignsViewController ()
 
@@ -38,6 +39,8 @@
 @property (nonatomic, assign)JACampaignPageView* campaignPageWithSizePickerOpen;
 
 @property (nonatomic, assign)RIApiResponse apiResponse;
+
+@property (nonatomic, assign)BOOL isLoaded;
 
 @end
 
@@ -75,7 +78,7 @@
     
     self.shouldPerformButtonActions = YES;
     
-    [self loadCampaigns];
+    self.isLoaded = NO;
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
 }
@@ -84,7 +87,11 @@
 {
     [super viewWillAppear:animated];
     
-    [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+    if (self.isLoaded) {
+        [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+    } else {
+        [self loadCampaigns];
+    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
@@ -103,8 +110,11 @@
     [self.pickerScrollView setHidden:YES];
     [self.scrollView setHidden:YES];
     
+    if(!((UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) && (UIInterfaceOrientationIsLandscape(toInterfaceOrientation))) && !((UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) && (UIInterfaceOrientationIsPortrait(toInterfaceOrientation))) ){
+        
     [self setupCampaings:self.view.frame.origin.y + self.view.frame.size.height height:self.view.frame.size.width - self.view.frame.origin.y interfaceOrientation:toInterfaceOrientation];
     
+    }
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
@@ -203,6 +213,8 @@
         self.pickerNamesAlreadySet = YES;
         self.pickerScrollView.startingIndex = startingIndex;
     }
+    
+    self.isLoaded = YES;
     
     [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
 }
@@ -444,6 +456,13 @@
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
                       
+                      float value = [price floatValue];
+                      [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                                    valueToSum:value
+                                 parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
+                                               FBAppEventParameterNameContentType : self.backupCampaignProduct.name,
+                                               FBAppEventParameterNameContentID   : self.backupCampaignProduct.sku}];
+
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       

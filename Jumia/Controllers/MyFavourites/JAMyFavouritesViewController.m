@@ -15,6 +15,7 @@
 #import "RICart.h"
 #import "RICustomer.h"
 #import "RICategory.h"
+#import <FacebookSDK/FacebookSDK.h>
 #import "JAProductListFlowLayout.h"
 
 @interface JAMyFavouritesViewController ()
@@ -540,6 +541,13 @@
                                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                          data:[trackingDictionary copy]];
                                
+                               float value = [price floatValue];
+                               [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                                          valueToSum:value
+                                          parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
+                                                        FBAppEventParameterNameContentType : product.name,
+                                                        FBAppEventParameterNameContentID   : product.sku}];
+
                                [RIProduct removeFromFavorites:product successBlock:^(void) {
                                    
                                    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -791,6 +799,13 @@
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
                       
+                      float value = [price floatValue];
+                      [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                                 valueToSum:value
+                                 parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
+                                               FBAppEventParameterNameContentType : product.name,
+                                               FBAppEventParameterNameContentID   : product.sku}];
+
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       

@@ -127,6 +127,7 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAHomeWizardUserDefaultsKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+    [self hideLoading];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

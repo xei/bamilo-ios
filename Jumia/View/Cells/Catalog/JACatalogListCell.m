@@ -46,9 +46,9 @@
         self.numberOfReviewsLabel.font = JACatalogCellLightFont;
         self.numberOfReviewsLabel.textColor = JACatalogCellGrayFontColor;
         if (1 == [product.sum integerValue]) {
-            self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEW, [product.sum stringValue]];
+            self.numberOfReviewsLabel.text = STRING_RATING;
         } else {
-            self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [product.sum stringValue]];
+            self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_RATINGS, [product.sum integerValue]];
         }
     } else {
         [self.ratingsView removeFromSuperview];

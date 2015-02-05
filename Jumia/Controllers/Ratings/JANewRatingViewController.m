@@ -11,13 +11,15 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "RIProductRatings.h"
-#import "RIRatings.h"
 #import "JADynamicForm.h"
 #import "JAAddRatingView.h"
 #import "RICustomer.h"
 #import "JAPriceView.h"
 #import "JAUtils.h"
 #import "RIProduct.h"
+#import <FacebookSDK/FacebookSDK.h>
+
+#define kDistanceBetweenStarsAndText 70.0f
 
 @interface JANewRatingViewController ()
 <
@@ -34,11 +36,16 @@ UIAlertViewDelegate
 @property (strong, nonatomic) UIView *centerView;
 @property (strong, nonatomic) UILabel *fixedLabel;
 @property (strong, nonatomic) UIButton *sendReviewButton;
+@property (nonatomic, strong) UISwitch *modeSwitch;
+@property (nonatomic, assign) BOOL isShowingRating;
 
-@property (strong, nonatomic) RIForm *form;
-@property (strong, nonatomic) JADynamicForm *ratingDynamicForm;
-@property (strong, nonatomic) NSArray *ratings;
-@property (strong, nonatomic) NSMutableArray *ratingStarsArray;
+@property (nonatomic, strong) RIForm* ratingsForm;
+@property (nonatomic, strong) JADynamicForm* ratingsDynamicForm;
+@property (nonatomic, strong) UIView* ratingsContentView;
+@property (nonatomic, strong) RIForm* reviewsForm;
+@property (nonatomic, strong) JADynamicForm* reviewsDynamicForm;
+@property (nonatomic, strong) UIView* reviewsContentView;
+
 @property (nonatomic, strong) JAPriceView *priceView;
 @property (assign, nonatomic) NSInteger numberOfFields;
 
@@ -102,17 +109,30 @@ UIAlertViewDelegate
 {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboards)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
     [self ratingsRequests];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    //[super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)ratingsRequests
 {
-    self.numberOfRequests = 2;
+    self.numberOfRequests = 0;
     
     [self hideViews];
     if(RIApiResponseSuccess != self.apiResponse)
     {
-        if(VALID_NOTEMPTY(self.ratingDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingDynamicForm.formViews, NSMutableArray))
+        if(VALID_NOTEMPTY(self.ratingsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingsDynamicForm.formViews, NSMutableArray) &&
+           VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray))
         {
             [self showLoading];
         }
@@ -124,25 +144,31 @@ UIAlertViewDelegate
         [self showLoading];
     }
     
-    [RIRatings getRatingsWithSuccessBlock:^(NSArray *ratings)
-     {
-         self.ratings = ratings;
-         self.numberOfRequests--;
-     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-     {
-         self.apiResponse = apiResponse;
-         self.numberOfRequests--;
-     }];
+    if ([[RICountryConfiguration getCurrentConfiguration].ratingIsEnabled boolValue]) {
+        self.numberOfRequests++;
+        [RIForm getForm:@"rating"
+           successBlock:^(RIForm *form)
+         {
+             self.ratingsForm = form;
+             self.numberOfRequests--;
+         } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+             self.apiResponse = apiResponse;
+             self.numberOfRequests--;
+         }];
+    }
     
-    [RIForm getForm:@"rating"
-       successBlock:^(RIForm *form)
-     {
-         self.form = form;
-         self.numberOfRequests--;
-     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-         self.apiResponse = apiResponse;
-         self.numberOfRequests--;
-     }];
+    if ([[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
+        self.numberOfRequests++;
+        [RIForm getForm:@"review"
+           successBlock:^(RIForm *form)
+         {
+             self.reviewsForm = form;
+             self.numberOfRequests--;
+         } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+             self.apiResponse = apiResponse;
+             self.numberOfRequests--;
+         }];
+    }
 }
 
 - (void)hideViews
@@ -159,11 +185,18 @@ UIAlertViewDelegate
     [self removeErrorView];
     if(RIApiResponseSuccess == self.apiResponse)
     {
+        if (VALID_NOTEMPTY(self.ratingsForm, RIForm)) {
+            self.isShowingRating = YES;
+        } else {
+            self.isShowingRating = NO;
+        }
         [self setupViews];
     }
+
     else if (RIApiResponseNoInternetConnection == self.apiResponse)
     {
-        if(VALID_NOTEMPTY(self.ratingDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingDynamicForm.formViews, NSMutableArray))
+        if(VALID_NOTEMPTY(self.ratingsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingsDynamicForm.formViews, NSMutableArray) &&
+           VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray))
         {
             [self showMessage:STRING_NO_CONNECTION success:NO];
         }
@@ -174,7 +207,8 @@ UIAlertViewDelegate
     }
     else
     {
-        if(VALID_NOTEMPTY(self.ratingDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingDynamicForm.formViews, NSMutableArray))
+        if(VALID_NOTEMPTY(self.ratingsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingsDynamicForm.formViews, NSMutableArray) &&
+           VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray))
         {
             [self showMessage:STRING_ERROR success:NO];
         }
@@ -249,7 +283,7 @@ UIAlertViewDelegate
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
         
-        if(VALID_NOTEMPTY(self.productRatings, RIProductRatings) && VALID_NOTEMPTY(self.productRatings.comments, NSArray))
+        if(VALID_NOTEMPTY(self.productRatings, RIProductRatings) && VALID_NOTEMPTY(self.productRatings.reviews, NSArray))
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil userInfo:userInfo];
         }
@@ -259,7 +293,10 @@ UIAlertViewDelegate
             {
                 [userInfo setObject:self.product forKey:@"product"];
             }
-            
+            if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+            {
+                [userInfo setObject:self.productRatings forKey:@"productRatings"];
+            }
             [userInfo setObject:[NSNumber numberWithBool:self.goToNewRatingButtonPressed] forKey:@"goToNewRatingButtonPressed"];
             
             [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"popLastViewController"];
@@ -309,7 +346,7 @@ UIAlertViewDelegate
     CGFloat dynamicFormHorizontalMargin = 6.0f;
     if(isiPad)
     {
-        dynamicFormHorizontalMargin = 60.0f;
+        dynamicFormHorizontalMargin = 250.0f;
     }
     
     if(VALID_NOTEMPTY(self.fixedLabel, UILabel))
@@ -326,61 +363,140 @@ UIAlertViewDelegate
     self.fixedLabel.textColor = UIColorFromRGB(0x666666);
     
     [self.centerView addSubview:self.fixedLabel];
-    
-    self.numberOfFields = 0;
-    self.ratingStarsArray = [NSMutableArray new];
-    
+
     CGFloat currentY = CGRectGetMaxY(self.fixedLabel.frame) + 12.0f;
-    for (RIRatingsDetails *option in self.ratings)
-    {
-        JAAddRatingView *stars = [JAAddRatingView getNewJAAddRatingView];
-        [stars setupWithOption:option];
-        
-        CGRect frame = stars.frame;
-        frame.origin.y = currentY;
-        frame.origin.x = dynamicFormHorizontalMargin;
-        frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
-        [stars setFrame:frame];
-        
-        [self.centerView addSubview:stars];
-        currentY += stars.frame.size.height;
-        
-        [self.ratingStarsArray addObject:stars];
-        
-        self.numberOfFields++;
-    }
-    
-    self.ratingDynamicForm = [[JADynamicForm alloc] initWithForm:self.form
-                                                        delegate:nil
-                                                startingPosition:currentY
-                                                       widthSize:centerViewWidth
-                                              hasFieldNavigation:YES];
-    
     CGFloat spaceBetweenFormFields = 6.0f;
-    NSInteger count = 0;
-    for (UIView *view in self.ratingDynamicForm.formViews)
-    {
-        view.tag = count;
-        
-        CGRect frame = view.frame;
-        if(isiPad)
+    
+    if (self.ratingsForm) {
+        NSInteger count = 0;
+        CGFloat initialContentY = 0;
+        self.ratingsDynamicForm = [[JADynamicForm alloc] initWithForm:self.ratingsForm
+                                                             delegate:nil
+                                                     startingPosition:initialContentY
+                                                            widthSize:centerViewWidth
+                                                   hasFieldNavigation:YES];
+        self.ratingsContentView = [UIView new];
+        for (UIView *view in self.ratingsDynamicForm.formViews)
         {
-            frame.origin.x = dynamicFormHorizontalMargin;
-            frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+            view.tag = count;
+            CGRect frame = view.frame;
+            if(isiPad)
+            {
+                frame.origin.x = dynamicFormHorizontalMargin;
+                frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+            }
+            else
+            {
+                frame.size.width = centerViewWidth;
+            }
+            view.frame = frame;
+            
+            [self.ratingsContentView addSubview:view];
+            initialContentY += view.frame.size.height + spaceBetweenFormFields;
+            count++;
         }
-        else
-        {
-            frame.size.width = centerViewWidth;
-        }
-        view.frame = frame;
-        
-        [self.centerView addSubview:view];
-        currentY += view.frame.size.height + spaceBetweenFormFields;
-        count++;
+        [self.ratingsContentView setFrame:CGRectMake(0.0,
+                                                     currentY,
+                                                     centerViewWidth,
+                                                     initialContentY)];
+        [self.centerView addSubview:self.ratingsContentView];
     }
     
-    // Add space between last form field and send review button
-    currentY += 38.0f;
+    if (self.reviewsForm) {
+        CGFloat initialContentY = 0;
+        self.reviewsDynamicForm = [[JADynamicForm alloc] initWithForm:self.reviewsForm
+                                                             delegate:nil
+                                                     startingPosition:initialContentY
+                                                            widthSize:centerViewWidth
+                                                   hasFieldNavigation:YES];
+        self.reviewsContentView = [UIView new];
+        for (int i = 0; i < self.reviewsDynamicForm.formViews.count; i++)
+        {
+            UIView* view = [self.reviewsDynamicForm.formViews objectAtIndex:i];
+            view.tag = i;
+            CGRect frame = view.frame;
+            if(isiPad)
+            {
+                frame.origin.x = dynamicFormHorizontalMargin;
+                frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+            }
+            else
+            {
+                frame.size.width = centerViewWidth;
+            }
+            if (NO == [view isKindOfClass:[JAAddRatingView class]]) {
+                if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
+                    //has switch
+                    frame.origin.y = frame.origin.y + kDistanceBetweenStarsAndText;
+                }
+            }
+            view.frame = frame;
+            
+            [self.reviewsContentView addSubview:view];
+
+            initialContentY += view.frame.size.height + spaceBetweenFormFields;
+        }
+        if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
+            //has switch
+            initialContentY += kDistanceBetweenStarsAndText;
+        }
+        [self.reviewsContentView setFrame:CGRectMake(0.0,
+                                                     currentY,
+                                                     centerViewWidth,
+                                                     initialContentY)];
+        [self.centerView addSubview:self.reviewsContentView];
+    }
+
+
+    if (self.isShowingRating && VALID_NOTEMPTY(self.ratingsContentView, UIView)) {
+        self.reviewsContentView.hidden = YES;
+        currentY += self.ratingsContentView.frame.size.height;
+    } else if (NO == self.isShowingRating && VALID_NOTEMPTY(self.reviewsContentView, UIView)){
+        self.ratingsContentView.hidden = NO;
+        currentY += self.reviewsContentView.frame.size.height;
+    }
+    
+    if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
+        //show the switch
+        self.modeSwitch = [UISwitch new];
+        [self.modeSwitch addTarget:self action:@selector(switchBetweenModes) forControlEvents:UIControlEventTouchUpInside];
+        CGFloat modeSwitchX = 10.0f;
+        if (isiPad) {
+            modeSwitchX = 260.0f;
+        }
+        [self.modeSwitch setFrame:CGRectMake(modeSwitchX,
+                                             currentY,
+                                             self.modeSwitch.frame.size.width,
+                                             self.modeSwitch.frame.size.height)];
+        [self.centerView addSubview:self.modeSwitch];
+        
+        CGFloat writeReviewLabelX = CGRectGetMaxX(self.modeSwitch.frame) + 15.0f;
+        CGFloat maxWriteReviewWidth = centerViewWidth - writeReviewLabelX;
+        UILabel* writeReviewLabel = [UILabel new];
+        writeReviewLabel.textColor = UIColorFromRGB(0x666666);
+        writeReviewLabel.font = [UIFont fontWithName:@"Helvetica-Neue" size:13.0f];
+        writeReviewLabel.numberOfLines = 2;
+        writeReviewLabel.text = STRING_WRITE_FULL_REVIEW;
+        [writeReviewLabel sizeToFit];
+        CGFloat finalWidth = writeReviewLabel.frame.size.width;
+        CGFloat finalHeight = writeReviewLabel.frame.size.height;
+        CGFloat yOffset = 5.0f;
+        if (maxWriteReviewWidth < writeReviewLabel.frame.size.width) {
+            finalWidth = maxWriteReviewWidth;
+            finalHeight *= 2;
+            yOffset = 0.0f;
+        }
+        [writeReviewLabel setFrame:CGRectMake(writeReviewLabelX,
+                                              self.modeSwitch.frame.origin.y + yOffset,
+                                              finalWidth,
+                                              finalHeight)];
+        [self.centerView addSubview:writeReviewLabel];
+        
+        currentY += self.modeSwitch.frame.size.height + 50.0f;
+    } else {
+        // Add space between last form field and send review button
+        currentY += 38.0f;
+    }
     
     NSString *imageNameFormat = @"orangeMedium_%@";
     if(isiPad)
@@ -439,22 +555,26 @@ UIAlertViewDelegate
 {
     [self showLoading];
     
-    [self.ratingDynamicForm resignResponder];
+    [self.ratingsDynamicForm resignResponder];
+    [self.reviewsDynamicForm resignResponder];
     
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.ratingDynamicForm getValues]];
-    
-    for (JAAddRatingView *component in self.ratingStarsArray)
-    {
-        RIRatingsOptions *option = [component.ratingOptions objectAtIndex:(component.rating - 1)];
-        NSString *key = [NSString stringWithFormat:@"rating-option--%@", option.fkRatingType];
-        
-        [parameters addEntriesFromDictionary:@{key: option.value}];
+    RIForm* currentForm;
+    JADynamicForm* currentDynamicForm;
+    if (self.isShowingRating) {
+        currentForm = self.ratingsForm;
+        currentDynamicForm = self.ratingsDynamicForm;
+    } else {
+        currentForm = self.reviewsForm;
+        currentDynamicForm = self.reviewsDynamicForm;
     }
     
-    [parameters addEntriesFromDictionary:@{@"rating-customer": [RICustomer getCustomerId]}];
-    [parameters addEntriesFromDictionary:@{@"rating-catalog-sku": self.product.sku}];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[currentDynamicForm getValues]];
     
-    [RIForm sendForm:self.ratingDynamicForm.form
+    [parameters addEntriesFromDictionary:@{@"rating-customer": [RICustomer getCustomerId]}];
+    NSString* skuKey = [currentDynamicForm getFieldNameForKey:@"sku"];
+    [parameters addEntriesFromDictionary:@{skuKey: self.product.sku}];
+    
+    [RIForm sendForm:currentForm
           parameters:parameters
         successBlock:^(id object) {
             
@@ -465,44 +585,56 @@ UIAlertViewDelegate
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
             [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
             
-            for (JAAddRatingView *component in self.ratingStarsArray)
+            for (UIView *component in currentDynamicForm.formViews)
             {
-                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
-                [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-                [trackingDictionary setValue:@(component.rating) forKey:kRIEventValueKey];
-                
-                if ([component.idRatingType isEqualToString:@"1"])
-                {
-                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingPriceKey];
-                    [trackingDictionary setValue:@"RateProductPrice" forKey:kRIEventActionKey];
+                if ([component isKindOfClass:[JAAddRatingView class]]) {
+                    
+                    JAAddRatingView* ratingView = (JAAddRatingView*)component;
+                    
+                    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                    [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
+                    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                    [trackingDictionary setValue:@(ratingView.rating) forKey:kRIEventValueKey];
+                    
+                    if ([ratingView.fieldRatingStars.type isEqualToString:@"1"])
+                    {
+                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingPriceKey];
+                        [trackingDictionary setValue:@"RateProductPrice" forKey:kRIEventActionKey];
+                    }
+                    else if ([ratingView.fieldRatingStars.type isEqualToString:@"2"])
+                    {
+                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingAppearanceKey];
+                        [trackingDictionary setValue:@"RateProductAppearance" forKey:kRIEventActionKey];
+                    }
+                    else if ([ratingView.fieldRatingStars.type isEqualToString:@"3"])
+                    {
+                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingQualityKey];
+                        [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
+                    }
+                    else
+                    {
+                        // There is no indication about the default tracking for rating
+                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingKey];
+                        [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
+                    }
+                    
+                    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                    [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
+                    
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProduct]
+                                                              data:[trackingDictionary copy]];
+                    
+                    float value = [@(ratingView.rating) floatValue];
+                    [FBAppEvents logEvent:FBAppEventNameRated
+                               valueToSum:value
+                               parameters:@{FBAppEventParameterNameContentType: self.product.name,
+                                            FBAppEventParameterNameContentID: self.product.sku,
+                                            FBAppEventParameterNameMaxRatingValue: @5 }];
                 }
-                else if ([component.idRatingType isEqualToString:@"2"])
-                {
-                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingAppearanceKey];
-                    [trackingDictionary setValue:@"RateProductAppearance" forKey:kRIEventActionKey];
-                }
-                else if ([component.idRatingType isEqualToString:@"3"])
-                {
-                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingQualityKey];
-                    [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
-                }
-                else
-                {
-                    // There is no indication about the default tracking for rating
-                    [globalRateDictionary setValue:[NSNumber numberWithInt:component.rating] forKey:kRIEventRatingKey];
-                    [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
-                }
-                
-                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
-                
-                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProduct]
-                                                          data:[trackingDictionary copy]];
             }
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProductGlobal]
@@ -525,19 +657,19 @@ UIAlertViewDelegate
             }
             else if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {
-                [self.ratingDynamicForm validateFields:errorObject];
+                [currentDynamicForm validateFields:errorObject];
                 
                 [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
-                [self.ratingDynamicForm checkErrors];
+                [currentDynamicForm checkErrors];
                 
                 [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
             }
             else
             {
-                [self.ratingDynamicForm checkErrors];
+                [currentDynamicForm checkErrors];
                 
                 [self showMessage:STRING_ERROR success:NO];
             }
@@ -581,5 +713,58 @@ UIAlertViewDelegate
     }];
 }
 
+#pragma mark - Switch
 
+- (void)switchBetweenModes
+{
+    [self.reviewsDynamicForm resignResponder];
+    [self.ratingsDynamicForm resignResponder];
+    
+    for (int i = 0; i < self.ratingsDynamicForm.formViews.count; i++) {
+        JAAddRatingView* ratingView = [self.ratingsDynamicForm.formViews objectAtIndex:i];
+        JAAddRatingView* reviewView = [self.reviewsDynamicForm.formViews objectAtIndex:i];
+        
+        if (VALID_NOTEMPTY(ratingView, JAAddRatingView) && VALID_NOTEMPTY(reviewView, JAAddRatingView)) {
+            if (self.isShowingRating) {
+                reviewView.rating = ratingView.rating;
+            } else {
+                ratingView.rating = reviewView.rating;
+            }
+        }
+    }
+    
+    self.isShowingRating = !self.isShowingRating;
+    
+    CGFloat difference = self.ratingsContentView.frame.size.height - self.reviewsContentView.frame.size.height + kDistanceBetweenStarsAndText;
+    if (self.isShowingRating) {
+        self.ratingsContentView.hidden = NO;
+        self.reviewsContentView.hidden = YES;
+    } else {
+        difference = -difference;
+    }
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        [self.sendReviewButton setFrame:CGRectMake(self.sendReviewButton.frame.origin.x,
+                                                   self.sendReviewButton.frame.origin.y + difference,
+                                                   self.sendReviewButton.frame.size.width,
+                                                   self.sendReviewButton.frame.size.height)];
+        [self.centerView setFrame:CGRectMake(self.centerView.frame.origin.x,
+                                             self.centerView.frame.origin.y,
+                                             self.centerView.frame.size.width,
+                                             self.centerView.frame.size.height + difference)];
+        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
+                                                 self.centerView.frame.size.height + self.centerView.frame.origin.y);
+    } completion:^(BOOL finished) {
+        //do this only after animation
+        if (NO == self.isShowingRating) {
+            self.ratingsContentView.hidden = YES;
+            self.reviewsContentView.hidden = NO;
+        }
+    }];
+}
+
+-(void)hideKeyboards
+{
+    [self.reviewsDynamicForm resignResponder];
+}
 @end

@@ -9,7 +9,8 @@
 #import "RIConfiguration.h"
 
 NSString *const RI_USERNAME = @"rocket";
-NSString *const RI_PASSWORD = @"rock4me";
+NSString *const RI_PASSWORD = @"z7euN7qfRD769BP";
+//NSString *const RI_PASSWORD = @"rock4me";
 
 BOOL RI_MOBAPI_HEADERS_ENABLED = NO;
 NSString *const RI_MOBAPI_VERSION_HEADER_VERSION_NAME = @"X-ROCKET-MOBAPI-VERSION";
@@ -35,9 +36,9 @@ NSString *const RI_HTTP_USER_AGENT_HEADER_IPHONE_VALUE = @"iPhone: Mozilla/5.0 (
 NSString *const RI_HTTP_USER_AGENT_HEADER_IPAD_VALUE = @"iPad: Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10";
 
 NSString *const RI_COUNTRIES_URL = @"http://www.jumia.com/mobapi/availablecountries";
-NSString *const RI_COUNTRIES_URL_ALL = @"http://kaymu.com/jtmobapi/";
+NSString *const RI_COUNTRIES_URL_ALL = @"https://cld.pt/dl/download/40e5154f-fbe5-4b4d-abad-bef636d089e5/jtmobapi_040215";
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
-NSString *const RI_API_VERSION = @"v1.5/";
+NSString *const RI_API_VERSION = @"v1.6/";
 NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
 NSString *const RI_FORMS_INDEX = @"forms/index/";
 NSString *const RI_API_INFO = @"main/md5/";
@@ -49,7 +50,6 @@ NSString *const RI_API_REGISTER_CUSTOMER = @"customer/create/";
 NSString *const RI_API_LOGIN_CUSTOMER = @"customer/login/";
 NSString *const RI_API_FACEBOOK_LOGIN_CUSTOMER = @"customer/facebooklogin?setDevice=mobileApi&facebook=true";
 NSString *const RI_API_LOGOUT_CUSTOMER = @"customer/logout/";
-NSString *const RI_API_RATING_OPTIONS = @"rating/options/";
 NSString *const RI_API_GET_ORDERS = @"order/list";
 NSString *const RI_API_TRACK_ORDER = @"order/trackingorder/?ordernr=%@";
 NSString *const RI_API_SEARCH_SUGGESTIONS = @"search/suggest/";
@@ -70,3 +70,7 @@ NSString *const RI_API_FINISH_CHECKOUT = @"multistep/finish/";
 NSString *const RI_API_PROMOTIONS_URL = @"main/getstatic?key=mobile_promotions";
 NSString *const RI_RATE_CONVERSION = @"http://rate-exchange.appspot.com/currency?from=%@&to=EUR";
 NSString *const RI_GET_CAMPAIGN = @"campaign/get/?campaign_slug=%@";
+NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
+NSString *const RI_API_ADD_BUNDLE = @"order/addbundle/";
+NSString *const RI_API_PRODUCT_OFFERS = @"?all_offers=1";
+NSString *const RI_API_SELLER_RATING = @"?seller_rating=1&per_page=%d&page=%d";

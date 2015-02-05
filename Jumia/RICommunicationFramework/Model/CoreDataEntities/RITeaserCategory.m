@@ -156,7 +156,7 @@
     }
     
     if ([json objectForKey:@"homepage_id"]) {
-        newCategory.homePageId = [NSNumber numberWithInt:[[json objectForKey:@"homepage_id"] integerValue]];
+        newCategory.homePageId = [NSNumber numberWithInteger:[[json objectForKey:@"homepage_id"] integerValue]];
     }
     
     if ([json objectForKey:@"homepage_title"]) {
@@ -164,7 +164,7 @@
     }
     
     if ([json objectForKey:@"homepage_default"]) {
-        newCategory.homePageDefault = [NSNumber numberWithInt:[[json objectForKey:@"homepage_default"] integerValue]];
+        newCategory.homePageDefault = [NSNumber numberWithInteger:[[json objectForKey:@"homepage_default"] integerValue]];
     }
     
     if ([json objectForKey:@"homepage_layout"]) {

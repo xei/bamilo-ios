@@ -13,6 +13,9 @@
 
 @property (nonatomic, strong)UIButton* overlayButton;
 
+//redefinition
+@property (nonatomic, strong)NSString* title;
+
 @end
 
 @implementation JAClickableView
@@ -100,6 +103,19 @@
     [self bringSubviewToFront:self.overlayButton];
 }
 
+- (void)setTitle:(NSString*)title forState:(UIControlState)state;
+{
+    self.title = title;
+    [self.overlayButton setTitle:title forState:state];
+}
+- (void)setTitleColor:(UIColor*)color forState:(UIControlState)state;
+{
+    [self.overlayButton setTitleColor:color forState:state];
+}
+- (void)setFont:(UIFont*)font;
+{
+    [self.overlayButton.titleLabel setFont:font];
+}
 - (void)addTarget:(id)target
            action:(SEL)action
 forControlEvents:(UIControlEvents)controlEvents

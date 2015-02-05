@@ -49,8 +49,10 @@
 
 "string_new" = "NEW";
 "string_size" = "Size";
-"string_review" = "%@ review";
-"string_reviews" = "%@ reviews";
+"string_rating" = "1 rating";
+"string_ratings" = "%d ratings";
+"string_review" = "1 review";
+"string_reviews" = "%d reviews";
 "string_quantity" = "Quantity: %@";
 "products_sort_bestrated" = "Best Rating";
 "products_sort_popularity" = "Popularity";
@@ -251,7 +253,7 @@
 
 "reviews" = "Reviews";
 "more" = "More";
-"reviews_empty" = "This Product has no ratings, yet!";
+"reviews_empty" = "This Product has no reviews, yet!";
 
 "order_summary_label" = "Order Summary";
 "string_edit" = "Edit";
@@ -284,3 +286,18 @@
 "my_order_payment_status_label" = "Status:";
 "my_order_quantity_label" = "Qty.";
 "my_order_no_orders_label" = "You have placed no orders.";
+"like_us_on_facebook" = "Like us on Facebook";
+
+"bundle_title" = "Frequently Bought Together";
+"bundle_total_price" = "Total Price:";
+"buy_now" = "Buy Now";
+
+"other_sellers" = "Other Sellers";
+"same_product_from_other_sellers" = "Same Product from Other Sellers";
+"from" = "From";
+"product_delivery_time" = "Delivery Within:";
+"product_delivery_days" = "days";
+"number_offers_from_ios" = "%d Offers from";
+
+"write_full_review" = "Write a full review";
+"product_sold_by" = "Sold by:";

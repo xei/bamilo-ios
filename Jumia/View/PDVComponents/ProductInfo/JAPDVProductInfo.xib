@@ -8,7 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB" customClass="JAPDVProductInfo">
-            <rect key="frame" x="0.0" y="0.0" width="308" height="176"/>
+            <rect key="frame" x="0.0" y="0.0" width="308" height="220"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d9i-Z6-p93">
@@ -88,6 +88,24 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <view contentMode="scaleToFill" id="B5i-Sn-3fW" customClass="JAClickableView">
+                    <rect key="frame" x="0.0" y="176" width="308" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wbz-UQ-Ysx">
+                            <rect key="frame" x="6" y="0.0" width="278" height="28"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_moreinfo" id="d18-CH-shy">
+                            <rect key="frame" x="292" y="16" width="7" height="12"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="3KQ-ig-dJC">
                     <rect key="frame" x="0.0" y="44" width="308" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -103,6 +121,11 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                 </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Sbg-zr-Zdu">
+                    <rect key="frame" x="0.0" y="176" width="308" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
@@ -112,6 +135,9 @@
                 <outlet property="goToSpecificationsImageView" destination="AxB-nz-fog" id="a5H-xA-mH3"/>
                 <outlet property="numberOfReviewsLabel" destination="orw-SE-ilC" id="wgS-HP-rRa"/>
                 <outlet property="oldPriceLabel" destination="d9i-Z6-p93" id="ZYq-VY-xGm"/>
+                <outlet property="otherOffersClickableView" destination="B5i-Sn-3fW" id="vGl-aE-0DE"/>
+                <outlet property="otherOffersLabel" destination="wbz-UQ-Ysx" id="hwf-19-I2X"/>
+                <outlet property="otherOffersTopSeparator" destination="Sbg-zr-Zdu" id="Oeo-tG-YKl"/>
                 <outlet property="priceSeparator" destination="3KQ-ig-dJC" id="62y-To-c2F"/>
                 <outlet property="ratingsSeparator" destination="XlL-kN-JXn" id="0zg-ZA-JZf"/>
                 <outlet property="reviewsClickableView" destination="KbH-OZ-BCW" id="en7-59-QbP"/>

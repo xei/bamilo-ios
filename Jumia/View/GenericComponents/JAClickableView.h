@@ -12,7 +12,11 @@
 
 @property (nonatomic, assign)BOOL selected;
 @property (nonatomic, assign)BOOL enabled;
+@property (nonatomic, readonly)NSString* title;
 
+- (void)setTitle:(NSString*)title forState:(UIControlState)state;
+- (void)setTitleColor:(UIColor*)color forState:(UIControlState)state;
+- (void)setFont:(UIFont*)font;
 - (void)addTarget:(id)target
            action:(SEL)action
  forControlEvents:(UIControlEvents)controlEvents;
