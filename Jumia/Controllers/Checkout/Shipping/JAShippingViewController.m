@@ -609,7 +609,7 @@ UICollectionViewDelegateFlowLayout
             if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
             {
                 NSInteger index = indexPath.row - self.collectionViewIndexSelected.row - 2;
-                NSLog(@"sizeForItemAtIndexPath %d = %@", indexPath.row, [[self.pickupStationHeightsForRegion objectAtIndex:index] stringValue]);
+                NSLog(@"sizeForItemAtIndexPath %ld = %@", (long)indexPath.row, [[self.pickupStationHeightsForRegion objectAtIndex:index] stringValue]);
                 sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, [[self.pickupStationHeightsForRegion objectAtIndex:index] floatValue]);
             }
         }
