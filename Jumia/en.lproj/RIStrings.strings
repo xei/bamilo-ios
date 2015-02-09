@@ -301,3 +301,4 @@
 
 "write_full_review" = "Write a full review";
 "product_sold_by" = "Sold by:";
+"fee_include" = "(%@ incl.)";

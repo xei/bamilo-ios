@@ -467,7 +467,6 @@
     
     // Remove left and right margins, plus extra 12.0f so that we have a margin between the fields.
     // The division by 2 is because we have 2 fields in each line.
-    CGFloat subTotalFieldsWidth = (self.cartScrollView.frame.size.width - (2 * horizontalMargin) - 12.0f) / 2;
     
     // subtotal
     self.subtotalView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.couponView.frame) + 3.0f, self.cartScrollView.frame.size.width, 0.0f)];
@@ -499,21 +498,24 @@
         [self.articlesCount setText:[NSString stringWithFormat:STRING_ARTICLES, cartCount]];
     }
     [self.articlesCount sizeToFit];
-    [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, subTotalFieldsWidth, self.articlesCount.frame.size.height)];
+    [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, 50.f, self.articlesCount.frame.size.height)];
     [self.subtotalView addSubview:self.articlesCount];
     
+    CGRect articleNumberWidth = [self.articlesCount.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
+                                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                                    attributes:@{NSFontAttributeName:self.articlesCount.font} context:nil];
     self.totalPriceView = [[JAPriceView alloc] init];
     
     if(VALID_NOTEMPTY([[self cart] cartUnreducedValueFormatted], NSString))
     {
         [self.totalPriceView loadWithPrice:[[self cart] cartUnreducedValueFormatted]
-                              specialPrice:[[self cart] cartCleanValueFormatted]
+                              specialPrice:[[self cart] cartValueFormatted]
                                   fontSize:11.0f
                      specialPriceOnTheLeft:YES];
     }
     else
     {
-        [self.totalPriceView loadWithPrice:[[self cart] cartCleanValueFormatted]
+        [self.totalPriceView loadWithPrice:[[self cart] cartValueFormatted]
                               specialPrice:nil
                                   fontSize:11.0f
                      specialPriceOnTheLeft:YES];
@@ -549,16 +551,17 @@
     self.cartVatLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.cartVatLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
     [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.cartVatLabel setText:STRING_VAT];
+    [self.cartVatLabel setText:[NSString stringWithFormat:STRING_TAX_INC, STRING_VAT]];
     [self.cartVatLabel sizeToFit];
     [self.cartVatLabel setBackgroundColor:[UIColor clearColor]];
     
-    self.cartVatValue = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.cartVatValue setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
-    [self.cartVatValue setTextColor:UIColorFromRGB(0x666666)];
-    [self.cartVatValue setText:[[self cart] vatValueFormatted]];
-    [self.cartVatValue sizeToFit];
-    [self.cartVatValue setBackgroundColor:[UIColor clearColor]];
+    [self.cartVatLabel setFrame:CGRectMake(articleNumberWidth.size.width + 10.0f,
+                                           self.articlesCount.frame.origin.y,
+                                           self.cartVatLabel.frame.size.width,
+                                           self.cartVatLabel.frame.size.height)];
+    
+    CGFloat extraCostYPos = CGRectGetMaxY(self.articlesCount.frame);
+    
     
     if(VALID_NOTEMPTY(priceRuleKeysString, NSString) && VALID_NOTEMPTY(priceRuleValuesString, NSString))
     {
@@ -591,17 +594,8 @@
         
         [self.subtotalView addSubview:self.priceRulesValue];
         
-        
-        [self.cartVatLabel setFrame:CGRectMake(6.0f,
-                                               CGRectGetMaxY(self.priceRulesLabel.frame),
-                                               self.cartVatLabel.frame.size.width,
-                                               self.cartVatLabel.frame.size.height)];
-        
-        
-        [self.cartVatValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.cartVatValue.frame.size.width - 4.0f,
-                                               CGRectGetMaxY(self.priceRulesValue.frame),
-                                               self.cartVatValue.frame.size.width,
-                                               self.cartVatValue.frame.size.height)];
+        extraCostYPos = CGRectGetMaxY(self.articlesCount.frame) + self.priceRulesLabel.frame.size.height + 4.0f;
+       
     }
     else
     {
@@ -614,18 +608,11 @@
             [self.priceRulesValue removeFromSuperview];
         }
         
-        [self.cartVatLabel setFrame:CGRectMake(6.0f,
-                                               CGRectGetMaxY(self.articlesCount.frame) + 4.0f,
-                                               self.cartVatLabel.frame.size.width,
-                                               self.cartVatLabel.frame.size.height)];
-        
-        [self.cartVatValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.cartVatValue.frame.size.width - 4.0f,
-                                               CGRectGetMaxY(self.articlesCount.frame) + 4.0f,
-                                               self.cartVatValue.frame.size.width,
-                                               self.cartVatValue.frame.size.height)];
+        extraCostYPos = CGRectGetMaxY(self.articlesCount.frame);
+
     }
     [self.subtotalView addSubview:self.cartVatLabel];
-    [self.subtotalView addSubview:self.cartVatValue];
+
     
     self.extraCostsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.extraCostsLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
@@ -634,7 +621,7 @@
     [self.extraCostsLabel sizeToFit];
     [self.extraCostsLabel setBackgroundColor:[UIColor clearColor]];
     [self.extraCostsLabel setFrame:CGRectMake(6.0f,
-                                              CGRectGetMaxY(self.cartVatLabel.frame),
+                                              extraCostYPos,
                                               self.extraCostsLabel.frame.size.width,
                                               self.extraCostsLabel.frame.size.height)];
     [self.subtotalView addSubview:self.extraCostsLabel];
@@ -646,7 +633,7 @@
     [self.extraCostsValue sizeToFit];
     [self.extraCostsValue setBackgroundColor:[UIColor clearColor]];
     [self.extraCostsValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.extraCostsValue.frame.size.width - 4.0f,
-                                              CGRectGetMaxY(self.cartVatLabel.frame),
+                                              extraCostYPos,
                                               self.extraCostsValue.frame.size.width,
                                               self.extraCostsValue.frame.size.height)];
     [self.subtotalView addSubview:self.extraCostsValue];
