@@ -103,6 +103,10 @@
     [self bringSubviewToFront:self.overlayButton];
 }
 
+- (void)setImage:(UIImage*)image forState:(UIControlState)state;
+{
+    [self.overlayButton setImage:image forState:state];
+}
 - (void)setTitle:(NSString*)title forState:(UIControlState)state;
 {
     self.title = title;

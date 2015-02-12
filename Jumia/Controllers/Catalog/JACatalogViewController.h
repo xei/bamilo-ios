@@ -7,6 +7,7 @@
 //
 
 #import "JABaseViewController.h"
+#import "JACatalogTopView.h"
 #import "JAPickerScrollView.h"
 #import "RICategory.h"
 #import "JAMainFiltersViewController.h"
@@ -15,6 +16,7 @@
 
 @interface JACatalogViewController : JABaseViewController
 <
+    JACatalogTopViewDelegate,
     JAPickerScrollViewDelegate,
     UICollectionViewDataSource,
     UICollectionViewDelegate,
