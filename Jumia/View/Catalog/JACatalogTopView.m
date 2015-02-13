@@ -8,8 +8,6 @@
 
 #import "JACatalogTopView.h"
 
-#define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
-
 @interface JACatalogTopView()
 
 @property (weak, nonatomic) IBOutlet UIView *separatorView;
@@ -30,6 +28,9 @@
         [self.viewModeButton setImage:[UIImage imageNamed:@"gridIcon_normal"] forState:UIControlStateNormal];
         [self.viewModeButton setImage:[UIImage imageNamed:@"gridIcon_highlighted"] forState:UIControlStateSelected];
         [self.viewModeButton setImage:[UIImage imageNamed:@"gridIcon_highlighted"] forState:UIControlStateHighlighted];
+    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(viewModeChanged)]) {
+        [self.delegate viewModeChanged];
     }
 }
 
@@ -126,12 +127,6 @@
 {
     //reverse selection
     self.gridSelected = !self.gridSelected;
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.gridSelected] forKey:JACatalogGridSelected];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-        
-    if (self.delegate && [self.delegate respondsToSelector:@selector(viewModeChanged)]) {
-        [self.delegate viewModeChanged];
-    }
 }
 
 

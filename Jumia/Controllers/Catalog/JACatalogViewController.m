@@ -21,6 +21,7 @@
 #import "JAAppDelegate.h"
 #import <FacebookSDK/FacebookSDK.h>
 
+#define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
 #define JACatalogViewControllerMaxProducts_ipad 46
@@ -236,6 +237,9 @@
     
     self.sortingMethod = RICatalogSortingPopularity;
     [self.catalogTopView setSorting:self.sortingMethod];
+    
+    NSNumber* gridSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
+    self.catalogTopView.gridSelected = [gridSelected boolValue];
 }
 
 - (void)getCategories
@@ -1086,7 +1090,10 @@
 }
 
 - (void)viewModeChanged;
-{    
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.catalogTopView.gridSelected] forKey:JACatalogGridSelected];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
 
