@@ -11,6 +11,7 @@
 
 @interface JASortingView()
 
+@property (nonatomic, strong) UIControl* backgroundControl;
 @property (nonatomic, assign) RICatalogSorting selectedIndex;
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) JAClickableView* doneClickableView;
@@ -25,7 +26,13 @@
     self.selectedIndex = selectedSorting;
     
     self.frame = frame;
-    self.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+    self.backgroundColor = [UIColor clearColor];
+    
+    self.backgroundControl = [UIControl new];
+    self.backgroundControl.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.7];
+    [self.backgroundControl setFrame:self.bounds];
+    [self.backgroundControl addTarget:self action:@selector(removeFromSuperview) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.backgroundControl];
     
     CGFloat margin = 6.0f;
     
@@ -35,8 +42,10 @@
                                                                                self.frame.size.width - margin*2,
                                                                                buttonHeight)];
     self.doneClickableView.layer.cornerRadius = 5.0f;
-    [self.doneClickableView setTitle:STRING_CANCEL forState:UIControlStateNormal];
     self.doneClickableView.backgroundColor = [UIColor whiteColor];
+    [self.doneClickableView setTitle:STRING_CANCEL forState:UIControlStateNormal];
+    [self.doneClickableView setFont:[UIFont fontWithName:@"HelveticaNeue" size:17.0f]];
+    [self.doneClickableView setTitleColor:UIColorFromRGB(0x06739e) forState:UIControlStateNormal];
     [self.doneClickableView addTarget:self action:@selector(removeFromSuperview) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.doneClickableView];
     
@@ -98,7 +107,8 @@
     
     if (0 == indexPath.row) {
         [clickView setTitle:[STRING_SORT_BY uppercaseString] forState:UIControlStateNormal];
-        [clickView setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [clickView setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
+        [clickView setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
         clickView.userInteractionEnabled = NO;
         
         return cell;
@@ -110,7 +120,8 @@
     
     NSString* option = [kJASORTINGVIEW_OPTIONS_ARRAY objectAtIndex:realIndex];
     [clickView setTitle:option forState:UIControlStateNormal];
-    [clickView setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [clickView setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [clickView setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f]];
     
     if (realIndex == self.selectedIndex) {
         UIImage* checkImage = [UIImage imageNamed:@"selectionCheckmark"];
