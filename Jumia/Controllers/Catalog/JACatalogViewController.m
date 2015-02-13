@@ -18,6 +18,7 @@
 #import "JAClickableView.h"
 #import "JAUndefinedSearchView.h"
 #import "JAFilteredNoResultsView.h"
+#import "JAAppDelegate.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
@@ -31,15 +32,11 @@
 @property (nonatomic, strong)JACatalogWizardView* wizardView;
 @property (nonatomic, strong) JAFilteredNoResultsView *filteredNoResultsView;
 
-@property (weak, nonatomic) IBOutlet JAClickableView *filterButton;
-@property (weak, nonatomic) IBOutlet JAClickableView *viewToggleButton;
-@property (nonatomic, strong)UIImageView* viewToggleButtonIcon;
-@property (nonatomic, assign)BOOL gridSelected;
-@property (weak, nonatomic) IBOutlet JAPickerScrollView *sortingScrollView;
+@property (nonatomic, strong) JACatalogTopView* catalogTopView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *catalogTopButton;
 @property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
-@property (nonatomic, strong) NSMutableDictionary* productsMap;
+@property (nonatomic, strong) NSMutableArray* productsArray;
 @property (nonatomic, strong) NSArray* filtersArray;
 @property (nonatomic, strong) NSArray* categoriesArray;
 @property (nonatomic, strong) RICategory* filterCategory;
@@ -58,9 +55,9 @@
 @property (nonatomic, assign) NSInteger numberOfCellsInScreen;
 @property (nonatomic, assign) NSInteger maxProducts;
 
-@property (nonatomic, assign) NSInteger lastIndex;
-
 @property (nonatomic, assign) RIApiResponse apiResponse;
+
+@property (nonatomic, strong) JASortingView* sortingView;
 
 @end
 
@@ -109,10 +106,7 @@
             [self.wizardView removeFromSuperview];
         }
     
-        self.sortingScrollView.hidden = YES;
-        self.sortingScrollView.disableDelagation = YES;
-        self.viewToggleButton.hidden = YES;
-        self.filterButton.hidden = YES;
+        self.catalogTopView.hidden = YES;
         
         CGRect frame = CGRectMake(0.0,
                                   0.0,
@@ -132,12 +126,9 @@
 -(void)pressedEditFiltersButton:(JAFilteredNoResultsView *)view
 {
     [self.filteredNoResultsView removeFromSuperview];
-    self.sortingScrollView.hidden = NO;
-    self.viewToggleButton.hidden = NO;
-    self.filterButton.hidden = NO;
-    self.sortingScrollView.disableDelagation = NO;
+    self.catalogTopView.hidden = NO;
     
-    [self filterButtonPressed:nil];
+    [self filterButtonPressed];
 }
 
 - (void)showLoading
@@ -179,42 +170,11 @@
         self.maxProducts = JACatalogViewControllerMaxProducts;
     }
     
-    UIImage* filterIcon = [UIImage imageNamed:@"filterIcon"];
-    UIImageView* filterIconView = [[UIImageView alloc] initWithImage:filterIcon];
-    [filterIconView setFrame:CGRectMake((self.filterButton.bounds.size.width - filterIcon.size.width) / 2,
-                                        (self.filterButton.bounds.size.height - filterIcon.size.height) / 2,
-                                        filterIcon.size.width,
-                                        filterIcon.size.height)];
-    filterIconView.center = self.filterButton.center;
-    [self.filterButton addSubview:filterIconView];
-    [self.filterButton addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    self.gridSelected = NO;
-    UIImage* viewToggleIcon = [UIImage imageNamed:@"gridIcon"];
-    NSNumber *gridSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
-    if(VALID_NOTEMPTY(gridSelected, NSNumber) && [gridSelected boolValue])
-    {
-        self.gridSelected = [gridSelected boolValue];
-        viewToggleIcon = [UIImage imageNamed:@"listIcon"];
-    }
-    
-    self.viewToggleButtonIcon = [[UIImageView alloc] initWithImage:viewToggleIcon];
-    [self.viewToggleButtonIcon setFrame:CGRectMake((self.viewToggleButton.bounds.size.width - viewToggleIcon.size.width) / 2,
-                                                   (self.viewToggleButton.bounds.size.height - viewToggleIcon.size.height) / 2,
-                                                   viewToggleIcon.size.width,
-                                                   viewToggleIcon.size.height)];
-    [self.viewToggleButton addSubview:self.viewToggleButtonIcon];
-    [self.viewToggleButton addTarget:self action:@selector(viewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self setupViews];
     
     if (VALID_NOTEMPTY(self.searchString, NSString) || VALID_NOTEMPTY(self.category, RICategory) || VALID_NOTEMPTY(self.catalogUrl, NSString))
     {
-        NSArray* sortList = [NSArray arrayWithObjects:STRING_BEST_RATING, STRING_POPULARITY, STRING_NEW_IN, STRING_PRICE_UP, STRING_PRICE_DOWN, STRING_NAME, STRING_BRAND, nil];
-        
-        //this will trigger load methods
-        [self.sortingScrollView setOptions:sortList];
+        [self loadMoreProducts];
     }
     else
     {
@@ -246,15 +206,18 @@
 
 - (void)setupViews
 {
-    self.productsMap = [NSMutableDictionary new];
+    self.productsArray = [NSMutableArray new];
     
     self.isFirstLoadTracking = NO;
-    self.filterButton.backgroundColor = JACatalogViewControllerButtonColor;
-    self.filterButton.enabled = NO;
-    self.viewToggleButton.backgroundColor = JACatalogViewControllerButtonColor;
     
-    self.sortingScrollView.delegate = self;
-    self.sortingScrollView.startingIndex = 1;
+    self.catalogTopView = [JACatalogTopView getNewJACatalogTopView];
+    [self.catalogTopView setFrame:CGRectMake(0.0f,
+                                             0.0f,
+                                             self.view.frame.size.width,
+                                             self.catalogTopView.frame.size.height)];
+    self.catalogTopView.gridSelected = NO;
+    self.catalogTopView.delegate = self;
+    [self.view addSubview:self.catalogTopView];
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -272,7 +235,11 @@
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
-    self.sortingMethod = NSIntegerMax;
+    self.sortingMethod = RICatalogSortingPopularity;
+    [self.catalogTopView setSorting:self.sortingMethod];
+    
+    NSNumber* gridSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
+    self.catalogTopView.gridSelected = [gridSelected boolValue];
 }
 
 - (void)getCategories
@@ -311,16 +278,7 @@
          {
              self.navBarLayout.title = self.category.name;
              
-             NSArray* sortList = [NSArray arrayWithObjects:STRING_BEST_RATING, STRING_POPULARITY, STRING_NEW_IN, STRING_PRICE_UP, STRING_PRICE_DOWN, STRING_NAME, STRING_BRAND, nil];
-             
-             if(VALID_NOTEMPTY(self.sorting, NSNumber))
-             {
-                 self.sortingScrollView.startingIndex = [self.sorting integerValue];
-                 self.sorting = nil;
-             }
-             
-             //this will trigger load methods
-             [self.sortingScrollView setOptions:sortList];
+             [self loadMoreProducts];
          }
          else
          {
@@ -329,7 +287,7 @@
              {
                  noConnection = YES;
              }
-             [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(getCategories) objects:nil];
+             [self showErrorView:noConnection startingY:CGRectGetMaxY(self.catalogTopView.frame) selector:@selector(getCategories) objects:nil];
          }
          
          [self hideLoading];
@@ -349,7 +307,7 @@
              {
                  noConnection = YES;
              }
-             [self showErrorView:noConnection startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(getCategories) objects:nil];
+             [self showErrorView:noConnection startingY:CGRectGetMaxY(self.catalogTopView.frame) selector:@selector(getCategories) objects:nil];
          }
          
          [self hideLoading];
@@ -366,7 +324,6 @@
     BOOL alreadyShowedWizardCatalog = [[NSUserDefaults standardUserDefaults] boolForKey:kJACatalogWizardUserDefaultsKey];
     if(alreadyShowedWizardCatalog == NO)
     {
-        [self hideLoading]; 
         self.wizardView = [[JACatalogWizardView alloc] initWithFrame:self.view.bounds];
         [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJACatalogWizardUserDefaultsKey];
@@ -378,42 +335,36 @@
         
         [self.undefinedView removeFromSuperview];
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
-                                                                           CGRectGetMaxY(self.sortingScrollView.frame),
+                                                                           CGRectGetMaxY(self.catalogTopView.frame),
                                                                            self.view.frame.size.width - 12.0f,
-                                                                           self.view.frame.size.height - CGRectGetMaxY(self.sortingScrollView.frame) - 12.0f)];
+                                                                           self.view.frame.size.height - CGRectGetMaxY(self.catalogTopView.frame) - 12.0f)];
     }
 }
 
 - (void)resetCatalog
 {
-    [self.productsMap enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [self.productsMap setObject:[NSMutableArray new] forKey:key];
-    }];
+    self.productsArray = [NSMutableArray new];
     
     self.loadedEverything = NO;
 }
 
-- (void)addProdutsToMap:(NSArray*)products
+- (void)addProductsToTable:(NSArray*)products
 {
     self.apiResponse = RIApiResponseSuccess;
     [self removeErrorView];
     
-    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-    
     BOOL isEmpty = NO;
-    if(ISEMPTY(productsArray))
+    if(ISEMPTY(self.productsArray))
     {
         isEmpty = YES;
-        productsArray = [NSMutableArray new];
+        self.productsArray = [NSMutableArray new];
     }
     
     if(VALID_NOTEMPTY(products, NSArray))
     {
-        [productsArray addObjectsFromArray:products];
+        [self.productsArray addObjectsFromArray:products];
     }
     
-    [self.productsMap setObject:productsArray forKey:key];
     [self.collectionView reloadData];
     if(isEmpty)
     {
@@ -449,7 +400,7 @@
                                                                               
                                                                               if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
                                                                                   self.filtersArray = filters;
-                                                                                  self.filterButton.enabled = YES;
+                                                                                  self.catalogTopView.filterButton.enabled = YES;
                                                                               }
                                                                               
                                                                               // Track events only in the first load of the products
@@ -521,11 +472,9 @@
                                                                               self.navBarLayout.subTitle = [NSString stringWithFormat:@"%ld", (long)[productCount integerValue]];
                                                                               [self reloadNavBar];
                                                                               
-                                                                              [self addProdutsToMap:results];
+                                                                              [self addProductsToTable:results];
                                                                               
-                                                                              NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-                                                                              NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-                                                                              if (0 == results.count || results.count < self.maxProducts || [productCount integerValue] == productsArray.count)
+                                                                              if (0 == results.count || results.count < self.maxProducts || [productCount integerValue] == self.productsArray.count)
                                                                               {
                                                                                   self.loadedEverything = YES;
                                                                               }
@@ -538,9 +487,7 @@
                                                                               [self removeErrorView];
                                                                               self.searchSuggestionOperationID = nil;
                                                                               
-                                                                              NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-                                                                              NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-                                                                              if(VALID_NOTEMPTY(productsArray, NSArray))
+                                                                              if(VALID_NOTEMPTY(self.productsArray, NSArray))
                                                                               {
                                                                                   NSString *erroMessasge = STRING_ERROR;
                                                                                   if (RIApiResponseNoInternetConnection == apiResponse)
@@ -560,12 +507,12 @@
                                                                                   {
                                                                                       if (RIApiResponseNoInternetConnection == apiResponse)
                                                                                       {
-                                                                                          [self showErrorView:YES startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+                                                                                          [self showErrorView:YES startingY:CGRectGetMaxY(self.catalogTopView.frame) selector:@selector(loadMoreProducts) objects:nil];
                                                                                           
                                                                                       }
                                                                                       else if(RIApiResponseAPIError == apiResponse)
                                                                                       {
-                                                                                          [self showNoResultsView:CGRectGetMaxY(self.sortingScrollView.frame) undefinedSearchTerm:undefSearchTerm];
+                                                                                          [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:undefSearchTerm];
                                                                                       }
                                                                                   }
                                                                               }
@@ -613,7 +560,7 @@
                                                                           
                                                                           if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
                                                                               self.filtersArray = filters;
-                                                                              self.filterButton.enabled = YES;
+                                                                              self.catalogTopView.filterButton.enabled = YES;
                                                                           }
                                                                           
                                                                           RICategory *category = nil;
@@ -623,9 +570,8 @@
                                                                           }
                                                                           
                                                                           NSInteger productCountValue = [productCount intValue];
-                                                                          NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-                                                                          NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-                                                                          if (0 == products.count || products.count < self.maxProducts || productCountValue == productsArray.count)
+
+                                                                          if (0 == products.count || products.count < self.maxProducts || productCountValue == self.productsArray.count)
                                                                           {
                                                                               self.loadedEverything = YES;
                                                                           }
@@ -735,7 +681,7 @@
                                                                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewGTMListing]
                                                                                                                     data:[trackingDictionary copy]];
                                                                           
-                                                                          [self addProdutsToMap:products];
+                                                                          [self addProductsToTable:products];
                                                                           
                                                                           self.isLoadingMoreProducts = NO;
                                                                           [self hideLoading];
@@ -745,9 +691,7 @@
                                                                           [self removeErrorView];
                                                                           self.getProductsOperationID = nil;
                                                                           
-                                                                          NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-                                                                          NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-                                                                          if(VALID_NOTEMPTY(productsArray, NSArray))
+                                                                          if(VALID_NOTEMPTY(self.productsArray, NSArray))
                                                                           {
                                                                               NSString *erroMessasge = STRING_ERROR;
                                                                               if (RIApiResponseNoInternetConnection == apiResponse)
@@ -767,12 +711,12 @@
                                                                               {
                                                                                   if (RIApiResponseNoInternetConnection == apiResponse)
                                                                                   {
-                                                                                      [self showErrorView:YES startingY:CGRectGetMaxY(self.sortingScrollView.frame) selector:@selector(loadMoreProducts) objects:nil];
+                                                                                      [self showErrorView:YES startingY:CGRectGetMaxY(self.catalogTopView.frame) selector:@selector(loadMoreProducts) objects:nil];
 
                                                                                   }
                                                                                   else if(RIApiResponseAPIError == apiResponse)
                                                                                   {
-                                                                                      [self showNoResultsView:CGRectGetMaxY(self.sortingScrollView.frame) undefinedSearchTerm:nil];
+                                                                                      [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:nil];
                                                                                   }
                                                                               }
                                                                           }
@@ -788,26 +732,14 @@
 - (NSInteger)getCurrentPage
 {
     NSInteger currentPage = 0;
-    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-    if (VALID_NOTEMPTY(productsArray, NSMutableArray))
+    if (VALID_NOTEMPTY(self.productsArray, NSMutableArray))
     {
-        currentPage = productsArray.count / self.maxProducts;
+        currentPage = self.productsArray.count / self.maxProducts;
     }
     return currentPage;
 }
 
 #pragma mark - Actions
-
-- (IBAction)swipeRight:(id)sender
-{
-    [self.sortingScrollView scrollRightAnimated:YES];
-}
-
-- (IBAction)swipeLeft:(id)sender
-{
-    [self.sortingScrollView scrollLeftAnimated:YES];
-}
 
 - (CGSize)getLayoutItemSizeForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -818,7 +750,7 @@
         
         if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
             
-            if (self.gridSelected) {
+            if (self.catalogTopView.gridSelected) {
                 width = 248.0f;
                 height = JACatalogViewControllerGridCellHeight_ipad;
             } else {
@@ -826,7 +758,7 @@
                 height = JACatalogViewControllerListCellHeight_ipad;
             }
         } else {
-            if (self.gridSelected) {
+            if (self.catalogTopView.gridSelected) {
                 width = 196.0f;
                 height = JACatalogViewControllerGridCellHeight_ipad;
             } else {
@@ -835,7 +767,7 @@
             }
         }
     } else {
-        if (self.gridSelected) {
+        if (self.catalogTopView.gridSelected) {
             width = (self.collectionView.frame.size.width / 2) - 2;
             height = JACatalogViewControllerGridCellHeight;
         } else {
@@ -860,7 +792,7 @@
             
         }
     } else {
-        if (self.gridSelected) {
+        if (self.catalogTopView.gridSelected) {
             
         } else {
             spacing = 3.0f;
@@ -872,7 +804,7 @@
 
 - (void)changeViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if (self.gridSelected) {
+    if (self.catalogTopView.gridSelected) {
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
                 self.cellIdentifier = @"gridCell_ipad_portrait";
@@ -906,7 +838,7 @@
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-    if (self.gridSelected) {
+    if (self.catalogTopView.gridSelected) {
         [trackingDictionary setValue:@"Grid" forKey:kRIEventActionKey];
     } else {
         [trackingDictionary setValue:@"List" forKey:kRIEventActionKey];
@@ -918,7 +850,7 @@
 
 - (NSInteger)getNumberOfCellsInScreenForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if (self.gridSelected) {
+    if (self.catalogTopView.gridSelected) {
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
                 return 15;
@@ -950,9 +882,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-    return productsArray.count;
+    return self.productsArray.count;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -970,15 +900,13 @@
         self.catalogTopButton.hidden = NO;
     }
     
-    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-    if (!self.loadedEverything && productsArray.count - self.numberOfCellsInScreen <= indexPath.row)
+    if (!self.loadedEverything && self.productsArray.count - self.numberOfCellsInScreen <= indexPath.row)
     {
         self.catalogTopButton.hidden = YES;
         [self loadMoreProducts];
     }
     
-    RIProduct *product = [productsArray objectAtIndex:indexPath.row];
+    RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
     
     JACatalogCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
     cell.favoriteButton.tag = indexPath.row;
@@ -1003,11 +931,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-    RIProduct *product = [productsArray objectAtIndex:indexPath.row];
+    RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
     
-    NSInteger count = productsArray.count;
+    NSInteger count = self.productsArray.count;
     
     if (count > 20) {
         count = 20;
@@ -1038,40 +964,6 @@
     }
 }
 
-#pragma mark - JAPickerScrollViewDelegate
-
-- (void)selectedIndex:(NSInteger)index
-{
-    if (index != self.sortingMethod)
-    {
-        self.sortingMethod = index;
-        
-        self.apiResponse = RIApiResponseSuccess;
-        [self removeErrorView];
-        
-        NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-        NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-        if(ISEMPTY(productsArray))
-        {
-            [self loadMoreProducts];
-        }
-        else
-        {
-            [self.collectionView reloadData];
-            [self.collectionView setContentOffset:CGPointZero animated:NO];
-        }
-        
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:self.title forKey:kRIEventLabelKey];
-        [trackingDictionary setValue:@"SortingOnCatalog" forKey:kRIEventActionKey];
-        [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-        [trackingDictionary setValue:[RIProduct sortingName:self.sortingMethod] forKey:kRIEventSortTypeKey];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSort]
-                                                  data:[trackingDictionary copy]];
-    }
-}
-
 #pragma mark - JAMainFiltersViewControllerDelegate
 
 - (void)updatedFiltersAndCategory:(RICategory *)category;
@@ -1081,6 +973,7 @@
     [trackingDictionary setValue:STRING_FILTERS forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     
+    BOOL filtersSelected = NO;
     if(VALID_NOTEMPTY(self.filtersArray, NSArray))
     {
         for(RIFilter *filter in self.filtersArray)
@@ -1099,6 +992,8 @@
                                                                       data:[NSDictionary dictionaryWithObject:filter.name forKey:kRIEventFilterTypeKey]];
                             
                             [trackingDictionary setObject:filter.name forKey:kRIEventPriceFilterKey];
+                            
+                            filtersSelected = YES;
                         }
                     }
                 } else
@@ -1118,6 +1013,8 @@
                             {
                                 [trackingDictionary setObject:filter.name forKey:kRIEventColorFilterKey];
                             }
+                            
+                            filtersSelected = YES;
                         }
                     }
                 }
@@ -1130,11 +1027,14 @@
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventIndividualFilter]
                                                   data:[NSDictionary dictionaryWithObject:@"category" forKey:kRIEventFilterTypeKey]];
         [trackingDictionary setObject:@"category" forKey:kRIEventCategoryFilterKey];
+        
+        filtersSelected = YES;
     }
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFilter]
                                               data:[trackingDictionary copy]];
     
+    [self.catalogTopView setFilterSelected:filtersSelected];
     self.filterCategory = category;
     [self resetCatalog];
     [self loadMoreProducts];
@@ -1143,11 +1043,9 @@
 #pragma mark - JAPDVViewControllerDelegate
 - (void)changedFavoriteStateOfProduct:(RIProduct*)product;
 {
-    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-    for (int i = 0; i < productsArray.count; i++)
+    for (int i = 0; i < self.productsArray.count; i++)
     {
-        RIProduct* currentProduct = [productsArray objectAtIndex:i];
+        RIProduct* currentProduct = [self.productsArray objectAtIndex:i];
         if ([currentProduct.sku isEqualToString:product.sku])
         {
             currentProduct.favoriteAddDate = product.favoriteAddDate;
@@ -1156,9 +1054,9 @@
     }
 }
 
-#pragma mark - Button actions
+#pragma mark - JACatalogTopViewDelegate
 
-- (IBAction)filterButtonPressed:(id)sender
+- (void)filterButtonPressed
 {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
     [userInfo setObject:self forKey:@"delegate"];
@@ -1181,23 +1079,26 @@
                                                       userInfo:userInfo];
 }
 
-- (IBAction)viewButtonPressed:(id)sender
+- (void)sortingButtonPressed;
 {
-    //reverse selection
-    self.gridSelected = !self.gridSelected;
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.gridSelected] forKey:JACatalogGridSelected];
+    [self.sortingView removeFromSuperview];
+    self.sortingView = [[JASortingView alloc] init];
+    self.sortingView.delegate = self;
+    UIView* windowView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
+    [self.sortingView setupWithFrame:windowView.bounds selectedSorting:self.sortingMethod];
+    [windowView addSubview:self.sortingView];
+    [self.sortingView animateIn];
+}
+
+- (void)viewModeChanged;
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.catalogTopView.gridSelected] forKey:JACatalogGridSelected];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    UIImage* image;
-    if (self.gridSelected) {
-        image = [UIImage imageNamed:@"listIcon"];
-    } else {
-        image = [UIImage imageNamed:@"gridIcon"];
-    }
-    [self.viewToggleButtonIcon setImage:image];
     
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
+
+#pragma mark - Button actions
 
 - (IBAction)catalogTopButtonPressed:(id)sender
 {
@@ -1213,10 +1114,7 @@
 
 - (void)continueAddingToFavouritesWithButton:(UIButton *)button
 {
-    NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-    NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-    
-    RIProduct* product = [productsArray objectAtIndex:button.tag];
+    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
 
     [self showLoading];
     
@@ -1390,9 +1288,7 @@
     self.undefinedView.delegate = self;
     
     // Remove the existent components
-    self.filterButton.userInteractionEnabled = NO;
-    self.viewToggleButton.userInteractionEnabled = NO;
-    self.sortingScrollView.disableDelagation = YES;
+    [self.catalogTopView removeFromSuperview];
     [self.collectionView removeFromSuperview];
     [self.catalogTopButton removeFromSuperview];
     
@@ -1459,17 +1355,20 @@
         [self.wizardView reloadForFrame:newFrame];
     }
     
-    self.lastIndex = self.sortingScrollView.selectedIndex;
-    
     [self changeViewToInterfaceOrientation:toInterfaceOrientation];
-    
-    [self selectedIndex:self.lastIndex];
-    self.sortingScrollView.startingIndex = self.lastIndex;
-    [self.sortingScrollView setNeedsLayout];
     
     [self.undefinedView removeFromSuperview];
     
     [self showLoading];
+    
+    BOOL currentIsLandscape = UIInterfaceOrientationIsLandscape(self.interfaceOrientation);
+    BOOL futureIsLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
+    if (currentIsLandscape != futureIsLandscape) {
+        [self.sortingView reloadForFrame:CGRectMake(self.sortingView.frame.origin.x,
+                                                    self.sortingView.frame.origin.y,
+                                                    self.sortingView.frame.size.height,
+                                                    self.sortingView.frame.size.width)];
+    }
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -1484,21 +1383,46 @@
     if (VALID_NOTEMPTY(self.undefinedBackup, RIUndefinedSearchTerm)){
         
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
-                                                                           CGRectGetMaxY(self.sortingScrollView.frame),
+                                                                           CGRectGetMaxY(self.catalogTopView.frame),
                                                                            self.view.frame.size.width - 12.0f,
-                                                                           self.view.frame.size.height - CGRectGetMaxY(self.sortingScrollView.frame) - 12.0f)];
+                                                                           self.view.frame.size.height - CGRectGetMaxY(self.catalogTopView.frame) - 12.0f)];
         [self.undefinedView didRotate];
     }
+    
+    [self.catalogTopView setFrame:CGRectMake(self.catalogTopView.frame.origin.x,
+                                             self.catalogTopView.frame.origin.y,
+                                             self.view.frame.size.width,
+                                             self.catalogTopView.frame.size.height)];
+    
     [self hideLoading];
     
-    // disabling delegation in case there's a filters view when device finishes rotating
-    UIView *filtersView = [self.view viewWithTag:1001];
-    if(filtersView != nil)
-    {
-        self.sortingScrollView.disableDelagation = YES;
-    }
-    
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+#pragma mark - JASortingView
+
+- (void)selectedSortingMethod:(RICatalogSorting)catalogSorting
+{
+    if (catalogSorting != self.sortingMethod) {
+        self.sortingMethod = catalogSorting;
+        [self.catalogTopView setSorting:self.sortingMethod];
+        
+        self.apiResponse = RIApiResponseSuccess;
+        [self removeErrorView];
+        
+        [self resetCatalog];
+        [self loadMoreProducts];
+        
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:self.title forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"SortingOnCatalog" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:[RIProduct sortingName:self.sortingMethod] forKey:kRIEventSortTypeKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSort]
+                                                  data:[trackingDictionary copy]];
+
+    }
 }
 
 @end

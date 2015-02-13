@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Load Country View Controller-->
@@ -1404,22 +1405,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6lO-cb-ku3" customClass="JAPickerScrollView">
-                                <rect key="frame" x="34" y="64" width="252" height="44"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="rY3-Fd-zBi"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lRf-p9-Veu" customClass="JAClickableView">
-                                <rect key="frame" x="0.0" y="0.0" width="34" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="obB-3l-EyE" customClass="JAClickableView">
-                                <rect key="frame" x="286" y="0.0" width="34" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZRY-qq-tSd">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZRY-qq-tSd">
                                 <rect key="frame" x="6" y="108" width="308" height="460"/>
                                 <color key="backgroundColor" red="0.77863919010000004" green="0.77863919010000004" blue="0.77863919010000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SCu-ih-mcg">
@@ -1457,40 +1443,21 @@
                         </subviews>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="ZRY-qq-tSd" firstAttribute="top" secondItem="6lO-cb-ku3" secondAttribute="bottom" id="7ux-D9-LHE"/>
                             <constraint firstAttribute="trailing" secondItem="ZRY-qq-tSd" secondAttribute="trailing" constant="6" id="CoR-IQ-aYS"/>
                             <constraint firstItem="ZRY-qq-tSd" firstAttribute="leading" secondItem="LT2-FN-Zb3" secondAttribute="leading" constant="6" id="Ph5-ps-5DO"/>
                             <constraint firstItem="lOt-fd-9os" firstAttribute="top" secondItem="Wc2-me-4py" secondAttribute="bottom" constant="20" id="UKY-kL-3Le"/>
                             <constraint firstItem="lOt-fd-9os" firstAttribute="top" secondItem="ZRY-qq-tSd" secondAttribute="bottom" id="YSJ-z2-uF1"/>
                             <constraint firstAttribute="trailing" secondItem="Wc2-me-4py" secondAttribute="trailing" constant="20" id="bTa-We-DJL"/>
-                            <constraint firstItem="6lO-cb-ku3" firstAttribute="top" secondItem="lzj-49-Dyb" secondAttribute="bottom" id="yoi-yP-bhp"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="QR5-05-akf" appends="YES" id="kS3-DL-PbS"/>
-                            <outletCollection property="gestureRecognizers" destination="WkV-aZ-WRO" appends="YES" id="Q8D-cV-TAp"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="0Ui-Gw-Yo9"/>
                     <connections>
                         <outlet property="catalogTopButton" destination="Wc2-me-4py" id="mcd-bw-b93"/>
                         <outlet property="collectionView" destination="ZRY-qq-tSd" id="XI0-2o-oZS"/>
-                        <outlet property="filterButton" destination="lRf-p9-Veu" id="6DO-QI-rnN"/>
-                        <outlet property="sortingScrollView" destination="6lO-cb-ku3" id="FN2-gq-REl"/>
-                        <outlet property="viewToggleButton" destination="obB-3l-EyE" id="r6x-kT-j8o"/>
                         <segue destination="hCe-bF-wIA" kind="push" id="qNS-lV-ylV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fw5-pW-XE1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="QR5-05-akf">
-                    <connections>
-                        <action selector="swipeRight:" destination="y7p-zP-v5K" id="bxT-uO-kCw"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="left" id="WkV-aZ-WRO">
-                    <connections>
-                        <action selector="swipeLeft:" destination="y7p-zP-v5K" id="n5P-Pw-ZSa"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="713" y="1527"/>
         </scene>

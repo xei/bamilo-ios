@@ -307,4 +307,6 @@
 #define STRING_SOLD_BY RILocalizedString(@"product_sold_by", nil)
 #define STRING_TAX_INC RILocalizedString(@"fee_include", nil)
 
+#define STRING_SORT_BY RILocalizedString(@"sort_by", nil)
+
 #endif

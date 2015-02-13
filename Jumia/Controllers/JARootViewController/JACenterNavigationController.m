@@ -972,7 +972,6 @@
         JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
         catalog.categoryName = categoryName;
-        catalog.sorting = sorting;
         catalog.filterType = filterType;
         catalog.filterValue = filterValue;
         

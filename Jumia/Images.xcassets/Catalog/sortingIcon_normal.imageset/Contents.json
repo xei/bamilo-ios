@@ -1,17 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "btn_listview.png"
+      "filename" : "sortby.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "btn_listview@2x.png"
+      "filename" : "sortby@2x.png"
     },
     {
       "idiom" : "universal",
