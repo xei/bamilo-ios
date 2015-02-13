@@ -69,7 +69,6 @@
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_normal"] forState:UIControlStateNormal];
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_highlighted"] forState:UIControlStateSelected];
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_highlighted"] forState:UIControlStateHighlighted];
-    [self.sortingButton setTitle:@" Sorting" forState:UIControlStateNormal];
     [self.sortingButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.sortingButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateSelected];
     [self.sortingButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateHighlighted];
@@ -92,9 +91,10 @@
     self.separatorView.backgroundColor = UIColorFromRGB(0xcccccc);
 }
 
-- (void)setSortingButtonTitle:(NSString*)sortingButtonTitle;
+- (void)setSorting:(RICatalogSorting)sorting;
 {
-    [self.sortingButton setTitle:sortingButtonTitle forState:UIControlStateNormal];
+    NSString* title = [NSString stringWithFormat:@" %@", [kJASORTINGVIEW_OPTIONS_ARRAY objectAtIndex:sorting]];
+    [self.sortingButton setTitle:title forState:UIControlStateNormal];
 }
 
 - (void)sortingButtonPressed:(id)sender

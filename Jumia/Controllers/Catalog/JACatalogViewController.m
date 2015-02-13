@@ -170,9 +170,6 @@
     
     if (VALID_NOTEMPTY(self.searchString, NSString) || VALID_NOTEMPTY(self.category, RICategory) || VALID_NOTEMPTY(self.catalogUrl, NSString))
     {
-//$$$ LOAD DEFAULT BUTTON
-//                NSArray* sortList = [NSArray arrayWithObjects:STRING_BEST_RATING, STRING_POPULARITY, STRING_NEW_IN, STRING_PRICE_UP, STRING_PRICE_DOWN, STRING_NAME, STRING_BRAND, nil];
-//        [self.sortingScrollView setOptions:sortList];
         [self loadMoreProducts];
     }
     else
@@ -234,7 +231,8 @@
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
-    self.sortingMethod = NSIntegerMax;
+    self.sortingMethod = RICatalogSortingPopularity;
+    [self.catalogTopView setSorting:self.sortingMethod];
 }
 
 - (void)getCategories
@@ -273,15 +271,7 @@
          {
              self.navBarLayout.title = self.category.name;
              
-             if(VALID_NOTEMPTY(self.sorting, NSNumber))
-             {
-                 self.sorting = nil;
-             }
-             
-//$$$ LOAD DEFAULT BUTTON
-//             NSArray* sortList = [NSArray arrayWithObjects:STRING_BEST_RATING, STRING_POPULARITY, STRING_NEW_IN, STRING_PRICE_UP, STRING_PRICE_DOWN, STRING_NAME, STRING_BRAND, nil];
-//             [self.sortingScrollView setOptions:sortList];
-
+             [self loadMoreProducts];
          }
          else
          {
@@ -968,41 +958,6 @@
     }
 }
 
-//$$$
-//#pragma mark - JAPickerScrollViewDelegate
-//
-//- (void)selectedIndex:(NSInteger)index
-//{
-//    if (index != self.sortingMethod)
-//    {
-//        self.sortingMethod = index;
-//        
-//        self.apiResponse = RIApiResponseSuccess;
-//        [self removeErrorView];
-//        
-//        NSNumber *key = [NSNumber numberWithInt:self.sortingMethod];
-//        NSMutableArray *productsArray = [self.productsMap objectForKey:key];
-//        if(ISEMPTY(productsArray))
-//        {
-//            [self loadMoreProducts];
-//        }
-//        else
-//        {
-//            [self.collectionView reloadData];
-//            [self.collectionView setContentOffset:CGPointZero animated:NO];
-//        }
-//        
-//        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//        [trackingDictionary setValue:self.title forKey:kRIEventLabelKey];
-//        [trackingDictionary setValue:@"SortingOnCatalog" forKey:kRIEventActionKey];
-//        [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-//        [trackingDictionary setValue:[RIProduct sortingName:self.sortingMethod] forKey:kRIEventSortTypeKey];
-//        
-//        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSort]
-//                                                  data:[trackingDictionary copy]];
-//    }
-//}
-
 #pragma mark - JAMainFiltersViewControllerDelegate
 
 - (void)updatedFiltersAndCategory:(RICategory *)category;
@@ -1120,6 +1075,11 @@
 
 - (void)sortingButtonPressed;
 {
+
+    JASortingView* sortingView = [[JASortingView alloc] init];
+    sortingView.delegate = self;
+    [sortingView setupWithFrame:self.view.bounds selectedSorting:self.sortingMethod];
+    [self.view addSubview:sortingView];
 }
 
 - (void)viewModeChanged;
@@ -1411,6 +1371,32 @@
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+#pragma mark - JASortingView
+
+- (void)selectedSortingMethod:(RICatalogSorting)catalogSorting
+{
+    if (catalogSorting != self.sortingMethod) {
+        self.sortingMethod = catalogSorting;
+        [self.catalogTopView setSorting:self.sortingMethod];
+        
+        self.apiResponse = RIApiResponseSuccess;
+        [self removeErrorView];
+        
+        [self resetCatalog];
+        [self loadMoreProducts];
+        
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:self.title forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"SortingOnCatalog" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:[RIProduct sortingName:self.sortingMethod] forKey:kRIEventSortTypeKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSort]
+                                                  data:[trackingDictionary copy]];
+
+    }
 }
 
 @end

@@ -8,16 +8,16 @@
 
 #import "JABaseViewController.h"
 #import "JACatalogTopView.h"
-#import "JAPickerScrollView.h"
 #import "RICategory.h"
 #import "JAMainFiltersViewController.h"
 #import "JAPDVViewController.h"
 #import "JAUndefinedSearchView.h"
+#import "JASortingView.h"
 
 @interface JACatalogViewController : JABaseViewController
 <
+    JASortingViewDelegate,
     JACatalogTopViewDelegate,
-    JAPickerScrollViewDelegate,
     UICollectionViewDataSource,
     UICollectionViewDelegate,
     JAMainFiltersViewControllerDelegate,
@@ -30,7 +30,6 @@
 @property (nonatomic, strong)NSString* categoryName;
 @property (nonatomic, strong)NSString* catalogUrl;
 @property (nonatomic, strong)NSString* searchString;
-@property (nonatomic, strong)NSNumber* sorting;
 @property (nonatomic, strong)NSString* filterType;
 @property (nonatomic, strong)NSString* filterValue;
 @property (assign, nonatomic)BOOL forceShowBackButton;

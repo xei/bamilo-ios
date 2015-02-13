@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
+#import "JASortingView.h"
 
 @protocol JACatalogTopViewDelegate <NSObject>
 
@@ -30,6 +31,6 @@
 @property (nonatomic, assign) BOOL gridSelected;
 @property (nonatomic, assign) BOOL filterSelected;
 
-- (void)setSortingButtonTitle:(NSString*)sortingButtonTitle;
+- (void)setSorting:(RICatalogSorting)sorting;
 
 @end
