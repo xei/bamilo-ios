@@ -18,6 +18,7 @@
 #import "JAClickableView.h"
 #import "JAUndefinedSearchView.h"
 #import "JAFilteredNoResultsView.h"
+#import "JAAppDelegate.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -1078,8 +1079,9 @@
 
     JASortingView* sortingView = [[JASortingView alloc] init];
     sortingView.delegate = self;
-    [sortingView setupWithFrame:self.view.bounds selectedSorting:self.sortingMethod];
-    [self.view addSubview:sortingView];
+    UIView* windowView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
+    [sortingView setupWithFrame:windowView.bounds selectedSorting:self.sortingMethod];
+    [windowView addSubview:sortingView];
 }
 
 - (void)viewModeChanged;

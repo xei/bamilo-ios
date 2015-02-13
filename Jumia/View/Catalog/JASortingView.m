@@ -29,7 +29,7 @@
     self.backgroundColor = [UIColor clearColor];
     
     self.backgroundControl = [UIControl new];
-    self.backgroundControl.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.7];
+    self.backgroundControl.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
     [self.backgroundControl setFrame:self.bounds];
     [self.backgroundControl addTarget:self action:@selector(removeFromSuperview) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.backgroundControl];
