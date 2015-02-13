@@ -56,6 +56,8 @@
 
 @property (nonatomic, assign) RIApiResponse apiResponse;
 
+@property (nonatomic, strong) JASortingView* sortingView;
+
 @end
 
 @implementation JACatalogViewController
@@ -210,7 +212,7 @@
     self.catalogTopView = [JACatalogTopView getNewJACatalogTopView];
     [self.catalogTopView setFrame:CGRectMake(0.0f,
                                              0.0f,
-                                             self.catalogTopView.frame.size.width,
+                                             self.view.frame.size.width,
                                              self.catalogTopView.frame.size.height)];
     self.catalogTopView.gridSelected = NO;
     self.catalogTopView.delegate = self;
@@ -1076,12 +1078,12 @@
 
 - (void)sortingButtonPressed;
 {
-
-    JASortingView* sortingView = [[JASortingView alloc] init];
-    sortingView.delegate = self;
+    [self.sortingView removeFromSuperview];
+    self.sortingView = [[JASortingView alloc] init];
+    self.sortingView.delegate = self;
     UIView* windowView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-    [sortingView setupWithFrame:windowView.bounds selectedSorting:self.sortingMethod];
-    [windowView addSubview:sortingView];
+    [self.sortingView setupWithFrame:windowView.bounds selectedSorting:self.sortingMethod];
+    [windowView addSubview:self.sortingView];
 }
 
 - (void)viewModeChanged;
@@ -1352,6 +1354,15 @@
     
     [self showLoading];
     
+    BOOL currentIsLandscape = UIInterfaceOrientationIsLandscape(self.interfaceOrientation);
+    BOOL futureIsLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
+    if (currentIsLandscape != futureIsLandscape) {
+        [self.sortingView reloadForFrame:CGRectMake(self.sortingView.frame.origin.x,
+                                                    self.sortingView.frame.origin.y,
+                                                    self.sortingView.frame.size.height,
+                                                    self.sortingView.frame.size.width)];
+    }
+    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
@@ -1370,6 +1381,12 @@
                                                                            self.view.frame.size.height - CGRectGetMaxY(self.catalogTopView.frame) - 12.0f)];
         [self.undefinedView didRotate];
     }
+    
+    [self.catalogTopView setFrame:CGRectMake(self.catalogTopView.frame.origin.x,
+                                             self.catalogTopView.frame.origin.y,
+                                             self.view.frame.size.width,
+                                             self.catalogTopView.frame.size.height)];
+    
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];

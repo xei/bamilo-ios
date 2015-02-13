@@ -25,22 +25,15 @@
 {
     self.selectedIndex = selectedSorting;
     
-    self.frame = frame;
     self.backgroundColor = [UIColor clearColor];
     
     self.backgroundControl = [UIControl new];
     self.backgroundControl.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
-    [self.backgroundControl setFrame:self.bounds];
     [self.backgroundControl addTarget:self action:@selector(removeFromSuperview) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.backgroundControl];
     
-    CGFloat margin = 6.0f;
-    
-    CGFloat buttonHeight = 44.0f;
-    self.doneClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(margin,
-                                                                               self.frame.size.height - margin - buttonHeight,
-                                                                               self.frame.size.width - margin*2,
-                                                                               buttonHeight)];
+
+    self.doneClickableView = [[JAClickableView alloc] init];
     self.doneClickableView.layer.cornerRadius = 5.0f;
     self.doneClickableView.backgroundColor = [UIColor whiteColor];
     [self.doneClickableView setTitle:STRING_CANCEL forState:UIControlStateNormal];
@@ -52,13 +45,31 @@
     self.tableView = [UITableView new];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.layer.cornerRadius = 5.0f;
+    [self addSubview:self.tableView];
+    
+    [self reloadForFrame:frame];
+}
+
+- (void)reloadForFrame:(CGRect)frame
+{
+    self.frame = frame;
+    
+    [self.backgroundControl setFrame:self.bounds];
+    
+    CGFloat margin = 6.0f;
+    CGFloat buttonHeight = 44.0f;
+    [self.doneClickableView setFrame:CGRectMake(margin,
+                                                self.frame.size.height - margin - buttonHeight,
+                                                self.frame.size.width - margin*2,
+                                                buttonHeight)];
+    
     CGFloat tableHeight = [self tableView:self.tableView numberOfRowsInSection:0] * [self tableView:self.tableView heightForRowAtIndexPath:nil];
     [self.tableView setFrame:CGRectMake(margin,
                                         self.doneClickableView.frame.origin.y - margin - tableHeight,
                                         self.frame.size.width - margin*2,
                                         tableHeight)];
-    self.tableView.layer.cornerRadius = 5.0f;
-    [self addSubview:self.tableView];
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableView

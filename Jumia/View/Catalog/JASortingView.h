@@ -22,5 +22,6 @@
 @property (nonatomic, assign)id<JASortingViewDelegate>delegate;
 - (void)setupWithFrame:(CGRect)frame
        selectedSorting:(RICatalogSorting)selectedSorting;
+- (void)reloadForFrame:(CGRect)frame;
 
 @end

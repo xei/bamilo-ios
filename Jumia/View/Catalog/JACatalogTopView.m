@@ -48,9 +48,20 @@
 
 + (JACatalogTopView *)getNewJACatalogTopView
 {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JACatalogTopView_iphone"
-                                                 owner:nil
-                                               options:nil];
+    NSArray *xib;
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        xib = [[NSBundle mainBundle] loadNibNamed:@"JACatalogTopView_iphone"
+                                            owner:nil
+                                          options:nil];
+    }
+    else if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        xib = [[NSBundle mainBundle] loadNibNamed:@"JACatalogTopView_ipad"
+                                            owner:nil
+                                          options:nil];
+    }
     
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JACatalogTopView class]]) {

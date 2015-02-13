@@ -836,6 +836,8 @@
 		CEBEEE781A8CF205001998E5 /* JASortingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBEEE771A8CF205001998E5 /* JASortingView.m */; };
 		CEBEEE791A8CF20C001998E5 /* JACatalogTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */; };
 		CEBEEE7A1A8CF20C001998E5 /* JASortingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBEEE771A8CF205001998E5 /* JASortingView.m */; };
+		CEBEEE7C1A8E13CF001998E5 /* JACatalogTopView_ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBEEE7B1A8E13CF001998E5 /* JACatalogTopView_ipad.xib */; };
+		CEBEEE7D1A8E13CF001998E5 /* JACatalogTopView_ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBEEE7B1A8E13CF001998E5 /* JACatalogTopView_ipad.xib */; };
 		CEC376D319EBCA5800558B98 /* JAClickableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376D219EBCA5800558B98 /* JAClickableView.m */; };
 		CEC376DD19EFC1E800558B98 /* JAWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376DC19EFC1E800558B98 /* JAWizardView.m */; };
 		CEC376E319F0050F00558B98 /* JAHomeWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E219F0050F00558B98 /* JAHomeWizardView.m */; };
@@ -1676,6 +1678,7 @@
 		CEABEEC51A1255F5000D0CF8 /* JACategoryFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACategoryFiltersView.m; path = Filters/JACategoryFiltersView.m; sourceTree = "<group>"; };
 		CEBEEE761A8CF205001998E5 /* JASortingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASortingView.h; path = Catalog/JASortingView.h; sourceTree = "<group>"; };
 		CEBEEE771A8CF205001998E5 /* JASortingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASortingView.m; path = Catalog/JASortingView.m; sourceTree = "<group>"; };
+		CEBEEE7B1A8E13CF001998E5 /* JACatalogTopView_ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACatalogTopView_ipad.xib; path = Catalog/JACatalogTopView_ipad.xib; sourceTree = "<group>"; };
 		CEC376D119EBCA5700558B98 /* JAClickableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAClickableView.h; sourceTree = "<group>"; };
 		CEC376D219EBCA5800558B98 /* JAClickableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAClickableView.m; sourceTree = "<group>"; };
 		CEC376DB19EFC1E800558B98 /* JAWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAWizardView.h; path = Wizard/JAWizardView.h; sourceTree = "<group>"; };
@@ -3215,6 +3218,7 @@
 				CE06FCB51A88C3A5002FCD25 /* JACatalogTopView.h */,
 				CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */,
 				CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */,
+				CEBEEE7B1A8E13CF001998E5 /* JACatalogTopView_ipad.xib */,
 				CEBEEE761A8CF205001998E5 /* JASortingView.h */,
 				CEBEEE771A8CF205001998E5 /* JASortingView.m */,
 			);
@@ -4120,6 +4124,7 @@
 				CEED47331A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib in Resources */,
 				CEAB63B61A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-retHD.xib in Resources */,
 				CEAB63441A81053C00B6F26E /* BMA4SCloseButton.png in Resources */,
+				CEBEEE7D1A8E13CF001998E5 /* JACatalogTopView_ipad.xib in Resources */,
 				CEAB63701A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */,
 				4c63827f343c921bf28405ea /* RITracking_example.plist in Resources */,
 			);
@@ -4273,6 +4278,7 @@
 				CE283E771A72C00E00F3E92D /* JAOfferCollectionViewCell.xib in Resources */,
 				CEAB63D31A81053C00B6F26E /* BMA4SiPhoneTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				CEAB63AF1A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape-retHD.xib in Resources */,
+				CEBEEE7C1A8E13CF001998E5 /* JACatalogTopView_ipad.xib in Resources */,
 				CE38E0E71A07AA1000B1738B /* JACatalogListCell_ipad_portrait.xib in Resources */,
 				CEABEEB91A1118A1000D0CF8 /* JAPriceFiltersView.xib in Resources */,
 				CEAB63971A81053C00B6F26E /* BMA4SiPhoneWebViewNotifView.xib in Resources */,
