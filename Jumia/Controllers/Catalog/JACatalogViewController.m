@@ -320,7 +320,6 @@
     BOOL alreadyShowedWizardCatalog = [[NSUserDefaults standardUserDefaults] boolForKey:kJACatalogWizardUserDefaultsKey];
     if(alreadyShowedWizardCatalog == NO)
     {
-        [self hideLoading]; 
         self.wizardView = [[JACatalogWizardView alloc] initWithFrame:self.view.bounds];
         [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJACatalogWizardUserDefaultsKey];
