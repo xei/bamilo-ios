@@ -23,5 +23,6 @@
 - (void)setupWithFrame:(CGRect)frame
        selectedSorting:(RICatalogSorting)selectedSorting;
 - (void)reloadForFrame:(CGRect)frame;
+- (void)animateIn;
 
 @end

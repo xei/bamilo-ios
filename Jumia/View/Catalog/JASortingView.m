@@ -29,7 +29,7 @@
     
     self.backgroundControl = [UIControl new];
     self.backgroundControl.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
-    [self.backgroundControl addTarget:self action:@selector(removeFromSuperview) forControlEvents:UIControlEventTouchUpInside];
+    [self.backgroundControl addTarget:self action:@selector(animateOut) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.backgroundControl];
     
 
@@ -39,7 +39,7 @@
     [self.doneClickableView setTitle:STRING_CANCEL forState:UIControlStateNormal];
     [self.doneClickableView setFont:[UIFont fontWithName:@"HelveticaNeue" size:17.0f]];
     [self.doneClickableView setTitleColor:UIColorFromRGB(0x06739e) forState:UIControlStateNormal];
-    [self.doneClickableView addTarget:self action:@selector(removeFromSuperview) forControlEvents:UIControlEventTouchUpInside];
+    [self.doneClickableView addTarget:self action:@selector(animateOut) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.doneClickableView];
     
     self.tableView = [UITableView new];
@@ -70,6 +70,49 @@
                                         self.frame.size.width - margin*2,
                                         tableHeight)];
     [self.tableView reloadData];
+}
+
+- (void)animateIn
+{
+    CGFloat margin = 6.0f;
+    
+    self.backgroundControl.alpha = 0.0f;
+    CGRect tableFrame = self.tableView.frame;
+    CGRect buttonFrame = self.doneClickableView.frame;
+    
+    [self.tableView setFrame:CGRectMake(self.tableView.frame.origin.x,
+                                        self.frame.size.height,
+                                        self.tableView.frame.size.width,
+                                        self.tableView.frame.size.height)];
+    [self.doneClickableView setFrame:CGRectMake(self.doneClickableView.frame.origin.x,
+                                                CGRectGetMaxY(self.tableView.frame) + margin,
+                                                self.doneClickableView.frame.size.width,
+                                                self.doneClickableView.frame.size.height)];
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        self.backgroundControl.alpha = 0.5f;
+        [self.tableView setFrame:tableFrame];
+        [self.doneClickableView setFrame:buttonFrame];
+    }];
+}
+
+- (void)animateOut;
+{
+    CGFloat margin = 6.0f;
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        self.backgroundControl.alpha = 0.0f;
+        [self.tableView setFrame:CGRectMake(self.tableView.frame.origin.x,
+                                            self.frame.size.height,
+                                            self.tableView.frame.size.width,
+                                            self.tableView.frame.size.height)];
+        [self.doneClickableView setFrame:CGRectMake(self.doneClickableView.frame.origin.x,
+                                                    CGRectGetMaxY(self.tableView.frame) + margin,
+                                                    self.doneClickableView.frame.size.width,
+                                                    self.doneClickableView.frame.size.height)];
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
 }
 
 #pragma mark - UITableView

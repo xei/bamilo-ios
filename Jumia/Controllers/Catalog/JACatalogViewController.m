@@ -1087,6 +1087,7 @@
     UIView* windowView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
     [self.sortingView setupWithFrame:windowView.bounds selectedSorting:self.sortingMethod];
     [windowView addSubview:self.sortingView];
+    [self.sortingView animateIn];
 }
 
 - (void)viewModeChanged;
