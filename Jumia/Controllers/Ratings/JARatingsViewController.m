@@ -323,8 +323,7 @@ UITableViewDataSource
         self.isShowingRating = NO;
     }
     
-    BOOL addNumberOfReviewsInTopView = (isiPad && isInLandscape);
-    [self setupTopView:addNumberOfReviewsInTopView];
+    [self setupTopView];
     
     CGFloat viewsWidth = self.view.frame.size.width - (2 * horizontalMargin);
     
@@ -391,9 +390,10 @@ UITableViewDataSource
             [self.resumeView setHidden:NO];
         }
         
+        [self.writeReviewScrollView setHidden:YES];
+        
         if(hasComments)
         {
-            [self.writeReviewScrollView setHidden:YES];
             [self.tableViewComments setFrame:CGRectMake(verticalMargin,
                                                         startingYForContent,
                                                         viewsWidth,
@@ -404,7 +404,6 @@ UITableViewDataSource
         else
         {
             [self.tableViewComments setHidden:YES];
-            [self.writeReviewScrollView setHidden:NO];
             [self.emptyReviewsView setHidden:NO];
             [self setupEmptyReviewsView:viewsWidth originY:startingYForContent];
         }
@@ -413,7 +412,7 @@ UITableViewDataSource
     [self.tableViewComments reloadData];
 }
 
-- (void)setupTopView:(BOOL)addNumberOfReviewsInTopView
+- (void)setupTopView
 {
     [self.brandLabel setFrame:CGRectMake(12.0f,
                                          6.0f,
@@ -461,27 +460,52 @@ UITableViewDataSource
     self.ratingStars = [NSMutableArray new];
     self.ratingStarLabels = [NSMutableArray new];
     
-    if(addNumberOfReviewsInTopView)
+    NSInteger numberOfItemsSideBySide = 3;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
-        NSInteger numberOfItemsSideBySide = 3;
-        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+        if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
         {
-            if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
-            {
-                numberOfItemsSideBySide = 7;
-            }
+            numberOfItemsSideBySide = 7;
         }
+    }
+    
+    topViewMinHeight += 6.0f;
+    
+    CGFloat currentX = 12.0f;
+    CGFloat ratingViewWidth = (self.view.frame.size.width - 6.0f*2) / numberOfItemsSideBySide;
+    
+    if (ISEMPTY(self.productRatings.ratingInfo.averageRatingsArray)) {
+        UILabel* titleLabel = [UILabel new];
+        [titleLabel setTextColor:UIColorFromRGB(0x666666)];
+        [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [titleLabel setText:@" "];
+        [titleLabel sizeToFit];
+        [titleLabel setFrame:CGRectMake(currentX,
+                                        topViewMinHeight,
+                                        ratingViewWidth,
+                                        titleLabel.frame.size.height)];
+        [self.topView addSubview:titleLabel];
+        [self.ratingStarLabels addObject:titleLabel];
         
-        topViewMinHeight += 6.0f;
+        JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
+        [ratingsView setRating:0];
+        [ratingsView setFrame:CGRectMake(currentX,
+                                         topViewMinHeight + titleLabel.frame.size.height,
+                                         ratingsView.frame.size.width,
+                                         ratingsView.frame.size.height)];
+        [self.topView addSubview:ratingsView];
+        [self.ratingStars addObject:ratingsView];
         
-        CGFloat currentX = 12.0f;
-        CGFloat ratingViewWidth = (self.topView.frame.size.width - 6.0f*2) / numberOfItemsSideBySide;
-        
-        if (ISEMPTY(self.productRatings.ratingInfo.averageRatingsArray)) {
+        topViewMinHeight += titleLabel.frame.size.height + ratingsView.frame.size.height;
+    } else {
+        for (int i = 0; i < self.productRatings.ratingInfo.averageRatingsArray.count; i++) {
+            
+            NSString* title = [self.productRatings.ratingInfo.typesArray objectAtIndex:i];
+            
             UILabel* titleLabel = [UILabel new];
             [titleLabel setTextColor:UIColorFromRGB(0x666666)];
             [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
-            [titleLabel setText:@" "];
+            [titleLabel setText:title];
             [titleLabel sizeToFit];
             [titleLabel setFrame:CGRectMake(currentX,
                                             topViewMinHeight,
@@ -490,8 +514,10 @@ UITableViewDataSource
             [self.topView addSubview:titleLabel];
             [self.ratingStarLabels addObject:titleLabel];
             
+            NSNumber* average = [self.productRatings.ratingInfo.averageRatingsArray objectAtIndex:i];
+            
             JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
-            [ratingsView setRating:0];
+            [ratingsView setRating:[average integerValue]];
             [ratingsView setFrame:CGRectMake(currentX,
                                              topViewMinHeight + titleLabel.frame.size.height,
                                              ratingsView.frame.size.width,
@@ -499,48 +525,18 @@ UITableViewDataSource
             [self.topView addSubview:ratingsView];
             [self.ratingStars addObject:ratingsView];
             
-            topViewMinHeight += titleLabel.frame.size.height + ratingsView.frame.size.height;
-        } else {
-            for (int i = 0; i < self.productRatings.ratingInfo.averageRatingsArray.count; i++) {
-                
-                NSString* title = [self.productRatings.ratingInfo.typesArray objectAtIndex:i];
-                
-                UILabel* titleLabel = [UILabel new];
-                [titleLabel setTextColor:UIColorFromRGB(0x666666)];
-                [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
-                [titleLabel setText:title];
-                [titleLabel sizeToFit];
-                [titleLabel setFrame:CGRectMake(currentX,
-                                                topViewMinHeight,
-                                                ratingViewWidth,
-                                                titleLabel.frame.size.height)];
-                [self.topView addSubview:titleLabel];
-                [self.ratingStarLabels addObject:titleLabel];
-                
-                NSNumber* average = [self.productRatings.ratingInfo.averageRatingsArray objectAtIndex:i];
-                
-                JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
-                [ratingsView setRating:[average integerValue]];
-                [ratingsView setFrame:CGRectMake(currentX,
-                                                 topViewMinHeight + titleLabel.frame.size.height,
-                                                 ratingsView.frame.size.width,
-                                                 ratingsView.frame.size.height)];
-                [self.topView addSubview:ratingsView];
-                [self.ratingStars addObject:ratingsView];
-                
-                currentX += ratingViewWidth;
-                
-                NSInteger nextIndex = i+1;
-                if (nextIndex < self.productRatings.ratingInfo.averageRatingsArray.count) {
-                    if (0 == nextIndex%numberOfItemsSideBySide) {
-                        currentX = 6.0f;
-                        if (0 != nextIndex) {
-                            topViewMinHeight += titleLabel.frame.size.height + ratingsView.frame.size.height;
-                        }
+            currentX += ratingViewWidth;
+            
+            NSInteger nextIndex = i+1;
+            if (nextIndex < self.productRatings.ratingInfo.averageRatingsArray.count) {
+                if (0 == nextIndex%numberOfItemsSideBySide) {
+                    currentX = 6.0f;
+                    if (0 != nextIndex) {
+                        topViewMinHeight += titleLabel.frame.size.height + ratingsView.frame.size.height;
                     }
-                } else {
-                    topViewMinHeight += 20.0f + ratingsView.frame.size.height;
                 }
+            } else {
+                topViewMinHeight += 20.0f + ratingsView.frame.size.height;
             }
         }
     }
@@ -560,67 +556,8 @@ UITableViewDataSource
 
 - (void)setupResumeView:(CGFloat)width
 {
-    if (VALID_NOTEMPTY(self.ratingStars, NSMutableArray)) {
-        for (UIView* view in self.ratingStars) {
-            [view removeFromSuperview];
-        }
-    }
-    
-    if (VALID_NOTEMPTY(self.ratingStarLabels, NSMutableArray)) {
-        for (UIView* view in self.ratingStars) {
-            [view removeFromSuperview];
-        }
-    }
-    
-    self.ratingStars = [NSMutableArray new];
-    self.ratingStarLabels = [NSMutableArray new];
-    
     CGFloat currentY = 6.0f;
     
-    CGFloat currentX = 6.0f;
-    CGFloat ratingViewWidth = (self.topView.frame.size.width - 6.0f*2) / 3;
-    for (int i = 0; i < self.productRatings.ratingInfo.averageRatingsArray.count; i++) {
-        
-        NSString* title = [self.productRatings.ratingInfo.typesArray objectAtIndex:i];
-        
-        UILabel* titleLabel = [UILabel new];
-        [titleLabel setTextColor:UIColorFromRGB(0x666666)];
-        [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
-        [titleLabel setText:title];
-        [titleLabel sizeToFit];
-        [titleLabel setFrame:CGRectMake(currentX,
-                                        currentY,
-                                        ratingViewWidth,
-                                        titleLabel.frame.size.height)];
-        [self.resumeView addSubview:titleLabel];
-        [self.ratingStarLabels addObject:titleLabel];
-        
-        NSNumber* average = [self.productRatings.ratingInfo.averageRatingsArray objectAtIndex:i];
-        
-        JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
-        [ratingsView setRating:[average integerValue]];
-        [ratingsView setFrame:CGRectMake(currentX,
-                                         currentY + titleLabel.frame.size.height,
-                                         ratingsView.frame.size.width,
-                                         ratingsView.frame.size.height)];
-        [self.resumeView addSubview:ratingsView];
-        [self.ratingStars addObject:ratingsView];
-        
-        currentX += ratingViewWidth;
-        
-        NSInteger nextIndex = i+1;
-        if (nextIndex < self.productRatings.ratingInfo.averageRatingsArray.count) {
-            if (0 == nextIndex%3) {
-                currentX = 6.0f;
-                if (0 != nextIndex) {
-                    currentY += titleLabel.frame.size.height + ratingsView.frame.size.height;
-                }
-            }
-        } else {
-            currentY += 20.0f + ratingsView.frame.size.height;
-        }
-    }
-
     if (NO == [[RICountryConfiguration getCurrentConfiguration].ratingIsEnabled boolValue] &&
         NO == [[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
 

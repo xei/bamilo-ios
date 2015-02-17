@@ -283,27 +283,7 @@ UIAlertViewDelegate
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
         
-        if(VALID_NOTEMPTY(self.productRatings, RIProductRatings) && VALID_NOTEMPTY(self.productRatings.reviews, NSArray))
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil userInfo:userInfo];
-        }
-        else
-        {
-            if(VALID_NOTEMPTY(self.product, RIProduct))
-            {
-                [userInfo setObject:self.product forKey:@"product"];
-            }
-            if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
-            {
-                [userInfo setObject:self.productRatings forKey:@"productRatings"];
-            }
-            [userInfo setObject:[NSNumber numberWithBool:self.goToNewRatingButtonPressed] forKey:@"goToNewRatingButtonPressed"];
-            
-            [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"popLastViewController"];
-            [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil userInfo:userInfo];
     }
     else
     {
