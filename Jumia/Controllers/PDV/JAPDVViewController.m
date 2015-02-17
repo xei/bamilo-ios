@@ -37,6 +37,7 @@
 #import "JAPDVBundleSingleItem.h"
 #import "RIProduct.h"
 #import "JAOtherOffersView.h"
+#import "JAWhatsAppActivity.h"
 
 @interface JAPDVViewController ()
 <
@@ -1179,14 +1180,16 @@ JAActivityViewControllerDelegate
     {
         url = [url stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
     }
-    
-    NSArray *objectsToShare = @[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url]];
-    
-    
+        
+    // Share with Facebook Messenger and WhatsApp
     UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
+    UIActivity *whatsAppActivity = [[JAWhatsAppActivity alloc] init];
+    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",STRING_SHARE_PRODUCT_MESSAGE, url] forABID:nil];
     
+    NSArray *aplicationActivities = @[fbmActivity, whatsAppActivity];
     
-    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:@[fbmActivity]];
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:aplicationActivities];
+    
     
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
     
