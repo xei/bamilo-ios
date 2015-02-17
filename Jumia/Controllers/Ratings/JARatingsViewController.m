@@ -117,7 +117,6 @@ UITableViewDataSource
     
     self.tableViewComments.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.goToNewRatingButtonPressed = NO;
     self.requestsDone = NO;
     
     self.apiResponse = RIApiResponseSuccess;
@@ -185,43 +184,7 @@ UITableViewDataSource
 {
     [self hideLoading];
     
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
-        if(UIInterfaceOrientationIsPortrait(self.interfaceOrientation) && (ISEMPTY(self.productRatings) || ISEMPTY(self.productRatings.reviews) || self.goToNewRatingButtonPressed))
-        {
-            NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-            if(VALID_NOTEMPTY(self.product, RIProduct))
-            {
-                [userInfo setObject:self.product forKey:@"product"];
-            }
-            
-            if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
-            {
-                [userInfo setObject:self.productRatings forKey:@"productRatings"];
-            }
-            
-            [userInfo setObject:[NSNumber numberWithBool:self.goToNewRatingButtonPressed] forKey:@"goToNewRatingButtonPressed"];
-            [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
-            
-            // if the user has clicked on write review button when it was on portrait we
-            // should not pop the last view controller
-            [userInfo setObject:[NSNumber numberWithBool:!self.goToNewRatingButtonPressed] forKey:@"popLastViewController"];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
-        }
-        else
-        {
-            // This means that the application made a rotation without going to the new reviews screen.
-            // We have to set the goToNewRatingButtonPressed to NO so that the application does not
-            // open the new rating screen again
-            self.goToNewRatingButtonPressed = NO;
-            [self setupViews];
-        }
-    }
-    else
-    {
-        [self setupViews];
-    }
+    [self setupViews];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
@@ -947,8 +910,6 @@ UITableViewDataSource
 
 - (IBAction)goToNewReviews:(id)sender
 {
-    self.goToNewRatingButtonPressed = YES;
-    
     NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(self.product, RIProduct))
     {
@@ -959,8 +920,6 @@ UITableViewDataSource
     {
         [userInfo setObject:self.productRatings forKey:@"productRatings"];
     }
-    
-    [userInfo setObject:[NSNumber numberWithBool:self.goToNewRatingButtonPressed] forKey:@"goToNewRatingButtonPressed"];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
 }

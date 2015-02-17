@@ -2509,7 +2509,7 @@
         <image name="ico_cart" width="25" height="20"/>
         <image name="img_emptyCart" width="98" height="98"/>
         <image name="img_emptyrecentsearches" width="98" height="98"/>
-        <image name="img_noreviews" width="25" height="20"/>
+        <image name="img_noreviews" width="140" height="140"/>
         <image name="orangeBig_disabled" width="308" height="44"/>
         <image name="orangeBig_highlighted" width="308" height="44"/>
         <image name="orangeBig_normal" width="308" height="44"/>

@@ -1094,15 +1094,6 @@
             ratingsViewController.productRatings = [notification.userInfo objectForKey:@"productRatings"];
         }
         
-        if ([notification.userInfo objectForKey:@"goToNewRatingButtonPressed"]) {
-            ratingsViewController.goToNewRatingButtonPressed = [[notification.userInfo objectForKey:@"goToNewRatingButtonPressed"] boolValue];
-        }
-        
-        if([notification.userInfo objectForKey:@"popLastViewController"] && [[notification.userInfo objectForKey:@"popLastViewController"] boolValue])
-        {
-            [self popViewControllerAnimated:NO];
-        }
-        
         BOOL animated = YES;
         if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
         {
