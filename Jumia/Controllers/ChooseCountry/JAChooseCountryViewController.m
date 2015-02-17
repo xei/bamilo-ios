@@ -71,6 +71,13 @@ UITableViewDataSource
     [self loadData];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"ChangeCountry"];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self hideLoading];

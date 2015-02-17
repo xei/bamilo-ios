@@ -228,6 +228,13 @@ FBLoginViewDelegate
     [self getForms];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutSignUp"];
+}
+
 - (void)getForms
 {
     self.loadFailed = NO; //resetting to NO, it is turned to YES if it fails

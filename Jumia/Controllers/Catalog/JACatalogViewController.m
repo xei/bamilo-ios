@@ -204,6 +204,12 @@
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ShopCatalogList"];
+}
+ 
 - (void)setupViews
 {
     self.productsArray = [NSMutableArray new];

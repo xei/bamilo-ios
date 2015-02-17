@@ -105,6 +105,13 @@ UICollectionViewDelegateFlowLayout
     [self continueLoading];
 }
 
+-(void)viewDidAppear:(BOOL)animate
+{
+    [super viewDidAppear:animate];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutShipping"];
+}
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     if(VALID(self.picker, JAPicker))

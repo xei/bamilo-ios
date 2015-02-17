@@ -184,6 +184,13 @@ UICollectionViewDelegateFlowLayout>
     [self getAddressList];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CheckoutAddress"];
+}
+
 - (void)getAddressList
 {
     if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)

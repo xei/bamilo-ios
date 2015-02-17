@@ -207,6 +207,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     {
         [tracker set:kGAIScreenName value:name];
         [tracker send:[[[GAIDictionaryBuilder createAppView] setCampaignParametersFromUrl:self.campaignData] build]];
+        [tracker send:[[GAIDictionaryBuilder createAppView] build]];
     }
     else
     {

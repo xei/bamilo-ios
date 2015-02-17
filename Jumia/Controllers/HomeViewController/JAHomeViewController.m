@@ -143,6 +143,12 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"HomeShop"];
+}
+
 - (void)addNotifications
 {
     //we do this to make sure no notification is added more than once
