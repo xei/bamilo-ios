@@ -179,7 +179,6 @@
 		692fece832938452dbf8505a /* JATeaserPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */; };
 		69c7ac2a38a28dc5589a97ca /* JANavigationBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A392142198925E300B70A9C /* JANavigationBarView.xib */; };
 		6C18BDAC1A1B4CA300626706 /* JANewsletterComponent~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */; };
-		6C1B3DE61A8B74180069E5EC /* JAWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1B3DE51A8B74180069E5EC /* JAWhatsAppActivity.m */; };
 		6ad0a1988b1e51c37142c75b /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
 		6be80f134e67002eecb79292 /* RILanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027619811E9200F71726 /* RILanguage.m */; };
 		6e0b7de87382100c6d8b4606 /* JAOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D195E19C33122004843C3 /* JAOrderViewController.m */; };
@@ -572,6 +571,8 @@
 		CE283E931A77899F00F3E92D /* JASellerRatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */; };
 		CE283E961A77981900F3E92D /* RISellerReviewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E951A77981900F3E92D /* RISellerReviewInfo.m */; };
 		CE283E971A77981900F3E92D /* RISellerReviewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E951A77981900F3E92D /* RISellerReviewInfo.m */; };
+		CE28EE5A1A9397C6000A264C /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */; };
+		CE28EE5B1A9397C6000A264C /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */; };
 		CE2C6B6F1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */; };
 		CE2C6B711A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B701A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib */; };
 		CE2DBC6E1A603B160075C21F /* RIFieldRatingStars.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DBC6D1A603B160075C21F /* RIFieldRatingStars.m */; };
@@ -1082,8 +1083,6 @@
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
-		6C1B3DE41A8B74180069E5EC /* JAWhatsAppActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAWhatsAppActivity.h; path = "../../../Desktop/JBWhatsAppActivity-master/JBWhatsAppActivity/JAWhatsAppActivity.h"; sourceTree = "<group>"; };
-		6C1B3DE51A8B74180069E5EC /* JAWhatsAppActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAWhatsAppActivity.m; path = "../../../Desktop/JBWhatsAppActivity-master/JBWhatsAppActivity/JAWhatsAppActivity.m"; sourceTree = "<group>"; };
 		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
 		8C38E18519CF16F50007F6F9 /* JAMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMessageView.h; sourceTree = "<group>"; };
 		8C38E18619CF16F50007F6F9 /* JAMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMessageView.m; sourceTree = "<group>"; };
@@ -1489,6 +1488,8 @@
 		CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASellerRatingsViewController.m; sourceTree = "<group>"; };
 		CE283E941A77981900F3E92D /* RISellerReviewInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISellerReviewInfo.h; sourceTree = "<group>"; };
 		CE283E951A77981900F3E92D /* RISellerReviewInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISellerReviewInfo.m; sourceTree = "<group>"; };
+		CE28EE581A9397C6000A264C /* JBWhatsAppActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBWhatsAppActivity.h; sourceTree = "<group>"; };
+		CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBWhatsAppActivity.m; sourceTree = "<group>"; };
 		CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell_ipad_landscape.xib; sourceTree = "<group>"; };
 		CE2C6B701A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell_ipad_portrait.xib; sourceTree = "<group>"; };
 		CE2DBC6C1A603B160075C21F /* RIFieldRatingStars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFieldRatingStars.h; sourceTree = "<group>"; };
@@ -2174,15 +2175,6 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
-		6C1B3DE01A8A77450069E5EC /* WhatsAppActivity */ = {
-			isa = PBXGroup;
-			children = (
-				6C1B3DE41A8B74180069E5EC /* JAWhatsAppActivity.h */,
-				6C1B3DE51A8B74180069E5EC /* JAWhatsAppActivity.m */,
-			);
-			name = WhatsAppActivity;
-			sourceTree = "<group>";
-		};
 		6C9355941A6EC8E700167486 /* Bundles */ = {
 			isa = PBXGroup;
 			children = (
@@ -2634,7 +2626,7 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6C1B3DE01A8A77450069E5EC /* WhatsAppActivity */,
+				CE28EE571A9397C6000A264C /* WhatsAppActivity */,
 				CE283E4E1A6D56E800F3E92D /* AQSFacebookMessengerActivity */,
 				B5B5FDA919D99D05008B8059 /* AccengageiOSSDK */,
 				B5C13E781A402A9E00484398 /* Adjust */,
@@ -3285,6 +3277,15 @@
 				CE283E791A765AE600F3E92D /* JAOfferCollectionViewCell_ipad_landscape.xib */,
 			);
 			name = OfferCell;
+			sourceTree = "<group>";
+		};
+		CE28EE571A9397C6000A264C /* WhatsAppActivity */ = {
+			isa = PBXGroup;
+			children = (
+				CE28EE581A9397C6000A264C /* JBWhatsAppActivity.h */,
+				CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */,
+			);
+			path = WhatsAppActivity;
 			sourceTree = "<group>";
 		};
 		CE2F576B19913B33000A9E09 /* Catalog */ = {
@@ -4520,6 +4521,7 @@
 				CEA86D9F1A3894C0000032AD /* JASizeGuideViewController.m in Sources */,
 				7a12981c2968c2aacbe9a9fb /* RITeaserCategory.m in Sources */,
 				CEED472D1A7B973B006D9CE7 /* JAPDVBundles.m in Sources */,
+				CE28EE5B1A9397C6000A264C /* JBWhatsAppActivity.m in Sources */,
 				7d1d33afb7c6d4f0efa0644b /* JAExternalPaymentsViewController.m in Sources */,
 				52E8CC1E1A40947000D33FD9 /* JASizeGuideWizardView.m in Sources */,
 				334b2d58a1b29954afa8a3b3 /* JAPDVVariations.m in Sources */,
@@ -4756,7 +4758,6 @@
 				B5B79B401A3F4A2A00639F9E /* RIShippingMethod.m in Sources */,
 				4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */,
 				CE3AF90E19DBF68400D8C51B /* RICampaign.m in Sources */,
-				6C1B3DE61A8B74180069E5EC /* JAWhatsAppActivity.m in Sources */,
 				520A37D21A4890CD0046C8B1 /* JASearchView.m in Sources */,
 				CE55A4E71993672600EE75DE /* JARatingsView.m in Sources */,
 				CEA86D9E1A3756C2000032AD /* JASizeGuideViewController.m in Sources */,
@@ -4838,6 +4839,7 @@
 				B59D195F19C33122004843C3 /* JAOrderViewController.m in Sources */,
 				B55CF29119BE072800A6C6B6 /* JAShippingInfoCell.m in Sources */,
 				4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */,
+				CE28EE5A1A9397C6000A264C /* JBWhatsAppActivity.m in Sources */,
 				CEDEB9C9199BA8FA0022BAB5 /* NMRangeSlider.m in Sources */,
 				B5B5FDA819D95D8E008B8059 /* RICustomer.m in Sources */,
 				B5A3025919811E8A00F71726 /* SDWebImageDecoder.m in Sources */,
