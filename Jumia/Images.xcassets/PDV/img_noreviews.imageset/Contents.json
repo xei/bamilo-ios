@@ -1,14 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "ipad",
+      "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "img_noreviews~ipad.png"
+      "filename" : "img_noreviews.png"
     },
     {
-      "idiom" : "ipad",
+      "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "img_noreviews@2x~ipad.png"
+      "filename" : "img_noreviews@2x.png"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

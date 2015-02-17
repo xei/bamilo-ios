@@ -283,27 +283,7 @@ UIAlertViewDelegate
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
         
-        if(VALID_NOTEMPTY(self.productRatings, RIProductRatings) && VALID_NOTEMPTY(self.productRatings.reviews, NSArray))
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil userInfo:userInfo];
-        }
-        else
-        {
-            if(VALID_NOTEMPTY(self.product, RIProduct))
-            {
-                [userInfo setObject:self.product forKey:@"product"];
-            }
-            if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
-            {
-                [userInfo setObject:self.productRatings forKey:@"productRatings"];
-            }
-            [userInfo setObject:[NSNumber numberWithBool:self.goToNewRatingButtonPressed] forKey:@"goToNewRatingButtonPressed"];
-            
-            [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"popLastViewController"];
-            [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil userInfo:userInfo];
     }
     else
     {
@@ -548,11 +528,6 @@ UIAlertViewDelegate
 
 - (void)sendReview:(id)sender
 {
-    [self continueSendingReview];
-}
-
-- (void)continueSendingReview
-{
     [self showLoading];
     
     [self.ratingsDynamicForm resignResponder];
@@ -560,12 +535,21 @@ UIAlertViewDelegate
     
     RIForm* currentForm;
     JADynamicForm* currentDynamicForm;
+    BOOL loginIsRequired = NO;
     if (self.isShowingRating) {
         currentForm = self.ratingsForm;
         currentDynamicForm = self.ratingsDynamicForm;
+        loginIsRequired = [[RICountryConfiguration getCurrentConfiguration].ratingRequiresLogin boolValue];
     } else {
         currentForm = self.reviewsForm;
         currentDynamicForm = self.reviewsDynamicForm;
+        loginIsRequired = [[RICountryConfiguration getCurrentConfiguration].reviewRequiresLogin boolValue];
+    }
+    
+    if (loginIsRequired && NO == [RICustomer checkIfUserIsLogged]) {
+        [self hideLoading];
+        [self showMessage:@"Requires Login" success:NO];
+        return;
     }
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[currentDynamicForm getValues]];
