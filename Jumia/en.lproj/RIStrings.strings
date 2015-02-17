@@ -304,3 +304,6 @@
 
 "sort_by" = "Sort by";
 "fee_include" = "(%@ incl.)";
+
+"login_to_review" = "Please login to review";
+"login_to_rate" = "Please login to rate";

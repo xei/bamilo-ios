@@ -1152,8 +1152,6 @@ JAActivityViewControllerDelegate
 
 - (void)goToRatinsMainScreen
 {
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation))
-    {
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         if(VALID_NOTEMPTY(self.product, RIProduct))
         {
@@ -1164,38 +1162,6 @@ JAActivityViewControllerDelegate
             [userInfo setObject:self.productRatings forKey:@"productRatings"];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
-    }
-    else
-    {
-        if (0 == self.commentsCount)
-        {
-            
-            NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-            if(VALID_NOTEMPTY(self.product, RIProduct))
-            {
-                [userInfo setObject:self.product forKey:@"product"];
-            }
-            if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
-            {
-                [userInfo setObject:self.productRatings forKey:@"productRatings"];
-            }
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
-        }
-        else
-        {
-            NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-            if(VALID_NOTEMPTY(self.product, RIProduct))
-            {
-                [userInfo setObject:self.product forKey:@"product"];
-            }
-            if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
-            {
-                [userInfo setObject:self.productRatings forKey:@"productRatings"];
-            }
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
-        }
-    }
 }
 
 - (void)shareProduct

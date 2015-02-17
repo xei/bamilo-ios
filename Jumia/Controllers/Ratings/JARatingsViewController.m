@@ -40,10 +40,10 @@ UITableViewDataSource
 @property (weak, nonatomic) IBOutlet UITableView *tableViewComments;
 @property (nonatomic, strong) JAPriceView *priceView;
 
-// iPad landscape components only
 @property (weak, nonatomic) IBOutlet UIView *emptyReviewsView;
 @property (weak, nonatomic) IBOutlet UIImageView *emptyReviewsImageView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyReviewsLabel;
+// iPad landscape components only
 @property (weak, nonatomic) IBOutlet UIScrollView *writeReviewScrollView;
 @property (assign, nonatomic) CGRect writeReviewScrollViewInitialRect;
 
@@ -374,67 +374,77 @@ UITableViewDataSource
     self.tableViewComments.layer.cornerRadius = 5.0f;
     self.tableViewComments.allowsSelection = NO;
     
-    if(isiPad)
+    if(isInLandscape)
     {
-        if(isInLandscape)
-        {
-            [self.resumeView setHidden:YES];
-            [self.writeReviewScrollView setHidden:NO];
+        [self.resumeView setHidden:YES];
+        [self.writeReviewScrollView setHidden:NO];
+        
+        originY = CGRectGetMaxY(self.topView.frame) + verticalMargin;
+        
+        
+        CGFloat rightSideViewsWidth = 0.0f;
+        
+        if (NO == [[RICountryConfiguration getCurrentConfiguration].ratingIsEnabled boolValue] &&
+            NO == [[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
             
-            originY = CGRectGetMaxY(self.topView.frame) + verticalMargin;
+            //keep them the same
+            
+        } else {
             
             // The 18.0f pixeis are the left, middle and right margins
             viewsWidth = ((self.view.frame.size.width - 18.0f) / 2);
-            
-            [self.tableViewComments setFrame:CGRectMake(horizontalMargin,
-                                                        originY,
-                                                        viewsWidth,
-                                                        self.view.frame.size.height - originY - verticalMargin)];
-            if(hasComments)
-            {
-                [self.emptyReviewsView setHidden:YES];
-                [self.tableViewComments setHidden:NO];
-            }
-            else
-            {
-                [self.tableViewComments setHidden:YES];
-                [self.emptyReviewsView setHidden:NO];
-            }
-            
-            [self setupSendReviewView:viewsWidth originY:originY];
-            
-            [self setupEmptyReviewsView:viewsWidth originY:originY];
+            rightSideViewsWidth = viewsWidth;
         }
-        else
-        {
-            [self.resumeView setHidden:NO];
-            [self.emptyReviewsView setHidden:YES];
-            
-            if(hasComments)
-            {
-                [self.writeReviewScrollView setHidden:YES];
-                [self.tableViewComments setFrame:CGRectMake(verticalMargin,
-                                                            originY,
-                                                            viewsWidth,
-                                                            self.view.frame.size.height - originY - verticalMargin)];
-                [self.tableViewComments setHidden:NO];
-            }
-            else
-            {
-                [self.tableViewComments setHidden:YES];
-                [self.writeReviewScrollView setHidden:NO];
-            }
-        }
-    }
-    else
-    {
-        [self.resumeView setHidden:NO];
         
-        [self.tableViewComments setFrame:CGRectMake(verticalMargin,
+        [self.tableViewComments setFrame:CGRectMake(horizontalMargin,
                                                     originY,
                                                     viewsWidth,
                                                     self.view.frame.size.height - originY - verticalMargin)];
-        [self.tableViewComments setHidden:NO];
+        if(hasComments)
+        {
+            [self.emptyReviewsView setHidden:YES];
+            [self.tableViewComments setHidden:NO];
+        }
+        else
+        {
+            [self.tableViewComments setHidden:YES];
+            [self.emptyReviewsView setHidden:NO];
+        }
+        
+        [self setupSendReviewView:rightSideViewsWidth originY:originY];
+        
+        [self setupEmptyReviewsView:viewsWidth originY:originY];
+    }
+    else
+    {
+        CGFloat startingYForContent = originY;
+        
+        if (NO == [[RICountryConfiguration getCurrentConfiguration].ratingIsEnabled boolValue] &&
+            NO == [[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
+            
+            [self.resumeView setHidden:YES];
+            startingYForContent = self.resumeView.frame.origin.y;
+        } else {
+            [self.resumeView setHidden:NO];
+        }
+        
+        if(hasComments)
+        {
+            [self.writeReviewScrollView setHidden:YES];
+            [self.tableViewComments setFrame:CGRectMake(verticalMargin,
+                                                        startingYForContent,
+                                                        viewsWidth,
+                                                        self.view.frame.size.height - startingYForContent - verticalMargin)];
+            [self.tableViewComments setHidden:NO];
+            [self.emptyReviewsView setHidden:YES];
+        }
+        else
+        {
+            [self.tableViewComments setHidden:YES];
+            [self.writeReviewScrollView setHidden:NO];
+            [self.emptyReviewsView setHidden:NO];
+            [self setupEmptyReviewsView:viewsWidth originY:startingYForContent];
+        }
     }
     
     [self.tableViewComments reloadData];
@@ -647,25 +657,34 @@ UITableViewDataSource
             currentY += 20.0f + ratingsView.frame.size.height;
         }
     }
-    
-    self.labelUsedProduct.text = STRING_RATE_PRODUCT;
-    [self.labelUsedProduct setTextColor:UIColorFromRGB(0x666666)];
-    self.labelUsedProduct.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.labelUsedProduct setFrame:CGRectMake(self.labelUsedProduct.frame.origin.x,
-                                               currentY,
-                                               self.labelUsedProduct.frame.size.width,
-                                               self.labelUsedProduct.frame.size.height)];
-    [self.writeReviewButton setTitle:STRING_WRITE_REVIEW
-                            forState:UIControlStateNormal];
-    [self.writeReviewButton sizeToFit];
-    [self.writeReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
-                                 forState:UIControlStateNormal];
+
+    if (NO == [[RICountryConfiguration getCurrentConfiguration].ratingIsEnabled boolValue] &&
+        NO == [[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
+
+        [self.labelUsedProduct removeFromSuperview];
+        [self.writeReviewButton removeFromSuperview];
+    } else {
+        self.labelUsedProduct.text = STRING_RATE_PRODUCT;
+        [self.labelUsedProduct setTextColor:UIColorFromRGB(0x666666)];
+        self.labelUsedProduct.translatesAutoresizingMaskIntoConstraints = YES;
+        [self.labelUsedProduct setFrame:CGRectMake(self.labelUsedProduct.frame.origin.x,
+                                                   currentY,
+                                                   self.labelUsedProduct.frame.size.width,
+                                                   self.labelUsedProduct.frame.size.height)];
+        [self.writeReviewButton setTitle:STRING_WRITE_REVIEW
+                                forState:UIControlStateNormal];
+        [self.writeReviewButton sizeToFit];
+        [self.writeReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
+                                     forState:UIControlStateNormal];
+        
+        currentY += self.labelUsedProduct.frame.size.height + self.writeReviewButton.frame.size.height;
+    }
     
     self.resumeView.layer.cornerRadius = 5.0f;
     [self.resumeView setFrame:CGRectMake(6.0f,
                                          CGRectGetMaxY(self.topView.frame) + 6.0f,
                                          width,
-                                         currentY + self.labelUsedProduct.frame.size.height + self.writeReviewButton.frame.size.height + 20.0f)];
+                                         currentY + 20.0f)];
 }
 
 - (void)setupSendReviewView:(CGFloat)width originY:(CGFloat)originY
@@ -985,25 +1004,31 @@ UITableViewDataSource
 
 - (void)sendReview:(id)sender
 {
-    [self continueSendingReview];
-}
-
-- (void)continueSendingReview
-{
     [self showLoading];
     
     [self.ratingsDynamicForm resignResponder];
     [self.reviewsDynamicForm resignResponder];
-    
+        
     RIForm* currentForm;
     JADynamicForm* currentDynamicForm;
     if (self.isShowingRating) {
         currentForm = self.ratingsForm;
         currentDynamicForm = self.ratingsDynamicForm;
+        if ([[RICountryConfiguration getCurrentConfiguration].ratingRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
+            [self hideLoading];
+            [self showMessage:STRING_LOGIN_TO_RATE success:NO];
+            return;
+        }
     } else {
         currentForm = self.reviewsForm;
         currentDynamicForm = self.reviewsDynamicForm;
+        if ([[RICountryConfiguration getCurrentConfiguration].reviewRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
+            [self hideLoading];
+            [self showMessage:STRING_LOGIN_TO_REVIEW success:NO];
+            return;
+        }
     }
+    
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[currentDynamicForm getValues]];
     

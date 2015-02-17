@@ -309,4 +309,7 @@
 
 #define STRING_SORT_BY RILocalizedString(@"sort_by", nil)
 
+#define STRING_LOGIN_TO_REVIEW RILocalizedString(@"login_to_review", nil)
+#define STRING_LOGIN_TO_RATE RILocalizedString(@"login_to_rate", nil)
+
 #endif

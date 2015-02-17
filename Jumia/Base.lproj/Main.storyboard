@@ -598,6 +598,21 @@
                                     <outlet property="delegate" destination="3I2-43-heI" id="5Xt-eL-tYv"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xng-dF-IBX" userLabel="Empty Reviews View">
+                                <rect key="frame" x="6" y="96" width="308" height="233"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="img_noreviews" translatesAutoresizingMaskIntoConstraints="NO" id="zmy-YS-mKH">
+                                        <rect key="frame" x="80" y="38" width="140" height="140"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qii-24-WDo">
+                                        <rect key="frame" x="6" y="200" width="286" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -615,6 +630,9 @@
                     <navigationItem key="navigationItem" id="EQC-ev-Vd7"/>
                     <connections>
                         <outlet property="brandLabel" destination="f5F-yC-DYb" id="m2Y-Zw-QTK"/>
+                        <outlet property="emptyReviewsImageView" destination="zmy-YS-mKH" id="Sbl-Qs-rUn"/>
+                        <outlet property="emptyReviewsLabel" destination="qii-24-WDo" id="PAQ-Cr-vlZ"/>
+                        <outlet property="emptyReviewsView" destination="Xng-dF-IBX" id="yvX-Iw-SIO"/>
                         <outlet property="labelUsedProduct" destination="12W-4a-bWD" id="H9b-db-D6p"/>
                         <outlet property="nameLabel" destination="3Km-cj-LcV" id="E6g-Ma-yN3"/>
                         <outlet property="resumeView" destination="rIu-hD-3ch" id="Sfz-M1-eIR"/>
@@ -2491,6 +2509,7 @@
         <image name="ico_cart" width="25" height="20"/>
         <image name="img_emptyCart" width="98" height="98"/>
         <image name="img_emptyrecentsearches" width="98" height="98"/>
+        <image name="img_noreviews" width="25" height="20"/>
         <image name="orangeBig_disabled" width="308" height="44"/>
         <image name="orangeBig_highlighted" width="308" height="44"/>
         <image name="orangeBig_normal" width="308" height="44"/>
