@@ -943,7 +943,6 @@
     RICategory* category = [selectedItem objectForKey:@"category"];
     NSString* categoryId = [selectedItem objectForKey:@"category_id"];
     NSString* categoryName = [selectedItem objectForKey:@"category_name"];
-    NSNumber* sorting = [notification.userInfo objectForKey:@"sorting"];
     NSString* filterType = [notification.userInfo objectForKey:@"filter_type"];
     NSString* filterValue = [notification.userInfo objectForKey:@"filter_value"];
     
