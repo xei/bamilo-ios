@@ -90,7 +90,10 @@
             self.undefinedBackup = undefinedSearchTerm;
             self.navBarLayout.subTitle = @"0";
             [self reloadNavBar];
-            [self addUndefinedSearchView:undefinedSearchTerm frame:self.collectionView.frame];
+            [self addUndefinedSearchView:undefinedSearchTerm frame:CGRectMake(6.0f,
+                                                                              self.catalogTopView.frame.origin.y,
+                                                                              self.view.frame.size.width - 12.0f,
+                                                                              self.view.frame.size.height - CGRectGetMaxY(self.catalogTopView.frame) - 12.0f)];
         }
         else
         {
@@ -332,7 +335,7 @@
         
         [self.undefinedView removeFromSuperview];
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
-                                                                           CGRectGetMaxY(self.catalogTopView.frame),
+                                                                           self.catalogTopView.frame.origin.y,
                                                                            self.view.frame.size.width - 12.0f,
                                                                            self.view.frame.size.height - CGRectGetMaxY(self.catalogTopView.frame) - 12.0f)];
     }
@@ -1392,7 +1395,7 @@
     if (VALID_NOTEMPTY(self.undefinedBackup, RIUndefinedSearchTerm)){
         
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
-                                                                           CGRectGetMaxY(self.catalogTopView.frame),
+                                                                           self.catalogTopView.frame.origin.y,
                                                                            self.view.frame.size.width - 12.0f,
                                                                            self.view.frame.size.height - CGRectGetMaxY(self.catalogTopView.frame) - 12.0f)];
         [self.undefinedView didRotate];
