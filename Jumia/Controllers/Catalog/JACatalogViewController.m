@@ -1000,6 +1000,9 @@
                             
                             filtersSelected = YES;
                         }
+                        if (filterOption.discountOnly) {
+                            filtersSelected = YES;
+                        }
                     }
                 } else
                 {
@@ -1019,6 +1022,10 @@
                                 [trackingDictionary setObject:filter.name forKey:kRIEventColorFilterKey];
                             }
                             
+                            filtersSelected = YES;
+                        }
+                        
+                        if (filterOption.discountOnly) {
                             filtersSelected = YES;
                         }
                     }
