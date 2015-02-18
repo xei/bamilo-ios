@@ -339,6 +339,11 @@
                                                                            self.view.frame.size.width - 12.0f,
                                                                            self.view.frame.size.height - CGRectGetMaxY(self.catalogTopView.frame) - 12.0f)];
     }
+    
+    [self.catalogTopView setFrame:CGRectMake(self.catalogTopView.frame.origin.x,
+                                             self.catalogTopView.frame.origin.y,
+                                             self.view.frame.size.width,
+                                             self.catalogTopView.frame.size.height)];
 }
 
 - (void)resetCatalog
