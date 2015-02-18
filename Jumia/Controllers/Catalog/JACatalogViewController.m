@@ -221,6 +221,8 @@
     self.catalogTopView.gridSelected = NO;
     self.catalogTopView.delegate = self;
     [self.view addSubview:self.catalogTopView];
+    self.catalogTopView.sortingButton.enabled = NO;
+    self.catalogTopView.filterButton.enabled = NO;
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -408,6 +410,8 @@
                                                                                   self.catalogTopView.filterButton.enabled = YES;
                                                                               }
                                                                               
+                                                                              self.catalogTopView.sortingButton.enabled = YES;
+                                                                              
                                                                               // Track events only in the first load of the products
                                                                               if (!self.isFirstLoadTracking)
                                                                               {
@@ -567,6 +571,8 @@
                                                                               self.filtersArray = filters;
                                                                               self.catalogTopView.filterButton.enabled = YES;
                                                                           }
+                                                                          
+                                                                          self.catalogTopView.sortingButton.enabled = YES;
                                                                           
                                                                           RICategory *category = nil;
                                                                           if (NOTEMPTY(categories)) {
