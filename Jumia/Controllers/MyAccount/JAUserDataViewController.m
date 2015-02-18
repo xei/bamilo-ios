@@ -123,6 +123,13 @@ JADynamicFormDelegate
                                                 object:nil];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"UserData"];
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

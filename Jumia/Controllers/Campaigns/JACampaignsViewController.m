@@ -190,6 +190,8 @@
                 RITeaserText* teaserText = [teaser.teaserTexts firstObject];
                 if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
                     [optionList addObject:teaserText.name];
+                    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Campaign"];
+                    [[RITrackingWrapper sharedInstance]trackScreenWithName:teaserText.name];
                     
                     if ([teaserText.name isEqualToString:self.startingTitle]) {
                         startingIndex = i;

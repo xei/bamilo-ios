@@ -405,6 +405,7 @@
                                                                       @"previousCategory" : STRING_MY_FAVOURITES,
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO],
                                                                       @"fromCatalog" : [NSNumber numberWithBool:YES]}];
+        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"Catalog_%@",product.name]];
     }
 }
 

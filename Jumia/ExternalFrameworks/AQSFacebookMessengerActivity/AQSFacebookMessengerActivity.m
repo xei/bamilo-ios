@@ -36,7 +36,7 @@
     return @"Facebook Messenger";
 }
 
-- (UIImage *)_activityImage {
+- (UIImage *)activityImage {
     
     UIImage *facebookMessengerImage = [UIImage imageNamed:[NSString stringWithFormat:@"facebookMessenger"]];
     return facebookMessengerImage;

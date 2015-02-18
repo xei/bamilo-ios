@@ -408,6 +408,9 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:notification.object
                                                       userInfo:notification.userInfo];
+    
+    NSString *productUrl = [notification.userInfo objectForKey:@"url"];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"teaser_%@", productUrl]];
 }
 
 - (void)pushCampaigns:(NSNotification*)notification

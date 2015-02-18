@@ -99,7 +99,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ShoppingCart"];
     [self continueLoading];
 }
 
@@ -302,12 +302,6 @@
     }
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ShoppingCart"];
-}
 
 -(void)setupEmptyCart
 {
@@ -325,6 +319,7 @@
     self.continueShoppingButton.layer.cornerRadius = 5.0f;
     
     [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CartEmpty"];
 }
 
 -(void)setupCart
@@ -792,6 +787,7 @@
         [self.cartScrollView setContentSize:CGSizeMake(self.cartScrollView.frame.size.width,
                                                        self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.callToOrderButton.frame) + 6.0f)];
     }
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CartWithItem"];
 }
 
 -(void)goToHomeScreen
@@ -1114,6 +1110,9 @@
                                                           userInfo:@{ @"url" : product.productUrl,
                                                                       @"previousCategory" : STRING_CART,
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO]}];
+        
+        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"cart_%@",product.name]];
+
     }
 }
 

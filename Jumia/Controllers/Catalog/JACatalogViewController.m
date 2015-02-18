@@ -957,6 +957,8 @@
                                                                       @"delegate" : self,
                                                                       @"category" : self.category,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
+        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"cat_/%@/%@",self.category.urlKey
+                                                                 ,product.name]];
     }
     else
     {
@@ -967,6 +969,7 @@
                                                                       @"previousCategory" : self.navBarLayout.title,
                                                                       @"delegate": self ,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
+        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"Search_%@",product.name]];
     }
 }
 

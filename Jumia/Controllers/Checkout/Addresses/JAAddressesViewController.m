@@ -188,7 +188,7 @@ UICollectionViewDelegateFlowLayout>
 {
     [super viewDidAppear:animated];
     
-    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CheckoutAddress"];
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"AddressesList"];
 }
 
 - (void)getAddressList

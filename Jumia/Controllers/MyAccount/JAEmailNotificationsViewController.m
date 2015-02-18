@@ -61,6 +61,13 @@ JADynamicFormDelegate
     [self getForm];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"NewsletterSubscription"];
+}
+
 - (void)getForm
 {
     if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
