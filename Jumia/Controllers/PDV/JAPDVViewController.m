@@ -37,7 +37,7 @@
 #import "JAPDVBundleSingleItem.h"
 #import "RIProduct.h"
 #import "JAOtherOffersView.h"
-#import "JAWhatsAppActivity.h"
+#import "JBWhatsAppActivity.h"
 
 @interface JAPDVViewController ()
 <
@@ -1183,7 +1183,7 @@ JAActivityViewControllerDelegate
         
     // Share with Facebook Messenger and WhatsApp
     UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
-    UIActivity *whatsAppActivity = [[JAWhatsAppActivity alloc] init];
+    UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
     WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",STRING_SHARE_PRODUCT_MESSAGE, url] forABID:nil];
     
     NSArray *aplicationActivities = @[fbmActivity, whatsAppActivity];
