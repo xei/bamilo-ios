@@ -92,6 +92,13 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"Categories"];
+}
+
 - (void)continueLoading
 {
     if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)

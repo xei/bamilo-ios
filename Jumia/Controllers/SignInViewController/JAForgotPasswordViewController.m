@@ -95,6 +95,13 @@
     [self getForgotPasswordForm];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"ForgotPass"];
+}
+
 - (void) getForgotPasswordForm
 {
     if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)

@@ -110,6 +110,13 @@
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0f];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Favourites"];
+}
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self changeViewToInterfaceOrientation:toInterfaceOrientation];
@@ -398,6 +405,7 @@
                                                                       @"previousCategory" : STRING_MY_FAVOURITES,
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO],
                                                                       @"fromCatalog" : [NSNumber numberWithBool:YES]}];
+        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"Catalog_%@",product.name]];
     }
 }
 

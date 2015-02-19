@@ -143,6 +143,12 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"HomeShop"];
+}
+
 - (void)addNotifications
 {
     //we do this to make sure no notification is added more than once
@@ -402,6 +408,9 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:notification.object
                                                       userInfo:notification.userInfo];
+    
+    NSString *productUrl = [notification.userInfo objectForKey:@"url"];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"teaser_%@", productUrl]];
 }
 
 - (void)pushCampaigns:(NSNotification*)notification

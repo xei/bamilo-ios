@@ -366,6 +366,8 @@
 {
     [super viewDidAppear:animated];
     
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ThankYou"];
+    
     [self.goToTrackOrdersButton setFrame:self.trackOrderMessage.frame];
 }
 
