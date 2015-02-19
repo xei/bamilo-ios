@@ -90,7 +90,10 @@
             self.undefinedBackup = undefinedSearchTerm;
             self.navBarLayout.subTitle = @"0";
             [self reloadNavBar];
-            [self addUndefinedSearchView:undefinedSearchTerm frame:self.collectionView.frame];
+            [self addUndefinedSearchView:undefinedSearchTerm frame:CGRectMake(6.0f,
+                                                                              self.catalogTopView.frame.origin.y,
+                                                                              self.view.frame.size.width - 12.0f,
+                                                                              self.view.frame.size.height - CGRectGetMaxY(self.catalogTopView.frame) - 12.0f)];
         }
         else
         {
@@ -224,6 +227,8 @@
     self.catalogTopView.gridSelected = NO;
     self.catalogTopView.delegate = self;
     [self.view addSubview:self.catalogTopView];
+    self.catalogTopView.sortingButton.enabled = NO;
+    self.catalogTopView.filterButton.enabled = NO;
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -324,9 +329,6 @@
 {
     [super viewWillAppear:animated];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
-                                                        object:nil];
-    
     BOOL alreadyShowedWizardCatalog = [[NSUserDefaults standardUserDefaults] boolForKey:kJACatalogWizardUserDefaultsKey];
     if(alreadyShowedWizardCatalog == NO)
     {
@@ -341,10 +343,15 @@
         
         [self.undefinedView removeFromSuperview];
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
-                                                                           CGRectGetMaxY(self.catalogTopView.frame),
+                                                                           self.catalogTopView.frame.origin.y,
                                                                            self.view.frame.size.width - 12.0f,
                                                                            self.view.frame.size.height - CGRectGetMaxY(self.catalogTopView.frame) - 12.0f)];
     }
+    
+    [self.catalogTopView setFrame:CGRectMake(self.catalogTopView.frame.origin.x,
+                                             self.catalogTopView.frame.origin.y,
+                                             self.view.frame.size.width,
+                                             self.catalogTopView.frame.size.height)];
 }
 
 - (void)resetCatalog
@@ -408,6 +415,8 @@
                                                                                   self.filtersArray = filters;
                                                                                   self.catalogTopView.filterButton.enabled = YES;
                                                                               }
+                                                                              
+                                                                              self.catalogTopView.sortingButton.enabled = YES;
                                                                               
                                                                               // Track events only in the first load of the products
                                                                               if (!self.isFirstLoadTracking)
@@ -568,6 +577,8 @@
                                                                               self.filtersArray = filters;
                                                                               self.catalogTopView.filterButton.enabled = YES;
                                                                           }
+                                                                          
+                                                                          self.catalogTopView.sortingButton.enabled = YES;
                                                                           
                                                                           RICategory *category = nil;
                                                                           if (NOTEMPTY(categories)) {
@@ -1004,6 +1015,9 @@
                             
                             filtersSelected = YES;
                         }
+                        if (filterOption.discountOnly) {
+                            filtersSelected = YES;
+                        }
                     }
                 } else
                 {
@@ -1023,6 +1037,10 @@
                                 [trackingDictionary setObject:filter.name forKey:kRIEventColorFilterKey];
                             }
                             
+                            filtersSelected = YES;
+                        }
+                        
+                        if (filterOption.discountOnly) {
                             filtersSelected = YES;
                         }
                     }
@@ -1392,7 +1410,7 @@
     if (VALID_NOTEMPTY(self.undefinedBackup, RIUndefinedSearchTerm)){
         
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
-                                                                           CGRectGetMaxY(self.catalogTopView.frame),
+                                                                           self.catalogTopView.frame.origin.y,
                                                                            self.view.frame.size.width - 12.0f,
                                                                            self.view.frame.size.height - CGRectGetMaxY(self.catalogTopView.frame) - 12.0f)];
         [self.undefinedView didRotate];
