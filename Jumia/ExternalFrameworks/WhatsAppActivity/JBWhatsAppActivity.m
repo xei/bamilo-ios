@@ -60,7 +60,7 @@
     return @"es.sweetbits.WHATSAPP";
 }
 
-- (UIImage *)_activityImage
+- (UIImage *)activityImage
 {
     UIImage *whatsAppImage = [UIImage imageNamed:[NSString stringWithFormat:@"whatsAppLogo"]];
     return whatsAppImage;
