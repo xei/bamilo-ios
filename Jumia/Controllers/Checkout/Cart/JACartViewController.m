@@ -971,6 +971,7 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
                                                                     object:nil
                                                                   userInfo:nil];
+                [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
             }
             else
             {
@@ -979,6 +980,7 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil
                                                                   userInfo:userInfo];
+                [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
             }
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
