@@ -307,3 +307,5 @@
 
 "login_to_review" = "Please login to review";
 "login_to_rate" = "Please login to rate";
+"my_order_item_label" = "item";
+"my_order_items_label" = "items";
