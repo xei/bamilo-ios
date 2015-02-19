@@ -39,11 +39,20 @@
     self.backButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.leftButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.topTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.bottomTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.doneButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.cartButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.cartCountLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.searchButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.logoImageView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.titleLabel.minimumScaleFactor = 10./self.titleLabel.font.pointSize;
+    self.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.topTitleLabel.minimumScaleFactor = 10./self.titleLabel.font.pointSize;
+    self.topTitleLabel.adjustsFontSizeToFitWidth = YES;
+    self.bottomTitleLabel.minimumScaleFactor = 10./self.titleLabel.font.pointSize;
+    self.bottomTitleLabel.adjustsFontSizeToFitWidth = YES;
     
     CGFloat initialWidth = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame.size.width;
     
@@ -154,35 +163,29 @@
 {
     self.logoImageView.hidden = NO;
     self.titleLabel.hidden = YES;
+    self.topTitleLabel.hidden = YES;
+    self.bottomTitleLabel.hidden = YES;
 }
 - (void)showTitleLabelWithTitle:(NSString*)title
                        subtitle:(NSString*)subtitle;
 {
-    NSMutableAttributedString* finalTitleString;
-    NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont fontWithName:@"HelveticaNeue" size:17.0f], NSFontAttributeName,
-                                UIColorFromRGB(0x4e4e4e), NSForegroundColorAttributeName, nil];
+    [self.topTitleLabel setText:title];
+    [self.bottomTitleLabel setText:subtitle];
+    [self.titleLabel setText:title];
+    
     if (VALID_NOTEMPTY(subtitle, NSString)) {
-        NSString* subtitleBrackets = [NSString stringWithFormat:@" (%@)", subtitle];
-        NSDictionary* subtitleAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                            [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f], NSFontAttributeName,
-                                            nil];
-        NSRange subtitleRange = NSMakeRange(title.length, subtitleBrackets.length);
-        finalTitleString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", title, subtitleBrackets]
-                                                                  attributes:attributes];
-        
-        [finalTitleString setAttributes:subtitleAttributes
-                                  range:subtitleRange];
-        
+        self.titleLabel.hidden = YES;
+        self.topTitleLabel.hidden = NO;
+        self.bottomTitleLabel.hidden = NO;
     } else {
-        finalTitleString = [[NSMutableAttributedString alloc] initWithString:title attributes:attributes];
+        self.titleLabel.hidden = NO;
+        self.topTitleLabel.hidden = YES;
+        self.bottomTitleLabel.hidden = YES;
     }
     
-    [self.titleLabel setAttributedText:finalTitleString];
-    self.logoImageView.hidden = YES;
-    self.titleLabel.hidden = NO;
-    
     [self adjustTitleFrame];
+    
+    self.logoImageView.hidden = YES;
 }
 
 -(void)adjustTitleFrame
@@ -295,7 +298,7 @@
         }
         else
         {
-            if(!self.titleLabel.hidden)
+            if(!self.titleLabel.hidden || !self.topTitleLabel.hidden)
             {
                 backButtonMaxWidth = backButtonTextSize.width;
                 backButtonFinalWidth = 6.0f + backButtonMaxWidth + 11.0f + 12.0f;
@@ -352,16 +355,27 @@
         titleLabelSideMargin = (width - titleLabelWidth) / 2;
     }
     
+    [self.titleLabel setNumberOfLines:2];
     [self.titleLabel setFrame:CGRectMake(titleLabelSideMargin,
                                          self.titleLabel.frame.origin.y,
                                          titleLabelWidth,
                                          self.titleLabel.frame.size.height)];
+    [self.topTitleLabel setFrame:CGRectMake(titleLabelSideMargin,
+                                            3.0f,
+                                            titleLabelWidth,
+                                            24.0f)];
+    [self.bottomTitleLabel setFrame:CGRectMake(titleLabelSideMargin,
+                                               self.frame.size.height - self.bottomTitleLabel.frame.size.height - 2.0f,
+                                               titleLabelWidth,
+                                               self.bottomTitleLabel.frame.size.height)];
 }
 
 - (void)hideCenterItems
 {
     self.logoImageView.hidden = YES;
     self.titleLabel.hidden = YES;
+    self.topTitleLabel.hidden = YES;
+    self.bottomTitleLabel.hidden = YES;
 }
 
 #pragma mark - Right side

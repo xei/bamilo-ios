@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *cartCountLabel;
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *topTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *bottomTitleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;

@@ -312,4 +312,9 @@
 #define STRING_LOGIN_TO_REVIEW RILocalizedString(@"login_to_review", nil)
 #define STRING_LOGIN_TO_RATE RILocalizedString(@"login_to_rate", nil)
 
+#define STRING_ITEM RILocalizedString(@"my_order_item_label", nil)
+#define STRING_ITEMS RILocalizedString(@"my_order_items_label", nil)
+
+
+
 #endif
