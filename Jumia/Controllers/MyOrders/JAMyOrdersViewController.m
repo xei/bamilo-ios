@@ -374,7 +374,7 @@ JAPickerScrollViewDelegate
     // Track Order
     if(0 == index)
     {
-        self.screenName = @"TrackOrder";
+        self.screenName = @"OrdingTracker";
         [[RITrackingWrapper sharedInstance] trackScreenWithName:self.screenName];
         
         [self.contentScrollView scrollRectToVisible:CGRectMake(index * self.contentScrollView.frame.size.width,

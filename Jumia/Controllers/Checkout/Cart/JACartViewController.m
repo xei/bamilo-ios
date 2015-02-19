@@ -99,7 +99,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ShoppingCart"];
     [self continueLoading];
 }
 
@@ -302,6 +302,7 @@
     }
 }
 
+
 -(void)setupEmptyCart
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
@@ -318,6 +319,7 @@
     self.continueShoppingButton.layer.cornerRadius = 5.0f;
     
     [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CartEmpty"];
 }
 
 -(void)setupCart
@@ -785,6 +787,7 @@
         [self.cartScrollView setContentSize:CGSizeMake(self.cartScrollView.frame.size.width,
                                                        self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.callToOrderButton.frame) + 6.0f)];
     }
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CartWithItem"];
 }
 
 -(void)goToHomeScreen
@@ -968,6 +971,7 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
                                                                     object:nil
                                                                   userInfo:nil];
+                [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
             }
             else
             {
@@ -976,6 +980,7 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil
                                                                   userInfo:userInfo];
+                [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
             }
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -1107,6 +1112,9 @@
                                                           userInfo:@{ @"url" : product.productUrl,
                                                                       @"previousCategory" : STRING_CART,
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO]}];
+        
+        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"cart_%@",product.name]];
+
     }
 }
 

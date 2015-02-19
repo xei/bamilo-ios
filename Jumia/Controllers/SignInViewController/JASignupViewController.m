@@ -133,6 +133,13 @@ JADatePickerDelegate
     [self getRegisterForm];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Register"];
+}
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self removeViews];

@@ -327,6 +327,13 @@ FBLoginViewDelegate
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CustomerSignUp"];
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     // notify the InAppNotification SDK that this view controller in no more active

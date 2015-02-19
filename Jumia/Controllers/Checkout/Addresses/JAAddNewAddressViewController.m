@@ -138,6 +138,13 @@ JAPickerDelegate>
     [self getForms];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"NewAddress"];
+}
+
 - (void) getForms
 {
     if(RIApiResponseSuccess == self.apiResponse)

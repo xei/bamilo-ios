@@ -161,6 +161,12 @@ JAActivityViewControllerDelegate
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"ShopProductDetail"];
+}
+
 - (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification
 {
     if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
@@ -1139,6 +1145,7 @@ JAActivityViewControllerDelegate
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRelatedItem]
                                               data:[trackingDictionary copy]];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"related_item_%@",tempProduct.name]];
 }
 
 - (void)gotoDetails

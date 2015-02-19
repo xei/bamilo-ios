@@ -109,6 +109,12 @@
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0f];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"Filters"];
+}
+
 - (BOOL)checkEditButtonState
 {
     NSInteger numberOfRows = [self tableView:self.tableView numberOfRowsInSection:0];

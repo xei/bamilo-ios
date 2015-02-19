@@ -161,6 +161,13 @@ UITableViewDataSource
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"Reviews"];
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
