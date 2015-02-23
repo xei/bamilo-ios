@@ -415,7 +415,13 @@
                       
                       [self hideLoading];
                       
-                      NSString *errorAddToCart = STRING_ERROR_ADDING_TO_CART;
+                       NSString *errorAddToCart = STRING_ERROR_ADDING_TO_CART;
+                      NSString *results = [[errorMessages valueForKey:@"description"] componentsJoinedByString:@""];
+                      if([results  isEqual: @"order_product_sold_out"]){
+                          
+                          errorAddToCart = STRING_PRODCUTS_OUT_OF_STOCK;
+                      }
+                      
                       if (RIApiResponseNoInternetConnection == apiResponse)
                       {
                           errorAddToCart = STRING_NO_CONNECTION;
