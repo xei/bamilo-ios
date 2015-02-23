@@ -27,6 +27,7 @@
 @property (nonatomic, retain) NSNumber * reviewIsEnabled;
 @property (nonatomic, retain) NSNumber * reviewRequiresLogin;
 @property (nonatomic, retain) NSOrderedSet *languages;
+@property (nonatomic, retain) NSNumber *facebookAvailable;
 
 /**
  *  Method to parse an RICountryConfiguration given a JSON object
