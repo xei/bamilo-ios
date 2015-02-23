@@ -26,6 +26,7 @@
 @dynamic reviewIsEnabled;
 @dynamic reviewRequiresLogin;
 @dynamic languages;
+@dynamic facebookAvailable;
 
 + (RICountryConfiguration *)parseCountryConfiguration:(NSDictionary *)json
 {
@@ -65,6 +66,10 @@
     
     if ([json objectForKey:@"cs_email"]) {
         newConfig.csEmail = [json objectForKey:@"cs_email"];
+    }
+    
+    if([json objectForKey:@"facebook_is_available"]){
+        newConfig.facebookAvailable = [json objectForKey:@"facebook_is_available"];
     }
     
     NSString *languageCode = @"";
