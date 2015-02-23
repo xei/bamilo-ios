@@ -857,7 +857,7 @@
                       
                       NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
                       NSString *results = [[errorMessages valueForKey:@"description"] componentsJoinedByString:@""];
-                      if([results  isEqual: @"order_product_sold_out"]){
+                      if([results  isEqualToString: @"order_product_sold_out"]){
                           
                           addToCartError = STRING_PRODCUTS_OUT_OF_STOCK;
                       }
