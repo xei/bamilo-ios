@@ -290,3 +290,5 @@
 
 "write_full_review" = "Donnez votre avis complet";
 "product_sold_by" = "Vendu par:";
+"my_order_item_label" = "produit";
+"my_order_items_label" = "produits";

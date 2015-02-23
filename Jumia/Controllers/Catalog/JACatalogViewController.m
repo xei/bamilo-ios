@@ -88,7 +88,7 @@
         if(VALID_NOTEMPTY(undefinedSearchTerm, RIUndefinedSearchTerm))
         {
             self.undefinedBackup = undefinedSearchTerm;
-            self.navBarLayout.subTitle = @"0";
+            self.navBarLayout.subTitle = [NSString stringWithFormat:@"0 %@",STRING_ITEMS];
             [self reloadNavBar];
             [self addUndefinedSearchView:undefinedSearchTerm frame:CGRectMake(6.0f,
                                                                               self.catalogTopView.frame.origin.y,
@@ -484,7 +484,11 @@
                                                                                   
                                                                               }
                                                                               
-                                                                              self.navBarLayout.subTitle = [NSString stringWithFormat:@"%ld", (long)[productCount integerValue]];
+                                                                              NSString* countString = [NSString stringWithFormat:@"%ld %@",(long)[productCount integerValue], STRING_ITEMS];
+                                                                              if (1 == [productCount integerValue]) {
+                                                                                  countString = [NSString stringWithFormat:@"1 %@", STRING_ITEM];
+                                                                              }
+                                                                              self.navBarLayout.subTitle = countString;
                                                                               [self reloadNavBar];
                                                                               
                                                                               [self addProductsToTable:results];
@@ -570,7 +574,11 @@
                                                                           
                                                                           self.getProductsOperationID = nil;
                                                                           
-                                                                          self.navBarLayout.subTitle = productCount;
+                                                                          NSString* countString = [NSString stringWithFormat:@"%@ %@",productCount, STRING_ITEMS];
+                                                                          if (1 == [productCount integerValue]) {
+                                                                              countString = [NSString stringWithFormat:@"1 %@", STRING_ITEM];
+                                                                          }
+                                                                          self.navBarLayout.subTitle = countString;
                                                                           [self reloadNavBar];
                                                                           
                                                                           if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
