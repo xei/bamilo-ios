@@ -1,3 +1,4 @@
+//  New Relic version 4.174
 //
 //  New Relic for Mobile -- iOS edition
 //
@@ -5,7 +6,7 @@
 //    https://docs.newrelic.com/docs/mobile-apps for information
 //    https://docs.newrelic.com/docs/releases/ios for release notes
 //
-//  Copyright (c) 2013 New Relic. All rights reserved.
+//  Copyright (c) 2014 New Relic. All rights reserved.
 //  See https://docs.newrelic.com/docs/licenses/ios-agent-licenses for license details
 //
 
@@ -17,40 +18,18 @@
  *
  */
 
+#import "NewRelicFeatureFlags.h"
 #import "NRConstants.h"
 #import "NRTimer.h"
 #import "NRLogger.h"
+#import "NewRelicCustomInteractionInterface.h"
 #import "NRGCDOverride.h"
-#import "NewRelicFeatureFlags.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-    /*
-     * @protocol NewRelicCustomInteractionInterface
-     *
-     * Discussion:
-     *      Use this protocol with your UIViewControllers to preemptively rename
-     *      the New Relic initiated Interaction Traces by implementing the method
-     *      -customInteractionName.
-     */
-@protocol NewRelicCustomInteractionInterface
-@required
-
-    /*
-     *  - (NSString*) customNewRelicInteractionName;
-     *
-     *  Discussion:
-     *      If you implement this method in your UIViewController, New Relic 
-     *      will call this method before starting an interaction (started from
-     *      -viewDidLoad, or -viewDidAppear:) and rename the interaction with 
-     *      the string returned. (Instead of the default name of
-     *      "display <ViewControllerName>")
-     */
-    - (NSString*)customNewRelicInteractionName;
-@end
 
 @interface NewRelic : NSObject
 
@@ -59,10 +38,32 @@ extern "C" {
 /**************************************/
 
 
+
+
+/*!
+ * Throws a demo run-time exception named "NewRelicDemoException" to test 
+ * New Relic Crash Reporting. 
+ *
+ * @param message the message attached to the exception
+ *
+ */
+
++ (void) crashNow:(NSString*)message;
+
+/*!
+ * Throws a demo run-time exception named "NewRelicDemoException" to test 
+ * New Relic Crash Reporting. 
+ *
+ *
+ */
+
++ (void) crashNow;
+
+
 /*!
  Set this bit-wise flag to enable/disable  features.
 
- @param NRMAFeatureFlag the NR_OPTIONS bitwise-flag 
+ @param NRFeatureFlags the NR_OPTIONS bitwise-flag
  
  Note these flags must be set before calling -startWithApplicationToken:
       See NewRelicFeatureFlags.h for more flag details.
@@ -72,6 +73,19 @@ extern "C" {
 + (void) enableFeatures:(NRMAFeatureFlags)featureFlags;
 
 + (void) disableFeatures:(NRMAFeatureFlags)featureFlags;
+
+
+/*! 
+
+ @param BOOL enable or disable crash reporting
+
+ @note call this method before +startWithApplicationToken.
+       it will only be effective called before this method.
+
+*/
+
++ (void) enableCrashReporting:(BOOL)enabled;
+
 /*!
  Sets the version of the application reported to New Relic.
 
@@ -273,9 +287,9 @@ extern "C" {
  *
  *      Note:
  *          - NR_TRACE_METHOD_START is a helper macro that handles the
- *            creation of the NRMATimer and the +startTraceMethod:... method call
+ *            creation of the NRTimer and the +startTraceMethod:... method call
  *            Please observer that this should be called in tandem with 
- *            NR_ARC_TRACE_METHOD_STOP or NR_NONARC_TRACE_METHOD_STOP 
+ *            NR_ARC_TRACE_METHOD_STOP or NR_NONARC_TRACE_METHOD_STOP
  *            see +endTracingMethodWithTimer: for more details.
 
  ******************************************************************************/
@@ -308,7 +322,7 @@ extern "C" {
  *  Note: 
  *      - NR_ARC_TRACE_METHOD_STOP and NR_NONARC_TRACE_METHOD_STOP are helper
  *        macros designed to be used in tandem with NR_TRACE_METHOD_START.
- *        the only difference between the two is NR_NONARC_TRACE_METHOD_STOP 
+ *        the only difference between the two is NR_NONARC_TRACE_METHOD_STOP
  *        cleans up the NRTimer created with NR_TRACE_METHOD_START;
  *
  ******************************************************************************/
@@ -528,7 +542,7 @@ extern "C" {
  *  Parameters:
  *      NSURL* URL:
  *          The URL of the request.
- *      NRMATimer* timer:
+ *      NRTimer* timer:
  *          A timer that captures the start and end of the request.
  *      NSDictionary* headers:
  *          A dictionary of the headers returned in the server response.
@@ -554,7 +568,9 @@ extern "C" {
  * and encoding from the headers dictionary and the response body data as a
  * server error in the New Relic UI.
  *******************************************************************************/
+
 + (void)noticeNetworkRequestForURL:(NSURL*)url
+                        httpMethod:(NSString*)httpMethod
                          withTimer:(NRTimer *)timer
                    responseHeaders:(NSDictionary *)headers
                         statusCode:(NSInteger)httpStatusCode
@@ -562,6 +578,16 @@ extern "C" {
                      bytesReceived:(NSUInteger)bytesReceived
                       responseData:(NSData *)responseData
                          andParams:(NSDictionary *)params;
+
++ (void)noticeNetworkRequestForURL:(NSURL*)url
+                         withTimer:(NRTimer *)timer
+                   responseHeaders:(NSDictionary *)headers
+                        statusCode:(NSInteger)httpStatusCode
+                         bytesSent:(NSUInteger)bytesSent
+                     bytesReceived:(NSUInteger)bytesReceived
+                      responseData:(NSData *)responseData
+                         andParams:(NSDictionary *)params __attribute__((deprecated));
+
 
 
 /*******************************************************************************
@@ -576,8 +602,14 @@ extern "C" {
  * http://developer.apple.com/library/ios/#documentation/Cocoa/Reference/Foundation/Miscellaneous/Foundation_Constants/Reference/reference.html#//apple_ref/doc/uid/TP40003793-CH3g-SW40
  *******************************************************************************/
 + (void)noticeNetworkFailureForURL:(NSURL *)url
+                        httpMethod:(NSString*)httpMethod
                          withTimer:(NRTimer *)timer
                     andFailureCode:(NSInteger)iOSFailureCode;
+
+
++ (void)noticeNetworkFailureForURL:(NSURL *)url
+                         withTimer:(NRTimer *)timer
+                    andFailureCode:(NSInteger)iOSFailureCode __attribute__((deprecated));
 
 
 

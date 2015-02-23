@@ -3827,6 +3827,7 @@
 				B5A301A419811D0700F71726 /* Sources */,
 				B5A301A519811D0700F71726 /* Frameworks */,
 				B5A301A619811D0700F71726 /* Resources */,
+				6C7B00721A9B6D84000F2E83 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -4391,6 +4392,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6C7B00721A9B6D84000F2E83 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SCRIPT=`/usr/bin/find \"${SRCROOT}\" -name newrelic_postbuild.sh | head -n 1`\n/bin/sh \"${SCRIPT}\" \"AA11211e8c9c311f3a9ec6ca6902bc3115602b7b8b\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0e1ddd53d8419281ea1d3272 /* Sources */ = {

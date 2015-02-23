@@ -5,7 +5,7 @@
 //    https://docs.newrelic.com/docs/mobile-apps for information
 //    https://docs.newrelic.com/docs/releases/ios for release notes
 //
-//  Copyright (c) 2013 New Relic. All rights reserved.
+//  Copyright (c) 2014 New Relic. All rights reserved.
 //  See https://docs.newrelic.com/docs/licenses/ios-agent-licenses for license details
 //
 
@@ -42,7 +42,11 @@ typedef NSString NRMetricUnit;
 #define kNRAgentHealthPrefix             @"Supportability/AgentHealth"
 #define kNRMASessionStartMetric           @"Session/Start"
 
+#define kNRMAExceptionHandlerHijackedMetric kNRAgentHealthPrefix @"/Hijacked/ExceptionHandler"
+
 #define kNRCarrierNameCacheLifetime     50 // milliseconds
+#define kNRWanTypeCacheLifetime         25 // milliseconds
+#define kNRNetworkStatusCacheLifetime   25 // milliseconds
 
 // Network Failure Codes
 enum NRNetworkFailureCode {
