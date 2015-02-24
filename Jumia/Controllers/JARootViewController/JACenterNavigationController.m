@@ -39,6 +39,7 @@
 #import "JAExternalPaymentsViewController.h"
 #import "JAThanksViewController.h"
 #import "RIProduct.h"
+#import "RISeller.h"
 #import "JANavigationBarLayout.h"
 #import "RICustomer.h"
 #import "JAUserDataViewController.h"
@@ -320,6 +321,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showSellerReviews:)
                                                  name:kOpenSellerReviews
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSellerCatalog:)
+                                                 name:kOpenSellerPage
                                                object:nil];
 }
 
@@ -1182,6 +1188,22 @@
         }
         
         [self pushViewController:viewController animated:YES];
+    }
+}
+
+-(void)showSellerCatalog: (NSNotification *)notification
+{
+    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* title = [notification.userInfo objectForKey:@"name"];
+    
+    if(VALID_NOTEMPTY(url, NSString))
+    {
+        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        catalog.catalogUrl = url;
+        catalog.navBarLayout.title = title;
+        catalog.navBarLayout.showBackButton = YES;
+        
+        [self pushViewController:catalog animated:YES];
     }
 }
 
