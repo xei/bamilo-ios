@@ -9,8 +9,10 @@
 #import "JAOfferCollectionViewCell.h"
 #import "RISeller.h"
 #import "JARatingsView.h"
+#import "JAClickableView.h"
 
 @interface JAOfferCollectionViewCell()
+@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
 
 @property (weak, nonatomic) IBOutlet UIView *backgroundContentView;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
@@ -18,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *deliveryLabel;
 @property (nonatomic, strong) JARatingsView* ratingsView;
 @property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
+@property (nonatomic, strong) RIProductOffer *productOfferSeller;
 
 @end
 
@@ -26,15 +29,18 @@
 - (void)loadWithProductOffer:(RIProductOffer*)productOffer
 {
     self.backgroundColor = [UIColor clearColor];
-    
+    self.productOfferSeller = productOffer;
     self.backgroundContentView.backgroundColor = [UIColor whiteColor];
     self.backgroundContentView.layer.cornerRadius = 5.0f;
     
+    self.clickableView.layer.cornerRadius = 5.0f;
     self.priceLabel.textColor = UIColorFromRGB(0xcc0000);
     self.priceLabel.text = productOffer.priceFormatted;
     
     self.sellerLabel.textColor = UIColorFromRGB(0x666666);
     self.sellerLabel.text = productOffer.seller.name;
+    
+    [self.clickableView addTarget:self action:@selector(gotoCatalogSeller) forControlEvents:UIControlEventTouchUpInside];
     
     self.deliveryLabel.textColor = UIColorFromRGB(0x666666);
     self.deliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[productOffer.minDeliveryTime integerValue], (long)[productOffer.maxDeliveryTime integerValue], STRING_DAYS];
@@ -59,5 +65,23 @@
     [self.addToCartButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.addToCartButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
 }
+
+-(void)gotoCatalogSeller
+{
+    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
+    
+    if(VALID_NOTEMPTY(self.productOfferSeller.seller, RISeller))
+    {
+        [userInfo setObject:self.productOfferSeller.seller.name forKey:@"name"];
+    }
+    
+    if(VALID_NOTEMPTY(self.productOfferSeller.seller, RISeller))
+    {
+        [userInfo setObject:self.productOfferSeller.seller.url forKey:@"url"];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.productOfferSeller.seller userInfo:userInfo];
+}
+
 
 @end
