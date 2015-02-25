@@ -36,6 +36,12 @@
 @property (nonatomic, retain) NSString * locale;
 @property (nonatomic, retain) RICustomer *customer;
 
+
++ (NSString*)setDefaultAddress:(RIAddress*)address
+                     isBilling:(BOOL)isBilling
+                  successBlock:(void (^)(void))successBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
 + (NSString*)getCustomerAddressListWithSuccessBlock:(void (^)(id adressList))successBlock
                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
