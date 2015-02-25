@@ -780,7 +780,7 @@ JAActivityViewControllerDelegate
                                                   self.variationsSection.frame.size.width,
                                                   self.variationsSection.frame.size.height);
         
-        self.variationsSection.titleLabel.text = STRING_VARIATIONS;
+        self.variationsSection.titleLabel.text = STRING_MORE_CHOICES;
         
         CGFloat currentX = 0.0;
         
