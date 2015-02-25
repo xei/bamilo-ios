@@ -9,8 +9,10 @@
 #import "JAOfferCollectionViewCell.h"
 #import "RISeller.h"
 #import "JARatingsView.h"
+#import "JAClickableView.h"
 
 @interface JAOfferCollectionViewCell()
+@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
 
 @property (weak, nonatomic) IBOutlet UIView *backgroundContentView;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
@@ -31,16 +33,14 @@
     self.backgroundContentView.backgroundColor = [UIColor whiteColor];
     self.backgroundContentView.layer.cornerRadius = 5.0f;
     
+    self.clickableView.layer.cornerRadius = 5.0f;
     self.priceLabel.textColor = UIColorFromRGB(0xcc0000);
     self.priceLabel.text = productOffer.priceFormatted;
     
     self.sellerLabel.textColor = UIColorFromRGB(0x666666);
     self.sellerLabel.text = productOffer.seller.name;
     
-    self.sellerLabel.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapGesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoCatalogSeller)];
-    [tapGesture setNumberOfTapsRequired:1];
-    [self.sellerLabel addGestureRecognizer:tapGesture];
+    [self.clickableView addTarget:self action:@selector(gotoCatalogSeller) forControlEvents:UIControlEventTouchUpInside];
     
     self.deliveryLabel.textColor = UIColorFromRGB(0x666666);
     self.deliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[productOffer.minDeliveryTime integerValue], (long)[productOffer.maxDeliveryTime integerValue], STRING_DAYS];
