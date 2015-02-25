@@ -958,43 +958,58 @@ UICollectionViewDelegateFlowLayout>
 
 -(void)nextStepButtonPressed
 {
-    [self showLoading];
-    
-    [RICheckout getBillingAddressFormWithSuccessBlock:^(RICheckout *checkout) {
-        RIForm *billingForm = checkout.billingAddressForm;
+    if (self.fromCheckout) {
+        [self showLoading];
         
-        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-        for (RIField *field in [billingForm fields])
-        {
-            if([@"billingForm[billingAddressId]" isEqualToString:[field name]])
-            {
-                [parameters setValue:[self.billingAddress uid] forKey:[field name]];
-            }
-            else if([@"billingForm[shippingAddressId]" isEqualToString:[field name]])
-            {
-                [parameters setValue:[self.shippingAddress uid] forKey:[field name]];
-            }
-            else if([@"billingForm[shippingAddressDifferent]" isEqualToString:[field name]])
-            {
-                //Yes, the true and false are switched for this api request...
-                [parameters setValue:[[self.billingAddress uid] isEqualToString:[self.shippingAddress uid]] ? @"1" : @"0" forKey:[field name]];
-            }
-        }
-        
-        [RICheckout setBillingAddress:checkout.billingAddressForm parameters:parameters successBlock:^(RICheckout *checkout) {
+        [RICheckout getBillingAddressFormWithSuccessBlock:^(RICheckout *checkout) {
+            RIForm *billingForm = checkout.billingAddressForm;
             
-            [self hideLoading];
+            NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+            for (RIField *field in [billingForm fields])
+            {
+                if([@"billingForm[billingAddressId]" isEqualToString:[field name]])
+                {
+                    [parameters setValue:[self.billingAddress uid] forKey:[field name]];
+                }
+                else if([@"billingForm[shippingAddressId]" isEqualToString:[field name]])
+                {
+                    [parameters setValue:[self.shippingAddress uid] forKey:[field name]];
+                }
+                else if([@"billingForm[shippingAddressDifferent]" isEqualToString:[field name]])
+                {
+                    //Yes, the true and false are switched for this api request...
+                    [parameters setValue:[[self.billingAddress uid] isEqualToString:[self.shippingAddress uid]] ? @"1" : @"0" forKey:[field name]];
+                }
+            }
             
-            if(self.fromCheckout)
-            {
-                [JAUtils goToCheckout:checkout];
-            }
-            else
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
-                                                                    object:nil
-                                                                  userInfo:nil];
-            }
+            [RICheckout setBillingAddress:checkout.billingAddressForm parameters:parameters successBlock:^(RICheckout *checkout) {
+                
+                [self hideLoading];
+                
+                if(self.fromCheckout)
+                {
+                    [JAUtils goToCheckout:checkout];
+                }
+                else
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+                                                                        object:nil
+                                                                      userInfo:nil];
+                }
+            } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                
+                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
+                [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+                
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
+                                                          data:[trackingDictionary copy]];
+                
+                [self hideLoading];
+                
+                [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
+            }];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -1009,20 +1024,37 @@ UICollectionViewDelegateFlowLayout>
             
             [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
         }];
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-        [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
-        [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
-                                                  data:[trackingDictionary copy]];
-        
-        [self hideLoading];
-        
-        [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
-    }];
+
+    } else {
+        [self setDefaultShippingAddress:self.shippingAddress];
+    }
+}
+
+- (void)setDefaultShippingAddress:(RIAddress *)shippingAddress
+{
+    [self showLoading];
+    [RIAddress setDefaultAddress:shippingAddress
+                       isBilling:NO
+                    successBlock:^(void) {
+                        [self setDefaultBillingAddress:self.billingAddress];
+                    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                        [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
+                        [self setDefaultBillingAddress:self.billingAddress];
+                    }];
+}
+
+- (void)setDefaultBillingAddress:(RIAddress *)billingAddress
+{
+    [RIAddress setDefaultAddress:billingAddress
+                       isBilling:YES
+                    successBlock:^(void) {
+                        [self showMessage:STRING_ADDRESSES_SAVED_AS_DEFAULT success:YES];
+                        [self finishedLoadingAddresses];
+                        [self hideLoading];
+                    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                        [self hideLoading];
+                        [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
+                    }];
 }
 
 @end

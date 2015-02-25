@@ -76,10 +76,16 @@
     
     RITeaser* teaser = [self.teasers objectAtIndex:index];
     
-    RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
+    if (2 == [teaser.targetType integerValue]) {
+        [self teaserPressedWithTitle:@"" inCampaignTeasers:[NSArray arrayWithObject:teaser]];
+    } else {
+        RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
+        
+        [self teaserPressedWithTeaserImage:teaserImage
+                                targetType:[teaser.targetType integerValue]];
+    }
     
-    [self teaserPressedWithTeaserImage:teaserImage
-                            targetType:[teaser.targetType integerValue]];
+
 }
 
 @end

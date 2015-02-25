@@ -314,7 +314,7 @@
 
 #define STRING_ITEM RILocalizedString(@"my_order_item_label", nil)
 #define STRING_ITEMS RILocalizedString(@"my_order_items_label", nil)
-
+#define STRING_ADDRESSES_SAVED_AS_DEFAULT RILocalizedString(@"string_addresses_saved_as_default", nil)
 
 
 #endif
