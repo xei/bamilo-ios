@@ -1425,6 +1425,11 @@
     [self.navigationBarView.searchButton addTarget:self
                                             action:@selector(search)
                                   forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationBarView.titleLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *touched = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goTop)];
+    [self.navigationBarView.titleLabel addGestureRecognizer:touched];
+    
 }
 
 - (void)changeNavigationWithNotification:(NSNotification*)notification
@@ -1490,6 +1495,11 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressBackNotification
                                                         object:nil];
     [self popViewControllerAnimated:YES];
+}
+
+-(void)goTop
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressNavBar object:nil];
 }
 
 - (void)done
