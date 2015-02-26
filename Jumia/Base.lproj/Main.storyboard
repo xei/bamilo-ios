@@ -1444,33 +1444,16 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wc2-me-4py">
-                                <rect key="frame" x="265" y="513" width="35" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="PXJ-n3-fa8"/>
-                                    <constraint firstAttribute="height" constant="35" id="lSf-dZ-Udb"/>
-                                </constraints>
-                                <state key="normal" image="catalogTopButton">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted" image="catalogTopButtonPressed"/>
-                                <connections>
-                                    <action selector="catalogTopButtonPressed:" destination="y7p-zP-v5K" eventType="touchUpInside" id="gqy-4E-N8g"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="ZRY-qq-tSd" secondAttribute="trailing" constant="6" id="CoR-IQ-aYS"/>
                             <constraint firstItem="ZRY-qq-tSd" firstAttribute="leading" secondItem="LT2-FN-Zb3" secondAttribute="leading" constant="6" id="Ph5-ps-5DO"/>
-                            <constraint firstItem="lOt-fd-9os" firstAttribute="top" secondItem="Wc2-me-4py" secondAttribute="bottom" constant="20" id="UKY-kL-3Le"/>
                             <constraint firstItem="lOt-fd-9os" firstAttribute="top" secondItem="ZRY-qq-tSd" secondAttribute="bottom" id="YSJ-z2-uF1"/>
-                            <constraint firstAttribute="trailing" secondItem="Wc2-me-4py" secondAttribute="trailing" constant="20" id="bTa-We-DJL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0Ui-Gw-Yo9"/>
                     <connections>
-                        <outlet property="catalogTopButton" destination="Wc2-me-4py" id="mcd-bw-b93"/>
                         <outlet property="collectionView" destination="ZRY-qq-tSd" id="XI0-2o-oZS"/>
                         <segue destination="hCe-bF-wIA" kind="push" id="qNS-lV-ylV"/>
                     </connections>
@@ -2491,8 +2474,6 @@
     </scenes>
     <resources>
         <image name="arrow_gotoarea" width="8" height="14"/>
-        <image name="catalogTopButton" width="35" height="35"/>
-        <image name="catalogTopButtonPressed" width="35" height="35"/>
         <image name="emptyFavoritesIcon" width="98" height="98"/>
         <image name="emptyRecentlyViewedIcon" width="98" height="98"/>
         <image name="greyHalf_disabled" width="152" height="44"/>
