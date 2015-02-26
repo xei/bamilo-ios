@@ -16,5 +16,6 @@
 @property (nonatomic, strong)NSArray* campaignTeasers;
 @property (nonatomic, strong)NSString* startingTitle;
 @property (nonatomic, strong)NSString* campaignId;
+@property (nonatomic, strong)NSString* campaignUrl;
 
 @end

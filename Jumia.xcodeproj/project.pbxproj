@@ -835,6 +835,10 @@
 		CEABEEC71A126652000D0CF8 /* JAPriceFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEABEEBB1A1119AB000D0CF8 /* JAPriceFiltersView.m */; };
 		CEABEEC81A126652000D0CF8 /* JAGenericFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEABEEBE1A122BEA000D0CF8 /* JAGenericFiltersView.m */; };
 		CEABEEC91A126652000D0CF8 /* JACategoryFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEABEEC51A1255F5000D0CF8 /* JACategoryFiltersView.m */; };
+		CEBE2A7B1A9E312F00F457FA /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBE2A7A1A9E312F00F457FA /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CEBE2A7C1A9E312F00F457FA /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBE2A7A1A9E312F00F457FA /* GTMNSString+HTML.m */; };
+		CEBE2A801A9E31E800F457FA /* JAShopWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBE2A7F1A9E31E800F457FA /* JAShopWebViewController.m */; };
+		CEBE2A811A9E31E800F457FA /* JAShopWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBE2A7F1A9E31E800F457FA /* JAShopWebViewController.m */; };
 		CEBEEE781A8CF205001998E5 /* JASortingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBEEE771A8CF205001998E5 /* JASortingView.m */; };
 		CEBEEE791A8CF20C001998E5 /* JACatalogTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */; };
 		CEBEEE7A1A8CF20C001998E5 /* JASortingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBEEE771A8CF205001998E5 /* JASortingView.m */; };
@@ -1681,6 +1685,11 @@
 		CEABEEC21A12327D000D0CF8 /* JACategoryFiltersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACategoryFiltersView.xib; path = Filters/JACategoryFiltersView.xib; sourceTree = "<group>"; };
 		CEABEEC41A1255F5000D0CF8 /* JACategoryFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACategoryFiltersView.h; path = Filters/JACategoryFiltersView.h; sourceTree = "<group>"; };
 		CEABEEC51A1255F5000D0CF8 /* JACategoryFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACategoryFiltersView.m; path = Filters/JACategoryFiltersView.m; sourceTree = "<group>"; };
+		CEBE2A781A9E312F00F457FA /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		CEBE2A791A9E312F00F457FA /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
+		CEBE2A7A1A9E312F00F457FA /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		CEBE2A7E1A9E31E800F457FA /* JAShopWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAShopWebViewController.h; sourceTree = "<group>"; };
+		CEBE2A7F1A9E31E800F457FA /* JAShopWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAShopWebViewController.m; sourceTree = "<group>"; };
 		CEBEEE761A8CF205001998E5 /* JASortingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASortingView.h; path = Catalog/JASortingView.h; sourceTree = "<group>"; };
 		CEBEEE771A8CF205001998E5 /* JASortingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASortingView.m; path = Catalog/JASortingView.m; sourceTree = "<group>"; };
 		CEBEEE7B1A8E13CF001998E5 /* JACatalogTopView_ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACatalogTopView_ipad.xib; path = Catalog/JACatalogTopView_ipad.xib; sourceTree = "<group>"; };
@@ -2627,6 +2636,7 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEBE2A771A9E312F00F457FA /* GTM */,
 				CE28EE571A9397C6000A264C /* WhatsAppActivity */,
 				CE283E4E1A6D56E800F3E92D /* AQSFacebookMessengerActivity */,
 				B5B5FDA919D99D05008B8059 /* AccengageiOSSDK */,
@@ -2917,6 +2927,7 @@
 		B5A302FF1981218E00F71726 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CEBE2A7D1A9E31E800F457FA /* ShopWeb */,
 				CE283E6E1A7296AE00F3E92D /* OtherOffers */,
 				B5A303001981218E00F71726 /* BaseViewController */,
 				CE3AF8FD19DBF4FB00D8C51B /* Campaigns */,
@@ -3724,6 +3735,25 @@
 				CE4848961A161979003C3D53 /* JAFiltersView.m */,
 			);
 			name = Filters;
+			sourceTree = "<group>";
+		};
+		CEBE2A771A9E312F00F457FA /* GTM */ = {
+			isa = PBXGroup;
+			children = (
+				CEBE2A781A9E312F00F457FA /* GTMDefines.h */,
+				CEBE2A791A9E312F00F457FA /* GTMNSString+HTML.h */,
+				CEBE2A7A1A9E312F00F457FA /* GTMNSString+HTML.m */,
+			);
+			path = GTM;
+			sourceTree = "<group>";
+		};
+		CEBE2A7D1A9E31E800F457FA /* ShopWeb */ = {
+			isa = PBXGroup;
+			children = (
+				CEBE2A7E1A9E31E800F457FA /* JAShopWebViewController.h */,
+				CEBE2A7F1A9E31E800F457FA /* JAShopWebViewController.m */,
+			);
+			path = ShopWeb;
 			sourceTree = "<group>";
 		};
 		CEC376DA19EFC1D500558B98 /* Wizard */ = {
@@ -4550,6 +4580,7 @@
 				d085cc95773f8a9e25e9ac1c /* RIPaymentMethodFormField.m in Sources */,
 				7e3a5f0e6afc1561038dbd8c /* Model.xcdatamodeld in Sources */,
 				9cbdf4e3cedc6bf19d69072d /* RICommunicationWrapper.m in Sources */,
+				CEBE2A811A9E31E800F457FA /* JAShopWebViewController.m in Sources */,
 				CEAB633E1A81053B00B6F26E /* BMA4SViewController.m in Sources */,
 				13aa921041b3d74e73c372da /* JAUndefinedSearchView.m in Sources */,
 				1b6f2e0df3c9146fca953a66 /* RITeaser.m in Sources */,
@@ -4581,6 +4612,7 @@
 				c98a2364f0dc0bb39541a1e3 /* RIPaymentMethodForm.m in Sources */,
 				39d64ebd01d50db348ddca2c /* RINewRelicTracker.m in Sources */,
 				132783da23c3a550a0c52064 /* RIGoogleAnalyticsTracker.m in Sources */,
+				CEBE2A7C1A9E312F00F457FA /* GTMNSString+HTML.m in Sources */,
 				c9e480b3a6b434d9b5f027fc /* JAPriceView.m in Sources */,
 				520A37C91A4444CC0046C8B1 /* JAFilteredNoResultsView.m in Sources */,
 				CE88F7AD1A1E33F000A3A586 /* JAProductListFlowLayout.m in Sources */,
@@ -4692,6 +4724,7 @@
 				4A19C51019D018F10070D194 /* JAShareActivityProvider.m in Sources */,
 				B5A302D519811E9200F71726 /* RICountry.m in Sources */,
 				4A944FF51992805100C02734 /* RIProductRatings.m in Sources */,
+				CEBE2A7B1A9E312F00F457FA /* GTMNSString+HTML.m in Sources */,
 				B5A3025E19811E8A00F71726 /* UIImageView+WebCache.m in Sources */,
 				B55BFB9519E6A83E0098467E /* JALoadCountryViewController.m in Sources */,
 				CEC376D319EBCA5800558B98 /* JAClickableView.m in Sources */,
@@ -4748,6 +4781,7 @@
 				B50B03A0198A5434002046DF /* JAAddressesViewController.m in Sources */,
 				CEAB633D1A81053B00B6F26E /* BMA4SViewController.m in Sources */,
 				4A1892D219939A0C0036F327 /* JAReviewCell.m in Sources */,
+				CEBE2A801A9E31E800F457FA /* JAShopWebViewController.m in Sources */,
 				4AE242E81986570F00E37C90 /* JAMenuViewController.m in Sources */,
 				CE283E6D1A726B3B00F3E92D /* RIProductOffer.m in Sources */,
 				B59DCA6219B710B100DE7960 /* RICity.m in Sources */,

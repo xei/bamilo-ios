@@ -56,6 +56,7 @@
 #import "JASizeGuideViewController.h"
 #import "JAOtherOffersViewController.h"
 #import "JASellerRatingsViewController.h"
+#import "JAShopWebViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -246,6 +247,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectTeaserWithPDVUrl:)
                                                  name:kDidSelectTeaserWithPDVUrlNofication
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectTeaserWithShopUrl:)
+                                                 name:kDidSelectTeaserWithShopUrlNofication
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1222,7 +1228,12 @@
         
         catalog.catalogUrl = url;
         catalog.navBarLayout.title = title;
-        catalog.navBarLayout.backButtonTitle = STRING_HOME;
+        
+        if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
+            catalog.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
+        } else {
+            catalog.navBarLayout.backButtonTitle = STRING_HOME;
+        }
         
         [self pushViewController:catalog animated:YES];
     }
@@ -1236,6 +1247,7 @@
     NSArray* campaignTeasers = [notification.userInfo objectForKey:@"campaignTeasers"];
     NSString* title = [notification.userInfo objectForKey:@"title"];
     NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
+    NSString* campaignUrl = [notification.userInfo objectForKey:@"campaign_url"];
     
     if (VALID_NOTEMPTY(campaignTeasers, NSArray))
     {
@@ -1251,6 +1263,12 @@
         JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
         
         campaignsVC.campaignId = campaignId;
+        
+        [self pushViewController:campaignsVC animated:YES];
+    } else if (VALID_NOTEMPTY(campaignUrl, NSString)) {
+        JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
+        
+        campaignsVC.campaignUrl = campaignUrl;
         
         [self pushViewController:campaignsVC animated:YES];
     }
@@ -1291,10 +1309,6 @@
                 pdv.previousCategory = previous;
             }
         }
-        else
-        {
-            pdv.previousCategory = STRING_HOME;
-        }
         
         if ([notification.userInfo objectForKey:@"category"])
         {
@@ -1320,6 +1334,38 @@
         
         [self pushViewController:pdv animated:YES];
     }
+}
+
+- (void)didSelectTeaserWithShopUrl:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                        object:nil];
+    
+    NSString* url = [notification.userInfo objectForKey:@"url"];
+
+    if (VALID_NOTEMPTY(url, NSString))
+    {
+        
+        JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
+        
+        if([notification.userInfo objectForKey:@"show_back_button"])
+        {
+            viewController.navBarLayout.backButtonTitle = STRING_HOME;
+        }
+        
+        if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
+            viewController.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
+        }
+        
+        if([notification.userInfo objectForKey:@"title"])
+        {
+            viewController.navBarLayout.title = [notification.userInfo objectForKey:@"title"];
+        }
+        
+        [self pushViewController:viewController animated:YES];
+
+    }
+
 }
 
 - (void)didSelectTeaserWithAllCategories:(NSNotification*)notification

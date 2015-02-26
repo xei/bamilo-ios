@@ -257,6 +257,8 @@
                         [self loadPage:campaignPageView withCampaignUrl:teaserImage.url];
                     }
                 }
+            } else if (VALID_NOTEMPTY(self.campaignUrl, NSString)) {
+                [self loadPage:campaignPageView withCampaignUrl:self.campaignUrl];
             }
         }
     }

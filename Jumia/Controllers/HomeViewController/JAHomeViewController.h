@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JAPickerScrollView.h"
+#import "JAShopWebViewController.h"
 
 @interface JAHomeViewController : JABaseViewController
 <
