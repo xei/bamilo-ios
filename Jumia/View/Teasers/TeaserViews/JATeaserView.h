@@ -14,6 +14,7 @@
 
 #define kTeaserNotificationPushCatalogWithUrl @"TEASER_NOTIFICATION_PUSH_CATALOG_WITH_URL"
 #define kTeaserNotificationPushPDVWithUrl @"TEASER_NOTIFICATION_PUSH_PDV_WITH_URL"
+#define kTeaserNotificationPushShopWithUrl @"TEASER_NOTIFICATION_PUSH_SHOP_WITH_URL"
 #define kTeaserNotificationPushAllCategories @"TEASER_NOTIFICATION_PUSH_ALL_CATEGORIES"
 #define kTeaserNotificationPushCatalogWithUrlForCampaigns @"TEASER_NOTIFICATION_PUSH_PDV_WITH_URL_FOR_CAMPAIGNS"
 

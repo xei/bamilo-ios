@@ -163,6 +163,10 @@
                                                  name:kTeaserNotificationPushPDVWithUrl
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(pushShopWithUrl:)
+                                                 name:kTeaserNotificationPushShopWithUrl
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(pushAllCategories)
                                                  name:kTeaserNotificationPushAllCategories
                                                object:nil];
@@ -179,6 +183,9 @@
                                                   object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:kTeaserNotificationPushPDVWithUrl
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kTeaserNotificationPushShopWithUrl
                                                   object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:kTeaserNotificationPushAllCategories
@@ -406,6 +413,16 @@
 - (void)pushPDVWithUrl:(NSNotification*)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                        object:notification.object
+                                                      userInfo:notification.userInfo];
+    
+    NSString *productUrl = [notification.userInfo objectForKey:@"url"];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"teaser_%@", productUrl]];
+}
+
+- (void)pushShopWithUrl:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication
                                                         object:notification.object
                                                       userInfo:notification.userInfo];
     
