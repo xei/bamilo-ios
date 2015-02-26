@@ -39,7 +39,7 @@
     self = [super init];
     if(self)
     {
-        self.hasFieldNavigation = hasFieldNavigation;        
+        self.hasFieldNavigation = YES;
         self.form = form;
         self.delegate = delegate;
         [self generateForm:[[[form fields] array] copy] values:nil startingY:startingY widthSize:widthComponent];
