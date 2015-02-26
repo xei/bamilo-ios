@@ -94,6 +94,7 @@
 #define kDidPressDoneNotification @"DID_PRESS_DONE_NOTIFICATION"
 #define kDidPressEditNotification @"DID_PRESS_EDIT_NOTIFICATION"
 #define kDidPressSearchButtonNotification @"DID_PRESS_SEARCH_BUTTON_NOTIFICATION"
+#define kDidPressNavBar @"DID_PRESS_NAV_BAR"
 
 
 // Ad4Push Notifications

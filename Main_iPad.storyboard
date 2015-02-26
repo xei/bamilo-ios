@@ -440,35 +440,18 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eyr-vl-osI">
-                                <rect key="frame" x="713" y="905" width="35" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="YXa-57-a8S"/>
-                                    <constraint firstAttribute="height" constant="35" id="pgQ-0t-Pc0"/>
-                                </constraints>
-                                <state key="normal" image="catalogTopButton">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted" image="catalogTopButtonPressed"/>
-                                <connections>
-                                    <action selector="catalogTopButtonPressed:" destination="c8w-bj-Pqm" eventType="touchUpInside" id="Fep-cq-wxz"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2zY-RW-R7t" firstAttribute="top" secondItem="Kpg-FM-fBt" secondAttribute="bottom" constant="44" id="0Wt-3p-cwg"/>
                             <constraint firstItem="cBE-tR-q0p" firstAttribute="top" secondItem="2zY-RW-R7t" secondAttribute="bottom" id="FYN-5E-uHp"/>
                             <constraint firstItem="2zY-RW-R7t" firstAttribute="leading" secondItem="X4L-oy-XJO" secondAttribute="leading" constant="6" id="aZV-dW-1qW"/>
-                            <constraint firstAttribute="trailing" secondItem="eyr-vl-osI" secondAttribute="trailing" constant="20" id="ooT-M6-PKB"/>
                             <constraint firstAttribute="trailing" secondItem="2zY-RW-R7t" secondAttribute="trailing" constant="6" id="yyq-X0-kzU"/>
-                            <constraint firstItem="cBE-tR-q0p" firstAttribute="top" secondItem="eyr-vl-osI" secondAttribute="bottom" constant="20" id="zsZ-0K-UXl"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="b7U-xG-y9h"/>
                     <connections>
-                        <outlet property="catalogTopButton" destination="eyr-vl-osI" id="b9b-ma-J8j"/>
                         <outlet property="collectionView" destination="2zY-RW-R7t" id="GZI-vJ-xyl"/>
                     </connections>
                 </viewController>
@@ -2477,8 +2460,6 @@
     </scenes>
     <resources>
         <image name="arrow_gotoarea" width="8" height="14"/>
-        <image name="catalogTopButton" width="35" height="35"/>
-        <image name="catalogTopButtonPressed" width="35" height="35"/>
         <image name="emptyFavoritesIcon" width="98" height="98"/>
         <image name="emptyRecentlyViewedIcon" width="98" height="98"/>
         <image name="greyHalf_disabled" width="152" height="44"/>

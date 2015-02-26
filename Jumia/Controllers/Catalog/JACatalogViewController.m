@@ -20,6 +20,7 @@
 #import "JAFilteredNoResultsView.h"
 #import "JAAppDelegate.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "JANavigationBarView.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -34,7 +35,6 @@
 
 @property (nonatomic, strong) JACatalogTopView* catalogTopView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet UIButton *catalogTopButton;
 @property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSMutableArray* productsArray;
 @property (nonatomic, strong) NSArray* filtersArray;
@@ -136,13 +136,16 @@
 
 - (void)showLoading
 {
-    self.catalogTopButton.hidden=YES;
     [super showLoading];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(navBarClicked)
+                                                 name:kDidPressNavBar
+                                               object:nil];
     
     self.apiResponse = RIApiResponseSuccess;
     
@@ -917,17 +920,9 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (0 == indexPath.row) {
-        self.catalogTopButton.hidden = YES;
-    }
-    
-    if (self.numberOfCellsInScreen <= indexPath.row) {
-        self.catalogTopButton.hidden = NO;
-    }
     
     if (!self.loadedEverything && self.productsArray.count - self.numberOfCellsInScreen <= indexPath.row)
     {
-        self.catalogTopButton.hidden = YES;
         [self loadMoreProducts];
     }
     
@@ -1133,12 +1128,12 @@
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
 
-#pragma mark - Button actions
-
-- (IBAction)catalogTopButtonPressed:(id)sender
+- (void)navBarClicked
 {
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
 }
+
+#pragma mark - Button actions
 
 - (void)addToFavoritesPressed:(UIButton*)button
 {
@@ -1325,7 +1320,6 @@
     // Remove the existent components
     [self.catalogTopView removeFromSuperview];
     [self.collectionView removeFromSuperview];
-    [self.catalogTopButton removeFromSuperview];
     
     // Build and add the new view
     [self.view addSubview:self.undefinedView];
