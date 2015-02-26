@@ -35,7 +35,6 @@
 
 @property (nonatomic, strong) JACatalogTopView* catalogTopView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet UIButton *catalogTopButton;
 @property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSMutableArray* productsArray;
 @property (nonatomic, strong) NSArray* filtersArray;
@@ -219,7 +218,6 @@
  
 - (void)setupViews
 {
-    [self.catalogTopButton removeFromSuperview];
     self.productsArray = [NSMutableArray new];
     
     self.isFirstLoadTracking = NO;
