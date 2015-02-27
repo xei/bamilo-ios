@@ -348,7 +348,7 @@
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
                                                                            self.catalogTopView.frame.origin.y,
                                                                            self.view.frame.size.width - 12.0f,
-                                                                           self.view.frame.size.height - CGRectGetMaxY(self.catalogTopView.frame) - 12.0f)];
+                                                                           self.view.frame.size.height - 12.0f)];
     }
     
     [self.catalogTopView setFrame:CGRectMake(self.catalogTopView.frame.origin.x,
