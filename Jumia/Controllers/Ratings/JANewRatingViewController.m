@@ -535,21 +535,22 @@ UIAlertViewDelegate
     
     RIForm* currentForm;
     JADynamicForm* currentDynamicForm;
-    BOOL loginIsRequired = NO;
     if (self.isShowingRating) {
         currentForm = self.ratingsForm;
         currentDynamicForm = self.ratingsDynamicForm;
-        loginIsRequired = [[RICountryConfiguration getCurrentConfiguration].ratingRequiresLogin boolValue];
+        if ([[RICountryConfiguration getCurrentConfiguration].ratingRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
+            [self hideLoading];
+            [self showMessage:STRING_LOGIN_TO_RATE success:NO];
+            return;
+        }
     } else {
         currentForm = self.reviewsForm;
         currentDynamicForm = self.reviewsDynamicForm;
-        loginIsRequired = [[RICountryConfiguration getCurrentConfiguration].reviewRequiresLogin boolValue];
-    }
-    
-    if (loginIsRequired && NO == [RICustomer checkIfUserIsLogged]) {
-        [self hideLoading];
-        [self showMessage:@"Requires Login" success:NO];
-        return;
+        if ([[RICountryConfiguration getCurrentConfiguration].reviewRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
+            [self hideLoading];
+            [self showMessage:STRING_LOGIN_TO_REVIEW success:NO];
+            return;
+        }
     }
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[currentDynamicForm getValues]];
