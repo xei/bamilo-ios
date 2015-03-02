@@ -61,7 +61,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 - (id)init
 {
-    NSLog(@"Initializing Ad4Push tracker");
+    RIDebugLog(@"Initializing Ad4Push tracker");
     
     if ((self = [super init])) {
         self.queue = [[NSOperationQueue alloc] init];

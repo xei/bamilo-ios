@@ -43,7 +43,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 
 - (id)init
 {
-    NSLog(@"Initializing Google Analytics tracker");
+    RIDebugLog(@"Initializing Google Analytics tracker");
     
     if ((self = [super init]))
     {
