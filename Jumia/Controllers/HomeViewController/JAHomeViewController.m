@@ -282,7 +282,6 @@
                 
                 JATeaserPageView* teaserPageView = [[JATeaserPageView alloc] init];
                 teaserPageView.teaserCategory = teaserCategory;
-                NSLog(@"%@", NSStringFromCGRect(self.teaserPagesScrollView.frame));
                 [teaserPageView loadTeasersForFrame:CGRectMake(currentPageX,
                                                                self.teaserPagesScrollView.bounds.origin.y,
                                                                self.teaserPagesScrollView.bounds.size.width,
