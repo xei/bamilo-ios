@@ -109,7 +109,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     // Dispatch tracking information every 5 seconds (default: 120)
     [GAI sharedInstance].dispatchInterval = 5;
     
-    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
+    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];// kGAILogLevelVerbose];
     
     // Create tracker instance.
     [[GAI sharedInstance] trackerWithTrackingId:trackingId];

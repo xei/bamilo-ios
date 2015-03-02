@@ -115,7 +115,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         return;
     }
     
-    [BMA4STracker setDebugMode:YES];
+    [BMA4STracker setDebugMode:NO];//YES];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [BMA4STracker trackWithPartnerId:userId
