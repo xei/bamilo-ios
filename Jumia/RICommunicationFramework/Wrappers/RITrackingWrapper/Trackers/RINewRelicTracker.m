@@ -17,7 +17,7 @@ NSString * const kRINewRelicTokenAPIKey = @"RINewRelicTokenAPIKey";
 
 - (id)init
 {
-    NSLog(@"Initializing NewRelic tracker");
+    RIDebugLog(@"Initializing NewRelic tracker");
     
     if ((self = [super init])) {
         self.queue = [[NSOperationQueue alloc] init];
