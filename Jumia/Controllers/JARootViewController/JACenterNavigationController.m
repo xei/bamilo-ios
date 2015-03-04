@@ -56,6 +56,7 @@
 #import "JASizeGuideViewController.h"
 #import "JAOtherOffersViewController.h"
 #import "JASellerRatingsViewController.h"
+#import "JANewSellerRatingViewController.h"
 #import "JAShopWebViewController.h"
 
 @interface JACenterNavigationController ()
@@ -327,6 +328,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showSellerReviews:)
                                                  name:kOpenSellerReviews
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showNewSellerReview:)
+                                                 name:kOpenNewSellerReview
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1130,15 +1136,6 @@
             newRatingViewController.productRatings = [notification.userInfo objectForKey:@"productRatings"];
         }
         
-        if ([notification.userInfo objectForKey:@"goToNewRatingButtonPressed"]) {
-            newRatingViewController.goToNewRatingButtonPressed = [[notification.userInfo objectForKey:@"goToNewRatingButtonPressed"] boolValue];
-        }
-        
-        if([notification.userInfo objectForKey:@"popLastViewController"] && [[notification.userInfo objectForKey:@"popLastViewController"] boolValue])
-        {
-            [self popViewControllerAnimated:NO];
-        }
-        
         BOOL animated = YES;
         if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
         {
@@ -1194,6 +1191,32 @@
         }
         
         [self pushViewController:viewController animated:YES];
+    }
+}
+
+- (void)showNewSellerReview:(NSNotification*)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JANewRatingViewController class]])
+    {
+        JANewSellerRatingViewController* newSellerRatingViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"newSellerRatingViewController"];
+        
+        if ([notification.userInfo objectForKey:@"product"]) {
+            newSellerRatingViewController.product = [notification.userInfo objectForKey:@"product"];
+        }
+        
+        if([notification.userInfo objectForKey:@"sellerAverageReviews"])
+        {
+            newSellerRatingViewController.sellerAverageReviews = [notification.userInfo objectForKey:@"product"];
+        }
+        
+        BOOL animated = YES;
+        if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
+        {
+            animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
+        }
+        
+        [self pushViewController:newSellerRatingViewController animated:animated];
     }
 }
 

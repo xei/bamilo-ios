@@ -307,18 +307,14 @@
 #define STRING_WRITE_FULL_REVIEW RILocalizedString(@"write_full_review", nil)
 #define STRING_SOLD_BY RILocalizedString(@"product_sold_by", nil)
 #define STRING_TAX_INC RILocalizedString(@"fee_include", nil)
-
 #define STRING_SORT_BY RILocalizedString(@"sort_by", nil)
-
 #define STRING_LOGIN_TO_REVIEW RILocalizedString(@"login_to_review", nil)
 #define STRING_LOGIN_TO_RATE RILocalizedString(@"login_to_rate", nil)
-
 #define STRING_ITEM RILocalizedString(@"my_order_item_label", nil)
 #define STRING_ITEMS RILocalizedString(@"my_order_items_label", nil)
-
 #define STRING_MORE_CHOICES RILocalizedString(@"string_more_choices", nil)
-
 #define STRING_ADDRESSES_SAVED_AS_DEFAULT RILocalizedString(@"string_addresses_saved_as_default", nil)
+#define STRING_REVIEW_THIS_SELLER RILocalizedString(@"review_this_seller", nil)
 
 
 #endif

@@ -6,13 +6,12 @@
 //  Copyright (c) 2015 Rocket Internet. All rights reserved.
 //
 
-#import "JABaseViewController.h"
+#import <UIKit/UIKit.h>
 
 @class RIProduct;
 
-@interface JASellerRatingsViewController : JABaseViewController <UITableViewDataSource, UITableViewDelegate>
+@interface JASellerRatingsViewController : JABaseViewController
 
-@property (nonatomic, strong) RIProduct* product;
-@property (nonatomic, assign) BOOL goToNewRatingButtonPressed;
+@property (strong, nonatomic) RIProduct *product;
 
 @end
