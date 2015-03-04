@@ -155,9 +155,6 @@ UIAlertViewDelegate
 
 -(void)finishedRequests
 {
-    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-    
     [self removeErrorView];
     if(RIApiResponseSuccess == self.apiResponse)
     {
@@ -415,68 +412,6 @@ UIAlertViewDelegate
     [RIForm sendForm:currentForm
           parameters:parameters
         successBlock:^(id object) {
-            
-            NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
-            
-            NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
-            [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
-            [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
-            [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
-            
-            for (UIView *component in currentDynamicForm.formViews)
-            {
-                if ([component isKindOfClass:[JAAddRatingView class]]) {
-                    
-                    JAAddRatingView* ratingView = (JAAddRatingView*)component;
-                    
-                    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                    [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
-                    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-                    [trackingDictionary setValue:@(ratingView.rating) forKey:kRIEventValueKey];
-                    
-                    if ([ratingView.fieldRatingStars.type isEqualToString:@"1"])
-                    {
-                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingPriceKey];
-                        [trackingDictionary setValue:@"RateProductPrice" forKey:kRIEventActionKey];
-                    }
-                    else if ([ratingView.fieldRatingStars.type isEqualToString:@"2"])
-                    {
-                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingAppearanceKey];
-                        [trackingDictionary setValue:@"RateProductAppearance" forKey:kRIEventActionKey];
-                    }
-                    else if ([ratingView.fieldRatingStars.type isEqualToString:@"3"])
-                    {
-                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingQualityKey];
-                        [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
-                    }
-                    else
-                    {
-                        // There is no indication about the default tracking for rating
-                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingKey];
-                        [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
-                    }
-                    
-                    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                    [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
-                    
-                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProduct]
-                                                              data:[trackingDictionary copy]];
-                    
-                    float value = [@(ratingView.rating) floatValue];
-                    [FBAppEvents logEvent:FBAppEventNameRated
-                               valueToSum:value
-                               parameters:@{FBAppEventParameterNameContentType: self.product.name,
-                                            FBAppEventParameterNameContentID: self.product.sku,
-                                            FBAppEventParameterNameMaxRatingValue: @5 }];
-                }
-            }
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProductGlobal]
-                                                      data:[globalRateDictionary copy]];
             
             [self hideLoading];
             
