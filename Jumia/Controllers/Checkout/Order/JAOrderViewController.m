@@ -327,7 +327,7 @@
     totalLabel.textAlignment = NSTextAlignmentRight;
     totalLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     totalLabel.textColor = UIColorFromRGB(0x666666);
-    totalLabel.text = self.checkout.cart.cartCleanValueFormatted;
+    totalLabel.text = self.checkout.cart.subTotalFormatted;
     [totalLabel sizeToFit];
     totalLabel.frame = CGRectMake(CGRectGetMaxX(articlesLabel.frame),
                                   articlesLabel.frame.origin.y,

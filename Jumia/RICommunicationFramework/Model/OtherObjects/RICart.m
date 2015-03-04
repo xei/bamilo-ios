@@ -571,6 +571,13 @@
         }
     }
     
+    if([json objectForKey:@"sub_total"]){
+        if(![[json objectForKey:@"sub_total"] isKindOfClass:[NSNull class]]){
+            cart.subTotal = [json objectForKey:@"sub_total"];
+            cart.subTotalFormatted = [RICountryConfiguration formatPrice:cart.subTotal country:country];
+            }
+        }
+
     if ([json objectForKey:@"cartCount"]) {
         if (![[json objectForKey:@"cartCount"] isKindOfClass:[NSNull class]]) {
             cart.cartCount = [json objectForKey:@"cartCount"];

@@ -511,13 +511,13 @@
     if(VALID_NOTEMPTY([[self cart] cartUnreducedValueFormatted], NSString))
     {
         [self.totalPriceView loadWithPrice:[[self cart] cartUnreducedValueFormatted]
-                              specialPrice:[[self cart] cartValueFormatted]
+                              specialPrice:[[self cart] subTotalFormatted]
                                   fontSize:11.0f
                      specialPriceOnTheLeft:YES];
     }
     else
     {
-        [self.totalPriceView loadWithPrice:[[self cart] cartValueFormatted]
+        [self.totalPriceView loadWithPrice:[[self cart] subTotalFormatted]
                               specialPrice:nil
                                   fontSize:11.0f
                      specialPriceOnTheLeft:YES];
