@@ -249,6 +249,7 @@
                                                self.soldByLabel.frame.origin.y - yOffset, //offset
                                                finalButtonWidth,
                                                finalButtonHeight)];
+        [self.sellerButton addTarget:self action:@selector(selectedButton) forControlEvents:UIControlEventTouchDown];
         [self.sellerButton addTarget:self action:@selector(gotoCatalogSeller) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.sellerButton];
 
@@ -284,6 +285,11 @@
                               self.frame.origin.y,
                               self.frame.size.width,
                               currentY)];
+}
+
+-(void)selectedButton
+{
+    [self.sellerButton setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.06f]];
 }
 
 - (void)setupForLandscape:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
@@ -374,6 +380,8 @@
                                                self.soldByLabel.frame.origin.y - yOffset, //offset
                                                finalButtonWidth,
                                                finalButtonHeight)];
+        [self.sellerButton addTarget:self action:@selector(selectedButton) forControlEvents:UIControlEventTouchDown];
+        [self.sellerButton addTarget:self action:@selector(gotoCatalogSeller) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:self.sellerButton];
         
@@ -629,7 +637,6 @@
 
 -(void)gotoCatalogSeller
 {
-    [self.sellerButton setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.06f]];
     
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
     
