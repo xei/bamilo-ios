@@ -607,6 +607,8 @@
 		CE55A4E71993672600EE75DE /* JARatingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55A4E61993672600EE75DE /* JARatingsView.m */; };
 		CE55A4E919936B6300EE75DE /* JARatingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE55A4E819936B6300EE75DE /* JARatingsView.xib */; };
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
+		CE73BB771AA60426002336B3 /* JANewSellerRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73BB761AA60426002336B3 /* JANewSellerRatingViewController.m */; };
+		CE73BB781AA6042E002336B3 /* JANewSellerRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73BB761AA60426002336B3 /* JANewSellerRatingViewController.m */; };
 		CE88F79F1A1CF64900A3A586 /* JAFavoriteListCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F79D1A1CF64900A3A586 /* JAFavoriteListCell_ipad_landscape.xib */; };
 		CE88F7A01A1CF64900A3A586 /* JAFavoriteListCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F79D1A1CF64900A3A586 /* JAFavoriteListCell_ipad_landscape.xib */; };
 		CE88F7A11A1CF64900A3A586 /* JAFavoriteListCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F79E1A1CF64900A3A586 /* JAFavoriteListCell_ipad_portrait.xib */; };
@@ -1551,6 +1553,8 @@
 		CE55A4E61993672600EE75DE /* JARatingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingsView.m; sourceTree = "<group>"; };
 		CE55A4E819936B6300EE75DE /* JARatingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARatingsView.xib; sourceTree = "<group>"; };
 		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		CE73BB751AA60426002336B3 /* JANewSellerRatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewSellerRatingViewController.h; sourceTree = "<group>"; };
+		CE73BB761AA60426002336B3 /* JANewSellerRatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewSellerRatingViewController.m; sourceTree = "<group>"; };
 		CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.1.xcdatamodel; sourceTree = "<group>"; };
 		CE88F79D1A1CF64900A3A586 /* JAFavoriteListCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFavoriteListCell_ipad_landscape.xib; sourceTree = "<group>"; };
 		CE88F79E1A1CF64900A3A586 /* JAFavoriteListCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFavoriteListCell_ipad_portrait.xib; sourceTree = "<group>"; };
@@ -1977,6 +1981,8 @@
 			children = (
 				CE283E901A77899F00F3E92D /* JASellerRatingsViewController.h */,
 				CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */,
+				CE73BB751AA60426002336B3 /* JANewSellerRatingViewController.h */,
+				CE73BB761AA60426002336B3 /* JANewSellerRatingViewController.m */,
 				4A944FF6199290F200C02734 /* JARatingsViewController.h */,
 				4A944FF7199290F200C02734 /* JARatingsViewController.m */,
 				CE283E4B1A6515F600F3E92D /* JANewRatingViewController.h */,
@@ -4592,6 +4598,7 @@
 				e50648146d628861d4e0bc0f /* JATeaserView.m in Sources */,
 				24395e3fd684124d0dc59179 /* JAUtils.m in Sources */,
 				CEABEEC71A126652000D0CF8 /* JAPriceFiltersView.m in Sources */,
+				CE73BB781AA6042E002336B3 /* JANewSellerRatingViewController.m in Sources */,
 				62add1971fcfac7a3f4f4acc /* JAPDVViewController.m in Sources */,
 				36d44c903225b19fe74884ab /* JAColorView.m in Sources */,
 				df8c4f5769b8468c440e00e1 /* RICountryConfiguration.m in Sources */,
@@ -4916,6 +4923,7 @@
 				CEA86E041A49D247000032AD /* JACampaignPageView.m in Sources */,
 				B5C682FB1986C41D0094C92C /* RIOrder.m in Sources */,
 				B510B01019AE466B00A9754A /* JABirthDateComponent.m in Sources */,
+				CE73BB771AA60426002336B3 /* JANewSellerRatingViewController.m in Sources */,
 				B5A302D219811E9200F71726 /* RIURLCache.m in Sources */,
 				B5C13EBC1A402A9E00484398 /* ADJPackageHandler.m in Sources */,
 				B5A302DC19811E9200F71726 /* RIDataBaseWrapper.m in Sources */,

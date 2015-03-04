@@ -7,34 +7,42 @@
 //
 
 #import "JASellerRatingsViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "JAReviewCell.h"
+#import "JANewRatingViewController.h"
+#import "JAPriceView.h"
+#import "JADynamicForm.h"
+#import "JAAddRatingView.h"
+#import "JARatingsViewMedium.h"
 #import "RIProduct.h"
 #import "RISeller.h"
 #import "RIForm.h"
-#import "JADynamicForm.h"
-#import "JARatingsView.h"
-#import "RISellerReviewInfo.h"
-#import "JAReviewCell.h"
+#import "RICustomer.h"
+#import "JAUtils.h"
+#import "RICategory.h"
+#import <FacebookSDK/FacebookSDK.h>
+
+#define kDistanceBetweenStarsAndText 70.0f
 
 @interface JASellerRatingsViewController ()
+<
+UITableViewDelegate,
+UITableViewDataSource
+>
+
+@property (nonatomic, strong)RISellerReviewInfo* sellerReviewInfo;
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (nonatomic, strong) JARatingsView* ratingsView;
-@property (nonatomic, strong) UILabel* numberOfReviewsLabel;
-
+@property (weak, nonatomic) IBOutlet UILabel *sellerNameLabel;
 @property (weak, nonatomic) IBOutlet UIView *resumeView;
-@property (weak, nonatomic) IBOutlet UILabel *reviewSellerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *labelUsedProduct;
 @property (weak, nonatomic) IBOutlet UIButton *writeReviewButton;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableViewComments;
 
-@property (nonatomic, strong) RISellerReviewInfo* sellerReviewInfo;
-
-
-// iPad landscape components only
 @property (weak, nonatomic) IBOutlet UIView *emptyReviewsView;
 @property (weak, nonatomic) IBOutlet UIImageView *emptyReviewsImageView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyReviewsLabel;
+// iPad landscape components only
 @property (weak, nonatomic) IBOutlet UIScrollView *writeReviewScrollView;
 @property (assign, nonatomic) CGRect writeReviewScrollViewInitialRect;
 
@@ -42,34 +50,64 @@
 @property (strong, nonatomic) UILabel *fixedLabel;
 @property (strong, nonatomic) UIButton *sendReviewButton;
 
-@property (nonatomic, strong) RIForm* sellerReviewForm;
-@property (nonatomic, strong) JADynamicForm* sellerReviewsDynamicForm;
-@property (nonatomic, strong) UIView* sellerReviewsContentView;
+@property (nonatomic, strong) RIForm* reviewsForm;
+@property (nonatomic, strong) JADynamicForm* reviewsDynamicForm;
+@property (nonatomic, strong) UIView* reviewsContentView;
 
+@property (assign, nonatomic) NSInteger numberOfRequests;
 @property (assign, nonatomic) RIApiResponse apiResponse;
+@property (assign, nonatomic) BOOL requestsDone;
 
 @end
 
 @implementation JASellerRatingsViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+@synthesize numberOfRequests=_numberOfRequests;
+-(void)setNumberOfRequests:(NSInteger)numberOfRequests
+{
+    _numberOfRequests=numberOfRequests;
+    if (0 == numberOfRequests) {
+        [self finishedRequests];
+    }
+}
 
-    self.screenName = @"SellerRatingScreen";
+#pragma mark - View lifecycle
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    if(VALID_NOTEMPTY(self.product.seller.name, NSString))
+    {
+        self.screenName = [NSString stringWithFormat:@"SellerRatingScreen / %@", self.product.seller.name];
+    }
+    else
+    {
+        self.screenName = @"SellerRatingScreen";
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
-
+    
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.nameLabel.text = self.product.seller.name;
-    self.nameLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.sellerNameLabel.text = self.product.seller.name;
+    self.sellerNameLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.resumeView.translatesAutoresizingMaskIntoConstraints = YES;
     self.tableViewComments.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.tableViewComments.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.goToNewRatingButtonPressed = NO;
+    self.requestsDone = NO;
     
     self.apiResponse = RIApiResponseSuccess;
     
@@ -84,7 +122,150 @@
     }
     
     [self hideViews];
-   
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboards)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
+    if(self.requestsDone)
+    {
+        [self setupViews];
+    }
+    else
+    {
+        [self showLoading];
+        
+        [RISellerReviewInfo getSellerReviewForProductWithUrl:self.product.url pageSize:0 pageNumber:10 successBlock:^(RISellerReviewInfo *sellerReviewInfo) {
+            self.sellerReviewInfo = sellerReviewInfo;
+            
+            if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+            {
+                [self formRequest];
+            }
+            else
+            {
+                self.numberOfRequests = 0;
+            }
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+            //$$$ SHOW ERROR
+            self.numberOfRequests = 0;
+        }];
+    }
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"Reviews"];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self showLoading];
+    
+    [self hideViews];
+    
+    [self.reviewsDynamicForm resignResponder];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self hideLoading];
+    
+    [self setupViews];
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+- (void)formRequest
+{
+    self.numberOfRequests = 0;
+    self.apiResponse = RIApiResponseSuccess;
+    
+    self.numberOfRequests++;
+    [RIForm getForm:@"sellerreview"
+       successBlock:^(RIForm *form)
+     {
+         self.reviewsForm = form;
+         self.numberOfRequests--;
+     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+         self.apiResponse = apiResponse;
+         self.numberOfRequests--;
+     }];
+}
+
+- (void)finishedRequests
+{
+    [self setupViews];
+    
+    [self hideLoading];
+    
+    if(RIApiResponseSuccess != self.apiResponse)
+    {
+        if (RIApiResponseNoInternetConnection == self.apiResponse)
+        {
+            [self showMessage:STRING_NO_CONNECTION success:NO];
+        }
+        else
+        {
+            [self showMessage:STRING_ERROR success:NO];
+        }
+    }
+    
+    self.requestsDone = YES;
+    
+//$$$ TRACKING
+//
+//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//    [trackingDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
+//    [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
+//    [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
+//    
+//    NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
+//    [trackingDictionary setValue:price forKey:kRIEventPriceKey];
+//    
+//    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+//    {
+//        NSArray *categoryIds = [self.product.categoryIds array];
+//        NSInteger subCategoryIndex = [categoryIds count] - 1;
+//        NSInteger categoryIndex = subCategoryIndex - 1;
+//        
+//        if(categoryIndex >= 0)
+//        {
+//            NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
+//            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+//            
+//            NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
+//            [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryNameKey];
+//        }
+//        else
+//        {
+//            NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
+//            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+//        }
+//    }
+//    
+//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewRatings] data:trackingDictionary];
+//    
+//    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+//    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
 - (void)hideViews
@@ -104,44 +285,6 @@
     }
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [self showLoading];
-    
-    [self hideViews];
-    
-    [self.sellerReviewsDynamicForm resignResponder];
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [self hideLoading];
-    
-    [self setupViews];
-    
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    if (VALID_NOTEMPTY(self.sellerReviewForm, RIForm)) {
-        [self setupViews];
-    } else {
-        [self requestSellerReviewForm];
-    }
-
-    if(NO == VALID_NOTEMPTY(self.sellerReviewInfo, RISellerReviewInfo))
-    {
-        [self requestSellerReviews];
-    }
-}
-
-#pragma mark - Setups views
-
 - (void)setupViews
 {
     CGFloat horizontalMargin = 6.0f;
@@ -156,10 +299,10 @@
     }
     if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
     {
-        isInLandscape = NO;//YES;
+        isInLandscape = YES;
     }
     
-    if(VALID_NOTEMPTY(self.sellerReviewInfo.reviews, NSArray))
+    if(VALID_NOTEMPTY(self.sellerReviewInfo, RISellerReviewInfo) && VALID_NOTEMPTY(self.sellerReviewInfo.reviews, NSArray))
     {
         hasComments = YES;
     }
@@ -177,70 +320,138 @@
     self.tableViewComments.layer.cornerRadius = 5.0f;
     self.tableViewComments.allowsSelection = NO;
     
-//    if(isiPad)
-//    {
-//        if(isInLandscape)
-//        {
-            [self.resumeView setHidden:YES];
-            [self.writeReviewScrollView setHidden:NO];
+    if(isInLandscape)
+    {
+        [self.resumeView setHidden:YES];
+        [self.writeReviewScrollView setHidden:NO];
+        
+        originY = CGRectGetMaxY(self.topView.frame) + verticalMargin;
+        
+        
+        CGFloat rightSideViewsWidth = 0.0f;
+        
+        if (NO == [[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
             
-            originY = CGRectGetMaxY(self.topView.frame) + verticalMargin;
+            //keep them the same
+            
+        } else {
             
             // The 18.0f pixeis are the left, middle and right margins
-//            viewsWidth = ((self.view.frame.size.width - 18.0f) / 2);
-    
-            [self.tableViewComments setFrame:CGRectMake(horizontalMargin,
-                                                        originY,
-                                                        viewsWidth,
-                                                        self.view.frame.size.height - originY - verticalMargin)];
-            if(hasComments)
-            {
-                [self.emptyReviewsView setHidden:YES];
-                [self.tableViewComments setHidden:NO];
-            }
-            else
-            {
-                [self.tableViewComments setHidden:YES];
-                [self.emptyReviewsView setHidden:NO];
-            }
-  
-            [self setupSendReviewView:viewsWidth originY:originY];
+            viewsWidth = ((self.view.frame.size.width - 18.0f) / 2);
+            rightSideViewsWidth = viewsWidth;
+        }
+        
+        [self.tableViewComments setFrame:CGRectMake(horizontalMargin,
+                                                    originY,
+                                                    viewsWidth,
+                                                    self.view.frame.size.height - originY - verticalMargin)];
+        if(hasComments)
+        {
+            [self.emptyReviewsView setHidden:YES];
+            [self.tableViewComments setHidden:NO];
+        }
+        else
+        {
+            [self.tableViewComments setHidden:YES];
+            [self.emptyReviewsView setHidden:NO];
+        }
+        
+        [self setupSendReviewView:rightSideViewsWidth originY:originY];
+        
+        [self setupEmptyReviewsView:viewsWidth originY:originY];
+    }
+    else
+    {
+        CGFloat startingYForContent = originY;
+        
+        if (NO == [[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
             
-//            [self setupEmptyReviewsView:viewsWidth originY:originY];
-//        }
-//        else
-//        {
-//            [self.resumeView setHidden:NO];
-//            [self.emptyReviewsView setHidden:YES];
-//            
-//            if(hasComments)
-//            {
-//                [self.writeReviewScrollView setHidden:YES];
-//                [self.tableViewComments setFrame:CGRectMake(verticalMargin,
-//                                                            originY,
-//                                                            viewsWidth,
-//                                                            self.view.frame.size.height - originY - verticalMargin)];
-//                [self.tableViewComments setHidden:NO];
-//            }
-//            else
-//            {
-//                [self.tableViewComments setHidden:YES];
-//                [self.writeReviewScrollView setHidden:NO];
-//            }
-//        }
-//    }
-//    else
-//    {
-//        [self.resumeView setHidden:NO];
-//        
-//        [self.tableViewComments setFrame:CGRectMake(verticalMargin,
-//                                                    originY,
-//                                                    viewsWidth,
-//                                                    self.view.frame.size.height - originY - verticalMargin)];
-//        [self.tableViewComments setHidden:NO];
-//    }
+            [self.resumeView setHidden:YES];
+            startingYForContent = self.resumeView.frame.origin.y;
+        } else {
+            [self.resumeView setHidden:NO];
+        }
+        
+        [self.writeReviewScrollView setHidden:YES];
+        
+        if(hasComments)
+        {
+            [self.tableViewComments setFrame:CGRectMake(verticalMargin,
+                                                        startingYForContent,
+                                                        viewsWidth,
+                                                        self.view.frame.size.height - startingYForContent - verticalMargin)];
+            [self.tableViewComments setHidden:NO];
+            [self.emptyReviewsView setHidden:YES];
+        }
+        else
+        {
+            [self.tableViewComments setHidden:YES];
+            [self.emptyReviewsView setHidden:NO];
+            [self setupEmptyReviewsView:viewsWidth originY:startingYForContent];
+        }
+    }
     
     [self.tableViewComments reloadData];
+}
+
+- (void)setupTopView
+{
+    [self.sellerNameLabel setFrame:CGRectMake(12.0f,
+                                              6.0f,
+                                              self.view.frame.size.width - 24.0f,
+                                              self.view.frame.size.height)];
+    [self.sellerNameLabel sizeToFit];
+            
+    CGFloat topViewMinHeight = CGRectGetMaxY(self.sellerNameLabel.frame) + 6.0f;
+    
+    JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
+    [ratingsView setRating:[self.sellerReviewInfo.averageReviews integerValue]];
+    [ratingsView setFrame:CGRectMake(12.0f,
+                                     topViewMinHeight,
+                                     ratingsView.frame.size.width,
+                                     ratingsView.frame.size.height)];
+    [self.topView addSubview:ratingsView];
+    
+    topViewMinHeight += ratingsView.frame.size.height + 11.0f;
+    
+    [self.topView setFrame:CGRectMake(0.0f,
+                                      0.0f,
+                                      self.view.frame.size.width,
+                                      topViewMinHeight)];
+    [self.topView setHidden:NO];
+}
+
+- (void)setupResumeView:(CGFloat)width
+{
+    CGFloat currentY = 6.0f;
+    
+    if (NO == [[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
+        
+        [self.labelUsedProduct removeFromSuperview];
+        [self.writeReviewButton removeFromSuperview];
+    } else {
+        self.labelUsedProduct.text = STRING_REVIEW_THIS_SELLER;
+        self.labelUsedProduct.textAlignment = NSTextAlignmentCenter;
+        [self.labelUsedProduct setTextColor:UIColorFromRGB(0x666666)];
+        self.labelUsedProduct.translatesAutoresizingMaskIntoConstraints = YES;
+        [self.labelUsedProduct setFrame:CGRectMake(self.labelUsedProduct.frame.origin.x,
+                                                   currentY,
+                                                   self.view.frame.size.width - 12.0f - (2* self.labelUsedProduct.frame.origin.x),
+                                                   self.labelUsedProduct.frame.size.height)];
+        [self.writeReviewButton setTitle:STRING_WRITE_REVIEW
+                                forState:UIControlStateNormal];
+        [self.writeReviewButton sizeToFit];
+        [self.writeReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
+                                     forState:UIControlStateNormal];
+        
+        currentY += self.labelUsedProduct.frame.size.height + self.writeReviewButton.frame.size.height;
+    }
+    
+    self.resumeView.layer.cornerRadius = 5.0f;
+    [self.resumeView setFrame:CGRectMake(6.0f,
+                                         CGRectGetMaxY(self.topView.frame) + 6.0f,
+                                         width,
+                                         currentY + 20.0f)];
 }
 
 - (void)setupSendReviewView:(CGFloat)width originY:(CGFloat)originY
@@ -281,8 +492,9 @@
                                                                 verticalMargin,
                                                                 width - (2 * dynamicFormHorizontalMargin),
                                                                 16.0f)];
+    self.fixedLabel.textAlignment = NSTextAlignmentCenter;
     self.fixedLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
-    self.fixedLabel.text = STRING_RATE_PRODUCT;
+    self.fixedLabel.text = STRING_REVIEW_THIS_SELLER;
     self.fixedLabel.textColor = UIColorFromRGB(0x666666);
     
     [self.centerView addSubview:self.fixedLabel];
@@ -290,18 +502,18 @@
     CGFloat currentY = CGRectGetMaxY(self.fixedLabel.frame) + 12.0f;
     CGFloat spaceBetweenFormFields = 6.0f;
     
-    if (self.sellerReviewForm) {
-        NSInteger count = 0;
+    if (self.reviewsForm) {
         CGFloat initialContentY = 0;
-        self.sellerReviewsDynamicForm = [[JADynamicForm alloc] initWithForm:self.sellerReviewForm
-                                                                   delegate:nil
-                                                           startingPosition:initialContentY
-                                                                  widthSize:width
-                                                         hasFieldNavigation:YES];
-        self.sellerReviewsContentView = [UIView new];
-        for (UIView *view in self.sellerReviewsDynamicForm.formViews)
+        self.reviewsDynamicForm = [[JADynamicForm alloc] initWithForm:self.reviewsForm
+                                                             delegate:nil
+                                                     startingPosition:initialContentY
+                                                            widthSize:width
+                                                   hasFieldNavigation:YES];
+        self.reviewsContentView = [UIView new];
+        for (int i = 0; i < self.reviewsDynamicForm.formViews.count; i++)
         {
-            view.tag = count;
+            UIView* view = [self.reviewsDynamicForm.formViews objectAtIndex:i];
+            view.tag = i;
             CGRect frame = view.frame;
             if(isiPad)
             {
@@ -314,19 +526,24 @@
             }
             view.frame = frame;
             
-            [self.sellerReviewsContentView addSubview:view];
+            [self.reviewsContentView addSubview:view];
+            
             initialContentY += view.frame.size.height + spaceBetweenFormFields;
-            count++;
         }
-        [self.sellerReviewsContentView setFrame:CGRectMake(0.0,
-                                                           currentY,
-                                                           width,
-                                                           initialContentY)];
-        [self.centerView addSubview:self.sellerReviewsContentView];
-    }    
+        [self.reviewsContentView setFrame:CGRectMake(0.0,
+                                                     currentY,
+                                                     width,
+                                                     initialContentY)];
+        [self.centerView addSubview:self.reviewsContentView];
+    }
     
-
-    currentY += self.sellerReviewsContentView.frame.size.height + 38.0f;
+    
+    if (VALID_NOTEMPTY(self.reviewsContentView, UIView)){
+        currentY += self.reviewsContentView.frame.size.height;
+    }
+    
+    // Add space between last form field and send review button
+    currentY += 38.0f;
     
     NSString *imageNameFormat = @"orangeHalfMedium_%@";
     UIImage* buttonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, @"normal"]];
@@ -404,139 +621,27 @@
                                                 emptyReviewsLabelRect.size.height)];
 }
 
-
-- (void)setupTopView
+- (void)didReceiveMemoryWarning
 {
-    [self.nameLabel setFrame:CGRectMake(12.0f,
-                                        6.0f,
-                                        self.view.frame.size.width - 24.0f,
-                                        self.view.frame.size.height)];
-    [self.nameLabel sizeToFit];
-    
-    CGFloat currentY = CGRectGetMaxY(self.nameLabel.frame) + 10.0f;
-    
-    [self.ratingsView removeFromSuperview];
-    self.ratingsView = [JARatingsView getNewJARatingsView];
-    self.ratingsView.rating = [self.product.seller.reviewAverage integerValue];
-    [self.ratingsView setFrame:CGRectMake(self.nameLabel.frame.origin.x,
-                                          currentY,
-                                          self.ratingsView.frame.size.width,
-                                          self.ratingsView.frame.size.height)];
-    [self.topView addSubview:self.ratingsView];
-    
-    [self.numberOfReviewsLabel removeFromSuperview];
-    self.numberOfReviewsLabel = [UILabel new];
-    self.numberOfReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f];
-    self.numberOfReviewsLabel.textColor = UIColorFromRGB(0xcccccc);
-    if (1 == [self.product.seller.reviewTotal integerValue]) {
-        self.numberOfReviewsLabel.text = STRING_REVIEW;
-    } else {
-        self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [self.product.seller.reviewTotal integerValue]];
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Action
+
+- (IBAction)goToNewReviews:(id)sender
+{
+    NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+    if(VALID_NOTEMPTY(self.product, RIProduct))
+    {
+        [userInfo setObject:self.product forKey:@"product"];
     }
-    [self.numberOfReviewsLabel sizeToFit];
-    [self.numberOfReviewsLabel setFrame:CGRectMake(CGRectGetMaxX(self.ratingsView.frame) + 4.0f,
-                                                   self.ratingsView.frame.origin.y,
-                                                   self.numberOfReviewsLabel.frame.size.width,
-                                                   self.numberOfReviewsLabel.frame.size.height)];
-    [self.topView addSubview:self.numberOfReviewsLabel];
     
-    currentY += self.ratingsView.frame.size.height + 10.0f;
+    if(VALID_NOTEMPTY(self.sellerReviewInfo.averageReviews, NSNumber))
+    {
+        [userInfo setObject:self.sellerReviewInfo.averageReviews forKey:@"sellerAverageReviews"];
+    }
     
-    [self.topView setFrame:CGRectMake(0.0f,
-                                      0.0f,
-                                      self.view.frame.size.width,
-                                      currentY)];
-    [self.topView setHidden:NO];
-}
-
-
-- (void)setupResumeView:(CGFloat)width
-{
-    CGFloat currentY = 6.0f;
-    
-    self.reviewSellerLabel.text = @"Rate this seller now!";
-    [self.reviewSellerLabel setTextColor:UIColorFromRGB(0x666666)];
-    self.reviewSellerLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.reviewSellerLabel setFrame:CGRectMake(self.reviewSellerLabel.frame.origin.x,
-                                               currentY,
-                                               self.reviewSellerLabel.frame.size.width,
-                                               self.reviewSellerLabel.frame.size.height)];
-    
-    [self.writeReviewButton setTitle:STRING_WRITE_REVIEW
-                            forState:UIControlStateNormal];
-    [self.writeReviewButton sizeToFit];
-    [self.writeReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
-                                 forState:UIControlStateNormal];
-    
-    self.resumeView.layer.cornerRadius = 5.0f;
-    [self.resumeView setFrame:CGRectMake(6.0f,
-                                         CGRectGetMaxY(self.topView.frame) + 6.0f,
-                                         width,
-                                         currentY + self.reviewSellerLabel.frame.size.height + self.writeReviewButton.frame.size.height + 20.0f)];
-}
-
-#pragma mark - Raquests
-
-- (void)requestSellerReviewForm
-{
-//    self.apiResponse = RIApiResponseSuccess;
-//    
-//    [self showLoading];
-//
-//    [RIForm getForm:@"sellerReview"
-//       successBlock:^(RIForm *form)
-//     {
-//         self.sellerReviewForm = form;
-//         
-//         [self setupViews];
-//         
-//         [self hideLoading];
-//         
-//     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-//         [self hideLoading];
-//         
-//         self.apiResponse = apiResponse;
-//         if (RIApiResponseNoInternetConnection == self.apiResponse)
-//         {
-//             [self showMessage:STRING_NO_CONNECTION success:NO];
-//         }
-//         else
-//         {
-//             [self showMessage:STRING_ERROR success:NO];
-//         }
-//     }];
-}
-
-- (void)requestSellerReviews
-{
-    self.apiResponse = RIApiResponseSuccess;
-    
-    [self showLoading];
-
-    [RISellerReviewInfo getSellerReviewForProductWithUrl:self.product.url
-                                                pageSize:100
-                                              pageNumber:1
-                                            successBlock:^(RISellerReviewInfo *sellerReviewInfo) {
-                                                self.sellerReviewInfo = sellerReviewInfo;
-                                                
-                                                [self hideLoading];
-                                                
-//                                                if (VALID_NOTEMPTY(self.sellerReviewForm, RIForm)){
-                                                    [self setupViews];
-//                                                }
-                                            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                                                [self hideLoading];
-                                                
-                                                self.apiResponse = apiResponse;
-                                                if (RIApiResponseNoInternetConnection == self.apiResponse)
-                                                {
-                                                    [self showMessage:STRING_NO_CONNECTION success:NO];
-                                                }
-                                                else
-                                                {
-                                                    [self showMessage:STRING_ERROR success:NO];
-                                                }
-                                            }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenNewSellerReview object:nil userInfo:userInfo];
 }
 
 #pragma mark - Tableview methods
@@ -563,7 +668,7 @@
     {
         showSeparator = NO;
     }
-        
+    
     [cell setupWithSellerReview:review width:self.tableViewComments.frame.size.width showSeparator:showSeparator];
     
     return cell;
@@ -574,10 +679,163 @@
     return [[UIView alloc] initWithFrame:CGRectZero];
 }
 
-#pragma mark - Button actions
+#pragma mark - Send review
+
 - (void)sendReview:(id)sender
 {
+    [self showLoading];
+    
+    [self.reviewsDynamicForm resignResponder];
+    
+    RIForm* currentForm;
+    JADynamicForm* currentDynamicForm;
+    currentForm = self.reviewsForm;
+    currentDynamicForm = self.reviewsDynamicForm;
+    if ([[RICountryConfiguration getCurrentConfiguration].reviewRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
+        [self hideLoading];
+        [self showMessage:STRING_LOGIN_TO_REVIEW success:NO];
+        return;
+    }
+    
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[currentDynamicForm getValues]];
+    
+    NSString* sellerIdKey = [currentDynamicForm getFieldNameForKey:@"sellerId"];
+    [parameters addEntriesFromDictionary:@{sellerIdKey: self.product.seller.uid}];
+    
+    [RIForm sendForm:currentForm
+          parameters:parameters
+        successBlock:^(id object) {
+            
+            NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
+            
+            NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
+            [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
+            [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
+            [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
+            
+            for (UIView *component in currentDynamicForm.formViews)
+            {
+                if ([component isKindOfClass:[JAAddRatingView class]]) {
+                    
+                    JAAddRatingView* ratingView = (JAAddRatingView*)component;
+                    
+                    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                    [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
+                    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+                    [trackingDictionary setValue:@(ratingView.rating) forKey:kRIEventValueKey];
+                    
+                    if ([ratingView.fieldRatingStars.type isEqualToString:@"1"])
+                    {
+                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingPriceKey];
+                        [trackingDictionary setValue:@"RateProductPrice" forKey:kRIEventActionKey];
+                    }
+                    else if ([ratingView.fieldRatingStars.type isEqualToString:@"2"])
+                    {
+                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingAppearanceKey];
+                        [trackingDictionary setValue:@"RateProductAppearance" forKey:kRIEventActionKey];
+                    }
+                    else if ([ratingView.fieldRatingStars.type isEqualToString:@"3"])
+                    {
+                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingQualityKey];
+                        [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
+                    }
+                    else
+                    {
+                        // There is no indication about the default tracking for rating
+                        [globalRateDictionary setValue:[NSNumber numberWithInteger:ratingView.rating] forKey:kRIEventRatingKey];
+                        [trackingDictionary setValue:@"RateProductQuality" forKey:kRIEventActionKey];
+                    }
+                    
+                    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                    [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
+                    
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProduct]
+                                                              data:[trackingDictionary copy]];
+                    
+                    float value = [@(ratingView.rating) floatValue];
+                    [FBAppEvents logEvent:FBAppEventNameRated
+                               valueToSum:value
+                               parameters:@{FBAppEventParameterNameContentType: self.product.name,
+                                            FBAppEventParameterNameContentID: self.product.sku,
+                                            FBAppEventParameterNameMaxRatingValue: @5 }];
+                }
+            }
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProductGlobal]
+                                                      data:[globalRateDictionary copy]];
+            
+            [self hideLoading];
+            
+            [self showMessage:STRING_REVIEW_SENT success:YES];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+                                                                object:nil
+                                                              userInfo:nil];
+        } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {
+            
+            [self hideLoading];
+            
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                [self showMessage:STRING_NO_CONNECTION success:NO];
+            }
+            else if(VALID_NOTEMPTY(errorObject, NSDictionary))
+            {
+                [currentDynamicForm validateFields:errorObject];
+                
+                [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+            }
+            else if(VALID_NOTEMPTY(errorObject, NSArray))
+            {
+                [currentDynamicForm checkErrors];
+                
+                [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+            }
+            else
+            {
+                [currentDynamicForm checkErrors];
+                
+                [self showMessage:STRING_ERROR success:NO];
+            }
+        }];
+}
 
+#pragma mark - Keyboard notifications
+
+- (void) keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    CGFloat height = kbSize.height;
+    if(self.view.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
+    // This happens only in landscape so we need to remove keyboard width.
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.writeReviewScrollView setFrame:CGRectMake(self.writeReviewScrollViewInitialRect.origin.x,
+                                                        self.writeReviewScrollViewInitialRect.origin.y,
+                                                        self.writeReviewScrollViewInitialRect.size.width,
+                                                        self.writeReviewScrollViewInitialRect.size.height - height)];
+    }];
+}
+
+- (void) keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.writeReviewScrollView setFrame:self.writeReviewScrollViewInitialRect];
+    }];
+}
+
+-(void)hideKeyboards
+{
+    [self.reviewsDynamicForm resignResponder];
 }
 
 

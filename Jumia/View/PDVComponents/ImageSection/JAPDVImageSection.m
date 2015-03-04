@@ -253,16 +253,14 @@
         [self addSubview:self.sellerButton];
 
         
-        if (0 != [product.seller.reviewTotal integerValue]) {
-            CGFloat buttonHeight = 22.0f;
-            CGFloat buttonOffset = -(buttonHeight - self.sellerRatings.frame.size.height)/2;
-            self.rateSellerButton = [[UIButton alloc] initWithFrame:CGRectMake(self.sellerRatings.frame.origin.x,
-                                                                               self.sellerRatings.frame.origin.y + buttonOffset,
-                                                                               self.sellerRatings.frame.size.width,
-                                                                               buttonHeight)];
-            [self.rateSellerButton addTarget:self action:@selector(sellerRatingButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-            [self addSubview:self.rateSellerButton];
-        }
+        CGFloat buttonHeight = 22.0f;
+        CGFloat buttonOffset = -(buttonHeight - self.sellerRatings.frame.size.height)/2;
+        self.rateSellerButton = [[UIButton alloc] initWithFrame:CGRectMake(self.sellerRatings.frame.origin.x,
+                                                                           self.sellerRatings.frame.origin.y + buttonOffset,
+                                                                           self.sellerRatings.frame.size.width,
+                                                                           buttonHeight)];
+        [self.rateSellerButton addTarget:self action:@selector(sellerRatingButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.rateSellerButton];
         
         currentY = CGRectGetMaxY(self.sellerButton.frame);
         

@@ -13,6 +13,7 @@
 
 @interface RISeller : NSManagedObject
 
+@property (nonatomic, retain) NSString * uid;
 @property (nonatomic, retain) NSNumber * maxDeliveryTime;
 @property (nonatomic, retain) NSNumber * minDeliveryTime;
 @property (nonatomic, retain) NSString * name;
