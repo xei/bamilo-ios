@@ -244,6 +244,7 @@
 #define STRING_WIZARD_PDV_SWIPE RILocalizedString(@"tip_swipe_text", nil)
 #define STRING_WIZARD_PDV_TAP RILocalizedString(@"tip_tap_text", nil)
 #define STRING_WIZARD_SIZE_GUIDE_PINCH RILocalizedString(@"pinch_to_zoom_label", nil)
+#define STRING_WIZARD_BACK_TOP RILocalizedString(@"string_wizard_back_top", nil)
 
 #define STRING_FALLBACK_AUDIO RILocalizedString(@"fallback_audio_ios", nil)
 #define STRING_FALLBACK_BOOKS RILocalizedString(@"fallback_books", nil)
