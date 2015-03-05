@@ -12,6 +12,7 @@
 @interface JAShopWebViewController ()
 
 @property (nonatomic, strong)UIWebView* webView;
+@property (nonatomic, assign)BOOL isLoaded;
 
 @end
 
@@ -21,28 +22,39 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor redColor];
-    
     self.webView = [UIWebView new];
     self.webView.delegate = self;
-    [self.webView setFrame:self.view.bounds];
     [self.view addSubview:self.webView];
+    
+    self.isLoaded = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    NSURL* url = [NSURL URLWithString:@"http://alice-staging.jumia.com.ng/mobapi/v1.6/main/getstatic/?key=lego_shop"];
-    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url parameters:nil httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-        NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
-        NSArray *data = [metadata objectForKey:@"data"];
-        NSString *html = [[data firstObject] gtm_stringByUnescapingFromHTML];
-        NSString *html2 = [html gtm_stringByUnescapingFromHTML];
-        [self.webView loadHTMLString:html2 baseURL:url];
-    } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObjectt) {
-        
-    }];
+    [self.webView setFrame:self.view.bounds];
+    
+    if (NO == self.isLoaded) {
+        NSURL* url = [NSURL URLWithString:@"http://alice-staging.jumia.com.ng/mobapi/v1.6/main/getstatic/?key=lego_shop"];
+        [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url parameters:nil httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+            NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+            NSArray *data = [metadata objectForKey:@"data"];
+            NSString *html = [[data firstObject] gtm_stringByUnescapingFromHTML];
+            NSString *html2 = [html gtm_stringByUnescapingFromHTML];
+            
+            self.isLoaded = YES;
+            [self.webView loadHTMLString:html2 baseURL:url];
+        } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObjectt) {
+            
+        }];
+    }
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [self.webView setFrame:self.view.bounds];
 }
 
 - (BOOL)webView:(UIWebView *)webView
