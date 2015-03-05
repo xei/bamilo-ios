@@ -83,7 +83,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                                                                   userInfo:@{ @"url" : url,
                                                                               @"show_back_button_title" : STRING_BACK}];
                 
-            } else if ([identifier isEqualToString:@"campaigns"]) {
+            } else if ([identifier isEqualToString:@"campaign"]) {
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCampaignNofication
                                                                     object:nil
