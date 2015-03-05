@@ -628,6 +628,11 @@
                                                                               categoryName = category.name;
                                                                           }
                                                                           
+                                                                          if (ISEMPTY(self.navBarLayout.title)) {
+                                                                              self.navBarLayout.title = categoryName;
+                                                                              [self reloadNavBar];
+                                                                          }
+                                                                          
                                                                           NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                                                                           // Track events only in the first load of the products
                                                                           if (!self.isFirstLoadTracking)
