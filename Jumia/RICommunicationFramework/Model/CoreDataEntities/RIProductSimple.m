@@ -69,9 +69,6 @@
         if ([meta objectForKey:@"max_delivery_time"]) {
             newProductSimple.maxDeliveryTime = [meta objectForKey:@"max_delivery_time"];
         }
-        if ([meta objectForKey:@"min_delivery_time"]) {
-            newProductSimple.minDeliveryTime = [meta objectForKey:@"min_delivery_time"];
-        }
  
         if (VALID_NOTEMPTY(variationKey, NSString)) {
             if ([meta objectForKey:variationKey]) {
