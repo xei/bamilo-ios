@@ -461,7 +461,6 @@ UICollectionViewDelegateFlowLayout>
 
 -(void)finishedLoadingAddresses
 {
-    NSInteger billingAddressIndex = 0;
     if(self.useSameAddressAsBillingAndShipping)
     {
         self.billingAddress = self.shippingAddress;
@@ -493,46 +492,54 @@ UICollectionViewDelegateFlowLayout>
     }
     else
     {
-        NSMutableArray *addresses = [[NSMutableArray alloc] init];
-        [addresses addObject:self.shippingAddress];
-        
-        if(VALID_NOTEMPTY(self.billingAddress, RIAddress) && ![self checkIfAddressIsAdded:self.billingAddress addresses:addresses])
-        {
-            billingAddressIndex = 1;
-            [addresses addObject:self.billingAddress];
-        }
+        NSMutableArray *shippingAddressesArray = [[NSMutableArray alloc] init];
+        NSMutableArray *billingAddressesArray = [[NSMutableArray alloc] init];
+        [shippingAddressesArray addObject:self.shippingAddress];
+        [billingAddressesArray addObject:self.billingAddress];
         
         RIAddress *addressToAdd = [self.addresses objectForKey:@"shipping"];
-        if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![self checkIfAddressIsAdded:addressToAdd addresses:addresses])
+        if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![self checkIfAddressIsAdded:addressToAdd addresses:shippingAddressesArray])
         {
-            [addresses addObject:addressToAdd];
+            [shippingAddressesArray addObject:addressToAdd];
+        }
+        if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![self checkIfAddressIsAdded:addressToAdd addresses:billingAddressesArray])
+        {
+            [billingAddressesArray addObject:addressToAdd];
         }
         
         addressToAdd = [self.addresses objectForKey:@"billing"];
-        if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![self checkIfAddressIsAdded:addressToAdd addresses:addresses])
+        if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![self checkIfAddressIsAdded:addressToAdd addresses:shippingAddressesArray])
         {
-            [addresses addObject:addressToAdd];
+            [shippingAddressesArray addObject:addressToAdd];
+        }
+        if(VALID_NOTEMPTY(addressToAdd, RIAddress) && ![self checkIfAddressIsAdded:addressToAdd addresses:billingAddressesArray])
+        {
+            [billingAddressesArray addObject:addressToAdd];
         }
         
         if(VALID_NOTEMPTY([self.addresses objectForKey:@"other"], NSArray))
         {
             for (RIAddress *address in [self.addresses objectForKey:@"other"]) {
-                if(![self checkIfAddressIsAdded:address addresses:addresses])
+                if(![self checkIfAddressIsAdded:address addresses:shippingAddressesArray])
                 {
-                    [addresses addObject:address];
+                    [shippingAddressesArray addObject:address];
+                }
+                if(![self checkIfAddressIsAdded:address addresses:billingAddressesArray])
+                {
+                    [billingAddressesArray addObject:address];
                 }
             }
         }
         
-        self.firstCollectionViewAddresses = [addresses copy];
-        self.secondCollectionViewAddresses = [addresses copy];
+        self.firstCollectionViewAddresses = [shippingAddressesArray copy];
+        self.secondCollectionViewAddresses = [billingAddressesArray copy];
     }
     
     self.firstCollectionViewIndexSelected = [NSIndexPath indexPathForItem:0 inSection:0];
     self.secondCollectionViewIndexSelected = nil;
     if(!self.useSameAddressAsBillingAndShipping)
     {
-        self.secondCollectionViewIndexSelected = [NSIndexPath indexPathForItem:billingAddressIndex inSection:0];
+        self.secondCollectionViewIndexSelected = [NSIndexPath indexPathForItem:0 inSection:0];
     }
     
     CGFloat newWidth = self.view.frame.size.width;
