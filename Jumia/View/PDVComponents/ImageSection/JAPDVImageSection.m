@@ -649,6 +649,8 @@
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerPage"];
 }
 
 @end
