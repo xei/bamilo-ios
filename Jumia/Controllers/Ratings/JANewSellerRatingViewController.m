@@ -406,8 +406,10 @@ UIAlertViewDelegate
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[currentDynamicForm getValues]];
     
-    NSString* sellerIdKey = [currentDynamicForm getFieldNameForKey:@"sellerId"];
-    [parameters addEntriesFromDictionary:@{sellerIdKey: self.product.seller.uid}];
+    if (VALID_NOTEMPTY(self.product.seller.uid, NSString)) {
+        NSString* sellerIdKey = [currentDynamicForm getFieldNameForKey:@"sellerId"];
+        [parameters addEntriesFromDictionary:@{sellerIdKey: self.product.seller.uid}];
+    }
     
     [RIForm sendForm:currentForm
           parameters:parameters

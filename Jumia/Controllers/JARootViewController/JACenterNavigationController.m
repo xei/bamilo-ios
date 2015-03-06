@@ -1207,7 +1207,7 @@
         
         if([notification.userInfo objectForKey:@"sellerAverageReviews"])
         {
-            newSellerRatingViewController.sellerAverageReviews = [notification.userInfo objectForKey:@"product"];
+            newSellerRatingViewController.sellerAverageReviews = [notification.userInfo objectForKey:@"sellerAverageReviews"];
         }
         
         BOOL animated = YES;
