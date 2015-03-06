@@ -99,6 +99,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self
+                                              selector:@selector(removeKeyboard)
+                                            name:kOpenMenuNotification
+                                                object:nil];
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ShoppingCart"];
     [self continueLoading];
 }
@@ -1064,6 +1069,9 @@
         [cell.deleteButton addTarget:self
                               action:@selector(removeFromCartPressed:)
                     forControlEvents:UIControlEventTouchUpInside];
+        [cell.deleteButton addTarget:self
+                              action:@selector(removeKeyboard)
+                    forControlEvents:UIControlEventTouchUpInside];
         cell.feedbackView.tag = indexPath.row;
         [cell.feedbackView addTarget:self
                               action:@selector(clickableViewPressedInCell:)
@@ -1078,6 +1086,11 @@
     }
     
     return cell;
+}
+
+-(void)removeKeyboard
+{
+    [self.couponTextField resignFirstResponder];
 }
 
 - (void)clickableViewPressedInCell:(UIControl*)sender
