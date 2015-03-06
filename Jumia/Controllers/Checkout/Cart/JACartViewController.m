@@ -132,6 +132,8 @@
 {
     [self showLoading];
     
+    [self.picker removeFromSuperview];
+    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 

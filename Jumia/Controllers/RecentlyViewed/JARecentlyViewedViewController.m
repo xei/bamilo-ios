@@ -135,6 +135,8 @@
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
+    [self.picker removeFromSuperview];
+    
     [self changeViewToInterfaceOrientation:toInterfaceOrientation];
 }
 
