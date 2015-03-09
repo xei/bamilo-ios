@@ -169,8 +169,11 @@
 - (void)showTitleLabelWithTitle:(NSString*)title
                        subtitle:(NSString*)subtitle;
 {
+    [self.topTitleLabel setText:@""];
     [self.topTitleLabel setText:title];
+    [self.bottomTitleLabel setText:@""];
     [self.bottomTitleLabel setText:subtitle];
+    [self.titleLabel setText:@""];
     [self.titleLabel setText:title];
     
     if (VALID_NOTEMPTY(subtitle, NSString)) {
