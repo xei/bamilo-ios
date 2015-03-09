@@ -184,6 +184,8 @@ UITableViewDataSource
     [self.reviewsDynamicForm resignResponder];
     [self.ratingsDynamicForm resignResponder];
     
+    [self setupViews];
+    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
@@ -799,6 +801,7 @@ UITableViewDataSource
 
 - (void) setupEmptyReviewsView:(CGFloat)width originY:(CGFloat)originY
 {
+    
     self.emptyReviewsView.translatesAutoresizingMaskIntoConstraints = YES;
     self.emptyReviewsImageView.translatesAutoresizingMaskIntoConstraints = YES;
     self.emptyReviewsLabel.translatesAutoresizingMaskIntoConstraints = YES;
@@ -843,6 +846,24 @@ UITableViewDataSource
                                                 CGRectGetMaxY(self.emptyReviewsImageView.frame) + marginBetweenImageAndLabel,
                                                 emptyReviewsLabelRect.size.width,
                                                 emptyReviewsLabelRect.size.height)];
+    CGFloat leftMarginImageNewSize = 100.5f;
+    if(self.view.frame.size.height < CGRectGetMaxY(self.emptyReviewsView.frame))
+    {
+        [self.emptyReviewsView setFrame:CGRectMake(self.emptyReviewsView.frame.origin.x,
+                                                  self.emptyReviewsView.frame.origin.y,
+                                                  self.emptyReviewsView.frame.size.width,
+                                                   self.view.frame.size.height - originY - 6.0f)];
+        
+        [self.emptyReviewsImageView setFrame:CGRectMake(leftMarginImageNewSize,
+                                                        self.emptyReviewsImageView.frame.origin.y,
+                                                        self.emptyReviewsImageView.frame.size.width/1.3,
+                                                        self.emptyReviewsImageView.frame.size.height/1.3)];
+        
+        [self.emptyReviewsLabel setFrame:CGRectMake(self.emptyReviewsLabel.frame.origin.x,
+                                                    CGRectGetMaxY(self.emptyReviewsImageView.frame) + 30.0f,
+                                                    self.emptyReviewsLabel.frame.size.width,
+                                                    self.emptyReviewsLabel.frame.size.height)];
+    }
 }
 
 - (void)didReceiveMemoryWarning
