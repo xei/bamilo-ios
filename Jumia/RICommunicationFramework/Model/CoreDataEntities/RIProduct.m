@@ -644,7 +644,7 @@
 }
 
 + (void)addToRecentlyViewed:(RIProduct*)product
-               successBlock:(void (^)(void))successBlock
+               successBlock:(void (^)(RIProduct* product))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
@@ -653,11 +653,10 @@
     for (RIProduct* currentProduct in allProducts) {
         if ([currentProduct.sku isEqualToString:product.sku]) {
             
-            //found it, so just change the product by deleting the previous entry
-            product.recentlyViewedDate = [NSDate date];
-            product.favoriteAddDate = currentProduct.favoriteAddDate;
-            [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
-            [RIProduct saveProduct:product];
+            //found it, so just change the product by updating the previous entry
+            currentProduct.recentlyViewedDate = [NSDate date];
+            [[RIDataBaseWrapper sharedInstance] saveContext];
+            product = currentProduct;
             productExists = YES;
             break;
         }
@@ -690,14 +689,19 @@
             if (VALID_NOTEMPTY(productToDelete, RIProduct)) {
                 [RIProduct removeFromRecentlyViewed:productToDelete successBlock:^{
                     if (successBlock) {
-                        successBlock();
+                        successBlock(product);
+                        return;
                     }
                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                     if (failureBlock) {
                         failureBlock(apiResponse, error);
+                        return;
                     }
                 }];
             }
+        }
+        if (successBlock) {
+            successBlock(product);
         }
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         if (failureBlock) {

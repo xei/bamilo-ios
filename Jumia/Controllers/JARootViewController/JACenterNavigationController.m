@@ -1325,10 +1325,6 @@
             pdv.fromCatalogue = NO;
         }
         
-        if ([notification.userInfo objectForKey:@"delegate"]) {
-            pdv.delegate = [notification.userInfo objectForKey:@"delegate"];
-        }
-        
         if ([notification.userInfo objectForKey:@"previousCategory"])
         {
             NSString *previous = [notification.userInfo objectForKey:@"previousCategory"];

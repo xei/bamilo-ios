@@ -160,7 +160,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *
  */
 + (void)addToRecentlyViewed:(RIProduct*)product
-               successBlock:(void (^)(void))successBlock
+               successBlock:(void (^)(RIProduct* product))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**

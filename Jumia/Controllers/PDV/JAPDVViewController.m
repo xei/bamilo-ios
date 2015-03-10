@@ -392,7 +392,6 @@ JAActivityViewControllerDelegate
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
     
-    [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
     self.product = product;
     NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue]) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
     
@@ -556,8 +555,11 @@ JAActivityViewControllerDelegate
         self.firstLoading = NO;
     }
     
-    [self requestReviews];
-    [self productLoaded];
+    [RIProduct addToRecentlyViewed:product successBlock:^(RIProduct *product) {
+        self.product = product;
+        [self requestReviews];
+        [self productLoaded];
+    } andFailureBlock:nil];
 }
 
 - (void)retryAddToCart
@@ -1121,21 +1123,11 @@ JAActivityViewControllerDelegate
     NSArray* relatedProducts = [self.product.relatedProducts allObjects];
     RIProduct *tempProduct = [relatedProducts objectAtIndex:sender.tag];
     
-    if (self.delegate) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                            object:nil
-                                                          userInfo:@{ @"url" : tempProduct.url,
-                                                                      @"previousCategory" : @"",
-                                                                      @"show_back_button" : [NSNumber numberWithBool:YES],
-                                                                      @"delegate" : self.delegate}];
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                            object:nil
-                                                          userInfo:@{ @"url" : tempProduct.url,
-                                                                      @"previousCategory" : @"",
-                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
-    }
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                        object:nil
+                                                      userInfo:@{ @"url" : tempProduct.url,
+                                                                  @"previousCategory" : @"",
+                                                                  @"show_back_button" : [NSNumber numberWithBool:YES]}];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:tempProduct.sku forKey:kRIEventLabelKey];
@@ -2056,9 +2048,8 @@ JAActivityViewControllerDelegate
                 self.product.favoriteAddDate = nil;
             }
             
-            if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
-                [self.delegate changedFavoriteStateOfProduct:self.product];
-            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
+                                                                object:self.product];
             
             [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
             
@@ -2097,9 +2088,8 @@ JAActivityViewControllerDelegate
             
             [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
             
-            if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
-                [self.delegate changedFavoriteStateOfProduct:self.product];
-            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
+                                                                object:self.product];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
