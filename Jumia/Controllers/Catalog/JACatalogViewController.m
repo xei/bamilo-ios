@@ -301,12 +301,10 @@
          }
          else
          {
-             BOOL noConnection = NO;
-             if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-             {
-                 noConnection = YES;
-             }
-             [self showErrorView:noConnection startingY:CGRectGetMaxY(self.catalogTopView.frame) selector:@selector(getCategories) objects:nil];
+             self.searchString = self.categoryName;
+             self.navBarLayout.title = self.categoryName;
+             
+             [self loadMoreProducts];
          }
          
          [self hideLoading];
