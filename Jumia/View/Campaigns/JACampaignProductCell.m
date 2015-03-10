@@ -58,6 +58,7 @@
            elapsedTimeInSeconds:(NSInteger)elapsedTimeInSeconds
                      chosenSize:(NSString*)chosenSize;
 {
+    self.discountLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.campaignProduct = campaignProduct;
     self.chosenSize = chosenSize;
     
@@ -71,9 +72,17 @@
         self.discountBadge.hidden = NO;
         self.discountLabel.hidden = NO;
         self.discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF, [campaignProduct.maxSavingPercentage integerValue]];
+        [self.titleLabel setFrame:CGRectMake(self.discountBadge.frame.origin.x + self.discountBadge.frame.size.width + 4.0f,
+                                            self.titleLabel.frame.origin.y,
+                                            self.titleLabel.frame.size.width,
+                                            self.titleLabel.frame.size.height)];
     } else {
         self.discountBadge.hidden = YES;
         self.discountLabel.hidden = YES;
+        [self.titleLabel setFrame:CGRectMake((self.backgroundContentView.frame.size.width-self.titleLabel.frame.size.width)/2,
+                                                self.discountLabel.frame.origin.y,
+                                                self.titleLabel.frame.size.width,
+                                                self.titleLabel.frame.size.height)];
     }
     
     self.titleLabel.textColor = UIColorFromRGB(0x666666);
