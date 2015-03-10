@@ -32,6 +32,7 @@
 
 //************ center navigation controller notifications
 #define kCloseCurrentScreenNotification @"NOTIFICATION_CLOSE_CURRENT_SCREEN"
+#define kCloseTopTwoScreensNotification @"NOTIFICATION_CLOSE_TOP_TWO_SCREENS"
 #define kMenuDidSelectOptionNotification @"NOTIFICATION_SELECTED_ITEM_MENU"
 #define kOpenCatalogFromUndefinedSearch @"NOTIFICATION_OPEN_CATALOG_FROM_UNDEF_SEARCH"
 #define kMenuDidSelectLeafCategoryNotification @"NOTIFICATION_SELECTED_LEAF_CATEGORY"
