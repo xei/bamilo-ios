@@ -21,7 +21,6 @@
     UICollectionViewDataSource,
     UICollectionViewDelegate,
     JAMainFiltersViewControllerDelegate,
-    JAPDVViewControllerDelegate,
     JAUndefinedSearchViewDelegate
 >
 

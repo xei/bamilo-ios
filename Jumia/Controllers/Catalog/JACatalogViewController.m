@@ -147,6 +147,11 @@
                                                  name:kDidPressNavBar
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changedFavoriteStateOfProduct:)
+                                                 name:kProductChangedNotification
+                                               object:nil];
+    
     self.apiResponse = RIApiResponseSuccess;
     
     if (self.forceShowBackButton)
@@ -973,7 +978,6 @@
                                                           userInfo:@{ @"url" : product.url,
                                                                       @"previousCategory" : temp,
                                                                       @"fromCatalog" : @"YES",
-                                                                      @"delegate" : self,
                                                                       @"category" : self.category,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
         [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"cat_/%@/%@",self.category.urlKey
@@ -986,7 +990,6 @@
                                                           userInfo:@{ @"url" : product.url,
                                                                       @"fromCatalog" : @"YES",
                                                                       @"previousCategory" : self.navBarLayout.title,
-                                                                      @"delegate": self ,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
         [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"Search_%@",product.name]];
     }
@@ -1075,16 +1078,20 @@
     [self loadMoreProducts];
 }
 
-#pragma mark - JAPDVViewControllerDelegate
-- (void)changedFavoriteStateOfProduct:(RIProduct*)product;
+#pragma mark - kProductChangedNotification
+- (void)changedFavoriteStateOfProduct:(NSNotification*)notification;
 {
-    for (int i = 0; i < self.productsArray.count; i++)
-    {
-        RIProduct* currentProduct = [self.productsArray objectAtIndex:i];
-        if ([currentProduct.sku isEqualToString:product.sku])
+    RIProduct* product = (RIProduct*) notification.object;
+    
+    if (VALID_NOTEMPTY(product, RIProduct)) {
+        for (int i = 0; i < self.productsArray.count; i++)
         {
-            currentProduct.favoriteAddDate = product.favoriteAddDate;
-            [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]];
+            RIProduct* currentProduct = [self.productsArray objectAtIndex:i];
+            if ([currentProduct.sku isEqualToString:product.sku])
+            {
+                currentProduct.favoriteAddDate = product.favoriteAddDate;
+                [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]];
+            }
         }
     }
 }
@@ -1255,6 +1262,9 @@
                                         
                                         [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
                                         
+                                        [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
+                                                                                            object:product];
+                                        
                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                         NSString *addToWishlistError = STRING_ERROR_ADDING_TO_WISHLIST;
                                         if(RIApiResponseNoInternetConnection == apiResponse)
@@ -1305,6 +1315,9 @@
             [self hideLoading];
             
             [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
+                                                                object:product];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             [self hideLoading];
