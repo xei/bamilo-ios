@@ -508,6 +508,9 @@
                                                                               [self hideLoading];
                                                                               
                                                                           } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
+                                                                              self.navBarLayout.subTitle = @"";
+                                                                              [self reloadNavBar];
+                                                                              
                                                                               self.apiResponse = apiResponse;
                                                                               [self removeErrorView];
                                                                               self.searchSuggestionOperationID = nil;
@@ -723,6 +726,9 @@
                                                                           [self hideLoading];
                                                                           
                                                                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                                                          self.navBarLayout.subTitle = @"";
+                                                                          [self reloadNavBar];
+                                                                          
                                                                           self.apiResponse = apiResponse;
                                                                           [self removeErrorView];
                                                                           self.getProductsOperationID = nil;
