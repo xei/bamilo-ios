@@ -91,7 +91,6 @@
         }
         
         currentY = [self loadTotalSectionInPositionY:currentY
-                                                 vat:cart.vatValueFormatted
                                             subtotal:cart.cartValueFormatted
                                                extra:cart.extraCostsFormatted
                                          shippingFee:shippingFeeValue];
@@ -309,34 +308,11 @@
 }
 
 - (CGFloat)loadTotalSectionInPositionY:(CGFloat)currentY
-                                   vat:(NSString*)vat
                               subtotal:(NSString*)subtotal
                                  extra:(NSString*)extra
                            shippingFee:(NSString*)shippingFee
 {
     currentY += 15.0f;
-    
-    UILabel* VATLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                  currentY,
-                                                                  self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                  1.0f)];
-    VATLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
-    VATLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    VATLabel.text = STRING_VAT;
-    [VATLabel sizeToFit];
-    [self.cartView addSubview:VATLabel];
-    
-    UILabel* VATValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                       currentY,
-                                                                       self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                       VATLabel.frame.size.height)];
-    VATValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
-    VATValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    VATValueLabel.text = vat;
-    VATValueLabel.textAlignment = NSTextAlignmentRight;
-    [self.cartView addSubview:VATValueLabel];
-    
-    currentY += VATLabel.frame.size.height + 7.0f;
     
     UILabel* subtotalLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
                                                                        currentY,
