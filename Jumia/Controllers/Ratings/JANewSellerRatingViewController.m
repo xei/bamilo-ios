@@ -419,7 +419,7 @@ UIAlertViewDelegate
             
             [self showMessage:STRING_REVIEW_SENT success:YES];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseTopTwoScreensNotification
                                                                 object:nil
                                                               userInfo:nil];
         } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {

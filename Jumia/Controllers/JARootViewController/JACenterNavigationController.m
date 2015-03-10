@@ -271,6 +271,11 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(closeTopTwoScreensNotificaion:)
+                                                 name:kCloseTopTwoScreensNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(changeNavigationWithNotification:)
                                                  name:kChangeNavigationBarNotification
                                                object:nil];
@@ -1446,6 +1451,21 @@
         animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
     }
     [self popViewControllerAnimated:animated];
+}
+
+- (void) closeTopTwoScreensNotificaion:(NSNotification*)notification
+{
+    NSInteger thirdToLastIndex = self.viewControllers.count-3;
+    if (0 <= thirdToLastIndex) {
+        UIViewController* thirdToLastViewController = [self.viewControllers objectAtIndex:thirdToLastIndex];
+        
+        BOOL animated = YES;
+        if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber))
+        {
+            animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
+        }
+        [self popToViewController:thirdToLastViewController animated:YES];
+    }
 }
 
 #pragma mark - Recent Search
