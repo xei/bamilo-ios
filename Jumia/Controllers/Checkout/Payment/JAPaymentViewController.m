@@ -516,7 +516,8 @@ UITextFieldDelegate>
             self.cart = cart;
             
             [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
-            
+            [self.couponTextField setEnabled: YES];
+            [self.couponTextField setText:@""];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
@@ -529,7 +530,7 @@ UITextFieldDelegate>
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
             [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
-            
+            [self.couponTextField setEnabled:NO];
             [self hideLoading];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {

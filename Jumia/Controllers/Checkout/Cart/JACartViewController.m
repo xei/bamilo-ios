@@ -463,6 +463,7 @@
     if(VALID_NOTEMPTY(self.voucherCode, NSString))
     {
         [self.couponTextField setText:self.voucherCode];
+        [self.couponTextField setEnabled:NO];
     }
     else if(!VALID_NOTEMPTY([self.couponTextField text], NSString))
     {
@@ -930,6 +931,8 @@
             self.voucherCode = voucherCode;
             
             [self setupCart];
+            [self.couponTextField setEnabled:YES];
+             [self.couponTextField setText:@""];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
