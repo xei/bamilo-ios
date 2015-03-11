@@ -70,6 +70,9 @@
     
     if([json objectForKey:@"facebook_is_available"]){
         newConfig.facebookAvailable = [json objectForKey:@"facebook_is_available"];
+        
+        //$$$ FORCE UPDATE CAN REMOVE THIS
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserDefaultsHasDownloadedFacebookConfigs];
     }
     
     NSString *languageCode = @"";

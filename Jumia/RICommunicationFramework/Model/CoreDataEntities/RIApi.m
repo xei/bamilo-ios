@@ -99,15 +99,27 @@
                                                                       for (RISection* newSection in newApi.sections) {
                                                                           
                                                                           BOOL sectionNeedsDownload = YES;
+
+                                                                          //$$$ FORCE UPDATE CAN REMOVE THIS
+                                                                          BOOL hasDownloadedFacebookConfigs = NO;
+                                                                          if(NO == ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultsHasDownloadedFacebookConfigs]))
+                                                                          {
+                                                                              hasDownloadedFacebookConfigs = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsHasDownloadedFacebookConfigs];
+                                                                          }
                                                                           
-                                                                          if (VALID(oldApi, RIApi)) {
-                                                                              for (RISection* oldSection in oldApi.sections) {
-                                                                                  
-                                                                                  if ([newSection.name isEqualToString:oldSection.name]) {
-                                                                                      //found it
-                                                                                      if ([newSection.md5 isEqualToString:oldSection.md5]) {
-                                                                                          
-                                                                                          sectionNeedsDownload = NO;
+                                                                          if ([newSection.name isEqualToString:@"countryconfs"] && NO == hasDownloadedFacebookConfigs) {
+                                                                              
+                                                                              sectionNeedsDownload = YES;
+                                                                          } else {
+                                                                              if (VALID(oldApi, RIApi)) {
+                                                                                  for (RISection* oldSection in oldApi.sections) {
+                                                                                      
+                                                                                      if ([newSection.name isEqualToString:oldSection.name]) {
+                                                                                          //found it
+                                                                                          if ([newSection.md5 isEqualToString:oldSection.md5]) {
+                                                                                              
+                                                                                              sectionNeedsDownload = NO;
+                                                                                          }
                                                                                       }
                                                                                   }
                                                                               }
