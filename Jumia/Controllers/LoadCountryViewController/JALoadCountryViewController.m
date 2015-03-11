@@ -113,6 +113,9 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RISectionRequestStartedNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RISectionRequestEndedNotificationName object:nil];
+    
     if(VALID_NOTEMPTY(self.countriesRequestId, NSString))
     {
         [RICountry cancelRequest:self.countriesRequestId];
