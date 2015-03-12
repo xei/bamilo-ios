@@ -369,7 +369,9 @@
     {
         return;
     }
-    [self removeNotifications];
+    if (self.teaserCategoryScrollView.selectedIndex > 0) {
+        [self removeNotifications];
+    }
     [self.teaserCategoryScrollView scrollRightAnimated:YES];
 }
 
@@ -379,7 +381,9 @@
     {
         return;
     }
-    [self removeNotifications];
+    if (self.teaserCategoryScrollView.selectedIndex < self.teaserCategoryScrollView.optionLabels.count-1) {
+        [self removeNotifications];
+    }
     [self.teaserCategoryScrollView scrollLeftAnimated:YES];
 }
 
