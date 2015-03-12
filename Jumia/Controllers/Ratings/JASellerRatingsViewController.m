@@ -223,11 +223,11 @@ UITableViewDataSource
     {
         if (RIApiResponseNoInternetConnection == self.apiResponse)
         {
-            [self showErrorView:YES startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
+            [self showErrorView:YES startingY:0.0f selector:@selector(finishedRequests) objects:nil];
         }
         else
         {
-            [self showErrorView:NO startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
+            [self showErrorView:NO startingY:0.0f selector:@selector(finishedRequests) objects:nil];
         }
     }
     
