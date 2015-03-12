@@ -454,6 +454,12 @@
     if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
     {
         [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
+        
+        NSString* voucherCode = [[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultsVoucherCode];
+        
+        if (VALID_NOTEMPTY(voucherCode, NSString)) {
+            [self.couponTextField setText:voucherCode];
+        }
     }
     else
     {
@@ -930,6 +936,8 @@
             self.cart = cart;
             self.voucherCode = voucherCode;
             
+            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUserDefaultsVoucherCode];
+            
             [self setupCart];
             [self.couponTextField setEnabled:YES];
              [self.couponTextField setText:@""];
@@ -945,6 +953,8 @@
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
             self.voucherCode = voucherCode;
+
+            [[NSUserDefaults standardUserDefaults] setObject:voucherCode forKey:kUserDefaultsVoucherCode];
             
             [self setupCart];
             [self hideLoading];
