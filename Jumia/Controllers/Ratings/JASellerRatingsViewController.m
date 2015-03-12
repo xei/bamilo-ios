@@ -217,15 +217,17 @@ UITableViewDataSource
     
     [self hideLoading];
     
+    [self removeErrorView];
+    
     if(RIApiResponseSuccess != self.apiResponse)
     {
         if (RIApiResponseNoInternetConnection == self.apiResponse)
         {
-            [self showMessage:STRING_NO_CONNECTION success:NO];
+            [self showErrorView:YES startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
         }
         else
         {
-            [self showMessage:STRING_ERROR success:NO];
+            [self showErrorView:NO startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
         }
     }
     
