@@ -459,6 +459,7 @@
         
         if (VALID_NOTEMPTY(voucherCode, NSString)) {
             [self.couponTextField setText:voucherCode];
+            [self.couponTextField setEnabled:NO];
         }
     }
     else

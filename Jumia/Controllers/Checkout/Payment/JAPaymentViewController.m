@@ -433,6 +433,7 @@ UITextFieldDelegate>
     if(VALID_NOTEMPTY([[[self checkout] orderSummary] discountCouponCode], NSString))
     {
         [self.couponTextField setText:[[[self checkout] orderSummary] discountCouponCode]];
+        [self.couponTextField setEnabled:NO];
         [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
     }
     else
