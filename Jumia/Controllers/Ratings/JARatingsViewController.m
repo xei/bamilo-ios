@@ -93,11 +93,6 @@ UITableViewDataSource
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
@@ -166,6 +161,11 @@ UITableViewDataSource
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"Reviews"];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
