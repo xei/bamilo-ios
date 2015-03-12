@@ -813,7 +813,7 @@ UITableViewDataSource
     [self.emptyReviewsView setFrame:CGRectMake(horizontalMargin,
                                                originY,
                                                width,
-                                               self.centerView.frame.size.height)];
+                                               self.emptyReviewsView.frame.size.height)];
     
     [self.emptyReviewsLabel setText:STRING_REVIEWS_EMPTY];
     [self.emptyReviewsLabel sizeToFit];
@@ -847,7 +847,7 @@ UITableViewDataSource
                                                 emptyReviewsLabelRect.size.width,
                                                 emptyReviewsLabelRect.size.height)];
     CGFloat leftMarginImageNewSize = 100.5f;
-    if(self.view.frame.size.height < CGRectGetMaxY(self.emptyReviewsView.frame))
+    if(self.view.frame.size.height <= CGRectGetMaxY(self.emptyReviewsView.frame))
     {
         [self.emptyReviewsView setFrame:CGRectMake(self.emptyReviewsView.frame.origin.x,
                                                   self.emptyReviewsView.frame.origin.y,
@@ -860,9 +860,9 @@ UITableViewDataSource
                                                         self.emptyReviewsImageView.frame.size.height/1.3)];
         
         [self.emptyReviewsLabel setFrame:CGRectMake(self.emptyReviewsLabel.frame.origin.x,
-                                                    CGRectGetMaxY(self.emptyReviewsImageView.frame) + 30.0f,
+                                                    CGRectGetMaxY(self.emptyReviewsImageView.frame) + 15.0f,
                                                     self.emptyReviewsLabel.frame.size.width,
-                                                    self.emptyReviewsLabel.frame.size.height)];
+                                                    self.emptyReviewsLabel.frame.size.height*2)];
     }
 }
 
