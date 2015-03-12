@@ -142,36 +142,41 @@ UITableViewDataSource
     {
         [self showLoading];
         
-        [RISellerReviewInfo getSellerReviewForProductWithUrl:self.product.url pageSize:0 pageNumber:10 successBlock:^(RISellerReviewInfo *sellerReviewInfo) {
-            self.sellerReviewInfo = sellerReviewInfo;
-            
-            [self removeErrorView];
-            
-            if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+        [self sellerReviewsRequest];
+    }
+}
+
+- (void)sellerReviewsRequest
+{
+    [RISellerReviewInfo getSellerReviewForProductWithUrl:self.product.url pageSize:0 pageNumber:10 successBlock:^(RISellerReviewInfo *sellerReviewInfo) {
+        self.sellerReviewInfo = sellerReviewInfo;
+        
+        [self removeErrorView];
+        
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+        {
+            [self formRequest];
+        }
+        else
+        {
+            self.numberOfRequests = 0;
+        }
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+        self.apiResponse = apiResponse;
+        
+        if(RIApiResponseSuccess != self.apiResponse)
+        {
+            if (RIApiResponseNoInternetConnection == self.apiResponse)
             {
-                [self formRequest];
+                [self showErrorView:YES startingY:0.0f selector:@selector(sellerReviewsRequest) objects:nil];
             }
             else
             {
-                self.numberOfRequests = 0;
+                [self showErrorView:NO startingY:0.0f selector:@selector(sellerReviewsRequest) objects:nil];
             }
-        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-            self.apiResponse = apiResponse;
-            
-            if(RIApiResponseSuccess != self.apiResponse)
-            {
-                if (RIApiResponseNoInternetConnection == self.apiResponse)
-                {
-                    [self showErrorView:YES startingY:0.0f selector:@selector(finishedRequests) objects:nil];
-                }
-                else
-                {
-                    [self showErrorView:NO startingY:0.0f selector:@selector(finishedRequests) objects:nil];
-                }
-            }
-            self.numberOfRequests = 0;
-        }];
-    }
+        }
+        self.numberOfRequests = 0;
+    }];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -237,11 +242,11 @@ UITableViewDataSource
     {
         if (RIApiResponseNoInternetConnection == self.apiResponse)
         {
-            [self showErrorView:YES startingY:0.0f selector:@selector(finishedRequests) objects:nil];
+            [self showErrorView:YES startingY:0.0f selector:@selector(formRequest) objects:nil];
         }
         else
         {
-            [self showErrorView:NO startingY:0.0f selector:@selector(finishedRequests) objects:nil];
+            [self showErrorView:NO startingY:0.0f selector:@selector(formRequest) objects:nil];
         }
     }
     
