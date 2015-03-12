@@ -1515,8 +1515,10 @@ JAActivityViewControllerDelegate
         {
             if ([simple.quantity integerValue] > 0)
             {
-                [self.pickerDataSource addObject:simple];
-                [options addObject:simple.variation];
+                if (VALID_NOTEMPTY(simple.variation, NSString)) {
+                    [self.pickerDataSource addObject:simple];
+                    [options addObject:simple.variation];
+                }
             }
         }
     }
@@ -1526,9 +1528,11 @@ JAActivityViewControllerDelegate
         sizeGuideTitle = STRING_SIZE_GUIDE;
     }
     
-    [self loadSizePickerWithOptions:[options copy]
-                       previousText:self.productInfoSection.sizeLabel.text
-                    leftButtonTitle:sizeGuideTitle];
+    if (VALID_NOTEMPTY(options, NSMutableArray)) {
+        [self loadSizePickerWithOptions:[options copy]
+                           previousText:self.productInfoSection.sizeLabel.text
+                        leftButtonTitle:sizeGuideTitle];
+    }
 }
 
 - (void)loadSizePickerWithOptions:(NSArray*)options

@@ -145,6 +145,8 @@ UITableViewDataSource
         [RISellerReviewInfo getSellerReviewForProductWithUrl:self.product.url pageSize:0 pageNumber:10 successBlock:^(RISellerReviewInfo *sellerReviewInfo) {
             self.sellerReviewInfo = sellerReviewInfo;
             
+            [self removeErrorView];
+            
             if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
             {
                 [self formRequest];
@@ -154,7 +156,19 @@ UITableViewDataSource
                 self.numberOfRequests = 0;
             }
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-            //$$$ SHOW ERROR
+            self.apiResponse = apiResponse;
+            
+            if(RIApiResponseSuccess != self.apiResponse)
+            {
+                if (RIApiResponseNoInternetConnection == self.apiResponse)
+                {
+                    [self showErrorView:YES startingY:0.0f selector:@selector(finishedRequests) objects:nil];
+                }
+                else
+                {
+                    [self showErrorView:NO startingY:0.0f selector:@selector(finishedRequests) objects:nil];
+                }
+            }
             self.numberOfRequests = 0;
         }];
     }
@@ -223,11 +237,11 @@ UITableViewDataSource
     {
         if (RIApiResponseNoInternetConnection == self.apiResponse)
         {
-            [self showErrorView:YES startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
+            [self showErrorView:YES startingY:0.0f selector:@selector(finishedRequests) objects:nil];
         }
         else
         {
-            [self showErrorView:NO startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
+            [self showErrorView:NO startingY:0.0f selector:@selector(finishedRequests) objects:nil];
         }
     }
     
