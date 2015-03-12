@@ -803,6 +803,8 @@ UITableViewDataSource
 
 - (void) setupEmptyReviewsView:(CGFloat)width originY:(CGFloat)originY
 {
+    CGFloat totalHeightAvailable = self.view.frame.size.height - originY - 6.0f;
+    
     
     self.emptyReviewsView.translatesAutoresizingMaskIntoConstraints = YES;
     self.emptyReviewsImageView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -838,33 +840,36 @@ UITableViewDataSource
                                                    totalHeight)];
     }
     
-    CGFloat verticalMargin = (self.emptyReviewsView.frame.size.height - componentsHeight) / 2;
-    [self.emptyReviewsImageView setFrame:CGRectMake((self.emptyReviewsView.frame.size.width - self.emptyReviewsImageView.frame.size.width) / 2,
-                                                    verticalMargin,
-                                                    self.emptyReviewsImageView.frame.size.width,
-                                                    self.emptyReviewsImageView.frame.size.height)];
+    if (totalHeight > totalHeightAvailable) {
+        [self.emptyReviewsView setFrame:CGRectMake(horizontalMargin,
+                                                   originY,
+                                                   width,
+                                                   totalHeightAvailable)];
+        
+        CGFloat verticalMargin = 6.0f;
+        CGFloat imageHeight = totalHeightAvailable - marginBetweenImageAndLabel - emptyReviewsLabelRect.size.height - verticalMargin*2;
     
-    [self.emptyReviewsLabel setFrame:CGRectMake((self.emptyReviewsView.frame.size.width - emptyReviewsLabelRect.size.width) / 2,
-                                                CGRectGetMaxY(self.emptyReviewsImageView.frame) + marginBetweenImageAndLabel,
-                                                emptyReviewsLabelRect.size.width,
-                                                emptyReviewsLabelRect.size.height)];
-    CGFloat leftMarginImageNewSize = 100.5f;
-    if(self.view.frame.size.height <= CGRectGetMaxY(self.emptyReviewsView.frame))
-    {
-        [self.emptyReviewsView setFrame:CGRectMake(self.emptyReviewsView.frame.origin.x,
-                                                  self.emptyReviewsView.frame.origin.y,
-                                                  self.emptyReviewsView.frame.size.width,
-                                                   self.view.frame.size.height - originY - 6.0f)];
+        [self.emptyReviewsImageView setFrame:CGRectMake((self.emptyReviewsView.frame.size.width - imageHeight) / 2,
+                                                        verticalMargin,
+                                                        imageHeight,
+                                                        imageHeight)];
         
-        [self.emptyReviewsImageView setFrame:CGRectMake(leftMarginImageNewSize,
-                                                        self.emptyReviewsImageView.frame.origin.y,
-                                                        self.emptyReviewsImageView.frame.size.width/1.3,
-                                                        self.emptyReviewsImageView.frame.size.height/1.3)];
+        [self.emptyReviewsLabel setFrame:CGRectMake((self.emptyReviewsView.frame.size.width - emptyReviewsLabelRect.size.width) / 2,
+                                                    CGRectGetMaxY(self.emptyReviewsImageView.frame) + marginBetweenImageAndLabel,
+                                                    emptyReviewsLabelRect.size.width,
+                                                    emptyReviewsLabelRect.size.height)];
         
-        [self.emptyReviewsLabel setFrame:CGRectMake(self.emptyReviewsLabel.frame.origin.x,
-                                                    CGRectGetMaxY(self.emptyReviewsImageView.frame) + 15.0f,
-                                                    self.emptyReviewsLabel.frame.size.width,
-                                                    self.emptyReviewsLabel.frame.size.height*2)];
+    } else {
+        CGFloat verticalMargin = (self.emptyReviewsView.frame.size.height - componentsHeight) / 2;
+        [self.emptyReviewsImageView setFrame:CGRectMake((self.emptyReviewsView.frame.size.width - self.emptyReviewsImageView.frame.size.width) / 2,
+                                                        verticalMargin,
+                                                        self.emptyReviewsImageView.frame.size.width,
+                                                        self.emptyReviewsImageView.frame.size.height)];
+        
+        [self.emptyReviewsLabel setFrame:CGRectMake((self.emptyReviewsView.frame.size.width - emptyReviewsLabelRect.size.width) / 2,
+                                                    CGRectGetMaxY(self.emptyReviewsImageView.frame) + marginBetweenImageAndLabel,
+                                                    emptyReviewsLabelRect.size.width,
+                                                    emptyReviewsLabelRect.size.height)];
     }
 }
 
