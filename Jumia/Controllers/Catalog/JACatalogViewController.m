@@ -1146,7 +1146,10 @@
 
 - (void)navBarClicked
 {
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    NSInteger numberOfCells = [self collectionView:self.collectionView numberOfItemsInSection:0];
+    if (VALID_NOTEMPTY(self.collectionView, UICollectionView) && numberOfCells > 0) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    }
 }
 
 #pragma mark - Button actions
