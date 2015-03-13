@@ -1,428 +1,535 @@
 /* 
-  RIStrings.strings
-  Jumia
-
-  Created by Pedro Lopes on 13/09/14.
-  Copyright (c) 2014 Rocket Internet. All rights reserved.
-*/
-
-"account_name" = "A Minha Conta";
-"action_label_add_address" = "Adicionar Morada";
-"action_label_basket" = "Cesto";
-"action_label_search_hint" = "Morada de Entrega Principal";
-"action_label_share" = "Partilhar";
-"action_label_wishlist" = "Lista de Desejos";
-"add_address" = "Adicionar Morada";
-"add_to_shopping_cart" = "Adicionar ao Carrinho";
-"added_to_shop_cart_dialog_text" = "O artigo foi adicionado ao carrinho de compras";
-"all_label" = "Todos";
-"app_name" = "Jumia";
-"back_label" = "Voltar";
-"back_level" = "Voltar ao nível anterior";
-"billing_add_label" = "%@ Ofertas de";
-"billing_billing_label" = "Morada de Faturação";
-"billing_choose_address" = "Por favor selecione uma morada!";
-"billing_def_shipping_label" = "Morada de Faturação Principal";
-"billing_others_label" = "Outras Moradas";
-"billing_same_label" = "Faturar na mesma morada";
-"billing_shipping_label" = "Morada de Entrega";
-"brands_label" = "Marcas";
-"buy_now" = "Comprar Já";
-"call_to_order" = "Ligar";
-"campaign_choose_size" = "Escolha o Tamanho";
-"campaign_ramaining_stock" = "Stock Disponível:";
-"campaign_save" = "Está a Poupar";
-"campaign_stock_alert" = "Pedimos desculpa mas o artigo que selecionou está esgotado";
-"campaigns_label" = "Campanhas";
-"campaing_offer_ended" = "A Promoção Terminou!";
-"campaing_timer_end" = "Termina em:";
-"cancel_label" = "Cancelar";
-"cart_label" = "Carrinho";
-"catalog_edit_filters" = "Editar Filtros";
-"catalog_no_results" = "Não foram encontrados resultados para os filtros que selecionou. Tente escolher filtros mais comuns.";
-"categories_label" = "Categorias";
-"categories_label_uppercase" = "CATEGORIAS";
-"categories_name_all" = "Todos para";
-"categories_title" = "Pesquise nas Categorias";
-"categories_toplevel_title" = "Todas as Categorias";
-"checkout_button_text" = "Finalizar Encomenda";
-"checkout_header_step_1" = "1. Sobre";
-"checkout_header_step_2" = "2. Morada";
-"checkout_header_step_3" = "3. Entrega";
-"checkout_header_step_4" = "4. Pagamento";
-"checkout_label" = "Checkout";
-"clear_all_uppercase_label" = "LIMPAR TUDO";
-"clear_uppercase_label" = "LIMPAR";
-"client_error_title" = "Erro na App!";
-"close_app" = "Fechar Aplicação";
-"color_label" = "Cor";
-"confirm_order_loosing_order" = "Se voltar atrás, a sua encomenda será desativada e será redirecionado para a página principal. \nNúmero da encomenda:";
-"confirm_order_loosing_order_title" = "Aviso: compra já efetuada!";
-"continue_shopping" = "Continuar a Comprar";
-"copied_to_clipboard" = "Copiado";
-"create_addresses_success" = "A morada foi criada com sucesso:";
-"creation_date" = "Data de Criação:";
-"dialog_to_reviews" = "Para rever:";
-"done_label" = "Validar";
-"dynamic_errortext" = "Não está correto";
-"edit_address" = "Editar Morada";
-"edit_address_success" = "A morada foi editada com sucesso.";
-"error_add_to_cart_failed" = "Ocorreu um erro ao adicionar o artigo ao carrinho";
-"error_add_to_shopping_cart" = "Ocorreu um erro ao adicionar o artigo ao carrinho de compras. Por favor volte a tentar mais tarde.";
-"error_add_to_shopping_cart_quantity" = "Pedimos desculpa mas não é permitido encomendar mais artigos do que a quantidade disponível.";
-"error_forgotpassword_title" = "A recuperação da password falhou";
-"error_ismandatory" = "Por favor preencha";
-"error_login_title" = "A autenticação falhou";
-"error_no_connection" = "Sem ligação";
-"error_occured" = "Ocorreu um erro";
-"error_please_try_again" = "Encontrámos um pequeno problema na recuperação dos dados. Por favor tente novamente.";
-"error_register_alreadyexists" = "Este endereço de email já existe. Por favor selecione outro.";
-"error_register_title" = "O registo falhou";
-"error_signup_title" = "O registo da nova conta falhou";
-"error_tracking_order_text" = "Não foram encontrados resultados para o número da encomenda que especificou.\nPor favor verifique e tente novamente.";
-"exit_press_back_again" = "Por favor carregue novamente em voltar se quiser sair da aplicação.";
-"extra_costs" = "Custos Extra:";
-"extra_costs_label" = "Custos Extra";
-"facebook_login_button_text" = "Entrar com o Facebook";
-"facebook_signup_button_text" = "Registar com o Facebook";
-"fallback_audio" = "Áudio &amp; Vídeo";
-"fallback_audio_ios" = "Áudio & Vídeo";
-"fallback_best" = "A melhor experiência em compras online";
-"fallback_books" = "Livros";
-"fallback_bottom_text" = "de qualquer lugar, a qualquer hora";
-"fallback_bottom_text2" = "E muito mais para navegar ou comprar";
-"fallback_choice" = "A MAIS AMPLA GAMA";
-"fallback_doorstep" = "À SUA PORTA";
-"fallback_fashion" = "Moda";
-"fallback_health" = "Saúde &amp; Beleza";
-"fallback_health_ios" = "Saúde & Beleza";
-"fallback_home_office" = "Casa &amp; Escritório";
-"fallback_home_office_ios" = "Casa & Escritório";
-"fallback_maintenance" = "MANUTENÇÃO";
-"fallback_maintenance_text" = "está atualmente em manutenção.";
-"fallback_maintenance_text_bottom" = "Tentaremos ser breves, por favor volte mais tarde";
-"fallback_mobile" = "Telemóveis";
-"fallback_welcome" = "BEM VINDOS A";
-"favourite_add_to_cart" = "Artigo Adicionado ao Carrinho";
-"favourite_addalltocart" = "Adicionar Todos os Artigos ao Carrinho";
-"favourite_no_favourites" = "Não tem artigos favoritos de momento.";
-"favourites" = "Os Meus Favoritos";
-"fgt_pass" = "Esqueceu a Password?";
-"filter_label" = "Filtrar";
-"forgotpass_header" = "Recuperação de Password";
-"forgotpass_title" = "O seu endereço de email";
-"forgotten_password" = "Por favor insira o seu endereço de email.";
-"forgotten_password_examplemail" = "nome1234@exemplo.com";
-"forgotten_password_resulttitle" = "Recuperação da password";
-"forgotten_password_sub_text" = "Vamos enviar-lhe um link para alterar a password.";
-"forgotten_password_successtext" = "Mensagem enviada";
-"form_passwordsnomatch" = "As passwords não são iguais";
-"form_texttolong" = "o texto é demasiado longo";
-"form_texttoshort" = "o texto é muito curto";
-"framework_category_label" = "Categoria";
-"free_label" = "Gratuito";
-"go_shop_text" = "Comprar Já";
-"go_to_cart" = "Ver Carrinho";
-"got_it" = "Compreendi";
-"home_label" = "Página Inicial";
-"home_tip_text" = "Deslize para a esquerda ou para a direita para mudar a categoria";
-"incomplete_alert" = "Oops, não foi possível terminar!";
-"loading_message" = "A carregar...";
-"loading_more" = "A carregar mais artigos ...";
-"login_label" = "Iniciar Sessão";
-"login_remember_user_email" = "Lembrar o meu email";
-"login_sectiontitle" = "Dados de Acesso";
-"logout_text_question" = "Tem a certeza de que deseja sair?";
-"logout_title" = "Confirmação de Saída";
-"menu_label_uppercase" = "MENU";
-"my_account" = "A Minha Conta";
-"my_order_confirm_button" = "Confirmar Encomenda";
-"my_order_coupon_label" = "Cupão";
-"my_order_is_same" = "Enviar fatura para a mesma morada";
-"my_order_item_label" = "artigo";
-"my_order_items_label" = "artigos";
-"my_order_label" = "A Minha Encomenda";
-"my_order_payment" = "Opções de Pagamento";
-"my_order_qty" = "Qtde";
-"my_order_ship_fee_label" = "Taxas de Entrega";
-"my_order_total_label" = "Total";
-"my_order_voucher_label" = "Vale de Desconto";
-"my_profile" = "O Meu Perfil";
-"myaccount_email_notifications" = "Notificações por Email";
-"myaccount_userdata" = "Dados do Utilizador";
-"name" = "Nome";
-"nav_country" = "Selecionar País";
-"nav_country_warning" = "Está prestes a alterar o país. Isto fará com que o carrinho seja esvaziado e que a sua sessão termine. Tem a certeza?";
-"nav_track_order" = "Localizar a Minha Encomenda";
-"navigation_cart_empty" = "O seu carrinho está vazio";
-"new_password_hint" = "Nova password";
-"new_password_label" = "Nova Password";
-"newsletter_saved_message" = "A configuração das notificações de email foram guardadas.";
-"newsletters_label" = "Newsletters";
-"next_button" = "Próximo";
-"no_connect_dialog_content" = "Por favor, verifique a sua ligação à Internet e tente novamente!";
-"no_internet_access_warning_title" = "Sem Acesso à internet!";
-"no_label" = "Não";
-"no_payment" = "Não é necessário qualquer pagamento";
-"notifications" = "Notificações";
-"notifications_summary" = "Receba ofertas exclusivas e atualizações pessoais";
-"off_label" = "OFF";
-"string_format_off_label" = "-%d%%";
-"ok_label" = "OK";
-"option2_description" = "Alterar Password, gerir email";
-"option3_description" = "Subscrever ou Cancelar Subscrição";
-"or_text" = "OU";
-"order_no_items" = "Não tem artigos no carrinho";
-"order_status_label" = "Estado da Encomenda";
-"order_success" = "A sua encomenda foi registada com sucesso\n com o número:";
-"order_summary_label" = "Resumo da Encomenda";
-"order_summary_shipping_fee_label" = "Taxa de Entrega:";
-"order_summary_shipping_method" = "Método de Envio";
-"order_summary_subtotal_label" = "Subtotal:";
-"order_summary_total_label" = "Total:";
-"order_track_link" = "estado da encomenda";
-"order_track_products" = "Produtos:";
-"order_track_success" = "Pode acompanhar a sua encomenda ao clicar \nem estado da encomenda, nesta aplicação";
-"password_changed" = "Password alterada com sucesso";
-"password_new_mincharacters" = "A nova password tem que ter pelo menos 6 carateres";
-"payment" = "Pagamento";
-"payment_method" = "Método de Pagamento:";
-"personal_data_label" = "Os Seus Dados Pessoais";
-"personal_data_title" = "Dados da Conta";
-"please_fill_all_data" = "Por favor preencha todos os campos";
-"poll_question_label" = "Questionário";
-"posted_by" = "publicado por";
-"product_could_not_retrieved" = "A informação do produto não pôde ser recuperada!";
-"product_description_title" = "Descrição do Produto";
-"product_details_title" = "Detalhes do Produto";
-"product_features_title" = "Características do Produto";
-"product_outof_stock" = "O artigo está esgotado";
-"product_sort_button" = "Ordenar";
-"product_specifications" = "Especificações";
-"product_variance_choose" = "Por favor, selecione";
-"product_variance_choose_error" = "Por favor, selecione entre vários";
-"product_variant_placeholder" = "...";
-"products_added_favourite" = "Artigo adicionado aos Meus Favoritos";
-"products_could_notloaded" = "O carregamento de mais produtos falhou. Por favor, tente novamente.";
-"products_label" = "Produtos";
-"products_removed_favourite" = "Artigo removido dos Meus Favoritos";
-"products_sort_bestrated" = "Melhor Avaliação";
-"products_sort_brand" = "Marca";
-"products_sort_name" = "Nome";
-"products_sort_newin" = "Novidades";
-"products_sort_popularity" = "Popularidade";
-"products_sort_pricedown" = "Preço baixo";
-"products_sort_priceup" = "Preço alto";
-"products_tip_favourite_text" = "Clique para adicionar produtos aos Favoritos!";
-"products_tip_swipe_text" = "Deslize para a esquerda ou direita para alterar o tipo de ordenação";
-"promotion_tip_tap_text" = "Toque na caixa acima para copiar o código para a área de transferência e guardá-lo para o check-out";
-"rating_quality" = "Qualidade";
-"rating_question" = "Experimentou este produto? Avalie-o agora!";
-"recent_searches" = "Pesquisas Recentes";
-"recently_viewed" = "Visto Recentemente";
-"recentlyview_clear_viewed" = "Limpar Produtos Vistos Recentemente";
-"recentlyview_no_searches" = "Nenhum Produto Recentemente Visto";
-"recentsearch_clear_searches" = "Limpar Pesquisas Recentes";
-"recentsearch_no_searches" = "Não Existem Pesquisas Recentes";
-"register_birthday" = "Aniversário";
-"register_button" = "Criar Conta";
-"register_dialog_birthday" = "A sua Data de Nascimento";
-"register_required_text" = "Por favor preencha os campos obrigatórios (*)";
-"register_sectiontitle" = "Dados da Conta";
-"register_text_terms_a" = "Concordo com os";
-"register_text_terms_b" = "Termos e Condições";
-"register_title" = "Criar Conta";
-"registration_text" = "Registar";
-"related_items" = "Artigos Relacionados";
-"retype_new_password_hint" = "Confirmar password";
-"review" = "Avaliação";
-"reviews" = "Avaliações";
-"reviews_empty" = "Este Produto ainda não tem avaliações!";
-"save_changes_label" = "Guardar Alterações";
-"save_label" = "Guardar";
-"search_label" = "Pesquisar";
-"section_title_account" = "Configurações da Conta";
-"section_title_notification" = "Configurações de Notificação";
-"server_error" = "Encontrámos um pequeno problema na recuperação dos dados.";
-"server_error_title" = "Ocorreu um problema";
-"share_checkout_this_product" = "Veja este produto que encontrámos!";
-"share_subject" = "Partilha do Jumia";
-"shipping" = "Entrega";
-"shopping_cart" = "Carrinho de Compras";
-"shoppingcart_alert_header" = "Cesto";
-"shoppingcart_alert_message_no_items" = "Cesto vazio! Por favor adicione produtos ao carrinho.";
-"shoppingcart_article" = "artigo";
-"shoppingcart_articles" = "artigos";
-"shoppingcart_choose_quantity" = "Escolher Quantidade";
-"shoppingcart_dialog_title" = "Carrinho de Compras";
-"shoppingcart_instock" = "Em stock.";
-"shoppingcart_item_btn_delete" = "Eliminar";
-"shoppingcart_items" = "Artigos";
-"shoppingcart_minamount" = "Infelizmente não podemos entregar encomendas que não excedam a encomenda mínima de% s.";
-"shoppingcart_minamount_waiting" = "À espera de informações do servidor acerca do valor de encomenda mínimo";
-"shoppingcart_notinstock" = "Não está em Stock.";
-"shoppingcart_quantity" = "Quantidade";
-"shoppingcart_remove_products" = "Deseja remover os produtos do Carrinho de Compras?";
-"shoppingcart_title" = "O Meu Carrinho";
-"sign_in" = "Entrar";
-"sign_out" = "Sair";
-"signup_label" = "Registar";
-"size_label" = "Tamanho";
-"some_products_not_added" = "Infelizmente alguns produtos não foram adicionados ao carrinho.";
-"splash_slogan" = "O maior centro comercial online em África";
-"stale_warning" = "Perda de ligação";
-"sub_total_title" = "Subtotal";
-"submit_label" = "Submeter";
-"submit_text" = "O seu comentário foi submetido e está agora sujeita a aprovação.";
-"submit_title" = "Avaliação enviada";
-"teaser_campaign_button_first_line" = "EM DESTQUE";
-"teaser_campaign_button_second_line" = "OFERTAS";
-"terms_and_conditions" = "Termos e Condições";
-"thank_you_order_title" = "Obrigado!";
-"tip_favourite_text" = "Clique para adicionar este produto aos favoritos e ver a lista completa no seu perfil";
-"tip_share_text" = "Clique para partilhar este produto";
-"tip_swipe_text" = "Deslize para a esquerda ou para a direita para\nver imagens diferentes";
-"tip_tap_text" = "Toque para abrir a galeria de imagens do produto";
-"top_brands_toplevel_title" = "Todas as Marcas";
-"track_order" = "Localizar Encomenda";
-"track_order_hint" = "Número da Encomenda";
-"track_your_order" = "Localize a Sua Encomenda";
-"track_your_order_tip" = "Procure pelo número da sua encomenda e todos os dados da encomenda serão exibidos aqui";
-"try_again" = "Tentar Novamente";
-"upgrade_forced_text" = "Encontrámos algo que foi necessário corrigir para que a experiência de comprar no Jumia seja ainda melhor! Para continuar a usar a aplicação, deverá atualizá-la.";
-"upgrade_forced_title" = "Atualização necessária";
-"upgrade_optional_text" = "Há uma nova atualização disponível que preparamos para que a experiência de comprar no Jumia seja ainda melhor! Certifique-se que a aplicação é atualizada já hoje!";
-"upgrade_optional_title" = "Atualização disponível";
-"upgrade_proceed" = "Atualizar";
-"upgrade_remindmelater" = "Lembrar mais tarde";
-"validation_errortext" = "Ocorreram erros nos dados submetidos, por favor verifique os campos preenchidos.";
-"validation_title" = "Erro na introdução de dados";
-"vat_string" = "IVA";
-"voucher_error_message" = "Por favor insira um número de cupão válido";
-"voucher_message_hint" = "Insira o código do seu cupão aqui";
-"voucher_remove" = "Remover";
-"voucher_use" = "Utilizar";
-"wizard_navigation" = "Acesso rápido a todas as suas categorias favoritas";
-"write_comment" = "Escreva uma Avaliação";
-"writereview_page_title" = "Escrever Avaliação";
-"writereview_review_hint" = "Comentário";
-"writereview_send" = "Enviar Avaliação";
-"writereview_title_hint" = "Título";
-"yes_label" = "Sim";
-"your_cart" = "O Seu Carrinho";
-"your_order" = "A Sua Encomenda";
-"categories" = "Categorias";
-"home" = "Início";
-"wishlist_notiems" = "Não tem artigos no carrinho";
-"action_label_logout" = "Sair";
-"setting_address_error" = "Erro na configuração de uma morada de faturação/entrega";
-"string_address" = "Morada:";
-"string_appearance" = "Aparência";
-"string_apply" = "Aplicar";
-"string_article" = "1 artigo";
-"string_articles" = "%d artigos";
-"string_choose_size_for_all_products" = "Por favor selecione um tamanho para todos os produtos";
-"string_city" = "Cidade:";
-"string_error" = "Erro";
-"string_error_no_results_for_tracking_id" = "Não foram encontrados resultados para o número da encomenda especificado.\nPor favor verifique e tente novamente.";
-"string_filters" = "Filtros";
+   RIStrings.strings
+   Jumia
+   
+   Created by Pedro Lopes on 13/09/14.
+   Copyright (c) 2014 Rocket Internet. All rights reserved. */
 "string_jumia" = "Jumia";
-"string_loosing_order_message" = "Se terminar o processo de check-out, a sua encomenda será anulada.";
-"string_loosing_order_title" = "Aviso";
-"string_new" = "NOVO";
-"string_no_thanks" = "Não, obrigado.";
-"string_ok_update" = "Ok, Atualizar!";
-"string_opening_hours" = "Horário de Funcionamento:";
-"string_order_status" = "Estado da Encomenda";
-"string_please_select" = "Por Favor Selecione";
-"string_posted_by" = "Publicado por %@, %@";
-"string_posted_by_anonymous" = "Publicado por Utilizador Anónimo,%@";
-"string_price" = "Preço";
-"string_quantity" = "Quantidade: %@";
-"string_rate_now" = "Avaliar Agora";
-"string_rating" = "1 Nota";
-"string_ratings" = "%d Notas";
-"string_review" = "1 Avaliação";
-"string_reviews" = "%d Avaliações";
-"string_size" = "Tamanho";
-"string_size_with_value" = "Tamanho: %@";
-"string_top_brands" = "Top de Marcas";
-"string_top_categories" = "Top de Categorias";
-"string_top_sellers" = "Top de Vendedores";
-"string_update" = "Atualize!";
-"string_update_available_message" = "Há uma nova atualização disponível para que a experiência de comprar no Jumia seja ainda melhor! Faça já a atualização!";
-"string_update_available_title" = "Atualização disponível";
-"string_update_necessary_message" = "Encontramos algo que foi necessário corrigir para que a experiência de comprar no Jumia seja ainda melhor! Para continuar a usar a aplicação, deverá atualizá-la.";
+
 "string_update_necessary_title" = "Atualização necessária";
-"string_variations" = "Variações";
+
+"string_update_necessary_message" = "Encontramos algo que foi necessário corrigir para que a experiência de comprar no Jumia seja ainda melhor! Para continuar a usar a aplicação, deverá atualizá-la.";
+
+"string_update_available_title" = "Atualização disponível";
+
+"string_update_available_message" = "Há uma nova atualização disponível para que a experiência de comprar no Jumia seja ainda melhor! Faça já a atualização!";
+
+"string_update" = "Atualize!";
+
+"string_ok_update" = "Ok, Atualizar!";
+
+"string_no_thanks" = "Não, obrigado.";
+
+"ok_label" = "OK";
+
+"done_label" = "Validar";
+
+"back_label" = "Voltar";
+
+"submit_label" = "Submeter";
+
+"string_error" = "Erro";
+
+"login_label" = "Iniciar Sessão";
+
+"action_label_logout" = "Sair";
+
+"home" = "Início";
+
+"categories" = "Categorias";
+
+"favourites" = "Os Meus Favoritos";
+
+"recent_searches" = "Pesquisas Recentes";
+
+"recently_viewed" = "Visto Recentemente";
+
+"my_account" = "A Minha Conta";
+
+"nav_track_order" = "Localizar a Minha Encomenda";
+
+"nav_country" = "Selecionar País";
+
+"string_filters" = "Filtros";
+
+"categories_toplevel_title" = "Todas as Categorias";
+
+"string_apply" = "Aplicar";
+
+"search_label" = "Pesquisar";
+
+"shopping_cart" = "Carrinho de Compras";
+
+"navigation_cart_empty" = "O seu carrinho está vazio";
+
 "string_vat_shipping_included" = "IVA e custos de envio incluídos";
-"string_with_discount_only" = "Apenas com desconto";
-"enter_order_id" = "Por favor insira o número da encomenda";
-"error_adding_to_wishlist" = "Erro ao adicionar aos favoritos";
-"error_add_to_cart_failed_for_x_products" = "Ocorreu um erro ao adicionar %d produtos ao carrinho";
-"error_add_to_cart_failed_for_1_product" = "Ocorreu um erro ao adicionar 1 produto ao carrinho";
-"error_removing_from_wishlist" = "Ocorreu um erro ao remover dos favoritos";
-"string_campaign_ramaining_stock" = "Stock Disponível: %d%%";
-"string_try_again" = "Tente Novamente";
-"string_no_newtork" = "Sem Ligação";
-"string_oops" = "Oops!";
-"string_something_broken" = "Algo parece estar a funcionar mal. Por favor tente novamente.";
-"string_user_data" = "Dados do Utilizador";
-"string_user_email_notifications" = "Notificações por E-mail";
-"preferences_updated" = "Preferências Atualizadas";
-"password_changed_success" = "Password alterada com sucesso.";
-"string_error_setting_payment_method" = "Ocorreu um erro na configuração do método de pagamento";
-"string_error_setting_shipping_method" = "Ocorreu um erro na configuração do método de envio";
-"show_more" = "Mais ...";
-"more" = "Mais";
-"my_orders_label" = "Encomendas";
-"my_order_history_label" = "Histórico de Encomendas";
-"my_order_number_label" = "Nr.";
-"my_order_date_label" = "Data:";
-"my_order_tracking_label" = "Localização de Encomendas";
-"my_order_quantity_label" = "Qtde.";
-"my_order_no_orders_label" = "Não efetuou nenhuma encomenda.";
-"my_order_details_label" = "Detalhes da Encomenda";
-"size_guide_label" = "Guia de Tamanhos";
-"pinch_to_zoom_label" = "Belisque para ampliar";
-"string_edit" = "Editar";
+
+"catalog_no_results" = "Não foram encontrados resultados para os filtros que selecionou. Tente escolher filtros mais comuns.";
+
+"catalog_edit_filters" = "Editar Filtros";
+
+"teaser_campaign_button_first_line" = "EM DESTQUE";
+
+"teaser_campaign_button_second_line" = "OFERTAS";
+
+"string_top_brands" = "Top de Marcas";
+
+"string_top_categories" = "Top de Categorias";
+
+"string_top_sellers" = "Top de Vendedores";
+
+"string_new" = "NOVO";
+
+"string_size" = "Tamanho";
+
 "string_rating" = "Avaliação";
-"invalid_product" = "Produto Inválido";
-"category_filter_error" = "Não foi possível filtrar a categoria";
-"my_addresses" = "As Minhas Moradas";
-"create_edit_address" = "Criar ou editar as suas moradas";
-"app_sharing" = "Partilhar Aplicação";
-"share_the_app" = "Partilhe a Aplicação";
-"can_share_app_with_friends" = "Já pode partilhar a aplicação com os seus amigos";
-"install_jumia_ios" = "Instale a App iOS do Jumia num instante";
-"share_jumia_app" = "Partilhe a App do Jumia";
-"delivery_time" = "Prazo de entrega:";
-"bamilo_not_available" = "Bamilo não está disponível de momento";
-"products_outof_stock" = "Os artigos estão fora de stock";
-"my_order_payment_reference_label" = "Referência #:";
-"my_order_payment_status_label" = "Estado:";
+
+"string_ratings" = "%d Notas";
+
+"string_review" = "1 Avaliação";
+
+"string_reviews" = "%d Avaliações";
+
+"string_quantity" = "Quantidade: %@";
+
+"products_sort_bestrated" = "Melhor Avaliação";
+
+"products_sort_popularity" = "Popularidade";
+
+"products_sort_newin" = "Novidades";
+
+"products_sort_priceup" = "Preço alto";
+
+"products_sort_pricedown" = "Preço baixo";
+
+"products_sort_name" = "Nome";
+
+"products_sort_brand" = "Marca";
+
+"all_label" = "Todos";
+
+"string_with_discount_only" = "Apenas com desconto";
+
+"favourite_no_favourites" = "Não tem artigos favoritos de momento.";
+
+"favourite_addalltocart" = "Adicionar Todos os Artigos ao Carrinho";
+
+"added_to_shop_cart_dialog_text" = "O artigo foi adicionado ao carrinho de compras";
+
+"error_add_to_cart_failed" = "Ocorreu um erro ao adicionar o artigo ao carrinho";
+
+"string_size_with_value" = "Tamanho: %@";
+
+"string_choose_size_for_all_products" = "Por favor selecione um tamanho para todos os produtos";
+
+"add_to_shopping_cart" = "Adicionar ao Carrinho";
+
+"string_variations" = "Variações";
+
+"string_rate_now" = "Avaliar Agora";
+
+"related_items" = "Artigos Relacionados";
+
+"product_features_title" = "Características do Produto";
+
+"product_description_title" = "Descrição do Produto";
+
+"share_subject" = "Partilha do Jumia";
+
+"share_checkout_this_product" = "Veja este produto que encontrámos!";
+
+"rating_question" = "Experimentou este produto? Avalie-o agora!";
+
+"writereview_send" = "Enviar Avaliação";
+
+"submit_title" = "Avaliação enviada";
+
+"write_comment" = "Escreva uma Avaliação";
+
+"string_posted_by" = "Publicado por %@, %@";
+
+"string_posted_by_anonymous" = "Publicado por Utilizador Anónimo,%@";
+
+"string_price" = "Preço";
+
+"string_appearance" = "Aparência";
+
+"rating_quality" = "Qualidade";
+
+"cart_label" = "Carrinho";
+
+"wishlist_notiems" = "Não tem artigos no carrinho";
+
+"continue_shopping" = "Continuar a Comprar";
+
+"my_order_coupon_label" = "Cupão";
+
+"voucher_use" = "Utilizar";
+
+"voucher_remove" = "Remover";
+
+"voucher_message_hint" = "Insira o código do seu cupão aqui";
+
+"call_to_order" = "Ligar";
+
+"string_article" = "1 artigo";
+
+"string_articles" = "%d artigos";
+
+"error_add_to_shopping_cart_quantity" = "Pedimos desculpa mas não é permitido encomendar mais artigos do que a quantidade disponível.";
+
+"shipping" = "Entrega";
+
+"free_label" = "Gratuito";
+
+"extra_costs_label" = "Custos Extra";
+
+"my_order_voucher_label" = "Vale de Desconto";
+
+"my_order_total_label" = "Total";
+
+"checkout_button_text" = "Finalizar Encomenda";
+
+"sub_total_title" = "Subtotal";
+
+"vat_string" = "IVA";
+
+"signup_label" = "Registar";
+
+"facebook_signup_button_text" = "Registar com o Facebook";
+
+"facebook_login_button_text" = "Entrar com o Facebook";
+
+"or_text" = "OU";
+
+"fgt_pass" = "Esqueceu a Password?";
+
+"forgotten_password" = "Por favor insira o seu endereço de email.";
+
+"forgotten_password_sub_text" = "Vamos enviar-lhe um link para alterar a password.";
+
+"forgotten_password_successtext" = "Mensagem enviada";
+
+"checkout_label" = "Checkout";
+
+"checkout_header_step_1" = "1. Sobre";
+
+"next_button" = "Próximo";
+
+"login_sectiontitle" = "Dados de Acesso";
+
+"register_title" = "Criar Conta";
+
+"register_sectiontitle" = "Dados da Conta";
+
+"registration_text" = "Registar";
+
+"checkout_header_step_2" = "2. Morada";
+
+"action_label_add_address" = "Adicionar Morada";
+
+"billing_same_label" = "Faturar na mesma morada";
+
+"billing_shipping_label" = "Morada de Entrega";
+
+"billing_billing_label" = "Morada de Faturação";
+
+"billing_def_shipping_label" = "Morada de Faturação Principal";
+
+"billing_others_label" = "Outras Moradas";
+
+"setting_address_error" = "Erro na configuração de uma morada de faturação/entrega";
+
+"cancel_label" = "Cancelar";
+
+"save_changes_label" = "Guardar Alterações";
+
+"edit_address" = "Editar Morada";
+
+"validation_errortext" = "Ocorreram erros nos dados submetidos, por favor verifique os campos preenchidos.";
+
+"checkout_header_step_3" = "3. Entrega";
+
+"string_city" = "Cidade:";
+
+"string_address" = "Morada:";
+
+"string_opening_hours" = "Horário de Funcionamento:";
+
+"string_please_select" = "Por Favor Selecione";
+
+"order_summary_shipping_fee_label" = "Taxa de Entrega:";
+
+"checkout_header_step_4" = "4. Pagamento";
+
+"payment" = "Pagamento";
+
+"creation_date" = "Data de Criação:";
+
+"payment_method" = "Método de Pagamento:";
+
+"order_track_products" = "Produtos:";
+
+"string_error_no_results_for_tracking_id" = "Não foram encontrados resultados para o número da encomenda especificado.\nPor favor verifique e tente novamente.";
+
+"track_your_order" = "Localize a Sua Encomenda";
+
+"track_order" = "Localizar Encomenda";
+
+"track_order_hint" = "Número da Encomenda";
+
+"string_order_status" = "Estado da Encomenda";
+
+"string_loosing_order_title" = "Aviso";
+
+"string_loosing_order_message" = "Se terminar o processo de check-out, a sua encomenda será anulada.";
+
+"recentsearch_no_searches" = "Não Existem Pesquisas Recentes";
+
+"recentsearch_clear_searches" = "Limpar Pesquisas Recentes";
+
+"recentlyview_no_searches" = "Nenhum Produto Recentemente Visto";
+
+"recentlyview_clear_viewed" = "Limpar Produtos Vistos Recentemente";
+
+"string_user_data" = "Dados do Utilizador";
+
+"string_user_email_notifications" = "Notificações por E-mail";
+
+"section_title_account" = "Configurações da Conta";
+
+"option2_description" = "Alterar Password, gerir email";
+
+"myaccount_email_notifications" = "Notificações por Email";
+
+"option3_description" = "Subscrever ou Cancelar Subscrição";
+
+"section_title_notification" = "Configurações de Notificação";
+
+"notifications" = "Notificações";
+
+"notifications_summary" = "Receba ofertas exclusivas e atualizações pessoais";
+
+"sound" = "Som";
+
+"sound_summary" = "Toca sons para notificações";
+
+"personal_data_label" = "Os Seus Dados Pessoais";
+
+"new_password_label" = "Nova Password";
+
+"password_changed_success" = "Password alterada com sucesso.";
+
+"preferences_updated" = "Preferências Atualizadas";
+
+"thank_you_order_title" = "Obrigado!";
+
+"order_success" = "A sua encomenda foi registada com sucesso\n com o número:";
+
+"order_track_success" = "Pode acompanhar a sua encomenda ao clicar \nem estado da encomenda, nesta aplicação";
+
+"order_track_link" = "estado da encomenda";
+
+"my_order_label" = "A Minha Encomenda";
+
+"my_order_payment" = "Opções de Pagamento";
+
+"enter_order_id" = "Por favor insira o número da encomenda";
+
+"products_added_favourite" = "Artigo adicionado aos Meus Favoritos";
+
+"error_adding_to_wishlist" = "Erro ao adicionar aos favoritos";
+
+"products_removed_favourite" = "Artigo removido dos Meus Favoritos";
+
+"error_removing_from_wishlist" = "Ocorreu um erro ao remover dos favoritos";
+
+"error_add_to_cart_failed_for_x_products" = "Ocorreu um erro ao adicionar %d produtos ao carrinho";
+
+"error_add_to_cart_failed_for_1_product" = "Ocorreu um erro ao adicionar 1 produto ao carrinho";
+
+"save_label" = "Guardar";
+
+"string_campaign_ramaining_stock" = "Stock Disponível: %d%%";
+
+"campaign_save" = "Está a Poupar";
+
+"campaing_offer_ended" = "A Promoção Terminou!";
+
+"campaing_timer_end" = "Termina em:";
+
+"string_format_off_label" = "-%d%%";
+
+"campaigns_label" = "Campanhas";
+
+"product_specifications" = "Especificações";
+
+"go_shop_text" = "Comprar Já";
+
+"promotion_tip_tap_text" = "Toque na caixa acima para copiar o código para a área de transferência e guardá-lo para o check-out";
+
+"string_try_again" = "Tente Novamente";
+
+"error_no_connection" = "Sem ligação";
+
+"string_no_newtork" = "Sem Ligação";
+
 "internet_no_connection_details_label" = "Ocorreu um erro de ligação, por favor tente novamente.";
-"try_again_retry" = "Tente Novamente";
-"internet_no_connection" = "Ocorreu um erro de ligação, por favor tente novamente.";
+
+"string_oops" = "Oops!";
+
+"string_something_broken" = "Algo parece estar a funcionar mal. Por favor tente novamente.";
+
+"form_data_not_transferred" = "Houve erros nos dados submetidos, por favor verifique os campos.";
+
+"my_order_confirm_button" = "Confirmar Encomenda";
+
+"string_error_setting_payment_method" = "Ocorreu um erro na configuração do método de pagamento";
+
+"string_error_setting_shipping_method" = "Ocorreu um erro na configuração do método de envio";
+
+"fallback_maintenance" = "MANUTENÇÃO";
+
+"fallback_maintenance_text" = "está atualmente em manutenção.";
+
+"fallback_maintenance_text_bottom" = "Tentaremos ser breves, por favor volte mais tarde";
+
+"fallback_best" = "A melhor experiência em compras online";
+
+"fallback_choice" = "A MAIS AMPLA GAMA";
+
+"fallback_doorstep" = "À SUA PORTA";
+
+"got_it" = "Compreendi";
+
+"home_tip_text" = "Deslize para a esquerda ou para a direita para mudar a categoria";
+
+"products_tip_swipe_text" = "Deslize para a esquerda ou direita para alterar o tipo de ordenação";
+
+"tip_favourite_text" = "Clique para adicionar este produto aos favoritos e ver a lista completa no seu perfil";
+
+"tip_share_text" = "Clique para partilhar este produto";
+
+"tip_swipe_text" = "Deslize para a esquerda ou para a direita para\nver imagens diferentes";
+
+"tip_tap_text" = "Toque para abrir a galeria de imagens do produto";
+
+"pinch_to_zoom_label" = "Belisque para ampliar";
+
+"fallback_audio_ios" = "Áudio & Vídeo";
+
+"fallback_books" = "Livros";
+
+"fallback_bottom_text" = "de qualquer lugar, a qualquer hora";
+
+"fallback_bottom_text2" = "E muito mais para navegar ou comprar";
+
+"fallback_fashion" = "Moda";
+
+"fallback_health_ios" = "Saúde & Beleza";
+
+"fallback_home_office_ios" = "Casa & Escritório";
+
+"fallback_mobile" = "Telemóveis";
+
+"fallback_welcome" = "BEM VINDOS A";
+
+"reviews" = "Avaliações";
+
+"more" = "Mais";
+
+"reviews_empty" = "Este Produto ainda não tem avaliações!";
+
+"order_summary_label" = "Resumo da Encomenda";
+
+"string_edit" = "Editar";
+
+"track_your_order_tip" = "Procure pelo número da sua encomenda e todos os dados da encomenda serão exibidos aqui";
+
+"size_guide_label" = "Guia de Tamanhos";
+
+"my_addresses" = "As Minhas Moradas";
+
+"create_edit_address" = "Criar ou editar as suas moradas";
+
+"app_sharing" = "Partilhar Aplicação";
+
+"share_the_app" = "Partilhe a Aplicação";
+
+"can_share_app_with_friends" = "Já pode partilhar a aplicação com os seus amigos";
+
+"install_jumia_ios" = "Instale a App iOS do Jumia num instante";
+
+"share_jumia_app" = "Partilhe a App do Jumia";
+
+"delivery_time" = "Prazo de entrega:";
+
+"product_outof_stock" = "O artigo está esgotado";
+
+"products_outof_stock" = "Os artigos estão fora de stock";
+
+"login_remember_user_email" = "Lembrar o meu email";
+
+"my_orders_label" = "Encomendas";
+
+"my_order_history_label" = "Histórico de Encomendas";
+
+"my_order_tracking_label" = "Localização de Encomendas";
+
+"my_order_details_label" = "Detalhes da Encomenda";
+
+"my_order_number_label" = "Nr.";
+
+"my_order_date_label" = "Data:";
+
+"my_order_payment_reference_label" = "Referência #:";
+
+"my_order_payment_status_label" = "Estado:";
+
+"my_order_quantity_label" = "Qtde.";
+
+"my_order_no_orders_label" = "Não efetuou nenhuma encomenda.";
+
 "like_us_on_facebook" = "Curta a nossa página no Facebook";
+
 "bundle_title" = "Produtos frequentemente comprados juntos";
+
 "bundle_total_price" = "Valor Total";
-"pickup_station_address" = "Morada:";
-"pickup_station_city" = "Cidade:";
-"pickup_station_opening_hours" = "Horário de Funcionamento:";
-"added_bundle_to_shop_cart_dialog_text" = "Os artigos foram adicionados ao carrinho de compras";
-"product_delivery_time" = "Entrega em:";
-"product_delivery_days" = "dias";
+
+"buy_now" = "Comprar Já";
+
 "other_sellers" = "Outros Vendedores";
+
 "same_product_from_other_sellers" = "Mesmo produto de outros vendedores";
+
 "from" = "A partir de";
-"shipping_time" = "Prazo de entrega:";
-"shipping_fee" = "Taxa de entrega:";
-"rating_option_error_message" = "Todas as opções de avaliação devem ser preenchidas";
+
+"product_delivery_time" = "Entrega em:";
+
+"product_delivery_days" = "dias";
+
 "number_offers_from_ios" = "%@ Ofertas de";
 
 "write_full_review" = "Escrever uma avaliação completa";
+
 "product_sold_by" = "Vendido por:";
+
+"sort_by" = "Ordena por";
+
+"fee_include" = "(%@ incl.)";
+
+"login_to_review" = "Por favor faz login para avaliar";
+
+"login_to_rate" = "Por favor faz login para classificar";
+
 "my_order_item_label" = "artigo";
+
 "my_order_items_label" = "artigos";
-"review_this_seller" = "Avalie este vendedor agora!";
+
+"string_more_choices" = "Mais Escolhas";
+
+"string_addresses_saved_as_default" = "Endereços guardados por omissão";
+
+"review_this_seller" = "Avalia este vendedor agora!";
+
+"string_wizard_back_top" = "Pressiona a barra para subir";
