@@ -12,12 +12,6 @@
 #import "RICategory.h"
 #import "JAPDVImageSection.h"
 
-@protocol JAPDVViewControllerDelegate <NSObject>
-
-- (void)changedFavoriteStateOfProduct:(RIProduct*)product;
-
-@end
-
 @interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate>
 
 @property (strong, nonatomic) RIProduct *product;
@@ -28,7 +22,6 @@
 @property (strong, nonatomic) NSString *previousCategory;
 @property (strong, nonatomic) NSString *preSelectedSize;
 @property (assign, nonatomic) BOOL showBackButton;
-@property (nonatomic, assign) id<JAPDVViewControllerDelegate>delegate;
 
 @property (nonatomic, retain) NSString* A4SViewControllerAlias;
 

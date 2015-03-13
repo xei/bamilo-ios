@@ -175,7 +175,6 @@
     
     if(VALID_NOTEMPTY(self.campaignId, NSString))
     {
-        [optionList addObject:@""];
         [self createCampaignPageAtX:currentX];
     }
     else if (VALID_NOTEMPTY(self.campaignTeasers, NSArray))
@@ -190,6 +189,8 @@
                 RITeaserText* teaserText = [teaser.teaserTexts firstObject];
                 if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
                     [optionList addObject:teaserText.name];
+                    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Campaign"];
+                    [[RITrackingWrapper sharedInstance]trackScreenWithName:teaserText.name];
                     
                     if ([teaserText.name isEqualToString:self.startingTitle]) {
                         startingIndex = i;
@@ -212,6 +213,9 @@
         [self.pickerScrollView setOptions:optionList];
         self.pickerNamesAlreadySet = YES;
         self.pickerScrollView.startingIndex = startingIndex;
+    }
+    else if (VALID_NOTEMPTY(self.campaignUrl, NSString)) {
+        [self createCampaignPageAtX:currentX];
     }
     
     self.isLoaded = YES;
@@ -255,6 +259,8 @@
                         [self loadPage:campaignPageView withCampaignUrl:teaserImage.url];
                     }
                 }
+            } else if (VALID_NOTEMPTY(self.campaignUrl, NSString)) {
+                [self loadPage:campaignPageView withCampaignUrl:self.campaignUrl];
             }
         }
     }
@@ -269,6 +275,9 @@
     }
     self.apiResponse = RIApiResponseSuccess;
     [RICampaign getCampaignWithUrl:campaignUrl successBlock:^(RICampaign *campaign) {
+        if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
+            [self.pickerScrollView setOptions:[NSArray arrayWithObject:campaign.name]];
+        }
         [self removeErrorView];
         [campaignPage loadWithCampaign:campaign];
         [self hideLoading];

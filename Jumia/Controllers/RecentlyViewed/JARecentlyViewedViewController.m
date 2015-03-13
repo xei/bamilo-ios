@@ -124,9 +124,18 @@
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0f];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"RecentlyViewed"];
+}
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [self.picker removeFromSuperview];
     
     [self changeViewToInterfaceOrientation:toInterfaceOrientation];
 }
@@ -272,6 +281,7 @@
                                                                       @"previousCategory" : STRING_RECENTLY_VIEWED,
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO],
                                                                       @"fromCatalog" : [NSNumber numberWithBool:YES]}];
+        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"Catalog_%@",product.name]];
     }
 }
 
@@ -407,7 +417,13 @@
                       
                       [self hideLoading];
                       
-                      NSString *errorAddToCart = STRING_ERROR_ADDING_TO_CART;
+                       NSString *errorAddToCart = STRING_ERROR_ADDING_TO_CART;
+                      NSString *results = [[errorMessages valueForKey:@"description"] componentsJoinedByString:@""];
+                      if([results  isEqualToString: @"order_product_sold_out"]){
+                          
+                          errorAddToCart = STRING_PRODCUTS_OUT_OF_STOCK;
+                      }
+                      
                       if (RIApiResponseNoInternetConnection == apiResponse)
                       {
                           errorAddToCart = STRING_NO_CONNECTION;

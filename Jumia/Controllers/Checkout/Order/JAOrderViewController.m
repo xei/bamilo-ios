@@ -83,6 +83,13 @@
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckOrderSummary"];
+}
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self showLoading];
@@ -312,11 +319,15 @@
                                      articlesLabel.frame.size.height);
     [subtotalContentView addSubview:articlesLabel];
     
+    CGRect articleNumberWidth = [articlesLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
+                                                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                                                   attributes:@{NSFontAttributeName:articlesLabel.font} context:nil];
+    
     UILabel* totalLabel = [UILabel new];
     totalLabel.textAlignment = NSTextAlignmentRight;
     totalLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     totalLabel.textColor = UIColorFromRGB(0x666666);
-    totalLabel.text = self.checkout.cart.cartCleanValueFormatted;
+    totalLabel.text = self.checkout.cart.subTotalFormatted;
     [totalLabel sizeToFit];
     totalLabel.frame = CGRectMake(CGRectGetMaxX(articlesLabel.frame),
                                   articlesLabel.frame.origin.y,
@@ -344,6 +355,20 @@
             }
         }
     }
+    
+    UILabel* vatLabel = [UILabel new];
+    vatLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    vatLabel.textColor = UIColorFromRGB(0x666666);
+    vatLabel.text = [NSString stringWithFormat:STRING_TAX_INC, STRING_VAT];
+    [vatLabel sizeToFit];
+    vatLabel.frame = CGRectMake(articleNumberWidth.size.width+ 10.0f,
+                                articlesLabel.frame.origin.y,
+                                articlesLabel.frame.size.width,
+                                vatLabel.frame.size.height);
+    
+    CGFloat shippingYPos = CGRectGetMaxY(vatLabel.frame);
+    
+    [subtotalContentView addSubview:vatLabel];
     
     CGFloat vatPositionY = CGRectGetMaxY(articlesLabel.frame);
     if(VALID_NOTEMPTY(priceRuleKeysString, NSString) && VALID_NOTEMPTY(priceRuleValuesString, NSString))
@@ -378,31 +403,10 @@
         
         [subtotalContentView addSubview:priceRulesValue];
         
+        shippingYPos = CGRectGetMaxY(articlesLabel.frame) + articlesLabel.frame.size.height;
         vatPositionY = CGRectGetMaxY(priceRulesLabel.frame);
     }
     
-    UILabel* vatLabel = [UILabel new];
-    vatLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
-    vatLabel.textColor = UIColorFromRGB(0x666666);
-    vatLabel.text = STRING_VAT;
-    [vatLabel sizeToFit];
-    vatLabel.frame = CGRectMake(articlesLabel.frame.origin.x,
-                                vatPositionY,
-                                articlesLabel.frame.size.width,
-                                vatLabel.frame.size.height);
-    [subtotalContentView addSubview:vatLabel];
-    
-    UILabel* vatValueLabel = [UILabel new];
-    vatValueLabel.textAlignment = NSTextAlignmentRight;
-    vatValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
-    vatValueLabel.textColor = UIColorFromRGB(0x666666);
-    vatValueLabel.text = self.checkout.cart.vatValueFormatted;
-    [vatValueLabel sizeToFit];
-    vatValueLabel.frame = CGRectMake(CGRectGetMaxX(vatLabel.frame),
-                                     vatLabel.frame.origin.y,
-                                     totalLabel.frame.size.width,
-                                     vatValueLabel.frame.size.height);
-    [subtotalContentView addSubview:vatValueLabel];
     
     UILabel* shippingLabel = [UILabel new];
     shippingLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
@@ -410,7 +414,7 @@
     shippingLabel.text = STRING_SHIPPING;
     [shippingLabel sizeToFit];
     shippingLabel.frame = CGRectMake(articlesLabel.frame.origin.x,
-                                     CGRectGetMaxY(vatLabel.frame),
+                                     shippingYPos,
                                      articlesLabel.frame.size.width,
                                      vatLabel.frame.size.height);
     [subtotalContentView addSubview:shippingLabel];

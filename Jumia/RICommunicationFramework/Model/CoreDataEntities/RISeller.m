@@ -12,6 +12,7 @@
 
 @implementation RISeller
 
+@dynamic uid;
 @dynamic name;
 @dynamic url;
 @dynamic minDeliveryTime;
@@ -25,6 +26,9 @@
 {
     RISeller* newSeller = (RISeller*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISeller class])];
     
+    if ([sellerJSON objectForKey:@"id"]) {
+        newSeller.uid = [sellerJSON objectForKey:@"id"];
+    }
     if ([sellerJSON objectForKey:@"name"]) {
         newSeller.name = [sellerJSON objectForKey:@"name"];
     }

@@ -1,17 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "btn_gridview.png"
+      "filename" : "View_Pressed.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "btn_gridview@2x.png"
+      "filename" : "View_Pressed@2x.png"
     },
     {
       "idiom" : "universal",

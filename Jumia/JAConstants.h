@@ -32,6 +32,7 @@
 
 //************ center navigation controller notifications
 #define kCloseCurrentScreenNotification @"NOTIFICATION_CLOSE_CURRENT_SCREEN"
+#define kCloseTopTwoScreensNotification @"NOTIFICATION_CLOSE_TOP_TWO_SCREENS"
 #define kMenuDidSelectOptionNotification @"NOTIFICATION_SELECTED_ITEM_MENU"
 #define kOpenCatalogFromUndefinedSearch @"NOTIFICATION_OPEN_CATALOG_FROM_UNDEF_SEARCH"
 #define kMenuDidSelectLeafCategoryNotification @"NOTIFICATION_SELECTED_LEAF_CATEGORY"
@@ -39,6 +40,8 @@
 #define kOpenCartNotification @"NOTIFICATION_OPEN_CART"
 #define kOpenOtherOffers @"NOTIFICATION_OPEN_OTHER_OFFERS"
 #define kOpenSellerReviews @"NOTIFICATION_OPEN_SELLER_REVIEWS"
+#define kOpenNewSellerReview @"NOTIFICATION_OPEN_NEW_SELLER_REVIEW"
+#define kOpenSellerPage @"NOTIFICATION_OPEN_SELLER_PAGE"
 
 //************ side menu navigation controller notifications
 #define kShowChooseCountryScreenNotification @"NOTIFICATION_CHOOSE_COUNTRY_SCREEN"
@@ -77,10 +80,12 @@
 #define kShowRatingsScreenNotification @"NOTIFICATION_SHOW_RATINGS_SCREEN"
 #define kShowNewRatingScreenNotification @"NOTIFICATION_SHOW_NEW_RATING_SCREEN"
 #define kShowSizeGuideNotification @"NOTIFICATION_SHOW_SIZE_GUIDE"
+#define kProductChangedNotification @"NOTIFICATION_PRODUCT_CHANGED"
 
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"
 #define kDidSelectTeaserWithPDVUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_PDV_URL"
+#define kDidSelectTeaserWithShopUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_SHOP_URL"
 #define kDidSelectCampaignNofication @"NOTIFICATION_DID_SELECT_CAMPAING"
 #define kDidSelectTeaserWithAllCategoriesNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_ALL_CATEGORIES"
 #define kDidSelectCategoryFromCenterPanelNotification @"NOTIFICATION_SELECTED_CATEGORY_FROM_CENTER_PANEL"
@@ -93,6 +98,7 @@
 #define kDidPressDoneNotification @"DID_PRESS_DONE_NOTIFICATION"
 #define kDidPressEditNotification @"DID_PRESS_EDIT_NOTIFICATION"
 #define kDidPressSearchButtonNotification @"DID_PRESS_SEARCH_BUTTON_NOTIFICATION"
+#define kDidPressNavBar @"DID_PRESS_NAV_BAR"
 
 
 // Ad4Push Notifications

@@ -18,7 +18,7 @@ NSString * const kRIBugsenseAPIKey = @"RIBugsenseAPIKey";
 
 - (id)init
 {
-    NSLog(@"Initializing BugSense tracker");
+    RIDebugLog(@"Initializing BugSense tracker");
     
     if ((self = [super init])) {
         self.queue = [[NSOperationQueue alloc] init];

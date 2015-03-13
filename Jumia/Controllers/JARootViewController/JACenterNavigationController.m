@@ -39,6 +39,7 @@
 #import "JAExternalPaymentsViewController.h"
 #import "JAThanksViewController.h"
 #import "RIProduct.h"
+#import "RISeller.h"
 #import "JANavigationBarLayout.h"
 #import "RICustomer.h"
 #import "JAUserDataViewController.h"
@@ -55,6 +56,8 @@
 #import "JASizeGuideViewController.h"
 #import "JAOtherOffersViewController.h"
 #import "JASellerRatingsViewController.h"
+#import "JANewSellerRatingViewController.h"
+#import "JAShopWebViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -248,6 +251,11 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectTeaserWithShopUrl:)
+                                                 name:kDidSelectTeaserWithShopUrlNofication
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectTeaserWithAllCategories:)
                                                  name:kDidSelectTeaserWithAllCategoriesNofication
                                                object:nil];
@@ -260,6 +268,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(closeCurrentScreenNotificaion:)
                                                  name:kCloseCurrentScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(closeTopTwoScreensNotificaion:)
+                                                 name:kCloseTopTwoScreensNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -320,6 +333,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showSellerReviews:)
                                                  name:kOpenSellerReviews
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showNewSellerReview:)
+                                                 name:kOpenNewSellerReview
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSellerCatalog:)
+                                                 name:kOpenSellerPage
                                                object:nil];
 }
 
@@ -943,7 +966,6 @@
     RICategory* category = [selectedItem objectForKey:@"category"];
     NSString* categoryId = [selectedItem objectForKey:@"category_id"];
     NSString* categoryName = [selectedItem objectForKey:@"category_name"];
-    NSNumber* sorting = [notification.userInfo objectForKey:@"sorting"];
     NSString* filterType = [notification.userInfo objectForKey:@"filter_type"];
     NSString* filterValue = [notification.userInfo objectForKey:@"filter_value"];
     
@@ -972,7 +994,6 @@
         JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
         catalog.categoryName = categoryName;
-        catalog.sorting = sorting;
         catalog.filterType = filterType;
         catalog.filterValue = filterValue;
         
@@ -1095,15 +1116,6 @@
             ratingsViewController.productRatings = [notification.userInfo objectForKey:@"productRatings"];
         }
         
-        if ([notification.userInfo objectForKey:@"goToNewRatingButtonPressed"]) {
-            ratingsViewController.goToNewRatingButtonPressed = [[notification.userInfo objectForKey:@"goToNewRatingButtonPressed"] boolValue];
-        }
-        
-        if([notification.userInfo objectForKey:@"popLastViewController"] && [[notification.userInfo objectForKey:@"popLastViewController"] boolValue])
-        {
-            [self popViewControllerAnimated:NO];
-        }
-        
         BOOL animated = YES;
         if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
         {
@@ -1127,15 +1139,6 @@
         
         if ([notification.userInfo objectForKey:@"productRatings"]) {
             newRatingViewController.productRatings = [notification.userInfo objectForKey:@"productRatings"];
-        }
-        
-        if ([notification.userInfo objectForKey:@"goToNewRatingButtonPressed"]) {
-            newRatingViewController.goToNewRatingButtonPressed = [[notification.userInfo objectForKey:@"goToNewRatingButtonPressed"] boolValue];
-        }
-        
-        if([notification.userInfo objectForKey:@"popLastViewController"] && [[notification.userInfo objectForKey:@"popLastViewController"] boolValue])
-        {
-            [self popViewControllerAnimated:NO];
         }
         
         BOOL animated = YES;
@@ -1196,6 +1199,48 @@
     }
 }
 
+- (void)showNewSellerReview:(NSNotification*)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JANewRatingViewController class]])
+    {
+        JANewSellerRatingViewController* newSellerRatingViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"newSellerRatingViewController"];
+        
+        if ([notification.userInfo objectForKey:@"product"]) {
+            newSellerRatingViewController.product = [notification.userInfo objectForKey:@"product"];
+        }
+        
+        if([notification.userInfo objectForKey:@"sellerAverageReviews"])
+        {
+            newSellerRatingViewController.sellerAverageReviews = [notification.userInfo objectForKey:@"sellerAverageReviews"];
+        }
+        
+        BOOL animated = YES;
+        if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
+        {
+            animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
+        }
+        
+        [self pushViewController:newSellerRatingViewController animated:animated];
+    }
+}
+
+-(void)showSellerCatalog: (NSNotification *)notification
+{
+    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* title = [notification.userInfo objectForKey:@"name"];
+    
+    if(VALID_NOTEMPTY(url, NSString))
+    {
+        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        catalog.catalogUrl = url;
+        catalog.navBarLayout.title = title;
+        catalog.navBarLayout.showBackButton = YES;
+        
+        [self pushViewController:catalog animated:YES];
+    }
+}
+
 #pragma mark - Teaser Actions
 - (void)didSelectTeaserWithCatalogUrl:(NSNotification*)notification
 {
@@ -1211,7 +1256,12 @@
         
         catalog.catalogUrl = url;
         catalog.navBarLayout.title = title;
-        catalog.navBarLayout.backButtonTitle = STRING_HOME;
+        
+        if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
+            catalog.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
+        } else {
+            catalog.navBarLayout.backButtonTitle = STRING_HOME;
+        }
         
         [self pushViewController:catalog animated:YES];
     }
@@ -1225,6 +1275,7 @@
     NSArray* campaignTeasers = [notification.userInfo objectForKey:@"campaignTeasers"];
     NSString* title = [notification.userInfo objectForKey:@"title"];
     NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
+    NSString* campaignUrl = [notification.userInfo objectForKey:@"campaign_url"];
     
     if (VALID_NOTEMPTY(campaignTeasers, NSArray))
     {
@@ -1240,6 +1291,12 @@
         JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
         
         campaignsVC.campaignId = campaignId;
+        
+        [self pushViewController:campaignsVC animated:YES];
+    } else if (VALID_NOTEMPTY(campaignUrl, NSString)) {
+        JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
+        
+        campaignsVC.campaignUrl = campaignUrl;
         
         [self pushViewController:campaignsVC animated:YES];
     }
@@ -1268,10 +1325,6 @@
             pdv.fromCatalogue = NO;
         }
         
-        if ([notification.userInfo objectForKey:@"delegate"]) {
-            pdv.delegate = [notification.userInfo objectForKey:@"delegate"];
-        }
-        
         if ([notification.userInfo objectForKey:@"previousCategory"])
         {
             NSString *previous = [notification.userInfo objectForKey:@"previousCategory"];
@@ -1279,10 +1332,6 @@
             if (previous.length > 0) {
                 pdv.previousCategory = previous;
             }
-        }
-        else
-        {
-            pdv.previousCategory = STRING_HOME;
         }
         
         if ([notification.userInfo objectForKey:@"category"])
@@ -1309,6 +1358,38 @@
         
         [self pushViewController:pdv animated:YES];
     }
+}
+
+- (void)didSelectTeaserWithShopUrl:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                        object:nil];
+    
+    NSString* url = [notification.userInfo objectForKey:@"url"];
+
+    if (VALID_NOTEMPTY(url, NSString))
+    {
+        
+        JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
+        
+        if([notification.userInfo objectForKey:@"show_back_button"])
+        {
+            viewController.navBarLayout.backButtonTitle = STRING_HOME;
+        }
+        
+        if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
+            viewController.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
+        }
+        
+        if([notification.userInfo objectForKey:@"title"])
+        {
+            viewController.navBarLayout.title = [notification.userInfo objectForKey:@"title"];
+        }
+        
+        [self pushViewController:viewController animated:YES];
+
+    }
+
 }
 
 - (void)didSelectTeaserWithAllCategories:(NSNotification*)notification
@@ -1368,6 +1449,21 @@
     [self popViewControllerAnimated:animated];
 }
 
+- (void) closeTopTwoScreensNotificaion:(NSNotification*)notification
+{
+    NSInteger thirdToLastIndex = self.viewControllers.count-3;
+    if (0 <= thirdToLastIndex) {
+        UIViewController* thirdToLastViewController = [self.viewControllers objectAtIndex:thirdToLastIndex];
+        
+        BOOL animated = YES;
+        if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber))
+        {
+            animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
+        }
+        [self popToViewController:thirdToLastViewController animated:YES];
+    }
+}
+
 #pragma mark - Recent Search
 
 - (void)didSelectRecentSearch:(NSNotification*)notification
@@ -1414,6 +1510,11 @@
     [self.navigationBarView.searchButton addTarget:self
                                             action:@selector(search)
                                   forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationBarView.titleLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *touched = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goTop)];
+    [self.navigationBarView.titleLabel addGestureRecognizer:touched];
+    
 }
 
 - (void)changeNavigationWithNotification:(NSNotification*)notification
@@ -1479,6 +1580,11 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressBackNotification
                                                         object:nil];
     [self popViewControllerAnimated:YES];
+}
+
+-(void)goTop
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressNavBar object:nil];
 }
 
 - (void)done

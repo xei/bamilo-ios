@@ -23,6 +23,7 @@
 @property (nonatomic, assign)NSInteger startingIndex;
 @property (nonatomic, readonly)NSInteger selectedIndex;
 
+@property (nonatomic, readonly)NSArray* optionLabels;
 - (void)setOptions:(NSArray*)options;
 
 - (void)scrollLeftAnimated:(BOOL)animated;

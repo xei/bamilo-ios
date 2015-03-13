@@ -14,6 +14,7 @@
 @property (nonatomic, assign)BOOL enabled;
 @property (nonatomic, readonly)NSString* title;
 
+- (void)setImage:(UIImage*)image forState:(UIControlState)state;
 - (void)setTitle:(NSString*)title forState:(UIControlState)state;
 - (void)setTitleColor:(UIColor*)color forState:(UIControlState)state;
 - (void)setFont:(UIFont*)font;

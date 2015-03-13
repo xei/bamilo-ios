@@ -283,27 +283,7 @@ UIAlertViewDelegate
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
         
-        if(VALID_NOTEMPTY(self.productRatings, RIProductRatings) && VALID_NOTEMPTY(self.productRatings.reviews, NSArray))
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil userInfo:userInfo];
-        }
-        else
-        {
-            if(VALID_NOTEMPTY(self.product, RIProduct))
-            {
-                [userInfo setObject:self.product forKey:@"product"];
-            }
-            if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
-            {
-                [userInfo setObject:self.productRatings forKey:@"productRatings"];
-            }
-            [userInfo setObject:[NSNumber numberWithBool:self.goToNewRatingButtonPressed] forKey:@"goToNewRatingButtonPressed"];
-            
-            [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"popLastViewController"];
-            [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil userInfo:userInfo];
     }
     else
     {
@@ -548,11 +528,6 @@ UIAlertViewDelegate
 
 - (void)sendReview:(id)sender
 {
-    [self continueSendingReview];
-}
-
-- (void)continueSendingReview
-{
     [self showLoading];
     
     [self.ratingsDynamicForm resignResponder];
@@ -563,9 +538,19 @@ UIAlertViewDelegate
     if (self.isShowingRating) {
         currentForm = self.ratingsForm;
         currentDynamicForm = self.ratingsDynamicForm;
+        if ([[RICountryConfiguration getCurrentConfiguration].ratingRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
+            [self hideLoading];
+            [self showMessage:STRING_LOGIN_TO_RATE success:NO];
+            return;
+        }
     } else {
         currentForm = self.reviewsForm;
         currentDynamicForm = self.reviewsDynamicForm;
+        if ([[RICountryConfiguration getCurrentConfiguration].reviewRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
+            [self hideLoading];
+            [self showMessage:STRING_LOGIN_TO_REVIEW success:NO];
+            return;
+        }
     }
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[currentDynamicForm getValues]];
@@ -644,7 +629,7 @@ UIAlertViewDelegate
             
             [self showMessage:STRING_REVIEW_SENT success:YES];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseTopTwoScreensNotification
                                                                 object:nil
                                                               userInfo:nil];
         } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {

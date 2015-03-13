@@ -37,6 +37,8 @@
 @property (strong, nonatomic) NSNumber *sumCostsValue;
 @property (strong, nonatomic) NSNumber *sumCostsValueEuroConverted;
 @property (strong, nonatomic) NSDictionary *priceRules;
+@property (strong, nonatomic) NSNumber *subTotal;
+@property (strong, nonatomic) NSString *subTotalFormatted;
 
 /**
  *  Method to add a product to the cart

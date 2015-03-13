@@ -21,7 +21,7 @@ JADynamicFormDelegate
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UIView *notificationsView;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
-@property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property (strong, nonatomic) UIButton *saveButton;
 @property (strong, nonatomic) RIForm *form;
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
@@ -59,6 +59,13 @@ JADynamicFormDelegate
     [super viewWillAppear:animated];
     
     [self getForm];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"NewsletterSubscription"];
 }
 
 - (void)getForm
@@ -258,6 +265,15 @@ JADynamicFormDelegate
     [self.scrollView addSubview:self.saveButton];
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.saveButton.frame) + 6.0f)];
+}
+
+-(UIButton *)saveButton
+{
+    if(!_saveButton)
+    {
+        _saveButton = [[UIButton alloc] initWithFrame:CGRectZero];
+    }
+    return _saveButton;
 }
 
 -(void) removeView

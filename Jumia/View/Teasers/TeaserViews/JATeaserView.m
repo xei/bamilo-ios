@@ -25,6 +25,8 @@
     NSString* notificationName = kTeaserNotificationPushCatalogWithUrl;
     if (1 == targetType) {
         notificationName = kTeaserNotificationPushPDVWithUrl;
+    } else if (4 == targetType) {
+        notificationName = kTeaserNotificationPushShopWithUrl;
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                         object:nil

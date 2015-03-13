@@ -301,3 +301,15 @@
 
 "write_full_review" = "Write a full review";
 "product_sold_by" = "Sold by:";
+
+"sort_by" = "Sort by";
+"fee_include" = "(%@ incl.)";
+
+"login_to_review" = "Please login to review";
+"login_to_rate" = "Please login to rate";
+"my_order_item_label" = "item";
+"my_order_items_label" = "items";
+"string_more_choices" = "More Choices";
+"string_addresses_saved_as_default" = "Addresses saved as default";
+"review_this_seller" = "Review this seller now!";
+"string_wizard_back_top" = "Tap the status bar to scroll the catalog back to top";

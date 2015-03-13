@@ -13,6 +13,9 @@
 #define RISectionRequestStartedNotificationName @"SECTION_REQUEST_STARTED"
 #define RISectionRequestEndedNotificationName @"SECTION_REQUEST_ENDED"
 
+//$$$ FORCE UPDATE CAN REMOVE THIS
+#define kUserDefaultsHasDownloadedFacebookConfigs @"kHasDownloadedFBConfigs"
+
 @class RISection;
 
 @interface RIApi : NSManagedObject

@@ -250,31 +250,36 @@ FBLoginViewDelegate
     }
     
     UIImage *facebookNormalImage = [UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"normal"]];
-    [self.facebookLoginButton setFrame:CGRectMake((self.loginView.frame.size.width - facebookNormalImage.size.width) / 2,
-                                                  42.0f,
-                                                  facebookNormalImage.size.width,
-                                                  facebookNormalImage.size.height)];
-    [self.facebookLoginButton setBackgroundImage:facebookNormalImage forState:UIControlStateNormal];
-    [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]] forState:UIControlStateHighlighted];
-    [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]] forState:UIControlStateSelected];
     
-    self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginButton.frame) + 6.0f;
+    if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
+        [self.facebookLoginButton setFrame:CGRectMake((self.loginView.frame.size.width - facebookNormalImage.size.width) / 2,
+                                                      42.0f,
+                                                      facebookNormalImage.size.width,
+                                                      facebookNormalImage.size.height)];
+        [self.facebookLoginButton setBackgroundImage:facebookNormalImage forState:UIControlStateNormal];
+        [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]] forState:UIControlStateHighlighted];
+        [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]] forState:UIControlStateSelected];
+        
+        self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginButton.frame) + 6.0f;
+    }else {
+        self.loginViewCurrentY= facebookNormalImage.size.height;
+    }
     
     for(UIView *view in self.dynamicForm.formViews)
     {
         CGRect dynamicFormFieldViewFrame = view.frame;
-        dynamicFormFieldViewFrame.origin.x = self.facebookLoginButton.frame.origin.x;
+        dynamicFormFieldViewFrame.origin.x = (self.loginView.frame.size.width - facebookNormalImage.size.width) / 2;
         dynamicFormFieldViewFrame.origin.y = self.loginViewCurrentY;
-        dynamicFormFieldViewFrame.size.width = self.facebookLoginButton.frame.size.width;
+        dynamicFormFieldViewFrame.size.width = facebookNormalImage.size.width;
         ;
         view.frame = dynamicFormFieldViewFrame;
         self.loginViewCurrentY = CGRectGetMaxY(view.frame);
     }
     
     self.loginViewCurrentY += 10.0f;
-    [self.checkBoxComponent setFrame:CGRectMake(self.facebookLoginButton.frame.origin.x,
+    [self.checkBoxComponent setFrame:CGRectMake((self.loginView.frame.size.width - facebookNormalImage.size.width) / 2,
                                                 self.loginViewCurrentY,
-                                                self.facebookLoginButton.frame.size.width - 12.0f,
+                                                facebookNormalImage.size.width - 12.0f,
                                                 self.checkBoxComponent.frame.size.height)];
     [self.checkBoxComponent setHidden:NO];
     self.loginViewCurrentY += self.checkBoxComponent.frame.size.height;
@@ -325,6 +330,13 @@ FBLoginViewDelegate
     
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CustomerSignUp"];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

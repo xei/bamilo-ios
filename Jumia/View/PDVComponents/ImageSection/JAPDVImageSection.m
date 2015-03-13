@@ -249,41 +249,49 @@
                                                self.soldByLabel.frame.origin.y - yOffset, //offset
                                                finalButtonWidth,
                                                finalButtonHeight)];
-        
+        [self.sellerButton addTarget:self action:@selector(selectedButton) forControlEvents:UIControlEventTouchDown];
+        [self.sellerButton addTarget:self action:@selector(gotoCatalogSeller) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.sellerButton];
 
         
-        if (0 != [product.seller.reviewTotal integerValue]) {
-            CGFloat buttonHeight = 22.0f;
-            CGFloat buttonOffset = -(buttonHeight - self.sellerRatings.frame.size.height)/2;
-            self.rateSellerButton = [[UIButton alloc] initWithFrame:CGRectMake(self.sellerRatings.frame.origin.x,
-                                                                               self.sellerRatings.frame.origin.y + buttonOffset,
-                                                                               self.sellerRatings.frame.size.width,
-                                                                               buttonHeight)];
-            [self.rateSellerButton addTarget:self action:@selector(sellerRatingButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-            [self addSubview:self.rateSellerButton];
-        }
+        CGFloat buttonHeight = 22.0f;
+        CGFloat buttonOffset = -(buttonHeight - self.sellerRatings.frame.size.height)/2;
+        self.rateSellerButton = [[UIButton alloc] initWithFrame:CGRectMake(self.sellerRatings.frame.origin.x,
+                                                                           self.sellerRatings.frame.origin.y + buttonOffset,
+                                                                           self.sellerRatings.frame.size.width,
+                                                                           buttonHeight)];
+        [self.rateSellerButton addTarget:self action:@selector(sellerRatingButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.rateSellerButton];
         
         currentY = CGRectGetMaxY(self.sellerButton.frame);
         
-        self.sellerDeliveryLabel = [UILabel new];
-        self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
-        self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
-        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[product.seller.minDeliveryTime integerValue], (long)[product.seller.maxDeliveryTime integerValue], STRING_DAYS];
-        [self.sellerDeliveryLabel sizeToFit];
-        [self.sellerDeliveryLabel setFrame:CGRectMake(6.0f,
-                                                      currentY,
-                                                      self.sellerDeliveryLabel.frame.size.width,
-                                                      self.sellerDeliveryLabel.frame.size.height)];
-        [self addSubview:self.sellerDeliveryLabel];
-        
-        currentY += self.sellerDeliveryLabel.frame.size.height + 16.0f;
+        RIProductSimple* firstSimple = [product.productSimples firstObject];
+        if (0 != [firstSimple.minDeliveryTime integerValue] && 0 != [firstSimple.maxDeliveryTime integerValue]) {
+            self.sellerDeliveryLabel = [UILabel new];
+            self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+            self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
+            self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[firstSimple.minDeliveryTime integerValue], (long)[firstSimple.maxDeliveryTime integerValue], STRING_DAYS];
+            [self.sellerDeliveryLabel sizeToFit];
+            [self.sellerDeliveryLabel setFrame:CGRectMake(6.0f,
+                                                          currentY,
+                                                          self.sellerDeliveryLabel.frame.size.width,
+                                                          self.sellerDeliveryLabel.frame.size.height)];
+            [self addSubview:self.sellerDeliveryLabel];
+            
+            currentY += self.sellerDeliveryLabel.frame.size.height;
+        }
+        currentY += 16.0f;
     }
     
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
                               currentY)];
+}
+
+-(void)selectedButton
+{
+    [self.sellerButton setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.06f]];
 }
 
 - (void)setupForLandscape:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
@@ -374,6 +382,8 @@
                                                self.soldByLabel.frame.origin.y - yOffset, //offset
                                                finalButtonWidth,
                                                finalButtonHeight)];
+        [self.sellerButton addTarget:self action:@selector(selectedButton) forControlEvents:UIControlEventTouchDown];
+        [self.sellerButton addTarget:self action:@selector(gotoCatalogSeller) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:self.sellerButton];
         
@@ -388,18 +398,23 @@
         
         currentY = CGRectGetMaxY(self.sellerButton.frame);
         
-        self.sellerDeliveryLabel = [UILabel new];
-        self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
-        self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
-        self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[product.seller.minDeliveryTime integerValue], (long)[product.seller.maxDeliveryTime integerValue], STRING_DAYS];
-        [self.sellerDeliveryLabel sizeToFit];
-        [self.sellerDeliveryLabel setFrame:CGRectMake(6.0f,
-                                                      currentY,
-                                                      self.sellerDeliveryLabel.frame.size.width,
-                                                      self.sellerDeliveryLabel.frame.size.height)];
-        [self addSubview:self.sellerDeliveryLabel];
+        RIProductSimple* firstSimple = [product.productSimples firstObject];
+        if (0 != [firstSimple.minDeliveryTime integerValue] && 0 != [firstSimple.maxDeliveryTime integerValue]) {
+            self.sellerDeliveryLabel = [UILabel new];
+            self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+            self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
+            self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[firstSimple.minDeliveryTime integerValue], (long)[firstSimple.maxDeliveryTime integerValue], STRING_DAYS];
+            [self.sellerDeliveryLabel sizeToFit];
+            [self.sellerDeliveryLabel setFrame:CGRectMake(6.0f,
+                                                          currentY,
+                                                          self.sellerDeliveryLabel.frame.size.width,
+                                                          self.sellerDeliveryLabel.frame.size.height)];
+            [self addSubview:self.sellerDeliveryLabel];
+            
+            currentY += self.sellerDeliveryLabel.frame.size.height;
+        }
         
-        currentY += self.sellerDeliveryLabel.frame.size.height + 16.0f;
+        currentY += 16.0f;
     }
     
     
@@ -625,6 +640,26 @@
 -(void)sellerRatingButtonPressed
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerReviews object:self.product];
+}   
+
+-(void)gotoCatalogSeller
+{
+    
+    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
+    
+    if(VALID_NOTEMPTY(self.product.seller, RISeller))
+    {
+        [userInfo setObject:self.product.seller.name forKey:@"name"];
+    }
+    
+    if(VALID_NOTEMPTY(self.product.seller, RISeller))
+    {
+        [userInfo setObject:self.product.seller.url forKey:@"url"];
+    }
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerPage"];
 }
 
 @end

@@ -26,6 +26,7 @@
 @dynamic reviewIsEnabled;
 @dynamic reviewRequiresLogin;
 @dynamic languages;
+@dynamic facebookAvailable;
 
 + (RICountryConfiguration *)parseCountryConfiguration:(NSDictionary *)json
 {
@@ -67,6 +68,13 @@
         newConfig.csEmail = [json objectForKey:@"cs_email"];
     }
     
+    if([json objectForKey:@"facebook_is_available"]){
+        newConfig.facebookAvailable = [json objectForKey:@"facebook_is_available"];
+        
+        //$$$ FORCE UPDATE CAN REMOVE THIS
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserDefaultsHasDownloadedFacebookConfigs];
+    }
+    
     NSString *languageCode = @"";
     if ([json objectForKey:@"languages"]) {
         
@@ -91,7 +99,7 @@
         if (VALID_NOTEMPTY(ratingDic, NSDictionary)) {
             
             if ([ratingDic objectForKey:@"is_enable"]) {
-                newConfig.ratingIsEnabled = [NSNumber numberWithBool:YES];//[ratingDic objectForKey:@"is_enable"];
+                newConfig.ratingIsEnabled = [ratingDic objectForKey:@"is_enable"];
             }
             
             if ([ratingDic objectForKey:@"required_login"]) {
@@ -106,7 +114,7 @@
         if (VALID_NOTEMPTY(reviewDic, NSDictionary)) {
             
             if ([reviewDic objectForKey:@"is_enable"]) {
-                newConfig.reviewIsEnabled = [NSNumber numberWithBool:YES];//[reviewDic objectForKey:@"is_enable"];
+                newConfig.reviewIsEnabled = [reviewDic objectForKey:@"is_enable"];
             }
             
             if ([reviewDic objectForKey:@"required_login"]) {

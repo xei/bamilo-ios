@@ -108,6 +108,13 @@ UITextFieldDelegate>
     [self continueLoading];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CheckoutPayment"];
+}
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self showLoading];
@@ -426,6 +433,7 @@ UITextFieldDelegate>
     if(VALID_NOTEMPTY([[[self checkout] orderSummary] discountCouponCode], NSString))
     {
         [self.couponTextField setText:[[[self checkout] orderSummary] discountCouponCode]];
+        [self.couponTextField setEnabled:NO];
         [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
     }
     else
@@ -509,7 +517,8 @@ UITextFieldDelegate>
             self.cart = cart;
             
             [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
-            
+            [self.couponTextField setEnabled: YES];
+            [self.couponTextField setText:@""];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
@@ -522,7 +531,7 @@ UITextFieldDelegate>
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
             [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
-            
+            [self.couponTextField setEnabled:NO];
             [self hideLoading];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {

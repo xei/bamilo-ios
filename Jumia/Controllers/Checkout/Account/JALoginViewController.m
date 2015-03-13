@@ -228,6 +228,13 @@ FBLoginViewDelegate
     [self getForms];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutSignUp"];
+}
+
 - (void)getForms
 {
     self.loadFailed = NO; //resetting to NO, it is turned to YES if it fails
@@ -553,59 +560,63 @@ FBLoginViewDelegate
     [self.loginFormView addSubview:self.forgotButton];
     self.loginFormHeight += self.forgotButton.frame.size.height;
     
-    // Separator
     CGFloat centerWidth = 54.0f;
     CGFloat halfSeparatorWidth = (componentWidth - centerWidth) / 2;
     
-    self.facebookLoginSeparator = [[UIView alloc] initWithFrame:CGRectZero];
-    
-    self.facebookLoginSeparatorLabel = [[UILabel alloc] init];
-    [self.facebookLoginSeparatorLabel setText:STRING_OR];
-    [self.facebookLoginSeparatorLabel setTextColor:UIColorFromRGB(0xcccccc)];
-    [self.facebookLoginSeparatorLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
-    [self.facebookLoginSeparatorLabel sizeToFit];
-    
-    self.facebookLoginSeparatorLeftView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.facebookLoginSeparatorLeftView setBackgroundColor:UIColorFromRGB(0xcccccc)];
-    
-    
-    [self.facebookLoginSeparatorLeftView setFrame:CGRectMake(0.0f, (self.facebookLoginSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
-    
-    [self.facebookLoginSeparatorLabel setFrame:CGRectMake(CGRectGetMaxX(self.facebookLoginSeparatorLeftView.frame) + 15.0f, 0.0f, self.facebookLoginSeparatorLabel.frame.size.width, self.facebookLoginSeparatorLabel.frame.size.height)];
-    
-    self.facebookLoginSeparatorRightView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.facebookLoginSeparatorRightView setBackgroundColor:UIColorFromRGB(0xcccccc)];
-    [self.facebookLoginSeparatorRightView setFrame:CGRectMake(halfSeparatorWidth + centerWidth, (self.facebookLoginSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
-    
-    [self.facebookLoginSeparator addSubview:self.facebookLoginSeparatorLeftView];
-    [self.facebookLoginSeparator addSubview:self.facebookLoginSeparatorLabel];
-    [self.facebookLoginSeparator addSubview:self.facebookLoginSeparatorRightView];
-    
-    [self.facebookLoginSeparator setFrame:CGRectMake(6.0f, self.loginFormHeight, componentWidth, self.facebookLoginSeparatorLabel.frame.size.height)];
-    [self.loginFormView addSubview:self.facebookLoginSeparator];
-    self.loginFormHeight += self.facebookLoginSeparator.frame.size.height;
-    
-    self.loginFormHeight += 11.0f;
-    // Facebook Login
-    self.facebookLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.facebookLoginButton setFrame:CGRectMake(6.0f, self.loginFormHeight, componentWidth, 44.0f)];
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-        [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_normal"] forState:UIControlStateNormal];
-        [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_highlighted"] forState:UIControlStateHighlighted];
-        [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_highlighted"] forState:UIControlStateSelected];
-    } else {
-        [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_normal"] forState:UIControlStateNormal];
-        [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_highlighted"] forState:UIControlStateHighlighted];
-        [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_highlighted"] forState:UIControlStateSelected];
+    if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
+        
+        // Separator
+        
+        self.facebookLoginSeparator = [[UIView alloc] initWithFrame:CGRectZero];
+        
+        self.facebookLoginSeparatorLabel = [[UILabel alloc] init];
+        [self.facebookLoginSeparatorLabel setText:STRING_OR];
+        [self.facebookLoginSeparatorLabel setTextColor:UIColorFromRGB(0xcccccc)];
+        [self.facebookLoginSeparatorLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        [self.facebookLoginSeparatorLabel sizeToFit];
+        
+        self.facebookLoginSeparatorLeftView = [[UIView alloc] initWithFrame:CGRectZero];
+        [self.facebookLoginSeparatorLeftView setBackgroundColor:UIColorFromRGB(0xcccccc)];
+        
+        
+        [self.facebookLoginSeparatorLeftView setFrame:CGRectMake(0.0f, (self.facebookLoginSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
+        
+        [self.facebookLoginSeparatorLabel setFrame:CGRectMake(CGRectGetMaxX(self.facebookLoginSeparatorLeftView.frame) + 15.0f, 0.0f, self.facebookLoginSeparatorLabel.frame.size.width, self.facebookLoginSeparatorLabel.frame.size.height)];
+        
+        self.facebookLoginSeparatorRightView = [[UIView alloc] initWithFrame:CGRectZero];
+        [self.facebookLoginSeparatorRightView setBackgroundColor:UIColorFromRGB(0xcccccc)];
+        [self.facebookLoginSeparatorRightView setFrame:CGRectMake(halfSeparatorWidth + centerWidth, (self.facebookLoginSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
+        
+        [self.facebookLoginSeparator addSubview:self.facebookLoginSeparatorLeftView];
+        [self.facebookLoginSeparator addSubview:self.facebookLoginSeparatorLabel];
+        [self.facebookLoginSeparator addSubview:self.facebookLoginSeparatorRightView];
+        
+        [self.facebookLoginSeparator setFrame:CGRectMake(6.0f, self.loginFormHeight, componentWidth, self.facebookLoginSeparatorLabel.frame.size.height)];
+        [self.loginFormView addSubview:self.facebookLoginSeparator];
+        self.loginFormHeight += self.facebookLoginSeparator.frame.size.height;
+        
+        self.loginFormHeight += 11.0f;
+        
+        // Facebook Login
+        self.facebookLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.facebookLoginButton setFrame:CGRectMake(6.0f, self.loginFormHeight, componentWidth, 44.0f)];
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+            [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_normal"] forState:UIControlStateNormal];
+            [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_highlighted"] forState:UIControlStateHighlighted];
+            [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_highlighted"] forState:UIControlStateSelected];
+        } else {
+            [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_normal"] forState:UIControlStateNormal];
+            [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_highlighted"] forState:UIControlStateHighlighted];
+            [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_highlighted"] forState:UIControlStateSelected];
+        }
+        [self.facebookLoginButton setTitle:STRING_LOGIN_WITH_FACEBOOK forState:UIControlStateNormal];
+        [self.facebookLoginButton setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
+        [self.facebookLoginButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.facebookLoginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        
+        [self.loginFormView addSubview:self.facebookLoginButton];
+        self.loginFormHeight += self.facebookLoginButton.frame.size.height;
     }
-    [self.facebookLoginButton setTitle:STRING_LOGIN_WITH_FACEBOOK forState:UIControlStateNormal];
-    [self.facebookLoginButton setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
-    [self.facebookLoginButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.facebookLoginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
-    
-    [self.loginFormView addSubview:self.facebookLoginButton];
-    self.loginFormHeight += self.facebookLoginButton.frame.size.height;
-    
     self.signupFormHeight += 15.0f;
     // Signup
     self.signUpButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -629,53 +640,56 @@ FBLoginViewDelegate
     self.signupFormHeight += self.signUpButton.frame.size.height;
     
     self.signupFormHeight += 12.0f;
-    // Separator
-    self.facebookSignupSeparator = [[UIView alloc] initWithFrame:CGRectZero];
     
-    self.facebookSignupSeparatorLabel = [[UILabel alloc] init];
-    [self.facebookSignupSeparatorLabel setText:STRING_OR];
-    [self.facebookSignupSeparatorLabel setTextColor:UIColorFromRGB(0xcccccc)];
-    [self.facebookSignupSeparatorLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
-    [self.facebookSignupSeparatorLabel sizeToFit];
-    
-    self.facebookSignupSeparatorLeftView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.facebookSignupSeparatorLeftView setBackgroundColor:UIColorFromRGB(0xcccccc)];
-    [self.facebookSignupSeparatorLeftView setFrame:CGRectMake(0.0f, (self.facebookSignupSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
-    
-    [self.facebookSignupSeparatorLabel setFrame:CGRectMake(CGRectGetMaxX(self.facebookSignupSeparatorLeftView.frame) + 15.0f, 0.0f, self.facebookSignupSeparatorLabel.frame.size.width, self.facebookSignupSeparatorLabel.frame.size.height)];
-    
-    self.facebookSignupSeparatorRightView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.facebookSignupSeparatorRightView setBackgroundColor:UIColorFromRGB(0xcccccc)];
-    [self.facebookSignupSeparatorRightView setFrame:CGRectMake(halfSeparatorWidth + centerWidth, (self.facebookSignupSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
-    
-    [self.facebookSignupSeparator addSubview:self.facebookSignupSeparatorLeftView];
-    [self.facebookSignupSeparator addSubview:self.facebookSignupSeparatorLabel];
-    [self.facebookSignupSeparator addSubview:self.facebookSignupSeparatorRightView];
-    
-    [self.facebookSignupSeparator setFrame:CGRectMake(6.0f, self.signupFormHeight, componentWidth, self.facebookSignupSeparatorLabel.frame.size.height)];
-    [self.signUpFormView addSubview:self.facebookSignupSeparator];
-    self.signupFormHeight += self.facebookSignupSeparator.frame.size.height;
-    
-    self.signupFormHeight += 11.0f;
-    // Facebook Signup
-    self.facebookSingupButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.facebookSingupButton setFrame:CGRectMake(6.0f, self.signupFormHeight, componentWidth, 44.0f)];
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-        [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_normal"] forState:UIControlStateNormal];
-        [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_highlighted"] forState:UIControlStateHighlighted];
-        [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_highlighted"] forState:UIControlStateSelected];
-    } else {
-        [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_normal"] forState:UIControlStateNormal];
-        [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_highlighted"] forState:UIControlStateHighlighted];
-        [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_highlighted"] forState:UIControlStateSelected];
+    if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
+        // Separator
+        self.facebookSignupSeparator = [[UIView alloc] initWithFrame:CGRectZero];
+        
+        self.facebookSignupSeparatorLabel = [[UILabel alloc] init];
+        [self.facebookSignupSeparatorLabel setText:STRING_OR];
+        [self.facebookSignupSeparatorLabel setTextColor:UIColorFromRGB(0xcccccc)];
+        [self.facebookSignupSeparatorLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        [self.facebookSignupSeparatorLabel sizeToFit];
+        
+        self.facebookSignupSeparatorLeftView = [[UIView alloc] initWithFrame:CGRectZero];
+        [self.facebookSignupSeparatorLeftView setBackgroundColor:UIColorFromRGB(0xcccccc)];
+        [self.facebookSignupSeparatorLeftView setFrame:CGRectMake(0.0f, (self.facebookSignupSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
+        
+        [self.facebookSignupSeparatorLabel setFrame:CGRectMake(CGRectGetMaxX(self.facebookSignupSeparatorLeftView.frame) + 15.0f, 0.0f, self.facebookSignupSeparatorLabel.frame.size.width, self.facebookSignupSeparatorLabel.frame.size.height)];
+        
+        self.facebookSignupSeparatorRightView = [[UIView alloc] initWithFrame:CGRectZero];
+        [self.facebookSignupSeparatorRightView setBackgroundColor:UIColorFromRGB(0xcccccc)];
+        [self.facebookSignupSeparatorRightView setFrame:CGRectMake(halfSeparatorWidth + centerWidth, (self.facebookSignupSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
+        
+        [self.facebookSignupSeparator addSubview:self.facebookSignupSeparatorLeftView];
+        [self.facebookSignupSeparator addSubview:self.facebookSignupSeparatorLabel];
+        [self.facebookSignupSeparator addSubview:self.facebookSignupSeparatorRightView];
+        
+        [self.facebookSignupSeparator setFrame:CGRectMake(6.0f, self.signupFormHeight, componentWidth, self.facebookSignupSeparatorLabel.frame.size.height)];
+        [self.signUpFormView addSubview:self.facebookSignupSeparator];
+        self.signupFormHeight += self.facebookSignupSeparator.frame.size.height;
+        
+        self.signupFormHeight += 11.0f;
+        // Facebook Signup
+        self.facebookSingupButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.facebookSingupButton setFrame:CGRectMake(6.0f, self.signupFormHeight, componentWidth, 44.0f)];
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+            [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_normal"] forState:UIControlStateNormal];
+            [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_highlighted"] forState:UIControlStateHighlighted];
+            [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_highlighted"] forState:UIControlStateSelected];
+        } else {
+            [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_normal"] forState:UIControlStateNormal];
+            [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_highlighted"] forState:UIControlStateHighlighted];
+            [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookMedium_highlighted"] forState:UIControlStateSelected];
+        }
+        [self.facebookSingupButton setTitle:STRING_SIGNUP_WITH_FACEBOOK forState:UIControlStateNormal];
+        [self.facebookSingupButton setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
+        [self.facebookSingupButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.facebookSingupButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        
+        [self.signUpFormView addSubview:self.facebookSingupButton];
+        self.signupFormHeight += self.facebookSingupButton.frame.size.height;
     }
-    [self.facebookSingupButton setTitle:STRING_SIGNUP_WITH_FACEBOOK forState:UIControlStateNormal];
-    [self.facebookSingupButton setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
-    [self.facebookSingupButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.facebookSingupButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
-    
-    [self.signUpFormView addSubview:self.facebookSingupButton];
-    self.signupFormHeight += self.facebookSingupButton.frame.size.height;
     
     [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
 }
@@ -853,7 +867,7 @@ FBLoginViewDelegate
                  {
                      [parameters setValue:email forKey:@"email"];
                  }
-
+                 
                  
                  [RICustomer loginCustomerByFacebookWithParameters:parameters
                                                       successBlock:^(RICustomer* customer, NSString* nextStep) {

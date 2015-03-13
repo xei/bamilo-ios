@@ -35,6 +35,38 @@
 @dynamic locale;
 @dynamic customer;
 
+
++ (NSString*)setDefaultAddress:(RIAddress*)address
+                     isBilling:(BOOL)isBilling
+                  successBlock:(void (^)(void))successBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+{
+    NSDictionary *parameters = @{@"id": address.uid};
+    
+    NSString* urlPart = RI_API_GET_CUSTOMER_SELECT_DEFAULT_SHIPPING_ADDRESS;
+    if (isBilling) {
+        urlPart = RI_API_GET_CUSTOMER_SELECT_DEFAULT_BILLING_ADDRESS;
+    }
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, urlPart]]
+                                                            parameters:parameters httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheDefaultTime
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              successBlock();
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject)) {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+}
+
 + (NSString*)getCustomerAddressListWithSuccessBlock:(void (^)(id adressList))successBlock
                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {

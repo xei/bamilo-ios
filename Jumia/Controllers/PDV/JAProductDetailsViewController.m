@@ -75,6 +75,13 @@
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ProductSpecs"];
+}
+
 - (void) setupViews:(CGFloat)width height:(CGFloat)height
 {
     [self.labelBrand setFrame:CGRectMake(12.0f,

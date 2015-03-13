@@ -108,14 +108,14 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 #if defined(DEBUG) && DEBUG
     ADJConfig *adjustConfig = [ADJConfig configWithAppToken:apiKey
                                                 environment:ADJEnvironmentSandbox];
-    NSLog(@"Adjust setEnvironment as ADJEnvironmentSandbox");
+//    NSLog(@"Adjust setEnvironment as ADJEnvironmentSandbox");
 #else
     ADJConfig *adjustConfig = [ADJConfig configWithAppToken:apiKey
                                                 environment:ADJEnvironmentProduction];
-    NSLog(@"Adjust setEnvironment as ADJEnvironmentProduction");
+//    NSLog(@"Adjust setEnvironment as ADJEnvironmentProduction");
 #endif
     
-    [adjustConfig setLogLevel:ADJLogLevelDebug];
+    [adjustConfig setLogLevel:ADJLogLevelAssert];// ADJLogLevelDebug];
     [adjustConfig setDelegate:self];
     [Adjust appDidLaunch:adjustConfig];
 }

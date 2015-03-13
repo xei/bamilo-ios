@@ -117,10 +117,19 @@ JADynamicFormDelegate
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [[NSNotificationCenter defaultCenter]  addObserver:self
                                                 selector:@selector(hideKeyboard)
                                                 name:kOpenMenuNotification
                                                 object:nil];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"UserData"];
 }
 
 -(void)viewWillDisappear:(BOOL)animated

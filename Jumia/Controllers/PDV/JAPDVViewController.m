@@ -37,6 +37,7 @@
 #import "JAPDVBundleSingleItem.h"
 #import "RIProduct.h"
 #import "JAOtherOffersView.h"
+#import "JBWhatsAppActivity.h"
 
 @interface JAPDVViewController ()
 <
@@ -158,6 +159,12 @@ JAActivityViewControllerDelegate
 {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"ShopProductDetail"];
 }
 
 - (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification
@@ -385,7 +392,6 @@ JAActivityViewControllerDelegate
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
     
-    [RIProduct addToRecentlyViewed:product successBlock:nil andFailureBlock:nil];
     self.product = product;
     NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue]) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
     
@@ -549,8 +555,11 @@ JAActivityViewControllerDelegate
         self.firstLoading = NO;
     }
     
-    [self requestReviews];
-    [self productLoaded];
+    [RIProduct addToRecentlyViewed:product successBlock:^(RIProduct *product) {
+        self.product = product;
+        [self requestReviews];
+        [self productLoaded];
+    } andFailureBlock:nil];
 }
 
 - (void)retryAddToCart
@@ -773,7 +782,7 @@ JAActivityViewControllerDelegate
                                                   self.variationsSection.frame.size.width,
                                                   self.variationsSection.frame.size.height);
         
-        self.variationsSection.titleLabel.text = STRING_VARIATIONS;
+        self.variationsSection.titleLabel.text = STRING_MORE_CHOICES;
         
         CGFloat currentX = 0.0;
         
@@ -1114,21 +1123,11 @@ JAActivityViewControllerDelegate
     NSArray* relatedProducts = [self.product.relatedProducts allObjects];
     RIProduct *tempProduct = [relatedProducts objectAtIndex:sender.tag];
     
-    if (self.delegate) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                            object:nil
-                                                          userInfo:@{ @"url" : tempProduct.url,
-                                                                      @"previousCategory" : @"",
-                                                                      @"show_back_button" : [NSNumber numberWithBool:YES],
-                                                                      @"delegate" : self.delegate}];
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                            object:nil
-                                                          userInfo:@{ @"url" : tempProduct.url,
-                                                                      @"previousCategory" : @"",
-                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
-    }
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                        object:nil
+                                                      userInfo:@{ @"url" : tempProduct.url,
+                                                                  @"previousCategory" : @"",
+                                                                  @"show_back_button" : [NSNumber numberWithBool:YES]}];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:tempProduct.sku forKey:kRIEventLabelKey];
@@ -1138,6 +1137,7 @@ JAActivityViewControllerDelegate
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRelatedItem]
                                               data:[trackingDictionary copy]];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"related_item_%@",tempProduct.name]];
 }
 
 - (void)gotoDetails
@@ -1152,8 +1152,6 @@ JAActivityViewControllerDelegate
 
 - (void)goToRatinsMainScreen
 {
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation))
-    {
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         if(VALID_NOTEMPTY(self.product, RIProduct))
         {
@@ -1164,38 +1162,6 @@ JAActivityViewControllerDelegate
             [userInfo setObject:self.productRatings forKey:@"productRatings"];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
-    }
-    else
-    {
-        if (0 == self.commentsCount)
-        {
-            
-            NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-            if(VALID_NOTEMPTY(self.product, RIProduct))
-            {
-                [userInfo setObject:self.product forKey:@"product"];
-            }
-            if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
-            {
-                [userInfo setObject:self.productRatings forKey:@"productRatings"];
-            }
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
-        }
-        else
-        {
-            NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-            if(VALID_NOTEMPTY(self.product, RIProduct))
-            {
-                [userInfo setObject:self.product forKey:@"product"];
-            }
-            if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
-            {
-                [userInfo setObject:self.productRatings forKey:@"productRatings"];
-            }
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
-        }
-    }
 }
 
 - (void)shareProduct
@@ -1213,14 +1179,16 @@ JAActivityViewControllerDelegate
     {
         url = [url stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
     }
-    
-    NSArray *objectsToShare = @[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url]];
-    
-    
+        
+    // Share with Facebook Messenger and WhatsApp
     UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
+    UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
+    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",STRING_SHARE_PRODUCT_MESSAGE, url] forABID:nil];
     
+    NSArray *aplicationActivities = @[fbmActivity, whatsAppActivity];
     
-    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:@[fbmActivity]];
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:aplicationActivities];
+    
     
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
     
@@ -1470,6 +1438,11 @@ JAActivityViewControllerDelegate
                           [self hideLoading];
                           
                           NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
+                          NSString *results = [[errorMessages valueForKey:@"description"] componentsJoinedByString:@""];
+                          if([results  isEqualToString: @"order_product_sold_out"]){
+                              
+                              addToCartError = STRING_PRODCUTS_OUT_OF_STOCK;
+                          }
                           if (RIApiResponseNoInternetConnection == apiResponse)
                           {
                               addToCartError = STRING_NO_CONNECTION;
@@ -1542,8 +1515,10 @@ JAActivityViewControllerDelegate
         {
             if ([simple.quantity integerValue] > 0)
             {
-                [self.pickerDataSource addObject:simple];
-                [options addObject:simple.variation];
+                if (VALID_NOTEMPTY(simple.variation, NSString)) {
+                    [self.pickerDataSource addObject:simple];
+                    [options addObject:simple.variation];
+                }
             }
         }
     }
@@ -1553,9 +1528,11 @@ JAActivityViewControllerDelegate
         sizeGuideTitle = STRING_SIZE_GUIDE;
     }
     
-    [self loadSizePickerWithOptions:[options copy]
-                       previousText:self.productInfoSection.sizeLabel.text
-                    leftButtonTitle:sizeGuideTitle];
+    if (VALID_NOTEMPTY(options, NSMutableArray)) {
+        [self loadSizePickerWithOptions:[options copy]
+                           previousText:self.productInfoSection.sizeLabel.text
+                        leftButtonTitle:sizeGuideTitle];
+    }
 }
 
 - (void)loadSizePickerWithOptions:(NSArray*)options
@@ -2075,9 +2052,8 @@ JAActivityViewControllerDelegate
                 self.product.favoriteAddDate = nil;
             }
             
-            if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
-                [self.delegate changedFavoriteStateOfProduct:self.product];
-            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
+                                                                object:self.product];
             
             [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
             
@@ -2116,9 +2092,8 @@ JAActivityViewControllerDelegate
             
             [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
             
-            if (self.delegate && [self.delegate respondsToSelector:@selector(changedFavoriteStateOfProduct:)]) {
-                [self.delegate changedFavoriteStateOfProduct:self.product];
-            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
+                                                                object:self.product];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
