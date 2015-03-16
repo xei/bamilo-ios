@@ -3057,8 +3057,8 @@
 		CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANavigationBarLayout.m; sourceTree = "<group>"; };
 		CE9ADD2B1AB34C4600D56481 /* Daraz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daraz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9ADD2C1AB34C4600D56481 /* Daraz-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Daraz-Info.plist"; path = "/Users/user/Desktop/JUMIAIOS/Daraz-Info.plist"; sourceTree = "<absolute>"; };
-		CE9ADF251AB6D6E900D56481 /* Shop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shop.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE9ADF261AB6D6EC00D56481 /* Shop-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Shop-Info.plist"; path = "/Users/user/Desktop/JUMIAIOS/Shop-Info.plist"; sourceTree = "<absolute>"; };
+		CE9ADF251AB6D6E900D56481 /* Shop.com.mm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shop.com.mm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE9ADF261AB6D6EC00D56481 /* Shop.com.mm-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Shop.com.mm-Info.plist"; path = "/Users/user/Desktop/JUMIAIOS/Shop.com.mm-Info.plist"; sourceTree = "<absolute>"; };
 		CE9AE11F1AB6D78200D56481 /* Bamilo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bamilo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9AE1201AB6D78200D56481 /* Bamilo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Bamilo-Info.plist"; path = "/Users/user/Desktop/JUMIAIOS/Bamilo-Info.plist"; sourceTree = "<absolute>"; };
 		CEA86D9A1A374D32000032AD /* Model_1.3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.3.xcdatamodel; sourceTree = "<group>"; };
@@ -4147,7 +4147,7 @@
 				B5A301C119811D0700F71726 /* JumiaTests.xctest */,
 				CE3AF8FC19DBF4EB00D8C51B /* Jumia-cal.app */,
 				CE9ADD2B1AB34C4600D56481 /* Daraz.app */,
-				CE9ADF251AB6D6E900D56481 /* Shop.app */,
+				CE9ADF251AB6D6E900D56481 /* Shop.com.mm.app */,
 				CE9AE11F1AB6D78200D56481 /* Bamilo.app */,
 			);
 			name = Products;
@@ -4173,7 +4173,7 @@
 			isa = PBXGroup;
 			children = (
 				CE9AE1201AB6D78200D56481 /* Bamilo-Info.plist */,
-				CE9ADF261AB6D6EC00D56481 /* Shop-Info.plist */,
+				CE9ADF261AB6D6EC00D56481 /* Shop.com.mm-Info.plist */,
 				CE9ADD2C1AB34C4600D56481 /* Daraz-Info.plist */,
 				B5A301AC19811D0700F71726 /* Info.plist */,
 				B5A301AD19811D0700F71726 /* main.m */,
@@ -5500,9 +5500,9 @@
 			productReference = CE9ADD2B1AB34C4600D56481 /* Daraz.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CE9ADD2D1AB6D6E900D56481 /* Shop */ = {
+		CE9ADD2D1AB6D6E900D56481 /* Shop.com.mm */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE9ADF201AB6D6E900D56481 /* Build configuration list for PBXNativeTarget "Shop" */;
+			buildConfigurationList = CE9ADF201AB6D6E900D56481 /* Build configuration list for PBXNativeTarget "Shop.com.mm" */;
 			buildPhases = (
 				CE9ADD2E1AB6D6E900D56481 /* Sources */,
 				CE9ADE1D1AB6D6E900D56481 /* Frameworks */,
@@ -5513,9 +5513,9 @@
 			);
 			dependencies = (
 			);
-			name = Shop;
+			name = Shop.com.mm;
 			productName = Jumia;
-			productReference = CE9ADF251AB6D6E900D56481 /* Shop.app */;
+			productReference = CE9ADF251AB6D6E900D56481 /* Shop.com.mm.app */;
 			productType = "com.apple.product-type.application";
 		};
 		CE9ADF271AB6D78200D56481 /* Bamilo */ = {
@@ -5596,7 +5596,7 @@
 				B5A301C019811D0700F71726 /* JumiaTests */,
 				ffe4ef9be990e92ee61945b7 /* Jumia-cal */,
 				CE9ADB331AB34C4600D56481 /* Daraz */,
-				CE9ADD2D1AB6D6E900D56481 /* Shop */,
+				CE9ADD2D1AB6D6E900D56481 /* Shop.com.mm */,
 				CE9ADF271AB6D78200D56481 /* Bamilo */,
 			);
 		};
@@ -8755,7 +8755,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
-				INFOPLIST_FILE = "Shop-Info.plist";
+				INFOPLIST_FILE = "Shop.com.mm-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -8766,7 +8766,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Shop;
+				PRODUCT_NAME = Shop.com.mm;
 				PROVISIONING_PROFILE = "20d0e393-b189-45fc-b3b4-777b9d5becb4";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8790,7 +8790,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
-				INFOPLIST_FILE = "Shop-Info.plist";
+				INFOPLIST_FILE = "Shop.com.mm-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -8801,7 +8801,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Shop;
+				PRODUCT_NAME = Shop.com.mm;
 				PROVISIONING_PROFILE = "20d0e393-b189-45fc-b3b4-777b9d5becb4";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8825,7 +8825,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
-				INFOPLIST_FILE = "Shop-Info.plist";
+				INFOPLIST_FILE = "Shop.com.mm-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -8836,7 +8836,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Shop;
+				PRODUCT_NAME = Shop.com.mm;
 				PROVISIONING_PROFILE = "20d0e393-b189-45fc-b3b4-777b9d5becb4";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8860,7 +8860,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
-				INFOPLIST_FILE = "Shop-Info.plist";
+				INFOPLIST_FILE = "Shop.com.mm-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -8871,7 +8871,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Shop;
+				PRODUCT_NAME = Shop.com.mm;
 				PROVISIONING_PROFILE = "20d0e393-b189-45fc-b3b4-777b9d5becb4";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9150,7 +9150,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE9ADF201AB6D6E900D56481 /* Build configuration list for PBXNativeTarget "Shop" */ = {
+		CE9ADF201AB6D6E900D56481 /* Build configuration list for PBXNativeTarget "Shop.com.mm" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE9ADF211AB6D6E900D56481 /* Debug */,
