@@ -32,9 +32,40 @@
 #if defined(DEBUG) && DEBUG
     
 #if defined(STAGING) && STAGING
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"7275370b79981af6b6437a87d813bafd"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9b9785a49d8763ce4f7d1041e15970cc"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+    }
+    
 #else
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"3c9ad1f5e09a65331e412821125cc2f2"];
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"3c9ad1f5e09a65331e412821125cc2f2"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+    }
 #endif
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
