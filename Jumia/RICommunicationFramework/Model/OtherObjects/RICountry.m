@@ -28,7 +28,7 @@
 #if defined(STAGING) && STAGING
     if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
     {
-        countryListURL = RI_COUNTRIES_URL_JUMIA_ALL;
+        countryListURL = RI_COUNTRIES_URL_JUMIA_STAGING;
     }
     else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
     {
@@ -232,6 +232,26 @@
         }
     }
     return country;
+}
+
++ (RICountry*)getUniqueCountry
+{
+    if([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        RICountry* uniqueCountry = [[RICountry alloc] init];
+        
+        uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_SHOP;
+        uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_SHOP;
+        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP;
+        uniqueCountry.isLive = YES;
+#if defined(STAGING) && STAGING
+        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP_STAGING;
+        uniqueCountry.isLive = NO;
+#endif
+        return uniqueCountry;
+    } else {
+        return nil;
+    }
 }
 
 @end

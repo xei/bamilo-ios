@@ -356,24 +356,33 @@ UIAlertViewDelegate
                              @"selected": @"ico_myaccount_pressed" },
                           @{ @"name": STRING_MY_ORDERS,
                              @"image": @"ico_trackorder",
-                             @"selected": @"ico_trackorder_pressed" },
-                          @{ @"name": STRING_CHOOSE_COUNTRY,
-                             @"image": @"ico_choosecountry",
-                             @"selected": @"ico_choosecountry_pressed" },
-                          @{ @"name": STRING_LOGIN,
-                             @"image": @"ico_sign",
-                             @"selected": @"ico_signpressed" }] mutableCopy];
+                             @"selected": @"ico_trackorder_pressed" }
+                          ] mutableCopy];
     
+    
+    if(NO == [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        NSDictionary* chooseCountry = @{ @"name": STRING_CHOOSE_COUNTRY,
+                                        @"image": @"ico_choosecountry",
+                                        @"selected": @"ico_choosecountry_pressed" };
+        [self.sourceArray addObject:chooseCountry];
+    }
+
+    NSDictionary* loginDic;
     if ([RICustomer checkIfUserIsLogged])
     {
-        NSDictionary *dic = @{ @"name": STRING_LOGOUT,
-                               @"image": @"ico_sign",
-                               @"selected": @"ico_signpressed" };
-        
-        [self.sourceArray removeLastObject];
-        [self.sourceArray addObject:dic];
-        [self.tableViewMenu reloadData];
+        loginDic = @{ @"name": STRING_LOGOUT,
+                      @"image": @"ico_sign",
+                      @"selected": @"ico_signpressed" };
     }
+    else
+    {
+        loginDic = @{ @"name": STRING_LOGIN,
+                      @"image": @"ico_sign",
+                      @"selected": @"ico_signpressed" };
+    }
+    [self.sourceArray addObject:loginDic];
+    [self.tableViewMenu reloadData];
 }
 
 #pragma mark - Login and Logout

@@ -96,8 +96,14 @@
         }
         else
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification
-                                                                object:nil];
+            RICountry* uniqueCountry = [RICountry getUniqueCountry];
+            if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
+                                                                    object:uniqueCountry];
+            } else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification
+                                                                    object:nil];
+            }
         }
     }
 }

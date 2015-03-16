@@ -252,21 +252,25 @@ void(^retryBock)(BOOL dismiss);
                                                 widestChoiceLabelRect.size.height + 2.0f)];
     [self addSubview:self.widestChoiceLabel];
     
-    self.changeCountryButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.changeCountryButton setFrame:CGRectMake(leftPadding, self.frame.size.height - 44.0f - marginBottom, self.frame.size.width - buttonsWidth, 44.0f)];
-    [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"normal"]]forState:UIControlStateNormal];
-    [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]]forState:UIControlStateHighlighted];
-    [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]]forState:UIControlStateSelected];
-    [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"disabled"]]forState:UIControlStateDisabled];
-    [self.changeCountryButton setTitle:STRING_CHOOSE_COUNTRY forState:UIControlStateNormal];
-    [self.changeCountryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.changeCountryButton addTarget:self action:@selector(changeCountryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.changeCountryButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
-    [self addSubview:self.changeCountryButton];
-    
+    CGFloat nextButtonPosition = self.frame.size.height - 44.0f - marginBottom;
+    if(NO == [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        self.changeCountryButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.changeCountryButton setFrame:CGRectMake(leftPadding, nextButtonPosition, self.frame.size.width - buttonsWidth, 44.0f)];
+        [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"normal"]]forState:UIControlStateNormal];
+        [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]]forState:UIControlStateHighlighted];
+        [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]]forState:UIControlStateSelected];
+        [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"disabled"]]forState:UIControlStateDisabled];
+        [self.changeCountryButton setTitle:STRING_CHOOSE_COUNTRY forState:UIControlStateNormal];
+        [self.changeCountryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+        [self.changeCountryButton addTarget:self action:@selector(changeCountryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [self.changeCountryButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        [self addSubview:self.changeCountryButton];
+        nextButtonPosition = CGRectGetMinY(self.changeCountryButton.frame) - 44.0f - 6.0f;
+    }
     
     self.retryButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.retryButton setFrame:CGRectMake(leftPadding, CGRectGetMinY(self.changeCountryButton.frame) - 44.0f - 6.0f, self.frame.size.width - buttonsWidth, 44.0f)];
+    [self.retryButton setFrame:CGRectMake(leftPadding, nextButtonPosition, self.frame.size.width - buttonsWidth, 44.0f)];
     [self.retryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]]forState:UIControlStateNormal];
     [self.retryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]]forState:UIControlStateHighlighted];
     [self.retryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]]forState:UIControlStateSelected];

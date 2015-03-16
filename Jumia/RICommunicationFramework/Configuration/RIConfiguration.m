@@ -36,8 +36,15 @@ NSString *const RI_HTTP_USER_AGENT_HEADER_IPHONE_VALUE = @"iPhone: Mozilla/5.0 (
 NSString *const RI_HTTP_USER_AGENT_HEADER_IPAD_VALUE = @"iPad: Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10";
 
 NSString *const RI_COUNTRIES_URL_JUMIA = @"http://www.jumia.com/mobapi/availablecountries";
-NSString *const RI_COUNTRIES_URL_JUMIA_ALL = @"https://cld.pt/dl/download/40e5154f-fbe5-4b4d-abad-bef636d089e5/jtmobapi_040215";
+NSString *const RI_COUNTRIES_URL_JUMIA_STAGING = @"https://cld.pt/dl/download/40e5154f-fbe5-4b4d-abad-bef636d089e5/jtmobapi_040215";
 NSString *const RI_COUNTRIES_URL_DARAZ = @"http://www.daraz.com/mobapi/availablecountries";
+NSString *const RI_COUNTRIES_URL_DARAZ_STAGING = @"http://www.daraz.com/mobapi/availablecountries/staging";
+
+NSString *const RI_UNIQUE_COUNTRY_URL_SHOP = @"http://www.shop.com.mm/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_URL_SHOP_STAGING = @"http://alice-staging.shop.com.mm/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_NAME_SHOP = @"Myanmar";
+NSString *const RI_UNIQUE_COUNTRY_ISO_SHOP = @"MM";
+
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
 NSString *const RI_API_VERSION = @"v1.6/";
 NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
