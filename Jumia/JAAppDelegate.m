@@ -40,7 +40,7 @@
     {
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"7275370b79981af6b6437a87d813bafd"];
     }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP"])
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
     {
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9b9785a49d8763ce4f7d1041e15970cc"];
     }
@@ -58,7 +58,7 @@
     {
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
     }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP"])
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
     {
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
     }

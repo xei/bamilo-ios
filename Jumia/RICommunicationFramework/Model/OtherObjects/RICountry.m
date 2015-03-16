@@ -15,9 +15,25 @@
 + (NSString*)getCountriesWithSuccessBlock:(void (^)(id countries))successBlock
                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
-    NSString *countryListURL = RI_COUNTRIES_URL;
+    NSString *countryListURL;
+    
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        countryListURL = RI_COUNTRIES_URL_JUMIA;
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        countryListURL = RI_COUNTRIES_URL_DARAZ;
+    }
 #if defined(STAGING) && STAGING
-    countryListURL = RI_COUNTRIES_URL_ALL;
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        countryListURL = RI_COUNTRIES_URL_JUMIA_ALL;
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        countryListURL = RI_COUNTRIES_URL_DARAZ;
+    }
 #endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
