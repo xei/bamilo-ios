@@ -2110,8 +2110,6 @@
 		CE9AE1171AB6D78200D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63361A81053B00B6F26E /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib */; };
 		CE9AE1181AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63181A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape-ret4.xib */; };
 		CE9AE1261AB8251000D56481 /* zawgyione2008.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE1251AB8251000D56481 /* zawgyione2008.ttf */; };
-		CE9AE12A1AB84A8A00D56481 /* Daraz-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE1281AB84A8A00D56481 /* Daraz-Info.plist */; };
-		CE9AE12B1AB84A8A00D56481 /* Shop.com.mm-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE1291AB84A8A00D56481 /* Shop.com.mm-Info.plist */; };
 		CEA86D9E1A3756C2000032AD /* JASizeGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */; };
 		CEA86D9F1A3894C0000032AD /* JASizeGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */; };
 		CEA86DA31A39F82C000032AD /* JAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DA21A39F82C000032AD /* JAPageControl.m */; };
@@ -3060,12 +3058,12 @@
 		CE9ADD2B1AB34C4600D56481 /* Daraz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daraz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9ADF251AB6D6E900D56481 /* Shop.com.mm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shop.com.mm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9AE11F1AB6D78200D56481 /* Bamilo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bamilo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE9AE1201AB6D78200D56481 /* Bamilo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Bamilo-Info.plist"; path = "/Users/user/Desktop/JUMIAIOS/Bamilo-Info.plist"; sourceTree = "<absolute>"; };
 		CE9AE1211AB823C100D56481 /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		CE9AE1251AB8251000D56481 /* zawgyione2008.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zawgyione2008.ttf; sourceTree = "<group>"; };
 		CE9AE1271AB8281400D56481 /* JAFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAFont.h; sourceTree = "<group>"; };
 		CE9AE1281AB84A8A00D56481 /* Daraz-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Daraz-Info.plist"; sourceTree = "<group>"; };
 		CE9AE1291AB84A8A00D56481 /* Shop.com.mm-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shop.com.mm-Info.plist"; sourceTree = "<group>"; };
+		CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bamilo-Info.plist"; sourceTree = "<group>"; };
 		CEA86D9A1A374D32000032AD /* Model_1.3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.3.xcdatamodel; sourceTree = "<group>"; };
 		CEA86D9C1A3756C2000032AD /* JASizeGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASizeGuideViewController.h; path = SizeGuide/JASizeGuideViewController.h; sourceTree = "<group>"; };
 		CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASizeGuideViewController.m; path = SizeGuide/JASizeGuideViewController.m; sourceTree = "<group>"; };
@@ -4180,7 +4178,7 @@
 				CE9AE1221AB824B700D56481 /* Fonts */,
 				CE9AE1281AB84A8A00D56481 /* Daraz-Info.plist */,
 				CE9AE1291AB84A8A00D56481 /* Shop.com.mm-Info.plist */,
-				CE9AE1201AB6D78200D56481 /* Bamilo-Info.plist */,
+				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
 				B5A301AC19811D0700F71726 /* Info.plist */,
 				B5A301AD19811D0700F71726 /* main.m */,
 				B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */,
@@ -5937,7 +5935,6 @@
 				CEAB63BB1A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				BBA145B419DC56BF003F0CA7 /* multi_step.rb in Resources */,
 				CEAB63931A81053C00B6F26E /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
-				CE9AE12B1AB84A8A00D56481 /* Shop.com.mm-Info.plist in Resources */,
 				520A37C41A4444A30046C8B1 /* JAFilteredNoResultsView~iPad.xib in Resources */,
 				BBA145AB19DC56BF003F0CA7 /* 02_logout.feature in Resources */,
 				CEDEB9C8199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png in Resources */,
@@ -6051,7 +6048,6 @@
 				BBA145B019DC56BF003F0CA7 /* assert.rb in Resources */,
 				CEAB63711A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-retHD.xib in Resources */,
 				B56BBF3319A60D5400F4B1A3 /* JACartListCell.xib in Resources */,
-				CE9AE12A1AB84A8A00D56481 /* Daraz-Info.plist in Resources */,
 				BBA145AD19DC56BF003F0CA7 /* 04_my_account.feature in Resources */,
 				BB128E9F19E2F4260033514F /* 10_search.feature in Resources */,
 				CEAB639B1A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
