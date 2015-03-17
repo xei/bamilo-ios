@@ -121,7 +121,7 @@
     }
     else if(self.appShare)
     {
-        shareObject = [NSString stringWithFormat:@"%@ %@", STRING_INSTALL_JUMIA_IOS, kAppStoreUrl];
+        shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrl];
     }
     
     return shareObject;

@@ -9,11 +9,10 @@
 #ifndef Jumia_JAStrings_h
 #define Jumia_JAStrings_h
 
-#define STRING_JUMIA RILocalizedString(@"string_jumia", nil)
 #define STRING_UPDATE_NECESSARY_TITLE RILocalizedString(@"string_update_necessary_title", nil)
-#define STRING_UPDATE_NECESSARY_MESSAGE RILocalizedString(@"string_update_necessary_message", nil)
+#define STRING_UPDATE_NECESSARY_MESSAGE RILocalizedString(@"string_update_necessary_message_ios", nil)
 #define STRING_UPDATE_AVAILABLE_TITLE RILocalizedString(@"string_update_available_title", nil)
-#define STRING_UPDATE_AVAILABLE_MESSAGE RILocalizedString(@"string_update_available_message", nil)
+#define STRING_UPDATE_AVAILABLE_MESSAGE RILocalizedString(@"string_update_available_message_ios", nil)
 #define STRING_UPDATE RILocalizedString(@"string_update", nil) 
 #define STRING_OK_UPDATE RILocalizedString(@"string_ok_update", nil)
 #define STRING_NO_THANKS RILocalizedString(@"string_no_thanks", nil)
@@ -80,7 +79,7 @@
 #define STRING_RELATED_ITEMS RILocalizedString(@"related_items", nil)
 #define STRING_PRODUCT_FEATURES RILocalizedString(@"product_features_title", nil)
 #define STRING_PRODUCT_DESCRIPTION RILocalizedString(@"product_description_title", nil)
-#define STRING_SHARE_OBJECT RILocalizedString(@"share_subject", nil)
+#define STRING_SHARE_OBJECT RILocalizedString(@"share_subject_ios", nil)
 #define STRING_SHARE_PRODUCT_MESSAGE RILocalizedString(@"share_checkout_this_product", nil)
 #define STRING_RATE_PRODUCT RILocalizedString(@"rating_question", nil)
 #define STRING_SEND_REVIEW RILocalizedString(@"writereview_send", nil)
@@ -271,8 +270,8 @@
 #define STRING_APP_SHARING RILocalizedString(@"app_sharing", nil)
 #define STRING_SHARE_THE_APP RILocalizedString(@"share_the_app", nil)
 #define STRING_CAN_SHARE_APP_WITH_FRIENDS RILocalizedString(@"can_share_app_with_friends", nil)
-#define STRING_SHARE_JUMIA_APP RILocalizedString(@"share_jumia_app", nil)
-#define STRING_INSTALL_JUMIA_IOS RILocalizedString(@"install_jumia_ios", nil)
+#define STRING_SHARE_APP RILocalizedString(@"share_app_ios", nil)
+#define STRING_INSTALL_APP RILocalizedString(@"install_app_ios", nil)
 
 #define STRING_DELIVERY_TIME RILocalizedString(@"delivery_time", nil)
 #define STRING_PRODCUT_OUT_OF_STOCK RILocalizedString(@"product_outof_stock", nil)

@@ -303,11 +303,11 @@ void(^retryBock)(BOOL dismiss);
     NSString *jumiaString = @"";
     if(VALID_NOTEMPTY(countryName, NSString))
     {
-        jumiaString = [NSString stringWithFormat:@"%@ %@", STRING_JUMIA, countryName];
+        jumiaString = [NSString stringWithFormat:@"%@ %@", APP_NAME, countryName];
     }
     else
     {
-        jumiaString = STRING_JUMIA;
+        jumiaString = APP_NAME;
     }
     
     NSString *currentlyMaintenanceString = [NSString stringWithFormat:@"%@ %@", jumiaString, STRING_CURRENTLY_IN_MAINTENANCE];
