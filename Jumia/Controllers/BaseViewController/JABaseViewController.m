@@ -75,14 +75,31 @@
     [self.loadingView addGestureRecognizer:tap];
     
     UIImage* image = [UIImage imageNamed:@"loadingAnimationFrame1"];
+    
+    int lastFrame = 24;
+    if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+    
+        image = [UIImage imageNamed:@"loadingAnimationDaraz1"];
+        lastFrame = 6;
+    
+    }
     self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0,
                                                                           0,
                                                                           image.size.width,
                                                                           image.size.height)];
     self.loadingAnimation.animationDuration = 1.0f;
     NSMutableArray* animationFrames = [NSMutableArray new];
-    for (int i = 1; i <= 24; i++) {
+    for (int i = 1; i <= lastFrame; i++) {
         NSString* frameName = [NSString stringWithFormat:@"loadingAnimationFrame%d", i];
+        
+        if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+        {
+            
+            frameName = [NSString stringWithFormat:@"loadingAnimationDaraz%d", i];
+            
+        }
+
         UIImage* frame = [UIImage imageNamed:frameName];
         [animationFrames addObject:frame];
     }
