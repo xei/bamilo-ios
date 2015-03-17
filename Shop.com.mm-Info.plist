@@ -41,16 +41,16 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb304887043046936</string>
+				<string>fb1598974337002842</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>FacebookAppID</key>
-	<string>304887043046936</string>
+	<string>1598974337002842</string>
 	<key>FacebookDisplayName</key>
-	<string>Jumia</string>
+	<string>Shop.com.mm</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIBackgroundModes</key>

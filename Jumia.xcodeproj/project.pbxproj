@@ -15,7 +15,7 @@
 		0950f15fccf17a6ebbc45e07 /* JAPickupRegionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B501E88819BE20C100BE51DD /* JAPickupRegionsCell.xib */; };
 		09a540fd5e97a0761054d14c /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3022619811E8A00F71726 /* SDWebImageDecoder.m */; };
 		0a7dd54e89ecf32139d07fd4 /* JASidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242D91986547C00E37C90 /* JASidePanelController.m */; };
-		0ae503a9046dc0361e776798 /* RITracking.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */; };
+		0ae503a9046dc0361e776798 /* RITracking_JUMIA.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking_JUMIA.plist */; };
 		0b1e813172ab4ac5baf4294c /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A454F3A199CBF1400B44821 /* RIAddress.m */; };
 		0ce264e75b75a76450279300 /* JANavigationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A392140198925D000B70A9C /* JANavigationBarView.m */; };
 		0d61a534825a19926f082cdd /* JAChooseCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39213619891FBA00B70A9C /* JAChooseCountryViewController.m */; };
@@ -139,7 +139,7 @@
 		4b5ae89debacca2cb1f16964 /* RIForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3026E19811E9200F71726 /* RIForm.m */; };
 		4bc43fda46c675d38bdb8ad7 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
 		4c2fef288bf2196e345a6ca6 /* RIProductSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027A19811E9200F71726 /* RIProductSimple.m */; };
-		4c63827f343c921bf28405ea /* RITracking_example.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5A302AE19811E9200F71726 /* RITracking_example.plist */; };
+		4c63827f343c921bf28405ea /* RITracking_example_JUMIA.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5A302AE19811E9200F71726 /* RITracking_example_JUMIA.plist */; };
 		4e6c662ba5a46bb8730e617e /* RITeaserImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028619811E9200F71726 /* RITeaserImage.m */; };
 		4f946a6031dc658465b500d8 /* slider-default7-trackCrossedOver.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A2199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png */; };
 		5037ac35e4d71a246fd9ed5a /* JAGenericFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */; };
@@ -179,6 +179,10 @@
 		692fece832938452dbf8505a /* JATeaserPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */; };
 		69c7ac2a38a28dc5589a97ca /* JANavigationBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A392142198925E300B70A9C /* JANavigationBarView.xib */; };
 		6C18BDAC1A1B4CA300626706 /* JANewsletterComponent~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */; };
+		6C60C8661AB748B7008AD4AD /* RITracking_DARAZ.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C60C8571AB722AE008AD4AD /* RITracking_DARAZ.plist */; };
+		6C60C8671AB748BB008AD4AD /* RITrackingDebug_DARAZ.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C60C8591AB72325008AD4AD /* RITrackingDebug_DARAZ.plist */; };
+		6C60C86D1AB75F3E008AD4AD /* RITracking_SHOP.COM.MM.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C60C8691AB75D0F008AD4AD /* RITracking_SHOP.COM.MM.plist */; };
+		6C60C86E1AB75F41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C60C86B1AB75D41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist */; };
 		6ad0a1988b1e51c37142c75b /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
 		6be80f134e67002eecb79292 /* RILanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027619811E9200F71726 /* RILanguage.m */; };
 		6e0b7de87382100c6d8b4606 /* JAOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D195E19C33122004843C3 /* JAOrderViewController.m */; };
@@ -359,7 +363,7 @@
 		B5A302DD19811E9200F71726 /* RILocalizationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302A719811E9200F71726 /* RILocalizationWrapper.m */; };
 		B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302AA19811E9200F71726 /* RITrackingWrapper.m */; };
 		B5A302DF19811E9200F71726 /* RIOpenURLHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302AD19811E9200F71726 /* RIOpenURLHandler.m */; };
-		B5A302E019811E9200F71726 /* RITracking_example.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5A302AE19811E9200F71726 /* RITracking_example.plist */; };
+		B5A302E019811E9200F71726 /* RITracking_example_JUMIA.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5A302AE19811E9200F71726 /* RITracking_example_JUMIA.plist */; };
 		B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B019811E9200F71726 /* RITrackingConfiguration.m */; };
 		B5A302E219811E9200F71726 /* RIAd4PushTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B319811E9200F71726 /* RIAd4PushTracker.m */; };
 		B5A302E419811E9200F71726 /* RIBugSenseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B719811E9200F71726 /* RIBugSenseTracker.m */; };
@@ -459,8 +463,8 @@
 		B5FBD58D19CAF2F400BD9510 /* RIAdjustTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD58C19CAF2F400BD9510 /* RIAdjustTracker.m */; };
 		B5FE9FB119A1F362006F7D63 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */; };
 		B5FE9FB319A1F4C6006F7D63 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */; };
-		B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */; };
-		B5FE9FB719A1FD1B006F7D63 /* RITrackingDebug.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */; };
+		B5FE9FB519A1FCD9006F7D63 /* RITracking_JUMIA.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking_JUMIA.plist */; };
+		B5FE9FB719A1FD1B006F7D63 /* RITrackingDebug_JUMIA.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug_JUMIA.plist */; };
 		B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FE9FBB19A204F1006F7D63 /* RINewRelicTracker.m */; };
 		BB128E9F19E2F4260033514F /* 10_search.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128E9E19E2F4260033514F /* 10_search.feature */; };
 		BB128EA019E2F4260033514F /* 10_search.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128E9E19E2F4260033514F /* 10_search.feature */; };
@@ -968,7 +972,6 @@
 		CE9ADC841AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63121A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-ret4.xib */; };
 		CE9ADC851AB34C4600D56481 /* 05_user_data.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */; };
 		CE9ADC861AB34C4600D56481 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
-		CE9ADC871AB34C4600D56481 /* RITracking.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */; };
 		CE9ADC881AB34C4600D56481 /* 16_recent_searches.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */; };
 		CE9ADC891AB34C4600D56481 /* touch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A319DC56BF003F0CA7 /* touch.rb */; };
 		CE9ADC8A1AB34C4600D56481 /* slider-metal-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AB199BA8FA0022BAB5 /* slider-metal-trackBackground.png */; };
@@ -1049,7 +1052,6 @@
 		CE9ADCD51AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62DB1A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib */; };
 		CE9ADCD61AB34C4600D56481 /* JAPDVProductInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */; };
 		CE9ADCD71AB34C4600D56481 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62FC1A81053B00B6F26E /* BMA4SiPhoneTextNotifView-iPad.xib */; };
-		CE9ADCD81AB34C4600D56481 /* RITrackingDebug.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */; };
 		CE9ADCD91AB34C4600D56481 /* JAOrangeButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71B19A5FDDA00DE12F6 /* JAOrangeButtonCell.xib */; };
 		CE9ADCDA1AB34C4600D56481 /* slider-metal-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AA199BA8FA0022BAB5 /* slider-metal-track@2x.png */; };
 		CE9ADCDB1AB34C4600D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-retHD.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62F01A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-retHD.xib */; };
@@ -1121,7 +1123,6 @@
 		CE9ADD1D1AB34C4600D56481 /* BMA4SiPhoneTextNotifView-nobuttons-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63301A81053B00B6F26E /* BMA4SiPhoneTextNotifView-nobuttons-landscape-ret4.xib */; };
 		CE9ADD1E1AB34C4600D56481 /* slider-default7-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99F199BA8FA0022BAB5 /* slider-default7-track@2x.png */; };
 		CE9ADD1F1AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB630D1A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib */; };
-		CE9ADD201AB34C4600D56481 /* RITracking_example.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5A302AE19811E9200F71726 /* RITracking_example.plist */; };
 		CE9ADD211AB34C4600D56481 /* BMA4SRichPushWebView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62F61A81053B00B6F26E /* BMA4SRichPushWebView-iPad.xib */; };
 		CE9ADD221AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-retHD.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63101A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-retHD.xib */; };
 		CE9ADD231AB34C4600D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63361A81053B00B6F26E /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib */; };
@@ -1462,7 +1463,6 @@
 		CE9ADE7E1AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63121A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-ret4.xib */; };
 		CE9ADE7F1AB6D6E900D56481 /* 05_user_data.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */; };
 		CE9ADE801AB6D6E900D56481 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
-		CE9ADE811AB6D6E900D56481 /* RITracking.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */; };
 		CE9ADE821AB6D6E900D56481 /* 16_recent_searches.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */; };
 		CE9ADE831AB6D6E900D56481 /* touch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A319DC56BF003F0CA7 /* touch.rb */; };
 		CE9ADE841AB6D6E900D56481 /* slider-metal-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AB199BA8FA0022BAB5 /* slider-metal-trackBackground.png */; };
@@ -1543,7 +1543,6 @@
 		CE9ADECF1AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62DB1A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib */; };
 		CE9ADED01AB6D6E900D56481 /* JAPDVProductInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */; };
 		CE9ADED11AB6D6E900D56481 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62FC1A81053B00B6F26E /* BMA4SiPhoneTextNotifView-iPad.xib */; };
-		CE9ADED21AB6D6E900D56481 /* RITrackingDebug.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */; };
 		CE9ADED31AB6D6E900D56481 /* JAOrangeButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71B19A5FDDA00DE12F6 /* JAOrangeButtonCell.xib */; };
 		CE9ADED41AB6D6E900D56481 /* slider-metal-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AA199BA8FA0022BAB5 /* slider-metal-track@2x.png */; };
 		CE9ADED51AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-retHD.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62F01A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-retHD.xib */; };
@@ -1615,7 +1614,6 @@
 		CE9ADF171AB6D6E900D56481 /* BMA4SiPhoneTextNotifView-nobuttons-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63301A81053B00B6F26E /* BMA4SiPhoneTextNotifView-nobuttons-landscape-ret4.xib */; };
 		CE9ADF181AB6D6E900D56481 /* slider-default7-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99F199BA8FA0022BAB5 /* slider-default7-track@2x.png */; };
 		CE9ADF191AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB630D1A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib */; };
-		CE9ADF1A1AB6D6E900D56481 /* RITracking_example.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5A302AE19811E9200F71726 /* RITracking_example.plist */; };
 		CE9ADF1B1AB6D6E900D56481 /* BMA4SRichPushWebView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62F61A81053B00B6F26E /* BMA4SRichPushWebView-iPad.xib */; };
 		CE9ADF1C1AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-retHD.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63101A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-retHD.xib */; };
 		CE9ADF1D1AB6D6E900D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63361A81053B00B6F26E /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib */; };
@@ -1956,7 +1954,6 @@
 		CE9AE0781AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63121A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-ret4.xib */; };
 		CE9AE0791AB6D78200D56481 /* 05_user_data.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */; };
 		CE9AE07A1AB6D78200D56481 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
-		CE9AE07B1AB6D78200D56481 /* RITracking.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */; };
 		CE9AE07C1AB6D78200D56481 /* 16_recent_searches.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */; };
 		CE9AE07D1AB6D78200D56481 /* touch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A319DC56BF003F0CA7 /* touch.rb */; };
 		CE9AE07E1AB6D78200D56481 /* slider-metal-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AB199BA8FA0022BAB5 /* slider-metal-trackBackground.png */; };
@@ -2037,7 +2034,6 @@
 		CE9AE0C91AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62DB1A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib */; };
 		CE9AE0CA1AB6D78200D56481 /* JAPDVProductInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */; };
 		CE9AE0CB1AB6D78200D56481 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62FC1A81053B00B6F26E /* BMA4SiPhoneTextNotifView-iPad.xib */; };
-		CE9AE0CC1AB6D78200D56481 /* RITrackingDebug.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */; };
 		CE9AE0CD1AB6D78200D56481 /* JAOrangeButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71B19A5FDDA00DE12F6 /* JAOrangeButtonCell.xib */; };
 		CE9AE0CE1AB6D78200D56481 /* slider-metal-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AA199BA8FA0022BAB5 /* slider-metal-track@2x.png */; };
 		CE9AE0CF1AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-retHD.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62F01A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-retHD.xib */; };
@@ -2109,7 +2105,6 @@
 		CE9AE1111AB6D78200D56481 /* BMA4SiPhoneTextNotifView-nobuttons-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63301A81053B00B6F26E /* BMA4SiPhoneTextNotifView-nobuttons-landscape-ret4.xib */; };
 		CE9AE1121AB6D78200D56481 /* slider-default7-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99F199BA8FA0022BAB5 /* slider-default7-track@2x.png */; };
 		CE9AE1131AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB630D1A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib */; };
-		CE9AE1141AB6D78200D56481 /* RITracking_example.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5A302AE19811E9200F71726 /* RITracking_example.plist */; };
 		CE9AE1151AB6D78200D56481 /* BMA4SRichPushWebView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62F61A81053B00B6F26E /* BMA4SRichPushWebView-iPad.xib */; };
 		CE9AE1161AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-retHD.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63101A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-retHD.xib */; };
 		CE9AE1171AB6D78200D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63361A81053B00B6F26E /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib */; };
@@ -2401,7 +2396,7 @@
 		b99ff21639ad13d2b87fbcaf /* JAButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC3F71919A5FDDA00DE12F6 /* JAButtonCell.m */; };
 		ba137566e9c10c0927dfa9e5 /* JAMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C38E18819CF170F0007F6F9 /* JAMessageView.xib */; };
 		bc2215ef52ef8f4c62accebd /* RIShippingMethodFormField.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F01986C41D0094C92C /* RIShippingMethodFormField.m */; };
-		bc226a46ffc7b0880f9f8ab4 /* RITrackingDebug.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */; };
+		bc226a46ffc7b0880f9f8ab4 /* RITrackingDebug_JUMIA.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug_JUMIA.plist */; };
 		bc498f82bcc9b32f500887de /* JACatalogGridCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2FB75719938EB500E7CD00 /* JACatalogGridCell.xib */; };
 		bf81d9401f5ca279a3161ca2 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3022B19811E8A00F71726 /* SDWebImageManager.m */; };
 		c0a7b46a0bf48c7a4a4b0950 /* JAShippingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B55CF28E19BE072800A6C6B6 /* JAShippingInfoCell.m */; };
@@ -2571,6 +2566,13 @@
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
+		6C60C8571AB722AE008AD4AD /* RITracking_DARAZ.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking_DARAZ.plist; sourceTree = "<group>"; };
+		6C60C8591AB72325008AD4AD /* RITrackingDebug_DARAZ.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_DARAZ.plist; sourceTree = "<group>"; };
+		6C60C85D1AB74814008AD4AD /* Bamilo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Info.plist"; sourceTree = SOURCE_ROOT; };
+		6C60C85E1AB74814008AD4AD /* Daraz-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Daraz-Info.plist"; sourceTree = SOURCE_ROOT; };
+		6C60C85F1AB74814008AD4AD /* Shop.com.mm-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shop.com.mm-Info.plist"; sourceTree = SOURCE_ROOT; };
+		6C60C8691AB75D0F008AD4AD /* RITracking_SHOP.COM.MM.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking_SHOP.COM.MM.plist; sourceTree = "<group>"; };
+		6C60C86B1AB75D41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_SHOP.COM.MM.plist; sourceTree = "<group>"; };
 		6CC5C4B81A9634FE00E362F3 /* Model_1.5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.5.xcdatamodel; sourceTree = "<group>"; };
 		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
 		8C38E18519CF16F50007F6F9 /* JAMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMessageView.h; sourceTree = "<group>"; };
@@ -2793,7 +2795,7 @@
 		B5A302AA19811E9200F71726 /* RITrackingWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RITrackingWrapper.m; sourceTree = "<group>"; };
 		B5A302AC19811E9200F71726 /* RIOpenURLHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOpenURLHandler.h; sourceTree = "<group>"; };
 		B5A302AD19811E9200F71726 /* RIOpenURLHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIOpenURLHandler.m; sourceTree = "<group>"; };
-		B5A302AE19811E9200F71726 /* RITracking_example.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking_example.plist; sourceTree = "<group>"; };
+		B5A302AE19811E9200F71726 /* RITracking_example_JUMIA.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking_example_JUMIA.plist; sourceTree = "<group>"; };
 		B5A302AF19811E9200F71726 /* RITrackingConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RITrackingConfiguration.h; sourceTree = "<group>"; };
 		B5A302B019811E9200F71726 /* RITrackingConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RITrackingConfiguration.m; sourceTree = "<group>"; };
 		B5A302B219811E9200F71726 /* RIAd4PushTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAd4PushTracker.h; sourceTree = "<group>"; };
@@ -2905,8 +2907,8 @@
 		B5FBD58C19CAF2F400BD9510 /* RIAdjustTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAdjustTracker.m; sourceTree = "<group>"; };
 		B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
-		B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking.plist; sourceTree = "<group>"; };
-		B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug.plist; sourceTree = "<group>"; };
+		B5FE9FB419A1FCD9006F7D63 /* RITracking_JUMIA.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking_JUMIA.plist; sourceTree = "<group>"; };
+		B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug_JUMIA.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_JUMIA.plist; sourceTree = "<group>"; };
 		B5FE9FBA19A204F1006F7D63 /* RINewRelicTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RINewRelicTracker.h; sourceTree = "<group>"; };
 		B5FE9FBB19A204F1006F7D63 /* RINewRelicTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RINewRelicTracker.m; sourceTree = "<group>"; };
 		BB128E9E19E2F4260033514F /* 10_search.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 10_search.feature; sourceTree = "<group>"; };
@@ -3056,11 +3058,8 @@
 		CE97D2EC19AE1ED50090D01C /* JANavigationBarLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANavigationBarLayout.h; sourceTree = "<group>"; };
 		CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANavigationBarLayout.m; sourceTree = "<group>"; };
 		CE9ADD2B1AB34C4600D56481 /* Daraz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daraz.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE9ADD2C1AB34C4600D56481 /* Daraz-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Daraz-Info.plist"; path = "/Users/user/Desktop/JUMIAIOS/Daraz-Info.plist"; sourceTree = "<absolute>"; };
 		CE9ADF251AB6D6E900D56481 /* Shop.com.mm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shop.com.mm.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE9ADF261AB6D6EC00D56481 /* Shop.com.mm-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Shop.com.mm-Info.plist"; path = "/Users/user/Desktop/JUMIAIOS/Shop.com.mm-Info.plist"; sourceTree = "<absolute>"; };
 		CE9AE11F1AB6D78200D56481 /* Bamilo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bamilo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE9AE1201AB6D78200D56481 /* Bamilo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Bamilo-Info.plist"; path = "/Users/user/Desktop/JUMIAIOS/Bamilo-Info.plist"; sourceTree = "<absolute>"; };
 		CEA86D9A1A374D32000032AD /* Model_1.3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.3.xcdatamodel; sourceTree = "<group>"; };
 		CEA86D9C1A3756C2000032AD /* JASizeGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASizeGuideViewController.h; path = SizeGuide/JASizeGuideViewController.h; sourceTree = "<group>"; };
 		CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASizeGuideViewController.m; path = SizeGuide/JASizeGuideViewController.m; sourceTree = "<group>"; };
@@ -4172,9 +4171,9 @@
 		B5A301AB19811D0700F71726 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				CE9AE1201AB6D78200D56481 /* Bamilo-Info.plist */,
-				CE9ADF261AB6D6EC00D56481 /* Shop.com.mm-Info.plist */,
-				CE9ADD2C1AB34C4600D56481 /* Daraz-Info.plist */,
+				6C60C85D1AB74814008AD4AD /* Bamilo-Info.plist */,
+				6C60C85E1AB74814008AD4AD /* Daraz-Info.plist */,
+				6C60C85F1AB74814008AD4AD /* Shop.com.mm-Info.plist */,
 				B5A301AC19811D0700F71726 /* Info.plist */,
 				B5A301AD19811D0700F71726 /* main.m */,
 				B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */,
@@ -4481,13 +4480,17 @@
 		B5A302AB19811E9200F71726 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				B5FE9FB419A1FCD9006F7D63 /* RITracking.plist */,
-				B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug.plist */,
+				B5FE9FB419A1FCD9006F7D63 /* RITracking_JUMIA.plist */,
+				B5FE9FB619A1FD1B006F7D63 /* RITrackingDebug_JUMIA.plist */,
 				B5A302AC19811E9200F71726 /* RIOpenURLHandler.h */,
 				B5A302AD19811E9200F71726 /* RIOpenURLHandler.m */,
-				B5A302AE19811E9200F71726 /* RITracking_example.plist */,
+				B5A302AE19811E9200F71726 /* RITracking_example_JUMIA.plist */,
 				B5A302AF19811E9200F71726 /* RITrackingConfiguration.h */,
 				B5A302B019811E9200F71726 /* RITrackingConfiguration.m */,
+				6C60C8571AB722AE008AD4AD /* RITracking_DARAZ.plist */,
+				6C60C8591AB72325008AD4AD /* RITrackingDebug_DARAZ.plist */,
+				6C60C8691AB75D0F008AD4AD /* RITracking_SHOP.COM.MM.plist */,
+				6C60C86B1AB75D41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -5673,7 +5676,7 @@
 				CEAB639A1A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */,
 				9542b3bdd30fbe4bec186675 /* JAPDVSingleRelatedItem.xib in Resources */,
 				37a7d0b54c205bb3a0c500c0 /* JAAddNewAddressCell.xib in Resources */,
-				0ae503a9046dc0361e776798 /* RITracking.plist in Resources */,
+				0ae503a9046dc0361e776798 /* RITracking_JUMIA.plist in Resources */,
 				CEAB63A61A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-retHD.xib in Resources */,
 				CEAB63DC1A81053C00B6F26E /* BMA4SiPhoneTextNotifView-nobuttons-retHD.xib in Resources */,
 				BB9546A619F5511900AC7D05 /* 02_pre_stop_hooks.rb in Resources */,
@@ -5756,7 +5759,7 @@
 				CEAB63E01A81053C00B6F26E /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */,
 				CEAB63B81A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons.xib in Resources */,
 				CEAB636E1A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
-				bc226a46ffc7b0880f9f8ab4 /* RITrackingDebug.plist in Resources */,
+				bc226a46ffc7b0880f9f8ab4 /* RITrackingDebug_JUMIA.plist in Resources */,
 				CEAB638A1A81053C00B6F26E /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				e8cdf19ae478212bba2a64b2 /* JAOrangeButtonCell.xib in Resources */,
 				551f1b565eeda72c3ef168a7 /* slider-metal-track@2x.png in Resources */,
@@ -5825,7 +5828,7 @@
 				CEAB63441A81053C00B6F26E /* BMA4SCloseButton.png in Resources */,
 				CEBEEE7D1A8E13CF001998E5 /* JACatalogTopView_ipad.xib in Resources */,
 				CEAB63701A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */,
-				4c63827f343c921bf28405ea /* RITracking_example.plist in Resources */,
+				4c63827f343c921bf28405ea /* RITracking_example_JUMIA.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5906,7 +5909,7 @@
 				CEAB63A31A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-ret4.xib in Resources */,
 				BBA145AE19DC56BF003F0CA7 /* 05_user_data.feature in Resources */,
 				B59DCA7F19B88DDB00DE7960 /* JAAddNewAddressCell.xib in Resources */,
-				B5FE9FB519A1FCD9006F7D63 /* RITracking.plist in Resources */,
+				B5FE9FB519A1FCD9006F7D63 /* RITracking_JUMIA.plist in Resources */,
 				BBBA4CC919E42E9A004271B2 /* 16_recent_searches.feature in Resources */,
 				BBA145B719DC56BF003F0CA7 /* touch.rb in Resources */,
 				CEDEB9C7199BA8FA0022BAB5 /* slider-metal-trackBackground.png in Resources */,
@@ -5987,7 +5990,7 @@
 				CEAB63451A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
 				4A2FD843199119D900C65C1D /* JAPDVProductInfo.xib in Resources */,
 				CEAB637D1A81053C00B6F26E /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
-				B5FE9FB719A1FD1B006F7D63 /* RITrackingDebug.plist in Resources */,
+				B5FE9FB719A1FD1B006F7D63 /* RITrackingDebug_JUMIA.plist in Resources */,
 				CEC3F71E19A5FDDA00DE12F6 /* JAOrangeButtonCell.xib in Resources */,
 				CEDEB9C6199BA8FA0022BAB5 /* slider-metal-track@2x.png in Resources */,
 				CEAB636B1A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-retHD.xib in Resources */,
@@ -6059,7 +6062,7 @@
 				CEAB63D51A81053C00B6F26E /* BMA4SiPhoneTextNotifView-nobuttons-landscape-ret4.xib in Resources */,
 				CEDEB9BC199BA8FA0022BAB5 /* slider-default7-track@2x.png in Resources */,
 				CEAB63991A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */,
-				B5A302E019811E9200F71726 /* RITracking_example.plist in Resources */,
+				B5A302E019811E9200F71726 /* RITracking_example_JUMIA.plist in Resources */,
 				CEAB63751A81053C00B6F26E /* BMA4SRichPushWebView-iPad.xib in Resources */,
 				CEAB639F1A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-retHD.xib in Resources */,
 				CEAB63DF1A81053C00B6F26E /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */,
@@ -6151,7 +6154,6 @@
 				CE9ADC841AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-ret4.xib in Resources */,
 				CE9ADC851AB34C4600D56481 /* 05_user_data.feature in Resources */,
 				CE9ADC861AB34C4600D56481 /* JAAddNewAddressCell.xib in Resources */,
-				CE9ADC871AB34C4600D56481 /* RITracking.plist in Resources */,
 				CE9ADC881AB34C4600D56481 /* 16_recent_searches.feature in Resources */,
 				CE9ADC891AB34C4600D56481 /* touch.rb in Resources */,
 				CE9ADC8A1AB34C4600D56481 /* slider-metal-trackBackground.png in Resources */,
@@ -6232,7 +6234,6 @@
 				CE9ADCD51AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
 				CE9ADCD61AB34C4600D56481 /* JAPDVProductInfo.xib in Resources */,
 				CE9ADCD71AB34C4600D56481 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
-				CE9ADCD81AB34C4600D56481 /* RITrackingDebug.plist in Resources */,
 				CE9ADCD91AB34C4600D56481 /* JAOrangeButtonCell.xib in Resources */,
 				CE9ADCDA1AB34C4600D56481 /* slider-metal-track@2x.png in Resources */,
 				CE9ADCDB1AB34C4600D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-retHD.xib in Resources */,
@@ -6277,6 +6278,7 @@
 				CE9ADD021AB34C4600D56481 /* JACartListCell.xib in Resources */,
 				CE9ADD031AB34C4600D56481 /* 04_my_account.feature in Resources */,
 				CE9ADD041AB34C4600D56481 /* 10_search.feature in Resources */,
+				6C60C8671AB748BB008AD4AD /* RITrackingDebug_DARAZ.plist in Resources */,
 				CE9ADD051AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				CE9ADD061AB34C4600D56481 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				CE9ADD071AB34C4600D56481 /* Images.xcassets in Resources */,
@@ -6286,6 +6288,7 @@
 				CE9ADD0B1AB34C4600D56481 /* BMA4SiPhoneTextNotifView-nobuttons-landscape.xib in Resources */,
 				CE9ADD0C1AB34C4600D56481 /* slider-default-trackCrossedOver.png in Resources */,
 				CE9ADD0D1AB34C4600D56481 /* slider-default7-trackBackground@2x.png in Resources */,
+				6C60C8661AB748B7008AD4AD /* RITracking_DARAZ.plist in Resources */,
 				CE9ADD0E1AB34C4600D56481 /* 19_filters.feature in Resources */,
 				CE9ADD0F1AB34C4600D56481 /* JACatalogListCell_ipad_landscape.xib in Resources */,
 				CE9ADD101AB34C4600D56481 /* env.rb in Resources */,
@@ -6304,7 +6307,6 @@
 				CE9ADD1D1AB34C4600D56481 /* BMA4SiPhoneTextNotifView-nobuttons-landscape-ret4.xib in Resources */,
 				CE9ADD1E1AB34C4600D56481 /* slider-default7-track@2x.png in Resources */,
 				CE9ADD1F1AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */,
-				CE9ADD201AB34C4600D56481 /* RITracking_example.plist in Resources */,
 				CE9ADD211AB34C4600D56481 /* BMA4SRichPushWebView-iPad.xib in Resources */,
 				CE9ADD221AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-retHD.xib in Resources */,
 				CE9ADD231AB34C4600D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */,
@@ -6389,7 +6391,6 @@
 				CE9ADE7E1AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-ret4.xib in Resources */,
 				CE9ADE7F1AB6D6E900D56481 /* 05_user_data.feature in Resources */,
 				CE9ADE801AB6D6E900D56481 /* JAAddNewAddressCell.xib in Resources */,
-				CE9ADE811AB6D6E900D56481 /* RITracking.plist in Resources */,
 				CE9ADE821AB6D6E900D56481 /* 16_recent_searches.feature in Resources */,
 				CE9ADE831AB6D6E900D56481 /* touch.rb in Resources */,
 				CE9ADE841AB6D6E900D56481 /* slider-metal-trackBackground.png in Resources */,
@@ -6467,14 +6468,15 @@
 				CE9ADECC1AB6D6E900D56481 /* 07_forgot_password.feature in Resources */,
 				CE9ADECD1AB6D6E900D56481 /* JAFavoriteListCell_ipad_landscape.xib in Resources */,
 				CE9ADECE1AB6D6E900D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape-iPad.xib in Resources */,
+				6C60C86D1AB75F3E008AD4AD /* RITracking_SHOP.COM.MM.plist in Resources */,
 				CE9ADECF1AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
 				CE9ADED01AB6D6E900D56481 /* JAPDVProductInfo.xib in Resources */,
 				CE9ADED11AB6D6E900D56481 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
-				CE9ADED21AB6D6E900D56481 /* RITrackingDebug.plist in Resources */,
 				CE9ADED31AB6D6E900D56481 /* JAOrangeButtonCell.xib in Resources */,
 				CE9ADED41AB6D6E900D56481 /* slider-metal-track@2x.png in Resources */,
 				CE9ADED51AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-retHD.xib in Resources */,
 				CE9ADED61AB6D6E900D56481 /* slider-default-handle.png in Resources */,
+				6C60C86E1AB75F41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist in Resources */,
 				CE9ADED71AB6D6E900D56481 /* BMA4SRichPushWebViewWithToolBar.xib in Resources */,
 				CE9ADED81AB6D6E900D56481 /* BMA4SRichPushWebView.xib in Resources */,
 				CE9ADED91AB6D6E900D56481 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
@@ -6542,7 +6544,6 @@
 				CE9ADF171AB6D6E900D56481 /* BMA4SiPhoneTextNotifView-nobuttons-landscape-ret4.xib in Resources */,
 				CE9ADF181AB6D6E900D56481 /* slider-default7-track@2x.png in Resources */,
 				CE9ADF191AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */,
-				CE9ADF1A1AB6D6E900D56481 /* RITracking_example.plist in Resources */,
 				CE9ADF1B1AB6D6E900D56481 /* BMA4SRichPushWebView-iPad.xib in Resources */,
 				CE9ADF1C1AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-retHD.xib in Resources */,
 				CE9ADF1D1AB6D6E900D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */,
@@ -6627,7 +6628,6 @@
 				CE9AE0781AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-ret4.xib in Resources */,
 				CE9AE0791AB6D78200D56481 /* 05_user_data.feature in Resources */,
 				CE9AE07A1AB6D78200D56481 /* JAAddNewAddressCell.xib in Resources */,
-				CE9AE07B1AB6D78200D56481 /* RITracking.plist in Resources */,
 				CE9AE07C1AB6D78200D56481 /* 16_recent_searches.feature in Resources */,
 				CE9AE07D1AB6D78200D56481 /* touch.rb in Resources */,
 				CE9AE07E1AB6D78200D56481 /* slider-metal-trackBackground.png in Resources */,
@@ -6708,7 +6708,6 @@
 				CE9AE0C91AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
 				CE9AE0CA1AB6D78200D56481 /* JAPDVProductInfo.xib in Resources */,
 				CE9AE0CB1AB6D78200D56481 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
-				CE9AE0CC1AB6D78200D56481 /* RITrackingDebug.plist in Resources */,
 				CE9AE0CD1AB6D78200D56481 /* JAOrangeButtonCell.xib in Resources */,
 				CE9AE0CE1AB6D78200D56481 /* slider-metal-track@2x.png in Resources */,
 				CE9AE0CF1AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-retHD.xib in Resources */,
@@ -6780,7 +6779,6 @@
 				CE9AE1111AB6D78200D56481 /* BMA4SiPhoneTextNotifView-nobuttons-landscape-ret4.xib in Resources */,
 				CE9AE1121AB6D78200D56481 /* slider-default7-track@2x.png in Resources */,
 				CE9AE1131AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */,
-				CE9AE1141AB6D78200D56481 /* RITracking_example.plist in Resources */,
 				CE9AE1151AB6D78200D56481 /* BMA4SRichPushWebView-iPad.xib in Resources */,
 				CE9AE1161AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-retHD.xib in Resources */,
 				CE9AE1171AB6D78200D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */,

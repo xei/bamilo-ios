@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>kRIAdjustToken</key>
+	<string>p6rhan2xhx6d</string>
+	<key>kGTMToken</key>
+	<string>GTM-NL79G8</string>
+	<key>RIGoogleAnalyticsTrackingID</key>
+	<string></string>
+	<key>RIBugsenseAPIKey</key>
+	<string></string>
+	<key>kRIAdd4PushDeviceToken</key>
+	<string></string>
+	<key>kRIAdd4PushUserID</key>
+	<string></string>
+	<key>kRIAdd4PushPrivateKey</key>
+	<string></string>
+	<key>RINewRelicTokenAPIKey</key>
+	<string>AAa2402d3bfa0ecf8e0e0e04f43f02e555131c083e</string>
+</dict>
+</plist>
