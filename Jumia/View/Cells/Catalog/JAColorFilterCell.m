@@ -30,7 +30,7 @@
         [self addSubview:self.colorView];
         
         self.colorTitleLabel = [[UILabel alloc] init];
-        self.colorTitleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+        self.colorTitleLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
         self.colorTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
         self.colorTitleLabel.text = @" ";
         [self.colorTitleLabel sizeToFit];

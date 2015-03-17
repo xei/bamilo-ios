@@ -121,7 +121,7 @@ void(^retryBock)(BOOL dismiss);
     [self.imageBackground setImage:backgroundImage];
     
     self.maintenanceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.maintenanceLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:18.0f]];
+    [self.maintenanceLabel setFont:[UIFont fontWithName:kFontRegularName size:18.0f]];
     [self.maintenanceLabel setTextColor:UIColorFromRGB(0xffffff)];
     [self.maintenanceLabel setText:STRING_MAINTENANCE];
     [self.maintenanceLabel sizeToFit];
@@ -149,7 +149,7 @@ void(^retryBock)(BOOL dismiss);
     logoViewWidth = self.logoImage.size.width;
     logoViewHeight = self.logoImage.size.height;
     
-    UIFont *countryNameLabelFont = [UIFont fontWithName:@"HelveticaNeue" size:24.0f];
+    UIFont *countryNameLabelFont = [UIFont fontWithName:kFontRegularName size:24.0f];
     self.countryNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.countryNameLabel setFont:countryNameLabelFont];
     [self.countryNameLabel setLineBreakMode:NSLineBreakByWordWrapping];
@@ -202,7 +202,7 @@ void(^retryBock)(BOOL dismiss);
         bestShoppingExperienceString = [STRING_BEST_SHOPPING_EXPERIENCE capitalizedString];
     }
     
-    UIFont *bestShoppingExperienceFont = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+    UIFont *bestShoppingExperienceFont = [UIFont fontWithName:kFontRegularName size:14.0f];
     CGRect bestShoppingExperienceLabelRect = [bestShoppingExperienceString boundingRectWithSize:CGSizeMake(self.frame.size.width - 20.0f, self.frame.size.height)
                                                                                         options:NSStringDrawingUsesLineFragmentOrigin
                                                                                      attributes:@{NSFontAttributeName:bestShoppingExperienceFont} context:nil];
@@ -224,7 +224,7 @@ void(^retryBock)(BOOL dismiss);
     
     NSMutableAttributedString *widestChoiceAttributedString = [[NSMutableAttributedString alloc] initWithString:widestChoicedString];
     
-    UIFont *doorStepTextFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f];
+    UIFont *doorStepTextFont = [UIFont fontWithName:kFontLightName size:10.0f];
     UIColor *doorStepTextColor = UIColorFromRGB(0x000000);
     
     [widestChoiceAttributedString addAttribute:NSFontAttributeName
@@ -234,7 +234,7 @@ void(^retryBock)(BOOL dismiss);
                                          value:doorStepTextColor
                                          range:NSMakeRange([STRING_WIDEST_CHOICE length], [widestChoicedString length] - [STRING_WIDEST_CHOICE length])];
     
-    UIFont *widestChoiceAttributedFont = [UIFont fontWithName:@"HelveticaNeue-Medium" size:10.0f];
+    UIFont *widestChoiceAttributedFont = [UIFont fontWithName:kFontMediumName size:10.0f];
     CGRect widestChoiceLabelRect = [widestChoicedString boundingRectWithSize:CGSizeMake(self.frame.size.width - 20.0f, self.frame.size.height)
                                                                      options:NSStringDrawingUsesLineFragmentOrigin
                                                                   attributes:@{NSFontAttributeName:widestChoiceAttributedFont} context:nil];
@@ -264,7 +264,7 @@ void(^retryBock)(BOOL dismiss);
         [self.changeCountryButton setTitle:STRING_CHOOSE_COUNTRY forState:UIControlStateNormal];
         [self.changeCountryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
         [self.changeCountryButton addTarget:self action:@selector(changeCountryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [self.changeCountryButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        [self.changeCountryButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
         [self addSubview:self.changeCountryButton];
         nextButtonPosition = CGRectGetMinY(self.changeCountryButton.frame) - 44.0f - 6.0f;
     }
@@ -278,10 +278,10 @@ void(^retryBock)(BOOL dismiss);
     [self.retryButton setTitle:STRING_TRY_AGAIN forState:UIControlStateNormal];
     [self.retryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.retryButton addTarget:self action:@selector(retryConnectionButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.retryButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.retryButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self addSubview:self.retryButton];
     
-    UIFont *tryToBeBriefLabelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+    UIFont *tryToBeBriefLabelFont = [UIFont fontWithName:kFontLightName size:12.0f];
     CGRect tryToBeBriefLabelRect = [STRING_TRY_TO_BE_BRIEF boundingRectWithSize:CGSizeMake(self.frame.size.width - 80.0f, self.frame.size.height)
                                                                         options:NSStringDrawingUsesLineFragmentOrigin
                                                                      attributes:@{NSFontAttributeName:tryToBeBriefLabelFont} context:nil];
@@ -314,11 +314,11 @@ void(^retryBock)(BOOL dismiss);
     
     NSMutableAttributedString *currentlyMaintenanceAttributedString = [[NSMutableAttributedString alloc] initWithString:currentlyMaintenanceString];
     
-    UIFont *currentlyInCurrentlyMaintenanceTextFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+    UIFont *currentlyInCurrentlyMaintenanceTextFont = [UIFont fontWithName:kFontLightName size:12.0f];
     [currentlyMaintenanceAttributedString addAttribute:NSFontAttributeName
                                                  value:currentlyInCurrentlyMaintenanceTextFont
                                                  range:NSMakeRange([jumiaString length], [currentlyMaintenanceString length] -[jumiaString length])];
-    UIFont *currentlyMaintenanceAttributedFont = [UIFont fontWithName:@"HelveticaNeue-Medium" size:12.0f];
+    UIFont *currentlyMaintenanceAttributedFont = [UIFont fontWithName:kFontMediumName size:12.0f];
     CGRect currentlyMaintenanceLabelRect = [currentlyMaintenanceString boundingRectWithSize:CGSizeMake(self.frame.size.width - 20.0f, self.frame.size.height)
                                                                                     options:NSStringDrawingUsesLineFragmentOrigin
                                                                                  attributes:@{NSFontAttributeName:currentlyMaintenanceAttributedFont} context:nil];

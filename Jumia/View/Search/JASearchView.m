@@ -302,8 +302,8 @@
     NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:text];
     NSInteger stringTextLenght = text.length;
     
-    UIFont *stringTextFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
-    UIFont *subStringTextFont = [UIFont fontWithName:@"HelveticaNeue" size:17.0f];
+    UIFont *stringTextFont = [UIFont fontWithName:kFontLightName size:17.0f];
+    UIFont *subStringTextFont = [UIFont fontWithName:kFontRegularName size:17.0f];
     UIColor *stringTextColor = UIColorFromRGB(0x4e4e4e);
     
     

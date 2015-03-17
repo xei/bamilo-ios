@@ -13,14 +13,14 @@
 #define JATopCategoriesTeaserViewContentY 4.0f
 #define JATopCategoriesTeaserViewContentCornerRadius 3.0f
 #define JATopCategoriesTeaserViewTitleHeight 26.0f
-#define JATopCategoriesTeaserViewTitleFont [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+#define JATopCategoriesTeaserViewTitleFont [UIFont fontWithName:kFontRegularName size:13.0f];
 #define JATopCategoriesTeaserViewTitleColor UIColorFromRGB(0x4e4e4e)
 #define JATopCategoriesTeaserViewLineColor UIColorFromRGB(0xfaa41a)
 #define JATopCategoriesTeaserViewCellMargin 16.0f
 #define JATopCategoriesTeaserViewCellHeight 30.0f
-#define JATopCategoriesTeaserViewCellFont [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]
+#define JATopCategoriesTeaserViewCellFont [UIFont fontWithName:kFontLightName size:13.0f]
 #define JATopCategoriesTeaserViewCellColor UIColorFromRGB(0x4e4e4e)
-#define JATopCategoriesTeaserViewAllCategoriesCellFont [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0f]
+#define JATopCategoriesTeaserViewAllCategoriesCellFont [UIFont fontWithName:kFontBoldName size:12.0f]
 
 @interface JATopCategoriesTeaserView()
 

@@ -11,8 +11,8 @@
 #import "JAClickableView.h"
 
 #define JACatalogCellContentCornerRadius 3.0f
-#define JACatalogCellNormalFont [UIFont fontWithName:@"HelveticaNeue" size:10.0f]
-#define JACatalogCellLightFont [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f]
+#define JACatalogCellNormalFont [UIFont fontWithName:kFontRegularName size:10.0f]
+#define JACatalogCellLightFont [UIFont fontWithName:kFontLightName size:9.0f]
 #define JACatalogCellRedFontColor UIColorFromRGB(0xcc0000)
 #define JACatalogCellGrayFontColor UIColorFromRGB(0xcccccc)
 #define JACatalogCellPriceLabelOffsetY 2.0f

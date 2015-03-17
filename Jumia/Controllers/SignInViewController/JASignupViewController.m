@@ -88,7 +88,7 @@ JADatePickerDelegate
     [self.contentScrollView addSubview:self.contentView];
     
     self.headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.headerLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.headerLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.headerLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.headerLabel setText:STRING_ACCOUNT_DATA];
     [self.headerLabel setBackgroundColor:[UIColor clearColor]];
@@ -108,7 +108,7 @@ JADatePickerDelegate
     [self.registerButton setTitle:STRING_REGISTER forState:UIControlStateNormal];
     [self.registerButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.registerButton addTarget:self action:@selector(registerButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.registerButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.registerButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.contentView addSubview:self.registerButton];
     
     self.registerViewCurrentY = CGRectGetMaxY(self.registerButton.frame) + 5.0f;
@@ -121,7 +121,7 @@ JADatePickerDelegate
     [self.loginButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [self.loginButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];
     [self.loginButton addTarget:self action:@selector(loginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.loginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.loginButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.contentView addSubview:self.loginButton];
     self.registerViewCurrentY = CGRectGetMaxY(self.loginButton.frame) + 3.0f;
     

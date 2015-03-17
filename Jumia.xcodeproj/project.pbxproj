@@ -2114,6 +2114,7 @@
 		CE9AE1161AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-retHD.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63101A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-retHD.xib */; };
 		CE9AE1171AB6D78200D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63361A81053B00B6F26E /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib */; };
 		CE9AE1181AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63181A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape-ret4.xib */; };
+		CE9AE1261AB8251000D56481 /* zawgyione2008.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE1251AB8251000D56481 /* zawgyione2008.ttf */; };
 		CEA86D9E1A3756C2000032AD /* JASizeGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */; };
 		CEA86D9F1A3894C0000032AD /* JASizeGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */; };
 		CEA86DA31A39F82C000032AD /* JAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DA21A39F82C000032AD /* JAPageControl.m */; };
@@ -3061,6 +3062,9 @@
 		CE9ADF261AB6D6EC00D56481 /* Shop.com.mm-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Shop.com.mm-Info.plist"; path = "/Users/user/Desktop/JUMIAIOS/Shop.com.mm-Info.plist"; sourceTree = "<absolute>"; };
 		CE9AE11F1AB6D78200D56481 /* Bamilo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bamilo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9AE1201AB6D78200D56481 /* Bamilo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Bamilo-Info.plist"; path = "/Users/user/Desktop/JUMIAIOS/Bamilo-Info.plist"; sourceTree = "<absolute>"; };
+		CE9AE1211AB823C100D56481 /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/RIStrings.strings; sourceTree = "<group>"; };
+		CE9AE1251AB8251000D56481 /* zawgyione2008.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zawgyione2008.ttf; sourceTree = "<group>"; };
+		CE9AE1271AB8281400D56481 /* JAFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAFont.h; sourceTree = "<group>"; };
 		CEA86D9A1A374D32000032AD /* Model_1.3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.3.xcdatamodel; sourceTree = "<group>"; };
 		CEA86D9C1A3756C2000032AD /* JASizeGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASizeGuideViewController.h; path = SizeGuide/JASizeGuideViewController.h; sourceTree = "<group>"; };
 		CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASizeGuideViewController.m; path = SizeGuide/JASizeGuideViewController.m; sourceTree = "<group>"; };
@@ -4172,6 +4176,7 @@
 		B5A301AB19811D0700F71726 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CE9AE1221AB824B700D56481 /* Fonts */,
 				CE9AE1201AB6D78200D56481 /* Bamilo-Info.plist */,
 				CE9ADF261AB6D6EC00D56481 /* Shop.com.mm-Info.plist */,
 				CE9ADD2C1AB34C4600D56481 /* Daraz-Info.plist */,
@@ -5048,6 +5053,15 @@
 			path = FallbackView;
 			sourceTree = "<group>";
 		};
+		CE9AE1221AB824B700D56481 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				CE9AE1251AB8251000D56481 /* zawgyione2008.ttf */,
+				CE9AE1271AB8281400D56481 /* JAFont.h */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		CEA86D9B1A3756A6000032AD /* SizeGuide */ = {
 			isa = PBXGroup;
 			children = (
@@ -5586,6 +5600,7 @@
 				Base,
 				fr,
 				pt,
+				my,
 			);
 			mainGroup = B5A3019F19811D0700F71726;
 			productRefGroup = B5A301A919811D0700F71726 /* Products */;
@@ -6368,6 +6383,7 @@
 				CE9ADE691AB6D6E900D56481 /* slider-metal-handle@2x.png in Resources */,
 				CE9ADE6A1AB6D6E900D56481 /* 12_product_details.feature in Resources */,
 				CE9ADE6B1AB6D6E900D56481 /* my_first_steps.rb in Resources */,
+				CE9AE1261AB8251000D56481 /* zawgyione2008.ttf in Resources */,
 				CE9ADE6C1AB6D6E900D56481 /* BMA4SiPhoneWebViewNotifView-retHD.xib in Resources */,
 				CE9ADE6D1AB6D6E900D56481 /* slider-default-handle-highlighted.png in Resources */,
 				CE9ADE6E1AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons.xib in Resources */,
@@ -8092,6 +8108,7 @@
 				B5210E8719C4863400FDB0D1 /* en */,
 				B5210E8919C4863D00FDB0D1 /* fr */,
 				CEAB62D11A7FE32B00B6F26E /* pt */,
+				CE9AE1211AB823C100D56481 /* my */,
 			);
 			name = RIStrings.strings;
 			sourceTree = "<group>";

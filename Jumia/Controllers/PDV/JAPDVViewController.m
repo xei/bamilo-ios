@@ -923,7 +923,7 @@ JAActivityViewControllerDelegate
                 
                 [bundleSingleItem.sizeClickableView setTitle:STRING_SIZE forState:UIControlStateNormal];
                 [bundleSingleItem.sizeClickableView setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-                [bundleSingleItem.sizeClickableView setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
+                [bundleSingleItem.sizeClickableView setFont:[UIFont fontWithName:kFontRegularName size:14.0f]];
                 bundleSingleItem.sizeClickableView.tag = i;
                 [bundleSingleItem.sizeClickableView addTarget:self
                                                        action:@selector(showSizePickerForBundleSingleItem:)

@@ -170,7 +170,7 @@
     [self.featuresTitleLabel setNumberOfLines:1];
     [self.featuresTitleLabel setText:STRING_PRODUCT_FEATURES];
     [self.featuresTitleLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.featuresTitleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.featuresTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.featuresView addSubview:self.featuresTitleLabel];
     
     self.featuresSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
@@ -186,7 +186,7 @@
                                                                        0.0f)];
     [self.featuresTextLabel setNumberOfLines:0];
     [self.featuresTextLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.featuresTextLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0f]];
+    [self.featuresTextLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     [self.featuresView addSubview:self.featuresTextLabel];
     
     if (VALID_NOTEMPTY(self.product.attributeShortDescription, NSString))
@@ -213,7 +213,7 @@
         [self.descriptionTitleLabel setNumberOfLines:1];
         [self.descriptionTitleLabel setText:STRING_PRODUCT_DESCRIPTION];
         [self.descriptionTitleLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-        [self.descriptionTitleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]];
+        [self.descriptionTitleLabel setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
         [self.descriptionView addSubview:self.descriptionTitleLabel];
         
         self.descriptionSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
@@ -228,7 +228,7 @@
                                                                               self.descriptionView.frame.size.width - (2 * horizontalMargin),
                                                                               0.0f)];
         [self.descriptionTextLabel setTextColor:UIColorFromRGB(0x666666)];
-        [self.descriptionTextLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [self.descriptionTextLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
         [self.descriptionTextLabel setNumberOfLines:0];
         [self.descriptionView addSubview:self.descriptionTextLabel];
         

@@ -106,7 +106,7 @@
                                                                     10.0f)];
     self.labelNoResults.textAlignment = NSTextAlignmentCenter;
     self.labelNoResults.numberOfLines = -1;
-    self.labelNoResults.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
+    self.labelNoResults.font = [UIFont fontWithName:kFontLightName size:14.0f];
     self.labelNoResults.textColor = UIColorFromRGB(0x666666);
     
     NSString *text = searchResult.errorMessage;
@@ -114,8 +114,8 @@
     NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:text];
     NSInteger stringTextLenght = text.length;
     
-    UIFont *stringTextFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
-    UIFont *subStringTextFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0f];
+    UIFont *stringTextFont = [UIFont fontWithName:kFontLightName size:14.0f];
+    UIFont *subStringTextFont = [UIFont fontWithName:kFontBoldName size:14.0f];
     UIColor *stringTextColor = UIColorFromRGB(0X666666);
     
     
@@ -159,7 +159,7 @@
                                                                               10.0f)];
         self.searchTipsTitleLabel.numberOfLines = -1;
         self.searchTipsTitleLabel.textColor = UIColorFromRGB(0x666666);
-        self.searchTipsTitleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+        self.searchTipsTitleLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
         self.searchTipsTitleLabel.text = searchType.title;
         [self.searchTipsTitleLabel sizeToFit];
         
@@ -173,7 +173,7 @@
                                                                          10.0f)];
     self.searchTipsTextLabel.numberOfLines = -1;
     self.searchTipsTextLabel.textColor = UIColorFromRGB(0x666666);
-    self.searchTipsTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    self.searchTipsTextLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     self.searchTipsTextLabel.text = searchType.text;
     [self.searchTipsTextLabel sizeToFit];
     
@@ -202,7 +202,7 @@
                                                                          self.topSellersView.bounds.size.width - 6.0f*2,
                                                                          26.0f)];
     topSellersTitle.text = STRING_TOP_SELLERS;
-    topSellersTitle.font = [UIFont fontWithName:@"HelveticaNeue" size:11.0f];
+    topSellersTitle.font = [UIFont fontWithName:kFontRegularName size:11.0f];
     topSellersTitle.textColor = UIColorFromRGB(0x4e4e4e);
     [self.topSellersView addSubview:topSellersTitle];
     
@@ -280,7 +280,7 @@
                                                                         self.topBrandsView.bounds.size.width - 6.0f*2,
                                                                         26.0f)];
     topBrandsTitle.text = STRING_TOP_BRANDS;
-    topBrandsTitle.font = [UIFont fontWithName:@"HelveticaNeue" size:11.0f];
+    topBrandsTitle.font = [UIFont fontWithName:kFontRegularName size:11.0f];
     topBrandsTitle.textColor = UIColorFromRGB(0x4e4e4e);
     [self.topBrandsView addSubview:topBrandsTitle];
     
@@ -323,7 +323,7 @@
             
             UILabel *brandLabel = [[UILabel alloc] initWithFrame:CGRectMake(3, 80, 104, 20)];
             brandLabel.textAlignment = NSTextAlignmentCenter;
-            brandLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light"
+            brandLabel.font = [UIFont fontWithName:kFontLightName
                                               size:13.0f];
             brandLabel.textColor = UIColorFromRGB(0x666666);
             brandLabel.text = brand.name;
@@ -362,7 +362,7 @@
                                                                      10.0f)];
     noticeLabel.numberOfLines = -1;
     noticeLabel.textColor = UIColorFromRGB(0x666666);
-    noticeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    noticeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     noticeLabel.text = searchResult.noticeMessage;
     [noticeLabel sizeToFit];
     [self.noticeView addSubview:noticeLabel];

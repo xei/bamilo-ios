@@ -101,7 +101,7 @@
         self.offerEndedLabel = [UILabel new];
         self.offerEndedLabel.textAlignment = NSTextAlignmentCenter;
         self.offerEndedLabel.numberOfLines = -1;
-        self.offerEndedLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0f];
+        self.offerEndedLabel.font = [UIFont fontWithName:kFontBoldName size:16.0f];
         self.offerEndedLabel.textColor = UIColorFromRGB(0x4e4e4e);
         self.offerEndedLabel.text = STRING_CAMPAIGN_OFFER_ENDED;
         [self.offerEndedLabel sizeToFit];
@@ -148,7 +148,7 @@
     if (ISEMPTY(self.endLabel)) {
         self.endLabel = [[UILabel alloc] init];
         self.endLabel.text = STRING_CAMPAIGN_TIMER_END;
-        self.endLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+        self.endLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         self.endLabel.textColor = UIColorFromRGB(0x666666);
         [self.endLabel sizeToFit];
         [self.backgroundContentView addSubview:self.endLabel];
@@ -170,7 +170,7 @@
     
     if (ISEMPTY(self.timeLabel)) {
         self.timeLabel = [[UILabel alloc] init];
-        self.timeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+        self.timeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         self.timeLabel.textColor = UIColorFromRGB(0xcc0000);
         [self.timeLabel sizeToFit];
         [self.backgroundContentView addSubview:self.timeLabel];
@@ -285,7 +285,7 @@
                                                            1.0f);
         self.sizeLabel = [[UILabel alloc] init];
         self.sizeLabel.textColor = UIColorFromRGB(0x55a1ff);
-        self.sizeLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+        self.sizeLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
         [self.sizeClickableView addSubview:self.sizeLabel];
         [self.sizeLabel setFrame:CGRectMake(self.sizeClickableView.bounds.origin.x + 10.0f,
                                             self.sizeClickableView.bounds.origin.y,

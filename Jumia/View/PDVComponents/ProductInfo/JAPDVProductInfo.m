@@ -298,7 +298,7 @@
         
         self.fromLabel = [UILabel new];
         [self.fromLabel setTextColor:UIColorFromRGB(0x666666)];
-        [self.fromLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:9.0f]];
+        [self.fromLabel setFont:[UIFont fontWithName:kFontRegularName size:9.0f]];
         self.fromLabel.text = [NSString stringWithFormat:@"%@ ", STRING_FROM];
         [self.fromLabel sizeToFit];
         [self.fromLabel setFrame:CGRectMake(self.otherOffersLabel.frame.origin.x,
@@ -309,7 +309,7 @@
         
         self.offerMinPriceLabel = [UILabel new];
         [self.offerMinPriceLabel setTextColor:UIColorFromRGB(0xcc0000)];
-        [self.offerMinPriceLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:9.0f]];
+        [self.offerMinPriceLabel setFont:[UIFont fontWithName:kFontRegularName size:9.0f]];
         self.offerMinPriceLabel.text = product.offersMinPriceFormatted;
         [self.offerMinPriceLabel sizeToFit];
         [self.offerMinPriceLabel setFrame:CGRectMake(CGRectGetMaxX(self.fromLabel.frame),

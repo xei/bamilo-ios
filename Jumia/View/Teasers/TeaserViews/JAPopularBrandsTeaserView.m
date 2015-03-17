@@ -13,12 +13,12 @@
 #define JAPopularBrandsTeaserViewContentY 4.0f
 #define JAPopularBrandsTeaserViewContentCornerRadius 3.0f
 #define JAPopularBrandsTeaserViewTitleHeight 26.0f
-#define JAPopularBrandsTeaserViewTitleFont [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+#define JAPopularBrandsTeaserViewTitleFont [UIFont fontWithName:kFontRegularName size:13.0f];
 #define JAPopularBrandsTeaserViewTitleColor UIColorFromRGB(0x4e4e4e)
 #define JAPopularBrandsTeaserViewLineColor UIColorFromRGB(0xfaa41a)
 #define JAPopularBrandsTeaserViewCellMargin 16.0f
 #define JAPopularBrandsTeaserViewCellHeight 30.0f
-#define JAPopularBrandsTeaserViewCellFont [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]
+#define JAPopularBrandsTeaserViewCellFont [UIFont fontWithName:kFontLightName size:13.0f]
 #define JAPopularBrandsTeaserViewCellColor UIColorFromRGB(0x4e4e4e)
 
 @interface JAPopularBrandsTeaserView()

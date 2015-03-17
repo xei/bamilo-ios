@@ -24,7 +24,7 @@
     self.values = [[NSMutableDictionary alloc] init];
     
     self.title = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.frame.size.width - 12.0f, 25.0f)];
-    [self.title setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.title setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.title setTextColor:UIColorFromRGB(0x666666)];
     [self addSubview:self.title];
     

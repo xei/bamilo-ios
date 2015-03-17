@@ -57,7 +57,7 @@
         
         self.button = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        UIFont *font = [UIFont fontWithName:@"HelveticaNeue"
+        UIFont *font = [UIFont fontWithName:kFontRegularName
                                        size:16.0];
         
         self.button.titleLabel.font = font;

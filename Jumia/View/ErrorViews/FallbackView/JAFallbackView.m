@@ -71,7 +71,7 @@
     
     self.welcomeLabel = [[UILabel alloc] init];
     self.welcomeLabel.textColor = [UIColor whiteColor];
-    self.welcomeLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:18.0f];
+    self.welcomeLabel.font = [UIFont fontWithName:kFontRegularName size:18.0f];
     self.welcomeLabel.text = STRING_FALLBACK_WELCOME;
     [self.welcomeLabel sizeToFit];
     [self.welcomeLabel setFrame:CGRectMake((self.bounds.size.width - self.welcomeLabel.frame.size.width) / 2,
@@ -92,7 +92,7 @@
     
     self.countryLabel = [[UILabel alloc] init];
     self.countryLabel.textColor = [UIColor blackColor];
-    self.countryLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:24.0f];
+    self.countryLabel.font = [UIFont fontWithName:kFontRegularName size:24.0f];
     self.countryLabel.text = [RIApi getCountryNameInUse];
     [self.countryLabel sizeToFit];
     
@@ -122,7 +122,7 @@
     self.firstSloganLabel.numberOfLines = -1;
     self.firstSloganLabel.textAlignment = NSTextAlignmentCenter;
     self.firstSloganLabel.textColor = [UIColor blackColor];
-    self.firstSloganLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+    self.firstSloganLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     self.firstSloganLabel.text = [NSString stringWithFormat:@"%@ %@", [RIApi getCountryNameInUse], STRING_BEST_SHOPPING_EXPERIENCE];
     [self.firstSloganLabel sizeToFit];
     [self.firstSloganLabel setFrame:CGRectMake(10.0f,
@@ -133,13 +133,13 @@
     
     self.secondSloganLabel1 = [[UILabel alloc] init];
     self.secondSloganLabel1.textColor = [UIColor whiteColor];
-    self.secondSloganLabel1.font = [UIFont fontWithName:@"HelveticaNeue" size:10.0f];
+    self.secondSloganLabel1.font = [UIFont fontWithName:kFontRegularName size:10.0f];
     self.secondSloganLabel1.text = STRING_WIDEST_CHOICE;
     [self.secondSloganLabel1 sizeToFit];
     
     self.secondSloganLabel2 = [[UILabel alloc] init];
     self.secondSloganLabel2.textColor = [UIColor blackColor];
-    self.secondSloganLabel2.font = [UIFont fontWithName:@"HelveticaNeue" size:10.0f];
+    self.secondSloganLabel2.font = [UIFont fontWithName:kFontRegularName size:10.0f];
     self.secondSloganLabel2.text = [NSString stringWithFormat:@" %@", STRING_AT_YOUR_DOORSTEP];
     [self.secondSloganLabel2 sizeToFit];
     
@@ -166,7 +166,7 @@
     
     self.moreLabelBottom = [[UILabel alloc] init];
     self.moreLabelBottom.textColor = [UIColor whiteColor];
-    self.moreLabelBottom.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0f];
+    self.moreLabelBottom.font = [UIFont fontWithName:kFontBoldName size:12.0f];
     self.moreLabelBottom.text = STRING_FALLBACK_BOTTOM_1;
     [self.moreLabelBottom sizeToFit];
     [self.moreLabelBottom setFrame:CGRectMake((self.bounds.size.width - self.moreLabelBottom.frame.size.width) / 2,
@@ -177,7 +177,7 @@
     
     self.moreLabelTop = [[UILabel alloc] init];
     self.moreLabelTop.textColor = [UIColor whiteColor];
-    self.moreLabelTop.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:12.0f];
+    self.moreLabelTop.font = [UIFont fontWithName:kFontMediumName size:12.0f];
     self.moreLabelTop.text = STRING_FALLBACK_BOTTOM_2;
     [self.moreLabelTop sizeToFit];
     [self.moreLabelTop setFrame:CGRectMake((self.bounds.size.width - self.moreLabelTop.frame.size.width) / 2,
@@ -229,7 +229,7 @@
         
         UILabel* categoryLabel = [[UILabel alloc] init];
         categoryLabel.textColor = [UIColor blackColor];
-        categoryLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12.0f];
+        categoryLabel.font = [UIFont fontWithName:kFontRegularName size:12.0f];
         categoryLabel.text = [leftColumnCategoriesArray objectAtIndex:i];
         [categoryLabel sizeToFit];
         [categoryLabel setFrame:CGRectMake(CGRectGetMaxX(checkboxImageView.frame) + 6.0f,
@@ -272,7 +272,7 @@
         
         UILabel* categoryLabel = [[UILabel alloc] init];
         categoryLabel.textColor = [UIColor blackColor];
-        categoryLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12.0f];
+        categoryLabel.font = [UIFont fontWithName:kFontRegularName size:12.0f];
         categoryLabel.text = [rightColumnCategoriesArray objectAtIndex:i];
         [categoryLabel sizeToFit];
         [categoryLabel setFrame:CGRectMake(CGRectGetMaxX(checkboxImageView.frame) + 6.0f,
