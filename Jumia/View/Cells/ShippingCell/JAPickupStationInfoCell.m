@@ -190,7 +190,7 @@
     [self addSubview:self.lastSeparator];
     
     [self.image setImageWithURL:[NSURL URLWithString:pickupStation.image]
-               placeholderImage:[UIImage imageNamed:@"placeholder_variations"]];
+               placeholderImage:[UIImage imageNamed:kPlaceholderVariationsName]];
     [self.image changeImageHeight:0.0f andWidth:60.0f];
     
     self.clickableView.frame = self.bounds;

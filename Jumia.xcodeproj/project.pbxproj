@@ -2566,6 +2566,7 @@
 		520A37D11A4890CD0046C8B1 /* JASearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASearchView.m; sourceTree = "<group>"; };
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
+		6C18BD761AB88E2D00905FD2 /* JAPlaceholder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAPlaceholder.h; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
 		6C60C8571AB722AE008AD4AD /* RITracking_DARAZ.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking_DARAZ.plist; sourceTree = "<group>"; };
 		6C60C8591AB72325008AD4AD /* RITrackingDebug_DARAZ.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_DARAZ.plist; sourceTree = "<group>"; };
@@ -4185,6 +4186,7 @@
 				4A3921191988E27A00B70A9C /* JAConstants.h */,
 				B5210E8819C4863400FDB0D1 /* RIStrings.strings */,
 				B5210E8A19C48F1700FDB0D1 /* JAStrings.h */,
+				6C18BD761AB88E2D00905FD2 /* JAPlaceholder.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

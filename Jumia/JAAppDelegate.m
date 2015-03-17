@@ -42,6 +42,13 @@
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Medium" forKey:kFontMediumName];
     }
 
+    //placeholders
+        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"placeholder_grid_%@", APP_NAME] forKey:kPlaceholderGridNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"placeholder_list_%@", APP_NAME] forKey:kPlaceholderListNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"placeholder_pdv_%@", APP_NAME] forKey:kPlaceholderPDVNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"placeholder_gallery_%@", APP_NAME] forKey:kPlaceholderGalleryNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"placeholder_scrollable_%@", APP_NAME] forKey:kPlaceholderScrollableNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"placeholder_variations_%@", APP_NAME] forKey:kPlaceholderVariationsNameKey];
     
     
 #if defined(DEBUG) && DEBUG

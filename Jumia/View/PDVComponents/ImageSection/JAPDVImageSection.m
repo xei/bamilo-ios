@@ -558,7 +558,7 @@
                                                                                        imageHeight)];
                 [clickableView addSubview:imageView];
                 [imageView setImageWithURL:[NSURL URLWithString:image.url]
-                          placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+                          placeholderImage:[UIImage imageNamed:kPlaceholderPDVName]];
                 
                 currentX += clickableView.frame.size.width;
             }
@@ -588,7 +588,7 @@
                                                                                imageWidth,
                                                                                imageHeight)];
         [self.imageScrollView addSubview:imageView];
-        [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"]];
+        [imageView setImage:[UIImage imageNamed:kPlaceholderPDVName]];
         
     }
 }

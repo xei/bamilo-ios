@@ -49,7 +49,7 @@
                                                                                            self.bounds.size.width / self.teasers.count,
                                                                                            self.bounds.size.height)];
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:clickableView.bounds];
-        [imageView setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+        [imageView setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl] placeholderImage:[UIImage imageNamed:kPlaceholderPDVName]];
         [clickableView addSubview:imageView];
         clickableView.tag = i;
         [clickableView addTarget:self action:@selector(teaserImagePressed:) forControlEvents:UIControlEventTouchUpInside];
