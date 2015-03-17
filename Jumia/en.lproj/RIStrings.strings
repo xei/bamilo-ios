@@ -6,11 +6,10 @@
   Copyright (c) 2014 Rocket Internet. All rights reserved.
 */
 
-"string_jumia" = "Jumia";
 "string_update_necessary_title" = "Update necessary";
-"string_update_necessary_message" = "We found something that we needed to fix to make shopping experience in Jumia even better! You will need to update before continue using the app.";
+"string_update_necessary_message_ios" = "We found something that we needed to fix to make shopping experience in %@ even better! You will need to update before continue using the app.";
 "string_update_available_title" = "Update available";
-"string_update_available_message" = "There is a new update available that we prepared to make shopping experience in Jumia even better! Make sure you upgrade today!";
+"string_update_available_message_ios" = "There is a new update available that we prepared to make shopping experience in %@ even better! Make sure you upgrade today!";
 "string_update" = "Update!";
 "string_ok_update" = "Ok, Update!";
 "string_no_thanks" = "No, thanks.";
@@ -77,7 +76,7 @@
 "related_items" = "Related Items";
 "product_features_title" = "Product Features";
 "product_description_title" = "Product Description";
-"share_subject" = "Jumia Sharing";
+"share_subject_ios" = "%@ Sharing";
 "share_checkout_this_product" = "Check out this product I found:";
 "rating_question" = "You have used this Product? Rate it now!";
 "writereview_send" = "Send Review";
@@ -266,8 +265,8 @@
 "app_sharing" = "App Sharing";
 "share_the_app" = "Share the App";
 "can_share_app_with_friends" = "You can now share the app with your friends";
-"install_jumia_ios" = "Install the Jumia iOS App in an instant";
-"share_jumia_app" = "Share the Jumia App";
+"install_app_ios" = "Install the %@ iOS App in an instant";
+"share_app_ios" = "Share the %@ App";
 
 "delivery_time" = "Delivery time:";
 

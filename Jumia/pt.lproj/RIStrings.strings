@@ -4,15 +4,14 @@
    
    Created by Pedro Lopes on 13/09/14.
    Copyright (c) 2014 Rocket Internet. All rights reserved. */
-"string_jumia" = "Jumia";
 
 "string_update_necessary_title" = "Atualização necessária";
 
-"string_update_necessary_message" = "Encontramos algo que foi necessário corrigir para que a experiência de comprar no Jumia seja ainda melhor! Para continuar a usar a aplicação, deverá atualizá-la.";
+"string_update_necessary_message_ios" = "Encontramos algo que foi necessário corrigir para que a experiência de comprar no %@ seja ainda melhor! Para continuar a usar a aplicação, deverá atualizá-la.";
 
 "string_update_available_title" = "Atualização disponível";
 
-"string_update_available_message" = "Há uma nova atualização disponível para que a experiência de comprar no Jumia seja ainda melhor! Faça já a atualização!";
+"string_update_available_message_ios" = "Há uma nova atualização disponível para que a experiência de comprar no %@ seja ainda melhor! Faça já a atualização!";
 
 "string_update" = "Atualize!";
 
@@ -134,7 +133,7 @@
 
 "product_description_title" = "Descrição do Produto";
 
-"share_subject" = "Partilha do Jumia";
+"share_subject_ios" = "Partilha do %@";
 
 "share_checkout_this_product" = "Veja este produto que encontrámos!";
 
@@ -458,9 +457,9 @@
 
 "can_share_app_with_friends" = "Já pode partilhar a aplicação com os seus amigos";
 
-"install_jumia_ios" = "Instale a App iOS do Jumia num instante";
+"install_app_ios" = "Instale a App iOS do %@ num instante";
 
-"share_jumia_app" = "Partilhe a App do Jumia";
+"share_app_ios" = "Partilhe a App do %@";
 
 "delivery_time" = "Prazo de entrega:";
 

@@ -507,7 +507,7 @@
     JAActivityViewController *activityController = [[JAActivityViewController alloc] initWithActivityItems:objectsToShare
                                                                                      applicationActivities:nil];
     
-    [activityController setValue:STRING_SHARE_JUMIA_APP
+    [activityController setValue:[NSString stringWithFormat:STRING_SHARE_APP, APP_NAME]
                           forKey:@"subject"];
     
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];

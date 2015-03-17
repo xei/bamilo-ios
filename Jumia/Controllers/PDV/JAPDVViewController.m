@@ -1192,7 +1192,7 @@ JAActivityViewControllerDelegate
     
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
     
-    [activityController setValue:STRING_SHARE_OBJECT
+    [activityController setValue:[NSString stringWithFormat:STRING_SHARE_OBJECT, APP_NAME]
                           forKey:@"subject"];
     
     
