@@ -16,14 +16,14 @@
 #define JATopSellersTeaserViewContentY 4.0f
 #define JATopSellersTeaserViewContentCornerRadius 3.0f
 #define JATopSellersTeaserViewTitleHeight 26.0f
-#define JATopSellersTeaserViewTitleFont [UIFont fontWithName:@"HelveticaNeue" size:11.0f];
+#define JATopSellersTeaserViewTitleFont [UIFont fontWithName:kFontRegularName size:11.0f];
 #define JATopSellersTeaserViewTitleColor UIColorFromRGB(0x4e4e4e)
 #define JATopSellersTeaserViewLineColor UIColorFromRGB(0xfaa41a)
 #define JATopSellersTeaserViewProductTeaserWidth 110.0f
 #define JATopSellersTeaserViewProductTeaserWidthLandscape 140.0f
 #define JATopSellersTeaserViewProductImageWidth 57.0f
 #define JATopSellersTeaserViewProductImageHeight 71.0f
-#define JATopSellersTeaserViewProductFont [UIFont fontWithName:@"HelveticaNeue" size:9.0f]
+#define JATopSellersTeaserViewProductFont [UIFont fontWithName:kFontRegularName size:9.0f]
 #define JATopSellersTeaserViewProductLabelColor UIColorFromRGB(0x666666)
 #define JATopSellersTeaserViewProductPriceColor UIColorFromRGB(0xcc0000)
 

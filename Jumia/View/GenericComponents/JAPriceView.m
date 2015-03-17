@@ -19,13 +19,13 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
     
     NSMutableAttributedString* finalPriceString;
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont fontWithName:@"HelveticaNeue" size:fontSize], NSFontAttributeName,
+                                [UIFont fontWithName:kFontRegularName size:fontSize], NSFontAttributeName,
                                 UIColorFromRGB(0xcc0000), NSForegroundColorAttributeName, nil];
 
     if (VALID_NOTEMPTY(specialPrice, NSString) && VALID_NOTEMPTY(price, NSString))
     {
         NSDictionary* oldPriceAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                            [UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize], NSFontAttributeName,
+                                            [UIFont fontWithName:kFontLightName size:fontSize], NSFontAttributeName,
                                             UIColorFromRGB(0xcccccc), NSForegroundColorAttributeName, nil];
         
         NSRange oldPriceRange = NSMakeRange(specialPrice.length + 1, price.length);
@@ -70,7 +70,7 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
     if (VALID_NOTEMPTY(specialPrice, NSString)) {
         UILabel* oldPriceLabel = [UILabel new];
         oldPriceLabel.text = price;
-        oldPriceLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize];
+        oldPriceLabel.font = [UIFont fontWithName:kFontLightName size:fontSize];
         [oldPriceLabel sizeToFit];
         UIView* strike = [[UIView alloc] init];
         

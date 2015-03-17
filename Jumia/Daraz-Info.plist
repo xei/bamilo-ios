@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.shop.ios.dev</string>
+	<string>com.daraz.ios.dev</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -22,35 +22,35 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>com.shop.ios.dev</string>
+			<string>com.jumia.ios.dev</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tagmanager.c.com.shop.ios.dev</string>
+				<string>tagmanager.c.com.jumia.ios.dev</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.shop.ios.dev</string>
+			<string>com.jumia.ios.dev</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>Shop.com.mm</string>
+				<string>Jumia</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb1598974337002842</string>
+				<string>fb669323149842984</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>FacebookAppID</key>
-	<string>1598974337002842</string>
+	<string>669323149842984</string>
 	<key>FacebookDisplayName</key>
-	<string>Shop.com.mm</string>
+	<string>Daraz</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -62,10 +62,6 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
-	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>zawgyione2008.ttf</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

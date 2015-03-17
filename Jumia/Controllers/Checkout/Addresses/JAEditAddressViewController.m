@@ -403,7 +403,7 @@ JAPickerDelegate>
     self.contentView.layer.cornerRadius = 5.0f;
     
     self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width, 26.0f)];
-    [self.headerLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.headerLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.headerLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.headerLabel setText:STRING_EDIT_ADDRESS];
     [self.headerLabel setBackgroundColor:[UIColor clearColor]];

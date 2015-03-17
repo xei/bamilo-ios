@@ -69,7 +69,7 @@
                                                                                           totalHeight,
                                                                                           width - (27.0f * 2),
                                                                                           1000.0f)];
-                    [descriptionLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]];
+                    [descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
                     [descriptionLabel setNumberOfLines:0];
                     [descriptionLabel setLineBreakMode:NSLineBreakByWordWrapping];
                     [descriptionLabel setTextColor:UIColorFromRGB(0x666666)];

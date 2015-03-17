@@ -46,7 +46,7 @@
     
     UIButton *button = (UIButton *)[self.viewForBaselineLayout viewWithTag:1000];
     [button setTitle:STRING_CATALOG_EDIT_FILTERS forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+    button.titleLabel.font = [UIFont fontWithName:kFontRegularName size:16];
     [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     button.layer.cornerRadius = 5.0f;
 }

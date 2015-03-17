@@ -261,7 +261,7 @@ JADynamicFormDelegate
     [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
     [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.saveButton addTarget:self action:@selector(continueUpdatePreferences) forControlEvents:UIControlEventTouchUpInside];
-    [self.saveButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.saveButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.scrollView addSubview:self.saveButton];
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.saveButton.frame) + 6.0f)];

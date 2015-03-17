@@ -14,16 +14,16 @@
 #define JACampaignsTeaserViewHorizontalMargin 6.0f
 #define JACampaignsTeaserViewContentY 4.0f
 #define JACampaignsTeaserViewContentCornerRadius 3.0f
-#define JACampaignsTeaserViewHotLabelFont [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f]
+#define JACampaignsTeaserViewHotLabelFont [UIFont fontWithName:kFontBoldName size:18.0f]
 #define JACampaignsTeaserViewHotLabelColor UIColorFromRGB(0xac1716)
 #define JACampaignsTeaserViewHotLabelOffset 4.0f
 #define JACampaignsTeaserViewGraySquareX 4.0f
 #define JACampaignsTeaserViewGraySquareWidth 61.0f
-#define JACampaignsTeaserViewOffersLabelFont [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0f];
+#define JACampaignsTeaserViewOffersLabelFont [UIFont fontWithName:kFontBoldName size:10.0f];
 #define JACampaignsTeaserViewOffersLabelColor [UIColor blackColor]
 #define JACampaignsTeaserViewTitleOffset 80.0f
 #define JACampaignsTeaserViewTitleRightOffset 20.0f
-#define JACampaignsTeaserViewTitleFont [UIFont fontWithName:@"HelveticaNeue-Bold" size:17.0f]
+#define JACampaignsTeaserViewTitleFont [UIFont fontWithName:kFontBoldName size:17.0f]
 #define JACampaignsTeaserViewTitleColor [UIColor whiteColor]
 
 
@@ -160,7 +160,7 @@
                                                                        listClickableView.bounds.size.width - 30.0f,
                                                                        listClickableView.bounds.size.height)];
             RITeaserText* teaserText = [teaser.teaserTexts firstObject];
-            label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+            label.font = [UIFont fontWithName:kFontLightName size:13.0f];
             label.textColor = UIColorFromRGB(0x4e4e4e);
             label.text = teaserText.name;
             [listClickableView addSubview:label];

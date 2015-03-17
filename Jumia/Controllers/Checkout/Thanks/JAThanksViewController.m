@@ -55,13 +55,13 @@
 
     NSString* baseString = STRING_ORDER_TRACK_SUCCESS;
     NSDictionary* baseAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [UIFont fontWithName:@"HelveticaNeue-Light" size:12], NSFontAttributeName,
+                                    [UIFont fontWithName:kFontLightName size:12], NSFontAttributeName,
                                     UIColorFromRGB(0x666666), NSForegroundColorAttributeName, nil];
     
     NSString* particleString = STRING_ORDER_TRACK_LINK;
     NSRange particleStringRange = [baseString rangeOfString:particleString];
     NSDictionary* highlightAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [UIFont fontWithName:@"HelveticaNeue-Light" size:12], NSFontAttributeName,
+                                         [UIFont fontWithName:kFontLightName size:12], NSFontAttributeName,
                                          UIColorFromRGB(0x55a1ff), NSForegroundColorAttributeName, nil];
     
     NSMutableAttributedString* finalString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:baseAttributes];

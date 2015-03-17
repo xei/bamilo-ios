@@ -246,7 +246,7 @@
     if(!self.doneButton.hidden)
     {
         NSString *doneButtonText = self.doneButton.titleLabel.text;
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:kFontRegularName size:17]};
         CGSize doneButtonTextSize = [doneButtonText sizeWithAttributes:attributes];
         CGFloat doneButtonWidth = 6.0f + doneButtonTextSize.width;
 
@@ -288,7 +288,7 @@
     if(!self.backButton.hidden)
     {
         NSString *backButtonText = self.backButton.titleLabel.text;
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:kFontRegularName size:17]};
         CGSize backButtonTextSize = [backButtonText sizeWithAttributes:attributes];
         
         CGFloat backButtonMaxWidth = backButtonTextSize.width;
@@ -350,7 +350,7 @@
     titleLabelWidth = width - (2 * titleLabelSideMargin);
     
     NSString *titleLabelText = self.titleLabel.text;
-    NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
+    NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:kFontRegularName size:17]};
     CGSize titleLabelTextSize = [titleLabelText sizeWithAttributes:titleLabelAttributes];
     if (titleLabelTextSize.width > titleLabelWidth)
     {

@@ -29,6 +29,21 @@
 {
     self.startLoadingTime = [NSDate date];
     
+    //fonts
+    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontRegularNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontLightNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontBoldName];
+        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontMediumName];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontRegularNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Light" forKey:kFontLightNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Bold" forKey:kFontBoldName];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Medium" forKey:kFontMediumName];
+    }
+
+    
+    
 #if defined(DEBUG) && DEBUG
     
 #if defined(STAGING) && STAGING
@@ -99,12 +114,12 @@
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
      setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                              UIColorFromRGB(0xc8c8c8), NSForegroundColorAttributeName,
-                             [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
+                             [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
      setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                              [UIColor orangeColor], NSForegroundColorAttributeName,
-                             [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
+                             [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
     
     NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:kPHPSESSIDCookie];
     if(VALID_NOTEMPTY(cookieProperties, NSDictionary))

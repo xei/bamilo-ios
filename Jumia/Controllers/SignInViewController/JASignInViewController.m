@@ -77,7 +77,7 @@ FBLoginViewDelegate
     [self.scrollView addSubview:self.loginView];
 
     self.loginLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.loginLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+    self.loginLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     [self.loginLabel setText:STRING_CREDENTIALS];
     [self.loginLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.loginView addSubview:self.loginLabel];
@@ -97,7 +97,7 @@ FBLoginViewDelegate
     [self.facebookLoginButton setTitle:STRING_LOGIN_WITH_FACEBOOK forState:UIControlStateNormal];
     [self.facebookLoginButton setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
     [self.facebookLoginButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.facebookLoginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.facebookLoginButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.loginView addSubview:self.facebookLoginButton];
     
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -105,7 +105,7 @@ FBLoginViewDelegate
     [self.loginButton setTitle:STRING_LOGIN forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.loginButton addTarget:self action:@selector(loginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.loginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.loginButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.loginView addSubview:self.loginButton];
 
     self.forgotPasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -116,7 +116,7 @@ FBLoginViewDelegate
     [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];
     [self.forgotPasswordButton addTarget:self action:@selector(forgotPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.forgotPasswordButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.forgotPasswordButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.loginView addSubview:self.forgotPasswordButton];
     
     self.loginViewCurrentY = CGRectGetMaxY(self.forgotPasswordButton.frame) + 6.0f;
@@ -126,7 +126,7 @@ FBLoginViewDelegate
     [self.signUpButton setTitle:STRING_CREATE_ACCOUNT forState:UIControlStateNormal];
     [self.signUpButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.signUpButton addTarget:self action:@selector(signUpButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.signUpButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.signUpButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.loginView addSubview:self.signUpButton];
     
     if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)

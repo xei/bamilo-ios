@@ -58,14 +58,14 @@
     [self.scrollView addSubview:self.contentView];
 
     self.firstLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.firstLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0f]];
+    [self.firstLabel setFont:[UIFont fontWithName:kFontBoldName size:13.0f]];
     [self.firstLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.firstLabel setText:STRING_TYPE_YOUR_EMAIL];
     [self.firstLabel setBackgroundColor:[UIColor clearColor]];
     [self.contentView addSubview:self.firstLabel];
     
     self.secondLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.secondLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.secondLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.secondLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.secondLabel setText:STRING_WE_WILL_SEND_PASSWORD];
     [self.secondLabel setBackgroundColor:[UIColor clearColor]];
@@ -250,7 +250,7 @@
     [self.forgotPasswordButton setTitle:STRING_SUBMIT forState:UIControlStateNormal];
     [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.forgotPasswordButton addTarget:self action:@selector(forgotPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.forgotPasswordButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.forgotPasswordButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.contentView addSubview:self.forgotPasswordButton];
     
     self.forgotPasswordViewCurrentY = CGRectGetMaxY(self.forgotPasswordButton.frame) + 6.0f;

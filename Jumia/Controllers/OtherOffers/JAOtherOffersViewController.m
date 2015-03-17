@@ -83,7 +83,7 @@
     if (ISEMPTY(self.brandLabel)) {
         self.brandLabel = [UILabel new];
         self.brandLabel.textColor = UIColorFromRGB(0x666666);
-        self.brandLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:14.0f];
+        self.brandLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
         [self.topView addSubview:self.brandLabel];
     }
     self.brandLabel.text = self.product.brand;
@@ -98,7 +98,7 @@
     if (ISEMPTY(self.nameLabel)) {
         self.nameLabel = [UILabel new];
         self.nameLabel.textColor = UIColorFromRGB(0x666666);
-        self.nameLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+        self.nameLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
         self.nameLabel.numberOfLines = -1;
         [self.topView addSubview:self.nameLabel];
     }
@@ -128,7 +128,7 @@
     if (ISEMPTY(self.offersFromLabel)) {
         self.offersFromLabel = [UILabel new];
         self.offersFromLabel.textColor = UIColorFromRGB(0x666666);
-        self.offersFromLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+        self.offersFromLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
         if (VALID_NOTEMPTY(self.productOffers, NSArray)) {
             self.offersFromLabel.text = [NSString stringWithFormat:STRING_NUMBER_OFFERS_FROM, self.productOffers.count];
         } else {
@@ -145,7 +145,7 @@
     if (ISEMPTY(self.priceLabel)) {
         self.priceLabel = [UILabel new];
         self.priceLabel.textColor = UIColorFromRGB(0xcc0000);
-        self.priceLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+        self.priceLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
         [self.topView addSubview:self.priceLabel];
     }
     self.priceLabel.text = self.product.offersMinPriceFormatted;

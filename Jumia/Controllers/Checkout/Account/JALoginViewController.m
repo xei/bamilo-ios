@@ -137,7 +137,7 @@ FBLoginViewDelegate
     [self.loginLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.loginLabel setBackgroundColor:[UIColor clearColor]];
     [self.loginLabel setText:STRING_LOGIN];
-    [self.loginLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]];
+    [self.loginLabel setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
     [self.loginView addSubview:self.loginLabel];
     
     self.loginArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
@@ -179,7 +179,7 @@ FBLoginViewDelegate
     [self.signUpLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.signUpLabel setBackgroundColor:[UIColor clearColor]];
     [self.signUpLabel setText:STRING_SIGNUP];
-    self.signUpLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    self.signUpLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     [self.signUpView addSubview:self.signUpLabel];
     
     self.signUpArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
@@ -543,7 +543,7 @@ FBLoginViewDelegate
     [self.loginButton setTitle:STRING_LOGIN forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.loginButton addTarget:self action:@selector(loginButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.loginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.loginButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.loginFormView addSubview:self.loginButton];
     self.loginFormHeight += self.loginButton.frame.size.height;
     
@@ -556,7 +556,7 @@ FBLoginViewDelegate
     [self.forgotButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
     [self.forgotButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [self.forgotButton addTarget:self action:@selector(forgotButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.forgotButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.forgotButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.loginFormView addSubview:self.forgotButton];
     self.loginFormHeight += self.forgotButton.frame.size.height;
     
@@ -572,7 +572,7 @@ FBLoginViewDelegate
         self.facebookLoginSeparatorLabel = [[UILabel alloc] init];
         [self.facebookLoginSeparatorLabel setText:STRING_OR];
         [self.facebookLoginSeparatorLabel setTextColor:UIColorFromRGB(0xcccccc)];
-        [self.facebookLoginSeparatorLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        [self.facebookLoginSeparatorLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
         [self.facebookLoginSeparatorLabel sizeToFit];
         
         self.facebookLoginSeparatorLeftView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -612,7 +612,7 @@ FBLoginViewDelegate
         [self.facebookLoginButton setTitle:STRING_LOGIN_WITH_FACEBOOK forState:UIControlStateNormal];
         [self.facebookLoginButton setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
         [self.facebookLoginButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.facebookLoginButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        [self.facebookLoginButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
         
         [self.loginFormView addSubview:self.facebookLoginButton];
         self.loginFormHeight += self.facebookLoginButton.frame.size.height;
@@ -635,7 +635,7 @@ FBLoginViewDelegate
     [self.signUpButton setTitle:STRING_SIGNUP forState:UIControlStateNormal];
     [self.signUpButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.signUpButton addTarget:self action:@selector(signUpButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.signUpButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.signUpButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.signUpFormView addSubview:self.signUpButton];
     self.signupFormHeight += self.signUpButton.frame.size.height;
     
@@ -648,7 +648,7 @@ FBLoginViewDelegate
         self.facebookSignupSeparatorLabel = [[UILabel alloc] init];
         [self.facebookSignupSeparatorLabel setText:STRING_OR];
         [self.facebookSignupSeparatorLabel setTextColor:UIColorFromRGB(0xcccccc)];
-        [self.facebookSignupSeparatorLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        [self.facebookSignupSeparatorLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
         [self.facebookSignupSeparatorLabel sizeToFit];
         
         self.facebookSignupSeparatorLeftView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -685,7 +685,7 @@ FBLoginViewDelegate
         [self.facebookSingupButton setTitle:STRING_SIGNUP_WITH_FACEBOOK forState:UIControlStateNormal];
         [self.facebookSingupButton setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
         [self.facebookSingupButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.facebookSingupButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        [self.facebookSingupButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
         
         [self.signUpFormView addSubview:self.facebookSingupButton];
         self.signupFormHeight += self.facebookSingupButton.frame.size.height;

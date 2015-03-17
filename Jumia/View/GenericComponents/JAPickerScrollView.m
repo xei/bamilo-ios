@@ -12,8 +12,8 @@
 #define JAPickerScrollViewBackgroundColor UIColorFromRGB(0xe3e3e3)
 #define JAPickerScrollViewTextColor UIColorFromRGB(0x4e4e4e)
 #define JAPickerScrollViewTextSize 13.0f
-#define JAPickerScrollViewNormalFont [UIFont fontWithName:@"HelveticaNeue-Light" size:JAPickerScrollViewTextSize]
-#define JAPickerScrollViewSelectedFont [UIFont fontWithName:@"HelveticaNeue" size:JAPickerScrollViewTextSize]
+#define JAPickerScrollViewNormalFont [UIFont fontWithName:kFontLightName size:JAPickerScrollViewTextSize]
+#define JAPickerScrollViewSelectedFont [UIFont fontWithName:kFontRegularName size:JAPickerScrollViewTextSize]
 #define JAPickerScrollViewIndicatorImageName @"PickerScrollIndicator"
 #define JAPickerScrollViewFadeWidth 30.0f
 

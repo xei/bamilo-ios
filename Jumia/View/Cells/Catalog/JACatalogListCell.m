@@ -62,7 +62,7 @@
     }
     [self.recentLabel removeFromSuperview];
     self.recentLabel = [[UILabel alloc] initWithFrame:CGRectMake(recentLabelX, recentLabelY, 48.0f, 14.0f)];
-    self.recentLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:8.0f];
+    self.recentLabel.font = [UIFont fontWithName:kFontBoldName size:8.0f];
     self.recentLabel.text = STRING_NEW;
     self.recentLabel.textAlignment = NSTextAlignmentCenter;
     self.recentLabel.textColor = [UIColor whiteColor];

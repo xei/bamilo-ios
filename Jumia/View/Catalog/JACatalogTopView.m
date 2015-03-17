@@ -84,7 +84,7 @@
     [self.sortingButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.sortingButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateSelected];
     [self.sortingButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateHighlighted];
-    [self.sortingButton setFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0f]];
+    [self.sortingButton setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     [self.sortingButton addTarget:self action:@selector(sortingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_normal"] forState:UIControlStateNormal];
@@ -94,7 +94,7 @@
     [self.filterButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.filterButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateSelected];
     [self.filterButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateHighlighted];
-    [self.filterButton setFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0f]];
+    [self.filterButton setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     [self.filterButton addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.viewModeButton addTarget:self action:@selector(viewModeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
