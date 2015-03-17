@@ -105,7 +105,7 @@ UIScrollViewDelegate
         imageView.center = point;
         
         [imageView setImageWithURL:[NSURL URLWithString:image.url]
-                  placeholderImage:[UIImage imageNamed:@"placeholder_gallery"]];
+                  placeholderImage:[UIImage imageNamed:kPlaceholderGalleryName]];
         
         [self.imageViewsArray insertObject:imageView
                                    atIndex:0];
@@ -152,7 +152,7 @@ UIScrollViewDelegate
             imageView.center = point;
             
             [imageView setImageWithURL:[NSURL URLWithString:image.url]
-                      placeholderImage:[UIImage imageNamed:@"placeholder_gallery"]];
+                      placeholderImage:[UIImage imageNamed:kPlaceholderGalleryName]];
             
             [self.imageViewsArray insertObject:imageView
                                        atIndex:i];

@@ -812,7 +812,7 @@ JAActivityViewControllerDelegate
                                                                                       imageHeight,
                                                                                       imageHeight)];
             [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
-                         placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                         placeholderImage:[UIImage imageNamed:kPlaceholderScrollableName]];
             [newImageView changeImageHeight:imageHeight andWidth:0.0f];
             [variationClickableView addSubview:newImageView];
             
@@ -952,7 +952,7 @@ JAActivityViewControllerDelegate
                 RIImage *imageTemp = [bundleProduct.images firstObject];
                 
                 [bundleSingleItem.productImageView setImageWithURL:[NSURL URLWithString:imageTemp.url]
-                                                  placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                                                  placeholderImage:[UIImage imageNamed:kPlaceholderScrollableName]];
             }
             
             bundleSingleItem.productNameLabel.text = bundleProduct.brand;
@@ -1047,7 +1047,7 @@ JAActivityViewControllerDelegate
                     RIImage *imageTemp = [product.images firstObject];
                     
                     [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
-                                             placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                                             placeholderImage:[UIImage imageNamed:kPlaceholderScrollableName]];
                 }
                 
                 singleItem.labelBrand.text = product.brand;

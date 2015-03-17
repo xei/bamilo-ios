@@ -94,7 +94,7 @@
                       forControlEvents:UIControlEventTouchUpInside];
     
     [self.imageView setImageWithURL:[NSURL URLWithString:[campaignProduct.imagesUrls firstObject]]
-                   placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                   placeholderImage:[UIImage imageNamed:kPlaceholderScrollableName]];
     
     //OFFER ENDED
     if (ISEMPTY(self.offerEndedLabel)) {
