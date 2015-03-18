@@ -49,7 +49,6 @@
     #import "RILocalizationWrapper.h"
     #import "JAStrings.h"
     #import "JAFont.h"
-    #import "JAPlaceholder.h"
 
     #import "JAMessageView.h"
     #import "Reachability.h"
