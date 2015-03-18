@@ -87,14 +87,14 @@ void(^retryBock)(BOOL dismiss);
     CGFloat leftPadding = 6.0f;
     NSString *orangeButtonName = @"orangeBig_%@";
     NSString *greyButtonName = @"greyBig_%@";
-    NSString *mapName = @"jumiaMap";
+    NSString *mapName = @"map";
     CGFloat buttonsWidth = 12.0f;
     CGFloat marginBottom = 15.0f;
     
     if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
         orangeButtonName = @"orangeFullPortrait_%@";
         greyButtonName = @"greyFullPortrait_%@";
-        mapName = @"jumiaMapiPad";
+        mapName = @"mapiPad";
         
         if(UIInterfaceOrientationIsLandscape(myOrientation)){
             startingY = 50.0f;
@@ -102,7 +102,7 @@ void(^retryBock)(BOOL dismiss);
             buttonsWidth = 268.0f;
             marginBottom = 50.0f;
             self.backgroundImageName = @"maintenancePageBackground_iPad_land";
-            mapName = @"jumiaMapiPad";
+            mapName = @"mapiPad";
             
         }else{
             self.backgroundImageName = @"maintenancePageBackground_iPad_port";
