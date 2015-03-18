@@ -33,13 +33,13 @@
     if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
         [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontRegularNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontLightNameKey];
-        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontBoldName];
-        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontMediumName];
+        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontBoldNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontMediumNameKey];
     } else {
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontRegularNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Light" forKey:kFontLightNameKey];
-        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Bold" forKey:kFontBoldName];
-        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Medium" forKey:kFontMediumName];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Bold" forKey:kFontBoldNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Medium" forKey:kFontMediumNameKey];
     }
 
     //placeholders

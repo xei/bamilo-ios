@@ -76,10 +76,7 @@
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
     
-  if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-    {
-       [self.logoImageView setImage:[UIImage imageNamed:@"img_navbar_logo_daraz"]];
-    }
+    [self.logoImageView setImage:[UIImage imageNamed:@"img_navbar_logo"]];
 
 }
 
