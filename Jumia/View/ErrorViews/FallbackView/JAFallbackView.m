@@ -302,10 +302,10 @@
     [self addSubview:self.rightColumn];
     
     CGFloat availableHeight = CGRectGetMinY(self.leftColumn.frame) - CGRectGetMaxY(self.secondSloganLabel1.frame);
-    UIImage* mapImage = [UIImage imageNamed:@"jumiaMap"];
+    UIImage* mapImage = [UIImage imageNamed:@"map"];
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
-        mapImage = [UIImage imageNamed:@"jumiaMapiPad"];
+        mapImage = [UIImage imageNamed:@"mapiPad"];
     }
     self.mapImageView = [[UIImageView alloc] initWithImage:mapImage];
     [self.mapImageView setFrame:CGRectMake((self.frame.size.width - mapImage.size.width) / 2,
@@ -478,10 +478,10 @@
     }
 
     CGFloat availableHeight = CGRectGetMinY(self.leftColumn.frame) - CGRectGetMaxY(self.secondSloganLabel1.frame);
-    UIImage* mapImage = [UIImage imageNamed:@"jumiaMap"];
+    UIImage* mapImage = [UIImage imageNamed:@"map"];
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
-        mapImage = [UIImage imageNamed:@"jumiaMapiPad"];
+        mapImage = [UIImage imageNamed:@"mapiPad"];
     }
     [self.mapImageView setImage:mapImage];
     [self.mapImageView setFrame:CGRectMake((self.frame.size.width - mapImage.size.width) / 2,
