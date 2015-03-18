@@ -236,9 +236,9 @@
             if (product.imagesArray.count > 0) {
                 NSString *url = [product.imagesArray firstObject];
                 [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:url]
-                                         placeholderImage:[UIImage imageNamed:kPlaceholderScrollableName]];
+                                         placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
             } else {
-                [singleItem.imageViewItem setImage:[UIImage imageNamed:kPlaceholderScrollableName]];
+                [singleItem.imageViewItem setImage:[UIImage imageNamed:@"placeholder_scrollable"]];
             }
             
             singleItem.labelBrand.text = product.brand;
@@ -314,9 +314,9 @@
             
             if (brand.image.length > 0) {
                 [brandImage setImageWithURL:[NSURL URLWithString:brand.image]
-                           placeholderImage:[UIImage imageNamed:kPlaceholderScrollableName]];
+                           placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
             } else {
-                [brandImage setImage:[UIImage imageNamed:kPlaceholderScrollableName]];
+                [brandImage setImage:[UIImage imageNamed:@"placeholder_scrollable"]];
             }
             
             [brandView addSubview:brandImage];

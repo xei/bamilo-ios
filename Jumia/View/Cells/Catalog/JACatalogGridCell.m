@@ -20,7 +20,7 @@
     RIImage* firstImage = [product.images firstObject];
  
     [self.productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
-                          placeholderImage:[UIImage imageNamed:kPlaceholderGridName]];
+                          placeholderImage:[UIImage imageNamed:@"placeholder_grid"]];
     
     CGFloat priceY = JACatalogViewControllerGridCellPriceViewY;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {

@@ -60,7 +60,7 @@
         [button setFrame:clickableView.bounds];
         [button setEnabled:NO];
         [button setBackgroundColor:UIColorFromRGB(0xffffff)];
-        [button setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl] placeholderImage:[UIImage imageNamed:kPlaceholderGridName]];
+        [button setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_grid"]];
         [clickableView addSubview:button];
         clickableView.tag = i;
         [clickableView addTarget:self action:@selector(teaserImagePressed:) forControlEvents:UIControlEventTouchUpInside];

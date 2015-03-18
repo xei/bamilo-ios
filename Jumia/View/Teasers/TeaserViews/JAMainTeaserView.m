@@ -70,7 +70,7 @@
         [button setFrame:clickableView.bounds];
         [button setEnabled:NO];
         [button setBackgroundColor:UIColorFromRGB(0xffffff)];
-        [button setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl] placeholderImage:[UIImage imageNamed:kPlaceholderPDVName]];
+        [button setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
         [clickableView addSubview:button];
         [clickableView addTarget:self action:@selector(teaserImagePressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:clickableView];

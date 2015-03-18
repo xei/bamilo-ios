@@ -95,7 +95,7 @@
                                                                                       productTeaserView.bounds.origin.y,
                                                                                       JATopSellersTeaserViewProductImageWidth,
                                                                                       JATopSellersTeaserViewProductImageHeight)];
-            [productImage setImageWithURL:[NSURL URLWithString:teaserProduct.imageUrl] placeholderImage:[UIImage imageNamed:kPlaceholderScrollableName]];
+            [productImage setImageWithURL:[NSURL URLWithString:teaserProduct.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
             [productTeaserView addSubview:productImage];
             
             

@@ -234,7 +234,7 @@
                                                                            85.0f)];
     
     [imageView setImageWithURL:[NSURL URLWithString:cartItem.imageUrl]
-              placeholderImage:[UIImage imageNamed:kPlaceholderListName]];
+              placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     [itemCell addSubview:imageView];
     
     UILabel* nameLabel = [UILabel new];
