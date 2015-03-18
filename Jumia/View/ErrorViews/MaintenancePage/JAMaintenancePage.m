@@ -169,12 +169,6 @@ void(^retryBock)(BOOL dismiss);
     
     CGFloat logoImageViewTopPadding = 10.0f;
     CGFloat countryNameLabelTopPadding = 10.0f;
-    if(countryNameLabelHeight > self.logoImage.size.height)
-    {
-        logoViewHeight = countryNameLabelHeight;
-        countryNameLabelTopPadding = 0.0f;
-        logoImageViewTopPadding = (countryNameLabelHeight - self.logoImage.size.height) / 2;
-    }
     
     [self.logoImageView setFrame:CGRectMake(0.0f,
                                             logoImageViewTopPadding,
