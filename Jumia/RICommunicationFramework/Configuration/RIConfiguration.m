@@ -38,7 +38,7 @@ NSString *const RI_HTTP_USER_AGENT_HEADER_IPAD_VALUE = @"iPad: Mozilla/5.0(iPad;
 NSString *const RI_COUNTRIES_URL_JUMIA = @"http://www.jumia.com/mobapi/availablecountries";
 NSString *const RI_COUNTRIES_URL_JUMIA_STAGING = @"https://cld.pt/dl/download/40e5154f-fbe5-4b4d-abad-bef636d089e5/jtmobapi_040215";
 NSString *const RI_COUNTRIES_URL_DARAZ = @"http://www.daraz.com/mobapi/availablecountries";
-NSString *const RI_COUNTRIES_URL_DARAZ_STAGING = @"http://www.daraz.com/mobapi/availablecountries/staging";
+NSString *const RI_COUNTRIES_URL_DARAZ_STAGING = @"https://cld.pt/dl/download/06052f3c-c6ac-4a91-ae88-b739c1e08d91/dtmobapi?download=true";//@"http://www.daraz.com/mobapi/availablecountries/staging";
 
 NSString *const RI_UNIQUE_COUNTRY_URL_SHOP = @"http://www.shop.com.mm/mobapi/";
 NSString *const RI_UNIQUE_COUNTRY_URL_SHOP_STAGING = @"http://alice-staging.shop.com.mm/mobapi/";
