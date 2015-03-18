@@ -32,7 +32,7 @@
     }
     else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
     {
-        countryListURL = RI_COUNTRIES_URL_DARAZ;
+        countryListURL = RI_COUNTRIES_URL_DARAZ_STAGING;
     }
 #endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
