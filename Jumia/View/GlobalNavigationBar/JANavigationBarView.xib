@@ -71,8 +71,8 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_navbar_logo" translatesAutoresizingMaskIntoConstraints="NO" id="fXf-f0-8rG">
-                    <rect key="frame" x="115" y="12" width="91" height="20"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_navbar_logo" translatesAutoresizingMaskIntoConstraints="NO" id="fXf-f0-8rG">
+                    <rect key="frame" x="119" y="12" width="83" height="20"/>
                 </imageView>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2DQ-tD-tFT">
                     <rect key="frame" x="214" y="8" width="106" height="30"/>
@@ -174,6 +174,6 @@
         <image name="btn_menu_pressed" width="18" height="20"/>
         <image name="btn_search" width="20" height="20"/>
         <image name="btn_search_pressed" width="20" height="20"/>
-        <image name="img_navbar_logo" width="91" height="20"/>
+        <image name="img_navbar_logo" width="83" height="20"/>
     </resources>
 </document>
