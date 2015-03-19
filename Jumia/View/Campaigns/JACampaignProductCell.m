@@ -67,6 +67,7 @@
     self.backgroundContentView.layer.cornerRadius = 5.0f;
     
     //TOP STUFF
+    self.discountLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
     self.discountLabel.textColor = [UIColor whiteColor];
     if (VALID_NOTEMPTY(campaignProduct.maxSavingPercentage, NSNumber) && 0 < [campaignProduct.maxSavingPercentage integerValue]){
         self.discountBadge.hidden = NO;
@@ -85,6 +86,7 @@
                                                 self.titleLabel.frame.size.height)];
     }
     
+    self.titleLabel.font = [UIFont fontWithName:kFontLightName size:17.0f];
     self.titleLabel.textColor = UIColorFromRGB(0x666666);
     self.titleLabel.text = campaignProduct.name;
     
@@ -210,6 +212,7 @@
                              fontSize:11.0f specialPriceOnTheLeft:NO];
     }
 
+    self.savingLabel.font = [UIFont fontWithName:kFontRegularName size:11.0f];
     self.savingLabel.textColor = UIColorFromRGB(0x666666);
     self.savingLabel.text = STRING_CAMPAIGN_SAVE;
     [self.savingLabel sizeToFit];
@@ -245,10 +248,11 @@
                                               3.0f);
     [self.percentageBarView loadWithPercentage:[campaignProduct.stockPercentage integerValue]];
 
-    
+    self.remainingStockLabel.font = [UIFont fontWithName:kFontRegularName size:11.0f];
     self.remainingStockLabel.textColor = UIColorFromRGB(0x666666);
     self.remainingStockLabel.text = [NSString stringWithFormat:STRING_CAMPAIGN_REMAINING_STOCK, [campaignProduct.stockPercentage integerValue]];
     
+    [self.buyButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.buyButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
     [self.buyButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.buyButton addTarget:self action:@selector(buyButtonPressed) forControlEvents:UIControlEventTouchUpInside];
