@@ -49,6 +49,7 @@
     self.layer.cornerRadius = 5.0f;
     
     [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    self.topLabel.font = [UIFont fontWithName:kFontRegularName size:self.topLabel.font.pointSize];
     [self.topLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     
     [self setFrame:CGRectMake(self.frame.origin.x,

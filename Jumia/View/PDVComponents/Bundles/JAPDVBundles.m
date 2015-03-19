@@ -68,6 +68,7 @@
     self.layer.cornerRadius = 5.0f;
     
     [self.separatorView setBackgroundColor: UIColorFromRGB(0xfaa41a)];
+    self.bundleTitle.font = [UIFont fontWithName:kFontRegularName size:self.bundleTitle.font.pointSize];
     [self.bundleTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
@@ -88,6 +89,7 @@
                                            self.buynowButton.frame.size.height)];
     
     self.bundleTitle.text = STRING_BUNDLE_TITLE;
+    self.totalLabel.font = [UIFont fontWithName:kFontRegularName size:self.totalLabel.font.pointSize];
     self.totalLabel.text = STRING_BUNDLE_TOTAL_PRICE;
     [self.totalLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     
