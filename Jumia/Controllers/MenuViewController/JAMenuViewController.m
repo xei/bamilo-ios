@@ -101,8 +101,11 @@ UIAlertViewDelegate
     [self.cartView addTarget:self
                       action:@selector(cartViewPressed:)
             forControlEvents:UIControlEventTouchUpInside];
+    self.cartLabelTitle.font = [UIFont fontWithName:kFontBoldName size:self.cartLabelTitle.font.pointSize];
     self.cartLabelTitle.text = STRING_SHOPPING_CART;
     
+    self.cartLabelTotalCost.font = [UIFont fontWithName:kFontRegularName size:self.cartLabelTotalCost.font.pointSize];
+    self.cartLabelDetails.font = [UIFont fontWithName:kFontLightName size:self.cartLabelDetails.font.pointSize];
     if(!VALID_NOTEMPTY(self.cart, RICart) || 0 == [[self.cart cartCount] integerValue])
     {
         self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
