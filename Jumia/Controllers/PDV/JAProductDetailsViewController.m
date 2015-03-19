@@ -58,9 +58,11 @@
     
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.labelBrand.font = [UIFont fontWithName:kFontMediumName size:self.labelBrand.font.pointSize];
     self.labelBrand.text = self.product.brand;
     self.labelBrand.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.labelName.font = [UIFont fontWithName:kFontMediumName size:self.labelName.font.pointSize];
     self.labelName.text = self.product.name;
     self.labelName.translatesAutoresizingMaskIntoConstraints = YES;
 }
