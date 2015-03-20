@@ -93,7 +93,22 @@
                                                                        launchOptions:launchOptions
                                                                         delegate:self];
 #else
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"dc297f584830db92a1047ba154dadb9e"];
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"dc297f584830db92a1047ba154dadb9e"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"373b0efcd95c82dbfb69a0c2d16c4b51"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+    }
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
     
