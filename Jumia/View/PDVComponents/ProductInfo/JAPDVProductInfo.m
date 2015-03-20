@@ -83,6 +83,17 @@
 {
     self.product = product;
     
+    self.oldPriceLabel.font = [UIFont fontWithName:kFontRegularName size:self.oldPriceLabel.font.pointSize];
+    self.sizeLabel.font = [UIFont fontWithName:kFontRegularName size:self.sizeLabel.font.pointSize];
+    self.numberOfReviewsLabel.font = [UIFont fontWithName:kFontRegularName size:self.numberOfReviewsLabel.font.pointSize];
+    self.specificationsLabel.font = [UIFont fontWithName:kFontRegularName size:self.specificationsLabel.font.pointSize];
+    self.reviewsLabel.font = [UIFont fontWithName:kFontRegularName size:self.reviewsLabel.font.pointSize];
+    self.productFeaturesLabel.font = [UIFont fontWithName:kFontRegularName size:self.productFeaturesLabel.font.pointSize];
+    self.productFeaturesText.font = [UIFont fontWithName:kFontRegularName size:self.productFeaturesText.font.pointSize];
+    self.productDescriptionLabel.font = [UIFont fontWithName:kFontRegularName size:self.productDescriptionLabel.font.pointSize];
+    self.productDescriptionText.font = [UIFont fontWithName:kFontRegularName size:self.productDescriptionText.font.pointSize];
+    self.otherOffersLabel.font = [UIFont fontWithName:kFontRegularName size:self.otherOffersLabel.font.pointSize];
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -374,6 +385,7 @@
     CGRect productFeaturesTextRect = [self.productFeaturesText.text boundingRectWithSize:CGSizeMake(self.productFeaturesText.frame.size.width, 1000.0f)
                                                                                  options:NSStringDrawingUsesLineFragmentOrigin
                                                                               attributes:@{NSFontAttributeName:self.productFeaturesText.font} context:nil];
+    self.productFeaturesMore.titleLabel.font = [UIFont fontWithName:kFontLightName size:self.productFeaturesMore.titleLabel.font.pointSize];
     if(productFeaturesTextRect.size.height > self.productFeaturesText.frame.size.height)
     {
         [self.productFeaturesMore setTitle:STRING_MORE forState:UIControlStateNormal];
@@ -424,6 +436,8 @@
         CGRect productDescriptionTextRect = [self.productDescriptionText.text boundingRectWithSize:CGSizeMake(self.productDescriptionText.frame.size.width, 1000.0f)
                                                                                            options:NSStringDrawingUsesLineFragmentOrigin
                                                                                         attributes:@{NSFontAttributeName:self.productDescriptionText.font} context:nil];
+        
+        self.productDescriptionMore.titleLabel.font = [UIFont fontWithName:kFontLightName size:self.productDescriptionMore.titleLabel.font.pointSize];
         if(productDescriptionTextRect.size.height > self.productDescriptionText.frame.size.height)
         {
             [self.productDescriptionMore setTitle:STRING_MORE forState:UIControlStateNormal];

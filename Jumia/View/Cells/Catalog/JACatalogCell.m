@@ -31,8 +31,10 @@
     
     self.recentProductImageView.hidden = ![product.isNew boolValue];
     
+    self.brandLabel.font = [UIFont fontWithName:kFontRegularName size:self.brandLabel.font.pointSize];
     self.brandLabel.text = product.brand;
     self.brandLabel.textColor = UIColorFromRGB(0x666666);
+    self.nameLabel.font = [UIFont fontWithName:kFontLightName size:self.nameLabel.font.pointSize];
     self.nameLabel.text = product.name;
     self.nameLabel.textColor = UIColorFromRGB(0x666666);
     
@@ -64,6 +66,7 @@
     } else {
         self.sizeButton.hidden = NO;
     }
+    self.sizeButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.sizeButton.titleLabel.font.pointSize];
     [self.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
     [self.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
     [self.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
@@ -91,8 +94,10 @@
                                       self.priceView.frame.size.height);
     [self.contentView addSubview:self.priceView];
     
+    self.sizeLabel.font = [UIFont fontWithName:kFontLightName size:self.sizeLabel.font.pointSize];
     self.sizeLabel.text = cartItem.variation;
     
+    self.discountLabel.font = [UIFont fontWithName:kFontBoldName size:self.discountLabel.font.pointSize];
     self.discountLabel.text = [NSString stringWithFormat:@"-%ld%%",[cartItem.savingPercentage longValue]];
     self.discountLabel.hidden = !cartItem.savingPercentage;
     self.discountImageView.hidden = !cartItem.savingPercentage;

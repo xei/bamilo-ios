@@ -59,12 +59,17 @@ void(^retryBock)(BOOL dismiss);
     self.backgroundColor = UIColorFromRGB(0xc8c8c8);
     self.noNetworkView.layer.cornerRadius = 5.0f;
 
+    self.retryButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.retryButton.titleLabel.font.pointSize];
     [self.retryButton setTitle:STRING_TRY_AGAIN forState:UIControlStateNormal];
     [self.retryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     
+    self.textLabel.font = [UIFont fontWithName:kFontRegularName size:self.textLabel.font.pointSize];
     self.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.noConnectionDetailsLabel.font = [UIFont fontWithName:kFontRegularName size:self.noConnectionDetailsLabel.font.pointSize];
     self.noConnectionDetailsLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.genericErrorLabel.font = [UIFont fontWithName:kFontRegularName size:self.genericErrorLabel.font.pointSize];
     self.genericErrorLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.genericDetailLabel.font = [UIFont fontWithName:kFontRegularName size:self.genericDetailLabel.font.pointSize];
     self.genericDetailLabel.textColor = UIColorFromRGB(0x4e4e4e);
     
     CGRect buttonTextLabelRect = [self.textLabel.text boundingRectWithSize: CGSizeMake(self.retryButton.frame.size.width, self.retryButton.frame.size.height)

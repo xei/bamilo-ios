@@ -55,7 +55,11 @@
     
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JAPDVBundleSingleItem class]]) {
-            return (JAPDVBundleSingleItem *)obj;
+            JAPDVBundleSingleItem* real = (JAPDVBundleSingleItem* )obj;
+            real.productNameLabel.font = [UIFont fontWithName:kFontRegularName size:real.productNameLabel.font.pointSize];
+            real.productTypeLabel.font = [UIFont fontWithName:kFontLightName size:real.productTypeLabel.font.pointSize];
+            real.productPriceLabel.font = [UIFont fontWithName:kFontLightName size:real.productPriceLabel.font.pointSize];
+            return real;
         }
     }
     
@@ -70,7 +74,11 @@
     
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JAPDVBundleSingleItem class]]) {
-            return (JAPDVBundleSingleItem *)obj;
+            JAPDVBundleSingleItem* real = (JAPDVBundleSingleItem* )obj;
+            real.productNameLabel.font = [UIFont fontWithName:kFontRegularName size:real.productNameLabel.font.pointSize];
+            real.productTypeLabel.font = [UIFont fontWithName:kFontLightName size:real.productTypeLabel.font.pointSize];
+            real.productPriceLabel.font = [UIFont fontWithName:kFontLightName size:real.productPriceLabel.font.pointSize];
+            return real;
         }
     }
     

@@ -69,6 +69,7 @@
     
     self.emptyListView.layer.cornerRadius = 3.0f;
     
+    self.emptyListLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyListLabel.font.pointSize];
     self.emptyListLabel.textColor = UIColorFromRGB(0xcccccc);
     self.emptyListLabel.text = STRING_NO_RECENTLY_VIEWED_PRODUCTS;
     

@@ -94,9 +94,11 @@
         }
     }
     
+    self.productNameLabel.font = [UIFont fontWithName:kFontMediumName size:self.productNameLabel.font.pointSize];
     self.productNameLabel.text = product.brand;
     self.productNameLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
+
+    self.productDescriptionLabel.font = [UIFont fontWithName:kFontRegularName size:self.productDescriptionLabel.font.pointSize];
     self.productDescriptionLabel.text = product.name;
     self.productDescriptionLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
@@ -123,6 +125,7 @@
     
     [self loadWithImages:[product.images array]];
     
+    self.discountLabel.font = [UIFont fontWithName:kFontBoldName size:self.discountLabel.font.pointSize];
     if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
     {
         self.discountLabel.text = [NSString stringWithFormat:@"-%@%%", product.maxSavingPercentage];
@@ -429,6 +432,7 @@
                                               self.imageScrollView.frame.size.height)];
     
     [self.sizeImageViewSeparator setBackgroundColor:UIColorFromRGB(0xcccccc)];
+    self.sizeLabel.font = [UIFont fontWithName:kFontLightName size:self.sizeLabel.font.pointSize];
     [self.sizeLabel setTextColor:UIColorFromRGB(0x55a1ff)];
     
     [self.sizeImageViewSeparator setFrame:CGRectMake(self.sizeImageViewSeparator.frame.origin.x,
