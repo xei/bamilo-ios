@@ -122,6 +122,7 @@
 
 // App url (this is needed to redirect to itunes connect to update the app)
 #define kAppStoreUrl @"https://itunes.apple.com/us/app/jumia-online-shopping/id925015459?mt=8"
+#define kAppStoreUrlDaraz @"https://itunes.apple.com/app/jumia-online-shopping/id978058048"
 
 // Preferences
 #define kDidFirstBuyKey @"did_first_buy"

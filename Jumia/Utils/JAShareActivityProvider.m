@@ -69,7 +69,7 @@
                 {
                     productUrl = [productUrl stringByReplacingOccurrencesOfString:RI_MOBAPI_PREFIX withString:@""];
                 }
-
+                
                 if(NSNotFound != [productUrl rangeOfString:RI_API_VERSION].location)
                 {
                     productUrl = [productUrl stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
@@ -121,7 +121,17 @@
     }
     else if(self.appShare)
     {
-        shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrl];
+        if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+        {
+            shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrl];
+            
+        }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+        {
+            
+            shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrlDaraz];
+            
+        }
+        
     }
     
     return shareObject;
