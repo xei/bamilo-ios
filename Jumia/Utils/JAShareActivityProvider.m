@@ -123,7 +123,7 @@
     {
         if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
         {
-            shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrlJumia];
+            shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrl];
             
         }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
         {
