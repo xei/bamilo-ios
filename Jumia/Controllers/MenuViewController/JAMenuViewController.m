@@ -273,16 +273,22 @@ UIAlertViewDelegate
         }
         else
         {
-            if (8 == indexPath.row)
+            BOOL hasOneLessIndex = [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"];
+            if (8 == indexPath.row ||
+                (hasOneLessIndex && 7 == indexPath.row))
             {
                 if ([RICustomer checkIfUserIsLogged])
                 {
+                    [self showLoading];
+                    
                     __block NSString *custumerId = [RICustomer getCustomerId];
                     [[FBSession activeSession] closeAndClearTokenInformation];
                     [FBSession setActiveSession:nil];
                     
                     [RICustomer logoutCustomerWithSuccessBlock:^
                      {
+                         [self hideLoading];
+                         
                          NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                          [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
                          [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
@@ -302,6 +308,8 @@ UIAlertViewDelegate
                          
                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject)
                      {
+                         [self hideLoading];
+                         
                          [self userDidLogout];
                          
                          [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
