@@ -41,6 +41,7 @@
 {
     self.viewForBaselineLayout.frame = frame;
     
+    self.filtersLabel.font = [UIFont fontWithName:kFontRegularName size:self.filtersLabel.font.pointSize];
     self.filtersLabel.textColor = UIColorFromRGB(0xcccccc);
     self.filtersLabel.text = STRING_FILTER_NO_RESULTS;
     
