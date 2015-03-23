@@ -84,6 +84,8 @@
     [self.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:17.0f]];
     [self.topTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:14.0f]];
     [self.bottomTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
+    
+    self.editButton.titleLabel.font = [UIFont fontWithName:kFontLightName size:self.editButton.titleLabel.font.pointSize];
 }
 
 - (void)orientationChanged:(NSNotification *)notification
@@ -144,6 +146,7 @@
 }
 - (void)showEditButton;
 {
+    [self.editButton setTitle:STRING_EDIT forState:UIControlStateNormal];
     self.backButton.hidden = YES;
     self.leftButton.hidden = YES;
     self.editButton.hidden = NO;
