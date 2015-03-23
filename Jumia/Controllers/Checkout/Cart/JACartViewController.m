@@ -317,9 +317,11 @@
     self.screenName = @"CartEmpty";
     
     self.emptyCartView.layer.cornerRadius = 5.0f;
+    self.emptyCartLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyCartLabel.font.pointSize];
     [self.emptyCartLabel setText:STRING_NO_ITEMS_IN_CART];
     [self.emptyCartLabel setTextColor:JALabelGrey];
-    
+
+    self.continueShoppingButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.continueShoppingButton.titleLabel.font.pointSize];
     [self.continueShoppingButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
     [self.continueShoppingButton setTitle:STRING_CONTINUE_SHOPPING forState:UIControlStateNormal];
     
