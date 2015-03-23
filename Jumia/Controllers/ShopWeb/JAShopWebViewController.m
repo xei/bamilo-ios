@@ -46,7 +46,11 @@
             self.isLoaded = YES;
             [self.webView loadHTMLString:html2 baseURL:url];
         } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObjectt) {
-            
+            if (RIApiResponseNoInternetConnection == apiResponse) {
+                [self showErrorView:YES startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];
+            } else {
+                [self showErrorView:NO startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];
+            }
         }];
     }
 }
