@@ -1121,7 +1121,7 @@
     if (kind == UICollectionElementKindSectionHeader) {
         JACartListHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader" forIndexPath:indexPath];
         
-        [headerView loadHeaderWithText:@"Items" width:self.productCollectionView.frame.size.width];
+        [headerView loadHeaderWithText:STRING_ITEMS width:self.productCollectionView.frame.size.width];
         
         reusableview = headerView;
     }
