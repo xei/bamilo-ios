@@ -123,15 +123,20 @@
     {
         if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
         {
-            shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrl];
+            shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrlJumia];
             
         }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
         {
-            
             shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrlDaraz];
             
+        }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+        {
+            shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrlShop];
+            
+        }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+        {
+            //$$$shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrlBamilo];
         }
-        
     }
     
     return shareObject;
