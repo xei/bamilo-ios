@@ -87,6 +87,7 @@ FBLoginViewDelegate
     [self.loginView addSubview:self.loginSeparator];
     
     self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
+        self.checkBoxComponent.labelText.font = [UIFont fontWithName:kFontRegularName size:self.checkBoxComponent.labelText.font.pointSize];
     [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
     [self.checkBoxComponent.switchComponent setOn:YES];
     [self.loginView addSubview:self.checkBoxComponent];

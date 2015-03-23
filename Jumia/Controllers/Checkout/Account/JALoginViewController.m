@@ -520,6 +520,7 @@ FBLoginViewDelegate
                                                 self.loginFormHeight,
                                                 self.checkBoxComponent.frame.size.width - 12.0f,
                                                 self.checkBoxComponent.frame.size.height)];
+    self.checkBoxComponent.labelText.font = [UIFont fontWithName:kFontRegularName size:self.checkBoxComponent.labelText.font.pointSize];
     [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
     [self.checkBoxComponent.switchComponent setOn:YES];
     [self.loginFormView addSubview:self.checkBoxComponent];

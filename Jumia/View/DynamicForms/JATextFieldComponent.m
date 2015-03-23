@@ -41,6 +41,7 @@
     self.field = field;
     [self.textField setPlaceholder:field.label];
     
+    self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     [self.textField setTextColor:UIColorFromRGB(0x666666)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     

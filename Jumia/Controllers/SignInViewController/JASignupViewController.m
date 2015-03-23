@@ -99,6 +99,7 @@ JADatePickerDelegate
     [self.contentView addSubview:self.headerSeparator];
     
     self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
+        self.checkBoxComponent.labelText.font = [UIFont fontWithName:kFontRegularName size:self.checkBoxComponent.labelText.font.pointSize];
     [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
     [self.checkBoxComponent.switchComponent setOn:YES];
     [self.contentView addSubview:self.checkBoxComponent];
