@@ -36,7 +36,7 @@
     [self.webView setFrame:self.view.bounds];
     
     if (NO == self.isLoaded) {
-        NSURL* url = [NSURL URLWithString:@"http://alice-staging.jumia.com.ng/mobapi/v1.6/main/getstatic/?key=lego_shop"];
+        NSURL* url = [NSURL URLWithString:self.url];
         [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url parameters:nil httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
             NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
             NSArray *data = [metadata objectForKey:@"data"];

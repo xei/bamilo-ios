@@ -1371,6 +1371,7 @@
     {
         
         JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
+        viewController.url = url;
         
         if([notification.userInfo objectForKey:@"show_back_button"])
         {
