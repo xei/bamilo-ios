@@ -23,6 +23,7 @@ UIScrollViewDelegate
 @property (strong, nonatomic) NSMutableArray *imageViewsArray;
 @property (strong, nonatomic) NSArray *source;
 @property (assign, nonatomic) NSInteger index;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 
 @end
@@ -183,6 +184,10 @@ UIScrollViewDelegate
     self.pageControl.numberOfPages = source.count;
     [self addSubview:self.pageControl];
     self.pageControl.currentPage = self.index;
+    
+    self.doneButton.translatesAutoresizingMaskIntoConstraints = YES;
+    self.doneButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.doneButton.titleLabel.font.pointSize];
+    [self.doneButton setTitle:STRING_DONE forState:UIControlStateNormal];
 }
 
 - (void)reloadFrame:(CGRect)frame
