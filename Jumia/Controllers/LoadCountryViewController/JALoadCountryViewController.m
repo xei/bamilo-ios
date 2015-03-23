@@ -77,23 +77,29 @@
                 }
                 else
                 {
-                    // Change country
-                    self.countriesRequestId = [RICountry getCountriesWithSuccessBlock:^(id countries)
-                                               {
-                                                   for (RICountry *country in countries)
+                    RICountry* country = [RICountry getUniqueCountry];
+                    if (VALID_NOTEMPTY(country, RICountry)) {
+                        self.selectedCountry = country;
+                        [self continueProcessing];
+                    } else {
+                        // Change country
+                        self.countriesRequestId = [RICountry getCountriesWithSuccessBlock:^(id countries)
                                                    {
-                                                       if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
+                                                       for (RICountry *country in countries)
                                                        {
-                                                           self.selectedCountry = country;
-                                                           
-                                                           [self continueProcessing];
+                                                           if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
+                                                           {
+                                                               self.selectedCountry = country;
+                                                               
+                                                               [self continueProcessing];
+                                                           }
                                                        }
-                                                   }
-                                                   
-                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-                                               {
-                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-                                               }];
+                                                       
+                                                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
+                                                   {
+                                                       [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                                                   }];
+                    }
                 }
             }
             else
