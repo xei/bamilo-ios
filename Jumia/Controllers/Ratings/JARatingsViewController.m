@@ -100,6 +100,12 @@ UITableViewDataSource
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
+    self.brandLabel.font = [UIFont fontWithName:kFontMediumName size:self.brandLabel.font.pointSize];
+    self.nameLabel.font = [UIFont fontWithName:kFontRegularName size:self.nameLabel.font.pointSize];
+    self.labelUsedProduct.font = [UIFont fontWithName:kFontLightName size:self.labelUsedProduct.font.pointSize];
+    self.writeReviewButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.writeReviewButton.titleLabel.font.pointSize];
+    self.emptyReviewsLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyReviewsLabel.font.pointSize];
+    
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     self.brandLabel.text = self.product.brand;
     self.brandLabel.translatesAutoresizingMaskIntoConstraints = YES;
@@ -749,7 +755,7 @@ UITableViewDataSource
         CGFloat maxWriteReviewWidth = width - writeReviewLabelX;
         UILabel* writeReviewLabel = [UILabel new];
         writeReviewLabel.textColor = UIColorFromRGB(0x666666);
-        writeReviewLabel.font = [UIFont fontWithName:@"Helvetica-Neue" size:13.0f];
+        writeReviewLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
         writeReviewLabel.numberOfLines = 2;
         writeReviewLabel.text = STRING_WRITE_FULL_REVIEW;
         [writeReviewLabel sizeToFit];

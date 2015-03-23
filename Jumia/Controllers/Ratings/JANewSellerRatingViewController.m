@@ -87,6 +87,8 @@ UIAlertViewDelegate
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
+    self.sellerNameLabel.font = [UIFont fontWithName:kFontMediumName size:self.sellerNameLabel.font.pointSize];
+    
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.sellerNameLabel.text = self.product.seller.name;

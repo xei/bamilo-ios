@@ -98,6 +98,11 @@ UITableViewDataSource
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
+    self.sellerNameLabel.font = [UIFont fontWithName:kFontMediumName size:self.sellerNameLabel.font.pointSize];
+    self.labelUsedProduct.font = [UIFont fontWithName:kFontLightName size:self.labelUsedProduct.font.pointSize];
+    self.writeReviewButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.writeReviewButton.titleLabel.font.pointSize];
+    self.emptyReviewsLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyReviewsLabel.font.pointSize];
+    
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     self.sellerNameLabel.text = self.product.seller.name;
     self.sellerNameLabel.translatesAutoresizingMaskIntoConstraints = YES;

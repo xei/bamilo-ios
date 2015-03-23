@@ -38,6 +38,7 @@
 
 -(void)setNumberOfReviews:(NSInteger)numberOfReviews
 {
+    self.label.font = [UIFont fontWithName:kFontRegularName size:self.label.font.pointSize];
     [self.label setText:[NSString stringWithFormat:STRING_REVIEWS, [NSString stringWithFormat:@"%ld",(long)numberOfReviews]]];
     [self.label setTextColor:UIColorFromRGB(0xcccccc)];
     [self.label sizeToFit];
