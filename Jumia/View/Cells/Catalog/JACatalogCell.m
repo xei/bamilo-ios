@@ -79,6 +79,7 @@
     
     self.recentProductImageView.hidden = YES;
     
+    self.nameLabel.font = [UIFont fontWithName:kFontLightName size:self.nameLabel.font.pointSize];
     self.nameLabel.text = cartItem.name;
     self.nameLabel.textColor = UIColorFromRGB(0x666666);
     

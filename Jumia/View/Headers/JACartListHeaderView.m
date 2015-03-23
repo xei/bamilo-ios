@@ -23,6 +23,7 @@
     
     [self setBackgroundColor:UIColorFromRGB(0xffffff)];
     
+    self.title.font = [UIFont fontWithName:kFontRegularName size:self.title.font.pointSize];
     [self.title setText:text];
     [self.title setTextColor:UIColorFromRGB(0x4e4e4e)];
     

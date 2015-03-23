@@ -26,6 +26,7 @@
                                             self.frame.size.width,
                                             self.frame.size.height)];
     
+    self.label.font = [UIFont fontWithName:kFontRegularName size:self.label.font.pointSize];
     [self.label setTextColor:UIColorFromRGB(0x55a1ff)];
     [self.label setText:text];
 }

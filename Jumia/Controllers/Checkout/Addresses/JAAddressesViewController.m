@@ -106,6 +106,7 @@ UICollectionViewDelegateFlowLayout>
         self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
         self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
         self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
+        self.stepLabel.font = [UIFont fontWithName:kFontBoldName size:self.stepLabel.font.pointSize];
         [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
     }
     else

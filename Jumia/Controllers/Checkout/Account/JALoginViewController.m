@@ -115,6 +115,7 @@ FBLoginViewDelegate
     self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
     self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
     self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepLabel.font = [UIFont fontWithName:kFontBoldName size:self.stepLabel.font.pointSize];
     [self.stepLabel setText:STRING_CHECKOUT_ABOUT_YOU];
     
     self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -520,6 +521,7 @@ FBLoginViewDelegate
                                                 self.loginFormHeight,
                                                 self.checkBoxComponent.frame.size.width - 12.0f,
                                                 self.checkBoxComponent.frame.size.height)];
+    self.checkBoxComponent.labelText.font = [UIFont fontWithName:kFontRegularName size:self.checkBoxComponent.labelText.font.pointSize];
     [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
     [self.checkBoxComponent.switchComponent setOn:YES];
     [self.loginFormView addSubview:self.checkBoxComponent];

@@ -61,6 +61,7 @@
     
     self.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.label.font = [UIFont fontWithName:kFontRegularName size:self.label.font.pointSize];
     [self.label setTextColor:UIColorFromRGB(0x666666)];
     
     if(VALID_NOTEMPTY(fieldRatingStars.title, NSString))

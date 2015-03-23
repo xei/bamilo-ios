@@ -36,6 +36,7 @@
 {
     self.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.labelText.font = [UIFont fontWithName:kFontRegularName size:self.labelText.font.pointSize];
     [self.labelText setTextColor:UIColorFromRGB(0x666666)];
     
     self.storedValue = @"";
