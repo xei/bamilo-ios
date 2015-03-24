@@ -78,14 +78,16 @@
     
     [self.logoImageView setImage:[UIImage imageNamed:@"img_navbar_logo"]];
     
-    [self.editButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:17.0f]];
-    [self.backButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:17.0f]];
-    [self.doneButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:17.0f]];
-    [self.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:17.0f]];
+    CGFloat fontSize = 17.0f;
+    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
+        fontSize = 14.0f;
+    }
+    [self.editButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:fontSize]];
+    [self.backButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:fontSize]];
+    [self.doneButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:fontSize]];
+    [self.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:fontSize]];
     [self.topTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:14.0f]];
     [self.bottomTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
-    
-    self.editButton.titleLabel.font = [UIFont fontWithName:kFontLightName size:self.editButton.titleLabel.font.pointSize];
 }
 
 - (void)orientationChanged:(NSNotification *)notification
