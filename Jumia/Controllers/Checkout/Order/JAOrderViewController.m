@@ -243,7 +243,7 @@
     nameLabel.text = cartItem.name;
     [nameLabel sizeToFit];
     nameLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 8.0f,
-                                 itemCell.bounds.origin.y + 15.0f,
+                                 itemCell.bounds.origin.y + 6.0f,
                                  itemCell.frame.size.width - imageView.frame.size.width - 8.0f*2,
                                  nameLabel.frame.size.height);
     [itemCell addSubview:nameLabel];
