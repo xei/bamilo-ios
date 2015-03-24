@@ -89,18 +89,20 @@
     }
     else
     {
-        if(VALID_NOTEMPTY(self.selectedCountry, RICountry) || [RIApi checkIfHaveCountrySelected])
-        {
+        RICountry* uniqueCountry = [RICountry getUniqueCountry];
+        if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
-                                                                object:self.selectedCountry];
-        }
-        else
-        {
-            RICountry* uniqueCountry = [RICountry getUniqueCountry];
-            if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
+                                                                object:uniqueCountry];
+        } else {
+            
+            if(VALID_NOTEMPTY(self.selectedCountry, RICountry) || [RIApi checkIfHaveCountrySelected])
+            {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
-                                                                    object:uniqueCountry];
-            } else {
+                                                                    object:self.selectedCountry];
+            }
+            else
+            {
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification
                                                                     object:nil];
             }
