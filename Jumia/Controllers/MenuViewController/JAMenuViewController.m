@@ -145,7 +145,7 @@ UIAlertViewDelegate
                                                self.cartLabelDetails.frame.size.height)];
     
     [self.cartView setFrame:CGRectMake(self.cartView.frame.origin.x,
-                                       self.cartView.frame.origin.y,
+                                       20.0f,
                                        self.cartView.frame.size.width,
                                        CGRectGetMaxY(self.cartLabelDetails.frame) + 6.0f)];
     
