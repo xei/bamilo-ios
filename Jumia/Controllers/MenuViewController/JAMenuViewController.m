@@ -98,13 +98,21 @@ UIAlertViewDelegate
                                                  name:kUpdateSideMenuCartNotification
                                                object:nil];
     
+    self.cartView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.cartLabelTitle.translatesAutoresizingMaskIntoConstraints = YES;
+    self.cartLabelTotalCost.translatesAutoresizingMaskIntoConstraints = YES;
+    self.cartLabelDetails.translatesAutoresizingMaskIntoConstraints = YES;
+    self.tableViewMenu.translatesAutoresizingMaskIntoConstraints = YES;
+    
     [self.cartView addTarget:self
                       action:@selector(cartViewPressed:)
             forControlEvents:UIControlEventTouchUpInside];
     self.cartLabelTitle.font = [UIFont fontWithName:kFontBoldName size:self.cartLabelTitle.font.pointSize];
     self.cartLabelTitle.text = STRING_SHOPPING_CART;
+    [self.cartLabelTitle sizeToFit];
     
     self.cartLabelTotalCost.font = [UIFont fontWithName:kFontRegularName size:self.cartLabelTotalCost.font.pointSize];
+    self.cartLabelTotalCost.adjustsFontSizeToFitWidth = YES;
     self.cartLabelDetails.font = [UIFont fontWithName:kFontLightName size:self.cartLabelDetails.font.pointSize];
     if(!VALID_NOTEMPTY(self.cart, RICart) || 0 == [[self.cart cartCount] integerValue])
     {
@@ -118,6 +126,33 @@ UIAlertViewDelegate
         self.cartLabelDetails.text = STRING_VAT_SHIPPING_INCLUDED;
         self.cartItensNumber.text = [[self.cart cartCount] stringValue];
     }
+    CGFloat labelMaxWidth = 256.0f - self.cartLabelTotalCost.frame.origin.x;
+    self.cartLabelTotalCost.numberOfLines = 2;
+    [self.cartLabelTotalCost setFrame:CGRectMake(self.cartLabelTotalCost.frame.origin.x,
+                                                 CGRectGetMaxY(self.cartLabelTitle.frame),
+                                                 labelMaxWidth,
+                                                 self.cartLabelTotalCost.frame.size.height)];
+    [self.cartLabelTotalCost sizeToFit];
+    [self.cartLabelTotalCost setFrame:CGRectMake(self.cartLabelTotalCost.frame.origin.x,
+                                                 self.cartLabelTotalCost.frame.origin.y,
+                                                 labelMaxWidth,
+                                                 self.cartLabelTotalCost.frame.size.height)];
+    
+    [self.cartLabelDetails sizeToFit];
+    [self.cartLabelDetails setFrame:CGRectMake(self.cartLabelDetails.frame.origin.x,
+                                               CGRectGetMaxY(self.cartLabelTotalCost.frame),
+                                               labelMaxWidth,
+                                               self.cartLabelDetails.frame.size.height)];
+    
+    [self.cartView setFrame:CGRectMake(self.cartView.frame.origin.x,
+                                       20.0f,
+                                       self.cartView.frame.size.width,
+                                       CGRectGetMaxY(self.cartLabelDetails.frame) + 6.0f)];
+    
+    [self.tableViewMenu setFrame:CGRectMake(self.tableViewMenu.frame.origin.x,
+                                            CGRectGetMaxY(self.cartView.frame),
+                                            self.tableViewMenu.frame.size.width,
+                                            self.view.frame.size.height - CGRectGetMaxY(self.cartView.frame))];
     
     // Added because of the footer space
     self.tableViewMenu.contentInset = UIEdgeInsetsMake(0, 0, -20, 0);
@@ -161,6 +196,34 @@ UIAlertViewDelegate
         self.cartLabelDetails.text = STRING_VAT_SHIPPING_INCLUDED;
         self.cartItensNumber.text = [[self.cart cartCount] stringValue];
     }
+    
+    CGFloat labelMaxWidth = 256.0f - self.cartLabelTotalCost.frame.origin.x;
+    self.cartLabelTotalCost.numberOfLines = 2;
+    [self.cartLabelTotalCost setFrame:CGRectMake(self.cartLabelTotalCost.frame.origin.x,
+                                                 self.cartLabelTotalCost.frame.origin.y,
+                                                 labelMaxWidth,
+                                                 self.cartLabelTotalCost.frame.size.height)];
+    [self.cartLabelTotalCost sizeToFit];
+    [self.cartLabelTotalCost setFrame:CGRectMake(self.cartLabelTotalCost.frame.origin.x,
+                                                 self.cartLabelTotalCost.frame.origin.y,
+                                                 labelMaxWidth,
+                                                 self.cartLabelTotalCost.frame.size.height)];
+    
+    [self.cartLabelDetails sizeToFit];
+    [self.cartLabelDetails setFrame:CGRectMake(self.cartLabelDetails.frame.origin.x,
+                                               CGRectGetMaxY(self.cartLabelTotalCost.frame),
+                                               labelMaxWidth,
+                                               self.cartLabelDetails.frame.size.height)];
+
+    [self.cartView setFrame:CGRectMake(self.cartView.frame.origin.x,
+                                       self.cartView.frame.origin.y,
+                                       self.cartView.frame.size.width,
+                                       CGRectGetMaxY(self.cartLabelDetails.frame) + 6.0f)];
+    
+    [self.tableViewMenu setFrame:CGRectMake(self.tableViewMenu.frame.origin.x,
+                                            CGRectGetMaxY(self.cartView.frame),
+                                            self.tableViewMenu.frame.size.width,
+                                            self.view.frame.size.height - CGRectGetMaxY(self.cartView.frame))];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -219,7 +282,11 @@ UIAlertViewDelegate
     [cell addSubview:clickView];
     
     [clickView addTarget:self action:@selector(menuCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-    cell.textLabel.font = [UIFont fontWithName:kFontLightName size:17.0f];
+    CGFloat fontSize = 17.0f;
+    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
+        fontSize = 14.0f;
+    }
+    cell.textLabel.font = [UIFont fontWithName:kFontLightName size:fontSize];
     cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
     
     cell.imageView.image = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"image"]];
