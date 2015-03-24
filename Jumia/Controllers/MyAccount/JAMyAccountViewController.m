@@ -136,6 +136,7 @@
     
     self.notificationTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.notificationTitleLabel.font.pointSize];
     self.notificationTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.notificationSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.notificationSubtitleLabel.font.pointSize];
     self.notificationSubtitleLabel.textColor = UIColorFromRGB(0x666666);
     self.notificationSubtitleLabel.text = STRING_RECEIVE_EXCLUSIVE_OFFERS;
     self.notificationSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
