@@ -188,6 +188,10 @@ UIScrollViewDelegate
     self.doneButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.doneButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.doneButton.titleLabel.font.pointSize];
     [self.doneButton setTitle:STRING_DONE forState:UIControlStateNormal];
+    [self.doneButton setFrame:CGRectMake(self.frame.size.width - self.doneButton.frame.size.width,
+                                         self.doneButton.frame.origin.y,
+                                         self.doneButton.frame.size.width,
+                                         self.doneButton.frame.size.height)];
 }
 
 - (void)reloadFrame:(CGRect)frame
@@ -215,6 +219,11 @@ UIScrollViewDelegate
     [self loadGalleryWithArray:self.source
                          frame:frame
                        atIndex:self.index];
+    
+    [self.doneButton setFrame:CGRectMake(self.frame.size.width - self.doneButton.frame.size.width,
+                                         self.doneButton.frame.origin.y,
+                                         self.doneButton.frame.size.width,
+                                         self.doneButton.frame.size.height)];
 }
 
 - (IBAction)dismiss:(id)sender
