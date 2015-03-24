@@ -282,7 +282,11 @@ UIAlertViewDelegate
     [cell addSubview:clickView];
     
     [clickView addTarget:self action:@selector(menuCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-    cell.textLabel.font = [UIFont fontWithName:kFontLightName size:17.0f];
+    CGFloat fontSize = 17.0f;
+    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
+        fontSize = 14.0f;
+    }
+    cell.textLabel.font = [UIFont fontWithName:kFontLightName size:fontSize];
     cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
     
     cell.imageView.image = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"image"]];
