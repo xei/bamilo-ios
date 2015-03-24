@@ -76,6 +76,12 @@ void(^retryBock)(BOOL dismiss);
                                   options:NSStringDrawingUsesLineFragmentOrigin
                                   attributes: @{NSFontAttributeName:self.textLabel.font} context:nil];
     
+    CGRect buttonLabel = [self.retryButton.titleLabel.text boundingRectWithSize: CGSizeMake(1000.0f, self.retryButton.frame.size.height)
+                                                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                                                     attributes:@{NSFontAttributeName:self.textLabel.font} context:nil];
+    
+    
+    
     [self.textLabel setFrame:(CGRectMake((self.retryButton.frame.size.width - buttonTextLabelRect.size.width)/2,
                                          self.textLabel.frame.origin.y,
                                          buttonTextLabelRect.size.width,
@@ -87,10 +93,21 @@ void(^retryBock)(BOOL dismiss);
     {
         offset = 50.0f;
     }
-    self.animationView = [[UIImageView alloc] initWithFrame:CGRectMake(self.textLabel.frame.origin.x - offset - tryAgainImage.size.width ,
-                                                                       (self.retryButton.frame.size.height - tryAgainImage.size.height)/2,
-                                                                       tryAgainImage.size.width,
-                                                                       tryAgainImage.size.height)];
+    self.animationView = [[UIImageView alloc] init];
+                           
+    CGFloat spaceBetweenLabelandImage = 12.0f;
+    CGFloat labelAndImageTotalWidth = tryAgainImage.size.width + spaceBetweenLabelandImage + buttonLabel.size.width;
+    
+    [self.animationView setFrame:CGRectMake((self.retryButton.frame.size.width - labelAndImageTotalWidth)/2,
+                                           (self.retryButton.frame.size.height - tryAgainImage.size.height)/2,
+                                           tryAgainImage.size.width,
+                                           tryAgainImage.size.height)];
+    
+    [self.retryButton.titleLabel setFrame:(CGRectMake(self.animationView.frame.origin.x + spaceBetweenLabelandImage,
+                                                      self.textLabel.frame.origin.y,
+                                                      buttonLabel.size.width,
+                                                      buttonLabel.size.height))];
+    
 
     [self.animationView setImage:tryAgainImage];
     
