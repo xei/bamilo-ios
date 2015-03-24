@@ -132,10 +132,6 @@
 
 "product_description_title" = "ကုန္ပစၥည္း၏ အခ်က္အလက္မ်ား";
 
-"share_subject_ios" = "%@ မွ်ေ၀ျခင္း";
-
-"share_checkout_this_product" = "ဒီပစၥည္း တကယ္ေကာင္းတယ္ သံုးၾကည္႕လိုက္ပါ:";
-
 "rating_question" = "ဒီပစၥည္းကို အသံုးျပဳျပီးပါျပီလား? သံုးသပ္ခ်က္ ေပးႏုိင္ပါသည္!";
 
 "writereview_send" = "ထင္ျမင္ခ်က္ ေပးပို႕ရန္";
@@ -455,10 +451,6 @@
 "share_the_app" = "App ကို မွ်ေ၀ရန္";
 
 "can_share_app_with_friends" = "သင္၏ သူငယ္ခ်င္းမ်ားကို ဤapp မွ်ေ၀ႏုိင္ပါသည္";
-
-"install_app_ios" = "%@ iOS App ကို သြင္းရန္";
-
-"share_app_ios" = "%@ App ကို မွ်ေ၀ရန္";
 
 "delivery_time" = "ပို႕ေဆာင္ရန္ ၾကာခ်ိန္";
 
