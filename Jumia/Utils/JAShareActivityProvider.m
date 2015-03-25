@@ -135,7 +135,7 @@
             
         }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
         {
-            //$$$shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrlBamilo];
+            shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrlBamilo];
         }
     }
     
