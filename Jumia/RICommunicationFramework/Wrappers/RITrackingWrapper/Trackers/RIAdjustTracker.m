@@ -227,6 +227,38 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             keyRIEventOpenApp = @"8upm01";
 
         
+        }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+        {
+            
+            keyRIEventLoginSuccess = @"y3ehk5";
+            keyRIEventLogout = @"rev85g";
+            keyRIEventRegisterSuccess = @"6hodya";
+            keyRIEventAddToCart = @"k53qfh";
+            keyRIEventRemoveFromCart = @"5mj3it";
+            keyRIEventAddToWishlist = @"ik3rb5";
+            keyRIEventRemoveFromWishlist = @"7inzjw";
+            keyRIEventFacebookLoginSuccess = @"zckrfc";
+            keyRIEventShareFacebook = @"iijbca";
+            keyRIEventShareTwitter = @"w4ug0f";
+            keyRIEventShareEmail = @"y7ryl9";
+            keyRIEventShareSMS = @"a7rn6n";
+            keyRIEventCallToOrder = @"x1e24b";
+            keyRIEventRateProduct = @"3t4nj8";
+            keyRIEventGuestCustomer = @"uwuz8b";
+            keyRIEventSearch = @"1vupdt";
+            keyRIEventViewProduct = @"nnwjjo";
+            keyRIEventViewListing = @"n5hlwu";
+            keyRIEventViewCart = @"pexi13";
+            keyRIEventTransactionConfirm = @"ca8jou";
+            keyRIEventFacebookHome = @"dthws5";
+            keyRIEventFacebookViewListing = @"dtglhr";
+            keyRIEventFacebookViewProduct = @"l2fxva";
+            keyRIEventFacebookSearch = @"p1nosg";
+            keyRIEventFacebookViewWishlist = @"52a5la";
+            keyRIEventFacebookViewCart = @"1m0slz";
+            keyRIEventFacebookViewTransaction = @"ys7sle";
+            keyRIEventOpenApp = @"3qdwyi";
+
         }
 
     
@@ -556,6 +588,10 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
     {
         event = [ADJEvent eventWithEventToken:@"x9cr8q"];
+        
+    }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    {
+        event = [ADJEvent eventWithEventToken:@"tly4ql"];
     }
     
     [event addCallbackParameter:@"country" value:@"b"];
@@ -590,6 +626,10 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
     {
         eventKey = @"cdta89";
+        
+    }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    {
+        eventKey = @"pakn7o";
     }
 
     NSNumber *guest = [data objectForKey:kRIEcommerceGuestKey];
@@ -606,6 +646,10 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
         {
             eventKey =@"sg766z";
+            
+        }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+        {
+            eventKey =@"cndznn";
         }
     }
     
