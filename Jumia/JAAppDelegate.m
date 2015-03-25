@@ -59,7 +59,7 @@
     }
     else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
     {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b69eae07b51d81f272e9ae78312967a8"];
     }
     
 #else
@@ -103,11 +103,11 @@
     }
     else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
     {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"d4fd2d8b265e80e20a34fc19ccc55d64"];
     }
     else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
     {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"64935d72b0c34cd51a7a806f7bb70e4a"];
     }
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
