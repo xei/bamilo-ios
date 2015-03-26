@@ -340,7 +340,7 @@ UIAlertViewDelegate
         }
         else
         {
-            BOOL hasOneLessIndex = [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"];
+            BOOL hasOneLessIndex = ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"] || [[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]);
             if (8 == indexPath.row ||
                 (hasOneLessIndex && 7 == indexPath.row))
             {
@@ -438,7 +438,8 @@ UIAlertViewDelegate
                           ] mutableCopy];
     
     
-    if(NO == [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    if(NO == [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"] &&
+       NO == [[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
     {
         NSDictionary* chooseCountry = @{ @"name": STRING_CHOOSE_COUNTRY,
                                         @"image": @"ico_choosecountry",

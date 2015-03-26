@@ -247,7 +247,8 @@ void(^retryBock)(BOOL dismiss);
     [self addSubview:self.widestChoiceLabel];
     
     CGFloat nextButtonPosition = self.frame.size.height - 44.0f - marginBottom;
-    if(NO == [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    if(NO == [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"] &&
+       NO == [[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
     {
         self.changeCountryButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.changeCountryButton setFrame:CGRectMake(leftPadding, nextButtonPosition, self.frame.size.width - buttonsWidth, 44.0f)];
