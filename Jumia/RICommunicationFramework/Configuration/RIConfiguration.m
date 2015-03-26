@@ -45,6 +45,11 @@ NSString *const RI_UNIQUE_COUNTRY_URL_SHOP_STAGING = @"http://alice-staging.shop
 NSString *const RI_UNIQUE_COUNTRY_NAME_SHOP = @"Myanmar";
 NSString *const RI_UNIQUE_COUNTRY_ISO_SHOP = @"MM";
 
+NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO = @"http://www.bamilo.com/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING = @"http://alice-staging.bamilo.com/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_NAME_BAMILO = @"Iran";
+NSString *const RI_UNIQUE_COUNTRY_ISO_BAMILO = @"IR";
+
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
 NSString *const RI_API_VERSION = @"v1.6/";
 NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
