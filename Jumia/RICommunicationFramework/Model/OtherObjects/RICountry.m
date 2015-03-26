@@ -236,16 +236,25 @@
 
 + (RICountry*)getUniqueCountry
 {
+    RICountry* uniqueCountry = [[RICountry alloc] init];
     if([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
     {
-        RICountry* uniqueCountry = [[RICountry alloc] init];
-        
         uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_SHOP;
         uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_SHOP;
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP;
         uniqueCountry.isLive = YES;
 #if defined(STAGING) && STAGING
 //        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP_STAGING;
+        uniqueCountry.isLive = NO;
+#endif
+        return uniqueCountry;
+    } else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+        uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_BAMILO;
+        uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_BAMILO;
+        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
+        uniqueCountry.isLive = YES;
+#if defined(STAGING) && STAGING
+        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
         uniqueCountry.isLive = NO;
 #endif
         return uniqueCountry;
