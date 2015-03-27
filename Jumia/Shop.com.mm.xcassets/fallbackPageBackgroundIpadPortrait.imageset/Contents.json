@@ -3,12 +3,12 @@
     {
       "idiom" : "ipad",
       "scale" : "1x",
-      "filename" : "bamilo_shoppingbag_iPad.png"
+      "filename" : "background_fallback_port~ipad.png"
     },
     {
       "idiom" : "ipad",
       "scale" : "2x",
-      "filename" : "bamilo_shoppingbag_iPad@2x.png"
+      "filename" : "background_fallback_port@2x~ipad.png"
     }
   ],
   "info" : {

@@ -87,12 +87,18 @@ void(^retryBock)(BOOL dismiss);
     CGFloat leftPadding = 6.0f;
     NSString *orangeButtonName = @"orangeBig_%@";
     NSString *greyButtonName = @"greyBig_%@";
+    if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+        orangeButtonName = @"maintGreyBig_%@";
+    }
     NSString *mapName = @"map";
     CGFloat buttonsWidth = 12.0f;
     CGFloat marginBottom = 15.0f;
     
     if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
         orangeButtonName = @"orangeFullPortrait_%@";
+        if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+            orangeButtonName = @"maintGreyFull_%@";
+        }
         greyButtonName = @"greyFullPortrait_%@";
         mapName = @"mapiPad";
         
@@ -111,7 +117,7 @@ void(^retryBock)(BOOL dismiss);
     
     RIApi *apiInformation = [RIApi getApiInformation];
     NSString *countryName = @"";
-    if(VALID_NOTEMPTY(apiInformation, RIApi) && VALID_NOTEMPTY(apiInformation.countryName, NSString))
+    if(NO == [[APP_NAME uppercaseString] isEqualToString:@"BAMILO"] && VALID_NOTEMPTY(apiInformation, RIApi) && VALID_NOTEMPTY(apiInformation.countryName, NSString))
     {
         countryName = apiInformation.countryName;
     }
@@ -187,13 +193,15 @@ void(^retryBock)(BOOL dismiss);
     [self addSubview:self.logoView];
     
     NSString *bestShoppingExperienceString = @"";
-    if(VALID_NOTEMPTY(countryName, NSString))
-    {
-        bestShoppingExperienceString = [NSString stringWithFormat:@"%@'s %@", countryName, STRING_BEST_SHOPPING_EXPERIENCE];
-    }
-    else
-    {
-        bestShoppingExperienceString = [STRING_BEST_SHOPPING_EXPERIENCE capitalizedString];
+    if (NO == [[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+        if(VALID_NOTEMPTY(countryName, NSString))
+        {
+            bestShoppingExperienceString = [NSString stringWithFormat:@"%@'s %@", countryName, STRING_BEST_SHOPPING_EXPERIENCE];
+        }
+        else
+        {
+            bestShoppingExperienceString = [STRING_BEST_SHOPPING_EXPERIENCE capitalizedString];
+        }
     }
     
     UIFont *bestShoppingExperienceFont = [UIFont fontWithName:kFontRegularName size:14.0f];
@@ -214,37 +222,41 @@ void(^retryBock)(BOOL dismiss);
                                                           bestShoppingExperienceLabelRect.size.height + 2.0f)];
     [self addSubview:self.bestShoppingExperienceLabel];
     
-    NSString *widestChoicedString = [NSString stringWithFormat:@"%@ %@", STRING_WIDEST_CHOICE, STRING_AT_YOUR_DOORSTEP];
-    
-    NSMutableAttributedString *widestChoiceAttributedString = [[NSMutableAttributedString alloc] initWithString:widestChoicedString];
-    
-    UIFont *doorStepTextFont = [UIFont fontWithName:kFontLightName size:10.0f];
-    UIColor *doorStepTextColor = UIColorFromRGB(0x000000);
-    
-    [widestChoiceAttributedString addAttribute:NSFontAttributeName
-                                         value:doorStepTextFont
-                                         range:NSMakeRange([STRING_WIDEST_CHOICE length], [widestChoicedString length] - [STRING_WIDEST_CHOICE length])];
-    [widestChoiceAttributedString addAttribute:NSForegroundColorAttributeName
-                                         value:doorStepTextColor
-                                         range:NSMakeRange([STRING_WIDEST_CHOICE length], [widestChoicedString length] - [STRING_WIDEST_CHOICE length])];
-    
-    UIFont *widestChoiceAttributedFont = [UIFont fontWithName:kFontMediumName size:10.0f];
-    CGRect widestChoiceLabelRect = [widestChoicedString boundingRectWithSize:CGSizeMake(self.frame.size.width - 20.0f, self.frame.size.height)
-                                                                     options:NSStringDrawingUsesLineFragmentOrigin
-                                                                  attributes:@{NSFontAttributeName:widestChoiceAttributedFont} context:nil];
-    
-    self.widestChoiceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.widestChoiceLabel setFont:widestChoiceAttributedFont];
-    [self.widestChoiceLabel setLineBreakMode:NSLineBreakByWordWrapping];
-    [self.widestChoiceLabel setNumberOfLines:0];
-    [self.widestChoiceLabel setTextColor:UIColorFromRGB(0xffffff)];
-    [self.widestChoiceLabel setAttributedText:widestChoiceAttributedString];
-    [self.widestChoiceLabel sizeToFit];
-    [self.widestChoiceLabel setFrame:CGRectMake((self.frame.size.width - widestChoiceLabelRect.size.width) / 2,
-                                                CGRectGetMaxY(self.bestShoppingExperienceLabel.frame),
-                                                widestChoiceLabelRect.size.width,
-                                                widestChoiceLabelRect.size.height + 2.0f)];
-    [self addSubview:self.widestChoiceLabel];
+
+    if (NO == [[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+        NSString *widestChoicedString = @"";
+        widestChoicedString = [NSString stringWithFormat:@"%@ %@", STRING_WIDEST_CHOICE, STRING_AT_YOUR_DOORSTEP];
+        
+        NSMutableAttributedString *widestChoiceAttributedString = [[NSMutableAttributedString alloc] initWithString:widestChoicedString];
+        
+        UIFont *doorStepTextFont = [UIFont fontWithName:kFontLightName size:10.0f];
+        UIColor *doorStepTextColor = UIColorFromRGB(0x000000);
+        
+        [widestChoiceAttributedString addAttribute:NSFontAttributeName
+                                             value:doorStepTextFont
+                                             range:NSMakeRange([STRING_WIDEST_CHOICE length], [widestChoicedString length] - [STRING_WIDEST_CHOICE length])];
+        [widestChoiceAttributedString addAttribute:NSForegroundColorAttributeName
+                                             value:doorStepTextColor
+                                             range:NSMakeRange([STRING_WIDEST_CHOICE length], [widestChoicedString length] - [STRING_WIDEST_CHOICE length])];
+        
+        UIFont *widestChoiceAttributedFont = [UIFont fontWithName:kFontMediumName size:10.0f];
+        CGRect widestChoiceLabelRect = [widestChoicedString boundingRectWithSize:CGSizeMake(self.frame.size.width - 20.0f, self.frame.size.height)
+                                                                         options:NSStringDrawingUsesLineFragmentOrigin
+                                                                      attributes:@{NSFontAttributeName:widestChoiceAttributedFont} context:nil];
+        
+        self.widestChoiceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self.widestChoiceLabel setFont:widestChoiceAttributedFont];
+        [self.widestChoiceLabel setLineBreakMode:NSLineBreakByWordWrapping];
+        [self.widestChoiceLabel setNumberOfLines:0];
+        [self.widestChoiceLabel setTextColor:UIColorFromRGB(0xffffff)];
+        [self.widestChoiceLabel setAttributedText:widestChoiceAttributedString];
+        [self.widestChoiceLabel sizeToFit];
+        [self.widestChoiceLabel setFrame:CGRectMake((self.frame.size.width - widestChoiceLabelRect.size.width) / 2,
+                                                    CGRectGetMaxY(self.bestShoppingExperienceLabel.frame),
+                                                    widestChoiceLabelRect.size.width,
+                                                    widestChoiceLabelRect.size.height + 2.0f)];
+        [self addSubview:self.widestChoiceLabel];
+    }
     
     CGFloat nextButtonPosition = self.frame.size.height - 44.0f - marginBottom;
     if(NO == [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"] &&
@@ -276,25 +288,28 @@ void(^retryBock)(BOOL dismiss);
     [self.retryButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self addSubview:self.retryButton];
     
-    UIFont *tryToBeBriefLabelFont = [UIFont fontWithName:kFontLightName size:12.0f];
-    CGRect tryToBeBriefLabelRect = [STRING_TRY_TO_BE_BRIEF boundingRectWithSize:CGSizeMake(self.frame.size.width - 80.0f, self.frame.size.height)
-                                                                        options:NSStringDrawingUsesLineFragmentOrigin
-                                                                     attributes:@{NSFontAttributeName:tryToBeBriefLabelFont} context:nil];
-    
-    self.tryToBeBriefLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.tryToBeBriefLabel setFont:tryToBeBriefLabelFont];
-    [self.tryToBeBriefLabel setLineBreakMode:NSLineBreakByWordWrapping];
-    [self.tryToBeBriefLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.tryToBeBriefLabel setNumberOfLines:0];
-    [self.tryToBeBriefLabel setTextColor:UIColorFromRGB(0x000000)];
-    [self.tryToBeBriefLabel setText:STRING_TRY_TO_BE_BRIEF];
-    [self.tryToBeBriefLabel sizeToFit];
-    [self.tryToBeBriefLabel setFrame:CGRectMake((self.frame.size.width - tryToBeBriefLabelRect.size.width) / 2,
-                                                CGRectGetMinY(self.retryButton.frame) - tryToBeBriefLabelRect.size.height - 20.0f,
-                                                tryToBeBriefLabelRect.size.width,
-                                                tryToBeBriefLabelRect.size.height + 2.0f)];
-    [self addSubview:self.tryToBeBriefLabel];
-    
+    if(NO == [[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    {
+        UIFont *tryToBeBriefLabelFont = [UIFont fontWithName:kFontLightName size:12.0f];
+        CGRect tryToBeBriefLabelRect = [STRING_TRY_TO_BE_BRIEF boundingRectWithSize:CGSizeMake(self.frame.size.width - 80.0f, self.frame.size.height)
+                                                                            options:NSStringDrawingUsesLineFragmentOrigin
+                                                                         attributes:@{NSFontAttributeName:tryToBeBriefLabelFont} context:nil];
+        
+        self.tryToBeBriefLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self.tryToBeBriefLabel setFont:tryToBeBriefLabelFont];
+        [self.tryToBeBriefLabel setLineBreakMode:NSLineBreakByWordWrapping];
+        [self.tryToBeBriefLabel setTextAlignment:NSTextAlignmentCenter];
+        [self.tryToBeBriefLabel setNumberOfLines:0];
+        [self.tryToBeBriefLabel setTextColor:UIColorFromRGB(0x000000)];
+        [self.tryToBeBriefLabel setText:STRING_TRY_TO_BE_BRIEF];
+        [self.tryToBeBriefLabel sizeToFit];
+        [self.tryToBeBriefLabel setFrame:CGRectMake((self.frame.size.width - tryToBeBriefLabelRect.size.width) / 2,
+                                                    CGRectGetMinY(self.retryButton.frame) - tryToBeBriefLabelRect.size.height - 20.0f,
+                                                    tryToBeBriefLabelRect.size.width,
+                                                    tryToBeBriefLabelRect.size.height + 2.0f)];
+        [self addSubview:self.tryToBeBriefLabel];
+    }
+        
     NSString *jumiaString = @"";
     if(VALID_NOTEMPTY(countryName, NSString))
     {
@@ -324,6 +339,9 @@ void(^retryBock)(BOOL dismiss);
     [self.currentlyMaintenanceLabel setTextAlignment:NSTextAlignmentCenter];
     [self.currentlyMaintenanceLabel setNumberOfLines:0];
     [self.currentlyMaintenanceLabel setTextColor:UIColorFromRGB(0x000000)];
+    if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+        [self.currentlyMaintenanceLabel setTextColor:UIColorFromRGB(0xFFFFFF)];
+    }
     [self.currentlyMaintenanceLabel setAttributedText:currentlyMaintenanceAttributedString];
     [self.currentlyMaintenanceLabel sizeToFit];
     [self.currentlyMaintenanceLabel setFrame:CGRectMake((self.frame.size.width - self.currentlyMaintenanceLabel.frame.size.width) / 2,
@@ -335,10 +353,38 @@ void(^retryBock)(BOOL dismiss);
     UIImage *mapImage = [UIImage imageNamed:mapName];
     self.mapImageView = [[UIImageView alloc] initWithImage:mapImage];
     
-    CGFloat mapImageviewTopPadding = CGRectGetMaxY(self.widestChoiceLabel.frame) + (((CGRectGetMinY(self.currentlyMaintenanceLabel.frame) - CGRectGetMaxY(self.widestChoiceLabel.frame)) / 2));
+    CGFloat mapImageviewTopPadding = self.frame.size.height / 2;
+    if (NO == [[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+        mapImageviewTopPadding = CGRectGetMaxY(self.widestChoiceLabel.frame) + (((CGRectGetMinY(self.currentlyMaintenanceLabel.frame) - CGRectGetMaxY(self.widestChoiceLabel.frame)) / 2));
+    }
     [self.mapImageView setCenter:CGPointMake((self.frame.size.width  / 2),
                                              mapImageviewTopPadding)];
     [self addSubview:self.mapImageView];
+    
+    //after all this we still have to change the button and label order for bamilo
+    //doing it here to avoid muddying the code above even more
+    if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
+            [self.retryButton setFrame:CGRectMake(self.retryButton.frame.origin.x,
+                                                  self.frame.size.height - self.retryButton.frame.size.height - 50.0f,
+                                                  self.retryButton.frame.size.width,
+                                                  self.retryButton.frame.size.height)];
+            [self.currentlyMaintenanceLabel setFrame:CGRectMake(self.currentlyMaintenanceLabel.frame.origin.x,
+                                                                self.retryButton.frame.origin.y - self.currentlyMaintenanceLabel.frame.size.height - 18.0f,
+                                                                self.currentlyMaintenanceLabel.frame.size.width,
+                                                                self.currentlyMaintenanceLabel.frame.size.height)];
+
+        } else {
+            [self.currentlyMaintenanceLabel setFrame:CGRectMake(self.currentlyMaintenanceLabel.frame.origin.x,
+                                                                self.frame.size.height - self.currentlyMaintenanceLabel.frame.size.height - marginBottom - 40.0f,
+                                                                self.currentlyMaintenanceLabel.frame.size.width,
+                                                                self.currentlyMaintenanceLabel.frame.size.height)];
+            [self.retryButton setFrame:CGRectMake(self.retryButton.frame.origin.x,
+                                                  self.currentlyMaintenanceLabel.frame.origin.y - self.retryButton.frame.size.height - 12.0f,
+                                                  self.retryButton.frame.size.width,
+                                                  self.retryButton.frame.size.height)];
+        }
+    }
 }
 
 - (void)retryConnectionButtonTapped:(id)sender
