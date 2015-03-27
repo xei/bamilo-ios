@@ -210,11 +210,11 @@
     
     if(VALID_NOTEMPTY(self.fallbackView, JAFallbackView) && VALID_NOTEMPTY(self.fallbackView.superview, UIView))
     {
-        [self.fallbackView reloadFallbackView:CGRectMake(self.fallbackView.frame.origin.x,
-                                                         self.fallbackView.frame.origin.y,
-                                                         self.view.frame.size.height + self.view.frame.origin.y,
-                                                         self.view.frame.size.width - self.view.frame.origin.y)
-                                  orientation:toInterfaceOrientation];
+        [self.fallbackView setupFallbackView:CGRectMake(self.fallbackView.frame.origin.x,
+                                                        self.fallbackView.frame.origin.y,
+                                                        self.view.frame.size.height + self.view.frame.origin.y,
+                                                        self.view.frame.size.width - self.view.frame.origin.y)
+                                 orientation:toInterfaceOrientation];
     }
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
@@ -258,7 +258,7 @@
     
     if(VALID_NOTEMPTY(self.fallbackView, JAFallbackView) && VALID_NOTEMPTY(self.fallbackView.superview, UIView))
     {
-        [self.fallbackView reloadFallbackView:self.view.bounds orientation:self.interfaceOrientation];
+        [self.fallbackView setupFallbackView:self.view.bounds orientation:self.interfaceOrientation];
     }
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];

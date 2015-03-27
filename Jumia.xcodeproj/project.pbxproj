@@ -3013,6 +3013,7 @@
 		CE3AF91119DD5D6700D8C51B /* JAPromotionPopUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPromotionPopUp.m; path = PromotionPopUp/JAPromotionPopUp.m; sourceTree = "<group>"; };
 		CE3AF91819DD8BC400D8C51B /* RIPromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPromotion.h; sourceTree = "<group>"; };
 		CE3AF91919DD8BC400D8C51B /* RIPromotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIPromotion.m; sourceTree = "<group>"; };
+		CE3F81411AC5743000EB3916 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		CE3FC5A51990E209003B4A27 /* JAPickerScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPickerScrollView.h; sourceTree = "<group>"; };
 		CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPickerScrollView.m; sourceTree = "<group>"; };
 		CE3FC5AC1990E25C003B4A27 /* JACatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogViewController.h; sourceTree = "<group>"; };
@@ -5623,6 +5624,7 @@
 				fr,
 				pt,
 				my,
+				fa,
 			);
 			mainGroup = B5A3019F19811D0700F71726;
 			productRefGroup = B5A301A919811D0700F71726 /* Products */;
@@ -8133,6 +8135,7 @@
 				B5210E8919C4863D00FDB0D1 /* fr */,
 				CEAB62D11A7FE32B00B6F26E /* pt */,
 				CE9AE1211AB823C100D56481 /* my */,
+				CE3F81411AC5743000EB3916 /* fa */,
 			);
 			name = RIStrings.strings;
 			sourceTree = "<group>";
