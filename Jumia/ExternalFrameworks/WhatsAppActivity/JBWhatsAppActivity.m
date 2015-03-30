@@ -62,7 +62,12 @@
 
 - (UIImage *)activityImage
 {
-    UIImage *whatsAppImage = [UIImage imageNamed:[NSString stringWithFormat:@"whatsAppLogo"]];
+    UIImage *whatsAppImage = [UIImage imageNamed:[NSString stringWithFormat:@"whatsAppLogo_noColor"]];
+    
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.2"))
+    {
+        whatsAppImage = [UIImage imageNamed:[NSString stringWithFormat:@"whatsAppLogo_color"]];
+    }
     return whatsAppImage;
 
 }
