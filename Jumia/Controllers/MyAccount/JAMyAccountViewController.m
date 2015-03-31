@@ -10,6 +10,8 @@
 #import "JAClickableView.h"
 #import "JAShareActivityProvider.h"
 #import "JAActivityViewController.h"
+#import "AQSFacebookMessengerActivity.h"
+#import "JBWhatsAppActivity.h"
 
 @interface JAMyAccountViewController ()
 
@@ -517,17 +519,32 @@
 
 - (void)shareApp:(id)sender
 {
-    JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initForAppShare];
+
+    UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
+    UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
+    WhatsAppMessage *whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",STRING_SHARE_APP, APP_NAME] forABID:nil];
     
-    NSArray *objectsToShare = @[provider];
+    NSArray *appActivities = @[whatsAppActivity, fbmActivity];
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] init];
     
-    JAActivityViewController *activityController = [[JAActivityViewController alloc] initWithActivityItems:objectsToShare
-                                                                                     applicationActivities:nil];
-    
-    [activityController setValue:[NSString stringWithFormat:STRING_SHARE_APP, APP_NAME]
-                          forKey:@"subject"];
-    
-    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
+    if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+       activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_APP, APP_NAME, [NSURL URLWithString:kAppStoreUrl], whatsAppMsg] applicationActivities:appActivities];
+        
+    }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_APP, APP_NAME, [NSURL URLWithString:kAppStoreUrlDaraz], whatsAppMsg] applicationActivities:appActivities];
+        
+    }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_APP, APP_NAME, [NSURL URLWithString:kAppStoreUrlShop], whatsAppMsg] applicationActivities:appActivities];
+        
+    }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    {
+        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_APP, APP_NAME, [NSURL URLWithString:kAppStoreUrlBamilo], whatsAppMsg] applicationActivities:appActivities];
+    }
+
+    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
