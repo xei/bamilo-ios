@@ -30,6 +30,8 @@
 @dynamic form;
 @dynamic options;
 @dynamic ratingStars;
+@dynamic linkText;
+@dynamic linkUrl;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 {
@@ -130,6 +132,14 @@
         {
             newField.required = [NSNumber numberWithBool:[required boolValue]];
         }
+    }
+    
+    if ([fieldJSON objectForKey:@"link_text"]) {
+        newField.linkText = [fieldJSON objectForKey:@"link_text"];
+    }
+    
+    if ([fieldJSON objectForKey:@"link_url"]) {
+        newField.linkUrl = [fieldJSON objectForKey:@"link_url"];
     }
     
     return newField;

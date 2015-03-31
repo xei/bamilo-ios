@@ -217,7 +217,7 @@
                 }
             }
         }
-        else if ([@"checkbox" isEqualToString:field.type])
+        else if ([field.type containsString:@"checkbox"])
         {
             if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [@"newsletter_categories_subscribed" isEqualToString:field.key])
             {
@@ -258,8 +258,6 @@
                     frame.origin.y = startingY;
                     check.frame = frame;
                     startingY += check.frame.size.height;
-                    
-                    check.labelText.text = field.label;
 
                     [check setTag:tag];
                     [self.formViews addObject:check];

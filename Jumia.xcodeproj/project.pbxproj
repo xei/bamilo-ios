@@ -3014,6 +3014,7 @@
 		CE3AF91819DD8BC400D8C51B /* RIPromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPromotion.h; sourceTree = "<group>"; };
 		CE3AF91919DD8BC400D8C51B /* RIPromotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIPromotion.m; sourceTree = "<group>"; };
 		CE3F81411AC5743000EB3916 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/RIStrings.strings; sourceTree = "<group>"; };
+		CE3F81431ACAED1100EB3916 /* Model_1.6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.6.xcdatamodel; sourceTree = "<group>"; };
 		CE3FC5A51990E209003B4A27 /* JAPickerScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPickerScrollView.h; sourceTree = "<group>"; };
 		CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPickerScrollView.m; sourceTree = "<group>"; };
 		CE3FC5AC1990E25C003B4A27 /* JACatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogViewController.h; sourceTree = "<group>"; };
@@ -9233,6 +9234,7 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CE3F81431ACAED1100EB3916 /* Model_1.6.xcdatamodel */,
 				6CC5C4B81A9634FE00E362F3 /* Model_1.5.xcdatamodel */,
 				CE4991001A5ED62F00508C1F /* Model_1.4.xcdatamodel */,
 				CEA86D9A1A374D32000032AD /* Model_1.3.xcdatamodel */,
@@ -9240,7 +9242,7 @@
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = 6CC5C4B81A9634FE00E362F3 /* Model_1.5.xcdatamodel */;
+			currentVersion = CE3F81431ACAED1100EB3916 /* Model_1.6.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
