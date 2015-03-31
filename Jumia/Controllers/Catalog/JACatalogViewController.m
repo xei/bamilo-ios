@@ -255,6 +255,9 @@
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
     self.sortingMethod = RICatalogSortingPopularity;
+    if (VALID_NOTEMPTY(self.sortingMethodFromPush, NSNumber)) {
+        self.sortingMethod = [self.sortingMethodFromPush integerValue];
+    }
     [self.catalogTopView setSorting:self.sortingMethod];
     
     NSNumber* gridSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];

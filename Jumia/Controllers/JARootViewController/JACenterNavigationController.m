@@ -968,6 +968,7 @@
     NSString* categoryName = [selectedItem objectForKey:@"category_name"];
     NSString* filterType = [notification.userInfo objectForKey:@"filter_type"];
     NSString* filterValue = [notification.userInfo objectForKey:@"filter_value"];
+    NSNumber* sorting = [notification.userInfo objectForKey:@"sorting"];
     
     if (VALID_NOTEMPTY(category, RICategory))
     {
@@ -996,6 +997,7 @@
         catalog.categoryName = categoryName;
         catalog.filterType = filterType;
         catalog.filterValue = filterValue;
+        catalog.sortingMethodFromPush = sorting;
         
         [self pushViewController:catalog animated:YES];
     }

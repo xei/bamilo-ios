@@ -31,6 +31,7 @@
 @property (nonatomic, strong)NSString* searchString;
 @property (nonatomic, strong)NSString* filterType;
 @property (nonatomic, strong)NSString* filterValue;
+@property (nonatomic, strong)NSNumber* sortingMethodFromPush;
 @property (assign, nonatomic)BOOL forceShowBackButton;
 
 @end
