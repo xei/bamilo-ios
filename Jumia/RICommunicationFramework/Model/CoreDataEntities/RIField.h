@@ -29,6 +29,8 @@
 @property (nonatomic, retain) RIForm *form;
 @property (nonatomic, retain) NSOrderedSet *options;
 @property (nonatomic, retain) NSOrderedSet *ratingStars;
+@property (nonatomic, retain) NSString * linkText;
+@property (nonatomic, retain) NSString * linkUrl;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 + (void)saveField:(RIField *)field;

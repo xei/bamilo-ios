@@ -38,6 +38,7 @@
     
     self.labelText.font = [UIFont fontWithName:kFontRegularName size:self.labelText.font.pointSize];
     [self.labelText setTextColor:UIColorFromRGB(0x666666)];
+    self.labelText.adjustsFontSizeToFitWidth = YES;
     
     self.storedValue = @"";
 }
@@ -48,13 +49,19 @@
     
     self.field = field;
     
+    NSString* text;
     if(VALID_NOTEMPTY(field.label, NSString))
     {
-        [self.labelText setText:field.label];
+        text = field.label;
+        
+        if (VALID_NOTEMPTY(field.linkText, NSString)) {
+            text = [NSString stringWithFormat:@"%@%@", field.label, field.linkText];
+        }
     }
     
     [self.switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
-    [self.switchComponent setAccessibilityLabel:field.label];
+    [self.switchComponent setAccessibilityLabel:text];
+    self.labelText.text = text;
     
     if(VALID_NOTEMPTY([self.field value], NSString))
     {
