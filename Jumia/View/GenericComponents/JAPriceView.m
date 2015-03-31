@@ -31,8 +31,12 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
         NSRange oldPriceRange = NSMakeRange(specialPrice.length + 1, price.length);
         finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", specialPrice, price]
                                                                   attributes:attributes];
-        
-        if (specialPriceOnTheLeft)
+
+        BOOL specialPriceOnTheLeftRelatingToRTL = specialPriceOnTheLeft;
+        if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+            specialPriceOnTheLeftRelatingToRTL = !specialPriceOnTheLeft;
+        }
+        if (specialPriceOnTheLeftRelatingToRTL)
         {
             oldPriceRange = NSMakeRange(0, price.length);
             finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", price, specialPrice]
