@@ -21,16 +21,16 @@
 {
     RILanguage *newLanguage = (RILanguage *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RILanguage class])];
     
-    if ([json objectForKey:@"lang_code"]) {
-        newLanguage.langCode = [json objectForKey:@"lang_code"];
+    if ([json objectForKey:@"code"]) {
+        newLanguage.langCode = [json objectForKey:@"code"];
     }
     
-    if ([json objectForKey:@"lang_name"]) {
-        newLanguage.langName = [json objectForKey:@"lang_name"];
+    if ([json objectForKey:@"name"]) {
+        newLanguage.langName = [json objectForKey:@"name"];
     }
     
-    if ([json objectForKey:@"lang_default"]) {
-        newLanguage.langDefault = [NSNumber numberWithInteger:[[json objectForKey:@"lang_default"] integerValue]];
+    if ([json objectForKey:@"default"]) {
+        newLanguage.langDefault = [NSNumber numberWithInteger:[[json objectForKey:@"default"] integerValue]];
     }
     
     return newLanguage;
