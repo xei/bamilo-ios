@@ -57,7 +57,9 @@ UITableViewDataSource
 @property (assign, nonatomic) NSInteger numberOfRequests;
 @property (assign, nonatomic) RIApiResponse apiResponse;
 @property (assign, nonatomic) BOOL requestsDone;
-
+@property (assign, nonatomic) NSInteger maxReviews;
+@property (strong, nonatomic) NSMutableArray *reviewsArray;
+@property (assign, nonatomic) BOOL loadedEverything;
 @end
 
 @implementation JASellerRatingsViewController
@@ -75,6 +77,8 @@ UITableViewDataSource
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.maxReviews = 15;
     
     if(VALID_NOTEMPTY(self.product.seller.name, NSString))
     {
@@ -114,6 +118,8 @@ UITableViewDataSource
     
     self.requestsDone = NO;
     
+    self.loadedEverything = NO;
+    
     self.apiResponse = RIApiResponseSuccess;
     
     if(VALID_NOTEMPTY(self.writeReviewScrollView, UIScrollView))
@@ -126,6 +132,8 @@ UITableViewDataSource
         self.emptyReviewsView.translatesAutoresizingMaskIntoConstraints = YES;
     }
     
+    self.reviewsArray = [NSMutableArray new];
+        
     [self hideViews];
 }
 
@@ -151,9 +159,45 @@ UITableViewDataSource
     }
 }
 
+- (void)addReviewsToTable:(NSArray*)reviews
+{
+    self.apiResponse = RIApiResponseSuccess;
+    [self removeErrorView];
+    
+    BOOL isEmpty = NO;
+    if(ISEMPTY(self.reviewsArray))
+    {
+        isEmpty = YES;
+        self.reviewsArray = [NSMutableArray new];
+    }
+    
+    if(VALID_NOTEMPTY(reviews, NSArray))
+    {
+        [self.reviewsArray addObjectsFromArray:reviews];
+    }
+    
+    [self.tableViewComments reloadData];
+    if(isEmpty)
+    {
+        [self.tableViewComments setContentOffset:CGPointZero animated:NO];
+    }
+}
+
+
 - (void)sellerReviewsRequest
 {
-    [RISellerReviewInfo getSellerReviewForProductWithUrl:self.product.url pageSize:0 pageNumber:10 successBlock:^(RISellerReviewInfo *sellerReviewInfo) {
+    
+    NSInteger currentPage = 0;
+    if (VALID_NOTEMPTY(self.sellerReviewInfo, RISellerReviewInfo)) {
+        if ([self.sellerReviewInfo.currentPage integerValue] == [self.sellerReviewInfo.totalPages integerValue]) {
+            self.loadedEverything = YES;
+            return;
+        }
+            
+        currentPage = [self.sellerReviewInfo.currentPage integerValue] + 1;
+    }
+    
+    [RISellerReviewInfo getSellerReviewForProductWithUrl:self.product.url pageSize:self.maxReviews pageNumber:currentPage successBlock:^(RISellerReviewInfo *sellerReviewInfo) {
         self.sellerReviewInfo = sellerReviewInfo;
         
         [self removeErrorView];
@@ -166,6 +210,10 @@ UITableViewDataSource
         {
             self.numberOfRequests = 0;
         }
+        
+        [self addReviewsToTable:self.sellerReviewInfo.reviews];
+        
+
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
         self.apiResponse = apiResponse;
         
@@ -638,23 +686,30 @@ UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.sellerReviewInfo.reviews.count;
+    return self.reviewsArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RISellerReview* review = [self.sellerReviewInfo.reviews objectAtIndex:indexPath.row];
+    RISellerReview* review = [self.reviewsArray objectAtIndex:indexPath.row];
     return [JAReviewCell cellHeightWithSellerReview:review width:self.tableViewComments.frame.size.width];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if((indexPath.row == ([self.reviewsArray count] - 1)) && (!self.loadedEverything))
+    {
+        [self showLoading];
+        [self sellerReviewsRequest];
+        [self hideLoading];
+    }
+    
     JAReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reviewCell"];
     
-    RISellerReview* review = [self.sellerReviewInfo.reviews objectAtIndex:indexPath.row];
+    RISellerReview* review = [self.reviewsArray objectAtIndex:indexPath.row];
     
     BOOL showSeparator = YES;
-    if(indexPath.row == ([self.sellerReviewInfo.reviews count] - 1))
+    if(indexPath.row == ([self.reviewsArray count] - 1))
     {
         showSeparator = NO;
     }
@@ -767,6 +822,5 @@ UITableViewDataSource
 {
     [self.reviewsDynamicForm resignResponder];
 }
-
 
 @end
