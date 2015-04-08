@@ -217,7 +217,7 @@
                 }
             }
         }
-        else if ([field.type containsString:@"checkbox"])
+        else if (0 != [field.type rangeOfString:@"checkbox"].length)
         {
             if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [@"newsletter_categories_subscribed" isEqualToString:field.key])
             {
