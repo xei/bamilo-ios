@@ -24,6 +24,8 @@
 @property (strong, nonatomic) UIScrollView *teaserPagesScrollView;
 @property (nonatomic, strong) NSMutableArray* teaserPageViews;
 
+@property (nonatomic, assign) BOOL isLoaded;
+
 @property (nonatomic, assign)CGRect teaserPageScrollPortraitRect;
 @property (nonatomic, assign)CGRect teaserPageScrollLandscapeRect;
 @property (nonatomic, assign)NSInteger lastIndex;
@@ -63,6 +65,8 @@
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookHome]
                                               data:[trackingDictionary copy]];
+    
+    self.isLoaded = NO;
     
     self.teaserCategoryScrollView.delegate = self;
     self.teaserCategoryScrollView.startingIndex = 0;
@@ -266,7 +270,12 @@
 
 - (void)completeTeasersLoading
 {
+    if (self.isLoaded) {
+        return;
+    }
     [RITeaserCategory getTeaserCategoriesWithSuccessBlock:^(id teaserCategories) {
+        self.isLoaded = YES;
+        
         [self removeErrorView];
         self.teaserCategories = teaserCategories;
         
