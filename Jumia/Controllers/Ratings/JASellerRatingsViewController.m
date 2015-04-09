@@ -196,7 +196,7 @@ UITableViewDataSource
             
         currentPage = [self.sellerReviewInfo.currentPage integerValue] + 1;
     }
-    
+    [self showLoading];
     [RISellerReviewInfo getSellerReviewForProductWithUrl:self.product.url pageSize:self.maxReviews pageNumber:currentPage successBlock:^(RISellerReviewInfo *sellerReviewInfo) {
         self.sellerReviewInfo = sellerReviewInfo;
         
@@ -213,6 +213,7 @@ UITableViewDataSource
         
         [self addReviewsToTable:self.sellerReviewInfo.reviews];
         
+        [self hideLoading];
 
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
         self.apiResponse = apiResponse;
@@ -229,6 +230,7 @@ UITableViewDataSource
             }
         }
         self.numberOfRequests = 0;
+        [self hideLoading];
     }];
 }
 
@@ -699,9 +701,9 @@ UITableViewDataSource
 {
     if((indexPath.row == ([self.reviewsArray count] - 1)) && (!self.loadedEverything))
     {
-        [self showLoading];
+        
         [self sellerReviewsRequest];
-        [self hideLoading];
+        
     }
     
     JAReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reviewCell"];
