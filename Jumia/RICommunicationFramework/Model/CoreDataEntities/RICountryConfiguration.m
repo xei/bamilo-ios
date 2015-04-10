@@ -56,8 +56,8 @@
         newConfig.decimalsSep = [json objectForKey:@"decimals_sep"];
     }
     
-    if ([json objectForKey:@"ga_id"]) {
-        newConfig.gaId = [json objectForKey:@"ga_id"];
+    if ([json objectForKey:@"ga_ios_id"]) {
+        newConfig.gaId = [json objectForKey:@"ga_ios_id"];
     }
     
     if ([json objectForKey:@"phone_number"]) {
