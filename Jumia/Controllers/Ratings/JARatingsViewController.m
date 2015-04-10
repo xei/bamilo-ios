@@ -64,6 +64,8 @@ UITableViewDataSource
 @property (assign, nonatomic) NSInteger numberOfRequests;
 @property (assign, nonatomic) RIApiResponse apiResponse;
 @property (assign, nonatomic) BOOL requestsDone;
+@property (assign, nonatomic) BOOL loadedEverything;
+@property (strong, nonatomic) NSMutableArray *reviewsArray;
 
 @end
 
@@ -82,6 +84,10 @@ UITableViewDataSource
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.reviewsArray = [NSMutableArray new];
+    
+    self.loadedEverything = NO;
     
     if(VALID_NOTEMPTY(self.product.sku, NSString))
     {
@@ -132,6 +138,16 @@ UITableViewDataSource
         self.emptyReviewsView.translatesAutoresizingMaskIntoConstraints = YES;
     }
     
+    if(self.requestsDone)
+    {
+        [self setupViews];
+    }else
+    {
+        [self showLoading];
+        
+        [self requestReviews];
+    }
+    
     [self hideViews];
 }
 
@@ -145,12 +161,7 @@ UITableViewDataSource
                                                  name:kOpenMenuNotification
                                                object:nil];
     
-    if(self.requestsDone)
-    {
-        [self setupViews];
-    }
-    else
-    {
+   
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
         {
             [self ratingsRequests];
@@ -159,7 +170,6 @@ UITableViewDataSource
         {
             self.numberOfRequests = 0;
         }
-    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -571,6 +581,88 @@ UITableViewDataSource
     [self.topView setHidden:NO];
 }
 
+-(void)addReviewsToTable:(NSArray *)reviews
+{
+    self.apiResponse = RIApiResponseSuccess;
+    [self removeErrorView];
+    
+    BOOL isEmpty = NO;
+    if(ISEMPTY(self.reviewsArray))
+    {
+        isEmpty = YES;
+        self.reviewsArray = [NSMutableArray new];
+    }
+    
+    if(VALID_NOTEMPTY(reviews, NSArray))
+    {
+        [self.reviewsArray addObjectsFromArray:reviews];
+    }
+    
+    [self.tableViewComments reloadData];
+    if(isEmpty)
+    {
+        [self.tableViewComments setContentOffset:CGPointZero animated:NO];
+    }
+}
+
+
+-(void)requestReviews
+{
+    NSInteger currentPage = 0;
+    if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+    {
+        if([self.productRatings.currentPage integerValue] == [self.productRatings.totalPages integerValue])
+        {
+            self.loadedEverything = YES;
+            return;
+        }
+        
+        currentPage = [self.productRatings.currentPage integerValue] + 1;
+    }
+    
+    [self showLoading];
+    [RIProductRatings getRatingsForProductWithUrl:self.product.url
+                                      allowRating:1
+                                       pageNumber:currentPage
+                                     successBlock:^(RIProductRatings *ratings) {
+                                         
+                                         self.productRatings = ratings;
+                                         
+                                         [self removeErrorView];
+                                         
+                                         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+                                         {
+                                             [self ratingsRequests];
+                                         }
+                                         else
+                                         {
+                                             self.numberOfRequests = 0;
+                                         }
+                                         
+                                         
+                                         [self addReviewsToTable:self.productRatings.reviews];
+                                         
+                                         [self hideLoading];
+                                         
+                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                         
+                                         if(RIApiResponseSuccess != self.apiResponse)
+                                         {
+                                             if (RIApiResponseNoInternetConnection == self.apiResponse)
+                                             {
+                                                 [self showErrorView:YES startingY:0.0f selector:@selector(requestReviews) objects:nil];
+                                             }
+                                             else
+                                             {
+                                                 [self showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
+                                             }
+                                         }
+                                         self.numberOfRequests = 0;
+                                         [self hideLoading];
+                                     }];
+
+}
+
 - (void)setupResumeView:(CGFloat)width
 {
     CGFloat currentY = 6.0f;
@@ -906,23 +998,29 @@ UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.productRatings.reviews.count;
+    return self.reviewsArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RIReview* review = [self.productRatings.reviews objectAtIndex:indexPath.row];
+    RIReview* review = [self.reviewsArray objectAtIndex:indexPath.row];
     return [JAReviewCell cellHeightWithReview:review width:self.tableViewComments.frame.size.width];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JAReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reviewCell"];
+    
+    if((indexPath.row == ([self.reviewsArray count] - 1)) && (!self.loadedEverything))
+    {
+        [self requestReviews];
+    }
 
-    RIReview* review = [self.productRatings.reviews objectAtIndex:indexPath.row];
+
+    RIReview* review = [self.reviewsArray objectAtIndex:indexPath.row];
 
     BOOL showSeparator = YES;
-    if(indexPath.row == ([self.productRatings.reviews count] - 1))
+    if(indexPath.row == ([self.reviewsArray count] - 1))
     {
         showSeparator = NO;
     }

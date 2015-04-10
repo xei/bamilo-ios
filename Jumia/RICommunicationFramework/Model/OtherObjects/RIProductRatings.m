@@ -12,6 +12,7 @@
 
 + (NSArray*)parseReviews:(NSDictionary*)reviewsJSON
 {
+    RIReview *review = [[RIReview alloc]init];
     NSMutableArray* newReviews = [NSMutableArray new];
     
     if ([reviewsJSON objectForKey:@"comments"]) {
@@ -22,7 +23,7 @@
             for (NSDictionary* comment in comments) {
                 if (VALID_NOTEMPTY(comment, NSDictionary)) {
                     
-                    RIReview* review = [RIReview parseReview:comment];
+                    review = [RIReview parseReview:comment];
                     
                     [newReviews addObject:review];
                 }
@@ -153,24 +154,32 @@
 #pragma mark - Send request
 
 + (NSString *)getRatingsForProductWithUrl:(NSString *)url
+                              allowRating:(NSInteger) allowRating
+                               pageNumber:(NSInteger) pageNumber
                              successBlock:(void (^)(RIProductRatings *ratings))successBlock
-                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
-{
+                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;{
     NSString *operationID = nil;
     
     if (VALID_NOTEMPTY(url, NSString))
     {
+        NSString* urlEnding = [NSString stringWithFormat:RI_API_PROD_RATING, allowRating, pageNumber];
+        
         operationID = [[RICommunicationWrapper sharedInstance]
-                       sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@", url]]
+                       sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", url, urlEnding]]
                        parameters:nil
                        httpMethodPost:YES
                        cacheType:RIURLCacheDBCache
                        cacheTime:RIURLCacheDefaultTime
                        successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                            
-                           dispatch_async(dispatch_get_main_queue(), ^{
-                               successBlock([RIProductRatings parseRatingWithDictionay:jsonObject]);
-                           });
+                           if ([jsonObject objectForKey:@"metadata"]) {
+                              
+                                           RIProductRatings* productRatingInfo = [RIProductRatings parseRatingWithDictionay:jsonObject];
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               successBlock(productRatingInfo);
+                                           });
+                           }
+
                            
                        } failureBlock:^(RIApiResponse apiResponse,  NSDictionary *errorJsonObject, NSError *errorObject) {
                            
@@ -272,7 +281,27 @@
                 newProductRatings.productSku = [dic objectForKey:@"sku"];
             }
             if ([product objectForKey:@"name"]) {
-                newProductRatings.productSku = [dic objectForKey:@"name"];
+                newProductRatings.productName = [dic objectForKey:@"name"];
+            }
+        }
+    }
+    
+    if ([dic objectForKey:@"reviews"])
+    {
+        NSDictionary *reviewsJSON = [dic objectForKey:@"reviews"];
+        if (VALID_NOTEMPTY(reviewsJSON, NSDictionary)) {
+            if([reviewsJSON objectForKey:@"pagination"]){
+                
+                NSDictionary *paginationJSON = [reviewsJSON objectForKey:@"pagination"];
+                if(VALID_NOTEMPTY(paginationJSON, NSDictionary)){
+                    if ([paginationJSON objectForKey:@"current_page"]) {
+                        newProductRatings.currentPage = [paginationJSON objectForKey:@"current_page"];
+                    }
+                    
+                    if([paginationJSON objectForKey:@"total_pages"]){
+                        newProductRatings.totalPages = [paginationJSON objectForKey:@"total_pages"];
+                    }
+                }
             }
         }
     }
@@ -294,7 +323,7 @@
             newProductRatings.reviews = [RIReview parseReviews:reviewsJSON];
         }
     }
-    
+
     return newProductRatings;
 }
 
