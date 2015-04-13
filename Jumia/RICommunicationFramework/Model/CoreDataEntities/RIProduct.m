@@ -653,10 +653,11 @@
     for (RIProduct* currentProduct in allProducts) {
         if ([currentProduct.sku isEqualToString:product.sku]) {
             
-            //found it, so just change the product by updating the previous entry
-            currentProduct.recentlyViewedDate = [NSDate date];
-            [[RIDataBaseWrapper sharedInstance] saveContext];
-            product = currentProduct;
+            //found it, so just change the product by deleting the previous entry
+            product.recentlyViewedDate = [NSDate date];
+            product.favoriteAddDate = currentProduct.favoriteAddDate;
+            [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
+            [RIProduct saveProduct:product];
             productExists = YES;
             break;
         }
