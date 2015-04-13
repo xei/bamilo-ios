@@ -89,27 +89,49 @@
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+    
     [self showLoading];
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
-        [self hideLoading];
-        self.productsArray = recentlyViewedProducts;
-        self.chosenSimpleNames = [NSMutableArray new];
-        for (int i = 0; i < self.productsArray.count; i++) {
-            [self.chosenSimpleNames addObject:@""];
-        }
         
-        if(self.firstLoading)
-        {
-            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-            self.firstLoading = NO;
+        if (recentlyViewedProducts.count > 0) {
+            NSMutableArray* skus = [NSMutableArray new];
+            for (RIProduct* product in recentlyViewedProducts) {
+                [skus addObject:product.sku];
+            }
+            
+            [RIProduct getUpdatedProductsWithSkus:skus successBlock:^(NSArray *products) {
+                
+                [self hideLoading];
+                self.productsArray = products;
+                self.chosenSimpleNames = [NSMutableArray new];
+                for (int i = 0; i < self.productsArray.count; i++) {
+                    [self.chosenSimpleNames addObject:@""];
+                }
+                
+                [self.collectionView reloadData];
+                
+                if(self.firstLoading)
+                {
+                    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                    self.firstLoading = NO;
+                }
+                
+            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+                
+                if(self.firstLoading)
+                {
+                    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                    self.firstLoading = NO;
+                }
+                
+                [self hideLoading];
+                
+            }];
+        } else {
+            [self hideLoading];
         }
-        
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         
         if(self.firstLoading)
@@ -121,6 +143,11 @@
         
         [self hideLoading];
     }];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0f];
 }
