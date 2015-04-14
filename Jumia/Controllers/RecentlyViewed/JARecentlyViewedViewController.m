@@ -128,6 +128,10 @@
                 
                 [self hideLoading];
                 
+                if (RIApiResponseMaintenancePage == apiResponse) {
+                    [self showMaintenancePage:@selector(viewDidLoad) objects:nil];
+                }
+                
             }];
         } else {
             [self hideLoading];
