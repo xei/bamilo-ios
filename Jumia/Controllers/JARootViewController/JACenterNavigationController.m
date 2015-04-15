@@ -1368,29 +1368,30 @@
                                                         object:nil];
     
     NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* uid = [notification.userInfo objectForKey:@"shop_id"];
 
+    JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
+    if([notification.userInfo objectForKey:@"show_back_button"])
+    {
+        viewController.navBarLayout.backButtonTitle = STRING_HOME;
+    }
+    if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
+        viewController.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
+    }
+    if([notification.userInfo objectForKey:@"title"])
+    {
+        viewController.navBarLayout.title = [notification.userInfo objectForKey:@"title"];
+    }
+    
     if (VALID_NOTEMPTY(url, NSString))
     {
-        
-        JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
         viewController.url = url;
-        
-        if([notification.userInfo objectForKey:@"show_back_button"])
-        {
-            viewController.navBarLayout.backButtonTitle = STRING_HOME;
-        }
-        
-        if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
-            viewController.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
-        }
-        
-        if([notification.userInfo objectForKey:@"title"])
-        {
-            viewController.navBarLayout.title = [notification.userInfo objectForKey:@"title"];
-        }
-        
         [self pushViewController:viewController animated:YES];
 
+    } else if (VALID_NOTEMPTY(uid, NSString))
+    {
+        viewController.url = [NSString stringWithFormat:@"%@%@main/getstatic/?key=%@",[RIApi getCountryUrlInUse], RI_API_VERSION, uid];
+        [self pushViewController:viewController animated:YES];
     }
 
 }
