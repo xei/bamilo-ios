@@ -144,6 +144,19 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
+ *  Method to reload a set of products given their skus
+ *
+ *  @param an array of skus to be reloaded
+ *  @param the success block containing the obtained products
+ *  @param the failure block containing the error message
+ *
+ *  @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString *)getUpdatedProductsWithSkus:(NSArray*)productSkus
+                            successBlock:(void (^)(NSArray *products))successBlock
+                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+
+/**
  *  Method to load a the recently viewed products from coredata
  *
  *  @param the success block containing the recently viewed products

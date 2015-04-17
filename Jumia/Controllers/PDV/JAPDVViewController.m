@@ -114,6 +114,8 @@ JAActivityViewControllerDelegate
                                              selector: @selector( applicationDidEnterBackgroundNotification:)
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -155,10 +157,26 @@ JAActivityViewControllerDelegate
     }
 }
 
+- (void)updatedProduct:(NSNotification*)notification
+{
+    RIProduct* newProduct = notification.object;
+    if (VALID_NOTEMPTY(newProduct, RIProduct)) {
+        self.product = newProduct;
+        [self removeSuperviews];
+        [self productLoaded];
+        [self fillTheViews];
+    }
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updatedProduct:)
+                                                 name:kProductChangedNotification
+                                               object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -556,7 +574,8 @@ JAActivityViewControllerDelegate
     }
     
     [RIProduct addToRecentlyViewed:product successBlock:^(RIProduct *product) {
-        self.product = product;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
+                                                            object:self.product];
         [self requestReviews];
         [self productLoaded];
     } andFailureBlock:nil];

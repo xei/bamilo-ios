@@ -58,7 +58,13 @@
         }
         
         if ([meta objectForKey:@"quantity"]) {
-            newProductSimple.quantity = [meta objectForKey:@"quantity"];
+            id quantity = [meta objectForKey:@"quantity"];
+            if ([quantity isKindOfClass:[NSString class]]) {
+                newProductSimple.quantity = (NSString*)quantity;
+            } else if ([quantity isKindOfClass:[NSNumber class]]){
+                newProductSimple.quantity = [NSString stringWithFormat:@"%ld",(long)[(NSNumber*)quantity integerValue]];
+            }
+
         }
         if ([meta objectForKey:@"stock"]) {
             newProductSimple.stock = [meta objectForKey:@"stock"];
@@ -98,6 +104,14 @@
         }
         else if ([meta objectForKey:@"size"]) {
             newProductSimple.variation = [meta objectForKey:@"size"];
+        }
+        else if ([meta objectForKey:@"variation_value"]) {
+            id variationValue = [meta objectForKey:@"variation_value"];
+            if ([variationValue isKindOfClass:[NSString class]]) {
+                newProductSimple.variation = (NSString*)variationValue;
+            } else if ([variationValue isKindOfClass:[NSNumber class]]){
+                newProductSimple.variation = [NSString stringWithFormat:@"%ld",(long)[(NSNumber*)variationValue integerValue]];
+            }
         }
     }
     
