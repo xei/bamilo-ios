@@ -16,39 +16,33 @@
     
     if(VALID_NOTEMPTY(bannerJSON, NSDictionary)){
         
-        NSDictionary *metadataBanner = [bannerJSON objectForKey:@"metadata"];
-        
-        if(VALID_NOTEMPTY(metadataBanner, NSDictionary))
-        {
-            NSDictionary *banner = [metadataBanner objectForKey:@"banner"];
-            if(VALID_NOTEMPTY(banner, NSDictionary)){
-                if([banner objectForKey:@"phone_image"])
+    
+                if([bannerJSON objectForKey:@"phone_image"])
                 {
-                    newBanner.iPhoneImageUrl = [banner objectForKey:@"phone_image"];
+                    newBanner.iPhoneImageUrl = [bannerJSON objectForKey:@"phone_image"];
                 }
                 
-                if([banner objectForKey:@"tablet_image"])
+                if([bannerJSON objectForKey:@"tablet_image"])
                 {
-                    newBanner.iPadImageUrl = [banner objectForKey:@"tablet_image"];
+                    newBanner.iPadImageUrl = [bannerJSON objectForKey:@"tablet_image"];
                 }
                 
-                if([banner objectForKey:@"target_type"])
+                if([bannerJSON objectForKey:@"target_type"])
                 {
-                    newBanner.targetType = [banner objectForKey:@"target_type"];
+                    newBanner.targetType = [bannerJSON objectForKey:@"target_type"];
                 }
                 
-                if([banner objectForKey:@"title"])
+                if([bannerJSON objectForKey:@"title"])
                 {
-                    newBanner.title = [banner objectForKey:@"title"];
+                    newBanner.title = [bannerJSON objectForKey:@"title"];
                 }
                 
-                if([banner objectForKey:@"url"])
+                if([bannerJSON objectForKey:@"url"])
                 {
-                    newBanner.url = [banner objectForKey:@"url"];
+                    newBanner.url = [bannerJSON objectForKey:@"url"];
                 }
             }
-        }
-    }
+    
     
     return newBanner;
     

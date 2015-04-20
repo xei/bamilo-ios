@@ -180,7 +180,7 @@
                          maxItems:(NSString *)maxItems
                     sortingMethod:(RICatalogSorting)sortingMethod
                           filters:(NSArray*)filters
-                     successBlock:(void (^)(NSArray *results, NSArray *filters, NSNumber *productCount))successBlock
+                     successBlock:(void (^)(NSArray *results, NSArray *filters, NSNumber *productCount, RIBanner *banner))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     query = [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -252,6 +252,15 @@
                                                                       productCountValue = [NSNumber numberWithInt:[productCountStirng intValue]];
                                                                   }
                                                                   
+                                                                  NSDictionary *bannerJSON = [metadata objectForKey:@"banner"];
+                                                                  
+                                                                  RIBanner *banner;
+                                                                  
+                                                                  if(VALID_NOTEMPTY(bannerJSON, NSDictionary))
+                                                                  {
+                                                                      banner = [RIBanner parseBanner:bannerJSON];
+                                                                  }
+                                                                  
                                                                   NSArray* filtersJSON = [metadata objectForKey:@"filters"];
                                                                   
                                                                   NSArray* filtersArray;
@@ -269,7 +278,7 @@
                                                                   }
                                                                   
                                                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                                                      successBlock([temp copy], filtersArray, productCountValue);
+                                                                      successBlock([temp copy], filtersArray, productCountValue, banner);
                                                                   });
                                                                   
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
