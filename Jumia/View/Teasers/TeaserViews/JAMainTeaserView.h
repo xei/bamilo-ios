@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "JATeaserView.h"
 
-@interface JAMainTeaserView : JATeaserView
+@interface JAMainTeaserView : JATeaserView <UIScrollViewDelegate>
 
 @end

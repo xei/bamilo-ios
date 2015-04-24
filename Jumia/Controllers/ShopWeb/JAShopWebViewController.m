@@ -39,12 +39,13 @@
         NSURL* url = [NSURL URLWithString:self.url];
         [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url parameters:nil httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
             NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
-            NSArray *data = [metadata objectForKey:@"data"];
-            NSString *html = [[data firstObject] gtm_stringByUnescapingFromHTML];
-            NSString *html2 = [html gtm_stringByUnescapingFromHTML];
+            NSDictionary *data = [metadata objectForKey:@"data"];
+            NSString* htmlRaw = [data objectForKey:@"html"];
+            NSString *htmlStep = [htmlRaw gtm_stringByUnescapingFromHTML];
+            NSString *htmlFinal = [htmlStep gtm_stringByUnescapingFromHTML];
             
             self.isLoaded = YES;
-            [self.webView loadHTMLString:html2 baseURL:url];
+            [self.webView loadHTMLString:htmlFinal baseURL:url];
         } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObjectt) {
             if (RIApiResponseNoInternetConnection == apiResponse) {
                 [self showErrorView:YES startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];
@@ -91,7 +92,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCampaignNofication
                                                                     object:nil
-                                                                  userInfo:@{ @"campaign_url" : url,
+                                                                  userInfo:@{ @"url" : url,
                                                                               @"show_back_button_title" : STRING_BACK}];
                 
             }

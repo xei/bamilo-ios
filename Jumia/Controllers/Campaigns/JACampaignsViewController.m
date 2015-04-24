@@ -7,14 +7,12 @@
 //
 
 #import "JACampaignsViewController.h"
-#import "RITeaser.h"
-#import "RITeaserText.h"
-#import "RITeaserImage.h"
 #import "RICart.h"
 #import "RICampaign.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "RITeaserComponent.h"
 
 @interface JACampaignsViewController ()
 
@@ -177,33 +175,22 @@
     {
         [self createCampaignPageAtX:currentX];
     }
-    else if (VALID_NOTEMPTY(self.campaignTeasers, NSArray))
+    else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet))
     {
-        for (int i = 0; i < self.campaignTeasers.count; i++)
+        for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++)
         {
             JACampaignPageView* campaignPageView = [self createCampaignPageAtX:currentX];
             currentX += campaignPageView.frame.size.width;
-            
-            RITeaser* teaser = [self.campaignTeasers objectAtIndex:i];
-            if (VALID_NOTEMPTY(teaser.teaserTexts, NSOrderedSet)) {
-                RITeaserText* teaserText = [teaser.teaserTexts firstObject];
-                if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
-                    [optionList addObject:teaserText.name];
+
+            RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
+            if (VALID_NOTEMPTY(component, RITeaserComponent)) {
+                
+                if (VALID_NOTEMPTY(component.name, NSString)) {
+                    [optionList addObject:component.name];
                     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Campaign"];
-                    [[RITrackingWrapper sharedInstance]trackScreenWithName:teaserText.name];
+                    [[RITrackingWrapper sharedInstance]trackScreenWithName:component.name];
                     
-                    if ([teaserText.name isEqualToString:self.startingTitle]) {
-                        startingIndex = i;
-                    }
-                }
-            }
-            else if (VALID_NOTEMPTY(teaser.teaserImages, NSOrderedSet))
-            {
-                RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
-                if (VALID_NOTEMPTY(teaserImage, RITeaserImage)) {
-                    [optionList addObject:teaserImage.teaserDescription];
-                    
-                    if ([teaserImage.teaserDescription isEqualToString:self.startingTitle]) {
+                    if ([component.name isEqualToString:self.startingTitle]) {
                         startingIndex = i;
                     }
                 }
@@ -245,19 +232,12 @@
             
             if (VALID_NOTEMPTY(self.campaignId, NSString)) {
                 [self loadPage:campaignPageView withCampaignId:self.campaignId];
-            } else if (VALID_NOTEMPTY(self.campaignTeasers, NSArray)) {
-                RITeaser* teaser = [self.campaignTeasers objectAtIndex:index];
-                if (VALID_NOTEMPTY(teaser.teaserTexts, NSOrderedSet)) {
-                    RITeaserText* teaserText = [teaser.teaserTexts firstObject];
-                    if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
-                        [self loadPage:campaignPageView withCampaignUrl:teaserText.url];
-                    }
-                }
-                else if (VALID_NOTEMPTY(teaser.teaserImages, NSOrderedSet)) {
-                    RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
-                    if (VALID_NOTEMPTY(teaserImage, RITeaserImage)) {
-                        [self loadPage:campaignPageView withCampaignUrl:teaserImage.url];
-                    }
+            } else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet)) {
+                
+                RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:index];
+                
+                if (VALID_NOTEMPTY(component, RITeaserComponent) && VALID_NOTEMPTY(component.url, NSString)) {
+                    [self loadPage:campaignPageView withCampaignUrl:component.url];
                 }
             } else if (VALID_NOTEMPTY(self.campaignUrl, NSString)) {
                 [self loadPage:campaignPageView withCampaignUrl:self.campaignUrl];

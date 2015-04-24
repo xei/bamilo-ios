@@ -2,31 +2,19 @@
 //  JATopSellersTeaserView.m
 //  Jumia
 //
-//  Created by Telmo Pinto on 31/07/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by Telmo Pinto on 23/04/15.
+//  Copyright (c) 2015 Rocket Internet. All rights reserved.
 //
 
 #import "JATopSellersTeaserView.h"
-#import <QuartzCore/QuartzCore.h>
 #import "UIImageView+WebCache.h"
 #import "JAClickableView.h"
 
-#define JATopSellersTeaserViewHeight 144.0f
-#define JATopSellersTeaserViewHorizontalMargin 6.0f
-#define JATopSellersTeaserViewContentY 4.0f
-#define JATopSellersTeaserViewContentCornerRadius 3.0f
-#define JATopSellersTeaserViewTitleHeight 26.0f
-#define JATopSellersTeaserViewTitleFont [UIFont fontWithName:kFontRegularName size:11.0f];
-#define JATopSellersTeaserViewTitleColor UIColorFromRGB(0x4e4e4e)
-#define JATopSellersTeaserViewLineColor UIColorFromRGB(0xfaa41a)
-#define JATopSellersTeaserViewProductTeaserWidth 110.0f
-#define JATopSellersTeaserViewProductTeaserWidthLandscape 140.0f
-#define JATopSellersTeaserViewProductImageWidth 57.0f
-#define JATopSellersTeaserViewProductImageHeight 71.0f
-#define JATopSellersTeaserViewProductFont [UIFont fontWithName:kFontRegularName size:9.0f]
-#define JATopSellersTeaserViewProductLabelColor UIColorFromRGB(0x666666)
-#define JATopSellersTeaserViewProductPriceColor UIColorFromRGB(0xcc0000)
+@interface JATopSellersTeaserView()
 
+@property (nonatomic, strong)UIScrollView* scrollView;
+
+@end
 
 @implementation JATopSellersTeaserView
 
@@ -34,126 +22,110 @@
 {
     [super load];
     
-    [self setFrame:CGRectMake(self.frame.origin.x,
-                              self.frame.origin.y,
-                              self.frame.size.width,
-                              JATopSellersTeaserViewHeight)];
-    
-    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(JATopSellersTeaserViewHorizontalMargin,
-                                                                   JATopSellersTeaserViewContentY,
-                                                                   self.bounds.size.width - JATopSellersTeaserViewHorizontalMargin*2,
-                                                                   self.bounds.size.height - JATopSellersTeaserViewContentY*2)];
-    contentView.backgroundColor = [UIColor whiteColor];
-    contentView.layer.cornerRadius = JATopSellersTeaserViewContentCornerRadius;
-    [self addSubview:contentView];
-    
-    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x + JATopSellersTeaserViewHorizontalMargin,
-                                                                    contentView.bounds.origin.y,
-                                                                    contentView.bounds.size.width - JATopSellersTeaserViewHorizontalMargin*2,
-                                                                    JATopSellersTeaserViewTitleHeight)];
-    titleLabel.text = self.groupTitle;
-    titleLabel.font = JATopSellersTeaserViewTitleFont
-    titleLabel.textColor = JATopSellersTeaserViewTitleColor;
-    [contentView addSubview:titleLabel];
-    
-    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x,
-                                                                contentView.bounds.origin.y + JATopSellersTeaserViewTitleHeight,
-                                                                contentView.bounds.size.width,
-                                                                1.0f)];
-    lineView.backgroundColor = JATopSellersTeaserViewLineColor;
-    [contentView addSubview:lineView];
-    
-    UIScrollView* productScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x,
-                                                                                     CGRectGetMaxY(lineView.frame),
-                                                                                     contentView.bounds.size.width,
-                                                                                     contentView.bounds.size.height - lineView.frame.size.height - titleLabel.frame.size.height)];
-    productScrollView.showsHorizontalScrollIndicator = NO;
-    [contentView addSubview:productScrollView];
-    
-    CGFloat currentX = productScrollView.bounds.origin.x;
-    
-    for (int i = 0; i < self.teasers.count; i++) {
-        RITeaser* teaser = [self.teasers objectAtIndex:i];
+    if (VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet)) {
+        CGFloat groupingTitleLabelMargin = 16.0f;
+        CGFloat groupingTitleLabelHeight = 30.0f;
+        UILabel* groupingTitleLabel = [UILabel new];
+        groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
+        groupingTitleLabel.textColor = [UIColor blackColor];
+        groupingTitleLabel.text = self.teaserGrouping.title;
+        [groupingTitleLabel sizeToFit];
+        [groupingTitleLabel setFrame:CGRectMake(groupingTitleLabelMargin,
+                                                self.bounds.origin.y,
+                                                self.frame.size.width - groupingTitleLabelMargin*2,
+                                                groupingTitleLabelHeight)];
+        [self addSubview:groupingTitleLabel];
         
-        for (RITeaserProduct* teaserProduct in teaser.teaserProducts) {
+        CGFloat margin = 6.0f; //value by design
+        CGFloat componentHeight = 129.0f; //value by design
+        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
+                                                                         self.bounds.origin.y + groupingTitleLabelHeight,
+                                                                         self.bounds.size.width,
+                                                                         componentHeight)];
+        self.scrollView.showsHorizontalScrollIndicator = NO;
+        [self addSubview:self.scrollView];
+        
+        CGFloat componentWidth = 114; //value by design
+        CGFloat currentX = margin;
+        for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
+            RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
             
-            CGFloat clickableViewWidth = JATopSellersTeaserViewProductTeaserWidth;
-            if (self.isLandscape) {
-                clickableViewWidth = JATopSellersTeaserViewProductTeaserWidthLandscape;
-            }
+            JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
+                                                                                               self.scrollView.bounds.origin.y,
+                                                                                               componentWidth,
+                                                                                               self.scrollView.bounds.size.height)];
+            clickableView.tag = i;
+            clickableView.backgroundColor = [UIColor whiteColor];
+            [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [self.scrollView addSubview:clickableView];
             
-            JAClickableView* productTeaserView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
-                                                                                                   productScrollView.bounds.origin.y,
-                                                                                                   clickableViewWidth,
-                                                                                                   productScrollView.bounds.size.height)];
-            productTeaserView.tag = i;
-            [productTeaserView addTarget:self action:@selector(teaserProductPressed:) forControlEvents:UIControlEventTouchUpInside];
-            [productScrollView addSubview:productTeaserView];
-            currentX += productTeaserView.frame.size.width;
-            
-            UIImageView* productImage = [[UIImageView alloc] initWithFrame:CGRectMake((productTeaserView.frame.size.width - JATopSellersTeaserViewProductImageWidth) / 2,
-                                                                                      productTeaserView.bounds.origin.y,
-                                                                                      JATopSellersTeaserViewProductImageWidth,
-                                                                                      JATopSellersTeaserViewProductImageHeight)];
-            [productImage setImageWithURL:[NSURL URLWithString:teaserProduct.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
-            [productTeaserView addSubview:productImage];
-            
-            
-            UILabel* brandLabel = [[UILabel alloc] init];
-            brandLabel.text = teaserProduct.brand;
-            brandLabel.font = JATopSellersTeaserViewProductFont;
-            brandLabel.textColor = JATopSellersTeaserViewProductLabelColor;
-            brandLabel.textAlignment = NSTextAlignmentCenter;
-            [brandLabel sizeToFit];
-            [brandLabel setFrame:CGRectMake(productTeaserView.bounds.origin.x + JATopSellersTeaserViewHorizontalMargin,
-                                            CGRectGetMaxY(productImage.frame),
-                                            productTeaserView.bounds.size.width - JATopSellersTeaserViewHorizontalMargin*2,
-                                            brandLabel.frame.size.height)];
-            [productTeaserView addSubview:brandLabel];
-            
-            UILabel* nameLabel = [[UILabel alloc] init];
-            nameLabel.text = teaserProduct.name;
-            nameLabel.font = JATopSellersTeaserViewProductFont;
-            nameLabel.textColor = JATopSellersTeaserViewProductLabelColor;
-            nameLabel.textAlignment = NSTextAlignmentCenter;
-            [nameLabel sizeToFit];
-            [nameLabel setFrame:CGRectMake(productTeaserView.bounds.origin.x + JATopSellersTeaserViewHorizontalMargin,
-                                           CGRectGetMaxY(brandLabel.frame),
-                                           productTeaserView.bounds.size.width - JATopSellersTeaserViewHorizontalMargin*2,
-                                           nameLabel.frame.size.height)];
-            [productTeaserView addSubview:nameLabel];
-            
-            UILabel* priceLabel = [[UILabel alloc] init];
-            if (VALID_NOTEMPTY(teaserProduct.specialPriceFormatted, NSString)) {
-                priceLabel.text = teaserProduct.specialPriceFormatted;
+            NSString* imageUrl;
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                imageUrl = component.imageLandscapeUrl;
             } else {
-                priceLabel.text = teaserProduct.priceFormatted;
+                imageUrl = component.imagePortraitUrl;
             }
-            priceLabel.font = JATopSellersTeaserViewProductFont;
-            priceLabel.textColor = JATopSellersTeaserViewProductPriceColor;
+            CGFloat imageTopMargin = 7.0f; //value by design
+            CGFloat imageWidth = 100.0f; //value by design
+            CGFloat imageHeight = 71.0f; //value by design
+            UIImageView* imageView = [UIImageView new];
+            [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+            [imageView setFrame:CGRectMake((clickableView.bounds.size.width - imageWidth) / 2,
+                                           imageTopMargin,
+                                           imageWidth,
+                                           imageHeight)];
+            [clickableView addSubview:imageView];
+            
+            CGFloat textMarginY = 6.0;
+            UILabel* nameLabel = [UILabel new];
+            nameLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+            nameLabel.textColor = [UIColor blackColor];
+            nameLabel.textAlignment = NSTextAlignmentCenter;
+            nameLabel.text = component.name;
+            [nameLabel sizeToFit];
+            [nameLabel setFrame:CGRectMake(imageView.frame.origin.x,
+                                            CGRectGetMaxY(imageView.frame) + textMarginY,
+                                            imageView.frame.size.width,
+                                            nameLabel.frame.size.height)];
+            [clickableView addSubview:nameLabel];
+            
+            UILabel* priceLabel = [UILabel new];
+            priceLabel.font = [UIFont fontWithName:kFontRegularName size:10.0f];
+            priceLabel.textColor = UIColorFromRGB(0xcc0000);
             priceLabel.textAlignment = NSTextAlignmentCenter;
+            priceLabel.text = component.priceFormatted;
             [priceLabel sizeToFit];
-            [priceLabel setFrame:CGRectMake(productTeaserView.bounds.origin.x + JATopSellersTeaserViewHorizontalMargin,
-                                            CGRectGetMaxY(nameLabel.frame),
-                                            productTeaserView.bounds.size.width - JATopSellersTeaserViewHorizontalMargin*2,
-                                            priceLabel.frame.size.height)];
-            [productTeaserView addSubview:priceLabel];
+            [priceLabel setFrame:CGRectMake(imageView.frame.origin.x,
+                                               CGRectGetMaxY(nameLabel.frame),
+                                               imageView.frame.size.width,
+                                               priceLabel.frame.size.height)];
+            [clickableView addSubview:priceLabel];
+            
+            currentX += clickableView.frame.size.width;
+            
+            if (i+1 != self.teaserGrouping.teaserComponents.count) {
+                //not the last one, so add a separator
+                UIView* separator = [UIView new];
+                separator.backgroundColor = UIColorFromRGB(0xd8d8d8);
+                [separator setFrame:CGRectMake(currentX - 1,
+                                               clickableView.frame.origin.y,
+                                               1,
+                                               clickableView.frame.size.height)];
+                [self.scrollView addSubview:separator];
+            }
         }
-    }
-    
-    [productScrollView setContentSize:CGSizeMake(currentX,
-                                                 productScrollView.frame.size.height)];
-}
 
-- (void)teaserProductPressed:(UIControl*)control
-{
-    NSInteger index = control.tag;
-    
-    RITeaser* teaser = [self.teasers objectAtIndex:index];
-    
-    RITeaserProduct* teaserProduct = [teaser.teaserProducts firstObject];
-    
-    [self teaserPressedWithTeaserProduct:teaserProduct];
+        
+        
+        [self.scrollView setContentSize:CGSizeMake(currentX,
+                                                   self.scrollView.frame.size.height)];
+        
+        CGFloat totalHeight = groupingTitleLabel.frame.size.height + self.scrollView.frame.size.height;
+        [self setFrame:CGRectMake(self.frame.origin.x,
+                                  self.frame.origin.y,
+                                  self.frame.size.width,
+                                  totalHeight)];
+    }
 }
 
 @end

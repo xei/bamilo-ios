@@ -8,6 +8,7 @@
 
 #import "JAClickableView.h"
 #import "JAUtils.h"
+#import "UIButton+WebCache.h"
 
 @interface JAClickableView()
 
@@ -106,6 +107,10 @@
 - (void)setImage:(UIImage*)image forState:(UIControlState)state;
 {
     [self.overlayButton setImage:image forState:state];
+}
+- (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)image;
+{
+    [self.overlayButton setImageWithURL:url placeholderImage:image];
 }
 - (void)setTitle:(NSString*)title forState:(UIControlState)state;
 {

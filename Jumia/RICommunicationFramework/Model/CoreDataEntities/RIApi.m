@@ -10,7 +10,8 @@
 #import "RISection.h"
 #import "RICategory.h"
 #import "RIFormIndex.h"
-#import "RITeaserCategory.h"
+//#import "RITeaserCategory.h"
+#import "RITeaserGrouping.h"
 #import "RIImageResolution.h"
 #import "RICountry.h"
 #import "RICountryConfiguration.h"
@@ -324,16 +325,17 @@
             failureBlock(apiResponse, errorMessage);
         }];
     }
-    else if ([section.name isEqualToString:@"teasers"])
+    else if ([section.name isEqualToString:@"home"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RITeaserCategory loadTeaserCategoriesIntoDatabaseForCountry:url withSuccessBlock:^(id teasers) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
-            successBlock();
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
-            failureBlock(apiResponse, errorMessage);
-        }];
+        [RITeaserGrouping loadTeasersIntoDatabaseForCountryUrl:url
+                                              withSuccessBlock:^(NSArray *teaserGroupings) {
+                                                  [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+                                                  successBlock();
+                                              } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+                                                  [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+                                                  failureBlock(apiResponse, error);
+                                              }];
     }
     else if ([section.name isEqualToString:@"imageresolutions"])
     {
