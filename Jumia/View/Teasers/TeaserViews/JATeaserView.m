@@ -14,52 +14,61 @@
 {
     self.backgroundColor = [UIColor clearColor];
     
-    if (ISEMPTY(self.teasers)) {
+    if (ISEMPTY(self.teaserGrouping)) {
         return;
     }
 }
 
-- (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage
-                          targetType:(NSInteger)targetType;
+- (void)teaserPressed:(UIControl*)control
 {
-    NSString* notificationName = kTeaserNotificationPushCatalogWithUrl;
-    if (1 == targetType) {
-        notificationName = kTeaserNotificationPushPDVWithUrl;
-    } else if (4 == targetType) {
-        notificationName = kTeaserNotificationPushShopWithUrl;
-    }
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                        object:nil
-                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserImage.url,teaserImage.teaserDescription,STRING_HOME] forKeys:@[@"url",@"title",@"show_back_button_title"]]];
+    NSInteger index = control.tag;
+    
+    RITeaserComponent* teaserComponent = [self.teaserGrouping.teaserComponents objectAtIndex:index];
+    
+    //$$$ do stuff
 }
 
-- (void)teaserPressedWithTeaserText:(RITeaserText*)teaserText
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushCatalogWithUrl
-                                                        object:nil
-                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserText.url,teaserText.name] forKeys:@[@"url",@"title"]]];
-}
-
-- (void)teaserPressedWithTeaserProduct:(RITeaserProduct*)teaserProduct
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushPDVWithUrl
-                                                        object:nil
-                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserProduct.url, STRING_HOME] forKeys:@[@"url", @"show_back_button_title"]]];
-}
-
-- (void)teaserPressedWithTitle:(NSString*)title
-             inCampaignTeasers:(NSArray*)campaignTeasers;
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushCatalogWithUrlForCampaigns
-                                                        object:nil
-                                                      userInfo:[NSDictionary dictionaryWithObjects:@[title,campaignTeasers] forKeys:@[@"title",@"campaignTeasers"]]];
-}
-
-- (void)teaserAllCategoriesPressed
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushAllCategories
-                                                        object:nil
-                                                      userInfo:nil];
-}
+//- (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage
+//                          targetType:(NSInteger)targetType;
+//{
+//    NSString* notificationName = kTeaserNotificationPushCatalogWithUrl;
+//    if (1 == targetType) {
+//        notificationName = kTeaserNotificationPushPDVWithUrl;
+//    } else if (4 == targetType) {
+//        notificationName = kTeaserNotificationPushShopWithUrl;
+//    }
+//    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+//                                                        object:nil
+//                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserImage.url,teaserImage.teaserDescription,STRING_HOME] forKeys:@[@"url",@"title",@"show_back_button_title"]]];
+//}
+//
+//- (void)teaserPressedWithTeaserText:(RITeaserText*)teaserText
+//{
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushCatalogWithUrl
+//                                                        object:nil
+//                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserText.url,teaserText.name] forKeys:@[@"url",@"title"]]];
+//}
+//
+//- (void)teaserPressedWithTeaserProduct:(RITeaserProduct*)teaserProduct
+//{
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushPDVWithUrl
+//                                                        object:nil
+//                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserProduct.url, STRING_HOME] forKeys:@[@"url", @"show_back_button_title"]]];
+//}
+//
+//- (void)teaserPressedWithTitle:(NSString*)title
+//             inCampaignTeasers:(NSArray*)campaignTeasers;
+//{
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushCatalogWithUrlForCampaigns
+//                                                        object:nil
+//                                                      userInfo:[NSDictionary dictionaryWithObjects:@[title,campaignTeasers] forKeys:@[@"title",@"campaignTeasers"]]];
+//}
+//
+//- (void)teaserAllCategoriesPressed
+//{
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushAllCategories
+//                                                        object:nil
+//                                                      userInfo:nil];
+//}
 
 @end

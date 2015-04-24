@@ -57,7 +57,7 @@ NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
 NSString *const RI_FORMS_INDEX = @"forms/index/";
 NSString *const RI_API_INFO = @"main/md5/";
 NSString *const RI_API_IMAGE_RESOLUTIONS = @"main/imageresolutions/";
-NSString *const RI_API_GET_TEASERS = @"main/getteasers/";
+NSString *const RI_API_GET_TEASERS = @"main/home/";
 NSString *const RI_API_GET_STATICBLOCKS = @"main/getstaticblocks/";
 NSString *const RI_API_GET_CUSTOMER = @"customer/getdetails?setDevice=mobileApi";
 NSString *const RI_API_REGISTER_CUSTOMER = @"customer/create/";

@@ -7,9 +7,6 @@
 //
 
 #import "JACampaignsViewController.h"
-#import "RITeaser.h"
-#import "RITeaserText.h"
-#import "RITeaserImage.h"
 #import "RICart.h"
 #import "RICampaign.h"
 #import "RICustomer.h"
@@ -183,31 +180,32 @@
         {
             JACampaignPageView* campaignPageView = [self createCampaignPageAtX:currentX];
             currentX += campaignPageView.frame.size.width;
-            
-            RITeaser* teaser = [self.campaignTeasers objectAtIndex:i];
-            if (VALID_NOTEMPTY(teaser.teaserTexts, NSOrderedSet)) {
-                RITeaserText* teaserText = [teaser.teaserTexts firstObject];
-                if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
-                    [optionList addObject:teaserText.name];
-                    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Campaign"];
-                    [[RITrackingWrapper sharedInstance]trackScreenWithName:teaserText.name];
-                    
-                    if ([teaserText.name isEqualToString:self.startingTitle]) {
-                        startingIndex = i;
-                    }
-                }
-            }
-            else if (VALID_NOTEMPTY(teaser.teaserImages, NSOrderedSet))
-            {
-                RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
-                if (VALID_NOTEMPTY(teaserImage, RITeaserImage)) {
-                    [optionList addObject:teaserImage.teaserDescription];
-                    
-                    if ([teaserImage.teaserDescription isEqualToString:self.startingTitle]) {
-                        startingIndex = i;
-                    }
-                }
-            }
+
+            //$$$ TODO
+//            RITeaser* teaser = [self.campaignTeasers objectAtIndex:i];
+//            if (VALID_NOTEMPTY(teaser.teaserTexts, NSOrderedSet)) {
+//                RITeaserText* teaserText = [teaser.teaserTexts firstObject];
+//                if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
+//                    [optionList addObject:teaserText.name];
+//                    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Campaign"];
+//                    [[RITrackingWrapper sharedInstance]trackScreenWithName:teaserText.name];
+//                    
+//                    if ([teaserText.name isEqualToString:self.startingTitle]) {
+//                        startingIndex = i;
+//                    }
+//                }
+//            }
+//            else if (VALID_NOTEMPTY(teaser.teaserImages, NSOrderedSet))
+//            {
+//                RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
+//                if (VALID_NOTEMPTY(teaserImage, RITeaserImage)) {
+//                    [optionList addObject:teaserImage.teaserDescription];
+//                    
+//                    if ([teaserImage.teaserDescription isEqualToString:self.startingTitle]) {
+//                        startingIndex = i;
+//                    }
+//                }
+//            }
         }
         //this will trigger load methods
         [self.pickerScrollView setOptions:optionList];
@@ -246,19 +244,20 @@
             if (VALID_NOTEMPTY(self.campaignId, NSString)) {
                 [self loadPage:campaignPageView withCampaignId:self.campaignId];
             } else if (VALID_NOTEMPTY(self.campaignTeasers, NSArray)) {
-                RITeaser* teaser = [self.campaignTeasers objectAtIndex:index];
-                if (VALID_NOTEMPTY(teaser.teaserTexts, NSOrderedSet)) {
-                    RITeaserText* teaserText = [teaser.teaserTexts firstObject];
-                    if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
-                        [self loadPage:campaignPageView withCampaignUrl:teaserText.url];
-                    }
-                }
-                else if (VALID_NOTEMPTY(teaser.teaserImages, NSOrderedSet)) {
-                    RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
-                    if (VALID_NOTEMPTY(teaserImage, RITeaserImage)) {
-                        [self loadPage:campaignPageView withCampaignUrl:teaserImage.url];
-                    }
-                }
+//$$$ TODO
+//                RITeaser* teaser = [self.campaignTeasers objectAtIndex:index];
+//                if (VALID_NOTEMPTY(teaser.teaserTexts, NSOrderedSet)) {
+//                    RITeaserText* teaserText = [teaser.teaserTexts firstObject];
+//                    if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
+//                        [self loadPage:campaignPageView withCampaignUrl:teaserText.url];
+//                    }
+//                }
+//                else if (VALID_NOTEMPTY(teaser.teaserImages, NSOrderedSet)) {
+//                    RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
+//                    if (VALID_NOTEMPTY(teaserImage, RITeaserImage)) {
+//                        [self loadPage:campaignPageView withCampaignUrl:teaserImage.url];
+//                    }
+//                }
             } else if (VALID_NOTEMPTY(self.campaignUrl, NSString)) {
                 [self loadPage:campaignPageView withCampaignUrl:self.campaignUrl];
             }

@@ -138,6 +138,7 @@
 // Colors - Backgrounds
 #define JANavBarBackgroundGrey UIColorFromRGB(0xeaeaea)
 #define JABackgroundGrey UIColorFromRGB(0xc8c8c8)
+#define JAHomePageBackgroundGrey UIColorFromRGB(0xf9f9f9)
 
 // Colors - Buttons
 #define JAButtonOrange UIColorFromRGB(0xfaa41a)

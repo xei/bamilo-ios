@@ -1,43 +1,54 @@
 //
-//  JASmallTeaserView.m
+//  JABrandTeaserView.m
 //  Jumia
 //
-//  Created by Telmo Pinto on 01/08/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by Telmo Pinto on 22/04/15.
+//  Copyright (c) 2015 Rocket Internet. All rights reserved.
 //
 
-#import "JASmallTeaserView.h"
+#import "JABrandTeaserView.h"
 #import "UIImageView+WebCache.h"
 #import "JAClickableView.h"
 
-@interface JASmallTeaserView()
+@interface JABrandTeaserView()
 
 @property (nonatomic, strong)UIScrollView* scrollView;
 
 @end
 
-@implementation JASmallTeaserView
+@implementation JABrandTeaserView
 
 - (void)load
 {
     [super load];
     
-    CGFloat totalHeight = 132; //value by design
+    CGFloat totalHeight = 60; //value by design
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
                               totalHeight)];
     
-    CGFloat margin = 6.0f; //value by design
+    CGFloat groupingTitleLabelMargin = 16.0f;
+    UILabel* groupingTitleLabel = [UILabel new];
+    groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
+    groupingTitleLabel.textColor = [UIColor blackColor];
+    groupingTitleLabel.text = STRING_SHOPS_OF_THE_WEEK;
+    [groupingTitleLabel sizeToFit];
+    [groupingTitleLabel setFrame:CGRectMake(groupingTitleLabelMargin,
+                                            0.0f,
+                                            self.frame.size.width - groupingTitleLabelMargin*2,
+                                            totalHeight / 2)];
+    [self addSubview:groupingTitleLabel];
+    
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
-                                                                     self.bounds.origin.y + margin,
+                                                                     CGRectGetMaxY(groupingTitleLabel.frame),
                                                                      self.bounds.size.width,
-                                                                     self.bounds.size.height - 2*margin)];
+                                                                     totalHeight / 2)];
     self.scrollView.showsHorizontalScrollIndicator = NO;
     [self addSubview:self.scrollView];
     
-    CGFloat componentWidth = 108; //value by design
-    CGFloat currentX = margin;
+    CGFloat componentWidth = 88; //value by design
+    CGFloat currentX = 6.0f;
     
     for (RITeaserComponent* component in self.teaserGrouping.teaserComponents) {
         
@@ -56,45 +67,20 @@
         } else {
             imageUrl = component.imagePortraitUrl;
         }
-        
-        CGFloat textMarginX = 4.0;
-        CGFloat textMarginY = 6.0;
-        UILabel* titleLabel = [UILabel new];
-        titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-        titleLabel.textColor = [UIColor blackColor];
-        titleLabel.text = component.title;
-        [titleLabel sizeToFit];
-        [titleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
-                                        clickableView.bounds.origin.y + textMarginY,
-                                        clickableView.bounds.size.width - textMarginX*2,
-                                        titleLabel.frame.size.height)];
-        [clickableView addSubview:titleLabel];
-        
-        UILabel* subTitleLabel = [UILabel new];
-        subTitleLabel.font = [UIFont fontWithName:kFontLightName size:9.0f];
-        subTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
-        subTitleLabel.text = component.subTitle;
-        [subTitleLabel sizeToFit];
-        [subTitleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
-                                           CGRectGetMaxY(titleLabel.frame),
-                                           clickableView.bounds.size.width - textMarginX*2,
-                                           subTitleLabel.frame.size.height)];
-        [clickableView addSubview:subTitleLabel];
-        
-        CGFloat imageHeight = 90; //value by design
         UIImageView* imageView = [UIImageView new];
         [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
         [imageView setFrame:CGRectMake(clickableView.bounds.origin.x,
-                                       clickableView.bounds.size.height - imageHeight,
+                                       clickableView.bounds.origin.y,
                                        clickableView.bounds.size.width,
-                                       imageHeight)];
+                                       clickableView.bounds.size.height)];
         [clickableView addSubview:imageView];
         
-        currentX += clickableView.frame.size.width + margin;
+        currentX += clickableView.frame.size.width;
     }
     
     [self.scrollView setContentSize:CGSizeMake(currentX,
                                                self.scrollView.frame.size.height)];
 }
+
 
 @end
