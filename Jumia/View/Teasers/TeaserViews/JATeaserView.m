@@ -25,50 +25,42 @@
     
     RITeaserComponent* teaserComponent = [self.teaserGrouping.teaserComponents objectAtIndex:index];
     
-    //$$$ do stuff
-}
+    NSMutableDictionary* userInfo = [NSMutableDictionary new];
+    [userInfo setObject:STRING_HOME forKey:@"show_back_button_title"];
+    if (VALID_NOTEMPTY(teaserComponent.name, NSString)) {
+        [userInfo setObject:teaserComponent.name forKey:@"title"];
+    }
+    
+    NSString* notificationName;
+    
+    if ([teaserComponent.targetType isEqualToString:@"catalog"]) {
+    
+        notificationName = kDidSelectTeaserWithCatalogUrlNofication;
 
-//- (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage
-//                          targetType:(NSInteger)targetType;
-//{
-//    NSString* notificationName = kTeaserNotificationPushCatalogWithUrl;
-//    if (1 == targetType) {
-//        notificationName = kTeaserNotificationPushPDVWithUrl;
-//    } else if (4 == targetType) {
-//        notificationName = kTeaserNotificationPushShopWithUrl;
-//    }
-//    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-//                                                        object:nil
-//                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserImage.url,teaserImage.teaserDescription,STRING_HOME] forKeys:@[@"url",@"title",@"show_back_button_title"]]];
-//}
-//
-//- (void)teaserPressedWithTeaserText:(RITeaserText*)teaserText
-//{
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushCatalogWithUrl
-//                                                        object:nil
-//                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserText.url,teaserText.name] forKeys:@[@"url",@"title"]]];
-//}
-//
-//- (void)teaserPressedWithTeaserProduct:(RITeaserProduct*)teaserProduct
-//{
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushPDVWithUrl
-//                                                        object:nil
-//                                                      userInfo:[NSDictionary dictionaryWithObjects:@[teaserProduct.url, STRING_HOME] forKeys:@[@"url", @"show_back_button_title"]]];
-//}
-//
-//- (void)teaserPressedWithTitle:(NSString*)title
-//             inCampaignTeasers:(NSArray*)campaignTeasers;
-//{
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushCatalogWithUrlForCampaigns
-//                                                        object:nil
-//                                                      userInfo:[NSDictionary dictionaryWithObjects:@[title,campaignTeasers] forKeys:@[@"title",@"campaignTeasers"]]];
-//}
-//
-//- (void)teaserAllCategoriesPressed
-//{
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kTeaserNotificationPushAllCategories
-//                                                        object:nil
-//                                                      userInfo:nil];
-//}
+    } else if ([teaserComponent.targetType isEqualToString:@"product_detail"]) {
+
+        notificationName = kDidSelectTeaserWithPDVUrlNofication;
+
+    } else if ([teaserComponent.targetType isEqualToString:@"static_page"]) {
+        
+        notificationName = kDidSelectTeaserWithShopUrlNofication;
+        
+    } else if ([teaserComponent.targetType isEqualToString:@"campaign"]) {
+
+        notificationName = kDidSelectCampaignNofication;
+        
+        //for the campaigns teaserGrouping we need all the campaign components
+        if ([self.teaserGrouping.type isEqualToString:@"campaigns"]) {
+            [userInfo setObject:self.teaserGrouping forKey:@"teaserGrouping"];
+        }
+    }
+    
+    if (VALID_NOTEMPTY(teaserComponent.url, NSString)) {
+        [userInfo setObject:teaserComponent.url forKey:@"url"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                            object:nil
+                                                          userInfo:userInfo];
+    }
+}
 
 @end

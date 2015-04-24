@@ -28,11 +28,12 @@
     
     CGFloat currentX = margin;
     for (int i = 0; i < numberOfComponents; i++) {
-
-            JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
-                                                                                               self.bounds.origin.y,
-                                                                                               componentWidth,
-                                                                                               self.bounds.size.height)];
+        
+        JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
+                                                                                           self.bounds.origin.y,
+                                                                                           componentWidth,
+                                                                                           self.bounds.size.height)];
+        clickableView.tag = i;
         clickableView.backgroundColor = [UIColor whiteColor];
         [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:clickableView];
@@ -82,7 +83,7 @@
                                            clickableView.bounds.size.height - imageHeight,
                                            clickableView.bounds.size.width,
                                            imageHeight)];
-            [clickableView addSubview:imageView];            
+            [clickableView addSubview:imageView];
         }
         
         if (i != numberOfComponents-1) {

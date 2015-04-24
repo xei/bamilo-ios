@@ -54,6 +54,7 @@
                                                                                                self.scrollView.bounds.origin.y,
                                                                                                componentWidth,
                                                                                                self.scrollView.bounds.size.height)];
+            clickableView.tag = i;
             clickableView.backgroundColor = [UIColor whiteColor];
             [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
             [self.scrollView addSubview:clickableView];

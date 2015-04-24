@@ -42,6 +42,7 @@
                                                                                            self.bounds.origin.y,
                                                                                            self.bounds.size.width - margin*2,
                                                                                            mainAreaHeight)];
+        mainClickableView.tag = 0;
         mainClickableView.backgroundColor = [UIColor whiteColor];
         [mainClickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:mainClickableView];
@@ -119,6 +120,7 @@
                                                                                           mainAreaHeight,
                                                                                           self.bounds.size.width - margin*2,
                                                                                           moreButtonHeight)];
+            moreView.tag = 0; //all the campaigns open when one of them is clicked
             moreView.backgroundColor = [UIColor clearColor];
             [moreView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:moreView];

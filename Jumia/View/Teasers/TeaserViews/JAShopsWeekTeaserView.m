@@ -32,6 +32,7 @@
                                                                                            margin,
                                                                                            componentWidth,
                                                                                            totalHeight - margin)];
+        clickableView.tag = i;
         clickableView.backgroundColor = [UIColor whiteColor];
         [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:clickableView];

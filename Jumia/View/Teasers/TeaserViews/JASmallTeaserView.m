@@ -39,13 +39,15 @@
     CGFloat componentWidth = 108; //value by design
     CGFloat currentX = margin;
     
-    for (RITeaserComponent* component in self.teaserGrouping.teaserComponents) {
+    for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
+        RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
         
         
         JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
                                                                                            self.scrollView.bounds.origin.y,
                                                                                            componentWidth,
                                                                                            self.scrollView.bounds.size.height)];
+        clickableView.tag = i;
         clickableView.backgroundColor = [UIColor whiteColor];
         [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:clickableView];

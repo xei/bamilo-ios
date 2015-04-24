@@ -1274,16 +1274,22 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
-    NSArray* campaignTeasers = [notification.userInfo objectForKey:@"campaignTeasers"];
     NSString* title = [notification.userInfo objectForKey:@"title"];
-    NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
-    NSString* campaignUrl = [notification.userInfo objectForKey:@"campaign_url"];
     
-    if (VALID_NOTEMPTY(campaignTeasers, NSArray))
+    //this is used when the teaserGrouping is campaigns and we have to show more than one campaign
+    RITeaserGrouping* teaserGrouping = [notification.userInfo objectForKey:@"teaserGrouping"];
+
+    //this is used when the teaserGrouping is not campaigns, so we're only going to be showing one
+    NSString* campaignUrl = [notification.userInfo objectForKey:@"url"];
+    
+    //this is used in deeplinking
+    NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
+    
+    if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping))
     {
         JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
         
-        campaignsVC.campaignTeasers = campaignTeasers;
+        campaignsVC.teaserGrouping = teaserGrouping;
         campaignsVC.startingTitle = title;
         
         [self pushViewController:campaignsVC animated:YES];

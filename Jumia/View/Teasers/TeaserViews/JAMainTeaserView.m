@@ -36,7 +36,8 @@
     
     CGFloat currentX = 0;
     
-    for (RITeaserComponent* component in self.teaserGrouping.teaserComponents) {
+    for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
+        RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
         
         NSString* imageUrl;
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -51,6 +52,7 @@
                                                                                                self.scrollView.bounds.origin.y,
                                                                                                self.scrollView.bounds.size.width,
                                                                                                self.scrollView.bounds.size.height)];
+            clickableView.tag = i;
             [clickableView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
             [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
             [self.scrollView addSubview:clickableView];
