@@ -63,12 +63,7 @@
         [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:clickableView];
         
-        NSString* imageUrl;
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            imageUrl = component.imageLandscapeUrl;
-        } else {
-            imageUrl = component.imagePortraitUrl;
-        }
+        NSString* imageUrl = component.imagePortraitUrl;
         UIImageView* imageView = [UIImageView new];
         [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
         [imageView setFrame:CGRectMake(clickableView.bounds.origin.x,

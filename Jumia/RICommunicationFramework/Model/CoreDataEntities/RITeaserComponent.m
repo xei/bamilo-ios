@@ -35,6 +35,10 @@
     
     if (VALID_NOTEMPTY(teaserComponentJSON, NSDictionary)) {
 
+        if ([teaserComponentJSON objectForKey:@"image"]) {
+            newTeaserComponent.imagePortraitUrl = [teaserComponentJSON objectForKey:@"image"];
+        }
+        
         if ([teaserComponentJSON objectForKey:@"image_landscape"]) {
             newTeaserComponent.imageLandscapeUrl = [teaserComponentJSON objectForKey:@"image_landscape"];
         }

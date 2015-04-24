@@ -70,12 +70,7 @@
                                                subTitleLabel.frame.size.height)];
             [clickableView addSubview:subTitleLabel];
             
-            NSString* imageUrl;
-            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-                imageUrl = component.imageLandscapeUrl;
-            } else {
-                imageUrl = component.imagePortraitUrl;
-            }
+            NSString* imageUrl = component.imagePortraitUrl;
             CGFloat imageHeight = 90; //value by design
             UIImageView* imageView = [UIImageView new];
             [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];

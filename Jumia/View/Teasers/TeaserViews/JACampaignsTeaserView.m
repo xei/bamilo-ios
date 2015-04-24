@@ -100,12 +100,7 @@
                                            subTitleLabel.frame.size.height)];
         [mainClickableView addSubview:subTitleLabel];
         
-        NSString* imageUrl;
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            imageUrl = mainCampaign.imageLandscapeUrl;
-        } else {
-            imageUrl = mainCampaign.imagePortraitUrl;
-        }
+        NSString* imageUrl = mainCampaign.imagePortraitUrl;
         UIImageView* imageView = [UIImageView new];
         [imageView setFrame:CGRectMake(halfWidth,
                                        self.bounds.origin.y,

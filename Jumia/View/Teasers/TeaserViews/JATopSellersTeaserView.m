@@ -59,12 +59,7 @@
             [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
             [self.scrollView addSubview:clickableView];
             
-            NSString* imageUrl;
-            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-                imageUrl = component.imageLandscapeUrl;
-            } else {
-                imageUrl = component.imagePortraitUrl;
-            }
+            NSString* imageUrl = component.imagePortraitUrl;
             CGFloat imageTopMargin = 7.0f; //value by design
             CGFloat imageWidth = 100.0f; //value by design
             CGFloat imageHeight = 71.0f; //value by design

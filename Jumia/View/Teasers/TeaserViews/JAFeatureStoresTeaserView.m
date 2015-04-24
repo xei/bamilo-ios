@@ -60,12 +60,7 @@
             
             RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
             
-            NSString* imageUrl;
-            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-                imageUrl = component.imageLandscapeUrl;
-            } else {
-                imageUrl = component.imagePortraitUrl;
-            }
+            NSString* imageUrl = component.imagePortraitUrl;
             CGFloat imageMargin = 2.0f;
             CGFloat imageSide = 40.0f; //value by design
             UIImageView* imageView = [UIImageView new];
