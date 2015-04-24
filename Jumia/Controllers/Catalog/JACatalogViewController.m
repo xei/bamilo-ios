@@ -21,6 +21,10 @@
 #import "JAAppDelegate.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "JANavigationBarView.h"
+#import "UIImageView+JA.h"
+#import "UIImageView+WebCache.h"
+#import "JACampaignBannerCell.h"
+#import "JACatalogBannerCell.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -58,10 +62,42 @@
 @property (nonatomic, assign) RIApiResponse apiResponse;
 
 @property (nonatomic, strong) JASortingView* sortingView;
+@property (nonatomic, strong) RIBanner *banner;
+@property (nonatomic, strong) UIImageView* bannerImage;
+@property (nonatomic, strong) NSString *bannerImageUrl;
 
 @end
 
 @implementation JACatalogViewController
+
+/*@synthesize bannerImage = _bannerImage;
+
+- (UIImageView*)bannerImage
+{
+    if (VALID_NOTEMPTY(_bannerImage, UIImageView)) { 
+        //do nothing
+    } else {
+        _bannerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                     0.0f,
+                                                                     1.0f,
+                                                                     1.0f)];
+
+        if (VALID_NOTEMPTY(self.bannerImageUrl, NSString)) {
+            __block UIImageView *blockedImageView = _bannerImage;
+            __weak JACatalogViewController* weakSelf = self;
+            [_bannerImage setImageWithURL:[NSURL URLWithString:self.bannerImageUrl]
+                                  success:^(UIImage *image, BOOL cached){
+                                      [blockedImageView changeImageHeight:0.0f andWidth:weakSelf.collectionView.frame.size.width];
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          [weakSelf.collectionView reloadData];
+                                      });
+                                  }failure:^(NSError *error){}];
+        }
+    }
+    return _bannerImage;
+    
+}*/
+
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
 {
@@ -240,7 +276,8 @@
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    
+
+    //[self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogBannerCell" bundle:nil] forCellWithReuseIdentifier:@"bannerCell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell" bundle:nil] forCellWithReuseIdentifier:@"gridCell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"gridCell_ipad_portrait"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"gridCell_ipad_landscape"];
@@ -416,7 +453,7 @@
                                                                               maxItems:[NSString stringWithFormat:@"%ld",(long)self.maxProducts]
                                                                          sortingMethod:self.sortingMethod
                                                                                filters:self.filtersArray
-                                                                          successBlock:^(NSArray *results, NSArray *filters, NSNumber *productCount) {
+                                                                          successBlock:^(NSArray *results, NSArray *filters, NSNumber *productCount, RIBanner *banner) {
                                                                               
                                                                               self.searchSuggestionOperationID = nil;
                                                                               
@@ -426,7 +463,25 @@
                                                                               }
                                                                               
                                                                               self.catalogTopView.sortingButton.enabled = YES;
+                                                                             
+                                                                              //$$$$$$$$$$$
                                                                               
+                                                                              if(VALID_NOTEMPTY(banner, RIBanner))
+                                                                              {
+                                                                                  self.banner = banner;
+                                                                                  
+                                                                                  if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+                                                                                  {
+                                                                                      self.bannerImageUrl = self.banner.iPhoneImageUrl;
+                                                                                      
+                                                                                  }else if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)&& (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)))
+                                                                                  {
+                                                                                      self.bannerImageUrl = self.banner.iPadImageUrl;
+                                                                                  }
+                                                                                  
+                                                                              }
+
+                                                                              //$$$$$$$$$$$$$$
                                                                               // Track events only in the first load of the products
                                                                               if (!self.isFirstLoadTracking)
                                                                               {
@@ -582,9 +637,27 @@
                                                                            filters:self.filtersArray
                                                                         filterType:self.filterType
                                                                        filterValue:self.filterValue
-                                                                      successBlock:^(NSArray* products, NSString* productCount, NSArray* filters, NSString *categoryId, NSArray* categories) {
+                                                                      successBlock:^(NSArray* products, NSString* productCount, NSArray* filters, NSString *categoryId, NSArray* categories, RIBanner* banner) {
                                                                           
                                                                           self.getProductsOperationID = nil;
+                                                                          
+                                                                          //$$$$
+                                                                          if(VALID_NOTEMPTY(banner, RIBanner))
+                                                                          {
+                                                                              self.banner = banner;
+                                                                              
+                                                                              if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+                                                                              {
+                                                                                  self.bannerImageUrl = self.banner.iPhoneImageUrl;
+                                                                                  
+                                                                              }else if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)&& (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)))
+                                                                              {
+                                                                                  self.bannerImageUrl = self.banner.iPadImageUrl;
+                                                                              }
+
+                                                                          }
+                                                                          
+                                                                          //$$$$$$$
                                                                           
                                                                           NSString* countString = [NSString stringWithFormat:@"%@ %@",productCount, STRING_ITEMS];
                                                                           if (1 == [productCount integerValue]) {
@@ -849,6 +922,7 @@
 
 - (void)changeViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    //self.bannerImage = nil;
     if (self.catalogTopView.gridSelected) {
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
@@ -927,7 +1001,12 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.productsArray.count;
+   CGFloat numberOfCells = self.productsArray.count;
+    
+    /* if (VALID_NOTEMPTY(self.bannerImageUrl, NSString)) {
+        numberOfCells++;
+    }*/
+    return numberOfCells;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -937,11 +1016,24 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    //NSInteger realIndex = indexPath.row;
+   
     if (!self.loadedEverything && self.productsArray.count - self.numberOfCellsInScreen <= indexPath.row)
     {
         [self loadMoreProducts];
     }
+    
+   /* if (VALID_NOTEMPTY(self.bannerImageUrl, NSString)) {
+        if (0 == indexPath.row) {
+            JACatalogBannerCell *bannerCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"bannerCell" forIndexPath:indexPath];
+            [bannerCell loadWithImageView:self.bannerImage];
+            [bannerCell.bannerClickableView addTarget:self
+                                               action:@selector(clickableBannerPressed:)
+                                     forControlEvents:UIControlEventTouchUpInside];
+            return bannerCell;
+        }
+        realIndex--;
+    }*/
     
     RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
     
@@ -960,6 +1052,37 @@
     return cell;
     
 }
+
+/*-(void)clickableBannerPressed:(RIBanner *)banner
+{
+    if(VALID_NOTEMPTY(self.banner, RIBanner))
+    {
+        banner = self.banner;
+        if([banner.targetType isEqualToString:@"product_detail"])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                object:nil
+                                                              userInfo:@{ @"url" :[NSURL URLWithString:banner.url],
+                                                                          @"show_back_button_title" : STRING_BACK}];
+        }else if ([banner.targetType isEqualToString:@"campaign"])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCampaignNofication
+                                                                object:nil
+                                                              userInfo:@{ @"url" :[NSURL URLWithString:banner.url],
+                                                                          @"show_back_button_title" : STRING_BACK}];
+        }else if ([banner.targetType isEqualToString:@"catalog"])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithCatalogUrlNofication
+                                                                object:nil
+                                                              userInfo:@{ @"url" : [NSURL URLWithString:banner.url],
+                                                                          @"show_back_button_title" : STRING_BACK}];
+        }else if ([banner.targetType isEqualToString:@"static_page"])
+        {
+        
+        }
+    }
+
+}*/
 
 - (void)clickableViewPressedInCell:(UIControl*)sender
 {

@@ -13,6 +13,7 @@
 #import "RIFilter.h"
 #import "RICategory.h"
 #import "RISeller.h"
+#import "RIBanner.h"
 
 @implementation RIBundle
 
@@ -166,7 +167,7 @@
                                 filters:(NSArray*)filters
                              filterType:(NSString*)filterType
                             filterValue:(NSString*)filterValue
-                           successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
+                           successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     NSString* fullUrl = @"";
@@ -217,7 +218,7 @@
 }
 
 + (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
+                        successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
@@ -241,6 +242,16 @@
                                                                           filtersArray = [RIFilter parseFilters:filtersJSON];
                                                                           
                                                                       }
+                                                                      
+                                                                      NSDictionary *bannerJSON = [metadata objectForKey:@"banner"];
+                                                                      
+                                                                      RIBanner *banner;
+                                                                      
+                                                                      if(VALID_NOTEMPTY(bannerJSON, NSDictionary))
+                                                                      {
+                                                                          banner = [RIBanner parseBanner:bannerJSON];
+                                                                      }
+                                                                      
                                                                       
                                                                       NSArray* categoriesJSON = [metadata objectForKey:@"categories"];
                                                                       
@@ -269,7 +280,7 @@
                                                                           }
                                                                           
                                                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                                                              successBlock(products, productCount, filtersArray, categoryId, categoriesArray);
+                                                                              successBlock(products, productCount, filtersArray, categoryId, categoriesArray, banner);
                                                                           });
                                                                       }
                                                                       else

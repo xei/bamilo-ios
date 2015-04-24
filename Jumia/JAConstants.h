@@ -124,7 +124,7 @@
 #define kAppStoreUrl @"https://itunes.apple.com/us/app/jumia-online-shopping/id925015459?mt=8"
 #define kAppStoreUrlDaraz @"https://itunes.apple.com/app/daraz-online-shopping/id978058048"
 #define kAppStoreUrlShop @"https://itunes.apple.com/app/shop.com.mm-online-shopping/id979214282"
-#define kAppStoreUrlBamilo @"https://itunes.apple.com/app/بامیلو/id979950698"
+#define kAppStoreUrlBamilo @"https://itunes.apple.com/app/bamylw/id979950698"
 
 // Preferences
 #define kDidFirstBuyKey @"did_first_buy"
