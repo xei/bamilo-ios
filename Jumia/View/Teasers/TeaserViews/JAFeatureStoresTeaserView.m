@@ -69,11 +69,14 @@
             
             NSString* imageUrl = component.imagePortraitUrl;
             CGFloat imageMargin = 2.0f;
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                imageMargin = 6.0f;
+            }
             CGFloat imageSide = 40.0f; //value by design
             UIImageView* imageView = [UIImageView new];
             [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
             [imageView setFrame:CGRectMake(clickableView.bounds.size.width - imageMargin - imageSide,
-                                           clickableView.bounds.origin.y + imageMargin,
+                                           clickableView.bounds.size.height - imageMargin - imageSide,
                                            imageSide,
                                            imageSide)];
             [clickableView addSubview:imageView];
