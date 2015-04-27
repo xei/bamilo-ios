@@ -19,7 +19,10 @@
     if (VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet)) {
         
         CGFloat groupingTitleLabelMargin = 16.0f;
-        CGFloat groupingTitleLabelHeight = 30.0f;
+        CGFloat groupingTitleLabelHeight = 30.0f; //value by design
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            groupingTitleLabelHeight = 35.0f; //value by design
+        }
         UILabel* groupingTitleLabel = [UILabel new];
         groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
         groupingTitleLabel.textColor = [UIColor blackColor];
@@ -33,10 +36,14 @@
         
         CGFloat currentY = groupingTitleLabel.frame.size.height;
         CGFloat margin = 6.0f; //value by design
+        CGFloat componentHeight = 44; //value by design
         NSInteger numberOfComponentsForLine = 2;
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            componentHeight = 68.0f;
+            numberOfComponentsForLine = self.teaserGrouping.teaserComponents.count / 2;
+        }
         NSInteger numberOfMargins = numberOfComponentsForLine + 1;
         CGFloat componentWidth = (self.bounds.size.width- margin * numberOfMargins)/numberOfComponentsForLine;
-        CGFloat componentHeight = 44; //value by design
         CGFloat currentX = margin;
         for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
             
