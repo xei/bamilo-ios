@@ -24,7 +24,10 @@
     
     if (VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet)) {
         CGFloat groupingTitleLabelMargin = 16.0f;
-        CGFloat groupingTitleLabelHeight = 30.0f;
+        CGFloat groupingTitleLabelHeight = 30.0f; //value by design
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            groupingTitleLabelHeight = 35.0f; //value by design
+        }
         UILabel* groupingTitleLabel = [UILabel new];
         groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
         groupingTitleLabel.textColor = [UIColor blackColor];
@@ -37,7 +40,7 @@
         [self addSubview:groupingTitleLabel];
         
         CGFloat margin = 6.0f; //value by design
-        CGFloat componentHeight = 129.0f; //value by design
+        CGFloat componentHeight = 120.0f; //value by design
         self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                          self.bounds.origin.y + groupingTitleLabelHeight,
                                                                          self.bounds.size.width,
@@ -45,8 +48,11 @@
         self.scrollView.showsHorizontalScrollIndicator = NO;
         [self addSubview:self.scrollView];
         
-        CGFloat componentWidth = 114; //value by design
         CGFloat currentX = margin;
+        CGFloat componentWidth = 114; //value by design
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            componentWidth = 142.0f; //value by design
+        }
         for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
             RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
             
@@ -103,13 +109,12 @@
                 UIView* separator = [UIView new];
                 separator.backgroundColor = UIColorFromRGB(0xd8d8d8);
                 [separator setFrame:CGRectMake(currentX - 1,
-                                               clickableView.frame.origin.y,
+                                               clickableView.frame.origin.y + imageTopMargin,
                                                1,
-                                               clickableView.frame.size.height)];
+                                               clickableView.frame.size.height - imageTopMargin*2)];
                 [self.scrollView addSubview:separator];
             }
         }
-
         
         
         [self.scrollView setContentSize:CGSizeMake(currentX,
